@@ -6,8 +6,8 @@ on:
       - 'master'
 
 env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}:${{ github.sha }}
-  IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}:latest
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-soknad:${{ github.sha }}
+  IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}/familie-ba-soknad:latest
 
 jobs:
   build:
