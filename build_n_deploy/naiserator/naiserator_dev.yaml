@@ -22,7 +22,7 @@ spec:
   istio:
     enabled: false
   ingresses:
-    - https://familie-ba-soknad.dev-adeo.no"
+    - "https://familie-ba-soknad.dev-adeo.no"
   resources:
     limits:
       cpu: 2000m
