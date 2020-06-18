@@ -23,9 +23,6 @@ spec:
     enabled: false
   ingresses:
     - https://familie-ba-soknad.dev-adeo.no"
-  env:
-    - name: APP_VERSION
-      value: "{{version}}"
   resources:
     limits:
       cpu: 2000m

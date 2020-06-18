@@ -22,9 +22,9 @@ jobs:
           docker build . -t ${IMAGE} -t ${IMAGE_LATEST}
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker push ${IMAGE}
-          docker push ${IMAGE_LATEST} 
+          docker push ${IMAGE_LATEST}
   deploy:
-    name: Deploy to prod gcp
+    name: Deploy to gcp
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -32,5 +32,5 @@ jobs:
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: prod-gcp
-          RESOURCE: build_n_deploy/naiserator/naiserator_prod.yaml
+          CLUSTER: dev-gcp
+          RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
