@@ -6,7 +6,7 @@ on:
       - 'master'
 
 env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-prosessering:${{ github.sha }}
+  IMAGE: docker.pkg.github.com/${{ github.repository }}:${{ github.sha }}
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker push ${IMAGE}
   deploy:
-    name: Deploy to NAIS
+    name: Deploy to dev gcp
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -31,4 +31,4 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: build_n_deploy/naiserator/gcp-dev.yaml
+          RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml

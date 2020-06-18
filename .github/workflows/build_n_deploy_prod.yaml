@@ -1,4 +1,4 @@
-name: Build, push, and deploy app to dev and prod
+name: Build, push, and deploy app to prod
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - 'master'
 
 env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-sak-frontend:${{ github.sha }}
-  IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}/familie-ba-sak-frontend:latest
+  IMAGE: docker.pkg.github.com/${{ github.repository }}:${{ github.sha }}
+  IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}:latest
 
 jobs:
   build:
@@ -19,27 +19,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          yarn
-          yarn build
           docker build . -t ${IMAGE} -t ${IMAGE_LATEST}
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker push ${IMAGE}
           docker push ${IMAGE_LATEST} 
   deploy:
-    name: Deploy to NAIS
+    name: Deploy to prod gcp
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Deploy til dev-fss
-        uses: nais/deploy/actions/deploy@v1
+      - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
-          RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
-      - name: Deploy til prod-fss
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: prod-fss
+          CLUSTER: prod-gcp
           RESOURCE: build_n_deploy/naiserator/naiserator_prod.yaml
