@@ -51,7 +51,5 @@ export const loggFeil = (error?: AxiosError, feilmelding?: string): void => {
 };
 
 export const apiLoggFeil = (melding: string) => {
-    return preferredAxios.post('/logg-feil', {
-        melding,
-    });
+    throw new Error(melding);
 };
