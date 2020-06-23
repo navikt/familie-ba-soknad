@@ -23,6 +23,11 @@ spec:
     enabled: false
   ingresses:
     - "https://familie-ba-soknad.dev-adeo.no"
+    - "https://familie-ba-soknad.dev-nav.no"
+  accessPolicy:
+    outbound:
+      rules:
+        - application: familie-ba-soknad-api
   resources:
     limits:
       cpu: 2000m
