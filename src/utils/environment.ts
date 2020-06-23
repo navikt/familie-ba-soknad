@@ -3,7 +3,7 @@ export interface IEnvironment {
 }
 
 export const environment = (): IEnvironment => {
-    if (window.location.pathname.includes('dev')) {
+    if (window.location.hostname.includes('dev')) {
         return {
             apiUrl: 'https://familie-ba-soknad-api.dev-nav.no',
         };
