@@ -1,6 +1,12 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const path = require('path');
 const app = express();
+const setupProxy = require('./src/setupProxy');
+
+setupProxy(app);
 
 app.use(express.static(path.join(__dirname, 'build')));
 

@@ -32,3 +32,5 @@ spec:
       memory: 1024Mi
     requests:
       memory: 512Mi
+  envFrom:
+    - secret: ba-soknad
