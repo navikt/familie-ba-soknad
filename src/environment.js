@@ -1,7 +1,7 @@
 module.exports = function () {
     if (process.env.ENV === 'dev') {
         return {
-            apiUrl: 'https://familie-ba-soknad-api.dev-nav.no',
+            apiUrl: 'http://familie-ba-soknad-api',
         };
     } else {
         return {
