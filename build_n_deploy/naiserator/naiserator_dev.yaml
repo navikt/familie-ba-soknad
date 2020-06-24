@@ -19,8 +19,6 @@ spec:
   readiness:
     path: /internal/isReady
     initialDelay: 5
-  istio:
-    enabled: false
   ingresses:
     - "https://familie-ba-soknad.dev-adeo.no"
     - "https://familie-ba-soknad.dev-nav.no"

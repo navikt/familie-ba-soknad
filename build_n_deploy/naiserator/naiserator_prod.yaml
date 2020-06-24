@@ -22,8 +22,6 @@ spec:
   prometheus:
     enabled: true
     path: /metrics
-  istio:
-    enabled: false
   ingresses:
     - "https://familie-ba-soknad.adeo.no"
   resources:
