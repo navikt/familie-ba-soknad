@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "constate": "^2.0.0",
+    "dotenv": "^8.2.0",
     "nav-frontend-core": "^5.0.1",
     "nav-frontend-ikoner-assets": "^2.0.1",
     "nav-frontend-spinner": "^2.0.2",

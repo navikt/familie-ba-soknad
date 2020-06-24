@@ -22,8 +22,6 @@ spec:
   prometheus:
     enabled: true
     path: /metrics
-  istio:
-    enabled: false
   ingresses:
     - "https://familie-ba-soknad.adeo.no"
   resources:
@@ -32,3 +30,5 @@ spec:
       memory: 1024Mi
     requests:
       memory: 512Mi
+  envFrom:
+    - secret: ba-soknad

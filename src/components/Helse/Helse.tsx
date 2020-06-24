@@ -5,12 +5,13 @@ import { Ressurs, RessursStatus } from '../../typer/ressurs';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 
 const Helse: React.FC = () => {
-    const { helseApi, helseMottak } = useApp();
+    const { helseApi, helseMottak, helsePdl } = useApp();
     return (
         <div className={'helse'}>
             <Undertittel>Helse</Undertittel>
             {renderHelse(helseApi, 'søknad api')}
             {renderHelse(helseMottak, 'mottak')}
+            {renderHelse(helsePdl, 'pdl')}
         </div>
     );
 };

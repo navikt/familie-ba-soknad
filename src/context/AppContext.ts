@@ -10,15 +10,16 @@ import {
     byggHenterRessurs,
 } from '../typer/ressurs';
 import { useState, useEffect } from 'react';
-import { environment } from '../utils/environment';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [helseApi, settHelseApi] = useState(byggTomRessurs<string>());
     const [helseMottak, settHelseMottak] = useState(byggTomRessurs<string>());
+    const [helsePdl, settHelsePdl] = useState(byggTomRessurs<string>());
 
     useEffect(() => {
         settHelseApi(byggHenterRessurs());
         settHelseMottak(byggHenterRessurs());
+        settHelsePdl(byggHenterRessurs());
 
         axiosRequest<string, void>({
             url: '/api/helse/soknad-api',
@@ -41,16 +42,24 @@ const [AppProvider, useApp] = createUseContext(() => {
             .catch(() => {
                 settHelseMottak(byggFeiletRessurs('Helse mot mottak feilet'));
             });
+
+        axiosRequest<string, void>({
+            url: '/api/helse/pdl',
+            method: 'GET',
+        })
+            .then(ressurs => {
+                settHelsePdl(ressurs);
+            })
+            .catch(() => {
+                settHelsePdl(byggFeiletRessurs('Helse mot pdl feilet'));
+            });
     }, []);
 
     const axiosRequest = async <T, D>(
         config: AxiosRequestConfig & { data?: D; påvirkerSystemLaster?: boolean }
     ): Promise<Ressurs<T>> => {
         return preferredAxios
-            .request({
-                ...config,
-                url: `${environment().apiUrl}${config.url}`,
-            })
+            .request(config)
             .then((response: AxiosResponse<ApiRessurs<T>>) => {
                 const responsRessurs: ApiRessurs<T> = response.data;
 
@@ -68,6 +77,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         axiosRequest,
         helseApi,
         helseMottak,
+        helsePdl,
     };
 });
 
