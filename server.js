@@ -16,8 +16,6 @@ app.engine("html", mustacheExpress());
 
 setupProxy(app);
 
-// app.use(express.static(path.join(__dirname, 'build')));
-
 // Static files
 app.use(express.static(path.join(__dirname, 'build'), { index: false }));
 
