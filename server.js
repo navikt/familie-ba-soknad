@@ -25,13 +25,10 @@ app.use(express.static(path.join(__dirname, 'build'), { index: false }));
 app.get(`/internal/isAlive|isReady`, (req, res) => res.sendStatus(200));
 
 
-app.get('/deko', (req, res) =>
+app.get('/', (req, res) =>
     getDecorator()
         .then(fragments => {
-            console.log("sending file");
-            //res.sendFile(path.join(__dirname + '/build/index.html'));
-            console.log("sending file OK");
-            res.render("index-dek.html", fragments);
+            res.render("index.html", fragments);
             console.log("render OK");
         })
         .catch(e => {
@@ -40,11 +37,6 @@ app.get('/deko', (req, res) =>
             res.status(500).send(error);
         })
 );
-
-
-app.get('/', function (_req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 
 
 app.listen(9000);
