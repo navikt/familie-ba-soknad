@@ -20,11 +20,11 @@ app.get(`/internal/isAlive|isReady`, (req, res) => res.sendStatus(200));
 app.get('/', (req, res) =>
     getDecorator()
         .then(fragments => {
-            res.render('index.html', fragments);
+            const error = `En feil oppstod. Klikk <a href="https://www.nav.no">her</a> for å gå tilbake til nav.no. Kontakt kundestøtte hvis problemet vedvarer.`;
+            res.status(500).send(error);
         })
         .catch(e => {
-            const error = `Failed to get decorator: ${e}`;
-            res.status(500).send(error);
+            res.render('index.html', fragments);
         })
 );
 
