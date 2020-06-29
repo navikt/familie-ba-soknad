@@ -26,7 +26,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "snyk": "^1.352.1"
   },
   "scripts": {
     "format-all": "prettier --write \"**/*.js\"",
@@ -35,7 +36,9 @@
     "build": "craco build",
     "test-ci": "CI=true craco build",
     "test": "craco test",
-    "serve": "NODE_ENV=production node server.js"
+    "serve": "NODE_ENV=production node server.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -64,5 +67,6 @@
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "typescript": "^3.9.5"
-  }
+  },
+  "snyk": true
 }
