@@ -26,6 +26,8 @@ spec:
     outbound:
       rules:
         - application: familie-ba-soknad-api
+      external:
+        - host: "nav.no"
   resources:
     limits:
       cpu: 2000m
