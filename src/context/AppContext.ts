@@ -10,11 +10,14 @@ import {
     byggHenterRessurs,
 } from '../typer/ressurs';
 import { useState, useEffect } from 'react';
+import { autentiseringsInterceptor } from '../utils/autentisering';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [helseApi, settHelseApi] = useState(byggTomRessurs<string>());
     const [helseMottak, settHelseMottak] = useState(byggTomRessurs<string>());
     const [helsePdl, settHelsePdl] = useState(byggTomRessurs<string>());
+
+    autentiseringsInterceptor();
 
     useEffect(() => {
         settHelseApi(byggHenterRessurs());

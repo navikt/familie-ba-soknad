@@ -1,13 +1,10 @@
-import axios, { AxiosError } from 'axios';
-import Environment from '../EnvironmentTest';
-import { erLokaltMedMock } from './miljø';
+import { AxiosError } from 'axios';
+import Miljø from '../Miljø';
+import { preferredAxios as axios } from '../context/axios';
+
 const er401Feil = (error: AxiosError) => error && error.response && error.response.status === 401;
-
-const loggInn = () => !erLokaltMedMock;
-
-// Mangler redirect path
 const getLoginUrl = () => {
-    return Environment().loginService;
+    return `${Miljø().loginService}&redirect=${window.location.origin}`;
 };
 
 export const autentiseringsInterceptor = () => {
@@ -16,7 +13,7 @@ export const autentiseringsInterceptor = () => {
             return response;
         },
         (error: AxiosError) => {
-            if (er401Feil(error) && loggInn()) {
+            if (er401Feil(error)) {
                 window.location.href = getLoginUrl();
             } else {
                 throw error;
@@ -28,19 +25,15 @@ export const autentiseringsInterceptor = () => {
 export const verifiserAtBrukerErAutentisert = (
     settAutentisering: (autentisering: boolean) => void
 ) => {
-    if (loggInn()) {
-        return verifiserInnloggetApi().then(response => {
-            if (response && 200 === response.status) {
-                settAutentisering(true);
-            }
-        });
-    } else {
-        settAutentisering(true);
-    }
+    return verifiserInnloggetApi().then(response => {
+        if (response && 200 === response.status) {
+            settAutentisering(true);
+        }
+    });
 };
 
 const verifiserInnloggetApi = () => {
-    return axios.get(`${Environment().apiUrl}/api/innlogget`, {
+    return axios.get(`/api/innlogget`, {
         withCredentials: true,
     });
 };
