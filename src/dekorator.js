@@ -2,6 +2,7 @@ const jsdom = require("jsdom");
 const request = require("request");
 const NodeCache = require("node-cache");
 const { JSDOM } = jsdom;
+const dekoratørURL = "https://nav.no/dekoratoren/?simple=true";
 
 const SECONDS_PER_MINUTE = 60;
 const SECONDS_PER_HOUR = SECONDS_PER_MINUTE * 60;
@@ -18,7 +19,7 @@ const getDecorator = () =>
         if (decorator) {
             resolve(decorator);
         } else {
-            request(process.env.DECORATOR_URL, (error, response, body) => {
+            request(dekoratørURL, (error, response, body) => {
                 if (!error && response.statusCode >= 200 && response.statusCode < 400) {
                     const { document } = new JSDOM(body).window;
                     const prop = "innerHTML";

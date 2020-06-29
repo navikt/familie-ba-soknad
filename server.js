@@ -7,7 +7,6 @@ const app = express();
 const setupProxy = require('./src/setupProxy');
 const getDecorator = require('./src/dekorator');
 const mustacheExpress = require("mustache-express");
-const { Console } = console;
 
 app.set("views", `${__dirname}/build`);
 app.set("view engine", "mustache");
@@ -27,11 +26,9 @@ app.get('/', (req, res) =>
     getDecorator()
         .then(fragments => {
             res.render("index.html", fragments);
-            console.log("render OK");
         })
         .catch(e => {
             const error = `Failed to get decorator: ${e}`;
-            console.log(error);
             res.status(500).send(error);
         })
 );
