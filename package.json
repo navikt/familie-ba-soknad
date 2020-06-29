@@ -29,6 +29,7 @@
     "request": "^2.88.2"
   },
   "scripts": {
+    "format-all": "prettier --write \"**/*.js\"", 
     "build_and_serve": "yarn build; yarn serve",
     "start": "craco start",
     "build": "craco build",
