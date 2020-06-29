@@ -20,11 +20,12 @@ app.get(`/internal/isAlive|isReady`, (req, res) => res.sendStatus(200));
 app.get('/', (req, res) =>
     getDecorator()
         .then(fragments => {
-            const error = `En feil oppstod. Klikk <a href="https://www.nav.no">her</a> for å gå tilbake til nav.no. Kontakt kundestøtte hvis problemet vedvarer.`;
-            res.status(500).send(error);
+            res.render('index.html', fragments);
         })
         .catch(e => {
-            res.render('index.html', fragments);
+            console.log(e);
+            const error = `En feil oppstod. Klikk <a href="https://www.nav.no">her</a> for å gå tilbake til nav.no. Kontakt kundestøtte hvis problemet vedvarer.`;
+            res.status(500).send(error);
         })
 );
 

@@ -27,7 +27,7 @@ spec:
       rules:
         - application: familie-ba-soknad-api
       external:
-        - host: "nav.no"
+        - host: "www-q1.nav.no"
   resources:
     limits:
       cpu: 2000m
