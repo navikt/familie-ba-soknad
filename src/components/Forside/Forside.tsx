@@ -6,7 +6,9 @@ import {
     Systemtittel,
     Undertittel,
 } from 'nav-frontend-typografi';
+import Tekstområde from 'nav-frontend-tekstomrade';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
+import Lenke from 'nav-frontend-lenker';
 import KnappBase from 'nav-frontend-knapper';
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import Panel from 'nav-frontend-paneler';
@@ -34,7 +36,11 @@ const Forside: React.FC = () => {
                         <VeilederSnakkeboble />
                     </div>
                     <Sidetittel>Søknad om barnetrygd</Sidetittel>
-                    <Normaltekst className={'forside__innhold'}>{LOREM}</Normaltekst>
+
+                    <div className={'ingress'}>
+                        <Tekstområde>{LOREM}</Tekstområde>
+                        <Lenke href={'https://www.nav.no'}>Mer om barnetrygd.</Lenke>
+                    </div>
 
                     <div className={'rettigheter'}>
                         <Systemtittel>
