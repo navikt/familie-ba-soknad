@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Element, Sidetittel, Normaltekst } from 'nav-frontend-typografi';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import Panel from 'nav-frontend-paneler';
 
 const Forside: React.FC = () => {
+    const LOREM =
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe sed consectetur maiores veniam voluptas obcaecati, cumque hic laboriosamcorporis vel temporibus optio blanditiis. Dolorum autem exercitationem nulla, sed porro eum!x';
+
+    const [bekreftet, settBekreftet] = useState<boolean>(false);
+
+    const handleOnChange = () => {
+        settBekreftet(!bekreftet);
+    };
+
     return (
         <div className={'forside'}>
             <div className={'forside__innhold'}>
@@ -13,25 +22,15 @@ const Forside: React.FC = () => {
                         <VeilederSnakkeboble />
                     </div>
                     <Sidetittel>Søknad om barnetrygd tittel</Sidetittel>
-                    <Normaltekst className={'forside__innhold'}>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro, repudiandae
-                        veritatis, voluptate asperiores quos architecto voluptatem fugiat eveniet
-                        doloremque provident fugit vel ullam inventore at magnam laborum minima
-                        aspernatur facere!
-                    </Normaltekst>
+                    <Normaltekst className={'forside__innhold'}>{LOREM}</Normaltekst>
                     <div className={'seksjon'}>
                         <Element className="disclaimer-tittel">Dette er en disclaimer</Element>
-                        <Normaltekst>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe sed
-                            consectetur maiores veniam voluptas obcaecati, cumque hic laboriosam
-                            corporis vel temporibus optio blanditiis. Dolorum autem exercitationem
-                            nulla, sed porro eum!x
-                        </Normaltekst>
+                        <Normaltekst>{LOREM}</Normaltekst>
                     </div>
                     <BekreftCheckboksPanel
-                        onChange={() => {}}
-                        label={'Bekreftelse'}
-                        checked={false}
+                        onChange={e => handleOnChange()}
+                        label={LOREM}
+                        checked={bekreftet}
                     ></BekreftCheckboksPanel>
                 </Panel>
             </div>
