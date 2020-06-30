@@ -38,12 +38,12 @@ const Forside: React.FC = () => {
                     <Sidetittel>Søknad om barnetrygd</Sidetittel>
 
                     <div className={'ingress'}>
-                        <Tekstområde>{LOREM}</Tekstområde>
+                        <Tekstområde style={{ paddingBottom: '12px' }}>{LOREM}</Tekstområde>
                         <Lenke href={'https://www.nav.no'}>Mer om barnetrygd.</Lenke>
                     </div>
 
                     <div className={'opplysninger'}>
-                        <Systemtittel>
+                        <Systemtittel style={{ paddingBottom: '12px' }}>
                             Det er viktig at du gir oss riktige opplysninger
                         </Systemtittel>
                         <Tekstområde>
@@ -54,9 +54,12 @@ const Forside: React.FC = () => {
                     </div>
 
                     <div className={'dokumentasjon'}>
-                        <Undertittel>Det kan hende du må sende inn dokumentasjon</Undertittel>
-                        <Tekstområde>{`Du får beskjed underveis i søknaden hvis du må dokumentere noen 
-                        av opplysningene dine. Noen ganger kan vi også trenge mer informasjon. Da gir vi deg beskjed om dette.`}</Tekstområde>
+                        <Undertittel style={{ paddingBottom: '12px' }}>
+                            Det kan hende du må sende inn dokumentasjon
+                        </Undertittel>
+                        <Tekstområde
+                            style={{ paddingBottom: '12px' }}
+                        >{`Du får beskjed underveis i søknaden hvis du må dokumentere noen av opplysningene dine. Noen ganger kan vi også trenge mer informasjon. Da gir vi deg beskjed om dette.`}</Tekstområde>
                         <Lenke href={`https://www.nav.no`}>
                             Oversikt over hva som krever dokumentasjon
                         </Lenke>
@@ -64,9 +67,10 @@ const Forside: React.FC = () => {
 
                     <div className={'informasjon'}>
                         <Undertittel>Vi vil hente informasjon om deg</Undertittel>
-                        <Tekstområde className={'forside__innhold'}>
-                            {`I tillegg til den informasjonen du oppgir i søknaden, henter vi inn 
-                            informasjon om deg for å avgjøre om du har rett til stønad.\n \nVi henter:`}
+                        <Tekstområde>
+                            {`I tillegg til den informasjonen du oppgir i søknaden, henter vi inn informasjon om deg for å avgjøre om du har rett til stønad.
+                            
+                            Vi henter:`}
                         </Tekstområde>
                         <ul>
                             <li>
@@ -87,7 +91,7 @@ const Forside: React.FC = () => {
                                 </Tekstområde>
                             </li>
                         </ul>
-                        <Tekstområde>
+                        <Tekstområde style={{ paddingBottom: '12px' }}>
                             Vi kan også bruke tidligere opplysninger du har gitt oss, eller
                             opplysninger du gir oss i andre sammenhenger, hvis det er relevant og
                             nødvendig.
@@ -98,17 +102,16 @@ const Forside: React.FC = () => {
                     </div>
 
                     <div className={`søker`}>
-                        <Undertittel>Slik søker du</Undertittel>
+                        <Undertittel style={{ paddingBottom: '12px' }}>Slik søker du</Undertittel>
                         <Tekstområde>
-                            {`Vi lagrer søknaden din i x dager. Derfor kan du ta
-                            pauser når du fyller ut.
-                            Du kan også slette i disse x dagene. Mangler du dokumentasjon,
-                            kan du ettersende dette.`}
+                            {`Vi lagrer søknaden din i x dager. Derfor kan du ta pauser når du fyller ut. Du kan også slette i disse x dagene. Mangler du dokumentasjon,kan du ettersende dette.`}
                         </Tekstområde>
                     </div>
 
                     <div className={'bekreftelse'}>
-                        <Undertittel>{`Vi stoler på deg`}</Undertittel>
+                        <Undertittel
+                            style={{ paddingBottom: '12px' }}
+                        >{`Vi stoler på deg`}</Undertittel>
                         <BekreftCheckboksPanel
                             onChange={() => handleOnChange()}
                             label={
