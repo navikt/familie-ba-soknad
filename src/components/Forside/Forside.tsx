@@ -104,7 +104,9 @@ const Forside: React.FC = () => {
                     <div className={`søker`}>
                         <Undertittel style={{ paddingBottom: '12px' }}>Slik søker du</Undertittel>
                         <Tekstområde>
-                            {`Vi lagrer søknaden din i x dager. Derfor kan du ta pauser når du fyller ut. Du kan også slette i disse x dagene. Mangler du dokumentasjon,kan du ettersende dette.`}
+                            {`Vi lagrer søknaden din i x dager. Derfor kan du ta pauser når du fyller ut. Du kan også slette i disse x dagene.
+                            
+                            Mangler du dokumentasjon, kan du ettersende dette.`}
                         </Tekstområde>
                     </div>
 
@@ -114,13 +116,19 @@ const Forside: React.FC = () => {
                         >{`Vi stoler på deg`}</Undertittel>
                         <BekreftCheckboksPanel
                             onChange={() => handleOnChange()}
-                            label={
-                                'Jeg, Kari Nordmann, bekrefter at jeg vil gi riktige og fullstendige opplysninger'
-                            }
+                            label={`Jeg, Kari Nordmann, bekrefter at jeg vil gi riktige og fullstendige\n
+                                opplysninger`}
                             checked={bekreftet}
                         >
-                            {`Jeg er klar over at jeg kan miste retten til overgangsstønad dersom jeg
-                            ikke har gitt riktige opplysninger. Jeg er også klar over at jeg må betale tilbake dersom jeg får penger jeg ikke har rett til og som skyldes at jeg har latt være å informere eller gitt feil opplysninger.`}
+                            {
+                                <Tekstområde style={{ paddingBottom: '12px' }}>
+                                    Jeg er klar over at jeg kan miste retten til overgangsstønad
+                                    dersom jeg ikke har gitt riktige opplysninger. Jeg er også klar
+                                    over at jeg må betale tilbake dersom jeg får penger jeg ikke har
+                                    rett til og som skyldes at jeg har latt være å informere eller
+                                    gitt feil opplysninger.
+                                </Tekstområde>
+                            }
                         </BekreftCheckboksPanel>
                     </div>
 
