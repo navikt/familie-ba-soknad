@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Element, Sidetittel, Normaltekst } from 'nav-frontend-typografi';
+import {
+    Element,
+    Sidetittel,
+    Normaltekst,
+    Systemtittel,
+    Undertittel,
+} from 'nav-frontend-typografi';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import KnappBase from 'nav-frontend-knapper';
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
@@ -27,8 +33,15 @@ const Forside: React.FC = () => {
                     <div className={'veileder'}>
                         <VeilederSnakkeboble />
                     </div>
-                    <Sidetittel>Søknad om barnetrygd tittel</Sidetittel>
+                    <Sidetittel>Søknad om barnetrygd</Sidetittel>
                     <Normaltekst className={'forside__innhold'}>{LOREM}</Normaltekst>
+
+                    <div className={'rettigheter'}>
+                        <Systemtittel>
+                            Det er viktig at du gir oss riktige opplysninger
+                        </Systemtittel>
+                        <Normaltekst className={'forside__innhold'}>{LOREM}</Normaltekst>
+                    </div>
 
                     {LOREM_list &&
                         LOREM_list.map((tekst: String, index: number) => {
@@ -42,6 +55,11 @@ const Forside: React.FC = () => {
                             );
                         })}
 
+                    <div className={'informasjon'}>
+                        <Undertittel>Vi vil hente informasjon om deg</Undertittel>
+                        <Normaltekst className={'forside__innhold'}>{LOREM}</Normaltekst>
+                    </div>
+
                     <BekreftCheckboksPanel
                         onChange={() => handleOnChange()}
                         label={'Ja, jeg samtykker.'}
@@ -51,9 +69,11 @@ const Forside: React.FC = () => {
                     </BekreftCheckboksPanel>
 
                     {bekreftet ? (
-                        <KnappBase onClick={() => {}}>
-                            <h3>Start søknaden</h3>
-                        </KnappBase>
+                        <div className={'knappbase'}>
+                            <KnappBase onClick={() => {}}>
+                                <h3>Start søknaden</h3>
+                            </KnappBase>
+                        </div>
                     ) : null}
                 </Panel>
             </div>
