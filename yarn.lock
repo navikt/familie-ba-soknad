@@ -7207,6 +7207,16 @@ nav-frontend-js-utils@^1.0.8:
   resolved "https://registry.yarnpkg.com/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.8.tgz#1c1ecec8d90b125157097b22b227ef0b53045432"
   integrity sha512-GFDedxAONjvcrkdtq9mz2r+Im7KkWXcgrhh9HtGIUTR5By7n33SBAk0SdfnLt18Q3HWEbnsa/jOWHDRHrQE7Zg==
 
+nav-frontend-knapper-style@^0.3.38:
+  version "0.3.38"
+  resolved "https://registry.yarnpkg.com/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.38.tgz#4ad009a42cc6405dd41b1932f3f0839311dae57f"
+  integrity sha512-pqzIAakw2EU2aqsPpYLLfYO/3DEb7OuW+qcmM95u6h9pIOB+pbduwzoYjRDv11N9ylk5Nqt7oYmpildGVwwZbg==
+
+nav-frontend-knapper@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/nav-frontend-knapper/-/nav-frontend-knapper-2.0.4.tgz#3d0c7f56f709abe8f990bf6fdc9f845a18ac4aac"
+  integrity sha512-vcAglzTWw8UzX1rY47EW9Nit6+q+d49IvEU/pmzBCz4ywqa2u29GTzqFCeyEzFq8/TCiVS68NZBtlUHXDgFrTQ==
+
 nav-frontend-lenker-style@^0.2.29:
   version "0.2.29"
   resolved "https://registry.yarnpkg.com/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.29.tgz#19c3b3d3356a06718950ffdebe68799bdc580fb5"
