@@ -5,6 +5,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { AppProvider } from './context/AppContext';
 import Helse from './components/Helse/Helse';
 import VeilederSnakkebolbe from './assets/VeilederSnakkeboble';
+import Forside from './components/Forside/Forside';
 
 function App() {
     return (
@@ -12,18 +13,7 @@ function App() {
             <div className="App">
                 <Router>
                     <Switch>
-                        <Route
-                            exact={true}
-                            path={'/'}
-                            render={() => {
-                                return (
-                                    <>
-                                        <Systemtittel>Søknad om barnetrygd</Systemtittel>
-                                        <VeilederSnakkebolbe></VeilederSnakkebolbe>
-                                    </>
-                                );
-                            }}
-                        />
+                        <Route exact={true} path={'/'} component={Forside} />
                         <Route exact={true} path={'/helse'} component={Helse} />
                     </Switch>
                 </Router>
