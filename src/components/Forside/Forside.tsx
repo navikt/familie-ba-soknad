@@ -29,9 +29,11 @@ const Forside: React.FC = () => {
                     </div>
                     <BekreftCheckboksPanel
                         onChange={e => handleOnChange()}
-                        label={LOREM}
+                        label={'Ja, jeg samtykker.'}
                         checked={bekreftet}
-                    ></BekreftCheckboksPanel>
+                    >
+                        {LOREM}
+                    </BekreftCheckboksPanel>
                 </Panel>
             </div>
         </div>
