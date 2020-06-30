@@ -13,18 +13,16 @@ function App() {
         verifiserAtBrukerErAutentisert(settAutentisering);
     }, [autentisert]);
 
-    if (autentisert) {
-        return (
-            <AppProvider>
-                <div className="App">
-                    <Systemtittel>Søknad om barnetrygd</Systemtittel>
-                    <Helse />
-                </div>
-            </AppProvider>
-        );
-    } else {
-        return <NavFrontendSpinner className="spinner" />;
-    }
+    return autentisert ? (
+        <AppProvider>
+            <div className="App">
+                <Systemtittel>Søknad om barnetrygd</Systemtittel>
+                <Helse />
+            </div>
+        </AppProvider>
+    ) : (
+        <NavFrontendSpinner className="spinner" />
+    );
 }
 
 export default App;

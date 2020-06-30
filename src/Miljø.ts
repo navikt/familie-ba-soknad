@@ -13,7 +13,7 @@ const Miljø = (): MiljøProps => {
         };
     } else {
         return {
-            loginService: `http://localhost:8080/local/cookie?subject=21057822284`,
+            loginService: `http://localhost:8080/local/cookie?subject=12345678900`,
         };
     }
 };
