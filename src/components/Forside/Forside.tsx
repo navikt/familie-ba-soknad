@@ -70,7 +70,7 @@ const Forside: React.FC = () => {
 
                     {bekreftet ? (
                         <div className={'knappbase'}>
-                            <KnappBase onClick={() => {}}>
+                            <KnappBase onClick={() => console.log('Knapp trykket')}>
                                 <h3>Start søknaden</h3>
                             </KnappBase>
                         </div>
