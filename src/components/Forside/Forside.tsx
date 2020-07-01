@@ -20,7 +20,7 @@ const Forside: React.FC = () => {
     return (
         <div className={'forside'}>
             <div className={'forside__innhold'}>
-                <Panel className={'forside__panel'}>
+                <Panel className={'forside__innhold__panel'}>
                     <div className={'veileder'}>
                         <VeilederSnakkeboble />
                     </div>
@@ -38,7 +38,7 @@ const Forside: React.FC = () => {
                         <Tekstområde className={'opplysninger__tekstområde'}>
                             {`For at vi skal kunne behandle søknaden din, må du gi oss riktige opplysninger. 
                             
-                            Hvis du får overgangsstønad, må du melde fra når det skjer viktige endringer i livet ditt, for eksempel bo-og familiesituasjonen eller arbeid og utdanning. Det samme gjelder dersom inntekten din endrer seg.`}
+                            Hvis du får barnetrygd, må du melde fra når det skjer viktige endringer i livet ditt, for eksempel bo-og familiesituasjonen eller arbeid og utdanning.`}
                         </Tekstområde>
                     </div>
 
@@ -64,17 +64,6 @@ const Forside: React.FC = () => {
                                 <Tekstområde rules={[BoldRule]}>
                                     _personinformasjon:_ om deg, barnet/barna dine og den andre
                                     forelderen til barna dine fra Folkeregisteret
-                                </Tekstområde>
-                            </li>
-                            <li>
-                                <Tekstområde rules={[BoldRule]}>
-                                    _inntektsinformasjon:_ fra Skatteetaten
-                                </Tekstområde>
-                            </li>
-                            <li>
-                                <Tekstområde rules={[BoldRule]}>
-                                    _opplysinger om arbeidsforholdet:_ ditt fra arbeidsgiver- og
-                                    arbeidstakerregisteret
                                 </Tekstområde>
                             </li>
                         </ul>
@@ -109,11 +98,11 @@ const Forside: React.FC = () => {
                         >
                             {
                                 <Tekstområde className={'bekreftelse__tekstområde'}>
-                                    Jeg er klar over at jeg kan miste retten til overgangsstønad
-                                    dersom jeg ikke har gitt riktige opplysninger. Jeg er også klar
-                                    over at jeg må betale tilbake dersom jeg får penger jeg ikke har
-                                    rett til og som skyldes at jeg har latt være å informere eller
-                                    gitt feil opplysninger.
+                                    Jeg er klar over at jeg kan miste retten til barnetrygd dersom
+                                    jeg ikke har gitt riktige opplysninger. Jeg er også klar over at
+                                    jeg må betale tilbake dersom jeg får penger jeg ikke har rett
+                                    til og som skyldes at jeg har latt være å informere eller gitt
+                                    feil opplysninger.
                                 </Tekstområde>
                             }
                         </BekreftCheckboksPanel>
@@ -121,9 +110,7 @@ const Forside: React.FC = () => {
 
                     <div className={'hovedknapp'}>
                         {bekreftet ? (
-                            <Hovedknapp onClick={() => {}}>
-                                <h3>Start søknaden</h3>
-                            </Hovedknapp>
+                            <Hovedknapp onClick={() => {}}>Start søknaden</Hovedknapp>
                         ) : null}
                     </div>
                 </Panel>
