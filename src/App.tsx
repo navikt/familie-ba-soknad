@@ -3,15 +3,15 @@ import './App.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { AppProvider } from './context/AppContext';
 import Helse from './components/Helse/Helse';
-import { pdlTest } from './pdl';
+import Person from './components/Person/Person';
 
 function App() {
-    pdlTest();
     return (
         <AppProvider>
             <div className="App">
                 <Systemtittel>Søknad om barnetrygd</Systemtittel>
                 <Helse />
+                <Person />
             </div>
         </AppProvider>
     );

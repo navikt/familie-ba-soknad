@@ -10,11 +10,13 @@ import {
     byggHenterRessurs,
 } from '../typer/ressurs';
 import { useState, useEffect } from 'react';
+import { Person } from '../typer/person';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [helseApi, settHelseApi] = useState(byggTomRessurs<string>());
     const [helseMottak, settHelseMottak] = useState(byggTomRessurs<string>());
     const [helsePdl, settHelsePdl] = useState(byggTomRessurs<string>());
+    const [personData, settPersonData] = useState(byggTomRessurs<Person>());
 
     useEffect(() => {
         settHelseApi(byggHenterRessurs());
@@ -53,6 +55,18 @@ const [AppProvider, useApp] = createUseContext(() => {
             .catch(() => {
                 settHelsePdl(byggFeiletRessurs('Helse mot pdl feilet'));
             });
+        axiosRequest<Person, Object>({
+            url: '/api/personopplysning',
+            method: 'POST',
+            data: {
+                withCredentials: true,
+                ident: '12345678901',
+            },
+        })
+            .then(ressurs => {
+                settPersonData(ressurs);
+            })
+            .catch(() => settPersonData(byggFeiletRessurs('Henting av persondata feilet')));
     }, []);
 
     const axiosRequest = async <T, D>(
@@ -78,6 +92,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         helseApi,
         helseMottak,
         helsePdl,
+        personData,
     };
 });
 
