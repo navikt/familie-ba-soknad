@@ -1,26 +1,15 @@
 import React, { useState } from 'react';
-import {
-    Element,
-    Sidetittel,
-    Normaltekst,
-    Systemtittel,
-    Undertittel,
-} from 'nav-frontend-typografi';
+import { Sidetittel, Systemtittel, Undertittel, Ingress } from 'nav-frontend-typografi';
 import Tekstområde, { BoldRule } from 'nav-frontend-tekstomrade';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import Lenke from 'nav-frontend-lenker';
-import KnappBase from 'nav-frontend-knapper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import Panel from 'nav-frontend-paneler';
 
 const Forside: React.FC = () => {
     const LOREM =
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe sed consectetur maiores veniam voluptas obcaecati, cumque hic laboriosamcorporis vel temporibus optio blanditiis. Dolorum autem exercitationem nulla, sed porro eum!x';
-    const LOREM_list: String[] = [
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        'Saepe sed consectetur maiores veniam voluptas obcaecati, cumque hic laboriosamcorporis vel temporibus optio blanditiis.',
-        'Dolorum autem exercitationem nulla, sed porro eum!x',
-    ];
 
     const [bekreftet, settBekreftet] = useState<boolean>(false);
 
@@ -38,15 +27,15 @@ const Forside: React.FC = () => {
                     <Sidetittel>Søknad om barnetrygd</Sidetittel>
 
                     <div className={'ingress'}>
-                        <Tekstområde style={{ paddingBottom: '12px' }}>{LOREM}</Tekstområde>
-                        <Lenke href={'https://www.nav.no'}>Mer om barnetrygd.</Lenke>
+                        <Ingress className={'ingress__tekstområde'}>{LOREM}</Ingress>
+                        <Lenke href={'https://www.nav.no'}>Mer om barnetrygd</Lenke>
                     </div>
 
                     <div className={'opplysninger'}>
-                        <Systemtittel style={{ paddingBottom: '12px' }}>
+                        <Systemtittel className={'opplysninger__systemtittel'}>
                             Det er viktig at du gir oss riktige opplysninger
                         </Systemtittel>
-                        <Tekstområde>
+                        <Tekstområde className={'opplysninger__tekstområde'}>
                             {`For at vi skal kunne behandle søknaden din, må du gi oss riktige opplysninger. 
                             
                             Hvis du får overgangsstønad, må du melde fra når det skjer viktige endringer i livet ditt, for eksempel bo-og familiesituasjonen eller arbeid og utdanning. Det samme gjelder dersom inntekten din endrer seg.`}
@@ -54,11 +43,9 @@ const Forside: React.FC = () => {
                     </div>
 
                     <div className={'dokumentasjon'}>
-                        <Undertittel style={{ paddingBottom: '12px' }}>
-                            Det kan hende du må sende inn dokumentasjon
-                        </Undertittel>
+                        <Undertittel>Det kan hende du må sende inn dokumentasjon</Undertittel>
                         <Tekstområde
-                            style={{ paddingBottom: '12px' }}
+                            className={'dokumentasjon__tekstområde'}
                         >{`Du får beskjed underveis i søknaden hvis du må dokumentere noen av opplysningene dine. Noen ganger kan vi også trenge mer informasjon. Da gir vi deg beskjed om dette.`}</Tekstområde>
                         <Lenke href={`https://www.nav.no`}>
                             Oversikt over hva som krever dokumentasjon
@@ -91,7 +78,7 @@ const Forside: React.FC = () => {
                                 </Tekstområde>
                             </li>
                         </ul>
-                        <Tekstområde style={{ paddingBottom: '12px' }}>
+                        <Tekstområde>
                             Vi kan også bruke tidligere opplysninger du har gitt oss, eller
                             opplysninger du gir oss i andre sammenhenger, hvis det er relevant og
                             nødvendig.
@@ -102,7 +89,7 @@ const Forside: React.FC = () => {
                     </div>
 
                     <div className={`søker`}>
-                        <Undertittel style={{ paddingBottom: '12px' }}>Slik søker du</Undertittel>
+                        <Undertittel className={'søker__undertittel'}>Slik søker du</Undertittel>
                         <Tekstområde>
                             {`Vi lagrer søknaden din i x dager. Derfor kan du ta pauser når du fyller ut. Du kan også slette i disse x dagene.
                             
@@ -112,7 +99,7 @@ const Forside: React.FC = () => {
 
                     <div className={'bekreftelse'}>
                         <Undertittel
-                            style={{ paddingBottom: '12px' }}
+                            className={'bekreftelse__undertittel'}
                         >{`Vi stoler på deg`}</Undertittel>
                         <BekreftCheckboksPanel
                             onChange={() => handleOnChange()}
@@ -121,7 +108,7 @@ const Forside: React.FC = () => {
                             checked={bekreftet}
                         >
                             {
-                                <Tekstområde style={{ paddingBottom: '12px' }}>
+                                <Tekstområde className={'bekreftelse__tekstområde'}>
                                     Jeg er klar over at jeg kan miste retten til overgangsstønad
                                     dersom jeg ikke har gitt riktige opplysninger. Jeg er også klar
                                     over at jeg må betale tilbake dersom jeg får penger jeg ikke har
@@ -132,13 +119,13 @@ const Forside: React.FC = () => {
                         </BekreftCheckboksPanel>
                     </div>
 
-                    {bekreftet ? (
-                        <div className={'knappbase'}>
-                            <KnappBase onClick={() => console.log('Knapp trykket')}>
+                    <div className={'hovedknapp'}>
+                        {bekreftet ? (
+                            <Hovedknapp onClick={() => {}}>
                                 <h3>Start søknaden</h3>
-                            </KnappBase>
-                        </div>
-                    ) : null}
+                            </Hovedknapp>
+                        ) : null}
+                    </div>
                 </Panel>
             </div>
         </div>

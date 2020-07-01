@@ -53,13 +53,15 @@
 
   .forside__innhold {
     margin: auto;
-    width: @panel-bredde;
+    width: @panel-innhold-bredde;
     @media @tablet {
       width: 100%;
+      display: flex;
     }
 
     @media @mobile {
       width: 100%;
+      display: flex;
     }
 
     .veileder {
@@ -90,35 +92,124 @@
     .alertstripe__tekst {
       padding-left: 1rem;
     }
-  }
-  .forside__panel {
-    padding: 2rem;
-    width: 40rem;
-    
-    .ingress {
-      padding-bottom: 3.5rem;
-    }
-    
-    .opplysninger {
-      padding-bottom: 3.5rem;
-    }
-    
-    .dokumentasjon {
-      padding-bottom: 3.5rem;
-    }
-    
-    .informasjon {
-      padding-bottom: 3.5rem;
-    }
-    
-    .søker {
-      padding-bottom: 5rem;
-    }
-  }
+  
+    .forside__panel {
+      padding: 2rem;
+      width: @panel-innhold-bredde;
+      
+      .ingress {
+        padding-bottom: 3.5rem;
+        font-size: 18px;
 
-  .knappbase {
-    text-align: center;
-    padding: 7.5rem;
+        & .typo-ingress{
+          padding-bottom: 12px;
+          font-size: 18px;
+        }
+      }
+      
+      .opplysninger {
+        padding-bottom: 3.5rem;
+
+        &__systemtittel {
+          padding-bottom: 12px;
+          font-size: 24px;
+        }
+
+        &__tekstområde .typo-normal{
+          font-size: 18px;
+          
+        }
+      }
+      
+      .dokumentasjon {
+        padding-bottom: 3.5rem;
+        font-size: 18px;
+
+        &__tekstområde .typo-normal{
+          padding-bottom: 12px;
+          font-size: 18px;
+        }
+
+        & .typo-undertittel {
+          padding-bottom: 15px;
+          font-size: 20px;
+        }
+      }
+      
+      .informasjon {
+        padding-bottom: 3.5rem;
+        font-size: 18px;
+
+        & .typo-undertittel {
+          font-size: 20px;
+        }
+
+        & .typo-normal {
+          font-size: 18px;
+          padding-bottom: 12px;
+        }
+
+        ul {
+          font-size: 18px;
+        }
+
+      }
+      
+      .søker {
+        padding-bottom: 5rem;
+
+        &__undertittel {
+          padding-bottom: 12px;
+          font-size: 20px;
+        }
+
+        & .typo-normal {
+          font-size: 18px;
+        }
+      }
+
+      .bekreftelse {
+        &__undertittel {
+          padding-bottom: 12px;
+        }
+
+        &__tekstområde .typo-normal{
+          padding: 12px;
+          font-size: 18px;
+        }
+
+        .bekreftCheckboksPanel .skjemaelement {
+          padding: 10px;
+        }
+        
+        .bekreftCheckboksPanel .skjemaelement__label {
+          font-size: 18px;
+        }
+
+
+      }
+    }
+
+    .hovedknapp {
+      text-align: center;
+      padding: 7.5rem 0;
+      justify-content: center;
+
+      @media @tablet {
+        width: auto;
+        display: flex;
+      }
+  
+      @media @mobile {
+        width: auto;
+        display: flex;
+      }
+
+      h3 {
+        font-size: 16px;
+        margin: 0;
+      }
+    }
   }
 
   .checkboks-tekst {
