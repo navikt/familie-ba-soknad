@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import {
-    Sidetittel,
-    Systemtittel,
-    Undertittel,
-    Ingress,
-    Normaltekst,
-} from 'nav-frontend-typografi';
-import Tekstområde, { BoldRule } from 'nav-frontend-tekstomrade';
+import { Sidetittel, Systemtittel, Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import Tekstområde from 'nav-frontend-tekstomrade';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import Lenke from 'nav-frontend-lenker';
 import { Hovedknapp } from 'nav-frontend-knapper';
