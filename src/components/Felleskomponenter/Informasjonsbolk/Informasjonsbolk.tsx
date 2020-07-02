@@ -9,7 +9,7 @@ const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({ tittel, children }
     return (
         <div className={'informasjonsbolk'}>
             {tittel}
-            <div className={'informasjonsbolk__barn'}>{children}</div>
+            <div className={'informasjonsbolk__children'}>{children}</div>
         </div>
     );
 };

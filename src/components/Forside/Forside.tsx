@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Sidetittel, Systemtittel, Undertittel, Ingress } from 'nav-frontend-typografi';
+import {
+    Sidetittel,
+    Systemtittel,
+    Undertittel,
+    Ingress,
+    Normaltekst,
+} from 'nav-frontend-typografi';
 import Tekstområde, { BoldRule } from 'nav-frontend-tekstomrade';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import Lenke from 'nav-frontend-lenker';
@@ -21,31 +27,32 @@ const Forside: React.FC = () => {
     return (
         <div className={'forside'}>
             <div className={'forside__innhold'}>
-                <Panel className={'forside__innhold__panel'}>
+                <Panel className={'forside__innhold--panel'}>
                     <div className={'veileder'}>
                         <VeilederSnakkeboble />
                     </div>
-                    <Sidetittel>Søknad om barnetrygd</Sidetittel>
 
-                    <Informasjonsbolk
-                        tittel={<Ingress className={'ingress__tekstområde'}>{LOREM}</Ingress>}
-                    >
+                    <Informasjonsbolk tittel={<Sidetittel>Søknad om barnetrygd</Sidetittel>}>
+                        <Normaltekst>{LOREM}</Normaltekst>
                         <Lenke href={'https://www.nav.no'}>Mer om barnetrygd</Lenke>
                     </Informasjonsbolk>
 
                     <Informasjonsbolk
                         tittel={
-                            <Systemtittel className={'opplysninger__systemtittel'}>
+                            <Systemtittel>
                                 Det er viktig at du gir oss riktige opplysninger
                             </Systemtittel>
                         }
                     >
-                        <Ingress className={'opplysninger__tekstområde'}>
+                        <Normaltekst>
                             For at vi skal kunne behandle søknaden din, må du gi oss riktige
-                            opplysninger. {'\n\n'}Hvis du får barnetrygd, må du melde fra når det
-                            skjer viktige endringer i livet ditt, for eksempel bo-og
-                            familiesituasjonen eller arbeid og utdanning.
-                        </Ingress>
+                            opplysninger.
+                            <br />
+                            <br />
+                            Hvis du får barnetrygd, må du melde fra når det skjer viktige endringer
+                            i livet ditt, for eksempel bo-og familiesituasjonen eller arbeid og
+                            utdanning.
+                        </Normaltekst>
                     </Informasjonsbolk>
 
                     <Informasjonsbolk
@@ -53,9 +60,11 @@ const Forside: React.FC = () => {
                             <Undertittel>Det kan hende du må sende inn dokumentasjon</Undertittel>
                         }
                     >
-                        <Ingress className={'dokumentasjon__tekstområde'}>
-                            {`Du får beskjed underveis i søknaden hvis du må dokumentere noen av opplysningene dine. Noen ganger kan vi også trenge mer informasjon. Da gir vi deg beskjed om dette.`}
-                        </Ingress>
+                        <Normaltekst>
+                            Du får beskjed underveis i søknaden hvis du må dokumentere noen av
+                            opplysningene dine. Noen ganger kan vi også trenge mer informasjon. Da
+                            gir vi deg beskjed om dette.
+                        </Normaltekst>
                         <Lenke href={`https://www.nav.no`}>
                             Oversikt over hva som krever dokumentasjon
                         </Lenke>
@@ -64,50 +73,46 @@ const Forside: React.FC = () => {
                     <Informasjonsbolk
                         tittel={<Undertittel>Vi vil hente informasjon om deg</Undertittel>}
                     >
-                        <Ingress>
-                            {`I tillegg til den informasjonen du oppgir i søknaden, henter vi inn informasjon om deg for å avgjøre om du har rett til stønad.
-                            
-                            Vi henter:`}
-                        </Ingress>
+                        <Normaltekst>
+                            I tillegg til den informasjonen du oppgir i søknaden, henter vi inn
+                            informasjon om deg for å avgjøre om du har rett til stønad.
+                            <br />
+                            <br />
+                            Vi henter:
+                        </Normaltekst>
                         <ul>
                             <li>
-                                <Tekstområde rules={[BoldRule]}>
-                                    _personinformasjon:_ om deg, barnet/barna dine og den andre
+                                <Normaltekst>
+                                    <b>personinformasjon:</b> om deg, barnet/barna dine og den andre
                                     forelderen til barna dine fra Folkeregisteret
-                                </Tekstområde>
+                                </Normaltekst>
                             </li>
                         </ul>
-                        <Ingress>
+                        <Normaltekst>
                             Vi kan også bruke tidligere opplysninger du har gitt oss, eller
                             opplysninger du gir oss i andre sammenhenger, hvis det er relevant og
                             nødvendig.
-                        </Ingress>
+                        </Normaltekst>
                         <Lenke href={`https://www.nav.no`}>
                             Slik behandler vi personopplysningene dine
                         </Lenke>
                     </Informasjonsbolk>
 
-                    <Informasjonsbolk
-                        tittel={
-                            <Undertittel className={'søker__undertittel'}>
-                                Slik søker du
-                            </Undertittel>
-                        }
-                    >
-                        <Ingress>
-                            {`Vi lagrer søknaden din i x dager. Derfor kan du ta pauser når du fyller ut. Du kan også slette i disse x dagene.
-                            
-                            Mangler du dokumentasjon, kan du ettersende dette.`}
-                        </Ingress>
+                    <Informasjonsbolk tittel={<Undertittel>Slik søker du</Undertittel>}>
+                        <Normaltekst>
+                            Vi lagrer søknaden din i x dager. Derfor kan du ta pauser når du fyller
+                            ut. Du kan også slette i disse x dagene.
+                            <br />
+                            <br />
+                            Mangler du dokumentasjon, kan du ettersende dette.
+                        </Normaltekst>
                     </Informasjonsbolk>
 
-                    <Informasjonsbolk
-                        tittel={
-                            <Undertittel
-                                className={'bekreftelse__undertittel'}
-                            >{`Vi stoler på deg`}</Undertittel>
-                        }
-                    >
+                    <div className={'bekreftelse'}>
+                        <Undertittel className={'bekreftelse__undertittel'}>
+                            Vi stoler på deg
+                        </Undertittel>
+
                         <BekreftCheckboksPanel
                             onChange={() => handleOnChange()}
                             label={`Jeg, Kari Nordmann, bekrefter at jeg vil gi riktige og fullstendige\n
@@ -115,16 +120,16 @@ const Forside: React.FC = () => {
                             checked={bekreftet}
                         >
                             {
-                                <Ingress className={'bekreftelse__tekstområde'}>
+                                <Tekstområde className={'bekreftelse__tekstområde'}>
                                     Jeg er klar over at jeg kan miste retten til barnetrygd dersom
                                     jeg ikke har gitt riktige opplysninger. Jeg er også klar over at
                                     jeg må betale tilbake dersom jeg får penger jeg ikke har rett
                                     til og som skyldes at jeg har latt være å informere eller gitt
                                     feil opplysninger.
-                                </Ingress>
+                                </Tekstområde>
                             }
                         </BekreftCheckboksPanel>
-                    </Informasjonsbolk>
+                    </div>
 
                     <div className={'hovedknapp'}>
                         {bekreftet ? (

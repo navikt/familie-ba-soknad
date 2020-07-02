@@ -24,7 +24,6 @@
     }
 
     & .veileder {
-      margin-bottom: 4rem;
       display: inline-block;
     }
 
@@ -44,129 +43,45 @@
       }
     }
 
-    & .bekreftCheckboksPanel {
-      background-color: @navOransjeLighten80;
-    }
-  
+    
     &__panel {
       padding: 2rem;
       width: @panel-innhold-bredde;
-      
-      & .ingress {
-        
-        font-size: 18px;
-
-        & .typo-ingress{
-          
-          font-size: 18px;
-        }
-      }
-      
-      & .opplysninger {
-        
-
-        &__systemtittel {
-          
-          font-size: 24px;
-        }
-
-        &__tekstområde .typo-normal{
-          font-size: 18px;
-          
-        }
-      }
-      
-      & .dokumentasjon {
-        
-        font-size: 18px;
-
-        &__tekstområde .typo-normal{
-          
-          font-size: 18px;
-        }
-
-        & .typo-undertittel {
-          padding-bottom: 15px;
-          font-size: 20px;
-        }
-      }
-      
-      & .informasjon {
-        
-        font-size: 18px;
-
-        & .typo-undertittel {
-          font-size: 20px;
-        }
-
-        & .typo-normal {
-          font-size: 18px;
-          
-        }
-
-        & ul {
-          font-size: 18px;
-        }
-
-      }
-      
-      & .søker {
-        padding-bottom: 5rem;
-
-        &__undertittel {
-          
-          font-size: 20px;
-        }
-
-        & .typo-normal {
-          font-size: 18px;
-        }
-      }
-
-      & .bekreftelse {
-        &__undertittel {
-          
-        }
-
-        &__tekstområde .typo-normal{
-          padding: 12px;
-          font-size: 18px;
-        }
-
-        & .bekreftCheckboksPanel .skjemaelement {
-          padding: 10px;
-        }
-        
-        & .bekreftCheckboksPanel .skjemaelement__label {
-          font-size: 18px;
-        }
-
-
-      }
     }
-
+    
+    
+    
     & .hovedknapp {
       text-align: center;
       padding: 7.5rem 0;
       justify-content: center;
-
+      
       @media @tablet {
         width: auto;
         display: flex;
       }
-  
+      
       @media @mobile {
         width: auto;
         display: flex;
       }
     }
-  }
-
-  & .checkboks-tekst {
-    padding: 0.5rem;
-  }
-
-  & .label {
-    padding: 0.5rem;
+    
+    & .bekreftelse {
+      margin-top: 4rem;
+      
+      &__tekstområde .typo-normal{
+        padding: 0.625rem;
+      }
+      
+      & .bekreftCheckboksPanel {
+        margin-top: 0.75rem;
+        background-color: @navOransjeLighten80;
+      }
+      
+      & .bekreftCheckboksPanel .skjemaelement {
+        padding: 0.625rem;
+      }
+    }
   }
 }
