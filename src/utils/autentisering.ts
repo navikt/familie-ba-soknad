@@ -25,11 +25,13 @@ export const autentiseringsInterceptor = () => {
 export const verifiserAtBrukerErAutentisert = (
     settAutentisering: (autentisering: boolean) => void
 ) => {
-    return verifiserInnloggetApi().then(response => {
-        if (response && 200 === response.status) {
-            settAutentisering(true);
-        }
-    });
+    return verifiserInnloggetApi()
+        .then(response => {
+            if (response && 200 === response.status) {
+                settAutentisering(true);
+            }
+        })
+        .catch(error => (window.location.href = '/error'));
 };
 
 const verifiserInnloggetApi = () => {

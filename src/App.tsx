@@ -7,6 +7,7 @@ import Helse from './components/Helse/Helse';
 import { verifiserAtBrukerErAutentisert } from './utils/autentisering';
 import Forside from './components/Forside/Forside';
 import { autentiseringsInterceptor } from './utils/autentisering';
+import Feilmelding from './components/Feilmelding/Feilmelding';
 
 function App() {
     const [autentisert, settAutentisering] = useState<boolean>(false);
@@ -29,7 +30,16 @@ function App() {
             </div>
         </AppProvider>
     ) : (
-        <NavFrontendSpinner className="spinner" />
+        <AppProvider>
+            <div className="App">
+                <Router>
+                    <Switch>
+                        <Route exact={true} path={'/'} component={NavFrontendSpinner} />
+                        <Route exact={true} path={'/error'} component={Feilmelding} />
+                    </Switch>
+                </Router>
+            </div>
+        </AppProvider>
     );
 }
 
