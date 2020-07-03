@@ -1310,6 +1310,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@navikt/familie-typer@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@navikt/familie-typer/-/familie-typer-3.0.4.tgz#1cbea49fe332f5939a56f006db5e53b61b9bda5f"
+  integrity sha512-DLmyE3eTGcID2MHrnCFmCwFfWOMMh+gswkGv2nD71uuGw1rDHWm33Ylr/D8p2N2HClQuHl1WvGNIKU4gIs+Gbw==
 "@navikt/fnrvalidator@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@navikt/fnrvalidator/-/fnrvalidator-1.1.2.tgz#b8fdf0997149aef1c2da0cee398281175f756c4c"

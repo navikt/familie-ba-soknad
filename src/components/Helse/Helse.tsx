@@ -1,11 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { useApp } from '../../context/AppContext';
-import { Ressurs, RessursStatus } from '../../typer/ressurs';
+import {
+    Ressurs,
+    RessursStatus,
+    byggTomRessurs,
+    byggHenterRessurs,
+    byggFeiletRessurs,
+} from '@navikt/familie-typer';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 
 const Helse: React.FC = () => {
-    const { helseApi, helseMottak, helsePdl } = useApp();
+    const { axiosRequest } = useApp();
+
+    const [helseApi, settHelseApi] = useState(byggTomRessurs<string>());
+    const [helseMottak, settHelseMottak] = useState(byggTomRessurs<string>());
+    const [helsePdl, settHelsePdl] = useState(byggTomRessurs<string>());
+
+    useEffect(() => {
+        settHelseApi(byggHenterRessurs());
+        settHelseMottak(byggHenterRessurs());
+        settHelsePdl(byggHenterRessurs());
+
+        axiosRequest<string, void>({
+            url: '/api/helse/soknad-api',
+            method: 'GET',
+        })
+            .then(ressurs => {
+                settHelseApi(ressurs);
+            })
+            .catch(() => {
+                settHelseApi(byggFeiletRessurs('Helse mot backend feilet'));
+            });
+
+        axiosRequest<string, void>({
+            url: '/api/helse/mottak',
+            method: 'GET',
+        })
+            .then(ressurs => {
+                settHelseMottak(ressurs);
+            })
+            .catch(() => {
+                settHelseMottak(byggFeiletRessurs('Helse mot mottak feilet'));
+            });
+
+        axiosRequest<string, void>({
+            url: '/api/helse/pdl',
+            method: 'GET',
+        })
+            .then(ressurs => {
+                settHelsePdl(ressurs);
+            })
+            .catch(() => {
+                settHelsePdl(byggFeiletRessurs('Helse mot pdl feilet'));
+            });
+    }, []);
+
     return (
         <div className={'helse'}>
             <Undertittel>Helse</Undertittel>
