@@ -6,9 +6,12 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import Helse from './components/Helse/Helse';
 import { verifiserAtBrukerErAutentisert } from './utils/autentisering';
 import Forside from './components/Forside/Forside';
+import { autentiseringsInterceptor } from './utils/autentisering';
 
 function App() {
     const [autentisert, settAutentisering] = useState<boolean>(false);
+
+    autentiseringsInterceptor();
 
     useEffect(() => {
         verifiserAtBrukerErAutentisert(settAutentisering);
