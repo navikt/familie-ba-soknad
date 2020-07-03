@@ -4,7 +4,12 @@ import { preferredAxios, loggFeil, håndterApiRessurs } from './axios';
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { Ressurs, ApiRessurs } from '@navikt/familie-typer';
 
+import { useState, useEffect } from 'react';
+import { autentiseringsInterceptor } from '../utils/autentisering';
+
 const [AppProvider, useApp] = createUseContext(() => {
+    autentiseringsInterceptor();
+
     const axiosRequest = async <T, D>(
         config: AxiosRequestConfig & { data?: D; påvirkerSystemLaster?: boolean }
     ): Promise<Ressurs<T>> => {
