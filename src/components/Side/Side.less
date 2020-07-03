@@ -1,0 +1,43 @@
+.skjema {
+
+    & .side {
+        text-align: center;
+
+    }
+
+    & .stegindikator__liste {
+        margin: 2rem 0;
+    }
+
+    .treKnapper {
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        grid-template-rows: repeat(2, min-content);
+        grid-template-areas:
+          "tilbake neste"
+          "avbryt avbryt";
+    
+        @supports (grid-gap: 1rem) {
+          grid-gap: 1rem;
+          justify-content: center;
+    
+          .avbryt {
+            margin-top: 0;
+          }
+        }
+        .hideButton {
+          display: none;
+        }
+    
+        .tilbake {
+          grid-area: tilbake;
+        }
+    
+        .neste {
+          grid-area: neste;
+        }
+        .avbryt {
+          grid-area: avbryt;
+        }
+      }
+}

@@ -5,6 +5,7 @@ export interface IRoute {
 }
 
 export enum RouteEnum {
+    Forside = 'Forside',
     steg1 = 'steg1',
     steg2 = 'steg2',
     steg3 = 'steg3',
@@ -12,10 +13,11 @@ export enum RouteEnum {
 }
 
 export const Routes: IRoute[] = [
-    { path: '/steg1', label: 'steg1', route: RouteEnum.steg1 },
-    { path: '/steg2', label: 'steg2', route: RouteEnum.steg2 },
-    { path: '/steg3', label: 'steg3', route: RouteEnum.steg3 },
-    { path: '/steg4', label: 'steg4', route: RouteEnum.steg4 },
+    { path: '/', label: 'Forside', route: RouteEnum.Forside },
+    { path: '/steg1', label: 'Steg 1', route: RouteEnum.steg1 },
+    { path: '/steg2', label: 'Steg 2', route: RouteEnum.steg2 },
+    { path: '/steg3', label: 'Steg 3', route: RouteEnum.steg3 },
+    { path: '/steg4', label: 'Steg 4', route: RouteEnum.steg4 },
 ];
 
 export const hentPath = (routes: IRoute[], route: RouteEnum) => {
