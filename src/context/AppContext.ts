@@ -17,8 +17,6 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [helseMottak, settHelseMottak] = useState(byggTomRessurs<string>());
     const [helsePdl, settHelsePdl] = useState(byggTomRessurs<string>());
 
-    autentiseringsInterceptor();
-
     useEffect(() => {
         settHelseApi(byggHenterRessurs());
         settHelseMottak(byggHenterRessurs());
