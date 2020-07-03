@@ -3,11 +3,11 @@ interface MiljøProps {
 }
 
 const Miljø = (): MiljøProps => {
-    if (window.location.hostname.indexOf('www-q0') > -1) {
+    if (window.location.hostname.indexOf('familie-ba-soknad.dev') > -1) {
         return {
             loginService: 'https://loginservice-q.nav.no/login?',
         };
-    } else if (window.location.hostname.indexOf('www') > -1) {
+    } else if (window.location.hostname.indexOf('familie-ba-soknad.adeo') > -1) {
         return {
             loginService: 'https://loginservice.nav.no/login?',
         };
