@@ -8,8 +8,6 @@ import { useState, useEffect } from 'react';
 import { autentiseringsInterceptor } from '../utils/autentisering';
 
 const [AppProvider, useApp] = createUseContext(() => {
-    autentiseringsInterceptor();
-
     const axiosRequest = async <T, D>(
         config: AxiosRequestConfig & { data?: D; påvirkerSystemLaster?: boolean }
     ): Promise<Ressurs<T>> => {
