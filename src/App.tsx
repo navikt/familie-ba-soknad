@@ -15,7 +15,9 @@ function App() {
     autentiseringsInterceptor();
 
     useEffect(() => {
-        verifiserAtBrukerErAutentisert(settAutentisering);
+        if (window.location.pathname !== '/error') {
+            verifiserAtBrukerErAutentisert(settAutentisering);
+        }
     }, [autentisert]);
 
     return autentisert ? (
