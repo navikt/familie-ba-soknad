@@ -7,6 +7,13 @@ const getLoginUrl = () => {
     return `${Miljø().loginService}&redirect=${window.location.origin}`;
 };
 
+export enum InnloggetStatus {
+    AUTENTISERT,
+    IKKE_AUTENTISERT,
+    FEILET,
+    IKKE_VERIFISERT,
+}
+
 export const autentiseringsInterceptor = () => {
     axios.interceptors.response.use(
         response => {
@@ -23,15 +30,15 @@ export const autentiseringsInterceptor = () => {
 };
 
 export const verifiserAtBrukerErAutentisert = (
-    settAutentisering: (autentisering: boolean) => void
+    settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
 ) => {
     return verifiserInnloggetApi()
         .then(response => {
             if (response && 200 === response.status) {
-                settAutentisering(true);
+                settInnloggetStatus(InnloggetStatus.AUTENTISERT);
             }
         })
-        .catch(error => (window.location.href = '/error'));
+        .catch(error => settInnloggetStatus(InnloggetStatus.FEILET));
 };
 
 const verifiserInnloggetApi = () => {

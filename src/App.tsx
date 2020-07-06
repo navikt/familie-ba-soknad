@@ -6,40 +6,37 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import Helse from './components/Helse/Helse';
 import { verifiserAtBrukerErAutentisert } from './utils/autentisering';
 import Forside from './components/Forside/Forside';
-import { autentiseringsInterceptor } from './utils/autentisering';
-import Feilmelding from './components/Feilmelding/Feilmelding';
+import { autentiseringsInterceptor, InnloggetStatus } from './utils/autentisering';
+import Alertstripe from 'nav-frontend-alertstriper';
 
 function App() {
-    const [autentisert, settAutentisering] = useState<boolean>(false);
+    const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
+        InnloggetStatus.IKKE_VERIFISERT
+    );
 
     autentiseringsInterceptor();
 
     useEffect(() => {
-        if (window.location.pathname !== '/error') {
-            verifiserAtBrukerErAutentisert(settAutentisering);
+        if (innloggetStatus === InnloggetStatus.IKKE_VERIFISERT) {
+            verifiserAtBrukerErAutentisert(settInnloggetStatus);
         }
-    }, [autentisert]);
+    }, [innloggetStatus]);
 
-    return autentisert ? (
+    return (
         <AppProvider>
             <div className="App">
-                <Router>
-                    <Switch>
-                        <Route exact={true} path={'/'} component={Forside} />
-                        <Route exact={true} path={'/helse'} component={Helse} />
-                    </Switch>
-                </Router>
-            </div>
-        </AppProvider>
-    ) : (
-        <AppProvider>
-            <div className="App">
-                <Router>
-                    <Switch>
-                        <Route exact={true} path={'/'} component={NavFrontendSpinner} />
-                        <Route exact={true} path={'/error'} component={Feilmelding} />
-                    </Switch>
-                </Router>
+                {innloggetStatus === InnloggetStatus.AUTENTISERT && (
+                    <Router>
+                        <Switch>
+                            <Route exact={true} path={'/'} component={Forside} />
+                            <Route exact={true} path={'/helse'} component={Helse} />
+                        </Switch>
+                    </Router>
+                )}
+                {innloggetStatus === InnloggetStatus.IKKE_VERIFISERT && <NavFrontendSpinner />}
+                {innloggetStatus === InnloggetStatus.FEILET && (
+                    <Alertstripe type="feil">En feil har oppstått!</Alertstripe>
+                )}
             </div>
         </AppProvider>
     );
