@@ -2,14 +2,23 @@ import createUseContext from 'constate';
 
 import { preferredAxios, loggFeil, håndterApiRessurs } from './axios';
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import { Ressurs, ApiRessurs, byggTomRessurs, byggFeiletRessurs } from '@navikt/familie-typer';
+import {
+    Ressurs,
+    ApiRessurs,
+    byggTomRessurs,
+    byggFeiletRessurs,
+    byggHenterRessurs,
+} from '@navikt/familie-typer';
 import { useState, useEffect } from 'react';
 import { Person } from '../typer/person';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [personData, settPersonData] = useState(byggTomRessurs<Person>());
 
+    console.log(personData);
+
     useEffect(() => {
+        settPersonData(byggHenterRessurs());
         axiosRequest<Person, Object>({
             url: '/api/personopplysning',
             method: 'POST',
@@ -23,6 +32,7 @@ const [AppProvider, useApp] = createUseContext(() => {
             })
             .catch(() => settPersonData(byggFeiletRessurs('Henting av persondata feilet')));
     }, []);
+
     const axiosRequest = async <T, D>(
         config: AxiosRequestConfig & { data?: D; påvirkerSystemLaster?: boolean }
     ): Promise<Ressurs<T>> => {
