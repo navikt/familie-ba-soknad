@@ -22,10 +22,13 @@ spec:
   ingresses:
     - "https://familie-ba-soknad.dev-adeo.no"
     - "https://familie-ba-soknad.dev-nav.no"
+    - "https://familie-ba-soknad.dev.nav.no"
   accessPolicy:
     outbound:
       rules:
         - application: familie-ba-soknad-api
+      external:
+        - host: "www-q1.nav.no"
   resources:
     limits:
       cpu: 2000m

@@ -24,6 +24,12 @@ spec:
     path: /metrics
   ingresses:
     - "https://familie-ba-soknad.adeo.no"
+  accessPolicy:
+    outbound:
+      rules:
+        - application: familie-ba-soknad-api
+      external:
+        - host: "www.nav.no"
   resources:
     limits:
       cpu: 2000m

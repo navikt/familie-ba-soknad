@@ -1,4 +1,4 @@
-import { Ressurs, RessursStatus, ApiRessurs } from '../typer/ressurs';
+import { Ressurs, RessursStatus, ApiRessurs } from '@navikt/familie-typer';
 import axios, { AxiosError } from 'axios';
 
 axios.defaults.baseURL = window.location.origin;

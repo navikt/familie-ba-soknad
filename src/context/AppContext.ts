@@ -2,59 +2,14 @@ import createUseContext from 'constate';
 
 import { preferredAxios, loggFeil, håndterApiRessurs } from './axios';
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import {
-    Ressurs,
-    ApiRessurs,
-    byggTomRessurs,
-    byggFeiletRessurs,
-    byggHenterRessurs,
-} from '../typer/ressurs';
+import { Ressurs, ApiRessurs, byggTomRessurs, byggFeiletRessurs } from '@navikt/familie-typer';
 import { useState, useEffect } from 'react';
 import { Person } from '../typer/person';
 
 const [AppProvider, useApp] = createUseContext(() => {
-    const [helseApi, settHelseApi] = useState(byggTomRessurs<string>());
-    const [helseMottak, settHelseMottak] = useState(byggTomRessurs<string>());
-    const [helsePdl, settHelsePdl] = useState(byggTomRessurs<string>());
     const [personData, settPersonData] = useState(byggTomRessurs<Person>());
 
     useEffect(() => {
-        settHelseApi(byggHenterRessurs());
-        settHelseMottak(byggHenterRessurs());
-        settHelsePdl(byggHenterRessurs());
-
-        axiosRequest<string, void>({
-            url: '/api/helse/soknad-api',
-            method: 'GET',
-        })
-            .then(ressurs => {
-                settHelseApi(ressurs);
-            })
-            .catch(() => {
-                settHelseApi(byggFeiletRessurs('Helse mot backend feilet'));
-            });
-
-        axiosRequest<string, void>({
-            url: '/api/helse/mottak',
-            method: 'GET',
-        })
-            .then(ressurs => {
-                settHelseMottak(ressurs);
-            })
-            .catch(() => {
-                settHelseMottak(byggFeiletRessurs('Helse mot mottak feilet'));
-            });
-
-        axiosRequest<string, void>({
-            url: '/api/helse/pdl',
-            method: 'GET',
-        })
-            .then(ressurs => {
-                settHelsePdl(ressurs);
-            })
-            .catch(() => {
-                settHelsePdl(byggFeiletRessurs('Helse mot pdl feilet'));
-            });
         axiosRequest<Person, Object>({
             url: '/api/personopplysning',
             method: 'POST',
@@ -68,7 +23,6 @@ const [AppProvider, useApp] = createUseContext(() => {
             })
             .catch(() => settPersonData(byggFeiletRessurs('Henting av persondata feilet')));
     }, []);
-
     const axiosRequest = async <T, D>(
         config: AxiosRequestConfig & { data?: D; påvirkerSystemLaster?: boolean }
     ): Promise<Ressurs<T>> => {
@@ -89,9 +43,6 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     return {
         axiosRequest,
-        helseApi,
-        helseMottak,
-        helsePdl,
         personData,
     };
 });
