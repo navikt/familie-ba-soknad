@@ -10,16 +10,16 @@ import {
     byggHenterRessurs,
 } from '@navikt/familie-typer';
 import { useState, useEffect } from 'react';
-import { Person } from '../typer/person';
+import { IPerson } from '../typer/person';
 
 const [AppProvider, useApp] = createUseContext(() => {
-    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<Person>());
+    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
 
     console.log(sluttbruker);
 
     useEffect(() => {
         settSluttbruker(byggHenterRessurs());
-        axiosRequest<Person, Object>({
+        axiosRequest<IPerson, Object>({
             url: '/api/personopplysning',
             method: 'POST',
             data: {

@@ -1,9 +1,9 @@
-export interface Person {
+export interface IPerson {
     navn: string;
-    barn: Barn[];
+    barn: IBarn[];
 }
 
-interface Barn {
+interface IBarn {
     ident: string;
     navn: string;
 }
