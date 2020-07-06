@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'build'), { index: false }));
 // Nais functions
 app.get(`/internal/isAlive|isReady`, (req, res) => res.sendStatus(200));
 
-app.get('/', (req, res) =>
+app.get('*', (req, res) =>
     getDecorator()
         .then(fragments => {
             res.render('index.html', fragments);

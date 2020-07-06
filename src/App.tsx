@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.less';
 import { AppProvider } from './context/AppContext';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 import Helse from './components/Helse/Helse';
+import { verifiserAtBrukerErAutentisert } from './utils/autentisering';
 import Forside from './components/Forside/Forside';
 import Steg1 from './components/Steg/Steg1/Steg1';
 import Steg3 from './components/Steg/Steg3/Steg3';
 import Steg4 from './components/Steg/Steg4/Steg4';
 import Steg2 from './components/Steg/Steg2/Steg2';
+import { autentiseringsInterceptor } from './utils/autentisering';
 
 function App() {
-    return (
+    const [autentisert, settAutentisering] = useState<boolean>(false);
+
+    autentiseringsInterceptor();
+
+    useEffect(() => {
+        verifiserAtBrukerErAutentisert(settAutentisering);
+    }, [autentisert]);
+
+    return autentisert ? (
         <AppProvider>
             <div className="App">
                 <Router>
@@ -25,6 +36,8 @@ function App() {
                 </Router>
             </div>
         </AppProvider>
+    ) : (
+        <NavFrontendSpinner className="spinner" />
     );
 }
 
