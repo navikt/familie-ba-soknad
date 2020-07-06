@@ -9,7 +9,6 @@ const getLoginUrl = () => {
 
 export enum InnloggetStatus {
     AUTENTISERT,
-    IKKE_AUTENTISERT,
     FEILET,
     IKKE_VERIFISERT,
 }
@@ -32,16 +31,16 @@ export const autentiseringsInterceptor = () => {
 export const verifiserAtBrukerErAutentisert = (
     settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
 ) => {
-    return verifiserInnloggetApi()
+    return hentInnloggetStatus()
         .then(response => {
-            if (response && 200 === response.status) {
+            if (response && response.status === 200) {
                 settInnloggetStatus(InnloggetStatus.AUTENTISERT);
             }
         })
         .catch(error => settInnloggetStatus(InnloggetStatus.FEILET));
 };
 
-const verifiserInnloggetApi = () => {
+const hentInnloggetStatus = () => {
     return axios.get(`/api/innlogget`, {
         withCredentials: true,
     });
