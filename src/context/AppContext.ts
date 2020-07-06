@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react';
 import { Person } from '../typer/person';
 
 const [AppProvider, useApp] = createUseContext(() => {
-    const [personData, settPersonData] = useState(byggTomRessurs<Person>());
+    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<Person>());
 
     console.log(personData);
 
