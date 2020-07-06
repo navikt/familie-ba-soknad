@@ -1,26 +1,24 @@
 import React from 'react';
-import './Side.less';
+import './Steg.less';
 import KnappBase from 'nav-frontend-knapper';
 import Stegindikator from 'nav-frontend-stegindikator';
 import Panel from 'nav-frontend-paneler';
-import { Routes } from '../../routing/Routes';
+import { StegRoutes } from '../../../routing/Routes';
 import { Systemtittel, Ingress } from 'nav-frontend-typografi';
 import { useLocation, useHistory } from 'react-router-dom';
-import { IRoute, hentNesteRoute, hentForrigeRoute } from '../../routing/Routes';
+import { IStegRoute, hentNesteRoute, hentForrigeRoute } from '../../../routing/Routes';
 
 interface ISide {
     tittel: string;
 }
 
-const Side: React.FC<ISide> = ({ tittel, children }) => {
+const Steg: React.FC<ISide> = ({ tittel, children }) => {
     const location = useLocation();
     const history = useHistory();
     const skalViseKnapper = true;
     const erSpørsmålBesvart = true;
 
-    const routes: IRoute[] = Object.values(Routes);
-    routes.shift();
-    const stegobjekter = routes.map((steg: IRoute, index: number) => {
+    const stegobjekter = StegRoutes.map((steg: IStegRoute, index: number) => {
         return {
             ...steg,
             index: index,
@@ -31,8 +29,8 @@ const Side: React.FC<ISide> = ({ tittel, children }) => {
     const erFørsteSide: boolean = aktivtSteg === 0;
     const erSisteSide: boolean = aktivtSteg + 1 === stegobjekter.length;
 
-    const nesteRoute: IRoute = hentNesteRoute(Routes, location.pathname);
-    const forrigeRoute: IRoute = hentForrigeRoute(Routes, location.pathname);
+    const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
+    const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
 
     return (
         <div className={'skjema'}>
@@ -75,7 +73,7 @@ const Side: React.FC<ISide> = ({ tittel, children }) => {
                         <KnappBase
                             className={'avbryt'}
                             type={'flat'}
-                            onClick={() => history.push(Routes[0].path)}
+                            onClick={() => history.push('/')}
                         >
                             <div>Avbryt</div>
                         </KnappBase>
@@ -86,4 +84,4 @@ const Side: React.FC<ISide> = ({ tittel, children }) => {
     );
 };
 
-export default Side;
+export default Steg;
