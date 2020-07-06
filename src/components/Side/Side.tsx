@@ -51,23 +51,26 @@ const Side: React.FC<ISide> = ({ tittel, children }) => {
                     </main>
                 </Panel>
                 {skalViseKnapper && (
-                    <div
-                        className={erSpørsmålBesvart ? 'side__knapper treKnapper' : 'side__knapper'}
-                    >
-                        {!erFørsteSide && (
-                            <KnappBase
-                                className={'tilbake'}
-                                type={'standard'}
-                                onClick={() => history.push(forrigeRoute.path)}
-                            >
-                                <div>Tilbake</div>
-                            </KnappBase>
-                        )}
-                        {erSpørsmålBesvart && !erSisteSide && (
-                            <KnappBase type={'hoved'} onClick={() => history.push(nesteRoute.path)}>
-                                <div>Neste</div>
-                            </KnappBase>
-                        )}
+                    <div className={'side__knapper'}>
+                        <div className={`side__knapper--rad1`}>
+                            {!erFørsteSide && (
+                                <KnappBase
+                                    className={erSisteSide ? 'tilbake--alene' : 'tilbake'}
+                                    type={'standard'}
+                                    onClick={() => history.push(forrigeRoute.path)}
+                                >
+                                    <div>Tilbake</div>
+                                </KnappBase>
+                            )}
+                            {erSpørsmålBesvart && !erSisteSide && (
+                                <KnappBase
+                                    type={'hoved'}
+                                    onClick={() => history.push(nesteRoute.path)}
+                                >
+                                    <div>Neste</div>
+                                </KnappBase>
+                            )}
+                        </div>
 
                         <KnappBase
                             className={'avbryt'}
