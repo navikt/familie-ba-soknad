@@ -15,10 +15,10 @@ import { Person } from '../typer/person';
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<Person>());
 
-    console.log(personData);
+    console.log(sluttbruker);
 
     useEffect(() => {
-        settPersonData(byggHenterRessurs());
+        settSluttbruker(byggHenterRessurs());
         axiosRequest<Person, Object>({
             url: '/api/personopplysning',
             method: 'POST',
@@ -28,9 +28,9 @@ const [AppProvider, useApp] = createUseContext(() => {
             },
         })
             .then(ressurs => {
-                settPersonData(ressurs);
+                settSluttbruker(ressurs);
             })
-            .catch(() => settPersonData(byggFeiletRessurs('Henting av persondata feilet')));
+            .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
     }, []);
 
     const axiosRequest = async <T, D>(
@@ -53,7 +53,7 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     return {
         axiosRequest,
-        personData,
+        sluttbruker,
     };
 });
 

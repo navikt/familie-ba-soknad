@@ -1,9 +1,9 @@
-export type Person = {
-    navn: String;
+export interface Person {
+    navn: string;
     barn: Barn[];
-};
+}
 
-type Barn = {
-    ident: String;
-    navn: String;
-};
+interface Barn {
+    ident: string;
+    navn: string;
+}
