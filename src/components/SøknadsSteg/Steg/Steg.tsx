@@ -8,11 +8,11 @@ import { Systemtittel, Ingress } from 'nav-frontend-typografi';
 import { useLocation, useHistory } from 'react-router-dom';
 import { IStegRoute, hentNesteRoute, hentForrigeRoute } from '../../../routing/Routes';
 
-interface ISide {
+interface ISteg {
     tittel: string;
 }
 
-const Steg: React.FC<ISide> = ({ tittel, children }) => {
+const Steg: React.FC<ISteg> = ({ tittel, children }) => {
     const location = useLocation();
     const history = useHistory();
     const skalViseKnapper = true;
@@ -26,60 +26,51 @@ const Steg: React.FC<ISide> = ({ tittel, children }) => {
     });
 
     const aktivtSteg: number = stegobjekter.findIndex(steg => steg.path === location.pathname);
-    const erFørsteSide: boolean = aktivtSteg === 0;
-    const erSisteSide: boolean = aktivtSteg + 1 === stegobjekter.length;
+    const erFørsteSteg: boolean = aktivtSteg === 0;
+    const erSisteSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
 
     const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
     const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
 
     return (
-        <div className={'skjema'}>
-            <div className={'side'}>
-                <Ingress>Søknad om barnetrygd</Ingress>
-                <Stegindikator
-                    autoResponsiv={true}
-                    aktivtSteg={aktivtSteg}
-                    steg={stegobjekter}
-                    visLabel={false}
-                />
-                <Panel className={'side__innhold'}>
-                    <main className={'innholdscontainer'}>
-                        <Systemtittel>{tittel}</Systemtittel>
-                        {children}
-                    </main>
-                </Panel>
-                {skalViseKnapper && (
-                    <div className={'side__knapper'}>
-                        <div className={`side__knapper--rad1`}>
-                            {!erFørsteSide && (
-                                <KnappBase
-                                    className={erSisteSide ? 'tilbake--alene' : 'tilbake'}
-                                    type={'standard'}
-                                    onClick={() => history.push(forrigeRoute.path)}
-                                >
-                                    <div>Tilbake</div>
-                                </KnappBase>
-                            )}
-                            {erSpørsmålBesvart && !erSisteSide && (
-                                <KnappBase
-                                    type={'hoved'}
-                                    onClick={() => history.push(nesteRoute.path)}
-                                >
-                                    <div>Neste</div>
-                                </KnappBase>
-                            )}
-                        </div>
-
-                        <KnappBase
-                            className={'avbryt'}
-                            type={'flat'}
-                            onClick={() => history.push('/')}
-                        >
-                            <div>Avbryt</div>
-                        </KnappBase>
+        <div className={'steg'}>
+            <Ingress>Søknad om barnetrygd</Ingress>
+            <Stegindikator
+                autoResponsiv={true}
+                aktivtSteg={aktivtSteg}
+                steg={stegobjekter}
+                visLabel={false}
+            />
+            <Panel className={'steg__innhold'}>
+                <main className={'innholdscontainer'}>
+                    <Systemtittel>{tittel}</Systemtittel>
+                    {children}
+                </main>
+            </Panel>
+            {skalViseKnapper && (
+                <div className={'steg__knapper'}>
+                    <div className={`steg__knapper--rad1`}>
+                        {!erFørsteSteg && (
+                            <KnappBase
+                                className={erSisteSteg ? 'tilbake--alene' : 'tilbake'}
+                                type={'standard'}
+                                onClick={() => history.push(forrigeRoute.path)}
+                            >
+                                <div>Tilbake</div>
+                            </KnappBase>
+                        )}
+                        {erSpørsmålBesvart && !erSisteSteg && (
+                            <KnappBase type={'hoved'} onClick={() => history.push(nesteRoute.path)}>
+                                <div>Neste</div>
+                            </KnappBase>
+                        )}
                     </div>
-                )}
-            </div>
+
+                    <KnappBase className={'avbryt'} type={'flat'} onClick={() => history.push('/')}>
+                        <div>Avbryt</div>
+                    </KnappBase>
+                </div>
+            )}
         </div>
     );
 };
