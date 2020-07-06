@@ -1,8 +1,7 @@
 import React from 'react';
+import './Side.less';
 import KnappBase from 'nav-frontend-knapper';
 import Stegindikator from 'nav-frontend-stegindikator';
-import './Side.less';
-//import classNames from 'classnames';
 import Panel from 'nav-frontend-paneler';
 import { Routes } from '../../routing/Routes';
 import { Systemtittel, Ingress } from 'nav-frontend-typografi';
@@ -34,9 +33,6 @@ const Side: React.FC<ISide> = ({ tittel, children }) => {
 
     const nesteRoute: IRoute = hentNesteRoute(Routes, location.pathname);
     const forrigeRoute: IRoute = hentForrigeRoute(Routes, location.pathname);
-    //const nesteKnappStyling = classNames('neste', {
-    //    hideButton: nesteRoute === undefined,
-    //});
 
     return (
         <div className={'skjema'}>
@@ -50,7 +46,7 @@ const Side: React.FC<ISide> = ({ tittel, children }) => {
                 />
                 <Panel className={'side__innhold'}>
                     <main className={'innholdscontainer'}>
-                        <Systemtittel>{stegobjekter[aktivtSteg].label}</Systemtittel>
+                        <Systemtittel>{tittel}</Systemtittel>
                         {children}
                     </main>
                 </Panel>
@@ -68,11 +64,7 @@ const Side: React.FC<ISide> = ({ tittel, children }) => {
                             </KnappBase>
                         )}
                         {erSpørsmålBesvart && !erSisteSide && (
-                            <KnappBase
-                                type={'hoved'}
-                                onClick={() => history.push(nesteRoute.path)}
-                                className={'/*nesteKnappStyling*/'}
-                            >
+                            <KnappBase type={'hoved'} onClick={() => history.push(nesteRoute.path)}>
                                 <div>Neste</div>
                             </KnappBase>
                         )}
