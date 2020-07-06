@@ -1,28 +1,22 @@
+import Forside from '../components/Forside/Forside';
+import Steg1 from '../components/Steg/Steg1/Steg1';
+import Steg2 from '../components/Steg/Steg2/Steg2';
+import Steg3 from '../components/Steg/Steg3/Steg3';
+import Steg4 from '../components/Steg/Steg4/Steg4';
+
 export interface IRoute {
-    route: RouteEnum;
     path: string;
     label: string;
-}
-
-export enum RouteEnum {
-    Forside = 'Forside',
-    steg1 = 'steg1',
-    steg2 = 'steg2',
-    steg3 = 'steg3',
-    steg4 = 'steg4',
+    komponent: React.FC;
 }
 
 export const Routes: IRoute[] = [
-    { path: '/', label: 'Forside', route: RouteEnum.Forside },
-    { path: '/steg1', label: 'Steg 1', route: RouteEnum.steg1 },
-    { path: '/steg2', label: 'Steg 2', route: RouteEnum.steg2 },
-    { path: '/steg3', label: 'Steg 3', route: RouteEnum.steg3 },
-    { path: '/steg4', label: 'Steg 4', route: RouteEnum.steg4 },
+    { path: '/', label: 'Forside', komponent: Forside },
+    { path: '/steg1', label: 'Steg 1', komponent: Steg1 },
+    { path: '/steg2', label: 'Steg 2', komponent: Steg2 },
+    { path: '/steg3', label: 'Steg 3', komponent: Steg3 },
+    { path: '/steg4', label: 'Steg 4', komponent: Steg4 },
 ];
-
-export const hentPath = (routes: IRoute[], route: RouteEnum) => {
-    return routes.find(r => r.route === route)?.path;
-};
 
 export const hentForrigeRoute = (routes: IRoute[], currentPath: string) => {
     const routeIndex = routes.findIndex(route => route.path === currentPath);
