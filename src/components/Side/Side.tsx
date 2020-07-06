@@ -1,10 +1,11 @@
 import React from 'react';
 import KnappBase from 'nav-frontend-knapper';
 import Stegindikator from 'nav-frontend-stegindikator';
+import './Side.less';
 //import classNames from 'classnames';
 import Panel from 'nav-frontend-paneler';
 import { Routes } from '../../routing/Routes';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Systemtittel, Ingress } from 'nav-frontend-typografi';
 import { useLocation, useHistory } from 'react-router-dom';
 import { IRoute, hentNesteRoute, hentForrigeRoute } from '../../routing/Routes';
 
@@ -26,9 +27,13 @@ const Side: React.FC<ISide> = ({ tittel, children }) => {
             index: index,
         };
     });
-    const aktivtSteg = stegobjekter.findIndex(steg => steg.path === location.pathname);
-    const nesteRoute = hentNesteRoute(Routes, location.pathname);
-    const forrigeRoute = hentForrigeRoute(Routes, location.pathname);
+
+    const aktivtSteg: number = stegobjekter.findIndex(steg => steg.path === location.pathname);
+    const erFørsteSide: boolean = aktivtSteg === 0;
+    const erSisteSide: boolean = aktivtSteg + 1 === stegobjekter.length;
+
+    const nesteRoute: IRoute = hentNesteRoute(Routes, location.pathname);
+    const forrigeRoute: IRoute = hentForrigeRoute(Routes, location.pathname);
     //const nesteKnappStyling = classNames('neste', {
     //    hideButton: nesteRoute === undefined,
     //});
@@ -36,10 +41,16 @@ const Side: React.FC<ISide> = ({ tittel, children }) => {
     return (
         <div className={'skjema'}>
             <div className={'side'}>
-                <Stegindikator autoResponsiv={true} aktivtSteg={aktivtSteg} steg={stegobjekter} />
+                <Ingress>Søknad om barnetrygd</Ingress>
+                <Stegindikator
+                    autoResponsiv={true}
+                    aktivtSteg={aktivtSteg}
+                    steg={stegobjekter}
+                    visLabel={false}
+                />
                 <Panel className={'side__innhold'}>
                     <main className={'innholdscontainer'}>
-                        <Systemtittel>{tittel}</Systemtittel>
+                        <Systemtittel>{stegobjekter[aktivtSteg].label}</Systemtittel>
                         {children}
                     </main>
                 </Panel>
@@ -47,14 +58,16 @@ const Side: React.FC<ISide> = ({ tittel, children }) => {
                     <div
                         className={erSpørsmålBesvart ? 'side__knapper treKnapper' : 'side__knapper'}
                     >
-                        <KnappBase
-                            className={'tilbake'}
-                            type={'standard'}
-                            onClick={() => history.push(forrigeRoute.path)}
-                        >
-                            <div>Tilbake</div>
-                        </KnappBase>
-                        {erSpørsmålBesvart && (
+                        {!erFørsteSide && (
+                            <KnappBase
+                                className={'tilbake'}
+                                type={'standard'}
+                                onClick={() => history.push(forrigeRoute.path)}
+                            >
+                                <div>Tilbake</div>
+                            </KnappBase>
+                        )}
+                        {erSpørsmålBesvart && !erSisteSide && (
                             <KnappBase
                                 type={'hoved'}
                                 onClick={() => history.push(nesteRoute.path)}
