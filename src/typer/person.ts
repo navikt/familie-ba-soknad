@@ -1,6 +1,6 @@
 export type Person = {
     navn: String;
-    barn: Array<Barn>;
+    barn: Barn[];
 };
 
 type Barn = {
