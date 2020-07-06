@@ -19,11 +19,11 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     useEffect(() => {
         settSluttbruker(byggHenterRessurs());
-        axiosRequest<IPerson, Object>({
+        axiosRequest<IPerson, { ident: string }>({
             url: '/api/personopplysning',
             method: 'POST',
+            withCredentials: true,
             data: {
-                withCredentials: true,
                 ident: '12345678901',
             },
         })
