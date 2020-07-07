@@ -7,12 +7,19 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import Panel from 'nav-frontend-paneler';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import { useHistory, useLocation } from 'react-router';
+import { IStegRoute, hentNesteRoute, StegRoutes } from '../../routing/Routes';
 
 const Forside: React.FC = () => {
     const LOREM =
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe sed consectetur maiores veniam voluptas obcaecati, cumque hic laboriosamcorporis vel temporibus optio blanditiis. Dolorum autem exercitationem nulla, sed porro eum!x';
 
     const [bekreftet, settBekreftet] = useState<boolean>(false);
+
+    const history = useHistory();
+    const location = useLocation();
+
+    const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
 
     const handleOnChange = () => {
         settBekreftet(!bekreftet);
@@ -127,7 +134,11 @@ const Forside: React.FC = () => {
 
                     <div className={'hovedknapp'}>
                         {bekreftet ? (
-                            <Hovedknapp onClick={() => {}}>Start søknaden</Hovedknapp>
+                            <Hovedknapp
+                                onClick={() => history.push(Object.values(StegRoutes)[0].path)}
+                            >
+                                Start søknaden
+                            </Hovedknapp>
                         ) : null}
                     </div>
                 </Panel>
