@@ -23,7 +23,7 @@ function App() {
     }, [innloggetStatus]);
 
     return (
-        <AppProvider>
+        <AppProvider innloggetStatus={innloggetStatus}>
             <div className="App">
                 {innloggetStatus === InnloggetStatus.AUTENTISERT && (
                     <Router>
