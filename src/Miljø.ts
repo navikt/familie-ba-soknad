@@ -5,7 +5,7 @@ interface MiljøProps {
 const Miljø = (): MiljøProps => {
     if (window.location.hostname.indexOf('familie-ba-soknad.dev') > -1) {
         return {
-            loginService: 'https://loginservice.dev-nav.no/login?',
+            loginService: 'https://loginservice.dev.nav.no/login?',
         };
     } else if (window.location.hostname.indexOf('familie-ba-soknad.adeo') > -1) {
         return {
