@@ -1,8 +1,8 @@
 import React from 'react';
-import Veileder from 'nav-frontend-veileder';
+import Veileder, { VeilederProps } from 'nav-frontend-veileder';
 
-const VeilederSnakkeboble: React.FC<any> = ({ tekst }) => (
-    <Veileder tekst="Hei, du som skal søke" posisjon="høyre">
+const VeilederSnakkeboble: React.FC<VeilederProps> = props => (
+    <Veileder {...props}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 93">
             <path
                 fill="#e7e5e2"

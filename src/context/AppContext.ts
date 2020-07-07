@@ -8,6 +8,7 @@ import {
     byggTomRessurs,
     byggFeiletRessurs,
     byggHenterRessurs,
+    RessursStatus,
 } from '@navikt/familie-typer';
 import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
@@ -47,14 +48,12 @@ const [AppProvider, useApp] = createUseContext(({ innloggetStatus }: IProps) => 
     ): Promise<Ressurs<T>> => {
         const ressursId = `${config.method}_${config.url}`;
         config.påvirkerSystemLaster && settRessurserSomLaster([...ressurserSomLaster, ressursId]);
-        console.log(ressurserSomLaster);
 
         return preferredAxios
             .request(config)
             .then((response: AxiosResponse<ApiRessurs<T>>) => {
                 const responsRessurs: ApiRessurs<T> = response.data;
                 config.påvirkerSystemLaster && fjernRessursSomLaster(ressursId);
-                console.log(ressurserSomLaster);
 
                 return håndterApiRessurs(responsRessurs);
             })
@@ -77,13 +76,22 @@ const [AppProvider, useApp] = createUseContext(({ innloggetStatus }: IProps) => 
     };
 
     const systemetLaster = () => {
-        return ressurserSomLaster.length > 0;
+        return ressurserSomLaster.length > 0 || innloggetStatus === InnloggetStatus.IKKE_VERIFISERT;
+    };
+
+    const systemetFeiler = () => {
+        return (
+            innloggetStatus === InnloggetStatus.FEILET ||
+            sluttbruker.status === RessursStatus.FEILET
+        );
     };
 
     return {
         axiosRequest,
         sluttbruker,
         systemetLaster,
+        innloggetStatus,
+        systemetFeiler,
     };
 });
 

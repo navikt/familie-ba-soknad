@@ -9,6 +9,9 @@ import Panel from 'nav-frontend-paneler';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import { useHistory, useLocation } from 'react-router';
 import { IStegRoute, hentNesteRoute, StegRoutes } from '../../routing/Routes';
+import { useApp } from '../../context/AppContext';
+import { RessursStatus } from '@navikt/familie-typer';
+import Alertstripe from 'nav-frontend-alertstriper';
 
 const Forside: React.FC = () => {
     const LOREM =
@@ -21,16 +24,21 @@ const Forside: React.FC = () => {
 
     const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
 
+    const { sluttbruker } = useApp();
+    console.log(sluttbruker.status);
+
+    const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
+
     const handleOnChange = () => {
         settBekreftet(!bekreftet);
     };
 
-    return (
+    return sluttbruker.status === RessursStatus.SUKSESS ? (
         <div className={'forside'}>
             <div className={'forside__innhold'}>
                 <Panel className={'forside__innhold--panel'}>
                     <div className={'veileder'}>
-                        <VeilederSnakkeboble />
+                        <VeilederSnakkeboble tekst={`Hei, ${navn}`} posisjon={'høyre'} />
                     </div>
 
                     <Informasjonsbolk tittel={<Sidetittel>Søknad om barnetrygd</Sidetittel>}>
@@ -116,8 +124,8 @@ const Forside: React.FC = () => {
 
                         <BekreftCheckboksPanel
                             onChange={() => handleOnChange()}
-                            label={`Jeg, Kari Nordmann, bekrefter at jeg vil gi riktige og fullstendige\n
-                                opplysninger`}
+                            label={`Jeg, ${navn} bekrefter at jeg vil gi riktige og fullstendige\n
+         opplysninger`}
                             checked={bekreftet}
                         >
                             {
@@ -144,7 +152,7 @@ const Forside: React.FC = () => {
                 </Panel>
             </div>
         </div>
-    );
+    ) : null;
 };
 
 export default Forside;
