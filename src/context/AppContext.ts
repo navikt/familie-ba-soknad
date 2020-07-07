@@ -29,9 +29,6 @@ const [AppProvider, useApp] = createUseContext(({ innloggetStatus }: IProps) => 
                 url: '/api/personopplysning',
                 method: 'POST',
                 withCredentials: true,
-                data: {
-                    ident: '12345678901',
-                },
             })
                 .then(ressurs => {
                     settSluttbruker(ressurs);
