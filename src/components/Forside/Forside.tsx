@@ -124,7 +124,7 @@ const Forside: React.FC = () => {
 
                         <BekreftCheckboksPanel
                             onChange={() => handleOnChange()}
-                            label={`Jeg, ${navn} bekrefter at jeg vil gi riktige og fullstendige\n
+                            label={`Jeg, ${navn}, bekrefter at jeg vil gi riktige og fullstendige\n
          opplysninger`}
                             checked={bekreftet}
                         >
