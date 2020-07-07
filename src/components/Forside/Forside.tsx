@@ -33,7 +33,7 @@ const Forside: React.FC = () => {
         settBekreftet(!bekreftet);
     };
 
-    return sluttbruker.status === RessursStatus.SUKSESS ? (
+    return (
         <div className={'forside'}>
             <div className={'forside__innhold'}>
                 <Panel className={'forside__innhold--panel'}>
@@ -152,7 +152,7 @@ const Forside: React.FC = () => {
                 </Panel>
             </div>
         </div>
-    ) : null;
+    );
 };
 
 export default Forside;
