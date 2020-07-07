@@ -24,6 +24,7 @@ spec:
     path: /metrics
   ingresses:
     - "https://familie-ba-soknad.adeo.no"
+    - "https://familie-ba-soknad.nav.no"
   accessPolicy:
     outbound:
       rules:
