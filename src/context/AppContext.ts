@@ -30,6 +30,7 @@ const [AppProvider, useApp] = createUseContext(({ innloggetStatus }: IProps) => 
                 url: '/api/personopplysning',
                 method: 'POST',
                 withCredentials: true,
+                påvirkerSystemLaster: true,
                 data: {
                     ident: '12345678901',
                 },
@@ -46,12 +47,14 @@ const [AppProvider, useApp] = createUseContext(({ innloggetStatus }: IProps) => 
     ): Promise<Ressurs<T>> => {
         const ressursId = `${config.method}_${config.url}`;
         config.påvirkerSystemLaster && settRessurserSomLaster([...ressurserSomLaster, ressursId]);
+        console.log(ressurserSomLaster);
 
         return preferredAxios
             .request(config)
             .then((response: AxiosResponse<ApiRessurs<T>>) => {
                 const responsRessurs: ApiRessurs<T> = response.data;
                 config.påvirkerSystemLaster && fjernRessursSomLaster(ressursId);
+                console.log(ressurserSomLaster);
 
                 return håndterApiRessurs(responsRessurs);
             })
