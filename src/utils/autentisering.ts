@@ -9,10 +9,6 @@ const getLoginUrl = () => {
 
 export enum InnloggetStatus {
     AUTENTISERT,
-<<<<<<< HEAD
-    IKKE_AUTENTISERT,
-=======
->>>>>>> master
     FEILET,
     IKKE_VERIFISERT,
 }
@@ -35,15 +31,9 @@ export const autentiseringsInterceptor = () => {
 export const verifiserAtBrukerErAutentisert = (
     settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
 ) => {
-<<<<<<< HEAD
-    return verifiserInnloggetApi()
-        .then(response => {
-            if (response && 200 === response.status) {
-=======
     return hentInnloggetStatus()
         .then(response => {
             if (response && response.status === 200) {
->>>>>>> master
                 settInnloggetStatus(InnloggetStatus.AUTENTISERT);
             }
         })
