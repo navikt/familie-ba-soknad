@@ -1,0 +1,52 @@
+@mobile: ~"all and (max-width: 420px)";
+
+.steg {
+    text-align: center;
+    margin-top: 2rem;
+    
+    &__knapper {
+      padding: 2rem;
+      grid-area: knapper;
+      display: flex;
+      justify-self: center;
+      flex-direction: column;
+      align-items: center;
+  
+      .avbryt {
+        margin-top: 1rem;
+        justify-content: center;
+        max-width: 134px;
+      }
+
+      &--rad1 {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    
+        @media @mobile {
+          flex-direction: column;
+          
+        }
+
+        & .tilbake {
+          margin-right: 1rem;
+          max-width: 134px;
+        
+          @media @mobile {
+            max-width: 100%;
+            margin-right: 0;
+            margin-bottom: 1rem;
+          }
+        }
+
+        & .tilbake--alene {
+          margin-right: 0;
+          max-width: 134px;
+        }
+      }
+    }
+    
+    & .stegindikator__liste {
+        margin: 2rem 0;
+    }
+}
