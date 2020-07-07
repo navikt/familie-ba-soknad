@@ -11,27 +11,34 @@ import {
 } from '@navikt/familie-typer';
 import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
+import { InnloggetStatus } from '../utils/autentisering';
 
-const [AppProvider, useApp] = createUseContext(() => {
+interface IProps {
+    innloggetStatus: InnloggetStatus;
+}
+
+const [AppProvider, useApp] = createUseContext(({ innloggetStatus }: IProps) => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
 
     console.log(sluttbruker);
-
     useEffect(() => {
-        settSluttbruker(byggHenterRessurs());
-        axiosRequest<IPerson, Object>({
-            url: '/api/personopplysning',
-            method: 'POST',
-            data: {
+        if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
+            settSluttbruker(byggHenterRessurs());
+
+            axiosRequest<IPerson, { ident: string }>({
+                url: '/api/personopplysning',
+                method: 'POST',
                 withCredentials: true,
-                ident: '12345678901',
-            },
-        })
-            .then(ressurs => {
-                settSluttbruker(ressurs);
+                data: {
+                    ident: '12345678901',
+                },
             })
-            .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
-    }, []);
+                .then(ressurs => {
+                    settSluttbruker(ressurs);
+                })
+                .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
+        }
+    }, [innloggetStatus]);
 
     const axiosRequest = async <T, D>(
         config: AxiosRequestConfig & { data?: D; påvirkerSystemLaster?: boolean }
