@@ -21,9 +21,10 @@ const Søknad = () => {
                             <Route exact={true} path={'/helse'} component={Helse} />
                             <Route exact={true} path={'/'} component={Forside} />
                             {StegRoutes &&
-                                StegRoutes.map(steg => {
+                                StegRoutes.map((steg, index) => {
                                     return (
                                         <Route
+                                            key={index}
                                             exact={true}
                                             path={steg.path}
                                             component={steg.komponent}
