@@ -17,8 +17,22 @@ interface IProps {
     innloggetStatus: InnloggetStatus;
 }
 
+export enum ESøknadstype {
+    IKKE_SATT = 'IKKE_SATT',
+    ORDINÆR = 'ORDINÆR',
+    UTVIDET = 'UTVIDET',
+    EØS = 'EØS',
+}
+
+interface ISøknad {
+    søknadstype: ESøknadstype;
+}
+
 const [AppProvider, useApp] = createUseContext(({ innloggetStatus }: IProps) => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
+    const [søknad, settSøknad] = useState<ISøknad>({
+        søknadstype: ESøknadstype.IKKE_SATT,
+    });
 
     console.log(sluttbruker);
     useEffect(() => {
@@ -61,6 +75,8 @@ const [AppProvider, useApp] = createUseContext(({ innloggetStatus }: IProps) => 
     return {
         axiosRequest,
         sluttbruker,
+        søknad,
+        settSøknad,
     };
 });
 
