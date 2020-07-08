@@ -7,7 +7,7 @@ const Miljø = (): MiljøProps => {
         return {
             loginService: 'https://loginservice.dev.nav.no/login?',
         };
-    } else if (window.location.hostname.indexOf('familie-ba-soknad.adeo') > -1) {
+    } else if (window.location.hostname.indexOf('familie-ba-soknad.nav') > -1) {
         return {
             loginService: 'https://loginservice.nav.no/login?',
         };
