@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Steg from '../Steg/Steg';
 import { Select } from 'nav-frontend-skjema';
 import { useApp, ESøknadstype } from '../../../context/AppContext';
@@ -13,7 +13,7 @@ const Søknadstype: React.FC = () => {
             <Select
                 label="Velg type søknad"
                 bredde="l"
-                onChange={e => settSøknad({ søknadstype: e.target.value })}
+                onChange={e => settSøknad({ søknadstype: e.target.value as ESøknadstype })}
             >
                 <option value={ESøknadstype.IKKE_SATT}>Velg type søknad</option>
                 <option value={ESøknadstype.ORDINÆR}>Ordinær</option>
