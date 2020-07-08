@@ -10,7 +10,7 @@ import Alertstripe from 'nav-frontend-alertstriper';
 import classNames from 'classnames';
 import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';
 
-function Søknad() {
+const Søknad = () => {
     const { systemetLaster, systemetFeiler, innloggetStatus } = useApp();
     return (
         <main className="App">
@@ -38,6 +38,6 @@ function Søknad() {
             {systemetFeiler() && <Alertstripe type="feil">En feil har oppstått!</Alertstripe>}
         </main>
     );
-}
+};
 
 export default Søknad;

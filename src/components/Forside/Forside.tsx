@@ -11,7 +11,6 @@ import { useHistory, useLocation } from 'react-router';
 import { IStegRoute, hentNesteRoute, StegRoutes } from '../../routing/Routes';
 import { useApp } from '../../context/AppContext';
 import { RessursStatus } from '@navikt/familie-typer';
-import Alertstripe from 'nav-frontend-alertstriper';
 
 const Forside: React.FC = () => {
     const LOREM =
@@ -25,7 +24,6 @@ const Forside: React.FC = () => {
     const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
 
     const { sluttbruker } = useApp();
-    console.log(sluttbruker.status);
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 
