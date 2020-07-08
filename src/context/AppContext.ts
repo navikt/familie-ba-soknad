@@ -25,7 +25,7 @@ const [AppProvider, useApp] = createUseContext(({ innloggetStatus }: IProps) => 
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 
-            axiosRequest<IPerson, { ident: string }>({
+            axiosRequest<IPerson, void>({
                 url: '/api/personopplysning',
                 method: 'POST',
                 withCredentials: true,
