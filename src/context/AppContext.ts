@@ -12,15 +12,24 @@ import {
 } from '@navikt/familie-typer';
 import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
-import { InnloggetStatus } from '../utils/autentisering';
+import { verifiserAtBrukerErAutentisert } from '../utils/autentisering';
 
-interface IProps {
-    innloggetStatus: InnloggetStatus;
-}
+import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 
-const [AppProvider, useApp] = createUseContext(({ innloggetStatus }: IProps) => {
+const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
+    const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
+        InnloggetStatus.IKKE_VERIFISERT
+    );
+
+    autentiseringsInterceptor();
+
+    useEffect(() => {
+        if (innloggetStatus === InnloggetStatus.IKKE_VERIFISERT) {
+            verifiserAtBrukerErAutentisert(settInnloggetStatus);
+        }
+    }, [innloggetStatus]);
 
     console.log(sluttbruker);
     useEffect(() => {
