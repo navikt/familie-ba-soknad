@@ -25,14 +25,11 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     autentiseringsInterceptor();
 
+    console.log(sluttbruker);
     useEffect(() => {
         if (innloggetStatus === InnloggetStatus.IKKE_VERIFISERT) {
             verifiserAtBrukerErAutentisert(settInnloggetStatus);
         }
-    }, [innloggetStatus]);
-
-    console.log(sluttbruker);
-    useEffect(() => {
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 
