@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.less';
 import { AppProvider } from './context/AppContext';
 import Søknad from './Søknad';

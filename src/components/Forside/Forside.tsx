@@ -7,8 +7,8 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import Panel from 'nav-frontend-paneler';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
-import { useHistory, useLocation } from 'react-router';
-import { IStegRoute, hentNesteRoute, StegRoutes } from '../../routing/Routes';
+import { useHistory } from 'react-router';
+import { StegRoutes } from '../../routing/Routes';
 import { useApp } from '../../context/AppContext';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -19,9 +19,6 @@ const Forside: React.FC = () => {
     const [bekreftet, settBekreftet] = useState<boolean>(false);
 
     const history = useHistory();
-    const location = useLocation();
-
-    const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
 
     const { sluttbruker } = useApp();
 
