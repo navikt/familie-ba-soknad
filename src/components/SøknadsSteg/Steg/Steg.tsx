@@ -44,7 +44,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children }) => {
             <Panel className={'steg__innhold'}>
                 <main className={'innholdscontainer'}>
                     <Systemtittel>{tittel}</Systemtittel>
-                    {children}
+                    <div className={'innholdscontainer__children'}>{children}</div>
                 </main>
             </Panel>
             {skalViseKnapper && (

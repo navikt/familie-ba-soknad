@@ -1,8 +1,21 @@
 @mobile: ~"all and (max-width: 420px)";
+@panel-innhold-bredde: 588px;
 
 .steg {
     text-align: center;
     margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__innhold {
+      padding: 2rem;
+      width: @panel-innhold-bredde;
+
+      & .innholdscontainer__children {
+        margin-top: 2rem;
+      }
+    }
     
     &__knapper {
       padding: 2rem;
