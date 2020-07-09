@@ -16,12 +16,26 @@ import { verifiserAtBrukerErAutentisert } from '../utils/autentisering';
 
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 
+export enum ESøknadstype {
+    IKKE_SATT = 'IKKE_SATT',
+    ORDINÆR = 'ORDINÆR',
+    UTVIDET = 'UTVIDET',
+    EØS = 'EØS',
+}
+
+interface ISøknad {
+    søknadstype: ESøknadstype;
+}
+
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
         InnloggetStatus.IKKE_VERIFISERT
     );
+    const [søknad, settSøknad] = useState<ISøknad>({
+        søknadstype: ESøknadstype.IKKE_SATT,
+    });
 
     autentiseringsInterceptor();
 
@@ -92,6 +106,8 @@ const [AppProvider, useApp] = createUseContext(() => {
     return {
         axiosRequest,
         sluttbruker,
+        søknad,
+        settSøknad,
         systemetLaster,
         innloggetStatus,
         systemetFeiler,
