@@ -61,7 +61,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children }) => {
                         )}
                         {erSpørsmålBesvart && !erSisteSteg && (
                             <KnappBase
-                                className={erFørsteSteg ? 'neste--alene' : 'neste'}
+                                className={'neste'}
                                 type={'hoved'}
                                 onClick={() => history.push(nesteRoute.path)}
                             >

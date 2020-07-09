@@ -1,4 +1,5 @@
 @mobile: ~"all and (max-width: 420px)";
+@knapp-width: 149px;
 
 .steg {
     text-align: center;
@@ -22,30 +23,26 @@
       .avbryt {
         margin-top: 1rem;
         justify-content: center;
-        width: 149px;
+        width: @knapp-width;
       }
 
       &--rad1 {
         display: flex;
         flex-direction: row;
         justify-content: center;
-        min-width: 149px;
+        min-width: @knapp-width;
     
         @media @mobile {
           flex-direction: column-reverse;
         }
 
         & .neste {
-          width: 149px;
-        }
-
-        & .neste-alene {
-          width: 149px;
+          width: @knapp-width;
         }
 
         & .tilbake {
           margin-right: 1rem;
-          width: 149px;
+          width: @knapp-width;
         
           @media @mobile {
             width: 100%;
@@ -56,7 +53,7 @@
 
         & .tilbake--alene {
           margin-right: 0;
-          width: 149px;
+          width: @knapp-width;
         }
       }
     }
