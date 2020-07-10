@@ -3,7 +3,10 @@ export interface IPerson {
     barn: IBarn[];
 }
 
-interface IBarn {
+/*interface IBarn {
     ident: string;
     navn: string;
+    borMedSøker: boolean, 
+    fødselsdato: string
 }
+*/

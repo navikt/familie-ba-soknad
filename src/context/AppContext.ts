@@ -76,6 +76,8 @@ const [AppProvider, useApp] = createUseContext(() => {
     autentiseringsInterceptor();
 
     console.log(sluttbruker);
+    console.log(søknad);
+
     useEffect(() => {
         if (innloggetStatus === InnloggetStatus.IKKE_VERIFISERT) {
             verifiserAtBrukerErAutentisert(settInnloggetStatus);
@@ -91,14 +93,23 @@ const [AppProvider, useApp] = createUseContext(() => {
             })
                 .then(ressurs => {
                     settSluttbruker(ressurs);
+                    if (ressurs.status === RessursStatus.SUKSESS) {
+                        const søker = {
+                            navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
+                        };
+                        const barn = ressurs.data.barn.map(barn => {
+                            return {
+                                navn: { label: 'Ditt navn', verdi: barn.navn },
+                                alder: { label: 'Alder', verdi: '2' },
+                                fødselsdato: { label: 'Fødselsdato', verdi: '2018-01-01' },
+                                ident: { label: 'Fødselsnummer(?)', verdi: '12345678910' },
+                                borMedSøker: { label: 'Bor barnet på din adresse?', verdi: true },
+                            };
+                        });
+                        settSøknad({ ...søknad, søker: søker });
+                    }
                 })
                 .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
-        }
-        if (sluttbruker.status === RessursStatus.SUKSESS) {
-            const søker = {
-                navn: { label: 'Ditt navn', verdi: sluttbruker.data.navn },
-            };
-            settSøknad({ ...søknad, søker: søker });
         }
     }, [innloggetStatus]);
 
