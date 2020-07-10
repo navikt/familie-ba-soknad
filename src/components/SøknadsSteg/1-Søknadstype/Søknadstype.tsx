@@ -11,8 +11,16 @@ const Søknadstype: React.FC = () => {
             <Select
                 label="Velg type søknad"
                 bredde="l"
-                onChange={e => settSøknad({ søknadstype: e.target.value as ESøknadstype })}
-                defaultValue={søknad.søknadstype}
+                onChange={e =>
+                    settSøknad({
+                        ...søknad,
+                        søknadstype: {
+                            label: 'Velg type søknad',
+                            verdi: e.target.value as ESøknadstype,
+                        },
+                    })
+                }
+                defaultValue={søknad.søknadstype.verdi}
             >
                 <option value={ESøknadstype.IKKE_SATT}>Velg type søknad</option>
                 <option value={ESøknadstype.ORDINÆR}>Ordinær</option>
