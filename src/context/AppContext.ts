@@ -35,12 +35,12 @@ interface IBarn {
     borMedSøker: ISøknadsfelt<boolean>;
 }
 
-interface ISøknad {
+export interface ISøknad {
     søknadstype: ISøknadsfelt<string>;
     søker: ISøker;
     barn: IBarn[];
 }
-interface ISøknadsfelt<T> {
+export interface ISøknadsfelt<T> {
     label: string;
     verdi: T;
 }
@@ -65,13 +65,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
         InnloggetStatus.IKKE_VERIFISERT
     );
-<<<<<<< HEAD
     const [søknad, settSøknad] = useState<ISøknad>(initialState);
-=======
-    const [søknad, settSøknad] = useState<ISøknad>({
-        søknadstype: { label: '', verdi: ESøknadstype.IKKE_SATT },
-    });
->>>>>>> master
 
     autentiseringsInterceptor();
 
