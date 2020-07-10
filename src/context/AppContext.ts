@@ -23,9 +23,47 @@ export enum ESøknadstype {
     EØS = 'EØS',
 }
 
-interface ISøknad {
-    søknadstype: ESøknadstype;
+interface ITekstFelt {
+    label: string;
+    verdi: string;
 }
+
+interface ISøker {
+    navn: ITekstFelt;
+}
+
+interface IBooleanFelt {
+    label: string;
+    verdi: boolean;
+}
+
+interface IBarn {
+    navn: ITekstFelt;
+    alder: ITekstFelt;
+    fødselsdato: ITekstFelt;
+    ident: ITekstFelt;
+    borMedSøker: IBooleanFelt;
+}
+
+interface ISøknad {
+    søknadstype: ITekstFelt;
+    søker: ISøker;
+    barn: IBarn[];
+}
+
+const initialState = {
+    søknadstype: { label: 'Velg type søknad', verdi: ESøknadstype.IKKE_SATT },
+    søker: { navn: { label: 'Ditt navn', verdi: 'Kis Kisesen' } },
+    barn: [
+        {
+            navn: { label: 'Ditt navn', verdi: 'Kid Kisesen' },
+            alder: { label: 'Alder', verdi: '2' },
+            fødselsdato: { label: 'Fødselsdato', verdi: '2018-01-01' },
+            ident: { label: 'Fødselsnummer(?)', verdi: '12345678910' },
+            borMedSøker: { label: 'Bor barnet på din adresse?', verdi: true },
+        },
+    ],
+};
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
@@ -33,9 +71,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
         InnloggetStatus.IKKE_VERIFISERT
     );
-    const [søknad, settSøknad] = useState<ISøknad>({
-        søknadstype: ESøknadstype.IKKE_SATT,
-    });
+    const [søknad, settSøknad] = useState<ISøknad>(initialState);
 
     autentiseringsInterceptor();
 
@@ -57,6 +93,12 @@ const [AppProvider, useApp] = createUseContext(() => {
                     settSluttbruker(ressurs);
                 })
                 .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
+        }
+        if (sluttbruker.status === RessursStatus.SUKSESS) {
+            const søker = {
+                navn: { label: 'Ditt navn', verdi: sluttbruker.data.navn },
+            };
+            settSøknad({ ...søknad, søker: søker });
         }
     }, [innloggetStatus]);
 
