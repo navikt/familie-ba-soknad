@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
-import barn1 from '../../../assets/barn1.svg';
-import barn2 from '../../../assets/barn2.svg';
-import barn3 from '../../../assets/barn3.svg';
-import ufødtIkon from '../../../assets/ufodt.svg';
+import barn1 from '../../../../assets/barn1.svg';
+import barn2 from '../../../../assets/barn2.svg';
+import barn3 from '../../../../assets/barn3.svg';
 
 interface Props {
     navn: string;
@@ -11,21 +10,11 @@ interface Props {
     fødselsdato: string;
     alder: string;
     harSammeAdresse: boolean;
-    lagtTil: boolean;
-    født: boolean;
+    medISøknad: boolean;
     id: string;
 }
 
-const Barnekort: React.FC<Props> = ({
-    id,
-    navn,
-    ident,
-    alder,
-    harSammeAdresse,
-    lagtTil,
-    født,
-    fødselsdato,
-}) => {
+const Barnekort: React.FC<Props> = ({ id, navn, ident, alder, harSammeAdresse, fødselsdato }) => {
     //const { søknad, settSøknad } = useSøknad();
     const [åpenEndreModal, settÅpenEndreModal] = useState(false);
 
@@ -34,7 +23,7 @@ const Barnekort: React.FC<Props> = ({
     };
 
     const ikoner = [barn1, barn2, barn3];
-    //const ikon = født.verdi ? ikoner[Math.floor(Math.random() * ikoner.length)] : ufødtIkon;
+    const ikon = ikoner[Math.floor(Math.random() * ikoner.length)];
 
     let bosted: string = 'Temp-bosted';
 
@@ -53,15 +42,14 @@ const Barnekort: React.FC<Props> = ({
             </div>
             <div className="barnekort__informasjonsboks">
                 <div className="informasjonsboks-innhold">
-                    <Element>{`Barne Barnson`}</Element>
+                    <Element>{navn}</Element>
                     <div className="informasjonselement">
                         <Normaltekst>{`FØDSELSNUMMER:`}</Normaltekst>
-                        <Normaltekst>{`12345678901`}</Normaltekst>
-                        )}
+                        <Normaltekst>{ident}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
                         <Normaltekst>{`Alder:`}</Normaltekst>
-                        <Normaltekst>{`Temp-alder`}</Normaltekst>
+                        <Normaltekst>{alder}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
                         <Normaltekst>{`Registrert på adresse:`}</Normaltekst>

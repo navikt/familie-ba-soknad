@@ -1,5 +1,5 @@
 import Søknadstype from '../components/SøknadsSteg/1-Søknadstype/Søknadstype';
-import Steg2 from '../components/SøknadsSteg/Steg2/Steg2';
+import Steg2 from '../components/SøknadsSteg/2-VelgBarn/Steg2';
 import Steg3 from '../components/SøknadsSteg/Steg3/Steg3';
 import Steg4 from '../components/SøknadsSteg/Steg4/Steg4';
 
@@ -11,7 +11,7 @@ export interface IStegRoute {
 
 export const StegRoutes: IStegRoute[] = [
     { path: '/soknadstype', label: 'Søknadstype', komponent: Søknadstype },
-    { path: '/steg2', label: 'Steg 2', komponent: Steg2 },
+    { path: '/velg-barn', label: 'Velg barn', komponent: Steg2 },
     { path: '/steg3', label: 'Steg 3', komponent: Steg3 },
     { path: '/steg4', label: 'Steg 4', komponent: Steg4 },
 ];
