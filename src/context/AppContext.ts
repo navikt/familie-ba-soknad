@@ -29,7 +29,7 @@ interface ISøker {
 
 interface IBarn {
     navn: ISøknadsfelt<string>;
-    alder: ISøknadsfelt<string>;
+    //alder: ISøknadsfelt<string>;
     fødselsdato: ISøknadsfelt<string>;
     ident: ISøknadsfelt<string>;
     borMedSøker: ISøknadsfelt<boolean>;
@@ -51,7 +51,7 @@ const initialState = {
     barn: [
         {
             navn: { label: 'Ditt navn', verdi: 'Kid Kisesen' },
-            alder: { label: 'Alder', verdi: '2' },
+            //alder: { label: 'Alder', verdi: '2' },
             fødselsdato: { label: 'Fødselsdato', verdi: '2018-01-01' },
             ident: { label: 'Fødselsnummer(?)', verdi: '12345678910' },
             borMedSøker: { label: 'Bor barnet på din adresse?', verdi: true },
@@ -94,13 +94,16 @@ const [AppProvider, useApp] = createUseContext(() => {
                         const barn = ressurs.data.barn.map(barn => {
                             return {
                                 navn: { label: 'Ditt navn', verdi: barn.navn },
-                                alder: { label: 'Alder', verdi: '2' },
-                                fødselsdato: { label: 'Fødselsdato', verdi: '2018-01-01' },
-                                ident: { label: 'Fødselsnummer(?)', verdi: '12345678910' },
-                                borMedSøker: { label: 'Bor barnet på din adresse?', verdi: true },
+                                //alder: { label: 'Alder', verdi: '2' },
+                                fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
+                                ident: { label: 'Fødselsnummer(?)', verdi: barn.ident },
+                                borMedSøker: {
+                                    label: 'Bor barnet på din adresse?',
+                                    verdi: barn.borMedSøker,
+                                },
                             };
                         });
-                        settSøknad({ ...søknad, søker: søker });
+                        settSøknad({ ...søknad, søker: søker, barn: barn });
                     }
                 })
                 .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
