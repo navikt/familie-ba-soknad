@@ -4,16 +4,16 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { useApp } from '../../../context/AppContext';
 import { visLabelOgSvar } from '../../../utils/visning';
 
-const OppsummeringSøknadstype: React.FC = () => {
+const OppsummeringBarnaDine: React.FC = () => {
     const { søknad } = useApp();
 
-    const søknadstype = søknad.søknadstype;
+    const barn = søknad.barn;
 
     return (
-        <Ekspanderbartpanel tittel={<Undertittel>Søknadstype</Undertittel>}>
-            {visLabelOgSvar(søknadstype)}
+        <Ekspanderbartpanel tittel={<Undertittel>Barna Dine</Undertittel>}>
+            {barn.map(barn => Object.values(barn).map(felt => visLabelOgSvar(felt)))}
         </Ekspanderbartpanel>
     );
 };
 
-export default OppsummeringSøknadstype;
+export default OppsummeringBarnaDine;
