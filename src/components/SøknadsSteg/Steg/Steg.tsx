@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Steg.less';
 import KnappBase from 'nav-frontend-knapper';
 import Stegindikator from 'nav-frontend-stegindikator';
@@ -17,6 +17,10 @@ const Steg: React.FC<ISteg> = ({ tittel, children }) => {
     const history = useHistory();
     const skalViseKnapper = true;
     const erSpørsmålBesvart = true;
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const stegobjekter = StegRoutes.map((steg: IStegRoute, index: number) => {
         return {
@@ -60,7 +64,11 @@ const Steg: React.FC<ISteg> = ({ tittel, children }) => {
                             </KnappBase>
                         )}
                         {erSpørsmålBesvart && !erSisteSteg && (
-                            <KnappBase type={'hoved'} onClick={() => history.push(nesteRoute.path)}>
+                            <KnappBase
+                                className={'neste'}
+                                type={'hoved'}
+                                onClick={() => history.push(nesteRoute.path)}
+                            >
                                 <div>Neste</div>
                             </KnappBase>
                         )}

@@ -1,4 +1,5 @@
 @mobile: ~"all and (max-width: 420px)";
+@knapp-width: 9.5rem;
 @panel-innhold-bredde: 588px;
 
 .steg {
@@ -19,42 +20,51 @@
     
     &__knapper {
       padding: 2rem;
-      grid-area: knapper;
       display: flex;
       justify-self: center;
       flex-direction: column;
       align-items: center;
+
+      @media @mobile {
+        margin-bottom: 10rem;
+      }
+
+      @media (orientation : landscape) {
+        margin-bottom: 10rem;
+      }
   
       .avbryt {
         margin-top: 1rem;
         justify-content: center;
-        max-width: 134px;
+        width: @knapp-width;
       }
 
       &--rad1 {
         display: flex;
         flex-direction: row;
         justify-content: center;
+        min-width: @knapp-width;
     
         @media @mobile {
-          flex-direction: column;
-          
+          flex-direction: column-reverse;
+        }
+
+        & .neste {
+          width: @knapp-width;
         }
 
         & .tilbake {
           margin-right: 1rem;
-          max-width: 134px;
+          width: @knapp-width;
         
           @media @mobile {
-            max-width: 100%;
+            width: 100%;
             margin-right: 0;
-            margin-bottom: 1rem;
+            margin-top: 1rem;
           }
-        }
-
-        & .tilbake--alene {
-          margin-right: 0;
-          max-width: 134px;
+          &--alene {
+            margin-right: 0;
+          }
         }
       }
     }
