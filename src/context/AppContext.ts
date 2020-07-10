@@ -23,32 +23,26 @@ export enum ESøknadstype {
     EØS = 'EØS',
 }
 
-interface ITekstFelt {
-    label: string;
-    verdi: string;
-}
-
 interface ISøker {
-    navn: ITekstFelt;
-}
-
-interface IBooleanFelt {
-    label: string;
-    verdi: boolean;
+    navn: ISøknadsfelt<string>;
 }
 
 interface IBarn {
-    navn: ITekstFelt;
-    alder: ITekstFelt;
-    fødselsdato: ITekstFelt;
-    ident: ITekstFelt;
-    borMedSøker: IBooleanFelt;
+    navn: ISøknadsfelt<string>;
+    alder: ISøknadsfelt<string>;
+    fødselsdato: ISøknadsfelt<string>;
+    ident: ISøknadsfelt<string>;
+    borMedSøker: ISøknadsfelt<boolean>;
 }
 
 interface ISøknad {
-    søknadstype: ITekstFelt;
+    søknadstype: ISøknadsfelt<string>;
     søker: ISøker;
     barn: IBarn[];
+}
+interface ISøknadsfelt<T> {
+    label: string;
+    verdi: T;
 }
 
 const initialState = {
@@ -71,7 +65,13 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
         InnloggetStatus.IKKE_VERIFISERT
     );
+<<<<<<< HEAD
     const [søknad, settSøknad] = useState<ISøknad>(initialState);
+=======
+    const [søknad, settSøknad] = useState<ISøknad>({
+        søknadstype: { label: '', verdi: ESøknadstype.IKKE_SATT },
+    });
+>>>>>>> master
 
     autentiseringsInterceptor();
 
