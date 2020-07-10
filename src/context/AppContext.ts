@@ -23,7 +23,7 @@ export enum ESøknadstype {
     EØS = 'EØS',
 }
 
-interface ISøknad {
+export interface ISøknad {
     søknadstype: ESøknadstype;
 }
 

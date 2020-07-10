@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import Steg from '../Steg/Steg';
 import { Select } from 'nav-frontend-skjema';
-import { useApp, ESøknadstype } from '../../../context/AppContext';
+import { useApp, ESøknadstype, ISøknad } from '../../../context/AppContext';
 
 const Søknadstype: React.FC = () => {
     const { søknad, settSøknad, axiosRequest } = useApp();
 
     useEffect(() => {
-        axiosRequest<string, Object>({
-            // TODO: endre ^ fra Object
+        axiosRequest<string, ISøknad>({
             url: '/api/kontrakt',
             method: 'POST',
             withCredentials: true,
