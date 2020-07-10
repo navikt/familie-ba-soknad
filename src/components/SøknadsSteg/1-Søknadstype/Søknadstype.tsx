@@ -5,6 +5,7 @@ import { useApp, ESøknadstype, ISøknad } from '../../../context/AppContext';
 
 const Søknadstype: React.FC = () => {
     const { søknad, settSøknad, axiosRequest } = useApp();
+    const label = 'Velg type søknad';
 
     useEffect(() => {
         axiosRequest<string, ISøknad>({
@@ -20,10 +21,14 @@ const Søknadstype: React.FC = () => {
     return (
         <Steg tittel={'Søknadstype'}>
             <Select
-                label="Velg type søknad"
+                label={label}
                 bredde="l"
-                onChange={e => settSøknad({ søknadstype: e.currentTarget.value as ESøknadstype })}
-                defaultValue={søknad.søknadstype}
+                onChange={e =>
+                    settSøknad({
+                        søknadstype: { label: label, verdi: e.currentTarget.value as ESøknadstype },
+                    })
+                }
+                defaultValue={søknad.søknadstype.verdi}
             >
                 <option value={ESøknadstype.IKKE_SATT}>Velg type søknad</option>
                 <option value={ESøknadstype.ORDINÆR}>Ordinær</option>

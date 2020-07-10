@@ -23,8 +23,13 @@ export enum ESøknadstype {
     EØS = 'EØS',
 }
 
+interface ISøknadsfelt<T> {
+    label: string;
+    verdi: T;
+}
+
 export interface ISøknad {
-    søknadstype: ESøknadstype;
+    søknadstype: ISøknadsfelt<ESøknadstype>;
 }
 
 const [AppProvider, useApp] = createUseContext(() => {
@@ -34,7 +39,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         InnloggetStatus.IKKE_VERIFISERT
     );
     const [søknad, settSøknad] = useState<ISøknad>({
-        søknadstype: ESøknadstype.IKKE_SATT,
+        søknadstype: { label: '', verdi: ESøknadstype.IKKE_SATT },
     });
 
     autentiseringsInterceptor();
