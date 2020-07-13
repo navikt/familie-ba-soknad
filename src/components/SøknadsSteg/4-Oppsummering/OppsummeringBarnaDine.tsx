@@ -11,7 +11,11 @@ const OppsummeringBarnaDine: React.FC = () => {
 
     return (
         <Ekspanderbartpanel tittel={<Undertittel>Barna Dine</Undertittel>}>
-            {barn.map(barn => Object.values(barn).map(felt => visLabelOgSvar(felt)))}
+            {barn.map(barn => (
+                <div className={'barn__detaljer'}>
+                    {Object.values(barn).map(felt => visLabelOgSvar(felt))}
+                </div>
+            ))}
         </Ekspanderbartpanel>
     );
 };
