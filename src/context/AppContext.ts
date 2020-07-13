@@ -12,7 +12,6 @@ import {
 } from '@navikt/familie-typer';
 import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
-import { verifiserAtBrukerErAutentisert } from '../utils/autentisering';
 
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 
@@ -105,6 +104,21 @@ const [AppProvider, useApp] = createUseContext(() => {
             innloggetStatus === InnloggetStatus.FEILET ||
             sluttbruker.status === RessursStatus.FEILET
         );
+    };
+
+    const verifiserAtBrukerErAutentisert = (
+        settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
+    ) => {
+        return axiosRequest({
+            url: '/api/innlogget',
+            method: 'GET',
+            withCredentials: true,
+            påvirkerSystemLaster: true,
+        })
+            .then(_ => {
+                settInnloggetStatus(InnloggetStatus.AUTENTISERT);
+            })
+            .catch(_ => settInnloggetStatus(InnloggetStatus.FEILET));
     };
 
     return {
