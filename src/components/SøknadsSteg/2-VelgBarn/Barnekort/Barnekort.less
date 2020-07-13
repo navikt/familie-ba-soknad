@@ -1,60 +1,74 @@
-.barnekort {
-    padding: 10px;
-    height: 400px;
-    width: 276px;
-    
-        &__header {
-            box-sizing: border-box;
-            height: 128px;
-            background-color: #4d3e55;
-            border-top-right-radius: 5px;
-            border-top-left-radius: 5px;
-            border-bottom: 4px solid #826ba1;
-            display: flex;
-            align-items: flex-end;
-    
-            img {
-            display: block;
-            margin: 0 auto;
+.barnekort-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    margin: 0 auto;
+    width: 620px;
+
+    .barnekort {
+        padding: 10px;
+        height: 400px;
+        width: 276px;
+        
+            &__header {
+                box-sizing: border-box;
+                height: 128px;
+                background-color: #4d3e55;
+                border-top-right-radius: 5px;
+                border-top-left-radius: 5px;
+                border-bottom: 4px solid #826ba1;
+                display: flex;
+                align-items: flex-end;
+        
+                img {
+                display: block;
+                margin: 0 auto;
+                }
+            }
+        
+            &__informasjonsboks {
+                text-align: center;
+                height: 272px;
+                background-color: #e7e9e9;
+        
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+        
+                .informasjonsboks-innhold {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+
+                    .fjern-barn-knapp {
+                        margin-top: 0.5rem;
+                    }
+
+                    .med-i-søknad {
+                        margin-top: 0.5rem;
+                    }
+                }
+            }
+        
+            &__endre-barnekort {
+                color: @navBla;
+            }
+        
+            .endre-barnekort:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        
+            .legg-til-barn-kort {
+                border-radius: 5px;
+                height: 200px;
+        
+                .typo-element {
+                padding: 30px;
             }
         }
-    
-        &__informasjonsboks {
-            text-align: center;
-            height: 272px;
-            background-color: #e7e9e9;
-    
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-    
-            .informasjonsboks-innhold {
-            height: 100%;
-    
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            }
-        }
-    
-        &__endre-barnekort {
-            color: @navBla;
-        }
-    
-        .endre-barnekort:hover {
-            text-decoration: underline;
-            cursor: pointer;
-        }
-    
-        .legg-til-barn-kort {
-            border-radius: 5px;
-            height: 200px;
-    
-            .typo-element {
-            padding: 30px;
-            }
-        }
-        }
-    
-    
-    
-      
+    }
+}
+        
+        
+        

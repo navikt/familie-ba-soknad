@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
+import KnappBase, { Knapp, Fareknapp, Flatknapp } from 'nav-frontend-knapper';
+import { EtikettSuksess } from 'nav-frontend-etiketter';
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
@@ -14,7 +16,15 @@ interface Props {
     id: string;
 }
 
-const Barnekort: React.FC<Props> = ({ id, navn, ident, alder, harSammeAdresse, fødselsdato }) => {
+const Barnekort: React.FC<Props> = ({
+    id,
+    navn,
+    ident,
+    alder,
+    harSammeAdresse,
+    medISøknad,
+    fødselsdato,
+}) => {
     //const { søknad, settSøknad } = useSøknad();
     const [åpenEndreModal, settÅpenEndreModal] = useState(false);
 
@@ -54,6 +64,19 @@ const Barnekort: React.FC<Props> = ({ id, navn, ident, alder, harSammeAdresse, f
                     <div className="informasjonselement">
                         <Normaltekst>{`Registrert på adresse:`}</Normaltekst>
                         <Normaltekst>{bosted}</Normaltekst>
+                    </div>
+                    <div>
+                        {!medISøknad && <Knapp mini>Legg til søknad</Knapp>}
+                        {medISøknad && (
+                            <>
+                                <EtikettSuksess className={'med-i-søknad'}>
+                                    Med i søknad
+                                </EtikettSuksess>
+                                <Knapp mini className={'fjern-barn-knapp'}>
+                                    Fjern fra søknad
+                                </Knapp>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
