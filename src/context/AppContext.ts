@@ -46,7 +46,7 @@ export interface ISøknadsfelt<T> {
 }
 
 const initialState = {
-    søknadstype: { label: '', verdi: ESøknadstype.IKKE_SATT },
+    søknadstype: { label: 'Velg type søknad', verdi: ESøknadstype.IKKE_SATT },
     søker: { navn: { label: '', verdi: '' } },
     barn: [],
 };
