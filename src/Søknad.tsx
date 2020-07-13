@@ -14,7 +14,7 @@ const Søknad = () => {
     const { systemetLaster, systemetFeiler, innloggetStatus } = useApp();
     return (
         <main className="App">
-            {innloggetStatus === InnloggetStatus.AUTENTISERT && (
+            {innloggetStatus === InnloggetStatus.AUTENTISERT && !systemetFeiler() && (
                 <div className={classNames(systemetLaster() && 'blur')}>
                     <Router>
                         <Switch>
@@ -36,7 +36,9 @@ const Søknad = () => {
                 </div>
             )}
             {systemetLaster() && <SystemetLaster />}
-            {systemetFeiler() && <Alertstripe type="feil">En feil har oppstått!</Alertstripe>}
+            {systemetFeiler() && !systemetLaster() && (
+                <Alertstripe type="feil">En feil har oppstått!</Alertstripe>
+            )}
         </main>
     );
 };
