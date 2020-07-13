@@ -85,7 +85,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                         };
                         const barn = ressurs.data.barn.map(barn => {
                             return {
-                                navn: { label: 'Ditt navn', verdi: barn.navn },
+                                navn: { label: 'Barnets navn', verdi: barn.navn },
                                 //alder: { label: 'Alder', verdi: '2' },
                                 fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
                                 ident: { label: 'Fødselsnummer(?)', verdi: barn.ident },
