@@ -20,7 +20,7 @@ const OppsummeringSøknadstype: React.FC = () => {
                 onClick={() =>
                     history.replace({
                         pathname: hentPath(StegRoutes, RouteEnum.Søknadstype),
-                        state: { kommerFraOppsummering: true } as any,
+                        state: { kommerFraOppsummering: true },
                     })
                 }
             />

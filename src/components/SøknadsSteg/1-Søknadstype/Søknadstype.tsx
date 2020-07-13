@@ -3,11 +3,12 @@ import Steg from '../Steg/Steg';
 import { Select } from 'nav-frontend-skjema';
 import { useApp, ESøknadstype, ISøknad } from '../../../context/AppContext';
 import { useLocation } from 'react-router-dom';
+import { ILocation } from '../../../typer/location';
 
 const Søknadstype: React.FC = () => {
     const { søknad, settSøknad, axiosRequest } = useApp();
     const label = 'Velg type søknad';
-    const location = useLocation() as any;
+    const location = useLocation<ILocation>();
 
     const kommerFraOppsummering = location.state?.kommerFraOppsummering;
 
@@ -23,7 +24,7 @@ const Søknadstype: React.FC = () => {
     }, [søknad]);
 
     return (
-        <Steg tittel={'Søknadstype'}>
+        <Steg tittel={'Søknadstype'} skalViseKnapper={!kommerFraOppsummering}>
             <Select
                 label={label}
                 bredde="l"
