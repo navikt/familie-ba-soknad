@@ -29,6 +29,7 @@ const Barnekort: React.FC<Props> = ({
     const { søknad, settSøknad } = useApp();
 
     medISøknad = Math.random() > 0.5;
+    harSammeAdresse = Math.random() > 0.5;
 
     const formaterFnr = (fødselsnummer: string) => {
         return fødselsnummer.substring(0, 6) + ' ' + fødselsnummer.substring(6, 11);
@@ -36,8 +37,6 @@ const Barnekort: React.FC<Props> = ({
 
     const ikoner = [barn1, barn2, barn3];
     const ikon = ikoner[Math.floor(Math.random() * ikoner.length)];
-
-    let bosted: string = 'Temp-bosted';
 
     return (
         <div className="barnekort">
@@ -56,10 +55,14 @@ const Barnekort: React.FC<Props> = ({
                         <Normaltekst>{alder}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
-                        <Normaltekst>{`Registrert på adresse:`}</Normaltekst>
-                        <Normaltekst>{bosted}</Normaltekst>
+                        {harSammeAdresse && (
+                            <Normaltekst>{`Registrert på adressen din`}</Normaltekst>
+                        )}
+                        {!harSammeAdresse && (
+                            <Normaltekst>{`Ikke registrert på din adresse`}</Normaltekst>
+                        )}
                     </div>
-                    <div>
+                    <div className="knappe-container">
                         {!medISøknad && <Knapp mini>Legg til søknad</Knapp>}
                         {medISøknad && (
                             <>
