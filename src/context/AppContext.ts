@@ -119,9 +119,8 @@ const [AppProvider, useApp] = createUseContext(() => {
                 return håndterApiRessurs(responsRessurs);
             })
             .catch((error: AxiosError) => {
-                loggFeil(error);
-
                 config.påvirkerSystemLaster && fjernRessursSomLaster(ressursId);
+                loggFeil(error);
 
                 const responsRessurs: ApiRessurs<T> = error.response?.data;
                 return håndterApiRessurs(responsRessurs);
