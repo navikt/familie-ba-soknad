@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
-import KnappBase, { Knapp, Fareknapp, Flatknapp } from 'nav-frontend-knapper';
+import { Knapp } from 'nav-frontend-knapper';
 import { EtikettSuksess } from 'nav-frontend-etiketter';
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
@@ -25,7 +25,7 @@ const Barnekort: React.FC<IBarn> = ({
         settSøknad({
             ...søknad,
             barn: [
-                ...søknad.barn.filter(b => b.ident != ident),
+                ...søknad.barn.filter(b => b.ident !== ident),
                 {
                     navn: navn,
                     alder: alder,
