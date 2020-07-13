@@ -1,39 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import KnappBase, { Knapp, Fareknapp, Flatknapp } from 'nav-frontend-knapper';
 import { EtikettSuksess } from 'nav-frontend-etiketter';
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
-import { useApp } from '../../../../context/AppContext';
+import { IBarn, useApp } from '../../../../context/AppContext';
 
-interface Props {
-    navn: string;
-    ident: string;
-    fødselsdato: string;
-    alder: string;
-    harSammeAdresse: boolean;
-    medISøknad: boolean;
-    id: string;
-}
-
-const Barnekort: React.FC<Props> = ({
-    id,
+const Barnekort: React.FC<IBarn> = ({
     navn,
     ident,
     alder,
-    harSammeAdresse,
+    borMedSøker,
     medISøknad,
     fødselsdato,
 }) => {
-    const { søknad, settSøknad } = useApp();
-
-    medISøknad = Math.random() > 0.5;
-    harSammeAdresse = Math.random() > 0.5;
-
     const formaterFnr = (fødselsnummer: string) => {
         return fødselsnummer.substring(0, 6) + ' ' + fødselsnummer.substring(6, 11);
     };
+
+    const { søknad, settSøknad } = useApp();
+
+    function settMedISøknad(erMed: boolean) {
+        settSøknad({
+            ...søknad,
+            barn: [
+                ...søknad.barn.filter(b => b.ident != ident),
+                {
+                    navn: navn,
+                    alder: alder,
+                    fødselsdato: fødselsdato,
+                    ident: ident,
+                    borMedSøker: borMedSøker,
+                    medISøknad: { label: medISøknad.label, verdi: erMed },
+                },
+            ],
+        });
+    }
+
+    function fjernBarnFraSøknad() {
+        settMedISøknad(false);
+    }
+
+    function leggTilBarnISøknad() {
+        settMedISøknad(true);
+    }
 
     const ikoner = [barn1, barn2, barn3];
     const ikon = ikoner[Math.floor(Math.random() * ikoner.length)];
@@ -45,32 +56,36 @@ const Barnekort: React.FC<Props> = ({
             </div>
             <div className="barnekort__informasjonsboks">
                 <div className="informasjonsboks-innhold">
-                    <Element>{navn}</Element>
+                    <Element>{navn.verdi}</Element>
                     <div className="informasjonselement">
-                        <Normaltekst>{`FØDSELSNUMMER:`}</Normaltekst>
-                        <Normaltekst>{formaterFnr(ident)}</Normaltekst>
+                        <Normaltekst>{ident.label}</Normaltekst>
+                        <Normaltekst>{formaterFnr(ident.verdi)}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
-                        <Normaltekst>{`Alder:`}</Normaltekst>
-                        <Normaltekst>{alder}</Normaltekst>
+                        <Normaltekst>{alder.label}</Normaltekst>
+                        <Normaltekst>{alder.verdi}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
-                        {harSammeAdresse && (
-                            <Normaltekst>{`Registrert på adressen din`}</Normaltekst>
-                        )}
-                        {!harSammeAdresse && (
+                        {borMedSøker.verdi && <Normaltekst>{borMedSøker.label}</Normaltekst>}
+                        {!borMedSøker.verdi && (
                             <Normaltekst>{`Ikke registrert på din adresse`}</Normaltekst>
                         )}
                     </div>
                     <div className="knappe-container">
-                        {!medISøknad && <Knapp mini>Legg til søknad</Knapp>}
-                        {medISøknad && (
+                        {!medISøknad.verdi && (
+                            <Knapp mini onClick={leggTilBarnISøknad}>
+                                Legg til søknad
+                            </Knapp>
+                        )}
+                        {medISøknad.verdi && (
                             <>
                                 <EtikettSuksess className={'med-i-søknad'}>
                                     Med i søknad
                                 </EtikettSuksess>
                                 <Normaltekst>
-                                    <div className="lenke fjern-barn">{'Fjern fra søknad'}</div>
+                                    <div className="lenke fjern-barn" onClick={fjernBarnFraSøknad}>
+                                        {'Fjern fra søknad'}
+                                    </div>
                                 </Normaltekst>
                             </>
                         )}

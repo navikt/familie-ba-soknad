@@ -27,7 +27,7 @@ interface ISøker {
     navn: ISøknadsfelt<string>;
 }
 
-interface IBarn {
+export interface IBarn {
     navn: ISøknadsfelt<string>;
     alder: ISøknadsfelt<number>;
     fødselsdato: ISøknadsfelt<string>;

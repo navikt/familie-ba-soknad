@@ -1,39 +1,25 @@
 import React from 'react';
 import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
+import { useApp } from '../../../context/AppContext';
 
 const Steg2: React.FC = () => {
+    const { søknad } = useApp();
+
     return (
         <Steg tittel={'Steg 2'}>
             Dette er Steg 2
             <div className="barnekort-wrapper">
-                <Barnekort
-                    navn={'Barn Barnesen'}
-                    ident={'12345678901'}
-                    fødselsdato={'123456'}
-                    alder={'4'}
-                    harSammeAdresse={true}
-                    medISøknad={true}
-                    id={'1'}
-                ></Barnekort>
-                <Barnekort
-                    navn={'Bjarne Barnesen'}
-                    ident={'12345678901'}
-                    fødselsdato={'123456'}
-                    alder={'4'}
-                    harSammeAdresse={true}
-                    medISøknad={true}
-                    id={'2'}
-                ></Barnekort>
-                <Barnekort
-                    navn={'Barn Tre Barnesen'}
-                    ident={'12345678901'}
-                    fødselsdato={'123456'}
-                    alder={'4'}
-                    harSammeAdresse={true}
-                    medISøknad={true}
-                    id={'3'}
-                ></Barnekort>
+                {søknad.barn.map(barn => (
+                    <Barnekort
+                        navn={barn.navn}
+                        alder={barn.alder}
+                        borMedSøker={barn.borMedSøker}
+                        ident={barn.ident}
+                        fødselsdato={barn.fødselsdato}
+                        medISøknad={barn.medISøknad}
+                    />
+                ))}
             </div>
         </Steg>
     );
