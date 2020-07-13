@@ -46,17 +46,9 @@ export interface ISøknadsfelt<T> {
 }
 
 const initialState = {
-    søknadstype: { label: 'Velg type søknad', verdi: ESøknadstype.IKKE_SATT },
-    søker: { navn: { label: 'Ditt navn', verdi: 'Kis Kisesen' } },
-    barn: [
-        {
-            navn: { label: 'Ditt navn', verdi: 'Kid Kisesen' },
-            //alder: { label: 'Alder', verdi: '2' },
-            fødselsdato: { label: 'Fødselsdato', verdi: '2018-01-01' },
-            ident: { label: 'Fødselsnummer(?)', verdi: '12345678910' },
-            borMedSøker: { label: 'Bor barnet på din adresse?', verdi: true },
-        },
-    ],
+    søknadstype: { label: '', verdi: ESøknadstype.IKKE_SATT },
+    søker: { navn: { label: '', verdi: '' } },
+    barn: [],
 };
 
 const [AppProvider, useApp] = createUseContext(() => {
