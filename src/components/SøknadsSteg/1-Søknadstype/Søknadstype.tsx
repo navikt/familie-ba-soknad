@@ -2,10 +2,14 @@ import React, { useEffect } from 'react';
 import Steg from '../Steg/Steg';
 import { Select } from 'nav-frontend-skjema';
 import { useApp, ESøknadstype, ISøknad } from '../../../context/AppContext';
+import { useLocation } from 'react-router-dom';
 
 const Søknadstype: React.FC = () => {
     const { søknad, settSøknad, axiosRequest } = useApp();
     const label = 'Velg type søknad';
+    const location = useLocation() as any;
+
+    const kommerFraOppsummering = location.state?.kommerFraOppsummering;
 
     useEffect(() => {
         axiosRequest<string, ISøknad>({
