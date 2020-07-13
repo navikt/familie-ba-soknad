@@ -25,7 +25,11 @@ const Søknadstype: React.FC = () => {
                 bredde="l"
                 onChange={e =>
                     settSøknad({
-                        søknadstype: { label: label, verdi: e.currentTarget.value as ESøknadstype },
+                        ...søknad,
+                        søknadstype: {
+                            label: label,
+                            verdi: e.target.value as ESøknadstype,
+                        },
                     })
                 }
                 defaultValue={søknad.søknadstype.verdi}

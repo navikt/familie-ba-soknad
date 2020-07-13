@@ -7338,6 +7338,11 @@ nav-frontend-alertstriper@^3.0.20:
   resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper/-/nav-frontend-alertstriper-3.0.20.tgz#e17c69521397ff272339e47bc914f3c3d8c6f631"
   integrity sha512-snuGuACvEmXYz2giZxLD3QXUCQoyZ4AA5rYI5M5EQld07QOqTcOdN0rHCD08xrjxo+3PNgpDRj81kG0iidk9Yg==
 
+nav-frontend-chevron-style@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/nav-frontend-chevron-style/-/nav-frontend-chevron-style-0.3.5.tgz#778d814ccf98825da744b7fb95a6e7dfb3ff7f4e"
+  integrity sha512-RahSZnJ+R/GtSHy4I15omGUyLawqswb3xgIG7Zcc88pbLH1x4Z1UHyqRShbsf1yKklXCgHzhx+JneZKYb2av/w==
+
 nav-frontend-core@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-5.0.1.tgz#f59d79da9342434cc89046bc289c90e2a5d53ea8"
@@ -7352,6 +7357,15 @@ nav-frontend-etiketter@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/nav-frontend-etiketter/-/nav-frontend-etiketter-2.0.5.tgz#fad397e653f5c944124850f398f052e1a667c933"
   integrity sha512-vuZVjk7v3I/4WUx6Sr2Y4KervhyzyLdaChoGAddHkVgrZwAulDDdZxPy/X3NnqkY8v1C17BqELtnNdMKrl7NfQ==
+nav-frontend-ekspanderbartpanel-style@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-1.0.19.tgz#e336ffdfdbb829808c79f36bf004f869aeb31a2b"
+  integrity sha512-3QOwwWHOv9gqvtLK22j8WfSCrXfgG9snJIc6DBoGpCBxsVJpbZttQ0pAFRyLwA5ejPM/KPGq/MfIFSiCkv2mdA==
+
+nav-frontend-ekspanderbartpanel@^3.0.21:
+  version "3.0.21"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-3.0.21.tgz#3ad2a6beb31eea67478a01e257c3eaa7428d2c0e"
+  integrity sha512-6hUkkmOm/AtGbpD8U2d3lTLu9D+5EOxDuH9Av/RXE0W2vO0wAevLZbXs6SzWSHvbEqoQduE6+pN94YA5hCV+lg==
 
 nav-frontend-ikoner-assets@^2.0.1:
   version "2.0.1"
@@ -9157,6 +9171,11 @@ react-app-polyfill@^1.0.6:
     raf "^3.4.1"
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
+
+react-collapse@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-collapse/-/react-collapse-5.0.1.tgz#f763b7207aee73baa1ff778b2d0b4ffb49d900a0"
+  integrity sha512-cN2tkxBWizhPQ2JHfe0aUSJtmMthKA17NZkTElpiQ2snQAAi1hssXZ2fv88rAPNNvG5ss4t0PbOZT0TIl9Lk3Q==
 
 react-dev-utils@^10.2.1:
   version "10.2.1"
