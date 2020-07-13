@@ -2,9 +2,7 @@ import React from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { ISøknadsfelt } from '../context/AppContext';
 
-export const visLabelOgSvar = (objekt: ISøknadsfelt<string> | undefined) => {
-    console.log(objekt, 'Halla');
-
+export const visLabelOgSvar = (objekt: ISøknadsfelt<string | boolean | number> | undefined) => {
     return objekt ? (
         <div className="spørsmål-og-svar">
             <Element>{objekt.label}</Element>
@@ -13,8 +11,8 @@ export const visLabelOgSvar = (objekt: ISøknadsfelt<string> | undefined) => {
     ) : null;
 };
 
-export const verdiTilTekstsvar = (verdi: string | boolean) => {
-    if (typeof verdi === 'string') {
+export const verdiTilTekstsvar = (verdi: string | boolean | number) => {
+    if (typeof verdi === 'string' || typeof verdi === 'number') {
         return <Normaltekst>{verdi}</Normaltekst>;
     } else if (typeof verdi === 'boolean') {
         let jaTekst = 'Ja';
@@ -22,6 +20,6 @@ export const verdiTilTekstsvar = (verdi: string | boolean) => {
 
         return verdi ? <Normaltekst>{jaTekst}</Normaltekst> : <Normaltekst>{neiTekst}</Normaltekst>;
     } else {
-        return 'Halla dude';
+        return null;
     }
 };

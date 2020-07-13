@@ -13,7 +13,7 @@ import {
 import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
 import { verifiserAtBrukerErAutentisert } from '../utils/autentisering';
-
+import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 
 export enum ESøknadstype {
@@ -29,10 +29,11 @@ interface ISøker {
 
 interface IBarn {
     navn: ISøknadsfelt<string>;
-    //alder: ISøknadsfelt<string>;
+    alder: ISøknadsfelt<number>;
     fødselsdato: ISøknadsfelt<string>;
     ident: ISøknadsfelt<string>;
     borMedSøker: ISøknadsfelt<boolean>;
+    medISøknad: ISøknadsfelt<boolean>;
 }
 
 export interface ISøknad {
@@ -86,9 +87,10 @@ const [AppProvider, useApp] = createUseContext(() => {
                         const barn = ressurs.data.barn.map(barn => {
                             return {
                                 navn: { label: 'Barnets navn', verdi: barn.navn },
-                                //alder: { label: 'Alder', verdi: '2' },
+                                alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
                                 fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
-                                ident: { label: 'Fødselsnummer(?)', verdi: barn.ident },
+                                ident: { label: 'Fødselsnummer eller d-nummer', verdi: barn.ident },
+                                medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
                                 borMedSøker: {
                                     label: 'Bor barnet på din adresse?',
                                     verdi: barn.borMedSøker,
