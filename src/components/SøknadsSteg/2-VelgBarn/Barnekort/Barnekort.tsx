@@ -5,6 +5,7 @@ import { EtikettSuksess } from 'nav-frontend-etiketter';
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
+import { useApp } from '../../../../context/AppContext';
 
 interface Props {
     navn: string;
@@ -25,10 +26,11 @@ const Barnekort: React.FC<Props> = ({
     medISøknad,
     fødselsdato,
 }) => {
-    //const { søknad, settSøknad } = useSøknad();
-    const [åpenEndreModal, settÅpenEndreModal] = useState(false);
+    const { søknad, settSøknad } = useApp();
 
-    const formatFnr = (fødselsnummer: string) => {
+    medISøknad = Math.random() > 0.5;
+
+    const formaterFnr = (fødselsnummer: string) => {
         return fødselsnummer.substring(0, 6) + ' ' + fødselsnummer.substring(6, 11);
     };
 
@@ -36,14 +38,6 @@ const Barnekort: React.FC<Props> = ({
     const ikon = ikoner[Math.floor(Math.random() * ikoner.length)];
 
     let bosted: string = 'Temp-bosted';
-
-    {
-        /*const fjernFraSøknad = (id: string) => {
-        const nyBarneListe = søknad.person.barn.filter(b => b.id !== id);
-
-        settSøknad({ ...søknad, person: { ...søknad.person, barn: nyBarneListe } });
-    };*/
-    }
 
     return (
         <div className="barnekort">
@@ -55,7 +49,7 @@ const Barnekort: React.FC<Props> = ({
                     <Element>{navn}</Element>
                     <div className="informasjonselement">
                         <Normaltekst>{`FØDSELSNUMMER:`}</Normaltekst>
-                        <Normaltekst>{ident}</Normaltekst>
+                        <Normaltekst>{formaterFnr(ident)}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
                         <Normaltekst>{`Alder:`}</Normaltekst>
@@ -72,9 +66,9 @@ const Barnekort: React.FC<Props> = ({
                                 <EtikettSuksess className={'med-i-søknad'}>
                                     Med i søknad
                                 </EtikettSuksess>
-                                <Knapp mini className={'fjern-barn-knapp'}>
-                                    Fjern fra søknad
-                                </Knapp>
+                                <Normaltekst>
+                                    <div className="lenke fjern-barn">{'Fjern fra søknad'}</div>
+                                </Normaltekst>
                             </>
                         )}
                     </div>
