@@ -113,6 +113,13 @@ const [AppProvider, useApp] = createUseContext(() => {
         );
     };
 
+    const systemetOK = () => {
+        return (
+            innloggetStatus === InnloggetStatus.AUTENTISERT &&
+            sluttbruker.status === RessursStatus.SUKSESS
+        );
+    };
+
     const verifiserAtBrukerErAutentisert = (
         settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
     ) => {
@@ -136,6 +143,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetLaster,
         innloggetStatus,
         systemetFeiler,
+        systemetOK,
     };
 });
 
