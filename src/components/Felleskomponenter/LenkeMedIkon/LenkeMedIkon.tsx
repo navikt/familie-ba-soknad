@@ -3,7 +3,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import endreIkon from '../../../assets/endre-ikon.svg';
 
 interface Props {
-    onClick: () => void);
+    onClick: () => void;
 }
 
 const LenkeMedIkon: React.FC<Props> = ({ onClick }) => {
