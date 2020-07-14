@@ -32,7 +32,7 @@ export interface ISøknad {
 }
 
 const [AppProvider, useApp] = createUseContext(() => {
-    const [harTilgang, settTilgang] = useState<boolean>(false);
+    const [harTilgang, settTilgang] = useState<boolean>(true);
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
@@ -58,9 +58,8 @@ const [AppProvider, useApp] = createUseContext(() => {
                 påvirkerSystemLaster: true,
             }).then(ressurs => {
                 if (ressurs.status === RessursStatus.IKKE_TILGANG) {
-                    console.log(ressurs);
+                    settTilgang(false);
                 } else if (ressurs.status === RessursStatus.SUKSESS) {
-                    settTilgang(true);
                     settSluttbruker(ressurs);
                 }
             });
