@@ -43,7 +43,6 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     autentiseringsInterceptor();
 
-    console.log(sluttbruker);
     useEffect(() => {
         if (innloggetStatus === InnloggetStatus.IKKE_VERIFISERT) {
             verifiserAtBrukerErAutentisert(settInnloggetStatus);
@@ -56,11 +55,9 @@ const [AppProvider, useApp] = createUseContext(() => {
                 method: 'POST',
                 withCredentials: true,
                 påvirkerSystemLaster: true,
-            })
-                .then(ressurs => {
-                    settSluttbruker(ressurs);
-                })
-                .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
+            }).then(ressurs => {
+                settSluttbruker(ressurs);
+            });
         }
     }, [innloggetStatus]);
 
@@ -106,6 +103,13 @@ const [AppProvider, useApp] = createUseContext(() => {
         );
     };
 
+    const systemetOK = () => {
+        return (
+            innloggetStatus === InnloggetStatus.AUTENTISERT &&
+            sluttbruker.status === RessursStatus.SUKSESS
+        );
+    };
+
     const verifiserAtBrukerErAutentisert = (
         settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
     ) => {
@@ -129,6 +133,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetLaster,
         innloggetStatus,
         systemetFeiler,
+        systemetOK,
     };
 });
 
