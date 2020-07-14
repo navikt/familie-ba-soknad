@@ -17,7 +17,7 @@ import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentiseri
 import { ESøknadstype, ISøknad } from '../typer/søknad';
 
 const initialState = {
-    søknadstype: { label: 'Velg type søknad', verdi: ESøknadstype.IKKE_SATT },
+    søknadstype: { label: 'Hva slags barnetrygd søker du om?', verdi: ESøknadstype.IKKE_SATT },
     søker: { navn: { label: '', verdi: '' } },
     barn: [],
 };
