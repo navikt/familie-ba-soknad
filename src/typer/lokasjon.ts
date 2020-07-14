@@ -1,3 +1,3 @@
-export interface ILocation {
+export interface ILokasjon {
     kommerFraOppsummering?: boolean;
 }

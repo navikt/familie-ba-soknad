@@ -1,7 +1,7 @@
 export enum ESøknadstype {
-    IKKE_SATT = 'IKKE_SATT',
-    ORDINÆR = 'ORDINÆR',
-    UTVIDET = 'UTVIDET',
+    IKKE_SATT = 'Ikke satt',
+    ORDINÆR = 'Ordinær',
+    UTVIDET = 'Utvidet',
     EØS = 'EØS',
 }
 
@@ -19,7 +19,7 @@ interface IBarn {
 }
 
 export interface ISøknad {
-    søknadstype: ISøknadsfelt<string>;
+    søknadstype: ISøknadsfelt<ESøknadstype>;
     søker: ISøker;
     barn: IBarn[];
 }

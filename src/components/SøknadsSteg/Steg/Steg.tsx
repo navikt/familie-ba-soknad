@@ -9,16 +9,18 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { IStegRoute, hentNesteRoute, hentForrigeRoute } from '../../../routing/Routes';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { hentPath } from '../../../routing/Routes';
+import { ILokasjon } from '../../../typer/lokasjon';
 
 interface ISteg {
     tittel: string;
     erSpørsmålBesvart: boolean;
-    skalViseKnapper?: boolean;
 }
 
-const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, skalViseKnapper = true }) => {
-    const location = useLocation();
+const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     const history = useHistory();
+    const location = useLocation<ILokasjon>();
+
+    const skalViseKnapper = !location.state?.kommerFraOppsummering;
 
     useEffect(() => {
         window.scrollTo(0, 0);

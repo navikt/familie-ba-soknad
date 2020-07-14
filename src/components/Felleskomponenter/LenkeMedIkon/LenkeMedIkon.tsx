@@ -8,10 +8,10 @@ interface Props {
 
 const LenkeMedIkon: React.FC<Props> = ({ onClick }) => {
     return (
-        <div className="lenke-knapp" onClick={onClick}>
+        <button className="lenke-knapp" onClick={onClick}>
             <img alt="Endre" src={endreIkon} />
             <Normaltekst>Endre informasjon</Normaltekst>
-        </div>
+        </button>
     );
 };
 

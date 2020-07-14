@@ -32,9 +32,6 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     autentiseringsInterceptor();
 
-    console.log(sluttbruker);
-    console.log(søknad);
-
     useEffect(() => {
         if (innloggetStatus === InnloggetStatus.IKKE_VERIFISERT) {
             verifiserAtBrukerErAutentisert(settInnloggetStatus);
