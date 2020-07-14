@@ -11,7 +11,7 @@ interface ISøker {
 
 interface IBarn {
     navn: ISøknadsfelt<string>;
-    alder: ISøknadsfelt<number>;
+    alder: ISøknadsfelt<string>;
     ident: ISøknadsfelt<string>;
     borMedSøker: ISøknadsfelt<boolean>;
     medISøknad: ISøknadsfelt<boolean>;
