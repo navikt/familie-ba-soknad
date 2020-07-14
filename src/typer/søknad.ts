@@ -14,7 +14,7 @@ export interface IBarn {
     alder: ISøknadsfelt<number>;
     fødselsdato: ISøknadsfelt<string>;
     ident: ISøknadsfelt<string>;
-    borMedSøker: ISøknadsfelt<boolean>;
+    borMedSøker: ISøknadsfelt<string>;
     medISøknad: ISøknadsfelt<boolean>;
 }
 

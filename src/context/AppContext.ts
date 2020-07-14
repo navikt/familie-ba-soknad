@@ -58,13 +58,13 @@ const [AppProvider, useApp] = createUseContext(() => {
                                 alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
                                 fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
                                 ident: {
-                                    label: 'Fødselsnummer eller d-nummer',
+                                    label: 'Fødselsnummer',
                                     verdi: formaterFnr(barn.ident),
                                 },
-                                medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
+                                medISøknad: { label: 'Med i søknad', verdi: true },
                                 borMedSøker: {
-                                    label: 'Bor barnet på din adresse?',
-                                    verdi: barn.borMedSøker,
+                                    label: 'Adresse',
+                                    verdi: barn.borMedSøker ? 'Registrert på din adresse' : 'Ikke registrert på adressen din',
                                 },
                             };
                         });
