@@ -19,11 +19,15 @@ const Oppsummering: React.FC = () => {
             <Oppsummeringsbolk tittel="Barna du søker for">
                 {søknad.barn
                     .filter(barn => barn.medISøknad)
-                    .map(barn => (
-                        <div className={'barn__detaljer'}>
-                            {Object.values(barn).map(felt => visLabelOgSvar(felt))}
-                        </div>
-                    ))}
+                    .map(barn => {
+                        const barnKopi = { ...barn };
+                        delete barnKopi.medISøknad;
+                        return (
+                            <div className={'barn__detaljer'}>
+                                {Object.values(barnKopi).map(felt => visLabelOgSvar(felt))}
+                            </div>
+                        );
+                    })}
             </Oppsummeringsbolk>
         </Steg>
     );
