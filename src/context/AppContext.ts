@@ -12,7 +12,6 @@ import {
 } from '@navikt/familie-typer';
 import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
-import { verifiserAtBrukerErAutentisert } from '../utils/autentisering';
 import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 
@@ -119,9 +118,8 @@ const [AppProvider, useApp] = createUseContext(() => {
                 return håndterApiRessurs(responsRessurs);
             })
             .catch((error: AxiosError) => {
-                loggFeil(error);
-
                 config.påvirkerSystemLaster && fjernRessursSomLaster(ressursId);
+                loggFeil(error);
 
                 const responsRessurs: ApiRessurs<T> = error.response?.data;
                 return håndterApiRessurs(responsRessurs);
@@ -145,6 +143,21 @@ const [AppProvider, useApp] = createUseContext(() => {
             innloggetStatus === InnloggetStatus.FEILET ||
             sluttbruker.status === RessursStatus.FEILET
         );
+    };
+
+    const verifiserAtBrukerErAutentisert = (
+        settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
+    ) => {
+        return axiosRequest({
+            url: '/api/innlogget',
+            method: 'GET',
+            withCredentials: true,
+            påvirkerSystemLaster: true,
+        })
+            .then(_ => {
+                settInnloggetStatus(InnloggetStatus.AUTENTISERT);
+            })
+            .catch(_ => settInnloggetStatus(InnloggetStatus.FEILET));
     };
 
     return {
