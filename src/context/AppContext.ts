@@ -12,24 +12,15 @@ import {
 } from '@navikt/familie-typer';
 import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
-
+import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
+import { ESøknadstype, ISøknad } from '../typer/søknad';
 
-export enum ESøknadstype {
-    IKKE_SATT = 'IKKE_SATT',
-    ORDINÆR = 'ORDINÆR',
-    UTVIDET = 'UTVIDET',
-    EØS = 'EØS',
-}
-
-interface ISøknadsfelt<T> {
-    label: string;
-    verdi: T;
-}
-
-export interface ISøknad {
-    søknadstype: ISøknadsfelt<ESøknadstype>;
-}
+const initialState = {
+    søknadstype: { label: 'Velg type søknad', verdi: ESøknadstype.IKKE_SATT },
+    søker: { navn: { label: '', verdi: '' } },
+    barn: [],
+};
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
@@ -37,9 +28,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
         InnloggetStatus.IKKE_VERIFISERT
     );
-    const [søknad, settSøknad] = useState<ISøknad>({
-        søknadstype: { label: '', verdi: ESøknadstype.IKKE_SATT },
-    });
+    const [søknad, settSøknad] = useState<ISøknad>(initialState);
 
     autentiseringsInterceptor();
 
@@ -55,9 +44,30 @@ const [AppProvider, useApp] = createUseContext(() => {
                 method: 'POST',
                 withCredentials: true,
                 påvirkerSystemLaster: true,
-            }).then(ressurs => {
-                settSluttbruker(ressurs);
-            });
+            })
+                .then(ressurs => {
+                    settSluttbruker(ressurs);
+                    if (ressurs.status === RessursStatus.SUKSESS) {
+                        const søker = {
+                            navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
+                        };
+                        const barn = ressurs.data.barn.map(barn => {
+                            return {
+                                navn: { label: 'Barnets navn', verdi: barn.navn },
+                                alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
+                                fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
+                                ident: { label: 'Fødselsnummer eller d-nummer', verdi: barn.ident },
+                                medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
+                                borMedSøker: {
+                                    label: 'Bor barnet på din adresse?',
+                                    verdi: barn.borMedSøker,
+                                },
+                            };
+                        });
+                        settSøknad({ ...søknad, søker: søker, barn: barn });
+                    }
+                })
+                .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
         }
     }, [innloggetStatus]);
 

@@ -6,4 +6,6 @@ export interface IPerson {
 interface IBarn {
     ident: string;
     navn: string;
+    borMedSøker: boolean;
+    fødselsdato: string;
 }
