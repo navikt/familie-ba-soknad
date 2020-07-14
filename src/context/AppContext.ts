@@ -32,7 +32,6 @@ export interface ISøknad {
 }
 
 const [AppProvider, useApp] = createUseContext(() => {
-    const [harTilgang, settTilgang] = useState<boolean>(true);
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
@@ -57,11 +56,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                 withCredentials: true,
                 påvirkerSystemLaster: true,
             }).then(ressurs => {
-                if (ressurs.status === RessursStatus.IKKE_TILGANG) {
-                    settTilgang(false);
-                } else if (ressurs.status === RessursStatus.SUKSESS) {
-                    settSluttbruker(ressurs);
-                }
+                settSluttbruker(ressurs);
             });
         }
     }, [innloggetStatus]);
@@ -108,6 +103,13 @@ const [AppProvider, useApp] = createUseContext(() => {
         );
     };
 
+    const systemetOK = () => {
+        return (
+            innloggetStatus === InnloggetStatus.AUTENTISERT &&
+            sluttbruker.status === RessursStatus.SUKSESS
+        );
+    };
+
     const verifiserAtBrukerErAutentisert = (
         settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
     ) => {
@@ -131,7 +133,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetLaster,
         innloggetStatus,
         systemetFeiler,
-        harTilgang,
+        systemetOK,
     };
 });
 
