@@ -5,7 +5,6 @@ import { useApp } from './context/AppContext';
 import Helse from './components/Helse/Helse';
 import Forside from './components/Forside/Forside';
 import { StegRoutes } from './routing/Routes';
-import { InnloggetStatus } from './utils/autentisering';
 import Alertstripe from 'nav-frontend-alertstriper';
 import classNames from 'classnames';
 import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';

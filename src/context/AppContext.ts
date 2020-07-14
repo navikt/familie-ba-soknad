@@ -6,7 +6,6 @@ import {
     Ressurs,
     ApiRessurs,
     byggTomRessurs,
-    byggFeiletRessurs,
     byggHenterRessurs,
     RessursStatus,
 } from '@navikt/familie-typer';
@@ -45,35 +44,33 @@ const [AppProvider, useApp] = createUseContext(() => {
                 method: 'POST',
                 withCredentials: true,
                 påvirkerSystemLaster: true,
-            })
-                .then(ressurs => {
-                    settSluttbruker(ressurs);
-                    if (ressurs.status === RessursStatus.SUKSESS) {
-                        const søker = {
-                            navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
+            }).then(ressurs => {
+                settSluttbruker(ressurs);
+                if (ressurs.status === RessursStatus.SUKSESS) {
+                    const søker = {
+                        navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
+                    };
+                    const barn = ressurs.data.barn.map(barn => {
+                        return {
+                            navn: { label: 'Barnets navn', verdi: barn.navn },
+                            alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
+                            fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
+                            ident: {
+                                label: 'Fødselsnummer',
+                                verdi: formaterFnr(barn.ident),
+                            },
+                            medISøknad: { label: 'Med i søknad', verdi: true },
+                            borMedSøker: {
+                                label: 'Adresse',
+                                verdi: barn.borMedSøker
+                                    ? 'Registrert på din adresse'
+                                    : 'Ikke registrert på adressen din',
+                            },
                         };
-                        const barn = ressurs.data.barn.map(barn => {
-                            return {
-                                navn: { label: 'Barnets navn', verdi: barn.navn },
-                                alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
-                                fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
-                                ident: {
-                                    label: 'Fødselsnummer',
-                                    verdi: formaterFnr(barn.ident),
-                                },
-                                medISøknad: { label: 'Med i søknad', verdi: true },
-                                borMedSøker: {
-                                    label: 'Adresse',
-                                    verdi: barn.borMedSøker
-                                        ? 'Registrert på din adresse'
-                                        : 'Ikke registrert på adressen din',
-                                },
-                            };
-                        });
-                        settSøknad({ ...søknad, søker: søker, barn: barn });
-                    }
-                })
-
+                    });
+                    settSøknad({ ...søknad, søker: søker, barn: barn });
+                }
+            });
         }
     }, [innloggetStatus]);
 
