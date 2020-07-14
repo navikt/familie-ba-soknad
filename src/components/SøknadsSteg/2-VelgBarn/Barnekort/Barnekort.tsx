@@ -24,11 +24,11 @@ const Barnekort: React.FC<IBarn> = ({
             barn: [
                 ...søknad.barn.filter(b => b.ident !== ident),
                 {
-                    navn: navn,
-                    alder: alder,
-                    fødselsdato: fødselsdato,
-                    ident: ident,
-                    borMedSøker: borMedSøker,
+                    navn,
+                    alder,
+                    fødselsdato,
+                    ident,
+                    borMedSøker,
                     medISøknad: { label: medISøknad.label, verdi: erMed },
                 },
             ],
@@ -55,15 +55,17 @@ const Barnekort: React.FC<IBarn> = ({
                 <div className="informasjonsboks-innhold">
                     <Element>{navn.verdi}</Element>
                     <div className="informasjonselement">
-                        <Normaltekst>{ident.label}</Normaltekst>
+                        <Normaltekst>{ident.label.toLocaleUpperCase()}</Normaltekst>
                         <Normaltekst>{formaterFnr(ident.verdi)}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
-                        <Normaltekst>{alder.label}</Normaltekst>
+                        <Normaltekst>{alder.label.toLocaleUpperCase()}</Normaltekst>
                         <Normaltekst>{alder.verdi}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
-                        {borMedSøker.verdi && <Normaltekst>{borMedSøker.label}</Normaltekst>}
+                        {borMedSøker.verdi && (
+                            <Normaltekst>{borMedSøker.label.toLocaleUpperCase()}</Normaltekst>
+                        )}
                         {!borMedSøker.verdi && (
                             <Normaltekst>{`Ikke registrert på din adresse`}</Normaltekst>
                         )}
