@@ -1,25 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Steg from '../Steg/Steg';
 import { Select } from 'nav-frontend-skjema';
 import { useApp } from '../../../context/AppContext';
-import { ESøknadstype, ISøknad } from '../../../typer/søknad';
+import { ESøknadstype } from '../../../typer/søknad';
 
 const Søknadstype: React.FC = () => {
-    const { søknad, settSøknad, axiosRequest } = useApp();
+    const { søknad, settSøknad } = useApp();
     const label = 'Velg type søknad';
 
     const erSpørsmålBesvart = søknad.søknadstype.verdi !== ESøknadstype.IKKE_SATT;
-
-    useEffect(() => {
-        axiosRequest<string, ISøknad>({
-            url: '/api/kontrakt',
-            method: 'POST',
-            withCredentials: true,
-            data: søknad,
-        })
-            .then(console.log)
-            .catch(console.log);
-    }, [søknad]);
 
     return (
         <Steg tittel={'Søknadstype'} erSpørsmålBesvart={erSpørsmålBesvart}>
