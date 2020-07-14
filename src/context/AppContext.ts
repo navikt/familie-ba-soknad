@@ -32,6 +32,7 @@ export interface ISøknad {
 }
 
 const [AppProvider, useApp] = createUseContext(() => {
+    const [harTilgang, settTilgang] = useState<boolean>(false);
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
@@ -43,7 +44,6 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     autentiseringsInterceptor();
 
-    console.log(sluttbruker);
     useEffect(() => {
         if (innloggetStatus === InnloggetStatus.IKKE_VERIFISERT) {
             verifiserAtBrukerErAutentisert(settInnloggetStatus);
@@ -56,11 +56,14 @@ const [AppProvider, useApp] = createUseContext(() => {
                 method: 'POST',
                 withCredentials: true,
                 påvirkerSystemLaster: true,
-            })
-                .then(ressurs => {
+            }).then(ressurs => {
+                if (ressurs.status === RessursStatus.IKKE_TILGANG) {
+                    console.log(ressurs);
+                } else if (ressurs.status === RessursStatus.SUKSESS) {
+                    settTilgang(true);
                     settSluttbruker(ressurs);
-                })
-                .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
+                }
+            });
         }
     }, [innloggetStatus]);
 
@@ -129,6 +132,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetLaster,
         innloggetStatus,
         systemetFeiler,
+        harTilgang,
     };
 });
 
