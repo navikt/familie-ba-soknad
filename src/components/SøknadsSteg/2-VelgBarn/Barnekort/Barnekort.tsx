@@ -55,7 +55,7 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
                     </div>
                     <div className="knappe-container">
                         {!medISøknad.verdi && (
-                            <Knapp mini onClick={leggTilBarnISøknad}>
+                            <Knapp className="legg-til-barn" mini onClick={leggTilBarnISøknad}>
                                 Legg til i søknad
                             </Knapp>
                         )}
