@@ -20,7 +20,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
 
-    const skalViseKnapper = !location.state?.kommerFraOppsummering;
+    const kommerFraOppsummering = location.state?.kommerFraOppsummering;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -55,7 +55,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                     <div className={'innholdscontainer__children'}>{children}</div>
                 </main>
             </Panel>
-            {skalViseKnapper && (
+            {!kommerFraOppsummering && (
                 <div className={'steg__knapper'}>
                     <div className={`steg__knapper--rad1`}>
                         {!erFørsteSteg && (
@@ -83,7 +83,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                     </KnappBase>
                 </div>
             )}
-            {!skalViseKnapper && erSpørsmålBesvart && (
+            {kommerFraOppsummering && erSpørsmålBesvart && (
                 <div className={'steg__knapper'}>
                     <Hovedknapp
                         className="tilbake-til-oppsummering"
