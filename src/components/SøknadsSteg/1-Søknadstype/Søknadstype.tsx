@@ -12,6 +12,8 @@ const Søknadstype: React.FC = () => {
 
     const kommerFraOppsummering = location.state?.kommerFraOppsummering;
 
+    const erSpørsmålBesvart = søknad.søknadstype.verdi !== ESøknadstype.IKKE_SATT;
+
     useEffect(() => {
         axiosRequest<string, ISøknad>({
             url: '/api/kontrakt',
@@ -24,7 +26,11 @@ const Søknadstype: React.FC = () => {
     }, [søknad]);
 
     return (
-        <Steg tittel={'Søknadstype'} skalViseKnapper={!kommerFraOppsummering}>
+        <Steg
+            tittel={'Søknadstype'}
+            skalViseKnapper={!kommerFraOppsummering}
+            erSpørsmålBesvart={erSpørsmålBesvart}
+        >
             <Select
                 label={label}
                 bredde="l"

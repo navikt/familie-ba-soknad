@@ -12,13 +12,13 @@ import { hentPath } from '../../../routing/Routes';
 
 interface ISteg {
     tittel: string;
+    erSpørsmålBesvart: boolean;
     skalViseKnapper?: boolean;
 }
 
-const Steg: React.FC<ISteg> = ({ tittel, children, skalViseKnapper = true }) => {
+const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, skalViseKnapper = true }) => {
     const location = useLocation();
     const history = useHistory();
-    const erSpørsmålBesvart = true;
 
     useEffect(() => {
         window.scrollTo(0, 0);

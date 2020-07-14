@@ -6,7 +6,7 @@ import OppsummeringOmDeg from './OppsummeringOmDeg';
 
 const Oppsummering: React.FC = () => {
     return (
-        <Steg tittel={'Oppsummering'}>
+        <Steg tittel={'Oppsummering'} erSpørsmålBesvart={true}>
             <OppsummeringSøknadstype />
             <OppsummeringOmDeg />
             <OppsummeringBarnaDine />

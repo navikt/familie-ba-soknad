@@ -1,18 +1,15 @@
-.lenke-med-ikon {
+.lenke-knapp {
+    display: flex;
+    margin-top: 2rem;
+    color: @navBla;
+    text-decoration: underline;
 
-    & .lenke-knapp {
-        display: flex;
-        margin-top: 2rem;
-        color: @navBla;
-        text-decoration: underline;
-    
-        .typo-normal {
-            margin-left: 1rem;
-        }
-    
-        &:hover {
-            text-decoration: none;
-            cursor: pointer;
-        }
+    & .typo-normal {
+        margin-left: 1rem;
+    }
+
+    &:hover {
+        text-decoration: none;
+        cursor: pointer;
     }
 }
