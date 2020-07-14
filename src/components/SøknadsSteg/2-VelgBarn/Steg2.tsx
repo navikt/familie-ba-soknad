@@ -7,8 +7,8 @@ const Steg2: React.FC = () => {
     const { søknad } = useApp();
 
     return (
-        <Steg tittel={'Steg 2'}>
-            Dette er Steg 2
+        <Steg tittel={'Velg barn'}>
+            Velg hvilke barn du vil inkludere i søknaden din
             <div className="barnekort-wrapper">
                 {søknad.barn.map(barn => (
                     <Barnekort {...barn} />
