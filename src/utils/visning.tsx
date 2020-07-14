@@ -1,6 +1,6 @@
 import React from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { ISøknadsfelt } from '../context/AppContext';
+import { ISøknadsfelt } from '../typer/søknad';
 
 export const visLabelOgSvar = (objekt: ISøknadsfelt<string | boolean | number> | undefined) => {
     return objekt ? (

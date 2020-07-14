@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import Steg from '../Steg/Steg';
 import { Select } from 'nav-frontend-skjema';
-import { useApp, ESøknadstype, ISøknad } from '../../../context/AppContext';
+import { useApp } from '../../../context/AppContext';
+import { ESøknadstype, ISøknad } from '../../../typer/søknad';
 import { useLocation } from 'react-router-dom';
 import { ILocation } from '../../../typer/location';
 

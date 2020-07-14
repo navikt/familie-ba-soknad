@@ -14,36 +14,7 @@ import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
 import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
-
-export enum ESøknadstype {
-    IKKE_SATT = 'IKKE_SATT',
-    ORDINÆR = 'ORDINÆR',
-    UTVIDET = 'UTVIDET',
-    EØS = 'EØS',
-}
-
-interface ISøker {
-    navn: ISøknadsfelt<string>;
-}
-
-interface IBarn {
-    navn: ISøknadsfelt<string>;
-    alder: ISøknadsfelt<number>;
-    fødselsdato: ISøknadsfelt<string>;
-    ident: ISøknadsfelt<string>;
-    borMedSøker: ISøknadsfelt<boolean>;
-    medISøknad: ISøknadsfelt<boolean>;
-}
-
-export interface ISøknad {
-    søknadstype: ISøknadsfelt<string>;
-    søker: ISøker;
-    barn: IBarn[];
-}
-export interface ISøknadsfelt<T> {
-    label: string;
-    verdi: T;
-}
+import { ESøknadstype, ISøknad } from '../typer/søknad';
 
 const initialState = {
     søknadstype: { label: 'Velg type søknad', verdi: ESøknadstype.IKKE_SATT },

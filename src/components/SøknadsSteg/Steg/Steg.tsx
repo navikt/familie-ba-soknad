@@ -81,7 +81,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, skalVise
                     </KnappBase>
                 </div>
             )}
-            {!skalViseKnapper && (
+            {!skalViseKnapper && erSpørsmålBesvart && (
                 <div className={'steg__knapper'}>
                     <Hovedknapp
                         className="tilbake-til-oppsummering"
