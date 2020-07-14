@@ -15,7 +15,7 @@ import { IPerson } from '../typer/person';
 import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { ESøknadstype, ISøknad } from '../typer/søknad';
-import { formaterFnr } from '../utils/formatering';
+import { formaterFnr } from '../utils/visning';
 
 const initialState = {
     søknadstype: { label: 'Velg type søknad', verdi: ESøknadstype.IKKE_SATT },
@@ -64,7 +64,9 @@ const [AppProvider, useApp] = createUseContext(() => {
                                 medISøknad: { label: 'Med i søknad', verdi: true },
                                 borMedSøker: {
                                     label: 'Adresse',
-                                    verdi: barn.borMedSøker ? 'Registrert på din adresse' : 'Ikke registrert på adressen din',
+                                    verdi: barn.borMedSøker
+                                        ? 'Registrert på din adresse'
+                                        : 'Ikke registrert på adressen din',
                                 },
                             };
                         });
