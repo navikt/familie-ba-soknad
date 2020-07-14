@@ -11,14 +11,7 @@ const Steg2: React.FC = () => {
             Dette er Steg 2
             <div className="barnekort-wrapper">
                 {søknad.barn.map(barn => (
-                    <Barnekort
-                        navn={barn.navn}
-                        alder={barn.alder}
-                        borMedSøker={barn.borMedSøker}
-                        ident={barn.ident}
-                        fødselsdato={barn.fødselsdato}
-                        medISøknad={barn.medISøknad}
-                    />
+                    <Barnekort {...barn} />
                 ))}
             </div>
         </Steg>
