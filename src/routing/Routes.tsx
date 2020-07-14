@@ -12,7 +12,7 @@ export interface IStegRoute {
 
 export enum RouteEnum {
     Søknadstype = 'Søknadstype',
-    Steg2 = 'Steg2',
+    VelgBarn = 'Velg barn',
     Steg3 = 'Steg3',
     Oppsummering = 'Oppsummering',
 }
@@ -24,7 +24,7 @@ export const StegRoutes: IStegRoute[] = [
         route: RouteEnum.Søknadstype,
         komponent: Søknadstype,
     },
-    { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.Steg2, komponent: VelgBarn },
+    { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
     { path: '/steg3', label: 'Steg 3', route: RouteEnum.Steg3, komponent: Steg3 },
     {
         path: '/oppsummering',

@@ -6,7 +6,7 @@ import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
-import { IBarn } from '../../../../typer/søknad';
+import { IBarn, ISøknadsfelt } from '../../../../typer/søknad';
 
 const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøknad }) => {
     const { søknad, settSøknad } = useApp();
@@ -41,18 +41,9 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
             <div className="barnekort__informasjonsboks">
                 <div className="informasjonsboks-innhold">
                     <Element>{navn.verdi}</Element>
-                    <div className="informasjonselement">
-                        <Normaltekst>{ident.label.toLocaleUpperCase()}</Normaltekst>
-                        <Normaltekst>{ident.verdi}</Normaltekst>
-                    </div>
-                    <div className="informasjonselement">
-                        <Normaltekst>{alder.label.toLocaleUpperCase()}</Normaltekst>
-                        <Normaltekst>{alder.verdi}</Normaltekst>
-                    </div>
-                    <div className="informasjonselement">
-                        <Normaltekst>{borMedSøker.label.toLocaleUpperCase()}</Normaltekst>
-                        <Normaltekst>{borMedSøker.verdi}</Normaltekst>
-                    </div>
+                    <BarneKortInfo {...ident} />
+                    <BarneKortInfo {...alder} />
+                    <BarneKortInfo {...borMedSøker} />
                     <div className="knappe-container">
                         {!medISøknad.verdi && (
                             <Knapp className="legg-til-barn" mini onClick={leggTilBarnISøknad}>
@@ -74,6 +65,15 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
                     </div>
                 </div>
             </div>
+        </div>
+    );
+};
+
+const BarneKortInfo: React.FC<ISøknadsfelt<any>> = ({ label, verdi }) => {
+    return (
+        <div className="informasjonselement">
+            <Normaltekst>{label.toLocaleUpperCase()}</Normaltekst>
+            <Normaltekst>{verdi}</Normaltekst>
         </div>
     );
 };
