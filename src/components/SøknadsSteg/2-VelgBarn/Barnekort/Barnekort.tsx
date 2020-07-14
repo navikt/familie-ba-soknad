@@ -5,7 +5,8 @@ import { EtikettSuksess } from 'nav-frontend-etiketter';
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
-import { IBarn, useApp } from '../../../../context/AppContext';
+import { useApp } from '../../../../context/AppContext';
+import { IBarn } from '../../../../typer/søknad';
 
 const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøknad }) => {
     const { søknad, settSøknad } = useApp();

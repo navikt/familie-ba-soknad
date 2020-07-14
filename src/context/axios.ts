@@ -51,5 +51,5 @@ export const loggFeil = (error?: AxiosError, feilmelding?: string): void => {
 };
 
 export const apiLoggFeil = (melding: string) => {
-    throw new Error(melding);
+    console.log(melding);
 };
