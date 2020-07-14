@@ -6,6 +6,7 @@ import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
 import { IBarn, useApp } from '../../../../context/AppContext';
+import { formaterFnr } from '../../../../utils/formatering';
 
 const Barnekort: React.FC<IBarn> = ({
     navn,
@@ -15,10 +16,6 @@ const Barnekort: React.FC<IBarn> = ({
     medISøknad,
     fødselsdato,
 }) => {
-    const formaterFnr = (fødselsnummer: string) => {
-        return fødselsnummer.substring(0, 6) + ' ' + fødselsnummer.substring(6, 11);
-    };
-
     const { søknad, settSøknad } = useApp();
 
     function settMedISøknad(erMed: boolean) {
