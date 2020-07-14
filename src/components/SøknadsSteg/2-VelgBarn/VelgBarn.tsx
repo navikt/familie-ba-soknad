@@ -11,7 +11,7 @@ const VelgBarn: React.FC = () => {
     return (
         <Steg tittel={'Velg barn'} erSpørsmålBesvart={erSpørsmålBesvart}>
             Velg hvilke barn du vil inkludere i søknaden din
-            <div className="barnekort-wrapper">
+            <div className="barnekort-container">
                 {søknad.barn.map(barn => (
                     <Barnekort {...barn} />
                 ))}

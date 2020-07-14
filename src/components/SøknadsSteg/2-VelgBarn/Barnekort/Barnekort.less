@@ -1,19 +1,25 @@
-.barnekort-wrapper {
+.barnekort-container  {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     margin: 0 auto;
     width: 38.75rem;
 
-    .barnekort {
+    &:only-child {
+        justify-content: center;
+        width: auto;
+    }
+
+    .barnekort{
         padding: 0.625rem;
         height: 25rem;
         width: 17.25rem;
+
         
         &__header {
             box-sizing: border-box;
             height: 8rem;
-            background-color: #4d3e55;
+            background-color: @navLillaDarken60;
             border-top-right-radius: 0.3rem;
             border-top-left-radius: 0.3rem;
             border-bottom: 0.25rem solid @navLillaLighten20;
