@@ -26,7 +26,7 @@ const Søknadstype: React.FC = () => {
                 }
                 defaultValue={søknad.søknadstype.verdi}
             >
-                <option value={ESøknadstype.IKKE_SATT}>{ESøknadstype.IKKE_SATT}</option>
+                <option value={ESøknadstype.IKKE_SATT}>Velg søknadstype</option>
                 <option value={ESøknadstype.ORDINÆR}>{ESøknadstype.ORDINÆR}</option>
                 <option value={ESøknadstype.UTVIDET}>{ESøknadstype.UTVIDET}</option>
                 <option value={ESøknadstype.EØS}>{ESøknadstype.EØS}</option>
