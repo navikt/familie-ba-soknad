@@ -50,23 +50,19 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
                         <Normaltekst>{alder.verdi}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
-                        {borMedSøker.verdi && (
-                            <Normaltekst>{borMedSøker.label.toLocaleUpperCase()}</Normaltekst>
-                        )}
-                        {!borMedSøker.verdi && (
-                            <Normaltekst>{`Ikke registrert på din adresse`}</Normaltekst>
-                        )}
+                        <Normaltekst>{borMedSøker.label.toLocaleUpperCase()}</Normaltekst>
+                        <Normaltekst>{borMedSøker.verdi}</Normaltekst>
                     </div>
                     <div className="knappe-container">
                         {!medISøknad.verdi && (
                             <Knapp mini onClick={leggTilBarnISøknad}>
-                                Legg til søknad
+                                Legg til i søknad
                             </Knapp>
                         )}
                         {medISøknad.verdi && (
                             <>
                                 <EtikettSuksess className={'med-i-søknad'}>
-                                    Med i søknad
+                                    {medISøknad.label}
                                 </EtikettSuksess>
                                 <Normaltekst>
                                     <div className="lenke fjern-barn" onClick={fjernBarnFraSøknad}>

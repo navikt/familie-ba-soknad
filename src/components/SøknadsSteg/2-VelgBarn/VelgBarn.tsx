@@ -3,7 +3,7 @@ import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
 import { useApp } from '../../../context/AppContext';
 
-const Steg2: React.FC = () => {
+const VelgBarn: React.FC = () => {
     const { søknad } = useApp();
 
     const erSpørsmålBesvart = søknad.barn.some(barn => barn.medISøknad.verdi);
@@ -20,4 +20,4 @@ const Steg2: React.FC = () => {
     );
 };
 
-export default Steg2;
+export default VelgBarn;
