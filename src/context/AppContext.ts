@@ -55,7 +55,6 @@ const [AppProvider, useApp] = createUseContext(() => {
                             return {
                                 navn: { label: 'Barnets navn', verdi: barn.navn },
                                 alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
-                                fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
                                 ident: { label: 'Fødselsnummer eller d-nummer', verdi: barn.ident },
                                 medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
                                 borMedSøker: {
