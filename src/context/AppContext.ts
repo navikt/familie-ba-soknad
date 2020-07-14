@@ -15,6 +15,7 @@ import { IPerson } from '../typer/person';
 import { verifiserAtBrukerErAutentisert } from '../utils/autentisering';
 import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
+import { formaterFnr } from '../utils/formatering';
 
 export enum ESøknadstype {
     IKKE_SATT = 'IKKE_SATT',
@@ -89,7 +90,10 @@ const [AppProvider, useApp] = createUseContext(() => {
                                 navn: { label: 'Barnets navn', verdi: barn.navn },
                                 alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
                                 fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
-                                ident: { label: 'Fødselsnummer eller d-nummer', verdi: barn.ident },
+                                ident: {
+                                    label: 'Fødselsnummer eller d-nummer',
+                                    verdi: formaterFnr(barn.ident),
+                                },
                                 medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
                                 borMedSøker: {
                                     label: 'Bor barnet på din adresse?',
