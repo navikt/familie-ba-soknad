@@ -12,39 +12,10 @@ import {
 } from '@navikt/familie-typer';
 import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
-import { verifiserAtBrukerErAutentisert } from '../utils/autentisering';
 import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
-
-export enum ESøknadstype {
-    IKKE_SATT = 'IKKE_SATT',
-    ORDINÆR = 'ORDINÆR',
-    UTVIDET = 'UTVIDET',
-    EØS = 'EØS',
-}
-
-interface ISøker {
-    navn: ISøknadsfelt<string>;
-}
-
-export interface IBarn {
-    navn: ISøknadsfelt<string>;
-    alder: ISøknadsfelt<number>;
-    fødselsdato: ISøknadsfelt<string>;
-    ident: ISøknadsfelt<string>;
-    borMedSøker: ISøknadsfelt<boolean>;
-    medISøknad: ISøknadsfelt<boolean>;
-}
-
-export interface ISøknad {
-    søknadstype: ISøknadsfelt<string>;
-    søker: ISøker;
-    barn: IBarn[];
-}
-export interface ISøknadsfelt<T> {
-    label: string;
-    verdi: T;
-}
+import { ESøknadstype, ISøknad } from '../typer/søknad';
+import { formaterFnr } from '../utils/formatering';
 
 const initialState = {
     søknadstype: { label: 'Velg type søknad', verdi: ESøknadstype.IKKE_SATT },
@@ -61,9 +32,6 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [søknad, settSøknad] = useState<ISøknad>(initialState);
 
     autentiseringsInterceptor();
-
-    console.log(sluttbruker);
-    console.log(søknad);
 
     useEffect(() => {
         if (innloggetStatus === InnloggetStatus.IKKE_VERIFISERT) {
@@ -89,7 +57,10 @@ const [AppProvider, useApp] = createUseContext(() => {
                                 navn: { label: 'Barnets navn', verdi: barn.navn },
                                 alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
                                 fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
-                                ident: { label: 'Fødselsnummer eller d-nummer', verdi: barn.ident },
+                                ident: {
+                                    label: 'Fødselsnummer eller d-nummer',
+                                    verdi: formaterFnr(barn.ident),
+                                },
                                 medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
                                 borMedSøker: {
                                     label: 'Bor barnet på din adresse?',
@@ -144,6 +115,21 @@ const [AppProvider, useApp] = createUseContext(() => {
             innloggetStatus === InnloggetStatus.FEILET ||
             sluttbruker.status === RessursStatus.FEILET
         );
+    };
+
+    const verifiserAtBrukerErAutentisert = (
+        settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
+    ) => {
+        return axiosRequest({
+            url: '/api/innlogget',
+            method: 'GET',
+            withCredentials: true,
+            påvirkerSystemLaster: true,
+        })
+            .then(_ => {
+                settInnloggetStatus(InnloggetStatus.AUTENTISERT);
+            })
+            .catch(_ => settInnloggetStatus(InnloggetStatus.FEILET));
     };
 
     return {

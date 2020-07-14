@@ -3,20 +3,24 @@ import './Steg.less';
 import KnappBase from 'nav-frontend-knapper';
 import Stegindikator from 'nav-frontend-stegindikator';
 import Panel from 'nav-frontend-paneler';
-import { StegRoutes } from '../../../routing/Routes';
+import { StegRoutes, RouteEnum } from '../../../routing/Routes';
 import { Systemtittel, Ingress } from 'nav-frontend-typografi';
 import { useLocation, useHistory } from 'react-router-dom';
 import { IStegRoute, hentNesteRoute, hentForrigeRoute } from '../../../routing/Routes';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { hentPath } from '../../../routing/Routes';
+import { ILokasjon } from '../../../typer/lokasjon';
 
 interface ISteg {
     tittel: string;
+    erSpørsmålBesvart: boolean;
 }
 
-const Steg: React.FC<ISteg> = ({ tittel, children }) => {
-    const location = useLocation();
+const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     const history = useHistory();
-    const skalViseKnapper = true;
-    const erSpørsmålBesvart = true;
+    const location = useLocation<ILokasjon>();
+
+    const skalViseKnapper = !location.state?.kommerFraOppsummering;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -77,6 +81,20 @@ const Steg: React.FC<ISteg> = ({ tittel, children }) => {
                     <KnappBase className={'avbryt'} type={'flat'} onClick={() => history.push('/')}>
                         <div>Avbryt</div>
                     </KnappBase>
+                </div>
+            )}
+            {!skalViseKnapper && erSpørsmålBesvart && (
+                <div className={'steg__knapper'}>
+                    <Hovedknapp
+                        className="tilbake-til-oppsummering"
+                        onClick={() =>
+                            history.push({
+                                pathname: hentPath(StegRoutes, RouteEnum.Oppsummering),
+                            })
+                        }
+                    >
+                        Tilbake til oppsummering
+                    </Hovedknapp>
                 </div>
             )}
         </div>
