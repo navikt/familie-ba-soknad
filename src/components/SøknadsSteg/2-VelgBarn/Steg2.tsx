@@ -9,7 +9,7 @@ const Steg2: React.FC = () => {
     return (
         <Steg tittel={'Velg barn'}>
             Velg hvilke barn du vil inkludere i søknaden din
-            <div className="barnekort-wrapper">
+            <div className="barnekort-container">
                 {søknad.barn.map(barn => (
                     <Barnekort {...barn} />
                 ))}
