@@ -49,15 +49,17 @@ const Barnekort: React.FC<IBarn> = ({
                 <div className="informasjonsboks-innhold">
                     <Element>{navn.verdi}</Element>
                     <div className="informasjonselement">
-                        <Normaltekst>{ident.label}</Normaltekst>
+                        <Normaltekst>{ident.label.toLocaleUpperCase()}</Normaltekst>
                         <Normaltekst>{formaterFnr(ident.verdi)}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
-                        <Normaltekst>{alder.label}</Normaltekst>
+                        <Normaltekst>{alder.label.toLocaleUpperCase()}</Normaltekst>
                         <Normaltekst>{alder.verdi}</Normaltekst>
                     </div>
                     <div className="informasjonselement">
-                        {borMedSøker.verdi && <Normaltekst>{borMedSøker.label}</Normaltekst>}
+                        {borMedSøker.verdi && (
+                            <Normaltekst>{borMedSøker.label.toLocaleUpperCase()}</Normaltekst>
+                        )}
                         {!borMedSøker.verdi && (
                             <Normaltekst>{`Ikke registrert på din adresse`}</Normaltekst>
                         )}
