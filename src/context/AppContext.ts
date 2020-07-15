@@ -14,13 +14,7 @@ import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
 import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
-import { ESøknadstype, ISøknad } from '../typer/søknad';
-
-const initialState = {
-    søknadstype: { label: 'Hva slags barnetrygd søker du om?', verdi: ESøknadstype.IKKE_SATT },
-    søker: { navn: { label: '', verdi: '' } },
-    barn: [],
-};
+import { ISøknad, initialState } from '../typer/søknad';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
@@ -47,24 +41,7 @@ const [AppProvider, useApp] = createUseContext(() => {
             })
                 .then(ressurs => {
                     settSluttbruker(ressurs);
-                    if (ressurs.status === RessursStatus.SUKSESS) {
-                        const søker = {
-                            navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
-                        };
-                        const barn = ressurs.data.barn.map(barn => {
-                            return {
-                                navn: { label: 'Barnets navn', verdi: barn.navn },
-                                alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
-                                ident: { label: 'Fødselsnummer eller d-nummer', verdi: barn.ident },
-                                medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
-                                borMedSøker: {
-                                    label: 'Bor barnet på din adresse?',
-                                    verdi: barn.borMedSøker,
-                                },
-                            };
-                        });
-                        settSøknad({ ...søknad, søker: søker, barn: barn });
-                    }
+                    settInitialState(ressurs);
                 })
                 .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
         }
@@ -134,6 +111,27 @@ const [AppProvider, useApp] = createUseContext(() => {
             .catch(_ => settInnloggetStatus(InnloggetStatus.FEILET));
     };
 
+    const settInitialState = (ressurs: Ressurs<IPerson>) => {
+        if (ressurs.status === RessursStatus.SUKSESS) {
+            const søker = {
+                navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
+            };
+            const barn = ressurs.data.barn.map(barn => {
+                return {
+                    navn: { label: 'Barnets navn', verdi: barn.navn },
+                    alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
+                    ident: { label: 'Fødselsnummer eller d-nummer', verdi: barn.ident },
+                    medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
+                    borMedSøker: {
+                        label: 'Bor barnet på din adresse?',
+                        verdi: barn.borMedSøker,
+                    },
+                };
+            });
+            settSøknad({ ...initialState, søker, barn });
+        }
+    };
+
     return {
         axiosRequest,
         sluttbruker,
@@ -143,6 +141,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         innloggetStatus,
         systemetFeiler,
         systemetOK,
+        settInitialState,
     };
 });
 

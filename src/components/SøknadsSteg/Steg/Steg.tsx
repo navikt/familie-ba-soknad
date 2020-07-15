@@ -10,6 +10,7 @@ import { IStegRoute, hentNesteRoute, hentForrigeRoute } from '../../../routing/R
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { hentPath } from '../../../routing/Routes';
 import { ILokasjon } from '../../../typer/lokasjon';
+import { useApp } from '../../../context/AppContext';
 
 interface ISteg {
     tittel: string;
@@ -19,6 +20,7 @@ interface ISteg {
 const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
+    const { settInitialState, sluttbruker } = useApp();
 
     const kommerFraOppsummering = location.state?.kommerFraOppsummering;
 
@@ -78,7 +80,14 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                         )}
                     </div>
 
-                    <KnappBase className={'avbryt'} type={'flat'} onClick={() => history.push('/')}>
+                    <KnappBase
+                        className={'avbryt'}
+                        type={'flat'}
+                        onClick={() => {
+                            settInitialState(sluttbruker);
+                            history.push('/');
+                        }}
+                    >
                         <div>Avbryt</div>
                     </KnappBase>
                 </div>
