@@ -7,9 +7,11 @@ import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
 import { IBarn, ISøknadsfelt } from '../../../../typer/søknad';
+import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
 
 const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøknad }) => {
     const { søknad, settSøknad } = useApp();
+    const ikoner = [barn1, barn2, barn3];
 
     function settMedISøknad(erMed: boolean) {
         settSøknad({
@@ -30,13 +32,10 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
         settMedISøknad(true);
     }
 
-    const ikoner = [barn1, barn2, barn3];
-    const ikon = ikoner[Math.floor(Math.random() * ikoner.length)];
-
     return (
         <div className="barnekort">
             <div className="barnekort__header">
-                <img alt="barn" className="barneikon" src={ikon} />
+                <img alt="barn" className="barneikon" src={hentTilfeldigElement(ikoner)} />
             </div>
             <div className="barnekort__informasjonsboks">
                 <div className="informasjonsboks-innhold">
