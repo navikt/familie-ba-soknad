@@ -10,7 +10,6 @@ import { IStegRoute, hentNesteRoute, hentForrigeRoute } from '../../../routing/R
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { hentPath } from '../../../routing/Routes';
 import { ILokasjon } from '../../../typer/lokasjon';
-import { useApp } from '../../../context/AppContext';
 
 interface ISteg {
     tittel: string;
