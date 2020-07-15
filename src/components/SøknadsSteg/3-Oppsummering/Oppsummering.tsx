@@ -16,7 +16,7 @@ const Oppsummering: React.FC = () => {
             <Oppsummeringsbolk tittel="Om Deg">
                 {visLabelOgSvar(søknad.søker.navn)}
             </Oppsummeringsbolk>
-            <Oppsummeringsbolk tittel="Barna du søker for">
+            <Oppsummeringsbolk tittel="Barna du søker for" lenke={RouteEnum.VelgBarn}>
                 {søknad.barn
                     .filter(barn => barn.medISøknad)
                     .map(barn => {

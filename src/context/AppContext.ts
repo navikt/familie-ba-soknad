@@ -6,7 +6,6 @@ import {
     Ressurs,
     ApiRessurs,
     byggTomRessurs,
-    byggFeiletRessurs,
     byggHenterRessurs,
     RessursStatus,
 } from '@navikt/familie-typer';
@@ -15,6 +14,7 @@ import { IPerson } from '../typer/person';
 import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { ISøknad, initialState } from '../typer/søknad';
+import { formaterFnr } from '../utils/visning';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
@@ -38,12 +38,10 @@ const [AppProvider, useApp] = createUseContext(() => {
                 method: 'POST',
                 withCredentials: true,
                 påvirkerSystemLaster: true,
-            })
-                .then(ressurs => {
-                    settSluttbruker(ressurs);
-                    nullstillSøknadsobjekt(ressurs);
-                })
-                .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
+            }).then(ressurs => {
+                settSluttbruker(ressurs);
+                nullstillSøknadsobjekt(ressurs);
+            });
         }
     }, [innloggetStatus]);
 
@@ -120,11 +118,13 @@ const [AppProvider, useApp] = createUseContext(() => {
                 return {
                     navn: { label: 'Barnets navn', verdi: barn.navn },
                     alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
-                    ident: { label: 'Fødselsnummer eller d-nummer', verdi: barn.ident },
+                    ident: { label: 'Fødselsnummer', verdi: formaterFnr(barn.ident) },
                     medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
                     borMedSøker: {
                         label: 'Bor barnet på din adresse?',
-                        verdi: barn.borMedSøker,
+                        verdi: barn.borMedSøker
+                            ? 'Registrert på din adresse'
+                            : 'Ikke registrert på adressen din',
                     },
                 };
             });

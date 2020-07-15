@@ -30,11 +30,11 @@ interface ISøker {
     navn: ISøknadsfelt<string>;
 }
 
-interface IBarn {
+export interface IBarn {
     navn: ISøknadsfelt<string>;
     alder: ISøknadsfelt<string>;
     ident: ISøknadsfelt<string>;
-    borMedSøker: ISøknadsfelt<boolean>;
+    borMedSøker: ISøknadsfelt<string>;
     medISøknad: ISøknadsfelt<boolean>;
 }
 
