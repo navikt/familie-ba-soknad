@@ -1,7 +1,6 @@
 import Søknadstype from '../components/SøknadsSteg/1-Søknadstype/Søknadstype';
 import Steg2 from '../components/SøknadsSteg/Steg2/Steg2';
-import Steg3 from '../components/SøknadsSteg/Steg3/Steg3';
-import Oppsummering from '../components/SøknadsSteg/4-Oppsummering/Oppsummering';
+import Oppsummering from '../components/SøknadsSteg/3-Oppsummering/Oppsummering';
 
 export interface IStegRoute {
     path: string;
@@ -13,7 +12,6 @@ export interface IStegRoute {
 export enum RouteEnum {
     Søknadstype = 'Søknadstype',
     Steg2 = 'Steg2',
-    Steg3 = 'Steg3',
     Oppsummering = 'Oppsummering',
 }
 
@@ -25,7 +23,6 @@ export const StegRoutes: IStegRoute[] = [
         komponent: Søknadstype,
     },
     { path: '/steg2', label: 'Steg 2', route: RouteEnum.Steg2, komponent: Steg2 },
-    { path: '/steg3', label: 'Steg 3', route: RouteEnum.Steg3, komponent: Steg3 },
     {
         path: '/oppsummering',
         label: 'Oppsummering',
