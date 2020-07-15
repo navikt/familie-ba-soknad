@@ -23,3 +23,7 @@ export const verdiTilTekstsvar = (verdi: string | boolean | number) => {
         return null;
     }
 };
+
+export const formaterFnr = (fødselsnummer: string) => {
+    return fødselsnummer.substring(0, 6) + ' ' + fødselsnummer.substring(6, 11);
+};

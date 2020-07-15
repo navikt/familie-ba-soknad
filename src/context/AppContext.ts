@@ -6,7 +6,6 @@ import {
     Ressurs,
     ApiRessurs,
     byggTomRessurs,
-    byggFeiletRessurs,
     byggHenterRessurs,
     RessursStatus,
 } from '@navikt/familie-typer';
@@ -15,6 +14,7 @@ import { IPerson } from '../typer/person';
 import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { ESøknadstype, ISøknad } from '../typer/søknad';
+import { formaterFnr } from '../utils/visning';
 
 const initialState = {
     søknadstype: { label: 'Velg type søknad', verdi: ESøknadstype.IKKE_SATT },
@@ -44,30 +44,33 @@ const [AppProvider, useApp] = createUseContext(() => {
                 method: 'POST',
                 withCredentials: true,
                 påvirkerSystemLaster: true,
-            })
-                .then(ressurs => {
-                    settSluttbruker(ressurs);
-                    if (ressurs.status === RessursStatus.SUKSESS) {
-                        const søker = {
-                            navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
+            }).then(ressurs => {
+                settSluttbruker(ressurs);
+                if (ressurs.status === RessursStatus.SUKSESS) {
+                    const søker = {
+                        navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
+                    };
+                    const barn = ressurs.data.barn.map(barn => {
+                        return {
+                            navn: { label: 'Barnets navn', verdi: barn.navn },
+                            alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
+                            fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
+                            ident: {
+                                label: 'Fødselsnummer',
+                                verdi: formaterFnr(barn.ident),
+                            },
+                            medISøknad: { label: 'Med i søknad', verdi: true },
+                            borMedSøker: {
+                                label: 'Adresse',
+                                verdi: barn.borMedSøker
+                                    ? 'Registrert på din adresse'
+                                    : 'Ikke registrert på adressen din',
+                            },
                         };
-                        const barn = ressurs.data.barn.map(barn => {
-                            return {
-                                navn: { label: 'Barnets navn', verdi: barn.navn },
-                                alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
-                                fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
-                                ident: { label: 'Fødselsnummer eller d-nummer', verdi: barn.ident },
-                                medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
-                                borMedSøker: {
-                                    label: 'Bor barnet på din adresse?',
-                                    verdi: barn.borMedSøker,
-                                },
-                            };
-                        });
-                        settSøknad({ ...søknad, søker: søker, barn: barn });
-                    }
-                })
-                .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
+                    });
+                    settSøknad({ ...søknad, søker: søker, barn: barn });
+                }
+            });
         }
     }, [innloggetStatus]);
 
