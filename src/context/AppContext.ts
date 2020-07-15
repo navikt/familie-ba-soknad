@@ -41,7 +41,7 @@ const [AppProvider, useApp] = createUseContext(() => {
             })
                 .then(ressurs => {
                     settSluttbruker(ressurs);
-                    settInitialState(ressurs);
+                    nullstillSøknadsobjekt(ressurs);
                 })
                 .catch(() => settSluttbruker(byggFeiletRessurs('Henting av persondata feilet')));
         }
@@ -111,7 +111,7 @@ const [AppProvider, useApp] = createUseContext(() => {
             .catch(_ => settInnloggetStatus(InnloggetStatus.FEILET));
     };
 
-    const settInitialState = (ressurs: Ressurs<IPerson>) => {
+    const nullstillSøknadsobjekt = (ressurs: Ressurs<IPerson>) => {
         if (ressurs.status === RessursStatus.SUKSESS) {
             const søker = {
                 navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
@@ -141,7 +141,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         innloggetStatus,
         systemetFeiler,
         systemetOK,
-        settInitialState,
+        nullstillSøknadsobjekt,
     };
 });
 
