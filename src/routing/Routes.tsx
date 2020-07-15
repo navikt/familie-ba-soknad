@@ -1,7 +1,6 @@
 import Søknadstype from '../components/SøknadsSteg/1-Søknadstype/Søknadstype';
 import VelgBarn from '../components/SøknadsSteg/2-VelgBarn/VelgBarn';
-import Steg3 from '../components/SøknadsSteg/Steg3/Steg3';
-import Oppsummering from '../components/SøknadsSteg/4-Oppsummering/Oppsummering';
+import Oppsummering from '../components/SøknadsSteg/3-Oppsummering/Oppsummering';
 
 export interface IStegRoute {
     path: string;
@@ -13,7 +12,6 @@ export interface IStegRoute {
 export enum RouteEnum {
     Søknadstype = 'Søknadstype',
     VelgBarn = 'Velg barn',
-    Steg3 = 'Steg3',
     Oppsummering = 'Oppsummering',
 }
 
@@ -25,7 +23,6 @@ export const StegRoutes: IStegRoute[] = [
         komponent: Søknadstype,
     },
     { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
-    { path: '/steg3', label: 'Steg 3', route: RouteEnum.Steg3, komponent: Steg3 },
     {
         path: '/oppsummering',
         label: 'Oppsummering',

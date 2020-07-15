@@ -78,7 +78,13 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                         )}
                     </div>
 
-                    <KnappBase className={'avbryt'} type={'flat'} onClick={() => history.push('/')}>
+                    <KnappBase
+                        className={'avbryt'}
+                        type={'flat'}
+                        onClick={() => {
+                            history.push('/');
+                        }}
+                    >
                         <div>Avbryt</div>
                     </KnappBase>
                 </div>

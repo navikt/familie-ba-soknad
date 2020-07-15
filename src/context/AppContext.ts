@@ -13,14 +13,8 @@ import { useState, useEffect } from 'react';
 import { IPerson } from '../typer/person';
 import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
-import { ESøknadstype, ISøknad } from '../typer/søknad';
+import { ISøknad, initialState } from '../typer/søknad';
 import { formaterFnr } from '../utils/visning';
-
-const initialState = {
-    søknadstype: { label: 'Velg type søknad', verdi: ESøknadstype.IKKE_SATT },
-    søker: { navn: { label: '', verdi: '' } },
-    barn: [],
-};
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
@@ -46,30 +40,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                 påvirkerSystemLaster: true,
             }).then(ressurs => {
                 settSluttbruker(ressurs);
-                if (ressurs.status === RessursStatus.SUKSESS) {
-                    const søker = {
-                        navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
-                    };
-                    const barn = ressurs.data.barn.map(barn => {
-                        return {
-                            navn: { label: 'Barnets navn', verdi: barn.navn },
-                            alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
-                            fødselsdato: { label: 'Fødselsdato', verdi: barn.fødselsdato },
-                            ident: {
-                                label: 'Fødselsnummer',
-                                verdi: formaterFnr(barn.ident),
-                            },
-                            medISøknad: { label: 'Med i søknad', verdi: true },
-                            borMedSøker: {
-                                label: 'Adresse',
-                                verdi: barn.borMedSøker
-                                    ? 'Registrert på din adresse'
-                                    : 'Ikke registrert på adressen din',
-                            },
-                        };
-                    });
-                    settSøknad({ ...søknad, søker: søker, barn: barn });
-                }
+                nullstillSøknadsobjekt(ressurs);
             });
         }
     }, [innloggetStatus]);
@@ -138,6 +109,29 @@ const [AppProvider, useApp] = createUseContext(() => {
             .catch(_ => settInnloggetStatus(InnloggetStatus.FEILET));
     };
 
+    const nullstillSøknadsobjekt = (ressurs: Ressurs<IPerson>) => {
+        if (ressurs.status === RessursStatus.SUKSESS) {
+            const søker = {
+                navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
+            };
+            const barn = ressurs.data.barn.map(barn => {
+                return {
+                    navn: { label: 'Barnets navn', verdi: barn.navn },
+                    alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
+                    ident: { label: 'Fødselsnummer', verdi: formaterFnr(barn.ident) },
+                    medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
+                    borMedSøker: {
+                        label: 'Bor barnet på din adresse?',
+                        verdi: barn.borMedSøker
+                            ? 'Registrert på din adresse'
+                            : 'Ikke registrert på adressen din',
+                    },
+                };
+            });
+            settSøknad({ ...initialState, søker, barn });
+        }
+    };
+
     return {
         axiosRequest,
         sluttbruker,
@@ -147,6 +141,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         innloggetStatus,
         systemetFeiler,
         systemetOK,
+        nullstillSøknadsobjekt,
     };
 });
 

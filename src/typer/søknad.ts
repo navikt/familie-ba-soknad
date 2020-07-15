@@ -1,9 +1,30 @@
+import { INøkkelPar } from './common';
+
 export enum ESøknadstype {
-    IKKE_SATT = 'Ikke satt',
-    ORDINÆR = 'Ordinær',
-    UTVIDET = 'Utvidet',
+    IKKE_SATT = 'IKKE_SATT',
+    ORDINÆR = 'ORDINÆR',
+    UTVIDET = 'UTIVIDET',
     EØS = 'EØS',
 }
+
+export const søknadstyper: INøkkelPar = {
+    IKKE_SATT: {
+        id: 'IKKE_SATT',
+        navn: 'Velg søknadstype',
+    },
+    ORDINÆR: {
+        id: 'ORDINÆR',
+        navn: 'Ordinær',
+    },
+    UTVIDET: {
+        id: 'UTVIDET',
+        navn: 'Utvidet',
+    },
+    EØS: {
+        id: 'EØS',
+        navn: 'EØS',
+    },
+};
 
 interface ISøker {
     navn: ISøknadsfelt<string>;
@@ -11,8 +32,7 @@ interface ISøker {
 
 export interface IBarn {
     navn: ISøknadsfelt<string>;
-    alder: ISøknadsfelt<number>;
-    fødselsdato: ISøknadsfelt<string>;
+    alder: ISøknadsfelt<string>;
     ident: ISøknadsfelt<string>;
     borMedSøker: ISøknadsfelt<string>;
     medISøknad: ISøknadsfelt<boolean>;
@@ -27,3 +47,9 @@ export interface ISøknadsfelt<T> {
     label: string;
     verdi: T;
 }
+
+export const initialState = {
+    søknadstype: { label: 'Hva slags barnetrygd søker du om?', verdi: ESøknadstype.IKKE_SATT },
+    søker: { navn: { label: '', verdi: '' } },
+    barn: [],
+};

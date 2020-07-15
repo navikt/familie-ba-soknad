@@ -1,4 +1,4 @@
-export const hentAlder = (dato: string): number => {
+export const hentAlder = (dato: string): string => {
     const idag = new Date();
     const fødselsdato = new Date(dato);
     let alder = idag.getFullYear() - fødselsdato.getFullYear();
@@ -6,5 +6,5 @@ export const hentAlder = (dato: string): number => {
     if (månedDiff < 0 || (månedDiff === 0 && idag.getDate() < fødselsdato.getDate())) {
         alder--;
     }
-    return alder;
+    return alder + ' år';
 };
