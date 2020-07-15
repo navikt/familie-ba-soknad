@@ -15,6 +15,7 @@ import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { ISøknad, initialState } from '../typer/søknad';
 import { formaterFnr } from '../utils/visning';
+import { useHistory } from 'react-router';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());

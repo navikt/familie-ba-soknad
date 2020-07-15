@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sidetittel, Systemtittel, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import Tekstområde from 'nav-frontend-tekstomrade';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
@@ -20,13 +20,17 @@ const Forside: React.FC = () => {
 
     const history = useHistory();
 
-    const { sluttbruker } = useApp();
+    const { sluttbruker, nullstillSøknadsobjekt } = useApp();
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 
     const handleOnChange = () => {
         settBekreftet(!bekreftet);
     };
+
+    useEffect(() => {
+        nullstillSøknadsobjekt(sluttbruker);
+    }, []);
 
     return (
         <div className={'forside'}>

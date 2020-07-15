@@ -20,7 +20,6 @@ interface ISteg {
 const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { nullstillSøknadsobjekt, sluttbruker } = useApp();
 
     const kommerFraOppsummering = location.state?.kommerFraOppsummering;
 
@@ -84,7 +83,6 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                         className={'avbryt'}
                         type={'flat'}
                         onClick={() => {
-                            nullstillSøknadsobjekt(sluttbruker);
                             history.push('/');
                         }}
                     >
