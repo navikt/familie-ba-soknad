@@ -6,7 +6,7 @@ import { ESøknadstype } from '../../../typer/søknad';
 
 const Søknadstype: React.FC = () => {
     const { søknad, settSøknad } = useApp();
-    const label = 'Velg type søknad';
+    const label = 'Hva slags barnetrygd søker du om?';
 
     const erSpørsmålBesvart = søknad.søknadstype.verdi !== ESøknadstype.IKKE_SATT;
 
