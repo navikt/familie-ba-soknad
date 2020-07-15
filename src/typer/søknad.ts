@@ -1,9 +1,30 @@
+import { INøkkelPar } from './common';
+
 export enum ESøknadstype {
-    IKKE_SATT = 'Ikke satt',
-    ORDINÆR = 'Ordinær',
-    UTVIDET = 'Utvidet',
+    IKKE_SATT = 'IKKE_SATT',
+    ORDINÆR = 'ORDINÆR',
+    UTVIDET = 'UTIVIDET',
     EØS = 'EØS',
 }
+
+export const søknadstyper: INøkkelPar = {
+    IKKE_SATT: {
+        id: 'IKKE_SATT',
+        navn: 'Velg søknadstype',
+    },
+    ORDINÆR: {
+        id: 'ORDINÆR',
+        navn: 'Ordinær',
+    },
+    UTVIDET: {
+        id: 'UTVIDET',
+        navn: 'Utvidet',
+    },
+    EØS: {
+        id: 'EØS',
+        navn: 'EØS',
+    },
+};
 
 interface ISøker {
     navn: ISøknadsfelt<string>;

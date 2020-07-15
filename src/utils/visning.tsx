@@ -1,8 +1,10 @@
 import React from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { ISøknadsfelt } from '../typer/søknad';
+import { ISøknadsfelt, ESøknadstype, søknadstyper } from '../typer/søknad';
 
-export const visLabelOgSvar = (objekt: ISøknadsfelt<string | boolean | number> | undefined) => {
+export const visLabelOgSvar = (
+    objekt: ISøknadsfelt<string | boolean | number | ESøknadstype> | undefined
+) => {
     return objekt ? (
         <div className="spørsmål-og-svar">
             <Element>{objekt.label}</Element>
@@ -11,8 +13,10 @@ export const visLabelOgSvar = (objekt: ISøknadsfelt<string | boolean | number> 
     ) : null;
 };
 
-export const verdiTilTekstsvar = (verdi: string | boolean | number) => {
-    if (typeof verdi === 'string' || typeof verdi === 'number') {
+export const verdiTilTekstsvar = (verdi: string | boolean | number | ESøknadstype) => {
+    if (typeof verdi === 'string' && Object.keys(søknadstyper).includes(verdi)) {
+        return <Normaltekst>{søknadstyper[verdi].navn}</Normaltekst>;
+    } else if (typeof verdi === 'string' || typeof verdi === 'number') {
         return <Normaltekst>{verdi}</Normaltekst>;
     } else if (typeof verdi === 'boolean') {
         let jaTekst = 'Ja';

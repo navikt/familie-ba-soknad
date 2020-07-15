@@ -2,7 +2,7 @@ import React from 'react';
 import Steg from '../Steg/Steg';
 import { Select } from 'nav-frontend-skjema';
 import { useApp } from '../../../context/AppContext';
-import { ESøknadstype } from '../../../typer/søknad';
+import { ESøknadstype, søknadstyper } from '../../../typer/søknad';
 
 const Søknadstype: React.FC = () => {
     const { søknad, settSøknad } = useApp();
@@ -26,10 +26,9 @@ const Søknadstype: React.FC = () => {
                 }
                 defaultValue={søknad.søknadstype.verdi}
             >
-                <option value={ESøknadstype.IKKE_SATT}>Velg søknadstype</option>
-                <option value={ESøknadstype.ORDINÆR}>{ESøknadstype.ORDINÆR}</option>
-                <option value={ESøknadstype.UTVIDET}>{ESøknadstype.UTVIDET}</option>
-                <option value={ESøknadstype.EØS}>{ESøknadstype.EØS}</option>
+                {Object.keys(søknadstyper).map((key: string) => {
+                    return <option value={key}>{søknadstyper[key].navn}</option>;
+                })}
             </Select>
         </Steg>
     );
