@@ -15,6 +15,7 @@ import { hentAlder } from '../utils/person';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { ISøknad, initialState } from '../typer/søknad';
 import { formaterFnr } from '../utils/visning';
+import { IKvittering } from '../typer/kvittering';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
@@ -23,6 +24,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         InnloggetStatus.IKKE_VERIFISERT
     );
     const [søknad, settSøknad] = useState<ISøknad>(initialState);
+    const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
 
     autentiseringsInterceptor();
 
@@ -142,6 +144,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetFeiler,
         systemetOK,
         nullstillSøknadsobjekt,
+        innsendingStatus,
+        settInnsendingStatus,
     };
 });
 

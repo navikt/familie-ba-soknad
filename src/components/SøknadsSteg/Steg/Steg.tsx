@@ -13,6 +13,8 @@ import { ILokasjon } from '../../../typer/lokasjon';
 import Miljø from '../../../Miljø';
 import { useApp } from '../../../context/AppContext';
 import { ISøknad } from '../../../typer/søknad';
+import { byggHenterRessurs, RessursStatus } from '@navikt/familie-typer';
+import { IKvittering } from '../../../typer/kvittering';
 
 interface ISteg {
     tittel: string;
@@ -22,7 +24,7 @@ interface ISteg {
 const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { søknad, axiosRequest } = useApp();
+    const { søknad, axiosRequest, innsendingStatus, settInnsendingStatus } = useApp();
 
     const kommerFraOppsummering = location.state?.kommerFraOppsummering;
 
@@ -38,13 +40,18 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     });
 
     function sendInnSøknad() {
-        axiosRequest<string, ISøknad>({
+        settInnsendingStatus(byggHenterRessurs());
+
+        axiosRequest<IKvittering, ISøknad>({
             url: '/api/soknad',
             method: 'POST',
             withCredentials: true,
             data: søknad,
         })
-            .then(console.log)
+            .then(ressurs => {
+                settInnsendingStatus(ressurs);
+                console.log(ressurs);
+            })
             .catch(console.log);
     }
 
@@ -93,7 +100,12 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                             </KnappBase>
                         )}
                         {visInnsendingsKnapp && erSisteSteg && (
-                            <KnappBase type={'hoved'} className={'neste'} onClick={sendInnSøknad}>
+                            <KnappBase
+                                spinner={innsendingStatus.status === RessursStatus.HENTER}
+                                type={'hoved'}
+                                className={'neste'}
+                                onClick={sendInnSøknad}
+                            >
                                 Send søknad
                             </KnappBase>
                         )}
