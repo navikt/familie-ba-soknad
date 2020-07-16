@@ -10,6 +10,9 @@ import { IStegRoute, hentNesteRoute, hentForrigeRoute } from '../../../routing/R
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { hentPath } from '../../../routing/Routes';
 import { ILokasjon } from '../../../typer/lokasjon';
+import Miljø from '../../../Miljø';
+import { useApp } from '../../../context/AppContext';
+import { ISøknad } from '../../../typer/søknad';
 
 interface ISteg {
     tittel: string;
@@ -19,6 +22,7 @@ interface ISteg {
 const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
+    const { søknad, axiosRequest } = useApp();
 
     const kommerFraOppsummering = location.state?.kommerFraOppsummering;
 
@@ -33,9 +37,22 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
         };
     });
 
+    function sendInnSøknad() {
+        axiosRequest<string, ISøknad>({
+            url: '/api/soknad',
+            method: 'POST',
+            withCredentials: true,
+            påvirkerSystemLaster: true,
+            data: søknad,
+        })
+            .then(console.log)
+            .catch(console.log);
+    }
+
     const aktivtSteg: number = stegobjekter.findIndex(steg => steg.path === location.pathname);
     const erFørsteSteg: boolean = aktivtSteg === 0;
     const erSisteSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
+    const visInnsendingsKnapp = Miljø().visInnsendingKnapp;
 
     const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
     const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
@@ -74,6 +91,11 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                                 onClick={() => history.push(nesteRoute.path)}
                             >
                                 <div>Neste</div>
+                            </KnappBase>
+                        )}
+                        {visInnsendingsKnapp && erSisteSteg && (
+                            <KnappBase type={'hoved'} className={'neste'} onClick={sendInnSøknad}>
+                                Send søknad
                             </KnappBase>
                         )}
                     </div>
