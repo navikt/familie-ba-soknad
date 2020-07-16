@@ -42,7 +42,6 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
             url: '/api/soknad',
             method: 'POST',
             withCredentials: true,
-            påvirkerSystemLaster: true,
             data: søknad,
         })
             .then(console.log)
