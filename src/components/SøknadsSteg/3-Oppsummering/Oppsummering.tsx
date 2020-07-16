@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Steg from '../Steg/Steg';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
 import { visLabelOgSvar } from '../../../utils/visning';
@@ -6,7 +6,7 @@ import { useApp } from '../../../context/AppContext';
 import { RouteEnum } from '../../../routing/Routes';
 
 const Oppsummering: React.FC = () => {
-    const { søknad, axiosRequest } = useApp();
+    const { søknad } = useApp();
 
     return (
         <Steg tittel={'Oppsummering'} erSpørsmålBesvart={true}>
