@@ -13,20 +13,6 @@ const Oppsummering: React.FC = () => {
     const { søknad, axiosRequest } = useApp();
     const visInnsendingsKnapp = Miljø().visInnsendingKnapp;
 
-    {
-        /*useEffect(() => {
-        axiosRequest<string, ISøknad>({
-            url: '/api/kontrakt',
-            method: 'POST',
-            withCredentials: true,
-            påvirkerSystemLaster: true,
-            data: søknad,
-        })
-            .then(console.log)
-            .catch(console.log);
-    }, []);*/
-    }
-
     function sendInnSøknad() {
         axiosRequest<string, ISøknad>({
             url: '/api/kontrakt',
