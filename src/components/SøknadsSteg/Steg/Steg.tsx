@@ -40,7 +40,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     });
 
     function sendInnSøknad() {
-        if (innsendingStatus.status === RessursStatus.IKKE_HENTET) {
+        if (innsendingStatus.status !== RessursStatus.HENTER) {
             settInnsendingStatus(byggHenterRessurs());
 
             axiosRequest<IKvittering, ISøknad>({
@@ -103,9 +103,9 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                         )}
                         {visInnsendingsKnapp && erSisteSteg && (
                             <KnappBase
-                                spinner={innsendingStatus.status === RessursStatus.HENTER}
+                                spinner={innsendingStatus.status === RessursStatus.HENTER || true}
                                 type={'hoved'}
-                                className={'neste'}
+                                className={'sendinn'}
                                 onClick={sendInnSøknad}
                             >
                                 Send søknad
