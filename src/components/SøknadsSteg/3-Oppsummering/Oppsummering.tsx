@@ -23,7 +23,7 @@ const Oppsummering: React.FC = () => {
                         const barnKopi = { ...barn };
                         delete barnKopi.medISøknad;
                         return (
-                            <div className={'barn__detaljer'}>
+                            <div className={'barn__detaljer'} key={barn.ident.verdi}>
                                 {Object.values(barnKopi).map(felt => visLabelOgSvar(felt))}
                             </div>
                         );

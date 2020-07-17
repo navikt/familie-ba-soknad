@@ -13,7 +13,7 @@ const VelgBarn: React.FC = () => {
             Velg hvilke barn du vil inkludere i søknaden din
             <div className="barnekort-container">
                 {søknad.barn.map(barn => (
-                    <Barnekort {...barn} />
+                    <Barnekort key={barn.ident.verdi} {...barn} />
                 ))}
             </div>
         </Steg>

@@ -27,7 +27,11 @@ const Søknadstype: React.FC = () => {
                 defaultValue={søknad.søknadstype.verdi}
             >
                 {Object.keys(søknadstyper).map((key: string) => {
-                    return <option value={key}>{søknadstyper[key].navn}</option>;
+                    return (
+                        <option key={key} value={key}>
+                            {søknadstyper[key].navn}
+                        </option>
+                    );
                 })}
             </Select>
         </Steg>
