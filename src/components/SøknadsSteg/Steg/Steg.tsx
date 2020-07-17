@@ -61,7 +61,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     const aktivtSteg: number = stegobjekter.findIndex(steg => steg.path === location.pathname);
     const erFørsteSteg: boolean = aktivtSteg === 0;
     const erSisteSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
-    const visInnsendingsKnapp = Miljø().visInnsendingsKnapp;
+    const visInnsendingsknapp = Miljø().visInnsendingsknapp;
 
     const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
     const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
@@ -102,7 +102,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                                 <div>Neste</div>
                             </KnappBase>
                         )}
-                        {visInnsendingsKnapp && erSisteSteg && (
+                        {visInnsendingsknapp && erSisteSteg && (
                             <KnappBase
                                 spinner={innsendingStatus.status === RessursStatus.HENTER}
                                 type={'hoved'}

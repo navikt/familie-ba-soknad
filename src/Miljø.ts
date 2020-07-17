@@ -1,23 +1,23 @@
 interface MiljøProps {
     loginService: string;
-    visInnsendingsKnapp: boolean;
+    visInnsendingsknapp: boolean;
 }
 
 const Miljø = (): MiljøProps => {
     if (window.location.hostname.indexOf('familie-ba-soknad.dev') > -1) {
         return {
             loginService: 'https://loginservice.dev.nav.no/login?',
-            visInnsendingsKnapp: true,
+            visInnsendingsknapp: true,
         };
     } else if (window.location.hostname.indexOf('familie-ba-soknad.nav') > -1) {
         return {
             loginService: 'https://loginservice.nav.no/login?',
-            visInnsendingsKnapp: false,
+            visInnsendingsknapp: false,
         };
     } else {
         return {
             loginService: `http://localhost:8080/local/cookie?subject=12345678901`,
-            visInnsendingsKnapp: true,
+            visInnsendingsknapp: true,
         };
     }
 };
