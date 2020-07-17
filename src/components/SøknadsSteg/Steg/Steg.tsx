@@ -40,19 +40,21 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     });
 
     function sendInnSøknad() {
-        settInnsendingStatus(byggHenterRessurs());
+        if (innsendingStatus.status === RessursStatus.IKKE_HENTET) {
+            settInnsendingStatus(byggHenterRessurs());
 
-        axiosRequest<IKvittering, ISøknad>({
-            url: '/api/soknad',
-            method: 'POST',
-            withCredentials: true,
-            data: søknad,
-        })
-            .then(ressurs => {
-                settInnsendingStatus(ressurs);
-                console.log(ressurs);
+            axiosRequest<IKvittering, ISøknad>({
+                url: '/api/soknad',
+                method: 'POST',
+                withCredentials: true,
+                data: søknad,
             })
-            .catch(console.log);
+                .then(ressurs => {
+                    settInnsendingStatus(ressurs);
+                    console.log(ressurs);
+                })
+                .catch(console.log);
+        }
     }
 
     const aktivtSteg: number = stegobjekter.findIndex(steg => steg.path === location.pathname);
