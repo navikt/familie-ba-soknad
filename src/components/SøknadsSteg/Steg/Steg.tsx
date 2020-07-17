@@ -103,7 +103,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                         )}
                         {visInnsendingsKnapp && erSisteSteg && (
                             <KnappBase
-                                spinner={innsendingStatus.status === RessursStatus.HENTER || true}
+                                spinner={innsendingStatus.status === RessursStatus.HENTER}
                                 type={'hoved'}
                                 className={'sendinn'}
                                 onClick={sendInnSøknad}
