@@ -13,7 +13,7 @@ import { ILokasjon } from '../../../typer/lokasjon';
 import Miljø from '../../../Miljø';
 import { useApp } from '../../../context/AppContext';
 import { ISøknad } from '../../../typer/søknad';
-import { byggHenterRessurs, RessursStatus } from '@navikt/familie-typer';
+import { byggHenterRessurs, RessursStatus, byggFeiletRessurs } from '@navikt/familie-typer';
 import { IKvittering } from '../../../typer/kvittering';
 
 interface ISteg {
@@ -51,16 +51,17 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
             })
                 .then(ressurs => {
                     settInnsendingStatus(ressurs);
-                    console.log(ressurs);
                 })
-                .catch(console.log);
+                .catch(() =>
+                    settInnsendingStatus(byggFeiletRessurs('Innsending av søknad feilet'))
+                );
         }
     }
 
     const aktivtSteg: number = stegobjekter.findIndex(steg => steg.path === location.pathname);
     const erFørsteSteg: boolean = aktivtSteg === 0;
     const erSisteSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
-    const visInnsendingsKnapp = Miljø().visInnsendingKnapp;
+    const visInnsendingsKnapp = Miljø().visInnsendingsKnapp;
 
     const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
     const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
