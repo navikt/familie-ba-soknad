@@ -6,7 +6,7 @@ export const visLabelOgSvar = (
     objekt: ISøknadsfelt<string | boolean | number | ESøknadstype> | undefined
 ) => {
     return objekt ? (
-        <div className="spørsmål-og-svar">
+        <div className="spørsmål-og-svar" key={objekt.label}>
             <Element>{objekt.label}</Element>
             {verdiTilTekstsvar(objekt.verdi)}
         </div>

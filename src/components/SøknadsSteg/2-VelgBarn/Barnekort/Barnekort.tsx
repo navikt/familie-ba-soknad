@@ -54,11 +54,9 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
                                 <EtikettSuksess className={'med-i-søknad'}>
                                     {medISøknad.label}
                                 </EtikettSuksess>
-                                <Normaltekst>
-                                    <div className="lenke fjern-barn" onClick={fjernBarnFraSøknad}>
-                                        {'Fjern fra søknad'}
-                                    </div>
-                                </Normaltekst>
+                                <div className="lenke fjern-barn" onClick={fjernBarnFraSøknad}>
+                                    <Normaltekst>Fjern fra søknad</Normaltekst>
+                                </div>
                             </>
                         )}
                     </div>
