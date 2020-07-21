@@ -19,8 +19,14 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
             barn: {
                 label: søknad.barn.label,
                 verdi: søknad.barn.verdi.map(barn =>
-                    barn.ident === ident
-                        ? { ...barn, medISøknad: { ...barn.medISøknad, verdi: erMed } }
+                    barn.verdi.ident === ident
+                        ? {
+                              ...barn,
+                              verdi: {
+                                  ...barn.verdi,
+                                  medISøknad: { ...barn.verdi.medISøknad, verdi: erMed },
+                              },
+                          }
                         : barn
                 ),
             },

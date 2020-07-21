@@ -18,13 +18,13 @@ const Oppsummering: React.FC = () => {
             </Oppsummeringsbolk>
             <Oppsummeringsbolk tittel="Barna du søker for" lenke={RouteEnum.VelgBarn}>
                 {søknad.barn.verdi
-                    .filter(barn => barn.medISøknad)
+                    .filter(barn => barn.verdi.medISøknad)
                     .map(barn => {
                         const barnKopi = { ...barn };
-                        delete barnKopi.medISøknad;
+                        delete barnKopi.verdi.medISøknad;
                         return (
-                            <div className={'barn__detaljer'} key={barn.ident.verdi}>
-                                {Object.values(barnKopi).map(felt => visLabelOgSvar(felt))}
+                            <div className={'barn__detaljer'} key={barn.verdi.ident.verdi}>
+                                {Object.values(barnKopi.verdi).map(felt => visLabelOgSvar(felt))}
                             </div>
                         );
                     })}

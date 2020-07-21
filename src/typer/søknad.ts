@@ -41,7 +41,7 @@ export interface IBarn {
 export interface ISøknad {
     søknadstype: ISøknadsfelt<ESøknadstype>;
     søker: ISøknadsfelt<ISøker>;
-    barn: ISøknadsfelt<IBarn[]>;
+    barn: ISøknadsfelt<ISøknadsfelt<IBarn>[]>;
 }
 export interface ISøknadsfelt<T> {
     label: string;
