@@ -6,13 +6,13 @@ import { useApp } from '../../../context/AppContext';
 const VelgBarn: React.FC = () => {
     const { søknad } = useApp();
 
-    const erSpørsmålBesvart = søknad.barn.some(barn => barn.medISøknad.verdi);
+    const erSpørsmålBesvart = søknad.barn.verdi.some(barn => barn.medISøknad.verdi);
 
     return (
         <Steg tittel={'Velg barn'} erSpørsmålBesvart={erSpørsmålBesvart}>
             Velg hvilke barn du vil inkludere i søknaden din
             <div className="barnekort-container">
-                {søknad.barn.map(barn => (
+                {søknad.barn.verdi.map(barn => (
                     <Barnekort key={barn.ident.verdi} {...barn} />
                 ))}
             </div>

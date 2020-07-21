@@ -130,7 +130,11 @@ const [AppProvider, useApp] = createUseContext(() => {
                     },
                 };
             });
-            settSøknad({ ...initialState, søker, barn });
+            settSøknad({
+                ...initialState,
+                søker: { label: initialState.søker.label, verdi: søker },
+                barn: { label: initialState.barn.label, verdi: barn },
+            });
         }
     };
 

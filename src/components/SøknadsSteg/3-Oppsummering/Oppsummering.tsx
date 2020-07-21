@@ -14,10 +14,10 @@ const Oppsummering: React.FC = () => {
                 {visLabelOgSvar(søknad.søknadstype)}
             </Oppsummeringsbolk>
             <Oppsummeringsbolk tittel="Om Deg">
-                {visLabelOgSvar(søknad.søker.navn)}
+                {visLabelOgSvar(søknad.søker.verdi.navn)}
             </Oppsummeringsbolk>
             <Oppsummeringsbolk tittel="Barna du søker for" lenke={RouteEnum.VelgBarn}>
-                {søknad.barn
+                {søknad.barn.verdi
                     .filter(barn => barn.medISøknad)
                     .map(barn => {
                         const barnKopi = { ...barn };
