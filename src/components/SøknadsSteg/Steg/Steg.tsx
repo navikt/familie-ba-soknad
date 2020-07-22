@@ -12,7 +12,7 @@ import { hentPath } from '../../../routing/Routes';
 import { ILokasjon } from '../../../typer/lokasjon';
 import Miljø from '../../../Miljø';
 import { useApp } from '../../../context/AppContext';
-import { ISøknad } from '../../../typer/søknad';
+import { ISøknad, ISøknadsfelt, IBarn } from '../../../typer/søknad';
 import { byggHenterRessurs, RessursStatus, byggFeiletRessurs } from '@navikt/familie-typer';
 import { IKvittering } from '../../../typer/kvittering';
 
@@ -39,6 +39,14 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
         };
     });
 
+    function behandleSøknad(søknad: ISøknad) {
+        return { ...søknad, barn: { ...søknad.barn, verdi: sorterBarn(søknad.barn.verdi) } };
+    }
+
+    function sorterBarn(barn: ISøknadsfelt<IBarn>[]) {
+        return barn.sort(barn => (barn.verdi.medISøknad.verdi ? -1 : 1));
+    }
+
     function sendInnSøknad() {
         if (innsendingStatus.status !== RessursStatus.HENTER) {
             settInnsendingStatus(byggHenterRessurs());
@@ -47,7 +55,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                 url: '/api/soknad',
                 method: 'POST',
                 withCredentials: true,
-                data: søknad,
+                data: behandleSøknad(søknad),
             })
                 .then(ressurs => {
                     settInnsendingStatus(ressurs);
@@ -97,7 +105,9 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                             <KnappBase
                                 className={'neste'}
                                 type={'hoved'}
-                                onClick={() => history.push(nesteRoute.path)}
+                                onClick={() => {
+                                    history.push(nesteRoute.path);
+                                }}
                             >
                                 <div>Neste</div>
                             </KnappBase>
