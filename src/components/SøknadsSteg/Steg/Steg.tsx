@@ -16,7 +16,6 @@ import { byggHenterRessurs, RessursStatus, byggFeiletRessurs } from '@navikt/fam
 import { IKvittering } from '../../../typer/kvittering';
 import classNames from 'classnames';
 import Modal from 'nav-frontend-modal';
-import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
 interface ISteg {

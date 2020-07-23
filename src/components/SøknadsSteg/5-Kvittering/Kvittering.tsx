@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useApp } from '../../../context/AppContext';
 import { RessursStatus } from '@navikt/familie-typer';
-import { useHistory } from 'react-router-dom';
 import Steg from '../Steg/Steg';
 import AlertStripe from 'nav-frontend-alertstriper';
 

@@ -5,7 +5,6 @@ import { visLabelOgSvar } from '../../../utils/visning';
 import { useApp } from '../../../context/AppContext';
 import { RouteEnum } from '../../../routing/Routes';
 import { RessursStatus } from '@navikt/familie-typer';
-import { Feilmelding } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 const Oppsummering: React.FC = () => {
