@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Steg.less';
 import KnappBase from 'nav-frontend-knapper';
 import Stegindikator from 'nav-frontend-stegindikator';
@@ -15,6 +15,7 @@ import { useApp } from '../../../context/AppContext';
 import { ISøknad, ISøknadsfelt, IBarn } from '../../../typer/søknad';
 import { byggHenterRessurs, RessursStatus, byggFeiletRessurs } from '@navikt/familie-typer';
 import { IKvittering } from '../../../typer/kvittering';
+import Modal from 'nav-frontend-modal';
 
 interface ISteg {
     tittel: string;
@@ -25,8 +26,8 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const { søknad, axiosRequest, innsendingStatus, settInnsendingStatus } = useApp();
-
     const kommerFraOppsummering = location.state?.kommerFraOppsummering;
+    const [åpenModal, settÅpenModal] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -38,6 +39,13 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
             index: index,
         };
     });
+
+    const aktivtSteg: number = stegobjekter.findIndex(steg => steg.path === location.pathname);
+    const erFørsteSteg: boolean = aktivtSteg === 0;
+    const erSisteSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
+    const visInnsendingsknapp = Miljø().visInnsendingsknapp;
+    const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
+    const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
 
     function behandleSøknad(søknad: ISøknad) {
         return { ...søknad, barn: { ...søknad.barn, verdi: sorterBarn(søknad.barn.verdi) } };
@@ -66,13 +74,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
         }
     }
 
-    const aktivtSteg: number = stegobjekter.findIndex(steg => steg.path === location.pathname);
-    const erFørsteSteg: boolean = aktivtSteg === 0;
-    const erSisteSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
-    const visInnsendingsknapp = Miljø().visInnsendingsknapp;
-
-    const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
-    const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
+    function visModal() {}
 
     return (
         <div className={'steg'}>
@@ -127,9 +129,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                     <KnappBase
                         className={'avbryt'}
                         type={'flat'}
-                        onClick={() => {
-                            history.push('/');
-                        }}
+                        onClick={() => settÅpenModal(true)}
                     >
                         <div>Avbryt</div>
                     </KnappBase>
@@ -149,6 +149,22 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                     </Hovedknapp>
                 </div>
             )}
+            <Modal
+                isOpen={åpenModal}
+                onRequestClose={() => settÅpenModal(false)}
+                closeButton={true}
+                contentLabel="Content label"
+            >
+                <KnappBase
+                    className={'avbryt'}
+                    type={'flat'}
+                    onClick={() => {
+                        history.push('/');
+                    }}
+                >
+                    <div>Avslutt søknad</div>
+                </KnappBase>
+            </Modal>
         </div>
     );
 };
