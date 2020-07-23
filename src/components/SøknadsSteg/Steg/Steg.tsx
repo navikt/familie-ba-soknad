@@ -24,7 +24,14 @@ interface ISteg {
 const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { søknad, axiosRequest, innsendingStatus, settInnsendingStatus } = useApp();
+    const {
+        søknad,
+        axiosRequest,
+        innsendingStatus,
+        settInnsendingStatus,
+        aktivtSteg,
+        settAktivtSteg,
+    } = useApp();
 
     const kommerFraOppsummering = location.state?.kommerFraOppsummering;
 
@@ -69,9 +76,8 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
         }
     }
 
-    const aktivtSteg: number = stegobjekter.findIndex(steg => steg.path === location.pathname);
     const erFørsteSteg: boolean = aktivtSteg === 0;
-    const erKvitteringsSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
+    const erKvitteringSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
     const erOppsummeringSteg: boolean = aktivtSteg + 2 === stegobjekter.length;
     const visInnsendingsknapp = Miljø().visInnsendingsknapp;
 
@@ -93,14 +99,17 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                     <div className={'innholdscontainer__children'}>{children}</div>
                 </main>
             </Panel>
-            {!kommerFraOppsummering && !erKvitteringsSteg && (
+            {!kommerFraOppsummering && !erKvitteringSteg && (
                 <div className={'steg__knapper'}>
                     <div className={`steg__knapper--rad1`}>
                         {!erFørsteSteg && (
                             <KnappBase
                                 className={erOppsummeringSteg ? 'tilbake--alene' : 'tilbake'}
                                 type={'standard'}
-                                onClick={() => history.push(forrigeRoute.path)}
+                                onClick={() => {
+                                    settAktivtSteg(aktivtSteg - 1);
+                                    history.push(forrigeRoute.path);
+                                }}
                             >
                                 <div>Tilbake</div>
                             </KnappBase>
@@ -110,6 +119,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                                 className={'neste'}
                                 type={'hoved'}
                                 onClick={() => {
+                                    settAktivtSteg(aktivtSteg + 1);
                                     history.push(nesteRoute.path);
                                 }}
                             >
@@ -121,7 +131,10 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                                 spinner={innsendingStatus.status === RessursStatus.HENTER}
                                 type={'hoved'}
                                 className={'sendinn'}
-                                onClick={sendInnSøknad}
+                                onClick={() => {
+                                    settAktivtSteg(aktivtSteg + 1);
+                                    sendInnSøknad();
+                                }}
                             >
                                 Send søknad
                             </KnappBase>
@@ -132,6 +145,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                         className={'avbryt'}
                         type={'flat'}
                         onClick={() => {
+                            settAktivtSteg(0);
                             history.push('/');
                         }}
                     >
