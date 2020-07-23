@@ -19,10 +19,10 @@ import classNames from 'classnames';
 interface ISteg {
     tittel: string;
     erSpørsmålBesvart: boolean;
-    klassenavn?: string;
+    className?: string;
 }
 
-const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, klassenavn }) => {
+const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, className }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const {
@@ -98,7 +98,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, klassena
     const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
 
     return (
-        <div className={classNames('steg', klassenavn)}>
+        <div className={classNames('steg', className)}>
             <Ingress>Søknad om barnetrygd</Ingress>
             <Stegindikator
                 autoResponsiv={true}

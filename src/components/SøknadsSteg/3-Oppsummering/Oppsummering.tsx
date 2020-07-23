@@ -12,7 +12,7 @@ const Oppsummering: React.FC = () => {
     const { søknad, innsendingStatus } = useApp();
 
     return (
-        <Steg tittel={'Oppsummering'} erSpørsmålBesvart={true} klassenavn={'oppsummering'}>
+        <Steg tittel={'Oppsummering'} erSpørsmålBesvart={true} className={'oppsummering'}>
             <Oppsummeringsbolk tittel="Søknadstype" lenke={RouteEnum.Søknadstype}>
                 {visLabelOgSvar(søknad.søknadstype)}
             </Oppsummeringsbolk>
