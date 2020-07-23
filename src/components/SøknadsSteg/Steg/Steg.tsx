@@ -163,7 +163,9 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                             <Undertittel>Er du sikker at vil avbryte søknadprosessen?</Undertittel>
                         }
                     >
-                        <Normaltekst>OBS: Hvis du avbryter vil søknaden bli slettet.</Normaltekst>
+                        <Normaltekst>
+                            OBS: Hvis du avbryter vil innholdet i søknaden bli slettet.
+                        </Normaltekst>
                     </Informasjonsbolk>
                     <div className={'avslutt-knapp'}>
                         <KnappBase
