@@ -13,13 +13,13 @@ const Kvittering: React.FC = () => {
             : null;
 
     const klokkeslett = innsendtDato?.toLocaleTimeString();
-    const dato = innsendtDato?.toDateString();
+    const dato = innsendtDato?.toLocaleDateString();
 
     return (
         <Steg tittel={'Takk for søknaden'} erSpørsmålBesvart={true}>
             <AlertStripe type="suksess">
-                {`Søknaden din om barnetrygd er mottatt [${klokkeslett}, 
-                ${dato}]`}
+                {`Søknaden din om barnetrygd er mottatt ${klokkeslett}, 
+                ${dato}`}
             </AlertStripe>
         </Steg>
     );
