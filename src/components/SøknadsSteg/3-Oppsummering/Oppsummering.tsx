@@ -4,12 +4,15 @@ import Oppsummeringsbolk from './Oppsummeringsbolk';
 import { visLabelOgSvar } from '../../../utils/visning';
 import { useApp } from '../../../context/AppContext';
 import { RouteEnum } from '../../../routing/Routes';
+import { RessursStatus } from '@navikt/familie-typer';
+import { Feilmelding } from 'nav-frontend-typografi';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 const Oppsummering: React.FC = () => {
-    const { søknad } = useApp();
+    const { søknad, innsendingStatus } = useApp();
 
     return (
-        <Steg tittel={'Oppsummering'} erSpørsmålBesvart={true}>
+        <Steg tittel={'Oppsummering'} erSpørsmålBesvart={true} klassenavn={'oppsummering'}>
             <Oppsummeringsbolk tittel="Søknadstype" lenke={RouteEnum.Søknadstype}>
                 {visLabelOgSvar(søknad.søknadstype)}
             </Oppsummeringsbolk>
@@ -29,6 +32,9 @@ const Oppsummering: React.FC = () => {
                         );
                     })}
             </Oppsummeringsbolk>
+            {innsendingStatus.status === RessursStatus.FEILET && (
+                <AlertStripe type="feil">{innsendingStatus.frontendFeilmelding}</AlertStripe>
+            )}
         </Steg>
     );
 };
