@@ -16,6 +16,8 @@ import { ISøknad, ISøknadsfelt, IBarn } from '../../../typer/søknad';
 import { byggHenterRessurs, RessursStatus, byggFeiletRessurs } from '@navikt/familie-typer';
 import { IKvittering } from '../../../typer/kvittering';
 import Modal from 'nav-frontend-modal';
+import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
 interface ISteg {
     tittel: string;
@@ -74,6 +76,10 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
         }
     }
 
+    function håndterModal() {
+        settÅpenModal(!åpenModal);
+    }
+
     function visModal() {}
 
     return (
@@ -126,11 +132,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                         )}
                     </div>
 
-                    <KnappBase
-                        className={'avbryt'}
-                        type={'flat'}
-                        onClick={() => settÅpenModal(true)}
-                    >
+                    <KnappBase className={'avbryt'} type={'flat'} onClick={() => håndterModal()}>
                         <div>Avbryt</div>
                     </KnappBase>
                 </div>
@@ -150,20 +152,29 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                 </div>
             )}
             <Modal
+                className={'avbryt-modal'}
                 isOpen={åpenModal}
-                onRequestClose={() => settÅpenModal(false)}
+                onRequestClose={() => håndterModal()}
                 closeButton={true}
                 contentLabel="Content label"
             >
-                <KnappBase
-                    className={'avbryt'}
-                    type={'flat'}
-                    onClick={() => {
-                        history.push('/');
-                    }}
-                >
-                    <div>Avslutt søknad</div>
-                </KnappBase>
+                <div className={'container'}>
+                    <Informasjonsbolk
+                        tittel={<Undertittel>Er du sikker at vil avbryte søknaden?</Undertittel>}
+                    >
+                        <Normaltekst>Hvis du avbryter søknaden vil den bli slettet.</Normaltekst>
+                    </Informasjonsbolk>
+                    <div className={'avslutt-knapp'}>
+                        <KnappBase
+                            type={'fare'}
+                            onClick={() => {
+                                history.push('/');
+                            }}
+                        >
+                            <div>Avslutt søknad</div>
+                        </KnappBase>
+                    </div>
+                </div>
             </Modal>
         </div>
     );
