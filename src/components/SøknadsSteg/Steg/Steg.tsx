@@ -152,13 +152,13 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                 </div>
             )}
             <Modal
-                className={'avbryt-modal'}
+                className={'steg__modal'}
                 isOpen={åpenModal}
                 onRequestClose={() => håndterModal()}
                 closeButton={true}
                 contentLabel="Content label"
             >
-                <div className={'container'}>
+                <div className={'modal-container'}>
                     <Informasjonsbolk
                         tittel={
                             <Undertittel>Er du sikker at vil avbryte søknadprosessen?</Undertittel>
