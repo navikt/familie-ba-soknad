@@ -13,9 +13,6 @@ import { useApp } from '../../context/AppContext';
 import { RessursStatus } from '@navikt/familie-typer';
 
 const Forside: React.FC = () => {
-    const LOREM =
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe sed consectetur maiores veniam voluptas obcaecati, cumque hic laboriosamcorporis vel temporibus optio blanditiis. Dolorum autem exercitationem nulla, sed porro eum!x';
-
     const [bekreftet, settBekreftet] = useState<boolean>(false);
 
     const history = useHistory();
@@ -41,7 +38,16 @@ const Forside: React.FC = () => {
                     </div>
 
                     <Informasjonsbolk tittel={<Sidetittel>Søknad om barnetrygd</Sidetittel>}>
-                        <Normaltekst>{LOREM}</Normaltekst>
+                        <Normaltekst>
+                            Hvis du har omsorg for barn under 18 år som bor hos deg i Norge, kan du
+                            ha rett på barnetrygd. Enslig mor eller far kan i tillegg få utvidet
+                            barnetrygd og småbarnstillegg.
+                            <br />
+                            <br />
+                            Hvis du er statsborger i et EU/ EØS-land og arbeider i Norge, kan du ha
+                            rett til barnetrygd selv om du skal være bosatt i Norge i mindre enn 12
+                            måneder.
+                        </Normaltekst>
                         <Lenke href={'https://www.nav.no'}>Mer om barnetrygd</Lenke>
                     </Informasjonsbolk>
 
