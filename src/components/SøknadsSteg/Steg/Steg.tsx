@@ -120,7 +120,6 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, klassena
                                 className={'tilbake'}
                                 type={'standard'}
                                 onClick={() => {
-                                    //settAktivtSteg(aktivtSteg - 1);
                                     history.push(forrigeRoute.path);
                                 }}
                             >
@@ -132,7 +131,6 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, klassena
                                 className={erFørsteSteg ? 'neste-alene' : 'neste'}
                                 type={'hoved'}
                                 onClick={() => {
-                                    //settAktivtSteg(aktivtSteg + 1);
                                     history.push(nesteRoute.path);
                                 }}
                             >
