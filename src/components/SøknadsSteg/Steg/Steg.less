@@ -51,19 +51,26 @@
         & .neste {
           width: @knapp-width;
           margin-left: 1rem;
+          
+          @media @mobile {
+            margin-left: 0rem;
+          }
         }
+
+        & .neste-alene {
+          margin-left: 0rem;
+          width: @knapp-width;
+        }
+
 
         & .tilbake {
           width: @knapp-width;
         
           @media @mobile {
             width: 100%;
-            margin-right: 0;
             margin-top: 1rem;
           }
-          &--alene {
-            margin-right: 0;
-          }
+
         }
         & .sendinn {
           margin-left: 1rem;

@@ -117,26 +117,26 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, klassena
                     <div className={`steg__knapper--rad1`}>
                         {!erFørsteSteg && (
                             <KnappBase
-                                className={erOppsummeringSteg ? 'tilbake--alene' : 'tilbake'}
+                                className={'tilbake'}
                                 type={'standard'}
                                 onClick={() => {
                                     //settAktivtSteg(aktivtSteg - 1);
                                     history.push(forrigeRoute.path);
                                 }}
                             >
-                                <div>Tilbake</div>
+                                Tilbake
                             </KnappBase>
                         )}
                         {erSpørsmålBesvart && !erOppsummeringSteg && (
                             <KnappBase
-                                className={'neste'}
+                                className={erFørsteSteg ? 'neste-alene' : 'neste'}
                                 type={'hoved'}
                                 onClick={() => {
                                     //settAktivtSteg(aktivtSteg + 1);
                                     history.push(nesteRoute.path);
                                 }}
                             >
-                                <div>Neste</div>
+                                Neste
                             </KnappBase>
                         )}
                         {visInnsendingsknapp && erOppsummeringSteg && (
