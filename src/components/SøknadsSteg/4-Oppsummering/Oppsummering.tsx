@@ -13,9 +13,6 @@ const Oppsummering: React.FC = () => {
 
     return (
         <Steg tittel={'Oppsummering'} erSpørsmålBesvart={true} className={'oppsummering'}>
-            <Oppsummeringsbolk tittel="Søknadstype" lenke={RouteEnum.Søknadstype}>
-                {visLabelOgSvar(søknad.søknadstype)}
-            </Oppsummeringsbolk>
             <Oppsummeringsbolk tittel="Om Deg">
                 {visLabelOgSvar(søknad.søker.verdi.navn)}
             </Oppsummeringsbolk>
