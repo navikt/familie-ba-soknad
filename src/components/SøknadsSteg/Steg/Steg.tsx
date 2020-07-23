@@ -15,6 +15,9 @@ import { ISøknad, ISøknadsfelt, IBarn } from '../../../typer/søknad';
 import { byggHenterRessurs, RessursStatus, byggFeiletRessurs } from '@navikt/familie-typer';
 import { IKvittering } from '../../../typer/kvittering';
 import classNames from 'classnames';
+import Modal from 'nav-frontend-modal';
+import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
 interface ISteg {
     tittel: string;
@@ -36,6 +39,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, classNam
     const [aktivtSteg, settAktivtSteg] = useState<number>(0);
 
     const kommerFraOppsummering = location.state?.kommerFraOppsummering;
+    const [åpenModal, settÅpenModal] = useState(false);
 
     useEffect(() => {
         const detteSteget = stegobjekter.findIndex(steg => steg.path === location.pathname);
@@ -97,6 +101,10 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, classNam
     const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
     const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
 
+    function håndterModalStatus() {
+        settÅpenModal(!åpenModal);
+    }
+
     return (
         <div className={classNames('steg', className)}>
             <Ingress>Søknad om barnetrygd</Ingress>
@@ -152,10 +160,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, classNam
                     <KnappBase
                         className={'avbryt'}
                         type={'flat'}
-                        onClick={() => {
-                            settUtfyltSteg(0);
-                            history.push('/');
-                        }}
+                        onClick={() => håndterModalStatus()}
                     >
                         <div>Avbryt</div>
                     </KnappBase>
@@ -175,6 +180,36 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, classNam
                     </Hovedknapp>
                 </div>
             )}
+            <Modal
+                className={'steg__modal'}
+                isOpen={åpenModal}
+                onRequestClose={() => håndterModalStatus()}
+                closeButton={true}
+                contentLabel="avbryt-søknad-modal"
+                shouldCloseOnOverlayClick={true}
+            >
+                <div className={'modal-container'}>
+                    <div className={'informasjonsbolk'}>
+                        <Undertittel>
+                            Er du sikker på at du vil avbryte søknadprosessen?
+                        </Undertittel>
+                        <Normaltekst className={'modal-tekst'}>
+                            Hvis du avbryter vil innholdet i søknaden bli slettet.
+                        </Normaltekst>
+                    </div>
+                    <div className={'avslutt-knapp'}>
+                        <KnappBase
+                            type={'fare'}
+                            onClick={() => {
+                                settUtfyltSteg(0);
+                                history.push('/');
+                            }}
+                        >
+                            <div>Avbryt søknad</div>
+                        </KnappBase>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 };

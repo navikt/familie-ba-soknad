@@ -4,48 +4,62 @@
 @panel-innhold-bredde: 588px;
 
 .steg {
-    text-align: center;
-    margin-top: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10rem;
+  
+  &__innhold {
+    padding: 2rem;
+    width: @panel-innhold-bredde;
+
+    @media @tablet{
+      width: auto;
+      min-width: 80%;
+    }
+
+    & .innholdscontainer__children {
+      margin-top: 2rem;
+    }
+  }
+  
+  &__knapper {
+    padding: 2rem;
     display: flex;
+    justify-self: center;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 10rem;
-    
-    &__innhold {
-      padding: 2rem;
-      width: @panel-innhold-bredde;
-  
-      @media @tablet{
-        width: auto;
-        min-width: 80%;
-      }
 
-      & .innholdscontainer__children {
-        margin-top: 2rem;
-      }
+    .avbryt {
+      margin-top: 1rem;
+      justify-content: center;
+      width: @knapp-width;
     }
-    
-    &__knapper {
-      padding: 2rem;
+
+    &--rad1 {
       display: flex;
-      justify-self: center;
-      flex-direction: column;
-      align-items: center;
+      flex-direction: row;
+      justify-content: center;
+      min-width: @knapp-width;
   
-      .avbryt {
-        margin-top: 1rem;
-        justify-content: center;
-        width: @knapp-width;
+      @media @mobile {
+        flex-direction: column-reverse;
       }
 
-      &--rad1 {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        min-width: @knapp-width;
-    
+      & .neste {
+        width: @knapp-width;
+        margin-left: 1rem;
+      }
+
+      & .tilbake {
+        width: @knapp-width;
+      
         @media @mobile {
-          flex-direction: column-reverse;
+          width: 100%;
+          margin-right: 0;
+          margin-top: 1rem;
         }
 
         & .neste {
@@ -56,12 +70,14 @@
             margin-left: 0rem;
           }
         }
+      }
+      & .sendinn {
+        margin-left: 1rem;
 
         & .neste-alene {
           margin-left: 0rem;
           width: @knapp-width;
         }
-
 
         & .tilbake {
           width: @knapp-width;
@@ -70,21 +86,47 @@
             width: 100%;
             margin-top: 1rem;
           }
-
-        }
-        & .sendinn {
-          margin-left: 1rem;
-
-          @media @mobile {
-            width: 100%;
-            margin-left: 0;
-            margin-top: 1rem;
-          }
         }
       }
     }
-    
-    & .stegindikator__liste {
-        margin: 2rem 0;
+  }
+  
+  & .stegindikator__liste {
+    margin: 2rem 0;
+  }
+  
+  &__modal {
+    display: flex;
+    justify-content: center;
+
+    & .avslutt-knapp {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      
+      @media @mobile {
+        width: 100%;
+      }
     }
+    
+    & .informasjonsbolk {
+      margin-top: 3rem;
+
+      & .modal-tittel {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
+      & .modal-tekst {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+      }
+    }
+    
+    & .modal-container {
+      margin: 1rem;
+    }
+  }
 }

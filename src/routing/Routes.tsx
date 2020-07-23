@@ -1,7 +1,8 @@
-import Søknadstype from '../components/SøknadsSteg/1-Søknadstype/Søknadstype';
-import VelgBarn from '../components/SøknadsSteg/2-VelgBarn/VelgBarn';
-import Oppsummering from '../components/SøknadsSteg/3-Oppsummering/Oppsummering';
-import Kvittering from '../components/SøknadsSteg/4-Kvittering/Kvittering';
+import Søknadstype from '../components/SøknadsSteg/2-Søknadstype/Søknadstype';
+import VelgBarn from '../components/SøknadsSteg/3-VelgBarn/VelgBarn';
+import Oppsummering from '../components/SøknadsSteg/4-Oppsummering/Oppsummering';
+import Kvittering from '../components/SøknadsSteg/5-Kvittering/Kvittering';
+import OmDeg from '../components/SøknadsSteg/1-OmDeg/OmDeg';
 
 export interface IStegRoute {
     path: string;
@@ -11,6 +12,7 @@ export interface IStegRoute {
 }
 
 export enum RouteEnum {
+    OmDeg = 'Om deg',
     Søknadstype = 'Søknadstype',
     VelgBarn = 'Velg barn',
     Oppsummering = 'Oppsummering',
@@ -18,6 +20,7 @@ export enum RouteEnum {
 }
 
 export const StegRoutes: IStegRoute[] = [
+    { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
     {
         path: '/soknadstype',
         label: 'Søknadstype',
