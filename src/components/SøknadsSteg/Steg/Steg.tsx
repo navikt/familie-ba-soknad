@@ -162,17 +162,14 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                 shouldCloseOnOverlayClick={true}
             >
                 <div className={'modal-container'}>
-                    <Informasjonsbolk
-                        tittel={
-                            <Undertittel>
-                                Er du sikker på at du vil avbryte søknadprosessen?
-                            </Undertittel>
-                        }
-                    >
-                        <Normaltekst>
-                            OBS: Hvis du avbryter vil innholdet i søknaden bli slettet.
+                    <div className={'informasjonsbolk'}>
+                        <Undertittel>
+                            Er du sikker på at du vil avbryte søknadprosessen?
+                        </Undertittel>
+                        <Normaltekst className={'modal-tekst'}>
+                            Hvis du avbryter vil innholdet i søknaden bli slettet.
                         </Normaltekst>
-                    </Informasjonsbolk>
+                    </div>
                     <div className={'avslutt-knapp'}>
                         <KnappBase
                             type={'fare'}
