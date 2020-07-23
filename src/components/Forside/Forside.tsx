@@ -17,7 +17,7 @@ const Forside: React.FC = () => {
 
     const history = useHistory();
 
-    const { sluttbruker, nullstillSøknadsobjekt } = useApp();
+    const { sluttbruker, nullstillSøknadsobjekt, settUtfyltSteg } = useApp();
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 
@@ -27,6 +27,7 @@ const Forside: React.FC = () => {
 
     useEffect(() => {
         nullstillSøknadsobjekt(sluttbruker);
+        settUtfyltSteg(0);
     }, []);
 
     return (

@@ -1,16 +1,33 @@
-.oppsummeringsbolk{
-    .ekspanderbartPanel, .ekspanderbartPanel--apen {
-        border: none;
-        border-bottom: 1px solid @navMorkGra;
-        border-radius: 0px;
+@panel-innhold-bredde: 588px;
+
+.oppsummering {
+    .alertstripe {
+        width: max-content;
+        margin-top: 2rem;
     }
-    
-    .spørsmål-og-svar {
-        margin-bottom: 1rem;
-        text-align: left;
+
+    .innholdscontainer__children {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
-    
-    .barn__detaljer {
-        margin-bottom: 3rem;
+
+    .oppsummeringsbolk{
+        width: @panel-innhold-bredde;
+
+        .ekspanderbartPanel, .ekspanderbartPanel--apen {
+            border: none;
+            border-bottom: 1px solid @navMorkGra;
+            border-radius: 0px;
+        }
+        
+        .spørsmål-og-svar {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        
+        .barn__detaljer {
+            margin-bottom: 3rem;
+        }
     }
 }

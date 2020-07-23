@@ -25,6 +25,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     );
     const [søknad, settSøknad] = useState<ISøknad>(initialState);
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
+    const [utfyltSteg, settUtfyltSteg] = useState<number>(-1);
 
     autentiseringsInterceptor();
 
@@ -153,6 +154,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         nullstillSøknadsobjekt,
         innsendingStatus,
         settInnsendingStatus,
+        utfyltSteg,
+        settUtfyltSteg,
     };
 });
 

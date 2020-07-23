@@ -1,6 +1,7 @@
 import Søknadstype from '../components/SøknadsSteg/2-Søknadstype/Søknadstype';
 import VelgBarn from '../components/SøknadsSteg/3-VelgBarn/VelgBarn';
 import Oppsummering from '../components/SøknadsSteg/4-Oppsummering/Oppsummering';
+import Kvittering from '../components/SøknadsSteg/5-Kvittering/Kvittering';
 import OmDeg from '../components/SøknadsSteg/1-OmDeg/OmDeg';
 
 export interface IStegRoute {
@@ -15,6 +16,7 @@ export enum RouteEnum {
     Søknadstype = 'Søknadstype',
     VelgBarn = 'Velg barn',
     Oppsummering = 'Oppsummering',
+    Kvittering = 'Kvittering',
 }
 
 export const StegRoutes: IStegRoute[] = [
@@ -31,6 +33,12 @@ export const StegRoutes: IStegRoute[] = [
         label: 'Oppsummering',
         route: RouteEnum.Oppsummering,
         komponent: Oppsummering,
+    },
+    {
+        path: '/kvittering',
+        label: 'Kvittering',
+        route: RouteEnum.Kvittering,
+        komponent: Kvittering,
     },
 ];
 
