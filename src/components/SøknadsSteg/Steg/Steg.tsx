@@ -76,7 +76,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
         }
     }
 
-    function veksleModal() {
+    function håndterModalStatus() {
         settÅpenModal(!åpenModal);
     }
 
@@ -130,7 +130,11 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                         )}
                     </div>
 
-                    <KnappBase className={'avbryt'} type={'flat'} onClick={() => veksleModal()}>
+                    <KnappBase
+                        className={'avbryt'}
+                        type={'flat'}
+                        onClick={() => håndterModalStatus()}
+                    >
                         <div>Avbryt</div>
                     </KnappBase>
                 </div>
@@ -152,7 +156,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
             <Modal
                 className={'steg__modal'}
                 isOpen={åpenModal}
-                onRequestClose={() => veksleModal()}
+                onRequestClose={() => håndterModalStatus()}
                 closeButton={true}
                 contentLabel="avbryt-søknad-modal"
                 shouldCloseOnOverlayClick={true}
@@ -160,7 +164,9 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                 <div className={'modal-container'}>
                     <Informasjonsbolk
                         tittel={
-                            <Undertittel>Er du sikker at vil avbryte søknadprosessen?</Undertittel>
+                            <Undertittel>
+                                Er du sikker på at du vil avbryte søknadprosessen?
+                            </Undertittel>
                         }
                     >
                         <Normaltekst>
