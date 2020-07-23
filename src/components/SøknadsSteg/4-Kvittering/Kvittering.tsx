@@ -7,11 +7,20 @@ import AlertStripe from 'nav-frontend-alertstriper';
 
 const Kvittering: React.FC = () => {
     const { innsendingStatus } = useApp();
-    const history = useHistory();
+    const innsendtDato =
+        innsendingStatus.status === RessursStatus.SUKSESS
+            ? new Date(innsendingStatus.data.mottattDato)
+            : null;
+
+    const klokkeslett = innsendtDato?.toLocaleTimeString();
+    const dato = innsendtDato?.toDateString();
 
     return (
         <Steg tittel={'Takk for søknaden'} erSpørsmålBesvart={true}>
-            <AlertStripe type="suksess">Søknaden din om barnetrygd er mottatt</AlertStripe>
+            <AlertStripe type="suksess">
+                {`Søknaden din om barnetrygd er mottatt [${klokkeslett}, 
+                ${dato}]`}
+            </AlertStripe>
         </Steg>
     );
 };
