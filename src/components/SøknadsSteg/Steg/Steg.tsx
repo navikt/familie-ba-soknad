@@ -59,6 +59,9 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
             })
                 .then(ressurs => {
                     settInnsendingStatus(ressurs);
+                    history.push({
+                        pathname: hentPath(StegRoutes, RouteEnum.Kvittering),
+                    });
                 })
                 .catch(() =>
                     settInnsendingStatus(byggFeiletRessurs('Innsending av søknad feilet'))
@@ -68,7 +71,8 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
 
     const aktivtSteg: number = stegobjekter.findIndex(steg => steg.path === location.pathname);
     const erFørsteSteg: boolean = aktivtSteg === 0;
-    const erSisteSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
+    const erKvitteringsSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
+    const erOppsummeringSteg: boolean = aktivtSteg + 2 === stegobjekter.length;
     const visInnsendingsknapp = Miljø().visInnsendingsknapp;
 
     const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
@@ -89,19 +93,19 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                     <div className={'innholdscontainer__children'}>{children}</div>
                 </main>
             </Panel>
-            {!kommerFraOppsummering && (
+            {!kommerFraOppsummering && !erKvitteringsSteg && (
                 <div className={'steg__knapper'}>
                     <div className={`steg__knapper--rad1`}>
                         {!erFørsteSteg && (
                             <KnappBase
-                                className={erSisteSteg ? 'tilbake--alene' : 'tilbake'}
+                                className={erOppsummeringSteg ? 'tilbake--alene' : 'tilbake'}
                                 type={'standard'}
                                 onClick={() => history.push(forrigeRoute.path)}
                             >
                                 <div>Tilbake</div>
                             </KnappBase>
                         )}
-                        {erSpørsmålBesvart && !erSisteSteg && (
+                        {erSpørsmålBesvart && !erOppsummeringSteg && (
                             <KnappBase
                                 className={'neste'}
                                 type={'hoved'}
@@ -112,7 +116,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                                 <div>Neste</div>
                             </KnappBase>
                         )}
-                        {visInnsendingsknapp && erSisteSteg && (
+                        {visInnsendingsknapp && erOppsummeringSteg && (
                             <KnappBase
                                 spinner={innsendingStatus.status === RessursStatus.HENTER}
                                 type={'hoved'}
