@@ -16,11 +16,20 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
     function settMedISøknad(erMed: boolean) {
         settSøknad({
             ...søknad,
-            barn: søknad.barn.map(barn =>
-                barn.ident === ident
-                    ? { ...barn, medISøknad: { ...barn.medISøknad, verdi: erMed } }
-                    : barn
-            ),
+            barn: {
+                label: søknad.barn.label,
+                verdi: søknad.barn.verdi.map(barn =>
+                    barn.verdi.ident === ident
+                        ? {
+                              ...barn,
+                              verdi: {
+                                  ...barn.verdi,
+                                  medISøknad: { ...barn.verdi.medISøknad, verdi: erMed },
+                              },
+                          }
+                        : barn
+                ),
+            },
         });
     }
 

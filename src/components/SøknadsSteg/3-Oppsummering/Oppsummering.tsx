@@ -14,17 +14,17 @@ const Oppsummering: React.FC = () => {
                 {visLabelOgSvar(søknad.søknadstype)}
             </Oppsummeringsbolk>
             <Oppsummeringsbolk tittel="Om Deg">
-                {visLabelOgSvar(søknad.søker.navn)}
+                {visLabelOgSvar(søknad.søker.verdi.navn)}
             </Oppsummeringsbolk>
             <Oppsummeringsbolk tittel="Barna du søker for" lenke={RouteEnum.VelgBarn}>
-                {søknad.barn
-                    .filter(barn => barn.medISøknad)
+                {søknad.barn.verdi
+                    .filter(barn => barn.verdi.medISøknad.verdi)
                     .map(barn => {
-                        const barnKopi = { ...barn };
-                        delete barnKopi.medISøknad;
                         return (
-                            <div className={'barn__detaljer'} key={barn.ident.verdi}>
-                                {Object.values(barnKopi).map(felt => visLabelOgSvar(felt))}
+                            <div className={'barn__detaljer'} key={barn.verdi.ident.verdi}>
+                                {Object.values(barn.verdi)
+                                    .filter(felt => typeof felt.verdi !== 'boolean')
+                                    .map(felt => visLabelOgSvar(felt))}
                             </div>
                         );
                     })}

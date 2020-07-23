@@ -40,8 +40,8 @@ export interface IBarn {
 
 export interface ISøknad {
     søknadstype: ISøknadsfelt<ESøknadstype>;
-    søker: ISøker;
-    barn: IBarn[];
+    søker: ISøknadsfelt<ISøker>;
+    barn: ISøknadsfelt<ISøknadsfelt<IBarn>[]>;
 }
 export interface ISøknadsfelt<T> {
     label: string;
@@ -50,6 +50,6 @@ export interface ISøknadsfelt<T> {
 
 export const initialState = {
     søknadstype: { label: 'Hva slags barnetrygd søker du om?', verdi: ESøknadstype.IKKE_SATT },
-    søker: { navn: { label: '', verdi: '' } },
-    barn: [],
+    søker: { label: 'Søker', verdi: { navn: { label: '', verdi: '' } } },
+    barn: { label: 'Barn', verdi: [] },
 };

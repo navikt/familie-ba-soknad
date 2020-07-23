@@ -118,19 +118,26 @@ const [AppProvider, useApp] = createUseContext(() => {
             };
             const barn = ressurs.data.barn.map(barn => {
                 return {
-                    navn: { label: 'Barnets navn', verdi: barn.navn },
-                    alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
-                    ident: { label: 'Fødselsnummer', verdi: formaterFnr(barn.ident) },
-                    medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
-                    borMedSøker: {
-                        label: 'Bor barnet på din adresse?',
-                        verdi: barn.borMedSøker
-                            ? 'Registrert på din adresse'
-                            : 'Ikke registrert på adressen din',
+                    label: 'barn',
+                    verdi: {
+                        navn: { label: 'Barnets navn', verdi: barn.navn },
+                        alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
+                        ident: { label: 'Fødselsnummer', verdi: formaterFnr(barn.ident) },
+                        medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
+                        borMedSøker: {
+                            label: 'Bor barnet på din adresse?',
+                            verdi: barn.borMedSøker
+                                ? 'Registrert på din adresse'
+                                : 'Ikke registrert på adressen din',
+                        },
                     },
                 };
             });
-            settSøknad({ ...initialState, søker, barn });
+            settSøknad({
+                ...initialState,
+                søker: { label: initialState.søker.label, verdi: søker },
+                barn: { label: initialState.barn.label, verdi: barn },
+            });
         }
     };
 
