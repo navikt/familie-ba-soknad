@@ -160,9 +160,11 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
             >
                 <div className={'container'}>
                     <Informasjonsbolk
-                        tittel={<Undertittel>Er du sikker at vil avbryte søknaden?</Undertittel>}
+                        tittel={
+                            <Undertittel>Er du sikker at vil avbryte søknadprosessen?</Undertittel>
+                        }
                     >
-                        <Normaltekst>Hvis du avbryter søknaden vil den bli slettet.</Normaltekst>
+                        <Normaltekst>OBS: Hvis du avbryter vil søknaden bli slettet.</Normaltekst>
                     </Informasjonsbolk>
                     <div className={'avslutt-knapp'}>
                         <KnappBase
@@ -171,7 +173,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart }) => {
                                 history.push('/');
                             }}
                         >
-                            <div>Avslutt søknad</div>
+                            <div>Avbryt søknad</div>
                         </KnappBase>
                     </div>
                 </div>
