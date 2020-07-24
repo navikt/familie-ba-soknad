@@ -51,5 +51,5 @@ export interface ISøknadsfelt<T> {
 export const initialState = {
     søknadstype: { label: 'Hva slags barnetrygd søker du om?', verdi: ESøknadstype.IKKE_SATT },
     søker: { label: 'Søker', verdi: { navn: { label: '', verdi: '' } } },
-    barn: { label: 'Barn', verdi: [] },
+    barn: { label: 'Barna', verdi: [] },
 };
