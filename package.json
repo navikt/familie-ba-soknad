@@ -5,13 +5,13 @@
     "@navikt/familie-typer": "^3.0.4",
     "@navikt/fnrvalidator": "^1.1.2",
     "@testing-library/jest-dom": "^5.11.1",
-    "@testing-library/react": "^10.4.7",
+    "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.0.11",
     "@types/classnames": "^2.2.10",
     "@types/jest": "^26.0.4",
     "@types/node": "^14.0.23",
-    "@types/react": "^16.9.43",
-    "@types/react-dom": "^16.9.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.5",
     "axios": "^0.19.2",
@@ -54,13 +54,13 @@
     "nav-frontend-veileder-style": "^2.0.15",
     "node-cache": "^5.1.2",
     "prop-types": "^15.7.2",
-    "react": "^16.13.1",
+    "react": "^17.0.1",
     "react-collapse": "^5.0.1",
-    "react-dom": "^16.13.1",
+    "react-dom": "^17.0.1",
     "react-modal": "^3.11.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^4.0.1",
     "request": "^2.88.2"
   },
   "scripts": {
@@ -98,6 +98,6 @@
     "http-proxy-middleware": "^1.0.5",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
-    "typescript": "^3.9.7"
+    "typescript": "^4.1.3"
   }
 }
