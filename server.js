@@ -1,12 +1,14 @@
-const dotenv = require('dotenv');
+import path from 'path';
+
+import dotenv from 'dotenv';
+import express from 'express';
+import mustacheExpress from 'mustache-express';
+
+import getDecorator from './src/dekorator';
+import setupProxy from './src/setupProxy';
 dotenv.config();
 
-const express = require('express');
-const path = require('path');
 const app = express();
-const setupProxy = require('./src/setupProxy');
-const getDecorator = require('./src/dekorator');
-const mustacheExpress = require('mustache-express');
 
 app.set('views', `${__dirname}/build`);
 app.set('view engine', 'mustache');
@@ -18,9 +20,9 @@ setupProxy(app);
 app.use(express.static(path.join(__dirname, 'build'), { index: false }));
 
 // Nais functions
-app.get(`/internal/isAlive|isReady`, (req, res) => res.sendStatus(200));
+app.get(`/internal/isAlive|isReady`, (_req, res) => res.sendStatus(200));
 
-app.get('*', (req, res) =>
+app.get('*', (_req, res) =>
     getDecorator()
         .then(fragments => {
             res.render('index.html', fragments);

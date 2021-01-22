@@ -77,6 +77,7 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
     );
 };
 
+// eslint-disable-next-line
 const BarneKortInfo: React.FC<ISøknadsfelt<any>> = ({ label, verdi }) => {
     return (
         <div className="informasjonselement">
