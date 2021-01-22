@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
-import Miljø from '../Miljø';
+
 import { preferredAxios as axios } from '../context/axios';
+import Miljø from '../Miljø';
 
 const er401Feil = (error: AxiosError) => error && error.response && error.response.status === 401;
 const getLoginUrl = () => {

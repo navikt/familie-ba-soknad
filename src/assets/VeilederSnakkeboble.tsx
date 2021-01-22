@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Veileder, { VeilederProps } from 'nav-frontend-veileder';
 
 const VeilederSnakkeboble: React.FC<VeilederProps> = props => (

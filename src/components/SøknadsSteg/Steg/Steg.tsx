@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
+
 import './Steg.less';
-import KnappBase from 'nav-frontend-knapper';
-import Stegindikator from 'nav-frontend-stegindikator';
-import Panel from 'nav-frontend-paneler';
-import { StegRoutes, RouteEnum } from '../../../routing/Routes';
-import { Systemtittel, Ingress } from 'nav-frontend-typografi';
-import { useLocation, useHistory } from 'react-router-dom';
-import { IStegRoute, hentNesteRoute, hentForrigeRoute, hentPath } from '../../../routing/Routes';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { ILokasjon } from '../../../typer/lokasjon';
-import Miljø from '../../../Miljø';
-import { useApp } from '../../../context/AppContext';
-import { ISøknad, ISøknadsfelt, IBarn } from '../../../typer/søknad';
-import { byggHenterRessurs, RessursStatus, byggFeiletRessurs } from '@navikt/familie-typer';
-import { IKvittering } from '../../../typer/kvittering';
 import classNames from 'classnames';
+import { useLocation, useHistory } from 'react-router-dom';
+
+import KnappBase from 'nav-frontend-knapper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
+import Panel from 'nav-frontend-paneler';
+import Stegindikator from 'nav-frontend-stegindikator';
+import { Systemtittel, Ingress } from 'nav-frontend-typografi';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+
+import { byggHenterRessurs, RessursStatus, byggFeiletRessurs } from '@navikt/familie-typer';
+
+import { useApp } from '../../../context/AppContext';
+import Miljø from '../../../Miljø';
+import { StegRoutes, RouteEnum } from '../../../routing/Routes';
+import { IStegRoute, hentNesteRoute, hentForrigeRoute, hentPath } from '../../../routing/Routes';
+import { IKvittering } from '../../../typer/kvittering';
+import { ILokasjon } from '../../../typer/lokasjon';
+import { ISøknad, ISøknadsfelt, IBarn } from '../../../typer/søknad';
 
 interface ISteg {
     tittel: string;

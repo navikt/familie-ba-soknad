@@ -1,8 +1,10 @@
 import React from 'react';
-import Steg from '../Steg/Steg';
-import { visLabelOgSvar } from '../../../utils/visning';
-import { useApp } from '../../../context/AppContext';
+
 import AlertStripe from 'nav-frontend-alertstriper';
+
+import { useApp } from '../../../context/AppContext';
+import { visLabelOgSvar } from '../../../utils/visning';
+import Steg from '../Steg/Steg';
 
 const OmDeg: React.FC = () => {
     const { søknad } = useApp();

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+
+import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { useApp } from '../../context/AppContext';
+
 import {
     Ressurs,
     RessursStatus,
@@ -8,7 +10,8 @@ import {
     byggHenterRessurs,
     byggFeiletRessurs,
 } from '@navikt/familie-typer';
-import NavFrontendSpinner from 'nav-frontend-spinner';
+
+import { useApp } from '../../context/AppContext';
 
 const Helse: React.FC = () => {
     const { axiosRequest } = useApp();

@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Sidetittel, Systemtittel, Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import Tekstområde from 'nav-frontend-tekstomrade';
-import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
-import Lenke from 'nav-frontend-lenker';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
-import Panel from 'nav-frontend-paneler';
-import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+
 import { useHistory } from 'react-router';
-import { StegRoutes } from '../../routing/Routes';
-import { useApp } from '../../context/AppContext';
+
+import { Hovedknapp } from 'nav-frontend-knapper';
+import Lenke from 'nav-frontend-lenker';
+import Panel from 'nav-frontend-paneler';
+import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
+import Tekstområde from 'nav-frontend-tekstomrade';
+import { Sidetittel, Systemtittel, Undertittel, Normaltekst } from 'nav-frontend-typografi';
+
 import { RessursStatus } from '@navikt/familie-typer';
+
+import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
+import { useApp } from '../../context/AppContext';
+import { StegRoutes } from '../../routing/Routes';
+import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 
 const Forside: React.FC = () => {
     const [bekreftet, settBekreftet] = useState<boolean>(false);

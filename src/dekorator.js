@@ -1,6 +1,7 @@
 const jsdom = require('jsdom');
-const request = require('request');
 const NodeCache = require('node-cache');
+const request = require('request');
+
 const environment = require('./environment');
 const { JSDOM } = jsdom;
 
