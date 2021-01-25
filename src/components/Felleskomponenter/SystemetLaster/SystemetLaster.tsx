@@ -1,6 +1,7 @@
+import React from 'react';
+
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Systemtittel } from 'nav-frontend-typografi';
-import React from 'react';
 
 const SystemetLaster = () => {
     return (

@@ -1,9 +1,12 @@
 import React from 'react';
+
+import { useHistory } from 'react-router';
+
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Undertittel } from 'nav-frontend-typografi';
-import LenkeMedIkon from '../../Felleskomponenter/LenkeMedIkon/LenkeMedIkon';
-import { useHistory } from 'react-router';
+
 import { StegRoutes, RouteEnum, hentPath } from '../../../routing/Routes';
+import LenkeMedIkon from '../../Felleskomponenter/LenkeMedIkon/LenkeMedIkon';
 
 interface Props {
     tittel: string;

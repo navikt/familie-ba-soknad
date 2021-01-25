@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+
 import { ISøknadsfelt, ESøknadstype, søknadstyper } from '../typer/søknad';
 
 export const visLabelOgSvar = (
@@ -19,8 +21,8 @@ export const verdiTilTekstsvar = (verdi: string | boolean | number | ESøknadsty
     } else if (typeof verdi === 'string' || typeof verdi === 'number') {
         return <Normaltekst>{verdi}</Normaltekst>;
     } else if (typeof verdi === 'boolean') {
-        let jaTekst = 'Ja';
-        let neiTekst = 'Nei';
+        const jaTekst = 'Ja';
+        const neiTekst = 'Nei';
 
         return verdi ? <Normaltekst>{jaTekst}</Normaltekst> : <Normaltekst>{neiTekst}</Normaltekst>;
     } else {

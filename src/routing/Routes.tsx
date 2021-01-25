@@ -1,8 +1,8 @@
+import OmDeg from '../components/SøknadsSteg/1-OmDeg/OmDeg';
 import Søknadstype from '../components/SøknadsSteg/2-Søknadstype/Søknadstype';
 import VelgBarn from '../components/SøknadsSteg/3-VelgBarn/VelgBarn';
 import Oppsummering from '../components/SøknadsSteg/4-Oppsummering/Oppsummering';
 import Kvittering from '../components/SøknadsSteg/5-Kvittering/Kvittering';
-import OmDeg from '../components/SøknadsSteg/1-OmDeg/OmDeg';
 
 export interface IStegRoute {
     path: string;

@@ -1,7 +1,9 @@
-const jsdom = require('jsdom');
-const request = require('request');
-const NodeCache = require('node-cache');
-const environment = require('./environment');
+import jsdom from 'jsdom';
+import NodeCache from 'node-cache';
+import request from 'request';
+
+import environment from './environment';
+
 const { JSDOM } = jsdom;
 
 const SECONDS_PER_MINUTE = 60;
@@ -38,4 +40,4 @@ const getDecorator = () =>
         }
     });
 
-module.exports = getDecorator;
+export default getDecorator;

@@ -1,7 +1,9 @@
 import React from 'react';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
-import { Knapp } from 'nav-frontend-knapper';
+
 import { EtikettSuksess } from 'nav-frontend-etiketter';
+import { Knapp } from 'nav-frontend-knapper';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
+
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
@@ -75,6 +77,7 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
     );
 };
 
+// eslint-disable-next-line
 const BarneKortInfo: React.FC<ISøknadsfelt<any>> = ({ label, verdi }) => {
     return (
         <div className="informasjonselement">

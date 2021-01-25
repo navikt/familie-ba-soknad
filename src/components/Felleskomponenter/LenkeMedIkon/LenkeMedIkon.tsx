@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Normaltekst } from 'nav-frontend-typografi';
+
 import endreIkon from '../../../assets/endre-ikon.svg';
 
 interface Props {

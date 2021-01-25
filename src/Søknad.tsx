@@ -1,14 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './App.less';
-import { useApp } from './context/AppContext';
-import Helse from './components/Helse/Helse';
-import Forside from './components/Forside/Forside';
-import { StegRoutes } from './routing/Routes';
-import Alertstripe from 'nav-frontend-alertstriper';
+
 import classNames from 'classnames';
-import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import './App.less';
+import Alertstripe from 'nav-frontend-alertstriper';
+
 import { RessursStatus } from '@navikt/familie-typer';
+
+import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';
+import Forside from './components/Forside/Forside';
+import Helse from './components/Helse/Helse';
+import { useApp } from './context/AppContext';
+import { StegRoutes } from './routing/Routes';
 
 const Søknad = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();

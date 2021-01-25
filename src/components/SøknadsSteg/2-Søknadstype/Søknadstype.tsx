@@ -1,8 +1,10 @@
 import React from 'react';
-import Steg from '../Steg/Steg';
+
 import { Select } from 'nav-frontend-skjema';
+
 import { useApp } from '../../../context/AppContext';
 import { ESøknadstype, søknadstyper } from '../../../typer/søknad';
+import Steg from '../Steg/Steg';
 
 const Søknadstype: React.FC = () => {
     const { søknad, settSøknad } = useApp();

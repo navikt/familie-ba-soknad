@@ -1,8 +1,10 @@
 import React from 'react';
+
 import './App.less';
+import AlertStripe from 'nav-frontend-alertstriper';
+
 import { AppProvider } from './context/AppContext';
 import Søknad from './Søknad';
-import AlertStripe from 'nav-frontend-alertstriper';
 
 function App() {
     return (

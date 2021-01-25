@@ -1,8 +1,11 @@
 import React from 'react';
-import { useApp } from '../../../context/AppContext';
-import { RessursStatus } from '@navikt/familie-typer';
-import Steg from '../Steg/Steg';
+
 import AlertStripe from 'nav-frontend-alertstriper';
+
+import { RessursStatus } from '@navikt/familie-typer';
+
+import { useApp } from '../../../context/AppContext';
+import Steg from '../Steg/Steg';
 
 const Kvittering: React.FC = () => {
     const { innsendingStatus } = useApp();

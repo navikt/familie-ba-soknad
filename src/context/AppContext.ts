@@ -1,7 +1,8 @@
+import { useState, useEffect } from 'react';
+
+import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import createUseContext from 'constate';
 
-import { preferredAxios, loggFeil, håndterApiRessurs } from './axios';
-import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import {
     Ressurs,
     ApiRessurs,
@@ -9,13 +10,14 @@ import {
     byggHenterRessurs,
     RessursStatus,
 } from '@navikt/familie-typer';
-import { useState, useEffect } from 'react';
-import { IPerson } from '../typer/person';
-import { hentAlder } from '../utils/person';
-import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
-import { ISøknad, initialState } from '../typer/søknad';
-import { formaterFnr } from '../utils/visning';
+
 import { IKvittering } from '../typer/kvittering';
+import { IPerson } from '../typer/person';
+import { ISøknad, initialState } from '../typer/søknad';
+import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
+import { hentAlder } from '../utils/person';
+import { formaterFnr } from '../utils/visning';
+import { preferredAxios, loggFeil, håndterApiRessurs } from './axios';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());

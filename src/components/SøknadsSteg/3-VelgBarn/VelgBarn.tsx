@@ -1,8 +1,10 @@
 import React from 'react';
+
+import classNames from 'classnames';
+
+import { useApp } from '../../../context/AppContext';
 import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
-import { useApp } from '../../../context/AppContext';
-import classNames from 'classnames';
 
 const VelgBarn: React.FC = () => {
     const { søknad } = useApp();
