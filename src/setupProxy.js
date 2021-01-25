@@ -1,7 +1,6 @@
-//eslint-disable-next-line
+/* eslint-disable */
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-//eslint-disable-next-line
 const environment = require('./environment');
 
 module.exports = function (app) {
