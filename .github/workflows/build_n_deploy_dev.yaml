@@ -14,10 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        name: Sett node-versjon til 12 som i container
+        with:
+          node-version: '12'
       - uses: borales/actions-yarn@v2.0.0
+        name: Installer node-pakker
         with:
           cmd: install
       - uses: borales/actions-yarn@v2.0.0
+        name: Kjør tester
         env:
           CI: true
         with:
