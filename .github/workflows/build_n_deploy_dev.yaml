@@ -18,6 +18,8 @@ jobs:
         with:
           cmd: install
       - uses: borales/actions-yarn@v2.0.0
+        env:
+          CI: true
         with:
           cmd: test
   build:
@@ -34,7 +36,9 @@ jobs:
           docker push ${IMAGE}
   deploy:
     name: Deploy to dev gcp
-    needs: build
+    needs:
+      - build
+      - test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
