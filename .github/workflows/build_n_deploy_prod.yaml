@@ -36,7 +36,9 @@ jobs:
           docker push ${IMAGE_LATEST}
   deploy:
     name: Deploy to gcp
-    needs: build
+    needs:
+      - build
+      - test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
