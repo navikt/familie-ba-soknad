@@ -9,25 +9,17 @@ env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-soknad:${{ github.sha }}
 
 jobs:
-  test:
+  test-dev:
     name: Run tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        name: Sett node-versjon til 12 som i container
-        with:
-          node-version: '12'
-      - uses: borales/actions-yarn@v2.0.0
-        name: Installer node-pakker
-        with:
-          cmd: install
-      - uses: borales/actions-yarn@v2.0.0
-        name: Kjør tester
+      - name: Installer node-pakker
+        run: npx yarn
+      - name: Kjør tester
         env:
           CI: true
-        with:
-          cmd: test
+        run: npx yarn test
   build:
     name: Build and push Docker container
     runs-on: ubuntu-latest
