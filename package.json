@@ -1,6 +1,7 @@
 {
   "name": "familie-ba-soknad",
   "version": "0.1.0",
+  "type": "module",
   "dependencies": {
     "@navikt/familie-typer": "^3.0.4",
     "@navikt/fnrvalidator": "^1.1.2",
@@ -69,11 +70,11 @@
   "scripts": {
     "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "build_and_serve": "yarn build; yarn serve",
-    "dev": "node --loader ts-node/esm --experimental-specifier-resolution=node src/server.ts",
+    "dev": "node --loader ts-node/esm src/server.ts",
     "build": "craco build && tsc -p tsconfig.backend.json",
     "test-ci": "CI=true craco build",
     "test": "jest",
-    "serve": "NODE_ENV=production node node_dist/server.js"
+    "serve": "NODE_ENV=production node build/server/server.js"
   },
   "jest": {
     "preset": "ts-jest",

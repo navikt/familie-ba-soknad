@@ -1,24 +1,25 @@
-import path from 'path';
-
 import dotenv from 'dotenv';
 import express from 'express';
 import mustacheExpress from 'mustache-express';
 
-import getDecorator from './dekorator';
-import { createApiForwardingFunction } from './proxy';
+import getDecorator from './dekorator.js';
+import { createApiForwardingFunction } from './proxy.js';
+import finnFrontendMappe from './utils/finnFrontendMappe.js';
 
 dotenv.config();
 
 const app = express();
 
-app.set('views', `${__dirname}/../build`);
+const frontendBuild = finnFrontendMappe();
+
+app.set('views', frontendBuild);
 app.set('view engine', 'mustache');
 app.engine('html', mustacheExpress());
 
 app.use('/api', createApiForwardingFunction());
 
 // Static files
-app.use(express.static(path.join(__dirname, '..', 'build'), { index: false }));
+app.use(express.static(frontendBuild, { index: false }));
 
 // Nais functions
 app.get(`/internal/isAlive|isReady`, (_req, res) => res.sendStatus(200));

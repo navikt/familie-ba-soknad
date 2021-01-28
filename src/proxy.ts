@@ -3,7 +3,7 @@ import { ClientRequest } from 'http';
 import { Request, Response } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
-import environment from './environment';
+import environment from './environment.js';
 
 const restream = (proxyReq: ClientRequest, req: Request, _res: Response) => {
     if (req.body) {

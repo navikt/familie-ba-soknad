@@ -17,9 +17,6 @@
   "include": [
     "./src"
   ],
-  "exclude": [
-    "(.*).test.(.*)"
-  ],
   "lib": [
     "es2015",
     "esnext"

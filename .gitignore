@@ -3,4 +3,3 @@ build
 .idea
 .env
 .eslintcache
-node_dist/
