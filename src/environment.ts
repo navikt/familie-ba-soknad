@@ -1,4 +1,4 @@
-module.exports = function () {
+export default function () {
     if (process.env.ENV === 'prod') {
         return {
             apiUrl: 'http://familie-ba-soknad-api',
@@ -15,4 +15,4 @@ module.exports = function () {
             dekoratørUrl: 'https://www.nav.no/dekoratoren/?simple=true',
         };
     }
-};
+}
