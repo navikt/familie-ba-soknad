@@ -3,6 +3,7 @@ import express from 'express';
 import mustacheExpress from 'mustache-express';
 
 import getDecorator from './dekorator.js';
+import environment from './environment.js';
 import { createApiForwardingFunction } from './proxy.js';
 import finnFrontendMappe from './utils/finnFrontendMappe.js';
 
@@ -37,4 +38,4 @@ app.get('*', (_req, res) =>
         })
 );
 
-app.listen(9000);
+app.listen(environment().port);
