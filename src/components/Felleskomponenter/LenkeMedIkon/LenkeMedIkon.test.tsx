@@ -8,7 +8,7 @@ test('Kan rendre LenkeMedIkon', () => {
     render(
         <LenkeMedIkon
             onClick={() => {
-                //do nothing
+                // Ikke implementert
             }}
         />
     );
