@@ -1,23 +1,26 @@
-import path from 'path';
-
 import dotenv from 'dotenv';
 import express from 'express';
 import mustacheExpress from 'mustache-express';
 
-import getDecorator from './src/dekorator';
-import setupProxy from './src/setupProxy';
+import getDecorator from './dekorator.js';
+import environment from './environment.js';
+import { createApiForwardingFunction } from './proxy.js';
+import finnFrontendMappe from './utils/finnFrontendMappe.js';
+
 dotenv.config();
 
 const app = express();
 
-app.set('views', `${__dirname}/build`);
+const frontendBuild = finnFrontendMappe();
+
+app.set('views', frontendBuild);
 app.set('view engine', 'mustache');
 app.engine('html', mustacheExpress());
 
-setupProxy(app);
+app.use('/api', createApiForwardingFunction());
 
 // Static files
-app.use(express.static(path.join(__dirname, 'build'), { index: false }));
+app.use(express.static(frontendBuild, { index: false }));
 
 // Nais functions
 app.get(`/internal/isAlive|isReady`, (_req, res) => res.sendStatus(200));
@@ -25,6 +28,7 @@ app.get(`/internal/isAlive|isReady`, (_req, res) => res.sendStatus(200));
 app.get('*', (_req, res) =>
     getDecorator()
         .then(fragments => {
+            // @ts-ignore
             res.render('index.html', fragments);
         })
         .catch(e => {
@@ -34,4 +38,6 @@ app.get('*', (_req, res) =>
         })
 );
 
-app.listen(9000);
+console.log(`Starting server on localhost: http://localhost:${environment().port}`);
+
+app.listen(environment().port);

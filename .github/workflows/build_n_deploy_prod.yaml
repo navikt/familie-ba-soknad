@@ -10,6 +10,17 @@ env:
   IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}/familie-ba-soknad:latest
 
 jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Installer node-pakker
+        run: npx yarn
+      - name: Kjør tester
+        env:
+          CI: true
+        run: npx yarn test
   build:
     name: Build and push Docker container
     runs-on: ubuntu-latest
@@ -25,7 +36,9 @@ jobs:
           docker push ${IMAGE_LATEST}
   deploy:
     name: Deploy to gcp
-    needs: build
+    needs:
+      - build
+      - test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -39,4 +52,3 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: build_n_deploy/naiserator/naiserator_prod.yaml
-      
