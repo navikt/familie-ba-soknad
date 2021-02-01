@@ -38,4 +38,6 @@ app.get('*', (_req, res) =>
         })
 );
 
+console.log(`Starting server on localhost: http://localhost:${environment().port}`);
+
 app.listen(environment().port);
