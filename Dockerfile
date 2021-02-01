@@ -7,4 +7,4 @@ RUN yarn
 RUN yarn build
 
 EXPOSE 9000
-CMD ["yarn", "serve"]
+CMD ["yarn", "start"]
