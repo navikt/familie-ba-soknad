@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
 
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
@@ -15,6 +16,11 @@ import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import { useApp } from '../../context/AppContext';
 import { StegRoutes } from '../../routing/Routes';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+
+const StyledLenke = styled(Lenke)`
+    margin-top: 0.75rem;
+    display: inline-block;
+`;
 
 const Forside: React.FC = () => {
     const [bekreftet, settBekreftet] = useState<boolean>(false);
@@ -53,7 +59,7 @@ const Forside: React.FC = () => {
                             rett til barnetrygd selv om du skal være bosatt i Norge i mindre enn 12
                             måneder.
                         </Normaltekst>
-                        <Lenke href={'https://www.nav.no'}>Mer om barnetrygd</Lenke>
+                        <StyledLenke href={'https://www.nav.no'}>Mer om barnetrygd</StyledLenke>
                     </Informasjonsbolk>
 
                     <Informasjonsbolk

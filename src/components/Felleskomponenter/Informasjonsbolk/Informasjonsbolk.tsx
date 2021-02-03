@@ -12,13 +12,6 @@ const InformasjonsbolkWrapper = styled.div`
 
 const InformasjonsbolkChild = styled.div`
     margin-top: 0.75 rem;
-    & > .lenke {
-        margin-top: 0.75rem;
-        display: inline-block;
-    }
-    & > .skjemaelement {
-        padding: 10px;
-    }
 `;
 
 const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({ tittel, children }) => {
