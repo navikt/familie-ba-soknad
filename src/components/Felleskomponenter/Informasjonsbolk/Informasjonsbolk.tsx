@@ -6,20 +6,20 @@ export interface IInformasjonsbolkProps {
     tittel: React.ReactNode;
 }
 
-const InformasjonsbolkWrapper = styled.div`
+const InformasjonsbolkContainer = styled.div`
     margin-top: 4rem;
 `;
 
-const InformasjonsbolkChild = styled.div`
+const InformasjonsbolkChildrenWrapper = styled.div`
     margin-top: 0.75 rem;
 `;
 
 const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({ tittel, children }) => {
     return (
-        <InformasjonsbolkWrapper>
+        <InformasjonsbolkContainer>
             {tittel}
-            <InformasjonsbolkChild>{children}</InformasjonsbolkChild>
-        </InformasjonsbolkWrapper>
+            <InformasjonsbolkChildrenWrapper>{children}</InformasjonsbolkChildrenWrapper>
+        </InformasjonsbolkContainer>
     );
 };
 
