@@ -90,9 +90,9 @@ const Forside: React.FC = () => {
                             opplysningene dine. Noen ganger kan vi også trenge mer informasjon. Da
                             gir vi deg beskjed om dette.
                         </Normaltekst>
-                        <Lenke href={`https://www.nav.no`}>
+                        <StyledLenke href={`https://www.nav.no`}>
                             Oversikt over hva som krever dokumentasjon
-                        </Lenke>
+                        </StyledLenke>
                     </Informasjonsbolk>
 
                     <Informasjonsbolk
@@ -118,9 +118,9 @@ const Forside: React.FC = () => {
                             opplysninger du gir oss i andre sammenhenger, hvis det er relevant og
                             nødvendig.
                         </Normaltekst>
-                        <Lenke href={`https://www.nav.no`}>
+                        <StyledLenke href={`https://www.nav.no`}>
                             Slik behandler vi personopplysningene dine
-                        </Lenke>
+                        </StyledLenke>
                     </Informasjonsbolk>
 
                     <Informasjonsbolk tittel={<Undertittel>Slik søker du</Undertittel>}>
