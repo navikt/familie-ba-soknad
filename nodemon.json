@@ -1,0 +1,5 @@
+{
+  "watch": ["src/**/*.tsx", "src/**/*.ts"],
+  "ext": "ts,tsx",
+  "exec": "craco build"
+}
