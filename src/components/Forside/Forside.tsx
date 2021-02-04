@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useHistory } from 'react-router';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
