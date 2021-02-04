@@ -16,10 +16,10 @@ const Oppsummering: React.FC = () => {
     return (
         <Steg tittel={'Oppsummering'} erSpørsmålBesvart={true} className={'oppsummering'}>
             <Oppsummeringsbolk tittel="Om Deg">
-                {visLabelOgSvar(søknad.søker.verdi.navn)}
+                {visLabelOgSvar(søknad.søker.verdi.navn, '1rem')}
             </Oppsummeringsbolk>
             <Oppsummeringsbolk tittel="Søknadstype" lenke={RouteEnum.Søknadstype}>
-                {visLabelOgSvar(søknad.søknadstype)}
+                {visLabelOgSvar(søknad.søknadstype, '1rem')}
             </Oppsummeringsbolk>
             <Oppsummeringsbolk tittel="Barna du søker for" lenke={RouteEnum.VelgBarn}>
                 {søknad.barn.verdi
@@ -29,7 +29,7 @@ const Oppsummering: React.FC = () => {
                             <div className={'barn__detaljer'} key={barn.verdi.ident.verdi}>
                                 {Object.values(barn.verdi)
                                     .filter(felt => typeof felt.verdi !== 'boolean')
-                                    .map(felt => visLabelOgSvar(felt))}
+                                    .map(felt => visLabelOgSvar(felt, '1rem'))}
                             </div>
                         );
                     })}
