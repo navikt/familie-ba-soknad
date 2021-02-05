@@ -7,6 +7,8 @@ _Er det noe du er bekymret eller usikker på? Beskriv det gjerne her._
 ### ✅ Checklist
 _Har du husket alle punktene i listen?_
 - [ ] Jeg har testet mine endringer i henhold til akseptansekriteriene 🕵️
+- [ ] Jeg har testet endringene mine med Arc Toolkit
+- [ ] Jeg har testet endringene mine i mobilstørrelse
 - [ ] Jeg har skrevet tester. Hvis du ikke har skrevet tester, beskriv hvorfor under 👇
 
 _Jeg har ikke skrevet tester fordi:_

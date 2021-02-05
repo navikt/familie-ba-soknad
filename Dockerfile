@@ -1,7 +1,9 @@
 FROM navikt/node-express:14-alpine
+USER root
 RUN apk --no-cache add curl
+USER apprunner
 
-ADD ./ /var/server/
+COPY --chown=apprunner:apprunner ./ /var/server/
 
 RUN yarn
 RUN yarn build
