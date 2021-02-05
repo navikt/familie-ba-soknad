@@ -11,7 +11,7 @@ const InformasjonsbolkContainer = styled.div`
 `;
 
 const InformasjonsbolkChildrenWrapper = styled.div`
-    margin-top: 0.75 rem;
+    margin-top: 0.75rem;
 `;
 
 const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({ tittel, children }) => {
