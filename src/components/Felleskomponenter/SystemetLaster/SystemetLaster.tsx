@@ -1,7 +1,15 @@
 import React from 'react';
 
+import styled from 'styled-components/macro';
+
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Systemtittel } from 'nav-frontend-typografi';
+
+const StyledSpinner = styled(NavFrontendSpinner)`
+    margin-top: 3rem;
+    height: 10rem;
+    width: 10rem;
+`;
 
 const SystemetLaster = () => {
     return (
@@ -11,10 +19,7 @@ const SystemetLaster = () => {
                     className={'systemet-laster__content--tekst'}
                     children={'Søknaden laster'}
                 />
-                <NavFrontendSpinner
-                    className={'systemet-laster__content--spinner'}
-                    transparent={true}
-                />
+                <StyledSpinner transparent={true} />
             </div>
         </div>
     );
