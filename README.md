@@ -2,10 +2,13 @@
 
 Frontend - søknad for barnetrygd.
 
+## Avhengigheter
+1. Node versjon >=14
+
 ## Kjør lokalt
 
 1. `yarn install`
-2. `yarn start`
+2. `yarn start:dev`
 
 # Bygg og deploy
 Appen bygges hos github actions, og gir beskjed til nais deploy om å deployere appen i gcp. Alle commits til feature brancher går til dev miljøet og master går til produksjon.
