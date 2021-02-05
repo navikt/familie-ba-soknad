@@ -1,3 +1,5 @@
+import React from 'react';
+
 import OmDeg from '../components/SøknadsSteg/1-OmDeg/OmDeg';
 import Søknadstype from '../components/SøknadsSteg/2-Søknadstype/Søknadstype';
 import VelgBarn from '../components/SøknadsSteg/3-VelgBarn/VelgBarn';

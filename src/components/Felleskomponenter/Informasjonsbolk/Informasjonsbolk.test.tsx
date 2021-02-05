@@ -6,7 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import Informasjonsbolk from './Informasjonsbolk';
 
-test('Kan render Informasjonsbolk', () => {
+test('Kan rendre Informasjonsbolk', () => {
     render(<Informasjonsbolk tittel={'Test'} />);
     expect(screen.getByText('Test')).toBeInTheDocument();
 });

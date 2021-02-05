@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import './Steg.less';
 import classNames from 'classnames';
+import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg.js';
 import { useLocation, useHistory } from 'react-router-dom';
 
 import KnappBase from 'nav-frontend-knapper';
@@ -45,7 +46,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, classNam
     const [åpenModal, settÅpenModal] = useState(false);
 
     useEffect(() => {
-        const detteSteget = stegobjekter.findIndex(steg => steg.path === location.pathname);
+        const detteSteget = StegRoutes.findIndex(steg => steg.path === location.pathname);
         settAktivtSteg(detteSteget);
 
         if ((utfyltSteg === -1 ? 0 : utfyltSteg + 1) < detteSteget && !kommerFraOppsummering) {
@@ -56,12 +57,14 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, classNam
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
-    const stegobjekter = StegRoutes.map((steg: IStegRoute, index: number) => {
-        return {
-            ...steg,
-            index: index,
-        };
-    });
+    const stegobjekter: StegindikatorStegProps[] = StegRoutes.map(
+        (steg: IStegRoute, index: number) => {
+            return {
+                label: steg.label,
+                index: index,
+            };
+        }
+    );
 
     function behandleSøknad(søknad: ISøknad) {
         return { ...søknad, barn: { ...søknad.barn, verdi: sorterBarn(søknad.barn.verdi) } };

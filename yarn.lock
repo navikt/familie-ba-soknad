@@ -8363,15 +8363,15 @@ nav-frontend-spinner@^2.0.5:
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-2.0.12.tgz#0dfd71468dd213ba3bd214ec00878f4d0a6a4c23"
   integrity sha512-063FIvazOkTsF+mFzyMF/EgmK+Umv3ORyZ6zjbDZ5mYkNyzt7FMp8Ug115r7pgNe0cUarAEThVrdvBsX3sVsXQ==
 
-nav-frontend-stegindikator-style@^1.0.31:
-  version "1.0.43"
-  resolved "https://registry.yarnpkg.com/nav-frontend-stegindikator-style/-/nav-frontend-stegindikator-style-1.0.43.tgz#eed383823b04d51ea722b70523f136f242f45dfa"
-  integrity sha512-FzQg1vtF54mK7BJGt9zyCQ48nsJO7jkZjOuDJbroLY8QZtcFtqyKY+HPU+pqtRRBhYgFP+DpXEfFHm2bPSh/pw==
+nav-frontend-stegindikator-style@1.0.45:
+  version "1.0.45"
+  resolved "https://registry.yarnpkg.com/nav-frontend-stegindikator-style/-/nav-frontend-stegindikator-style-1.0.45.tgz#0af79cd4de0264326fcc029491e941566fc78b88"
+  integrity sha512-MqhNpMQXaYUudCedNlee4qDNWhRZaGkac6GMTnP5I/Q2ShV/OpxkXRCqrmYbGGHGf9vfVIA+SmRUj+SYTftj/w==
 
-nav-frontend-stegindikator@^0.0.68:
-  version "0.0.68"
-  resolved "https://registry.yarnpkg.com/nav-frontend-stegindikator/-/nav-frontend-stegindikator-0.0.68.tgz#75fba8e37eeaff973011dcb78001eb1d0dedd7da"
-  integrity sha512-HZ7Ig6n++CRTFbkrnCe/qjEDjGP/20NZz8Rt4TxsHVl/4rqsHrUOoJ54C1PTJCPwGOPC07bC4kPrV1wpxjWBmg==
+nav-frontend-stegindikator@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-stegindikator/-/nav-frontend-stegindikator-1.0.1.tgz#9ab89980a7cac1fec95e0d4f61a688d313bfc689"
+  integrity sha512-saEG5zfqUS4a6tv/ldpwh6AbNlK8g5yZCHHc1oLBH8Xs8wS2chhD31EB/mpSVis2nFKTLu/EhegDKq6VVvkB7A==
 
 nav-frontend-tekstomrade@^2.0.51:
   version "2.0.68"
