@@ -11,8 +11,8 @@ const BarnekortContainer = styled.div<{ kunEttBarn: boolean }>`
     flex-flow: row wrap;
     margin: 0 auto;
     margin-top: 1rem;
-    justify-content: ${props => (props.kunEttBarn ? 'center' : 'flex-start')}
-    width: ${props => (props.kunEttBarn ? 'auto' : '38.75rem')}
+    justify-content: ${props => (props.kunEttBarn ? 'center' : 'flex-start')};
+    width: ${props => (props.kunEttBarn ? 'auto' : '38.75rem')};
 `;
 
 const VelgBarn: React.FC = () => {
