@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { css } from 'styled-components';
 import styled from 'styled-components/macro';
 
 import { useApp } from '../../../context/AppContext';
@@ -10,16 +9,10 @@ import Barnekort from './Barnekort/Barnekort';
 const BarnekortContainer = styled.div<{ kunEttBarn: boolean }>`
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     margin: 0 auto;
     margin-top: 1rem;
-    width: 38.75rem;
-    ${props =>
-        props.kunEttBarn &&
-        css`
-            justify-content: center;
-            width: auto;
-        `}
+    justify-content: ${props => (props.kunEttBarn ? 'center' : 'flex-start')}
+    width: ${props => (props.kunEttBarn ? 'auto' : '38.75rem')}
 `;
 
 const VelgBarn: React.FC = () => {
