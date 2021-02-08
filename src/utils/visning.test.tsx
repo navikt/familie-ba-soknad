@@ -7,7 +7,7 @@ import { visLabelOgSvar } from './visning';
 
 test(`Test at rendrer både label og svar`, () => {
     const { getByText } = render(
-        <div>{visLabelOgSvar({ label: 'TestLabel', verdi: 'TestVerdi' })}</div>
+        <div>{visLabelOgSvar({ label: 'TestLabel', verdi: 'TestVerdi' }, '2rem')}</div>
     );
 
     expect(getByText(/TestLabel/)).toBeInTheDocument();
@@ -16,7 +16,7 @@ test(`Test at rendrer både label og svar`, () => {
 
 test(`Test at rendrer ESøknadstype`, () => {
     const { getByText } = render(
-        <div>{visLabelOgSvar({ label: 'TestLabel', verdi: ESøknadstype.ORDINÆR })}</div>
+        <div>{visLabelOgSvar({ label: 'TestLabel', verdi: ESøknadstype.ORDINÆR }, '1rem')}</div>
     );
     expect(getByText(/Ordinær/)).toBeInTheDocument();
 });

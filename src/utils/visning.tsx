@@ -1,17 +1,25 @@
 import React from 'react';
 
+import styled from 'styled-components/macro';
+
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ISøknadsfelt, ESøknadstype, søknadstyper } from '../typer/søknad';
 
+export const LabelOgSvarContainer = styled.div<{ marginTop: string }>`
+    text-align: left;
+    margin-top: ${props => props.marginTop};
+`;
+
 export const visLabelOgSvar = (
-    objekt: ISøknadsfelt<string | boolean | number | ESøknadstype> | undefined
+    objekt: ISøknadsfelt<string | boolean | number | ESøknadstype> | undefined,
+    marginTop: string
 ) => {
     return objekt ? (
-        <div className="spørsmål-og-svar" key={objekt.label}>
+        <LabelOgSvarContainer marginTop={marginTop} key={objekt.label}>
             <Element>{objekt.label}</Element>
             {verdiTilTekstsvar(objekt.verdi)}
-        </div>
+        </LabelOgSvarContainer>
     ) : null;
 };
 

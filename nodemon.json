@@ -1,0 +1,5 @@
+{
+  "watch": ["src/**/*.tsx", "src/**/*.ts", "src/**/*.css", "src/**/*.less"],
+  "ext": "ts,tsx,css,less",
+  "exec": "craco build && NODE_ENV=development node --loader ts-node/esm src/server.ts"
+}

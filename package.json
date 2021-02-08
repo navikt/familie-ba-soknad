@@ -69,8 +69,8 @@
   },
   "scripts": {
     "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "build_and_serve": "yarn build; yarn serve",
-    "start:dev": "node --loader ts-node/esm src/server.ts",
+    "build_and_serve": "yarn build; yarn start",
+    "start:dev": "nodemon",
     "build": "craco build && tsc -p tsconfig.backend.json",
     "test-ci": "CI=true craco build",
     "test": "jest",
@@ -80,7 +80,9 @@
     "preset": "ts-jest",
     "moduleNameMapper": {
       "\\.(css|less|svg)$": "<rootDir>/src/mockStyle.js",
-      "nav-(.*)-style": "<rootDir>/src/mockStyle.js"
+      "nav-(.*)-style": "<rootDir>/src/mockStyle.js",
+      "nav-frontend-core": "<rootDir>/src/mockStyle.js",
+      "styled-components/macro": "styled-components"
     },
     "globals": {
       "ts-jest": {
@@ -103,6 +105,9 @@
       "eslint --fix src/ --max-warnings=0"
     ]
   },
+  "resolutions": {
+    "styled-components": "^5"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -120,6 +125,9 @@
     "@types/express": "^4.17.11",
     "@types/express-session": "^1.17.3",
     "@types/mustache-express": "^1.2.1",
+    "@types/styled-components": "^5.1.7",
+    "babel-plugin-macros": "^3.0.1",
+    "babel-plugin-styled-components": "^1.12.0",
     "craco-less": "^1.17.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
@@ -127,6 +135,7 @@
     "http-proxy-middleware": "^1.0.5",
     "husky": "^4.3.8",
     "identity-obj-proxy": "^3.0.0",
+    "nodemon": "^2.0.7",
     "prettier": "^2.0.5",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",

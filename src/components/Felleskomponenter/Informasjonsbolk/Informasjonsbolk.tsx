@@ -1,16 +1,25 @@
 import React from 'react';
-import './Informasjonsbolk.less';
+
+import styled from 'styled-components/macro';
 
 export interface IInformasjonsbolkProps {
     tittel: React.ReactNode;
 }
 
+const InformasjonsbolkContainer = styled.div`
+    margin-top: 4rem;
+`;
+
+const InformasjonsbolkChildrenWrapper = styled.div`
+    margin-top: 0.75rem;
+`;
+
 const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({ tittel, children }) => {
     return (
-        <div className={'informasjonsbolk'}>
+        <InformasjonsbolkContainer>
             {tittel}
-            <div className={'informasjonsbolk__children'}>{children}</div>
-        </div>
+            <InformasjonsbolkChildrenWrapper>{children}</InformasjonsbolkChildrenWrapper>
+        </InformasjonsbolkContainer>
     );
 };
 

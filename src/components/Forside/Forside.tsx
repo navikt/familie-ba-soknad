@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useHistory } from 'react-router';
+import styled from 'styled-components/macro';
 
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
@@ -15,6 +16,11 @@ import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import { useApp } from '../../context/AppContext';
 import { StegRoutes } from '../../routing/Routes';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+
+const StyledLenke = styled(Lenke)`
+    margin-top: 0.75rem;
+    display: inline-block;
+`;
 
 const Forside: React.FC = () => {
     const [bekreftet, settBekreftet] = useState<boolean>(false);
@@ -53,7 +59,7 @@ const Forside: React.FC = () => {
                             rett til barnetrygd selv om du skal være bosatt i Norge i mindre enn 12
                             måneder.
                         </Normaltekst>
-                        <Lenke href={'https://www.nav.no'}>Mer om barnetrygd</Lenke>
+                        <StyledLenke href={'https://www.nav.no'}>Mer om barnetrygd</StyledLenke>
                     </Informasjonsbolk>
 
                     <Informasjonsbolk
@@ -84,9 +90,9 @@ const Forside: React.FC = () => {
                             opplysningene dine. Noen ganger kan vi også trenge mer informasjon. Da
                             gir vi deg beskjed om dette.
                         </Normaltekst>
-                        <Lenke href={`https://www.nav.no`}>
+                        <StyledLenke href={`https://www.nav.no`}>
                             Oversikt over hva som krever dokumentasjon
-                        </Lenke>
+                        </StyledLenke>
                     </Informasjonsbolk>
 
                     <Informasjonsbolk
@@ -112,9 +118,9 @@ const Forside: React.FC = () => {
                             opplysninger du gir oss i andre sammenhenger, hvis det er relevant og
                             nødvendig.
                         </Normaltekst>
-                        <Lenke href={`https://www.nav.no`}>
+                        <StyledLenke href={`https://www.nav.no`}>
                             Slik behandler vi personopplysningene dine
-                        </Lenke>
+                        </StyledLenke>
                     </Informasjonsbolk>
 
                     <Informasjonsbolk tittel={<Undertittel>Slik søker du</Undertittel>}>
