@@ -80,7 +80,8 @@
     "preset": "ts-jest",
     "moduleNameMapper": {
       "\\.(css|less|svg)$": "<rootDir>/src/mockStyle.js",
-      "nav-(.*)-style": "<rootDir>/src/mockStyle.js"
+      "nav-(.*)-style": "<rootDir>/src/mockStyle.js",
+      "styled-components/macro": "styled-components"
     },
     "globals": {
       "ts-jest": {
