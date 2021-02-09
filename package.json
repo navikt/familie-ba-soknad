@@ -89,10 +89,7 @@
         "tsconfig": "<rootDir>/tsconfig.json"
       },
       "window": {}
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/jest-setup.ts"
-    ]
+    }
   },
   "husky": {
     "hooks": {
