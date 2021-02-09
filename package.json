@@ -77,18 +77,11 @@
     "start": "NODE_ENV=production node build/server/server.js"
   },
   "jest": {
-    "preset": "ts-jest",
     "moduleNameMapper": {
       "\\.(css|less|svg)$": "<rootDir>/src/mockStyle.js",
       "nav-(.*)-style": "<rootDir>/src/mockStyle.js",
       "nav-frontend-core": "<rootDir>/src/mockStyle.js",
       "styled-components/macro": "styled-components"
-    },
-    "globals": {
-      "ts-jest": {
-        "tsconfig": "<rootDir>/tsconfig.json"
-      },
-      "window": {}
     }
   },
   "husky": {
