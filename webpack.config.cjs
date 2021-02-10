@@ -14,6 +14,14 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(jsx|tsx)?$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    presets: ["react-app"]
+                },
+            },
+            {
                 test: /\.(js|ts|tsx)$/,
                 loader: 'ts-loader',
                 exclude: /node_modules/,
@@ -22,8 +30,18 @@ module.exports = {
                 },
             },
             {
+                test: /\.svg$/,
+                use: [
+                    {
+                        loader: 'svg-url-loader',
+                        options: {
+                            limit: 10000,
+                        },
+                    },
+                ],
+            },
+            {
                 test: /\.(less|css)$/,
-                exclude: /node_modules/,
                 use: [
                     { loader: require.resolve('style-loader') },
                     {
