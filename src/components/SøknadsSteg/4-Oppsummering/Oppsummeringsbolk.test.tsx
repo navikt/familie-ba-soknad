@@ -6,7 +6,7 @@ import { RouteEnum } from '../../../routing/Routes';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
 
 jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as {}),
+    ...(jest.requireActual('react-router-dom') as object),
     useLocation: () => ({
         pathname: 'localhost:3000/example/path',
     }),

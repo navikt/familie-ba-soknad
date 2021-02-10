@@ -1,9 +1,16 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 module.exports = {
     entry: {
         'familie-ba-soknad': ['./src/index.tsx'],
     },
+    plugins: [new HtmlWebpackPlugin({
+        template: path.join(__dirname, 'public/index.html'),
+        inject: 'body',
+        alwaysWriteToDisk: true
+    })],
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.less'],
     },
@@ -14,7 +21,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(jsx|tsx)?$/,
+                test: /\.(jsx|tsx|ts)?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 options: {

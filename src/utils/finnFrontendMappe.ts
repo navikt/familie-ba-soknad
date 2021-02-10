@@ -21,7 +21,7 @@ export const finnProsjektMappe = (): string => {
 };
 
 export const finnFrontendMappe = () => {
-    return path.join(finnProsjektMappe(), 'build');
+    return path.join(finnProsjektMappe(), 'dist');
 };
 
 export default finnFrontendMappe;

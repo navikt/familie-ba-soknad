@@ -28,6 +28,7 @@ app.get(`/internal/isAlive|isReady`, (_req, res) => res.sendStatus(200));
 app.get('*', (_req, res) =>
     getDecorator()
         .then(fragments => {
+            // eslint-disable-next-line
             // @ts-ignore
             res.render('index.html', fragments);
         })

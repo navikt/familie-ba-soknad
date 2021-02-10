@@ -123,8 +123,8 @@
   "scripts": {
     "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "build_and_serve": "yarn build; yarn start",
-    "start:dev": "webpack serve --mode=development",
-    "build": "webpack --config webpack.config.cjs --mode=development && tsc -p tsconfig.backend.json",
+    "start:dev": "NODE_ENV=development webpack serve --mode development --port 3000 --config webpack.config.cjs",
+    "build": "NODE_ENV=development webpack --config webpack.config.cjs && tsc -p tsconfig.backend.json",
     "test-ci": "CI=true build",
     "test": "jest",
     "start": "NODE_ENV=production node build/server/server.js"
