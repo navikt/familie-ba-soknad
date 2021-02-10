@@ -124,7 +124,7 @@
     "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "build_and_serve": "yarn build; yarn start",
     "start:dev": "NODE_ENV=development webpack serve --mode development --port 3000 --config webpack.config.cjs",
-    "build": "NODE_ENV=development webpack --config webpack.config.cjs && tsc -p tsconfig.backend.json",
+    "build": "NODE_ENV=production webpack --config webpack.config.cjs && tsc -p tsconfig.backend.json",
     "test-ci": "CI=true build",
     "test": "jest",
     "start": "NODE_ENV=production node build/server/server.js"
@@ -193,7 +193,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css}": [
+    "src/**/*.{js,jsx,ts,tsx,css}": [
       "prettier --write",
       "eslint --fix src/ --max-warnings=0"
     ]
@@ -220,6 +220,7 @@
     "@types/styled-components": "^5.1.7",
     "babel-plugin-macros": "^3.0.1",
     "babel-plugin-styled-components": "^1.12.0",
+    "copy-webpack-plugin": "^6.4.1",
     "css-loader": "^5.0.2",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
