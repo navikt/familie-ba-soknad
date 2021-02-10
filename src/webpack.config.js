@@ -1,46 +1,46 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
-
-module.exports = {
+export default {
     entry: {
         'familie-ba-soknad': ['./src/index.tsx'],
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src/public/index.html'),
+            template: path.join(process.cwd(), 'src/public/index.html'),
             inject: 'body',
-            alwaysWriteToDisk: true
+            alwaysWriteToDisk: true,
         }),
         new CopyWebpackPlugin({
             patterns: [
-                "src/public/manifest.json",
-                "src/public/favicon.ico",
-                "src/public/robots.txt"
-            ]
-        })
+                'src/public/manifest.json',
+                'src/public/favicon.ico',
+                'src/public/robots.txt',
+            ],
+        }),
     ],
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.less'],
     },
     output: {
         filename: 'main.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(process.cwd(), 'dist'),
+        publicPath: '/',
     },
     module: {
         rules: [
             {
                 test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
                 exclude: /node_modules/,
-                use: ['file-loader?name=public/[name].[ext]']
+                use: ['file-loader?name=public/[name].[ext]'],
             },
             {
                 test: /\.(jsx|tsx|ts)?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 options: {
-                    presets: ["react-app"]
+                    presets: ['react-app'],
                 },
             },
             {
@@ -65,16 +65,16 @@ module.exports = {
             {
                 test: /\.(less|css)$/,
                 use: [
-                    { loader: require.resolve('style-loader') },
+                    { loader: 'style-loader' },
                     {
-                        loader: require.resolve('css-loader'),
+                        loader: 'css-loader',
                         options: {
                             modules: {
                                 compileType: 'icss',
                             },
                         },
                     },
-                    { loader: require.resolve('less-loader') },
+                    { loader: 'less-loader' },
                 ],
             },
         ],

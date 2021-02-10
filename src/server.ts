@@ -6,9 +6,12 @@ import getDecorator from './dekorator.js';
 import environment from './environment.js';
 import { createApiForwardingFunction } from './proxy.js';
 import finnFrontendMappe from './utils/finnFrontendMappe.js';
+import webpack from 'webpack';
+import projectWebpackConfig from './webpack.config.js';
+import webpackDevMiddleware from 'webpack-dev-middleware';
 
 dotenv.config();
-
+const compiler = webpack(projectWebpackConfig);
 const app = express();
 
 const frontendBuild = finnFrontendMappe();
@@ -19,8 +22,16 @@ app.engine('html', mustacheExpress());
 
 app.use('/api', createApiForwardingFunction());
 
-// Static files
-app.use(express.static(frontendBuild, { index: false }));
+if (process.env.NODE_ENV == 'development') {
+    app.use(
+        webpackDevMiddleware(compiler, {
+            publicPath: projectWebpackConfig.output.publicPath,
+        })
+    );
+} else {
+    // Static files
+    app.use(express.static(frontendBuild, { index: false }));
+}
 
 // Nais functions
 app.get(`/internal/isAlive|isReady`, (_req, res) => res.sendStatus(200));
