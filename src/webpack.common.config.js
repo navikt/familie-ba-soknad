@@ -2,6 +2,7 @@ import path from 'path';
 
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import TerserWebpackPlugin from 'terser-webpack-plugin';
 
 export default {
     mode: 'production',
@@ -59,5 +60,9 @@ export default {
                 ],
             },
         ],
+    },
+    optimization: {
+        minimize: true,
+        minimizer: [new TerserWebpackPlugin()],
     },
 };
