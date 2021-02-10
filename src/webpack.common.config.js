@@ -4,6 +4,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
+    mode: 'production',
     entry: ['./src/index.tsx'],
     plugins: [
         new HtmlWebpackPlugin({

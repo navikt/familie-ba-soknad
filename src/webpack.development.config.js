@@ -14,6 +14,7 @@ const devConfig = mergeWithRules({
 })(baseConfig, {
     mode: 'development',
     entry: ['webpack-hot-middleware/client'],
+    devtool: 'inline-source-map',
     plugins: [new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin()],
     module: {
         rules: [
