@@ -1,28 +1,29 @@
+import path from 'path';
+
 import dotenv from 'dotenv';
 import express from 'express';
 import mustacheExpress from 'mustache-express';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
 
 import getDecorator from './dekorator.js';
 import environment from './environment.js';
 import { createApiForwardingFunction } from './proxy.js';
-import finnFrontendMappe from './utils/finnFrontendMappe.js';
-import webpack from 'webpack';
 import projectWebpackConfig from './webpack.config.js';
-import webpackDevMiddleware from 'webpack-dev-middleware';
 
 dotenv.config();
 const compiler = webpack(projectWebpackConfig);
 const app = express();
 
-const frontendBuild = finnFrontendMappe();
+const frontendMappe = path.join(process.cwd(), 'dist');
 
-app.set('views', frontendBuild);
+app.set('views', frontendMappe);
 app.set('view engine', 'mustache');
 app.engine('html', mustacheExpress());
 
 app.use('/api', createApiForwardingFunction());
 
-if (process.env.NODE_ENV == 'development') {
+if (process.env.NODE_ENV === 'development') {
     app.use(
         webpackDevMiddleware(compiler, {
             publicPath: projectWebpackConfig.output.publicPath,
@@ -30,7 +31,7 @@ if (process.env.NODE_ENV == 'development') {
     );
 } else {
     // Static files
-    app.use(express.static(frontendBuild, { index: false }));
+    app.use(express.static(frontendMappe, { index: false }));
 }
 
 // Nais functions

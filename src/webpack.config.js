@@ -1,6 +1,7 @@
 import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
     entry: {
