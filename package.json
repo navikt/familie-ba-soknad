@@ -6,7 +6,7 @@
     "@babel/core": "7.12.3",
     "@navikt/familie-typer": "^3.0.4",
     "@navikt/fnrvalidator": "^1.1.2",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.4.2",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@svgr/webpack": "5.4.0",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.2.3",
@@ -104,7 +104,7 @@
     "react-dev-utils": "^11.0.2",
     "react-dom": "^17.0.1",
     "react-modal": "^3.11.2",
-    "react-refresh": "^0.8.3",
+    "react-refresh": "^0.9.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "request": "^2.88.2",
@@ -123,8 +123,8 @@
   "scripts": {
     "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "build_and_serve": "yarn build; yarn start",
-    "start:dev": "NODE_ENV=development node build/server/server.js",
-    "build": "NODE_ENV=production webpack --config src/webpack.config.js && tsc -p tsconfig.backend.json",
+    "start:dev": "tsc -p tsconfig.backend.json && NODE_ENV=development node build/server/server.js",
+    "build": "NODE_ENV=production webpack --config src/webpack.common.config.js && tsc -p tsconfig.backend.json",
     "test-ci": "CI=true build",
     "test": "jest",
     "start": "NODE_ENV=production node build/server/server.js"
@@ -218,6 +218,7 @@
     "@types/express-session": "^1.17.3",
     "@types/mustache-express": "^1.2.1",
     "@types/styled-components": "^5.1.7",
+    "@types/webpack-env": "^1.16.0",
     "babel-plugin-macros": "^3.0.1",
     "babel-plugin-styled-components": "^1.12.0",
     "copy-webpack-plugin": "^6.4.1",
@@ -238,8 +239,10 @@
     "ts-loader": "^8.0.16",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3",
-    "webpack-cli": "^5.0.0",
-    "webpack-dev-middleware": "^4.1.0"
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-middleware": "^4.1.0",
+    "webpack-hot-middleware": "^2.25.0",
+    "webpack-merge": "^5.7.3"
   },
   "eslintConfig": {
     "extends": "react-app"

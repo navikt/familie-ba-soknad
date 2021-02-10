@@ -5,14 +5,14 @@ import express from 'express';
 import mustacheExpress from 'mustache-express';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import getDecorator from './dekorator.js';
 import environment from './environment.js';
 import { createApiForwardingFunction } from './proxy.js';
-import projectWebpackConfig from './webpack.config.js';
+import projectWebpackDevConfig from './webpack.development.config.js';
 
 dotenv.config();
-const compiler = webpack(projectWebpackConfig);
 const app = express();
 
 const frontendMappe = path.join(process.cwd(), 'dist');
@@ -24,11 +24,17 @@ app.engine('html', mustacheExpress());
 app.use('/api', createApiForwardingFunction());
 
 if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line
+    // @ts-ignore
+    const compiler = webpack(projectWebpackDevConfig);
     app.use(
         webpackDevMiddleware(compiler, {
-            publicPath: projectWebpackConfig.output.publicPath,
+            // eslint-disable-next-line
+            // @ts-ignore
+            publicPath: projectWebpackDevConfig.output.publicPath,
         })
     );
+    app.use(webpackHotMiddleware(compiler));
 } else {
     // Static files
     app.use(express.static(frontendMappe, { index: false }));

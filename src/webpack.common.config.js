@@ -4,9 +4,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
-    entry: {
-        'familie-ba-soknad': ['./src/index.tsx'],
-    },
+    entry: ['./src/index.tsx'],
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(process.cwd(), 'src/public/index.html'),
@@ -37,31 +35,12 @@ export default {
                 use: ['file-loader?name=public/[name].[ext]'],
             },
             {
-                test: /\.(jsx|tsx|ts)?$/,
+                test: /\.(jsx|tsx|ts|js)?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 options: {
                     presets: ['react-app'],
                 },
-            },
-            {
-                test: /\.(js|ts|tsx)$/,
-                loader: 'ts-loader',
-                exclude: /node_modules/,
-                options: {
-                    transpileOnly: true,
-                },
-            },
-            {
-                test: /\.svg$/,
-                use: [
-                    {
-                        loader: 'svg-url-loader',
-                        options: {
-                            limit: 10000,
-                        },
-                    },
-                ],
             },
             {
                 test: /\.(less|css)$/,
