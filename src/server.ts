@@ -32,6 +32,7 @@ if (process.env.NODE_ENV === 'development') {
             // eslint-disable-next-line
             // @ts-ignore
             publicPath: projectWebpackDevConfig.output.publicPath,
+            writeToDisk: true,
         })
     );
     app.use(webpackHotMiddleware(compiler));
