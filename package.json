@@ -2,6 +2,74 @@
   "name": "familie-ba-soknad",
   "version": "0.1.0",
   "type": "module",
+  "scripts": {
+    "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "build_and_serve": "yarn build; yarn start",
+    "start:dev": "tsc -p tsconfig.backend.json && NODE_ENV=development node build/server/server.js",
+    "build": "NODE_ENV=production webpack --config src/webpack.common.config.js && tsc -p tsconfig.backend.json",
+    "test-ci": "CI=true build",
+    "test": "jest",
+    "start": "NODE_ENV=production node build/server/server.js"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/jest-setup.ts"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jsdom",
+    "modulePaths": [
+      "<rootDir>/src"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|svg)$": "<rootDir>/src/mockStyle.js",
+      "nav-(.*)-style": "<rootDir>/src/mockStyle.js",
+      "nav-frontend-core": "<rootDir>/src/mockStyle.js",
+      "styled-components/macro": "styled-components"
+    },
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ],
+    "resetMocks": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,css}": [
+      "prettier --write",
+      "eslint --fix src/ --max-warnings=0"
+    ]
+  },
+  "resolutions": {
+    "styled-components": "^5"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "@babel/core": "7.12.3",
     "@navikt/familie-typer": "^3.0.4",
@@ -73,74 +141,6 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "webpack": "^5.21.2"
-  },
-  "scripts": {
-    "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "build_and_serve": "yarn build; yarn start",
-    "start:dev": "tsc -p tsconfig.backend.json && NODE_ENV=development node build/server/server.js",
-    "build": "NODE_ENV=production webpack --config src/webpack.common.config.js && tsc -p tsconfig.backend.json",
-    "test-ci": "CI=true build",
-    "test": "jest",
-    "start": "NODE_ENV=production node build/server/server.js"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
-    ],
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/jest-setup.ts"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
-    ],
-    "testEnvironment": "jsdom",
-    "modulePaths": [
-      "<rootDir>/src"
-    ],
-    "moduleNameMapper": {
-      "\\.(css|less|svg)$": "<rootDir>/src/mockStyle.js",
-      "nav-(.*)-style": "<rootDir>/src/mockStyle.js",
-      "nav-frontend-core": "<rootDir>/src/mockStyle.js",
-      "styled-components/macro": "styled-components"
-    },
-    "watchPlugins": [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
-    ],
-    "resetMocks": true
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,css}": [
-      "prettier --write",
-      "eslint --fix src/ --max-warnings=0"
-    ]
-  },
-  "resolutions": {
-    "styled-components": "^5"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "@axe-core/react": "^4.1.1",
