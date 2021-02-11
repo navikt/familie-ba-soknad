@@ -8,7 +8,7 @@ import Oppsummering from './Oppsummering';
 jest.mock('./Oppsummeringsbolk', () => () => <div data-testid="oppsummeringsbolk" />);
 
 jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as {}),
+    ...(jest.requireActual('react-router-dom') as object),
     useLocation: () => ({
         pathname: 'localhost:3000/example/path',
     }),

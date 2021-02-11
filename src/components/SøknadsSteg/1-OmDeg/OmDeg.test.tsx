@@ -8,7 +8,7 @@ import OmDeg from './OmDeg';
 jest.mock('nav-frontend-alertstriper', () => () => <div data-testid="alertstripe" />);
 
 jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as {}),
+    ...(jest.requireActual('react-router-dom') as object),
     useLocation: () => ({
         pathname: 'localhost:3000/example/path',
     }),
