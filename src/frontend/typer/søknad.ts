@@ -1,4 +1,4 @@
-import { INøkkelPar } from './common.js';
+import { INøkkelPar } from './common';
 
 export enum ESøknadstype {
     IKKE_SATT = 'IKKE_SATT',
