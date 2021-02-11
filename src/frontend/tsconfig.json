@@ -1,9 +1,7 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "node_dist",
-    "baseUrl": "./src",
-    "rootDir": "./src",
+    "rootDir": ".",
     "resolveJsonModule": true,
     "allowJs": true,
     "skipLibCheck": true,
@@ -12,11 +10,10 @@
     "module": "esnext",
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "typeRoots": ["../../node_modules/@types", "./@types"]
   },
-  "include": [
-    "./src"
-  ],
+  "exclude": ["../../node_modules"],
   "lib": [
     "es2015",
     "esnext"

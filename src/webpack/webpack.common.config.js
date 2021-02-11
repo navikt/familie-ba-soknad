@@ -7,18 +7,18 @@ import TerserWebpackPlugin from 'terser-webpack-plugin';
 
 export default {
     mode: 'production',
-    entry: ['./src/index.tsx'],
+    entry: ['./src/frontend/index.tsx'],
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.join(process.cwd(), 'src/public/index.html'),
+            template: path.join(process.cwd(), 'src/frontend/public/index.html'),
             inject: 'body',
             alwaysWriteToDisk: true,
         }),
         new CopyWebpackPlugin({
             patterns: [
-                'src/public/manifest.json',
-                'src/public/favicon.ico',
-                'src/public/robots.txt',
+                'src/frontend/public/manifest.json',
+                'src/frontend/public/favicon.ico',
+                'src/frontend/public/robots.txt',
             ],
         }),
         new CaseSensitivePathsPlugin(),

@@ -4,11 +4,14 @@
     "allowJs": true,
     "skipLibCheck": true,
     "module": "ESNext",
-    "outDir": "build/server",
-    "baseUrl": "./src",
+    "outDir": "./build",
     "rootDir": "./src",
     "resolveJsonModule": true
   },
-  "include": ["./src"],
+  "include": [
+    "./src/backend",
+    "./src/webpack"
+  ],
+  "exclude": ["./src/frontend"],
   "lib": ["es2015", "esnext"]
 }

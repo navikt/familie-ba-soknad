@@ -7,10 +7,10 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
+import projectWebpackDevConfig from '../webpack/webpack.development.config.js';
 import getDecorator from './dekorator.js';
 import environment from './environment.js';
 import { createApiForwardingFunction } from './proxy.js';
-import projectWebpackDevConfig from './webpack.development.config.js';
 
 dotenv.config();
 const app = express();
