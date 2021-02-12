@@ -60,6 +60,10 @@ const prodConfig = mergeWithRules({
             },
         },
     },
+    performance: {
+        maxEntrypointSize: 800000,
+        maxAssetSize: 800000,
+    },
 });
 
 export default prodConfig;
