@@ -29,9 +29,6 @@ const devConfig = mergeWithRules({
             },
         ],
     },
-    optimization: {
-        minimize: false,
-    },
 });
 
 export default devConfig;
