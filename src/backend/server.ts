@@ -1,5 +1,6 @@
 import path from 'path';
 
+import compression from 'compression';
 import dotenv from 'dotenv';
 import express from 'express';
 import mustacheExpress from 'mustache-express';
@@ -21,6 +22,7 @@ app.set('views', frontendMappe);
 app.set('view engine', 'mustache');
 app.engine('html', mustacheExpress());
 
+app.use(compression());
 app.use('/api', createApiForwardingFunction());
 
 if (process.env.NODE_ENV === 'development') {
