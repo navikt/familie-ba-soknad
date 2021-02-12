@@ -3,7 +3,6 @@ import path from 'path';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import TerserWebpackPlugin from 'terser-webpack-plugin';
 
 export default {
     mode: 'production',
@@ -62,9 +61,5 @@ export default {
                 ],
             },
         ],
-    },
-    optimization: {
-        minimize: true,
-        minimizer: [new TerserWebpackPlugin()],
     },
 };
