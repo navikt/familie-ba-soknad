@@ -3,6 +3,9 @@ import path from 'path';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin.js';
+
+export const publicUrl = '/public';
 
 export default {
     mode: 'production',
@@ -13,11 +16,14 @@ export default {
             inject: 'body',
             alwaysWriteToDisk: true,
         }),
+        new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
+            PUBLIC_URL: publicUrl,
+        }),
         new CopyWebpackPlugin({
             patterns: [
-                'src/frontend/public/manifest.json',
-                'src/frontend/public/favicon.ico',
-                'src/frontend/public/robots.txt',
+                { from: 'src/frontend/public/manifest.json', to: '.' + publicUrl },
+                { from: 'src/frontend/public/favicon.ico', to: '.' + publicUrl },
+                { from: 'src/frontend/public/robots.txt', to: '.' + publicUrl },
             ],
         }),
         new CaseSensitivePathsPlugin(),
@@ -28,14 +34,14 @@ export default {
     output: {
         filename: 'main.js',
         path: path.resolve(process.cwd(), 'dist'),
-        publicPath: '/',
+        publicPath: publicUrl + '/',
     },
     module: {
         rules: [
             {
                 test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
                 exclude: /node_modules/,
-                use: ['file-loader?name=public/[name].[ext]'],
+                use: [`file-loader?name=${publicUrl}/[name].[ext]`],
             },
             {
                 test: /\.(jsx|tsx|ts|js)?$/,
