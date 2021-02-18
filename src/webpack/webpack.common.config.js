@@ -34,7 +34,6 @@ export default {
     output: {
         filename: 'main.js',
         path: path.resolve(process.cwd(), 'dist'),
-        publicPath: publicUrl + '/',
     },
     module: {
         rules: [
