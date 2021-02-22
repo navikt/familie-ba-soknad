@@ -138,6 +138,7 @@
     "react-collapse": "^5.0.1",
     "react-dev-utils": "^11.0.2",
     "react-dom": "^17.0.1",
+    "react-intl": "^5.12.3",
     "react-modal": "^3.11.2",
     "react-refresh": "^0.9.0",
     "react-router": "^5.2.0",
@@ -146,6 +147,8 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.1.1",
+    "@formatjs/cli": "^3.1.0",
+    "@navikt/familie-sprakvelger": "^1.0.3",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.0.11",

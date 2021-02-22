@@ -2,8 +2,11 @@ import React from 'react';
 
 import ReactDOM from 'react-dom';
 
+import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
+
 import './index.less';
 import App from './App';
+import * as norskeTekster from './assets/lang/nb.json';
 
 if (process.env.NODE_ENV !== 'production') {
     import('@axe-core/react').then(({ default: axe }) => {
@@ -13,7 +16,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <SprakProvider
+            tekster={{ nb: norskeTekster }}
+            defaultSprak={{ tittel: 'Bokmål', locale: LocaleType.nb }}
+        >
+            <App />
+        </SprakProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );
