@@ -38,6 +38,12 @@ export default {
     module: {
         rules: [
             {
+                test: /\.m?js$/,
+                resolve: {
+                    fullySpecified: false, // Fikser at man ikke kan gjøre import uten filextension fra moduler med type: module i package.json
+                },
+            },
+            {
                 test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
                 exclude: /node_modules/,
                 use: [`file-loader?name=${publicUrl}/[name].[ext]`],

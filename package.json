@@ -43,6 +43,13 @@
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
     ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(@navikt)/)",
+      "\\.pnp\\.[^\\/]+$"
+    ],
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    },
     "resetMocks": true
   },
   "husky": {
