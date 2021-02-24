@@ -14,10 +14,7 @@ beforeEach(() => {
 
 test('Kan rendre Forside', () => {
     render(
-        <SprakProvider
-            tekster={{ nb: norskeTekster }}
-            defaultSprak={{ tittel: 'Bokmål', locale: LocaleType.nb }}
-        >
+        <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
             <AppProvider>
                 <Forside />
             </AppProvider>
@@ -28,10 +25,7 @@ test('Kan rendre Forside', () => {
 
 test('Alle tekster finnes i språkfil', () => {
     render(
-        <SprakProvider
-            tekster={{ nb: norskeTekster }}
-            defaultSprak={{ tittel: 'Bokmål', locale: LocaleType.nb }}
-        >
+        <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
             <AppProvider>
                 <Forside />
             </AppProvider>

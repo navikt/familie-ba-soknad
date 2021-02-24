@@ -44,12 +44,7 @@ const Forside: React.FC = () => {
     return (
         <div className={'forside'}>
             <div className={'forside__innhold'}>
-                <Sprakvelger
-                    støttedeSprak={[
-                        { tittel: 'English', locale: LocaleType.en },
-                        { tittel: 'Bokmål', locale: LocaleType.nb },
-                    ]}
-                />
+                <Sprakvelger støttedeSprak={[LocaleType.en, LocaleType.nb]} />
                 <Panel className={'forside__innhold--panel'}>
                     <div className={'veileder'}>
                         <VeilederSnakkeboble

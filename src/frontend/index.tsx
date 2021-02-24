@@ -16,10 +16,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 ReactDOM.render(
     <React.StrictMode>
-        <SprakProvider
-            tekster={{ nb: norskeTekster }}
-            defaultSprak={{ tittel: 'Bokmål', locale: LocaleType.nb }}
-        >
+        <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
             <App />
         </SprakProvider>
     </React.StrictMode>,

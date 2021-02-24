@@ -155,7 +155,7 @@
   "devDependencies": {
     "@axe-core/react": "^4.1.1",
     "@formatjs/cli": "^3.1.0",
-    "@navikt/familie-sprakvelger": "^1.0.3",
+    "@navikt/familie-sprakvelger": "^2.0.0",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.0.11",
