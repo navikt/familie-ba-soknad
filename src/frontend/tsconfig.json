@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": ".",
+    "rootDir": "../..",
     "resolveJsonModule": true,
     "allowJs": true,
     "skipLibCheck": true,
@@ -13,7 +13,7 @@
     "jsx": "react-jsx",
     "typeRoots": ["../../node_modules/@types", "./@types"]
   },
-  "exclude": ["../../node_modules"],
+  "exclude": ["../../node_modules", "../../dist", "../../build", "../backend", "../webpack", "../jest-setup.ts"],
   "lib": [
     "es2015",
     "esnext"
