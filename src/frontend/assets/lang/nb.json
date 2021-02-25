@@ -5,7 +5,7 @@
   "forside.dokumentasjonskrav.brødtekst": "Jeg er klar over at jeg kan miste retten til barnetrygd dersom jeg ikke har gitt riktige opplysninger. Jeg er også klar over at jeg må betale tilbake dersom jeg får penger jeg ikke har rett til og som skyldes at jeg har latt være å informere eller gitt feil opplysninger.",
   "forside.dokumentasjonskrav.lenke": "Oversikt over hva som krever dokumentasjon",
   "forside.dokumentasjonskrav.tittel": "Det kan hende du må sende inn dokumentasjon",
-  "forside.greeting": "Hei, {navn}",
+  "forside.veileder.hilsen": "Hei, {navn}",
   "forside.infoinnhenting.bruksinfolenke": "Slik behandler vi personopplysningene dine",
   "forside.infoinnhenting.brødtekst": "I tillegg til den informasjonen du oppgir i søknaden, henter vi inn informasjon om deg for å avgjøre om du har rett til stønad. {linjeskift} {linjeskift} Vi henter:",
   "forside.infoinnhenting.personinformasjon": "<b>personinformasjon:</b> om deg, barnet/barna dine og den andre forelderen til barna dine fra Folkeregisteret",

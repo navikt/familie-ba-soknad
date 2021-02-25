@@ -48,7 +48,7 @@ const Forside: React.FC = () => {
                 <Panel className={'forside__innhold--panel'}>
                     <div className={'veileder'}>
                         <VeilederSnakkeboble
-                            tekst={formatMessage({ id: 'forside.greeting' }, { navn: navn })}
+                            tekst={formatMessage({ id: 'forside.veileder.hilsen' }, { navn: navn })}
                             posisjon={'høyre'}
                         />
                     </div>
