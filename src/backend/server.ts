@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Nais functions
-app.get(`/internal/isAlive|isReady`, (_req, res) => res.sendStatus(200));
+app.get(/^\/(internal\/)?(isAlive|isReady)\/?$/, (_req, res) => res.sendStatus(200));
 
 app.get('*', (_req, res) =>
     getDecorator()

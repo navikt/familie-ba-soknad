@@ -20,8 +20,6 @@ spec:
     path: /internal/isReady
     initialDelay: 5
   ingresses:
-    - "https://familie-ba-soknad.dev-adeo.no"
-    - "https://familie-ba-soknad.dev-nav.no"
     - "https://familie-ba-soknad.dev.nav.no"
   accessPolicy:
     outbound:
