@@ -5,7 +5,6 @@
   "forside.dokumentasjonskrav.brødtekst": "Jeg er klar over at jeg kan miste retten til barnetrygd dersom jeg ikke har gitt riktige opplysninger. Jeg er også klar over at jeg må betale tilbake dersom jeg får penger jeg ikke har rett til og som skyldes at jeg har latt være å informere eller gitt feil opplysninger.",
   "forside.dokumentasjonskrav.lenke": "Oversikt over hva som krever dokumentasjon",
   "forside.dokumentasjonskrav.tittel": "Det kan hende du må sende inn dokumentasjon",
-  "forside.veileder.hilsen": "Hei, {navn}",
   "forside.infoinnhenting.bruksinfolenke": "Slik behandler vi personopplysningene dine",
   "forside.infoinnhenting.brødtekst": "I tillegg til den informasjonen du oppgir i søknaden, henter vi inn informasjon om deg for å avgjøre om du har rett til stønad. {linjeskift} {linjeskift} Vi henter:",
   "forside.infoinnhenting.personinformasjon": "<b>personinformasjon:</b> om deg, barnet/barna dine og den andre forelderen til barna dine fra Folkeregisteret",
@@ -16,5 +15,6 @@
   "forside.rett-på-barnetrygd": "Hvis du har omsorg for barn under 18 år som bor hos deg i Norge, kan du ha rett på barnetrygd. Enslig mor eller far kan i tillegg få utvidet barnetrygd og småbarnstillegg. {linjeskift} {linjeskift} Hvis du er statsborger i et EU/ EØS-land og arbeider i Norge, kan du ha rett til barnetrygd selv om du skal være bosatt i Norge i mindre enn 12 måneder.",
   "forside.sidetittel": "Søknad om barnetrygd",
   "forside.sliksokerdu.brødtekst": "Vi lagrer søknaden din i x dager. Derfor kan du ta pauser når du fyller ut. Du kan også slette i disse x dagene. {linjeskift} {linjeskift} Mangler du dokumentasjon, kan du ettersende dette.",
-  "forside.sliksokerdu.tittel": "Slik søker du"
+  "forside.sliksokerdu.tittel": "Slik søker du",
+  "forside.veileder.hilsen": "Hei, {navn}"
 }
