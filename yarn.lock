@@ -1629,10 +1629,10 @@
   resolved "https://registry.yarnpkg.com/@navikt/ds-icons/-/ds-icons-0.1.6.tgz#f28f223384c0e6385bb6990e58c946e1d7ecf61d"
   integrity sha512-0oFQ5P1SGOYoxxunyp1V6kJE+YX5EhLdkP9sxXr0M8dusTMNhzXd6xJEG59V1DE0fKqX7CfmNSMnHWIJ2MdG6A==
 
-"@navikt/familie-form-elements@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-form-elements/-/familie-form-elements-2.1.1.tgz#046d8f8263afa35eca2d3cee78364a8777f310b0"
-  integrity sha512-CUKSA2uzFiJhCtQEjjJ0CFbeWg+D7u1nTOscw+PlcK2jEmW5UB86q5CMywqQ0QZd127oK2aE8+thz2Q/KnUFBw==
+"@navikt/familie-form-elements@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@navikt/familie-form-elements/-/familie-form-elements-2.1.2.tgz#a84c27427995209cc4201fa86f63f7de2f0b65d6"
+  integrity sha512-Phf0onaTRRaALdpZ4UtpyUhEj60/Y1uwr6tKe88RRjvScwa7Ja3Jn4abeMhrkZFdv10bo+ytJDI+s/ubSLUDlw==
   dependencies:
     "@navikt/fnrvalidator" "^1.1.2"
     "@types/classnames" "^2.2.10"
@@ -1660,13 +1660,13 @@
     nav-frontend-knapper "^2.0.31"
     nav-frontend-knapper-style "^1.0.16"
 
-"@navikt/familie-sprakvelger@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-sprakvelger/-/familie-sprakvelger-2.0.0.tgz#81eac8f9e173c8c92be3fff008647c52026cfc3c"
-  integrity sha512-x6JOPmZscQ8lgjmFFnzVZJS6OP1Upc90ImAAjGZPcNO72PY3xK6jU8LlPfepnHmILzZlLB+5uqg2dDnLwTyjdQ==
+"@navikt/familie-sprakvelger@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@navikt/familie-sprakvelger/-/familie-sprakvelger-2.0.1.tgz#2b1f3df073483036103c4928a14b715d2f363b5f"
+  integrity sha512-zmwCn+0jeIDaxBXNuAH270Yd9cNMgKyW4SxmRgd4S3JAIPXUMcI0z8tRgg1QTYv//K1kP49NkjrAM6sAY54I4Q==
   dependencies:
     "@navikt/ds-icons" "^0.1.5"
-    "@navikt/familie-form-elements" "^2.1.1"
+    "@navikt/familie-form-elements" "^2.1.2"
     "@navikt/familie-ikoner" "^3.1.9"
     "@types/react-aria-menubutton" "^6.2.7"
     nav-frontend-chevron "^1.0.28"
