@@ -3,9 +3,12 @@ import React from 'react';
 import * as Sentry from '@sentry/browser';
 import ReactDOM from 'react-dom';
 
+import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
+
 import { version } from './../../package.json';
 import './index.less';
 import App from './App';
+import * as norskeTekster from './assets/lang/nb.json';
 
 const environment = window.location.hostname;
 
@@ -24,7 +27,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
+            <App />
+        </SprakProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );
