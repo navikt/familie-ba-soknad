@@ -23,6 +23,10 @@ const StyledLenke = styled(Lenke)`
     display: inline-block;
 `;
 
+const VeilederContainer = styled.div`
+    display: inline-block;
+`;
+
 const Forside: React.FC = () => {
     const [bekreftet, settBekreftet] = useState<boolean>(false);
     const { formatMessage } = useIntl();
@@ -46,12 +50,12 @@ const Forside: React.FC = () => {
             <div className={'forside__innhold'}>
                 <Sprakvelger støttedeSprak={[LocaleType.en, LocaleType.nb]} />
                 <Panel className={'forside__innhold--panel'}>
-                    <div className={'veileder'}>
+                    <VeilederContainer>
                         <VeilederSnakkeboble
                             tekst={formatMessage({ id: 'forside.veileder.hilsen' }, { navn: navn })}
                             posisjon={'høyre'}
                         />
-                    </div>
+                    </VeilederContainer>
 
                     <Informasjonsbolk
                         tittel={
