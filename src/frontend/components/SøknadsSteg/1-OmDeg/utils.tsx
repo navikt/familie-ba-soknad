@@ -1,6 +1,6 @@
 import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 
-import { ESivilstand } from './typer';
+import { ESivilstand } from '../../../typer/person';
 
 export const landkodeTilSpråk = (landkode: string, locale: string) => {
     const landkodeIso = alpha3ToAlpha2(landkode);
