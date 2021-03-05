@@ -19,16 +19,6 @@ export interface IAdresse {
 }
 
 export enum ESivilstand {
-    // GIFT = 'GIFT',
-    REPA = 'REPA',
-    UGIF = 'UGIF',
-    ENKE = 'ENKE',
-    GJPA = 'GJPA',
-    SEPA = 'SEPA',
-    SEPR = 'SEPR',
-    SKIL = 'SKIL',
-    SAMB = 'SAMB',
-
     UOPPGITT = 'UOPPGITT',
     UGIFT = 'UGIFT',
     GIFT = 'GIFT',
