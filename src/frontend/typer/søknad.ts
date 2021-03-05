@@ -1,4 +1,5 @@
 import { INøkkelPar } from './common';
+import { IBarnNy, ISøkerNy } from './person';
 
 export enum ESøknadstype {
     IKKE_SATT = 'IKKE_SATT',
@@ -48,8 +49,26 @@ export interface ISøknadsfelt<T> {
     verdi: T;
 }
 
-export const initialState = {
-    søknadstype: { label: 'Hva slags barnetrygd søker du om?', verdi: ESøknadstype.IKKE_SATT },
-    søker: { label: 'Søker', verdi: { navn: { label: '', verdi: '' } } },
-    barn: { label: 'Barna', verdi: [] },
+export interface ISøknadNy {
+    søknadstype: ESøknadstype;
+    søker: ISøkerNy;
+    barn: IBarnNy[];
+    spørsmål?: ISøknadsfeltNy[];
+}
+
+export interface ISøknadsfeltNy {
+    label: string;
+    id: string;
+}
+
+export const initialStateSøknadNy: ISøknadNy = {
+    søknadstype: ESøknadstype.IKKE_SATT,
+    søker: {
+        navn: '',
+        barn: [],
+        statsborgerskap: [],
+        kontakttelefon: '',
+    },
+    barn: [],
+    spørsmål: [],
 };
