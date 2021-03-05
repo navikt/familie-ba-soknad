@@ -30,53 +30,34 @@ const PersonopplysningerSection = styled.section`
 `;
 
 export const Personopplysninger: React.FC = () => {
-    const [feilTelefonnr, settFeilTelefonnr] = useState<boolean>(false);
     const [søkerBorPåRegistrertAdresse, setSøkerBorPåRegistrertAdresse] = useState<
         boolean | undefined
     >();
 
     const intl = useIntl();
 
-    const { søknad, settSøknad } = useApp();
+    const { søknad } = useApp();
     const søker = søknad.søker;
     const telefonnummer = useFelt<string>({
         verdi: søker.kontakttelefon,
-        valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
+        valideringsfunksjon: (felt: FeltState<string>) => {
             return felt.verdi.length >= 8 && /^[+\d\s]+$/.test(felt.verdi)
                 ? ok(felt)
                 : feil(
                       felt,
-                      avhengigheter?.intl.formatMessage({
+                      intl.formatMessage({
                           id: 'personopplysninger.feilmelding.telefonnr',
-                      }) ?? ''
+                      })
                   );
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            const { søkerBorPåRegistrertAdresse } = avhengigheter;
-            return søkerBorPåRegistrertAdresse.value ? true : false;
+            const { søkerMåOppgiTlf } = avhengigheter;
+            return søkerMåOppgiTlf;
         },
         avhengigheter: {
-            søkerBorPåRegistrertAdresse: søkerBorPåRegistrertAdresse ?? false,
-            intl: intl,
+            søkerMåOppgiTlf: søkerBorPåRegistrertAdresse ?? false,
         },
     });
-
-    const oppdaterTelefonnr = (event: React.FormEvent<HTMLInputElement>) => {
-        const telefonnr = event.currentTarget.value;
-        settSøknad({
-            ...søknad,
-            søker: {
-                ...søker,
-                kontakttelefon: telefonnr,
-            },
-        });
-    };
-
-    const oppdaterFeilmelding = (e: React.FormEvent<HTMLInputElement>) => {
-        e.currentTarget.value.length >= 8 && /^[+\d\s]+$/.test(e.currentTarget.value)
-            ? settFeilTelefonnr(false)
-            : settFeilTelefonnr(true);
-    };
 
     const borDuPåRegistrertAdresseOnChange = (verdi: ESvar) => {
         setSøkerBorPåRegistrertAdresse(verdi === ESvar.JA);
@@ -164,14 +145,6 @@ export const Personopplysninger: React.FC = () => {
                     label={<FormattedMessage id={'person.telefonnr'} />}
                     bredde={'M'}
                     type="tel"
-                    onChange={e => oppdaterTelefonnr(e)}
-                    onBlur={e => oppdaterFeilmelding(e)}
-                    feil={
-                        feilTelefonnr ? (
-                            <FormattedMessage id={'personopplysninger.feilmelding.telefonnr'} />
-                        ) : undefined
-                    }
-                    value={søknad.søker.kontakttelefon}
                 />
             )}
         </PersonopplysningerSection>
