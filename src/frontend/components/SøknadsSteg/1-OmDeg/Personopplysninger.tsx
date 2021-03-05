@@ -94,7 +94,8 @@ export const Personopplysninger: React.FC = () => {
                         <FormattedMessage id={'sivilstatus.tittel'} />
                     </Element>
                     <Normaltekst>
-                        <FormattedMessage id={`TODO: ${hentSivilstatus(ESivilstand.ENKE)}`} />
+                        <FormattedMessage id={hentSivilstatus(ESivilstand.ENKE_ELLER_ENKEMANN)} />{' '}
+                        {/* TODO */}
                     </Normaltekst>
                 </FeltGruppe>
 

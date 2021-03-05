@@ -7,6 +7,7 @@ export const landkodeTilSpråk = (landkode: string, locale: string) => {
     return getName(landkodeIso, locale);
 };
 
+// TODO: Fjern funksjon når backend fallbackstatus merget
 export const hentSivilstatus = (statuskode?: string) => {
     switch (statuskode) {
         case ESivilstand.UOPPGITT:
@@ -19,17 +20,6 @@ export const hentSivilstatus = (statuskode?: string) => {
         case ESivilstand.SEPARERT_PARTNER:
         case ESivilstand.SKILT_PARTNER:
         case ESivilstand.GJENLEVENDE_PARTNER:
-            return `sivilstatus.kode.${statuskode}`;
-        // TPS
-        // case ESivilstand.GIFT:
-        case ESivilstand.REPA:
-        case ESivilstand.UGIF:
-        case ESivilstand.SAMB:
-        case ESivilstand.SEPA:
-        case ESivilstand.SEPR:
-        case ESivilstand.SKIL:
-        case ESivilstand.GJPA:
-        case ESivilstand.ENKE:
             return `sivilstatus.kode.${statuskode}`;
 
         default:
