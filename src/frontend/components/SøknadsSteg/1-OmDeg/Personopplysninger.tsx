@@ -7,6 +7,7 @@ import { Input } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
+import { Avhengigheter, feil, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { ESivilstand } from '../../../typer/person';
@@ -38,6 +39,27 @@ export const Personopplysninger: React.FC = () => {
 
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
+    const telefonnummer = useFelt<string>({
+        verdi: søker.kontakttelefon,
+        valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
+            return felt.verdi.length >= 8 && /^[+\d\s]+$/.test(felt.verdi)
+                ? ok(felt)
+                : feil(
+                      felt,
+                      avhengigheter?.intl.formatMessage({
+                          id: 'personopplysninger.feilmelding.telefonnr',
+                      }) ?? ''
+                  );
+        },
+        skalFeltetVises: (avhengigheter: Avhengigheter) => {
+            const { søkerBorPåRegistrertAdresse } = avhengigheter;
+            return søkerBorPåRegistrertAdresse.value ? true : false;
+        },
+        avhengigheter: {
+            søkerBorPåRegistrertAdresse: søkerBorPåRegistrertAdresse ?? false,
+            intl: intl,
+        },
+    });
 
     const oppdaterTelefonnr = (event: React.FormEvent<HTMLInputElement>) => {
         const telefonnr = event.currentTarget.value;
@@ -135,8 +157,9 @@ export const Personopplysninger: React.FC = () => {
                 )}
             </KomponentGruppe>
 
-            {søkerBorPåRegistrertAdresse && (
+            {telefonnummer.erSynlig && (
                 <StyledInput
+                    {...telefonnummer.hentNavInputProps(true)}
                     name={'Telefonnummer'}
                     label={<FormattedMessage id={'person.telefonnr'} />}
                     bredde={'M'}
