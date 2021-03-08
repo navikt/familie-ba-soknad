@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import { Avhengigheter, feil, FeltState, ok, useFelt } from '@navikt/familie-skj
 
 import { useApp } from '../../../context/AppContext';
 import { ESivilstand } from '../../../typer/person';
-import { StyledAlertStripe, FeltGruppe, KomponentGruppe } from './layoutKomponenter';
+import { FeltGruppe, KomponentGruppe, StyledAlertStripe } from './layoutKomponenter';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { hentSivilstatus, landkodeTilSpråk } from './utils';
 
@@ -30,14 +30,25 @@ const PersonopplysningerSection = styled.section`
 `;
 
 export const Personopplysninger: React.FC = () => {
-    const [søkerBorPåRegistrertAdresse, setSøkerBorPåRegistrertAdresse] = useState<
-        boolean | undefined
-    >();
-
     const intl = useIntl();
 
     const { søknad } = useApp();
     const søker = søknad.søker;
+
+    const borPåRegistrertAdresse = useFelt<ESvar | undefined>({
+        verdi: undefined,
+        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
+            return felt.verdi === ESvar.JA
+                ? ok(felt)
+                : feil(
+                      felt,
+                      <FormattedMessage
+                          id={'personopplysninger.feilmelding.borpåregistrertadresse'}
+                      />
+                  );
+        },
+    });
+
     const telefonnummer = useFelt<string>({
         verdi: søker.kontakttelefon,
         valideringsfunksjon: (felt: FeltState<string>) => {
@@ -50,13 +61,9 @@ export const Personopplysninger: React.FC = () => {
             return søkerMåOppgiTlf;
         },
         avhengigheter: {
-            søkerMåOppgiTlf: søkerBorPåRegistrertAdresse ?? false,
+            søkerMåOppgiTlf: borPåRegistrertAdresse.verdi === ESvar.JA,
         },
     });
-
-    const borDuPåRegistrertAdresseOnChange = (verdi: ESvar) => {
-        setSøkerBorPåRegistrertAdresse(verdi === ESvar.JA);
-    };
 
     return (
         <PersonopplysningerSection aria-live={'polite'}>
@@ -108,6 +115,8 @@ export const Personopplysninger: React.FC = () => {
 
             <KomponentGruppe aria-live="polite">
                 <JaNeiSpørsmål
+                    {...borPåRegistrertAdresse.hentNavInputProps(true)}
+                    name={'søker.borpåregistrertadresse'}
                     legend={
                         <>
                             <Element>
@@ -120,15 +129,13 @@ export const Personopplysninger: React.FC = () => {
                             </Normaltekst>
                         </>
                     }
-                    onChange={borDuPåRegistrertAdresseOnChange}
-                    name={'RegistrertAdresseStemmer'}
                     labelTekstForJaNei={{
                         ja: <FormattedMessage id={'ja'} />,
                         nei: <FormattedMessage id={'nei'} />,
                     }}
                 />
 
-                {søkerBorPåRegistrertAdresse === false && (
+                {borPåRegistrertAdresse.verdi === ESvar.NEI && (
                     <SøkerBorIkkePåAdresse lenkePDFSøknad={'https://nav.no'} /> //TODO
                 )}
             </KomponentGruppe>
