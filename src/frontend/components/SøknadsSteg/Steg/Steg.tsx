@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import './Steg.less';
 import classNames from 'classnames';
@@ -6,56 +6,30 @@ import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindik
 import { useLocation, useHistory } from 'react-router-dom';
 
 import KnappBase from 'nav-frontend-knapper';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import Panel from 'nav-frontend-paneler';
 import Stegindikator from 'nav-frontend-stegindikator';
 import { Systemtittel, Ingress } from 'nav-frontend-typografi';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
-import { byggHenterRessurs, RessursStatus, byggFeiletRessurs } from '@navikt/familie-typer';
-
 import { useApp } from '../../../context/AppContext';
-import Miljø from '../../../Miljø';
-import { StegRoutes, RouteEnum } from '../../../routing/Routes';
-import { IStegRoute, hentNesteRoute, hentForrigeRoute, hentPath } from '../../../routing/Routes';
-import { IKvittering } from '../../../typer/kvittering';
+import { StegRoutes, hentAktivtStegIndex } from '../../../routing/Routes';
+import { IStegRoute, hentNesteRoute, hentForrigeRoute } from '../../../routing/Routes';
 import { ILokasjon } from '../../../typer/lokasjon';
-import { ISøknad, ISøknadsfelt, IBarn } from '../../../typer/søknad';
+import { ESteg } from '../../../typer/søknad';
 
 interface ISteg {
     tittel: string;
-    erSpørsmålBesvart: boolean;
+    kanGåTilNesteSteg: () => boolean;
     className?: string;
 }
 
-const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, className }) => {
+const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg, className }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const {
-        søknad,
-        axiosRequest,
-        innsendingStatus,
-        settInnsendingStatus,
-        utfyltSteg,
-        settUtfyltSteg,
-    } = useApp();
-    const [aktivtSteg, settAktivtSteg] = useState<number>(0);
+    const { settUtfyltSteg } = useApp();
 
-    const kommerFraOppsummering = location.state?.kommerFraOppsummering;
     const [åpenModal, settÅpenModal] = useState(false);
-
-    useEffect(() => {
-        const detteSteget = StegRoutes.findIndex(steg => steg.path === location.pathname);
-        settAktivtSteg(detteSteget);
-
-        if ((utfyltSteg === -1 ? 0 : utfyltSteg + 1) < detteSteget && !kommerFraOppsummering) {
-            history.push('/');
-        } else if (detteSteget > utfyltSteg) {
-            settUtfyltSteg(detteSteget);
-        }
-        window.scrollTo(0, 0);
-    }, [location.pathname]);
 
     const stegobjekter: StegindikatorStegProps[] = StegRoutes.map(
         (steg: IStegRoute, index: number) => {
@@ -65,44 +39,6 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, classNam
             };
         }
     );
-
-    function behandleSøknad(søknad: ISøknad) {
-        return { ...søknad, barn: { ...søknad.barn, verdi: sorterBarn(søknad.barn.verdi) } };
-    }
-
-    function sorterBarn(barn: ISøknadsfelt<IBarn>[]) {
-        return barn.sort(barn => (barn.verdi.medISøknad.verdi ? -1 : 1));
-    }
-
-    function sendInnSøknad() {
-        if (innsendingStatus.status !== RessursStatus.HENTER) {
-            settInnsendingStatus(byggHenterRessurs());
-
-            axiosRequest<IKvittering, ISøknad>({
-                url: '/api/soknad',
-                method: 'POST',
-                withCredentials: true,
-                data: behandleSøknad(søknad),
-            })
-                .then(ressurs => {
-                    settInnsendingStatus(ressurs);
-                    if (ressurs.status === RessursStatus.SUKSESS) {
-                        settUtfyltSteg(utfyltSteg + 1);
-                        history.push({
-                            pathname: hentPath(StegRoutes, RouteEnum.Kvittering),
-                        });
-                    }
-                })
-                .catch(() =>
-                    settInnsendingStatus(byggFeiletRessurs('Innsending av søknad feilet'))
-                );
-        }
-    }
-
-    const erFørsteSteg: boolean = aktivtSteg === 0;
-    const erKvitteringSteg: boolean = aktivtSteg + 1 === stegobjekter.length;
-    const erOppsummeringSteg: boolean = aktivtSteg + 2 === stegobjekter.length;
-    const visInnsendingsknapp = Miljø().visInnsendingsknapp;
 
     const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
     const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
@@ -116,7 +52,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, classNam
             <Ingress>Søknad om barnetrygd</Ingress>
             <Stegindikator
                 autoResponsiv={true}
-                aktivtSteg={aktivtSteg}
+                aktivtSteg={hentAktivtStegIndex(location)}
                 steg={stegobjekter}
                 visLabel={false}
             />
@@ -126,66 +62,35 @@ const Steg: React.FC<ISteg> = ({ tittel, children, erSpørsmålBesvart, classNam
                     <div className={'innholdscontainer__children'}>{children}</div>
                 </main>
             </Panel>
-            {!kommerFraOppsummering && !erKvitteringSteg && (
-                <div className={'steg__knapper'}>
-                    <div className={`steg__knapper--rad1`}>
-                        {!erFørsteSteg && (
-                            <KnappBase
-                                className={'tilbake'}
-                                type={'standard'}
-                                onClick={() => {
-                                    history.push(forrigeRoute.path);
-                                }}
-                            >
-                                Tilbake
-                            </KnappBase>
-                        )}
-                        {erSpørsmålBesvart && !erOppsummeringSteg && (
-                            <KnappBase
-                                className={erFørsteSteg ? 'neste-alene' : 'neste'}
-                                type={'hoved'}
-                                onClick={() => {
-                                    history.push(nesteRoute.path);
-                                }}
-                            >
-                                Neste
-                            </KnappBase>
-                        )}
-                        {visInnsendingsknapp && erOppsummeringSteg && (
-                            <KnappBase
-                                spinner={innsendingStatus.status === RessursStatus.HENTER}
-                                type={'hoved'}
-                                className={'sendinn'}
-                                onClick={sendInnSøknad}
-                            >
-                                Send søknad
-                            </KnappBase>
-                        )}
-                    </div>
-
+            <div className={'steg__knapper'}>
+                <div className={`steg__knapper--rad1`}>
+                    {hentAktivtStegIndex(location) > ESteg.STEG_EN && (
+                        <KnappBase
+                            className={'tilbake'}
+                            type={'standard'}
+                            onClick={() => {
+                                history.push(forrigeRoute.path);
+                            }}
+                        >
+                            Tilbake
+                        </KnappBase>
+                    )}
                     <KnappBase
-                        className={'avbryt'}
-                        type={'flat'}
-                        onClick={() => håndterModalStatus()}
+                        type={'hoved'}
+                        onClick={() => {
+                            if (kanGåTilNesteSteg()) {
+                                history.push(nesteRoute.path);
+                            }
+                        }}
                     >
-                        <div>Avbryt</div>
+                        Neste
                     </KnappBase>
                 </div>
-            )}
-            {kommerFraOppsummering && erSpørsmålBesvart && (
-                <div className={'steg__knapper'}>
-                    <Hovedknapp
-                        className="tilbake-til-oppsummering"
-                        onClick={() =>
-                            history.push({
-                                pathname: hentPath(StegRoutes, RouteEnum.Oppsummering),
-                            })
-                        }
-                    >
-                        Tilbake til oppsummering
-                    </Hovedknapp>
-                </div>
-            )}
+
+                <KnappBase className={'avbryt'} type={'flat'} onClick={() => håndterModalStatus()}>
+                    <div>Avbryt</div>
+                </KnappBase>
+            </div>
             <Modal
                 className={'steg__modal'}
                 isOpen={åpenModal}
