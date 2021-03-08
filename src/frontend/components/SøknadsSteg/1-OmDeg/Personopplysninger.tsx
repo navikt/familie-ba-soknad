@@ -43,12 +43,7 @@ export const Personopplysninger: React.FC = () => {
         valideringsfunksjon: (felt: FeltState<string>) => {
             return felt.verdi.length >= 8 && /^[+\d\s]+$/.test(felt.verdi)
                 ? ok(felt)
-                : feil(
-                      felt,
-                      intl.formatMessage({
-                          id: 'personopplysninger.feilmelding.telefonnr',
-                      })
-                  );
+                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.telefonnr'} />);
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             const { søkerMåOppgiTlf } = avhengigheter;
