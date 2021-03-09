@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
+import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg.js';
 import { useLocation, useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
@@ -8,7 +9,6 @@ import { Fareknapp, Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import Panel from 'nav-frontend-paneler';
 import Stegindikator from 'nav-frontend-stegindikator';
-import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg.js';
 import { Systemtittel, Ingress, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
@@ -129,6 +129,10 @@ const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg, className
 
     const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
     const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const håndterModalStatus = () => {
         settÅpenModal(!åpenModal);
