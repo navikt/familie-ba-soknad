@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/browser';
 import { registerLocale } from 'i18n-iso-countries';
 import ReactDOM from 'react-dom';
 
+import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import { version } from './../../package.json';
@@ -32,7 +33,9 @@ import(`i18n-iso-countries/langs/nb.json`).then(result => registerLocale(result)
 ReactDOM.render(
     <React.StrictMode>
         <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
-            <App />
+            <HttpProvider>
+                <App />
+            </HttpProvider>
         </SprakProvider>
     </React.StrictMode>,
     document.getElementById('root')
