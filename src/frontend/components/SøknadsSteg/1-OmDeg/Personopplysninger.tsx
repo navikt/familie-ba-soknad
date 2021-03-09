@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 import { Input } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
