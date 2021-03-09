@@ -1,31 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import createUseContext from 'constate';
 
 import {
-    Ressurs,
     ApiRessurs,
-    byggTomRessurs,
     byggHenterRessurs,
+    byggTomRessurs,
+    Ressurs,
     RessursStatus,
 } from '@navikt/familie-typer';
 
 import { IKvittering } from '../typer/kvittering';
-import { IPerson } from '../typer/person';
-import { ISøknad, initialState } from '../typer/søknad';
+import { IBarnNy, IPersonFraPdl } from '../typer/person';
+import { initialStateSøknadNy, ISøknadNy } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { hentAlder } from '../utils/person';
 import { formaterFnr } from '../utils/visning';
-import { preferredAxios, loggFeil, håndterApiRessurs } from './axios';
+import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
 
 const [AppProvider, useApp] = createUseContext(() => {
-    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPerson>());
+    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPersonFraPdl>()); // legacy
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
         InnloggetStatus.IKKE_VERIFISERT
     );
-    const [søknad, settSøknad] = useState<ISøknad>(initialState);
+    const [søknad, settSøknad] = useState<ISøknadNy>(initialStateSøknadNy);
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [utfyltSteg, settUtfyltSteg] = useState<number>(-1);
 
@@ -38,14 +38,25 @@ const [AppProvider, useApp] = createUseContext(() => {
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 
-            axiosRequest<IPerson, void>({
+            axiosRequest<IPersonFraPdl, void>({
                 url: '/api/personopplysning',
                 method: 'POST',
                 withCredentials: true,
                 påvirkerSystemLaster: true,
             }).then(ressurs => {
-                settSluttbruker(ressurs);
-                nullstillSøknadsobjekt(ressurs);
+                settSluttbruker(ressurs); // legacy
+                nullstillSøknadsobjekt(ressurs); // legacy
+
+                ressurs.status === RessursStatus.SUKSESS &&
+                    settSøknad({
+                        ...søknad,
+                        søker: {
+                            ...søknad.søker,
+                            navn: ressurs.data.navn,
+                            statsborgerskap: ressurs.data.statsborgerskap,
+                            barn: ressurs.data.barn,
+                        },
+                    });
             });
         }
     }, [innloggetStatus]);
@@ -114,32 +125,24 @@ const [AppProvider, useApp] = createUseContext(() => {
             .catch(_ => settInnloggetStatus(InnloggetStatus.FEILET));
     };
 
-    const nullstillSøknadsobjekt = (ressurs: Ressurs<IPerson>) => {
+    const nullstillSøknadsobjekt = (ressurs: Ressurs<IPersonFraPdl>) => {
         if (ressurs.status === RessursStatus.SUKSESS) {
-            const søker = {
-                navn: { label: 'Ditt navn', verdi: ressurs.data.navn },
-            };
-            const barn = ressurs.data.barn.map(barn => {
-                return {
-                    label: 'Barn',
-                    verdi: {
-                        navn: { label: 'Barnets navn', verdi: barn.navn },
-                        alder: { label: 'Alder', verdi: hentAlder(barn.fødselsdato) },
-                        ident: { label: 'Fødselsnummer', verdi: formaterFnr(barn.ident) },
-                        medISøknad: { label: 'Søker du for dette barnet?', verdi: true },
-                        borMedSøker: {
-                            label: 'Bor barnet på din adresse?',
-                            verdi: barn.borMedSøker
-                                ? 'Registrert på din adresse'
-                                : 'Ikke registrert på adressen din',
-                        },
-                    },
-                };
-            });
+            const søker = ressurs.data;
+            const barn = ressurs.data.barn.map(
+                (barn): IBarnNy => {
+                    return {
+                        navn: barn.navn,
+                        alder: hentAlder(barn.fødselsdato),
+                        fødselsdato: barn.fødselsdato,
+                        ident: formaterFnr(barn.ident),
+                        borMedSøker: barn.borMedSøker,
+                    };
+                }
+            );
             settSøknad({
-                ...initialState,
-                søker: { label: initialState.søker.label, verdi: søker },
-                barn: { label: initialState.barn.label, verdi: barn },
+                ...initialStateSøknadNy,
+                søker,
+                barn,
             });
         }
     };

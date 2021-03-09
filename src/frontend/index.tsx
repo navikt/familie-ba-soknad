@@ -1,6 +1,7 @@
 import React from 'react';
 
 import * as Sentry from '@sentry/browser';
+import { registerLocale } from 'i18n-iso-countries';
 import ReactDOM from 'react-dom';
 
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
@@ -24,6 +25,9 @@ if (process.env.NODE_ENV !== 'production') {
         axe(React, ReactDOM, 1000);
     });
 }
+
+// Last ned land-navn for statsborgeskap
+import(`i18n-iso-countries/langs/nb.json`).then(result => registerLocale(result));
 
 ReactDOM.render(
     <React.StrictMode>
