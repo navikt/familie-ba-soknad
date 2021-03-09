@@ -2,10 +2,10 @@ import React from 'react';
 
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
-import { useStegEn } from './useStegEn';
+import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
-    const { skjema, kanSendeSkjema } = useStegEn();
+    const { skjema, kanSendeSkjema } = useOmdeg();
 
     return (
         <Steg tittel={'Om deg'} kanGåTilNesteSteg={kanSendeSkjema}>

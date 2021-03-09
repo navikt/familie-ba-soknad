@@ -13,7 +13,7 @@ import { useApp } from '../../../context/AppContext';
 import { ESivilstand } from '../../../typer/person';
 import { FeltGruppe, KomponentGruppe, StyledAlertStripe } from './layoutKomponenter';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
-import { IStegEnFeltTyper } from './useStegEn';
+import { IStegEnFeltTyper } from './useOmdeg';
 import { hentSivilstatus, landkodeTilSpråk } from './utils';
 
 const StyledInput = styled(Input)`

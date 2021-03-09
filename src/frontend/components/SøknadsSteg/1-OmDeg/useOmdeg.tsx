@@ -12,7 +12,7 @@ export interface IStegEnFeltTyper {
     telefonnummer: string;
 }
 
-export const useStegEn = () => {
+export const useOmdeg = () => {
     const { søknad } = useApp();
     const søker = søknad.søker;
 
@@ -51,7 +51,7 @@ export const useStegEn = () => {
             borPåRegistrertAdresse,
             telefonnummer,
         },
-        skjemanavn: 'steg1',
+        skjemanavn: 'omdeg',
     });
 
     return {
