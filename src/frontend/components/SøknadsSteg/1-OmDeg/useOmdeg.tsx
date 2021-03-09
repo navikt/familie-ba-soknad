@@ -3,7 +3,15 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { Avhengigheter, feil, FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import {
+    Avhengigheter,
+    feil,
+    FeltState,
+    ISkjema,
+    ok,
+    useFelt,
+    useSkjema,
+} from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 
@@ -12,7 +20,10 @@ export interface IStegEnFeltTyper {
     telefonnummer: string;
 }
 
-export const useOmdeg = () => {
+export const useOmdeg = (): {
+    skjema: ISkjema<IStegEnFeltTyper, string>;
+    kanSendeSkjema: () => boolean;
+} => {
     const { søknad } = useApp();
     const søker = søknad.søker;
 
