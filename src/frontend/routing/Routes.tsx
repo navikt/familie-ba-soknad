@@ -1,10 +1,13 @@
 import React from 'react';
 
+import { Location } from 'history';
+
 import OmDeg from '../components/SøknadsSteg/1-OmDeg/OmDeg';
 import Søknadstype from '../components/SøknadsSteg/2-Søknadstype/Søknadstype';
 import VelgBarn from '../components/SøknadsSteg/3-VelgBarn/VelgBarn';
 import Oppsummering from '../components/SøknadsSteg/4-Oppsummering/Oppsummering';
 import Kvittering from '../components/SøknadsSteg/5-Kvittering/Kvittering';
+import { ILokasjon } from '../typer/lokasjon';
 
 export interface IStegRoute {
     path: string;
@@ -43,6 +46,9 @@ export const StegRoutes: IStegRoute[] = [
         komponent: Kvittering,
     },
 ];
+
+export const hentAktivtStegIndex = (location: Location<ILokasjon>) =>
+    StegRoutes.findIndex(steg => steg.path === location.pathname);
 
 export const hentForrigeRoute = (routes: IStegRoute[], currentPath: string) => {
     const routeIndex = routes.findIndex(route => route.path === currentPath);

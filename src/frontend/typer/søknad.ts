@@ -8,6 +8,10 @@ export enum ESøknadstype {
     EØS = 'EØS',
 }
 
+export enum ESteg {
+    STEG_EN,
+}
+
 export const søknadstyper: INøkkelPar = {
     IKKE_SATT: {
         id: 'IKKE_SATT',
