@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 import { Input } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
+import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { ESivilstand } from '../../../typer/person';
-import { StyledAlertStripe, FeltGruppe, KomponentGruppe } from './layoutKomponenter';
+import { FeltGruppe, KomponentGruppe, StyledAlertStripe } from './layoutKomponenter';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
+import { IStegEnFeltTyper } from './useOmdeg';
 import { hentSivilstatus, landkodeTilSpråk } from './utils';
 
 const StyledInput = styled(Input)`
@@ -28,37 +30,13 @@ const PersonopplysningerSection = styled.section`
     }
 `;
 
-export const Personopplysninger: React.FC = () => {
-    const [feilTelefonnr, settFeilTelefonnr] = useState<boolean>(false);
-    const [søkerBorPåRegistrertAdresse, setSøkerBorPåRegistrertAdresse] = useState<
-        boolean | undefined
-    >();
-
+export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, string> }> = ({
+    skjema,
+}) => {
     const intl = useIntl();
 
-    const { søknad, settSøknad } = useApp();
+    const { søknad } = useApp();
     const søker = søknad.søker;
-
-    const oppdaterTelefonnr = (event: React.FormEvent<HTMLInputElement>) => {
-        const telefonnr = event.currentTarget.value;
-        settSøknad({
-            ...søknad,
-            søker: {
-                ...søker,
-                kontakttelefon: telefonnr,
-            },
-        });
-    };
-
-    const oppdaterFeilmelding = (e: React.FormEvent<HTMLInputElement>) => {
-        e.currentTarget.value.length >= 8 && /^[+\d\s]+$/.test(e.currentTarget.value)
-            ? settFeilTelefonnr(false)
-            : settFeilTelefonnr(true);
-    };
-
-    const borDuPåRegistrertAdresseOnChange = (verdi: ESvar) => {
-        setSøkerBorPåRegistrertAdresse(verdi === ESvar.JA);
-    };
 
     return (
         <PersonopplysningerSection aria-live={'polite'}>
@@ -110,6 +88,8 @@ export const Personopplysninger: React.FC = () => {
 
             <KomponentGruppe aria-live="polite">
                 <JaNeiSpørsmål
+                    {...skjema.felter.borPåRegistrertAdresse.hentNavInputProps(true)}
+                    name={'søker.borpåregistrertadresse'}
                     legend={
                         <>
                             <Element>
@@ -122,33 +102,24 @@ export const Personopplysninger: React.FC = () => {
                             </Normaltekst>
                         </>
                     }
-                    onChange={borDuPåRegistrertAdresseOnChange}
-                    name={'RegistrertAdresseStemmer'}
                     labelTekstForJaNei={{
                         ja: <FormattedMessage id={'ja'} />,
                         nei: <FormattedMessage id={'nei'} />,
                     }}
                 />
 
-                {søkerBorPåRegistrertAdresse === false && (
+                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
                     <SøkerBorIkkePåAdresse lenkePDFSøknad={'https://nav.no'} /> //TODO
                 )}
             </KomponentGruppe>
 
-            {søkerBorPåRegistrertAdresse && (
+            {skjema.felter.telefonnummer.erSynlig && (
                 <StyledInput
+                    {...skjema.felter.telefonnummer.hentNavInputProps(true)}
                     name={'Telefonnummer'}
                     label={<FormattedMessage id={'person.telefonnr'} />}
                     bredde={'M'}
                     type="tel"
-                    onChange={e => oppdaterTelefonnr(e)}
-                    onBlur={e => oppdaterFeilmelding(e)}
-                    feil={
-                        feilTelefonnr ? (
-                            <FormattedMessage id={'personopplysninger.feilmelding.telefonnr'} />
-                        ) : undefined
-                    }
-                    value={søknad.søker.kontakttelefon}
                 />
             )}
         </PersonopplysningerSection>

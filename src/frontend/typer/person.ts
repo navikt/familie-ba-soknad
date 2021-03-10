@@ -42,7 +42,7 @@ export interface IPersonFraPdl {
 }
 
 export interface ISøkerNy extends IPersonFraPdl {
-    kontakttelefon?: string;
+    kontakttelefon: string;
 }
 
 export interface IBarnNy {
