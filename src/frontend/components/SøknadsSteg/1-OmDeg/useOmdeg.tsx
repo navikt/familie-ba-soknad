@@ -18,6 +18,7 @@ import { useApp } from '../../../context/AppContext';
 export interface IStegEnFeltTyper {
     borPåRegistrertAdresse: ESvar | undefined;
     telefonnummer: string;
+    oppholderSegINorge: ESvar | undefined;
 }
 
 export const useOmdeg = (): {
@@ -41,6 +42,16 @@ export const useOmdeg = (): {
         },
     });
 
+    const oppholderSegINorge = useFelt<ESvar | undefined>({
+        verdi: undefined,
+        skalFeltetVises: (avhengigheter: Avhengigheter) => {
+            return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
+        },
+        avhengigheter: {
+            borPåRegistrertAdresse,
+        },
+    });
+
     const telefonnummer = useFelt<string>({
         verdi: søker.kontakttelefon,
         valideringsfunksjon: (felt: FeltState<string>) => {
@@ -61,6 +72,7 @@ export const useOmdeg = (): {
         felter: {
             borPåRegistrertAdresse,
             telefonnummer,
+            oppholderSegINorge,
         },
         skjemanavn: 'omdeg',
     });
