@@ -7,7 +7,6 @@ import styled from 'styled-components/macro';
 import navFarger from 'nav-frontend-core';
 import KnappBase from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
-import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Sidetittel, Normaltekst } from 'nav-frontend-typografi';
 
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
@@ -17,6 +16,7 @@ import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import { useApp } from '../../context/AppContext';
 import { StegRoutes } from '../../routing/Routes';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import BekreftelsePanel from './BekreftelsePanel';
 
 const panelBredde = '524px';
 const tablet = '959px';
@@ -51,19 +51,21 @@ const StyledLenke = styled(Lenke)`
     display: inline-block;
 `;
 
-const StyledBekreftCheckboksPanel = styled(BekreftCheckboksPanel)`
-    padding: 1.5rem;
-    background-color: ${navFarger.navOransjeLighten80};
-    border: solid 1px ${navFarger.navOransje};
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-`;
-
 const StyledKnappBase = styled(KnappBase)`
     margin: 2.3rem auto 0 auto;
 `;
 
+export enum BekreftelseStatus {
+    NORMAL = 'NORMAL',
+    BEKREFTET = 'BEKREFTET',
+    FEIL = 'FEIL',
+}
+
 const Forside: React.FC = () => {
-    const [bekreftet, settBekreftet] = useState<boolean>(false);
+    const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
+        BekreftelseStatus.NORMAL
+    );
+
     const { formatMessage } = useIntl();
     const history = useHistory();
 
@@ -71,14 +73,24 @@ const Forside: React.FC = () => {
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 
-    const handleOnChange = () => {
-        settBekreftet(!bekreftet);
-    };
-
     useEffect(() => {
         nullstillSøknadsobjekt(sluttbruker);
         settUtfyltSteg(0);
     }, []);
+
+    const startSøknadOnClick = () => {
+        bekreftelseStatus === BekreftelseStatus.BEKREFTET
+            ? history.push(Object.values(StegRoutes)[0].path)
+            : settBekreftelseStatus(BekreftelseStatus.FEIL);
+    };
+
+    const bekreftelseOnChange = () => {
+        settBekreftelseStatus(prevState =>
+            prevState !== BekreftelseStatus.BEKREFTET
+                ? BekreftelseStatus.BEKREFTET
+                : BekreftelseStatus.NORMAL
+        );
+    };
 
     return (
         <ForsideContainer>
@@ -157,24 +169,15 @@ const Forside: React.FC = () => {
                 </Normaltekst>
             </Informasjonsbolk>
 
-            <Informasjonsbolk tittelId="forside.bekreftelsesboks.tittel">
-                <StyledBekreftCheckboksPanel
-                    onChange={() => handleOnChange()}
-                    label={formatMessage(
-                        { id: 'forside.bekreftelsesboks.erklæring' },
-                        { navn: navn }
-                    )}
-                    checked={bekreftet}
-                >
-                    <Normaltekst>
-                        <FormattedMessage id="forside.dokumentasjonskrav.brødtekst" />
-                    </Normaltekst>
-                </StyledBekreftCheckboksPanel>
-            </Informasjonsbolk>
+            <BekreftelsePanel
+                navn={navn}
+                bekreftelseStatus={bekreftelseStatus}
+                onChange={bekreftelseOnChange}
+            />
 
             <StyledKnappBase
-                type={bekreftet ? 'hoved' : 'standard'}
-                onClick={() => history.push(Object.values(StegRoutes)[0].path)}
+                type={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'hoved' : 'standard'}
+                onClick={startSøknadOnClick}
             >
                 Start søknaden
             </StyledKnappBase>
