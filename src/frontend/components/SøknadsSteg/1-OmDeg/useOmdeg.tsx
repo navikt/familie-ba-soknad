@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Alpha3Code } from 'i18n-iso-countries';
 import { FormattedMessage } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -19,6 +20,7 @@ export interface IStegEnFeltTyper {
     borPåRegistrertAdresse: ESvar | undefined;
     telefonnummer: string;
     oppholderSegINorge: ESvar | undefined;
+    oppholdsLand: Alpha3Code | undefined;
 }
 
 export const useOmdeg = (): {
@@ -31,13 +33,21 @@ export const useOmdeg = (): {
     const borPåRegistrertAdresse = useFelt<ESvar | undefined>({
         verdi: undefined,
         valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
+            /**
+             * Hvis man svarer nei setter vi felt til Feil-state slik at man ikke kan gå videre,
+             * og setter feilmelding til en tom string, siden personopplysningskomponenten har egen
+             * feilmelding for det tilfellet.
+             * Hvis man ikke svarer vises vanlig feilmelding.
+             */
             return felt.verdi === ESvar.JA
                 ? ok(felt)
                 : feil(
                       felt,
-                      <FormattedMessage
-                          id={'personopplysninger.feilmelding.borpåregistrertadresse'}
-                      />
+                      felt.verdi === undefined ? (
+                          <FormattedMessage id={'personopplysninger.feilmelding.janei'} />
+                      ) : (
+                          ''
+                      )
                   );
         },
     });
@@ -47,8 +57,28 @@ export const useOmdeg = (): {
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
         },
+        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
+        },
         avhengigheter: {
             borPåRegistrertAdresse,
+        },
+    });
+
+    const oppholdsLand = useFelt<Alpha3Code | undefined>({
+        verdi: undefined,
+        skalFeltetVises: (avhengigheter: Avhengigheter) => {
+            return avhengigheter.oppholderSegINorge.verdi === ESvar.NEI;
+        },
+        valideringsfunksjon: (felt: FeltState<Alpha3Code | undefined>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.velgland'} />);
+        },
+        avhengigheter: {
+            oppholderSegINorge,
         },
     });
 
@@ -73,6 +103,7 @@ export const useOmdeg = (): {
             borPåRegistrertAdresse,
             telefonnummer,
             oppholderSegINorge,
+            oppholdsLand,
         },
         skjemanavn: 'omdeg',
     });

@@ -17,6 +17,7 @@
   "forside.sliksokerdu.brødtekst": "Vi lagrer søknaden din i x dager. Derfor kan du ta pauser når du fyller ut. Du kan også slette i disse x dagene. {linjeskift} {linjeskift} Mangler du dokumentasjon, kan du ettersende dette.",
   "forside.sliksokerdu.tittel": "Slik søker du",
   "forside.veileder.hilsen": "Hei, {navn}",
+  "landdropdown.velgland": "Velg land",
   "personopplysninger.alert.infohentet":
   "Hvis opplysningene vi har om deg ikke stemmer, må du endre disse hos Folkeregisteret.",
   "person.ident.visning": "Fødselsnummer eller d-nummer",
@@ -32,7 +33,10 @@
   "personopplysninger.lenke.pdfskjema": "Bruk PDF-skjema",
   "personopplysninger.info.pdfskjema": "Skjemaet kan sendes inn elektronisk eller på papir",
   "person.telefonnr": "Telefonnummer du kan kontaktes på",
+  "personopplysninger.feilmelding.janei": "Du må svare ja eller nei",
   "personopplysninger.feilmelding.telefonnr": "Telefonnummeret må ha minst 8 siffer",
+  "personopplysninger.feilmelding.velgland": "Du må velge et land",
+  "omdeg.spm.landopphold": "Hvilket land oppholder du deg i?",
   "omdeg.spm.oppholderSegINorge": "Oppholder du deg i Norge?",
   "ja": "ja",
   "nei": "nei",

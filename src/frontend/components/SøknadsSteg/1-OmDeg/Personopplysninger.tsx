@@ -88,7 +88,9 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
 
             <KomponentGruppe aria-live="polite">
                 <JaNeiSpørsmål
-                    {...skjema.felter.borPåRegistrertAdresse.hentNavInputProps(true)}
+                    {...skjema.felter.borPåRegistrertAdresse.hentNavInputProps(
+                        skjema.visFeilmeldinger
+                    )}
                     name={'søker.borpåregistrertadresse'}
                     legend={
                         <>
@@ -115,7 +117,7 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
 
             {skjema.felter.telefonnummer.erSynlig && (
                 <StyledInput
-                    {...skjema.felter.telefonnummer.hentNavInputProps(true)}
+                    {...skjema.felter.telefonnummer.hentNavInputProps(skjema.visFeilmeldinger)}
                     name={'Telefonnummer'}
                     label={<FormattedMessage id={'person.telefonnr'} />}
                     bredde={'M'}
