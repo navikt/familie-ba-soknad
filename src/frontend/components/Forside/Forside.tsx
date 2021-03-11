@@ -40,7 +40,9 @@ const ForsideContainer = styled.div`
 `;
 
 const StyledSidetittel = styled(Sidetittel)`
-    margin: 4rem 0 2.3rem 0;
+    && {
+        margin: 4rem 0 2.3rem 0;
+    }
 `;
 
 const StyledLenke = styled(Lenke)`

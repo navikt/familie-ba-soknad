@@ -18,9 +18,11 @@ const FormContainer = styled.form`
 `;
 
 const StyledBekreftCheckboksPanel = styled(BekreftCheckboksPanel)<{ status: BekreftelseStatus }>`
-    border: 1px solid ${props => bekreftelseBoksBorderFarge(props.status)};
-    padding: 1.5rem;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    && {
+        border: 1px solid ${props => bekreftelseBoksBorderFarge(props.status)};
+        padding: 1.5rem;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
 `;
 
 const StyledKnappBase = styled(KnappBase)`
