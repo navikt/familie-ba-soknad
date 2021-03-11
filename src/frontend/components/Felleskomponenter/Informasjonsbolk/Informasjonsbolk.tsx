@@ -1,23 +1,30 @@
 import React from 'react';
 
+import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 
+import { Undertittel } from 'nav-frontend-typografi';
+
 export interface IInformasjonsbolkProps {
-    tittel: React.ReactNode;
+    tittelId?: string;
 }
 
 const InformasjonsbolkContainer = styled.div`
-    margin-top: 4rem;
+    margin-top: 2.3rem;
 `;
 
 const InformasjonsbolkChildrenWrapper = styled.div`
-    margin-top: 0.75rem;
+    margin-top: 1.125rem;
 `;
 
-const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({ tittel, children }) => {
+const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({ tittelId, children }) => {
     return (
         <InformasjonsbolkContainer>
-            {tittel}
+            {tittelId && (
+                <Undertittel>
+                    <FormattedMessage id={tittelId} />
+                </Undertittel>
+            )}
             <InformasjonsbolkChildrenWrapper>{children}</InformasjonsbolkChildrenWrapper>
         </InformasjonsbolkContainer>
     );
