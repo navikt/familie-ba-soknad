@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
-import classNames from 'classnames';
 import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg.js';
 import { useLocation, useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-import { Fareknapp, Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Fareknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import Panel from 'nav-frontend-paneler';
 import Stegindikator from 'nav-frontend-stegindikator';
 import { Systemtittel, Ingress, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
-import { StegRoutes, hentAktivtStegIndex } from '../../../routing/Routes';
-import { IStegRoute, hentNesteRoute, hentForrigeRoute } from '../../../routing/Routes';
+import {
+    StegRoutes,
+    hentAktivtStegIndex,
+    hentNesteRoute,
+    hentForrigeRoute,
+} from '../../../routing/Routes';
+import { IStegRoute } from '../../../routing/Routes';
 import { ILokasjon } from '../../../typer/lokasjon';
-import { ESteg } from '../../../typer/søknad';
+import Navigeringspanel from './Navigeringspanel';
 
 interface ISteg {
     tittel: string;
@@ -25,7 +29,6 @@ interface ISteg {
 
 const mobile = '420px';
 const tablet = '959px';
-const knappWidth = '9.5rem';
 const panelInnholdBredde = '588px';
 
 const AvsluttKnappContainer = styled.div`
@@ -35,21 +38,6 @@ const AvsluttKnappContainer = styled.div`
 
     @media all and (max-width: ${mobile}) {
         width: 100%;
-    }
-`;
-
-const StyledAvbrytKnapp = styled(Flatknapp)`
-    margin-top: 1rem;
-    justify-content: center;
-    width: ${knappWidth};
-`;
-
-const StyledTilbakeknapp = styled(Knapp)`
-    width: ${knappWidth};
-
-    @media all and (max-width: ${mobile}) {
-        width: 100%;
-        margin-top: 1rem;
     }
 `;
 
@@ -79,25 +67,6 @@ const StegContainer = styled.div`
     }
 `;
 
-const KnappeContainer = styled.div`
-    padding: 2rem;
-    display: flex;
-    justify-self: center;
-    flex-direction: column;
-    align-items: center;
-`;
-
-const KnappeRadContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    min-width: ${knappWidth};
-
-    @media all and (max-width: ${mobile}) {
-        flex-direction: column-reverse;
-    }
-`;
-
 const StyledPanel = styled(Panel)`
     padding: 2rem;
     width: ${panelInnholdBredde};
@@ -111,7 +80,7 @@ const ChildrenContainer = styled.div`
     margin-top: 2rem;
 `;
 
-const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg, className }) => {
+const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const { settUtfyltSteg } = useApp();
@@ -143,7 +112,8 @@ const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg, className
         history.push('/');
     };
 
-    const håndterNeste = () => {
+    const håndterGåVidere = event => {
+        event.preventDefault();
         if (kanGåTilNesteSteg()) {
             history.push(nesteRoute.path);
         }
@@ -154,7 +124,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg, className
     };
 
     return (
-        <StegContainer className={classNames('steg', className)}>
+        <StegContainer>
             <Ingress>Søknad om barnetrygd</Ingress>
             <Stegindikator
                 autoResponsiv={true}
@@ -165,19 +135,17 @@ const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg, className
             <StyledPanel>
                 <main>
                     <Systemtittel>{tittel}</Systemtittel>
-                    <ChildrenContainer>{children}</ChildrenContainer>
+                    <form onSubmit={event => håndterGåVidere(event)}>
+                        <ChildrenContainer>{children}</ChildrenContainer>
+                        <Navigeringspanel
+                            onTilbakeCallback={håndterTilbake}
+                            onAvbrytCallback={håndterModalStatus}
+                            kanGåTilNesteSteg={kanGåTilNesteSteg()}
+                        />
+                    </form>
                 </main>
             </StyledPanel>
-            <KnappeContainer>
-                <KnappeRadContainer>
-                    {hentAktivtStegIndex(location) > ESteg.STEG_EN && (
-                        <StyledTilbakeknapp onClick={håndterTilbake}>Tilbake</StyledTilbakeknapp>
-                    )}
-                    <Hovedknapp onClick={håndterNeste}>Neste</Hovedknapp>
-                </KnappeRadContainer>
 
-                <StyledAvbrytKnapp onClick={håndterModalStatus}>Avbryt</StyledAvbrytKnapp>
-            </KnappeContainer>
             <StyledModal
                 isOpen={åpenModal}
                 onRequestClose={håndterModalStatus}

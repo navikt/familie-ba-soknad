@@ -1,4 +1,8 @@
 {
+  "felles.tilbake": "Tilbake",
+  "felles.gåvidere": "Gå videre",
+  "felles.avslutt-fortsettsenere": "Avslutt og fortsett senere",
+  "felles.avbryt-slett": "Avbryt og slett søknad",
   "forside.barnetrygd-lenke-tekst": "Mer om barnetrygd",
   "forside.bekreftelsesboks.erklæring": "Jeg, {navn}, bekrefter at jeg vil gi riktige og fullstendige opplysninger",
   "forside.bekreftelsesboks.feil": "Du må bekrefte at du vil gi riktig og fullstendig informasjon",
