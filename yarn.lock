@@ -1686,29 +1686,6 @@
   resolved "https://registry.yarnpkg.com/@navikt/ds-icons/-/ds-icons-0.1.6.tgz#f28f223384c0e6385bb6990e58c946e1d7ecf61d"
   integrity sha512-0oFQ5P1SGOYoxxunyp1V6kJE+YX5EhLdkP9sxXr0M8dusTMNhzXd6xJEG59V1DE0fKqX7CfmNSMnHWIJ2MdG6A==
 
-"@navikt/familie-form-elements@2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-form-elements/-/familie-form-elements-2.2.2.tgz#cd93574b8f9d3f09c2c5113b414a3aa082223f7b"
-  integrity sha512-qU39VBVehWIUkYUF05SRC+lbAY4stAGLTXGcwWnu08PLFEbHJfOfnsd7iBynU4h1RbngbCKpVwgmEVc8WSLRXw==
-  dependencies:
-    "@navikt/fnrvalidator" "^1.1.2"
-    "@types/classnames" "^2.2.10"
-    "@types/react-select" "^3.0.28"
-    classnames "^2.2.6"
-    dayjs "^1.9.6"
-    nav-datovelger "^10.1.1"
-    nav-frontend-knapper "^2.0.32"
-    nav-frontend-knapper-style "^1.0.17"
-    nav-frontend-lenker "^1.0.60"
-    nav-frontend-lenker-style "^1.0.2"
-    nav-frontend-skjema "^3.0.53"
-    nav-frontend-skjema-style "^2.0.33"
-    nav-frontend-toggle "^0.0.57"
-    nav-frontend-toggle-style "^0.0.46"
-    nav-frontend-typografi "^3.0.4"
-    react-select "^4.0.13"
-    styled-components "^5.2.1"
-
 "@navikt/familie-form-elements@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@navikt/familie-form-elements/-/familie-form-elements-2.1.2.tgz#a84c27427995209cc4201fa86f63f7de2f0b65d6"
@@ -1729,6 +1706,29 @@
     nav-frontend-typografi "^2.0.21"
     react-day-picker "^7.4.8"
     react-select "^3.1.1"
+    styled-components "^5.2.1"
+
+"@navikt/familie-form-elements@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@navikt/familie-form-elements/-/familie-form-elements-2.2.2.tgz#cd93574b8f9d3f09c2c5113b414a3aa082223f7b"
+  integrity sha512-qU39VBVehWIUkYUF05SRC+lbAY4stAGLTXGcwWnu08PLFEbHJfOfnsd7iBynU4h1RbngbCKpVwgmEVc8WSLRXw==
+  dependencies:
+    "@navikt/fnrvalidator" "^1.1.2"
+    "@types/classnames" "^2.2.10"
+    "@types/react-select" "^3.0.28"
+    classnames "^2.2.6"
+    dayjs "^1.9.6"
+    nav-datovelger "^10.1.1"
+    nav-frontend-knapper "^2.0.32"
+    nav-frontend-knapper-style "^1.0.17"
+    nav-frontend-lenker "^1.0.60"
+    nav-frontend-lenker-style "^1.0.2"
+    nav-frontend-skjema "^3.0.53"
+    nav-frontend-skjema-style "^2.0.33"
+    nav-frontend-toggle "^0.0.57"
+    nav-frontend-toggle-style "^0.0.46"
+    nav-frontend-typografi "^3.0.4"
+    react-select "^4.0.13"
     styled-components "^5.2.1"
 
 "@navikt/familie-http@^1.0.4":
