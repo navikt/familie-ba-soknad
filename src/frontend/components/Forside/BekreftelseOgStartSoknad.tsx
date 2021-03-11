@@ -54,22 +54,25 @@ const BekreftelseOgStartSoknad: React.FC<{
         BekreftelseStatus.NORMAL
     );
 
-    const startSøknadOnClick = () => {
-        bekreftelseStatus === BekreftelseStatus.BEKREFTET
-            ? history.push(Object.values(StegRoutes)[0].path)
-            : settBekreftelseStatus(BekreftelseStatus.FEIL);
+    const onStartSøknad = (event: React.FormEvent) => {
+        event.preventDefault();
+        if (bekreftelseStatus === BekreftelseStatus.BEKREFTET) {
+            history.push(Object.values(StegRoutes)[0].path);
+        } else {
+            settBekreftelseStatus(BekreftelseStatus.FEIL);
+        }
     };
 
     const bekreftelseOnChange = () => {
-        settBekreftelseStatus(prevState =>
-            prevState !== BekreftelseStatus.BEKREFTET
+        settBekreftelseStatus(prevState => {
+            return prevState !== BekreftelseStatus.BEKREFTET
                 ? BekreftelseStatus.BEKREFTET
-                : BekreftelseStatus.NORMAL
-        );
+                : BekreftelseStatus.NORMAL;
+        });
     };
 
     return (
-        <FormContainer>
+        <FormContainer onSubmit={event => onStartSøknad(event)}>
             <Informasjonsbolk tittelId="forside.bekreftelsesboks.tittel">
                 <StyledBekreftCheckboksPanel
                     label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring' }, { navn })}
@@ -91,7 +94,6 @@ const BekreftelseOgStartSoknad: React.FC<{
             <StyledKnappBase
                 type={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'hoved' : 'standard'}
                 htmlType={'submit'}
-                onClick={startSøknadOnClick}
             >
                 Start søknaden
             </StyledKnappBase>
