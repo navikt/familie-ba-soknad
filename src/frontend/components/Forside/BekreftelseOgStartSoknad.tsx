@@ -95,7 +95,7 @@ const BekreftelseOgStartSoknad: React.FC<{
                 type={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'hoved' : 'standard'}
                 htmlType={'submit'}
             >
-                Start søknaden
+                <FormattedMessage id="forside.startsoknad" />
             </StyledKnappBase>
         </FormContainer>
     );

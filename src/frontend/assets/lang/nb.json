@@ -14,9 +14,10 @@
   "forside.oppmaning.brødtekst": "For at vi skal kunne behandle søknaden din, må du gi oss riktige opplysninger. {linjeskift} {linjeskift} Hvis du får barnetrygd, må du melde fra når det skjer viktige endringer i livet ditt, for eksempel bo-og familiesituasjonen eller arbeid og utdanning.",
   "forside.oppmaning.tittel": "Det er viktig at du gir oss riktige opplysninger",
   "forside.rett-på-barnetrygd": "Hvis du har omsorg for barn under 18 år som bor hos deg i Norge, kan du ha rett på barnetrygd. Enslig mor eller far kan i tillegg få utvidet barnetrygd og småbarnstillegg. {linjeskift} {linjeskift} Hvis du er statsborger i et EU/ EØS-land og arbeider i Norge, kan du ha rett til barnetrygd selv om du skal være bosatt i Norge i mindre enn 12 måneder.",
-  "forside.sidetittel": "Søknad om ordinær barnetrygd",
+  "forside.sidetittel": "Velkommen til barnetrygdsøknaden",
   "forside.sliksokerdu.brødtekst": "Vi lagrer søknaden din i x dager. Derfor kan du ta pauser når du fyller ut. Du kan også slette i disse x dagene. {linjeskift} {linjeskift} Mangler du dokumentasjon, kan du ettersende dette.",
   "forside.sliksokerdu.tittel": "Slik søker du",
+  "forside.startsoknad": "Start søknad",
   "forside.veileder.hilsen": "Hei, {navn}",
   "personopplysninger.alert.infohentet":
   "Hvis opplysningene vi har om deg ikke stemmer, må du endre disse hos Folkeregisteret.",
