@@ -18,7 +18,7 @@ const FormContainer = styled.form`
 `;
 
 const StyledBekreftCheckboksPanel = styled(BekreftCheckboksPanel)<{ status: BekreftelseStatus }>`
-    border: 1px solid ${props => bekreftelsesBoksBorderFarge(props.status)};
+    border: 1px solid ${props => bekreftelseBoksBorderFarge(props.status)};
     padding: 1.5rem;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
@@ -33,7 +33,7 @@ export enum BekreftelseStatus {
     FEIL = 'FEIL',
 }
 
-const bekreftelsesBoksBorderFarge = (status: BekreftelseStatus) => {
+const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
     switch (status) {
         case BekreftelseStatus.BEKREFTET:
             return navFarger.navGronn;
