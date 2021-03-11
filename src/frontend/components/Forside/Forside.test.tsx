@@ -20,7 +20,7 @@ test('Kan rendre Forside', () => {
             </AppProvider>
         </SprakProvider>
     );
-    expect(screen.getByText('Søknad om barnetrygd')).toBeInTheDocument();
+    expect(screen.getByText('Velkommen til barnetrygdsøknaden')).toBeInTheDocument();
 });
 
 test('Alle tekster finnes i språkfil', () => {
