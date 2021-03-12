@@ -30,11 +30,9 @@ const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId 
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                 name={guid()}
                 legend={
-                    <>
-                        <Element>
-                            <FormattedMessage id={spørsmålTekstId} />
-                        </Element>
-                    </>
+                    <Element>
+                        <FormattedMessage id={spørsmålTekstId} />
+                    </Element>
                 }
                 labelTekstForJaNei={{
                     ja: <FormattedMessage id={'ja'} />,
