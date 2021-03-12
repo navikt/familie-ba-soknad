@@ -16,26 +16,6 @@ import { Personopplysninger } from './Personopplysninger';
 import { ESvarMedUbesvart, IStegEnFeltTyper, useOmdeg } from './useOmdeg';
 
 // TODO: Bruk konstant for mobilbredde
-const StyledLandDropdown = styled(LandDropdown)`
-    @media all and (min-width: 420px) {
-        width: 50%;
-        padding-right: 0.7rem;
-    }
-    text-align: left;
-    label {
-        font-size: 1rem;
-        font-weight: 600;
-    }
-`;
-
-const StyledSection = styled.section`
-    text-align: left;
-    padding-bottom: 2rem;
-
-    p {
-        font-size: 1.125rem;
-    }
-`;
 
 interface IJaNeiBolkProps {
     skjema: ISkjema<IStegEnFeltTyper, string>;
@@ -66,6 +46,23 @@ const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId 
         return <></>;
     }
 };
+
+// TODO: Bruk konstant for mobilbredde
+const StyledLandDropdown = styled(LandDropdown)`
+    @media all and (min-width: 420px) {
+        width: 50%;
+        padding-right: 0.7rem;
+    }
+    text-align: left;
+`;
+
+const StyledSection = styled.section`
+    text-align: left;
+
+    p {
+        font-size: 1.125rem;
+    }
+`;
 
 const OmDeg: React.FC = () => {
     const { skjema, kanSendeSkjema } = useOmdeg();
