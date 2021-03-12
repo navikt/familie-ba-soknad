@@ -12,6 +12,13 @@ beforeEach(() => {
     jest.spyOn(global.console, 'error');
 });
 
+jest.mock('react-router-dom', () => ({
+    ...(jest.requireActual('react-router-dom') as object),
+    useLocation: () => ({
+        pathname: 'localhost:3000/example/path',
+    }),
+}));
+
 test('Kan rendre Forside', () => {
     render(
         <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
