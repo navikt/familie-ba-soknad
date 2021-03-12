@@ -34,7 +34,6 @@ export interface IStegEnFeltTyper {
 export const useOmdeg = (): {
     skjema: ISkjema<IStegEnFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
-    validerAlleSynligeFelter: () => void;
     valideringErOk: () => boolean;
 } => {
     const { søknad } = useApp();
@@ -198,10 +197,7 @@ export const useOmdeg = (): {
         },
     });
 
-    const { skjema, kanSendeSkjema, validerAlleSynligeFelter, valideringErOk } = useSkjema<
-        IStegEnFeltTyper,
-        string
-    >({
+    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IStegEnFeltTyper, string>({
         felter: {
             borPåRegistrertAdresse,
             telefonnummer,
@@ -220,7 +216,6 @@ export const useOmdeg = (): {
     return {
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
-        validerAlleSynligeFelter,
         valideringErOk,
     };
 };

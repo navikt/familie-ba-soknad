@@ -63,7 +63,9 @@ const StyledAvbrytOgSlettKnapp = styled(Flatknapp)`
     grid-area: avbrytOgSlett;
     width: fit-content;
     place-self: center;
-    color: ${navFarger.navMorkGra};
+    && {
+        color: ${navFarger.navMorkGra};
+    }
 `;
 
 const Navigeringspanel: React.FC<{
