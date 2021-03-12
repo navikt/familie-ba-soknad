@@ -114,16 +114,17 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                     <SøkerBorIkkePåAdresse lenkePDFSøknad={'https://nav.no'} /> //TODO
                 )}
             </KomponentGruppe>
-
-            {skjema.felter.telefonnummer.erSynlig && (
-                <StyledInput
-                    {...skjema.felter.telefonnummer.hentNavInputProps(skjema.visFeilmeldinger)}
-                    name={'Telefonnummer'}
-                    label={<FormattedMessage id={'person.telefonnr'} />}
-                    bredde={'M'}
-                    type="tel"
-                />
-            )}
+            <KomponentGruppe>
+                {skjema.felter.telefonnummer.erSynlig && (
+                    <StyledInput
+                        {...skjema.felter.telefonnummer.hentNavInputProps(skjema.visFeilmeldinger)}
+                        name={'Telefonnummer'}
+                        label={<FormattedMessage id={'person.telefonnr'} />}
+                        bredde={'M'}
+                        type="tel"
+                    />
+                )}
+            </KomponentGruppe>
         </PersonopplysningerSection>
     );
 };
