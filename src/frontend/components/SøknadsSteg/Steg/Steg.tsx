@@ -17,14 +17,13 @@ import {
     hentNesteRoute,
     hentForrigeRoute,
 } from '../../../routing/Routes';
-import { IStegRoute } from '../../../routing/Routes';
+import { IRoute } from '../../../routing/Routes';
 import { ILokasjon } from '../../../typer/lokasjon';
 import Navigeringspanel from './Navigeringspanel';
 
 interface ISteg {
     tittel: string;
     kanGåTilNesteSteg: () => boolean;
-    className?: string;
 }
 
 const mobile = '420px';
@@ -87,17 +86,15 @@ const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg }) => {
 
     const [åpenModal, settÅpenModal] = useState(false);
 
-    const stegobjekter: StegindikatorStegProps[] = StegRoutes.map(
-        (steg: IStegRoute, index: number) => {
-            return {
-                label: steg.label,
-                index: index,
-            };
-        }
-    );
+    const stegobjekter: StegindikatorStegProps[] = StegRoutes.map((steg: IRoute, index: number) => {
+        return {
+            label: steg.label,
+            index: index,
+        };
+    });
 
-    const nesteRoute: IStegRoute = hentNesteRoute(StegRoutes, location.pathname);
-    const forrigeRoute: IStegRoute = hentForrigeRoute(StegRoutes, location.pathname);
+    const nesteRoute: IRoute = hentNesteRoute(StegRoutes, location.pathname);
+    const forrigeRoute: IRoute = hentForrigeRoute(StegRoutes, location.pathname);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -140,7 +137,6 @@ const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg }) => {
                         <Navigeringspanel
                             onTilbakeCallback={håndterTilbake}
                             onAvbrytCallback={håndterModalStatus}
-                            kanGåTilNesteSteg={kanGåTilNesteSteg()}
                         />
                     </form>
                 </main>
