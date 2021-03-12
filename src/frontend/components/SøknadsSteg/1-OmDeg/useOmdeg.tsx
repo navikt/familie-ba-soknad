@@ -16,11 +16,19 @@ import {
 
 import { useApp } from '../../../context/AppContext';
 
+export type ESvarMedUbesvart = ESvar | undefined;
+
 export interface IStegEnFeltTyper {
-    borPåRegistrertAdresse: ESvar | undefined;
+    borPåRegistrertAdresse: ESvarMedUbesvart;
     telefonnummer: string;
-    oppholderSegINorge: ESvar | undefined;
+    oppholderSegINorge: ESvarMedUbesvart;
     oppholdsLand: Alpha3Code | undefined;
+    værtINorgeITolvMåneder: ESvarMedUbesvart;
+    erAsylsøker: ESvarMedUbesvart;
+    jobberPåBåt: ESvarMedUbesvart;
+    arbeidsLand: Alpha3Code | undefined;
+    mottarUtlandsPensjon: ESvarMedUbesvart;
+    pensjonsLand: Alpha3Code | undefined;
 }
 
 export const useOmdeg = (): {
@@ -30,9 +38,9 @@ export const useOmdeg = (): {
     const { søknad } = useApp();
     const søker = søknad.søker;
 
-    const borPåRegistrertAdresse = useFelt<ESvar | undefined>({
+    const borPåRegistrertAdresse = useFelt<ESvarMedUbesvart>({
         verdi: undefined,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
+        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
             /**
              * Hvis man svarer nei setter vi felt til Feil-state slik at man ikke kan gå videre,
              * og setter feilmelding til en tom string, siden personopplysningskomponenten har egen
@@ -52,12 +60,12 @@ export const useOmdeg = (): {
         },
     });
 
-    const oppholderSegINorge = useFelt<ESvar | undefined>({
+    const oppholderSegINorge = useFelt<ESvarMedUbesvart>({
         verdi: undefined,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
         },
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
+        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
                 : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
@@ -98,12 +106,108 @@ export const useOmdeg = (): {
         },
     });
 
+    const værtINorgeITolvMåneder = useFelt<ESvarMedUbesvart>({
+        verdi: undefined,
+        skalFeltetVises: (avhengigheter: Avhengigheter) => {
+            return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
+        },
+        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
+        },
+        avhengigheter: {
+            borPåRegistrertAdresse,
+        },
+    });
+
+    const erAsylsøker = useFelt<ESvarMedUbesvart>({
+        verdi: undefined,
+        skalFeltetVises: (avhengigheter: Avhengigheter) => {
+            return avhengigheter.værtINorgeITolvMåneder.verdi !== undefined;
+        },
+        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
+        },
+        avhengigheter: {
+            værtINorgeITolvMåneder,
+        },
+    });
+
+    const jobberPåBåt = useFelt<ESvarMedUbesvart>({
+        verdi: undefined,
+        skalFeltetVises: avhengigheter => {
+            return avhengigheter.erAsylsøker.verdi !== undefined;
+        },
+        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
+        },
+        avhengigheter: {
+            erAsylsøker,
+        },
+    });
+
+    const arbeidsLand = useFelt<Alpha3Code | undefined>({
+        verdi: undefined,
+        skalFeltetVises: (avhengigheter: Avhengigheter) => {
+            return avhengigheter.jobberPåBåt.verdi === ESvar.JA;
+        },
+        valideringsfunksjon: (felt: FeltState<Alpha3Code | undefined>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.velgland'} />);
+        },
+        avhengigheter: {
+            jobberPåBåt,
+        },
+    });
+
+    const mottarUtlandsPensjon = useFelt<ESvarMedUbesvart>({
+        verdi: undefined,
+        skalFeltetVises: avhengigheter => {
+            return avhengigheter.erAsylsøker.verdi !== undefined;
+        },
+        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
+        },
+        avhengigheter: {
+            erAsylsøker,
+        },
+    });
+
+    const pensjonsLand = useFelt<Alpha3Code | undefined>({
+        verdi: undefined,
+        skalFeltetVises: (avhengigheter: Avhengigheter) => {
+            return avhengigheter.mottarUtlandsPensjon.verdi === ESvar.JA;
+        },
+        valideringsfunksjon: (felt: FeltState<Alpha3Code | undefined>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.velgland'} />);
+        },
+        avhengigheter: {
+            mottarUtlandsPensjon,
+        },
+    });
+
     const { skjema, kanSendeSkjema } = useSkjema<IStegEnFeltTyper, string>({
         felter: {
             borPåRegistrertAdresse,
             telefonnummer,
             oppholderSegINorge,
             oppholdsLand,
+            værtINorgeITolvMåneder,
+            erAsylsøker,
+            jobberPåBåt,
+            arbeidsLand,
+            mottarUtlandsPensjon,
+            pensjonsLand,
         },
         skjemanavn: 'omdeg',
     });
