@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
-import { version } from './../../package.json';
+import packageJson from './../../package.json';
 import './index.less';
 import App from './App';
 import * as norskeTekster from './assets/lang/nb.json';
@@ -16,7 +16,7 @@ const environment = window.location.hostname;
 
 Sentry.init({
     dsn: 'https://75e165345c514862b5829a724a4e8e45@sentry.gc.nav.no/71',
-    release: version,
+    release: packageJson.version,
     environment,
     //enabled: process.env.NODE_ENV !== 'development', - TODO legge til denne når vi går live
 });
