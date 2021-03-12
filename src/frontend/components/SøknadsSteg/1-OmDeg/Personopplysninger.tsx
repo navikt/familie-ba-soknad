@@ -73,7 +73,7 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                     </Element>
                     <Normaltekst>
                         <FormattedMessage id={hentSivilstatus(ESivilstand.ENKE_ELLER_ENKEMANN)} />{' '}
-                        {/* TODO */}
+                        {søker.sivilstand}
                     </Normaltekst>
                 </FeltGruppe>
 
@@ -81,8 +81,8 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                     <Element>
                         <FormattedMessage id={'person.adresse'} />
                     </Element>
-                    <Normaltekst>TODO: Søkers adresse</Normaltekst>
-                    <Normaltekst>TODO: postnummer og poststed</Normaltekst>
+                    <Normaltekst>{`${søker.adresse?.adressenavn} ${søker.adresse?.husnummer}${søker.adresse?.husbokstav}`}</Normaltekst>
+                    <Normaltekst>{`${søker.adresse.postnummer}`}</Normaltekst>
                 </FeltGruppe>
             </KomponentGruppe>
 
