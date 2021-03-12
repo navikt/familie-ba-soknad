@@ -27,20 +27,27 @@ interface IJaNeiBolkProps {
 
 const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId }) => {
     if (felt.erSynlig) {
+        const feltIndexISkjema = Object.entries(skjema.felter).findIndex(
+            feltEntry => feltEntry[1] === felt
+        );
+        const feltNavn = Object.keys(skjema.felter)[feltIndexISkjema];
+
         return (
-            <JaNeiSpørsmål
-                {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
-                name={guid()}
-                legend={
-                    <Element>
-                        <FormattedMessage id={spørsmålTekstId} />
-                    </Element>
-                }
-                labelTekstForJaNei={{
-                    ja: <FormattedMessage id={'ja'} />,
-                    nei: <FormattedMessage id={'nei'} />,
-                }}
-            />
+            <span id={feltNavn}>
+                <JaNeiSpørsmål
+                    {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
+                    name={guid()}
+                    legend={
+                        <Element>
+                            <FormattedMessage id={spørsmålTekstId} />
+                        </Element>
+                    }
+                    labelTekstForJaNei={{
+                        ja: <FormattedMessage id={'ja'} />,
+                        nei: <FormattedMessage id={'nei'} />,
+                    }}
+                />
+            </span>
         );
     } else {
         return <></>;
@@ -78,6 +85,7 @@ const OmDeg: React.FC = () => {
             tittel={'Om deg'}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
+            skjema={skjema}
         >
             <KomponentGruppe>
                 <Personopplysninger />
