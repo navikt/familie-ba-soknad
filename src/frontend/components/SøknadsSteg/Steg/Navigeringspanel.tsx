@@ -69,13 +69,14 @@ const StyledAvbrytOgSlettKnapp = styled(Flatknapp)`
 const Navigeringspanel: React.FC<{
     onAvbrytCallback: () => void;
     onTilbakeCallback: () => void;
-}> = ({ onAvbrytCallback, onTilbakeCallback }) => {
+    valideringErOk: () => boolean;
+}> = ({ onAvbrytCallback, onTilbakeCallback, valideringErOk }) => {
     return (
         <Container>
             <StyledTilbakeKnapp htmlType={'button'} onClick={onTilbakeCallback}>
                 <FormattedMessage id={'felles.tilbake'} />
             </StyledTilbakeKnapp>
-            <StyledGåVidereKnapp htmlType={'submit'} type={'hoved'}>
+            <StyledGåVidereKnapp htmlType={'submit'} type={valideringErOk() ? 'hoved' : 'standard'}>
                 <FormattedMessage id={'felles.gåvidere'} />
             </StyledGåVidereKnapp>
             <StyledAvsluttOgFortsettSenereKnapp mini htmlType={'button'} onClick={onAvbrytCallback}>

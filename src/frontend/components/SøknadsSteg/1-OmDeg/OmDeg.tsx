@@ -63,9 +63,13 @@ const StyledSection = styled.section`
 `;
 
 const OmDeg: React.FC = () => {
-    const { skjema, kanSendeSkjema } = useOmdeg();
+    const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useOmdeg();
     return (
-        <Steg tittel={'Om deg'} kanGåTilNesteSteg={kanSendeSkjema}>
+        <Steg
+            tittel={'Om deg'}
+            validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
+            valideringErOk={valideringErOk}
+        >
             <KomponentGruppe>
                 <Personopplysninger skjema={skjema} />
             </KomponentGruppe>

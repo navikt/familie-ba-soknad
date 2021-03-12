@@ -23,7 +23,8 @@ import Navigeringspanel from './Navigeringspanel';
 
 interface ISteg {
     tittel: string;
-    kanGåTilNesteSteg: () => boolean;
+    validerFelterOgVisFeilmelding: () => boolean;
+    valideringErOk: () => boolean;
 }
 
 const mobile = '420px';
@@ -79,7 +80,12 @@ const ChildrenContainer = styled.div`
     margin-top: 2rem;
 `;
 
-const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg }) => {
+const Steg: React.FC<ISteg> = ({
+    tittel,
+    children,
+    validerFelterOgVisFeilmelding,
+    valideringErOk,
+}) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const { settUtfyltSteg } = useApp();
@@ -111,7 +117,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg }) => {
 
     const håndterGåVidere = event => {
         event.preventDefault();
-        if (kanGåTilNesteSteg()) {
+        if (validerFelterOgVisFeilmelding()) {
             history.push(nesteRoute.path);
         }
     };
@@ -137,6 +143,7 @@ const Steg: React.FC<ISteg> = ({ tittel, children, kanGåTilNesteSteg }) => {
                         <Navigeringspanel
                             onTilbakeCallback={håndterTilbake}
                             onAvbrytCallback={håndterModalStatus}
+                            valideringErOk={valideringErOk}
                         />
                     </form>
                 </main>
