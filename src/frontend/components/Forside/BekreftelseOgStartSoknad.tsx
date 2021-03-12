@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
@@ -9,7 +10,8 @@ import KnappBase from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { StegRoutes } from '../../routing/Routes';
+import { hentNesteRoute, IRoute, StegRoutes } from '../../routing/Routes';
+import { ILokasjon } from '../../typer/lokasjon';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 
 const FormContainer = styled.form`
@@ -51,15 +53,17 @@ const BekreftelseOgStartSoknad: React.FC<{
 }> = ({ navn }) => {
     const { formatMessage } = useIntl();
     const history = useHistory();
+    const location = useLocation<ILokasjon>();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         BekreftelseStatus.NORMAL
     );
+    const nesteRoute: IRoute = hentNesteRoute(StegRoutes, location.pathname);
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();
         if (bekreftelseStatus === BekreftelseStatus.BEKREFTET) {
-            history.push(Object.values(StegRoutes)[0].path);
+            history.push(nesteRoute.path);
         } else {
             settBekreftelseStatus(BekreftelseStatus.FEIL);
         }

@@ -9,7 +9,7 @@ import Oppsummering from '../components/SøknadsSteg/4-Oppsummering/Oppsummering
 import Kvittering from '../components/SøknadsSteg/5-Kvittering/Kvittering';
 import { ILokasjon } from '../typer/lokasjon';
 
-export interface IStegRoute {
+export interface IRoute {
     path: string;
     label: string;
     route: RouteEnum;
@@ -17,6 +17,7 @@ export interface IStegRoute {
 }
 
 export enum RouteEnum {
+    Forside = 'Forside',
     OmDeg = 'Om deg',
     Søknadstype = 'Søknadstype',
     VelgBarn = 'Velg barn',
@@ -24,7 +25,8 @@ export enum RouteEnum {
     Kvittering = 'Kvittering',
 }
 
-export const StegRoutes: IStegRoute[] = [
+export const StegRoutes: IRoute[] = [
+    { path: '/', label: 'Forside', route: RouteEnum.OmDeg, komponent: OmDeg },
     { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
     {
         path: '/soknadstype',
@@ -50,18 +52,16 @@ export const StegRoutes: IStegRoute[] = [
 export const hentAktivtStegIndex = (location: Location<ILokasjon>) =>
     StegRoutes.findIndex(steg => steg.path === location.pathname);
 
-export const hentForrigeRoute = (routes: IStegRoute[], currentPath: string) => {
+export const hentForrigeRoute = (routes: IRoute[], currentPath: string) => {
     const routeIndex = routes.findIndex(route => route.path === currentPath);
-    const forrigeRoute = routes[routeIndex - 1];
-    return forrigeRoute;
+    return routes[routeIndex - 1];
 };
 
-export const hentNesteRoute = (routes: IStegRoute[], currentPath: string) => {
+export const hentNesteRoute = (routes: IRoute[], currentPath: string) => {
     const routeIndex = routes.findIndex(route => route.path === currentPath);
-    const nesteRoute = routes[routeIndex + 1];
-    return nesteRoute;
+    return routes[routeIndex + 1];
 };
 
-export const hentPath = (routes: IStegRoute[], route: RouteEnum) => {
+export const hentPath = (routes: IRoute[], route: RouteEnum) => {
     return routes.find(r => r.route === route)?.path;
 };
