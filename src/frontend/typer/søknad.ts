@@ -72,6 +72,7 @@ export const initialStateSøknadNy: ISøknadNy = {
         barn: [],
         statsborgerskap: [],
         kontakttelefon: '',
+        ident: '',
     },
     barn: [],
     spørsmål: [],

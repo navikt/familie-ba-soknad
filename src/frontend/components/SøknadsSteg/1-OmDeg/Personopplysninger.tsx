@@ -53,7 +53,7 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                     <Element>
                         <FormattedMessage id={'person.ident.visning'} />
                     </Element>
-                    <Normaltekst>TODO: Søkers ident</Normaltekst>
+                    <Normaltekst>{søker.ident}</Normaltekst>
                 </FeltGruppe>
 
                 <FeltGruppe>

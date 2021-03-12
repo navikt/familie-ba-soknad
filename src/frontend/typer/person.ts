@@ -35,6 +35,7 @@ export interface IPersonFraPdl {
     navn: string;
     barn: IBarn[];
     statsborgerskap: Alpha3Code[];
+    ident: string;
     //fødselsdato: Date;
     //fnr: string;
     //adresse: IAdresse;
