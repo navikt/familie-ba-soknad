@@ -11,7 +11,6 @@ import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { ESivilstand } from '../../../typer/person';
 import { hentAdressefelterSortert } from '../../../utils/person';
 import { FeltGruppe, KomponentGruppe, StyledAlertStripe } from './layoutKomponenter';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
@@ -76,8 +75,7 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                         <FormattedMessage id={'sivilstatus.tittel'} />
                     </Element>
                     <Normaltekst>
-                        <FormattedMessage id={hentSivilstatus(ESivilstand.ENKE_ELLER_ENKEMANN)} />{' '}
-                        {søker.sivilstand}
+                        <FormattedMessage id={hentSivilstatus(søker.sivilstand?.type)} />
                     </Normaltekst>
                 </FeltGruppe>
 

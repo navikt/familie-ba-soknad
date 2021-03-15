@@ -73,7 +73,7 @@ export const initialStateSøknadNy: ISøknadNy = {
         statsborgerskap: [],
         kontakttelefon: '',
         ident: '',
-        sivilstand: ESivilstand.UOPPGITT,
+        sivilstand: { type: ESivilstand.UOPPGITT },
         adresse: {
             adressenavn: '',
             husbokstav: '',

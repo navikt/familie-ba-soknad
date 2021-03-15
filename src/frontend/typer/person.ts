@@ -31,7 +31,7 @@ export interface IPersonFraPdl {
     statsborgerskap: { landkode: Alpha3Code }[];
     ident: string;
     adresse: IAdresse;
-    sivilstand: ESivilstand;
+    sivilstand: { type: ESivilstand };
     //fødselsdato: Date;
 }
 
