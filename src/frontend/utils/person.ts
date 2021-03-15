@@ -18,6 +18,6 @@ export const hentAdressefelterSortert = (adresse: IAdresse) => {
         }`,
         `${adresse.postnummer ?? ''} ${adresse.bostedskommune ?? ''}`,
     ]
-        .map(linje => linje.replace(/\s{2+}/, ' '))
+        .map(linje => linje.replace(/\s{2+}/, ' ').trim())
         .filter(value => value);
 };
