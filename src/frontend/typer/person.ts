@@ -28,12 +28,11 @@ export enum ESivilstand {
 export interface IPersonFraPdl {
     navn: string;
     barn: IBarn[];
-    statsborgerskap: Alpha3Code[];
+    statsborgerskap: { landkode: Alpha3Code }[];
     ident: string;
     adresse: IAdresse;
     sivilstand: ESivilstand;
     //fødselsdato: Date;
-    //adresse: IAdresse;
 }
 
 export interface ISøkerNy extends IPersonFraPdl {

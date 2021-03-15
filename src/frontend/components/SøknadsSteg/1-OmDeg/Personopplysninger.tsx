@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Alpha3Code } from 'i18n-iso-countries';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
@@ -11,6 +12,7 @@ import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { ESivilstand } from '../../../typer/person';
+import { hentAdressefelterSortert } from '../../../utils/person';
 import { FeltGruppe, KomponentGruppe, StyledAlertStripe } from './layoutKomponenter';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { IStegEnFeltTyper } from './useOmdeg';
@@ -62,7 +64,9 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                     </Element>
                     <Normaltekst>
                         {søker.statsborgerskap
-                            .map((landkode: string) => landkodeTilSpråk(landkode, intl.locale))
+                            .map((statsborgerskap: { landkode: Alpha3Code }) =>
+                                landkodeTilSpråk(statsborgerskap.landkode, intl.locale)
+                            )
                             .join(', ')}
                     </Normaltekst>
                 </FeltGruppe>
@@ -81,8 +85,9 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                     <Element>
                         <FormattedMessage id={'person.adresse'} />
                     </Element>
-                    <Normaltekst>{`${søker.adresse?.adressenavn} ${søker.adresse?.husnummer}${søker.adresse?.husbokstav}`}</Normaltekst>
-                    <Normaltekst>{`${søker.adresse.postnummer}`}</Normaltekst>
+                    {hentAdressefelterSortert(søker.adresse).map(adresseFelt => (
+                        <Normaltekst>{adresseFelt}</Normaltekst>
+                    ))}
                 </FeltGruppe>
             </KomponentGruppe>
 
