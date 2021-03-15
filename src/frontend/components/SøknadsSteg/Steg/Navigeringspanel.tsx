@@ -8,8 +8,6 @@ import KnappBase, { Flatknapp, Knapp } from 'nav-frontend-knapper';
 
 import { DeleteFilled } from '@navikt/ds-icons';
 
-const mobile = '420px';
-
 const Container = styled.div`
     padding: 2rem;
     display: grid;
@@ -21,7 +19,7 @@ const Container = styled.div`
     grid-template-rows: auto;
     gap: 0.5rem;
 
-    @media all and (max-width: ${mobile}) {
+    @media all and (max-width: var(--mobile)) {
         grid-template-columns: 1fr;
         grid-template-areas:
             ' gåVidere '
@@ -37,7 +35,7 @@ const StyledTilbakeKnapp = styled(Knapp)`
     width: 10rem;
     font-size: 1.125rem;
 
-    @media all and (max-width: ${mobile}) {
+    @media all and (max-width: var(--mobile)) {
         place-self: center;
     }
 `;
@@ -47,7 +45,7 @@ const StyledGåVidereKnapp = styled(KnappBase)`
     width: 10rem;
     font-size: 1.125rem;
 
-    @media all and (max-width: ${mobile}) {
+    @media all and (max-width: var(--mobile)) {
         place-self: center;
     }
 `;

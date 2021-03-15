@@ -47,7 +47,7 @@ const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId 
 
 // TODO: Bruk konstant for mobilbredde
 const StyledLandDropdown = styled(LandDropdown)`
-    @media all and (min-width: 420px) {
+    @media all and (min-width: var(--mobile)) {
         width: 50%;
         padding-right: 0.7rem;
     }
