@@ -2,6 +2,7 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
+import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import norskeTekster from '../../../assets/lang/nb.json';
@@ -21,7 +22,9 @@ test('Skal rendre alertstripe i OmDeg', () => {
     const { getByTestId } = render(
         <AppProvider>
             <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
-                <OmDeg />
+                <HttpProvider>
+                    <OmDeg />
+                </HttpProvider>
             </SprakProvider>
         </AppProvider>
     );
