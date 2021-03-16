@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
-import KnappBase, { Flatknapp, Knapp } from 'nav-frontend-knapper';
+import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
 
 import { DeleteFilled } from '@navikt/ds-icons';
 
@@ -31,10 +31,13 @@ const Container = styled.div`
     }
 `;
 
-const StyledTilbakeKnapp = styled(Knapp)`
-    grid-area: tilbake;
-    place-self: end;
+const StyledKnappBase = styled(KnappBase)<{
+    placeSelf: 'end' | 'start';
+    gridArea: 'tilbake' | 'gåVidere';
+}>`
+    grid-area: ${props => props.gridArea};
     width: 10rem;
+    place-self: ${props => props.placeSelf};
     font-size: 1.125rem;
 
     @media all and (max-width: ${mobile}) {
@@ -42,29 +45,17 @@ const StyledTilbakeKnapp = styled(Knapp)`
     }
 `;
 
-const StyledGåVidereKnapp = styled(KnappBase)`
-    grid-area: gåVidere;
-    width: 10rem;
-    font-size: 1.125rem;
-
-    @media all and (max-width: ${mobile}) {
-        place-self: center;
-    }
-`;
-
-const StyledAvsluttOgFortsettSenereKnapp = styled(Flatknapp)`
-    grid-area: avsluttOgFortsett;
+const StyledFlatKnapp = styled(Flatknapp)<{
+    gridArea: 'avsluttOgFortsett' | 'avbrytOgSlett';
+    color: string;
+    marginTop: string;
+}>`
+    grid-area: ${props => props.gridArea};
     width: fit-content;
     place-self: center;
-    margin-top: 0.5rem;
-`;
-
-const StyledAvbrytOgSlettKnapp = styled(Flatknapp)`
-    grid-area: avbrytOgSlett;
-    width: fit-content;
-    place-self: center;
+    margin-top: ${props => props.marginTop};
     && {
-        color: ${navFarger.navMorkGra};
+        color: ${props => props.color};
     }
 `;
 
@@ -75,21 +66,45 @@ const Navigeringspanel: React.FC<{
 }> = ({ onAvbrytCallback, onTilbakeCallback, valideringErOk }) => {
     return (
         <Container>
-            <StyledTilbakeKnapp htmlType={'button'} onClick={onTilbakeCallback}>
+            <StyledKnappBase
+                htmlType={'button'}
+                onClick={onTilbakeCallback}
+                placeSelf="end"
+                gridArea="tilbake"
+            >
                 <FormattedMessage id={'felles.tilbake'} />
-            </StyledTilbakeKnapp>
-            <StyledGåVidereKnapp htmlType={'submit'} type={valideringErOk() ? 'hoved' : 'standard'}>
+            </StyledKnappBase>
+            <StyledKnappBase
+                htmlType={'submit'}
+                type={valideringErOk() ? 'hoved' : 'standard'}
+                placeSelf="start"
+                gridArea="gåVidere"
+            >
                 <FormattedMessage id={'felles.gåvidere'} />
-            </StyledGåVidereKnapp>
-            <StyledAvsluttOgFortsettSenereKnapp mini htmlType={'button'} onClick={onAvbrytCallback}>
+            </StyledKnappBase>
+            <StyledFlatKnapp
+                mini
+                htmlType={'button'}
+                onClick={onAvbrytCallback}
+                color={navFarger.navBla}
+                gridArea="avsluttOgFortsett"
+                marginTop="0.5rem"
+            >
                 <FormattedMessage id={'felles.avslutt-fortsettsenere'} />
-            </StyledAvsluttOgFortsettSenereKnapp>
-            <StyledAvbrytOgSlettKnapp mini htmlType={'button'} onClick={onAvbrytCallback}>
+            </StyledFlatKnapp>
+            <StyledFlatKnapp
+                mini
+                htmlType={'button'}
+                onClick={onAvbrytCallback}
+                color={navFarger.navMorkGra}
+                gridArea="avbrytOgSlett"
+                marginTop="0"
+            >
                 <DeleteFilled />
                 <span>
                     <FormattedMessage id={'felles.avbryt-slett'} />
                 </span>
-            </StyledAvbrytOgSlettKnapp>
+            </StyledFlatKnapp>
         </Container>
     );
 };
