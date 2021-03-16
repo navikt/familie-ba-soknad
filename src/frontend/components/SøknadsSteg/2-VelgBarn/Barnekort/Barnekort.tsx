@@ -12,7 +12,8 @@ import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
-import { IBarn, ISøknadsfelt } from '../../../../typer/søknad';
+import { IBarnNy } from '../../../../typer/person';
+import { ISøknadsfelt } from '../../../../typer/søknad';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
 
 const StyledBarnekort = styled.div`
@@ -67,27 +68,19 @@ const BarnekortHeader = styled.div`
     }
 `;
 
-const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøknad }) => {
+const Barnekort: React.FC<IBarnNy> = props => {
     const { søknad, settSøknad } = useApp();
     const ikoner = [barn1, barn2, barn3];
+    const { ident, borMedSøker, alder, navn } = props;
+
+    const medISøknad = !!søknad.barn.find(barn => barn.ident === ident);
 
     function settMedISøknad(erMed: boolean) {
         settSøknad({
             ...søknad,
-            barn: {
-                label: søknad.barn.label,
-                verdi: søknad.barn.verdi.map(barn =>
-                    barn.verdi.ident === ident
-                        ? {
-                              ...barn,
-                              verdi: {
-                                  ...barn.verdi,
-                                  medISøknad: { ...barn.verdi.medISøknad, verdi: erMed },
-                              },
-                          }
-                        : barn
-                ),
-            },
+            barn: erMed
+                ? søknad.barn.concat([{ ...props }])
+                : søknad.barn.filter((barn: IBarnNy) => barn.ident !== ident),
         });
     }
 
@@ -106,17 +99,17 @@ const Barnekort: React.FC<IBarn> = ({ navn, ident, alder, borMedSøker, medISøk
             </BarnekortHeader>
             <Informasjonsboks>
                 <InformasjonsboksInnhold>
-                    <Element>{navn.verdi}</Element>
-                    <BarneKortInfo {...ident} />
-                    <BarneKortInfo {...alder} />
-                    <BarneKortInfo {...borMedSøker} />
+                    <Element>{navn}</Element>
+                    <BarneKortInfo label={'ident'} verdi={ident} />
+                    <BarneKortInfo label={'alder'} verdi={alder} />
+                    <BarneKortInfo label={'borMedSøker'} verdi={borMedSøker} />
                     <KnappeContainer>
-                        {!medISøknad.verdi && (
+                        {!medISøknad && (
                             <LeggTilBarnKnapp mini onClick={leggTilBarnISøknad}>
                                 Legg til i søknad
                             </LeggTilBarnKnapp>
                         )}
-                        {medISøknad.verdi && (
+                        {medISøknad && (
                             <>
                                 <EtikettSuksess>Med i søknaden</EtikettSuksess>
                                 <FjernBarnLenke href={'#'} onClick={fjernBarnFraSøknad}>

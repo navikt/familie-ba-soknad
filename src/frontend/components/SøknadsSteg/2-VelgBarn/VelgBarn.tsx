@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 import { useApp } from '../../../context/AppContext';
+import { hentAlder } from '../../../utils/person';
 import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
 
@@ -18,15 +19,14 @@ const BarnekortContainer = styled.div<{ kunEttBarn: boolean }>`
 const VelgBarn: React.FC = () => {
     const { søknad } = useApp();
 
-    const erSpørsmålBesvart = søknad.barn.verdi.some(barn => barn.verdi.medISøknad.verdi);
-    const kunEttBarn = søknad.barn.verdi.length === 1;
+    const kunEttBarn = søknad.søker.barn.length === 1;
 
     return (
-        <Steg tittel={'Velg barn'} erSpørsmålBesvart={erSpørsmålBesvart}>
+        <Steg tittel={'Velg barn'} kanGåTilNesteSteg={() => søknad.barn.length > 0}>
             Velg hvilke barn du vil inkludere i søknaden din
             <BarnekortContainer kunEttBarn={kunEttBarn}>
-                {søknad.barn.verdi.map(barn => (
-                    <Barnekort key={barn.verdi.ident.verdi} {...barn.verdi} />
+                {søknad.søker.barn.map(barn => (
+                    <Barnekort key={barn.ident} {...barn} alder={hentAlder(barn.fødselsdato)} />
                 ))}
             </BarnekortContainer>
         </Steg>
