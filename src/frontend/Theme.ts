@@ -4,7 +4,7 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     --mobile: 420px;
     --tablet: 959px;
-    --panel-innhold-bredde: 588px;
+    --panel-innhold-bredde: 524px;
   }
 
   body {

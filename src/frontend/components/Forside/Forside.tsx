@@ -15,10 +15,8 @@ import { useApp } from '../../context/AppContext';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
 
-const panelBredde = '524px';
-
 const ForsideContainer = styled.div`
-    width: ${panelBredde};
+    width: var(--panel-innhold-bredde);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
