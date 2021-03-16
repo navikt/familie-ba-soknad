@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Alpha3Code } from 'i18n-iso-countries';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
@@ -10,7 +11,7 @@ import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { ESivilstand } from '../../../typer/person';
+import { hentAdressefelterSortert } from '../../../utils/person';
 import { FeltGruppe, KomponentGruppe, StyledAlertStripe } from './layoutKomponenter';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { IStegEnFeltTyper } from './useOmdeg';
@@ -53,7 +54,7 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                     <Element>
                         <FormattedMessage id={'person.ident.visning'} />
                     </Element>
-                    <Normaltekst>TODO: Søkers ident</Normaltekst>
+                    <Normaltekst>{søker.ident}</Normaltekst>
                 </FeltGruppe>
 
                 <FeltGruppe>
@@ -62,7 +63,9 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                     </Element>
                     <Normaltekst>
                         {søker.statsborgerskap
-                            .map((landkode: string) => landkodeTilSpråk(landkode, intl.locale))
+                            .map((statsborgerskap: { landkode: Alpha3Code }) =>
+                                landkodeTilSpråk(statsborgerskap.landkode, intl.locale)
+                            )
                             .join(', ')}
                     </Normaltekst>
                 </FeltGruppe>
@@ -72,8 +75,7 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                         <FormattedMessage id={'sivilstatus.tittel'} />
                     </Element>
                     <Normaltekst>
-                        <FormattedMessage id={hentSivilstatus(ESivilstand.ENKE_ELLER_ENKEMANN)} />{' '}
-                        {/* TODO */}
+                        <FormattedMessage id={hentSivilstatus(søker.sivilstand?.type)} />
                     </Normaltekst>
                 </FeltGruppe>
 
@@ -81,8 +83,9 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                     <Element>
                         <FormattedMessage id={'person.adresse'} />
                     </Element>
-                    <Normaltekst>TODO: Søkers adresse</Normaltekst>
-                    <Normaltekst>TODO: postnummer og poststed</Normaltekst>
+                    {hentAdressefelterSortert(søker.adresse).map(adresseFelt => (
+                        <Normaltekst>{adresseFelt}</Normaltekst>
+                    ))}
                 </FeltGruppe>
             </KomponentGruppe>
 

@@ -12,33 +12,27 @@ interface IBarn {
     fødselsdato: string;
 }
 
-export interface IAdresse {
-    adresse: string;
-    postnummer: string;
-    poststed?: string;
-}
-
 export enum ESivilstand {
-    UOPPGITT = 'UOPPGITT',
-    UGIFT = 'UGIFT',
     GIFT = 'GIFT',
     ENKE_ELLER_ENKEMANN = 'ENKE_ELLER_ENKEMANN',
     SKILT = 'SKILT',
     SEPARERT = 'SEPARERT',
-    PARTNER = 'PARTNER',
+    REGISTRERT_PARTNER = 'REGISTRERT_PARTNER',
     SEPARERT_PARTNER = 'SEPARERT_PARTNER',
     SKILT_PARTNER = 'SKILT_PARTNER',
     GJENLEVENDE_PARTNER = 'GJENLEVENDE_PARTNER',
+    UGIFT = 'UGIFT',
+    UOPPGITT = 'UOPPGITT',
 }
 
 export interface IPersonFraPdl {
     navn: string;
     barn: IBarn[];
-    statsborgerskap: Alpha3Code[];
+    statsborgerskap: { landkode: Alpha3Code }[];
+    ident: string;
+    adresse: IAdresse;
+    sivilstand: { type: ESivilstand };
     //fødselsdato: Date;
-    //fnr: string;
-    //adresse: IAdresse;
-    //sivilstand?: ESivilstand;
 }
 
 export interface ISøkerNy extends IPersonFraPdl {
@@ -51,4 +45,13 @@ export interface IBarnNy {
     fødselsdato: string;
     borMedSøker: boolean;
     alder: string;
+}
+
+export interface IAdresse {
+    adressenavn?: string;
+    postnummer?: string;
+    husbokstav?: string;
+    bruksenhetsnummer?: string;
+    husnummer?: string;
+    bostedskommune?: string;
 }
