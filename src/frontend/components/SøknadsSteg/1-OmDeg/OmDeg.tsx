@@ -23,9 +23,10 @@ interface IJaNeiBolkProps {
     skjema: ISkjema<IStegEnFeltTyper, string>;
     felt: Felt<ESvar | ESvarMedUbesvart>;
     spørsmålTekstId: string;
+    tilleggsinfo?: string;
 }
 
-const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId }) => {
+const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId, tilleggsinfo }) => {
     if (felt.erSynlig) {
         const feltIndexISkjema = Object.entries(skjema.felter).findIndex(
             feltEntry => feltEntry[1] === felt
@@ -38,9 +39,16 @@ const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId 
                     {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                     name={guid()}
                     legend={
-                        <Element>
-                            <FormattedMessage id={spørsmålTekstId} />
-                        </Element>
+                        <>
+                            <Element>
+                                <FormattedMessage id={spørsmålTekstId} />
+                            </Element>
+                            {tilleggsinfo && (
+                                <Normaltekst>
+                                    <FormattedMessage id={tilleggsinfo} />
+                                </Normaltekst>
+                            )}
+                        </>
                     }
                     labelTekstForJaNei={{
                         ja: <FormattedMessage id={'ja'} />,
@@ -91,30 +99,13 @@ const OmDeg: React.FC = () => {
                 <Personopplysninger />
             </KomponentGruppe>
 
-            <StyledSection aria-live="polite">
-                <JaNeiSpørsmål
-                    {...skjema.felter.borPåRegistrertAdresse.hentNavInputProps(
-                        skjema.visFeilmeldinger
-                    )}
-                    name={'søker.borpåregistrertadresse'}
-                    legend={
-                        <>
-                            <Element>
-                                <FormattedMessage id={'personopplysninger.spm.riktigAdresse'} />
-                            </Element>
-                            <Normaltekst>
-                                <FormattedMessage
-                                    id={'personopplysninger.lesmer-innhold.riktigAdresse'}
-                                />
-                            </Normaltekst>
-                        </>
-                    }
-                    labelTekstForJaNei={{
-                        ja: <FormattedMessage id={'ja'} />,
-                        nei: <FormattedMessage id={'nei'} />,
-                    }}
+            <StyledSection>
+                <JaNeiBolk
+                    skjema={skjema}
+                    felt={skjema.felter.oppholderSegINorge}
+                    spørsmålTekstId={'personopplysninger.spm.riktigAdresse'}
+                    tilleggsinfo={'personopplysninger.lesmer-innhold.riktigAdresse'}
                 />
-
                 {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
                     <SøkerBorIkkePåAdresse lenkePDFSøknad={'https://nav.no'} /> //TODO
                 )}
