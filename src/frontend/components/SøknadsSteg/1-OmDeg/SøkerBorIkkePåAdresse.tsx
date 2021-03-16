@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import Lenke from 'nav-frontend-lenker';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -8,27 +8,36 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { StyledAlertStripe, FeltGruppe, KomponentGruppe } from './layoutKomponenter';
 
 interface Props {
-    lenkePDFSøknad: string;
+    advarselTekstId: string;
+    utfyllendeAdvarselInfoId: string;
+    className?: string;
 }
 
-export const SøkerBorIkkePåAdresse: FC<Props> = ({ lenkePDFSøknad }) => {
+export const SøkerBorIkkePåAdresse: FC<Props> = ({
+    advarselTekstId,
+    utfyllendeAdvarselInfoId,
+    className,
+}) => {
+    const intl = useIntl();
     return (
-        <>
+        <div className={className}>
             <KomponentGruppe>
                 <StyledAlertStripe type={'advarsel'} form={'inline'} className={'avstand-øverst'}>
-                    <FormattedMessage id={'personopplysninger.alert.riktigAdresse'} />
+                    <FormattedMessage id={advarselTekstId} />
                 </StyledAlertStripe>
             </KomponentGruppe>
             <KomponentGruppe>
                 <FeltGruppe>
                     <Element>
-                        <FormattedMessage id={'personopplysninger.info.endreAdresse'} />
+                        <FormattedMessage id={utfyllendeAdvarselInfoId} />
                     </Element>
                 </FeltGruppe>
                 <FeltGruppe>
                     <Normaltekst>
-                        <Lenke href={lenkePDFSøknad}>
-                            <FormattedMessage id={'personopplysninger.lenke.pdfskjema'} />
+                        <Lenke
+                            href={intl.formatMessage({ id: 'personopplysninger.lenke.pdfskjema' })}
+                        >
+                            <FormattedMessage id={'personopplysninger.lenketekst.pdfskjema'} />
                         </Lenke>
                     </Normaltekst>
                 </FeltGruppe>
@@ -36,6 +45,6 @@ export const SøkerBorIkkePåAdresse: FC<Props> = ({ lenkePDFSøknad }) => {
                     <FormattedMessage id={'personopplysninger.info.pdfskjema'} />
                 </Normaltekst>
             </KomponentGruppe>
-        </>
+        </div>
     );
 };

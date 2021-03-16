@@ -31,6 +31,10 @@ const PersonopplysningerSection = styled.section`
     }
 `;
 
+const StyledSøkerBorIkkePåAdresse = styled(SøkerBorIkkePåAdresse)`
+    margin-top: -3rem;
+`;
+
 export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, string> }> = ({
     skjema,
 }) => {
@@ -81,48 +85,67 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
 
                 <FeltGruppe>
                     <Element>
-                        <FormattedMessage id={'person.adresse'} />
+                        <FormattedMessage id={'personopplysninger.adresse'} />
                     </Element>
-                    {hentAdressefelterSortert(søker.adresse).map(adresseFelt => (
-                        <Normaltekst>{adresseFelt}</Normaltekst>
-                    ))}
+                    {søker.adresse ? (
+                        hentAdressefelterSortert(søker.adresse).map(adresseFelt => (
+                            <Normaltekst>{adresseFelt}</Normaltekst>
+                        ))
+                    ) : (
+                        <Normaltekst>
+                            <FormattedMessage
+                                id={'personopplysninger.har-ikke-registrert-adresse'}
+                            />
+                        </Normaltekst>
+                    )}
                 </FeltGruppe>
             </KomponentGruppe>
 
-            <KomponentGruppe aria-live="polite">
-                <JaNeiSpørsmål
-                    {...skjema.felter.borPåRegistrertAdresse.hentNavInputProps(
-                        skjema.visFeilmeldinger
-                    )}
-                    name={'søker.borpåregistrertadresse'}
-                    legend={
-                        <>
-                            <Element>
-                                <FormattedMessage id={'personopplysninger.spm.riktigAdresse'} />
-                            </Element>
-                            <Normaltekst>
-                                <FormattedMessage
-                                    id={'personopplysninger.lesmer-innhold.riktigAdresse'}
-                                />
-                            </Normaltekst>
-                        </>
-                    }
-                    labelTekstForJaNei={{
-                        ja: <FormattedMessage id={'ja'} />,
-                        nei: <FormattedMessage id={'nei'} />,
-                    }}
-                />
+            {søker.adresse && (
+                <KomponentGruppe aria-live="polite">
+                    <JaNeiSpørsmål
+                        {...skjema.felter.borPåRegistrertAdresse.hentNavInputProps(
+                            skjema.visFeilmeldinger
+                        )}
+                        name={'søker.borpåregistrertadresse'}
+                        legend={
+                            <>
+                                <Element>
+                                    <FormattedMessage id={'personopplysninger.spm.riktigAdresse'} />
+                                </Element>
+                                <Normaltekst>
+                                    <FormattedMessage
+                                        id={'personopplysninger.lesmer-innhold.riktigAdresse'}
+                                    />
+                                </Normaltekst>
+                            </>
+                        }
+                        labelTekstForJaNei={{
+                            ja: <FormattedMessage id={'ja'} />,
+                            nei: <FormattedMessage id={'nei'} />,
+                        }}
+                    />
 
-                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <SøkerBorIkkePåAdresse lenkePDFSøknad={'https://nav.no'} /> //TODO
-                )}
-            </KomponentGruppe>
+                    {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
+                        <SøkerBorIkkePåAdresse
+                            advarselTekstId={'personopplysninger.alert.riktigAdresse'}
+                            utfyllendeAdvarselInfoId={'personopplysninger.info.endreAdresse'}
+                        />
+                    )}
+                </KomponentGruppe>
+            )}
+            {!søker.adresse && (
+                <StyledSøkerBorIkkePåAdresse
+                    advarselTekstId={'personopplysninger.info.ukjentadresse'}
+                    utfyllendeAdvarselInfoId={'personopplysninger.info.vi-trenger-din-adresse'}
+                />
+            )}
             <KomponentGruppe>
                 {skjema.felter.telefonnummer.erSynlig && (
                     <StyledInput
                         {...skjema.felter.telefonnummer.hentNavInputProps(skjema.visFeilmeldinger)}
                         name={'Telefonnummer'}
-                        label={<FormattedMessage id={'person.telefonnr'} />}
+                        label={<FormattedMessage id={'personopplysninger.telefonnr'} />}
                         bredde={'M'}
                         type="tel"
                     />
