@@ -1,5 +1,5 @@
 import { INøkkelPar } from './common';
-import { IBarnNy, ISøkerNy } from './person';
+import { ESivilstand, IBarnNy, ISøkerNy } from './person';
 
 export enum ESøknadstype {
     IKKE_SATT = 'IKKE_SATT',
@@ -72,6 +72,16 @@ export const initialStateSøknadNy: ISøknadNy = {
         barn: [],
         statsborgerskap: [],
         kontakttelefon: '',
+        ident: '',
+        sivilstand: { type: ESivilstand.UOPPGITT },
+        adresse: {
+            adressenavn: '',
+            husbokstav: '',
+            husnummer: '',
+            bruksenhetsnummer: '',
+            postnummer: '',
+            bostedskommune: '',
+        },
     },
     barn: [],
     spørsmål: [],
