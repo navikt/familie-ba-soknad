@@ -12,7 +12,7 @@ import packageJson from './../../package.json';
 import './index.less';
 import App from './App';
 import * as norskeTekster from './assets/lang/nb.json';
-import { GlobalStyle } from './components/Felleskomponenter/Theme';
+import { GlobalStyle } from './Theme';
 
 const environment = window.location.hostname;
 
