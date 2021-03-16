@@ -56,3 +56,30 @@ test('Test at rendrer adresse i personopplysninger', () => {
     expect(getByText(/Testgata/)).toBeInTheDocument();
     expect(getByText(/Oslo/)).toBeInTheDocument();
 });
+
+test('Kan rendre med tom adresse', () => {
+    const skjema = mockDeep<ISkjema<IStegEnFeltTyper, string>>();
+
+    const søker = {
+        adresse: null,
+        navn: 'Test Testdottir',
+        statsborgerskap: [{ landkode: 'NOR' }],
+        ident: '12345678901',
+        kontakttelefon: '40123456',
+        barn: [],
+        sivilstand: { type: mockedSivilstand },
+    };
+
+    jest.spyOn(appContext, 'useApp').mockImplementation(
+        jest.fn().mockReturnValue({ søknad: { søker } })
+    );
+
+    const { getByText } = render(
+        <IntlProvider locale={LocaleType.nb}>
+            <Personopplysninger skjema={skjema} />
+        </IntlProvider>
+    );
+
+    expect(getByText(/12345678901/)).toBeInTheDocument();
+    expect(getByText(/personopplysninger\.info\.ukjentadresse/)).toBeInTheDocument();
+});
