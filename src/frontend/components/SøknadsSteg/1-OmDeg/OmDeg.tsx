@@ -15,8 +15,6 @@ import { KomponentGruppe } from './layoutKomponenter';
 import { Personopplysninger } from './Personopplysninger';
 import { ESvarMedUbesvart, IStegEnFeltTyper, useOmdeg } from './useOmdeg';
 
-// TODO: Bruk konstant for mobilbredde
-
 interface IJaNeiBolkProps {
     skjema: ISkjema<IStegEnFeltTyper, string>;
     felt: Felt<ESvar | ESvarMedUbesvart>;
@@ -45,7 +43,6 @@ const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId 
     }
 };
 
-// TODO: Bruk konstant for mobilbredde
 const StyledLandDropdown = styled(LandDropdown)`
     @media all and (min-width: var(--mobile)) {
         width: 50%;
