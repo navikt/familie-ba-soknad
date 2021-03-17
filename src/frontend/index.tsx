@@ -3,7 +3,6 @@ import React from 'react';
 import * as Sentry from '@sentry/browser';
 import { registerLocale } from 'i18n-iso-countries';
 import ReactDOM from 'react-dom';
-import { ThemeProvider } from 'styled-components';
 
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
@@ -34,14 +33,12 @@ import(`i18n-iso-countries/langs/nb.json`).then(result => registerLocale(result)
 
 ReactDOM.render(
     <React.StrictMode>
-        <ThemeProvider theme={{}}>
-            <GlobalStyle />
-            <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
-                <HttpProvider>
-                    <App />
-                </HttpProvider>
-            </SprakProvider>
-        </ThemeProvider>
+        <GlobalStyle />
+        <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
+            <HttpProvider>
+                <App />
+            </HttpProvider>
+        </SprakProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );
