@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
+import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
-import { EtikettSuksess } from 'nav-frontend-etiketter';
-import { Knapp } from 'nav-frontend-knapper';
-import Lenke from 'nav-frontend-lenker';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Checkbox } from 'nav-frontend-skjema';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
 import { IBarnNy } from '../../../../typer/person';
-import { ISøknadsfelt } from '../../../../typer/søknad';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
+import { formaterFnr } from '../../../../utils/visning';
 
 const StyledBarnekort = styled.div`
     padding: 0.625rem;
@@ -22,20 +21,13 @@ const StyledBarnekort = styled.div`
     width: 17.25rem;
 `;
 
-const LeggTilBarnKnapp = styled(Knapp)`
+const LeggTilBarnCheckbox = styled(Checkbox)`
     margin-top: 2.75rem;
 `;
 
 const KnappeContainer = styled.div`
     margin-top: 1rem;
     height: 5rem;
-`;
-
-const FjernBarnLenke = styled(Lenke)`
-    margin-top: 1rem;
-    margin-left: 3rem;
-    margin-right: 3rem;
-    display: block;
 `;
 
 const InformasjonsboksInnhold = styled.div`
@@ -84,14 +76,6 @@ const Barnekort: React.FC<IBarnNy> = props => {
         });
     }
 
-    function fjernBarnFraSøknad() {
-        settMedISøknad(false);
-    }
-
-    function leggTilBarnISøknad() {
-        settMedISøknad(true);
-    }
-
     return (
         <StyledBarnekort>
             <BarnekortHeader>
@@ -100,23 +84,23 @@ const Barnekort: React.FC<IBarnNy> = props => {
             <Informasjonsboks>
                 <InformasjonsboksInnhold>
                     <Element>{navn}</Element>
-                    <BarneKortInfo label={'ident'} verdi={ident} />
-                    <BarneKortInfo label={'alder'} verdi={alder} />
-                    <BarneKortInfo label={'borMedSøker'} verdi={borMedSøker} />
+                    <BarneKortInfo
+                        label={<FormattedMessage id={'velgbarn.fødselsnummer.label'} />}
+                        verdi={formaterFnr(ident)}
+                    />
+                    <BarneKortInfo
+                        label={<FormattedMessage id={'velgbarn.alder.label'} />}
+                        verdi={alder}
+                    />
+                    <BarneKortInfo
+                        label={'Bor med søker'}
+                        verdi={<FormattedMessage id={borMedSøker ? 'ja' : 'nei'} />}
+                    />
                     <KnappeContainer>
-                        {!medISøknad && (
-                            <LeggTilBarnKnapp mini onClick={leggTilBarnISøknad}>
-                                Legg til i søknad
-                            </LeggTilBarnKnapp>
-                        )}
-                        {medISøknad && (
-                            <>
-                                <EtikettSuksess>Med i søknaden</EtikettSuksess>
-                                <FjernBarnLenke href={'#'} onClick={fjernBarnFraSøknad}>
-                                    <Normaltekst>Fjern fra søknad</Normaltekst>
-                                </FjernBarnLenke>
-                            </>
-                        )}
+                        <LeggTilBarnCheckbox
+                            label={<FormattedMessage id={'velgbarn.checkboxtekst'} />}
+                            onClick={() => settMedISøknad(!medISøknad)}
+                        />
                     </KnappeContainer>
                 </InformasjonsboksInnhold>
             </Informasjonsboks>
@@ -125,10 +109,10 @@ const Barnekort: React.FC<IBarnNy> = props => {
 };
 
 // eslint-disable-next-line
-const BarneKortInfo: React.FC<ISøknadsfelt<any>> = ({ label, verdi }) => {
+const BarneKortInfo: React.FC<{ label: ReactNode; verdi: ReactNode }> = ({ label, verdi }) => {
     return (
         <div>
-            <Normaltekst>{label.toLocaleUpperCase()}</Normaltekst>
+            <Normaltekst>{label}</Normaltekst>
             <Normaltekst>{verdi}</Normaltekst>
         </div>
     );

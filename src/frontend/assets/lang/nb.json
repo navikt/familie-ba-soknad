@@ -62,5 +62,8 @@
   "sivilstatus.kode.SEPARERT_PARTNER": "Separert",
   "sivilstatus.kode.SKILT_PARTNER": "Skilt",
   "sivilstatus.kode.GJENLEVENDE_PARTNER": "Gjenlevende partner",
-  "sivilstatus.kode.ANNET": "Annen sivilstatus enn GIFT, UGIF, SAMB, SEPA, SKIL, SEPR"
+  "sivilstatus.kode.ANNET": "Annen sivilstatus enn GIFT, UGIF, SAMB, SEPA, SKIL, SEPR",
+  "velgbarn.checkboxtekst": "Søk om barnetrygd for barnet",
+  "velgbarn.fødselsnummer.label": "Fødselsnummer",
+  "velgbarn.alder.label": "Alder"
 }
