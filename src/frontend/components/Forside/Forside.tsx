@@ -15,11 +15,8 @@ import { useApp } from '../../context/AppContext';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
 
-const panelBredde = '524px';
-const tablet = '959px';
-
 const ForsideContainer = styled.div`
-    width: ${panelBredde};
+    width: var(--panel-innhold-bredde);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -33,7 +30,7 @@ const ForsideContainer = styled.div`
         line-height: 26px;
     }
 
-    @media all and (max-width: ${tablet}) {
+    @media all and (max-width: var(--tablet)) {
         width: 100%;
         padding: 2rem;
     }

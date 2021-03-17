@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './App.less';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import { AppProvider } from './context/AppContext';
