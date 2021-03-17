@@ -5,7 +5,7 @@ import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
 import { Checkbox } from 'nav-frontend-skjema';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Ingress, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
@@ -17,7 +17,6 @@ import { formaterFnr } from '../../../../utils/visning';
 
 const StyledBarnekort = styled.div`
     padding: 0.625rem;
-    height: 27.5rem;
     width: 17.25rem;
 `;
 
@@ -25,21 +24,14 @@ const LeggTilBarnCheckbox = styled(Checkbox)`
     margin-top: 2.75rem;
 `;
 
-const KnappeContainer = styled.div`
-    margin-top: 1rem;
-    height: 5rem;
-`;
-
 const InformasjonsboksInnhold = styled.div`
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 `;
 
 const Informasjonsboks = styled.div`
-    text-align: center;
-    height: 70%;
+    padding: 2rem;
     border-bottom-left-radius: 0.3rem;
     border-bottom-right-radius: 0.3rem;
     background-color: ${navFarger.navLysGra};
@@ -47,7 +39,7 @@ const Informasjonsboks = styled.div`
 
 const BarnekortHeader = styled.div`
     box-sizing: border-box;
-    height: 30%;
+    height: 8rem;
     background-color: ${navFarger.navLillaDarken60};
     border-top-right-radius: 0.3rem;
     border-top-left-radius: 0.3rem;
@@ -64,6 +56,21 @@ interface IBarnekortProps extends IBarnNy {
     settMedISøknad: (ident: string, skalVæreMed: boolean) => void;
 }
 
+const StyledUndertittel = styled(Undertittel)`
+    text-transform: uppercase;
+    && {
+        font-weight: 700;
+    }
+`;
+
+const StyledIngress = styled(Ingress)`
+    && {
+        font-size: 1.125rem; // Overstyr mixin som mener den skal være samme som undertittel på stor skjerm
+        margin-top: 1rem;
+        font-weight: 600;
+    }
+`;
+
 const Barnekort: React.FC<IBarnekortProps> = props => {
     const { søknad } = useApp();
     const ikoner = [barn1, barn2, barn3];
@@ -78,35 +85,40 @@ const Barnekort: React.FC<IBarnekortProps> = props => {
             </BarnekortHeader>
             <Informasjonsboks>
                 <InformasjonsboksInnhold>
-                    <Element>{navn}</Element>
+                    <StyledUndertittel>{navn}</StyledUndertittel>
                     <BarneKortInfo
-                        label={<FormattedMessage id={'velgbarn.fødselsnummer.label'} />}
+                        labelId={'velgbarn.fødselsnummer.label'}
                         verdi={formaterFnr(ident)}
                     />
+                    <BarneKortInfo labelId={'velgbarn.alder.label'} verdi={alder} />
                     <BarneKortInfo
-                        label={<FormattedMessage id={'velgbarn.alder.label'} />}
-                        verdi={alder}
+                        labelId={'velgbarn.bosted.label'}
+                        verdi={
+                            <FormattedMessage
+                                id={
+                                    borMedSøker
+                                        ? 'velgbarn.bosted.registrert-på-adressen-din'
+                                        : 'velgbarn.bosted.annen-adresse'
+                                }
+                            />
+                        }
                     />
-                    <BarneKortInfo
-                        label={'Bor med søker'}
-                        verdi={<FormattedMessage id={borMedSøker ? 'ja' : 'nei'} />}
+                    <LeggTilBarnCheckbox
+                        label={<FormattedMessage id={'velgbarn.checkboxtekst'} />}
+                        onClick={() => settMedISøknad(ident, !medISøknad)}
                     />
-                    <KnappeContainer>
-                        <LeggTilBarnCheckbox
-                            label={<FormattedMessage id={'velgbarn.checkboxtekst'} />}
-                            onClick={() => settMedISøknad(ident, !medISøknad)}
-                        />
-                    </KnappeContainer>
                 </InformasjonsboksInnhold>
             </Informasjonsboks>
         </StyledBarnekort>
     );
 };
 
-const BarneKortInfo: React.FC<{ label: ReactNode; verdi: ReactNode }> = ({ label, verdi }) => {
+const BarneKortInfo: React.FC<{ labelId: string; verdi: ReactNode }> = ({ labelId, verdi }) => {
     return (
         <div>
-            <Normaltekst>{label}</Normaltekst>
+            <StyledIngress>
+                <FormattedMessage id={labelId} />
+            </StyledIngress>
             <Normaltekst>{verdi}</Normaltekst>
         </div>
     );

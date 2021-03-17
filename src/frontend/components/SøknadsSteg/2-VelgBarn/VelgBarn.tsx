@@ -5,6 +5,7 @@ import styled from 'styled-components/macro';
 
 import { useApp } from '../../../context/AppContext';
 import { hentAlder } from '../../../utils/person';
+import { StyledAlertStripe } from '../1-OmDeg/layoutKomponenter';
 import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
 import { useVelgBarn } from './useVelgBarn';
@@ -16,6 +17,7 @@ const BarnekortContainer = styled.div<{ kunEttBarn: boolean }>`
     margin-top: 1rem;
     justify-content: ${props => (props.kunEttBarn ? 'center' : 'flex-start')};
     width: ${props => (props.kunEttBarn ? 'auto' : '38.75rem')};
+    text-align: left;
 `;
 
 const VelgBarn: React.FC = () => {
@@ -43,7 +45,9 @@ const VelgBarn: React.FC = () => {
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
         >
-            <FormattedMessage id={'velgbarn.undertittel'} />
+            <StyledAlertStripe type={'info'} form={'inline'}>
+                <FormattedMessage id={'velgbarn.info.folkeregisteret'} />
+            </StyledAlertStripe>
 
             <BarnekortContainer id={'barnMedISøknad'} kunEttBarn={kunEttBarn}>
                 {søknad.søker.barn.map(barn => (
