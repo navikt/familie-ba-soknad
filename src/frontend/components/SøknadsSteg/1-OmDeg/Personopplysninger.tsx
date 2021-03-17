@@ -69,8 +69,8 @@ export const Personopplysninger: React.FC = () => {
                     <Element>
                         <FormattedMessage id={'person.adresse'} />
                     </Element>
-                    {hentAdressefelterSortert(søker.adresse).map(adresseFelt => (
-                        <Normaltekst>{adresseFelt}</Normaltekst>
+                    {hentAdressefelterSortert(søker.adresse).map((adresseFelt, index) => (
+                        <Normaltekst key={index}>{adresseFelt}</Normaltekst>
                     ))}
                 </FeltGruppe>
             </KomponentGruppe>
