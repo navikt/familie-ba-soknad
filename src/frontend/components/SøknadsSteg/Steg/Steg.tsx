@@ -57,7 +57,9 @@ const StyledModal = styled(Modal)`
 `;
 
 const StegContainer = styled.div`
-    text-align: center;
+    h2 {
+        text-align: center;
+    }
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
