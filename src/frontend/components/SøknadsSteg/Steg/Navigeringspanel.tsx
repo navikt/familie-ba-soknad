@@ -4,11 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
-import KnappBase, { Flatknapp, Knapp } from 'nav-frontend-knapper';
+import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
 
 import { DeleteFilled } from '@navikt/ds-icons';
-
-const mobile = '420px';
 
 const Container = styled.div`
     padding: 2rem;
@@ -21,7 +19,7 @@ const Container = styled.div`
     grid-template-rows: auto;
     gap: 0.5rem;
 
-    @media all and (max-width: ${mobile}) {
+    @media all and (max-width: var(--mobile)) {
         grid-template-columns: 1fr;
         grid-template-areas:
             ' gåVidere '
@@ -31,62 +29,80 @@ const Container = styled.div`
     }
 `;
 
-const StyledTilbakeKnapp = styled(Knapp)`
-    grid-area: tilbake;
-    place-self: end;
+const StyledKnappBase = styled(KnappBase)<{
+    placeself: 'end' | 'start';
+    gridarea: 'tilbake' | 'gåVidere';
+}>`
+    grid-area: ${props => props.gridarea};
     width: 10rem;
+    place-self: ${props => props.placeself};
     font-size: 1.125rem;
 
-    @media all and (max-width: ${mobile}) {
+    @media all and (max-width: var(--mobile)) {
         place-self: center;
     }
 `;
 
-const StyledGåVidereKnapp = styled(KnappBase)`
-    grid-area: gåVidere;
-    width: 10rem;
-    font-size: 1.125rem;
-
-    @media all and (max-width: ${mobile}) {
-        place-self: center;
+const StyledFlatKnapp = styled(Flatknapp)<{
+    gridarea: 'avsluttOgFortsett' | 'avbrytOgSlett';
+    color: string;
+    margintop: string;
+}>`
+    grid-area: ${props => props.gridarea};
+    width: fit-content;
+    place-self: center;
+    margin-top: ${props => props.margintop};
+    && {
+        color: ${props => props.color};
     }
-`;
-
-const StyledAvsluttOgFortsettSenereKnapp = styled(Flatknapp)`
-    grid-area: avsluttOgFortsett;
-    width: fit-content;
-    place-self: center;
-    margin-top: 0.5rem;
-`;
-
-const StyledAvbrytOgSlettKnapp = styled(Flatknapp)`
-    grid-area: avbrytOgSlett;
-    width: fit-content;
-    place-self: center;
-    color: ${navFarger.navMorkGra};
 `;
 
 const Navigeringspanel: React.FC<{
     onAvbrytCallback: () => void;
     onTilbakeCallback: () => void;
-}> = ({ onAvbrytCallback, onTilbakeCallback }) => {
+    valideringErOk: () => boolean;
+}> = ({ onAvbrytCallback, onTilbakeCallback, valideringErOk }) => {
     return (
         <Container>
-            <StyledTilbakeKnapp htmlType={'button'} onClick={onTilbakeCallback}>
+            <StyledKnappBase
+                htmlType={'button'}
+                onClick={onTilbakeCallback}
+                placeself={'end'}
+                gridarea={'tilbake'}
+            >
                 <FormattedMessage id={'felles.tilbake'} />
-            </StyledTilbakeKnapp>
-            <StyledGåVidereKnapp htmlType={'submit'} type={'hoved'}>
+            </StyledKnappBase>
+            <StyledKnappBase
+                htmlType={'submit'}
+                type={valideringErOk() ? 'hoved' : 'standard'}
+                placeself={'start'}
+                gridarea={'gåVidere'}
+            >
                 <FormattedMessage id={'felles.gåvidere'} />
-            </StyledGåVidereKnapp>
-            <StyledAvsluttOgFortsettSenereKnapp mini htmlType={'button'} onClick={onAvbrytCallback}>
+            </StyledKnappBase>
+            <StyledFlatKnapp
+                mini
+                htmlType={'button'}
+                onClick={onAvbrytCallback}
+                color={navFarger.navBla}
+                gridarea={'avsluttOgFortsett'}
+                margintop={'0.5rem'}
+            >
                 <FormattedMessage id={'felles.avslutt-fortsettsenere'} />
-            </StyledAvsluttOgFortsettSenereKnapp>
-            <StyledAvbrytOgSlettKnapp mini htmlType={'button'} onClick={onAvbrytCallback}>
+            </StyledFlatKnapp>
+            <StyledFlatKnapp
+                mini
+                htmlType={'button'}
+                onClick={onAvbrytCallback}
+                color={navFarger.navMorkGra}
+                gridarea={'avbrytOgSlett'}
+                margintop={'0'}
+            >
                 <DeleteFilled />
                 <span>
                     <FormattedMessage id={'felles.avbryt-slett'} />
                 </span>
-            </StyledAvbrytOgSlettKnapp>
+            </StyledFlatKnapp>
         </Container>
     );
 };
