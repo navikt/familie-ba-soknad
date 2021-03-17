@@ -109,7 +109,7 @@ const OmDeg: React.FC = () => {
 
             <StyledSection>
                 {søker.adresse && (
-                    <KomponentGruppe aria-live="polite">
+                    <>
                         <JaNeiBolk
                             skjema={skjema}
                             felt={skjema.felter.borPåRegistrertAdresse}
@@ -123,7 +123,7 @@ const OmDeg: React.FC = () => {
                                 utfyllendeAdvarselInfoId={'personopplysninger.info.endreAdresse'}
                             />
                         )}
-                    </KomponentGruppe>
+                    </>
                 )}
 
                 {!søker.adresse && (
