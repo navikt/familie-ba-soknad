@@ -11,6 +11,7 @@ import packageJson from './../../package.json';
 import './index.less';
 import App from './App';
 import * as norskeTekster from './assets/lang/nb.json';
+import { GlobalStyle } from './Theme';
 
 const environment = window.location.hostname;
 
@@ -32,6 +33,7 @@ import(`i18n-iso-countries/langs/nb.json`).then(result => registerLocale(result)
 
 ReactDOM.render(
     <React.StrictMode>
+        <GlobalStyle />
         <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
             <HttpProvider>
                 <App />
