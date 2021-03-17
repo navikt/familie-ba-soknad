@@ -4,24 +4,12 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
-import { Input } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-
-import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
-import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { hentAdressefelterSortert } from '../../../utils/person';
 import { FeltGruppe, KomponentGruppe, StyledAlertStripe } from './layoutKomponenter';
-import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
-import { IStegEnFeltTyper } from './useOmdeg';
 import { hentSivilstatus, landkodeTilSpråk } from './utils';
-
-const StyledInput = styled(Input)`
-    label {
-        font-size: 1.125rem;
-    }
-`;
 
 const PersonopplysningerSection = styled.section`
     text-align: left;
@@ -31,9 +19,7 @@ const PersonopplysningerSection = styled.section`
     }
 `;
 
-export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, string> }> = ({
-    skjema,
-}) => {
+export const Personopplysninger: React.FC = () => {
     const intl = useIntl();
 
     const { søknad } = useApp();
@@ -87,46 +73,6 @@ export const Personopplysninger: React.FC<{ skjema: ISkjema<IStegEnFeltTyper, st
                         <Normaltekst>{adresseFelt}</Normaltekst>
                     ))}
                 </FeltGruppe>
-            </KomponentGruppe>
-
-            <KomponentGruppe aria-live="polite">
-                <JaNeiSpørsmål
-                    {...skjema.felter.borPåRegistrertAdresse.hentNavInputProps(
-                        skjema.visFeilmeldinger
-                    )}
-                    name={'søker.borpåregistrertadresse'}
-                    legend={
-                        <>
-                            <Element>
-                                <FormattedMessage id={'personopplysninger.spm.riktigAdresse'} />
-                            </Element>
-                            <Normaltekst>
-                                <FormattedMessage
-                                    id={'personopplysninger.lesmer-innhold.riktigAdresse'}
-                                />
-                            </Normaltekst>
-                        </>
-                    }
-                    labelTekstForJaNei={{
-                        ja: <FormattedMessage id={'ja'} />,
-                        nei: <FormattedMessage id={'nei'} />,
-                    }}
-                />
-
-                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <SøkerBorIkkePåAdresse lenkePDFSøknad={'https://nav.no'} /> //TODO
-                )}
-            </KomponentGruppe>
-            <KomponentGruppe>
-                {skjema.felter.telefonnummer.erSynlig && (
-                    <StyledInput
-                        {...skjema.felter.telefonnummer.hentNavInputProps(skjema.visFeilmeldinger)}
-                        name={'Telefonnummer'}
-                        label={<FormattedMessage id={'person.telefonnr'} />}
-                        bredde={'M'}
-                        type="tel"
-                    />
-                )}
             </KomponentGruppe>
         </PersonopplysningerSection>
     );

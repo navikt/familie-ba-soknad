@@ -4,7 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import { guid } from 'nav-frontend-js-utils';
-import { Element } from 'nav-frontend-typografi';
+import { Input } from 'nav-frontend-skjema';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
@@ -13,6 +14,7 @@ import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown'
 import Steg from '../Steg/Steg';
 import { KomponentGruppe } from './layoutKomponenter';
 import { Personopplysninger } from './Personopplysninger';
+import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { ESvarMedUbesvart, IStegEnFeltTyper, useOmdeg } from './useOmdeg';
 
 // TODO: Bruk konstant for mobilbredde
@@ -21,24 +23,39 @@ interface IJaNeiBolkProps {
     skjema: ISkjema<IStegEnFeltTyper, string>;
     felt: Felt<ESvar | ESvarMedUbesvart>;
     spørsmålTekstId: string;
+    tilleggsinfo?: string;
 }
 
-const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId }) => {
+const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId, tilleggsinfo }) => {
     if (felt.erSynlig) {
+        const feltIndexISkjema = Object.entries(skjema.felter).findIndex(
+            feltEntry => feltEntry[1] === felt
+        );
+        const feltNavn = Object.keys(skjema.felter)[feltIndexISkjema];
+
         return (
-            <JaNeiSpørsmål
-                {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
-                name={guid()}
-                legend={
-                    <Element>
-                        <FormattedMessage id={spørsmålTekstId} />
-                    </Element>
-                }
-                labelTekstForJaNei={{
-                    ja: <FormattedMessage id={'ja'} />,
-                    nei: <FormattedMessage id={'nei'} />,
-                }}
-            />
+            <span id={feltNavn}>
+                <JaNeiSpørsmål
+                    {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
+                    name={guid()}
+                    legend={
+                        <>
+                            <Element>
+                                <FormattedMessage id={spørsmålTekstId} />
+                            </Element>
+                            {tilleggsinfo && (
+                                <Normaltekst>
+                                    <FormattedMessage id={tilleggsinfo} />
+                                </Normaltekst>
+                            )}
+                        </>
+                    }
+                    labelTekstForJaNei={{
+                        ja: <FormattedMessage id={'ja'} />,
+                        nei: <FormattedMessage id={'nei'} />,
+                    }}
+                />
+            </span>
         );
     } else {
         return <></>;
@@ -56,19 +73,55 @@ const StyledLandDropdown = styled(LandDropdown)`
 
 const StyledSection = styled.section`
     text-align: left;
+    margin-top: 4rem;
 
     p {
         font-size: 1.125rem;
     }
 `;
 
+const StyledInput = styled(Input)`
+    label {
+        font-size: 1.125rem;
+    }
+`;
+
 const OmDeg: React.FC = () => {
-    const { skjema, kanSendeSkjema } = useOmdeg();
+    const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useOmdeg();
     return (
-        <Steg tittel={'Om deg'} kanGåTilNesteSteg={kanSendeSkjema}>
+        <Steg
+            tittel={'Om deg'}
+            validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
+            valideringErOk={valideringErOk}
+            skjema={skjema}
+        >
             <KomponentGruppe>
-                <Personopplysninger skjema={skjema} />
+                <Personopplysninger />
             </KomponentGruppe>
+
+            <StyledSection>
+                <JaNeiBolk
+                    skjema={skjema}
+                    felt={skjema.felter.oppholderSegINorge}
+                    spørsmålTekstId={'personopplysninger.spm.riktigAdresse'}
+                    tilleggsinfo={'personopplysninger.lesmer-innhold.riktigAdresse'}
+                />
+                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
+                    <SøkerBorIkkePåAdresse lenkePDFSøknad={'https://nav.no'} /> //TODO
+                )}
+            </StyledSection>
+            <StyledSection>
+                {skjema.felter.telefonnummer.erSynlig && (
+                    <StyledInput
+                        {...skjema.felter.telefonnummer.hentNavInputProps(skjema.visFeilmeldinger)}
+                        name={'Telefonnummer'}
+                        label={<FormattedMessage id={'person.telefonnr'} />}
+                        bredde={'M'}
+                        type="tel"
+                    />
+                )}
+            </StyledSection>
+
             <StyledSection>
                 <JaNeiBolk
                     skjema={skjema}
