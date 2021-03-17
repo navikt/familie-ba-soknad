@@ -10,6 +10,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import Steg from '../Steg/Steg';
 import { KomponentGruppe } from './layoutKomponenter';
@@ -62,6 +63,10 @@ const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId,
     }
 };
 
+const StyledSøkerBorIkkePåAdresse = styled(SøkerBorIkkePåAdresse)`
+    margin-top: -3rem;
+`;
+
 // TODO: Bruk konstant for mobilbredde
 const StyledLandDropdown = styled(LandDropdown)`
     @media all and (min-width: 420px) {
@@ -88,6 +93,9 @@ const StyledInput = styled(Input)`
 
 const OmDeg: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useOmdeg();
+    const { søknad } = useApp();
+    const { søker } = søknad;
+
     return (
         <Steg
             tittel={'Om deg'}
@@ -100,22 +108,38 @@ const OmDeg: React.FC = () => {
             </KomponentGruppe>
 
             <StyledSection>
-                <JaNeiBolk
-                    skjema={skjema}
-                    felt={skjema.felter.oppholderSegINorge}
-                    spørsmålTekstId={'personopplysninger.spm.riktigAdresse'}
-                    tilleggsinfo={'personopplysninger.lesmer-innhold.riktigAdresse'}
-                />
-                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <SøkerBorIkkePåAdresse lenkePDFSøknad={'https://nav.no'} /> //TODO
+                {søker.adresse && (
+                    <>
+                        <JaNeiBolk
+                            skjema={skjema}
+                            felt={skjema.felter.borPåRegistrertAdresse}
+                            spørsmålTekstId={'personopplysninger.spm.riktigAdresse'}
+                            tilleggsinfo={'personopplysninger.lesmer-innhold.riktigAdresse'}
+                        />
+
+                        {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
+                            <SøkerBorIkkePåAdresse
+                                advarselTekstId={'personopplysninger.alert.riktigAdresse'}
+                                utfyllendeAdvarselInfoId={'personopplysninger.info.endreAdresse'}
+                            />
+                        )}
+                    </>
+                )}
+
+                {!søker.adresse && (
+                    <StyledSøkerBorIkkePåAdresse
+                        advarselTekstId={'personopplysninger.info.ukjentadresse'}
+                        utfyllendeAdvarselInfoId={'personopplysninger.info.vi-trenger-din-adresse'}
+                    />
                 )}
             </StyledSection>
+
             <StyledSection>
                 {skjema.felter.telefonnummer.erSynlig && (
                     <StyledInput
                         {...skjema.felter.telefonnummer.hentNavInputProps(skjema.visFeilmeldinger)}
                         name={'Telefonnummer'}
-                        label={<FormattedMessage id={'person.telefonnr'} />}
+                        label={<FormattedMessage id={'personopplysninger.telefonnr'} />}
                         bredde={'M'}
                         type="tel"
                     />

@@ -67,11 +67,19 @@ export const Personopplysninger: React.FC = () => {
 
                 <FeltGruppe>
                     <Element>
-                        <FormattedMessage id={'person.adresse'} />
+                        <FormattedMessage id={'personopplysninger.adresse'} />
                     </Element>
-                    {hentAdressefelterSortert(søker.adresse).map((adresseFelt, index) => (
-                        <Normaltekst key={index}>{adresseFelt}</Normaltekst>
-                    ))}
+                    {søker.adresse ? (
+                        hentAdressefelterSortert(søker.adresse).map((adresseFelt, index) => (
+                            <Normaltekst key={index}>{adresseFelt}</Normaltekst>
+                        ))
+                    ) : (
+                        <Normaltekst>
+                            <FormattedMessage
+                                id={'personopplysninger.har-ikke-registrert-adresse'}
+                            />
+                        </Normaltekst>
+                    )}
                 </FeltGruppe>
             </KomponentGruppe>
         </PersonopplysningerSection>
