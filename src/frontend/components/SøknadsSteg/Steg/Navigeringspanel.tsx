@@ -32,12 +32,12 @@ const Container = styled.div`
 `;
 
 const StyledKnappBase = styled(KnappBase)<{
-    placeSelf: 'end' | 'start';
-    gridArea: 'tilbake' | 'gåVidere';
+    placeself: 'end' | 'start';
+    gridarea: 'tilbake' | 'gåVidere';
 }>`
-    grid-area: ${props => props.gridArea};
+    grid-area: ${props => props.gridarea};
     width: 10rem;
-    place-self: ${props => props.placeSelf};
+    place-self: ${props => props.placeself};
     font-size: 1.125rem;
 
     @media all and (max-width: ${mobile}) {
@@ -46,14 +46,14 @@ const StyledKnappBase = styled(KnappBase)<{
 `;
 
 const StyledFlatKnapp = styled(Flatknapp)<{
-    gridArea: 'avsluttOgFortsett' | 'avbrytOgSlett';
+    gridarea: 'avsluttOgFortsett' | 'avbrytOgSlett';
     color: string;
-    marginTop: string;
+    margintop: string;
 }>`
-    grid-area: ${props => props.gridArea};
+    grid-area: ${props => props.gridarea};
     width: fit-content;
     place-self: center;
-    margin-top: ${props => props.marginTop};
+    margin-top: ${props => props.margintop};
     && {
         color: ${props => props.color};
     }
@@ -69,16 +69,16 @@ const Navigeringspanel: React.FC<{
             <StyledKnappBase
                 htmlType={'button'}
                 onClick={onTilbakeCallback}
-                placeSelf="end"
-                gridArea="tilbake"
+                placeself={'end'}
+                gridarea={'tilbake'}
             >
                 <FormattedMessage id={'felles.tilbake'} />
             </StyledKnappBase>
             <StyledKnappBase
                 htmlType={'submit'}
                 type={valideringErOk() ? 'hoved' : 'standard'}
-                placeSelf="start"
-                gridArea="gåVidere"
+                placeself={'start'}
+                gridarea={'gåVidere'}
             >
                 <FormattedMessage id={'felles.gåvidere'} />
             </StyledKnappBase>
@@ -87,8 +87,8 @@ const Navigeringspanel: React.FC<{
                 htmlType={'button'}
                 onClick={onAvbrytCallback}
                 color={navFarger.navBla}
-                gridArea="avsluttOgFortsett"
-                marginTop="0.5rem"
+                gridarea={'avsluttOgFortsett'}
+                margintop={'0.5rem'}
             >
                 <FormattedMessage id={'felles.avslutt-fortsettsenere'} />
             </StyledFlatKnapp>
@@ -97,8 +97,8 @@ const Navigeringspanel: React.FC<{
                 htmlType={'button'}
                 onClick={onAvbrytCallback}
                 color={navFarger.navMorkGra}
-                gridArea="avbrytOgSlett"
-                marginTop="0"
+                gridarea={'avbrytOgSlett'}
+                margintop={'0'}
             >
                 <DeleteFilled />
                 <span>
