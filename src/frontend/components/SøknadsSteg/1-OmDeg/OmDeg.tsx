@@ -95,7 +95,7 @@ const OmDeg: React.FC = () => {
 
     return (
         <Steg
-            tittel={'Om deg'}
+            tittel={<FormattedMessage id={'omdeg.tittel'} />}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
             skjema={skjema}

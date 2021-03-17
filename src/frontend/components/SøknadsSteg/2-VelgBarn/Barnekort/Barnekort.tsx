@@ -60,21 +60,16 @@ const BarnekortHeader = styled.div`
     }
 `;
 
-const Barnekort: React.FC<IBarnNy> = props => {
-    const { søknad, settSøknad } = useApp();
+interface IBarnekortProps extends IBarnNy {
+    settMedISøknad: (ident: string, skalVæreMed: boolean) => void;
+}
+
+const Barnekort: React.FC<IBarnekortProps> = props => {
+    const { søknad } = useApp();
     const ikoner = [barn1, barn2, barn3];
-    const { ident, borMedSøker, alder, navn } = props;
+    const { ident, borMedSøker, alder, navn, settMedISøknad } = props;
 
     const medISøknad = !!søknad.barn.find(barn => barn.ident === ident);
-
-    function settMedISøknad(erMed: boolean) {
-        settSøknad({
-            ...søknad,
-            barn: erMed
-                ? søknad.barn.concat([{ ...props }])
-                : søknad.barn.filter((barn: IBarnNy) => barn.ident !== ident),
-        });
-    }
 
     return (
         <StyledBarnekort>
@@ -99,7 +94,7 @@ const Barnekort: React.FC<IBarnNy> = props => {
                     <KnappeContainer>
                         <LeggTilBarnCheckbox
                             label={<FormattedMessage id={'velgbarn.checkboxtekst'} />}
-                            onClick={() => settMedISøknad(!medISøknad)}
+                            onClick={() => settMedISøknad(ident, !medISøknad)}
                         />
                     </KnappeContainer>
                 </InformasjonsboksInnhold>
@@ -108,7 +103,6 @@ const Barnekort: React.FC<IBarnNy> = props => {
     );
 };
 
-// eslint-disable-next-line
 const BarneKortInfo: React.FC<{ label: ReactNode; verdi: ReactNode }> = ({ label, verdi }) => {
     return (
         <div>

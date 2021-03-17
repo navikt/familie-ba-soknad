@@ -55,6 +55,7 @@
   "omdeg.spm.mottar-du-pensjon-fra-utland": "Mottar du pensjon fra utlandet?",
   "omdeg.spm.oppholderSegINorge": "Oppholder du deg i Norge?",
   "omdeg.spm.vært-i-tolv-måneder": "Har du oppholdt deg sammenhengende i Norge de siste 12 månedene",
+  "omdeg.tittel": "Om deg",
   "ja": "ja",
   "nei": "nei",
   "sivilstatus.kode.GIFT": "Gift",
@@ -70,5 +71,8 @@
   "sivilstatus.kode.ANNET": "Annen sivilstatus enn GIFT, UGIF, SAMB, SEPA, SKIL, SEPR",
   "velgbarn.checkboxtekst": "Søk om barnetrygd for barnet",
   "velgbarn.fødselsnummer.label": "Fødselsnummer",
-  "velgbarn.alder.label": "Alder"
+  "velgbarn.alder.label": "Alder",
+  "velgbarn.feilmelding.du-må-velge-barn": "Du må velge minst ett barn for å fortsette med søknaden",
+  "velgbarn.tittel": "Velg barn",
+  "velgbarn.undertittel": "Velg hvilke barn du vil inkludere i søknaden din"
 }
