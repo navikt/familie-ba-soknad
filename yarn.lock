@@ -1754,10 +1754,10 @@
     nav-frontend-knapper "^2.0.31"
     nav-frontend-knapper-style "^1.0.16"
 
-"@navikt/familie-skjema@^1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-skjema/-/familie-skjema-1.0.10.tgz#5c3a27e2ab6dd72aa5521d7808511f3c3661febd"
-  integrity sha512-bRmXCXoz0IBPYjoV5ECY2drc5iN2M8WtIqJvngO8Q0oX9vBc3PAghtlo39I16MhQ2f2BdwPFAP8JqOfWKBwF5w==
+"@navikt/familie-skjema@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@navikt/familie-skjema/-/familie-skjema-1.1.0.tgz#c54be89b3ce0f6d20f3204af052285bd0e5b0a68"
+  integrity sha512-fiBSwu0xAcROdItEGsdWAmcu99NUaw1qd4vwPmosULklCNc3T0wnPtHhQ5N96JJ21QDdfws0/gaZHRux04sh3w==
   dependencies:
     "@navikt/familie-http" "^1.0.4"
     "@navikt/familie-typer" "^3.0.13"
