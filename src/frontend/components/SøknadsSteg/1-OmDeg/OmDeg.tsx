@@ -19,8 +19,6 @@ import { Personopplysninger } from './Personopplysninger';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { ESvarMedUbesvart, IStegEnFeltTyper, useOmdeg } from './useOmdeg';
 
-// TODO: Bruk konstant for mobilbredde
-
 interface IJaNeiBolkProps {
     skjema: ISkjema<IStegEnFeltTyper, string>;
     felt: Felt<ESvar | ESvarMedUbesvart>;
@@ -63,9 +61,8 @@ const StyledSøkerBorIkkePåAdresse = styled(SøkerBorIkkePåAdresse)`
     margin-top: -3rem;
 `;
 
-// TODO: Bruk konstant for mobilbredde
 const StyledLandDropdown = styled(LandDropdown)`
-    @media all and (min-width: 420px) {
+    @media all and (min-width: var(--mobile)) {
         width: 50%;
         padding-right: 0.7rem;
     }

@@ -33,16 +33,12 @@ interface ISteg {
     skjema: ISkjema<IStegEnFeltTyper, string>;
 }
 
-const mobile = '420px';
-const tablet = '959px';
-const panelInnholdBredde = '588px';
-
 const AvsluttKnappContainer = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 2rem;
 
-    @media all and (max-width: ${mobile}) {
+    @media all and (max-width: var(--mobile)) {
         width: 100%;
     }
 `;
@@ -75,9 +71,9 @@ const StegContainer = styled.div`
 
 const StyledPanel = styled(Panel)`
     padding: 2rem;
-    width: ${panelInnholdBredde};
+    width: var(--panel-innhold-bredde);
 
-    @media all and (max-width: ${tablet}) {
+    @media all and (max-width: var(--tablet)) {
         width: auto;
     }
 `;
