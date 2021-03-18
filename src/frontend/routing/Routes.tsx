@@ -23,7 +23,7 @@ export enum RouteEnum {
     Kvittering = 'Kvittering',
 }
 
-export const StegRoutes: IRoute[] = [
+export const Routes: IRoute[] = [
     { path: '/', label: 'Forside', route: RouteEnum.OmDeg, komponent: OmDeg },
     { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
     { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
@@ -42,7 +42,8 @@ export const StegRoutes: IRoute[] = [
 ];
 
 export const hentAktivtStegIndex = (location: Location<ILokasjon>) =>
-    StegRoutes.findIndex(steg => steg.path === location.pathname);
+    // Trekker fra 1 fordi forsiden teller som en route
+    Routes.findIndex(steg => steg.path === location.pathname) - 1;
 
 export const hentForrigeRoute = (routes: IRoute[], currentPath: string) => {
     const routeIndex = routes.findIndex(route => route.path === currentPath);

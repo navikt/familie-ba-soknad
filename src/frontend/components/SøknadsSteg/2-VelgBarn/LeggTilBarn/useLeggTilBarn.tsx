@@ -5,7 +5,7 @@ import { feil, ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navik
 import { idnr } from '@navikt/fnrvalidator';
 
 import { IBarnNy } from '../../../../typer/person';
-import { SpråkTekst } from '../../../../utils/visning';
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../1-OmDeg/useOmdeg';
 
 interface ISkjemaTyper extends Omit<IBarnNy, 'borMedSøker' | 'alder'> {

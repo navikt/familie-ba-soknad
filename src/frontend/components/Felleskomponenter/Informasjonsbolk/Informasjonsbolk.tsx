@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import { Undertittel } from 'nav-frontend-typografi';
+
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 export interface IInformasjonsbolkProps {
     tittelId?: string;
@@ -22,7 +23,7 @@ const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({ tittelId, children
         <InformasjonsbolkContainer>
             {tittelId && (
                 <Undertittel>
-                    <FormattedMessage id={tittelId} />
+                    <SpråkTekst id={tittelId} />
                 </Undertittel>
             )}
             <InformasjonsbolkChildrenWrapper>{children}</InformasjonsbolkChildrenWrapper>

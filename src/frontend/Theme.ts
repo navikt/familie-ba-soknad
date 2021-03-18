@@ -1,24 +1,18 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
+
+export const device = {
+    mobile: css`(max-width: 30rem)`,
+    tablet: css`(max-width: 52.5rem)`,
+};
 
 export const GlobalStyle = createGlobalStyle`
   :root {
-    --mobile: 420px;
-    --tablet: 959px;
-    --panel-innhold-bredde: 524px;
+    --innhold-bredde: 32.75rem;
   }
 
   body {
     margin: 0;
     box-sizing: content-box;
-
-    /**
-     * Setter eksplisitt font-family slik at google sine fonter blir brukt.
-     * nav-frontend-typografi har en rar bug hvor fontene blir utydelige på enkelte
-     * nettlesere.
-     */
-    & * {
-      font-family: 'Source Sans Pro', sans-serif;
-    }
   }
 
   .blur {

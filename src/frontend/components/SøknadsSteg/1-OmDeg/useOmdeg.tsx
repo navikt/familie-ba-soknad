@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
-import { FormattedMessage } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import {
@@ -15,10 +14,11 @@ import {
 } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export type ESvarMedUbesvart = ESvar | undefined;
 
-export interface IStegEnFeltTyper {
+export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvarMedUbesvart;
     telefonnummer: string;
     oppholderSegINorge: ESvarMedUbesvart;
@@ -32,7 +32,7 @@ export interface IStegEnFeltTyper {
 }
 
 export const useOmdeg = (): {
-    skjema: ISkjema<IStegEnFeltTyper, string>;
+    skjema: ISkjema<IOmDegFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
 } => {
@@ -53,7 +53,7 @@ export const useOmdeg = (): {
                 : feil(
                       felt,
                       felt.verdi === undefined ? (
-                          <FormattedMessage id={'personopplysninger.feilmelding.janei'} />
+                          <SpråkTekst id={'personopplysninger.feilmelding.janei'} />
                       ) : (
                           ''
                       )
@@ -69,7 +69,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
         },
         avhengigheter: {
             borPåRegistrertAdresse,
@@ -84,7 +84,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<Alpha3Code | undefined>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.velgland'} />);
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.velgland'} />);
         },
         avhengigheter: {
             oppholderSegINorge,
@@ -96,7 +96,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<string>) => {
             return felt.verdi.length >= 8 && /^[+\d\s]+$/.test(felt.verdi)
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.telefonnr'} />);
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.telefonnr'} />);
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             const { søkerMåOppgiTlf } = avhengigheter;
@@ -115,7 +115,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
         },
         avhengigheter: {
             borPåRegistrertAdresse,
@@ -130,7 +130,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
         },
         avhengigheter: {
             værtINorgeITolvMåneder,
@@ -145,7 +145,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
         },
         avhengigheter: {
             erAsylsøker,
@@ -160,7 +160,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<Alpha3Code | undefined>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.velgland'} />);
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.velgland'} />);
         },
         avhengigheter: {
             jobberPåBåt,
@@ -175,7 +175,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.janei'} />);
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
         },
         avhengigheter: {
             erAsylsøker,
@@ -190,14 +190,14 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<Alpha3Code | undefined>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'personopplysninger.feilmelding.velgland'} />);
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.velgland'} />);
         },
         avhengigheter: {
             mottarUtlandsPensjon,
         },
     });
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IStegEnFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IOmDegFeltTyper, string>({
         felter: {
             borPåRegistrertAdresse,
             telefonnummer,

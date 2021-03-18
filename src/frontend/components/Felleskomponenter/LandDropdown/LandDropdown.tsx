@@ -10,6 +10,7 @@ import { NavInputProps } from '@navikt/familie-skjema';
 
 interface LandDropdownProps<Verdi> extends NavInputProps<Verdi> {
     label?: ReactNode;
+    id?: string;
 }
 
 const StyledSelect = styled(Select)`
@@ -19,7 +20,11 @@ const StyledSelect = styled(Select)`
     }
 `;
 
-export const LandDropdown: React.FC<LandDropdownProps<Alpha3Code | undefined>> = props => {
+export const LandDropdown: React.FC<LandDropdownProps<Alpha3Code | undefined>> = ({
+    label,
+    id,
+    ...navSkjemaProps
+}) => {
     const intl = useIntl();
 
     const landkoderSortertPåNavn = Object.keys(getAlpha3Codes()).sort((a, b) => {
@@ -27,7 +32,7 @@ export const LandDropdown: React.FC<LandDropdownProps<Alpha3Code | undefined>> =
     });
 
     return (
-        <StyledSelect {...props} defaultValue={''}>
+        <StyledSelect label={label} defaultValue={''} id={id} {...navSkjemaProps}>
             <option
                 disabled={true}
                 value={''}

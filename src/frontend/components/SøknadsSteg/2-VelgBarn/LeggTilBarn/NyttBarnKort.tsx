@@ -13,7 +13,7 @@ import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 
-import { SpråkTekst } from '../../../../utils/visning';
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useLeggTilBarn } from './useLeggTilBarn';
 
 const LeggTilBarnKortWrapper = styled.div`

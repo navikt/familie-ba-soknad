@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
@@ -10,9 +10,10 @@ import KnappBase from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { hentNesteRoute, IRoute, StegRoutes } from '../../routing/Routes';
+import { hentNesteRoute, IRoute, Routes } from '../../routing/Routes';
 import { ILokasjon } from '../../typer/lokasjon';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const FormContainer = styled.form`
     display: flex;
@@ -58,7 +59,7 @@ const BekreftelseOgStartSoknad: React.FC<{
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         BekreftelseStatus.NORMAL
     );
-    const nesteRoute: IRoute = hentNesteRoute(StegRoutes, location.pathname);
+    const nesteRoute: IRoute = hentNesteRoute(Routes, location.pathname);
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();
@@ -86,13 +87,13 @@ const BekreftelseOgStartSoknad: React.FC<{
                     checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                     feil={
                         bekreftelseStatus === BekreftelseStatus.FEIL && (
-                            <FormattedMessage id={'forside.bekreftelsesboks.feil'} />
+                            <SpråkTekst id={'forside.bekreftelsesboks.feil'} />
                         )
                     }
                     status={bekreftelseStatus}
                 >
                     <Normaltekst>
-                        <FormattedMessage id="forside.dokumentasjonskrav.brødtekst" />
+                        <SpråkTekst id="forside.dokumentasjonskrav.brødtekst" />
                     </Normaltekst>
                 </StyledBekreftCheckboksPanel>
             </Informasjonsbolk>
@@ -101,7 +102,7 @@ const BekreftelseOgStartSoknad: React.FC<{
                 type={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'hoved' : 'standard'}
                 htmlType={'submit'}
             >
-                <FormattedMessage id="forside.startsoknad" />
+                <SpråkTekst id="forside.startsoknad" />
             </StyledKnappBase>
         </FormContainer>
     );
