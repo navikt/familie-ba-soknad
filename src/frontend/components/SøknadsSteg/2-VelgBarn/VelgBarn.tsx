@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import { NedChevron } from 'nav-frontend-chevron';
@@ -9,6 +9,7 @@ import Lenke, { Props as LenkeProps } from 'nav-frontend-lenker';
 
 import { useApp } from '../../../context/AppContext';
 import { hentAlder } from '../../../utils/person';
+import { SpråkTekst } from '../../../utils/visning';
 import { StyledAlertStripe } from '../1-OmDeg/layoutKomponenter';
 import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
@@ -57,17 +58,17 @@ const VelgBarn: React.FC = () => {
 
     return (
         <Steg
-            tittel={<FormattedMessage id={'velgbarn.tittel'} />}
+            tittel={<SpråkTekst id={'velgbarn.tittel'} />}
             skjema={skjema}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
         >
             <StyledAlertStripe type={'info'} form={'inline'}>
-                <FormattedMessage id={'velgbarn.info.folkeregisteret'} />
+                <SpråkTekst id={'velgbarn.info.folkeregisteret'} />
             </StyledAlertStripe>
 
             <LenkeMedChevron href={intl.formatMessage({ id: 'velgbarn.regelverkinfo.lenke' })}>
-                <FormattedMessage id={'velgbarn.regelverkinfo.lenke.tittel'} />
+                <SpråkTekst id={'velgbarn.regelverkinfo.lenke.tittel'} />
             </LenkeMedChevron>
 
             <BarnekortContainer id={'barnMedISøknad'} kunEttBarn={kunEttBarn}>

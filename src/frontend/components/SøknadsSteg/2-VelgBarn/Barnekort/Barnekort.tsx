@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 
-import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
@@ -13,7 +12,7 @@ import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
 import { IBarnNy } from '../../../../typer/person';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
-import { formaterFnr } from '../../../../utils/visning';
+import { formaterFnr, SpråkTekst } from '../../../../utils/visning';
 
 const StyledBarnekort = styled.div`
     padding: 0.625rem;
@@ -94,7 +93,7 @@ const Barnekort: React.FC<IBarnekortProps> = props => {
                     <BarneKortInfo
                         labelId={'velgbarn.bosted.label'}
                         verdi={
-                            <FormattedMessage
+                            <SpråkTekst
                                 id={
                                     borMedSøker
                                         ? 'velgbarn.bosted.registrert-på-adressen-din'
@@ -104,7 +103,7 @@ const Barnekort: React.FC<IBarnekortProps> = props => {
                         }
                     />
                     <LeggTilBarnCheckbox
-                        label={<FormattedMessage id={'velgbarn.checkboxtekst'} />}
+                        label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
                         onClick={() => settMedISøknad(ident, !medISøknad)}
                     />
                 </InformasjonsboksInnhold>
@@ -117,7 +116,7 @@ const BarneKortInfo: React.FC<{ labelId: string; verdi: ReactNode }> = ({ labelI
     return (
         <div>
             <StyledIngress>
-                <FormattedMessage id={labelId} />
+                <SpråkTekst id={labelId} />
             </StyledIngress>
             <Normaltekst>{verdi}</Normaltekst>
         </div>

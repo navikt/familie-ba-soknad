@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
-
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { IBarnNy } from '../../../typer/person';
+import { SpråkTekst } from '../../../utils/visning';
 
 export interface IStegToFeltTyper {
     barnMedISøknad: IBarnNy[];
@@ -24,7 +23,7 @@ export const useVelgBarn = (): {
         valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.barnMedISøknad.length > 0
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'velgbarn.feilmelding.du-må-velge-barn'} />);
+                : feil(felt, <SpråkTekst id={'velgbarn.feilmelding.du-må-velge-barn'} />);
         },
         avhengigheter: { barnMedISøknad },
     });
