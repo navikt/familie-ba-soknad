@@ -24,6 +24,7 @@ import {
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { SpråkTekst } from '../../../utils/visning';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
 import Navigeringspanel from './Navigeringspanel';
 
@@ -173,13 +174,15 @@ const Steg: React.FC<ISteg> = ({
                     shouldCloseOnOverlayClick={true}
                 >
                     <StyledUndertittel>
-                        Er du sikker på at du vil avbryte søknadprosessen?
+                        <SpråkTekst id={'felles.avbryt-søknadsprosess'} />
                     </StyledUndertittel>
                     <Normaltekst>
-                        Hvis du avbryter vil innholdet i søknaden bli slettet.
+                        <SpråkTekst id={'felles.slette-advarsel'} />
                     </Normaltekst>
                     <AvsluttKnappContainer>
-                        <Fareknapp onClick={håndterAvbryt}>Avbryt søknad</Fareknapp>
+                        <Fareknapp onClick={håndterAvbryt}>
+                            <SpråkTekst id={'felles.avbryt-slett'} />
+                        </Fareknapp>
                     </AvsluttKnappContainer>
                 </StyledModal>
             </InnholdContainer>
