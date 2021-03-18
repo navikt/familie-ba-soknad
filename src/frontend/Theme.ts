@@ -7,7 +7,7 @@ export const device = {
 
 export const GlobalStyle = createGlobalStyle`
   :root {
-    --innhold-bredde: 524px;
+    --innhold-bredde: 32.75rem;
   }
 
   body {
