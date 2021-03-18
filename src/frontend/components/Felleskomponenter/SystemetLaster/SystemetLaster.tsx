@@ -13,7 +13,7 @@ const StyledSpinner = styled(NavFrontendSpinner)`
 
 const SystemetLaster = () => {
     return (
-        <div className={'systemet-laster'}>
+        <main className={'systemet-laster'}>
             <div className={'systemet-laster__content'}>
                 <Systemtittel
                     className={'systemet-laster__content--tekst'}
@@ -21,7 +21,7 @@ const SystemetLaster = () => {
                 />
                 <StyledSpinner transparent={true} />
             </div>
-        </div>
+        </main>
     );
 };
 

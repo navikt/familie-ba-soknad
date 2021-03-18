@@ -16,15 +16,17 @@ import { StegRoutes } from './routing/Routes';
 const Søknad = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
     return (
-        <main className="App">
+        <div className="App">
             {systemetLaster() && <SystemetLaster />}
             {sluttbruker.status === RessursStatus.IKKE_TILGANG && (
-                <Alertstripe type="advarsel">
-                    {'Du må søke på papir. '}
-                    <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
-                        Klikk her for å gå til våre sider for barnetrygd
-                    </a>
-                </Alertstripe>
+                <main>
+                    <Alertstripe type="advarsel">
+                        {'Du må søke på papir. '}
+                        <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
+                            Klikk her for å gå til våre sider for barnetrygd
+                        </a>
+                    </Alertstripe>
+                </main>
             )}
             {systemetOK() && (
                 <div className={classNames(systemetLaster() && 'blur')}>
@@ -48,9 +50,11 @@ const Søknad = () => {
                 </div>
             )}
             {systemetFeiler() && !systemetLaster() && (
-                <Alertstripe type="feil">En feil har oppstått!</Alertstripe>
+                <main>
+                    <Alertstripe type="feil">En feil har oppstått!</Alertstripe>
+                </main>
             )}
-        </main>
+        </div>
     );
 };
 
