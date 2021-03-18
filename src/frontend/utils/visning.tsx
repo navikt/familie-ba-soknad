@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { FormattedMessage } from 'react-intl';
+import { Props as MessageProps } from 'react-intl/lib/src/components/message';
 import styled from 'styled-components/macro';
 
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -40,4 +42,17 @@ export const verdiTilTekstsvar = (verdi: string | boolean | number | ESøknadsty
 
 export const formaterFnr = (fødselsnummer: string) => {
     return fødselsnummer.substring(0, 6) + ' ' + fødselsnummer.substring(6, 11);
+};
+
+export const SpråkTekst: React.FC<MessageProps> = props => {
+    const propsMedFellesFunksjoner: MessageProps = {
+        ...props,
+        values: {
+            ...props.values,
+            linjeskift: <br />,
+            b: msg => <b>{msg}</b>,
+        },
+    };
+
+    return <FormattedMessage {...propsMedFellesFunksjoner} />;
 };
