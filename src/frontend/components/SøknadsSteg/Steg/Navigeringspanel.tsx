@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
@@ -9,6 +8,7 @@ import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
 import { DeleteFilled } from '@navikt/ds-icons';
 
 import { device } from '../../../Theme';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const Container = styled.div`
     padding: 2rem;
@@ -74,7 +74,7 @@ const Navigeringspanel: React.FC<{
                 placeself={'end'}
                 gridarea={'tilbake'}
             >
-                <FormattedMessage id={'felles.tilbake'} />
+                <SpråkTekst id={'felles.tilbake'} />
             </StyledKnappBase>
             <StyledKnappBase
                 htmlType={'submit'}
@@ -82,7 +82,7 @@ const Navigeringspanel: React.FC<{
                 placeself={'start'}
                 gridarea={'gåVidere'}
             >
-                <FormattedMessage id={'felles.gåvidere'} />
+                <SpråkTekst id={'felles.gåvidere'} />
             </StyledKnappBase>
             <StyledFlatKnapp
                 mini
@@ -92,7 +92,7 @@ const Navigeringspanel: React.FC<{
                 gridarea={'avsluttOgFortsett'}
                 margintop={'0.5rem'}
             >
-                <FormattedMessage id={'felles.avslutt-fortsettsenere'} />
+                <SpråkTekst id={'felles.avslutt-fortsettsenere'} />
             </StyledFlatKnapp>
             <StyledFlatKnapp
                 mini
@@ -104,7 +104,7 @@ const Navigeringspanel: React.FC<{
             >
                 <DeleteFilled />
                 <span>
-                    <FormattedMessage id={'felles.avbryt-slett'} />
+                    <SpråkTekst id={'felles.avbryt-slett'} />
                 </span>
             </StyledFlatKnapp>
         </Container>

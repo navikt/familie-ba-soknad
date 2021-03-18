@@ -12,7 +12,8 @@ import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
 import { IBarnNy } from '../../../../typer/person';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
-import { formaterFnr, SpråkTekst } from '../../../../utils/visning';
+import { formaterFnr } from '../../../../utils/visning';
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const StyledBarnekort = styled.div`
     padding: 0.625rem;

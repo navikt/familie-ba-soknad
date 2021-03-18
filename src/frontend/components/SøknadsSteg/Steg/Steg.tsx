@@ -1,7 +1,6 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
 import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg.js';
-import { FormattedMessage } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
@@ -24,8 +23,8 @@ import {
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { SpråkTekst } from '../../../utils/visning';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Navigeringspanel from './Navigeringspanel';
 
 interface ISteg {
@@ -142,7 +141,7 @@ const Steg: React.FC<ISteg> = ({
                     <ChildrenContainer>{children}</ChildrenContainer>
                     {skjema.visFeilmeldinger && visFeiloppsummering() && (
                         <Feiloppsummering
-                            tittel={<FormattedMessage id={'felles.feiloppsummering.tittel'} />}
+                            tittel={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}
                             feil={Object.entries(skjema.felter)
                                 .filter(feltEntry => {
                                     const felt = feltEntry[1];

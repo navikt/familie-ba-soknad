@@ -9,7 +9,7 @@ import Lenke, { Props as LenkeProps } from 'nav-frontend-lenker';
 
 import { useApp } from '../../../context/AppContext';
 import { hentAlder } from '../../../utils/person';
-import { SpråkTekst } from '../../../utils/visning';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { StyledAlertStripe } from '../1-OmDeg/layoutKomponenter';
 import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';

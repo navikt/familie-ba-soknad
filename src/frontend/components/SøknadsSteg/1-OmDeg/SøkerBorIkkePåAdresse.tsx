@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import Lenke from 'nav-frontend-lenker';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { StyledAlertStripe, FeltGruppe, KomponentGruppe } from './layoutKomponenter';
 
 interface Props {
@@ -23,13 +24,13 @@ export const SøkerBorIkkePåAdresse: FC<Props> = ({
         <div className={className}>
             <KomponentGruppe>
                 <StyledAlertStripe type={'advarsel'} form={'inline'} className={'avstand-øverst'}>
-                    <FormattedMessage id={advarselTekstId} />
+                    <SpråkTekst id={advarselTekstId} />
                 </StyledAlertStripe>
             </KomponentGruppe>
             <KomponentGruppe>
                 <FeltGruppe>
                     <Element>
-                        <FormattedMessage id={utfyllendeAdvarselInfoId} />
+                        <SpråkTekst id={utfyllendeAdvarselInfoId} />
                     </Element>
                 </FeltGruppe>
                 <FeltGruppe>
@@ -37,12 +38,12 @@ export const SøkerBorIkkePåAdresse: FC<Props> = ({
                         <Lenke
                             href={intl.formatMessage({ id: 'personopplysninger.lenke.pdfskjema' })}
                         >
-                            <FormattedMessage id={'personopplysninger.lenketekst.pdfskjema'} />
+                            <SpråkTekst id={'personopplysninger.lenketekst.pdfskjema'} />
                         </Lenke>
                     </Normaltekst>
                 </FeltGruppe>
                 <Normaltekst>
-                    <FormattedMessage id={'personopplysninger.info.pdfskjema'} />
+                    <SpråkTekst id={'personopplysninger.info.pdfskjema'} />
                 </Normaltekst>
             </KomponentGruppe>
         </div>
