@@ -17,4 +17,7 @@ export const StyledAlertStripe = styled(AlertStripe)`
     p {
         margin: 0;
     }
+    div {
+        text-align: left;
+    }
 `;
