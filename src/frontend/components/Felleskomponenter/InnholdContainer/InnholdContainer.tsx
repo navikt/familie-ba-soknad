@@ -7,7 +7,7 @@ import navFarger from 'nav-frontend-core';
 import { device } from '../../../Theme';
 
 const Container = styled.main`
-    width: var(--innhold-bredde);
+    max-width: var(--innhold-bredde);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -23,7 +23,7 @@ const Container = styled.main`
 
     @media all and ${device.tablet} {
         max-width: 100%;
-        margin: 2rem;
+        margin: 2rem 2rem 20rem 2rem;
     }
 `;
 

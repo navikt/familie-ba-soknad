@@ -11,10 +11,10 @@ import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { device } from '../../../Theme';
 import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import Steg from '../Steg/Steg';
-import { KomponentGruppe } from './layoutKomponenter';
 import { Personopplysninger } from './Personopplysninger';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { ESvarMedUbesvart, IStegEnFeltTyper, useOmdeg } from './useOmdeg';
@@ -62,15 +62,16 @@ const StyledSøkerBorIkkePåAdresse = styled(SøkerBorIkkePåAdresse)`
 `;
 
 const StyledLandDropdown = styled(LandDropdown)`
-    @media all and (min-width: var(--mobile)) {
-        width: 50%;
-        padding-right: 0.7rem;
+    width: 50%;
+    padding-right: 0.7rem;
+
+    @media all and ${device.mobile} {
+        width: 100%;
+        padding: 0;
     }
-    text-align: left;
 `;
 
 const StyledSection = styled.section`
-    text-align: left;
     margin-top: 4rem;
 
     p {
@@ -95,9 +96,9 @@ const OmDeg: React.FC = () => {
             valideringErOk={valideringErOk}
             skjema={skjema}
         >
-            <KomponentGruppe>
+            <StyledSection>
                 <Personopplysninger />
-            </KomponentGruppe>
+            </StyledSection>
 
             <StyledSection>
                 {søker.adresse && (

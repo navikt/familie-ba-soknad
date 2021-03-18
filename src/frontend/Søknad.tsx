@@ -16,7 +16,7 @@ import { StegRoutes } from './routing/Routes';
 const Søknad = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
     return (
-        <div className="App">
+        <div>
             {systemetLaster() && <SystemetLaster />}
             {sluttbruker.status === RessursStatus.IKKE_TILGANG && (
                 <main>
