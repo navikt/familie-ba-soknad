@@ -55,6 +55,7 @@
   "omdeg.spm.mottar-du-pensjon-fra-utland": "Mottar du pensjon fra utlandet?",
   "omdeg.spm.oppholderSegINorge": "Oppholder du deg i Norge?",
   "omdeg.spm.vært-i-tolv-måneder": "Har du oppholdt deg sammenhengende i Norge de siste 12 månedene",
+  "omdeg.tittel": "Om deg",
   "ja": "ja",
   "nei": "nei",
   "sivilstatus.kode.GIFT": "Gift",
@@ -67,5 +68,16 @@
   "sivilstatus.kode.SEPARERT_PARTNER": "Separert",
   "sivilstatus.kode.SKILT_PARTNER": "Skilt",
   "sivilstatus.kode.GJENLEVENDE_PARTNER": "Gjenlevende partner",
-  "sivilstatus.kode.ANNET": "Annen sivilstatus enn GIFT, UGIF, SAMB, SEPA, SKIL, SEPR"
+  "sivilstatus.kode.ANNET": "Annen sivilstatus enn GIFT, UGIF, SAMB, SEPA, SKIL, SEPR",
+  "velgbarn.bosted.label": "Bosted",
+  "velgbarn.bosted.registrert-på-adressen-din": "Registrert på adressen din",
+  "velgbarn.bosted.annen-adresse": "TODO",
+  "velgbarn.checkboxtekst": "Søk om barnetrygd for barnet",
+  "velgbarn.fødselsnummer.label": "Fødselsnummer",
+  "velgbarn.alder.label": "Alder",
+  "velgbarn.feilmelding.du-må-velge-barn": "Du må velge minst ett barn for å fortsette med søknaden",
+  "velgbarn.tittel": "Hvilke barn skal være med i søknaden?",
+  "velgbarn.info.folkeregisteret": "Informasjonen er hentet fra Folkeregisteret. Hvis noe ikke stemmer, kan du endre informasjonen hos Folkeregisteret. ",
+  "velgbarn.regelverkinfo.lenke.tittel": "Dette sier regelverket om hvilke barn du kan få barnetrygd for",
+  "velgbarn.regelverkinfo.lenke": "https://nav.no/"
 }

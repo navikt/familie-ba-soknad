@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg.js';
 import { FormattedMessage } from 'react-intl';
@@ -23,15 +23,15 @@ import {
 } from '../../../routing/Routes';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
+import { SkjemaFeltTyper } from '../../../typer/skjema';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
-import { IStegEnFeltTyper } from '../1-OmDeg/useOmdeg';
 import Navigeringspanel from './Navigeringspanel';
 
 interface ISteg {
-    tittel: string;
+    tittel: ReactNode;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
-    skjema: ISkjema<IStegEnFeltTyper, string>;
+    skjema: ISkjema<SkjemaFeltTyper, string>;
 }
 
 const AvsluttKnappContainer = styled.div`
