@@ -10,7 +10,7 @@ import KnappBase from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { hentNesteRoute, IRoute, StegRoutes } from '../../routing/Routes';
+import { hentNesteRoute, IRoute, Routes } from '../../routing/Routes';
 import { ILokasjon } from '../../typer/lokasjon';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 
@@ -58,7 +58,7 @@ const BekreftelseOgStartSoknad: React.FC<{
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         BekreftelseStatus.NORMAL
     );
-    const nesteRoute: IRoute = hentNesteRoute(StegRoutes, location.pathname);
+    const nesteRoute: IRoute = hentNesteRoute(Routes, location.pathname);
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();
