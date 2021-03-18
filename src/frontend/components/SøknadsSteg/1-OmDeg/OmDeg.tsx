@@ -17,10 +17,10 @@ import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown'
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
-import { ESvarMedUbesvart, IStegEnFeltTyper, useOmdeg } from './useOmdeg';
+import { ESvarMedUbesvart, IOmDegFeltTyper, useOmdeg } from './useOmdeg';
 
 interface IJaNeiBolkProps {
-    skjema: ISkjema<IStegEnFeltTyper, string>;
+    skjema: ISkjema<IOmDegFeltTyper, string>;
     felt: Felt<ESvar | ESvarMedUbesvart>;
     spørsmålTekstId: string;
     tilleggsinfo?: string;

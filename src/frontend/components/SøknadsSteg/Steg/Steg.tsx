@@ -19,7 +19,7 @@ import {
     hentForrigeRoute,
     hentNesteRoute,
     IRoute,
-    StegRoutes,
+    Routes,
 } from '../../../routing/Routes';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
@@ -84,15 +84,15 @@ const Steg: React.FC<ISteg> = ({
 
     const [åpenModal, settÅpenModal] = useState(false);
 
-    const stegobjekter: StegindikatorStegProps[] = StegRoutes.map((steg: IRoute, index: number) => {
+    const stegobjekter: StegindikatorStegProps[] = Routes.map((steg: IRoute, index: number) => {
         return {
             label: steg.label,
             index: index,
         };
     });
 
-    const nesteRoute: IRoute = hentNesteRoute(StegRoutes, location.pathname);
-    const forrigeRoute: IRoute = hentForrigeRoute(StegRoutes, location.pathname);
+    const nesteRoute: IRoute = hentNesteRoute(Routes, location.pathname);
+    const forrigeRoute: IRoute = hentForrigeRoute(Routes, location.pathname);
 
     useEffect(() => {
         window.scrollTo(0, 0);

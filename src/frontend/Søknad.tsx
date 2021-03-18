@@ -11,7 +11,7 @@ import SystemetLaster from './components/Felleskomponenter/SystemetLaster/System
 import Forside from './components/Forside/Forside';
 import Helse from './components/Helse/Helse';
 import { useApp } from './context/AppContext';
-import { StegRoutes } from './routing/Routes';
+import { Routes } from './routing/Routes';
 
 const Søknad = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
@@ -34,8 +34,8 @@ const Søknad = () => {
                         <Switch>
                             <Route exact={true} path={'/helse'} component={Helse} />
                             <Route exact={true} path={'/'} component={Forside} />
-                            {StegRoutes &&
-                                StegRoutes.map((steg, index) => {
+                            {Routes &&
+                                Routes.map((steg, index) => {
                                     return (
                                         <Route
                                             key={index}

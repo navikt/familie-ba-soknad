@@ -18,7 +18,7 @@ import { useApp } from '../../../context/AppContext';
 
 export type ESvarMedUbesvart = ESvar | undefined;
 
-export interface IStegEnFeltTyper {
+export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvarMedUbesvart;
     telefonnummer: string;
     oppholderSegINorge: ESvarMedUbesvart;
@@ -32,7 +32,7 @@ export interface IStegEnFeltTyper {
 }
 
 export const useOmdeg = (): {
-    skjema: ISkjema<IStegEnFeltTyper, string>;
+    skjema: ISkjema<IOmDegFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
 } => {
@@ -197,7 +197,7 @@ export const useOmdeg = (): {
         },
     });
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IStegEnFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IOmDegFeltTyper, string>({
         felter: {
             borPåRegistrertAdresse,
             telefonnummer,
