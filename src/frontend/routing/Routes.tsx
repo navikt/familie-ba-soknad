@@ -50,7 +50,8 @@ export const StegRoutes: IRoute[] = [
 ];
 
 export const hentAktivtStegIndex = (location: Location<ILokasjon>) =>
-    StegRoutes.findIndex(steg => steg.path === location.pathname);
+    // Trekker fra 1 fordi forsiden teller som en route
+    StegRoutes.findIndex(steg => steg.path === location.pathname) - 1;
 
 export const hentForrigeRoute = (routes: IRoute[], currentPath: string) => {
     const routeIndex = routes.findIndex(route => route.path === currentPath);
