@@ -4,7 +4,7 @@ import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { IBarnNy } from '../../../typer/person';
-import { SpråkTekst } from '../../../utils/visning';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export interface IStegToFeltTyper {
     barnMedISøknad: IBarnNy[];

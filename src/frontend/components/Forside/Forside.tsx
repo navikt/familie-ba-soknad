@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import Lenke from 'nav-frontend-lenker';
@@ -13,6 +13,7 @@ import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import { useApp } from '../../context/AppContext';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import InnholdContainer from '../Felleskomponenter/InnholdContainer/InnholdContainer';
+import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
 
 const StyledSidetittel = styled(Sidetittel)`
@@ -46,44 +47,38 @@ const Forside: React.FC = () => {
             />
 
             <StyledSidetittel>
-                <FormattedMessage id="forside.sidetittel" />
+                <SpråkTekst id="forside.sidetittel" />
             </StyledSidetittel>
 
             <Sprakvelger støttedeSprak={[LocaleType.en, LocaleType.nb]} />
 
             <Informasjonsbolk>
                 <Normaltekst>
-                    <FormattedMessage
-                        id="forside.rett-på-barnetrygd"
-                        values={{ linjeskift: <br /> }}
-                    />
+                    <SpråkTekst id="forside.rett-på-barnetrygd" values={{ linjeskift: <br /> }} />
                 </Normaltekst>
                 <StyledLenke href={'https://www.nav.no'}>
-                    <FormattedMessage id="forside.barnetrygd-lenke-tekst" />
+                    <SpråkTekst id="forside.barnetrygd-lenke-tekst" />
                 </StyledLenke>
             </Informasjonsbolk>
 
             <Informasjonsbolk tittelId="forside.oppmaning.tittel">
                 <Normaltekst>
-                    <FormattedMessage
-                        id="forside.oppmaning.brødtekst"
-                        values={{ linjeskift: <br /> }}
-                    />
+                    <SpråkTekst id="forside.oppmaning.brødtekst" values={{ linjeskift: <br /> }} />
                 </Normaltekst>
             </Informasjonsbolk>
 
             <Informasjonsbolk tittelId="forside.dokumentasjonskrav.tittel">
                 <Normaltekst>
-                    <FormattedMessage id="forside.dokumentasjonskrav.brødtekst" />
+                    <SpråkTekst id="forside.dokumentasjonskrav.brødtekst" />
                 </Normaltekst>
                 <StyledLenke href={`https://www.nav.no`}>
-                    <FormattedMessage id="forside.dokumentasjonskrav.lenke" />
+                    <SpråkTekst id="forside.dokumentasjonskrav.lenke" />
                 </StyledLenke>
             </Informasjonsbolk>
 
             <Informasjonsbolk tittelId="forside.infoinnhenting.tittel">
                 <Normaltekst>
-                    <FormattedMessage
+                    <SpråkTekst
                         id="forside.infoinnhenting.brødtekst"
                         values={{ linjeskift: <br /> }}
                     />
@@ -91,7 +86,7 @@ const Forside: React.FC = () => {
                 <ul>
                     <li>
                         <Normaltekst>
-                            <FormattedMessage
+                            <SpråkTekst
                                 id="forside.infoinnhenting.personinformasjon"
                                 values={{ b: msg => <b>{msg}</b> }}
                             />
@@ -99,16 +94,16 @@ const Forside: React.FC = () => {
                     </li>
                 </ul>
                 <Normaltekst>
-                    <FormattedMessage id="forside.infoinnhenting.tidligereinfo" />
+                    <SpråkTekst id="forside.infoinnhenting.tidligereinfo" />
                 </Normaltekst>
                 <StyledLenke href={`https://www.nav.no`}>
-                    <FormattedMessage id="forside.infoinnhenting.bruksinfolenke" />
+                    <SpråkTekst id="forside.infoinnhenting.bruksinfolenke" />
                 </StyledLenke>
             </Informasjonsbolk>
 
             <Informasjonsbolk tittelId="forside.sliksokerdu.tittel">
                 <Normaltekst>
-                    <FormattedMessage
+                    <SpråkTekst
                         id="forside.sliksokerdu.brødtekst"
                         values={{ linjeskift: <br /> }}
                     />
