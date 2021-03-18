@@ -13,15 +13,16 @@ import { SpråkTekst } from '../../../utils/visning';
 import { StyledAlertStripe } from '../1-OmDeg/layoutKomponenter';
 import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
+import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { useVelgBarn } from './useVelgBarn';
 
-const BarnekortContainer = styled.div<{ kunEttBarn: boolean }>`
+const BarnekortContainer = styled.div`
     display: flex;
     flex-flow: row wrap;
     margin: 0 auto;
     margin-top: 1rem;
-    justify-content: ${props => (props.kunEttBarn ? 'center' : 'flex-start')};
-    width: ${props => (props.kunEttBarn ? 'auto' : '38.75rem')};
+    justify-content: flex-start;
+    width: 38.75rem;
     text-align: left;
 `;
 
@@ -41,8 +42,6 @@ const VelgBarn: React.FC = () => {
     const { søknad, settSøknad } = useApp();
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useVelgBarn();
     const intl = useIntl();
-
-    const kunEttBarn = søknad.søker.barn.length === 1;
 
     function settMedISøknad(ident: string, skalVæreMed: boolean) {
         const barn = søknad.søker.barn.find(barn => barn.ident === ident);
@@ -71,7 +70,7 @@ const VelgBarn: React.FC = () => {
                 <SpråkTekst id={'velgbarn.regelverkinfo.lenke.tittel'} />
             </LenkeMedChevron>
 
-            <BarnekortContainer id={'barnMedISøknad'} kunEttBarn={kunEttBarn}>
+            <BarnekortContainer id={'barnMedISøknad'}>
                 {søknad.søker.barn.map(barn => (
                     <Barnekort
                         key={barn.ident}
@@ -80,6 +79,7 @@ const VelgBarn: React.FC = () => {
                         settMedISøknad={settMedISøknad}
                     />
                 ))}
+                <NyttBarnKort />
             </BarnekortContainer>
         </Steg>
     );

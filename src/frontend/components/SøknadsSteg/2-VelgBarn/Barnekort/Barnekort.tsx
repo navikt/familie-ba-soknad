@@ -64,7 +64,7 @@ const StyledUndertittel = styled(Undertittel)`
 
 const StyledIngress = styled(Ingress)`
     && {
-        font-size: 1.125rem; // Overstyr mixin som mener den skal være samme som undertittel på stor skjerm
+        font-size: 1rem;
         margin-top: 1rem;
         font-weight: 600;
     }
