@@ -11,9 +11,10 @@ import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { device } from '../../../Theme';
+import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import Steg from '../Steg/Steg';
-import { KomponentGruppe } from './layoutKomponenter';
 import { Personopplysninger } from './Personopplysninger';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { ESvarMedUbesvart, IStegEnFeltTyper, useOmdeg } from './useOmdeg';
@@ -27,13 +28,8 @@ interface IJaNeiBolkProps {
 
 const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId, tilleggsinfo }) => {
     if (felt.erSynlig) {
-        const feltIndexISkjema = Object.entries(skjema.felter).findIndex(
-            feltEntry => feltEntry[1] === felt
-        );
-        const feltNavn = Object.keys(skjema.felter)[feltIndexISkjema];
-
         return (
-            <span id={feltNavn}>
+            <span id={hentFeltNavn(skjema, felt)}>
                 <JaNeiSpørsmål
                     {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                     name={guid()}
@@ -66,15 +62,16 @@ const StyledSøkerBorIkkePåAdresse = styled(SøkerBorIkkePåAdresse)`
 `;
 
 const StyledLandDropdown = styled(LandDropdown)`
-    @media all and (min-width: var(--mobile)) {
-        width: 50%;
-        padding-right: 0.7rem;
+    width: 50%;
+    padding-right: 0.7rem;
+
+    @media all and ${device.mobile} {
+        width: 100%;
+        padding: 0;
     }
-    text-align: left;
 `;
 
 const StyledSection = styled.section`
-    text-align: left;
     margin-top: 4rem;
 
     p {
@@ -92,7 +89,6 @@ const OmDeg: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useOmdeg();
     const { søknad } = useApp();
     const { søker } = søknad;
-
     return (
         <Steg
             tittel={<FormattedMessage id={'omdeg.tittel'} />}
@@ -100,9 +96,9 @@ const OmDeg: React.FC = () => {
             valideringErOk={valideringErOk}
             skjema={skjema}
         >
-            <KomponentGruppe>
+            <StyledSection>
                 <Personopplysninger />
-            </KomponentGruppe>
+            </StyledSection>
 
             <StyledSection>
                 {søker.adresse && (
@@ -133,13 +129,17 @@ const OmDeg: React.FC = () => {
 
             <StyledSection>
                 {skjema.felter.telefonnummer.erSynlig && (
-                    <StyledInput
-                        {...skjema.felter.telefonnummer.hentNavInputProps(skjema.visFeilmeldinger)}
-                        name={'Telefonnummer'}
-                        label={<FormattedMessage id={'personopplysninger.telefonnr'} />}
-                        bredde={'M'}
-                        type="tel"
-                    />
+                    <span id={hentFeltNavn(skjema, skjema.felter.telefonnummer)}>
+                        <StyledInput
+                            {...skjema.felter.telefonnummer.hentNavInputProps(
+                                skjema.visFeilmeldinger
+                            )}
+                            name={'Telefonnummer'}
+                            label={<FormattedMessage id={'personopplysninger.telefonnr'} />}
+                            bredde={'M'}
+                            type="tel"
+                        />
+                    </span>
                 )}
             </StyledSection>
 
@@ -150,10 +150,14 @@ const OmDeg: React.FC = () => {
                     spørsmålTekstId={'omdeg.spm.oppholderSegINorge'}
                 />
                 {skjema.felter.oppholdsLand.erSynlig && (
-                    <StyledLandDropdown
-                        label={<FormattedMessage id={'omdeg.spm.landopphold'} />}
-                        {...skjema.felter.oppholdsLand.hentNavInputProps(skjema.visFeilmeldinger)}
-                    />
+                    <span id={hentFeltNavn(skjema, skjema.felter.oppholdsLand)}>
+                        <StyledLandDropdown
+                            label={<FormattedMessage id={'omdeg.spm.landopphold'} />}
+                            {...skjema.felter.oppholdsLand.hentNavInputProps(
+                                skjema.visFeilmeldinger
+                            )}
+                        />
+                    </span>
                 )}
             </StyledSection>
             <StyledSection>
@@ -177,10 +181,14 @@ const OmDeg: React.FC = () => {
                     spørsmålTekstId={'omdeg.spm.jobberpåbåt'}
                 />
                 {skjema.felter.jobberPåBåt.verdi === ESvar.JA && (
-                    <StyledLandDropdown
-                        {...skjema.felter.arbeidsLand.hentNavInputProps(skjema.visFeilmeldinger)}
-                        label={<FormattedMessage id={'omdeg.spm.hvilket-arbeidsland'} />}
-                    />
+                    <span id={hentFeltNavn(skjema, skjema.felter.arbeidsLand)}>
+                        <StyledLandDropdown
+                            {...skjema.felter.arbeidsLand.hentNavInputProps(
+                                skjema.visFeilmeldinger
+                            )}
+                            label={<FormattedMessage id={'omdeg.spm.hvilket-arbeidsland'} />}
+                        />
+                    </span>
                 )}
             </StyledSection>
             <StyledSection>
@@ -190,10 +198,14 @@ const OmDeg: React.FC = () => {
                     spørsmålTekstId={'omdeg.spm.mottar-du-pensjon-fra-utland'}
                 />
                 {skjema.felter.mottarUtlandsPensjon.verdi === ESvar.JA && (
-                    <StyledLandDropdown
-                        {...skjema.felter.pensjonsLand.hentNavInputProps(skjema.visFeilmeldinger)}
-                        label={<FormattedMessage id={'omdeg.spm.hvilket-pensjonsland'} />}
-                    />
+                    <span id={hentFeltNavn(skjema, skjema.felter.pensjonsLand)}>
+                        <StyledLandDropdown
+                            {...skjema.felter.pensjonsLand.hentNavInputProps(
+                                skjema.visFeilmeldinger
+                            )}
+                            label={<FormattedMessage id={'omdeg.spm.hvilket-pensjonsland'} />}
+                        />
+                    </span>
                 )}
             </StyledSection>
         </Steg>

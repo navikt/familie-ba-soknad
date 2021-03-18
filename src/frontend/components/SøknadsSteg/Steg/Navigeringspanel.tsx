@@ -8,6 +8,8 @@ import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
 
 import { DeleteFilled } from '@navikt/ds-icons';
 
+import { device } from '../../../Theme';
+
 const Container = styled.div`
     padding: 2rem;
     display: grid;
@@ -18,14 +20,16 @@ const Container = styled.div`
         ' avbrytOgSlett avbrytOgSlett';
     grid-template-rows: auto;
     gap: 0.5rem;
+    justify-content: center;
 
-    @media all and (max-width: var(--mobile)) {
+    @media all and ${device.mobile} {
         grid-template-columns: 1fr;
         grid-template-areas:
             ' gåVidere '
             ' tilbake '
             ' avsluttOgFortsett '
             ' avbrytOgSlett';
+        padding: 2rem 0;
     }
 `;
 
@@ -38,7 +42,7 @@ const StyledKnappBase = styled(KnappBase)<{
     place-self: ${props => props.placeself};
     font-size: 1.125rem;
 
-    @media all and (max-width: var(--mobile)) {
+    @media all and ${device.mobile} {
         place-self: center;
     }
 `;

@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
-import navFarger from 'nav-frontend-core';
 import Lenke from 'nav-frontend-lenker';
 import { Sidetittel, Normaltekst } from 'nav-frontend-typografi';
 
@@ -13,28 +12,8 @@ import { RessursStatus } from '@navikt/familie-typer';
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import { useApp } from '../../context/AppContext';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import InnholdContainer from '../Felleskomponenter/InnholdContainer/InnholdContainer';
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
-
-const ForsideContainer = styled.div`
-    width: var(--panel-innhold-bredde);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 2rem auto 20rem auto;
-    color: ${navFarger.navMorkGra};
-
-    && label,
-    a,
-    p {
-        font-size: 18px;
-        line-height: 26px;
-    }
-
-    @media all and (max-width: var(--tablet)) {
-        width: 100%;
-        padding: 2rem;
-    }
-`;
 
 const StyledSidetittel = styled(Sidetittel)`
     && {
@@ -60,7 +39,7 @@ const Forside: React.FC = () => {
     }, []);
 
     return (
-        <ForsideContainer>
+        <InnholdContainer>
             <VeilederSnakkeboble
                 tekst={formatMessage({ id: 'forside.veileder.hilsen' }, { navn: navn })}
                 posisjon={'høyre'}
@@ -137,7 +116,7 @@ const Forside: React.FC = () => {
             </Informasjonsbolk>
 
             <BekreftelseOgStartSoknad navn={navn} />
-        </ForsideContainer>
+        </InnholdContainer>
     );
 };
 
