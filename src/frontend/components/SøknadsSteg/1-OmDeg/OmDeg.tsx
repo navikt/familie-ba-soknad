@@ -3,59 +3,19 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 
-import { guid } from 'nav-frontend-js-utils';
 import { Input } from 'nav-frontend-skjema';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
-import { Felt, ISkjema } from '@navikt/familie-skjema';
+import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { device } from '../../../Theme';
 import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
-import { ESvarMedUbesvart, IOmDegFeltTyper, useOmdeg } from './useOmdeg';
-
-interface IJaNeiBolkProps {
-    skjema: ISkjema<IOmDegFeltTyper, string>;
-    felt: Felt<ESvar | ESvarMedUbesvart>;
-    spørsmålTekstId: string;
-    tilleggsinfo?: string;
-}
-
-const JaNeiBolk: React.FC<IJaNeiBolkProps> = ({ skjema, felt, spørsmålTekstId, tilleggsinfo }) => {
-    if (felt.erSynlig) {
-        return (
-            <span id={hentFeltNavn(skjema, felt)}>
-                <JaNeiSpørsmål
-                    {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
-                    name={guid()}
-                    legend={
-                        <>
-                            <Element>
-                                <FormattedMessage id={spørsmålTekstId} />
-                            </Element>
-                            {tilleggsinfo && (
-                                <Normaltekst>
-                                    <FormattedMessage id={tilleggsinfo} />
-                                </Normaltekst>
-                            )}
-                        </>
-                    }
-                    labelTekstForJaNei={{
-                        ja: <FormattedMessage id={'ja'} />,
-                        nei: <FormattedMessage id={'nei'} />,
-                    }}
-                />
-            </span>
-        );
-    } else {
-        return <></>;
-    }
-};
+import { useOmdeg } from './useOmdeg';
 
 const StyledSøkerBorIkkePåAdresse = styled(SøkerBorIkkePåAdresse)`
     margin-top: -3rem;
@@ -103,7 +63,7 @@ const OmDeg: React.FC = () => {
             <StyledSection>
                 {søker.adresse && (
                     <>
-                        <JaNeiBolk
+                        <JaNeiSpm
                             skjema={skjema}
                             felt={skjema.felter.borPåRegistrertAdresse}
                             spørsmålTekstId={'personopplysninger.spm.riktigAdresse'}
@@ -144,7 +104,7 @@ const OmDeg: React.FC = () => {
             </StyledSection>
 
             <StyledSection>
-                <JaNeiBolk
+                <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.oppholderSegINorge}
                     spørsmålTekstId={'omdeg.spm.oppholderSegINorge'}
@@ -161,21 +121,21 @@ const OmDeg: React.FC = () => {
                 )}
             </StyledSection>
             <StyledSection>
-                <JaNeiBolk
+                <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.værtINorgeITolvMåneder}
                     spørsmålTekstId={'omdeg.spm.vært-i-tolv-måneder'}
                 />
             </StyledSection>
             <StyledSection>
-                <JaNeiBolk
+                <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erAsylsøker}
                     spørsmålTekstId={'omdeg.spm.erasylsøker'}
                 />
             </StyledSection>
             <StyledSection>
-                <JaNeiBolk
+                <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.jobberPåBåt}
                     spørsmålTekstId={'omdeg.spm.jobberpåbåt'}
@@ -192,7 +152,7 @@ const OmDeg: React.FC = () => {
                 )}
             </StyledSection>
             <StyledSection>
-                <JaNeiBolk
+                <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.mottarUtlandsPensjon}
                     spørsmålTekstId={'omdeg.spm.mottar-du-pensjon-fra-utland'}
