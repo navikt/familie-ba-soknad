@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
@@ -13,6 +13,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { hentNesteRoute, IRoute, Routes } from '../../routing/Routes';
 import { ILokasjon } from '../../typer/lokasjon';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const FormContainer = styled.form`
     display: flex;
@@ -86,13 +87,13 @@ const BekreftelseOgStartSoknad: React.FC<{
                     checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                     feil={
                         bekreftelseStatus === BekreftelseStatus.FEIL && (
-                            <FormattedMessage id={'forside.bekreftelsesboks.feil'} />
+                            <SpråkTekst id={'forside.bekreftelsesboks.feil'} />
                         )
                     }
                     status={bekreftelseStatus}
                 >
                     <Normaltekst>
-                        <FormattedMessage id="forside.dokumentasjonskrav.brødtekst" />
+                        <SpråkTekst id="forside.dokumentasjonskrav.brødtekst" />
                     </Normaltekst>
                 </StyledBekreftCheckboksPanel>
             </Informasjonsbolk>
@@ -101,7 +102,7 @@ const BekreftelseOgStartSoknad: React.FC<{
                 type={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'hoved' : 'standard'}
                 htmlType={'submit'}
             >
-                <FormattedMessage id="forside.startsoknad" />
+                <SpråkTekst id="forside.startsoknad" />
             </StyledKnappBase>
         </FormContainer>
     );

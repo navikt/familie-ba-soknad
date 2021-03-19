@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import { Input } from 'nav-frontend-skjema';
@@ -12,6 +11,7 @@ import { device } from '../../../Theme';
 import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
@@ -51,7 +51,7 @@ const OmDeg: React.FC = () => {
     const { søker } = søknad;
     return (
         <Steg
-            tittel={<FormattedMessage id={'omdeg.tittel'} />}
+            tittel={<SpråkTekst id={'omdeg.tittel'} />}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
             skjema={skjema}
@@ -95,7 +95,7 @@ const OmDeg: React.FC = () => {
                                 skjema.visFeilmeldinger
                             )}
                             name={'Telefonnummer'}
-                            label={<FormattedMessage id={'personopplysninger.telefonnr'} />}
+                            label={<SpråkTekst id={'personopplysninger.telefonnr'} />}
                             bredde={'M'}
                             type="tel"
                         />
@@ -112,7 +112,7 @@ const OmDeg: React.FC = () => {
                 {skjema.felter.oppholdsLand.erSynlig && (
                     <span id={hentFeltNavn(skjema, skjema.felter.oppholdsLand)}>
                         <StyledLandDropdown
-                            label={<FormattedMessage id={'omdeg.spm.landopphold'} />}
+                            label={<SpråkTekst id={'omdeg.spm.landopphold'} />}
                             {...skjema.felter.oppholdsLand.hentNavInputProps(
                                 skjema.visFeilmeldinger
                             )}
@@ -146,7 +146,7 @@ const OmDeg: React.FC = () => {
                             {...skjema.felter.arbeidsLand.hentNavInputProps(
                                 skjema.visFeilmeldinger
                             )}
-                            label={<FormattedMessage id={'omdeg.spm.hvilket-arbeidsland'} />}
+                            label={<SpråkTekst id={'omdeg.spm.hvilket-arbeidsland'} />}
                         />
                     </span>
                 )}
@@ -163,7 +163,7 @@ const OmDeg: React.FC = () => {
                             {...skjema.felter.pensjonsLand.hentNavInputProps(
                                 skjema.visFeilmeldinger
                             )}
-                            label={<FormattedMessage id={'omdeg.spm.hvilket-pensjonsland'} />}
+                            label={<SpråkTekst id={'omdeg.spm.hvilket-pensjonsland'} />}
                         />
                     </span>
                 )}

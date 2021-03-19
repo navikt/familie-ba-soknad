@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
-
 import { guid } from 'nav-frontend-js-utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -10,6 +8,7 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
 import { ESvarMedUbesvart, IOmDegFeltTyper } from '../../SøknadsSteg/1-OmDeg/useOmdeg';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface IJaNeiSpmProps {
     skjema: ISkjema<IOmDegFeltTyper, string>;
@@ -27,18 +26,18 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({ skjema, felt, spørsmålTekstId, t
                 legend={
                     <>
                         <Element>
-                            <FormattedMessage id={spørsmålTekstId} />
+                            <SpråkTekst id={spørsmålTekstId} />
                         </Element>
                         {tilleggsinfo && (
                             <Normaltekst>
-                                <FormattedMessage id={tilleggsinfo} />
+                                <SpråkTekst id={tilleggsinfo} />
                             </Normaltekst>
                         )}
                     </>
                 }
                 labelTekstForJaNei={{
-                    ja: <FormattedMessage id={'ja'} />,
-                    nei: <FormattedMessage id={'nei'} />,
+                    ja: <SpråkTekst id={'ja'} />,
+                    nei: <SpråkTekst id={'nei'} />,
                 }}
             />
         </span>
