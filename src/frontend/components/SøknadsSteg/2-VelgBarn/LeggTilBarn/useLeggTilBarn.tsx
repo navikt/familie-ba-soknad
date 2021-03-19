@@ -79,7 +79,7 @@ export const useLeggTilBarn = (): {
     });
 
     const fødselsdato = useFelt<string>({
-        verdi: (Date.now() as unknown) as string,
+        verdi: '',
         avhengigheter: { ident },
     });
 
