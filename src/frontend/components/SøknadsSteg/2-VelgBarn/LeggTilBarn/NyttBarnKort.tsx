@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import AlertStripe from 'nav-frontend-alertstriper';
 import navFarger from 'nav-frontend-core';
-import { guid } from 'nav-frontend-js-utils';
 import { Knapp } from 'nav-frontend-knapper';
+import Lenke from 'nav-frontend-lenker';
 import Modal from 'nav-frontend-modal';
-import { Input } from 'nav-frontend-skjema';
+import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 
-import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../../context/AppContext';
+import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useLeggTilBarn } from './useLeggTilBarn';
 
@@ -59,10 +61,50 @@ const StyledInput = styled(Input)`
     }
 `;
 
+const StyledLenke = styled(Lenke)`
+    display: block;
+    margin-top: 1rem;
+`;
+
 export const NyttBarnKort: React.FC = () => {
     const [modalÅpen, settModalÅpen] = useState<boolean>(false);
-    const { skjema, validerFelterOgVisFeilmelding } = useLeggTilBarn();
+    const {
+        skjema,
+        validerFelterOgVisFeilmelding,
+        nullstillSkjema,
+        valideringErOk,
+    } = useLeggTilBarn();
+    const { ident, navn, fødselsdato, borMedSøker, navnUbestemt } = skjema.felter;
     const intl = useIntl();
+    const { søknad, settSøknad } = useApp();
+
+    const submit = () => {
+        if (!validerFelterOgVisFeilmelding()) {
+            return;
+        }
+        settSøknad({
+            ...søknad,
+            søker: {
+                ...søknad.søker,
+                barn: søknad.søker.barn.concat([
+                    {
+                        ident: ident.verdi,
+                        borMedSøker: borMedSøker.verdi === ESvar.JA,
+                        fødselsdato: fødselsdato.verdi,
+                        navn:
+                            navn.verdi ||
+                            intl.formatMessage({ id: 'leggtilbarn.navn-ubestemt.plassholder' }),
+                    },
+                ]),
+            },
+        });
+        nullstillSkjema();
+        settModalÅpen(false);
+    };
+
+    useEffect(() => {
+        navn.validerOgSettFelt(navn.verdi);
+    }, [navnUbestemt.verdi]);
 
     return (
         <>
@@ -74,36 +116,83 @@ export const NyttBarnKort: React.FC = () => {
                 <StyledSystemtittel>
                     <SpråkTekst id={'leggtilbarn.tittel'} />
                 </StyledSystemtittel>
-                <JaNeiSpørsmål
-                    {...skjema.felter.erFødt.hentNavInputProps(false)}
-                    legend={<SpråkTekst id={'leggtilbarn.er-barnet-født'} />}
-                    name={guid()}
-                    labelTekstForJaNei={{
-                        ja: <SpråkTekst id={'ja'} />,
-                        nei: <SpråkTekst id={'nei'} />,
-                    }}
-                />
-                {skjema.felter.erFødt.verdi === ESvar.NEI && (
-                    <AlertStripe type={'advarsel'} form={'inline'}>
-                        <SpråkTekst id={'leggtilbarn.feil.må-være-født'} />
-                    </AlertStripe>
-                )}
-
-                {skjema.felter.navn.erSynlig && (
-                    <Input
-                        {...skjema.felter.navn.hentNavInputProps(skjema.visFeilmeldinger)}
-                        label={<SpråkTekst id={'leggtibarn.barnets-navn'} />}
+                <SkjemaGruppe>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.erFødt}
+                        spørsmålTekstId={'leggtilbarn.er-barnet-født'}
                     />
-                )}
+                    {skjema.felter.erFødt.verdi === ESvar.NEI && (
+                        <AlertStripe type={'advarsel'} form={'inline'}>
+                            <SpråkTekst id={'leggtilbarn.feil.må-være-født'} />
+                        </AlertStripe>
+                    )}
+                </SkjemaGruppe>
 
-                {skjema.felter.ident.erSynlig && (
-                    <StyledInput
-                        {...skjema.felter.ident.hentNavInputProps(skjema.visFeilmeldinger)}
-                        label={<SpråkTekst id={'leggtilbarn.fødselsnummer'} />}
-                    />
-                )}
+                <SkjemaGruppe>
+                    {skjema.felter.navn.erSynlig && (
+                        <Input
+                            {...skjema.felter.navn.hentNavInputProps(skjema.visFeilmeldinger)}
+                            label={<SpråkTekst id={'leggtilbarn.barnets-navn'} />}
+                            disabled={skjema.felter.navnUbestemt.verdi === ESvar.JA}
+                        />
+                    )}
 
-                <StyledKnappIModal onClick={validerFelterOgVisFeilmelding}>
+                    {skjema.felter.navnUbestemt.erSynlig && (
+                        <Checkbox
+                            {...skjema.felter.navnUbestemt.hentNavInputProps(
+                                skjema.visFeilmeldinger
+                            )}
+                            label={<SpråkTekst id={'leggtilbarn.navn-ubestemt.label'} />}
+                            onChange={event => {
+                                const { onChange } = skjema.felter.navnUbestemt.hentNavInputProps(
+                                    false
+                                );
+                                onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
+                            }}
+                        />
+                    )}
+                </SkjemaGruppe>
+
+                <SkjemaGruppe>
+                    {skjema.felter.ident.erSynlig && (
+                        <StyledInput
+                            {...skjema.felter.ident.hentNavInputProps(skjema.visFeilmeldinger)}
+                            label={<SpråkTekst id={'leggtilbarn.fødselsnummer'} />}
+                            disabled={skjema.felter.ingenIdent.verdi === ESvar.JA}
+                        />
+                    )}
+
+                    {skjema.felter.ingenIdent.erSynlig && (
+                        <Checkbox
+                            {...skjema.felter.ingenIdent.hentNavInputProps(false)}
+                            label={<SpråkTekst id={'leggtilbarn.ingen-ident.label'} />}
+                            onChange={event => {
+                                const { onChange } = skjema.felter.ingenIdent.hentNavInputProps(
+                                    false
+                                );
+                                onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
+                            }}
+                        />
+                    )}
+                    {skjema.felter.ingenIdent.verdi === ESvar.JA && (
+                        <>
+                            <AlertStripe type={'advarsel'} form={'inline'}>
+                                <SpråkTekst id={'leggtilbarn.feil.må-ha-idnr'} />
+                            </AlertStripe>
+
+                            <StyledLenke
+                                href={intl.formatMessage({
+                                    id: 'personopplysninger.lenke.pdfskjema',
+                                })}
+                            >
+                                <SpråkTekst id={'leggtilbarn.pdfskjema.lenke.tekst'} />
+                            </StyledLenke>
+                        </>
+                    )}
+                </SkjemaGruppe>
+
+                <StyledKnappIModal onClick={submit} type={valideringErOk() ? 'hoved' : 'standard'}>
                     <SpråkTekst id={'leggtilbarn.tittel'} />
                 </StyledKnappIModal>
             </StyledModal>

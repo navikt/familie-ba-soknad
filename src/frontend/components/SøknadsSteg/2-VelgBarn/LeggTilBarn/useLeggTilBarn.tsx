@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { FormattedMessage } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
@@ -8,15 +10,18 @@ import { IBarnNy } from '../../../../typer/person';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../1-OmDeg/useOmdeg';
 
-interface ISkjemaTyper extends Omit<IBarnNy, 'borMedSøker' | 'alder'> {
+export interface ILeggTilBarnTyper extends Omit<IBarnNy, 'borMedSøker' | 'alder'> {
     borMedSøker: ESvarMedUbesvart;
     erFødt: ESvarMedUbesvart;
+    navnUbestemt: ESvar;
+    ingenIdent: ESvar;
 }
 
 export const useLeggTilBarn = (): {
-    skjema: ISkjema<ISkjemaTyper, string>;
+    skjema: ISkjema<ILeggTilBarnTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
+    nullstillSkjema: () => void;
 } => {
     const erFødt = useFelt<ESvarMedUbesvart>({
         verdi: undefined,
@@ -27,10 +32,25 @@ export const useLeggTilBarn = (): {
         },
     });
 
+    const navnUbestemt = useFelt<ESvar>({
+        verdi: ESvar.NEI,
+        skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
+        avhengigheter: { erFødt },
+    });
+
     const navn = useFelt<string>({
         verdi: '',
         skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
-        avhengigheter: { erFødt },
+        valideringsfunksjon: (felt, avhengigheter) => {
+            const skip = avhengigheter?.navnUbestemt.verdi === ESvar.JA;
+            if (skip) {
+                return ok(felt);
+            }
+            return felt.verdi !== ''
+                ? ok(felt)
+                : feil(felt, <FormattedMessage id={'leggtilbarn.feil.tomt-navn'} />);
+        },
+        avhengigheter: { erFødt, navnUbestemt },
     });
 
     const ident = useFelt<string>({
@@ -39,8 +59,18 @@ export const useLeggTilBarn = (): {
         valideringsfunksjon: felt => {
             return idnr(felt.verdi).status === 'valid'
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'leggtilbarn.ugyldig-fødselsnummer'} />);
+                : feil(felt, <SpråkTekst id={'leggtilbarn.feil.ugyldig-idnr'} />);
         },
+        avhengigheter: { erFødt },
+    });
+
+    const ingenIdent = useFelt<ESvar>({
+        verdi: ESvar.NEI,
+        valideringsfunksjon: felt =>
+            felt.verdi === ESvar.NEI
+                ? ok(felt)
+                : feil(felt, <FormattedMessage id={'leggtilbarn.feil.må-ha-idnr'} />),
+        skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
         avhengigheter: { erFødt },
     });
 
@@ -53,13 +83,22 @@ export const useLeggTilBarn = (): {
         avhengigheter: { ident },
     });
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<ISkjemaTyper, string>({
+    // Nødvendig for å sette valideringsstatus til ok for element
+    // som bruker ikke kommer til å interacte med.
+    ingenIdent.validerOgSettFelt(ESvar.NEI);
+
+    const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
+        ILeggTilBarnTyper,
+        string
+    >({
         felter: {
             erFødt,
             ident,
             navn,
             borMedSøker,
             fødselsdato,
+            navnUbestemt,
+            ingenIdent,
         },
         skjemanavn: 'velgbarn',
     });
@@ -68,5 +107,6 @@ export const useLeggTilBarn = (): {
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
+        nullstillSkjema,
     };
 };
