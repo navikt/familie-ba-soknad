@@ -14,10 +14,15 @@ interface IJaNeiSpmProps {
     skjema: ISkjema<IOmDegFeltTyper, string>;
     felt: Felt<ESvar | ESvarMedUbesvart>;
     spørsmålTekstId: string;
-    tilleggsinfo?: string;
+    tilleggsinfoTekstId?: string;
 }
 
-const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({ skjema, felt, spørsmålTekstId, tilleggsinfo }) => {
+const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
+    skjema,
+    felt,
+    spørsmålTekstId,
+    tilleggsinfoTekstId,
+}) => {
     return felt.erSynlig ? (
         <span id={hentFeltNavn(skjema, felt)}>
             <JaNeiSpørsmål
@@ -28,9 +33,9 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({ skjema, felt, spørsmålTekstId, t
                         <Element>
                             <SpråkTekst id={spørsmålTekstId} />
                         </Element>
-                        {tilleggsinfo && (
+                        {tilleggsinfoTekstId && (
                             <Normaltekst>
-                                <SpråkTekst id={tilleggsinfo} />
+                                <SpråkTekst id={tilleggsinfoTekstId} />
                             </Normaltekst>
                         )}
                     </>
