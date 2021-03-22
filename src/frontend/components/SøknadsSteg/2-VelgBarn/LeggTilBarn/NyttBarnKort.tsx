@@ -14,6 +14,7 @@ import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
+import { device } from '../../../../Theme';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useLeggTilBarn } from './useLeggTilBarn';
@@ -51,12 +52,16 @@ const StyledKnappIModal = styled(Knapp)`
 const StyledModal = styled(Modal)`
     && {
         padding: 2rem;
-        width: 80vw;
+    }
+    width: 45rem;
+    min-height: 35rem;
+    @media all and ${device.mobile} {
+        width: 95%;
     }
 `;
 
 const StyledInput = styled(Input)`
-    @media all and (min-device-width: 992px) {
+    @media all and ${device.tablet} {
         max-width: 30rem;
     }
 `;
