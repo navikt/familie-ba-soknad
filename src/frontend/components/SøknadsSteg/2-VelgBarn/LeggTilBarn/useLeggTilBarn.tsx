@@ -14,8 +14,8 @@ import { ESvarMedUbesvart } from '../../1-OmDeg/useOmdeg';
 export interface ILeggTilBarnTyper extends Omit<IBarnNy, 'borMedSøker' | 'alder'> {
     borMedSøker: ESvarMedUbesvart;
     erFødt: ESvarMedUbesvart;
-    navnUbestemt: ESvar;
-    ingenIdent: ESvar;
+    navnetErUbestemt: ESvar;
+    harBarnetFåttIdNummer: ESvar;
 }
 
 export const useLeggTilBarn = (): {
@@ -37,7 +37,7 @@ export const useLeggTilBarn = (): {
         },
     });
 
-    const navnUbestemt = useFelt<ESvar>({
+    const navnetErUbestemt = useFelt<ESvar>({
         verdi: ESvar.NEI,
         skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
         avhengigheter: { erFødt },
@@ -47,7 +47,7 @@ export const useLeggTilBarn = (): {
         verdi: '',
         skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
         valideringsfunksjon: (felt, avhengigheter) => {
-            const navnErUbestemt = avhengigheter?.navnUbestemt.verdi === ESvar.JA;
+            const navnErUbestemt = avhengigheter?.navnetErUbestemt.verdi === ESvar.JA;
             if (navnErUbestemt) {
                 return ok(felt);
             }
@@ -55,7 +55,7 @@ export const useLeggTilBarn = (): {
                 ? ok(felt)
                 : feil(felt, <FormattedMessage id={'leggtilbarn.feil.tomt-navn'} />);
         },
-        avhengigheter: { erFødt, navnUbestemt },
+        avhengigheter: { erFødt, navnetErUbestemt },
     });
 
     const ident = useFelt<string>({
@@ -69,10 +69,10 @@ export const useLeggTilBarn = (): {
         avhengigheter: { erFødt },
     });
 
-    const ingenIdent = useFelt<ESvar>({
-        verdi: ESvar.NEI,
+    const harBarnetFåttIdNummer = useFelt<ESvar>({
+        verdi: ESvar.JA,
         valideringsfunksjon: felt =>
-            felt.verdi === ESvar.NEI
+            felt.verdi === ESvar.JA
                 ? ok(felt)
                 : feil(felt, <FormattedMessage id={'leggtilbarn.feil.må-ha-idnr'} />),
         skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
@@ -90,8 +90,8 @@ export const useLeggTilBarn = (): {
 
     // Nødvendig for å sette valideringsstatus til ok for element
     // som bruker ikke kommer til å interacte med.
-    ingenIdent.validerOgSettFelt(ingenIdent.verdi);
-    navnUbestemt.validerOgSettFelt(navnUbestemt.verdi);
+    harBarnetFåttIdNummer.validerOgSettFelt(harBarnetFåttIdNummer.verdi);
+    navnetErUbestemt.validerOgSettFelt(navnetErUbestemt.verdi);
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
         ILeggTilBarnTyper,
@@ -103,8 +103,8 @@ export const useLeggTilBarn = (): {
             navn,
             borMedSøker,
             fødselsdato,
-            navnUbestemt,
-            ingenIdent,
+            navnetErUbestemt,
+            harBarnetFåttIdNummer,
         },
         skjemanavn: 'velgbarn',
     });
@@ -113,6 +113,11 @@ export const useLeggTilBarn = (): {
         if (!kanSendeSkjema()) {
             return false;
         }
+        // TODO: Fjern hvis vi legger til dato-input
+        const dato = ident.verdi.substr(0, 6);
+        const [, dag, måned, år] = dato.match(/.{2}/g) || [];
+        const fulltÅr =
+            Number.parseInt(år) > 60 ? 1900 + Number.parseInt(år) : 2000 + Number.parseInt(år);
         settSøknad({
             ...søknad,
             søker: {
@@ -121,7 +126,7 @@ export const useLeggTilBarn = (): {
                     {
                         ident: ident.verdi,
                         borMedSøker: borMedSøker.verdi === ESvar.JA,
-                        fødselsdato: fødselsdato.verdi,
+                        fødselsdato: [fulltÅr, måned, dag].join('-'),
                         navn:
                             navn.verdi ||
                             intl.formatMessage({ id: 'leggtilbarn.navn-ubestemt.plassholder' }),

@@ -73,12 +73,12 @@ const StyledLenke = styled(Lenke)`
 export const NyttBarnKort: React.FC = () => {
     const [modalÅpen, settModalÅpen] = useState<boolean>(false);
     const { skjema, nullstillSkjema, valideringErOk, submit } = useLeggTilBarn();
-    const { navn, navnUbestemt } = skjema.felter;
+    const { navn, navnetErUbestemt } = skjema.felter;
     const intl = useIntl();
 
     useEffect(() => {
         navn.validerOgSettFelt('');
-    }, [navnUbestemt.verdi]);
+    }, [navnetErUbestemt.verdi]);
 
     const submitOgLukk = () => {
         submit() && settModalÅpen(false);
@@ -115,20 +115,20 @@ export const NyttBarnKort: React.FC = () => {
                         <Input
                             {...skjema.felter.navn.hentNavInputProps(skjema.visFeilmeldinger)}
                             label={<SpråkTekst id={'leggtilbarn.barnets-navn'} />}
-                            disabled={skjema.felter.navnUbestemt.verdi === ESvar.JA}
+                            disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                         />
                     )}
 
-                    {skjema.felter.navnUbestemt.erSynlig && (
+                    {skjema.felter.navnetErUbestemt.erSynlig && (
                         <Checkbox
-                            {...skjema.felter.navnUbestemt.hentNavInputProps(
+                            {...skjema.felter.navnetErUbestemt.hentNavInputProps(
                                 skjema.visFeilmeldinger
                             )}
                             label={<SpråkTekst id={'leggtilbarn.navn-ubestemt.label'} />}
                             onChange={event => {
-                                const { onChange } = skjema.felter.navnUbestemt.hentNavInputProps(
-                                    false
-                                );
+                                const {
+                                    onChange,
+                                } = skjema.felter.navnetErUbestemt.hentNavInputProps(false);
                                 onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
                             }}
                         />
@@ -140,23 +140,23 @@ export const NyttBarnKort: React.FC = () => {
                         <StyledInput
                             {...skjema.felter.ident.hentNavInputProps(skjema.visFeilmeldinger)}
                             label={<SpråkTekst id={'leggtilbarn.fødselsnummer'} />}
-                            disabled={skjema.felter.ingenIdent.verdi === ESvar.JA}
+                            disabled={skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI}
                         />
                     )}
 
-                    {skjema.felter.ingenIdent.erSynlig && (
+                    {skjema.felter.harBarnetFåttIdNummer.erSynlig && (
                         <Checkbox
-                            {...skjema.felter.ingenIdent.hentNavInputProps(false)}
+                            {...skjema.felter.harBarnetFåttIdNummer.hentNavInputProps(false)}
                             label={<SpråkTekst id={'leggtilbarn.ingen-ident.label'} />}
                             onChange={event => {
-                                const { onChange } = skjema.felter.ingenIdent.hentNavInputProps(
-                                    false
-                                );
-                                onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
+                                const {
+                                    onChange,
+                                } = skjema.felter.harBarnetFåttIdNummer.hentNavInputProps(false);
+                                onChange(event.target.checked ? ESvar.NEI : ESvar.JA);
                             }}
                         />
                     )}
-                    {skjema.felter.ingenIdent.verdi === ESvar.JA && (
+                    {skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI && (
                         <>
                             <AlertStripe type={'advarsel'} form={'inline'}>
                                 <SpråkTekst id={'leggtilbarn.feil.må-ha-idnr'} />
