@@ -86,7 +86,7 @@
   "sivilstatus.kode.ANNET": "Annen sivilstatus enn GIFT, UGIF, SAMB, SEPA, SKIL, SEPR",
   "velgbarn.bosted.label": "Bosted",
   "velgbarn.bosted.registrert-på-adressen-din": "Registrert på adressen din",
-  "velgbarn.bosted.annen-adresse": "TODO",
+  "velgbarn.bosted.annen-adresse": "Registrert på en annen adresse enn deg",
   "velgbarn.checkboxtekst": "Søk om barnetrygd for barnet",
   "velgbarn.fødselsnummer.label": "Fødselsnummer",
   "velgbarn.alder.label": "Alder",
