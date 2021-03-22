@@ -185,12 +185,7 @@ export const NyttBarnKort: React.FC = () => {
                     <StyledIngress>
                         <SpråkTekst id={'leggtilbarn.kort.info'} />
                     </StyledIngress>
-                    <StyledKnapp
-                        onClick={event => {
-                            event.preventDefault();
-                            settModalÅpen(!modalÅpen);
-                        }}
-                    >
+                    <StyledKnapp htmlType={'button'} onClick={() => settModalÅpen(!modalÅpen)}>
                         <SpråkTekst id={'leggtilbarn.tittel'} />
                     </StyledKnapp>
                 </Informasjonsboks>
