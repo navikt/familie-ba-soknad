@@ -11,6 +11,7 @@ import { device } from '../../../Theme';
 import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
+import Seksjon from '../../Felleskomponenter/Seksjon/Seksjon';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
@@ -31,20 +32,6 @@ const StyledLandDropdown = styled(LandDropdown)`
     }
 `;
 
-const StyledSection = styled.section`
-    margin-top: 4rem;
-
-    p {
-        font-size: 1.125rem;
-    }
-`;
-
-const StyledInput = styled(Input)`
-    label {
-        font-size: 1.125rem;
-    }
-`;
-
 const OmDeg: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useOmdeg();
     const { søknad } = useApp();
@@ -56,11 +43,11 @@ const OmDeg: React.FC = () => {
             valideringErOk={valideringErOk}
             skjema={skjema}
         >
-            <StyledSection>
+            <Seksjon>
                 <Personopplysninger />
-            </StyledSection>
+            </Seksjon>
 
-            <StyledSection>
+            <Seksjon>
                 {søker.adresse && (
                     <>
                         <JaNeiSpm
@@ -85,12 +72,9 @@ const OmDeg: React.FC = () => {
                         utfyllendeAdvarselInfoId={'personopplysninger.info.vi-trenger-din-adresse'}
                     />
                 )}
-            </StyledSection>
-
-            <StyledSection>
                 {skjema.felter.telefonnummer.erSynlig && (
                     <span id={hentFeltNavn(skjema, skjema.felter.telefonnummer)}>
-                        <StyledInput
+                        <Input
                             {...skjema.felter.telefonnummer.hentNavInputProps(
                                 skjema.visFeilmeldinger
                             )}
@@ -101,9 +85,9 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </StyledSection>
+            </Seksjon>
 
-            <StyledSection>
+            <Seksjon>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.oppholderSegINorge}
@@ -119,22 +103,22 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </StyledSection>
-            <StyledSection>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.værtINorgeITolvMåneder}
                     spørsmålTekstId={'omdeg.spm.vært-i-tolv-måneder'}
                 />
-            </StyledSection>
-            <StyledSection>
+            </Seksjon>
+
+            <Seksjon>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erAsylsøker}
                     spørsmålTekstId={'omdeg.spm.erasylsøker'}
                 />
-            </StyledSection>
-            <StyledSection>
+            </Seksjon>
+
+            <Seksjon>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.jobberPåBåt}
@@ -150,8 +134,8 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </StyledSection>
-            <StyledSection>
+            </Seksjon>
+            <Seksjon>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.mottarUtlandsPensjon}
@@ -167,7 +151,7 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </StyledSection>
+            </Seksjon>
         </Steg>
     );
 };
