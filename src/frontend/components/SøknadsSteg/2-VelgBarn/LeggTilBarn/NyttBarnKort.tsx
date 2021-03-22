@@ -13,7 +13,6 @@ import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../../context/AppContext';
 import { device } from '../../../../Theme';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -73,43 +72,17 @@ const StyledLenke = styled(Lenke)`
 
 export const NyttBarnKort: React.FC = () => {
     const [modalÅpen, settModalÅpen] = useState<boolean>(false);
-    const {
-        skjema,
-        validerFelterOgVisFeilmelding,
-        nullstillSkjema,
-        valideringErOk,
-    } = useLeggTilBarn();
-    const { ident, navn, fødselsdato, borMedSøker, navnUbestemt } = skjema.felter;
+    const { skjema, nullstillSkjema, valideringErOk, submit } = useLeggTilBarn();
+    const { navn, navnUbestemt } = skjema.felter;
     const intl = useIntl();
-    const { søknad, settSøknad } = useApp();
-
-    const submit = () => {
-        if (!validerFelterOgVisFeilmelding()) {
-            return;
-        }
-        settSøknad({
-            ...søknad,
-            søker: {
-                ...søknad.søker,
-                barn: søknad.søker.barn.concat([
-                    {
-                        ident: ident.verdi,
-                        borMedSøker: borMedSøker.verdi === ESvar.JA,
-                        fødselsdato: fødselsdato.verdi,
-                        navn:
-                            navn.verdi ||
-                            intl.formatMessage({ id: 'leggtilbarn.navn-ubestemt.plassholder' }),
-                    },
-                ]),
-            },
-        });
-        nullstillSkjema();
-        settModalÅpen(false);
-    };
 
     useEffect(() => {
-        navn.validerOgSettFelt(navn.verdi);
+        navn.validerOgSettFelt('');
     }, [navnUbestemt.verdi]);
+
+    const submitOgLukk = () => {
+        submit() && settModalÅpen(false);
+    };
 
     return (
         <>
@@ -200,7 +173,10 @@ export const NyttBarnKort: React.FC = () => {
                     )}
                 </SkjemaGruppe>
 
-                <StyledKnappIModal onClick={submit} type={valideringErOk() ? 'hoved' : 'standard'}>
+                <StyledKnappIModal
+                    onClick={submitOgLukk}
+                    type={valideringErOk() ? 'hoved' : 'standard'}
+                >
                     <SpråkTekst id={'leggtilbarn.tittel'} />
                 </StyledKnappIModal>
             </StyledModal>

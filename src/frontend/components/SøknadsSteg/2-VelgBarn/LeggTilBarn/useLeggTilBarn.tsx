@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
 
+import { useApp } from '../../../../context/AppContext';
 import { IBarnNy } from '../../../../typer/person';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../1-OmDeg/useOmdeg';
@@ -22,7 +23,11 @@ export const useLeggTilBarn = (): {
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     nullstillSkjema: () => void;
+    submit: () => boolean;
 } => {
+    const { søknad, settSøknad } = useApp();
+    const intl = useIntl();
+
     const erFødt = useFelt<ESvarMedUbesvart>({
         verdi: undefined,
         valideringsfunksjon: felt => {
@@ -85,8 +90,8 @@ export const useLeggTilBarn = (): {
 
     // Nødvendig for å sette valideringsstatus til ok for element
     // som bruker ikke kommer til å interacte med.
-    ingenIdent.validerOgSettFelt(ESvar.NEI);
-    navnUbestemt.validerOgSettFelt(ESvar.NEI);
+    ingenIdent.validerOgSettFelt(ingenIdent.verdi);
+    navnUbestemt.validerOgSettFelt(navnUbestemt.verdi);
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
         ILeggTilBarnTyper,
@@ -104,10 +109,34 @@ export const useLeggTilBarn = (): {
         skjemanavn: 'velgbarn',
     });
 
+    const submit = () => {
+        if (!kanSendeSkjema()) {
+            return false;
+        }
+        settSøknad({
+            ...søknad,
+            søker: {
+                ...søknad.søker,
+                barn: søknad.søker.barn.concat([
+                    {
+                        ident: ident.verdi,
+                        borMedSøker: borMedSøker.verdi === ESvar.JA,
+                        fødselsdato: fødselsdato.verdi,
+                        navn:
+                            navn.verdi ||
+                            intl.formatMessage({ id: 'leggtilbarn.navn-ubestemt.plassholder' }),
+                    },
+                ]),
+            },
+        });
+        nullstillSkjema();
+        return true;
+    };
     return {
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
         nullstillSkjema,
+        submit,
     };
 };
