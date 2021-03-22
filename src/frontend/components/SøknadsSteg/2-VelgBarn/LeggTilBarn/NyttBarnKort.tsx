@@ -75,6 +75,9 @@ export const NyttBarnKort: React.FC = () => {
         submit() && settModalÅpen(false);
     };
 
+    const skalViseIdentFeil =
+        skjema.visFeilmeldinger && skjema.felter.harBarnetFåttIdNummer.verdi !== ESvar.NEI;
+
     return (
         <>
             <StyledModal
@@ -129,7 +132,7 @@ export const NyttBarnKort: React.FC = () => {
                 <SkjemaGruppe>
                     {skjema.felter.ident.erSynlig && (
                         <StyledInput
-                            {...skjema.felter.ident.hentNavInputProps(skjema.visFeilmeldinger)}
+                            {...skjema.felter.ident.hentNavInputProps(skalViseIdentFeil)}
                             label={<SpråkTekst id={'leggtilbarn.fødselsnummer'} />}
                             disabled={skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI}
                         />
