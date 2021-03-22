@@ -33,7 +33,7 @@ export const useLeggTilBarn = (): {
         valideringsfunksjon: felt => {
             return felt.verdi === ESvar.JA
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'Du kan ikke søke for ufødte barn'} />);
+                : feil(felt, <SpråkTekst id={'leggtilbarn.må-være-født'} />);
         },
     });
 
@@ -47,8 +47,8 @@ export const useLeggTilBarn = (): {
         verdi: '',
         skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
         valideringsfunksjon: (felt, avhengigheter) => {
-            const skip = avhengigheter?.navnUbestemt.verdi === ESvar.JA;
-            if (skip) {
+            const navnErUbestemt = avhengigheter?.navnUbestemt.verdi === ESvar.JA;
+            if (navnErUbestemt) {
                 return ok(felt);
             }
             return felt.verdi !== ''

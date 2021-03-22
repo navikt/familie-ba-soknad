@@ -35,6 +35,8 @@
   "leggtilbarn.feil.ugyldig-idnr": "Ugyldig fødselsnummer/d-nummer",
   "leggtilbarn.fødselsnummer": "Fødselsnummer (11 siffer) / d-nummer",
   "leggtilbarn.ingen-ident.label": "Barnet har ikke fått ikke fødselsnummer / d-nummer",
+  "leggtilbarn.kort.info": "Har du nylig fått barn, eller har du fosterbarn som foreløpig ikke er registrert i Folkeregisteret?",
+  "leggtilbarn.må-være-født": "Du kan ikke søke for ufødte barn",
   "leggtilbarn.navn-ubestemt.label": "Navnet er ikke bestemt",
   "leggtilbarn.navn-ubestemt.plassholder": "Ikke bestemt",
   "leggtilbarn.pdfskjema.lenke.tekst": "Bruk PDF-skjema",

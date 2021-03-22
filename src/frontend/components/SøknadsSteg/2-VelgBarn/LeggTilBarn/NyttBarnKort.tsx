@@ -9,7 +9,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
 import Modal from 'nav-frontend-modal';
 import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Ingress, Systemtittel } from 'nav-frontend-typografi';
+import { Ingress, Innholdstittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -35,7 +35,7 @@ const StyledIngress = styled(Ingress)`
     }
 `;
 
-const StyledSystemtittel = styled(Systemtittel)`
+const StyledInnholdstittel = styled(Innholdstittel)`
     text-align: center;
     padding: 2rem;
 `;
@@ -94,9 +94,9 @@ export const NyttBarnKort: React.FC = () => {
                     nullstillSkjema();
                 }}
             >
-                <StyledSystemtittel>
+                <StyledInnholdstittel>
                     <SpråkTekst id={'leggtilbarn.tittel'} />
-                </StyledSystemtittel>
+                </StyledInnholdstittel>
                 <SkjemaGruppe>
                     <JaNeiSpm
                         skjema={skjema}
@@ -183,8 +183,7 @@ export const NyttBarnKort: React.FC = () => {
             <LeggTilBarnKortWrapper>
                 <Informasjonsboks>
                     <StyledIngress>
-                        Har du nylig fått barn, eller har du fosterbarn som foreløpig ikke er
-                        registrert i Folkeregisteret?
+                        <SpråkTekst id={'leggtilbarn.kort.info'} />
                     </StyledIngress>
                     <StyledKnapp
                         onClick={event => {
