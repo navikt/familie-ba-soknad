@@ -111,7 +111,10 @@ export const NyttBarnKort: React.FC = () => {
             <StyledModal
                 isOpen={modalÅpen}
                 contentLabel={intl.formatMessage({ id: 'leggtilbarn.popup.label' })}
-                onRequestClose={() => settModalÅpen(!modalÅpen)}
+                onRequestClose={() => {
+                    settModalÅpen(!modalÅpen);
+                    nullstillSkjema();
+                }}
             >
                 <StyledSystemtittel>
                     <SpråkTekst id={'leggtilbarn.tittel'} />

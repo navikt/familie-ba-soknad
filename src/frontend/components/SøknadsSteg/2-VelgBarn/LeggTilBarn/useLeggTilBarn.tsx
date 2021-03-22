@@ -86,6 +86,7 @@ export const useLeggTilBarn = (): {
     // Nødvendig for å sette valideringsstatus til ok for element
     // som bruker ikke kommer til å interacte med.
     ingenIdent.validerOgSettFelt(ESvar.NEI);
+    navnUbestemt.validerOgSettFelt(ESvar.NEI);
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
         ILeggTilBarnTyper,
