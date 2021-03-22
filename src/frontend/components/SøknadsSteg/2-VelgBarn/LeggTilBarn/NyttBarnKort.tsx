@@ -4,7 +4,6 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import AlertStripe from 'nav-frontend-alertstriper';
-import navFarger from 'nav-frontend-core';
 import { Knapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
 import Modal from 'nav-frontend-modal';
@@ -16,17 +15,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { device } from '../../../../Theme';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { StyledBarnekort } from '../Barnekort/Barnekort';
 import { useLeggTilBarn } from './useLeggTilBarn';
-
-const LeggTilBarnKortWrapper = styled.div`
-    width: 17.25rem;
-    padding: 0.625rem;
-`;
-const Informasjonsboks = styled.div`
-    padding: 2rem;
-    border-radius: 0.3rem;
-    background-color: ${navFarger.navLysGra};
-`;
 
 const StyledIngress = styled(Ingress)`
     && {
@@ -42,6 +32,7 @@ const StyledInnholdstittel = styled(Innholdstittel)`
 
 const StyledKnapp = styled(Knapp)`
     margin-top: 1rem;
+    width: 100%;
 `;
 
 const StyledKnappIModal = styled(Knapp)`
@@ -180,16 +171,14 @@ export const NyttBarnKort: React.FC = () => {
                     <SpråkTekst id={'leggtilbarn.tittel'} />
                 </StyledKnappIModal>
             </StyledModal>
-            <LeggTilBarnKortWrapper>
-                <Informasjonsboks>
-                    <StyledIngress>
-                        <SpråkTekst id={'leggtilbarn.kort.info'} />
-                    </StyledIngress>
-                    <StyledKnapp htmlType={'button'} onClick={() => settModalÅpen(!modalÅpen)}>
-                        <SpråkTekst id={'leggtilbarn.tittel'} />
-                    </StyledKnapp>
-                </Informasjonsboks>
-            </LeggTilBarnKortWrapper>
+            <StyledBarnekort>
+                <StyledIngress>
+                    <SpråkTekst id={'leggtilbarn.kort.info'} />
+                </StyledIngress>
+                <StyledKnapp htmlType={'button'} onClick={() => settModalÅpen(!modalÅpen)}>
+                    <SpråkTekst id={'leggtilbarn.tittel'} />
+                </StyledKnapp>
+            </StyledBarnekort>
         </>
     );
 };

@@ -18,11 +18,11 @@ import { useVelgBarn } from './useVelgBarn';
 
 const BarnekortContainer = styled.div`
     display: flex;
+    align-items: flex-start;
     flex-flow: row wrap;
-    margin: 0 auto;
-    margin-top: 1rem;
-    justify-content: flex-start;
-    width: 38.75rem;
+    margin: 1rem auto 0;
+    justify-content: space-between;
+    width: 100%;
     text-align: left;
 `;
 
