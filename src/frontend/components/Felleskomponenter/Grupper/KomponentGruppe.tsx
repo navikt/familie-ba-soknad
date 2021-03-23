@@ -12,14 +12,17 @@ const Container = styled.div`
     }
 `;
 
-const Seksjon: React.FC<{ className?: string; tekst?: string }> = ({ className, children }) => {
+const KomponentGruppe: React.FC<{ className?: string; tekst?: string }> = ({
+    className,
+    children,
+}) => {
     return (
         <Container className={className}>
             {React.Children.map(children, child => {
-                return <div>{child}</div>;
+                return child && <div>{child}</div>;
             })}
         </Container>
     );
 };
 
-export default Seksjon;
+export default KomponentGruppe;

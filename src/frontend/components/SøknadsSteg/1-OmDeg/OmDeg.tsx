@@ -9,9 +9,9 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { device } from '../../../Theme';
 import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
+import KomponentGruppe from '../../Felleskomponenter/Grupper/KomponentGruppe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
-import Seksjon from '../../Felleskomponenter/Seksjon/Seksjon';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
@@ -43,11 +43,11 @@ const OmDeg: React.FC = () => {
             valideringErOk={valideringErOk}
             skjema={skjema}
         >
-            <Seksjon>
+            <KomponentGruppe>
                 <Personopplysninger />
-            </Seksjon>
+            </KomponentGruppe>
 
-            <Seksjon>
+            <KomponentGruppe>
                 {søker.adresse && (
                     <>
                         <JaNeiSpm
@@ -72,6 +72,9 @@ const OmDeg: React.FC = () => {
                         utfyllendeAdvarselInfoId={'personopplysninger.info.vi-trenger-din-adresse'}
                     />
                 )}
+            </KomponentGruppe>
+
+            <KomponentGruppe>
                 {skjema.felter.telefonnummer.erSynlig && (
                     <span id={hentFeltNavn(skjema, skjema.felter.telefonnummer)}>
                         <Input
@@ -85,9 +88,6 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </Seksjon>
-
-            <Seksjon>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.oppholderSegINorge}
@@ -108,17 +108,14 @@ const OmDeg: React.FC = () => {
                     felt={skjema.felter.værtINorgeITolvMåneder}
                     spørsmålTekstId={'omdeg.spm.vært-i-tolv-måneder'}
                 />
-            </Seksjon>
+            </KomponentGruppe>
 
-            <Seksjon>
+            <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erAsylsøker}
                     spørsmålTekstId={'omdeg.spm.erasylsøker'}
                 />
-            </Seksjon>
-
-            <Seksjon>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.jobberPåBåt}
@@ -134,8 +131,6 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </Seksjon>
-            <Seksjon>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.mottarUtlandsPensjon}
@@ -151,7 +146,7 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </Seksjon>
+            </KomponentGruppe>
         </Steg>
     );
 };

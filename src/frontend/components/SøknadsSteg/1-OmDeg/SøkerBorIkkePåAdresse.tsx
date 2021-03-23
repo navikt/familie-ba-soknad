@@ -6,7 +6,7 @@ import Lenke from 'nav-frontend-lenker';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { StyledAlertStripe, FeltGruppe, KomponentGruppe } from './layoutKomponenter';
+import { StyledAlertStripe, FeltGruppe, KomponentGruppeDeprecated } from './layoutKomponenter';
 
 interface Props {
     advarselTekstId: string;
@@ -22,12 +22,12 @@ export const SøkerBorIkkePåAdresse: FC<Props> = ({
     const intl = useIntl();
     return (
         <div className={className}>
-            <KomponentGruppe>
+            <KomponentGruppeDeprecated>
                 <StyledAlertStripe type={'advarsel'} form={'inline'} className={'avstand-øverst'}>
                     <SpråkTekst id={advarselTekstId} />
                 </StyledAlertStripe>
-            </KomponentGruppe>
-            <KomponentGruppe>
+            </KomponentGruppeDeprecated>
+            <KomponentGruppeDeprecated>
                 <FeltGruppe>
                     <Element>
                         <SpråkTekst id={utfyllendeAdvarselInfoId} />
@@ -45,7 +45,7 @@ export const SøkerBorIkkePåAdresse: FC<Props> = ({
                 <Normaltekst>
                     <SpråkTekst id={'personopplysninger.info.pdfskjema'} />
                 </Normaltekst>
-            </KomponentGruppe>
+            </KomponentGruppeDeprecated>
         </div>
     );
 };
