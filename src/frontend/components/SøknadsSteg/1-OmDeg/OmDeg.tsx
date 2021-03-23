@@ -67,7 +67,7 @@ const OmDeg: React.FC = () => {
                             skjema={skjema}
                             felt={skjema.felter.borPåRegistrertAdresse}
                             spørsmålTekstId={'personopplysninger.spm.riktigAdresse'}
-                            tilleggsinfo={'personopplysninger.lesmer-innhold.riktigAdresse'}
+                            tilleggsinfoTekstId={'personopplysninger.lesmer-innhold.riktigAdresse'}
                         />
 
                         {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
