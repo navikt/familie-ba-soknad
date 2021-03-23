@@ -1754,15 +1754,16 @@
     nav-frontend-knapper "^2.0.31"
     nav-frontend-knapper-style "^1.0.16"
 
-"@navikt/familie-skjema@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-skjema/-/familie-skjema-1.1.0.tgz#c54be89b3ce0f6d20f3204af052285bd0e5b0a68"
-  integrity sha512-fiBSwu0xAcROdItEGsdWAmcu99NUaw1qd4vwPmosULklCNc3T0wnPtHhQ5N96JJ21QDdfws0/gaZHRux04sh3w==
+"@navikt/familie-skjema@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@navikt/familie-skjema/-/familie-skjema-1.1.1.tgz#071e23b50b91e7f7fd3165f5d923bbfa8fb97760"
+  integrity sha512-U/aPXahYqsGkPWTn2ED7hgOlpU0O7aqtlgG1+oaLio/qlQKLVBuI44Ljyp5clhcaq2HK081fGTAzxVkgwQRW0g==
   dependencies:
     "@navikt/familie-http" "^1.0.4"
     "@navikt/familie-typer" "^3.0.13"
     "@types/deep-equal" "^1.0.1"
     deep-equal "^2.0.5"
+    hashids "^2.2.8"
 
 "@navikt/familie-sprakvelger@2.0.1":
   version "2.0.1"
@@ -5861,6 +5862,11 @@ hash-sum@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/hash-sum/-/hash-sum-2.0.0.tgz#81d01bb5de8ea4a214ad5d6ead1b523460b0b45a"
   integrity sha512-WdZTbAByD+pHfl/g9QSsBIIwy8IT+EsPiKDs0KNX+zSHhdDLFKdZu0BQHljvO+0QI/BasbMSUa8wYNCZTvhslg==
+
+hashids@^2.2.8:
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/hashids/-/hashids-2.2.8.tgz#d1e4e1be48e711ad6e5f27b32c37c399d5eeb5b4"
+  integrity sha512-OI6rsk/OqyX60nBsqxnNl3R7CDv9eMOgxzipshZwXE6cUcBcEyHf8rNDlWVdQJZK3TEynILYybCsNUEQfJsdLA==
 
 he@^1.2.0:
   version "1.2.0"

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import { Input } from 'nav-frontend-skjema';
@@ -15,6 +16,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
+import { omDegSpråkTekstId } from './typer';
 import { useOmdeg } from './useOmdeg';
 
 const StyledSøkerBorIkkePåAdresse = styled(SøkerBorIkkePåAdresse)`
@@ -47,14 +49,36 @@ const StyledInput = styled(Input)`
 
 const OmDeg: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useOmdeg();
-    const { søknad } = useApp();
+    const { søknad, settSøknad } = useApp();
     const { søker } = søknad;
+
+    const { formatMessage } = useIntl();
+
+    const oppdaterSøknad = () => {
+        const spørsmål = Object.values(skjema.felter).map(felt => {
+            return {
+                label: formatMessage({ id: omDegSpråkTekstId[felt.feltId] }),
+                svar: felt.verdi,
+                id: felt.feltId,
+            };
+        });
+
+        settSøknad({
+            ...søknad,
+            søker: {
+                ...søknad.søker,
+                spørsmål: søknad.søker.spørsmål.concat(spørsmål),
+            },
+        });
+    };
+
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.tittel'} />}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
             skjema={skjema}
+            gåVidereOnClickCallback={oppdaterSøknad}
         >
             <StyledSection>
                 <Personopplysninger />
@@ -66,7 +90,9 @@ const OmDeg: React.FC = () => {
                         <JaNeiSpm
                             skjema={skjema}
                             felt={skjema.felter.borPåRegistrertAdresse}
-                            spørsmålTekstId={'personopplysninger.spm.riktigAdresse'}
+                            spørsmålTekstId={
+                                omDegSpråkTekstId[skjema.felter.borPåRegistrertAdresse.feltId]
+                            }
                             tilleggsinfoTekstId={'personopplysninger.lesmer-innhold.riktigAdresse'}
                         />
 
@@ -95,7 +121,7 @@ const OmDeg: React.FC = () => {
                                 skjema.visFeilmeldinger
                             )}
                             name={'Telefonnummer'}
-                            label={<SpråkTekst id={'personopplysninger.telefonnr'} />}
+                            label={<SpråkTekst id={'personopplysninger.spm.telefonnr'} />}
                             bredde={'M'}
                             type="tel"
                         />

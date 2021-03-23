@@ -15,6 +15,7 @@ import {
 
 import { useApp } from '../../../context/AppContext';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { SpørsmålIdOmDeg } from './typer';
 
 export type ESvarMedUbesvart = ESvar | undefined;
 
@@ -40,6 +41,7 @@ export const useOmdeg = (): {
     const søker = søknad.søker;
 
     const borPåRegistrertAdresse = useFelt<ESvarMedUbesvart>({
+        feltId: SpørsmålIdOmDeg.borPåRegistrertAdresse,
         verdi: undefined,
         valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
             /**
@@ -62,6 +64,7 @@ export const useOmdeg = (): {
     });
 
     const oppholderSegINorge = useFelt<ESvarMedUbesvart>({
+        feltId: SpørsmålIdOmDeg.oppholderSegINorge,
         verdi: undefined,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
@@ -77,6 +80,7 @@ export const useOmdeg = (): {
     });
 
     const oppholdsLand = useFelt<Alpha3Code | undefined>({
+        feltId: SpørsmålIdOmDeg.oppholdsland,
         verdi: undefined,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.oppholderSegINorge.verdi === ESvar.NEI;
@@ -92,6 +96,7 @@ export const useOmdeg = (): {
     });
 
     const telefonnummer = useFelt<string>({
+        feltId: SpørsmålIdOmDeg.telefonnummer,
         verdi: søker.kontakttelefon,
         valideringsfunksjon: (felt: FeltState<string>) => {
             return felt.verdi.length >= 8 && /^[+\d\s]+$/.test(felt.verdi)
@@ -108,6 +113,7 @@ export const useOmdeg = (): {
     });
 
     const værtINorgeITolvMåneder = useFelt<ESvarMedUbesvart>({
+        feltId: SpørsmålIdOmDeg.værtINorgeITolvMåneder,
         verdi: undefined,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
@@ -123,6 +129,7 @@ export const useOmdeg = (): {
     });
 
     const erAsylsøker = useFelt<ESvarMedUbesvart>({
+        feltId: SpørsmålIdOmDeg.asylsøker,
         verdi: undefined,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.værtINorgeITolvMåneder.verdi !== undefined;
@@ -138,6 +145,7 @@ export const useOmdeg = (): {
     });
 
     const jobberPåBåt = useFelt<ESvarMedUbesvart>({
+        feltId: SpørsmålIdOmDeg.jobberPåBåt,
         verdi: undefined,
         skalFeltetVises: avhengigheter => {
             return avhengigheter.erAsylsøker.verdi !== undefined;
@@ -153,6 +161,7 @@ export const useOmdeg = (): {
     });
 
     const arbeidsLand = useFelt<Alpha3Code | undefined>({
+        feltId: SpørsmålIdOmDeg.arbeidsland,
         verdi: undefined,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.jobberPåBåt.verdi === ESvar.JA;
@@ -168,6 +177,7 @@ export const useOmdeg = (): {
     });
 
     const mottarUtlandsPensjon = useFelt<ESvarMedUbesvart>({
+        feltId: SpørsmålIdOmDeg.mottarUtlandspensjon,
         verdi: undefined,
         skalFeltetVises: avhengigheter => {
             return avhengigheter.erAsylsøker.verdi !== undefined;
@@ -183,6 +193,7 @@ export const useOmdeg = (): {
     });
 
     const pensjonsLand = useFelt<Alpha3Code | undefined>({
+        feltId: SpørsmålIdOmDeg.pensjonsland,
         verdi: undefined,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.mottarUtlandsPensjon.verdi === ESvar.JA;

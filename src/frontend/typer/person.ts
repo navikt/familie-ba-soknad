@@ -1,5 +1,7 @@
 import { Alpha3Code } from 'i18n-iso-countries';
 
+import { ISøknadSpørsmål } from './søknad';
+
 export interface IPerson {
     navn: string;
     barn: IBarn[];
@@ -32,11 +34,11 @@ export interface IPersonFraPdl {
     ident: string;
     adresse?: IAdresse;
     sivilstand: { type: ESivilstand };
-    //fødselsdato: Date;
 }
 
 export interface ISøkerNy extends IPersonFraPdl {
     kontakttelefon: string;
+    spørsmål: ISøknadSpørsmål[];
 }
 
 export interface IBarnNy {
@@ -45,6 +47,7 @@ export interface IBarnNy {
     fødselsdato: string;
     borMedSøker: boolean;
     alder: string;
+    spørsmål: ISøknadSpørsmål[];
 }
 
 export interface IAdresse {

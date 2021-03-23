@@ -57,12 +57,12 @@ export interface ISøknadNy {
     søknadstype: ESøknadstype;
     søker: ISøkerNy;
     barn: IBarnNy[];
-    spørsmål?: ISøknadsfeltNy[];
 }
 
-export interface ISøknadsfeltNy {
-    label: string;
+export interface ISøknadSpørsmål {
     id: string;
+    label: string;
+    svar: string;
 }
 
 export const initialStateSøknadNy: ISøknadNy = {
@@ -82,7 +82,7 @@ export const initialStateSøknadNy: ISøknadNy = {
             postnummer: '',
             bostedskommune: '',
         },
+        spørsmål: [],
     },
     barn: [],
-    spørsmål: [],
 };

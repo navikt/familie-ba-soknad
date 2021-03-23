@@ -139,6 +139,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                         fødselsdato: barn.fødselsdato,
                         ident: formaterFnr(barn.ident),
                         borMedSøker: barn.borMedSøker,
+                        spørsmål: [],
                     };
                 }
             );
@@ -147,6 +148,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                 søker: {
                     ...søker,
                     kontakttelefon: '',
+                    spørsmål: [],
                 },
                 barn,
             });
