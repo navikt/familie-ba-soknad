@@ -10,14 +10,21 @@ import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
+import { device } from '../../../../Theme';
 import { IBarnNy } from '../../../../typer/person';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
 import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
-const StyledBarnekort = styled.div`
-    padding: 0.625rem;
-    width: 17.25rem;
+export const StyledBarnekort = styled.div`
+    position: relative;
+    border-radius: 0.3rem;
+    max-width: 49%;
+    padding: 2rem;
+    background-color: ${navFarger.navLysGra};
+    @media all and ${device.mobile} {
+        max-width: 100%;
+    }
 `;
 
 const LeggTilBarnCheckbox = styled(Checkbox)`
@@ -28,24 +35,20 @@ const InformasjonsboksInnhold = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-`;
-
-const Informasjonsboks = styled.div`
-    padding: 2rem;
-    border-bottom-left-radius: 0.3rem;
-    border-bottom-right-radius: 0.3rem;
-    background-color: ${navFarger.navLysGra};
+    margin-top: 8rem;
 `;
 
 const BarnekortHeader = styled.div`
-    box-sizing: border-box;
     height: 8rem;
     background-color: ${navFarger.navLillaDarken60};
-    border-top-right-radius: 0.3rem;
-    border-top-left-radius: 0.3rem;
     border-bottom: 0.25rem solid ${navFarger.navLillaLighten20};
+    border-radius: 0.3rem 0.3rem 0 0;
     display: flex;
     align-items: flex-end;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
     > img {
         display: block;
         margin: 0 auto;
@@ -65,7 +68,7 @@ const StyledUndertittel = styled(Undertittel)`
 
 const StyledIngress = styled(Ingress)`
     && {
-        font-size: 1.125rem; // Overstyr mixin som mener den skal være samme som undertittel på stor skjerm
+        font-size: 1rem;
         margin-top: 1rem;
         font-weight: 600;
     }
@@ -83,32 +86,30 @@ const Barnekort: React.FC<IBarnekortProps> = props => {
             <BarnekortHeader>
                 <img alt="barn" src={hentTilfeldigElement(ikoner)} />
             </BarnekortHeader>
-            <Informasjonsboks>
-                <InformasjonsboksInnhold>
-                    <StyledUndertittel>{navn}</StyledUndertittel>
-                    <BarneKortInfo
-                        labelId={'velgbarn.fødselsnummer.label'}
-                        verdi={formaterFnr(ident)}
-                    />
-                    <BarneKortInfo labelId={'velgbarn.alder.label'} verdi={alder} />
-                    <BarneKortInfo
-                        labelId={'velgbarn.bosted.label'}
-                        verdi={
-                            <SpråkTekst
-                                id={
-                                    borMedSøker
-                                        ? 'velgbarn.bosted.registrert-på-adressen-din'
-                                        : 'velgbarn.bosted.annen-adresse'
-                                }
-                            />
-                        }
-                    />
-                    <LeggTilBarnCheckbox
-                        label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
-                        onClick={() => settMedISøknad(ident, !medISøknad)}
-                    />
-                </InformasjonsboksInnhold>
-            </Informasjonsboks>
+            <InformasjonsboksInnhold>
+                <StyledUndertittel>{navn}</StyledUndertittel>
+                <BarneKortInfo
+                    labelId={'velgbarn.fødselsnummer.label'}
+                    verdi={formaterFnr(ident)}
+                />
+                <BarneKortInfo labelId={'velgbarn.alder.label'} verdi={alder} />
+                <BarneKortInfo
+                    labelId={'velgbarn.bosted.label'}
+                    verdi={
+                        <SpråkTekst
+                            id={
+                                borMedSøker
+                                    ? 'velgbarn.bosted.registrert-på-adressen-din'
+                                    : 'velgbarn.bosted.annen-adresse'
+                            }
+                        />
+                    }
+                />
+                <LeggTilBarnCheckbox
+                    label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
+                    onClick={() => settMedISøknad(ident, !medISøknad)}
+                />
+            </InformasjonsboksInnhold>
         </StyledBarnekort>
     );
 };

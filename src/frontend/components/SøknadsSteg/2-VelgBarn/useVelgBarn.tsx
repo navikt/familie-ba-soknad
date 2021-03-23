@@ -6,12 +6,12 @@ import { useApp } from '../../../context/AppContext';
 import { IBarnNy } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
-export interface IStegToFeltTyper {
+export interface IVelgBarnFeltTyper {
     barnMedISøknad: IBarnNy[];
 }
 
 export const useVelgBarn = (): {
-    skjema: ISkjema<IStegToFeltTyper, string>;
+    skjema: ISkjema<IVelgBarnFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
 } => {
@@ -28,7 +28,7 @@ export const useVelgBarn = (): {
         avhengigheter: { barnMedISøknad },
     });
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IStegToFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IVelgBarnFeltTyper, string>({
         felter: {
             barnMedISøknad: barnMedISøknadFelt,
         },

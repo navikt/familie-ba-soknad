@@ -4,6 +4,8 @@ import * as Sentry from '@sentry/browser';
 import { registerLocale } from 'i18n-iso-countries';
 import ReactDOM from 'react-dom';
 
+import Modal from 'nav-frontend-modal';
+
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
@@ -42,3 +44,5 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('root')
 );
+
+Modal.setAppElement('#root');
