@@ -9,18 +9,14 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { device } from '../../../Theme';
 import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
-import KomponentGruppe from '../../Felleskomponenter/Grupper/KomponentGruppe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { useOmdeg } from './useOmdeg';
-
-const StyledSøkerBorIkkePåAdresse = styled(SøkerBorIkkePåAdresse)`
-    margin-top: -3rem;
-`;
 
 const StyledLandDropdown = styled(LandDropdown)`
     width: 50%;
@@ -49,25 +45,21 @@ const OmDeg: React.FC = () => {
 
             <KomponentGruppe>
                 {søker.adresse && (
-                    <>
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.borPåRegistrertAdresse}
-                            spørsmålTekstId={'personopplysninger.spm.riktigAdresse'}
-                            tilleggsinfoTekstId={'personopplysninger.lesmer-innhold.riktigAdresse'}
-                        />
-
-                        {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                            <SøkerBorIkkePåAdresse
-                                advarselTekstId={'personopplysninger.alert.riktigAdresse'}
-                                utfyllendeAdvarselInfoId={'personopplysninger.info.endreAdresse'}
-                            />
-                        )}
-                    </>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.borPåRegistrertAdresse}
+                        spørsmålTekstId={'personopplysninger.spm.riktigAdresse'}
+                        tilleggsinfoTekstId={'personopplysninger.lesmer-innhold.riktigAdresse'}
+                    />
                 )}
-
+                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
+                    <SøkerBorIkkePåAdresse
+                        advarselTekstId={'personopplysninger.alert.riktigAdresse'}
+                        utfyllendeAdvarselInfoId={'personopplysninger.info.endreAdresse'}
+                    />
+                )}
                 {!søker.adresse && (
-                    <StyledSøkerBorIkkePåAdresse
+                    <SøkerBorIkkePåAdresse
                         advarselTekstId={'personopplysninger.info.ukjentadresse'}
                         utfyllendeAdvarselInfoId={'personopplysninger.info.vi-trenger-din-adresse'}
                     />

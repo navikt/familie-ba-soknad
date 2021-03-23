@@ -5,47 +5,37 @@ import { useIntl } from 'react-intl';
 import Lenke from 'nav-frontend-lenker';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
+import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { StyledAlertStripe, FeltGruppe, KomponentGruppeDeprecated } from './layoutKomponenter';
 
 interface Props {
     advarselTekstId: string;
     utfyllendeAdvarselInfoId: string;
-    className?: string;
 }
 
-export const SøkerBorIkkePåAdresse: FC<Props> = ({
-    advarselTekstId,
-    utfyllendeAdvarselInfoId,
-    className,
-}) => {
+export const SøkerBorIkkePåAdresse: FC<Props> = ({ advarselTekstId, utfyllendeAdvarselInfoId }) => {
     const intl = useIntl();
     return (
-        <div className={className}>
-            <KomponentGruppeDeprecated>
-                <StyledAlertStripe type={'advarsel'} form={'inline'} className={'avstand-øverst'}>
-                    <SpråkTekst id={advarselTekstId} />
-                </StyledAlertStripe>
-            </KomponentGruppeDeprecated>
-            <KomponentGruppeDeprecated>
-                <FeltGruppe>
-                    <Element>
-                        <SpråkTekst id={utfyllendeAdvarselInfoId} />
-                    </Element>
-                </FeltGruppe>
-                <FeltGruppe>
-                    <Normaltekst>
-                        <Lenke
-                            href={intl.formatMessage({ id: 'personopplysninger.lenke.pdfskjema' })}
-                        >
-                            <SpråkTekst id={'personopplysninger.lenketekst.pdfskjema'} />
-                        </Lenke>
-                    </Normaltekst>
-                </FeltGruppe>
+        <>
+            <AlertStripe type={'advarsel'}>
+                <SpråkTekst id={advarselTekstId} />
+            </AlertStripe>
+            <Informasjonsbolk>
+                <Element>
+                    <SpråkTekst id={utfyllendeAdvarselInfoId} />
+                </Element>
+            </Informasjonsbolk>
+            <Informasjonsbolk>
                 <Normaltekst>
-                    <SpråkTekst id={'personopplysninger.info.pdfskjema'} />
+                    <Lenke href={intl.formatMessage({ id: 'personopplysninger.lenke.pdfskjema' })}>
+                        <SpråkTekst id={'personopplysninger.lenketekst.pdfskjema'} />
+                    </Lenke>
                 </Normaltekst>
-            </KomponentGruppeDeprecated>
-        </div>
+            </Informasjonsbolk>
+            <Normaltekst>
+                <SpråkTekst id={'personopplysninger.info.pdfskjema'} />
+            </Normaltekst>
+        </>
     );
 };
