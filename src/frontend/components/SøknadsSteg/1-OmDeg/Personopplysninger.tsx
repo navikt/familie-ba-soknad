@@ -6,10 +6,9 @@ import { useIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
-import { hentAdressefelterSortert } from '../../../utils/person';
+import { hentAdressefelterSortert, hentSivilstatus, landkodeTilSpråk } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { FeltGruppe, StyledAlertStripe } from './layoutKomponenter';
-import { hentSivilstatus, landkodeTilSpråk } from './utils';
 
 export const Personopplysninger: React.FC = () => {
     const intl = useIntl();

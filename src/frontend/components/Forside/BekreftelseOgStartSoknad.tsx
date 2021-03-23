@@ -38,7 +38,7 @@ export enum BekreftelseStatus {
     FEIL = 'FEIL',
 }
 
-const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
+export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
     switch (status) {
         case BekreftelseStatus.BEKREFTET:
             return navFarger.navGronn;
