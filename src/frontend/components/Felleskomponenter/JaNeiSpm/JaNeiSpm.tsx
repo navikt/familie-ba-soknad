@@ -6,12 +6,13 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
-import { ESvarMedUbesvart, IOmDegFeltTyper } from '../../SøknadsSteg/1-OmDeg/useOmdeg';
+import { ESvarMedUbesvart } from '../../SøknadsSteg/1-OmDeg/useOmdeg';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface IJaNeiSpmProps {
-    skjema: ISkjema<IOmDegFeltTyper, string>;
+    skjema: ISkjema<SkjemaFeltTyper, string>;
     felt: Felt<ESvar | ESvarMedUbesvart>;
     spørsmålTekstId: string;
     tilleggsinfoTekstId?: string;
