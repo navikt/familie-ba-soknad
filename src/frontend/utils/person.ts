@@ -1,4 +1,6 @@
-import { IAdresse } from '../typer/person';
+import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
+
+import { ESivilstand, IAdresse } from '../typer/person';
 
 export const hentAlder = (dato: string): string => {
     const idag = new Date();
@@ -20,4 +22,28 @@ export const hentAdressefelterSortert = (adresse: IAdresse) => {
     ]
         .map(linje => linje.replace(/\s{2+}/, ' ').trim())
         .filter(value => value);
+};
+
+export const landkodeTilSpråk = (landkode: string, locale: string) => {
+    const landkodeIso = alpha3ToAlpha2(landkode);
+    return getName(landkodeIso, locale);
+};
+
+export const hentSivilstatus = (statuskode?: ESivilstand) => {
+    switch (statuskode) {
+        case ESivilstand.UOPPGITT:
+        case ESivilstand.UGIFT:
+        case ESivilstand.GIFT:
+        case ESivilstand.ENKE_ELLER_ENKEMANN:
+        case ESivilstand.SKILT:
+        case ESivilstand.SEPARERT:
+        case ESivilstand.REGISTRERT_PARTNER:
+        case ESivilstand.SEPARERT_PARTNER:
+        case ESivilstand.SKILT_PARTNER:
+        case ESivilstand.GJENLEVENDE_PARTNER:
+            return `sivilstatus.kode.${statuskode}`;
+
+        default:
+            return 'sivilstatus.kode.ANNET';
+    }
 };
