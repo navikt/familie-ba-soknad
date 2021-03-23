@@ -2,10 +2,13 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
-import { SprakProvider, LocaleType } from '@navikt/familie-sprakvelger';
+import navFarger from 'nav-frontend-core';
+
+import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import norskeTekster from '../../assets/lang/nb.json';
 import { AppProvider } from '../../context/AppContext';
+import { bekreftelseBoksBorderFarge, BekreftelseStatus } from './BekreftelseOgStartSoknad';
 import Forside from './Forside';
 
 beforeEach(() => {
@@ -39,4 +42,10 @@ test('Alle tekster finnes i språkfil', () => {
         </SprakProvider>
     );
     expect(console.error).toHaveBeenCalledTimes(0);
+});
+
+test('Return riktig borderfarge basert på status', () => {
+    expect(bekreftelseBoksBorderFarge(BekreftelseStatus.FEIL)).toEqual(navFarger.navRod);
+    expect(bekreftelseBoksBorderFarge(BekreftelseStatus.BEKREFTET)).toEqual(navFarger.navGronn);
+    expect(bekreftelseBoksBorderFarge(BekreftelseStatus.NORMAL)).toEqual(navFarger.navOransje);
 });
