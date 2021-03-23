@@ -88,11 +88,6 @@ export const useLeggTilBarn = (): {
         avhengigheter: { ident },
     });
 
-    // Nødvendig for å sette valideringsstatus til ok for element
-    // som bruker ikke kommer til å interacte med.
-    harBarnetFåttIdNummer.validerOgSettFelt(harBarnetFåttIdNummer.verdi);
-    navnetErUbestemt.validerOgSettFelt(navnetErUbestemt.verdi);
-
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
         ILeggTilBarnTyper,
         string

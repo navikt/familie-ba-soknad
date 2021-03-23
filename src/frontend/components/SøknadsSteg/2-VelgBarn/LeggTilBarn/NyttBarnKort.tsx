@@ -64,12 +64,26 @@ const StyledLenke = styled(Lenke)`
 export const NyttBarnKort: React.FC = () => {
     const [modalÅpen, settModalÅpen] = useState<boolean>(false);
     const { skjema, nullstillSkjema, valideringErOk, submit } = useLeggTilBarn();
-    const { navn, navnetErUbestemt } = skjema.felter;
+    const { navn, navnetErUbestemt, harBarnetFåttIdNummer, erFødt } = skjema.felter;
     const intl = useIntl();
 
     useEffect(() => {
         navn.validerOgSettFelt('');
     }, [navnetErUbestemt.verdi]);
+
+    /**
+     * Søker vil ikke nødvendigvis interacte med disse feltene siden de er valgfrie
+     * checkboxer, derfor må vi sørge for at de får valideringsstatus satt med en gang.
+     *
+     * Feltene har erFødt som avhengighet, og siden feltavhengigheter er med i avhengighetene
+     * til useMemo i useFelt-hooken vil useFelt reinitialisere feltene når søker velger
+     * ja eller nei på spørsmål om barnet er født eller ikke. Dermed må vi tvinge
+     * valideringsstatus hver gang erFødt endrer verdi.
+     */
+    useEffect(() => {
+        harBarnetFåttIdNummer.validerOgSettFelt(ESvar.JA);
+        navnetErUbestemt.validerOgSettFelt(ESvar.NEI);
+    }, [erFødt.verdi]);
 
     const submitOgLukk = () => {
         submit() && settModalÅpen(false);
