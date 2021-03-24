@@ -1,6 +1,6 @@
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/typer';
 import { INøkkelPar } from './common';
-import { ESivilstand, IBarnNy, ISøkerNy } from './person';
+import { ESivilstand, IBarn, ISøker } from './person';
 
 export enum ESøknadstype {
     IKKE_SATT = 'IKKE_SATT',
@@ -28,23 +28,15 @@ export const søknadstyper: INøkkelPar = {
     },
 };
 
-export interface IBarn {
-    navn: ISøknadsfelt<string>;
-    alder: ISøknadsfelt<string>;
-    ident: ISøknadsfelt<string>;
-    borMedSøker: ISøknadsfelt<string>;
-    medISøknad: ISøknadsfelt<boolean>;
-}
-
 export interface ISøknadsfelt<T> {
     label: string;
     verdi: T;
 }
 
-export interface ISøknadNy {
+export interface ISøknad {
     søknadstype: ESøknadstype;
-    søker: ISøkerNy;
-    barn: IBarnNy[];
+    søker: ISøker;
+    barn: IBarn[];
 }
 
 export interface ISøknadSpørsmål<T> {
@@ -52,7 +44,7 @@ export interface ISøknadSpørsmål<T> {
     svar: T;
 }
 
-export const initialStateSøknadNy: ISøknadNy = {
+export const initialStateSøknad: ISøknad = {
     søknadstype: ESøknadstype.IKKE_SATT,
     søker: {
         navn: '',

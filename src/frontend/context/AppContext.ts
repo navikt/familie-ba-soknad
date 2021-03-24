@@ -12,20 +12,20 @@ import {
 } from '@navikt/familie-typer';
 
 import { IKvittering } from '../typer/kvittering';
-import { IBarnNy, IPersonFraPdl } from '../typer/person';
-import { initialStateSøknadNy, ISøknadNy } from '../typer/søknad';
+import { IBarn, ISøkerFraPdl } from '../typer/person';
+import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { hentAlder } from '../utils/person';
 import { formaterFnr } from '../utils/visning';
 import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
 
 const [AppProvider, useApp] = createUseContext(() => {
-    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<IPersonFraPdl>()); // legacy
+    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerFraPdl>()); // legacy
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
         InnloggetStatus.IKKE_VERIFISERT
     );
-    const [søknad, settSøknad] = useState<ISøknadNy>(initialStateSøknadNy);
+    const [søknad, settSøknad] = useState<ISøknad>(initialStateSøknad);
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [utfyltSteg, settUtfyltSteg] = useState<number>(-1);
 
@@ -38,7 +38,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 
-            axiosRequest<IPersonFraPdl, void>({
+            axiosRequest<ISøkerFraPdl, void>({
                 url: '/api/personopplysning',
                 method: 'POST',
                 withCredentials: true,
@@ -128,11 +128,11 @@ const [AppProvider, useApp] = createUseContext(() => {
             .catch(_ => settInnloggetStatus(InnloggetStatus.FEILET));
     };
 
-    const nullstillSøknadsobjekt = (ressurs: Ressurs<IPersonFraPdl>) => {
+    const nullstillSøknadsobjekt = (ressurs: Ressurs<ISøkerFraPdl>) => {
         if (ressurs.status === RessursStatus.SUKSESS) {
             const søker = ressurs.data;
             const barn = ressurs.data.barn.map(
-                (barn): IBarnNy => {
+                (barn): IBarn => {
                     return {
                         navn: barn.navn,
                         alder: hentAlder(barn.fødselsdato),
@@ -143,9 +143,9 @@ const [AppProvider, useApp] = createUseContext(() => {
                 }
             );
             settSøknad({
-                ...initialStateSøknadNy,
+                ...initialStateSøknad,
                 søker: {
-                    ...initialStateSøknadNy.søker,
+                    ...initialStateSøknad.søker,
                     ...søker,
                 },
                 barn,
