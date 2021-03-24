@@ -1,3 +1,4 @@
+import { OmDegSpørsmålId } from '../components/SøknadsSteg/1-OmDeg/typer';
 import { INøkkelPar } from './common';
 import { ESivilstand, IBarnNy, ISøkerNy } from './person';
 
@@ -6,10 +7,6 @@ export enum ESøknadstype {
     ORDINÆR = 'ORDINÆR',
     UTVIDET = 'UTIVIDET',
     EØS = 'EØS',
-}
-
-export enum ESteg {
-    STEG_EN,
 }
 
 export const søknadstyper: INøkkelPar = {
@@ -31,10 +28,6 @@ export const søknadstyper: INøkkelPar = {
     },
 };
 
-interface ISøker {
-    navn: ISøknadsfelt<string>;
-}
-
 export interface IBarn {
     navn: ISøknadsfelt<string>;
     alder: ISøknadsfelt<string>;
@@ -43,11 +36,6 @@ export interface IBarn {
     medISøknad: ISøknadsfelt<boolean>;
 }
 
-export interface ISøknad {
-    søknadstype: ISøknadsfelt<ESøknadstype>;
-    søker: ISøknadsfelt<ISøker>;
-    barn: ISøknadsfelt<ISøknadsfelt<IBarn>[]>;
-}
 export interface ISøknadsfelt<T> {
     label: string;
     verdi: T;
@@ -59,10 +47,9 @@ export interface ISøknadNy {
     barn: IBarnNy[];
 }
 
-export interface ISøknadSpørsmål {
-    id: string;
-    label: string;
-    svar: string;
+export interface ISøknadSpørsmål<T> {
+    id: OmDegSpørsmålId;
+    svar: T;
 }
 
 export const initialStateSøknadNy: ISøknadNy = {
@@ -71,7 +58,6 @@ export const initialStateSøknadNy: ISøknadNy = {
         navn: '',
         barn: [],
         statsborgerskap: [],
-        kontakttelefon: '',
         ident: '',
         sivilstand: { type: ESivilstand.UOPPGITT },
         adresse: {
@@ -82,7 +68,46 @@ export const initialStateSøknadNy: ISøknadNy = {
             postnummer: '',
             bostedskommune: '',
         },
-        spørsmål: [],
+        borPåRegistrertAdresse: {
+            id: OmDegSpørsmålId.borPåRegistrertAdresse,
+            svar: undefined,
+        },
+        telefonnummer: {
+            id: OmDegSpørsmålId.telefonnummer,
+            svar: '',
+        },
+        oppholderSegINorge: {
+            id: OmDegSpørsmålId.oppholderSegINorge,
+            svar: undefined,
+        },
+        oppholdsland: {
+            id: OmDegSpørsmålId.oppholdsland,
+            svar: undefined,
+        },
+        værtINorgeITolvMåneder: {
+            id: OmDegSpørsmålId.værtINorgeITolvMåneder,
+            svar: undefined,
+        },
+        erAsylsøker: {
+            id: OmDegSpørsmålId.erAsylsøker,
+            svar: undefined,
+        },
+        jobberPåBåt: {
+            id: OmDegSpørsmålId.jobberPåBåt,
+            svar: undefined,
+        },
+        arbeidsland: {
+            id: OmDegSpørsmålId.arbeidsland,
+            svar: undefined,
+        },
+        mottarUtenlandspensjon: {
+            id: OmDegSpørsmålId.mottarUtenlandspensjon,
+            svar: undefined,
+        },
+        pensjonsland: {
+            id: OmDegSpørsmålId.pensjonsland,
+            svar: undefined,
+        },
     },
     barn: [],
 };

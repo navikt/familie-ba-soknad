@@ -15,7 +15,6 @@ import {
 
 import { useApp } from '../../../context/AppContext';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { SpørsmålIdOmDeg } from './typer';
 
 export type ESvarMedUbesvart = ESvar | undefined;
 
@@ -23,26 +22,27 @@ export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvarMedUbesvart;
     telefonnummer: string;
     oppholderSegINorge: ESvarMedUbesvart;
-    oppholdsLand: Alpha3Code | undefined;
+    oppholdsland: Alpha3Code | undefined;
     værtINorgeITolvMåneder: ESvarMedUbesvart;
     erAsylsøker: ESvarMedUbesvart;
     jobberPåBåt: ESvarMedUbesvart;
-    arbeidsLand: Alpha3Code | undefined;
-    mottarUtlandsPensjon: ESvarMedUbesvart;
-    pensjonsLand: Alpha3Code | undefined;
+    arbeidsland: Alpha3Code | undefined;
+    mottarUtenlandspensjon: ESvarMedUbesvart;
+    pensjonsland: Alpha3Code | undefined;
 }
 
 export const useOmdeg = (): {
     skjema: ISkjema<IOmDegFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
+    oppdaterSøknad: () => void;
 } => {
-    const { søknad } = useApp();
+    const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
 
     const borPåRegistrertAdresse = useFelt<ESvarMedUbesvart>({
-        feltId: SpørsmålIdOmDeg.borPåRegistrertAdresse,
-        verdi: undefined,
+        feltId: søker.borPåRegistrertAdresse.id,
+        verdi: søker.borPåRegistrertAdresse.svar,
         valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
             /**
              * Hvis man svarer nei setter vi felt til Feil-state slik at man ikke kan gå videre,
@@ -64,8 +64,8 @@ export const useOmdeg = (): {
     });
 
     const oppholderSegINorge = useFelt<ESvarMedUbesvart>({
-        feltId: SpørsmålIdOmDeg.oppholderSegINorge,
-        verdi: undefined,
+        feltId: søker.oppholderSegINorge.id,
+        verdi: søker.oppholderSegINorge.svar,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
         },
@@ -79,9 +79,9 @@ export const useOmdeg = (): {
         },
     });
 
-    const oppholdsLand = useFelt<Alpha3Code | undefined>({
-        feltId: SpørsmålIdOmDeg.oppholdsland,
-        verdi: undefined,
+    const oppholdsland = useFelt<Alpha3Code | undefined>({
+        feltId: søker.oppholdsland.id,
+        verdi: søker.oppholdsland.svar,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.oppholderSegINorge.verdi === ESvar.NEI;
         },
@@ -96,8 +96,8 @@ export const useOmdeg = (): {
     });
 
     const telefonnummer = useFelt<string>({
-        feltId: SpørsmålIdOmDeg.telefonnummer,
-        verdi: søker.kontakttelefon,
+        feltId: søker.telefonnummer.id,
+        verdi: søker.telefonnummer.svar,
         valideringsfunksjon: (felt: FeltState<string>) => {
             return felt.verdi.length >= 8 && /^[+\d\s]+$/.test(felt.verdi)
                 ? ok(felt)
@@ -113,8 +113,8 @@ export const useOmdeg = (): {
     });
 
     const værtINorgeITolvMåneder = useFelt<ESvarMedUbesvart>({
-        feltId: SpørsmålIdOmDeg.værtINorgeITolvMåneder,
-        verdi: undefined,
+        feltId: søker.værtINorgeITolvMåneder.id,
+        verdi: søker.værtINorgeITolvMåneder.svar,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
         },
@@ -129,8 +129,8 @@ export const useOmdeg = (): {
     });
 
     const erAsylsøker = useFelt<ESvarMedUbesvart>({
-        feltId: SpørsmålIdOmDeg.asylsøker,
-        verdi: undefined,
+        feltId: søker.erAsylsøker.id,
+        verdi: søker.erAsylsøker.svar,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.værtINorgeITolvMåneder.verdi !== undefined;
         },
@@ -145,8 +145,8 @@ export const useOmdeg = (): {
     });
 
     const jobberPåBåt = useFelt<ESvarMedUbesvart>({
-        feltId: SpørsmålIdOmDeg.jobberPåBåt,
-        verdi: undefined,
+        feltId: søker.jobberPåBåt.id,
+        verdi: søker.jobberPåBåt.svar,
         skalFeltetVises: avhengigheter => {
             return avhengigheter.erAsylsøker.verdi !== undefined;
         },
@@ -160,9 +160,9 @@ export const useOmdeg = (): {
         },
     });
 
-    const arbeidsLand = useFelt<Alpha3Code | undefined>({
-        feltId: SpørsmålIdOmDeg.arbeidsland,
-        verdi: undefined,
+    const arbeidsland = useFelt<Alpha3Code | undefined>({
+        feltId: søker.arbeidsland.id,
+        verdi: søker.arbeidsland.svar,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.jobberPåBåt.verdi === ESvar.JA;
         },
@@ -176,9 +176,9 @@ export const useOmdeg = (): {
         },
     });
 
-    const mottarUtlandsPensjon = useFelt<ESvarMedUbesvart>({
-        feltId: SpørsmålIdOmDeg.mottarUtlandspensjon,
-        verdi: undefined,
+    const mottarUtenlandspensjon = useFelt<ESvarMedUbesvart>({
+        feltId: søker.mottarUtenlandspensjon.id,
+        verdi: søker.mottarUtenlandspensjon.svar,
         skalFeltetVises: avhengigheter => {
             return avhengigheter.erAsylsøker.verdi !== undefined;
         },
@@ -192,11 +192,11 @@ export const useOmdeg = (): {
         },
     });
 
-    const pensjonsLand = useFelt<Alpha3Code | undefined>({
-        feltId: SpørsmålIdOmDeg.pensjonsland,
-        verdi: undefined,
+    const pensjonsland = useFelt<Alpha3Code | undefined>({
+        feltId: søker.pensjonsland.id,
+        verdi: søker.pensjonsland.svar,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            return avhengigheter.mottarUtlandsPensjon.verdi === ESvar.JA;
+            return avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA;
         },
         valideringsfunksjon: (felt: FeltState<Alpha3Code | undefined>) => {
             return felt.verdi !== undefined
@@ -204,22 +204,71 @@ export const useOmdeg = (): {
                 : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.velgland'} />);
         },
         avhengigheter: {
-            mottarUtlandsPensjon,
+            mottarUtenlandspensjon,
         },
     });
+
+    const oppdaterSøknad = () => {
+        settSøknad({
+            ...søknad,
+            søker: {
+                ...søknad.søker,
+                borPåRegistrertAdresse: {
+                    ...søknad.søker.borPåRegistrertAdresse,
+                    svar: skjema.felter.borPåRegistrertAdresse.verdi,
+                },
+                telefonnummer: {
+                    ...søknad.søker.telefonnummer,
+                    svar: skjema.felter.telefonnummer.verdi,
+                },
+                oppholderSegINorge: {
+                    ...søknad.søker.oppholderSegINorge,
+                    svar: skjema.felter.oppholderSegINorge.verdi,
+                },
+                oppholdsland: {
+                    ...søknad.søker.oppholdsland,
+                    svar: skjema.felter.oppholdsland.verdi,
+                },
+                værtINorgeITolvMåneder: {
+                    ...søknad.søker.værtINorgeITolvMåneder,
+                    svar: skjema.felter.værtINorgeITolvMåneder.verdi,
+                },
+                erAsylsøker: {
+                    ...søknad.søker.erAsylsøker,
+                    svar: skjema.felter.erAsylsøker.verdi,
+                },
+                jobberPåBåt: {
+                    ...søknad.søker.jobberPåBåt,
+                    svar: skjema.felter.jobberPåBåt.verdi,
+                },
+                arbeidsland: {
+                    ...søknad.søker.arbeidsland,
+                    svar: skjema.felter.arbeidsland.verdi,
+                },
+                mottarUtenlandspensjon: {
+                    ...søknad.søker.mottarUtenlandspensjon,
+                    svar: skjema.felter.mottarUtenlandspensjon.verdi,
+                },
+                pensjonsland: {
+                    ...søknad.søker.pensjonsland,
+                    svar: skjema.felter.pensjonsland.verdi,
+                },
+            },
+        });
+    };
 
     const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IOmDegFeltTyper, string>({
         felter: {
             borPåRegistrertAdresse,
             telefonnummer,
             oppholderSegINorge,
-            oppholdsLand,
+            oppholdsland,
             værtINorgeITolvMåneder,
             erAsylsøker,
             jobberPåBåt,
-            arbeidsLand,
-            mottarUtlandsPensjon,
-            pensjonsLand,
+            arbeidsland,
+            mottarUtenlandspensjon,
+            pensjonsland,
         },
         skjemanavn: 'omdeg',
     });
@@ -228,5 +277,6 @@ export const useOmdeg = (): {
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
+        oppdaterSøknad,
     };
 };
