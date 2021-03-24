@@ -96,5 +96,6 @@
   "velgbarn.tittel": "Hvilke barn skal være med i søknaden?",
   "velgbarn.info.folkeregisteret": "Informasjonen er hentet fra Folkeregisteret. Hvis noe ikke stemmer, kan du endre informasjonen hos Folkeregisteret. ",
   "velgbarn.regelverkinfo.lenke.tittel": "Dette sier regelverket om hvilke barn du kan få barnetrygd for",
-  "velgbarn.regelverkinfo.lenke": "https://nav.no/"
+  "velgbarn.regelverkinfo.lenke": "https://nav.no/",
+  "ombarnadine.tittel": "Om barna dine"
 }
