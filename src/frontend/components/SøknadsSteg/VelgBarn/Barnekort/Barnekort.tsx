@@ -9,7 +9,6 @@ import { Ingress, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
-import { useApp } from '../../../../context/AppContext';
 import { device } from '../../../../Theme';
 import { IBarnNy } from '../../../../typer/person';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
@@ -76,11 +75,8 @@ const StyledIngress = styled(Ingress)`
 `;
 
 const Barnekort: React.FC<IBarnekortProps> = props => {
-    const { søknad } = useApp();
     const ikoner = [barn1, barn2, barn3];
     const { ident, borMedSøker, alder, navn, settMedISøknad } = props;
-
-    const medISøknad = !!søknad.barn.find(barn => barn.ident === ident);
 
     return (
         <StyledBarnekort>
@@ -110,7 +106,7 @@ const Barnekort: React.FC<IBarnekortProps> = props => {
                 )}
                 <LeggTilBarnCheckbox
                     label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
-                    onClick={() => settMedISøknad(ident, !medISøknad)}
+                    onChange={event => settMedISøknad(ident, event.target.checked)}
                 />
             </InformasjonsboksInnhold>
         </StyledBarnekort>

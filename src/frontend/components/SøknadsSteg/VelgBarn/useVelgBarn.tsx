@@ -14,18 +14,17 @@ export const useVelgBarn = (): {
     skjema: ISkjema<IVelgBarnFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
+    oppdaterSøknad: () => void;
 } => {
-    const { søknad } = useApp();
-    const { barn: barnMedISøknad } = søknad;
+    const { søknad, settSøknad } = useApp();
 
     const barnMedISøknadFelt = useFelt<IBarnNy[]>({
-        verdi: barnMedISøknad,
-        valideringsfunksjon: (felt, avhengigheter) => {
-            return avhengigheter?.barnMedISøknad.length > 0
+        verdi: søknad.barn,
+        valideringsfunksjon: felt => {
+            return felt.verdi.length > 0
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'velgbarn.feilmelding.du-må-velge-barn'} />);
         },
-        avhengigheter: { barnMedISøknad },
     });
 
     const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IVelgBarnFeltTyper, string>({
@@ -35,9 +34,17 @@ export const useVelgBarn = (): {
         skjemanavn: 'velgbarn',
     });
 
+    const oppdaterSøknad = () => {
+        settSøknad({
+            ...søknad,
+            barn: barnMedISøknadFelt.verdi,
+        });
+    };
+
     return {
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
+        oppdaterSøknad,
     };
 };

@@ -45,21 +45,24 @@ const LenkeMedChevron: React.FC<LenkeProps> = props => (
 );
 
 const VelgBarn: React.FC = () => {
-    const { søknad, settSøknad } = useApp();
-    const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useVelgBarn();
+    const { søknad } = useApp();
+    const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useVelgBarn();
+    const { barnMedISøknad } = skjema.felter;
     const intl = useIntl();
 
-    function settMedISøknad(ident: string, skalVæreMed: boolean) {
-        const barn = søknad.søker.barn.find(barn => barn.ident === ident);
+    const settMedISøknad = (ident: string, skalVæreMed: boolean) => {
+        // Hvis barnet allerede er i søknaden, bruk info fra søknad, ellers finn fra søker
+        const barn =
+            søknad.barn.find(barn => barn.ident === ident) ??
+            søknad.søker.barn.find(barn => barn.ident === ident);
 
         barn &&
-            settSøknad({
-                ...søknad,
-                barn: skalVæreMed
-                    ? søknad.barn.concat([{ ...barn, alder: hentAlder(barn.fødselsdato) }])
-                    : søknad.barn.filter(barn => barn.ident !== ident),
-            });
-    }
+            barnMedISøknad.validerOgSettFelt(
+                skalVæreMed
+                    ? barnMedISøknad.verdi.concat([{ ...barn, alder: hentAlder(barn.fødselsdato) }])
+                    : barnMedISøknad.verdi.filter(barn => barn.ident !== ident)
+            );
+    };
 
     return (
         <Steg
@@ -67,9 +70,7 @@ const VelgBarn: React.FC = () => {
             skjema={skjema}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
-            gåVidereOnClickCallback={() => {
-                // TODO: Bytt ut settMedISøknad med noe fra useVelgBarn
-            }}
+            gåVidereOnClickCallback={oppdaterSøknad}
         >
             <AlertStripe form={'inline'}>
                 <SpråkTekst id={'velgbarn.info.folkeregisteret'} />
