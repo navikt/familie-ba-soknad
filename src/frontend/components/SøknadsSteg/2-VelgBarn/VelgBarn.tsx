@@ -8,6 +8,7 @@ import navFarger from 'nav-frontend-core';
 import Lenke, { Props as LenkeProps } from 'nav-frontend-lenker';
 
 import { useApp } from '../../../context/AppContext';
+import { device } from '../../../Theme';
 import { hentAlder } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { StyledAlertStripe } from '../1-OmDeg/layoutKomponenter';
@@ -23,7 +24,12 @@ const BarnekortContainer = styled.div`
     margin: 1rem auto 0;
     justify-content: space-between;
     width: 100%;
-    text-align: left;
+    @media all and ${device.tablet} {
+        justify-content: left;
+    }
+    @media all and ${device.mobile} {
+        justify-content: center;
+    }
 `;
 
 const LenkeContainer = styled.div`

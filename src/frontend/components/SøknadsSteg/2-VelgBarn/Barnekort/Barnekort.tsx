@@ -19,11 +19,12 @@ import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 export const StyledBarnekort = styled.div`
     position: relative;
     border-radius: 0.3rem;
-    max-width: 49%;
+    max-width: calc(16.3rem - 0.3rem * 2);
     padding: 2rem;
     background-color: ${navFarger.navLysGra};
+    margin: 0.3rem;
     @media all and ${device.mobile} {
-        max-width: 100%;
+        width: 100%;
     }
 `;
 
@@ -93,18 +94,20 @@ const Barnekort: React.FC<IBarnekortProps> = props => {
                     verdi={formaterFnr(ident)}
                 />
                 <BarneKortInfo labelId={'velgbarn.alder.label'} verdi={alder} />
-                <BarneKortInfo
-                    labelId={'velgbarn.bosted.label'}
-                    verdi={
-                        <SpråkTekst
-                            id={
-                                borMedSøker
-                                    ? 'velgbarn.bosted.registrert-på-adressen-din'
-                                    : 'velgbarn.bosted.annen-adresse'
-                            }
-                        />
-                    }
-                />
+                {borMedSøker !== undefined && (
+                    <BarneKortInfo
+                        labelId={'velgbarn.bosted.label'}
+                        verdi={
+                            <SpråkTekst
+                                id={
+                                    borMedSøker
+                                        ? 'velgbarn.bosted.registrert-på-adressen-din'
+                                        : 'velgbarn.bosted.annen-adresse'
+                                }
+                            />
+                        }
+                    />
+                )}
                 <LeggTilBarnCheckbox
                     label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
                     onClick={() => settMedISøknad(ident, !medISøknad)}

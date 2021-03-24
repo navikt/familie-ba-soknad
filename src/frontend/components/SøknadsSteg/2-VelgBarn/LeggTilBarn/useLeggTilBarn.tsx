@@ -113,7 +113,7 @@ export const useLeggTilBarn = (): {
                 barn: søknad.søker.barn.concat([
                     {
                         ident: ident.verdi,
-                        borMedSøker: false,
+                        borMedSøker: undefined,
                         fødselsdato: [fulltÅr, måned, dagKompansertForDNummer].join('-'),
                         navn:
                             navn.verdi ||
