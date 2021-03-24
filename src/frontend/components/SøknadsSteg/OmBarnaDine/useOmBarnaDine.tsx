@@ -16,52 +16,38 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export type ESvarMedUbesvart = ESvar | undefined;
 
-export interface IOmDegFeltTyper {
-    borPåRegistrertAdresse: ESvarMedUbesvart;
+export interface IOmBarnaDineFeltTyper {
+    erNoenAvBarnaFosterbarn: ESvar | undefined;
 }
 
 export const useOmBarnaDine = (): {
-    skjema: ISkjema<IOmDegFeltTyper, string>;
+    skjema: ISkjema<IOmBarnaDineFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
-    const søker = søknad.søker;
 
     const erNoenAvBarnaFosterbarn = useFelt<ESvarMedUbesvart>({
-        feltId: søker.borPåRegistrertAdresse.id,
-        verdi: søker.borPåRegistrertAdresse.svar,
+        feltId: søknad.erNoenAvBarnaFosterbarn.id,
+        verdi: søknad.erNoenAvBarnaFosterbarn.svar,
         valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
-            return felt.verdi === ESvar.JA
+            return felt.verdi !== undefined
                 ? ok(felt)
-                : feil(
-                      felt,
-                      felt.verdi === undefined ? (
-                          <SpråkTekst id={'personopplysninger.feilmelding.janei'} />
-                      ) : (
-                          ''
-                      )
-                  );
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
         },
     });
 
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
-            søker: {
-                ...søknad.søker,
-                borPåRegistrertAdresse: {
-                    ...søknad.søker.borPåRegistrertAdresse,
-                    svar: skjema.felter.borPåRegistrertAdresse.verdi,
-                },
-            },
+            erNoenAvBarnaFosterbarn: skjema.felter.erNoenAvBarnaFosterbarn.verdi,
         });
     };
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IOmDegFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IOmBarnaDineFeltTyper, string>({
         felter: {
-            borPåRegistrertAdresse,
+            erNoenAvBarnaFosterbarn,
         },
         skjemanavn: 'ombarnadine',
     });

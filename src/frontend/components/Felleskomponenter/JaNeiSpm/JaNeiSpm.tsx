@@ -12,7 +12,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface IJaNeiSpmProps {
     skjema: ISkjema<SkjemaFeltTyper, string>;
-    felt: Felt<ESvar | ESvarMedUbesvart>;
+    felt: Felt<ESvar | undefined>;
     spørsmålTekstId: string;
     tilleggsinfoTekstId?: string;
 }
