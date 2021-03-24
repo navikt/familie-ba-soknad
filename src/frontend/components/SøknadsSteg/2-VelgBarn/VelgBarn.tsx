@@ -10,8 +10,8 @@ import Lenke, { Props as LenkeProps } from 'nav-frontend-lenker';
 import { useApp } from '../../../context/AppContext';
 import { device } from '../../../Theme';
 import { hentAlder } from '../../../utils/person';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { StyledAlertStripe } from '../1-OmDeg/layoutKomponenter';
 import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
@@ -68,9 +68,9 @@ const VelgBarn: React.FC = () => {
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
         >
-            <StyledAlertStripe type={'info'} form={'inline'}>
+            <AlertStripe form={'inline'}>
                 <SpråkTekst id={'velgbarn.info.folkeregisteret'} />
-            </StyledAlertStripe>
+            </AlertStripe>
 
             <LenkeMedChevron href={intl.formatMessage({ id: 'velgbarn.regelverkinfo.lenke' })}>
                 <SpråkTekst id={'velgbarn.regelverkinfo.lenke.tittel'} />
