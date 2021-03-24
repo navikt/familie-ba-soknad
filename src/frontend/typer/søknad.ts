@@ -108,11 +108,6 @@ export const initialStateSøknadNy: ISøknadNy = {
             id: OmDegSpørsmålId.pensjonsland,
             svar: undefined,
         },
-        erNoenAvBarnaFosterbarn: {
-            id: OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
-            svar: undefined,
-            //TODO
-        },
     },
     barn: [],
 };

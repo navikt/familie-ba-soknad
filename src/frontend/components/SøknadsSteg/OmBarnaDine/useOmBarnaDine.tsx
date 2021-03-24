@@ -33,12 +33,6 @@ export const useOmBarnaDine = (): {
         feltId: søker.borPåRegistrertAdresse.id,
         verdi: søker.borPåRegistrertAdresse.svar,
         valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
-            /**
-             * Hvis man svarer nei setter vi felt til Feil-state slik at man ikke kan gå videre,
-             * og setter feilmelding til en tom string, siden personopplysningskomponenten har egen
-             * feilmelding for det tilfellet.
-             * Hvis man ikke svarer vises vanlig feilmelding.
-             */
             return felt.verdi === ESvar.JA
                 ? ok(felt)
                 : feil(
