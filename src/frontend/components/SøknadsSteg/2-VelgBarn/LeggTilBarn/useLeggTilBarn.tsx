@@ -11,8 +11,7 @@ import { IBarnNy } from '../../../../typer/person';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../1-OmDeg/useOmdeg';
 
-export interface ILeggTilBarnTyper extends Omit<IBarnNy, 'borMedSøker' | 'alder'> {
-    borMedSøker: ESvarMedUbesvart;
+export interface ILeggTilBarnTyper extends Omit<IBarnNy, 'borMedSøker' | 'alder' | 'fødselsdato'> {
     erFødt: ESvarMedUbesvart;
     navnetErUbestemt: ESvar;
     harBarnetFåttIdNummer: ESvar;
@@ -75,17 +74,8 @@ export const useLeggTilBarn = (): {
             felt.verdi === ESvar.JA
                 ? ok(felt)
                 : feil(felt, <FormattedMessage id={'leggtilbarn.feil.må-ha-idnr'} />),
-        skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
+        skalFeltetVises: ({ erFødt }) => erFødt.verdi === ESvar.JA,
         avhengigheter: { erFødt },
-    });
-
-    const borMedSøker = useFelt<ESvarMedUbesvart>({
-        verdi: undefined,
-    });
-
-    const fødselsdato = useFelt<string>({
-        verdi: '',
-        avhengigheter: { ident },
     });
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
@@ -96,8 +86,6 @@ export const useLeggTilBarn = (): {
             erFødt,
             ident,
             navn,
-            borMedSøker,
-            fødselsdato,
             navnetErUbestemt,
             harBarnetFåttIdNummer,
         },
@@ -108,11 +96,16 @@ export const useLeggTilBarn = (): {
         if (!kanSendeSkjema()) {
             return false;
         }
-        // TODO: Fjern hvis vi legger til dato-input
         const dato = ident.verdi.substr(0, 6);
-        const [, dag, måned, år] = dato.match(/.{2}/g) || [];
-        const fulltÅr =
-            Number.parseInt(år) > 60 ? 1900 + Number.parseInt(år) : 2000 + Number.parseInt(år);
+        const [, dag, måned, år] = (dato.match(/.{2}/g) || []).map(tall => Number.parseInt(tall));
+
+        const fulltÅr = år > 60 ? 1900 + år : 2000 + år;
+
+        const dagKompansertForDNummer =
+            dag < 40 // D-nummer starter med fødselsdato pluss 4 på første tall
+                ? dag // ... med mindre det ikke var noen tilgjengelige for den datoen,
+                : dag - 40; // da brukes dato man søkte om d-nummer i steden for fødselsdato.
+        // TODO: Bedre dato-løsning
         settSøknad({
             ...søknad,
             søker: {
@@ -120,8 +113,8 @@ export const useLeggTilBarn = (): {
                 barn: søknad.søker.barn.concat([
                     {
                         ident: ident.verdi,
-                        borMedSøker: borMedSøker.verdi === ESvar.JA,
-                        fødselsdato: [fulltÅr, måned, dag].join('-'),
+                        borMedSøker: undefined,
+                        fødselsdato: [fulltÅr, måned, dagKompansertForDNummer].join('-'),
                         navn:
                             navn.verdi ||
                             intl.formatMessage({ id: 'leggtilbarn.navn-ubestemt.plassholder' }),

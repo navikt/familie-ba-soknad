@@ -64,7 +64,7 @@ const StyledLenke = styled(Lenke)`
 export const NyttBarnKort: React.FC = () => {
     const [modalÅpen, settModalÅpen] = useState<boolean>(false);
     const { skjema, nullstillSkjema, valideringErOk, submit } = useLeggTilBarn();
-    const { navn, navnetErUbestemt, harBarnetFåttIdNummer, erFødt } = skjema.felter;
+    const { navn, navnetErUbestemt, harBarnetFåttIdNummer } = skjema.felter;
     const intl = useIntl();
 
     useEffect(() => {
@@ -78,12 +78,25 @@ export const NyttBarnKort: React.FC = () => {
      * Feltene har erFødt som avhengighet, og siden feltavhengigheter er med i avhengighetene
      * til useMemo i useFelt-hooken vil useFelt reinitialisere feltene når søker velger
      * ja eller nei på spørsmål om barnet er født eller ikke. Dermed må vi tvinge
-     * valideringsstatus hver gang erFødt endrer verdi.
+     * valideringsstatus hver gang erFødt endrer verdi. I tillegg er det en intern useEffect
+     * i useFelt-hooken som nullstiller felter når de endrer synlighet. Altså:
+     *
+     * erFødt endrer seg fra undefined til ja
+     *  -> useMemo får nytt kall inni useFelt med nye inputs, regenererer feltet
+     *      -> harBarnetFåttIdNummer/navnetErUbestemt nullstilles og settes til synlig
+     *          -> Disse effektene tvinger valideringsstatus til å settes
+     *
+     * Det er fristende å sette erFødt som dependency for disse effektene, men det går ikke
+     * siden den interne useEffecten nullstiller til initiell FeltState, som innebærer
+     * valideringsstatus satt til IKKE_VALIDERT.
      */
     useEffect(() => {
         harBarnetFåttIdNummer.validerOgSettFelt(ESvar.JA);
+    }, [harBarnetFåttIdNummer.erSynlig]);
+
+    useEffect(() => {
         navnetErUbestemt.validerOgSettFelt(ESvar.NEI);
-    }, [erFødt.verdi]);
+    }, [navnetErUbestemt.erSynlig]);
 
     const submitOgLukk = () => {
         submit() && settModalÅpen(false);
