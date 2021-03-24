@@ -59,7 +59,7 @@
   "personopplysninger.lenketekst.pdfskjema": "Bruk PDF-skjema",
   "personopplysninger.lenke.pdfskjema": "https://nav.no/",
   "personopplysninger.info.pdfskjema": "Skjemaet kan sendes inn elektronisk eller på papir",
-  "personopplysninger.telefonnr": "Telefonnummer du kan kontaktes på",
+  "personopplysninger.spm.telefonnr": "Telefonnummer du kan kontaktes på",
   "personopplysninger.feilmelding.janei": "Du må svare ja eller nei",
   "personopplysninger.feilmelding.telefonnr": "Telefonnummeret må ha minst 8 siffer",
   "personopplysninger.feilmelding.velgland": "Du må velge et land",

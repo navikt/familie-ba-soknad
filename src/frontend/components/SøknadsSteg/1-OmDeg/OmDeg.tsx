@@ -8,7 +8,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { device } from '../../../Theme';
-import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
@@ -16,6 +15,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
+import { omDegSpråkTekstId, OmDegSpørsmålId } from './typer';
 import { useOmdeg } from './useOmdeg';
 
 const StyledLandDropdown = styled(LandDropdown)`
@@ -29,7 +29,7 @@ const StyledLandDropdown = styled(LandDropdown)`
 `;
 
 const OmDeg: React.FC = () => {
-    const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useOmdeg();
+    const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmdeg();
     const { søknad } = useApp();
     const { søker } = søknad;
     return (
@@ -38,6 +38,7 @@ const OmDeg: React.FC = () => {
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
             skjema={skjema}
+            gåVidereOnClickCallback={oppdaterSøknad}
         >
             <KomponentGruppe>
                 <Personopplysninger />
@@ -48,10 +49,11 @@ const OmDeg: React.FC = () => {
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.borPåRegistrertAdresse}
-                        spørsmålTekstId={'personopplysninger.spm.riktigAdresse'}
+                        spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.borPåRegistrertAdresse]}
                         tilleggsinfoTekstId={'personopplysninger.lesmer-innhold.riktigAdresse'}
                     />
                 )}
+
                 {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
                     <SøkerBorIkkePåAdresse
                         advarselTekstId={'personopplysninger.alert.riktigAdresse'}
@@ -68,13 +70,15 @@ const OmDeg: React.FC = () => {
 
             <KomponentGruppe>
                 {skjema.felter.telefonnummer.erSynlig && (
-                    <span id={hentFeltNavn(skjema, skjema.felter.telefonnummer)}>
+                    <span id={skjema.felter.telefonnummer.id}>
                         <Input
                             {...skjema.felter.telefonnummer.hentNavInputProps(
                                 skjema.visFeilmeldinger
                             )}
                             name={'Telefonnummer'}
-                            label={<SpråkTekst id={'personopplysninger.telefonnr'} />}
+                            label={
+                                <SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.telefonnummer]} />
+                            }
                             bredde={'M'}
                             type="tel"
                         />
@@ -83,22 +87,18 @@ const OmDeg: React.FC = () => {
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.oppholderSegINorge}
-                    spørsmålTekstId={'omdeg.spm.oppholderSegINorge'}
+                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.oppholderSegINorge]}
                 />
-                {skjema.felter.oppholdsLand.erSynlig && (
-                    <span id={hentFeltNavn(skjema, skjema.felter.oppholdsLand)}>
-                        <StyledLandDropdown
-                            label={<SpråkTekst id={'omdeg.spm.landopphold'} />}
-                            {...skjema.felter.oppholdsLand.hentNavInputProps(
-                                skjema.visFeilmeldinger
-                            )}
-                        />
-                    </span>
+                {skjema.felter.oppholdsland.erSynlig && (
+                    <StyledLandDropdown
+                        label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.oppholdsland]} />}
+                        {...skjema.felter.oppholdsland.hentNavInputProps(skjema.visFeilmeldinger)}
+                    />
                 )}
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.værtINorgeITolvMåneder}
-                    spørsmålTekstId={'omdeg.spm.vært-i-tolv-måneder'}
+                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
                 />
             </KomponentGruppe>
 
@@ -106,37 +106,29 @@ const OmDeg: React.FC = () => {
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erAsylsøker}
-                    spørsmålTekstId={'omdeg.spm.erasylsøker'}
+                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.erAsylsøker]}
                 />
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.jobberPåBåt}
-                    spørsmålTekstId={'omdeg.spm.jobberpåbåt'}
+                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.jobberPåBåt]}
                 />
                 {skjema.felter.jobberPåBåt.verdi === ESvar.JA && (
-                    <span id={hentFeltNavn(skjema, skjema.felter.arbeidsLand)}>
-                        <StyledLandDropdown
-                            {...skjema.felter.arbeidsLand.hentNavInputProps(
-                                skjema.visFeilmeldinger
-                            )}
-                            label={<SpråkTekst id={'omdeg.spm.hvilket-arbeidsland'} />}
-                        />
-                    </span>
+                    <StyledLandDropdown
+                        {...skjema.felter.arbeidsland.hentNavInputProps(skjema.visFeilmeldinger)}
+                        label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.arbeidsland]} />}
+                    />
                 )}
                 <JaNeiSpm
                     skjema={skjema}
-                    felt={skjema.felter.mottarUtlandsPensjon}
-                    spørsmålTekstId={'omdeg.spm.mottar-du-pensjon-fra-utland'}
+                    felt={skjema.felter.mottarUtenlandspensjon}
+                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.mottarUtenlandspensjon]}
                 />
-                {skjema.felter.mottarUtlandsPensjon.verdi === ESvar.JA && (
-                    <span id={hentFeltNavn(skjema, skjema.felter.pensjonsLand)}>
-                        <StyledLandDropdown
-                            {...skjema.felter.pensjonsLand.hentNavInputProps(
-                                skjema.visFeilmeldinger
-                            )}
-                            label={<SpråkTekst id={'omdeg.spm.hvilket-pensjonsland'} />}
-                        />
-                    </span>
+                {skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (
+                    <StyledLandDropdown
+                        {...skjema.felter.pensjonsland.hentNavInputProps(skjema.visFeilmeldinger)}
+                        label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.pensjonsland]} />}
+                    />
                 )}
             </KomponentGruppe>
         </Steg>

@@ -32,6 +32,7 @@ interface ISteg {
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     skjema: ISkjema<SkjemaFeltTyper, string>;
+    gåVidereOnClickCallback: () => void;
 }
 
 const AvsluttKnappContainer = styled.div`
@@ -76,6 +77,7 @@ const Steg: React.FC<ISteg> = ({
     validerFelterOgVisFeilmelding,
     valideringErOk,
     skjema,
+    gåVidereOnClickCallback,
 }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
@@ -109,6 +111,7 @@ const Steg: React.FC<ISteg> = ({
     const håndterGåVidere = event => {
         event.preventDefault();
         if (validerFelterOgVisFeilmelding()) {
+            gåVidereOnClickCallback();
             history.push(nesteRoute.path);
         }
     };
@@ -142,16 +145,14 @@ const Steg: React.FC<ISteg> = ({
                     {skjema.visFeilmeldinger && visFeiloppsummering() && (
                         <Feiloppsummering
                             tittel={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}
-                            feil={Object.entries(skjema.felter)
-                                .filter(feltEntry => {
-                                    const felt = feltEntry[1];
+                            feil={Object.values(skjema.felter)
+                                .filter(felt => {
                                     return felt.valideringsstatus === Valideringsstatus.FEIL;
                                 })
                                 .map(
-                                    (feltEntry): FeiloppsummeringFeil => {
-                                        const [feltNavn, felt] = feltEntry;
+                                    (felt): FeiloppsummeringFeil => {
                                         return {
-                                            skjemaelementId: feltNavn,
+                                            skjemaelementId: felt.id,
                                             feilmelding: felt.feilmelding as string,
                                         };
                                     }

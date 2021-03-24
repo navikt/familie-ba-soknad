@@ -1,5 +1,9 @@
 import { Alpha3Code } from 'i18n-iso-countries';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
+import { ISøknadSpørsmål } from './søknad';
+
 export interface IPerson {
     navn: string;
     barn: IBarn[];
@@ -32,11 +36,19 @@ export interface IPersonFraPdl {
     ident: string;
     adresse?: IAdresse;
     sivilstand: { type: ESivilstand };
-    //fødselsdato: Date;
 }
 
 export interface ISøkerNy extends IPersonFraPdl {
-    kontakttelefon: string;
+    telefonnummer: ISøknadSpørsmål<string>;
+    borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | undefined>;
+    oppholderSegINorge: ISøknadSpørsmål<ESvar | undefined>;
+    oppholdsland: ISøknadSpørsmål<Alpha3Code | undefined>;
+    værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | undefined>;
+    erAsylsøker: ISøknadSpørsmål<ESvar | undefined>;
+    jobberPåBåt: ISøknadSpørsmål<ESvar | undefined>;
+    arbeidsland: ISøknadSpørsmål<Alpha3Code | undefined>;
+    mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | undefined>;
+    pensjonsland: ISøknadSpørsmål<Alpha3Code | undefined>;
 }
 
 export interface IBarnNy {

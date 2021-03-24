@@ -145,8 +145,8 @@ const [AppProvider, useApp] = createUseContext(() => {
             settSøknad({
                 ...initialStateSøknadNy,
                 søker: {
+                    ...initialStateSøknadNy.søker,
                     ...søker,
-                    kontakttelefon: '',
                 },
                 barn,
             });

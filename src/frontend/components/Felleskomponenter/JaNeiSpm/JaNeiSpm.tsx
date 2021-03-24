@@ -7,7 +7,6 @@ import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
 import { ESvarMedUbesvart } from '../../SøknadsSteg/1-OmDeg/useOmdeg';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -25,7 +24,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     tilleggsinfoTekstId,
 }) => {
     return felt.erSynlig ? (
-        <span id={hentFeltNavn(skjema, felt)}>
+        <span id={felt.id}>
             <JaNeiSpørsmål
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                 name={guid()}
