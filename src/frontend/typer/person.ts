@@ -4,7 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { ISøknadSpørsmål } from './søknad';
 
-interface IBarnFraPdl {
+export interface IBarnFraPdl {
     ident: string;
     navn: string;
     borMedSøker: boolean | undefined;
@@ -24,7 +24,7 @@ export enum ESivilstand {
     UOPPGITT = 'UOPPGITT',
 }
 
-export interface IPersonFraPdl {
+export interface ISøkerFraPdl {
     navn: string;
     barn: IBarnFraPdl[];
     statsborgerskap: { landkode: Alpha3Code }[];
@@ -33,7 +33,7 @@ export interface IPersonFraPdl {
     sivilstand: { type: ESivilstand };
 }
 
-export interface ISøkerNy extends IPersonFraPdl {
+export interface ISøker extends ISøkerFraPdl {
     telefonnummer: ISøknadSpørsmål<string>;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | undefined>;
     oppholderSegINorge: ISøknadSpørsmål<ESvar | undefined>;
@@ -46,7 +46,7 @@ export interface ISøkerNy extends IPersonFraPdl {
     pensjonsland: ISøknadSpørsmål<Alpha3Code | undefined>;
 }
 
-export interface IBarnNy extends IBarnFraPdl {
+export interface IBarn extends IBarnFraPdl {
     alder: string;
     erFosterbarn: ISøknadSpørsmål<ESvar | undefined>;
     oppholderSegIInstitusjon: ISøknadSpørsmål<ESvar | undefined>;

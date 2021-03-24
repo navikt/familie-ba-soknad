@@ -7,11 +7,11 @@ import { feil, ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navik
 import { idnr } from '@navikt/fnrvalidator';
 
 import { useApp } from '../../../../context/AppContext';
-import { IBarnNy } from '../../../../typer/person';
+import { IBarn } from '../../../../typer/person';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
 
-export interface ILeggTilBarnTyper extends Omit<IBarnNy, 'borMedSøker' | 'alder' | 'fødselsdato'> {
+export interface ILeggTilBarnTyper extends Omit<IBarn, 'borMedSøker' | 'alder' | 'fødselsdato'> {
     erFødt: ESvarMedUbesvart;
     navnetErUbestemt: ESvar;
     harBarnetFåttIdNummer: ESvar;

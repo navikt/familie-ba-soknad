@@ -11,7 +11,7 @@ import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
 import { device } from '../../../../Theme';
-import { IBarnNy } from '../../../../typer/person';
+import { IBarn } from '../../../../typer/person';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
 import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -56,7 +56,7 @@ const BarnekortHeader = styled.div`
     }
 `;
 
-interface IBarnekortProps extends IBarnNy {
+interface IBarnekortProps extends IBarn {
     settMedISøknad: (ident: string, skalVæreMed: boolean) => void;
 }
 

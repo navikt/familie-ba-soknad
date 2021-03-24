@@ -3,11 +3,11 @@ import React from 'react';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { IBarnNy } from '../../../typer/person';
+import { IBarn } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export interface IVelgBarnFeltTyper {
-    barnMedISøknad: IBarnNy[];
+    barnMedISøknad: IBarn[];
 }
 
 export const useVelgBarn = (): {
@@ -18,7 +18,7 @@ export const useVelgBarn = (): {
     const { søknad } = useApp();
     const { barn: barnMedISøknad } = søknad;
 
-    const barnMedISøknadFelt = useFelt<IBarnNy[]>({
+    const barnMedISøknadFelt = useFelt<IBarn[]>({
         verdi: barnMedISøknad,
         valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.barnMedISøknad.length > 0
