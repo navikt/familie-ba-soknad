@@ -1,5 +1,5 @@
-import { IOmDegFeltTyper } from '../components/SøknadsSteg/1-OmDeg/useOmdeg';
-import { ILeggTilBarnTyper } from '../components/SøknadsSteg/2-VelgBarn/LeggTilBarn/useLeggTilBarn';
-import { IVelgBarnFeltTyper } from '../components/SøknadsSteg/2-VelgBarn/useVelgBarn';
+import { IOmDegFeltTyper } from '../components/SøknadsSteg/OmDeg/useOmdeg';
+import { ILeggTilBarnTyper } from '../components/SøknadsSteg/VelgBarn/LeggTilBarn/useLeggTilBarn';
+import { IVelgBarnFeltTyper } from '../components/SøknadsSteg/VelgBarn/useVelgBarn';
 
 export type SkjemaFeltTyper = IOmDegFeltTyper | IVelgBarnFeltTyper | ILeggTilBarnTyper;

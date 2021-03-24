@@ -1,4 +1,4 @@
-import { OmDegSpørsmålId } from '../components/SøknadsSteg/1-OmDeg/typer';
+import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/typer';
 import { INøkkelPar } from './common';
 import { ESivilstand, IBarnNy, ISøkerNy } from './person';
 

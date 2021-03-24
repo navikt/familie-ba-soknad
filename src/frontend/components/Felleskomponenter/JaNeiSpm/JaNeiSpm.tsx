@@ -7,7 +7,7 @@ import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { ESvarMedUbesvart } from '../../SøknadsSteg/1-OmDeg/useOmdeg';
+import { ESvarMedUbesvart } from '../../SøknadsSteg/OmDeg/useOmdeg';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface IJaNeiSpmProps {
