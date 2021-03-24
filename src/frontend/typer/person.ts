@@ -48,7 +48,13 @@ export interface ISøkerNy extends IPersonFraPdl {
 
 export interface IBarnNy extends IBarnFraPdl {
     alder: string;
+    erFosterbarn: ISøknadSpørsmål<ESvar | undefined>;
+    oppholderSegIInstitusjon: ISøknadSpørsmål<ESvar | undefined>;
+    erAdoptertFraUtland: ISøknadSpørsmål<ESvar | undefined>;
+    oppholderSegIUtland: ISøknadSpørsmål<ESvar | undefined>;
     erAsylsøker: ISøknadSpørsmål<ESvar | undefined>;
+    oppholdtSegINorgeSammenhengendeTolvMnd: ISøknadSpørsmål<ESvar | undefined>;
+    barnetrygdFraAnnetEøsland: ISøknadSpørsmål<ESvar | undefined>;
 }
 
 export interface IAdresse {

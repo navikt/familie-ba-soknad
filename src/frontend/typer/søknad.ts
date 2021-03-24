@@ -1,6 +1,8 @@
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/typer';
 import { INøkkelPar } from './common';
 import { ESivilstand, IBarnNy, ISøkerNy } from './person';
+import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { ESvar } from '@navikt/familie-form-elements';
 
 export enum ESøknadstype {
     IKKE_SATT = 'IKKE_SATT',
@@ -45,15 +47,23 @@ export interface ISøknadNy {
     søknadstype: ESøknadstype;
     søker: ISøkerNy;
     barn: IBarnNy[];
+    erNoenAvBarnaFosterbarn: ISøknadSpørsmål<ESvar | undefined>;
+    oppholderBarnSegIInstitusjon: ISøknadSpørsmål<ESvar | undefined>;
+    erBarnAdoptertFraUtland: ISøknadSpørsmål<ESvar | undefined>;
+    oppholderBarnSegIUtland: ISøknadSpørsmål<ESvar | undefined>;
+    søktAsylForBarn: ISøknadSpørsmål<ESvar | undefined>;
+    barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | undefined>;
+    mottarBarnetrygdForBarnFraAnnetEøsland: ISøknadSpørsmål<ESvar | undefined>;
 }
 
 export interface ISøknadSpørsmål<T> {
-    id: OmDegSpørsmålId;
+    id: OmDegSpørsmålId | OmBarnaDineSpørsmålId;
     svar: T;
 }
 
 export const initialStateSøknadNy: ISøknadNy = {
     søknadstype: ESøknadstype.IKKE_SATT,
+    barn: [],
     søker: {
         navn: '',
         barn: [],
@@ -109,5 +119,32 @@ export const initialStateSøknadNy: ISøknadNy = {
             svar: undefined,
         },
     },
-    barn: [],
+    erNoenAvBarnaFosterbarn: {
+        id: OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
+        svar: undefined,
+    },
+    oppholderBarnSegIInstitusjon: {
+        id: OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon,
+        svar: undefined,
+    },
+    erBarnAdoptertFraUtland: {
+        id: OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland,
+        svar: undefined,
+    },
+    oppholderBarnSegIUtland: {
+        id: OmBarnaDineSpørsmålId.oppholderBarnSegIUtland,
+        svar: undefined,
+    },
+    søktAsylForBarn: {
+        id: OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
+        svar: undefined,
+    },
+    barnOppholdtSegTolvMndSammenhengendeINorge: {
+        id: OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge,
+        svar: undefined,
+    },
+    mottarBarnetrygdForBarnFraAnnetEøsland: {
+        id: OmBarnaDineSpørsmålId.mottarBarnetrygdFraAnnetEøsland,
+        svar: undefined,
+    },
 };
