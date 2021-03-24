@@ -11,7 +11,7 @@ export enum OmBarnaDineSpørsmålId {
     'hvemErSøktAsylFor' = 'hvem-er-søkt-asyl-for',
     'barnOppholdtSegTolvMndSammenhengendeINorge' = 'tolv-mnd-sammenhengende-i-norge',
     'hvemTolvMndSammenhengendeINorge' = 'hvem-tolv-mnd-sammenhengende-i-norge',
-    'mottarBarnetrygdFraAnnetEøsland' = 'barnetrygd-fra-annet-eøsland',
+    'mottarBarnetrygdForBarnFraAnnetEøsland' = 'barnetrygd-fra-annet-eøsland',
     'hvemBarnetrygdFraAnnetEøsland' = 'hvem-mottar-barnetrygd-eøsland',
 }
 
@@ -32,7 +32,7 @@ export const omBarnaDineSpråkTekstId: Record<OmBarnaDineSpørsmålId, string> =
         'ombarnadine.spm.tolv-mnd-sammenhengende-i-norge',
     [OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge]:
         'ombarnadine.spm.hvem-tolv-mnd-sammenhengende-i-norge',
-    [OmBarnaDineSpørsmålId.mottarBarnetrygdFraAnnetEøsland]:
+    [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]:
         'ombarnadine.spm.barnetrygd-fra-annet-eøsland',
     [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]:
         'ombarnadine.spm.hvem-mottar-barnetrygd-eøsland',
