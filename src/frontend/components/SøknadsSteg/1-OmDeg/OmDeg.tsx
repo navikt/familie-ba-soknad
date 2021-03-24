@@ -10,6 +10,7 @@ import { useApp } from '../../../context/AppContext';
 import { device } from '../../../Theme';
 import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
@@ -18,10 +19,6 @@ import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { omDegSpråkTekstId, OmDegSpørsmålId } from './typer';
 import { useOmdeg } from './useOmdeg';
 
-const StyledSøkerBorIkkePåAdresse = styled(SøkerBorIkkePåAdresse)`
-    margin-top: -3rem;
-`;
-
 const StyledLandDropdown = styled(LandDropdown)`
     width: 50%;
     padding-right: 0.7rem;
@@ -29,20 +26,6 @@ const StyledLandDropdown = styled(LandDropdown)`
     @media all and ${device.mobile} {
         width: 100%;
         padding: 0;
-    }
-`;
-
-const StyledSection = styled.section`
-    margin-top: 4rem;
-
-    p {
-        font-size: 1.125rem;
-    }
-`;
-
-const StyledInput = styled(Input)`
-    label {
-        font-size: 1.125rem;
     }
 `;
 
@@ -58,43 +41,38 @@ const OmDeg: React.FC = () => {
             skjema={skjema}
             gåVidereOnClickCallback={oppdaterSøknad}
         >
-            <StyledSection>
+            <KomponentGruppe>
                 <Personopplysninger />
-            </StyledSection>
+            </KomponentGruppe>
 
-            <StyledSection>
+            <KomponentGruppe>
                 {søker.adresse && (
-                    <>
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.borPåRegistrertAdresse}
-                            spørsmålTekstId={
-                                omDegSpråkTekstId[OmDegSpørsmålId.borPåRegistrertAdresse]
-                            }
-                            tilleggsinfoTekstId={'personopplysninger.lesmer-innhold.riktigAdresse'}
-                        />
-
-                        {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                            <SøkerBorIkkePåAdresse
-                                advarselTekstId={'personopplysninger.alert.riktigAdresse'}
-                                utfyllendeAdvarselInfoId={'personopplysninger.info.endreAdresse'}
-                            />
-                        )}
-                    </>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.borPåRegistrertAdresse}
+                        spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.borPåRegistrertAdresse]}
+                        tilleggsinfoTekstId={'personopplysninger.lesmer-innhold.riktigAdresse'}
+                    />
                 )}
 
+                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
+                    <SøkerBorIkkePåAdresse
+                        advarselTekstId={'personopplysninger.alert.riktigAdresse'}
+                        utfyllendeAdvarselInfoId={'personopplysninger.info.endreAdresse'}
+                    />
+                )}
                 {!søker.adresse && (
-                    <StyledSøkerBorIkkePåAdresse
+                    <SøkerBorIkkePåAdresse
                         advarselTekstId={'personopplysninger.info.ukjentadresse'}
                         utfyllendeAdvarselInfoId={'personopplysninger.info.vi-trenger-din-adresse'}
                     />
                 )}
-            </StyledSection>
+            </KomponentGruppe>
 
-            <StyledSection>
+            <KomponentGruppe>
                 {skjema.felter.telefonnummer.erSynlig && (
                     <span id={hentFeltNavn(skjema, skjema.felter.telefonnummer)}>
-                        <StyledInput
+                        <Input
                             {...skjema.felter.telefonnummer.hentNavInputProps(
                                 skjema.visFeilmeldinger
                             )}
@@ -107,9 +85,6 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </StyledSection>
-
-            <StyledSection>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.oppholderSegINorge}
@@ -127,22 +102,19 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </StyledSection>
-            <StyledSection>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.værtINorgeITolvMåneder}
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
                 />
-            </StyledSection>
-            <StyledSection>
+            </KomponentGruppe>
+
+            <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erAsylsøker}
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.erAsylsøker]}
                 />
-            </StyledSection>
-            <StyledSection>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.jobberPåBåt}
@@ -160,8 +132,6 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </StyledSection>
-            <StyledSection>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.mottarUtenlandspensjon}
@@ -179,7 +149,7 @@ const OmDeg: React.FC = () => {
                         />
                     </span>
                 )}
-            </StyledSection>
+            </KomponentGruppe>
         </Steg>
     );
 };

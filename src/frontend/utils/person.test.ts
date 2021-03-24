@@ -1,5 +1,5 @@
-import { IAdresse } from '../typer/person';
-import { hentAdressefelterSortert } from './person';
+import { ESivilstand, IAdresse } from '../typer/person';
+import { hentAdressefelterSortert, hentSivilstatus, landkodeTilSpråk } from './person';
 
 test('Kan rendre standard adresse', () => {
     const adresse: IAdresse = {
@@ -22,4 +22,20 @@ test('Kan rendre rar adresse', () => {
 
     const result = hentAdressefelterSortert(adresse);
     expect(result).toEqual(['Bestemorenga', '8020 Bodø']);
+});
+
+describe('landkodeTilSpråk', () => {
+    test('Kan ta inn landkode og gjøre om til språk', () => {
+        expect(landkodeTilSpråk('NOR', 'nb')).toEqual('Norge');
+    });
+});
+
+describe('hentSivilstatus', () => {
+    test('Skal returnere tekstid til sivilstatus kode ANNET dersom sivilstanden er ukjent', () => {
+        expect(hentSivilstatus('JEGHARKJÆRESTE')).toEqual('sivilstatus.kode.ANNET');
+    });
+
+    test('Skal returnere tekstid til innsendt sivilstatus kode', () => {
+        expect(hentSivilstatus(ESivilstand.GIFT)).toEqual(`sivilstatus.kode.${ESivilstand.GIFT}`);
+    });
 });

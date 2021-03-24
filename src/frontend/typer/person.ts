@@ -12,7 +12,7 @@ export interface IPerson {
 interface IBarn {
     ident: string;
     navn: string;
-    borMedSøker: boolean;
+    borMedSøker: boolean | undefined;
     fødselsdato: string;
 }
 
@@ -55,7 +55,7 @@ export interface IBarnNy {
     navn: string;
     ident: string;
     fødselsdato: string;
-    borMedSøker: boolean;
+    borMedSøker: boolean | undefined;
     alder: string;
 }
 

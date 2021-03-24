@@ -16,17 +16,17 @@ import { Routes } from './routing/Routes';
 const Søknad = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
     return (
-        <div>
+        <main>
             {systemetLaster() && <SystemetLaster />}
             {sluttbruker.status === RessursStatus.IKKE_TILGANG && (
-                <main>
+                <div>
                     <Alertstripe type="advarsel">
                         {'Du må søke på papir. '}
                         <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
                             Klikk her for å gå til våre sider for barnetrygd
                         </a>
                     </Alertstripe>
-                </main>
+                </div>
             )}
             {systemetOK() && (
                 <div className={classNames(systemetLaster() && 'blur')}>
@@ -50,11 +50,11 @@ const Søknad = () => {
                 </div>
             )}
             {systemetFeiler() && !systemetLaster() && (
-                <main>
+                <div>
                     <Alertstripe type="feil">En feil har oppstått!</Alertstripe>
-                </main>
+                </div>
             )}
-        </div>
+        </main>
     );
 };
 

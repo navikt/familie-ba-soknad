@@ -6,10 +6,10 @@ import { useIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
-import { hentAdressefelterSortert } from '../../../utils/person';
+import { hentAdressefelterSortert, hentSivilstatus, landkodeTilSpråk } from '../../../utils/person';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
+import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { FeltGruppe, StyledAlertStripe } from './layoutKomponenter';
-import { hentSivilstatus, landkodeTilSpråk } from './utils';
 
 export const Personopplysninger: React.FC = () => {
     const intl = useIntl();
@@ -19,22 +19,20 @@ export const Personopplysninger: React.FC = () => {
 
     return (
         <>
-            <FeltGruppe>
-                <StyledAlertStripe type={'info'} form={'inline'}>
-                    <p>
-                        <SpråkTekst id={'personopplysninger.alert.infohentet'} />
-                    </p>
-                </StyledAlertStripe>
-            </FeltGruppe>
+            <Informasjonsbolk>
+                <AlertStripe>
+                    <SpråkTekst id={'personopplysninger.alert.infohentet'} />
+                </AlertStripe>
+            </Informasjonsbolk>
 
-            <FeltGruppe>
+            <Informasjonsbolk>
                 <Element>
                     <SpråkTekst id={'person.ident.visning'} />
                 </Element>
                 <Normaltekst>{søker.ident}</Normaltekst>
-            </FeltGruppe>
+            </Informasjonsbolk>
 
-            <FeltGruppe>
+            <Informasjonsbolk>
                 <Element>
                     <SpråkTekst id={'person.statsborgerskap'} />
                 </Element>
@@ -45,18 +43,18 @@ export const Personopplysninger: React.FC = () => {
                         )
                         .join(', ')}
                 </Normaltekst>
-            </FeltGruppe>
+            </Informasjonsbolk>
 
-            <FeltGruppe>
+            <Informasjonsbolk>
                 <Element>
                     <SpråkTekst id={'sivilstatus.tittel'} />
                 </Element>
                 <Normaltekst>
                     <SpråkTekst id={hentSivilstatus(søker.sivilstand?.type)} />
                 </Normaltekst>
-            </FeltGruppe>
+            </Informasjonsbolk>
 
-            <FeltGruppe>
+            <Informasjonsbolk>
                 <Element>
                     <SpråkTekst id={'personopplysninger.adresse'} />
                 </Element>
@@ -69,7 +67,7 @@ export const Personopplysninger: React.FC = () => {
                         <SpråkTekst id={'personopplysninger.har-ikke-registrert-adresse'} />
                     </Normaltekst>
                 )}
-            </FeltGruppe>
+            </Informasjonsbolk>
         </>
     );
 };

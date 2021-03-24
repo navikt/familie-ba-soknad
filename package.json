@@ -64,7 +64,8 @@
     ]
   },
   "resolutions": {
-    "styled-components": "^5"
+    "styled-components": "^5",
+    "is-svg": "^4.2.2"
   },
   "browserslist": {
     "production": [
