@@ -11,7 +11,7 @@ export interface IInformasjonsbolkProps {
 }
 
 const InformasjonsbolkContainer = styled.div`
-    margin-top: 2.3rem;
+    margin-top: 2rem;
 `;
 
 const InformasjonsbolkChildrenWrapper = styled.div`

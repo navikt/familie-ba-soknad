@@ -6,7 +6,7 @@ import navFarger from 'nav-frontend-core';
 
 import { device } from '../../../Theme';
 
-const Container = styled.main`
+const Container = styled.div`
     max-width: var(--innhold-bredde);
     display: flex;
     flex-direction: column;

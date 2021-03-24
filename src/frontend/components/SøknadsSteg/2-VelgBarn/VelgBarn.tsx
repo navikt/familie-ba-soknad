@@ -9,19 +9,20 @@ import Lenke, { Props as LenkeProps } from 'nav-frontend-lenker';
 
 import { useApp } from '../../../context/AppContext';
 import { hentAlder } from '../../../utils/person';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { StyledAlertStripe } from '../1-OmDeg/layoutKomponenter';
 import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
+import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { useVelgBarn } from './useVelgBarn';
 
-const BarnekortContainer = styled.div<{ kunEttBarn: boolean }>`
+const BarnekortContainer = styled.div`
     display: flex;
+    align-items: flex-start;
     flex-flow: row wrap;
-    margin: 0 auto;
-    margin-top: 1rem;
-    justify-content: ${props => (props.kunEttBarn ? 'center' : 'flex-start')};
-    width: ${props => (props.kunEttBarn ? 'auto' : '38.75rem')};
+    margin: 1rem auto 0;
+    justify-content: space-between;
+    width: 100%;
     text-align: left;
 `;
 
@@ -42,8 +43,6 @@ const VelgBarn: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useVelgBarn();
     const intl = useIntl();
 
-    const kunEttBarn = søknad.søker.barn.length === 1;
-
     function settMedISøknad(ident: string, skalVæreMed: boolean) {
         const barn = søknad.søker.barn.find(barn => barn.ident === ident);
 
@@ -63,15 +62,15 @@ const VelgBarn: React.FC = () => {
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
         >
-            <StyledAlertStripe type={'info'} form={'inline'}>
+            <AlertStripe form={'inline'}>
                 <SpråkTekst id={'velgbarn.info.folkeregisteret'} />
-            </StyledAlertStripe>
+            </AlertStripe>
 
             <LenkeMedChevron href={intl.formatMessage({ id: 'velgbarn.regelverkinfo.lenke' })}>
                 <SpråkTekst id={'velgbarn.regelverkinfo.lenke.tittel'} />
             </LenkeMedChevron>
 
-            <BarnekortContainer id={'barnMedISøknad'} kunEttBarn={kunEttBarn}>
+            <BarnekortContainer id={'barnMedISøknad'}>
                 {søknad.søker.barn.map(barn => (
                     <Barnekort
                         key={barn.ident}
@@ -80,6 +79,7 @@ const VelgBarn: React.FC = () => {
                         settMedISøknad={settMedISøknad}
                     />
                 ))}
+                <NyttBarnKort />
             </BarnekortContainer>
         </Steg>
     );
