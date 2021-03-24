@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Location } from 'history';
 
-import OmDeg from '../components/SøknadsSteg/1-OmDeg/OmDeg';
-import VelgBarn from '../components/SøknadsSteg/2-VelgBarn/VelgBarn';
-import Oppsummering from '../components/SøknadsSteg/4-Oppsummering/Oppsummering';
-import Kvittering from '../components/SøknadsSteg/5-Kvittering/Kvittering';
+import Kvittering from '../components/SøknadsSteg/Kvittering/Kvittering';
+import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
+import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
+import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
 import { ILokasjon } from '../typer/lokasjon';
 
 export interface IRoute {
