@@ -8,7 +8,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { device } from '../../../Theme';
-import { hentFeltNavn } from '../../../utils/hjelpefunksjoner';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
@@ -71,7 +70,7 @@ const OmDeg: React.FC = () => {
 
             <KomponentGruppe>
                 {skjema.felter.telefonnummer.erSynlig && (
-                    <span id={hentFeltNavn(skjema, skjema.felter.telefonnummer)}>
+                    <span id={skjema.felter.telefonnummer.id}>
                         <Input
                             {...skjema.felter.telefonnummer.hentNavInputProps(
                                 skjema.visFeilmeldinger
@@ -91,16 +90,10 @@ const OmDeg: React.FC = () => {
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.oppholderSegINorge]}
                 />
                 {skjema.felter.oppholdsland.erSynlig && (
-                    <span id={hentFeltNavn(skjema, skjema.felter.oppholdsland)}>
-                        <StyledLandDropdown
-                            label={
-                                <SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.oppholdsland]} />
-                            }
-                            {...skjema.felter.oppholdsland.hentNavInputProps(
-                                skjema.visFeilmeldinger
-                            )}
-                        />
-                    </span>
+                    <StyledLandDropdown
+                        label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.oppholdsland]} />}
+                        {...skjema.felter.oppholdsland.hentNavInputProps(skjema.visFeilmeldinger)}
+                    />
                 )}
                 <JaNeiSpm
                     skjema={skjema}
@@ -121,16 +114,10 @@ const OmDeg: React.FC = () => {
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.jobberPåBåt]}
                 />
                 {skjema.felter.jobberPåBåt.verdi === ESvar.JA && (
-                    <span id={hentFeltNavn(skjema, skjema.felter.arbeidsland)}>
-                        <StyledLandDropdown
-                            {...skjema.felter.arbeidsland.hentNavInputProps(
-                                skjema.visFeilmeldinger
-                            )}
-                            label={
-                                <SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.arbeidsland]} />
-                            }
-                        />
-                    </span>
+                    <StyledLandDropdown
+                        {...skjema.felter.arbeidsland.hentNavInputProps(skjema.visFeilmeldinger)}
+                        label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.arbeidsland]} />}
+                    />
                 )}
                 <JaNeiSpm
                     skjema={skjema}
@@ -138,16 +125,10 @@ const OmDeg: React.FC = () => {
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.mottarUtenlandspensjon]}
                 />
                 {skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (
-                    <span id={hentFeltNavn(skjema, skjema.felter.pensjonsland)}>
-                        <StyledLandDropdown
-                            {...skjema.felter.pensjonsland.hentNavInputProps(
-                                skjema.visFeilmeldinger
-                            )}
-                            label={
-                                <SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.pensjonsland]} />
-                            }
-                        />
-                    </span>
+                    <StyledLandDropdown
+                        {...skjema.felter.pensjonsland.hentNavInputProps(skjema.visFeilmeldinger)}
+                        label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.pensjonsland]} />}
+                    />
                 )}
             </KomponentGruppe>
         </Steg>

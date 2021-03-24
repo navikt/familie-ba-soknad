@@ -10,7 +10,6 @@ import { NavInputProps } from '@navikt/familie-skjema';
 
 interface LandDropdownProps<Verdi> extends NavInputProps<Verdi> {
     label?: ReactNode;
-    id?: string;
 }
 
 const StyledSelect = styled(Select)`
@@ -22,7 +21,6 @@ const StyledSelect = styled(Select)`
 
 export const LandDropdown: React.FC<LandDropdownProps<Alpha3Code | undefined>> = ({
     label,
-    id,
     ...navSkjemaProps
 }) => {
     const intl = useIntl();
@@ -32,21 +30,23 @@ export const LandDropdown: React.FC<LandDropdownProps<Alpha3Code | undefined>> =
     });
 
     return (
-        <StyledSelect label={label} defaultValue={''} id={id} {...navSkjemaProps}>
-            <option
-                disabled={true}
-                value={''}
-                label={intl.formatMessage({ id: 'landdropdown.velgland' })}
-            />
-            {landkoderSortertPåNavn.map(
-                (alphaCode): ReactNode => (
-                    <option
-                        value={alphaCode}
-                        label={getName(alphaCode, intl.locale)}
-                        key={alphaCode}
-                    />
-                )
-            )}
-        </StyledSelect>
+        <span id={navSkjemaProps.id}>
+            <StyledSelect label={label} defaultValue={''} {...navSkjemaProps} id={undefined}>
+                <option
+                    disabled={true}
+                    value={''}
+                    label={intl.formatMessage({ id: 'landdropdown.velgland' })}
+                />
+                {landkoderSortertPåNavn.map(
+                    (alphaCode): ReactNode => (
+                        <option
+                            value={alphaCode}
+                            label={getName(alphaCode, intl.locale)}
+                            key={alphaCode}
+                        />
+                    )
+                )}
+            </StyledSelect>
+        </span>
     );
 };

@@ -145,16 +145,14 @@ const Steg: React.FC<ISteg> = ({
                     {skjema.visFeilmeldinger && visFeiloppsummering() && (
                         <Feiloppsummering
                             tittel={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}
-                            feil={Object.entries(skjema.felter)
-                                .filter(feltEntry => {
-                                    const felt = feltEntry[1];
+                            feil={Object.values(skjema.felter)
+                                .filter(felt => {
                                     return felt.valideringsstatus === Valideringsstatus.FEIL;
                                 })
                                 .map(
-                                    (feltEntry): FeiloppsummeringFeil => {
-                                        const [feltNavn, felt] = feltEntry;
+                                    (felt): FeiloppsummeringFeil => {
                                         return {
-                                            skjemaelementId: feltNavn,
+                                            skjemaelementId: felt.id,
                                             feilmelding: felt.feilmelding as string,
                                         };
                                     }
