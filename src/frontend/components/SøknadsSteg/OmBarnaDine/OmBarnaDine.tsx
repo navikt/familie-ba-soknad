@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useApp } from '../../../context/AppContext';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
 import { useOmBarnaDine } from './useOmBarnaDine';
@@ -12,8 +11,6 @@ const OmBarnaDine: React.FC = () => {
         valideringErOk,
         oppdaterSøknad,
     } = useOmBarnaDine();
-    const { søknad } = useApp();
-    const { søker } = søknad;
     return (
         <Steg
             tittel={<SpråkTekst id={'ombarnadine.tittel'} />}
@@ -22,8 +19,7 @@ const OmBarnaDine: React.FC = () => {
             skjema={skjema}
             gåVidereOnClickCallback={oppdaterSøknad}
         >
-            {' '}
-            Hei{' '}
+            <span>hei</span>
         </Steg>
     );
 };
