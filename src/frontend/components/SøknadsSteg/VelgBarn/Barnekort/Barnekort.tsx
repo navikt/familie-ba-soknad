@@ -81,7 +81,9 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) =
     const { søknad } = useApp();
     const ikoner = [barn1, barn2, barn3];
 
-    const medISøknad = !!søknad.barn.find(barn => barn.ident === barnFraPdl.ident);
+    const medISøknad = !!søknad.barnInkludertISøknaden.find(
+        barn => barn.ident === barnFraPdl.ident
+    );
 
     return (
         <StyledBarnekort>

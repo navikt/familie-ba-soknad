@@ -12,11 +12,9 @@ import {
 } from '@navikt/familie-typer';
 
 import { IKvittering } from '../typer/kvittering';
-import { IBarn, ISøkerFraPdl } from '../typer/person';
+import { ISøkerFraPdl } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
-import { hentAlder } from '../utils/person';
-import { formaterFnr } from '../utils/visning';
 import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
 
 const [AppProvider, useApp] = createUseContext(() => {
@@ -131,24 +129,12 @@ const [AppProvider, useApp] = createUseContext(() => {
     const nullstillSøknadsobjekt = (ressurs: Ressurs<ISøkerFraPdl>) => {
         if (ressurs.status === RessursStatus.SUKSESS) {
             const søker = ressurs.data;
-            const barn = ressurs.data.barn.map(
-                (barn): IBarn => {
-                    return {
-                        navn: barn.navn,
-                        alder: hentAlder(barn.fødselsdato),
-                        fødselsdato: barn.fødselsdato,
-                        ident: formaterFnr(barn.ident),
-                        borMedSøker: barn.borMedSøker,
-                    };
-                }
-            );
             settSøknad({
                 ...initialStateSøknad,
                 søker: {
                     ...initialStateSøknad.søker,
                     ...søker,
                 },
-                barn,
             });
         }
     };

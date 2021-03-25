@@ -27,7 +27,7 @@ export const useOmBarnaDine = (): {
     oppdaterSøknad: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
-    const barn: IBarn[] = søknad.barn;
+    const barn: IBarn[] = søknad.barnInkludertISøknaden;
 
     const erNoenAvBarnaFosterbarn = useFelt<ESvar | undefined>({
         feltId: søknad.erNoenAvBarnaFosterbarn.id,
@@ -41,7 +41,7 @@ export const useOmBarnaDine = (): {
 
     const hvemErFosterbarn = useFelt<BarnasIdenter>({
         feltId: barn.length > 0 ? barn[0].erFosterbarn.id : OmBarnaDineSpørsmålId.hvemErFosterbarn,
-        verdi: søknad.barn
+        verdi: søknad.barnInkludertISøknaden
             .filter(barn => barn.erFosterbarn.svar === ESvar.JA)
             .map(barn => barn.ident),
         valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
@@ -112,9 +112,9 @@ export const useOmBarnaDine = (): {
     const hentSvarForSpørsmålBarn = (barn: IBarn, felt: Felt<string[]>): ESvar =>
         felt.verdi.includes(barn.ident) ? ESvar.JA : ESvar.NEI;
 
-    const hentOppdaterteBarn = (): IBarn[] => {
+    const genererOppdaterteBarn = (): IBarn[] => {
         //TODO: OPPDATER MED RIKTIG FELT NÅR DE ER LAGT TIL I SKJEMA
-        return søknad.barn.map(barn => {
+        return søknad.barnInkludertISøknaden.map(barn => {
             return {
                 ...barn,
                 erFosterbarn: {
@@ -180,7 +180,7 @@ export const useOmBarnaDine = (): {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
                 svar: skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
             },
-            barn: hentOppdaterteBarn(),
+            barnInkludertISøknaden: genererOppdaterteBarn(),
         });
     };
 

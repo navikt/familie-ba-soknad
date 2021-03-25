@@ -39,7 +39,7 @@ export interface ISøknadsfelt<T> {
 export interface ISøknad {
     søknadstype: ESøknadstype;
     søker: ISøker;
-    barn: IBarn[];
+    barnInkludertISøknaden: IBarn[];
     erNoenAvBarnaFosterbarn: ISøknadSpørsmål<ESvar | undefined>;
     oppholderBarnSegIInstitusjon: ISøknadSpørsmål<ESvar | undefined>;
     erBarnAdoptertFraUtland: ISøknadSpørsmål<ESvar | undefined>;
@@ -56,7 +56,7 @@ export interface ISøknadSpørsmål<T> {
 
 export const initialStateSøknad: ISøknad = {
     søknadstype: ESøknadstype.IKKE_SATT,
-    barn: [],
+    barnInkludertISøknaden: [],
     søker: {
         navn: '',
         barn: [],

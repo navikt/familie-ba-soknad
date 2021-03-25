@@ -1,6 +1,7 @@
 import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 
-import { ESivilstand, IAdresse } from '../typer/person';
+import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { ESivilstand, IAdresse, IBarn, IBarnFraPdl } from '../typer/person';
 
 export const hentAlder = (dato: string): string => {
     const idag = new Date();
@@ -46,4 +47,39 @@ export const hentSivilstatus = (statuskode?: ESivilstand) => {
         default:
             return 'sivilstatus.kode.ANNET';
     }
+};
+
+export const genererInitialStateBarn = (barnFraPDL: IBarnFraPdl): IBarn => {
+    return {
+        ...barnFraPDL,
+        alder: hentAlder(barnFraPDL.fødselsdato),
+        erFosterbarn: {
+            id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
+            svar: undefined,
+        },
+        erAdoptertFraUtland: {
+            id: OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland,
+            svar: undefined,
+        },
+        erAsylsøker: {
+            id: OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
+            svar: undefined,
+        },
+        barnetrygdFraAnnetEøsland: {
+            id: OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland,
+            svar: undefined,
+        },
+        oppholderSegIInstitusjon: {
+            id: OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon,
+            svar: undefined,
+        },
+        oppholdtSegINorgeSammenhengendeTolvMnd: {
+            id: OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge,
+            svar: undefined,
+        },
+        oppholderSegIUtland: {
+            id: OmBarnaDineSpørsmålId.hvemOppholderSegIUtland,
+            svar: undefined,
+        },
+    };
 };

@@ -49,7 +49,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt, visFeilmeldin
             {...felt.hentNavBaseSkjemaProps(visFeilmelding)}
             utenFeilPropagering
         >
-            {søknad.barn.map((barnISøknad, index) => {
+            {søknad.barnInkludertISøknaden.map((barnISøknad, index) => {
                 return (
                     <Checkbox
                         key={index}
