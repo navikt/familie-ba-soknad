@@ -1,13 +1,12 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { Felt, ISkjema, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { IBarn } from '../../../typer/person';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { barnDataKeySpørsmål, IBarn } from '../../../typer/person';
+import { søknadDataKeySpørsmål } from '../../../typer/søknad';
 import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
-import { OmBarnaDineSpørsmålId } from './spørsmål';
+import useBarnCheckboxFelt from './useBarnCheckboxFelt';
+import useJaNeiSpmFelt from './useJaNeiSpmFelt';
 
 export interface IOmBarnaDineFeltTyper {
     erNoenAvBarnaFosterbarn: ESvar | undefined;
@@ -33,162 +32,73 @@ export const useOmBarnaDine = (): {
     oppdaterSøknad: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
-    const barn: IBarn[] = søknad.barnInkludertISøknaden;
 
-    const erNoenAvBarnaFosterbarn = useFelt<ESvar | undefined>({
-        feltId: søknad.erNoenAvBarnaFosterbarn.id,
-        verdi: søknad.erNoenAvBarnaFosterbarn.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-    });
+    const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt(
+        søknadDataKeySpørsmål.erNoenAvBarnaFosterbarn,
+        'personopplysninger.feilmelding.janei'
+    );
 
-    const hvemErFosterbarn = useFelt<BarnetsIdent[]>({
-        feltId: barn.length > 0 ? barn[0].erFosterbarn.id : OmBarnaDineSpørsmålId.hvemErFosterbarn,
-        verdi: søknad.barnInkludertISøknaden
-            .filter(barn => barn.erFosterbarn.svar === ESvar.JA)
-            .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
-            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
-        },
-    });
+    const oppholderBarnSegIInstitusjon = useJaNeiSpmFelt(
+        søknadDataKeySpørsmål.oppholderBarnSegIInstitusjon,
+        'personopplysninger.feilmelding.janei'
+    );
 
-    const oppholderBarnSegIInstitusjon = useFelt<ESvar | undefined>({
-        feltId: søknad.oppholderBarnSegIInstitusjon.id,
-        verdi: søknad.oppholderBarnSegIInstitusjon.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-    });
+    const erBarnAdoptertFraUtland = useJaNeiSpmFelt(
+        søknadDataKeySpørsmål.erBarnAdoptertFraUtland,
+        'personopplysninger.feilmelding.janei'
+    );
 
-    const hvemOppholderSegIInstitusjon = useFelt<BarnetsIdent[]>({
-        feltId:
-            barn.length > 0
-                ? barn[0].oppholderSegIInstitusjon.id
-                : OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon,
-        verdi: søknad.barnInkludertISøknaden
-            .filter(barn => barn.oppholderSegIInstitusjon.svar === ESvar.JA)
-            .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
-            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
-        },
-    });
+    const oppholderBarnSegIUtland = useJaNeiSpmFelt(
+        søknadDataKeySpørsmål.oppholderBarnSegIUtland,
+        'personopplysninger.feilmelding.janei'
+    );
 
-    const erBarnAdoptertFraUtland = useFelt<ESvar | undefined>({
-        feltId: søknad.erBarnAdoptertFraUtland.id,
-        verdi: søknad.erBarnAdoptertFraUtland.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-    });
+    const søktAsylForBarn = useJaNeiSpmFelt(
+        søknadDataKeySpørsmål.søktAsylForBarn,
+        'personopplysninger.feilmelding.janei'
+    );
 
-    const hvemErAdoptertFraUtland = useFelt<BarnetsIdent[]>({
-        feltId:
-            barn.length > 0
-                ? barn[0].erAdoptertFraUtland.id
-                : OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland,
-        verdi: søknad.barnInkludertISøknaden
-            .filter(barn => barn.erAdoptertFraUtland.svar === ESvar.JA)
-            .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
-            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
-        },
-    });
+    const barnOppholdtSegTolvMndSammenhengendeINorge = useJaNeiSpmFelt(
+        søknadDataKeySpørsmål.barnOppholdtSegTolvMndSammenhengendeINorge,
+        'personopplysninger.feilmelding.janei'
+    );
 
-    const oppholderBarnSegIUtland = useFelt<ESvar | undefined>({
-        feltId: søknad.oppholderBarnSegIUtland.id,
-        verdi: søknad.oppholderBarnSegIUtland.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-    });
+    const mottarBarnetrygdForBarnFraAnnetEøsland = useJaNeiSpmFelt(
+        søknadDataKeySpørsmål.mottarBarnetrygdForBarnFraAnnetEøsland,
+        'personopplysninger.feilmelding.janei'
+    );
 
-    const hvemOppholderSegIUtland = useFelt<BarnetsIdent[]>({
-        feltId:
-            barn.length > 0
-                ? barn[0].oppholderSegIUtland.id
-                : OmBarnaDineSpørsmålId.hvemOppholderSegIUtland,
-        verdi: søknad.barnInkludertISøknaden
-            .filter(barn => barn.oppholderSegIUtland.svar === ESvar.JA)
-            .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
-            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
-        },
-    });
+    const hvemBarnetrygdFraAnnetEøsland = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.barnetrygdFraAnnetEøsland,
+        'ombarnadine.feil.du-må-velge-barn'
+    );
+    const hvemErFosterbarn = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.erFosterbarn,
+        'ombarnadine.feil.du-må-velge-barn'
+    );
+    const hvemOppholderSegIInstitusjon = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.oppholderSegIInstitusjon,
+        'ombarnadine.feil.du-må-velge-barn'
+    );
+    const hvemErAdoptertFraUtland = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.erAdoptertFraUtland,
+        'ombarnadine.feil.du-må-velge-barn'
+    );
 
-    const søktAsylForBarn = useFelt<ESvar | undefined>({
-        feltId: søknad.søktAsylForBarn.id,
-        verdi: søknad.søktAsylForBarn.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-    });
+    const hvemTolvMndSammenhengendeINorge = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd,
+        'ombarnadine.feil.du-må-velge-barn'
+    );
 
-    const hvemErSøktAsylFor = useFelt<BarnetsIdent[]>({
-        feltId: barn.length > 0 ? barn[0].erAsylsøker.id : OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
-        verdi: søknad.barnInkludertISøknaden
-            .filter(barn => barn.erAsylsøker.svar === ESvar.JA)
-            .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
-            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
-        },
-    });
+    const hvemErSøktAsylFor = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.erAsylsøker,
+        'ombarnadine.feil.du-må-velge-barn'
+    );
 
-    const barnOppholdtSegTolvMndSammenhengendeINorge = useFelt<ESvar | undefined>({
-        feltId: søknad.barnOppholdtSegTolvMndSammenhengendeINorge.id,
-        verdi: søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-    });
-
-    const hvemTolvMndSammenhengendeINorge = useFelt<BarnetsIdent[]>({
-        feltId:
-            barn.length > 0
-                ? barn[0].oppholdtSegINorgeSammenhengendeTolvMnd.id
-                : OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge,
-        verdi: søknad.barnInkludertISøknaden
-            .filter(barn => barn.oppholdtSegINorgeSammenhengendeTolvMnd.svar === ESvar.JA)
-            .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
-            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
-        },
-    });
-
-    const mottarBarnetrygdForBarnFraAnnetEøsland = useFelt<ESvar | undefined>({
-        feltId: søknad.mottarBarnetrygdForBarnFraAnnetEøsland.id,
-        verdi: søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-    });
-
-    const hvemBarnetrygdFraAnnetEøsland = useFelt<BarnetsIdent[]>({
-        feltId:
-            barn.length > 0
-                ? barn[0].barnetrygdFraAnnetEøsland.id
-                : OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland,
-        verdi: søknad.barnInkludertISøknaden
-            .filter(barn => barn.barnetrygdFraAnnetEøsland.svar === ESvar.JA)
-            .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
-            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
-        },
-    });
+    const hvemOppholderSegIUtland = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.oppholderSegIUtland,
+        'ombarnadine.feil.du-må-velge-barn'
+    );
 
     const hentSvarForSpørsmålBarn = (barn: IBarn, felt: Felt<string[]>): ESvar =>
         felt.verdi.includes(barn.ident) ? ESvar.JA : ESvar.NEI;

@@ -113,5 +113,6 @@
   "ombarnadine.spm.tolv-mnd-sammenhengende-i-norge": "Har barna vært sammenhengende i Norge de siste 12 månedene?",
   "ombarnadine.spm.hvem-tolv-mnd-sammenhengende-i-norge": "Hvilke av barna har vært mindre enn 12 måneder sammenhengende i Norge?",
   "ombarnadine.spm.barnetrygd-fra-annet-eøsland": "Mottar du eller er det søkt om barnetrygd for noen av barna fra et annet EU/EØS land?",
-  "ombarnadine.spm.hvem-mottar-barnetrygd-eøsland": "Hvilke av barna har du mottatt eller søkt om barnetrygd for?"
+  "ombarnadine.spm.hvem-mottar-barnetrygd-eøsland": "Hvilke av barna har du mottatt eller søkt om barnetrygd for?",
+  "ombarnadine.feil.du-må-velge-barn": "Du må velge barn"
 }
