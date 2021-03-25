@@ -68,36 +68,43 @@ export const useOmBarnaDine = (): {
         'personopplysninger.feilmelding.janei'
     );
 
-    const hvemBarnetrygdFraAnnetEøsland = useBarnCheckboxFelt(
-        barnDataKeySpørsmål.barnetrygdFraAnnetEøsland,
-        'ombarnadine.feil.du-må-velge-barn'
-    );
     const hvemErFosterbarn = useBarnCheckboxFelt(
         barnDataKeySpørsmål.erFosterbarn,
-        'ombarnadine.feil.du-må-velge-barn'
+        'ombarnadine.feil.du-må-velge-barn',
+        erNoenAvBarnaFosterbarn
+    );
+    const hvemBarnetrygdFraAnnetEøsland = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.barnetrygdFraAnnetEøsland,
+        'ombarnadine.feil.du-må-velge-barn',
+        mottarBarnetrygdForBarnFraAnnetEøsland
     );
     const hvemOppholderSegIInstitusjon = useBarnCheckboxFelt(
         barnDataKeySpørsmål.oppholderSegIInstitusjon,
-        'ombarnadine.feil.du-må-velge-barn'
+        'ombarnadine.feil.du-må-velge-barn',
+        oppholderBarnSegIInstitusjon
     );
     const hvemErAdoptertFraUtland = useBarnCheckboxFelt(
         barnDataKeySpørsmål.erAdoptertFraUtland,
-        'ombarnadine.feil.du-må-velge-barn'
+        'ombarnadine.feil.du-må-velge-barn',
+        erBarnAdoptertFraUtland
     );
 
     const hvemTolvMndSammenhengendeINorge = useBarnCheckboxFelt(
         barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd,
-        'ombarnadine.feil.du-må-velge-barn'
+        'ombarnadine.feil.du-må-velge-barn',
+        barnOppholdtSegTolvMndSammenhengendeINorge
     );
 
     const hvemErSøktAsylFor = useBarnCheckboxFelt(
         barnDataKeySpørsmål.erAsylsøker,
-        'ombarnadine.feil.du-må-velge-barn'
+        'ombarnadine.feil.du-må-velge-barn',
+        søktAsylForBarn
     );
 
     const hvemOppholderSegIUtland = useBarnCheckboxFelt(
         barnDataKeySpørsmål.oppholderSegIUtland,
-        'ombarnadine.feil.du-må-velge-barn'
+        'ombarnadine.feil.du-må-velge-barn',
+        oppholderBarnSegIUtland
     );
 
     const hentSvarForSpørsmålBarn = (barn: IBarn, felt: Felt<string[]>): ESvar =>
