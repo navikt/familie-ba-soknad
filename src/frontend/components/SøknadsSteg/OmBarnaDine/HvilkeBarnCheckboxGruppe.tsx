@@ -27,7 +27,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt, visFeilmeldin
     }, [valgteBarn]);
 
     const oppdaterListeMedBarn = async (event: ChangeEvent) => {
-        const barnetsIdent = event.target.id;
+        const barnetsIdent = event.target.id.substring(`${felt.id}`.length);
 
         const barnetFinnesIListen = !!valgteBarn.find(ident => ident === barnetsIdent);
         const barnChecked = (event.target as HTMLInputElement).checked;
@@ -54,7 +54,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt, visFeilmeldin
                     <Checkbox
                         key={index}
                         label={barnISøknad.navn}
-                        id={barnISøknad.ident}
+                        id={`${felt.id}${barnISøknad.ident}`}
                         onChange={event => oppdaterListeMedBarn(event)}
                     />
                 );

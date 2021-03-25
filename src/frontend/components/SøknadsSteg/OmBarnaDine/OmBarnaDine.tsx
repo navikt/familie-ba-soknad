@@ -49,6 +49,20 @@ const OmBarnaDine: React.FC = () => {
                         omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon]
                     }
                 />
+
+                <HvilkeBarnCheckboxGruppe
+                    legend={
+                        <SpråkTekst
+                            id={
+                                omBarnaDineSpråkTekstId[
+                                    OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon
+                                ]
+                            }
+                        />
+                    }
+                    felt={skjema.felter.hvemOppholderSegIInstitusjon}
+                    visFeilmelding={skjema.visFeilmeldinger}
+                />
             </KomponentGruppe>
 
             <KomponentGruppe>
@@ -59,12 +73,38 @@ const OmBarnaDine: React.FC = () => {
                         omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland]
                     }
                 />
+                <HvilkeBarnCheckboxGruppe
+                    legend={
+                        <SpråkTekst
+                            id={
+                                omBarnaDineSpråkTekstId[
+                                    OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland
+                                ]
+                            }
+                        />
+                    }
+                    felt={skjema.felter.hvemErAdoptertFraUtland}
+                    visFeilmelding={skjema.visFeilmeldinger}
+                />
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.oppholderBarnSegIUtland}
                     spørsmålTekstId={
                         omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.oppholderBarnSegIUtland]
                     }
+                />
+                <HvilkeBarnCheckboxGruppe
+                    legend={
+                        <SpråkTekst
+                            id={
+                                omBarnaDineSpråkTekstId[
+                                    OmBarnaDineSpørsmålId.hvemOppholderSegIUtland
+                                ]
+                            }
+                        />
+                    }
+                    felt={skjema.felter.hvemOppholderSegIUtland}
+                    visFeilmelding={skjema.visFeilmeldinger}
                 />
             </KomponentGruppe>
 
@@ -74,6 +114,15 @@ const OmBarnaDine: React.FC = () => {
                     felt={skjema.felter.søktAsylForBarn}
                     spørsmålTekstId={omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.søktAsylForBarn]}
                 />
+                <HvilkeBarnCheckboxGruppe
+                    legend={
+                        <SpråkTekst
+                            id={omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.hvemErSøktAsylFor]}
+                        />
+                    }
+                    felt={skjema.felter.hvemErSøktAsylFor}
+                    visFeilmelding={skjema.visFeilmeldinger}
+                />
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge}
@@ -82,6 +131,19 @@ const OmBarnaDine: React.FC = () => {
                             OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
                         ]
                     }
+                />
+                <HvilkeBarnCheckboxGruppe
+                    legend={
+                        <SpråkTekst
+                            id={
+                                omBarnaDineSpråkTekstId[
+                                    OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge
+                                ]
+                            }
+                        />
+                    }
+                    felt={skjema.felter.hvemTolvMndSammenhengendeINorge}
+                    visFeilmelding={skjema.visFeilmeldinger}
                 />
             </KomponentGruppe>
 
@@ -94,6 +156,19 @@ const OmBarnaDine: React.FC = () => {
                             OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland
                         ]
                     }
+                />
+                <HvilkeBarnCheckboxGruppe
+                    legend={
+                        <SpråkTekst
+                            id={
+                                omBarnaDineSpråkTekstId[
+                                    OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland
+                                ]
+                            }
+                        />
+                    }
+                    felt={skjema.felter.hvemBarnetrygdFraAnnetEøsland}
+                    visFeilmelding={skjema.visFeilmeldinger}
                 />
             </KomponentGruppe>
         </Steg>

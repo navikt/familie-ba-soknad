@@ -17,7 +17,13 @@ export interface IOmBarnaDineFeltTyper {
     søktAsylForBarn: ESvar | undefined;
     barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | undefined;
     mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | undefined;
-    hvemErFosterbarn: string[];
+    hvemErFosterbarn: BarnasIdenter;
+    hvemOppholderSegIInstitusjon: BarnasIdenter;
+    hvemErAdoptertFraUtland: BarnasIdenter;
+    hvemOppholderSegIUtland: BarnasIdenter;
+    hvemBarnetrygdFraAnnetEøsland: BarnasIdenter;
+    hvemTolvMndSammenhengendeINorge: BarnasIdenter;
+    hvemErSøktAsylFor: BarnasIdenter;
 }
 
 export const useOmBarnaDine = (): {
@@ -59,6 +65,19 @@ export const useOmBarnaDine = (): {
         },
     });
 
+    const hvemOppholderSegIInstitusjon = useFelt<BarnasIdenter>({
+        feltId:
+            barn.length > 0
+                ? barn[0].oppholderSegIInstitusjon.id
+                : OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon,
+        verdi: søknad.barnInkludertISøknaden
+            .filter(barn => barn.oppholderSegIInstitusjon.svar === ESvar.JA)
+            .map(barn => barn.ident),
+        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
+        },
+    });
+
     const erBarnAdoptertFraUtland = useFelt<ESvar | undefined>({
         feltId: søknad.erBarnAdoptertFraUtland.id,
         verdi: søknad.erBarnAdoptertFraUtland.svar,
@@ -66,6 +85,19 @@ export const useOmBarnaDine = (): {
             return felt.verdi !== undefined
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
+        },
+    });
+
+    const hvemErAdoptertFraUtland = useFelt<BarnasIdenter>({
+        feltId:
+            barn.length > 0
+                ? barn[0].erAdoptertFraUtland.id
+                : OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland,
+        verdi: søknad.barnInkludertISøknaden
+            .filter(barn => barn.erAdoptertFraUtland.svar === ESvar.JA)
+            .map(barn => barn.ident),
+        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
 
@@ -79,6 +111,19 @@ export const useOmBarnaDine = (): {
         },
     });
 
+    const hvemOppholderSegIUtland = useFelt<BarnasIdenter>({
+        feltId:
+            barn.length > 0
+                ? barn[0].oppholderSegIUtland.id
+                : OmBarnaDineSpørsmålId.hvemOppholderSegIUtland,
+        verdi: søknad.barnInkludertISøknaden
+            .filter(barn => barn.oppholderSegIUtland.svar === ESvar.JA)
+            .map(barn => barn.ident),
+        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
+        },
+    });
+
     const søktAsylForBarn = useFelt<ESvar | undefined>({
         feltId: søknad.søktAsylForBarn.id,
         verdi: søknad.søktAsylForBarn.svar,
@@ -86,6 +131,16 @@ export const useOmBarnaDine = (): {
             return felt.verdi !== undefined
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
+        },
+    });
+
+    const hvemErSøktAsylFor = useFelt<BarnasIdenter>({
+        feltId: barn.length > 0 ? barn[0].erAsylsøker.id : OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
+        verdi: søknad.barnInkludertISøknaden
+            .filter(barn => barn.erAsylsøker.svar === ESvar.JA)
+            .map(barn => barn.ident),
+        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
 
@@ -99,6 +154,19 @@ export const useOmBarnaDine = (): {
         },
     });
 
+    const hvemTolvMndSammenhengendeINorge = useFelt<BarnasIdenter>({
+        feltId:
+            barn.length > 0
+                ? barn[0].oppholdtSegINorgeSammenhengendeTolvMnd.id
+                : OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge,
+        verdi: søknad.barnInkludertISøknaden
+            .filter(barn => barn.oppholdtSegINorgeSammenhengendeTolvMnd.svar === ESvar.JA)
+            .map(barn => barn.ident),
+        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
+        },
+    });
+
     const mottarBarnetrygdForBarnFraAnnetEøsland = useFelt<ESvar | undefined>({
         feltId: søknad.mottarBarnetrygdForBarnFraAnnetEøsland.id,
         verdi: søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar,
@@ -109,11 +177,23 @@ export const useOmBarnaDine = (): {
         },
     });
 
+    const hvemBarnetrygdFraAnnetEøsland = useFelt<BarnasIdenter>({
+        feltId:
+            barn.length > 0
+                ? barn[0].barnetrygdFraAnnetEøsland.id
+                : OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland,
+        verdi: søknad.barnInkludertISøknaden
+            .filter(barn => barn.barnetrygdFraAnnetEøsland.svar === ESvar.JA)
+            .map(barn => barn.ident),
+        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
+        },
+    });
+
     const hentSvarForSpørsmålBarn = (barn: IBarn, felt: Felt<string[]>): ESvar =>
         felt.verdi.includes(barn.ident) ? ESvar.JA : ESvar.NEI;
 
     const genererOppdaterteBarn = (): IBarn[] => {
-        //TODO: OPPDATER MED RIKTIG FELT NÅR DE ER LAGT TIL I SKJEMA
         return søknad.barnInkludertISøknaden.map(barn => {
             return {
                 ...barn,
@@ -123,27 +203,33 @@ export const useOmBarnaDine = (): {
                 },
                 erAsylsøker: {
                     ...barn.erAsylsøker,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErSøktAsylFor),
                 },
                 erAdoptertFraUtland: {
                     ...barn.erAdoptertFraUtland,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErAdoptertFraUtland),
                 },
                 oppholderSegIInstitusjon: {
                     ...barn.oppholderSegIInstitusjon,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemOppholderSegIInstitusjon),
                 },
                 oppholdtSegINorgeSammenhengendeTolvMnd: {
                     ...barn.oppholdtSegINorgeSammenhengendeTolvMnd,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                    svar: hentSvarForSpørsmålBarn(
+                        barn,
+                        skjema.felter.hvemTolvMndSammenhengendeINorge
+                    ),
                 },
                 oppholderSegIUtland: {
                     ...barn.oppholderSegIUtland,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemOppholderSegIUtland),
                 },
                 barnetrygdFraAnnetEøsland: {
                     ...barn.barnetrygdFraAnnetEøsland,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                    svar: hentSvarForSpørsmålBarn(
+                        barn,
+                        skjema.felter.hvemBarnetrygdFraAnnetEøsland
+                    ),
                 },
             };
         });
@@ -194,6 +280,12 @@ export const useOmBarnaDine = (): {
             barnOppholdtSegTolvMndSammenhengendeINorge,
             mottarBarnetrygdForBarnFraAnnetEøsland,
             hvemErFosterbarn,
+            hvemErAdoptertFraUtland,
+            hvemOppholderSegIInstitusjon,
+            hvemOppholderSegIUtland,
+            hvemBarnetrygdFraAnnetEøsland,
+            hvemTolvMndSammenhengendeINorge,
+            hvemErSøktAsylFor,
         },
         skjemanavn: 'ombarnadine',
     });
