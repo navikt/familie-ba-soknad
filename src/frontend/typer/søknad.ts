@@ -129,7 +129,7 @@ export const initialStateSøknad: ISøknad = {
         svar: undefined,
     },
     søktAsylForBarn: {
-        id: OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
+        id: OmBarnaDineSpørsmålId.søktAsylForBarn,
         svar: undefined,
     },
     barnOppholdtSegTolvMndSammenhengendeINorge: {
@@ -137,7 +137,7 @@ export const initialStateSøknad: ISøknad = {
         svar: undefined,
     },
     mottarBarnetrygdForBarnFraAnnetEøsland: {
-        id: OmBarnaDineSpørsmålId.mottarBarnetrygdFraAnnetEøsland,
+        id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
         svar: undefined,
     },
 };

@@ -9,9 +9,11 @@ import Lenke, { Props as LenkeProps } from 'nav-frontend-lenker';
 
 import { useApp } from '../../../context/AppContext';
 import { device } from '../../../Theme';
+import { IBarn, IBarnFraPdl } from '../../../typer/person';
 import { hentAlder } from '../../../utils/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import Steg from '../Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
@@ -50,15 +52,53 @@ const VelgBarn: React.FC = () => {
     const intl = useIntl();
 
     function settMedISøknad(ident: string, skalVæreMed: boolean) {
-        const barn = søknad.søker.barn.find(barn => barn.ident === ident);
+        const barnFraPDL: IBarnFraPdl | undefined = søknad.søker.barn.find(
+            barn => barn.ident === ident
+        );
 
-        barn &&
-            settSøknad({
-                ...søknad,
-                barn: skalVæreMed
-                    ? søknad.barn.concat([{ ...barn, alder: hentAlder(barn.fødselsdato) }])
-                    : søknad.barn.filter(barn => barn.ident !== ident),
-            });
+        if (!barnFraPDL) {
+            return;
+        }
+
+        const barn: IBarn = {
+            ...barnFraPDL,
+            alder: hentAlder(barnFraPDL.fødselsdato),
+            erFosterbarn: {
+                id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
+                svar: undefined,
+            },
+            erAdoptertFraUtland: {
+                id: OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland,
+                svar: undefined,
+            },
+            erAsylsøker: {
+                id: OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
+                svar: undefined,
+            },
+            barnetrygdFraAnnetEøsland: {
+                id: OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland,
+                svar: undefined,
+            },
+            oppholderSegIInstitusjon: {
+                id: OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon,
+                svar: undefined,
+            },
+            oppholdtSegINorgeSammenhengendeTolvMnd: {
+                id: OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge,
+                svar: undefined,
+            },
+            oppholderSegIUtland: {
+                id: OmBarnaDineSpørsmålId.hvemOppholderSegIUtland,
+                svar: undefined,
+            },
+        };
+
+        settSøknad({
+            ...søknad,
+            barn: skalVæreMed
+                ? søknad.barn.concat(barn)
+                : søknad.barn.filter(barn => barn.ident !== ident),
+        });
     }
 
     return (
@@ -81,12 +121,7 @@ const VelgBarn: React.FC = () => {
 
             <BarnekortContainer id={'barnMedISøknad'}>
                 {søknad.søker.barn.map(barn => (
-                    <Barnekort
-                        key={barn.ident}
-                        {...barn}
-                        alder={hentAlder(barn.fødselsdato)}
-                        settMedISøknad={settMedISøknad}
-                    />
+                    <Barnekort key={barn.ident} barnFraPdl={barn} settMedISøknad={settMedISøknad} />
                 ))}
                 <NyttBarnKort />
             </BarnekortContainer>

@@ -19,6 +19,10 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt, visFeilmeldin
     const [valgteBarn, settValgteBarn] = useState<BarnasIdenter>([]);
 
     useEffect(() => {
+        felt.validerOgSettFelt(valgteBarn);
+    }, []);
+
+    useEffect(() => {
         felt.hentNavInputProps(false).onChange(valgteBarn);
     }, [valgteBarn]);
 

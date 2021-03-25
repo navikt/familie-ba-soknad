@@ -11,10 +11,16 @@ import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
 import { device } from '../../../../Theme';
-import { IBarn } from '../../../../typer/person';
+import { IBarnFraPdl } from '../../../../typer/person';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
+import { hentAlder } from '../../../../utils/person';
 import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+
+interface IBarnekortProps {
+    settMedISøknad: (ident: string, skalVæreMed: boolean) => void;
+    barnFraPdl: IBarnFraPdl;
+}
 
 export const StyledBarnekort = styled.div`
     position: relative;
@@ -56,10 +62,6 @@ const BarnekortHeader = styled.div`
     }
 `;
 
-interface IBarnekortProps extends IBarn {
-    settMedISøknad: (ident: string, skalVæreMed: boolean) => void;
-}
-
 const StyledUndertittel = styled(Undertittel)`
     text-transform: uppercase;
     && {
@@ -75,12 +77,11 @@ const StyledIngress = styled(Ingress)`
     }
 `;
 
-const Barnekort: React.FC<IBarnekortProps> = props => {
+const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) => {
     const { søknad } = useApp();
     const ikoner = [barn1, barn2, barn3];
-    const { ident, borMedSøker, alder, navn, settMedISøknad } = props;
 
-    const medISøknad = !!søknad.barn.find(barn => barn.ident === ident);
+    const medISøknad = !!søknad.barn.find(barn => barn.ident === barnFraPdl.ident);
 
     return (
         <StyledBarnekort>
@@ -88,19 +89,22 @@ const Barnekort: React.FC<IBarnekortProps> = props => {
                 <img alt="barn" src={hentTilfeldigElement(ikoner)} />
             </BarnekortHeader>
             <InformasjonsboksInnhold>
-                <StyledUndertittel>{navn}</StyledUndertittel>
+                <StyledUndertittel>{barnFraPdl.navn}</StyledUndertittel>
                 <BarneKortInfo
                     labelId={'velgbarn.fødselsnummer.label'}
-                    verdi={formaterFnr(ident)}
+                    verdi={formaterFnr(barnFraPdl.ident)}
                 />
-                <BarneKortInfo labelId={'velgbarn.alder.label'} verdi={alder} />
-                {borMedSøker !== undefined && (
+                <BarneKortInfo
+                    labelId={'velgbarn.alder.label'}
+                    verdi={hentAlder(barnFraPdl.fødselsdato)}
+                />
+                {barnFraPdl.borMedSøker !== undefined && (
                     <BarneKortInfo
                         labelId={'velgbarn.bosted.label'}
                         verdi={
                             <SpråkTekst
                                 id={
-                                    borMedSøker
+                                    barnFraPdl.borMedSøker
                                         ? 'velgbarn.bosted.registrert-på-adressen-din'
                                         : 'velgbarn.bosted.annen-adresse'
                                 }
@@ -110,7 +114,7 @@ const Barnekort: React.FC<IBarnekortProps> = props => {
                 )}
                 <LeggTilBarnCheckbox
                     label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
-                    onClick={() => settMedISøknad(ident, !medISøknad)}
+                    onClick={() => settMedISøknad(barnFraPdl.ident, !medISøknad)}
                 />
             </InformasjonsboksInnhold>
         </StyledBarnekort>

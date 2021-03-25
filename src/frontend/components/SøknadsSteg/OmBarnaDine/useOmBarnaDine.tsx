@@ -27,6 +27,7 @@ export const useOmBarnaDine = (): {
     oppdaterSøknad: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
+    const barn: IBarn[] = søknad.barn;
 
     const erNoenAvBarnaFosterbarn = useFelt<ESvar | undefined>({
         feltId: søknad.erNoenAvBarnaFosterbarn.id,
@@ -39,9 +40,11 @@ export const useOmBarnaDine = (): {
     });
 
     const hvemErFosterbarn = useFelt<BarnasIdenter>({
-        feltId: OmBarnaDineSpørsmålId.hvemErFosterbarn, //TOODO: fiks id
-        verdi: søknad.barn.filter(barn => barn.erFosterbarn).map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<string[]>) => {
+        feltId: barn.length > 0 ? barn[0].erFosterbarn.id : OmBarnaDineSpørsmålId.hvemErFosterbarn,
+        verdi: søknad.barn
+            .filter(barn => barn.erFosterbarn.svar === ESvar.JA)
+            .map(barn => barn.ident),
+        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
             return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
@@ -132,6 +135,14 @@ export const useOmBarnaDine = (): {
                 },
                 oppholdtSegINorgeSammenhengendeTolvMnd: {
                     ...barn.oppholdtSegINorgeSammenhengendeTolvMnd,
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                },
+                oppholderSegIUtland: {
+                    ...barn.oppholderSegIUtland,
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                },
+                barnetrygdFraAnnetEøsland: {
+                    ...barn.barnetrygdFraAnnetEøsland,
                     svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
                 },
             };
