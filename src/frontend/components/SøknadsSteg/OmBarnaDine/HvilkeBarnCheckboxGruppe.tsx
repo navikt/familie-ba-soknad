@@ -6,17 +6,17 @@ import { Felt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 
-export type BarnasIdenter = string[];
+export type BarnetsIdent = string;
 
 interface Props {
     legend: ReactNode;
-    felt: Felt<BarnasIdenter>;
+    felt: Felt<BarnetsIdent[]>;
     visFeilmelding: boolean;
 }
 
 const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt, visFeilmelding }) => {
     const { søknad } = useApp();
-    const [valgteBarn, settValgteBarn] = useState<BarnasIdenter>([]);
+    const [valgteBarn, settValgteBarn] = useState<BarnetsIdent[]>([]);
 
     useEffect(() => {
         felt.validerOgSettFelt(valgteBarn);

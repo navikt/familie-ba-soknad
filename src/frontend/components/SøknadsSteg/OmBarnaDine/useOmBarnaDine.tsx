@@ -6,7 +6,7 @@ import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/
 import { useApp } from '../../../context/AppContext';
 import { IBarn } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { BarnasIdenter } from './HvilkeBarnCheckboxGruppe';
+import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId } from './spørsmål';
 
 export interface IOmBarnaDineFeltTyper {
@@ -17,13 +17,13 @@ export interface IOmBarnaDineFeltTyper {
     søktAsylForBarn: ESvar | undefined;
     barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | undefined;
     mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | undefined;
-    hvemErFosterbarn: BarnasIdenter;
-    hvemOppholderSegIInstitusjon: BarnasIdenter;
-    hvemErAdoptertFraUtland: BarnasIdenter;
-    hvemOppholderSegIUtland: BarnasIdenter;
-    hvemBarnetrygdFraAnnetEøsland: BarnasIdenter;
-    hvemTolvMndSammenhengendeINorge: BarnasIdenter;
-    hvemErSøktAsylFor: BarnasIdenter;
+    hvemErFosterbarn: BarnetsIdent[];
+    hvemOppholderSegIInstitusjon: BarnetsIdent[];
+    hvemErAdoptertFraUtland: BarnetsIdent[];
+    hvemOppholderSegIUtland: BarnetsIdent[];
+    hvemBarnetrygdFraAnnetEøsland: BarnetsIdent[];
+    hvemTolvMndSammenhengendeINorge: BarnetsIdent[];
+    hvemErSøktAsylFor: BarnetsIdent[];
 }
 
 export const useOmBarnaDine = (): {
@@ -45,12 +45,12 @@ export const useOmBarnaDine = (): {
         },
     });
 
-    const hvemErFosterbarn = useFelt<BarnasIdenter>({
+    const hvemErFosterbarn = useFelt<BarnetsIdent[]>({
         feltId: barn.length > 0 ? barn[0].erFosterbarn.id : OmBarnaDineSpørsmålId.hvemErFosterbarn,
         verdi: søknad.barnInkludertISøknaden
             .filter(barn => barn.erFosterbarn.svar === ESvar.JA)
             .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
             return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
@@ -65,7 +65,7 @@ export const useOmBarnaDine = (): {
         },
     });
 
-    const hvemOppholderSegIInstitusjon = useFelt<BarnasIdenter>({
+    const hvemOppholderSegIInstitusjon = useFelt<BarnetsIdent[]>({
         feltId:
             barn.length > 0
                 ? barn[0].oppholderSegIInstitusjon.id
@@ -73,7 +73,7 @@ export const useOmBarnaDine = (): {
         verdi: søknad.barnInkludertISøknaden
             .filter(barn => barn.oppholderSegIInstitusjon.svar === ESvar.JA)
             .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
             return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
@@ -88,7 +88,7 @@ export const useOmBarnaDine = (): {
         },
     });
 
-    const hvemErAdoptertFraUtland = useFelt<BarnasIdenter>({
+    const hvemErAdoptertFraUtland = useFelt<BarnetsIdent[]>({
         feltId:
             barn.length > 0
                 ? barn[0].erAdoptertFraUtland.id
@@ -96,7 +96,7 @@ export const useOmBarnaDine = (): {
         verdi: søknad.barnInkludertISøknaden
             .filter(barn => barn.erAdoptertFraUtland.svar === ESvar.JA)
             .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
             return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
@@ -111,7 +111,7 @@ export const useOmBarnaDine = (): {
         },
     });
 
-    const hvemOppholderSegIUtland = useFelt<BarnasIdenter>({
+    const hvemOppholderSegIUtland = useFelt<BarnetsIdent[]>({
         feltId:
             barn.length > 0
                 ? barn[0].oppholderSegIUtland.id
@@ -119,7 +119,7 @@ export const useOmBarnaDine = (): {
         verdi: søknad.barnInkludertISøknaden
             .filter(barn => barn.oppholderSegIUtland.svar === ESvar.JA)
             .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
             return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
@@ -134,12 +134,12 @@ export const useOmBarnaDine = (): {
         },
     });
 
-    const hvemErSøktAsylFor = useFelt<BarnasIdenter>({
+    const hvemErSøktAsylFor = useFelt<BarnetsIdent[]>({
         feltId: barn.length > 0 ? barn[0].erAsylsøker.id : OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
         verdi: søknad.barnInkludertISøknaden
             .filter(barn => barn.erAsylsøker.svar === ESvar.JA)
             .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
             return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
@@ -154,7 +154,7 @@ export const useOmBarnaDine = (): {
         },
     });
 
-    const hvemTolvMndSammenhengendeINorge = useFelt<BarnasIdenter>({
+    const hvemTolvMndSammenhengendeINorge = useFelt<BarnetsIdent[]>({
         feltId:
             barn.length > 0
                 ? barn[0].oppholdtSegINorgeSammenhengendeTolvMnd.id
@@ -162,7 +162,7 @@ export const useOmBarnaDine = (): {
         verdi: søknad.barnInkludertISøknaden
             .filter(barn => barn.oppholdtSegINorgeSammenhengendeTolvMnd.svar === ESvar.JA)
             .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
             return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
@@ -177,7 +177,7 @@ export const useOmBarnaDine = (): {
         },
     });
 
-    const hvemBarnetrygdFraAnnetEøsland = useFelt<BarnasIdenter>({
+    const hvemBarnetrygdFraAnnetEøsland = useFelt<BarnetsIdent[]>({
         feltId:
             barn.length > 0
                 ? barn[0].barnetrygdFraAnnetEøsland.id
@@ -185,7 +185,7 @@ export const useOmBarnaDine = (): {
         verdi: søknad.barnInkludertISøknaden
             .filter(barn => barn.barnetrygdFraAnnetEøsland.svar === ESvar.JA)
             .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnasIdenter>) => {
+        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
             return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
