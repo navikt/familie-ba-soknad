@@ -39,6 +39,7 @@ const OmBarnaDine: React.FC = () => {
                         />
                     }
                     felt={skjema.felter.hvemErFosterbarn}
+                    visFeilmelding={skjema.visFeilmeldinger}
                 />
 
                 <JaNeiSpm

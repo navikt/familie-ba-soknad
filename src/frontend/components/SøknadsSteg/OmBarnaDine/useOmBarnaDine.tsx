@@ -1,11 +1,13 @@
 import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { IBarn } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { BarnasIdenter } from './HvilkeBarnCheckboxGruppe';
+import { OmBarnaDineSpørsmålId } from './spørsmål';
 
 export interface IOmBarnaDineFeltTyper {
     erNoenAvBarnaFosterbarn: ESvar | undefined;
@@ -37,7 +39,7 @@ export const useOmBarnaDine = (): {
     });
 
     const hvemErFosterbarn = useFelt<BarnasIdenter>({
-        feltId: 'todo',
+        feltId: OmBarnaDineSpørsmålId.hvemErFosterbarn, //TOODO: fiks id
         verdi: søknad.barn.filter(barn => barn.erFosterbarn).map(barn => barn.ident),
         valideringsfunksjon: (felt: FeltState<string[]>) => {
             return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
@@ -104,6 +106,38 @@ export const useOmBarnaDine = (): {
         },
     });
 
+    const hentSvarForSpørsmålBarn = (barn: IBarn, felt: Felt<string[]>): ESvar =>
+        felt.verdi.includes(barn.ident) ? ESvar.JA : ESvar.NEI;
+
+    const hentOppdaterteBarn = (): IBarn[] => {
+        //TODO: OPPDATER MED RIKTIG FELT NÅR DE ER LAGT TIL I SKJEMA
+        return søknad.barn.map(barn => {
+            return {
+                ...barn,
+                erFosterbarn: {
+                    ...barn.erFosterbarn,
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                },
+                erAsylsøker: {
+                    ...barn.erAsylsøker,
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                },
+                erAdoptertFraUtland: {
+                    ...barn.erAdoptertFraUtland,
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                },
+                oppholderSegIInstitusjon: {
+                    ...barn.oppholderSegIInstitusjon,
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                },
+                oppholdtSegINorgeSammenhengendeTolvMnd: {
+                    ...barn.oppholdtSegINorgeSammenhengendeTolvMnd,
+                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                },
+            };
+        });
+    };
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
@@ -135,6 +169,7 @@ export const useOmBarnaDine = (): {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
                 svar: skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
             },
+            barn: hentOppdaterteBarn(),
         });
     };
 

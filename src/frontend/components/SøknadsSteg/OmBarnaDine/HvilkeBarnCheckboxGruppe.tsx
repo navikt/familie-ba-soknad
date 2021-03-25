@@ -11,9 +11,10 @@ export type BarnasIdenter = string[];
 interface Props {
     legend: ReactNode;
     felt: Felt<BarnasIdenter>;
+    visFeilmelding: boolean;
 }
 
-const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt }) => {
+const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt, visFeilmelding }) => {
     const { søknad } = useApp();
     const [valgteBarn, settValgteBarn] = useState<BarnasIdenter>([]);
 
@@ -29,19 +30,21 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt }) => {
 
         // Legg til barn i listen i lokal state
         if (barnChecked && !barnetFinnesIListen) {
-            await settValgteBarn(prevState => [...prevState].concat(barnetsIdent));
+            settValgteBarn(prevState => [...prevState].concat(barnetsIdent));
         }
 
         // Fjern barn fra listen i lokal state
         if (!barnChecked && barnetFinnesIListen) {
-            await settValgteBarn(prevState =>
-                [...prevState].filter(ident => ident !== barnetsIdent)
-            );
+            settValgteBarn(prevState => [...prevState].filter(ident => ident !== barnetsIdent));
         }
     };
 
     return (
-        <CheckboxGruppe legend={legend}>
+        <CheckboxGruppe
+            legend={legend}
+            {...felt.hentNavBaseSkjemaProps(visFeilmelding)}
+            utenFeilPropagering
+        >
             {søknad.barn.map((barnISøknad, index) => {
                 return (
                     <Checkbox
