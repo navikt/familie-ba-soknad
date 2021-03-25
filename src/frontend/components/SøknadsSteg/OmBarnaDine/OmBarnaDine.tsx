@@ -4,6 +4,7 @@ import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
+import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { omBarnaDineSpråkTekstId, OmBarnaDineSpørsmålId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
 
@@ -30,6 +31,16 @@ const OmBarnaDine: React.FC = () => {
                         omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn]
                     }
                 />
+
+                <HvilkeBarnCheckboxGruppe
+                    legend={
+                        <SpråkTekst
+                            id={omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.hvemErFosterbarn]}
+                        />
+                    }
+                    felt={skjema.felter.hvemErFosterbarn}
+                />
+
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.oppholderBarnSegIInstitusjon}

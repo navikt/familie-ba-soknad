@@ -5,6 +5,7 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 
 import { useApp } from '../../../context/AppContext';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { BarnasIdenter } from './HvilkeBarnCheckboxGruppe';
 
 export interface IOmBarnaDineFeltTyper {
     erNoenAvBarnaFosterbarn: ESvar | undefined;
@@ -14,6 +15,7 @@ export interface IOmBarnaDineFeltTyper {
     søktAsylForBarn: ESvar | undefined;
     barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | undefined;
     mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | undefined;
+    hvemErFosterbarn: string[];
 }
 
 export const useOmBarnaDine = (): {
@@ -31,6 +33,14 @@ export const useOmBarnaDine = (): {
             return felt.verdi !== undefined
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
+        },
+    });
+
+    const hvemErFosterbarn = useFelt<BarnasIdenter>({
+        feltId: 'todo',
+        verdi: søknad.barn.filter(barn => barn.erFosterbarn).map(barn => barn.ident),
+        valideringsfunksjon: (felt: FeltState<string[]>) => {
+            return felt.verdi.length > 0 ? ok(felt) : feil(felt, 'Du må velge barn');
         },
     });
 
@@ -137,6 +147,7 @@ export const useOmBarnaDine = (): {
             søktAsylForBarn,
             barnOppholdtSegTolvMndSammenhengendeINorge,
             mottarBarnetrygdForBarnFraAnnetEøsland,
+            hvemErFosterbarn,
         },
         skjemanavn: 'ombarnadine',
     });
