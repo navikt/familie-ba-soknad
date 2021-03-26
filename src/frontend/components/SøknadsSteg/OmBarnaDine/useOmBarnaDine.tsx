@@ -57,8 +57,7 @@ export const useOmBarnaDine = (): {
 
     const erBarnAdoptertFraUtland = useJaNeiSpmFelt(
         søknadDataKeySpørsmål.erBarnAdoptertFraUtland,
-        'personopplysninger.feilmelding.janei',
-        { erNoenAvBarnaFosterbarn, oppholderBarnSegIInstitusjon }
+        'personopplysninger.feilmelding.janei'
     );
 
     const hvemErAdoptertFraUtland = useBarnCheckboxFelt(
@@ -69,8 +68,7 @@ export const useOmBarnaDine = (): {
 
     const oppholderBarnSegIUtland = useJaNeiSpmFelt(
         søknadDataKeySpørsmål.oppholderBarnSegIUtland,
-        'personopplysninger.feilmelding.janei',
-        { erNoenAvBarnaFosterbarn, oppholderBarnSegIInstitusjon }
+        'personopplysninger.feilmelding.janei'
     );
 
     const hvemOppholderSegIUtland = useBarnCheckboxFelt(
@@ -81,8 +79,7 @@ export const useOmBarnaDine = (): {
 
     const søktAsylForBarn = useJaNeiSpmFelt(
         søknadDataKeySpørsmål.søktAsylForBarn,
-        'personopplysninger.feilmelding.janei',
-        { erBarnAdoptertFraUtland, oppholderBarnSegIUtland }
+        'personopplysninger.feilmelding.janei'
     );
 
     const hvemErSøktAsylFor = useBarnCheckboxFelt(
@@ -93,8 +90,7 @@ export const useOmBarnaDine = (): {
 
     const barnOppholdtSegTolvMndSammenhengendeINorge = useJaNeiSpmFelt(
         søknadDataKeySpørsmål.barnOppholdtSegTolvMndSammenhengendeINorge,
-        'personopplysninger.feilmelding.janei',
-        { erBarnAdoptertFraUtland, oppholderBarnSegIUtland }
+        'personopplysninger.feilmelding.janei'
     );
 
     const hvemTolvMndSammenhengendeINorge = useBarnCheckboxFelt(
@@ -105,8 +101,7 @@ export const useOmBarnaDine = (): {
 
     const mottarBarnetrygdForBarnFraAnnetEøsland = useJaNeiSpmFelt(
         søknadDataKeySpørsmål.mottarBarnetrygdForBarnFraAnnetEøsland,
-        'personopplysninger.feilmelding.janei',
-        { søktAsylForBarn, barnOppholdtSegTolvMndSammenhengendeINorge }
+        'personopplysninger.feilmelding.janei'
     );
 
     const hvemBarnetrygdFraAnnetEøsland = useBarnCheckboxFelt(

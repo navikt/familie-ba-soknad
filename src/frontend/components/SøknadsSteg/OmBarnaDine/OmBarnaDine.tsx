@@ -69,7 +69,12 @@ const OmBarnaDine: React.FC = () => {
                 )}
             </KomponentGruppe>
 
-            <KomponentGruppe>
+            <KomponentGruppe
+                avhengigheter={[
+                    skjema.felter.erNoenAvBarnaFosterbarn,
+                    skjema.felter.oppholderBarnSegIInstitusjon,
+                ]}
+            >
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erBarnAdoptertFraUtland}
@@ -116,7 +121,12 @@ const OmBarnaDine: React.FC = () => {
                 )}
             </KomponentGruppe>
 
-            <KomponentGruppe>
+            <KomponentGruppe
+                avhengigheter={[
+                    skjema.felter.erBarnAdoptertFraUtland,
+                    skjema.felter.oppholderBarnSegIUtland,
+                ]}
+            >
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.søktAsylForBarn}
@@ -161,7 +171,12 @@ const OmBarnaDine: React.FC = () => {
                 )}
             </KomponentGruppe>
 
-            <KomponentGruppe>
+            <KomponentGruppe
+                avhengigheter={[
+                    skjema.felter.søktAsylForBarn,
+                    skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge,
+                ]}
+            >
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland}
