@@ -112,7 +112,7 @@ const Steg: React.FC<ISteg> = ({
         event.preventDefault();
         if (validerFelterOgVisFeilmelding()) {
             gåVidereOnClickCallback();
-            history.push(nesteRoute.path);
+            history.push(nesteRoute.path.split(':')[0]);
         }
     };
 
