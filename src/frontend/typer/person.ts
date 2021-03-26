@@ -46,10 +46,6 @@ export interface ISøker extends ISøkerFraPdl {
     pensjonsland: ISøknadSpørsmål<Alpha3Code | undefined>;
 }
 
-export interface IBarn extends IBarnFraPdl {
-    alder: string;
-}
-
 export interface IAdresse {
     adressenavn?: string;
     postnummer?: string;
@@ -57,4 +53,27 @@ export interface IAdresse {
     bruksenhetsnummer?: string;
     husnummer?: string;
     bostedskommune?: string;
+}
+
+export enum barnDataKeySpørsmål {
+    erFosterbarn = 'erFosterbarn',
+    erAdoptertFraUtland = 'erAdoptertFraUtland',
+    erAsylsøker = 'erAsylsøker',
+    barnetrygdFraAnnetEøsland = 'barnetrygdFraAnnetEøsland',
+    oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
+    oppholdtSegINorgeSammenhengendeTolvMnd = 'oppholdtSegINorgeSammenhengendeTolvMnd',
+    oppholderSegIUtland = 'oppholderSegIUtland',
+}
+
+export interface IBarn extends IBarnFraPdl {
+    alder: string;
+    [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.oppholderSegIUtland]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.erAsylsøker]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd]: ISøknadSpørsmål<
+        ESvar | undefined
+    >;
+    [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | undefined>;
 }

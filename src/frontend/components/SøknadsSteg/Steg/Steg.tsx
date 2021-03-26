@@ -63,12 +63,12 @@ const ChildrenContainer = styled.div`
 
 const StyledSystemtittel = styled(Systemtittel)`
     && {
-        margin: 4rem auto 0 auto;
+        margin: 4rem auto 2rem auto;
     }
 `;
 
 const Form = styled.form`
-    max-width: 100%;
+    width: 100%;
 `;
 
 const Steg: React.FC<ISteg> = ({

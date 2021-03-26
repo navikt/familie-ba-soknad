@@ -16,7 +16,7 @@ export const useVelgBarn = (): {
     valideringErOk: () => boolean;
 } => {
     const { søknad } = useApp();
-    const { barn: barnMedISøknad } = søknad;
+    const { barnInkludertISøknaden: barnMedISøknad } = søknad;
 
     const barnMedISøknadFelt = useFelt<IBarn[]>({
         verdi: barnMedISøknad,

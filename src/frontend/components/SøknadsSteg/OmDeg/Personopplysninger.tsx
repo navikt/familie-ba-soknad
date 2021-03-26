@@ -19,11 +19,9 @@ export const Personopplysninger: React.FC = () => {
 
     return (
         <>
-            <Informasjonsbolk>
-                <AlertStripe>
-                    <SpråkTekst id={'personopplysninger.alert.infohentet'} />
-                </AlertStripe>
-            </Informasjonsbolk>
+            <AlertStripe>
+                <SpråkTekst id={'personopplysninger.alert.infohentet'} />
+            </AlertStripe>
 
             <Informasjonsbolk>
                 <Element>

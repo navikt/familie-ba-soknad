@@ -1,3 +1,6 @@
+import { ESvar } from '@navikt/familie-form-elements';
+
+import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/typer';
 import { INøkkelPar } from './common';
 import { ESivilstand, IBarn, ISøker } from './person';
@@ -33,19 +36,41 @@ export interface ISøknadsfelt<T> {
     verdi: T;
 }
 
+export enum søknadDataKeySpørsmål {
+    erNoenAvBarnaFosterbarn = 'erNoenAvBarnaFosterbarn',
+    oppholderBarnSegIInstitusjon = 'oppholderBarnSegIInstitusjon',
+    erBarnAdoptertFraUtland = 'erBarnAdoptertFraUtland',
+    oppholderBarnSegIUtland = 'oppholderBarnSegIUtland',
+    søktAsylForBarn = 'søktAsylForBarn',
+    barnOppholdtSegTolvMndSammenhengendeINorge = 'barnOppholdtSegTolvMndSammenhengendeINorge',
+    mottarBarnetrygdForBarnFraAnnetEøsland = 'mottarBarnetrygdForBarnFraAnnetEøsland',
+}
+
 export interface ISøknad {
     søknadstype: ESøknadstype;
     søker: ISøker;
-    barn: IBarn[];
+    barnInkludertISøknaden: IBarn[];
+    [søknadDataKeySpørsmål.erNoenAvBarnaFosterbarn]: ISøknadSpørsmål<ESvar | undefined>;
+    [søknadDataKeySpørsmål.oppholderBarnSegIInstitusjon]: ISøknadSpørsmål<ESvar | undefined>;
+    [søknadDataKeySpørsmål.erBarnAdoptertFraUtland]: ISøknadSpørsmål<ESvar | undefined>;
+    [søknadDataKeySpørsmål.oppholderBarnSegIUtland]: ISøknadSpørsmål<ESvar | undefined>;
+    [søknadDataKeySpørsmål.søktAsylForBarn]: ISøknadSpørsmål<ESvar | undefined>;
+    [søknadDataKeySpørsmål.barnOppholdtSegTolvMndSammenhengendeINorge]: ISøknadSpørsmål<
+        ESvar | undefined
+    >;
+    [søknadDataKeySpørsmål.mottarBarnetrygdForBarnFraAnnetEøsland]: ISøknadSpørsmål<
+        ESvar | undefined
+    >;
 }
 
 export interface ISøknadSpørsmål<T> {
-    id: OmDegSpørsmålId;
+    id: OmDegSpørsmålId | OmBarnaDineSpørsmålId;
     svar: T;
 }
 
 export const initialStateSøknad: ISøknad = {
     søknadstype: ESøknadstype.IKKE_SATT,
+    barnInkludertISøknaden: [],
     søker: {
         navn: '',
         barn: [],
@@ -101,5 +126,32 @@ export const initialStateSøknad: ISøknad = {
             svar: undefined,
         },
     },
-    barn: [],
+    erNoenAvBarnaFosterbarn: {
+        id: OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
+        svar: undefined,
+    },
+    oppholderBarnSegIInstitusjon: {
+        id: OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon,
+        svar: undefined,
+    },
+    erBarnAdoptertFraUtland: {
+        id: OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland,
+        svar: undefined,
+    },
+    oppholderBarnSegIUtland: {
+        id: OmBarnaDineSpørsmålId.oppholderBarnSegIUtland,
+        svar: undefined,
+    },
+    søktAsylForBarn: {
+        id: OmBarnaDineSpørsmålId.søktAsylForBarn,
+        svar: undefined,
+    },
+    barnOppholdtSegTolvMndSammenhengendeINorge: {
+        id: OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge,
+        svar: undefined,
+    },
+    mottarBarnetrygdForBarnFraAnnetEøsland: {
+        id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
+        svar: undefined,
+    },
 };

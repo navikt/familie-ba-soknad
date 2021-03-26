@@ -3,6 +3,7 @@ import React from 'react';
 import { Location } from 'history';
 
 import Kvittering from '../components/SøknadsSteg/Kvittering/Kvittering';
+import OmBarnaDine from '../components/SøknadsSteg/OmBarnaDine/OmBarnaDine';
 import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
@@ -19,6 +20,7 @@ export enum RouteEnum {
     Forside = 'Forside',
     OmDeg = 'Om deg',
     VelgBarn = 'Velg barn',
+    OmBarna = 'Om barna',
     Oppsummering = 'Oppsummering',
     Kvittering = 'Kvittering',
 }
@@ -27,6 +29,7 @@ export const Routes: IRoute[] = [
     { path: '/', label: 'Forside', route: RouteEnum.OmDeg, komponent: OmDeg },
     { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
     { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
+    { path: '/om-barna', label: 'Om barna', route: RouteEnum.OmBarna, komponent: OmBarnaDine },
     {
         path: '/oppsummering',
         label: 'Oppsummering',
