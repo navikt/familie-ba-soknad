@@ -8,10 +8,14 @@ import { barnDataKeySpørsmål } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 
+interface ICheckboxAvhengighet {
+    jaNeiSpm: Felt<ESvar | undefined>;
+}
+
 const useBarnCheckboxFelt = (
     datafeltNavn: barnDataKeySpørsmål,
     språkTekstIdForFeil: string,
-    spmCheckboxErAvhengigAv: Felt<ESvar | undefined>
+    avhengigheter?: ICheckboxAvhengighet
 ) => {
     const { søknad } = useApp();
     const barn = søknad.barnInkludertISøknaden;
@@ -27,11 +31,10 @@ const useBarnCheckboxFelt = (
                 : feil(felt, <SpråkTekst id={språkTekstIdForFeil} />);
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            return avhengigheter.spmCheckboxErAvhengigAv.verdi === ESvar.JA;
+            const typetAvhengigheter = avhengigheter as ICheckboxAvhengighet;
+            return typetAvhengigheter ? typetAvhengigheter.jaNeiSpm.verdi === ESvar.JA : true;
         },
-        avhengigheter: {
-            spmCheckboxErAvhengigAv,
-        },
+        avhengigheter: avhengigheter,
     });
 };
 
