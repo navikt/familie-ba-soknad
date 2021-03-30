@@ -15,7 +15,7 @@ interface ICheckboxAvhengighet {
 const useBarnCheckboxFelt = (
     datafeltNavn: barnDataKeySpørsmål,
     språkTekstIdForFeil: string,
-    avhengigheter?: ICheckboxAvhengighet
+    avhengighet?: Felt<ESvar | undefined>
 ) => {
     const { søknad } = useApp();
     const barn = søknad.barnInkludertISøknaden;
@@ -34,7 +34,7 @@ const useBarnCheckboxFelt = (
             const typetAvhengigheter = avhengigheter as ICheckboxAvhengighet;
             return typetAvhengigheter ? typetAvhengigheter.jaNeiSpm.verdi === ESvar.JA : true;
         },
-        avhengigheter: avhengigheter,
+        avhengigheter: { jaNeiSpm: avhengighet } as ICheckboxAvhengighet,
     });
 };
 
