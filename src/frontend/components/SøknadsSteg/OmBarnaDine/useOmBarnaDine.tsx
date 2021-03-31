@@ -1,12 +1,13 @@
 import { ESvar } from '@navikt/familie-form-elements';
-import { Felt, ISkjema, useSkjema } from '@navikt/familie-skjema';
+import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { barnDataKeySpørsmål, IBarn } from '../../../typer/person';
+import { barnDataKeySpørsmål } from '../../../typer/person';
 import { søknadDataKeySpørsmål } from '../../../typer/søknad';
 import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 import useJaNeiSpmFelt from './useJaNeiSpmFelt';
+import { hentFiltrerteAvhengigheter, genererOppdaterteBarn } from './utils';
 
 export interface IOmBarnaDineFeltTyper {
     erNoenAvBarnaFosterbarn: ESvar | undefined;
@@ -25,11 +26,6 @@ export interface IOmBarnaDineFeltTyper {
     hvemErSøktAsylFor: BarnetsIdent[];
 }
 
-type JaNeiSpmOgCheckboxPar = {
-    jaNeiSpm: Felt<ESvar | undefined>;
-    checkbox: Felt<BarnetsIdent[]>;
-}[];
-
 export const useOmBarnaDine = (): {
     skjema: ISkjema<IOmBarnaDineFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
@@ -37,25 +33,6 @@ export const useOmBarnaDine = (): {
     oppdaterSøknad: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
-
-    const hentFiltrerteAvhengigheter = (jaNeiSpmOgCheckboxPar: JaNeiSpmOgCheckboxPar) => {
-        let avhengigheter = {};
-
-        jaNeiSpmOgCheckboxPar.forEach(par => {
-            if (par.jaNeiSpm.verdi === ESvar.JA) {
-                avhengigheter = {
-                    ...avhengigheter,
-                    [par.checkbox.id]: par.checkbox,
-                };
-            } else {
-                avhengigheter = {
-                    ...avhengigheter,
-                    [par.jaNeiSpm.id]: par.jaNeiSpm,
-                };
-            }
-        });
-        return avhengigheter;
-    };
 
     const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt(
         søknadDataKeySpørsmål.erNoenAvBarnaFosterbarn,
@@ -157,51 +134,6 @@ export const useOmBarnaDine = (): {
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
 
-    const hentSvarForSpørsmålBarn = (barn: IBarn, felt: Felt<string[]>): ESvar =>
-        felt.verdi.includes(barn.ident) ? ESvar.JA : ESvar.NEI;
-
-    const genererOppdaterteBarn = (): IBarn[] => {
-        return søknad.barnInkludertISøknaden.map(barn => {
-            return {
-                ...barn,
-                erFosterbarn: {
-                    ...barn.erFosterbarn,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
-                },
-                erAsylsøker: {
-                    ...barn.erAsylsøker,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErSøktAsylFor),
-                },
-                erAdoptertFraUtland: {
-                    ...barn.erAdoptertFraUtland,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErAdoptertFraUtland),
-                },
-                oppholderSegIInstitusjon: {
-                    ...barn.oppholderSegIInstitusjon,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemOppholderSegIInstitusjon),
-                },
-                oppholdtSegINorgeSammenhengendeTolvMnd: {
-                    ...barn.oppholdtSegINorgeSammenhengendeTolvMnd,
-                    svar: hentSvarForSpørsmålBarn(
-                        barn,
-                        skjema.felter.hvemTolvMndSammenhengendeINorge
-                    ),
-                },
-                oppholderSegIUtland: {
-                    ...barn.oppholderSegIUtland,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemOppholderSegIUtland),
-                },
-                barnetrygdFraAnnetEøsland: {
-                    ...barn.barnetrygdFraAnnetEøsland,
-                    svar: hentSvarForSpørsmålBarn(
-                        barn,
-                        skjema.felter.hvemBarnetrygdFraAnnetEøsland
-                    ),
-                },
-            };
-        });
-    };
-
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
@@ -233,7 +165,7 @@ export const useOmBarnaDine = (): {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
                 svar: skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
             },
-            barnInkludertISøknaden: genererOppdaterteBarn(),
+            barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema),
         });
     };
 
