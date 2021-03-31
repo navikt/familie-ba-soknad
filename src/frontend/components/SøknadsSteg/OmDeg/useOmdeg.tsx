@@ -14,7 +14,9 @@ import {
 } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { hentFiltrerteAvhengigheter } from '../../../utils/hjelpefunksjoner';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import useJaNeiSpmFelt from '../OmBarnaDine/useJaNeiSpmFelt';
 
 export type ESvarMedUbesvart = ESvar | undefined;
 
@@ -63,21 +65,28 @@ export const useOmdeg = (): {
         },
     });
 
-    const oppholderSegINorge = useFelt<ESvarMedUbesvart>({
-        feltId: søker.oppholderSegINorge.id,
-        verdi: søker.oppholderSegINorge.svar,
+    const telefonnummer = useFelt<string>({
+        feltId: søker.telefonnummer.id,
+        verdi: søker.telefonnummer.svar,
+        valideringsfunksjon: (felt: FeltState<string>) => {
+            return felt.verdi.length >= 8 && /^[+\d\s]+$/.test(felt.verdi)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.telefonnr'} />);
+        },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
-        },
-        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
         },
         avhengigheter: {
             borPåRegistrertAdresse,
         },
     });
+
+    const oppholderSegINorge = useJaNeiSpmFelt(
+        søknad.søker.oppholderSegINorge,
+        'personopplysninger.feilmelding.janei',
+        { borPåRegistrertAdresse },
+        true
+    );
 
     const oppholdsland = useFelt<Alpha3Code | undefined>({
         feltId: søker.oppholdsland.id,
@@ -95,70 +104,44 @@ export const useOmdeg = (): {
         },
     });
 
-    const telefonnummer = useFelt<string>({
-        feltId: søker.telefonnummer.id,
-        verdi: søker.telefonnummer.svar,
-        valideringsfunksjon: (felt: FeltState<string>) => {
-            return felt.verdi.length >= 8 && /^[+\d\s]+$/.test(felt.verdi)
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.telefonnr'} />);
-        },
-        skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            const { søkerMåOppgiTlf } = avhengigheter;
-            return søkerMåOppgiTlf;
-        },
-        avhengigheter: {
-            søkerMåOppgiTlf: borPåRegistrertAdresse.verdi === ESvar.JA,
-        },
-    });
+    const værtINorgeITolvMåneder = useJaNeiSpmFelt(
+        søknad.søker.værtINorgeITolvMåneder,
+        'personopplysninger.feilmelding.janei',
+        { borPåRegistrertAdresse },
+        true
+    );
 
-    const værtINorgeITolvMåneder = useFelt<ESvarMedUbesvart>({
-        feltId: søker.værtINorgeITolvMåneder.id,
-        verdi: søker.værtINorgeITolvMåneder.svar,
-        skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
-        },
-        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-        avhengigheter: {
+    const erAsylsøker = useJaNeiSpmFelt(
+        søknad.søker.erAsylsøker,
+        'personopplysninger.feilmelding.janei',
+        {
             borPåRegistrertAdresse,
+            ...hentFiltrerteAvhengigheter(
+                [
+                    { jaNeiSpm: værtINorgeITolvMåneder },
+                    { jaNeiSpm: oppholderSegINorge, tilhørendeFelter: { oppholdsland } },
+                ],
+                ESvar.NEI
+            ),
         },
-    });
+        borPåRegistrertAdresse.verdi === ESvar.NEI
+    );
 
-    const erAsylsøker = useFelt<ESvarMedUbesvart>({
-        feltId: søker.erAsylsøker.id,
-        verdi: søker.erAsylsøker.svar,
-        skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            return avhengigheter.værtINorgeITolvMåneder.verdi !== undefined;
+    const jobberPåBåt = useJaNeiSpmFelt(
+        søknad.søker.jobberPåBåt,
+        'personopplysninger.feilmelding.janei',
+        {
+            borPåRegistrertAdresse,
+            ...hentFiltrerteAvhengigheter(
+                [
+                    { jaNeiSpm: værtINorgeITolvMåneder },
+                    { jaNeiSpm: oppholderSegINorge, tilhørendeFelter: { oppholdsland } },
+                ],
+                ESvar.NEI
+            ),
         },
-        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-        avhengigheter: {
-            værtINorgeITolvMåneder,
-        },
-    });
-
-    const jobberPåBåt = useFelt<ESvarMedUbesvart>({
-        feltId: søker.jobberPåBåt.id,
-        verdi: søker.jobberPåBåt.svar,
-        skalFeltetVises: avhengigheter => {
-            return avhengigheter.erAsylsøker.verdi !== undefined;
-        },
-        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-        avhengigheter: {
-            erAsylsøker,
-        },
-    });
+        borPåRegistrertAdresse.verdi === ESvar.NEI
+    );
 
     const arbeidsland = useFelt<Alpha3Code | undefined>({
         feltId: søker.arbeidsland.id,
@@ -176,21 +159,21 @@ export const useOmdeg = (): {
         },
     });
 
-    const mottarUtenlandspensjon = useFelt<ESvarMedUbesvart>({
-        feltId: søker.mottarUtenlandspensjon.id,
-        verdi: søker.mottarUtenlandspensjon.svar,
-        skalFeltetVises: avhengigheter => {
-            return avhengigheter.erAsylsøker.verdi !== undefined;
+    const mottarUtenlandspensjon = useJaNeiSpmFelt(
+        søknad.søker.mottarUtenlandspensjon,
+        'personopplysninger.feilmelding.janei',
+        {
+            borPåRegistrertAdresse,
+            ...hentFiltrerteAvhengigheter(
+                [
+                    { jaNeiSpm: værtINorgeITolvMåneder },
+                    { jaNeiSpm: oppholderSegINorge, tilhørendeFelter: { oppholdsland } },
+                ],
+                ESvar.NEI
+            ),
         },
-        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
-        },
-        avhengigheter: {
-            erAsylsøker,
-        },
-    });
+        borPåRegistrertAdresse.verdi === ESvar.NEI
+    );
 
     const pensjonsland = useFelt<Alpha3Code | undefined>({
         feltId: søker.pensjonsland.id,
