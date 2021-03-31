@@ -3,51 +3,7 @@
 
 // Disabler ts for å kunne sende inn parametre med kun nødvendige felter i objektet, uten å måtte mocke hele objektet.
 
-import {
-    genererOppdaterteBarn,
-    genererSvarForSpørsmålBarn,
-    hentFiltrerteAvhengigheter,
-} from './utils';
-
-describe('hentFiltrerteAvhengigheter', () => {
-    const mockJaNeiSpmOgCheckboxParSvarJa = [
-        {
-            jaNeiSpm: { verdi: 'JA', id: 'jaNeiId' },
-            checkbox: { verdi: ['12345678910'], id: 'checkboxId' },
-        },
-    ];
-    const mockJaNeiSpmOgCheckboxParSvarNei = [
-        {
-            jaNeiSpm: { verdi: 'NEI', id: 'jaNeiId' },
-            checkbox: { verdi: ['12345678910'], id: 'checkboxId' },
-        },
-    ];
-    const mockJaNeiSpmOgCheckboxParSvarUndefined = [
-        {
-            jaNeiSpm: { verdi: undefined, id: 'jaNeiId' },
-            checkbox: { verdi: ['12345678910'], id: 'checkboxId' },
-        },
-    ];
-
-    test('Returnerer checkbox dersom svar på jaNeiSpm === JA', () => {
-        expect(hentFiltrerteAvhengigheter(mockJaNeiSpmOgCheckboxParSvarJa)).toEqual({
-            [mockJaNeiSpmOgCheckboxParSvarJa[0].checkbox.id]:
-                mockJaNeiSpmOgCheckboxParSvarJa[0].checkbox,
-        });
-    });
-    test('Returnerer jaNeiSpm dersom svar på jaNeiSpm === NEI', () => {
-        expect(hentFiltrerteAvhengigheter(mockJaNeiSpmOgCheckboxParSvarNei)).toEqual({
-            [mockJaNeiSpmOgCheckboxParSvarNei[0].jaNeiSpm.id]:
-                mockJaNeiSpmOgCheckboxParSvarNei[0].jaNeiSpm,
-        });
-    });
-    test('Returnerer jaNeiSpm dersom svar på jaNeiSpm === undefined', () => {
-        expect(hentFiltrerteAvhengigheter(mockJaNeiSpmOgCheckboxParSvarUndefined)).toEqual({
-            [mockJaNeiSpmOgCheckboxParSvarUndefined[0].jaNeiSpm.id]:
-                mockJaNeiSpmOgCheckboxParSvarUndefined[0].jaNeiSpm,
-        });
-    });
-});
+import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from './utils';
 
 describe('genererSvarForSpørsmålBarn', () => {
     const mockBarn = { ident: '12345678910' };

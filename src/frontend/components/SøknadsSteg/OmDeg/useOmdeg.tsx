@@ -14,7 +14,7 @@ import {
 } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { hentFiltrerteAvhengigheter } from '../../../utils/hjelpefunksjoner';
+import { hentFiltrerteAvhengigheter } from '../../../utils/felthook';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useJaNeiSpmFelt from '../OmBarnaDine/useJaNeiSpmFelt';
 

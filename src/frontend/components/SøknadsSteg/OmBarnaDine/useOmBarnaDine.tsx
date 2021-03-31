@@ -3,7 +3,7 @@ import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
-import { hentFiltrerteAvhengigheter } from '../../../utils/hjelpefunksjoner';
+import { hentFiltrerteAvhengigheter } from '../../../utils/felthook';
 import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 import useJaNeiSpmFelt from './useJaNeiSpmFelt';
