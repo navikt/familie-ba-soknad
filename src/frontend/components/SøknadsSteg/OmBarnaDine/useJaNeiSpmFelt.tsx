@@ -10,28 +10,34 @@ import {
     Valideringsstatus,
 } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
-import { søknadDataKeySpørsmål } from '../../../typer/søknad';
+import { ISøknadSpørsmål } from '../../../typer/søknad';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const useJaNeiSpmFelt = (
-    søknadsdatafelt: søknadDataKeySpørsmål,
+    søknadsfelt: ISøknadSpørsmål<ESvar | undefined>,
     språkTekstIdForFeil: string,
-    avhengigheter?: Avhengigheter
+    avhengigheter?: Avhengigheter,
+    nullstillVedAvhengighetEndring = false
 ) => {
-    const { søknad } = useApp();
     const [harBlittVist, settHarBlittVist] = useState<boolean>(!avhengigheter);
 
     return useFelt<ESvar | undefined>({
-        feltId: søknad[søknadsdatafelt].id,
-        nullstillVedAvhengighetEndring: false,
-        verdi: søknad[søknadsdatafelt].svar,
+        feltId: søknadsfelt.id,
+        nullstillVedAvhengighetEndring,
+        verdi: søknadsfelt.svar,
         valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={språkTekstIdForFeil} />);
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
+            if (
+                avhengigheter.borPåRegistrertAdresse &&
+                avhengigheter.borPåRegistrertAdresse.verdi === ESvar.NEI
+            ) {
+                return false;
+            }
+
             if (harBlittVist) {
                 return true;
             }
