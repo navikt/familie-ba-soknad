@@ -1,7 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/typer';
+import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { INøkkelPar } from './common';
 import { ESivilstand, IBarn, ISøker } from './person';
 
