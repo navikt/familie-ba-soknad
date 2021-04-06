@@ -2,11 +2,11 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { barnDataKeySpørsmål } from '../../../typer/person';
 import { hentFiltrerteAvhengigheter } from '../../../utils/felthook';
 import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
-import useJaNeiSpmFelt from './useJaNeiSpmFelt';
 import { genererOppdaterteBarn } from './utils';
 
 export interface IOmBarnaDineFeltTyper {
