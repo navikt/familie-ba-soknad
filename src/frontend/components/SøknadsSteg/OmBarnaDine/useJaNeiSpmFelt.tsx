@@ -31,6 +31,7 @@ const useJaNeiSpmFelt = (
                 : feil(felt, <SpråkTekst id={språkTekstIdForFeil} />);
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
+            // borPåRegistrertAdresse er et spesialtilfelle for avhengighet, fordi hvis svaret på den er Nei må man søke på papir.
             if (
                 avhengigheter.borPåRegistrertAdresse &&
                 avhengigheter.borPåRegistrertAdresse.verdi === ESvar.NEI
