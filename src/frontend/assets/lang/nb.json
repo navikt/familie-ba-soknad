@@ -71,6 +71,8 @@
   "omdeg.spm.landopphold": "Hvilket land oppholder du deg i?",
   "omdeg.spm.mottar-du-pensjon-fra-utland": "Mottar du pensjon fra utlandet?",
   "omdeg.spm.oppholderSegINorge": "Oppholder du deg i Norge?",
+  "omdeg.spm.landopphold.dato": "Når begynte oppholdet? (format dd.mm.åååå)",
+  "omdeg.spm.dato.feil": "Du må oppgi dato på riktig format",
   "omdeg.spm.vært-i-tolv-måneder": "Har du oppholdt deg sammenhengende i Norge de siste 12 månedene",
   "omdeg.tittel": "Om deg",
   "ja": "ja",

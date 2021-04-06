@@ -38,6 +38,7 @@ export interface ISøker extends ISøkerFraPdl {
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | undefined>;
     oppholderSegINorge: ISøknadSpørsmål<ESvar | undefined>;
     oppholdsland: ISøknadSpørsmål<Alpha3Code | undefined>;
+    oppholdslandDato: ISøknadSpørsmål<string>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | undefined>;
     erAsylsøker: ISøknadSpørsmål<ESvar | undefined>;
     jobberPåBåt: ISøknadSpørsmål<ESvar | undefined>;
