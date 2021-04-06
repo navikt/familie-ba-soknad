@@ -1,7 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/typer';
+import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { INøkkelPar } from './common';
 import { ESivilstand, IBarn, ISøker } from './person';
 
@@ -36,31 +36,17 @@ export interface ISøknadsfelt<T> {
     verdi: T;
 }
 
-export enum søknadDataKeySpørsmål {
-    erNoenAvBarnaFosterbarn = 'erNoenAvBarnaFosterbarn',
-    oppholderBarnSegIInstitusjon = 'oppholderBarnSegIInstitusjon',
-    erBarnAdoptertFraUtland = 'erBarnAdoptertFraUtland',
-    oppholderBarnSegIUtland = 'oppholderBarnSegIUtland',
-    søktAsylForBarn = 'søktAsylForBarn',
-    barnOppholdtSegTolvMndSammenhengendeINorge = 'barnOppholdtSegTolvMndSammenhengendeINorge',
-    mottarBarnetrygdForBarnFraAnnetEøsland = 'mottarBarnetrygdForBarnFraAnnetEøsland',
-}
-
 export interface ISøknad {
     søknadstype: ESøknadstype;
     søker: ISøker;
     barnInkludertISøknaden: IBarn[];
-    [søknadDataKeySpørsmål.erNoenAvBarnaFosterbarn]: ISøknadSpørsmål<ESvar | undefined>;
-    [søknadDataKeySpørsmål.oppholderBarnSegIInstitusjon]: ISøknadSpørsmål<ESvar | undefined>;
-    [søknadDataKeySpørsmål.erBarnAdoptertFraUtland]: ISøknadSpørsmål<ESvar | undefined>;
-    [søknadDataKeySpørsmål.oppholderBarnSegIUtland]: ISøknadSpørsmål<ESvar | undefined>;
-    [søknadDataKeySpørsmål.søktAsylForBarn]: ISøknadSpørsmål<ESvar | undefined>;
-    [søknadDataKeySpørsmål.barnOppholdtSegTolvMndSammenhengendeINorge]: ISøknadSpørsmål<
-        ESvar | undefined
-    >;
-    [søknadDataKeySpørsmål.mottarBarnetrygdForBarnFraAnnetEøsland]: ISøknadSpørsmål<
-        ESvar | undefined
-    >;
+    erNoenAvBarnaFosterbarn: ISøknadSpørsmål<ESvar | undefined>;
+    oppholderBarnSegIInstitusjon: ISøknadSpørsmål<ESvar | undefined>;
+    erBarnAdoptertFraUtland: ISøknadSpørsmål<ESvar | undefined>;
+    oppholderBarnSegIUtland: ISøknadSpørsmål<ESvar | undefined>;
+    søktAsylForBarn: ISøknadSpørsmål<ESvar | undefined>;
+    barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | undefined>;
+    mottarBarnetrygdForBarnFraAnnetEøsland: ISøknadSpørsmål<ESvar | undefined>;
 }
 
 export interface ISøknadSpørsmål<T> {

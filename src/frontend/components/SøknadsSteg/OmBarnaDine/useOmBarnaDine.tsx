@@ -1,12 +1,13 @@
 import { ESvar } from '@navikt/familie-form-elements';
-import { Felt, ISkjema, useSkjema } from '@navikt/familie-skjema';
+import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { barnDataKeySpørsmål, IBarn } from '../../../typer/person';
-import { søknadDataKeySpørsmål } from '../../../typer/søknad';
+import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { barnDataKeySpørsmål } from '../../../typer/person';
+import { hentFiltrerteAvhengigheter } from '../../../utils/felthook';
 import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
-import useJaNeiSpmFelt from './useJaNeiSpmFelt';
+import { genererOppdaterteBarn } from './utils';
 
 export interface IOmBarnaDineFeltTyper {
     erNoenAvBarnaFosterbarn: ESvar | undefined;
@@ -34,7 +35,7 @@ export const useOmBarnaDine = (): {
     const { søknad, settSøknad } = useApp();
 
     const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt(
-        søknadDataKeySpørsmål.erNoenAvBarnaFosterbarn,
+        søknad.erNoenAvBarnaFosterbarn,
         'personopplysninger.feilmelding.janei'
     );
 
@@ -45,7 +46,7 @@ export const useOmBarnaDine = (): {
     );
 
     const oppholderBarnSegIInstitusjon = useJaNeiSpmFelt(
-        søknadDataKeySpørsmål.oppholderBarnSegIInstitusjon,
+        søknad.oppholderBarnSegIInstitusjon,
         'personopplysninger.feilmelding.janei'
     );
 
@@ -56,8 +57,18 @@ export const useOmBarnaDine = (): {
     );
 
     const erBarnAdoptertFraUtland = useJaNeiSpmFelt(
-        søknadDataKeySpørsmål.erBarnAdoptertFraUtland,
-        'personopplysninger.feilmelding.janei'
+        søknad.erBarnAdoptertFraUtland,
+        'personopplysninger.feilmelding.janei',
+        hentFiltrerteAvhengigheter(
+            [
+                { jaNeiSpm: erNoenAvBarnaFosterbarn, tilhørendeFelter: { hvemErFosterbarn } },
+                {
+                    jaNeiSpm: oppholderBarnSegIInstitusjon,
+                    tilhørendeFelter: { hvemOppholderSegIInstitusjon },
+                },
+            ],
+            ESvar.JA
+        )
     );
 
     const hvemErAdoptertFraUtland = useBarnCheckboxFelt(
@@ -67,8 +78,18 @@ export const useOmBarnaDine = (): {
     );
 
     const oppholderBarnSegIUtland = useJaNeiSpmFelt(
-        søknadDataKeySpørsmål.oppholderBarnSegIUtland,
-        'personopplysninger.feilmelding.janei'
+        søknad.oppholderBarnSegIUtland,
+        'personopplysninger.feilmelding.janei',
+        hentFiltrerteAvhengigheter(
+            [
+                { jaNeiSpm: erNoenAvBarnaFosterbarn, tilhørendeFelter: { hvemErFosterbarn } },
+                {
+                    jaNeiSpm: oppholderBarnSegIInstitusjon,
+                    tilhørendeFelter: { hvemOppholderSegIInstitusjon },
+                },
+            ],
+            ESvar.JA
+        )
     );
 
     const hvemOppholderSegIUtland = useBarnCheckboxFelt(
@@ -78,8 +99,21 @@ export const useOmBarnaDine = (): {
     );
 
     const søktAsylForBarn = useJaNeiSpmFelt(
-        søknadDataKeySpørsmål.søktAsylForBarn,
-        'personopplysninger.feilmelding.janei'
+        søknad.søktAsylForBarn,
+        'personopplysninger.feilmelding.janei',
+        hentFiltrerteAvhengigheter(
+            [
+                {
+                    jaNeiSpm: erBarnAdoptertFraUtland,
+                    tilhørendeFelter: { hvemErAdoptertFraUtland },
+                },
+                {
+                    jaNeiSpm: oppholderBarnSegIUtland,
+                    tilhørendeFelter: { hvemOppholderSegIUtland },
+                },
+            ],
+            ESvar.JA
+        )
     );
 
     const hvemErSøktAsylFor = useBarnCheckboxFelt(
@@ -89,8 +123,21 @@ export const useOmBarnaDine = (): {
     );
 
     const barnOppholdtSegTolvMndSammenhengendeINorge = useJaNeiSpmFelt(
-        søknadDataKeySpørsmål.barnOppholdtSegTolvMndSammenhengendeINorge,
-        'personopplysninger.feilmelding.janei'
+        søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
+        'personopplysninger.feilmelding.janei',
+        hentFiltrerteAvhengigheter(
+            [
+                {
+                    jaNeiSpm: erBarnAdoptertFraUtland,
+                    tilhørendeFelter: { hvemErAdoptertFraUtland },
+                },
+                {
+                    jaNeiSpm: oppholderBarnSegIUtland,
+                    tilhørendeFelter: { hvemOppholderSegIUtland },
+                },
+            ],
+            ESvar.JA
+        )
     );
 
     const hvemTolvMndSammenhengendeINorge = useBarnCheckboxFelt(
@@ -100,8 +147,18 @@ export const useOmBarnaDine = (): {
     );
 
     const mottarBarnetrygdForBarnFraAnnetEøsland = useJaNeiSpmFelt(
-        søknadDataKeySpørsmål.mottarBarnetrygdForBarnFraAnnetEøsland,
-        'personopplysninger.feilmelding.janei'
+        søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
+        'personopplysninger.feilmelding.janei',
+        hentFiltrerteAvhengigheter(
+            [
+                { jaNeiSpm: søktAsylForBarn, tilhørendeFelter: { hvemErSøktAsylFor } },
+                {
+                    jaNeiSpm: barnOppholdtSegTolvMndSammenhengendeINorge,
+                    tilhørendeFelter: { hvemTolvMndSammenhengendeINorge },
+                },
+            ],
+            ESvar.JA
+        )
     );
 
     const hvemBarnetrygdFraAnnetEøsland = useBarnCheckboxFelt(
@@ -109,51 +166,6 @@ export const useOmBarnaDine = (): {
         'ombarnadine.feil.du-må-velge-barn',
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
-
-    const hentSvarForSpørsmålBarn = (barn: IBarn, felt: Felt<string[]>): ESvar =>
-        felt.verdi.includes(barn.ident) ? ESvar.JA : ESvar.NEI;
-
-    const genererOppdaterteBarn = (): IBarn[] => {
-        return søknad.barnInkludertISøknaden.map(barn => {
-            return {
-                ...barn,
-                erFosterbarn: {
-                    ...barn.erFosterbarn,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
-                },
-                erAsylsøker: {
-                    ...barn.erAsylsøker,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErSøktAsylFor),
-                },
-                erAdoptertFraUtland: {
-                    ...barn.erAdoptertFraUtland,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemErAdoptertFraUtland),
-                },
-                oppholderSegIInstitusjon: {
-                    ...barn.oppholderSegIInstitusjon,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemOppholderSegIInstitusjon),
-                },
-                oppholdtSegINorgeSammenhengendeTolvMnd: {
-                    ...barn.oppholdtSegINorgeSammenhengendeTolvMnd,
-                    svar: hentSvarForSpørsmålBarn(
-                        barn,
-                        skjema.felter.hvemTolvMndSammenhengendeINorge
-                    ),
-                },
-                oppholderSegIUtland: {
-                    ...barn.oppholderSegIUtland,
-                    svar: hentSvarForSpørsmålBarn(barn, skjema.felter.hvemOppholderSegIUtland),
-                },
-                barnetrygdFraAnnetEøsland: {
-                    ...barn.barnetrygdFraAnnetEøsland,
-                    svar: hentSvarForSpørsmålBarn(
-                        barn,
-                        skjema.felter.hvemBarnetrygdFraAnnetEøsland
-                    ),
-                },
-            };
-        });
-    };
 
     const oppdaterSøknad = () => {
         settSøknad({
@@ -186,7 +198,7 @@ export const useOmBarnaDine = (): {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
                 svar: skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
             },
-            barnInkludertISøknaden: genererOppdaterteBarn(),
+            barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema),
         });
     };
 
