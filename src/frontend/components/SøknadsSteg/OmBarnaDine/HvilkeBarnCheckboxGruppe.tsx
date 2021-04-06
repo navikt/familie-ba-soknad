@@ -19,11 +19,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt, visFeilmeldin
     const [valgteBarn, settValgteBarn] = useState<BarnetsIdent[]>([]);
 
     useEffect(() => {
-        felt.validerOgSettFelt(valgteBarn);
-    }, []);
-
-    useEffect(() => {
-        felt.hentNavInputProps(false).onChange(valgteBarn);
+        felt.erSynlig && felt.hentNavInputProps(false).onChange(valgteBarn);
     }, [valgteBarn]);
 
     const oppdaterListeMedBarn = async (event: ChangeEvent) => {
@@ -43,7 +39,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt, visFeilmeldin
         }
     };
 
-    return (
+    return felt.erSynlig ? (
         <CheckboxGruppe
             legend={legend}
             {...felt.hentNavBaseSkjemaProps(visFeilmelding)}
@@ -60,7 +56,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({ legend, felt, visFeilmeldin
                 );
             })}
         </CheckboxGruppe>
-    );
+    ) : null;
 };
 
 export default HvilkeBarnCheckboxGruppe;
