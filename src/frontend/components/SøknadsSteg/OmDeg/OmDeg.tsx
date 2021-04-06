@@ -14,8 +14,8 @@ import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown'
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
+import { omDegSpråkTekstId, OmDegSpørsmålId } from './spørsmål';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
-import { omDegSpråkTekstId, OmDegSpørsmålId } from './typer';
 import { useOmdeg } from './useOmdeg';
 
 const StyledLandDropdown = styled(LandDropdown)`
