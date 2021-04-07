@@ -1,6 +1,6 @@
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { ESvar } from '@navikt/familie-form-elements';
+import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { ISøknadSpørsmål } from './søknad';
 
@@ -38,7 +38,7 @@ export interface ISøker extends ISøkerFraPdl {
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | undefined>;
     oppholderSegINorge: ISøknadSpørsmål<ESvar | undefined>;
     oppholdsland: ISøknadSpørsmål<Alpha3Code | undefined>;
-    oppholdslandDato: ISøknadSpørsmål<string>;
+    oppholdslandDato: ISøknadSpørsmål<ISODateString>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | undefined>;
     erAsylsøker: ISøknadSpørsmål<ESvar | undefined>;
     jobberPåBåt: ISøknadSpørsmål<ESvar | undefined>;

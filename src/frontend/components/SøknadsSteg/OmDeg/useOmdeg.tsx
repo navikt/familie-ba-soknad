@@ -14,10 +14,11 @@ import {
 } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import useLandDropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { hentFiltrerteAvhengigheter } from '../../../utils/felthook';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import useLandDropdownFelt from './useLanddropdownFelt';
 
 export type ESvarMedUbesvart = ESvar | undefined;
 
@@ -97,19 +98,12 @@ export const useOmdeg = (): {
         oppholderSegINorge
     );
 
-    const oppholdslandDato = useFelt({
-        feltId: søker.oppholdslandDato.id,
-        verdi: søker.oppholdslandDato.svar,
-        valideringsfunksjon: felt => {
-            return felt.verdi !== ''
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.spm.dato.feil'} />);
-        },
-        skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            return avhengigheter.oppholderSegINorge.verdi === ESvar.NEI;
-        },
-        avhengigheter: { oppholderSegINorge },
-    });
+    const oppholdslandDato = useDatovelgerFelt(
+        søker.oppholdslandDato,
+        'omdeg.spm.dato.feil',
+        ESvar.NEI,
+        oppholderSegINorge
+    );
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
         søker.værtINorgeITolvMåneder,

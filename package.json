@@ -102,6 +102,7 @@
     "classnames": "^2.2.6",
     "compression": "^1.7.4",
     "constate": "^3.1.0",
+    "dayjs": "^1.10.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "file-loader": "6.1.1",

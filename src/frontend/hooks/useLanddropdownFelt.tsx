@@ -5,8 +5,8 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Avhengigheter, feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
-import { ISøknadSpørsmål } from '../../../typer/søknad';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { ISøknadSpørsmål } from '../typer/søknad';
 
 interface ILandDropdownAvhengighet {
     jaNeiSpm: Felt<ESvar | undefined>;
