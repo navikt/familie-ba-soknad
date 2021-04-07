@@ -120,7 +120,10 @@ export const useOmdeg = (): {
             ...hentFiltrerteAvhengigheter(
                 [
                     { jaNeiSpm: værtINorgeITolvMåneder },
-                    { jaNeiSpm: oppholderSegINorge, tilhørendeFelter: { oppholdsland } },
+                    {
+                        jaNeiSpm: oppholderSegINorge,
+                        tilhørendeFelter: { oppholdsland, oppholdslandDato },
+                    },
                 ],
                 ESvar.NEI
             ),

@@ -27,7 +27,7 @@ const useDatovelgerFelt = (
                 : feil(felt, <SpråkTekst id={språkTekstIdForFeil} />);
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            const typetAvhengigheter = avhengigheter as ILandDropdownAvhengighet;
+            const typetAvhengigheter = avhengigheter as ILandDropdownAvhengighet; //TODO: rydd opp
             return typetAvhengigheter
                 ? typetAvhengigheter.jaNeiSpm.verdi === avhengigSvarCondition
                 : true;
