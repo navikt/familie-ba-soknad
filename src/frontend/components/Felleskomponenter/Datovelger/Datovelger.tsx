@@ -33,7 +33,7 @@ const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
         `}
 `;
 
-const DatoVelger: React.FC<DatoVelgerProps> = ({ felt, skjema, feilTekstId }) => {
+const Datovelger: React.FC<DatoVelgerProps> = ({ felt, skjema, feilTekstId }) => {
     return felt.erSynlig ? (
         <>
             <StyledFamilieDatovelger
@@ -51,4 +51,4 @@ const DatoVelger: React.FC<DatoVelgerProps> = ({ felt, skjema, feilTekstId }) =>
     ) : null;
 };
 
-export default DatoVelger;
+export default Datovelger;
