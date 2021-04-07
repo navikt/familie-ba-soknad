@@ -14,11 +14,11 @@ import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import {
-    hentAktivtStegIndex,
+    useAktivtStegIndex,
     hentForrigeRoute,
     hentNesteRoute,
     IRoute,
-    Routes,
+    useRoutes,
 } from '../../../routing/Routes';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
@@ -82,18 +82,19 @@ const Steg: React.FC<ISteg> = ({
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const { settUtfyltSteg } = useApp();
+    const routes = useRoutes();
 
     const [åpenModal, settÅpenModal] = useState(false);
 
-    const stegobjekter: StegindikatorStegProps[] = Routes.map((steg: IRoute, index: number) => {
+    const stegobjekter: StegindikatorStegProps[] = routes.map((steg: IRoute, index: number) => {
         return {
             label: steg.label,
             index: index,
         };
     });
 
-    const nesteRoute: IRoute = hentNesteRoute(Routes, location.pathname);
-    const forrigeRoute: IRoute = hentForrigeRoute(Routes, location.pathname);
+    const nesteRoute: IRoute = hentNesteRoute(routes, location.pathname);
+    const forrigeRoute: IRoute = hentForrigeRoute(routes, location.pathname);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -112,7 +113,7 @@ const Steg: React.FC<ISteg> = ({
         event.preventDefault();
         if (validerFelterOgVisFeilmelding()) {
             gåVidereOnClickCallback();
-            history.push(nesteRoute.path.split(':')[0]);
+            history.push(nesteRoute.path);
         }
     };
 
@@ -133,7 +134,7 @@ const Steg: React.FC<ISteg> = ({
                 <Ingress>Søknad om barnetrygd</Ingress>
                 <Stegindikator
                     autoResponsiv={true}
-                    aktivtSteg={hentAktivtStegIndex(location)}
+                    aktivtSteg={useAktivtStegIndex(location)}
                     steg={stegobjekter}
                     visLabel={false}
                 />

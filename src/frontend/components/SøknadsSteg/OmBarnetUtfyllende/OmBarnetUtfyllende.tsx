@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FormattedMessage } from 'react-intl';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import slugify from 'slugify';
 
 import { Input } from 'nav-frontend-skjema';
@@ -99,18 +99,20 @@ const InternKomponent: React.FC<{ barn: IBarn }> = ({ barn }) => {
 const OmBarnetUtfyllende: React.FC = () => {
     const { søknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
-    const { navn: navnParameter } = useParams<{ navn?: string }>();
     const history = useHistory();
+    const location = useLocation();
+    const match = location.pathname.match(/\/barnet\/(.+)\/?/);
 
     if (!barnInkludertISøknaden.length) {
         history.push('/velg-barn');
         return <></>;
     }
 
-    if (!navnParameter) {
+    if (!match || match.length < 2) {
         history.push(`/barnet/${slugify(barnInkludertISøknaden[0].navn)}`);
         return <></>;
     }
+    const navnParameter = match[1];
 
     const barn = barnInkludertISøknaden.find(barn => slugify(barn.navn) === navnParameter);
     if (!barn) {

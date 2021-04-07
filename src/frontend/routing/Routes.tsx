@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Location } from 'history';
+import { matchPath } from 'react-router';
+import slugify from 'slugify';
 
 import Kvittering from '../components/SøknadsSteg/Kvittering/Kvittering';
 import OmBarnaDine from '../components/SøknadsSteg/OmBarnaDine/OmBarnaDine';
@@ -8,6 +10,7 @@ import OmBarnetUtfyllende from '../components/SøknadsSteg/OmBarnetUtfyllende/Om
 import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
+import { useApp } from '../context/AppContext';
 import { ILokasjon } from '../typer/lokasjon';
 
 export interface IRoute {
@@ -27,42 +30,69 @@ export enum RouteEnum {
     Kvittering = 'Kvittering',
 }
 
-export const Routes: IRoute[] = [
-    { path: '/', label: 'Forside', route: RouteEnum.OmDeg, komponent: OmDeg },
-    { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
-    { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
-    { path: '/om-barna', label: 'Om barna', route: RouteEnum.OmBarna, komponent: OmBarnaDine },
-    {
-        path: '/barnet/:navn?',
-        label: 'Barn 1 av 2',
-        route: RouteEnum.OmBarnetUtfyllende,
-        komponent: OmBarnetUtfyllende,
-    },
-    {
-        path: '/oppsummering',
-        label: 'Oppsummering',
-        route: RouteEnum.Oppsummering,
-        komponent: Oppsummering,
-    },
-    {
-        path: '/kvittering',
-        label: 'Kvittering',
-        route: RouteEnum.Kvittering,
-        komponent: Kvittering,
-    },
-];
+export const useRoutes: () => IRoute[] = () => {
+    const {
+        søknad: { barnInkludertISøknaden },
+    } = useApp();
+    // En route per barn som er valgt, eller en plassholder hvis ingen er valgt
+    const barnRoutes: IRoute[] = barnInkludertISøknaden.length
+        ? barnInkludertISøknaden.map(barn => ({
+              path: `/barnet/${slugify(barn.navn)}`,
+              label: `Om ${barn.navn}`,
+              route: RouteEnum.OmBarnetUtfyllende,
+              komponent: OmBarnetUtfyllende,
+          }))
+        : [
+              {
+                  path: '/barnet/',
+                  label: 'Om barnet',
+                  route: RouteEnum.OmBarnetUtfyllende,
+                  komponent: OmBarnetUtfyllende,
+              },
+          ];
 
-export const hentAktivtStegIndex = (location: Location<ILokasjon>) =>
+    return [
+        { path: '/', label: 'Forside', route: RouteEnum.OmDeg, komponent: OmDeg },
+        { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
+        { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
+        { path: '/om-barna', label: 'Om barna', route: RouteEnum.OmBarna, komponent: OmBarnaDine },
+        ...barnRoutes,
+        {
+            path: '/oppsummering',
+            label: 'Oppsummering',
+            route: RouteEnum.Oppsummering,
+            komponent: Oppsummering,
+        },
+        {
+            path: '/kvittering',
+            label: 'Kvittering',
+            route: RouteEnum.Kvittering,
+            komponent: Kvittering,
+        },
+    ];
+};
+
+const hentRouteIndex = (routes: IRoute[], currentPath: string): number => {
+    return routes.findIndex(route => {
+        const match = matchPath(currentPath, {
+            path: route.path,
+            exact: true,
+        });
+        return match !== null;
+    });
+};
+
+export const useAktivtStegIndex = (location: Location<ILokasjon>) =>
     // Trekker fra 1 fordi forsiden teller som en route
-    Routes.findIndex(steg => steg.path === location.pathname) - 1;
+    hentRouteIndex(useRoutes(), location.pathname) - 1;
 
 export const hentForrigeRoute = (routes: IRoute[], currentPath: string) => {
-    const routeIndex = routes.findIndex(route => route.path === currentPath);
+    const routeIndex = hentRouteIndex(routes, currentPath);
     return routes[routeIndex - 1];
 };
 
 export const hentNesteRoute = (routes: IRoute[], currentPath: string) => {
-    const routeIndex = routes.findIndex(route => route.path === currentPath);
+    const routeIndex = hentRouteIndex(routes, currentPath);
     return routes[routeIndex + 1];
 };
 
