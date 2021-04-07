@@ -34,7 +34,7 @@ test(`Kan hente neste route fra forsiden`, () => {
     expect(nesteRoute.route).toBe(RouteEnum.OmDeg);
 });
 
-test(`Kan hente neste route når inneværende route har parameter`, () => {
+test(`Kan hente neste route når inneværende route er eneste barn`, () => {
     spyOnUseApp({
         barnInkludertISøknaden: [
             {
@@ -47,7 +47,7 @@ test(`Kan hente neste route når inneværende route har parameter`, () => {
     expect(nesteRoute.route).toBe(RouteEnum.Oppsummering);
 });
 
-test(`Kan hente forrige route når inneværende route har parameter`, () => {
+test(`Kan hente forrige route når inneværende route er eneste barn`, () => {
     spyOnUseApp({
         barnInkludertISøknaden: [
             {
@@ -58,19 +58,6 @@ test(`Kan hente forrige route når inneværende route har parameter`, () => {
     const location = '/barnet/Jens';
     const nesteRoute = hentForrigeRoute(useRoutes(), location);
     expect(nesteRoute.route).toBe(RouteEnum.OmBarna);
-});
-
-test(`Kan hente neste route når inneværende route har optional parameter`, () => {
-    spyOnUseApp({
-        barnInkludertISøknaden: [
-            {
-                navn: 'Jens',
-            },
-        ],
-    });
-    const location = '/barnet/';
-    const nesteRoute = hentNesteRoute(useRoutes(), location);
-    expect(nesteRoute.route).toBe(RouteEnum.Oppsummering);
 });
 
 test(`Label til steg om barnet skal inneholde barnets navn`, () => {
