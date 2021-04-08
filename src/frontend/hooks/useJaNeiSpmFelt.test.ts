@@ -1,10 +1,13 @@
+import { renderHook } from '@testing-library/react-hooks';
 import { Alpha3Code } from 'i18n-iso-countries';
 import { mock } from 'jest-mock-extended';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, Valideringsstatus } from '@navikt/familie-skjema';
 
-import { erRelevanteAvhengigheterValidert } from './useJaNeiSpmFelt';
+import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
+import { ISøknadSpørsmål } from '../typer/søknad';
+import useJaNeiSpmFelt, { erRelevanteAvhengigheterValidert } from './useJaNeiSpmFelt';
 
 describe('erRelevanteAvhengigheterValidert', () => {
     test('Skal returnere true dersom alle felter er validert til OK', () => {
@@ -118,4 +121,28 @@ describe('erRelevanteAvhengigheterValidert', () => {
         };
         expect(erRelevanteAvhengigheterValidert(avhengigheterMock)).toEqual(false);
     });
+});
+
+describe('useJaNeiSpmFelt', () => {
+    const oppholderSegINorge: ISøknadSpørsmål<ESvar | undefined> = {
+        id: OmDegSpørsmålId.oppholderSegINorge,
+        svar: undefined,
+    };
+
+    const borPåRegistrertAdresseFeltMock = mock<Felt<ESvar | undefined>>({
+        valideringsstatus: Valideringsstatus.IKKE_VALIDERT,
+    });
+
+    const { result } = renderHook(() =>
+        useJaNeiSpmFelt(
+            oppholderSegINorge,
+            'personopplysninger.feilmelding.janei',
+            { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresseFeltMock } },
+            true
+        )
+    );
+
+    expect(result.current.erSynlig).toEqual(false);
+    expect(result.current.valideringsstatus).toEqual(Valideringsstatus.IKKE_VALIDERT);
+    expect(result.current.verdi).toEqual(undefined);
 });
