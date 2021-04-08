@@ -35,17 +35,14 @@ const Søknad = () => {
                         <Switch>
                             <Route exact={true} path={'/helse'} component={Helse} />
                             <Route exact={true} path={'/'} component={Forside} />
-                            {routes &&
-                                routes.map((steg, index) => {
-                                    return (
-                                        <Route
-                                            key={index}
-                                            exact={true}
-                                            path={steg.path}
-                                            component={steg.komponent}
-                                        />
-                                    );
-                                })}
+                            {routes.map((steg, index) => (
+                                <Route
+                                    key={index}
+                                    exact={true}
+                                    path={steg.path}
+                                    component={steg.komponent}
+                                />
+                            ))}
                         </Switch>
                     </Router>
                 </div>
