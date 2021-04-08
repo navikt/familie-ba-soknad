@@ -7,11 +7,10 @@ import { HttpProvider } from '@navikt/familie-http';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
 import * as appContext from '../../../../context/AppContext';
+import { silenceConsoleErrors } from '../../../../utils/testing';
 import { NyttBarnKort } from './NyttBarnKort';
 
-jest.spyOn(global.console, 'error').mockImplementation(() => {
-    // Shut up about the missing translations;
-});
+silenceConsoleErrors();
 
 jest.mock('../../../../context/AppContext');
 jest.mock('@navikt/fnrvalidator');

@@ -1,4 +1,4 @@
-import * as appContext from '../context/AppContext';
+import { spyOnUseApp } from '../utils/testing';
 import { useRoutes, hentNesteRoute, RouteEnum, hentForrigeRoute } from './Routes';
 
 jest.mock('../context/AppContext');
@@ -8,10 +8,6 @@ jest.mock('react-router-dom', () => ({
         pathname: '/barnet/Jens',
     }),
 }));
-
-const spyOnUseApp = søknad => {
-    jest.spyOn(appContext, 'useApp').mockImplementation(jest.fn().mockReturnValue({ søknad }));
-};
 
 test(`Kan hente routes før barn er valgt`, () => {
     spyOnUseApp({

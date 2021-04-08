@@ -6,7 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
-import * as appContext from '../../../context/AppContext';
+import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import OmBarnetUtfyllende from './OmBarnetUtfyllende';
 
 jest.mock('../../../context/AppContext');
@@ -21,13 +21,7 @@ jest.mock('react-router-dom', () => ({
     useHistory: () => history,
 }));
 
-jest.spyOn(global.console, 'error').mockImplementation(() => {
-    // Shut up about the missing translations;
-});
-
-const spyOnUseApp = søknad => {
-    jest.spyOn(appContext, 'useApp').mockImplementation(jest.fn().mockReturnValue({ søknad }));
-};
+silenceConsoleErrors();
 
 test(`Kan rendre Om Barnet Utfyllende`, () => {
     spyOnUseApp({
