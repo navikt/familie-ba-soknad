@@ -25,7 +25,7 @@ const OmBarnaDine: React.FC = () => {
 
     if (!barnInkludertISøknaden.length) {
         history.push('/velg-barn');
-        return <></>;
+        return null;
     }
     return (
         <Steg

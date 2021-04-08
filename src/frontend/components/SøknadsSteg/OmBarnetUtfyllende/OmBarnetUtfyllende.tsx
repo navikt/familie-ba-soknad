@@ -105,19 +105,19 @@ const OmBarnetUtfyllende: React.FC = () => {
 
     if (!barnInkludertISøknaden.length) {
         history.push('/velg-barn');
-        return <></>;
+        return null;
     }
 
     if (!match || match.length < 2) {
         history.push(`/barnet/${slugify(barnInkludertISøknaden[0].navn)}`);
-        return <></>;
+        return null;
     }
     const navnParameter = match[1];
 
     const barn = barnInkludertISøknaden.find(barn => slugify(barn.navn) === navnParameter);
     if (!barn) {
         history.push('/barnet');
-        return <></>;
+        return null;
     }
 
     return <InternKomponent barn={barn} />;
