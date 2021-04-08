@@ -6,9 +6,14 @@ import styled from 'styled-components/macro';
 
 import { Select } from 'nav-frontend-skjema';
 
-import { NavInputProps } from '@navikt/familie-skjema';
+import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-interface LandDropdownProps<Verdi> extends NavInputProps<Verdi> {
+import { device } from '../../../Theme';
+import { SkjemaFeltTyper } from '../../../typer/skjema';
+
+interface LandDropdownProps {
+    felt: Felt<Alpha3Code | undefined>;
+    skjema: ISkjema<SkjemaFeltTyper, string>;
     label?: ReactNode;
 }
 
@@ -19,19 +24,31 @@ const StyledSelect = styled(Select)`
     }
 `;
 
-export const LandDropdown: React.FC<LandDropdownProps<Alpha3Code | undefined>> = ({
-    label,
-    ...navSkjemaProps
-}) => {
+const Container = styled.div`
+    width: 50%;
+    padding-right: 0.7rem;
+
+    @media all and ${device.mobile} {
+        width: 100%;
+        padding: 0;
+    }
+`;
+
+export const LandDropdown: React.FC<LandDropdownProps> = ({ felt, skjema, label }) => {
     const intl = useIntl();
 
     const landkoderSortertPåNavn = Object.keys(getAlpha3Codes()).sort((a, b) => {
         return getName(a, intl.locale) >= getName(b, intl.locale) ? 1 : -1;
     });
 
-    return (
-        <span id={navSkjemaProps.id}>
-            <StyledSelect label={label} defaultValue={''} {...navSkjemaProps} id={undefined}>
+    return felt.erSynlig ? (
+        <Container id={felt.id}>
+            <StyledSelect
+                label={label}
+                defaultValue={''}
+                {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
+                id={undefined}
+            >
                 <option
                     disabled={true}
                     value={''}
@@ -47,6 +64,6 @@ export const LandDropdown: React.FC<LandDropdownProps<Alpha3Code | undefined>> =
                     )
                 )}
             </StyledSelect>
-        </span>
-    );
+        </Container>
+    ) : null;
 };

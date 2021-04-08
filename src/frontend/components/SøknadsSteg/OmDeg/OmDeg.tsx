@@ -1,13 +1,10 @@
 import React from 'react';
 
-import styled from 'styled-components/macro';
-
 import { Input } from 'nav-frontend-skjema';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { device } from '../../../Theme';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
@@ -17,16 +14,6 @@ import { Personopplysninger } from './Personopplysninger';
 import { omDegSpråkTekstId, OmDegSpørsmålId } from './spørsmål';
 import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { useOmdeg } from './useOmdeg';
-
-const StyledLandDropdown = styled(LandDropdown)`
-    width: 50%;
-    padding-right: 0.7rem;
-
-    @media all and ${device.mobile} {
-        width: 100%;
-        padding: 0;
-    }
-`;
 
 const OmDeg: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmdeg();
@@ -89,12 +76,11 @@ const OmDeg: React.FC = () => {
                     felt={skjema.felter.oppholderSegINorge}
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.oppholderSegINorge]}
                 />
-                {skjema.felter.oppholdsland.erSynlig && (
-                    <StyledLandDropdown
-                        label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.oppholdsland]} />}
-                        {...skjema.felter.oppholdsland.hentNavInputProps(skjema.visFeilmeldinger)}
-                    />
-                )}
+                <LandDropdown
+                    felt={skjema.felter.oppholdsland}
+                    skjema={skjema}
+                    label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.oppholdsland]} />}
+                />
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.værtINorgeITolvMåneder}
@@ -113,23 +99,23 @@ const OmDeg: React.FC = () => {
                     felt={skjema.felter.jobberPåBåt}
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.jobberPåBåt]}
                 />
-                {skjema.felter.jobberPåBåt.verdi === ESvar.JA && (
-                    <StyledLandDropdown
-                        {...skjema.felter.arbeidsland.hentNavInputProps(skjema.visFeilmeldinger)}
-                        label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.arbeidsland]} />}
-                    />
-                )}
+
+                <LandDropdown
+                    felt={skjema.felter.arbeidsland}
+                    skjema={skjema}
+                    label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.arbeidsland]} />}
+                />
+
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.mottarUtenlandspensjon}
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.mottarUtenlandspensjon]}
                 />
-                {skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (
-                    <StyledLandDropdown
-                        {...skjema.felter.pensjonsland.hentNavInputProps(skjema.visFeilmeldinger)}
-                        label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.pensjonsland]} />}
-                    />
-                )}
+                <LandDropdown
+                    felt={skjema.felter.pensjonsland}
+                    skjema={skjema}
+                    label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.pensjonsland]} />}
+                />
             </KomponentGruppe>
         </Steg>
     );
