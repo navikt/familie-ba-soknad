@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import {
     Avhengigheter,
     feil,
+    Felt,
     FeltState,
     ISkjema,
     ok,
@@ -17,10 +18,15 @@ import { useApp } from '../../../context/AppContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLandDropdownFelt from '../../../hooks/useLanddropdownFelt';
-import { hentFiltrerteAvhengigheter } from '../../../utils/felthook';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export type ESvarMedUbesvart = ESvar | undefined;
+
+export interface FeltGruppe {
+    jaNeiSpm: Felt<ESvarMedUbesvart>;
+    // eslint-disable-next-line
+    tilhørendeFelter?: Felt<any>[];
+}
 
 export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvarMedUbesvart;
@@ -87,7 +93,7 @@ export const useOmdeg = (): {
     const oppholderSegINorge = useJaNeiSpmFelt(
         søker.oppholderSegINorge,
         'personopplysninger.feilmelding.janei',
-        { borPåRegistrertAdresse },
+        { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
         true
     );
 
@@ -108,7 +114,7 @@ export const useOmdeg = (): {
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
         søker.værtINorgeITolvMåneder,
         'personopplysninger.feilmelding.janei',
-        { borPåRegistrertAdresse },
+        { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
         true
     );
 
@@ -116,17 +122,16 @@ export const useOmdeg = (): {
         søker.erAsylsøker,
         'personopplysninger.feilmelding.janei',
         {
-            borPåRegistrertAdresse,
-            ...hentFiltrerteAvhengigheter(
-                [
-                    { jaNeiSpm: værtINorgeITolvMåneder },
-                    {
-                        jaNeiSpm: oppholderSegINorge,
-                        tilhørendeFelter: { oppholdsland, oppholdslandDato },
-                    },
-                ],
-                ESvar.NEI
-            ),
+            borPåRegistrertAdresse: {
+                jaNeiSpm: borPåRegistrertAdresse,
+            },
+            værtINorgeITolvMåneder: {
+                jaNeiSpm: værtINorgeITolvMåneder,
+            },
+            oppholderSegINorge: {
+                jaNeiSpm: oppholderSegINorge,
+                tilhørendeFelter: [oppholdsland, oppholdslandDato],
+            },
         },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
@@ -135,14 +140,16 @@ export const useOmdeg = (): {
         søker.jobberPåBåt,
         'personopplysninger.feilmelding.janei',
         {
-            borPåRegistrertAdresse,
-            ...hentFiltrerteAvhengigheter(
-                [
-                    { jaNeiSpm: værtINorgeITolvMåneder },
-                    { jaNeiSpm: oppholderSegINorge, tilhørendeFelter: { oppholdsland } },
-                ],
-                ESvar.NEI
-            ),
+            borPåRegistrertAdresse: {
+                jaNeiSpm: borPåRegistrertAdresse,
+            },
+            værtINorgeITolvMåneder: {
+                jaNeiSpm: værtINorgeITolvMåneder,
+            },
+            oppholderSegINorge: {
+                jaNeiSpm: oppholderSegINorge,
+                tilhørendeFelter: [oppholdsland, oppholdslandDato],
+            },
         },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
@@ -158,14 +165,16 @@ export const useOmdeg = (): {
         søker.mottarUtenlandspensjon,
         'personopplysninger.feilmelding.janei',
         {
-            borPåRegistrertAdresse,
-            ...hentFiltrerteAvhengigheter(
-                [
-                    { jaNeiSpm: værtINorgeITolvMåneder },
-                    { jaNeiSpm: oppholderSegINorge, tilhørendeFelter: { oppholdsland } },
-                ],
-                ESvar.NEI
-            ),
+            borPåRegistrertAdresse: {
+                jaNeiSpm: borPåRegistrertAdresse,
+            },
+            værtINorgeITolvMåneder: {
+                jaNeiSpm: værtINorgeITolvMåneder,
+            },
+            oppholderSegINorge: {
+                jaNeiSpm: oppholderSegINorge,
+                tilhørendeFelter: [oppholdsland, oppholdslandDato],
+            },
         },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
