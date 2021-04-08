@@ -7,6 +7,29 @@ import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst
 import { FeltGruppe } from '../components/SøknadsSteg/OmDeg/useOmdeg';
 import { ISøknadSpørsmål } from '../typer/søknad';
 
+export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]: FeltGruppe }) => {
+    if (
+        Object.values(avhengigheter).find(
+            feltGruppe => feltGruppe.jaNeiSpm.valideringsstatus !== Valideringsstatus.OK
+        )
+    ) {
+        return false;
+    }
+
+    const tilhørendeSomIkkeErValidert = Object.values(avhengigheter).filter(feltGruppe => {
+        if (!feltGruppe.tilhørendeFelter) {
+            return false;
+        } else {
+            return !!feltGruppe.tilhørendeFelter.find(
+                tilhørendeFelt =>
+                    tilhørendeFelt.erSynlig &&
+                    tilhørendeFelt.valideringsstatus !== Valideringsstatus.OK
+            );
+        }
+    });
+    return tilhørendeSomIkkeErValidert.length === 0;
+};
+
 const useJaNeiSpmFelt = (
     søknadsfelt: ISøknadSpørsmål<ESvar | undefined>,
     språkTekstIdForFeil: string,
@@ -28,6 +51,9 @@ const useJaNeiSpmFelt = (
         },
         skalFeltetVises: (avhengigheter: { [key: string]: FeltGruppe }) => {
             if (!avhengigheter) return harBlittVist;
+            if (harBlittVist) {
+                return true;
+            }
 
             // borPåRegistrertAdresse er et spesialtilfelle for avhengighet, fordi hvis svaret på den er Nei må man søke på papir.
             if (
@@ -37,31 +63,7 @@ const useJaNeiSpmFelt = (
                 return false;
             }
 
-            if (harBlittVist) {
-                return true;
-            }
-
-            if (
-                Object.values(avhengigheter).find(
-                    feltGruppe => feltGruppe.jaNeiSpm.valideringsstatus !== Valideringsstatus.OK
-                )
-            ) {
-                return false;
-            }
-
-            const tilhørendeSomIkkeErValidert = Object.values(avhengigheter).filter(feltGruppe => {
-                if (!feltGruppe.tilhørendeFelter) {
-                    return false;
-                } else {
-                    return !!feltGruppe.tilhørendeFelter.find(
-                        tilhørendeFelt =>
-                            tilhørendeFelt.erSynlig &&
-                            tilhørendeFelt.valideringsstatus !== Valideringsstatus.OK
-                    );
-                }
-            });
-
-            const skalVises = tilhørendeSomIkkeErValidert.length === 0;
+            const skalVises = erRelevanteAvhengigheterValidert(avhengigheter);
             skalVises && settHarBlittVist(true);
 
             return skalVises;
