@@ -7,9 +7,9 @@ import { IntlProvider } from 'react-intl';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
-import * as appContext from '../../../context/AppContext';
 import { preferredAxios } from '../../../context/axios';
 import { ESivilstand } from '../../../typer/person';
+import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import { Personopplysninger } from './Personopplysninger';
 
 const axiosMock = new MockAdapter(preferredAxios);
@@ -21,10 +21,7 @@ axiosMock.onGet('/api/innlogget').reply(200, {
 
 const mockedSivilstand = ESivilstand.GIFT;
 
-jest.spyOn(global.console, 'error').mockImplementation(() => {
-    // Shut up about the missing translations;
-});
-jest.mock('../../../context/AppContext');
+silenceConsoleErrors();
 
 test('Test at rendrer adresse i personopplysninger', () => {
     const søker = {
@@ -40,9 +37,7 @@ test('Test at rendrer adresse i personopplysninger', () => {
         sivilstand: { type: mockedSivilstand },
     };
 
-    jest.spyOn(appContext, 'useApp').mockImplementation(
-        jest.fn().mockReturnValue({ søknad: { søker } })
-    );
+    spyOnUseApp({ søker });
 
     const { getByText } = render(
         <IntlProvider locale={LocaleType.nb}>
@@ -64,9 +59,7 @@ test('Kan rendre med tom adresse', () => {
         sivilstand: { type: mockedSivilstand },
     };
 
-    jest.spyOn(appContext, 'useApp').mockImplementation(
-        jest.fn().mockReturnValue({ søknad: { søker } })
-    );
+    spyOnUseApp({ søker });
 
     const { getByText } = render(
         <IntlProvider locale={LocaleType.nb}>
