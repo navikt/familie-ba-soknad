@@ -88,13 +88,14 @@ export const useOmdeg = (): {
         avhengigheter: {
             borPåRegistrertAdresse,
         },
+        nullstillVedAvhengighetEndring: borPåRegistrertAdresse.verdi === ESvar.NEI,
     });
 
     const oppholderSegINorge = useJaNeiSpmFelt(
         søker.oppholderSegINorge,
         'personopplysninger.feilmelding.janei',
         { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
-        true
+        borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
     const oppholdsland = useLandDropdownFelt(
@@ -106,7 +107,7 @@ export const useOmdeg = (): {
 
     const oppholdslandDato = useDatovelgerFelt(
         søker.oppholdslandDato,
-        'omdeg.spm.dato.feil',
+        'omdeg.spm.oppholdsland.dato',
         ESvar.NEI,
         oppholderSegINorge
     );
@@ -115,7 +116,7 @@ export const useOmdeg = (): {
         søker.værtINorgeITolvMåneder,
         'personopplysninger.feilmelding.janei',
         { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
-        true
+        borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
     const erAsylsøker = useJaNeiSpmFelt(

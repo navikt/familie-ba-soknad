@@ -10,6 +10,7 @@ import { FamilieDatovelger, ISODateString } from '@navikt/familie-form-elements'
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface DatoVelgerProps {
     felt: Felt<ISODateString>;
@@ -39,7 +40,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({ felt, skjema, feilTekstId }) =>
             <StyledFamilieDatovelger
                 placeholder={'ddmmåå'}
                 valgtDato={felt.verdi}
-                label={feilTekstId} // Legg til ReactNode i felles
+                label={<SpråkTekst id={feilTekstId} />}
                 {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}
                 onChange={dato => {
                     felt.hentNavInputProps(false).onChange(dato);
