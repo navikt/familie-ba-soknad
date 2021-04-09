@@ -28,9 +28,7 @@ const useDatovelgerFelt = (
                       avhengigSvarCondition
                 : true;
         },
-        avhengigheter: {
-            jaNeiSpm: avhengighet,
-        },
+        avhengigheter: { jaNeiSpm: avhengighet },
     });
 };
 
