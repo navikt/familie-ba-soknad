@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { useHistory } from 'react-router-dom';
+
+import { useApp } from '../../../context/AppContext';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -15,6 +18,15 @@ const OmBarnaDine: React.FC = () => {
         valideringErOk,
         oppdaterSøknad,
     } = useOmBarnaDine();
+
+    const history = useHistory();
+    const { søknad } = useApp();
+    const { barnInkludertISøknaden } = søknad;
+
+    if (!barnInkludertISøknaden.length) {
+        history.push('/velg-barn');
+        return null;
+    }
     return (
         <Steg
             tittel={<SpråkTekst id={'ombarnadine.tittel'} />}
