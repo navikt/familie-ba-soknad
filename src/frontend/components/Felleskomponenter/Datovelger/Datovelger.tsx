@@ -15,7 +15,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 interface DatoVelgerProps {
     felt: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
-    feilTekstId: string;
+    labelTekstId: string;
 }
 
 const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
@@ -34,13 +34,13 @@ const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
         `}
 `;
 
-const Datovelger: React.FC<DatoVelgerProps> = ({ felt, skjema, feilTekstId }) => {
+const Datovelger: React.FC<DatoVelgerProps> = ({ felt, skjema, labelTekstId }) => {
     return felt.erSynlig ? (
         <>
             <StyledFamilieDatovelger
                 placeholder={'ddmmåå'}
                 valgtDato={felt.verdi}
-                label={<SpråkTekst id={feilTekstId} />}
+                label={<SpråkTekst id={labelTekstId} />}
                 {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}
                 onChange={dato => {
                     felt.hentNavInputProps(false).onChange(dato);

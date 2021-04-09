@@ -85,7 +85,7 @@ const OmDeg: React.FC = () => {
                 <Datovelger
                     felt={skjema.felter.oppholdslandDato}
                     skjema={skjema}
-                    feilTekstId={'omdeg.spm.dato.feil'}
+                    labelTekstId={'omdeg.spm.landopphold.dato'}
                 />
                 <JaNeiSpm
                     skjema={skjema}
