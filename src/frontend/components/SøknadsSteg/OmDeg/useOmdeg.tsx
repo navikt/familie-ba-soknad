@@ -107,7 +107,7 @@ export const useOmdeg = (): {
 
     const oppholdslandDato = useDatovelgerFelt(
         søker.oppholdslandDato,
-        'omdeg.spm.oppholdsland.dato',
+        'omdeg.spm.dato.feil',
         ESvar.NEI,
         oppholderSegINorge
     );
