@@ -51,9 +51,6 @@ const useJaNeiSpmFelt = (
         },
         skalFeltetVises: (avhengigheter: { [key: string]: FeltGruppe }) => {
             if (!avhengigheter) return harBlittVist;
-            if (harBlittVist) {
-                return true;
-            }
 
             // borPåRegistrertAdresse er et spesialtilfelle for avhengighet, fordi hvis svaret på den er Nei må man søke på papir.
             if (
@@ -61,6 +58,10 @@ const useJaNeiSpmFelt = (
                 avhengigheter.borPåRegistrertAdresse.jaNeiSpm.verdi === ESvar.NEI
             ) {
                 return false;
+            }
+
+            if (harBlittVist) {
+                return true;
             }
 
             const skalVises = erRelevanteAvhengigheterValidert(avhengigheter);
