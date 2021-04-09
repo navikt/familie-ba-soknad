@@ -4,7 +4,6 @@ import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { barnDataKeySpørsmål } from '../../../typer/person';
-import { hentFiltrerteAvhengigheter } from '../../../utils/felthook';
 import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 import { genererOppdaterteBarn } from './utils';
@@ -59,16 +58,16 @@ export const useOmBarnaDine = (): {
     const erBarnAdoptertFraUtland = useJaNeiSpmFelt(
         søknad.erBarnAdoptertFraUtland,
         'personopplysninger.feilmelding.janei',
-        hentFiltrerteAvhengigheter(
-            [
-                { jaNeiSpm: erNoenAvBarnaFosterbarn, tilhørendeFelter: { hvemErFosterbarn } },
-                {
-                    jaNeiSpm: oppholderBarnSegIInstitusjon,
-                    tilhørendeFelter: { hvemOppholderSegIInstitusjon },
-                },
-            ],
-            ESvar.JA
-        )
+        {
+            erNoenAvBarnaFosterbarn: {
+                jaNeiSpm: erNoenAvBarnaFosterbarn,
+                tilhørendeFelter: [hvemErFosterbarn],
+            },
+            oppholderBarnSegIInstitusjon: {
+                jaNeiSpm: oppholderBarnSegIInstitusjon,
+                tilhørendeFelter: [hvemOppholderSegIInstitusjon],
+            },
+        }
     );
 
     const hvemErAdoptertFraUtland = useBarnCheckboxFelt(
@@ -80,16 +79,16 @@ export const useOmBarnaDine = (): {
     const oppholderBarnSegIUtland = useJaNeiSpmFelt(
         søknad.oppholderBarnSegIUtland,
         'personopplysninger.feilmelding.janei',
-        hentFiltrerteAvhengigheter(
-            [
-                { jaNeiSpm: erNoenAvBarnaFosterbarn, tilhørendeFelter: { hvemErFosterbarn } },
-                {
-                    jaNeiSpm: oppholderBarnSegIInstitusjon,
-                    tilhørendeFelter: { hvemOppholderSegIInstitusjon },
-                },
-            ],
-            ESvar.JA
-        )
+        {
+            erNoenAvBarnaFosterbarn: {
+                jaNeiSpm: erNoenAvBarnaFosterbarn,
+                tilhørendeFelter: [hvemErFosterbarn],
+            },
+            oppholderBarnSegIInstitusjon: {
+                jaNeiSpm: oppholderBarnSegIInstitusjon,
+                tilhørendeFelter: [hvemOppholderSegIInstitusjon],
+            },
+        }
     );
 
     const hvemOppholderSegIUtland = useBarnCheckboxFelt(
@@ -101,19 +100,16 @@ export const useOmBarnaDine = (): {
     const søktAsylForBarn = useJaNeiSpmFelt(
         søknad.søktAsylForBarn,
         'personopplysninger.feilmelding.janei',
-        hentFiltrerteAvhengigheter(
-            [
-                {
-                    jaNeiSpm: erBarnAdoptertFraUtland,
-                    tilhørendeFelter: { hvemErAdoptertFraUtland },
-                },
-                {
-                    jaNeiSpm: oppholderBarnSegIUtland,
-                    tilhørendeFelter: { hvemOppholderSegIUtland },
-                },
-            ],
-            ESvar.JA
-        )
+        {
+            erBarnAdoptertFraUtland: {
+                jaNeiSpm: erBarnAdoptertFraUtland,
+                tilhørendeFelter: [hvemErAdoptertFraUtland],
+            },
+            oppholderBarnSegIUtland: {
+                jaNeiSpm: oppholderBarnSegIUtland,
+                tilhørendeFelter: [hvemOppholderSegIUtland],
+            },
+        }
     );
 
     const hvemErSøktAsylFor = useBarnCheckboxFelt(
@@ -125,19 +121,16 @@ export const useOmBarnaDine = (): {
     const barnOppholdtSegTolvMndSammenhengendeINorge = useJaNeiSpmFelt(
         søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
         'personopplysninger.feilmelding.janei',
-        hentFiltrerteAvhengigheter(
-            [
-                {
-                    jaNeiSpm: erBarnAdoptertFraUtland,
-                    tilhørendeFelter: { hvemErAdoptertFraUtland },
-                },
-                {
-                    jaNeiSpm: oppholderBarnSegIUtland,
-                    tilhørendeFelter: { hvemOppholderSegIUtland },
-                },
-            ],
-            ESvar.JA
-        )
+        {
+            erBarnAdoptertFraUtland: {
+                jaNeiSpm: erBarnAdoptertFraUtland,
+                tilhørendeFelter: [hvemErAdoptertFraUtland],
+            },
+            oppholderBarnSegIUtland: {
+                jaNeiSpm: oppholderBarnSegIUtland,
+                tilhørendeFelter: [hvemOppholderSegIUtland],
+            },
+        }
     );
 
     const hvemTolvMndSammenhengendeINorge = useBarnCheckboxFelt(
@@ -149,16 +142,13 @@ export const useOmBarnaDine = (): {
     const mottarBarnetrygdForBarnFraAnnetEøsland = useJaNeiSpmFelt(
         søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
         'personopplysninger.feilmelding.janei',
-        hentFiltrerteAvhengigheter(
-            [
-                { jaNeiSpm: søktAsylForBarn, tilhørendeFelter: { hvemErSøktAsylFor } },
-                {
-                    jaNeiSpm: barnOppholdtSegTolvMndSammenhengendeINorge,
-                    tilhørendeFelter: { hvemTolvMndSammenhengendeINorge },
-                },
-            ],
-            ESvar.JA
-        )
+        {
+            søktAsylForBarn: { jaNeiSpm: søktAsylForBarn, tilhørendeFelter: [hvemErSøktAsylFor] },
+            barnOppholdtSegTolvMndSammenhengendeINorge: {
+                jaNeiSpm: barnOppholdtSegTolvMndSammenhengendeINorge,
+                tilhørendeFelter: [hvemTolvMndSammenhengendeINorge],
+            },
+        }
     );
 
     const hvemBarnetrygdFraAnnetEøsland = useBarnCheckboxFelt(

@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import {
     Avhengigheter,
     feil,
+    Felt,
     FeltState,
     ISkjema,
     ok,
@@ -14,18 +15,25 @@ import {
 } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import { hentFiltrerteAvhengigheter } from '../../../utils/felthook';
+import useLandDropdownFelt from '../../../hooks/useLanddropdownFelt';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import useLandDropdownFelt from './useLanddropdownFelt';
 
 export type ESvarMedUbesvart = ESvar | undefined;
+
+export interface FeltGruppe {
+    jaNeiSpm: Felt<ESvarMedUbesvart>;
+    // eslint-disable-next-line
+    tilhørendeFelter?: Felt<any>[];
+}
 
 export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvarMedUbesvart;
     telefonnummer: string;
     oppholderSegINorge: ESvarMedUbesvart;
     oppholdsland: Alpha3Code | undefined;
+    oppholdslandDato: string;
     værtINorgeITolvMåneder: ESvarMedUbesvart;
     erAsylsøker: ESvarMedUbesvart;
     jobberPåBåt: ESvarMedUbesvart;
@@ -83,9 +91,9 @@ export const useOmdeg = (): {
     });
 
     const oppholderSegINorge = useJaNeiSpmFelt(
-        søknad.søker.oppholderSegINorge,
+        søker.oppholderSegINorge,
         'personopplysninger.feilmelding.janei',
-        { borPåRegistrertAdresse },
+        { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
         true
     );
 
@@ -96,41 +104,52 @@ export const useOmdeg = (): {
         oppholderSegINorge
     );
 
+    const oppholdslandDato = useDatovelgerFelt(
+        søker.oppholdslandDato,
+        'omdeg.spm.dato.feil',
+        ESvar.NEI,
+        oppholderSegINorge
+    );
+
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
-        søknad.søker.værtINorgeITolvMåneder,
+        søker.værtINorgeITolvMåneder,
         'personopplysninger.feilmelding.janei',
-        { borPåRegistrertAdresse },
+        { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
         true
     );
 
     const erAsylsøker = useJaNeiSpmFelt(
-        søknad.søker.erAsylsøker,
+        søker.erAsylsøker,
         'personopplysninger.feilmelding.janei',
         {
-            borPåRegistrertAdresse,
-            ...hentFiltrerteAvhengigheter(
-                [
-                    { jaNeiSpm: værtINorgeITolvMåneder },
-                    { jaNeiSpm: oppholderSegINorge, tilhørendeFelter: { oppholdsland } },
-                ],
-                ESvar.NEI
-            ),
+            borPåRegistrertAdresse: {
+                jaNeiSpm: borPåRegistrertAdresse,
+            },
+            værtINorgeITolvMåneder: {
+                jaNeiSpm: værtINorgeITolvMåneder,
+            },
+            oppholderSegINorge: {
+                jaNeiSpm: oppholderSegINorge,
+                tilhørendeFelter: [oppholdsland, oppholdslandDato],
+            },
         },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
     const jobberPåBåt = useJaNeiSpmFelt(
-        søknad.søker.jobberPåBåt,
+        søker.jobberPåBåt,
         'personopplysninger.feilmelding.janei',
         {
-            borPåRegistrertAdresse,
-            ...hentFiltrerteAvhengigheter(
-                [
-                    { jaNeiSpm: værtINorgeITolvMåneder },
-                    { jaNeiSpm: oppholderSegINorge, tilhørendeFelter: { oppholdsland } },
-                ],
-                ESvar.NEI
-            ),
+            borPåRegistrertAdresse: {
+                jaNeiSpm: borPåRegistrertAdresse,
+            },
+            værtINorgeITolvMåneder: {
+                jaNeiSpm: værtINorgeITolvMåneder,
+            },
+            oppholderSegINorge: {
+                jaNeiSpm: oppholderSegINorge,
+                tilhørendeFelter: [oppholdsland, oppholdslandDato],
+            },
         },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
@@ -143,17 +162,19 @@ export const useOmdeg = (): {
     );
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt(
-        søknad.søker.mottarUtenlandspensjon,
+        søker.mottarUtenlandspensjon,
         'personopplysninger.feilmelding.janei',
         {
-            borPåRegistrertAdresse,
-            ...hentFiltrerteAvhengigheter(
-                [
-                    { jaNeiSpm: værtINorgeITolvMåneder },
-                    { jaNeiSpm: oppholderSegINorge, tilhørendeFelter: { oppholdsland } },
-                ],
-                ESvar.NEI
-            ),
+            borPåRegistrertAdresse: {
+                jaNeiSpm: borPåRegistrertAdresse,
+            },
+            værtINorgeITolvMåneder: {
+                jaNeiSpm: værtINorgeITolvMåneder,
+            },
+            oppholderSegINorge: {
+                jaNeiSpm: oppholderSegINorge,
+                tilhørendeFelter: [oppholdsland, oppholdslandDato],
+            },
         },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
@@ -171,43 +192,47 @@ export const useOmdeg = (): {
             søker: {
                 ...søknad.søker,
                 borPåRegistrertAdresse: {
-                    ...søknad.søker.borPåRegistrertAdresse,
+                    ...søker.borPåRegistrertAdresse,
                     svar: skjema.felter.borPåRegistrertAdresse.verdi,
                 },
                 telefonnummer: {
-                    ...søknad.søker.telefonnummer,
+                    ...søker.telefonnummer,
                     svar: skjema.felter.telefonnummer.verdi,
                 },
                 oppholderSegINorge: {
-                    ...søknad.søker.oppholderSegINorge,
+                    ...søker.oppholderSegINorge,
                     svar: skjema.felter.oppholderSegINorge.verdi,
                 },
                 oppholdsland: {
-                    ...søknad.søker.oppholdsland,
+                    ...søker.oppholdsland,
                     svar: skjema.felter.oppholdsland.verdi,
                 },
+                oppholdslandDato: {
+                    ...søker.oppholdslandDato,
+                    svar: skjema.felter.oppholdslandDato.verdi,
+                },
                 værtINorgeITolvMåneder: {
-                    ...søknad.søker.værtINorgeITolvMåneder,
+                    ...søker.værtINorgeITolvMåneder,
                     svar: skjema.felter.værtINorgeITolvMåneder.verdi,
                 },
                 erAsylsøker: {
-                    ...søknad.søker.erAsylsøker,
+                    ...søker.erAsylsøker,
                     svar: skjema.felter.erAsylsøker.verdi,
                 },
                 jobberPåBåt: {
-                    ...søknad.søker.jobberPåBåt,
+                    ...søker.jobberPåBåt,
                     svar: skjema.felter.jobberPåBåt.verdi,
                 },
                 arbeidsland: {
-                    ...søknad.søker.arbeidsland,
+                    ...søker.arbeidsland,
                     svar: skjema.felter.arbeidsland.verdi,
                 },
                 mottarUtenlandspensjon: {
-                    ...søknad.søker.mottarUtenlandspensjon,
+                    ...søker.mottarUtenlandspensjon,
                     svar: skjema.felter.mottarUtenlandspensjon.verdi,
                 },
                 pensjonsland: {
-                    ...søknad.søker.pensjonsland,
+                    ...søker.pensjonsland,
                     svar: skjema.felter.pensjonsland.verdi,
                 },
             },
@@ -220,6 +245,7 @@ export const useOmdeg = (): {
             telefonnummer,
             oppholderSegINorge,
             oppholdsland,
+            oppholdslandDato,
             værtINorgeITolvMåneder,
             erAsylsøker,
             jobberPåBåt,

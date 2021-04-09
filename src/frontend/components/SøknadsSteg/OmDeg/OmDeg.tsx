@@ -5,6 +5,7 @@ import { Input } from 'nav-frontend-skjema';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
@@ -80,6 +81,11 @@ const OmDeg: React.FC = () => {
                     felt={skjema.felter.oppholdsland}
                     skjema={skjema}
                     label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.oppholdsland]} />}
+                />
+                <Datovelger
+                    felt={skjema.felter.oppholdslandDato}
+                    skjema={skjema}
+                    feilTekstId={'omdeg.spm.dato.feil'}
                 />
                 <JaNeiSpm
                     skjema={skjema}
