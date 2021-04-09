@@ -45,9 +45,9 @@ const Datovelger: React.FC<DatoVelgerProps> = ({ felt, skjema, feilTekstId }) =>
                 onChange={dato => {
                     felt.hentNavInputProps(false).onChange(dato);
                 }}
-                feil={!!felt.feilmelding}
+                feil={!!(felt.feilmelding && skjema.visFeilmeldinger)}
             />
-            <Feilmelding>{felt.feilmelding}</Feilmelding>
+            {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
         </>
     ) : null;
 };
