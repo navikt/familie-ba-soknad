@@ -27,8 +27,9 @@ export const StyledBarnekort = styled.div`
     border-radius: 0.3rem;
     max-width: calc(16.3rem - 0.3rem * 2);
     padding: 2rem;
+    margin: 0 auto 0.625rem;
     background-color: ${navFarger.navLysGra};
-    margin: 0.3rem;
+    break-inside: avoid;
     @media all and ${device.mobile} {
         width: 100%;
     }
