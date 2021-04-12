@@ -13,6 +13,9 @@ interface SkjemaFeltInputProps extends InputProps {
     labelSpråkTekstId: string;
 }
 
+/**
+ * Henter input props fra felt, og fra props. Props overstyrer felt.
+ */
 export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
     const { felt, labelSpråkTekstId, visFeilmeldinger, ...navInputProps } = props;
     return felt.erSynlig ? (
