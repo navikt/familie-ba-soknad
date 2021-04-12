@@ -49,49 +49,10 @@ export const hentSivilstatus = (statuskode?: ESivilstand) => {
     }
 };
 
-/**
- * Konverter fra fnr/dnr til ISO-dato.
- * @param idnummer
- * Enten fødselsnummer eller d-nummer
- * @param årSomRegnesSomForrigeÅrhundre
- * Hvor vi endrer fra base 1900 til 2000 for årstall i idnr. Hvis idnr starter med 010120 kan
- * for eksempel det tolkes som at man er født 1920, eller 2020. Alle årstall fra og med det som
- * sendes inn som andre parameter her vil regnes som 1900 + parameteret, alle årstall opp til
- * det vil regnes som 2000 + parameteret. Default er 60, slik at man eksempelvis får følgende:
- *      010120 => 2020-01-01
- *      010140 => 2040-01-01
- *      010160 => 1960-01-01
- *      010180 => 1980-01-01
- */
-export const fødselsdatoSomISOStringFraIdNummer = (
-    idnummer: string,
-    årSomRegnesSomForrigeÅrhundre = 60
-) => {
-    // Fjern all whitespace
-    const idnummerSanitized = idnummer.replace(/\s/g, '');
-    const dato = idnummerSanitized.substr(0, 6);
-    const [dag, måned, år] = (dato.match(/[0-9]{2}/g) || []).map(tall => Number.parseInt(tall));
-
-    const fulltÅr = år >= årSomRegnesSomForrigeÅrhundre ? 1900 + år : 2000 + år;
-
-    /**
-     * D-nummer starter med fødselsdato pluss 4 på første tall
-     * ... med mindre det ikke var noen tilgjengelige for den datoen,
-     * da brukes dato man søkte om d-nummer i steden for fødselsdato.
-     */
-    const dagKompansertForDNummer = dag < 40 ? dag : dag - 40;
-
-    return [
-        fulltÅr,
-        måned.toString(10).padStart(2, '0'),
-        dagKompansertForDNummer.toString(10).padStart(2, '0'),
-    ].join('-');
-};
-
 export const genererInitialStateBarn = (barnFraPDL: IBarnFraPdl): IBarn => {
     return {
         ...barnFraPDL,
-        alder: hentAlder(barnFraPDL.fødselsdato),
+        alder: barnFraPDL.fødselsdato && hentAlder(barnFraPDL.fødselsdato),
         erFosterbarn: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
             svar: undefined,

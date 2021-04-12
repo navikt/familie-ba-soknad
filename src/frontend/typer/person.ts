@@ -8,7 +8,7 @@ export interface IBarnFraPdl {
     ident: string;
     navn: string;
     borMedSøker: boolean | undefined;
-    fødselsdato: string;
+    fødselsdato?: string;
 }
 
 export enum ESivilstand {
@@ -67,7 +67,7 @@ export enum barnDataKeySpørsmål {
 }
 
 export interface IBarn extends IBarnFraPdl {
-    alder: string;
+    alder?: string;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | undefined>;

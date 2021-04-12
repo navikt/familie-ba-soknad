@@ -96,10 +96,12 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) =
                     labelId={'velgbarn.fødselsnummer.label'}
                     verdi={formaterFnr(barnFraPdl.ident)}
                 />
-                <BarneKortInfo
-                    labelId={'velgbarn.alder.label'}
-                    verdi={hentAlder(barnFraPdl.fødselsdato)}
-                />
+                {barnFraPdl.fødselsdato && ( // Barn som søker har lagt inn selv har ikke fødselsdato
+                    <BarneKortInfo
+                        labelId={'velgbarn.alder.label'}
+                        verdi={hentAlder(barnFraPdl.fødselsdato)}
+                    />
+                )}
                 {barnFraPdl.borMedSøker !== undefined && (
                     <BarneKortInfo
                         labelId={'velgbarn.bosted.label'}

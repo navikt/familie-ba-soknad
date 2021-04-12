@@ -8,13 +8,12 @@ import { idnr } from '@navikt/fnrvalidator';
 
 import { useApp } from '../../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarn } from '../../../../typer/person';
-import { fødselsdatoSomISOStringFraIdNummer } from '../../../../utils/person';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
 
 // Jeg har ikke funnet dokumentasjon på at man kan passe en enum til Omit, men det funker
 export interface ILeggTilBarnTyper
-    extends Omit<IBarn, 'borMedSøker' | 'alder' | 'fødselsdato' | barnDataKeySpørsmål> {
+    extends Omit<IBarn, 'borMedSøker' | 'alder' | barnDataKeySpørsmål> {
     erFødt: ESvarMedUbesvart;
     navnetErUbestemt: ESvar;
     harBarnetFåttIdNummer: ESvar;
@@ -108,7 +107,6 @@ export const useLeggTilBarn = (): {
                     {
                         ident: ident.verdi,
                         borMedSøker: undefined,
-                        fødselsdato: fødselsdatoSomISOStringFraIdNummer(ident.verdi),
                         navn:
                             navn.verdi ||
                             intl.formatMessage({ id: 'leggtilbarn.navn-ubestemt.plassholder' }),
