@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
 import { css } from 'styled-components';
 import styled from 'styled-components/macro';
 
@@ -35,10 +36,12 @@ const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
 `;
 
 const Datovelger: React.FC<DatoVelgerProps> = ({ felt, skjema, labelTekstId }) => {
+    const { formatMessage } = useIntl();
+
     return felt.erSynlig ? (
         <>
             <StyledFamilieDatovelger
-                placeholder={'ddmmåå'}
+                placeholder={formatMessage({ id: 'felles.dato.placeholder' })}
                 valgtDato={felt.verdi}
                 label={<SpråkTekst id={labelTekstId} />}
                 {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}

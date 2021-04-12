@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { ESvar } from '@navikt/familie-form-elements';
+import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import {
     Avhengigheter,
     feil,
@@ -23,22 +23,23 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 export type ESvarMedUbesvart = ESvar | undefined;
 
 export interface FeltGruppe {
-    jaNeiSpm: Felt<ESvarMedUbesvart>;
+    jaNeiSpm: Felt<ESvar | undefined>;
     // eslint-disable-next-line
     tilhørendeFelter?: Felt<any>[];
 }
 
 export interface IOmDegFeltTyper {
-    borPåRegistrertAdresse: ESvarMedUbesvart;
+    borPåRegistrertAdresse: ESvar | undefined;
     telefonnummer: string;
-    oppholderSegINorge: ESvarMedUbesvart;
+    oppholderSegINorge: ESvar | undefined;
     oppholdsland: Alpha3Code | undefined;
-    oppholdslandDato: string;
-    værtINorgeITolvMåneder: ESvarMedUbesvart;
-    erAsylsøker: ESvarMedUbesvart;
-    jobberPåBåt: ESvarMedUbesvart;
+    oppholdslandDato: ISODateString;
+    værtINorgeITolvMåneder: ESvar | undefined;
+    komTilNorgeDato: ISODateString;
+    erAsylsøker: ESvar | undefined;
+    jobberPåBåt: ESvar | undefined;
     arbeidsland: Alpha3Code | undefined;
-    mottarUtenlandspensjon: ESvarMedUbesvart;
+    mottarUtenlandspensjon: ESvar | undefined;
     pensjonsland: Alpha3Code | undefined;
 }
 
@@ -51,10 +52,10 @@ export const useOmdeg = (): {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
 
-    const borPåRegistrertAdresse = useFelt<ESvarMedUbesvart>({
+    const borPåRegistrertAdresse = useFelt<ESvar | undefined>({
         feltId: søker.borPåRegistrertAdresse.id,
         verdi: søker.borPåRegistrertAdresse.svar,
-        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
+        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
             /**
              * Hvis man svarer nei setter vi felt til Feil-state slik at man ikke kan gå videre,
              * og setter feilmelding til en tom string, siden personopplysningskomponenten har egen
@@ -117,6 +118,13 @@ export const useOmdeg = (): {
         'personopplysninger.feilmelding.janei',
         { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
         borPåRegistrertAdresse.verdi === ESvar.NEI
+    );
+
+    const komTilNorgeDato = useDatovelgerFelt(
+        søker.komTilNorgeDato,
+        'omdeg.spm.dato.feil',
+        ESvar.NEI,
+        værtINorgeITolvMåneder
     );
 
     const erAsylsøker = useJaNeiSpmFelt(
@@ -216,6 +224,10 @@ export const useOmdeg = (): {
                     ...søker.værtINorgeITolvMåneder,
                     svar: skjema.felter.værtINorgeITolvMåneder.verdi,
                 },
+                komTilNorgeDato: {
+                    ...søker.komTilNorgeDato,
+                    svar: skjema.felter.komTilNorgeDato.verdi,
+                },
                 erAsylsøker: {
                     ...søker.erAsylsøker,
                     svar: skjema.felter.erAsylsøker.verdi,
@@ -248,6 +260,7 @@ export const useOmdeg = (): {
             oppholdsland,
             oppholdslandDato,
             værtINorgeITolvMåneder,
+            komTilNorgeDato,
             erAsylsøker,
             jobberPåBåt,
             arbeidsland,

@@ -92,6 +92,11 @@ const OmDeg: React.FC = () => {
                     felt={skjema.felter.værtINorgeITolvMåneder}
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
                 />
+                <Datovelger
+                    felt={skjema.felter.komTilNorgeDato}
+                    skjema={skjema}
+                    labelTekstId={'omdeg.spm.komTilNorge.dato'}
+                />
             </KomponentGruppe>
 
             <KomponentGruppe>
