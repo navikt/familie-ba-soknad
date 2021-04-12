@@ -97,6 +97,14 @@ const OmDeg: React.FC = () => {
                     skjema={skjema}
                     labelTekstId={'omdeg.spm.komTilNorge.dato'}
                 />
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
+                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]}
+                />
+                {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
+                    <p>Hei på deg jeg dukker opp</p>
+                )}
             </KomponentGruppe>
 
             <KomponentGruppe>

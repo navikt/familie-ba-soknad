@@ -36,6 +36,7 @@ export interface IOmDegFeltTyper {
     oppholdslandDato: ISODateString;
     værtINorgeITolvMåneder: ESvar | undefined;
     komTilNorgeDato: ISODateString;
+    planleggerÅBoINorgeTolvMnd: ESvar | undefined;
     erAsylsøker: ESvar | undefined;
     jobberPåBåt: ESvar | undefined;
     arbeidsland: Alpha3Code | undefined;
@@ -126,6 +127,23 @@ export const useOmdeg = (): {
         ESvar.NEI,
         værtINorgeITolvMåneder
     );
+
+    const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | undefined>({
+        feltId: søker.planleggerÅBoINorgeTolvMnd.id,
+        verdi: søker.planleggerÅBoINorgeTolvMnd.svar,
+        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
+        },
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter.værtINorgeITolvMåneder &&
+                avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI
+            );
+        },
+        avhengigheter: { værtINorgeITolvMåneder },
+    });
 
     const erAsylsøker = useJaNeiSpmFelt(
         søker.erAsylsøker,
@@ -228,6 +246,10 @@ export const useOmdeg = (): {
                     ...søker.komTilNorgeDato,
                     svar: skjema.felter.komTilNorgeDato.verdi,
                 },
+                planleggerÅBoINorgeTolvMnd: {
+                    ...søker.planleggerÅBoINorgeTolvMnd,
+                    svar: skjema.felter.planleggerÅBoINorgeTolvMnd.verdi,
+                },
                 erAsylsøker: {
                     ...søker.erAsylsøker,
                     svar: skjema.felter.erAsylsøker.verdi,
@@ -261,6 +283,7 @@ export const useOmdeg = (): {
             oppholdslandDato,
             værtINorgeITolvMåneder,
             komTilNorgeDato,
+            planleggerÅBoINorgeTolvMnd,
             erAsylsøker,
             jobberPåBåt,
             arbeidsland,

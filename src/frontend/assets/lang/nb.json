@@ -76,6 +76,7 @@
   "omdeg.spm.dato.feil": "Du må oppgi dato på riktig format",
   "omdeg.spm.vært-i-tolv-måneder": "Har du oppholdt deg sammenhengende i Norge de siste 12 månedene",
   "omdeg.spm.komTilNorge.dato": "Når kom du til Norge? (format dd.mm.åååå)",
+  "omdeg.spm.planlegger-å-bo-i-norge": "Planlegger du å bo sammenhengende i Norge i mer enn tolv måneder?",
   "omdeg.tittel": "Om deg",
   "ja": "ja",
   "nei": "nei",
