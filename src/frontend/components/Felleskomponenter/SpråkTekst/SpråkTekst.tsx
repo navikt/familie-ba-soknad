@@ -10,6 +10,8 @@ const SpråkTekst: React.FC<MessageProps> = props => {
             ...props.values,
             linjeskift: <br />,
             b: msg => <b>{msg}</b>,
+            punktliste: msg => <ul>{msg}</ul>,
+            punkt: msg => <li>{msg}</li>,
         },
     };
 
