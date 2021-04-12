@@ -8,6 +8,10 @@ import { feil, Felt, ok, useFelt } from '@navikt/familie-skjema';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ISøknadSpørsmål } from '../typer/søknad';
 
+export const erDatoFormatGodkjent = (verdi: string) => {
+    return dayjs(verdi, 'YYYY-MM-DD').format('YYYY-MM-DD') === verdi;
+};
+
 const useDatovelgerFelt = (
     søknadsfelt: ISøknadSpørsmål<ISODateString>,
     språkTekstIdForFeil: string,
@@ -18,7 +22,7 @@ const useDatovelgerFelt = (
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
         valideringsfunksjon: felt => {
-            return dayjs(felt.verdi, 'YYYY-MM-DD').format('YYYY-MM-DD') === felt.verdi
+            return erDatoFormatGodkjent(felt.verdi)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={språkTekstIdForFeil} />);
         },
