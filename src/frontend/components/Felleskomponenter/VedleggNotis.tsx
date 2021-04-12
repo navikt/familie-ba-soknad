@@ -6,7 +6,6 @@ import { FileContent } from '@navikt/ds-icons';
 
 const NotisWrapper = styled.div`
     display: flex;
-    flex-direction: row;
 `;
 
 const StyledFileContent = styled(FileContent)`

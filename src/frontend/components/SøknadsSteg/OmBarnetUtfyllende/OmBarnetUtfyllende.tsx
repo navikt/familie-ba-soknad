@@ -14,7 +14,7 @@ import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaF
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import Steg from '../Steg/Steg';
-import { OmBarnetUfyllendeSpørsmålsId, OmBarnetUfyllendeSpørsmålSpråkId } from './spørsmål';
+import { OmBarnetUfyllendeSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnetUtfyllende } from './useOmBarnetUtfyllende';
 
 const InternKomponent: React.FC<{ barn: IBarn }> = ({ barn }) => {
@@ -57,29 +57,17 @@ const InternKomponent: React.FC<{ barn: IBarn }> = ({ barn }) => {
                 <SkjemaFeltInput
                     felt={skjema.felter.institusjonsnavn}
                     visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        OmBarnetUfyllendeSpørsmålSpråkId[
-                            OmBarnetUfyllendeSpørsmålsId.institusjonsnavn
-                        ]
-                    }
+                    labelSpråkTekstId={OmBarnetUfyllendeSpørsmålSpråkId.institusjonsnavn}
                 />
                 <SkjemaFeltInput
                     felt={skjema.felter.institusjonsadresse}
                     visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        OmBarnetUfyllendeSpørsmålSpråkId[
-                            OmBarnetUfyllendeSpørsmålsId.institusjonsadresse
-                        ]
-                    }
+                    labelSpråkTekstId={OmBarnetUfyllendeSpørsmålSpråkId.institusjonsadresse}
                 />
                 <SkjemaFeltInput
                     felt={skjema.felter.institusjonspostnummer}
                     visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        OmBarnetUfyllendeSpørsmålSpråkId[
-                            OmBarnetUfyllendeSpørsmålsId.institusjonspostnummer
-                        ]
-                    }
+                    labelSpråkTekstId={OmBarnetUfyllendeSpørsmålSpråkId.institusjonspostnummer}
                     bredde={'S'}
                 />
             </KomponentGruppe>
