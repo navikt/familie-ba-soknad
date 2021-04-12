@@ -5,6 +5,7 @@ import { Input } from 'nav-frontend-skjema';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -103,7 +104,9 @@ const OmDeg: React.FC = () => {
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]}
                 />
                 {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                    <p>Hei på deg jeg dukker opp</p>
+                    <AlertStripe type={'advarsel'}>
+                        <SpråkTekst id={'omdeg.info.planlegger-ikke-å-bo-i-norge'} />
+                    </AlertStripe>
                 )}
             </KomponentGruppe>
 
