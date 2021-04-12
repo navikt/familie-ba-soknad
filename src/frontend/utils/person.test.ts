@@ -83,4 +83,17 @@ describe('fødselsdatoSomISOStringFraIdNummer', () => {
             expect(fødselsdatoSomISOStringFraIdNummer(idnummer)).toEqual(dato);
         });
     });
+
+    test(`Regresjonstester`, () => {
+        const harGittFeilFør: Record<string, ISODateString> = {
+            '13041550095': '2015-04-13',
+            '16101176499': '2011-10-16',
+            '16101176650': '2011-10-16',
+        };
+
+        Object.entries(harGittFeilFør).forEach(entry => {
+            const [idnummer, dato] = entry;
+            expect(fødselsdatoSomISOStringFraIdNummer(idnummer)).toEqual(dato);
+        });
+    });
 });
