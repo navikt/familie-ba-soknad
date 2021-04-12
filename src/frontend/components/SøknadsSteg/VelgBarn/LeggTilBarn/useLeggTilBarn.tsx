@@ -7,11 +7,14 @@ import { feil, ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navik
 import { idnr } from '@navikt/fnrvalidator';
 
 import { useApp } from '../../../../context/AppContext';
-import { IBarn } from '../../../../typer/person';
+import { barnDataKeySpørsmål, IBarn } from '../../../../typer/person';
+import { fødselsdatoSomISOStringFraIdNummer } from '../../../../utils/person';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
 
-export interface ILeggTilBarnTyper extends Omit<IBarn, 'borMedSøker' | 'alder' | 'fødselsdato'> {
+// Jeg har ikke funnet dokumentasjon på at man kan passe en enum til Omit, men det funker
+export interface ILeggTilBarnTyper
+    extends Omit<IBarn, 'borMedSøker' | 'alder' | 'fødselsdato' | barnDataKeySpørsmål> {
     erFødt: ESvarMedUbesvart;
     navnetErUbestemt: ESvar;
     harBarnetFåttIdNummer: ESvar;
@@ -96,15 +99,6 @@ export const useLeggTilBarn = (): {
         if (!kanSendeSkjema()) {
             return false;
         }
-        const dato = ident.verdi.substr(0, 6);
-        const [, dag, måned, år] = (dato.match(/.{2}/g) || []).map(tall => Number.parseInt(tall));
-
-        const fulltÅr = år > 60 ? 1900 + år : 2000 + år;
-
-        const dagKompansertForDNummer =
-            dag < 40 // D-nummer starter med fødselsdato pluss 4 på første tall
-                ? dag // ... med mindre det ikke var noen tilgjengelige for den datoen,
-                : dag - 40; // da brukes dato man søkte om d-nummer i steden for fødselsdato.
         // TODO: Bedre dato-løsning
         settSøknad({
             ...søknad,
@@ -114,7 +108,7 @@ export const useLeggTilBarn = (): {
                     {
                         ident: ident.verdi,
                         borMedSøker: undefined,
-                        fødselsdato: [fulltÅr, måned, dagKompansertForDNummer].join('-'),
+                        fødselsdato: fødselsdatoSomISOStringFraIdNummer(ident.verdi),
                         navn:
                             navn.verdi ||
                             intl.formatMessage({ id: 'leggtilbarn.navn-ubestemt.plassholder' }),
