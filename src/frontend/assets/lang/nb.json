@@ -79,6 +79,7 @@
   "omdeg.spm.planlegger-å-bo-i-norge": "Planlegger du å bo sammenhengende i Norge i mer enn tolv måneder?",
   "omdeg.info.planlegger-ikke-å-bo-i-norge": "Fordi du planlegger å bo i Norge i mindre enn tolv måneder sammenhengende, har du som hovedregel ikke rett til barnetrygd. Du kan likevel ha rett til barnetrygd dersom du er nordisk statsborger eller EØS statsborger.",
   "omdeg.tittel": "Om deg",
+  "omdeg.info.oppholdstillatelse-UDI-vedtak": "Du må legge ved vedtak fra UDI om oppholdstillatelse dersom det er første gang du søker om barnetrygd. ",
   "ja": "ja",
   "nei": "nei",
   "sivilstatus.kode.GIFT": "Gift",

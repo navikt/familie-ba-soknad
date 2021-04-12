@@ -116,6 +116,11 @@ const OmDeg: React.FC = () => {
                     felt={skjema.felter.erAsylsøker}
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.erAsylsøker]}
                 />
+                {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
+                    <AlertStripe type={'info'}>
+                        <SpråkTekst id={'omdeg.info.oppholdstillatelse-UDI-vedtak'} />
+                    </AlertStripe>
+                )}
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.jobberPåBåt}
