@@ -8,7 +8,6 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 export interface IInformasjonsbolkProps {
     tittelId?: string;
-    className?: string;
 }
 
 const InformasjonsbolkContainer = styled.div`
@@ -19,9 +18,9 @@ const InformasjonsbolkChildrenWrapper = styled.div`
     margin-top: 1.125rem;
 `;
 
-const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({ tittelId, children, className }) => {
+const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({ tittelId, children }) => {
     return (
-        <InformasjonsbolkContainer className={className}>
+        <InformasjonsbolkContainer>
             {tittelId && (
                 <Undertittel>
                     <SpråkTekst id={tittelId} />
