@@ -27,8 +27,9 @@ export const StyledBarnekort = styled.div`
     border-radius: 0.3rem;
     max-width: calc(16.3rem - 0.3rem * 2);
     padding: 2rem;
+    margin: 0 auto 0.625rem;
     background-color: ${navFarger.navLysGra};
-    margin: 0.3rem;
+    break-inside: avoid;
     @media all and ${device.mobile} {
         width: 100%;
     }
@@ -96,10 +97,12 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) =
                     labelId={'velgbarn.fødselsnummer.label'}
                     verdi={formaterFnr(barnFraPdl.ident)}
                 />
-                <BarneKortInfo
-                    labelId={'velgbarn.alder.label'}
-                    verdi={hentAlder(barnFraPdl.fødselsdato)}
-                />
+                {barnFraPdl.fødselsdato && ( // Barn som søker har lagt inn selv har ikke fødselsdato
+                    <BarneKortInfo
+                        labelId={'velgbarn.alder.label'}
+                        verdi={hentAlder(barnFraPdl.fødselsdato)}
+                    />
+                )}
                 {barnFraPdl.borMedSøker !== undefined && (
                     <BarneKortInfo
                         labelId={'velgbarn.bosted.label'}
