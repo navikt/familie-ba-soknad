@@ -16,19 +16,27 @@ export const erDatoFormatGodkjent = (verdi: string) => {
     return dayjs(verdi, 'YYYY-MM-DD').format('YYYY-MM-DD') === verdi;
 };
 
+export const erDatoFremITid = (verdi: ISODateString) => {
+    return dayjs(verdi).isAfter(dayjs());
+};
+
 const useDatovelgerFelt = (
     søknadsfelt: ISøknadSpørsmål<ISODateString>,
-    språkTekstIdForFeil: string,
     avhengigSvarCondition: ESvar,
-    avhengighet?: Felt<ESvar | undefined>
+    avhengighet?: Felt<ESvar | undefined>,
+    avgrensDatoFremITid = false
 ) => {
     return useFelt<ISODateString>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
         valideringsfunksjon: felt => {
-            return erDatoFormatGodkjent(felt.verdi)
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={språkTekstIdForFeil} />);
+            if (!erDatoFormatGodkjent(felt.verdi)) {
+                return feil(felt, <SpråkTekst id={'omdeg.spm.dato.feil-format'} />);
+            }
+            if (avgrensDatoFremITid && erDatoFremITid(felt.verdi)) {
+                return feil(felt, <SpråkTekst id={'omdeg.spm.dato.feil-frem-i-tid'} />);
+            }
+            return ok(felt);
         },
         skalFeltetVises: avhengigheter => {
             return avhengigheter && avhengigheter.jaNeiSpm
