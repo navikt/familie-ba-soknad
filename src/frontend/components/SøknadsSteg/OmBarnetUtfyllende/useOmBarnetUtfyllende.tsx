@@ -6,20 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { IBarn } from '../../../typer/person';
-
-export enum OmBarnetUfyllendeSpørsmålsId {
-    institusjonsnavn = 'institusjonsnavn',
-    institusjonsadresse = 'institusjonsadresse',
-    institusjonspostnummer = 'institusjonspostnummer',
-}
-
-export const OmBarnetUfyllendeSpørsmålSpråkId: Record<OmBarnetUfyllendeSpørsmålsId, string> = {
-    [OmBarnetUfyllendeSpørsmålsId.institusjonsnavn]: 'ombarnet-utfyllende.spm.institusjonsnavn',
-    [OmBarnetUfyllendeSpørsmålsId.institusjonsadresse]:
-        'ombarnet-utfyllende.spm.institusjonsadresse',
-    [OmBarnetUfyllendeSpørsmålsId.institusjonspostnummer]:
-        'ombarnet-utfyllende.spm.institusjonspostnummer',
-};
+import { OmBarnetUfyllendeSpørsmålsId } from './spørsmål';
 
 export interface IOmBarnetUtvidetFeltTyper {
     [OmBarnetUfyllendeSpørsmålsId.institusjonsnavn]: string | undefined;

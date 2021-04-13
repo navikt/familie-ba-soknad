@@ -1,22 +1,21 @@
 import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 import slugify from 'slugify';
 
-import { Input } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { useApp } from '../../../context/AppContext';
-import { IBarn } from '../../../typer/person';
+import { barnDataKeySpørsmål, IBarn } from '../../../typer/person';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import Steg from '../Steg/Steg';
-import {
-    OmBarnetUfyllendeSpørsmålsId,
-    OmBarnetUfyllendeSpørsmålSpråkId,
-    useOmBarnetUtfyllende,
-} from './useOmBarnetUtfyllende';
+import { OmBarnetUfyllendeSpørsmålSpråkId } from './spørsmål';
+import { useOmBarnetUtfyllende } from './useOmBarnetUtfyllende';
 
 const InternKomponent: React.FC<{ barn: IBarn }> = ({ barn }) => {
     const {
@@ -33,64 +32,44 @@ const InternKomponent: React.FC<{ barn: IBarn }> = ({ barn }) => {
             skjema={skjema}
             gåVidereOnClickCallback={oppdaterSøknad}
         >
+            {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
+                <KomponentGruppe>
+                    <Undertittel>
+                        <SpråkTekst
+                            id={'ombarnet-utfyllende.fosterbarn.undertittel'}
+                            values={{ navn: barn.navn }}
+                        />
+                    </Undertittel>
+                    <VedleggNotis>
+                        <SpråkTekst id={'ombarnet-utfyllende.vedleggsinfo.fosterbarn'} />
+                    </VedleggNotis>
+                </KomponentGruppe>
+            )}
             <KomponentGruppe>
                 {skjema.felter.institusjonsnavn.erSynlig && (
-                    <>
-                        <Undertittel>
-                            <FormattedMessage
-                                id={'ombarnet-utfyllende.undertittel.institusjon'}
-                                values={{ navn: barn.navn }}
-                            />
-                        </Undertittel>
-                        <Input
-                            label={
-                                <FormattedMessage
-                                    id={
-                                        OmBarnetUfyllendeSpørsmålSpråkId[
-                                            OmBarnetUfyllendeSpørsmålsId.institusjonsnavn
-                                        ]
-                                    }
-                                />
-                            }
-                            {...skjema.felter.institusjonsnavn.hentNavInputProps(
-                                skjema.visFeilmeldinger
-                            )}
+                    <Undertittel>
+                        <SpråkTekst
+                            id={'ombarnet-utfyllende.institusjon.undertittel'}
+                            values={{ navn: barn.navn }}
                         />
-                    </>
+                    </Undertittel>
                 )}
-                {skjema.felter.institusjonsnavn.erSynlig && (
-                    <Input
-                        label={
-                            <FormattedMessage
-                                id={
-                                    OmBarnetUfyllendeSpørsmålSpråkId[
-                                        OmBarnetUfyllendeSpørsmålsId.institusjonsadresse
-                                    ]
-                                }
-                            />
-                        }
-                        {...skjema.felter.institusjonsadresse.hentNavInputProps(
-                            skjema.visFeilmeldinger
-                        )}
-                    />
-                )}
-                {skjema.felter.institusjonsnavn.erSynlig && (
-                    <Input
-                        bredde={'S'}
-                        label={
-                            <FormattedMessage
-                                id={
-                                    OmBarnetUfyllendeSpørsmålSpråkId[
-                                        OmBarnetUfyllendeSpørsmålsId.institusjonspostnummer
-                                    ]
-                                }
-                            />
-                        }
-                        {...skjema.felter.institusjonspostnummer.hentNavInputProps(
-                            skjema.visFeilmeldinger
-                        )}
-                    />
-                )}
+                <SkjemaFeltInput
+                    felt={skjema.felter.institusjonsnavn}
+                    visFeilmeldinger={skjema.visFeilmeldinger}
+                    labelSpråkTekstId={OmBarnetUfyllendeSpørsmålSpråkId.institusjonsnavn}
+                />
+                <SkjemaFeltInput
+                    felt={skjema.felter.institusjonsadresse}
+                    visFeilmeldinger={skjema.visFeilmeldinger}
+                    labelSpråkTekstId={OmBarnetUfyllendeSpørsmålSpråkId.institusjonsadresse}
+                />
+                <SkjemaFeltInput
+                    felt={skjema.felter.institusjonspostnummer}
+                    visFeilmeldinger={skjema.visFeilmeldinger}
+                    labelSpråkTekstId={OmBarnetUfyllendeSpørsmålSpråkId.institusjonspostnummer}
+                    bredde={'S'}
+                />
             </KomponentGruppe>
         </Steg>
     );
