@@ -110,7 +110,7 @@
   "ombarnadine.spm.hvem-er-fosterbarn": "Hvilke av barna er fosterbarn?",
   "ombarnadine.spm.oppholder-barn-seg-i-institusjon": "Oppholder noen av barna seg i barnverninstitusjon eller i annen institusjon?",
   "ombarnadine.spm.hvem-oppholder-seg-i-institusjon": "Hvilke av barna oppholder seg i institusjon?",
-"ombarnadine.spm.er-barn-adoptert-fra-utland": "Er noen av barna adoptert fra utlandet?",
+  "ombarnadine.spm.er-barn-adoptert-fra-utland": "Er noen av barna adoptert fra utlandet?",
   "ombarnadine.spm.hvem-er-adoptert-fra-utland": "Hvilke av barna er adoptert fra utlandet?",
   "ombarnadine.spm.oppholder-barn-seg-i-utland":"Oppholder noen av barna seg i utlandet?",
   "ombarnadine.spm.hvem-oppholder-seg-i-utland":"Hvilke av barna oppholder seg i utlandet?",
@@ -124,8 +124,10 @@
   "ombarnadine.spm.hvem-mottar-barnetrygd-eøsland": "Hvilke av barna har du mottatt eller søkt om barnetrygd for?",
   "ombarnadine.feil.du-må-velge-barn": "Du må velge barn",
   "ombarnet-utfyllende.tittel": "Om {navn}",
-  "ombarnet-utfyllende.undertittel.institusjon": "Du har opplyst at {navn} oppholder seg i institusjon.",
+  "ombarnet-utfyllende.fosterbarn.undertittel": "Du har opplyst at {navn} er fosterbarn",
+  "ombarnet-utfyllende.institusjon.undertittel": "Du har opplyst at {navn} oppholder seg i institusjon",
   "ombarnet-utfyllende.spm.institusjonsnavn": "Navnet på institusjonen",
   "ombarnet-utfyllende.spm.institusjonsadresse":"Adressen til institusjonen",
-  "ombarnet-utfyllende.spm.institusjonspostnummer": "Postnummer"
+  "ombarnet-utfyllende.spm.institusjonspostnummer": "Postnummer",
+  "ombarnet-utfyllende.vedleggsinfo.fosterbarn": "Du må legge ved bekreftelse fra barnevernet senere i søknaden, dersom det er første gang du søker barnetrygd for barnet.{linjeskift}{linjeskift}Bekreftelsen må vise:<punktliste><punkt>Hvilken dato barnet flyttet til deg</punkt><punkt>Hvilken dato det var avgjort at du skulle ha omsorgen for barnet</punkt></punktliste>"
 }

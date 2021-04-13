@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
+import { barnDataKeySpørsmål } from '../../../typer/person';
 import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import OmBarnetUtfyllende from './OmBarnetUtfyllende';
 
@@ -28,11 +29,13 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
         barnInkludertISøknaden: [
             {
                 navn: 'Jens',
-                oppholderSegIInstitusjon: ESvar.JA,
+                [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
+                [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.JA,
             },
             {
                 navn: 'Line',
-                oppholderSegIInstitusjon: ESvar.NEI,
+                [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
+                [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.NEI,
             },
         ],
     });
@@ -50,11 +53,13 @@ test(`Kan navigere mellom barn og til oppsummering`, () => {
         barnInkludertISøknaden: [
             {
                 navn: 'Jens',
-                oppholderSegIInstitusjon: ESvar.NEI,
+                [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
+                [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.JA,
             },
             {
                 navn: 'Line',
-                oppholderSegIInstitusjon: ESvar.NEI,
+                [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
+                [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.NEI,
             },
         ],
     });
