@@ -34,6 +34,6 @@ describe('erDatoFremITid', () => {
     });
 
     test('Skal returnere true dersom dato er frem i tid', () => {
-        expect(erDatoFremITid('2025-14-04')).toEqual(true);
+        expect(erDatoFremITid(dayjs().add(7, 'day').format('YYYY-MM-DD'))).toEqual(true);
     });
 });
