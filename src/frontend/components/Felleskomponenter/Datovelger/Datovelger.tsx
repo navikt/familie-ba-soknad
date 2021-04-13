@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
 import { css } from 'styled-components';
 import styled from 'styled-components/macro';
 
@@ -10,11 +11,12 @@ import { FamilieDatovelger, ISODateString } from '@navikt/familie-form-elements'
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface DatoVelgerProps {
     felt: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
-    feilTekstId: string;
+    labelTekstId: string;
 }
 
 const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
@@ -33,20 +35,22 @@ const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
         `}
 `;
 
-const Datovelger: React.FC<DatoVelgerProps> = ({ felt, skjema, feilTekstId }) => {
+const Datovelger: React.FC<DatoVelgerProps> = ({ felt, skjema, labelTekstId }) => {
+    const { formatMessage } = useIntl();
+
     return felt.erSynlig ? (
         <>
             <StyledFamilieDatovelger
-                placeholder={'ddmmåå'}
+                placeholder={formatMessage({ id: 'felles.dato.placeholder' })}
                 valgtDato={felt.verdi}
-                label={feilTekstId} // Legg til ReactNode i felles
+                label={<SpråkTekst id={labelTekstId} />}
                 {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}
                 onChange={dato => {
                     felt.hentNavInputProps(false).onChange(dato);
                 }}
-                feil={!!felt.feilmelding}
+                feil={!!(felt.feilmelding && skjema.visFeilmeldinger)}
             />
-            <Feilmelding>{felt.feilmelding}</Feilmelding>
+            {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
         </>
     ) : null;
 };

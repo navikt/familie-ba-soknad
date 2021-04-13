@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { ESvar } from '@navikt/familie-form-elements';
+import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import {
     Avhengigheter,
     feil,
@@ -23,22 +23,24 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 export type ESvarMedUbesvart = ESvar | undefined;
 
 export interface FeltGruppe {
-    jaNeiSpm: Felt<ESvarMedUbesvart>;
+    jaNeiSpm: Felt<ESvar | undefined>;
     // eslint-disable-next-line
     tilhørendeFelter?: Felt<any>[];
 }
 
 export interface IOmDegFeltTyper {
-    borPåRegistrertAdresse: ESvarMedUbesvart;
+    borPåRegistrertAdresse: ESvar | undefined;
     telefonnummer: string;
-    oppholderSegINorge: ESvarMedUbesvart;
+    oppholderSegINorge: ESvar | undefined;
     oppholdsland: Alpha3Code | undefined;
-    oppholdslandDato: string;
-    værtINorgeITolvMåneder: ESvarMedUbesvart;
-    erAsylsøker: ESvarMedUbesvart;
-    jobberPåBåt: ESvarMedUbesvart;
+    oppholdslandDato: ISODateString;
+    værtINorgeITolvMåneder: ESvar | undefined;
+    komTilNorgeDato: ISODateString;
+    planleggerÅBoINorgeTolvMnd: ESvar | undefined;
+    erAsylsøker: ESvar | undefined;
+    jobberPåBåt: ESvar | undefined;
     arbeidsland: Alpha3Code | undefined;
-    mottarUtenlandspensjon: ESvarMedUbesvart;
+    mottarUtenlandspensjon: ESvar | undefined;
     pensjonsland: Alpha3Code | undefined;
 }
 
@@ -51,10 +53,10 @@ export const useOmdeg = (): {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
 
-    const borPåRegistrertAdresse = useFelt<ESvarMedUbesvart>({
+    const borPåRegistrertAdresse = useFelt<ESvar | undefined>({
         feltId: søker.borPåRegistrertAdresse.id,
         verdi: søker.borPåRegistrertAdresse.svar,
-        valideringsfunksjon: (felt: FeltState<ESvarMedUbesvart>) => {
+        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
             /**
              * Hvis man svarer nei setter vi felt til Feil-state slik at man ikke kan gå videre,
              * og setter feilmelding til en tom string, siden personopplysningskomponenten har egen
@@ -88,13 +90,14 @@ export const useOmdeg = (): {
         avhengigheter: {
             borPåRegistrertAdresse,
         },
+        nullstillVedAvhengighetEndring: borPåRegistrertAdresse.verdi === ESvar.NEI,
     });
 
     const oppholderSegINorge = useJaNeiSpmFelt(
         søker.oppholderSegINorge,
         'personopplysninger.feilmelding.janei',
         { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
-        true
+        borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
     const oppholdsland = useLandDropdownFelt(
@@ -115,8 +118,32 @@ export const useOmdeg = (): {
         søker.værtINorgeITolvMåneder,
         'personopplysninger.feilmelding.janei',
         { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
-        true
+        borPåRegistrertAdresse.verdi === ESvar.NEI
     );
+
+    const komTilNorgeDato = useDatovelgerFelt(
+        søker.komTilNorgeDato,
+        'omdeg.spm.dato.feil',
+        ESvar.NEI,
+        værtINorgeITolvMåneder
+    );
+
+    const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | undefined>({
+        feltId: søker.planleggerÅBoINorgeTolvMnd.id,
+        verdi: søker.planleggerÅBoINorgeTolvMnd.svar,
+        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
+        },
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter.værtINorgeITolvMåneder &&
+                avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI
+            );
+        },
+        avhengigheter: { værtINorgeITolvMåneder },
+    });
 
     const erAsylsøker = useJaNeiSpmFelt(
         søker.erAsylsøker,
@@ -215,6 +242,14 @@ export const useOmdeg = (): {
                     ...søker.værtINorgeITolvMåneder,
                     svar: skjema.felter.værtINorgeITolvMåneder.verdi,
                 },
+                komTilNorgeDato: {
+                    ...søker.komTilNorgeDato,
+                    svar: skjema.felter.komTilNorgeDato.verdi,
+                },
+                planleggerÅBoINorgeTolvMnd: {
+                    ...søker.planleggerÅBoINorgeTolvMnd,
+                    svar: skjema.felter.planleggerÅBoINorgeTolvMnd.verdi,
+                },
                 erAsylsøker: {
                     ...søker.erAsylsøker,
                     svar: skjema.felter.erAsylsøker.verdi,
@@ -247,6 +282,8 @@ export const useOmdeg = (): {
             oppholdsland,
             oppholdslandDato,
             værtINorgeITolvMåneder,
+            komTilNorgeDato,
+            planleggerÅBoINorgeTolvMnd,
             erAsylsøker,
             jobberPåBåt,
             arbeidsland,
