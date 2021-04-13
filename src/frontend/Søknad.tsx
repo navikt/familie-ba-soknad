@@ -11,11 +11,11 @@ import SystemetLaster from './components/Felleskomponenter/SystemetLaster/System
 import Forside from './components/Forside/Forside';
 import Helse from './components/Helse/Helse';
 import { useApp } from './context/AppContext';
-import { useRoutes } from './routing/Routes';
+import { useRoutes } from './routing/RoutesContext';
 
 const Søknad = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
-    const routes = useRoutes();
+    const { routes } = useRoutes();
     return (
         <main>
             {systemetLaster() && <SystemetLaster />}

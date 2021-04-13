@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
 
 import { useApp } from '../../context/AppContext';
-import { hentNesteRoute, IRoute, useRoutes } from '../../routing/Routes';
+import { IRoute, useRoutes } from '../../routing/RoutesContext';
 import { ILokasjon } from '../../typer/lokasjon';
 
 export enum BekreftelseStatus {
@@ -20,13 +20,14 @@ export const useBekreftelseOgStartSoknad = (): {
 } => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const routes = useRoutes();
+
+    const { hentNesteRoute } = useRoutes();
     const { søknad, settSøknad } = useApp();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         BekreftelseStatus.NORMAL
     );
-    const nesteRoute: IRoute = hentNesteRoute(routes, location.pathname);
+    const nesteRoute: IRoute = hentNesteRoute(location.pathname);
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();

@@ -1,5 +1,5 @@
 import { spyOnUseApp } from '../utils/testing';
-import { useRoutes, hentNesteRoute, RouteEnum, hentForrigeRoute } from './Routes';
+import { useRoutes, RouteEnum } from './RoutesContext';
 
 jest.mock('../context/AppContext');
 jest.mock('react-router-dom', () => ({
