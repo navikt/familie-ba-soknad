@@ -52,7 +52,7 @@ export const hentSivilstatus = (statuskode?: ESivilstand) => {
 export const genererInitialStateBarn = (barnFraPDL: IBarnFraPdl): IBarn => {
     return {
         ...barnFraPDL,
-        alder: hentAlder(barnFraPDL.fødselsdato),
+        alder: barnFraPDL.fødselsdato && hentAlder(barnFraPDL.fødselsdato),
         erFosterbarn: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
             svar: undefined,

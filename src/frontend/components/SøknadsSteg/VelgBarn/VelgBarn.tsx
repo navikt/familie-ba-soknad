@@ -19,17 +19,10 @@ import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { useVelgBarn } from './useVelgBarn';
 
 const BarnekortContainer = styled.div`
-    display: flex;
-    align-items: flex-start;
-    flex-flow: row wrap;
-    margin: 1rem auto 0;
-    justify-content: space-between;
-    width: 100%;
-    @media all and ${device.tablet} {
-        justify-content: left;
-    }
+    columns: 2;
+    column-gap: 0.3rem;
     @media all and ${device.mobile} {
-        justify-content: center;
+        columns: 1;
     }
 `;
 
