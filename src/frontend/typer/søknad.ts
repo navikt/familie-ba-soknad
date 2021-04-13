@@ -38,6 +38,7 @@ export interface ISøknadsfelt<T> {
 
 export interface ISøknad {
     søknadstype: ESøknadstype;
+    lestOgForståttBekreftelse: boolean;
     søker: ISøker;
     barnInkludertISøknaden: IBarn[];
     erNoenAvBarnaFosterbarn: ISøknadSpørsmål<ESvar | undefined>;
@@ -57,6 +58,7 @@ export interface ISøknadSpørsmål<T> {
 export const initialStateSøknad: ISøknad = {
     søknadstype: ESøknadstype.IKKE_SATT,
     barnInkludertISøknaden: [],
+    lestOgForståttBekreftelse: false,
     søker: {
         navn: '',
         barn: [],
