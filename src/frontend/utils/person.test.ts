@@ -32,6 +32,8 @@ describe('landkodeTilSpråk', () => {
 
 describe('hentSivilstatus', () => {
     test('Skal returnere tekstid til sivilstatus kode ANNET dersom sivilstanden er ukjent', () => {
+        // eslint-disable-next-line
+        // @ts-ignore fordi hele poenget er at det er en ukjent verdi
         expect(hentSivilstatus('JEGHARKJÆRESTE')).toEqual('sivilstatus.kode.ANNET');
     });
 
