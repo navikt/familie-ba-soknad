@@ -8,8 +8,9 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import norskeTekster from '../../assets/lang/nb.json';
 import { AppProvider } from '../../context/AppContext';
-import { bekreftelseBoksBorderFarge, BekreftelseStatus } from './BekreftelseOgStartSoknad';
+import { bekreftelseBoksBorderFarge } from './BekreftelseOgStartSoknad';
 import Forside from './Forside';
+import { BekreftelseStatus } from './useBekreftelseOgStartSoknad';
 
 beforeEach(() => {
     jest.spyOn(global.console, 'error');

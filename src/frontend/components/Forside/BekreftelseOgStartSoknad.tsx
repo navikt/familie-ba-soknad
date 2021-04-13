@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
-import { useHistory } from 'react-router';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
@@ -10,10 +8,9 @@ import KnappBase from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { hentNesteRoute, IRoute, useRoutes } from '../../routing/Routes';
-import { ILokasjon } from '../../typer/lokasjon';
 import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
 const FormContainer = styled.form`
     display: flex;
@@ -32,12 +29,6 @@ const StyledKnappBase = styled(KnappBase)`
     margin: 2.3rem auto 0 auto;
 `;
 
-export enum BekreftelseStatus {
-    NORMAL = 'NORMAL',
-    BEKREFTET = 'BEKREFTET',
-    FEIL = 'FEIL',
-}
-
 export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
     switch (status) {
         case BekreftelseStatus.BEKREFTET:
@@ -53,31 +44,7 @@ const BekreftelseOgStartSoknad: React.FC<{
     navn: string;
 }> = ({ navn }) => {
     const { formatMessage } = useIntl();
-    const history = useHistory();
-    const location = useLocation<ILokasjon>();
-    const routes = useRoutes();
-
-    const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
-        BekreftelseStatus.NORMAL
-    );
-    const nesteRoute: IRoute = hentNesteRoute(routes, location.pathname);
-
-    const onStartSøknad = (event: React.FormEvent) => {
-        event.preventDefault();
-        if (bekreftelseStatus === BekreftelseStatus.BEKREFTET) {
-            history.push(nesteRoute.path);
-        } else {
-            settBekreftelseStatus(BekreftelseStatus.FEIL);
-        }
-    };
-
-    const bekreftelseOnChange = () => {
-        settBekreftelseStatus(prevState => {
-            return prevState !== BekreftelseStatus.BEKREFTET
-                ? BekreftelseStatus.BEKREFTET
-                : BekreftelseStatus.NORMAL;
-        });
-    };
+    const { onStartSøknad, bekreftelseOnChange, bekreftelseStatus } = useBekreftelseOgStartSoknad();
 
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
