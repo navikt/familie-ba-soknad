@@ -109,9 +109,9 @@ export const useOmdeg = (): {
 
     const oppholdslandDato = useDatovelgerFelt(
         søker.oppholdslandDato,
-        'omdeg.spm.dato.feil',
         ESvar.NEI,
-        oppholderSegINorge
+        oppholderSegINorge,
+        true
     );
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
@@ -123,9 +123,9 @@ export const useOmdeg = (): {
 
     const komTilNorgeDato = useDatovelgerFelt(
         søker.komTilNorgeDato,
-        'omdeg.spm.dato.feil',
         ESvar.NEI,
-        værtINorgeITolvMåneder
+        værtINorgeITolvMåneder,
+        true
     );
 
     const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | undefined>({
