@@ -5,6 +5,8 @@ import { Input } from 'nav-frontend-skjema';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
+import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
@@ -81,11 +83,31 @@ const OmDeg: React.FC = () => {
                     skjema={skjema}
                     label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.oppholdsland]} />}
                 />
+                <Datovelger
+                    felt={skjema.felter.oppholdslandDato}
+                    skjema={skjema}
+                    labelTekstId={'omdeg.spm.landopphold.dato'}
+                />
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.værtINorgeITolvMåneder}
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
                 />
+                <Datovelger
+                    felt={skjema.felter.komTilNorgeDato}
+                    skjema={skjema}
+                    labelTekstId={'omdeg.spm.komTilNorge.dato'}
+                />
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
+                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]}
+                />
+                {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
+                    <AlertStripe type={'advarsel'}>
+                        <SpråkTekst id={'omdeg.info.planlegger-ikke-å-bo-i-norge'} />
+                    </AlertStripe>
+                )}
             </KomponentGruppe>
 
             <KomponentGruppe>
@@ -94,6 +116,11 @@ const OmDeg: React.FC = () => {
                     felt={skjema.felter.erAsylsøker}
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.erAsylsøker]}
                 />
+                {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
+                    <AlertStripe type={'info'}>
+                        <SpråkTekst id={'omdeg.info.oppholdstillatelse-UDI-vedtak'} />
+                    </AlertStripe>
+                )}
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.jobberPåBåt}

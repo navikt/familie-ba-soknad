@@ -9,7 +9,7 @@ interface AlertStripeProps {
     form?: 'default' | 'inline' | undefined;
 }
 
-export const StyledAlertStripe = styled(NavAlertStripe)`
+const StyledAlertStripe = styled(NavAlertStripe)`
     p {
         margin: 0;
     }

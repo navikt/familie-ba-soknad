@@ -87,8 +87,20 @@ export const initialStateSøknad: ISøknad = {
             id: OmDegSpørsmålId.oppholdsland,
             svar: undefined,
         },
+        oppholdslandDato: {
+            id: OmDegSpørsmålId.oppholdslandDato,
+            svar: '',
+        },
         værtINorgeITolvMåneder: {
             id: OmDegSpørsmålId.værtINorgeITolvMåneder,
+            svar: undefined,
+        },
+        komTilNorgeDato: {
+            id: OmDegSpørsmålId.komTilNorgeDato,
+            svar: '',
+        },
+        planleggerÅBoINorgeTolvMnd: {
+            id: OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd,
             svar: undefined,
         },
         erAsylsøker: {
