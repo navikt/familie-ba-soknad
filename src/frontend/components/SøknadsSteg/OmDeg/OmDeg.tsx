@@ -84,6 +84,7 @@ const OmDeg: React.FC = () => {
                     label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.oppholdsland]} />}
                 />
                 <Datovelger
+                    avgrensDatoFremITid={true}
                     felt={skjema.felter.oppholdslandDato}
                     skjema={skjema}
                     labelTekstId={'omdeg.spm.landopphold.dato'}
@@ -94,6 +95,7 @@ const OmDeg: React.FC = () => {
                     spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
                 />
                 <Datovelger
+                    avgrensDatoFremITid={true}
                     felt={skjema.felter.komTilNorgeDato}
                     skjema={skjema}
                     labelTekstId={'omdeg.spm.komTilNorge.dato'}

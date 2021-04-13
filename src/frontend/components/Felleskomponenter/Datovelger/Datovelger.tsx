@@ -14,6 +14,7 @@ import { SkjemaFeltTyper } from '../../../typer/skjema';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface DatoVelgerProps {
+    avgrensDatoFremITid: boolean;
     felt: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
     labelTekstId: string;
@@ -35,12 +36,25 @@ const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
         `}
 `;
 
-const Datovelger: React.FC<DatoVelgerProps> = ({ felt, skjema, labelTekstId }) => {
+const Datovelger: React.FC<DatoVelgerProps> = ({
+    avgrensDatoFremITid = false,
+    felt,
+    skjema,
+    labelTekstId,
+}) => {
     const { formatMessage } = useIntl();
 
     return felt.erSynlig ? (
         <>
             <StyledFamilieDatovelger
+                allowInvalidDateSelection={false}
+                limitations={
+                    avgrensDatoFremITid
+                        ? {
+                              maxDate: new Date().toISOString(),
+                          }
+                        : {}
+                }
                 placeholder={formatMessage({ id: 'felles.dato.placeholder' })}
                 valgtDato={felt.verdi}
                 label={<SpråkTekst id={labelTekstId} />}
