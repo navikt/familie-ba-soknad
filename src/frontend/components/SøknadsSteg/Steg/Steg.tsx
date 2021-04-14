@@ -76,12 +76,13 @@ const Steg: React.FC<ISteg> = ({
 }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { settUtfyltSteg } = useApp();
+    const { settUtfyltSteg, utfyltSteg } = useApp();
     const {
         routes,
         hentNesteRoute,
         hentForrigeRoute,
         hentAktivtStegIndexForStegindikator,
+        hentRouteIndex,
     } = useRoutes();
 
     const [åpenModal, settÅpenModal] = useState(false);
@@ -98,6 +99,11 @@ const Steg: React.FC<ISteg> = ({
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        if (utfyltSteg >= hentRouteIndex(location.pathname)) {
+            Object.values(skjema.felter).forEach(felt => {
+                felt.validerOgSettFelt();
+            });
+        }
     }, []);
 
     const håndterModalStatus = () => {
@@ -113,6 +119,7 @@ const Steg: React.FC<ISteg> = ({
         event.preventDefault();
         if (validerFelterOgVisFeilmelding()) {
             gåVidereOnClickCallback();
+            settUtfyltSteg(hentRouteIndex(location.pathname));
             history.push(nesteRoute.path);
         }
     };

@@ -21,8 +21,8 @@ export const useBekreftelseOgStartSoknad = (): {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
 
-    const { hentNesteRoute } = useRoutes();
-    const { søknad, settSøknad } = useApp();
+    const { hentNesteRoute, hentRouteIndex } = useRoutes();
+    const { søknad, settSøknad, settUtfyltSteg } = useApp();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         BekreftelseStatus.NORMAL
@@ -36,6 +36,7 @@ export const useBekreftelseOgStartSoknad = (): {
                 ...søknad,
                 lestOgForståttBekreftelse: true,
             });
+            settUtfyltSteg(hentRouteIndex(location.pathname));
             history.push(nesteRoute.path);
         } else {
             settBekreftelseStatus(BekreftelseStatus.FEIL);
