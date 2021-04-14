@@ -96,10 +96,11 @@ const Steg: React.FC<ISteg> = ({
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
+    const nåværendeRouteIndex = hentRouteIndex(location.pathname);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (utfyltSteg >= hentRouteIndex(location.pathname)) {
+        if (utfyltSteg >= nåværendeRouteIndex) {
             Object.values(skjema.felter).forEach(felt => {
                 felt.validerOgSettFelt();
             });
@@ -119,7 +120,9 @@ const Steg: React.FC<ISteg> = ({
         event.preventDefault();
         if (validerFelterOgVisFeilmelding()) {
             gåVidereOnClickCallback();
-            settUtfyltSteg(hentRouteIndex(location.pathname));
+            if (utfyltSteg < nåværendeRouteIndex) {
+                settUtfyltSteg(nåværendeRouteIndex);
+            }
             history.push(nesteRoute.path);
         }
     };

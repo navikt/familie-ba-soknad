@@ -22,13 +22,14 @@ export const useBekreftelseOgStartSoknad = (): {
     const location = useLocation<ILokasjon>();
 
     const { hentNesteRoute, hentRouteIndex } = useRoutes();
-    const { søknad, settSøknad, settUtfyltSteg } = useApp();
+    const { søknad, settSøknad, settUtfyltSteg, utfyltSteg } = useApp();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
     );
 
     const nesteRoute: IRoute = hentNesteRoute(location.pathname);
+    const nåværendeRouteIndex = hentRouteIndex(location.pathname);
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();
@@ -37,7 +38,9 @@ export const useBekreftelseOgStartSoknad = (): {
                 ...søknad,
                 lestOgForståttBekreftelse: true,
             });
-            settUtfyltSteg(hentRouteIndex(location.pathname));
+            if (utfyltSteg < nåværendeRouteIndex) {
+                settUtfyltSteg(nåværendeRouteIndex);
+            }
             history.push(nesteRoute.path);
         } else {
             settBekreftelseStatus(BekreftelseStatus.FEIL);
