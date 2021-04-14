@@ -25,8 +25,9 @@ export const useBekreftelseOgStartSoknad = (): {
     const { søknad, settSøknad, settUtfyltSteg } = useApp();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
-        BekreftelseStatus.NORMAL
+        søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
     );
+
     const nesteRoute: IRoute = hentNesteRoute(location.pathname);
 
     const onStartSøknad = (event: React.FormEvent) => {
