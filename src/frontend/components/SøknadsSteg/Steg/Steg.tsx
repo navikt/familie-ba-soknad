@@ -8,7 +8,7 @@ import { Fareknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import Stegindikator from 'nav-frontend-stegindikator';
-import { Ingress, Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -23,6 +23,7 @@ import {
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import Banner from '../../Felleskomponenter/Banner/Banner';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Navigeringspanel from './Navigeringspanel';
@@ -131,7 +132,7 @@ const Steg: React.FC<ISteg> = ({
     return (
         <>
             <header>
-                <Ingress>Søknad om barnetrygd</Ingress>
+                <Banner språkTekstId={'felles.overskrift.ordinær-barnetrygd'} />
                 <Stegindikator
                     autoResponsiv={true}
                     aktivtSteg={useAktivtStegIndex(location)}
