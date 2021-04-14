@@ -13,13 +13,7 @@ import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import {
-    useAktivtStegIndex,
-    hentForrigeRoute,
-    hentNesteRoute,
-    IRoute,
-    useRoutes,
-} from '../../../routing/Routes';
+import { IRoute, useRoutes } from '../../../routing/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -83,7 +77,12 @@ const Steg: React.FC<ISteg> = ({
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const { settUtfyltSteg } = useApp();
-    const routes = useRoutes();
+    const {
+        routes,
+        hentNesteRoute,
+        hentForrigeRoute,
+        hentAktivtStegIndexForStegindikator,
+    } = useRoutes();
 
     const [åpenModal, settÅpenModal] = useState(false);
 
@@ -94,8 +93,8 @@ const Steg: React.FC<ISteg> = ({
         };
     });
 
-    const nesteRoute: IRoute = hentNesteRoute(routes, location.pathname);
-    const forrigeRoute: IRoute = hentForrigeRoute(routes, location.pathname);
+    const nesteRoute = hentNesteRoute(location.pathname);
+    const forrigeRoute = hentForrigeRoute(location.pathname);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -135,7 +134,7 @@ const Steg: React.FC<ISteg> = ({
                 <Banner språkTekstId={'felles.overskrift.ordinær-barnetrygd'} />
                 <Stegindikator
                     autoResponsiv={true}
-                    aktivtSteg={useAktivtStegIndex(location)}
+                    aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}
                     steg={stegobjekter}
                     visLabel={false}
                 />

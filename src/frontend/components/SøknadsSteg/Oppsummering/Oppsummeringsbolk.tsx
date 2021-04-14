@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { useRoutes, RouteEnum, hentPath } from '../../../routing/Routes';
+import { useRoutes, RouteEnum } from '../../../routing/RoutesContext';
 import LenkeMedIkon from '../../Felleskomponenter/LenkeMedIkon/LenkeMedIkon';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 const Oppsummeringsbolk: React.FC<Props> = ({ children, tittel, lenke }) => {
     const history = useHistory();
-    const routes = useRoutes();
+    const { hentPath } = useRoutes();
 
     return (
         <div className="oppsummeringsbolk">
@@ -25,7 +25,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({ children, tittel, lenke }) => {
                     <LenkeMedIkon
                         onClick={() =>
                             history.replace({
-                                pathname: hentPath(routes, lenke),
+                                pathname: hentPath(lenke),
                                 state: { kommerFraOppsummering: true },
                             })
                         }

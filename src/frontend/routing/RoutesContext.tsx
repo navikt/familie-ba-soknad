@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Location } from 'history';
+import createUseContext from 'constate';
 import { matchPath } from 'react-router';
 import slugify from 'slugify';
 
@@ -11,7 +11,6 @@ import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useApp } from '../context/AppContext';
-import { ILokasjon } from '../typer/lokasjon';
 
 export interface IRoute {
     path: string;
@@ -30,10 +29,11 @@ export enum RouteEnum {
     Kvittering = 'Kvittering',
 }
 
-export const useRoutes: () => IRoute[] = () => {
+const [RoutesProvider, useRoutes] = createUseContext(() => {
     const {
         søknad: { barnInkludertISøknaden },
     } = useApp();
+
     // En route per barn som er valgt, eller en plassholder hvis ingen er valgt
     const barnRoutes: IRoute[] = barnInkludertISøknaden.length
         ? barnInkludertISøknaden.map(barn => ({
@@ -51,7 +51,8 @@ export const useRoutes: () => IRoute[] = () => {
               },
           ];
 
-    return [
+    // TODO: skrive om label til språktekst
+    const routes = [
         { path: '/', label: 'Forside', route: RouteEnum.OmDeg, komponent: OmDeg },
         { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
         { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
@@ -70,32 +71,42 @@ export const useRoutes: () => IRoute[] = () => {
             komponent: Kvittering,
         },
     ];
-};
 
-const hentRouteIndex = (routes: IRoute[], currentPath: string): number => {
-    return routes.findIndex(route => {
-        const match = matchPath(currentPath, {
-            path: route.path,
-            exact: true,
+    const hentRouteIndex = (currentPath: string): number => {
+        return routes.findIndex(route => {
+            const match = matchPath(currentPath, {
+                path: route.path,
+                exact: true,
+            });
+            return match !== null;
         });
-        return match !== null;
-    });
-};
+    };
 
-export const useAktivtStegIndex = (location: Location<ILokasjon>) =>
-    // Trekker fra 1 fordi forsiden teller som en route
-    hentRouteIndex(useRoutes(), location.pathname) - 1;
+    const hentAktivtStegIndexForStegindikator = (currentPath: string) => {
+        // Trekker fra 1 fordi forsiden teller som en route
+        return hentRouteIndex(currentPath) - 1;
+    };
 
-export const hentForrigeRoute = (routes: IRoute[], currentPath: string) => {
-    const routeIndex = hentRouteIndex(routes, currentPath);
-    return routes[routeIndex - 1];
-};
+    const hentForrigeRoute = (currentPath: string) => {
+        return routes[hentRouteIndex(currentPath) - 1];
+    };
 
-export const hentNesteRoute = (routes: IRoute[], currentPath: string) => {
-    const routeIndex = hentRouteIndex(routes, currentPath);
-    return routes[routeIndex + 1];
-};
+    const hentNesteRoute = (currentPath: string) => {
+        return routes[hentRouteIndex(currentPath) + 1];
+    };
 
-export const hentPath = (routes: IRoute[], route: RouteEnum) => {
-    return routes.find(r => r.route === route)?.path;
-};
+    const hentPath = (route: RouteEnum) => {
+        return routes.find(r => r.route === route)?.path;
+    };
+
+    return {
+        hentRouteIndex,
+        hentAktivtStegIndexForStegindikator,
+        hentForrigeRoute,
+        hentNesteRoute,
+        hentPath,
+        routes,
+    };
+});
+
+export { RoutesProvider, useRoutes };

@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
+import { RoutesProvider } from '../../../routing/RoutesContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
 import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import OmBarnetUtfyllende from './OmBarnetUtfyllende';
@@ -40,11 +41,13 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
         ],
     });
     render(
-        <HttpProvider>
-            <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
-                <OmBarnetUtfyllende />
-            </SprakProvider>
-        </HttpProvider>
+        <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
+            <HttpProvider>
+                <RoutesProvider>
+                    <OmBarnetUtfyllende />
+                </RoutesProvider>
+            </HttpProvider>
+        </SprakProvider>
     );
 });
 
@@ -65,14 +68,16 @@ test(`Kan navigere mellom barn og til oppsummering`, () => {
     });
 
     const { getByText, rerender } = render(
-        <HttpProvider>
-            <SprakProvider
-                tekster={{ nb: { 'ombarnet-utfyllende.tittel': 'Om {navn}' } }}
-                defaultLocale={LocaleType.nb}
-            >
-                <OmBarnetUtfyllende />
-            </SprakProvider>
-        </HttpProvider>
+        <SprakProvider
+            tekster={{ nb: { 'ombarnet-utfyllende.tittel': 'Om {navn}' } }}
+            defaultLocale={LocaleType.nb}
+        >
+            <HttpProvider>
+                <RoutesProvider>
+                    <OmBarnetUtfyllende />
+                </RoutesProvider>
+            </HttpProvider>
+        </SprakProvider>
     );
 
     const jensTittel = getByText('Om Jens');
@@ -81,14 +86,16 @@ test(`Kan navigere mellom barn og til oppsummering`, () => {
     const gåVidere = getByText(/felles.gåvidere/);
     act(() => gåVidere.click());
     rerender(
-        <HttpProvider>
-            <SprakProvider
-                tekster={{ nb: { 'ombarnet-utfyllende.tittel': 'Om {navn}' } }}
-                defaultLocale={LocaleType.nb}
-            >
-                <OmBarnetUtfyllende />
-            </SprakProvider>
-        </HttpProvider>
+        <SprakProvider
+            tekster={{ nb: { 'ombarnet-utfyllende.tittel': 'Om {navn}' } }}
+            defaultLocale={LocaleType.nb}
+        >
+            <HttpProvider>
+                <RoutesProvider>
+                    <OmBarnetUtfyllende />
+                </RoutesProvider>
+            </HttpProvider>
+        </SprakProvider>
     );
 
     const lineTittel = getByText('Om Line');

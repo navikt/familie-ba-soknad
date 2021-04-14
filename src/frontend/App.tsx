@@ -2,8 +2,9 @@ import React from 'react';
 
 import AlertStripe from 'nav-frontend-alertstriper';
 
+import AppContainer from './AppContainer';
 import { AppProvider } from './context/AppContext';
-import Søknad from './Søknad';
+import { RoutesProvider } from './routing/RoutesContext';
 
 function App() {
     return (
@@ -14,7 +15,9 @@ function App() {
                     Klikk her for å gå til våre sider for barnetrygd
                 </a>
             </AlertStripe>
-            <Søknad />
+            <RoutesProvider>
+                <AppContainer />
+            </RoutesProvider>
         </AppProvider>
     );
 }
