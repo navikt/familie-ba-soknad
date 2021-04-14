@@ -8,6 +8,7 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import norskeTekster from '../../assets/lang/nb.json';
 import { AppProvider } from '../../context/AppContext';
+import { RoutesProvider } from '../../routing/RoutesContext';
 import { bekreftelseBoksBorderFarge } from './BekreftelseOgStartSoknad';
 import Forside from './Forside';
 import { BekreftelseStatus } from './useBekreftelseOgStartSoknad';
@@ -27,7 +28,9 @@ test('Kan rendre Forside', () => {
     render(
         <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
             <AppProvider>
-                <Forside />
+                <RoutesProvider>
+                    <Forside />
+                </RoutesProvider>
             </AppProvider>
         </SprakProvider>
     );
@@ -38,7 +41,9 @@ test('Alle tekster finnes i språkfil', () => {
     render(
         <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
             <AppProvider>
-                <Forside />
+                <RoutesProvider>
+                    <Forside />
+                </RoutesProvider>
             </AppProvider>
         </SprakProvider>
     );
