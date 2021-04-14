@@ -51,6 +51,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
               },
           ];
 
+    // TODO: skrive om label til språktekst
     const routes = [
         { path: '/', label: 'Forside', route: RouteEnum.OmDeg, komponent: OmDeg },
         { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
