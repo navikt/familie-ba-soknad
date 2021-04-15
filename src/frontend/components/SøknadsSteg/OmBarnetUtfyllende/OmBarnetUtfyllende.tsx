@@ -30,7 +30,7 @@ const InternKomponent: React.FC<{ barn: IBarn }> = ({ barn }) => {
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
             skjema={skjema}
-            gåVidereOnClickCallback={oppdaterSøknad}
+            settSøknadsdataCallback={oppdaterSøknad}
         >
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <KomponentGruppe>

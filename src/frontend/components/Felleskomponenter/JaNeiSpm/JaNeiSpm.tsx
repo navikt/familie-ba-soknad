@@ -26,6 +26,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
         <span id={felt.id}>
             <JaNeiSpørsmål
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
+                initiellVerdi={felt.verdi}
                 name={guid()}
                 legend={
                     <>

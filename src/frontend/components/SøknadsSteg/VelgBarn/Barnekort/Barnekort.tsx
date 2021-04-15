@@ -18,7 +18,7 @@ import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface IBarnekortProps {
-    settMedISøknad: (ident: string, skalVæreMed: boolean) => void;
+    settMedISøknad: (ident: string, barnMedISøknad: boolean) => void;
     barnFraPdl: IBarnFraPdl;
 }
 
@@ -35,7 +35,7 @@ export const StyledBarnekort = styled.div`
     }
 `;
 
-const LeggTilBarnCheckbox = styled(Checkbox)`
+const StyledCheckbox = styled(Checkbox)`
     margin-top: 2.75rem;
 `;
 
@@ -82,7 +82,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) =
     const { søknad } = useApp();
     const ikoner = [barn1, barn2, barn3];
 
-    const medISøknad = !!søknad.barnInkludertISøknaden.find(
+    const erMedISøknad = !!søknad.barnInkludertISøknaden.find(
         barn => barn.ident === barnFraPdl.ident
     );
 
@@ -117,9 +117,10 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) =
                         }
                     />
                 )}
-                <LeggTilBarnCheckbox
+                <StyledCheckbox
+                    checked={erMedISøknad}
                     label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
-                    onClick={() => settMedISøknad(barnFraPdl.ident, !medISøknad)}
+                    onChange={() => settMedISøknad(barnFraPdl.ident, erMedISøknad)}
                 />
             </InformasjonsboksInnhold>
         </StyledBarnekort>

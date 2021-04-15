@@ -43,7 +43,9 @@ const VelgBarn: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useVelgBarn();
     const intl = useIntl();
 
-    function settMedISøknad(ident: string, skalVæreMed: boolean) {
+    const settMedISøknad = (ident: string, erMedISøknad: boolean) => {
+        const skalVæreMed = !erMedISøknad;
+
         const barnFraPDL: IBarnFraPdl | undefined = søknad.søker.barn.find(
             barn => barn.ident === ident
         );
@@ -58,7 +60,7 @@ const VelgBarn: React.FC = () => {
                 ? søknad.barnInkludertISøknaden.concat(genererInitialStateBarn(barnFraPDL))
                 : søknad.barnInkludertISøknaden.filter(barn => barn.ident !== ident),
         });
-    }
+    };
 
     return (
         <Steg
@@ -66,7 +68,7 @@ const VelgBarn: React.FC = () => {
             skjema={skjema}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
-            gåVidereOnClickCallback={() => {
+            settSøknadsdataCallback={() => {
                 // TODO: Bytt ut settMedISøknad med noe fra useVelgBarn
             }}
         >
