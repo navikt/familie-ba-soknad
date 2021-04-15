@@ -17,7 +17,6 @@ import { IRoute, useRoutes } from '../../../routing/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { erStegUtfyltFrafør } from '../../../utils/steg';
 import Banner from '../../Felleskomponenter/Banner/Banner';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -77,7 +76,7 @@ const Steg: React.FC<ISteg> = ({
 }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { settSisteUtfylteStegIndex, sisteUtfylteStegIndex } = useApp();
+    const { settSisteUtfylteStegIndex, erStegUtfyltFrafør } = useApp();
     const {
         routes,
         hentNesteRoute,
@@ -97,11 +96,11 @@ const Steg: React.FC<ISteg> = ({
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
-    const nåværendeRouteIndex = hentRouteIndex(location.pathname);
+    const nåværendeStegIndex = hentRouteIndex(location.pathname);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (erStegUtfyltFrafør(sisteUtfylteStegIndex, nåværendeRouteIndex)) {
+        if (erStegUtfyltFrafør(nåværendeStegIndex)) {
             Object.values(skjema.felter).forEach(felt => {
                 felt.validerOgSettFelt();
             });
@@ -121,8 +120,8 @@ const Steg: React.FC<ISteg> = ({
         event.preventDefault();
         if (validerFelterOgVisFeilmelding()) {
             settSøknadsdataCallback();
-            if (!erStegUtfyltFrafør(sisteUtfylteStegIndex, nåværendeRouteIndex)) {
-                settSisteUtfylteStegIndex(nåværendeRouteIndex);
+            if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
+                settSisteUtfylteStegIndex(nåværendeStegIndex);
             }
             history.push(nesteRoute.path);
         }

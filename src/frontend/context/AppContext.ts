@@ -139,6 +139,9 @@ const [AppProvider, useApp] = createUseContext(() => {
         }
     };
 
+    const erStegUtfyltFrafør = (nåværendeStegIndex: number) =>
+        sisteUtfylteStegIndex >= nåværendeStegIndex;
+
     return {
         axiosRequest,
         sluttbruker,
@@ -153,6 +156,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         settInnsendingStatus,
         sisteUtfylteStegIndex,
         settSisteUtfylteStegIndex,
+        erStegUtfyltFrafør,
     };
 });
 

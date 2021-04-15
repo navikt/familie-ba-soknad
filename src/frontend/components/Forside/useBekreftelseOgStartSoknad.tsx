@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { IRoute, useRoutes } from '../../routing/RoutesContext';
 import { ILokasjon } from '../../typer/lokasjon';
-import { erStegUtfyltFrafør } from '../../utils/steg';
 
 export enum BekreftelseStatus {
     NORMAL = 'NORMAL',
@@ -23,14 +22,14 @@ export const useBekreftelseOgStartSoknad = (): {
     const location = useLocation<ILokasjon>();
 
     const { hentNesteRoute, hentRouteIndex } = useRoutes();
-    const { søknad, settSøknad, settSisteUtfylteStegIndex, sisteUtfylteStegIndex } = useApp();
+    const { søknad, settSøknad, settSisteUtfylteStegIndex, erStegUtfyltFrafør } = useApp();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
     );
 
     const nesteRoute: IRoute = hentNesteRoute(location.pathname);
-    const nåværendeRouteIndex = hentRouteIndex(location.pathname);
+    const nåværendeStegIndex = hentRouteIndex(location.pathname);
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();
@@ -39,8 +38,8 @@ export const useBekreftelseOgStartSoknad = (): {
                 ...søknad,
                 lestOgForståttBekreftelse: true,
             });
-            if (!erStegUtfyltFrafør(sisteUtfylteStegIndex, nåværendeRouteIndex)) {
-                settSisteUtfylteStegIndex(nåværendeRouteIndex);
+            if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
+                settSisteUtfylteStegIndex(nåværendeStegIndex);
             }
             history.push(nesteRoute.path);
         } else {
