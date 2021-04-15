@@ -2,12 +2,7 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
-import { HttpProvider } from '@navikt/familie-http';
-import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
-
-import norskeTekster from '../../../assets/lang/nb.json';
-import { AppProvider } from '../../../context/AppContext';
-import { RoutesProvider } from '../../../routing/RoutesContext';
+import { TestProvidereMedEkteTekster } from '../../../utils/testing';
 import OmDeg from './OmDeg';
 
 jest.mock('nav-frontend-alertstriper', () => () => <div data-testid="alertstripe" />);
@@ -21,15 +16,9 @@ jest.mock('react-router-dom', () => ({
 
 test('Skal rendre alertstripe i OmDeg', () => {
     const { getByTestId } = render(
-        <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
-            <HttpProvider>
-                <AppProvider>
-                    <RoutesProvider>
-                        <OmDeg />
-                    </RoutesProvider>
-                </AppProvider>
-            </HttpProvider>
-        </SprakProvider>
+        <TestProvidereMedEkteTekster>
+            <OmDeg />
+        </TestProvidereMedEkteTekster>
     );
     expect(getByTestId(/alertstripe/)).toBeInTheDocument();
 });
