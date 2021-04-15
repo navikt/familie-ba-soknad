@@ -1713,10 +1713,10 @@
     react-select "^3.1.1"
     styled-components "^5.2.1"
 
-"@navikt/familie-form-elements@^2.2.11":
-  version "2.2.12"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-form-elements/-/familie-form-elements-2.2.12.tgz#4a8929d111abf7bc07e57915a1d3bb0ecf75fefd"
-  integrity sha512-EhTJJrUEzDnx+YO/IBHU63ajynCmgSXiP2FltcVnL/gOYNK6yohHjNqdR7W7K3u/qx/mCzAMBaHuRcgdxGTozw==
+"@navikt/familie-form-elements@^2.2.14":
+  version "2.2.14"
+  resolved "https://registry.yarnpkg.com/@navikt/familie-form-elements/-/familie-form-elements-2.2.14.tgz#76ea8a539285d1c1618cde5474dc43e2e6e05055"
+  integrity sha512-3hazycmKcWU1xe5o6inwvAJ0UfYqNqNQY1tCCRgdok1mgbMQdhzhvfrzIqgtJd2cvkB0dGJXJSb5OlHsNU/vIg==
   dependencies:
     "@navikt/fnrvalidator" "^1.1.2"
     "@types/classnames" "^2.2.10"
