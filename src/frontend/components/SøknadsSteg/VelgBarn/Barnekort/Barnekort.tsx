@@ -82,7 +82,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) =
     const { søknad } = useApp();
     const ikoner = [barn1, barn2, barn3];
 
-    const barnMedISøknad = !!søknad.barnInkludertISøknaden.find(
+    const erMedISøknad = !!søknad.barnInkludertISøknaden.find(
         barn => barn.ident === barnFraPdl.ident
     );
 
@@ -118,9 +118,9 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) =
                     />
                 )}
                 <StyledCheckbox
-                    checked={barnMedISøknad}
+                    checked={erMedISøknad}
                     label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
-                    onClick={() => settMedISøknad(barnFraPdl.ident, barnMedISøknad)}
+                    onChange={() => settMedISøknad(barnFraPdl.ident, erMedISøknad)}
                 />
             </InformasjonsboksInnhold>
         </StyledBarnekort>

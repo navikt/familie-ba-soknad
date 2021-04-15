@@ -17,6 +17,7 @@ import { IRoute, useRoutes } from '../../../routing/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { erStegFyltUtFrafør } from '../../../utils/steg';
 import Banner from '../../Felleskomponenter/Banner/Banner';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -76,7 +77,7 @@ const Steg: React.FC<ISteg> = ({
 }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { settUtfyltSteg, utfyltSteg } = useApp();
+    const { settSisteUtfylteStegIndex, sisteUtfylteStegIndex } = useApp();
     const {
         routes,
         hentNesteRoute,
@@ -100,7 +101,7 @@ const Steg: React.FC<ISteg> = ({
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (utfyltSteg >= nåværendeRouteIndex) {
+        if (erStegFyltUtFrafør(sisteUtfylteStegIndex, nåværendeRouteIndex)) {
             Object.values(skjema.felter).forEach(felt => {
                 felt.validerOgSettFelt();
             });
@@ -112,7 +113,7 @@ const Steg: React.FC<ISteg> = ({
     };
 
     const håndterAvbryt = () => {
-        settUtfyltSteg(0);
+        settSisteUtfylteStegIndex(0);
         history.push('/');
     };
 
@@ -120,8 +121,8 @@ const Steg: React.FC<ISteg> = ({
         event.preventDefault();
         if (validerFelterOgVisFeilmelding()) {
             gåVidereOnClickCallback();
-            if (utfyltSteg < nåværendeRouteIndex) {
-                settUtfyltSteg(nåværendeRouteIndex);
+            if (!erStegFyltUtFrafør(sisteUtfylteStegIndex, nåværendeRouteIndex)) {
+                settSisteUtfylteStegIndex(nåværendeRouteIndex);
             }
             history.push(nesteRoute.path);
         }

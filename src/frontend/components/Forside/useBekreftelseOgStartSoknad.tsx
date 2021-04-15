@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { IRoute, useRoutes } from '../../routing/RoutesContext';
 import { ILokasjon } from '../../typer/lokasjon';
+import { erStegFyltUtFrafør } from '../../utils/steg';
 
 export enum BekreftelseStatus {
     NORMAL = 'NORMAL',
@@ -22,7 +23,7 @@ export const useBekreftelseOgStartSoknad = (): {
     const location = useLocation<ILokasjon>();
 
     const { hentNesteRoute, hentRouteIndex } = useRoutes();
-    const { søknad, settSøknad, settUtfyltSteg, utfyltSteg } = useApp();
+    const { søknad, settSøknad, settSisteUtfylteStegIndex, sisteUtfylteStegIndex } = useApp();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
@@ -38,8 +39,8 @@ export const useBekreftelseOgStartSoknad = (): {
                 ...søknad,
                 lestOgForståttBekreftelse: true,
             });
-            if (utfyltSteg < nåværendeRouteIndex) {
-                settUtfyltSteg(nåværendeRouteIndex);
+            if (!erStegFyltUtFrafør(sisteUtfylteStegIndex, nåværendeRouteIndex)) {
+                settSisteUtfylteStegIndex(nåværendeRouteIndex);
             }
             history.push(nesteRoute.path);
         } else {

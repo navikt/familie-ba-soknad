@@ -43,8 +43,8 @@ const VelgBarn: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useVelgBarn();
     const intl = useIntl();
 
-    const settMedISøknad = (ident: string, barnMedISøknad: boolean) => {
-        const skalVæreMed = !barnMedISøknad;
+    const settMedISøknad = (ident: string, erMedISøknad: boolean) => {
+        const skalVæreMed = !erMedISøknad;
 
         const barnFraPDL: IBarnFraPdl | undefined = søknad.søker.barn.find(
             barn => barn.ident === ident
