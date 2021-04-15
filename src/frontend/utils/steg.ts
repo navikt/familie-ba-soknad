@@ -1,2 +1,2 @@
-export const erStegFyltUtFrafør = (sisteUtfylteStegIndex: number, nåværendeRouteIndex: number) =>
+export const erStegUtfyltFrafør = (sisteUtfylteStegIndex: number, nåværendeRouteIndex: number) =>
     sisteUtfylteStegIndex >= nåværendeRouteIndex;

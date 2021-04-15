@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { IRoute, useRoutes } from '../../routing/RoutesContext';
 import { ILokasjon } from '../../typer/lokasjon';
-import { erStegFyltUtFrafør } from '../../utils/steg';
+import { erStegUtfyltFrafør } from '../../utils/steg';
 
 export enum BekreftelseStatus {
     NORMAL = 'NORMAL',
@@ -39,7 +39,7 @@ export const useBekreftelseOgStartSoknad = (): {
                 ...søknad,
                 lestOgForståttBekreftelse: true,
             });
-            if (!erStegFyltUtFrafør(sisteUtfylteStegIndex, nåværendeRouteIndex)) {
+            if (!erStegUtfyltFrafør(sisteUtfylteStegIndex, nåværendeRouteIndex)) {
                 settSisteUtfylteStegIndex(nåværendeRouteIndex);
             }
             history.push(nesteRoute.path);
