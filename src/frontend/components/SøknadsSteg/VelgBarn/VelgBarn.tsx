@@ -68,7 +68,7 @@ const VelgBarn: React.FC = () => {
             skjema={skjema}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
-            gåVidereOnClickCallback={() => {
+            settSøknadsdataCallback={() => {
                 // TODO: Bytt ut settMedISøknad med noe fra useVelgBarn
             }}
         >

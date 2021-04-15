@@ -1,7 +1,13 @@
 import * as appContext from '../context/AppContext';
 
 export const spyOnUseApp = søknad => {
-    jest.spyOn(appContext, 'useApp').mockImplementation(jest.fn().mockReturnValue({ søknad }));
+    jest.spyOn(appContext, 'useApp').mockImplementation(
+        jest.fn().mockReturnValue({
+            søknad,
+            settSisteUtfylteStegIndex: jest.fn(),
+            sisteUtfylteStegIndex: 2,
+        })
+    );
 };
 
 export const brukUseAppMedTomSøknadForRouting = () => spyOnUseApp({ barnInkludertISøknaden: [] });

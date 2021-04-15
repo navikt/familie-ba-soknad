@@ -27,7 +27,7 @@ const OmDeg: React.FC = () => {
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
             skjema={skjema}
-            gåVidereOnClickCallback={oppdaterSøknad}
+            settSøknadsdataCallback={oppdaterSøknad}
         >
             <KomponentGruppe>
                 <Personopplysninger />

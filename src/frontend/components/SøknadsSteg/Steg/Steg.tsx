@@ -28,7 +28,7 @@ interface ISteg {
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     skjema: ISkjema<SkjemaFeltTyper, string>;
-    gåVidereOnClickCallback: () => void;
+    settSøknadsdataCallback: () => void;
 }
 
 const AvsluttKnappContainer = styled.div`
@@ -73,7 +73,7 @@ const Steg: React.FC<ISteg> = ({
     validerFelterOgVisFeilmelding,
     valideringErOk,
     skjema,
-    gåVidereOnClickCallback,
+    settSøknadsdataCallback,
 }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
@@ -120,7 +120,7 @@ const Steg: React.FC<ISteg> = ({
     const håndterGåVidere = event => {
         event.preventDefault();
         if (validerFelterOgVisFeilmelding()) {
-            gåVidereOnClickCallback();
+            settSøknadsdataCallback();
             if (!erStegUtfyltFrafør(sisteUtfylteStegIndex, nåværendeRouteIndex)) {
                 settSisteUtfylteStegIndex(nåværendeRouteIndex);
             }
