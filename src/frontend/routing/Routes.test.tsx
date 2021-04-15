@@ -46,7 +46,7 @@ describe('Routes', () => {
                 },
             ],
         });
-        const location = '/barnet/Jens';
+        const location = '/barnet/barn-1';
         const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
         const { result } = renderHook(() => useRoutes(), { wrapper });
         const nesteRoute = result.current.hentNesteRoute(location);
@@ -61,7 +61,7 @@ describe('Routes', () => {
                 },
             ],
         });
-        const location = '/barnet/Jens';
+        const location = '/barnet/barn-1';
         const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
         const { result } = renderHook(() => useRoutes(), { wrapper });
         const nesteRoute = result.current.hentForrigeRoute(location);
@@ -101,10 +101,10 @@ describe('Routes', () => {
         const {
             current: { hentForrigeRoute, hentNesteRoute },
         } = result;
-        const forrigeRouteFraJens = hentForrigeRoute('/barnet/Jens');
-        const forrigeRouteFraLine = hentForrigeRoute('/barnet/Line');
-        const nesteRouteFraJens = hentNesteRoute('/barnet/Jens');
-        const nesteRouteFraLine = hentNesteRoute('/barnet/Line');
+        const forrigeRouteFraJens = hentForrigeRoute('/barnet/barn-1');
+        const forrigeRouteFraLine = hentForrigeRoute('/barnet/barn-2');
+        const nesteRouteFraJens = hentNesteRoute('/barnet/barn-1');
+        const nesteRouteFraLine = hentNesteRoute('/barnet/barn-2');
 
         expect(forrigeRouteFraJens.route).toBe(RouteEnum.OmBarna);
         expect(nesteRouteFraJens.label).toBe('Om Line');
