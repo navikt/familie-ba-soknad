@@ -27,7 +27,7 @@ interface ISteg {
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     skjema: ISkjema<SkjemaFeltTyper, string>;
-    gåVidereOnClickCallback: () => void;
+    settSøknadsdataCallback: () => void;
 }
 
 const AvsluttKnappContainer = styled.div`
@@ -72,16 +72,17 @@ const Steg: React.FC<ISteg> = ({
     validerFelterOgVisFeilmelding,
     valideringErOk,
     skjema,
-    gåVidereOnClickCallback,
+    settSøknadsdataCallback,
 }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { settUtfyltSteg } = useApp();
+    const { settSisteUtfylteStegIndex, erStegUtfyltFrafør } = useApp();
     const {
         routes,
         hentNesteRoute,
         hentForrigeRoute,
         hentAktivtStegIndexForStegindikator,
+        hentRouteIndex,
     } = useRoutes();
 
     const [åpenModal, settÅpenModal] = useState(false);
@@ -95,9 +96,15 @@ const Steg: React.FC<ISteg> = ({
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
+    const nåværendeStegIndex = hentRouteIndex(location.pathname);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        if (erStegUtfyltFrafør(nåværendeStegIndex)) {
+            Object.values(skjema.felter).forEach(felt => {
+                felt.validerOgSettFelt();
+            });
+        }
     }, []);
 
     const håndterModalStatus = () => {
@@ -105,14 +112,17 @@ const Steg: React.FC<ISteg> = ({
     };
 
     const håndterAvbryt = () => {
-        settUtfyltSteg(0);
+        settSisteUtfylteStegIndex(0);
         history.push('/');
     };
 
     const håndterGåVidere = event => {
         event.preventDefault();
         if (validerFelterOgVisFeilmelding()) {
-            gåVidereOnClickCallback();
+            settSøknadsdataCallback();
+            if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
+                settSisteUtfylteStegIndex(nåværendeStegIndex);
+            }
             history.push(nesteRoute.path);
         }
     };

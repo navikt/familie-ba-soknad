@@ -25,7 +25,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     );
     const [søknad, settSøknad] = useState<ISøknad>(initialStateSøknad);
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
-    const [utfyltSteg, settUtfyltSteg] = useState<number>(-1);
+    const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
 
     autentiseringsInterceptor();
 
@@ -139,6 +139,9 @@ const [AppProvider, useApp] = createUseContext(() => {
         }
     };
 
+    const erStegUtfyltFrafør = (nåværendeStegIndex: number) =>
+        sisteUtfylteStegIndex >= nåværendeStegIndex;
+
     return {
         axiosRequest,
         sluttbruker,
@@ -151,8 +154,9 @@ const [AppProvider, useApp] = createUseContext(() => {
         nullstillSøknadsobjekt,
         innsendingStatus,
         settInnsendingStatus,
-        utfyltSteg,
-        settUtfyltSteg,
+        sisteUtfylteStegIndex,
+        settSisteUtfylteStegIndex,
+        erStegUtfyltFrafør,
     };
 });
 

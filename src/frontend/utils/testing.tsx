@@ -9,7 +9,14 @@ import { AppProvider } from '../context/AppContext';
 import { RoutesProvider } from '../routing/RoutesContext';
 
 export const spyOnUseApp = søknad => {
-    jest.spyOn(appContext, 'useApp').mockImplementation(jest.fn().mockReturnValue({ søknad }));
+    jest.spyOn(appContext, 'useApp').mockImplementation(
+        jest.fn().mockReturnValue({
+            søknad,
+            settSisteUtfylteStegIndex: jest.fn(),
+            sisteUtfylteStegIndex: 2,
+            erStegUtfyltFrafør: jest.fn(),
+        })
+    );
 };
 
 export const brukUseAppMedTomSøknadForRouting = () => spyOnUseApp({ barnInkludertISøknaden: [] });

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
@@ -30,14 +30,9 @@ const StyledLenke = styled(Lenke)`
 const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
 
-    const { sluttbruker, nullstillSøknadsobjekt, settUtfyltSteg } = useApp();
+    const { sluttbruker } = useApp();
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
-
-    useEffect(() => {
-        nullstillSøknadsobjekt(sluttbruker);
-        settUtfyltSteg(0);
-    }, []);
 
     return (
         <InnholdContainer>
