@@ -12,13 +12,13 @@ import {
 } from '@navikt/familie-typer';
 
 import { IKvittering } from '../typer/kvittering';
-import { ISøkerFraPdl } from '../typer/person';
+import { ISøkerRespons } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
 
 const [AppProvider, useApp] = createUseContext(() => {
-    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerFraPdl>()); // legacy
+    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>()); // legacy
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
         InnloggetStatus.IKKE_VERIFISERT
@@ -36,14 +36,13 @@ const [AppProvider, useApp] = createUseContext(() => {
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 
-            axiosRequest<ISøkerFraPdl, void>({
+            axiosRequest<ISøkerRespons, void>({
                 url: '/api/personopplysning',
                 method: 'POST',
                 withCredentials: true,
                 påvirkerSystemLaster: true,
             }).then(ressurs => {
-                settSluttbruker(ressurs); // legacy
-                nullstillSøknadsobjekt(ressurs); // legacy
+                settSluttbruker(ressurs);
 
                 ressurs.status === RessursStatus.SUKSESS &&
                     settSøknad({
@@ -126,21 +125,29 @@ const [AppProvider, useApp] = createUseContext(() => {
             .catch(_ => settInnloggetStatus(InnloggetStatus.FEILET));
     };
 
-    const nullstillSøknadsobjekt = (ressurs: Ressurs<ISøkerFraPdl>) => {
-        if (ressurs.status === RessursStatus.SUKSESS) {
-            const søker = ressurs.data;
-            settSøknad({
-                ...initialStateSøknad,
-                søker: {
-                    ...initialStateSøknad.søker,
-                    ...søker,
-                },
-            });
-        }
+    const nullstillSøknadsobjekt = () => {
+        settSøknad({
+            ...initialStateSøknad,
+            søknadstype: søknad.søknadstype,
+            søker: {
+                ...initialStateSøknad.søker,
+                ident: søknad.søker.ident,
+                navn: søknad.søker.navn,
+                barn: søknad.søker.barn,
+                statsborgerskap: søknad.søker.statsborgerskap,
+                adresse: søknad.søker.adresse,
+                sivilstand: søknad.søker.sivilstand,
+            },
+        });
     };
 
     const erStegUtfyltFrafør = (nåværendeStegIndex: number) =>
         sisteUtfylteStegIndex >= nåværendeStegIndex;
+
+    const avbrytSøknad = () => {
+        nullstillSøknadsobjekt();
+        settSisteUtfylteStegIndex(-1);
+    };
 
     return {
         axiosRequest,
@@ -157,6 +164,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         sisteUtfylteStegIndex,
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
+        avbrytSøknad,
     };
 });
 

@@ -3,7 +3,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { INøkkelPar } from './common';
-import { ESivilstand, IBarn, ISøker } from './person';
+import { ESivilstand, IBarn, IBarnMedISøknad, ISøker } from './person';
 
 export enum ESøknadstype {
     IKKE_SATT = 'IKKE_SATT',
@@ -38,9 +38,10 @@ export interface ISøknadsfelt<T> {
 
 export interface ISøknad {
     søknadstype: ESøknadstype;
-    lestOgForståttBekreftelse: boolean;
     søker: ISøker;
-    barnInkludertISøknaden: IBarn[];
+    lestOgForståttBekreftelse: boolean;
+    barnInkludertISøknaden: IBarnMedISøknad[];
+    barnRegistrertManuelt: IBarn[];
     erNoenAvBarnaFosterbarn: ISøknadSpørsmål<ESvar | undefined>;
     oppholderBarnSegIInstitusjon: ISøknadSpørsmål<ESvar | undefined>;
     erBarnAdoptertFraUtland: ISøknadSpørsmål<ESvar | undefined>;
@@ -59,6 +60,7 @@ export const initialStateSøknad: ISøknad = {
     søknadstype: ESøknadstype.IKKE_SATT,
     barnInkludertISøknaden: [],
     lestOgForståttBekreftelse: false,
+    barnRegistrertManuelt: [],
     søker: {
         navn: '',
         barn: [],

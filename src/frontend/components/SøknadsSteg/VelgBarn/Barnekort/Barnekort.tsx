@@ -11,15 +11,14 @@ import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
 import { device } from '../../../../Theme';
-import { IBarnFraPdl } from '../../../../typer/person';
+import { IBarn } from '../../../../typer/person';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
-import { hentAlder } from '../../../../utils/person';
 import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface IBarnekortProps {
-    settMedISøknad: (ident: string, barnMedISøknad: boolean) => void;
-    barnFraPdl: IBarnFraPdl;
+    settMedISøknad: (barn: IBarn, barnMedISøknad: boolean) => void;
+    barn: IBarn;
 }
 
 export const StyledBarnekort = styled.div`
@@ -78,12 +77,12 @@ const StyledIngress = styled(Ingress)`
     }
 `;
 
-const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) => {
+const Barnekort: React.FC<IBarnekortProps> = ({ barn, settMedISøknad }) => {
     const { søknad } = useApp();
     const ikoner = [barn1, barn2, barn3];
 
     const erMedISøknad = !!søknad.barnInkludertISøknaden.find(
-        barn => barn.ident === barnFraPdl.ident
+        barnMedISøknad => barnMedISøknad.ident === barn.ident
     );
 
     return (
@@ -92,24 +91,21 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) =
                 <img alt="barn" src={hentTilfeldigElement(ikoner)} />
             </BarnekortHeader>
             <InformasjonsboksInnhold>
-                <StyledUndertittel>{barnFraPdl.navn}</StyledUndertittel>
+                <StyledUndertittel>{barn.navn}</StyledUndertittel>
                 <BarneKortInfo
                     labelId={'velgbarn.fødselsnummer.label'}
-                    verdi={formaterFnr(barnFraPdl.ident)}
+                    verdi={formaterFnr(barn.ident)}
                 />
-                {barnFraPdl.fødselsdato && ( // Barn som søker har lagt inn selv har ikke fødselsdato
-                    <BarneKortInfo
-                        labelId={'velgbarn.alder.label'}
-                        verdi={hentAlder(barnFraPdl.fødselsdato)}
-                    />
+                {barn.alder && ( // Barn som søker har lagt inn selv har ikke fødselsdato
+                    <BarneKortInfo labelId={'velgbarn.alder.label'} verdi={barn.alder} />
                 )}
-                {barnFraPdl.borMedSøker !== undefined && (
+                {barn.borMedSøker !== undefined && (
                     <BarneKortInfo
                         labelId={'velgbarn.bosted.label'}
                         verdi={
                             <SpråkTekst
                                 id={
-                                    barnFraPdl.borMedSøker
+                                    barn.borMedSøker
                                         ? 'velgbarn.bosted.registrert-på-adressen-din'
                                         : 'velgbarn.bosted.annen-adresse'
                                 }
@@ -120,7 +116,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barnFraPdl, settMedISøknad }) =
                 <StyledCheckbox
                     checked={erMedISøknad}
                     label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
-                    onChange={() => settMedISøknad(barnFraPdl.ident, erMedISøknad)}
+                    onChange={() => settMedISøknad(barn, erMedISøknad)}
                 />
             </InformasjonsboksInnhold>
         </StyledBarnekort>

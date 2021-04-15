@@ -36,8 +36,8 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
 
     // En route per barn som er valgt, eller en plassholder hvis ingen er valgt
     const barnRoutes: IRoute[] = barnInkludertISøknaden.length
-        ? barnInkludertISøknaden.map(barn => ({
-              path: `/barnet/${slugify(barn.navn)}`,
+        ? barnInkludertISøknaden.map((barn, index) => ({
+              path: `/barnet/${slugify(`barn-${index + 1}`)}`,
               label: `Om ${barn.navn}`,
               route: RouteEnum.OmBarnetUtfyllende,
               komponent: OmBarnetUtfyllende,

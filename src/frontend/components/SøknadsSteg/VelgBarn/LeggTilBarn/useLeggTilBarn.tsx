@@ -44,7 +44,7 @@ export const useLeggTilBarn = (): {
         avhengigheter: { erFødt },
     });
 
-    const navn = useFelt<string>({
+    const navn = useFelt<string | undefined>({
         verdi: '',
         skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
         valideringsfunksjon: (felt, avhengigheter) => {
@@ -101,18 +101,16 @@ export const useLeggTilBarn = (): {
         // TODO: Bedre dato-løsning
         settSøknad({
             ...søknad,
-            søker: {
-                ...søknad.søker,
-                barn: søknad.søker.barn.concat([
-                    {
-                        ident: ident.verdi,
-                        borMedSøker: undefined,
-                        navn:
-                            navn.verdi ||
-                            intl.formatMessage({ id: 'leggtilbarn.navn-ubestemt.plassholder' }),
-                    },
-                ]),
-            },
+            barnRegistrertManuelt: søknad.barnRegistrertManuelt.concat([
+                {
+                    navn:
+                        navn.verdi ||
+                        intl.formatMessage({ id: 'leggtilbarn.navn-ubestemt.plassholder' }),
+                    ident: ident.verdi,
+                    borMedSøker: undefined,
+                    alder: undefined,
+                },
+            ]),
         });
         nullstillSkjema();
         return true;

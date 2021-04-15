@@ -76,7 +76,7 @@ const Steg: React.FC<ISteg> = ({
 }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { settSisteUtfylteStegIndex, erStegUtfyltFrafør } = useApp();
+    const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, avbrytSøknad } = useApp();
     const {
         routes,
         hentNesteRoute,
@@ -112,7 +112,7 @@ const Steg: React.FC<ISteg> = ({
     };
 
     const håndterAvbryt = () => {
-        settSisteUtfylteStegIndex(0);
+        avbrytSøknad();
         history.push('/');
     };
 

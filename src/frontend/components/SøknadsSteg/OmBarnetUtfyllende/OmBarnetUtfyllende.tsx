@@ -8,7 +8,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { barnDataKeySpørsmål, IBarn } from '../../../typer/person';
+import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -17,7 +17,7 @@ import Steg from '../Steg/Steg';
 import { OmBarnetUfyllendeSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnetUtfyllende } from './useOmBarnetUtfyllende';
 
-const InternKomponent: React.FC<{ barn: IBarn }> = ({ barn }) => {
+const InternKomponent: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -88,12 +88,14 @@ const OmBarnetUtfyllende: React.FC = () => {
     }
 
     if (!match || match.length < 2) {
-        history.push(`/barnet/${slugify(barnInkludertISøknaden[0].navn)}`);
+        history.push(`/barnet/${slugify('barn-1')}`);
         return null;
     }
     const navnParameter = match[1];
 
-    const barn = barnInkludertISøknaden.find(barn => slugify(barn.navn) === navnParameter);
+    const barn = barnInkludertISøknaden.find(
+        (_barn, index) => slugify(`barn-${index + 1}`) === navnParameter
+    );
     if (!barn) {
         history.push('/barnet');
         return null;

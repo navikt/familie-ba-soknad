@@ -188,7 +188,7 @@ export const useOmBarnaDine = (): {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
                 svar: skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
             },
-            barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema),
+            barnMedISøknaden: genererOppdaterteBarn(søknad, skjema),
         });
     };
 
