@@ -1,7 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { IBarn } from '../../../typer/person';
+import { IBarn, IBarnMedISøknad } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import { IOmBarnaDineFeltTyper } from './useOmBarnaDine';
 
@@ -11,7 +11,7 @@ export const genererSvarForSpørsmålBarn = (barn: IBarn, felt: Felt<string[]>):
 export const genererOppdaterteBarn = (
     søknad: ISøknad,
     skjema: ISkjema<IOmBarnaDineFeltTyper, string>
-): IBarn[] => {
+): IBarnMedISøknad[] => {
     return søknad.barnInkludertISøknaden.map(barn => {
         return {
             ...barn,

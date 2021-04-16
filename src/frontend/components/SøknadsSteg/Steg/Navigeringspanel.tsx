@@ -87,7 +87,10 @@ const Navigeringspanel: React.FC<{
             <StyledFlatKnapp
                 mini
                 htmlType={'button'}
-                onClick={onAvbrytCallback}
+                onClick={() => {
+                    //TODO: enten fjerne knapp eller legge til mellomlagring
+                    alert('ikke implementert enda');
+                }}
                 color={navFarger.navBla}
                 gridarea={'avsluttOgFortsett'}
                 margintop={'0.5rem'}

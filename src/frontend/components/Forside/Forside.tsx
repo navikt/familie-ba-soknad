@@ -105,7 +105,7 @@ const Forside: React.FC = () => {
                 </Normaltekst>
             </Informasjonsbolk>
 
-            <BekreftelseOgStartSoknad navn={navn} />
+            <BekreftelseOgStartSoknad navn={navn ? navn : '-'} />
         </InnholdContainer>
     );
 };

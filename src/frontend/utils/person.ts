@@ -1,7 +1,7 @@
 import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { ESivilstand, IAdresse, IBarn, IBarnFraPdl } from '../typer/person';
+import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, IBarnRespons } from '../typer/person';
 
 export const hentAlder = (dato: string): string => {
     const idag = new Date();
@@ -49,10 +49,9 @@ export const hentSivilstatus = (statuskode?: ESivilstand) => {
     }
 };
 
-export const genererInitialStateBarn = (barnFraPDL: IBarnFraPdl): IBarn => {
+export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => {
     return {
-        ...barnFraPDL,
-        alder: barnFraPDL.fødselsdato && hentAlder(barnFraPDL.fødselsdato),
+        ...barn,
         erFosterbarn: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
             svar: undefined,
@@ -82,4 +81,13 @@ export const genererInitialStateBarn = (barnFraPDL: IBarnFraPdl): IBarn => {
             svar: undefined,
         },
     };
+};
+
+export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
+    return barn.map(barnRespons => ({
+        navn: barnRespons.navn,
+        ident: barnRespons.ident,
+        alder: barnRespons.fødselsdato && hentAlder(barnRespons.fødselsdato),
+        borMedSøker: barnRespons.borMedSøker,
+    }));
 };

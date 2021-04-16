@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
-import { IBarn } from '../../../typer/person';
+import { IBarnMedISøknad } from '../../../typer/person';
 import { OmBarnetUfyllendeSpørsmålsId } from './spørsmål';
 
 export interface IOmBarnetUtvidetFeltTyper {
@@ -15,7 +15,7 @@ export interface IOmBarnetUtvidetFeltTyper {
 }
 
 export const useOmBarnetUtfyllende = (
-    barn: IBarn
+    barn: IBarnMedISøknad
 ): {
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;

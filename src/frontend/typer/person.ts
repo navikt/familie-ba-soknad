@@ -4,13 +4,6 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { ISøknadSpørsmål } from './søknad';
 
-export interface IBarnFraPdl {
-    ident: string;
-    navn: string;
-    borMedSøker: boolean | undefined;
-    fødselsdato?: string;
-}
-
 export enum ESivilstand {
     GIFT = 'GIFT',
     ENKE_ELLER_ENKEMANN = 'ENKE_ELLER_ENKEMANN',
@@ -24,16 +17,19 @@ export enum ESivilstand {
     UOPPGITT = 'UOPPGITT',
 }
 
-export interface ISøkerFraPdl {
-    navn: string;
-    barn: IBarnFraPdl[];
-    statsborgerskap: { landkode: Alpha3Code }[];
+export interface IPerson {
     ident: string;
+    navn: string | undefined;
+}
+
+export interface ISøkerRespons extends IPerson {
+    barn: IBarnRespons[];
+    statsborgerskap: { landkode: Alpha3Code }[];
     adresse?: IAdresse;
     sivilstand: { type: ESivilstand };
 }
 
-export interface ISøker extends ISøkerFraPdl {
+export interface ISøker extends ISøkerRespons {
     telefonnummer: ISøknadSpørsmål<string>;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | undefined>;
     oppholderSegINorge: ISøknadSpørsmål<ESvar | undefined>;
@@ -68,8 +64,17 @@ export enum barnDataKeySpørsmål {
     oppholderSegIUtland = 'oppholderSegIUtland',
 }
 
-export interface IBarn extends IBarnFraPdl {
-    alder?: string;
+export interface IBarnRespons extends IPerson {
+    borMedSøker: boolean;
+    fødselsdato: string | undefined;
+}
+
+export interface IBarn extends IPerson {
+    borMedSøker: boolean | undefined;
+    alder: string | undefined;
+}
+
+export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | undefined>;

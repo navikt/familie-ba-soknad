@@ -9,8 +9,8 @@ import Lenke, { Props as LenkeProps } from 'nav-frontend-lenker';
 
 import { useApp } from '../../../context/AppContext';
 import { device } from '../../../Theme';
-import { IBarnFraPdl } from '../../../typer/person';
-import { genererInitialStateBarn } from '../../../utils/person';
+import { IBarn } from '../../../typer/person';
+import { genererInitialBarnMedISøknad, mapBarnResponsTilBarn } from '../../../utils/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
@@ -43,24 +43,21 @@ const VelgBarn: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useVelgBarn();
     const intl = useIntl();
 
-    const settMedISøknad = (ident: string, erMedISøknad: boolean) => {
+    const settMedISøknad = (barn: IBarn, erMedISøknad: boolean) => {
         const skalVæreMed = !erMedISøknad;
-
-        const barnFraPDL: IBarnFraPdl | undefined = søknad.søker.barn.find(
-            barn => barn.ident === ident
-        );
-
-        if (!barnFraPDL) {
-            return;
-        }
 
         settSøknad({
             ...søknad,
             barnInkludertISøknaden: skalVæreMed
-                ? søknad.barnInkludertISøknaden.concat(genererInitialStateBarn(barnFraPDL))
-                : søknad.barnInkludertISøknaden.filter(barn => barn.ident !== ident),
+                ? søknad.barnInkludertISøknaden.concat(genererInitialBarnMedISøknad(barn))
+                : søknad.barnInkludertISøknaden.filter(
+                      barnMedISøknad => barnMedISøknad.ident !== barn.ident
+                  ),
         });
     };
+
+    const barnFraRespons = mapBarnResponsTilBarn(søknad.søker.barn);
+    const barnManueltLagtTil = søknad.barnRegistrertManuelt;
 
     return (
         <Steg
@@ -81,8 +78,11 @@ const VelgBarn: React.FC = () => {
             </LenkeMedChevron>
 
             <BarnekortContainer id={'barnMedISøknad'}>
-                {søknad.søker.barn.map(barn => (
-                    <Barnekort key={barn.ident} barnFraPdl={barn} settMedISøknad={settMedISøknad} />
+                {barnFraRespons.map(barn => (
+                    <Barnekort key={barn.ident} barn={barn} settMedISøknad={settMedISøknad} />
+                ))}
+                {barnManueltLagtTil.map(barn => (
+                    <Barnekort key={barn.ident} barn={barn} settMedISøknad={settMedISøknad} />
                 ))}
                 <NyttBarnKort />
             </BarnekortContainer>
