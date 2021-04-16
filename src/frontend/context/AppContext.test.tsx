@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -36,27 +35,21 @@ describe('erStegUtfyltFraFør', () => {
     test('Skal returnere true dersom siste utfylte steg er det samme som nåværende steg', () => {
         const nåværendeStegIndex = 2;
         const { settSisteUtfylteStegIndex } = hookResult.current;
-        act(() => {
-            settSisteUtfylteStegIndex(2);
-        });
+        settSisteUtfylteStegIndex(2);
         expect(hookResult.current.erStegUtfyltFrafør(nåværendeStegIndex)).toEqual(true);
     });
 
     test('Skal returnere true dersom siste utfylte steg er etter nåværende steg', () => {
         const nåværendeStegIndex = 2;
         const { settSisteUtfylteStegIndex } = hookResult.current;
-        act(() => {
-            settSisteUtfylteStegIndex(3);
-        });
+        settSisteUtfylteStegIndex(3);
         expect(hookResult.current.erStegUtfyltFrafør(nåværendeStegIndex)).toEqual(true);
     });
 
     test('Skal returnere false dersom siste utfylte steg er før nåværende steg', () => {
         const nåværendeStegIndex = 2;
         const { settSisteUtfylteStegIndex } = hookResult.current;
-        act(() => {
-            settSisteUtfylteStegIndex(1);
-        });
+        settSisteUtfylteStegIndex(1);
         expect(hookResult.current.erStegUtfyltFrafør(nåværendeStegIndex)).toEqual(false);
     });
 });
@@ -86,13 +79,9 @@ describe('nullstillSøknadsObject', () => {
             },
         };
 
-        act(() => {
-            result.current.settSøknad(søknadHalvveisUtfylt);
-        });
+        result.current.settSøknad(søknadHalvveisUtfylt);
         expect(result.current.søknad).toEqual(søknadHalvveisUtfylt);
-        act(() => {
-            result.current.nullstillSøknadsobjekt();
-        });
+        result.current.nullstillSøknadsobjekt();
         expect(result.current.søknad).toEqual(søknadEtterRespons);
     });
 });
@@ -102,9 +91,7 @@ describe('avbrytSøknad', () => {
         const wrapper = ({ children }) => <AppProvider>{children}</AppProvider>;
         const { result } = renderHook(() => useApp(), { wrapper });
         result.current.sisteUtfylteStegIndex = 3;
-        act(() => {
-            result.current.avbrytSøknad();
-        });
+        result.current.avbrytSøknad();
         expect(result.current.sisteUtfylteStegIndex).toEqual(-1);
     });
 });
