@@ -9,7 +9,6 @@ import { Ingress, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
-import { useApp } from '../../../../context/AppContext';
 import { device } from '../../../../Theme';
 import { IBarn } from '../../../../typer/person';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
@@ -17,8 +16,9 @@ import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface IBarnekortProps {
-    settMedISøknad: (barn: IBarn, barnMedISøknad: boolean) => void;
+    velgBarnCallback: (barn: IBarn, barnMedISøknad: boolean) => void;
     barn: IBarn;
+    barnSomSkalVæreMed: IBarn[];
 }
 
 export const StyledBarnekort = styled.div`
@@ -77,11 +77,10 @@ const StyledIngress = styled(Ingress)`
     }
 `;
 
-const Barnekort: React.FC<IBarnekortProps> = ({ barn, settMedISøknad }) => {
-    const { søknad } = useApp();
+const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæreMed }) => {
     const ikoner = [barn1, barn2, barn3];
 
-    const erMedISøknad = !!søknad.barnInkludertISøknaden.find(
+    const erMedISøknad = !!barnSomSkalVæreMed.find(
         barnMedISøknad => barnMedISøknad.ident === barn.ident
     );
 
@@ -116,7 +115,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, settMedISøknad }) => {
                 <StyledCheckbox
                     checked={erMedISøknad}
                     label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
-                    onChange={() => settMedISøknad(barn, erMedISøknad)}
+                    onChange={() => velgBarnCallback(barn, erMedISøknad)}
                 />
             </InformasjonsboksInnhold>
         </StyledBarnekort>
