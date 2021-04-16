@@ -13,7 +13,7 @@ import OmBarnetUtfyllende from './OmBarnetUtfyllende';
 
 jest.mock('../../../context/AppContext');
 
-const history = ['/barnet/Jens'];
+const history = ['/barnet/barn-1'];
 
 jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),
