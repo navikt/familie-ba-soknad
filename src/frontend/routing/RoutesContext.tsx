@@ -2,7 +2,6 @@ import React from 'react';
 
 import createUseContext from 'constate';
 import { matchPath } from 'react-router';
-import slugify from 'slugify';
 
 import Kvittering from '../components/SøknadsSteg/Kvittering/Kvittering';
 import OmBarnaDine from '../components/SøknadsSteg/OmBarnaDine/OmBarnaDine';
@@ -37,7 +36,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
     // En route per barn som er valgt, eller en plassholder hvis ingen er valgt
     const barnRoutes: IRoute[] = barnInkludertISøknaden.length
         ? barnInkludertISøknaden.map((barn, index) => ({
-              path: `/barnet/${slugify(`barn-${index + 1}`)}`,
+              path: `/barnet/barn-${index + 1}`,
               label: `Om ${barn.navn}`,
               route: RouteEnum.OmBarnetUtfyllende,
               komponent: OmBarnetUtfyllende,
