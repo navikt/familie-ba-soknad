@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import createUseContext from 'constate';
 import { matchPath } from 'react-router';
 import slugify from 'slugify';
 
+import Forside from '../components/Forside/Forside';
 import Kvittering from '../components/SøknadsSteg/Kvittering/Kvittering';
 import OmBarnaDine from '../components/SøknadsSteg/OmBarnaDine/OmBarnaDine';
 import OmBarnetUtfyllende from '../components/SøknadsSteg/OmBarnetUtfyllende/OmBarnetUtfyllende';
@@ -11,6 +12,7 @@ import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useApp } from '../context/AppContext';
+import { IBarn } from '../typer/person';
 
 export interface IRoute {
     path: string;
@@ -34,9 +36,11 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         søknad: { barnInkludertISøknaden },
     } = useApp();
 
+    const [barnForRoutes, settBarnForRoutes] = useState<IBarn[]>(barnInkludertISøknaden);
+
     // En route per barn som er valgt, eller en plassholder hvis ingen er valgt
-    const barnRoutes: IRoute[] = barnInkludertISøknaden.length
-        ? barnInkludertISøknaden.map((barn, index) => ({
+    const barnRoutes: IRoute[] = barnForRoutes.length
+        ? barnForRoutes.map((barn, index) => ({
               path: `/barnet/${slugify(`barn-${index + 1}`)}`,
               label: `Om ${barn.navn}`,
               route: RouteEnum.OmBarnetUtfyllende,
@@ -53,7 +57,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
 
     // TODO: skrive om label til språktekst
     const routes = [
-        { path: '/', label: 'Forside', route: RouteEnum.OmDeg, komponent: OmDeg },
+        { path: '/', label: 'Forside', route: RouteEnum.Forside, komponent: Forside },
         { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
         { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
         { path: '/om-barna', label: 'Om barna', route: RouteEnum.OmBarna, komponent: OmBarnaDine },
@@ -106,6 +110,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         hentNesteRoute,
         hentPath,
         routes,
+        settBarnForRoutes,
     };
 });
 

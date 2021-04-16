@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useRoutes } from '../../../routing/RoutesContext';
 import { IBarn } from '../../../typer/person';
+import { genererInitialBarnMedISøknad } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export interface IVelgBarnFeltTyper {
@@ -14,23 +16,50 @@ export const useVelgBarn = (): {
     skjema: ISkjema<IVelgBarnFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
+    oppdaterSøknad: () => void;
+    håndterVelgBarnToggle: (barn: IBarn, erMedISøknad: boolean) => void;
+    barnSomSkalVæreMed: IBarn[];
 } => {
-    const { søknad } = useApp();
-    const { barnInkludertISøknaden: barnMedISøknad } = søknad;
+    const { søknad, settSøknad } = useApp();
+    const { barnInkludertISøknaden } = søknad;
+    const { settBarnForRoutes } = useRoutes();
+    const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] = useState<IBarn[]>(barnInkludertISøknaden);
 
-    const barnMedISøknadFelt = useFelt<IBarn[]>({
-        verdi: barnMedISøknad,
+    useEffect(() => {
+        settBarnForRoutes(barnSomSkalVæreMed);
+    }, [barnSomSkalVæreMed]);
+
+    const barnMedISøknad = useFelt<IBarn[]>({
+        verdi: barnSomSkalVæreMed,
         valideringsfunksjon: (felt, avhengigheter) => {
-            return avhengigheter?.barnMedISøknad.length > 0
+            return avhengigheter?.barnSomSkalVæreMed.length > 0
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'velgbarn.feilmelding.du-må-velge-barn'} />);
         },
-        avhengigheter: { barnMedISøknad },
+        avhengigheter: { barnSomSkalVæreMed },
     });
+
+    const oppdaterSøknad = () => {
+        settSøknad({
+            ...søknad,
+            barnInkludertISøknaden: barnSomSkalVæreMed.map(barn =>
+                genererInitialBarnMedISøknad(barn)
+            ),
+        });
+    };
+
+    const håndterVelgBarnToggle = (barn: IBarn, erMedISøknad: boolean) => {
+        const skalVæreMed = !erMedISøknad;
+        settBarnSomSkalVæreMed(prevState =>
+            skalVæreMed
+                ? prevState.concat(genererInitialBarnMedISøknad(barn))
+                : prevState.filter(barnMedISøknad => barnMedISøknad.ident !== barn.ident)
+        );
+    };
 
     const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IVelgBarnFeltTyper, string>({
         felter: {
-            barnMedISøknad: barnMedISøknadFelt,
+            barnMedISøknad,
         },
         skjemanavn: 'velgbarn',
     });
@@ -39,5 +68,8 @@ export const useVelgBarn = (): {
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
+        oppdaterSøknad,
+        håndterVelgBarnToggle,
+        barnSomSkalVæreMed,
     };
 };

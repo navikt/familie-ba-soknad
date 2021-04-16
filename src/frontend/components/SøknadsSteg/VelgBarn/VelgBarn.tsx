@@ -9,8 +9,7 @@ import Lenke, { Props as LenkeProps } from 'nav-frontend-lenker';
 
 import { useApp } from '../../../context/AppContext';
 import { device } from '../../../Theme';
-import { IBarn } from '../../../typer/person';
-import { genererInitialBarnMedISøknad, mapBarnResponsTilBarn } from '../../../utils/person';
+import { mapBarnResponsTilBarn } from '../../../utils/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../Steg/Steg';
@@ -39,25 +38,20 @@ const LenkeMedChevron: React.FC<LenkeProps> = props => (
 );
 
 const VelgBarn: React.FC = () => {
-    const { søknad, settSøknad } = useApp();
-    const { skjema, validerFelterOgVisFeilmelding, valideringErOk } = useVelgBarn();
+    const { søknad } = useApp();
+    const {
+        skjema,
+        validerFelterOgVisFeilmelding,
+        valideringErOk,
+        oppdaterSøknad,
+        håndterVelgBarnToggle,
+        barnSomSkalVæreMed,
+    } = useVelgBarn();
     const intl = useIntl();
-
-    const settMedISøknad = (barn: IBarn, erMedISøknad: boolean) => {
-        const skalVæreMed = !erMedISøknad;
-
-        settSøknad({
-            ...søknad,
-            barnInkludertISøknaden: skalVæreMed
-                ? søknad.barnInkludertISøknaden.concat(genererInitialBarnMedISøknad(barn))
-                : søknad.barnInkludertISøknaden.filter(
-                      barnMedISøknad => barnMedISøknad.ident !== barn.ident
-                  ),
-        });
-    };
 
     const barnFraRespons = mapBarnResponsTilBarn(søknad.søker.barn);
     const barnManueltLagtTil = søknad.barnRegistrertManuelt;
+    const barn = barnFraRespons.concat(barnManueltLagtTil);
 
     return (
         <Steg
@@ -66,7 +60,7 @@ const VelgBarn: React.FC = () => {
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
             settSøknadsdataCallback={() => {
-                // TODO: Bytt ut settMedISøknad med noe fra useVelgBarn
+                oppdaterSøknad();
             }}
         >
             <AlertStripe form={'inline'}>
@@ -78,11 +72,13 @@ const VelgBarn: React.FC = () => {
             </LenkeMedChevron>
 
             <BarnekortContainer id={'barnMedISøknad'}>
-                {barnFraRespons.map(barn => (
-                    <Barnekort key={barn.ident} barn={barn} settMedISøknad={settMedISøknad} />
-                ))}
-                {barnManueltLagtTil.map(barn => (
-                    <Barnekort key={barn.ident} barn={barn} settMedISøknad={settMedISøknad} />
+                {barn.map(barn => (
+                    <Barnekort
+                        key={barn.ident}
+                        barn={barn}
+                        velgBarnCallback={håndterVelgBarnToggle}
+                        barnSomSkalVæreMed={barnSomSkalVæreMed}
+                    />
                 ))}
                 <NyttBarnKort />
             </BarnekortContainer>
