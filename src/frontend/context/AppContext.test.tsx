@@ -98,10 +98,9 @@ describe('nullstillSøknadsObject', () => {
 });
 
 describe('avbrytSøknad', () => {
-    const wrapper = ({ children }) => <AppProvider>{children}</AppProvider>;
-    const { result } = renderHook(() => useApp(), { wrapper });
-
     test('Ved avbryt skal sisteUtfylteStegIndex settes til -1', () => {
+        const wrapper = ({ children }) => <AppProvider>{children}</AppProvider>;
+        const { result } = renderHook(() => useApp(), { wrapper });
         result.current.sisteUtfylteStegIndex = 3;
         act(() => {
             result.current.avbrytSøknad();
