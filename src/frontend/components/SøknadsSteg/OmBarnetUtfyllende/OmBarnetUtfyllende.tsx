@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useHistory, useLocation } from 'react-router-dom';
-import slugify from 'slugify';
 
 import { Undertittel } from 'nav-frontend-typografi';
 
@@ -88,13 +87,13 @@ const OmBarnetUtfyllende: React.FC = () => {
     }
 
     if (!match || match.length < 2) {
-        history.push(`/barnet/${slugify('barn-1')}`);
+        history.push('/barnet/barn-1');
         return null;
     }
     const navnParameter = match[1];
 
     const barn = barnInkludertISøknaden.find(
-        (_barn, index) => slugify(`barn-${index + 1}`) === navnParameter
+        (_barn, index) => `barn-${index + 1}` === navnParameter
     );
     if (!barn) {
         history.push('/barnet');
