@@ -17,7 +17,7 @@ test('Kan rendre rar adresse', () => {
     const adresse: IAdresse = {
         adressenavn: 'Bestemorenga',
         postnummer: '8020',
-        bostedskommune: 'Bodø',
+        poststed: 'Bodø',
     };
 
     const result = hentAdressefelterSortert(adresse);

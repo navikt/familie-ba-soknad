@@ -27,7 +27,7 @@ test('Test at rendrer adresse i personopplysninger', () => {
     const søker = {
         adresse: {
             adressenavn: 'Testgata',
-            bostedskommune: 'Oslo',
+            poststed: 'Oslo',
         },
         navn: 'Test Testdottir',
         statsborgerskap: [{ landkode: 'NOR' }],

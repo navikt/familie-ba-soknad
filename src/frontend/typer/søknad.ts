@@ -73,7 +73,7 @@ export const initialStateSøknad: ISøknad = {
             husnummer: '',
             bruksenhetsnummer: '',
             postnummer: '',
-            bostedskommune: '',
+            poststed: '',
         },
         borPåRegistrertAdresse: {
             id: OmDegSpørsmålId.borPåRegistrertAdresse,
