@@ -43,10 +43,18 @@ From the top (rekkefølge er viktig, steg 5 krasjer hvis du ikke gjør steg 3 f�
     Git apply den følgende diffen
     ```diff
     diff --git "a/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt" "b/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt"
-    index 0efad49..c4a6725 100644
+    index 0efad49..bbda0d8 100644
     --- "a/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt"
     +++ "b/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt"
-    @@ -17,6 +17,8 @@ class JournalførSøknadTask(private val pdfService: PdfService,
+    @@ -8,6 +8,7 @@ import no.nav.familie.prosessering.domene.Task
+    import org.slf4j.Logger
+    import org.slf4j.LoggerFactory
+    import org.springframework.stereotype.Service
+    +import java.io.File
+    
+    @Service
+    @TaskStepBeskrivelse(taskStepType = JournalførSøknadTask.JOURNALFØR_SØKNAD, beskrivelse = "Journalfør søknad")
+    @@ -17,6 +18,8 @@ class JournalførSøknadTask(private val pdfService: PdfService,
     override fun doTask(task: Task) {
     log.info("Generer pdf og journalfør søknad")
     val pdf = pdfService.lagPdf(task.payload)
