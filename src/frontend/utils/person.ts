@@ -14,12 +14,19 @@ export const hentAlder = (dato: string): string => {
     return alder + ' år';
 };
 
+const uppercaseFørsteBokstav = text => {
+    if (typeof text !== 'string') return '';
+    return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
+};
+
 export const hentAdressefelterSortert = (adresse: IAdresse) => {
     return [
         `${adresse.adressenavn ?? ''} ${adresse.husnummer ?? ''}${adresse.husbokstav ?? ''} ${
             adresse.bruksenhetsnummer ?? ''
         }`,
-        `${adresse.postnummer ?? ''} ${adresse.bostedskommune ?? ''}`,
+        `${adresse.postnummer ?? ''} ${
+            adresse.poststed ? uppercaseFørsteBokstav(adresse.poststed) : ''
+        }`,
     ]
         .map(linje => linje.replace(/\s{2+}/, ' ').trim())
         .filter(value => value);

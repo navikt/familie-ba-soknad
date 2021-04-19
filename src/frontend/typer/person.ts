@@ -51,7 +51,7 @@ export interface IAdresse {
     husbokstav?: string;
     bruksenhetsnummer?: string;
     husnummer?: string;
-    bostedskommune?: string;
+    poststed?: string;
 }
 
 export enum barnDataKeySpørsmål {
