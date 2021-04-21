@@ -53,12 +53,10 @@ export const useLeggTilBarn = (): {
     });
 
     const fornavn = useNavnInputFelt('hvilkebarn.leggtilbarn.fornavn.feilmelding', {
-        erFødt,
         navnetErUbestemt,
     });
 
     const etternavn = useNavnInputFelt('hvilkebarn.leggtilbarn.etternavn.feilmelding', {
-        erFødt,
         navnetErUbestemt,
     });
 
