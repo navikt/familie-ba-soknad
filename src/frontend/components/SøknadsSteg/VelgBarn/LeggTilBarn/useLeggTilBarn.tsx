@@ -13,10 +13,12 @@ import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
 
 // Jeg har ikke funnet dokumentasjon på at man kan passe en enum til Omit, men det funker
 export interface ILeggTilBarnTyper
-    extends Omit<IBarn, 'borMedSøker' | 'alder' | barnDataKeySpørsmål> {
+    extends Omit<IBarn, 'borMedSøker' | 'alder' | 'navn' | barnDataKeySpørsmål> {
     erFødt: ESvarMedUbesvart;
     navnetErUbestemt: ESvar;
     harBarnetFåttIdNummer: ESvar;
+    fornavn: string;
+    etternavn: string;
 }
 
 export const useLeggTilBarn = (): {

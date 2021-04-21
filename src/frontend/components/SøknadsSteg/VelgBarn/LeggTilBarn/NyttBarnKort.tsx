@@ -63,10 +63,11 @@ const StyledLenke = styled(Lenke)`
 export const NyttBarnKort: React.FC = () => {
     const [modalÅpen, settModalÅpen] = useState<boolean>(false);
     const { skjema, nullstillSkjema, valideringErOk, submit } = useLeggTilBarn();
-    const { navn, navnetErUbestemt, harBarnetFåttIdNummer } = skjema.felter;
+    const { fornavn, etternavn, navnetErUbestemt, harBarnetFåttIdNummer } = skjema.felter;
 
     useEffect(() => {
-        navn.validerOgSettFelt('');
+        fornavn.validerOgSettFelt('');
+        etternavn.validerOgSettFelt('');
     }, [navnetErUbestemt.verdi]);
 
     /**
@@ -130,15 +131,23 @@ export const NyttBarnKort: React.FC = () => {
                 </SkjemaGruppe>
 
                 <SkjemaGruppe>
-                    {skjema.felter.navn.erSynlig && (
+                    {fornavn.erSynlig && (
                         <Input
-                            {...skjema.felter.navn.hentNavInputProps(skjema.visFeilmeldinger)}
-                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
+                            {...skjema.felter.fornavn.hentNavInputProps(skjema.visFeilmeldinger)}
+                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fornavn'} />}
                             disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                         />
                     )}
 
-                    {skjema.felter.navnetErUbestemt.erSynlig && (
+                    {etternavn.erSynlig && (
+                        <Input
+                            {...skjema.felter.etternavn.hentNavInputProps(skjema.visFeilmeldinger)}
+                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.etternavn'} />}
+                            disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
+                        />
+                    )}
+
+                    {navnetErUbestemt.erSynlig && (
                         <Checkbox
                             {...skjema.felter.navnetErUbestemt.hentNavInputProps(
                                 skjema.visFeilmeldinger
