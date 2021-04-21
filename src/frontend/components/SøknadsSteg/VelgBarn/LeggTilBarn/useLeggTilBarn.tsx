@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
@@ -10,6 +10,7 @@ import { useApp } from '../../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarn } from '../../../../typer/person';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
+import useNavnInputFelt from './useNavnInputFelt';
 
 // Jeg har ikke funnet dokumentasjon på at man kan passe en enum til Omit, men det funker
 export interface ILeggTilBarnTyper
@@ -17,8 +18,8 @@ export interface ILeggTilBarnTyper
     erFødt: ESvarMedUbesvart;
     navnetErUbestemt: ESvar;
     harBarnetFåttIdNummer: ESvar;
-    fornavn: string;
-    etternavn: string;
+    fornavn: string | undefined;
+    etternavn: string | undefined;
 }
 
 export const useLeggTilBarn = (): {
@@ -51,22 +52,14 @@ export const useLeggTilBarn = (): {
         avhengigheter: { erFødt },
     });
 
-    const navn = useFelt<string | undefined>({
-        verdi: '',
-        skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
-        valideringsfunksjon: (felt, avhengigheter) => {
-            const navnErUbestemt = avhengigheter?.navnetErUbestemt.verdi === ESvar.JA;
-            if (navnErUbestemt) {
-                return ok(felt);
-            }
-            return felt.verdi !== ''
-                ? ok(felt)
-                : feil(
-                      felt,
-                      <FormattedMessage id={'hvilkebarn.leggtilbarn.fornavn.feilmelding'} />
-                  );
-        },
-        avhengigheter: { erFødt, navnetErUbestemt },
+    const fornavn = useNavnInputFelt('hvilkebarn.leggtilbarn.fornavn.feilmelding', {
+        erFødt,
+        navnetErUbestemt,
+    });
+
+    const etternavn = useNavnInputFelt('hvilkebarn.leggtilbarn.etternavn.feilmelding', {
+        erFødt,
+        navnetErUbestemt,
     });
 
     const ident = useFelt<string>({
@@ -94,12 +87,17 @@ export const useLeggTilBarn = (): {
         felter: {
             erFødt,
             ident,
-            navn,
+            fornavn,
+            etternavn,
             navnetErUbestemt,
             harBarnetFåttIdNummer,
         },
         skjemanavn: 'velgbarn',
     });
+
+    const fulltNavn = () => {
+        return fornavn.verdi && etternavn.verdi ? `${fornavn.verdi} ${etternavn.verdi}` : '';
+    };
 
     const submit = () => {
         if (!kanSendeSkjema()) {
@@ -111,7 +109,7 @@ export const useLeggTilBarn = (): {
             barnRegistrertManuelt: søknad.barnRegistrertManuelt.concat([
                 {
                     navn:
-                        navn.verdi ||
+                        fulltNavn() ||
                         intl.formatMessage({ id: 'hvilkebarn.barn.ingen-navn.placeholder' }),
                     ident: ident.verdi,
                     borMedSøker: undefined,

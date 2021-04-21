@@ -134,7 +134,7 @@ export const NyttBarnKort: React.FC = () => {
                     {fornavn.erSynlig && (
                         <Input
                             {...skjema.felter.fornavn.hentNavInputProps(skjema.visFeilmeldinger)}
-                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fornavn'} />}
+                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fornavn.spm'} />}
                             disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                         />
                     )}
@@ -142,7 +142,7 @@ export const NyttBarnKort: React.FC = () => {
                     {etternavn.erSynlig && (
                         <Input
                             {...skjema.felter.etternavn.hentNavInputProps(skjema.visFeilmeldinger)}
-                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.etternavn'} />}
+                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.etternavn.spm'} />}
                             disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                         />
                     )}
