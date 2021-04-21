@@ -109,7 +109,7 @@ export const NyttBarnKort: React.FC = () => {
         <>
             <StyledModal
                 isOpen={modalÅpen}
-                contentLabel={intl.formatMessage({ id: 'leggtilbarn.popup.label' })}
+                contentLabel={intl.formatMessage({ id: 'hvilkebarn.leggtilbarn.modal.tittel' })}
                 onRequestClose={() => {
                     settModalÅpen(!modalÅpen);
                     nullstillSkjema();
@@ -203,10 +203,10 @@ export const NyttBarnKort: React.FC = () => {
             </StyledModal>
             <StyledBarnekort>
                 <StyledIngress>
-                    <SpråkTekst id={'leggtilbarn.kort.info'} />
+                    <SpråkTekst id={'hvilkebarn.leggtilbarn.kort'} />
                 </StyledIngress>
                 <StyledKnapp htmlType={'button'} onClick={() => settModalÅpen(!modalÅpen)}>
-                    <SpråkTekst id={'leggtilbarn.tittel'} />
+                    <SpråkTekst id={'hvilkebarn.leggtilbarn.kort.knapp'} />
                 </StyledKnapp>
             </StyledBarnekort>
         </>

@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
-import { Sidetittel, Normaltekst } from 'nav-frontend-typografi';
+import { Sidetittel } from 'nav-frontend-typografi';
 
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
@@ -43,9 +43,7 @@ const Forside: React.FC = () => {
             <Sprakvelger støttedeSprak={[LocaleType.en, LocaleType.nb]} />
 
             <Informasjonsbolk>
-                <Normaltekst>
-                    <SpråkTekst id="forside.info.punktliste" values={{ b: msg => <b>{msg}</b> }} />
-                </Normaltekst>
+                <SpråkTekst id="forside.info.punktliste" values={{ b: msg => <b>{msg}</b> }} />
                 <EksternLenke lenkeSpråkId={'#'} lenkeTekstSpråkId={'forside.plikter.lenketekst'} />
             </Informasjonsbolk>
 

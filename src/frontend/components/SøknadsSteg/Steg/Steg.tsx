@@ -58,7 +58,7 @@ const ChildrenContainer = styled.div`
 
 const StyledSystemtittel = styled(Systemtittel)`
     && {
-        margin: 4rem auto 2rem auto;
+        margin: 4rem auto 3rem auto;
     }
 `;
 
@@ -155,7 +155,7 @@ const Steg: React.FC<ISteg> = ({
                     <ChildrenContainer>{children}</ChildrenContainer>
                     {skjema.visFeilmeldinger && visFeiloppsummering() && (
                         <Feiloppsummering
-                            tittel={<SpråkTekst id={'felles.navigasjon.informasjon'} />}
+                            tittel={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}
                             feil={Object.values(skjema.felter)
                                 .filter(felt => {
                                     return felt.valideringsstatus === Valideringsstatus.FEIL;

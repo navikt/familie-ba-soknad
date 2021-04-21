@@ -41,8 +41,8 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
                     </>
                 }
                 labelTekstForJaNei={{
-                    ja: <SpråkTekst id={'ja'} />,
-                    nei: <SpråkTekst id={'nei'} />,
+                    ja: <SpråkTekst id={'felles.svaralternativ.ja'} />,
+                    nei: <SpråkTekst id={'felles.svaralternativ.nei'} />,
                 }}
             />
         </span>

@@ -48,7 +48,7 @@ export const Personopplysninger: React.FC = () => {
                     <SpråkTekst id={'omdeg.personopplysninger.sivilstatus'} />
                 </Element>
                 <Normaltekst>
-                    <SpråkTekst id={hentSivilstatus(søker.sivilstand?.type)} />
+                    <SpråkTekst id={hentSivilstatus(søker.sivilstand.type)} />
                 </Normaltekst>
             </Informasjonsbolk>
 

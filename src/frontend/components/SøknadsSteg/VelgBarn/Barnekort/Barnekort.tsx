@@ -92,21 +92,21 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
             <InformasjonsboksInnhold>
                 <StyledUndertittel>{barn.navn}</StyledUndertittel>
                 <BarneKortInfo
-                    labelId={'velgbarn.fødselsnummer.label'}
+                    labelId={'hvilkebarn.barn.fødselsnummer'}
                     verdi={formaterFnr(barn.ident)}
                 />
                 {barn.alder && ( // Barn som søker har lagt inn selv har ikke fødselsdato
-                    <BarneKortInfo labelId={'velgbarn.alder.label'} verdi={barn.alder} />
+                    <BarneKortInfo labelId={'hvilkebarn.barn.alder'} verdi={barn.alder} />
                 )}
                 {barn.borMedSøker !== undefined && (
                     <BarneKortInfo
-                        labelId={'velgbarn.bosted.label'}
+                        labelId={'hvilkebarn.barn.bosted'}
                         verdi={
                             <SpråkTekst
                                 id={
                                     barn.borMedSøker
-                                        ? 'velgbarn.bosted.registrert-på-adressen-din'
-                                        : 'velgbarn.bosted.annen-adresse'
+                                        ? 'hvilkebarn.barn.bosted.din-adresse'
+                                        : 'hvilkebarn.barn.bosted.ikke-din-adresse'
                                 }
                             />
                         }
@@ -114,7 +114,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
                 )}
                 <StyledCheckbox
                     checked={erMedISøknad}
-                    label={<SpråkTekst id={'velgbarn.checkboxtekst'} />}
+                    label={<SpråkTekst id={'hvilkebarn.barn.søk-om.spm'} />}
                     onChange={() => velgBarnCallback(barn, erMedISøknad)}
                 />
             </InformasjonsboksInnhold>
