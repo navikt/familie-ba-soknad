@@ -83,7 +83,7 @@ test(`Kan navigere mellom barn og til oppsummering`, () => {
     const jensTittel = getByText('Om Jens');
     expect(jensTittel).toBeInTheDocument();
 
-    const gåVidere = getByText(/felles.gåvidere/);
+    const gåVidere = getByText(/felles.navigasjon.gå-videre/);
     act(() => gåVidere.click());
     rerender(
         <SprakProvider

@@ -191,6 +191,7 @@
   "omdeg.opphold-sammenhengende.dato.spm": "Når kom du til Norge? (format dd.mm.åååå)",
   "omdeg.opphold-sammenhengende.spm": "Har du bodd sammenhengende i Norge de siste tolv månedene?",
   "omdeg.personopplysninger.adresse": "Adresse",
+  "omdeg.personopplysninger.adresse-ukjent": "Ukjent",
   "omdeg.personopplysninger.fødselsnummer": "Fødselsnummer eller d-nummer",
   "omdeg.personopplysninger.ikke-registrert.alert": "Du er ikke registrert med bostedsadresse i Norge",
   "omdeg.personopplysninger.info.alert": "Hvis opplysningene vi har om deg ikke stemmer, må du endre disse hos Folkeregisteret.",

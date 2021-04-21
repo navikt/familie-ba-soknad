@@ -62,7 +62,7 @@ export const Personopplysninger: React.FC = () => {
                     ))
                 ) : (
                     <Normaltekst>
-                        <SpråkTekst id={'omdeg.personopplysninger.ikke-registrert.alert'} />
+                        <SpråkTekst id={'omdeg.personopplysninger.adresse-ukjent'} />
                     </Normaltekst>
                 )}
             </Informasjonsbolk>
