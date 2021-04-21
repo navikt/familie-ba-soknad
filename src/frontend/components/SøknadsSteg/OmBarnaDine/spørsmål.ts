@@ -16,24 +16,20 @@ export enum OmBarnaDineSpørsmålId {
 }
 
 export const omBarnaDineSpråkTekstId: Record<OmBarnaDineSpørsmålId, string> = {
-    [OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn]: 'ombarnadine.spm.er-barn-fosterbarn',
-    [OmBarnaDineSpørsmålId.hvemErFosterbarn]: 'ombarnadine.spm.hvem-er-fosterbarn',
-    [OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon]:
-        'ombarnadine.spm.oppholder-barn-seg-i-institusjon',
-    [OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon]:
-        'ombarnadine.spm.hvem-oppholder-seg-i-institusjon',
-    [OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland]: 'ombarnadine.spm.er-barn-adoptert-fra-utland',
-    [OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland]: 'ombarnadine.spm.hvem-er-adoptert-fra-utland',
-    [OmBarnaDineSpørsmålId.oppholderBarnSegIUtland]: 'ombarnadine.spm.oppholder-barn-seg-i-utland',
-    [OmBarnaDineSpørsmålId.hvemOppholderSegIUtland]: 'ombarnadine.spm.hvem-oppholder-seg-i-utland',
-    [OmBarnaDineSpørsmålId.søktAsylForBarn]: 'ombarnadine.spm.søkt-asyl-for-barn',
-    [OmBarnaDineSpørsmålId.hvemErSøktAsylFor]: 'ombarnadine.spm.hvem-er-søkt-asyl-for',
+    [OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn]: 'ombarna.fosterbarn.spm',
+    [OmBarnaDineSpørsmålId.hvemErFosterbarn]: 'ombarna.fosterbarn.hvem.spm',
+    [OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon]: 'ombarna.institusjon.spm',
+    [OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon]: 'ombarna.institusjon.hvem.spm',
+    [OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland]: 'ombarna.adoptert.spm',
+    [OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland]: 'ombarna.adoptert.hvem.spm',
+    [OmBarnaDineSpørsmålId.oppholderBarnSegIUtland]: 'ombarna.opphold-utland.spm',
+    [OmBarnaDineSpørsmålId.hvemOppholderSegIUtland]: 'ombarna.opphold-utland.hvem.spm',
+    [OmBarnaDineSpørsmålId.søktAsylForBarn]: 'ombarna.asyl.spm',
+    [OmBarnaDineSpørsmålId.hvemErSøktAsylFor]: 'ombarna.asyl.hvem.spm',
     [OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge]:
-        'ombarnadine.spm.tolv-mnd-sammenhengende-i-norge',
+        'ombarna.sammenhengende-opphold.spm',
     [OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge]:
-        'ombarnadine.spm.hvem-tolv-mnd-sammenhengende-i-norge',
-    [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]:
-        'ombarnadine.spm.barnetrygd-fra-annet-eøsland',
-    [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]:
-        'ombarnadine.spm.hvem-mottar-barnetrygd-eøsland',
+        'ombarna.sammenhengende-opphold.hvem.spm',
+    [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]: 'ombarna.barnetrygd-eøs.spm',
+    [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]: 'ombarna.barnetrygd-eøs.hvem.spm',
 };

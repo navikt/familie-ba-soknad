@@ -29,7 +29,7 @@ const OmBarnaDine: React.FC = () => {
     }
     return (
         <Steg
-            tittel={<SpråkTekst id={'ombarnadine.tittel'} />}
+            tittel={<SpråkTekst id={'ombarna.sidetittel'} />}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
             skjema={skjema}

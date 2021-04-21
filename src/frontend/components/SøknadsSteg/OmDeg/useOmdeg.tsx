@@ -95,7 +95,6 @@ export const useOmdeg = (): {
 
     const oppholderSegINorge = useJaNeiSpmFelt(
         søker.oppholderSegINorge,
-        'felles.mangler-svar.feilmelding',
         { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
@@ -116,7 +115,6 @@ export const useOmdeg = (): {
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
         søker.værtINorgeITolvMåneder,
-        'felles.mangler-svar.feilmelding',
         { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
@@ -147,7 +145,6 @@ export const useOmdeg = (): {
 
     const erAsylsøker = useJaNeiSpmFelt(
         søker.erAsylsøker,
-        'felles.mangler-svar.feilmelding',
         {
             borPåRegistrertAdresse: {
                 jaNeiSpm: borPåRegistrertAdresse,
@@ -165,7 +162,6 @@ export const useOmdeg = (): {
 
     const jobberPåBåt = useJaNeiSpmFelt(
         søker.jobberPåBåt,
-        'felles.mangler-svar.feilmelding',
         {
             borPåRegistrertAdresse: {
                 jaNeiSpm: borPåRegistrertAdresse,
@@ -190,7 +186,6 @@ export const useOmdeg = (): {
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt(
         søker.mottarUtenlandspensjon,
-        'felles.mangler-svar.feilmelding',
         {
             borPåRegistrertAdresse: {
                 jaNeiSpm: borPåRegistrertAdresse,
