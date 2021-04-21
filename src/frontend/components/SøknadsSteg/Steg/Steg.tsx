@@ -141,7 +141,7 @@ const Steg: React.FC<ISteg> = ({
     return (
         <>
             <header>
-                <Banner språkTekstId={'felles.overskrift.ordinær-barnetrygd'} />
+                <Banner språkTekstId={'felles.banner'} />
                 <Stegindikator
                     autoResponsiv={true}
                     aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}
