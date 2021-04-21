@@ -68,7 +68,7 @@ export const useOmdeg = (): {
                 : feil(
                       felt,
                       felt.verdi === undefined ? (
-                          <SpråkTekst id={'personopplysninger.feilmelding.janei'} />
+                          <SpråkTekst id={'felles.mangler-svar.feilmelding'} />
                       ) : (
                           ''
                       )
@@ -82,7 +82,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<string>) => {
             return felt.verdi.length >= 8 && /^[+\d\s]+$/.test(felt.verdi)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.telefonnr'} />);
+                : feil(felt, <SpråkTekst id={'omdeg.telefon.feilmelding'} />);
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
@@ -95,14 +95,13 @@ export const useOmdeg = (): {
 
     const oppholderSegINorge = useJaNeiSpmFelt(
         søker.oppholderSegINorge,
-        'personopplysninger.feilmelding.janei',
         { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
     const oppholdsland = useLandDropdownFelt(
         søker.oppholdsland,
-        'personopplysninger.feilmelding.velgland',
+        'felles.velg-land.feilmelding',
         ESvar.NEI,
         oppholderSegINorge
     );
@@ -116,7 +115,6 @@ export const useOmdeg = (): {
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
         søker.værtINorgeITolvMåneder,
-        'personopplysninger.feilmelding.janei',
         { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
@@ -134,7 +132,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
             return felt.verdi !== undefined
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'personopplysninger.feilmelding.janei'} />);
+                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
         },
         skalFeltetVises: avhengigheter => {
             return (
@@ -147,7 +145,6 @@ export const useOmdeg = (): {
 
     const erAsylsøker = useJaNeiSpmFelt(
         søker.erAsylsøker,
-        'personopplysninger.feilmelding.janei',
         {
             borPåRegistrertAdresse: {
                 jaNeiSpm: borPåRegistrertAdresse,
@@ -165,7 +162,6 @@ export const useOmdeg = (): {
 
     const jobberPåBåt = useJaNeiSpmFelt(
         søker.jobberPåBåt,
-        'personopplysninger.feilmelding.janei',
         {
             borPåRegistrertAdresse: {
                 jaNeiSpm: borPåRegistrertAdresse,
@@ -183,14 +179,13 @@ export const useOmdeg = (): {
 
     const arbeidsland = useLandDropdownFelt(
         søker.arbeidsland,
-        'personopplysninger.feilmelding.velgland',
+        'felles.velg-land.feilmelding',
         ESvar.JA,
         jobberPåBåt
     );
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt(
         søker.mottarUtenlandspensjon,
-        'personopplysninger.feilmelding.janei',
         {
             borPåRegistrertAdresse: {
                 jaNeiSpm: borPåRegistrertAdresse,
@@ -208,7 +203,7 @@ export const useOmdeg = (): {
 
     const pensjonsland = useLandDropdownFelt(
         søker.pensjonsland,
-        'personopplysninger.feilmelding.velgland',
+        'felles.velg-land.feilmelding',
         ESvar.JA,
         mottarUtenlandspensjon
     );

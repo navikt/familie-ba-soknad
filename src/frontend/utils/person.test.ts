@@ -31,13 +31,15 @@ describe('landkodeTilSpråk', () => {
 });
 
 describe('hentSivilstatus', () => {
-    test('Skal returnere tekstid til sivilstatus kode ANNET dersom sivilstanden er ukjent', () => {
+    test('Skal returnere tekstid til sivilstatus kode UOPPGITT dersom sivilstanden er ukjent', () => {
         // eslint-disable-next-line
         // @ts-ignore fordi hele poenget er at det er en ukjent verdi
-        expect(hentSivilstatus('JEGHARKJÆRESTE')).toEqual('sivilstatus.kode.ANNET');
+        expect(hentSivilstatus('JEGHARKJÆRESTE')).toEqual('felles.sivilstatus.kode.UOPPGITT');
     });
 
     test('Skal returnere tekstid til innsendt sivilstatus kode', () => {
-        expect(hentSivilstatus(ESivilstand.GIFT)).toEqual(`sivilstatus.kode.${ESivilstand.GIFT}`);
+        expect(hentSivilstatus(ESivilstand.GIFT)).toEqual(
+            `felles.sivilstatus.kode.${ESivilstand.GIFT}`
+        );
     });
 });

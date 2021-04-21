@@ -52,7 +52,7 @@ export const LandDropdown: React.FC<LandDropdownProps> = ({ felt, skjema, label 
                 <option
                     disabled={true}
                     value={''}
-                    label={intl.formatMessage({ id: 'landdropdown.velgland' })}
+                    label={intl.formatMessage({ id: 'felles.velg-land.placeholder' })}
                 />
                 {landkoderSortertPåNavn.map(
                     (alphaCode): ReactNode => (

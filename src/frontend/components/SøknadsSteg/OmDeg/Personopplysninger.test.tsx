@@ -68,5 +68,5 @@ test('Kan rendre med tom adresse', () => {
     );
 
     expect(getByText(/12345678901/)).toBeInTheDocument();
-    expect(getByText(/personopplysninger\.har-ikke-registrert-adresse/)).toBeInTheDocument();
+    expect(getByText(/omdeg\.personopplysninger\.adresse-ukjent/)).toBeInTheDocument();
 });

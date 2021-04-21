@@ -10,7 +10,6 @@ import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 
 const useBarnCheckboxFelt = (
     datafeltNavn: barnDataKeySpørsmål,
-    språkTekstIdForFeil: string,
     avhengighet?: Felt<ESvar | undefined>
 ) => {
     const { søknad } = useApp();
@@ -24,7 +23,7 @@ const useBarnCheckboxFelt = (
         valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
             return felt.verdi.length > 0
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={språkTekstIdForFeil} />);
+                : feil(felt, <SpråkTekst id={'ombarna.barn-ikke-valgt.feilmelding'} />);
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter && avhengigheter.jaNeiSpm

@@ -44,20 +44,20 @@ test(`Kan legge til barn`, () => {
     expect(leggTilBarnKort).toBeInTheDocument();
     act(() => leggTilBarnKort.click());
 
-    const modal = getByLabelText('leggtilbarn.popup.label');
+    const modal = getByLabelText('hvilkebarn.leggtilbarn.modal.tittel');
     const leggTilKnappIModal = modal.querySelector('button');
     expect(leggTilKnappIModal).toBeInTheDocument();
     expect(leggTilKnappIModal).toHaveClass('knapp--standard');
 
-    const erFødt = getByText('leggtilbarn.er-barnet-født');
+    const erFødt = getByText('hvilkebarn.leggtilbarn.barnfødt.spm');
     expect(erFødt).toBeInTheDocument();
 
     // Språktekst-id for Ja er 'ja'
-    const jaKnapp = getByText('ja');
+    const jaKnapp = getByText('felles.svaralternativ.ja');
     act(() => jaKnapp.click());
 
-    const navnLabel = getByText('leggtilbarn.barnets-navn');
-    const idnrLabel = getByText('leggtilbarn.fødselsnummer');
+    const navnLabel = getByText('hvilkebarn.leggtilbarn.barnets-navn');
+    const idnrLabel = getByText('hvilkebarn.leggtilbarn.fnr.spm');
     expect(navnLabel).toBeInTheDocument();
     expect(idnrLabel).toBeInTheDocument();
     const navnInput = navnLabel.nextElementSibling || new Element();

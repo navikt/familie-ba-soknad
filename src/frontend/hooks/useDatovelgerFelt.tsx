@@ -30,11 +30,14 @@ const useDatovelgerFelt = (
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
         valideringsfunksjon: felt => {
+            if (felt.verdi === '') {
+                return feil(felt, <SpråkTekst id={'felles.velg-dato.feilmelding'} />);
+            }
             if (!erDatoFormatGodkjent(felt.verdi)) {
-                return feil(felt, <SpråkTekst id={'omdeg.spm.dato.feil-format'} />);
+                return feil(felt, <SpråkTekst id={'felles.dato-format.feilmelding'} />);
             }
             if (avgrensDatoFremITid && erDatoFremITid(felt.verdi)) {
-                return feil(felt, <SpråkTekst id={'omdeg.spm.dato.feil-frem-i-tid'} />);
+                return feil(felt, <SpråkTekst id={'felles.dato-frem-i-tid.feilmelding'} />);
             }
             return ok(felt);
         },

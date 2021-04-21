@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -65,7 +64,6 @@ export const NyttBarnKort: React.FC = () => {
     const [modalÅpen, settModalÅpen] = useState<boolean>(false);
     const { skjema, nullstillSkjema, valideringErOk, submit } = useLeggTilBarn();
     const { navn, navnetErUbestemt, harBarnetFåttIdNummer } = skjema.felter;
-    const intl = useIntl();
 
     useEffect(() => {
         navn.validerOgSettFelt('');
@@ -109,24 +107,24 @@ export const NyttBarnKort: React.FC = () => {
         <>
             <StyledModal
                 isOpen={modalÅpen}
-                contentLabel={intl.formatMessage({ id: 'leggtilbarn.popup.label' })}
+                contentLabel={'hvilkebarn.leggtilbarn.modal.tittel'}
                 onRequestClose={() => {
                     settModalÅpen(!modalÅpen);
                     nullstillSkjema();
                 }}
             >
                 <StyledInnholdstittel>
-                    <SpråkTekst id={'leggtilbarn.tittel'} />
+                    <SpråkTekst id={'hvilkebarn.leggtilbarn.modal.tittel'} />
                 </StyledInnholdstittel>
                 <SkjemaGruppe>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.erFødt}
-                        spørsmålTekstId={'leggtilbarn.er-barnet-født'}
+                        spørsmålTekstId={'hvilkebarn.leggtilbarn.barnfødt.spm'}
                     />
                     {skjema.felter.erFødt.verdi === ESvar.NEI && (
                         <AlertStripe type={'advarsel'} form={'inline'}>
-                            <SpråkTekst id={'leggtilbarn.feil.må-være-født'} />
+                            <SpråkTekst id={'hvilkebarn.leggtilbarn.barndfødt.ikke-født.alert'} />
                         </AlertStripe>
                     )}
                 </SkjemaGruppe>
@@ -135,7 +133,7 @@ export const NyttBarnKort: React.FC = () => {
                     {skjema.felter.navn.erSynlig && (
                         <Input
                             {...skjema.felter.navn.hentNavInputProps(skjema.visFeilmeldinger)}
-                            label={<SpråkTekst id={'leggtilbarn.barnets-navn'} />}
+                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
                             disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                         />
                     )}
@@ -145,7 +143,9 @@ export const NyttBarnKort: React.FC = () => {
                             {...skjema.felter.navnetErUbestemt.hentNavInputProps(
                                 skjema.visFeilmeldinger
                             )}
-                            label={<SpråkTekst id={'leggtilbarn.navn-ubestemt.label'} />}
+                            label={
+                                <SpråkTekst id={'hvilkebarn.leggtilbarn.navn-ikke-bestemt.spm'} />
+                            }
                             onChange={event => {
                                 const {
                                     onChange,
@@ -160,7 +160,7 @@ export const NyttBarnKort: React.FC = () => {
                     {skjema.felter.ident.erSynlig && (
                         <StyledInput
                             {...skjema.felter.ident.hentNavInputProps(skalViseIdentFeil)}
-                            label={<SpråkTekst id={'leggtilbarn.fødselsnummer'} />}
+                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.spm'} />}
                             disabled={skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI}
                         />
                     )}
@@ -168,7 +168,7 @@ export const NyttBarnKort: React.FC = () => {
                     {skjema.felter.harBarnetFåttIdNummer.erSynlig && (
                         <Checkbox
                             {...skjema.felter.harBarnetFåttIdNummer.hentNavInputProps(false)}
-                            label={<SpråkTekst id={'leggtilbarn.ingen-ident.label'} />}
+                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.ikke-fått-fnr.spm'} />}
                             onChange={event => {
                                 const {
                                     onChange,
@@ -180,15 +180,11 @@ export const NyttBarnKort: React.FC = () => {
                     {skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI && (
                         <>
                             <AlertStripe type={'advarsel'} form={'inline'}>
-                                <SpråkTekst id={'leggtilbarn.feil.må-ha-idnr'} />
+                                <SpråkTekst id={'hvilkebarn.leggtilbarn.ikke-fått-fnr.alert'} />
                             </AlertStripe>
 
-                            <StyledLenke
-                                href={intl.formatMessage({
-                                    id: 'personopplysninger.lenke.pdfskjema',
-                                })}
-                            >
-                                <SpråkTekst id={'leggtilbarn.pdfskjema.lenke.tekst'} />
+                            <StyledLenke href={'#'}>
+                                <SpråkTekst id={'felles.bruk-pdfskjema.lenketekst'} />
                             </StyledLenke>
                         </>
                     )}
@@ -198,15 +194,15 @@ export const NyttBarnKort: React.FC = () => {
                     onClick={submitOgLukk}
                     type={valideringErOk() ? 'hoved' : 'standard'}
                 >
-                    <SpråkTekst id={'leggtilbarn.tittel'} />
+                    <SpråkTekst id={'hvilkebarn.leggtilbarn.kort.knapp'} />
                 </StyledKnappIModal>
             </StyledModal>
             <StyledBarnekort>
                 <StyledIngress>
-                    <SpråkTekst id={'leggtilbarn.kort.info'} />
+                    <SpråkTekst id={'hvilkebarn.leggtilbarn.kort'} />
                 </StyledIngress>
                 <StyledKnapp htmlType={'button'} onClick={() => settModalÅpen(!modalÅpen)}>
-                    <SpråkTekst id={'leggtilbarn.tittel'} />
+                    <SpråkTekst id={'hvilkebarn.leggtilbarn.kort.knapp'} />
                 </StyledKnapp>
             </StyledBarnekort>
         </>
