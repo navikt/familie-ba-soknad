@@ -32,9 +32,14 @@ export const useLeggTilBarn = (): {
     const erFødt = useFelt<ESvarMedUbesvart>({
         verdi: undefined,
         valideringsfunksjon: felt => {
-            return felt.verdi === ESvar.JA
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'leggtilbarn.må-være-født'} />);
+            switch (felt.verdi) {
+                case ESvar.JA:
+                    return ok(felt);
+                case ESvar.NEI:
+                    return feil(felt, '');
+                default:
+                    return feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+            }
         },
     });
 
@@ -54,7 +59,10 @@ export const useLeggTilBarn = (): {
             }
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'leggtilbarn.feil.tomt-navn'} />);
+                : feil(
+                      felt,
+                      <FormattedMessage id={'hvilkebarn.leggtilbarn.fornavn.feilmelding'} />
+                  );
         },
         avhengigheter: { erFødt, navnetErUbestemt },
     });
@@ -65,17 +73,14 @@ export const useLeggTilBarn = (): {
         valideringsfunksjon: felt => {
             return idnr(felt.verdi).status === 'valid'
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'leggtilbarn.feil.ugyldig-idnr'} />);
+                : feil(felt, <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.feilmelding'} />);
         },
         avhengigheter: { erFødt },
     });
 
     const harBarnetFåttIdNummer = useFelt<ESvar>({
         verdi: ESvar.JA,
-        valideringsfunksjon: felt =>
-            felt.verdi === ESvar.JA
-                ? ok(felt)
-                : feil(felt, <FormattedMessage id={'leggtilbarn.feil.må-ha-idnr'} />),
+        valideringsfunksjon: felt => (felt.verdi === ESvar.JA ? ok(felt) : feil(felt, '')),
         skalFeltetVises: ({ erFødt }) => erFødt.verdi === ESvar.JA,
         avhengigheter: { erFødt },
     });
@@ -105,7 +110,7 @@ export const useLeggTilBarn = (): {
                 {
                     navn:
                         navn.verdi ||
-                        intl.formatMessage({ id: 'leggtilbarn.navn-ubestemt.plassholder' }),
+                        intl.formatMessage({ id: 'hvilkebarn.barn.ingen-navn.placeholder' }),
                     ident: ident.verdi,
                     borMedSøker: undefined,
                     alder: undefined,
