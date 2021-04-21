@@ -34,10 +34,10 @@ const useDatovelgerFelt = (
                 return feil(felt, <SpråkTekst id={'felles.velg-dato.feilmelding'} />);
             }
             if (!erDatoFormatGodkjent(felt.verdi)) {
-                return feil(felt, <SpråkTekst id={'felles.velg-dato.feilmelding'} />);
+                return feil(felt, <SpråkTekst id={'felles.dato-format.feilmelding'} />);
             }
             if (avgrensDatoFremITid && erDatoFremITid(felt.verdi)) {
-                return feil(felt, <SpråkTekst id={'felles.velg-dato.feilmelding'} />);
+                return feil(felt, <SpråkTekst id={'felles.dato-frem-i-tid.feilmelding'} />);
             }
             return ok(felt);
         },
