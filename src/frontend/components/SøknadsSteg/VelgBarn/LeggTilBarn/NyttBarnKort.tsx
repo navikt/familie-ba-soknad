@@ -10,6 +10,7 @@ import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Ingress, Innholdstittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
+import { Valideringsstatus } from '@navikt/familie-skjema';
 
 import { device } from '../../../../Theme';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -130,24 +131,22 @@ export const NyttBarnKort: React.FC = () => {
                     )}
                 </SkjemaGruppe>
 
-                <SkjemaGruppe>
-                    {fornavn.erSynlig && (
+                {skjema.felter.erFødt.valideringsstatus === Valideringsstatus.OK && (
+                    <SkjemaGruppe
+                        legend={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
+                    >
                         <Input
                             {...skjema.felter.fornavn.hentNavInputProps(skjema.visFeilmeldinger)}
                             label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fornavn.spm'} />}
                             disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                         />
-                    )}
 
-                    {etternavn.erSynlig && (
                         <Input
                             {...skjema.felter.etternavn.hentNavInputProps(skjema.visFeilmeldinger)}
                             label={<SpråkTekst id={'hvilkebarn.leggtilbarn.etternavn.spm'} />}
                             disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                         />
-                    )}
 
-                    {navnetErUbestemt.erSynlig && (
                         <Checkbox
                             {...skjema.felter.navnetErUbestemt.hentNavInputProps(
                                 skjema.visFeilmeldinger
@@ -162,8 +161,8 @@ export const NyttBarnKort: React.FC = () => {
                                 onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
                             }}
                         />
-                    )}
-                </SkjemaGruppe>
+                    </SkjemaGruppe>
+                )}
 
                 <SkjemaGruppe>
                     {skjema.felter.ident.erSynlig && (
