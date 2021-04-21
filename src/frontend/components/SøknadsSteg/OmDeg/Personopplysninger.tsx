@@ -20,19 +20,19 @@ export const Personopplysninger: React.FC = () => {
     return (
         <>
             <AlertStripe>
-                <SpråkTekst id={'personopplysninger.alert.infohentet'} />
+                <SpråkTekst id={'omdeg.personopplysninger.info.alert'} />
             </AlertStripe>
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={'person.ident.visning'} />
+                    <SpråkTekst id={'omdeg.personopplysninger.fødselsnummer'} />
                 </Element>
                 <Normaltekst>{søker.ident}</Normaltekst>
             </Informasjonsbolk>
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={'person.statsborgerskap'} />
+                    <SpråkTekst id={'omdeg.personopplysninger.statsborgerskap'} />
                 </Element>
                 <Normaltekst>
                     {søker.statsborgerskap
@@ -45,7 +45,7 @@ export const Personopplysninger: React.FC = () => {
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={'sivilstatus.tittel'} />
+                    <SpråkTekst id={'omdeg.personopplysninger.sivilstatus'} />
                 </Element>
                 <Normaltekst>
                     <SpråkTekst id={hentSivilstatus(søker.sivilstand?.type)} />
@@ -54,7 +54,7 @@ export const Personopplysninger: React.FC = () => {
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={'personopplysninger.adresse'} />
+                    <SpråkTekst id={'omdeg.personopplysninger.adresse'} />
                 </Element>
                 {søker.adresse ? (
                     hentAdressefelterSortert(søker.adresse).map((adresseFelt, index) => (
@@ -62,7 +62,7 @@ export const Personopplysninger: React.FC = () => {
                     ))
                 ) : (
                     <Normaltekst>
-                        <SpråkTekst id={'personopplysninger.har-ikke-registrert-adresse'} />
+                        <SpråkTekst id={'omdeg.personopplysninger.ikke-registrert.alert'} />
                     </Normaltekst>
                 )}
             </Informasjonsbolk>

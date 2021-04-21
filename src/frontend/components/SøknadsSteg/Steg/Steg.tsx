@@ -155,7 +155,7 @@ const Steg: React.FC<ISteg> = ({
                     <ChildrenContainer>{children}</ChildrenContainer>
                     {skjema.visFeilmeldinger && visFeiloppsummering() && (
                         <Feiloppsummering
-                            tittel={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}
+                            tittel={<SpråkTekst id={'felles.navigasjon.informasjon'} />}
                             feil={Object.values(skjema.felter)
                                 .filter(felt => {
                                     return felt.valideringsstatus === Valideringsstatus.FEIL;
