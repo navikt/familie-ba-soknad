@@ -166,7 +166,7 @@
   "ombarnet.planlagt-sammenhengende-opphold.spm": "Er det planlagt at barnet skal bo sammenhengende i Norge i mer enn tolv måneder?",
   "ombarnet.sammenhengende-opphold": "Du har opplyst at {barns navn} ikke har bodd\nsammenhengende i Norge de siste tolv månedene",
   "ombarnet.sammenhengende-opphold.dato.spm": "Når kom barnet til Norge? (format dd.mm.yyy)",
-  "ombarnet.sidetittel": "Om {barnets navn}",
+  "ombarnet.sidetittel": "Om {navn}",
   "ombarnet.svaralternativ.annen-bosituasjon": "Annen bosituasjon",
   "ombarnet.svaralternativ.annen-forelder": "Annen forelder",
   "ombarnet.svaralternativ.samme-som-barn": "Samme som {barns navn}",
