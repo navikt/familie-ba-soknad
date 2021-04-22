@@ -6,7 +6,7 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import norskeTekster from '../assets/lang/nb.json';
 import * as appContext from '../context/AppContext';
 import { AppProvider } from '../context/AppContext';
-import { RoutesProvider } from '../routing/RoutesContext';
+import { RoutesProvider } from '../context/RoutesContext';
 
 export const spyOnUseApp = søknad => {
     jest.spyOn(appContext, 'useApp').mockImplementation(

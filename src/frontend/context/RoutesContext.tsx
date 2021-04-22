@@ -3,15 +3,15 @@ import React, { useState } from 'react';
 import createUseContext from 'constate';
 import { matchPath } from 'react-router';
 
-import Forside from '../components/Forside/Forside';
+import Forside from '../components/SøknadsSteg/Forside/Forside';
 import Kvittering from '../components/SøknadsSteg/Kvittering/Kvittering';
 import OmBarnaDine from '../components/SøknadsSteg/OmBarnaDine/OmBarnaDine';
 import OmBarnetUtfyllende from '../components/SøknadsSteg/OmBarnetUtfyllende/OmBarnetUtfyllende';
 import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
-import { useApp } from '../context/AppContext';
 import { IBarnMedISøknad } from '../typer/person';
+import { useApp } from './AppContext';
 
 export interface IRoute {
     path: string;

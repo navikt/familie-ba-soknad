@@ -6,7 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
-import { RoutesProvider } from '../../../routing/RoutesContext';
+import { RoutesProvider } from '../../../context/RoutesContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
 import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import OmBarnetUtfyllende from './OmBarnetUtfyllende';

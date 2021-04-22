@@ -8,12 +8,12 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
-import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
-import { useApp } from '../../context/AppContext';
-import EksternLenke from '../Felleskomponenter/EksternLenke/EksternLenke';
-import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
-import InnholdContainer from '../Felleskomponenter/InnholdContainer/InnholdContainer';
-import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';
+import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
+import { useApp } from '../../../context/AppContext';
+import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
+import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
 
 const StyledSidetittel = styled(Sidetittel)`

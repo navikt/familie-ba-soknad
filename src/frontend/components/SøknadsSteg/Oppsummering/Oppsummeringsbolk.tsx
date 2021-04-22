@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { useRoutes, RouteEnum } from '../../../routing/RoutesContext';
+import { useRoutes, RouteEnum } from '../../../context/RoutesContext';
 import LenkeMedIkon from '../../Felleskomponenter/LenkeMedIkon/LenkeMedIkon';
 
 interface Props {

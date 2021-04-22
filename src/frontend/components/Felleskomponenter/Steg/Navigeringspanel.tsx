@@ -8,7 +8,7 @@ import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
 import { DeleteFilled } from '@navikt/ds-icons';
 
 import { device } from '../../../Theme';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const Container = styled.div`
     padding: 2rem;
