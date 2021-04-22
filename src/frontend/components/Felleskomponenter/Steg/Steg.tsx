@@ -13,13 +13,13 @@ import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { IRoute, useRoutes } from '../../../routing/RoutesContext';
+import { IRoute, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import Banner from '../../Felleskomponenter/Banner/Banner';
-import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import Banner from '../Banner/Banner';
+import InnholdContainer from '../InnholdContainer/InnholdContainer';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import Navigeringspanel from './Navigeringspanel';
 
 interface ISteg {

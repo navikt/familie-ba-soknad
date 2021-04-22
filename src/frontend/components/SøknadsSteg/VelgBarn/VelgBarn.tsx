@@ -8,7 +8,7 @@ import { mapBarnResponsTilBarn } from '../../../utils/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import Steg from '../Steg/Steg';
+import Steg from '../../Felleskomponenter/Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { useVelgBarn } from './useVelgBarn';

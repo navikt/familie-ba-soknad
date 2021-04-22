@@ -8,8 +8,8 @@ import KnappBase from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
-import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';
+import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
 const FormContainer = styled.form`

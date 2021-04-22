@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react';
 
-import { RouteEnum } from '../../../routing/RoutesContext';
+import { RouteEnum } from '../../../context/RoutesContext';
 import { brukUseAppMedTomSøknadForRouting } from '../../../utils/testing';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
 
