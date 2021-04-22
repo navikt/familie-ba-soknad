@@ -19,7 +19,7 @@ export enum ESivilstand {
 
 export interface IPerson {
     ident: string;
-    navn: string | undefined;
+    navn: string;
 }
 
 export interface ISøkerRespons extends IPerson {
