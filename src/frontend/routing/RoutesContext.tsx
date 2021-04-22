@@ -11,13 +11,13 @@ import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useApp } from '../context/AppContext';
-import { IBarn } from '../typer/person';
+import { IBarnMedISøknad } from '../typer/person';
 
 export interface IRoute {
     path: string;
     label: string;
     route: RouteEnum;
-    komponent: React.FC;
+    komponent: React.FC | React.FC<{ barnetsIdent: string }>;
 }
 
 export enum RouteEnum {
@@ -30,24 +30,30 @@ export enum RouteEnum {
     Kvittering = 'Kvittering',
 }
 
+export const omBarnetBasePath = 'om-barnet';
+
 const [RoutesProvider, useRoutes] = createUseContext(() => {
     const {
         søknad: { barnInkludertISøknaden },
     } = useApp();
 
-    const [barnForRoutes, settBarnForRoutes] = useState<IBarn[]>(barnInkludertISøknaden);
+    const [barnForRoutes, settBarnForRoutes] = useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
 
     // En route per barn som er valgt, eller en plassholder hvis ingen er valgt
     const barnRoutes: IRoute[] = barnForRoutes.length
-        ? barnForRoutes.map((barn, index) => ({
-              path: `/barnet/barn-${index + 1}`,
-              label: `Om ${barn.navn}`,
-              route: RouteEnum.OmBarnetUtfyllende,
-              komponent: OmBarnetUtfyllende,
-          }))
+        ? barnForRoutes.map((barn, index) => {
+              return {
+                  path: `/${omBarnetBasePath}/barn-${index + 1}`,
+                  label: `Om ${barn.navn}`,
+                  route: RouteEnum.OmBarnetUtfyllende,
+                  komponent: () => {
+                      return <OmBarnetUtfyllende barnetsIdent={barn.ident} />;
+                  },
+              };
+          })
         : [
               {
-                  path: '/barnet/',
+                  path: `/${omBarnetBasePath}/`,
                   label: 'Om barnet',
                   route: RouteEnum.OmBarnetUtfyllende,
                   komponent: OmBarnetUtfyllende,
@@ -55,7 +61,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
           ];
 
     // TODO: skrive om label til språktekst
-    const routes = [
+    const routes: IRoute[] = [
         { path: '/', label: 'Forside', route: RouteEnum.Forside, komponent: Forside },
         { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
         { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
