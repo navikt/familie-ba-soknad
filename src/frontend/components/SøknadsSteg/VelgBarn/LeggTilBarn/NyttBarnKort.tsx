@@ -4,7 +4,6 @@ import styled from 'styled-components/macro';
 
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Knapp } from 'nav-frontend-knapper';
-import Lenke from 'nav-frontend-lenker';
 import Modal from 'nav-frontend-modal';
 import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Ingress, Innholdstittel } from 'nav-frontend-typografi';
@@ -15,6 +14,7 @@ import { Valideringsstatus } from '@navikt/familie-skjema';
 import { device } from '../../../../Theme';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { SøkerMåBrukePDF } from '../../../Felleskomponenter/SøkerMåBrukePDF';
 import { StyledBarnekort } from '../Barnekort/Barnekort';
 import { useLeggTilBarn } from './useLeggTilBarn';
 
@@ -54,11 +54,6 @@ const StyledInput = styled(Input)`
     @media all and ${device.tablet} {
         max-width: 30rem;
     }
-`;
-
-const StyledLenke = styled(Lenke)`
-    display: block;
-    margin-top: 1rem;
 `;
 
 export const NyttBarnKort: React.FC = () => {
@@ -186,15 +181,9 @@ export const NyttBarnKort: React.FC = () => {
                         />
                     )}
                     {skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI && (
-                        <>
-                            <AlertStripe type={'advarsel'} form={'inline'}>
-                                <SpråkTekst id={'hvilkebarn.leggtilbarn.ikke-fått-fnr.alert'} />
-                            </AlertStripe>
-
-                            <StyledLenke href={'#'}>
-                                <SpråkTekst id={'felles.bruk-pdfskjema.lenketekst'} />
-                            </StyledLenke>
-                        </>
+                        <SøkerMåBrukePDF
+                            advarselTekstId={'hvilkebarn.leggtilbarn.ikke-fått-fnr.alert'}
+                        />
                     )}
                 </SkjemaGruppe>
 
