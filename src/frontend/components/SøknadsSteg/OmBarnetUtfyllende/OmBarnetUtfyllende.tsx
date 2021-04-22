@@ -19,7 +19,7 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
         validerFelterOgVisFeilmelding,
         valideringErOk,
         oppdaterSøknad,
-    } = useOmBarnetUtfyllende();
+    } = useOmBarnetUtfyllende(barnetsIdent);
     const barn = søknad.barnInkludertISøknaden.find(barn => barn.ident === barnetsIdent);
 
     return barn ? (

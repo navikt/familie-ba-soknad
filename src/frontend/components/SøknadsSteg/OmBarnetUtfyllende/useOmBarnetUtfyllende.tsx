@@ -2,6 +2,8 @@ import React from 'react';
 
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
+import { IBarnMedISøknad } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 
@@ -11,12 +13,16 @@ export interface IOmBarnetUtvidetFeltTyper {
     [OmBarnetSpørsmålsId.institusjonspostnummer]: string;
 }
 
-export const useOmBarnetUtfyllende = (): {
+export const useOmBarnetUtfyllende = (
+    barnetsIdent: string
+): {
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
 } => {
+    const { søknad, settSøknad } = useApp();
+
     const institusjonsnavn = useFelt<string>({
         verdi: '',
         feltId: OmBarnetSpørsmålsId.institusjonsnavn,
@@ -56,7 +62,31 @@ export const useOmBarnetUtfyllende = (): {
     );
 
     const oppdaterSøknad = () => {
-        // TODO
+        const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] = søknad.barnInkludertISøknaden.map(
+            barn =>
+                barn.ident === barnetsIdent
+                    ? {
+                          ...barn,
+                          institusjonsnavn: {
+                              ...barn.institusjonsnavn,
+                              svar: institusjonsnavn.verdi,
+                          },
+                          institusjonsadresse: {
+                              ...barn.institusjonsadresse,
+                              svar: institusjonsadresse.verdi,
+                          },
+                          institusjonspostnummer: {
+                              ...barn.institusjonspostnummer,
+                              svar: institusjonspostnummer.verdi,
+                          },
+                      }
+                    : barn
+        );
+
+        settSøknad({
+            ...søknad,
+            barnInkludertISøknaden: oppdatertBarnInkludertISøknaden,
+        });
     };
 
     return {
