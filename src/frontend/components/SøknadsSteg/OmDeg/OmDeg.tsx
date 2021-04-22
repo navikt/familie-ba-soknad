@@ -11,10 +11,10 @@ import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
 import Steg from '../Steg/Steg';
 import { Personopplysninger } from './Personopplysninger';
 import { omDegSpråkTekstId, OmDegSpørsmålId } from './spørsmål';
-import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
@@ -44,13 +44,13 @@ const OmDeg: React.FC = () => {
                 )}
 
                 {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <SøkerBorIkkePåAdresse
+                    <SøkerMåBrukePDF
                         advarselTekstId={'omdeg.borpådenneadressen.kontakt-folkeregister.alert'}
                         utfyllendeAdvarselInfoId={'omdeg.borpådenneadressen.ikke-endre-adresse'}
                     />
                 )}
                 {!søker.adresse && (
-                    <SøkerBorIkkePåAdresse
+                    <SøkerMåBrukePDF
                         advarselTekstId={'omdeg.personopplysninger.ikke-registrert.alert'}
                     />
                 )}
