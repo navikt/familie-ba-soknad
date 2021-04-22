@@ -1,69 +1,47 @@
 import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
-
-import { ESvar } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
-import { IBarnMedISøknad } from '../../../typer/person';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetUfyllendeSpørsmålsId } from './spørsmål';
 
 export interface IOmBarnetUtvidetFeltTyper {
-    [OmBarnetUfyllendeSpørsmålsId.institusjonsnavn]: string | undefined;
-    [OmBarnetUfyllendeSpørsmålsId.institusjonsadresse]: string | undefined;
-    [OmBarnetUfyllendeSpørsmålsId.institusjonspostnummer]: string | undefined;
+    [OmBarnetUfyllendeSpørsmålsId.institusjonsnavn]: string;
+    [OmBarnetUfyllendeSpørsmålsId.institusjonsadresse]: string;
+    [OmBarnetUfyllendeSpørsmålsId.institusjonspostnummer]: string;
 }
 
-export const useOmBarnetUtfyllende = (
-    barn: IBarnMedISøknad
-): {
+export const useOmBarnetUtfyllende = (): {
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
 } => {
-    const { oppholderSegIInstitusjon } = barn;
-
-    const institusjonsnavn = useFelt<string | undefined>({
-        verdi: undefined,
+    const institusjonsnavn = useFelt<string>({
+        verdi: '',
         feltId: OmBarnetUfyllendeSpørsmålsId.institusjonsnavn,
         valideringsfunksjon: felt =>
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <FormattedMessage id={'ombarnet.feil.måfylleinninstitusjonsnavn'} />),
-        skalFeltetVises: ({ oppholderSegIInstitusjon }) =>
-            oppholderSegIInstitusjon.svar === ESvar.JA,
-        avhengigheter: { oppholderSegIInstitusjon },
+                : feil(felt, <SpråkTekst id={'ombarnet.institusjon.navn.feilmelding'} />),
     });
 
-    const institusjonsadresse = useFelt<string | undefined>({
-        verdi: undefined,
+    const institusjonsadresse = useFelt<string>({
+        verdi: '',
+        feltId: OmBarnetUfyllendeSpørsmålsId.institusjonsnavn,
         valideringsfunksjon: felt =>
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
-                : feil(
-                      felt,
-                      <FormattedMessage id={'ombarnet.feil.måfylleinninstitusjonpostnummer'} />
-                  ),
-        feltId: OmBarnetUfyllendeSpørsmålsId.institusjonsnavn,
-        skalFeltetVises: ({ oppholderSegIInstitusjon }) =>
-            oppholderSegIInstitusjon.svar === ESvar.JA,
-        avhengigheter: { oppholderSegIInstitusjon },
+                : feil(felt, <SpråkTekst id={'ombarnet.institusjon.adresse.feilmelding'} />),
     });
 
-    const institusjonspostnummer = useFelt<string | undefined>({
-        verdi: undefined,
+    const institusjonspostnummer = useFelt<string>({
+        verdi: '',
         feltId: OmBarnetUfyllendeSpørsmålsId.institusjonsnavn,
         valideringsfunksjon: felt =>
             felt.verdi?.length === 4 && Number.parseInt(felt.verdi)
                 ? ok(felt)
-                : feil(
-                      felt,
-                      <FormattedMessage id={'ombarnet.feil.måfylleinninstitusjonadresse'} />
-                  ),
-        skalFeltetVises: ({ oppholderSegIInstitusjon }) =>
-            oppholderSegIInstitusjon.svar === ESvar.JA,
-        avhengigheter: { oppholderSegIInstitusjon },
+                : feil(felt, <SpråkTekst id={'ombarnet.institusjon.postnummer.feilmelding'} />),
     });
 
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
@@ -73,7 +51,7 @@ export const useOmBarnetUtfyllende = (
                 institusjonsadresse,
                 institusjonspostnummer,
             },
-            skjemanavn: barn.ident,
+            skjemanavn: 'om-barnet',
         }
     );
 
