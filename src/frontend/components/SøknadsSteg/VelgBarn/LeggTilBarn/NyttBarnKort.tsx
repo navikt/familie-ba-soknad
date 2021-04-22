@@ -10,6 +10,7 @@ import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Ingress, Innholdstittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
+import { Valideringsstatus } from '@navikt/familie-skjema';
 
 import { device } from '../../../../Theme';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -63,10 +64,11 @@ const StyledLenke = styled(Lenke)`
 export const NyttBarnKort: React.FC = () => {
     const [modalÅpen, settModalÅpen] = useState<boolean>(false);
     const { skjema, nullstillSkjema, valideringErOk, submit } = useLeggTilBarn();
-    const { navn, navnetErUbestemt, harBarnetFåttIdNummer } = skjema.felter;
+    const { fornavn, etternavn, navnetErUbestemt, harBarnetFåttIdNummer } = skjema.felter;
 
     useEffect(() => {
-        navn.validerOgSettFelt('');
+        fornavn.validerOgSettFelt('');
+        etternavn.validerOgSettFelt('');
     }, [navnetErUbestemt.verdi]);
 
     /**
@@ -129,16 +131,22 @@ export const NyttBarnKort: React.FC = () => {
                     )}
                 </SkjemaGruppe>
 
-                <SkjemaGruppe>
-                    {skjema.felter.navn.erSynlig && (
+                {skjema.felter.erFødt.valideringsstatus === Valideringsstatus.OK && (
+                    <SkjemaGruppe
+                        legend={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
+                    >
                         <Input
-                            {...skjema.felter.navn.hentNavInputProps(skjema.visFeilmeldinger)}
-                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
+                            {...skjema.felter.fornavn.hentNavInputProps(skjema.visFeilmeldinger)}
+                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fornavn.spm'} />}
                             disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                         />
-                    )}
 
-                    {skjema.felter.navnetErUbestemt.erSynlig && (
+                        <Input
+                            {...skjema.felter.etternavn.hentNavInputProps(skjema.visFeilmeldinger)}
+                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.etternavn.spm'} />}
+                            disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
+                        />
+
                         <Checkbox
                             {...skjema.felter.navnetErUbestemt.hentNavInputProps(
                                 skjema.visFeilmeldinger
@@ -153,8 +161,8 @@ export const NyttBarnKort: React.FC = () => {
                                 onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
                             }}
                         />
-                    )}
-                </SkjemaGruppe>
+                    </SkjemaGruppe>
+                )}
 
                 <SkjemaGruppe>
                     {skjema.felter.ident.erSynlig && (
