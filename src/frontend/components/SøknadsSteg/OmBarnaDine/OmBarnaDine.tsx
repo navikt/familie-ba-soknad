@@ -2,7 +2,10 @@ import React from 'react';
 
 import { useHistory } from 'react-router-dom';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { useApp } from '../../../context/AppContext';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -97,6 +100,11 @@ const OmBarnaDine: React.FC = () => {
                     felt={skjema.felter.hvemErAdoptertFraUtland}
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
+                {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
+                    <AlertStripe>
+                        <SpråkTekst id={'ombarna.adoptert.alert'} />
+                    </AlertStripe>
+                )}
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.oppholderBarnSegIUtland}
@@ -134,6 +142,11 @@ const OmBarnaDine: React.FC = () => {
                     felt={skjema.felter.hvemErSøktAsylFor}
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
+                {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
+                    <AlertStripe>
+                        <SpråkTekst id={'ombarna.asyl.alert'} />
+                    </AlertStripe>
+                )}
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge}
