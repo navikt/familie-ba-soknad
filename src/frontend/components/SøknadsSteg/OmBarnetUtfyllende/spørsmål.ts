@@ -1,11 +1,11 @@
-export enum OmBarnetUfyllendeSpørsmålsId {
+export enum OmBarnetSpørsmålsId {
     institusjonsnavn = 'institusjonsnavn',
     institusjonsadresse = 'institusjonsadresse',
     institusjonspostnummer = 'institusjonspostnummer',
 }
 
-export const OmBarnetSpørsmålSpråkId: Record<OmBarnetUfyllendeSpørsmålsId, string> = {
-    [OmBarnetUfyllendeSpørsmålsId.institusjonsnavn]: 'ombarnet.institusjon.navn.spm',
-    [OmBarnetUfyllendeSpørsmålsId.institusjonsadresse]: 'ombarnet.institusjon.adresse.spm',
-    [OmBarnetUfyllendeSpørsmålsId.institusjonspostnummer]: 'ombarnet.institusjon.postnummer.spm',
+export const OmBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
+    [OmBarnetSpørsmålsId.institusjonsnavn]: 'ombarnet.institusjon.navn.spm',
+    [OmBarnetSpørsmålsId.institusjonsadresse]: 'ombarnet.institusjon.adresse.spm',
+    [OmBarnetSpørsmålsId.institusjonspostnummer]: 'ombarnet.institusjon.postnummer.spm',
 };

@@ -62,6 +62,9 @@ export enum barnDataKeySpørsmål {
     oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
     oppholdtSegINorgeSammenhengendeTolvMnd = 'oppholdtSegINorgeSammenhengendeTolvMnd',
     oppholderSegIUtland = 'oppholderSegIUtland',
+    institusjonsnavn = 'institusjonsnavn',
+    institusjonsadresse = 'institusjonsadresse',
+    institusjonspostnummer = 'institusjonspostnummer',
 }
 
 export interface IBarnRespons extends IPerson {
@@ -84,4 +87,7 @@ export interface IBarnMedISøknad extends IBarn {
         ESvar | undefined
     >;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.institusjonsnavn]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.institusjonsadresse]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.institusjonspostnummer]: ISøknadSpørsmål<string>;
 }

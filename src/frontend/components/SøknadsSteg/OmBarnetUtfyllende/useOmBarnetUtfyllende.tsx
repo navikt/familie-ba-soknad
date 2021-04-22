@@ -3,12 +3,12 @@ import React from 'react';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { OmBarnetUfyllendeSpørsmålsId } from './spørsmål';
+import { OmBarnetSpørsmålsId } from './spørsmål';
 
 export interface IOmBarnetUtvidetFeltTyper {
-    [OmBarnetUfyllendeSpørsmålsId.institusjonsnavn]: string;
-    [OmBarnetUfyllendeSpørsmålsId.institusjonsadresse]: string;
-    [OmBarnetUfyllendeSpørsmålsId.institusjonspostnummer]: string;
+    [OmBarnetSpørsmålsId.institusjonsnavn]: string;
+    [OmBarnetSpørsmålsId.institusjonsadresse]: string;
+    [OmBarnetSpørsmålsId.institusjonspostnummer]: string;
 }
 
 export const useOmBarnetUtfyllende = (): {
@@ -19,7 +19,7 @@ export const useOmBarnetUtfyllende = (): {
 } => {
     const institusjonsnavn = useFelt<string>({
         verdi: '',
-        feltId: OmBarnetUfyllendeSpørsmålsId.institusjonsnavn,
+        feltId: OmBarnetSpørsmålsId.institusjonsnavn,
         valideringsfunksjon: felt =>
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
@@ -28,7 +28,7 @@ export const useOmBarnetUtfyllende = (): {
 
     const institusjonsadresse = useFelt<string>({
         verdi: '',
-        feltId: OmBarnetUfyllendeSpørsmålsId.institusjonsnavn,
+        feltId: OmBarnetSpørsmålsId.institusjonsnavn,
         valideringsfunksjon: felt =>
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
@@ -37,7 +37,7 @@ export const useOmBarnetUtfyllende = (): {
 
     const institusjonspostnummer = useFelt<string>({
         verdi: '',
-        feltId: OmBarnetUfyllendeSpørsmålsId.institusjonsnavn,
+        feltId: OmBarnetSpørsmålsId.institusjonsnavn,
         valideringsfunksjon: felt =>
             felt.verdi?.length === 4 && Number.parseInt(felt.verdi)
                 ? ok(felt)

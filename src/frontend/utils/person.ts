@@ -1,6 +1,7 @@
 import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnetUtfyllende/spørsmål';
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, IBarnRespons } from '../typer/person';
 
 export const hentAlder = (dato: string): string => {
@@ -85,6 +86,18 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         oppholderSegIUtland: {
             id: OmBarnaDineSpørsmålId.hvemOppholderSegIUtland,
             svar: undefined,
+        },
+        institusjonsnavn: {
+            id: OmBarnetSpørsmålsId.institusjonsnavn,
+            svar: '',
+        },
+        institusjonsadresse: {
+            id: OmBarnetSpørsmålsId.institusjonsadresse,
+            svar: '',
+        },
+        institusjonspostnummer: {
+            id: OmBarnetSpørsmålsId.institusjonspostnummer,
+            svar: '',
         },
     };
 };
