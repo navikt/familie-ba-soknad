@@ -5,6 +5,7 @@ import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
+import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import {
     AlternativtDatoSvar,
     barnDataKeySpørsmål,
@@ -73,10 +74,6 @@ export const useOmBarnetUtfyllende = (
         finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdStart]
     );
 
-    const institusjonOppholdSlutt = useDatovelgerFelt(
-        finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdSlutt]
-    );
-
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
         verdi:
             finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdSlutt].svar === 'UKJENT'
@@ -84,6 +81,12 @@ export const useOmBarnetUtfyllende = (
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
     });
+
+    const institusjonOppholdSlutt = useDatovelgerFeltMedUkjent(
+        OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
+        finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdSlutt],
+        institusjonOppholdSluttVetIkke
+    );
 
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
