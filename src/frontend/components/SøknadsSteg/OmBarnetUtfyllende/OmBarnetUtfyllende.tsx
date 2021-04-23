@@ -5,6 +5,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { AlternativtDatoSvar } from '../../../typer/person';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -80,7 +81,9 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                                 id={OmBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']}
                             />
                         }
-                        {...skjema.felter.institusjonOppholdSluttVetIkke.hentNavInputProps(false)}
+                        defaultChecked={
+                            barn.institusjonOppholdSlutt.svar === AlternativtDatoSvar.UKJENT
+                        }
                         onChange={event => {
                             skjema.felter.institusjonOppholdSluttVetIkke
                                 .hentNavInputProps(false)

@@ -58,7 +58,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                         : {}
                 }
                 placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}
-                valgtDato={felt.verdi}
+                valgtDato={disabled ? '' : felt.verdi}
                 label={<SpråkTekst id={labelTekstId} />}
                 {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}
                 onChange={dato => {

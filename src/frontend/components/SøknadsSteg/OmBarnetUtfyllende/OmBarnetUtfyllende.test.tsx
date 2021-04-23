@@ -7,7 +7,7 @@ import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import { RoutesProvider } from '../../../context/RoutesContext';
-import { barnDataKeySpørsmål } from '../../../typer/person';
+import { AlternativtDatoSvar, barnDataKeySpørsmål } from '../../../typer/person';
 import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import OmBarnetUtfyllende from './OmBarnetUtfyllende';
 
@@ -25,7 +25,7 @@ jest.mock('react-router-dom', () => ({
 
 silenceConsoleErrors();
 
-test(`Kan rendre Om Barnet Utfyllende`, () => {
+beforeEach(() => {
     spyOnUseApp({
         barnInkludertISøknaden: [
             {
@@ -33,15 +33,28 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
                 ident: '12345678910',
                 [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
                 [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.JA,
+                [barnDataKeySpørsmål.institusjonsnavn]: 'narvesen',
+                [barnDataKeySpørsmål.institusjonsadresse]: 'narvesen',
+                [barnDataKeySpørsmål.institusjonspostnummer]: 'narvesen',
+                [barnDataKeySpørsmål.institusjonOppholdStart]: '2020-08-08',
+                [barnDataKeySpørsmål.institusjonOppholdSlutt]: AlternativtDatoSvar.UKJENT,
             },
             {
                 navn: 'Line',
-                ident: '12345678910',
+                ident: '12345678911',
                 [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
                 [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.NEI,
+                [barnDataKeySpørsmål.institusjonsnavn]: 'narvesen',
+                [barnDataKeySpørsmål.institusjonsadresse]: 'narvesen',
+                [barnDataKeySpørsmål.institusjonspostnummer]: 'narvesen',
+                [barnDataKeySpørsmål.institusjonOppholdStart]: '2020-08-08',
+                [barnDataKeySpørsmål.institusjonOppholdSlutt]: AlternativtDatoSvar.UKJENT,
             },
         ],
     });
+});
+
+test(`Kan rendre Om Barnet Utfyllende`, () => {
     render(
         <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
             <HttpProvider>
@@ -54,23 +67,6 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
 });
 
 test(`Kan navigere mellom barn og til oppsummering`, () => {
-    spyOnUseApp({
-        barnInkludertISøknaden: [
-            {
-                navn: 'Jens',
-                ident: '12345678910',
-                [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
-                [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.JA,
-            },
-            {
-                navn: 'Line',
-                ident: '12345678911',
-                [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
-                [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.NEI,
-            },
-        ],
-    });
-
     const { getByText, rerender } = render(
         <SprakProvider
             tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
