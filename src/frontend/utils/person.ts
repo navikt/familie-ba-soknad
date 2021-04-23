@@ -99,6 +99,14 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnetSpørsmålsId.institusjonspostnummer,
             svar: '',
         },
+        institusjonOppholdStart: {
+            id: OmBarnetSpørsmålsId.institusjonOppholdStart,
+            svar: '',
+        },
+        institusjonOppholdSlutt: {
+            id: OmBarnetSpørsmålsId.institusjonOppholdSlutt,
+            svar: '',
+        },
     };
 };
 

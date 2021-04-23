@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styled from 'styled-components/macro';
-
 import { Input, InputProps } from 'nav-frontend-skjema';
 
 import { Felt } from '@navikt/familie-skjema';
@@ -15,10 +13,6 @@ interface SkjemaFeltInputProps extends InputProps {
     labelSpråkTekstId: string;
 }
 
-const StyledInput = styled(Input)`
-    margin-top: 1.125rem;
-`;
-
 /**
  * Henter input props fra felt, og fra props. Props overstyrer felt.
  */
@@ -27,10 +21,12 @@ export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
     const navInputPropsFraFeltHook = felt.hentNavInputProps(visFeilmeldinger);
 
     return felt.erSynlig ? (
-        <StyledInput
-            label={<SpråkTekst id={labelSpråkTekstId} />}
-            {...navInputPropsFraFeltHook}
-            {...øvrigePropsStøttetAvNavInput}
-        />
+        <div>
+            <Input
+                label={<SpråkTekst id={labelSpråkTekstId} />}
+                {...navInputPropsFraFeltHook}
+                {...øvrigePropsStøttetAvNavInput}
+            />
+        </div>
     ) : null;
 };

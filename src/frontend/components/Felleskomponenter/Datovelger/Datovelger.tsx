@@ -14,7 +14,7 @@ import { SkjemaFeltTyper } from '../../../typer/skjema';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface DatoVelgerProps {
-    avgrensDatoFremITid: boolean;
+    avgrensDatoFremITid?: boolean;
     felt: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
     labelTekstId: string;

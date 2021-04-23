@@ -3,9 +3,11 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
@@ -42,29 +44,34 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
             )}
 
             {barn.oppholderSegIInstitusjon.svar === ESvar.JA && (
-                <KomponentGruppe>
-                    <Informasjonsbolk
-                        tittelId={'ombarnet.institusjon'}
-                        språkValues={{ navn: barn.navn }}
-                    >
-                        <SkjemaFeltInput
-                            felt={skjema.felter.institusjonsnavn}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={OmBarnetSpørsmålSpråkId.institusjonsnavn}
-                        />
-                        <SkjemaFeltInput
-                            felt={skjema.felter.institusjonsadresse}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={OmBarnetSpørsmålSpråkId.institusjonsadresse}
-                        />
-                        <SkjemaFeltInput
-                            felt={skjema.felter.institusjonspostnummer}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={OmBarnetSpørsmålSpråkId.institusjonspostnummer}
-                            bredde={'S'}
-                        />
-                    </Informasjonsbolk>
-                </KomponentGruppe>
+                <SkjemaFieldset tittelId={'ombarnet.institusjon'} språkValues={{ navn: barn.navn }}>
+                    <SkjemaFeltInput
+                        felt={skjema.felter.institusjonsnavn}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={OmBarnetSpørsmålSpråkId.institusjonsnavn}
+                    />
+                    <SkjemaFeltInput
+                        felt={skjema.felter.institusjonsadresse}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={OmBarnetSpørsmålSpråkId.institusjonsadresse}
+                    />
+                    <SkjemaFeltInput
+                        felt={skjema.felter.institusjonspostnummer}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={OmBarnetSpørsmålSpråkId.institusjonspostnummer}
+                        bredde={'S'}
+                    />
+                    <Datovelger
+                        felt={skjema.felter.institusjonOppholdStart}
+                        skjema={skjema}
+                        labelTekstId={OmBarnetSpørsmålSpråkId.institusjonOppholdStart}
+                    />
+                    <Datovelger
+                        felt={skjema.felter.institusjonOppholdSlutt}
+                        skjema={skjema}
+                        labelTekstId={OmBarnetSpørsmålSpråkId.institusjonOppholdSlutt}
+                    />
+                </SkjemaFieldset>
             )}
         </Steg>
     ) : null;

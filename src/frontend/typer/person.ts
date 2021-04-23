@@ -65,6 +65,8 @@ export enum barnDataKeySpørsmål {
     institusjonsnavn = 'institusjonsnavn',
     institusjonsadresse = 'institusjonsadresse',
     institusjonspostnummer = 'institusjonspostnummer',
+    institusjonOppholdStart = 'institusjonOppholdStart',
+    institusjonOppholdSlutt = 'institusjonOppholdSlutt',
 }
 
 export interface IBarnRespons extends IPerson {
@@ -90,4 +92,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.institusjonsnavn]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonsadresse]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonspostnummer]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.institusjonOppholdStart]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.institusjonOppholdSlutt]: ISøknadSpørsmål<ISODateString>;
 }

@@ -22,7 +22,7 @@ export const erDatoFremITid = (verdi: ISODateString) => {
 
 const useDatovelgerFelt = (
     søknadsfelt: ISøknadSpørsmål<ISODateString>,
-    avhengigSvarCondition: ESvar,
+    avhengigSvarCondition?: ESvar,
     avhengighet?: Felt<ESvar | undefined>,
     avgrensDatoFremITid = false
 ) => {
@@ -42,7 +42,7 @@ const useDatovelgerFelt = (
             return ok(felt);
         },
         skalFeltetVises: avhengigheter => {
-            return avhengigheter && avhengigheter.jaNeiSpm
+            return avhengigSvarCondition && avhengigheter && avhengigheter.jaNeiSpm
                 ? (avhengigheter.jaNeiSpm as Felt<ESvar | undefined>).verdi ===
                       avhengigSvarCondition
                 : true;
