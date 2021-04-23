@@ -79,6 +79,12 @@ export interface IBarn extends IPerson {
     alder: string | undefined;
 }
 
+export enum AlternativtDatoSvar {
+    UKJENT = 'UKJENT',
+}
+
+export type DatoMedUkjent = ISODateString | AlternativtDatoSvar.UKJENT;
+
 export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | undefined>;
@@ -93,5 +99,5 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.institusjonsadresse]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonspostnummer]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonOppholdStart]: ISøknadSpørsmål<ISODateString>;
-    [barnDataKeySpørsmål.institusjonOppholdSlutt]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.institusjonOppholdSlutt]: ISøknadSpørsmål<DatoMedUkjent>;
 }

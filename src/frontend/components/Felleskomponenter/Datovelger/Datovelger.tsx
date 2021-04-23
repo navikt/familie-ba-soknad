@@ -18,6 +18,7 @@ interface DatoVelgerProps {
     felt: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
     labelTekstId: string;
+    disabled?: boolean;
 }
 
 const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
@@ -41,6 +42,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     felt,
     skjema,
     labelTekstId,
+    disabled = false,
 }) => {
     const { formatMessage } = useIntl();
 
@@ -63,6 +65,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                     felt.hentNavInputProps(false).onChange(dato);
                 }}
                 feil={!!(felt.feilmelding && skjema.visFeilmeldinger)}
+                disabled={disabled}
             />
             {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
         </>

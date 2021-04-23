@@ -6,6 +6,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, ok, useFelt } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { AlternativtDatoSvar, DatoMedUkjent } from '../typer/person';
 import { ISøknadSpørsmål } from '../typer/søknad';
 
 export const erDatoFormatGodkjent = (verdi: string) => {
@@ -21,14 +22,14 @@ export const erDatoFremITid = (verdi: ISODateString) => {
 };
 
 const useDatovelgerFelt = (
-    søknadsfelt: ISøknadSpørsmål<ISODateString>,
+    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent>,
     avhengigSvarCondition?: ESvar,
     avhengighet?: Felt<ESvar | undefined>,
     avgrensDatoFremITid = false
 ) => {
     return useFelt<ISODateString>({
         feltId: søknadsfelt.id,
-        verdi: søknadsfelt.svar,
+        verdi: søknadsfelt.svar !== AlternativtDatoSvar.UKJENT ? søknadsfelt.svar : '',
         valideringsfunksjon: felt => {
             if (felt.verdi === '') {
                 return feil(felt, <SpråkTekst id={'felles.velg-dato.feilmelding'} />);

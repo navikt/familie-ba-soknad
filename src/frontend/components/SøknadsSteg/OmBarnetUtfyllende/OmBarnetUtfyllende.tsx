@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Checkbox } from 'nav-frontend-skjema';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -64,12 +66,26 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdStart}
                         skjema={skjema}
-                        labelTekstId={OmBarnetSpørsmålSpråkId.institusjonOppholdStart}
+                        labelTekstId={OmBarnetSpørsmålSpråkId['institusjon-opphold-startdato']}
                     />
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdSlutt}
                         skjema={skjema}
-                        labelTekstId={OmBarnetSpørsmålSpråkId.institusjonOppholdSlutt}
+                        labelTekstId={OmBarnetSpørsmålSpråkId['institusjon-opphold-sluttdato']}
+                        disabled={skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
+                    />
+                    <Checkbox
+                        label={
+                            <SpråkTekst
+                                id={OmBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']}
+                            />
+                        }
+                        {...skjema.felter.institusjonOppholdSluttVetIkke.hentNavInputProps(false)}
+                        onChange={event => {
+                            skjema.felter.institusjonOppholdSluttVetIkke
+                                .hentNavInputProps(false)
+                                .onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
+                        }}
                     />
                 </SkjemaFieldset>
             )}
