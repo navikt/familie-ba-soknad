@@ -162,6 +162,7 @@ const Steg: React.FC<ISteg> = ({
                                 })
                                 .map(
                                     (felt): FeiloppsummeringFeil => {
+                                        console.log(felt);
                                         return {
                                             skjemaelementId: felt.id,
                                             feilmelding: felt.feilmelding as string,

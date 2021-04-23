@@ -54,7 +54,7 @@ export const useOmBarnetUtfyllende = (
 
     const institusjonsadresse = useFelt<string>({
         verdi: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonsadresse].svar,
-        feltId: OmBarnetSpørsmålsId.institusjonsnavn,
+        feltId: OmBarnetSpørsmålsId.institusjonsadresse,
         valideringsfunksjon: felt =>
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
@@ -63,7 +63,7 @@ export const useOmBarnetUtfyllende = (
 
     const institusjonspostnummer = useFelt<string>({
         verdi: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonspostnummer].svar,
-        feltId: OmBarnetSpørsmålsId.institusjonsnavn,
+        feltId: OmBarnetSpørsmålsId.institusjonspostnummer,
         valideringsfunksjon: felt =>
             felt.verdi?.length === 4 && Number.parseInt(felt.verdi)
                 ? ok(felt)
