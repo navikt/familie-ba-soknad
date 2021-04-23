@@ -6,7 +6,7 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';
 import { useApp } from './context/AppContext';
-import { RoutesProvider } from './routing/RoutesContext';
+import { RoutesProvider } from './context/RoutesContext';
 import Søknad from './Søknad';
 
 const AppContainer = () => {

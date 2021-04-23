@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../routing/RoutesContext';
+import { useRoutes } from '../../../context/RoutesContext';
 import { IBarn } from '../../../typer/person';
 import { genererInitialBarnMedISøknad } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';

@@ -13,13 +13,13 @@ import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { IRoute, useRoutes } from '../../../routing/RoutesContext';
+import { IRoute, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import Banner from '../../Felleskomponenter/Banner/Banner';
-import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import Banner from '../Banner/Banner';
+import InnholdContainer from '../InnholdContainer/InnholdContainer';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import Navigeringspanel from './Navigeringspanel';
 
 interface ISteg {
@@ -58,7 +58,7 @@ const ChildrenContainer = styled.div`
 
 const StyledSystemtittel = styled(Systemtittel)`
     && {
-        margin: 4rem auto 2rem auto;
+        margin: 4rem auto 3rem auto;
     }
 `;
 
@@ -141,7 +141,7 @@ const Steg: React.FC<ISteg> = ({
     return (
         <>
             <header>
-                <Banner språkTekstId={'felles.overskrift.ordinær-barnetrygd'} />
+                <Banner språkTekstId={'felles.banner'} />
                 <Stegindikator
                     autoResponsiv={true}
                     aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}

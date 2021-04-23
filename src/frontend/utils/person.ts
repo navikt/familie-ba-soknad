@@ -39,7 +39,6 @@ export const landkodeTilSpråk = (landkode: string, locale: string) => {
 
 export const hentSivilstatus = (statuskode?: ESivilstand) => {
     switch (statuskode) {
-        case ESivilstand.UOPPGITT:
         case ESivilstand.UGIFT:
         case ESivilstand.GIFT:
         case ESivilstand.ENKE_ELLER_ENKEMANN:
@@ -49,10 +48,10 @@ export const hentSivilstatus = (statuskode?: ESivilstand) => {
         case ESivilstand.SEPARERT_PARTNER:
         case ESivilstand.SKILT_PARTNER:
         case ESivilstand.GJENLEVENDE_PARTNER:
-            return `sivilstatus.kode.${statuskode}`;
+            return `felles.sivilstatus.kode.${statuskode}`;
 
         default:
-            return 'sivilstatus.kode.ANNET';
+            return `felles.sivilstatus.kode.${ESivilstand.UOPPGITT}`;
     }
 };
 

@@ -44,27 +44,31 @@ test(`Kan legge til barn`, () => {
     expect(leggTilBarnKort).toBeInTheDocument();
     act(() => leggTilBarnKort.click());
 
-    const modal = getByLabelText('leggtilbarn.popup.label');
+    const modal = getByLabelText('hvilkebarn.leggtilbarn.modal.tittel');
     const leggTilKnappIModal = modal.querySelector('button');
     expect(leggTilKnappIModal).toBeInTheDocument();
     expect(leggTilKnappIModal).toHaveClass('knapp--standard');
 
-    const erFødt = getByText('leggtilbarn.er-barnet-født');
+    const erFødt = getByText('hvilkebarn.leggtilbarn.barnfødt.spm');
     expect(erFødt).toBeInTheDocument();
 
     // Språktekst-id for Ja er 'ja'
-    const jaKnapp = getByText('ja');
+    const jaKnapp = getByText('felles.svaralternativ.ja');
     act(() => jaKnapp.click());
 
-    const navnLabel = getByText('leggtilbarn.barnets-navn');
-    const idnrLabel = getByText('leggtilbarn.fødselsnummer');
-    expect(navnLabel).toBeInTheDocument();
+    const fornavnLabel = getByText('hvilkebarn.leggtilbarn.fornavn.spm');
+    const etternavnLabel = getByText('hvilkebarn.leggtilbarn.etternavn.spm');
+    const idnrLabel = getByText('hvilkebarn.leggtilbarn.fnr.spm');
+    expect(fornavnLabel).toBeInTheDocument();
+    expect(etternavnLabel).toBeInTheDocument();
     expect(idnrLabel).toBeInTheDocument();
-    const navnInput = navnLabel.nextElementSibling || new Element();
+    const fornavnInput = fornavnLabel.nextElementSibling || new Element();
+    const etternavnInput = etternavnLabel.nextElementSibling || new Element();
     const idnrInput = idnrLabel.nextElementSibling || new Element();
 
     act(() => {
-        fireEvent.input(navnInput, { target: { value: 'Sirius Svaart' } });
+        fireEvent.input(fornavnInput, { target: { value: 'Sirius' } });
+        fireEvent.input(etternavnInput, { target: { value: 'Svaart' } });
         fireEvent.input(idnrInput, { target: { value: '031159123456' } });
     });
 

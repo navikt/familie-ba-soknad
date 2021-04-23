@@ -2,11 +2,14 @@ import React from 'react';
 
 import { useHistory } from 'react-router-dom';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { useApp } from '../../../context/AppContext';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import Steg from '../Steg/Steg';
+import Steg from '../../Felleskomponenter/Steg/Steg';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { omBarnaDineSpråkTekstId, OmBarnaDineSpørsmålId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
@@ -29,7 +32,7 @@ const OmBarnaDine: React.FC = () => {
     }
     return (
         <Steg
-            tittel={<SpråkTekst id={'ombarnadine.tittel'} />}
+            tittel={<SpråkTekst id={'ombarna.sidetittel'} />}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
             skjema={skjema}
@@ -97,6 +100,11 @@ const OmBarnaDine: React.FC = () => {
                     felt={skjema.felter.hvemErAdoptertFraUtland}
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
+                {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
+                    <AlertStripe>
+                        <SpråkTekst id={'ombarna.adoptert.alert'} />
+                    </AlertStripe>
+                )}
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.oppholderBarnSegIUtland}
@@ -134,6 +142,11 @@ const OmBarnaDine: React.FC = () => {
                     felt={skjema.felter.hvemErSøktAsylFor}
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
+                {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
+                    <AlertStripe>
+                        <SpråkTekst id={'ombarna.asyl.alert'} />
+                    </AlertStripe>
+                )}
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge}

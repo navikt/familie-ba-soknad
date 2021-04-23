@@ -3,10 +3,10 @@ import React from 'react';
 import classNames from 'classnames';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Forside from './components/Forside/Forside';
 import Helse from './components/Helse/Helse';
+import Forside from './components/SøknadsSteg/Forside/Forside';
 import { useApp } from './context/AppContext';
-import { useRoutes } from './routing/RoutesContext';
+import { useRoutes } from './context/RoutesContext';
 
 const Søknad = () => {
     const { systemetLaster } = useApp();

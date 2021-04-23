@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useHistory, useLocation } from 'react-router-dom';
-
 import { Undertittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -11,8 +9,8 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
-import Steg from '../Steg/Steg';
 import { OmBarnetUfyllendeSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnetUtfyllende } from './useOmBarnetUtfyllende';
 
@@ -25,7 +23,7 @@ const InternKomponent: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
     } = useOmBarnetUtfyllende(barn);
     return (
         <Steg
-            tittel={<SpråkTekst id={'ombarnet-utfyllende.tittel'} values={{ navn: barn.navn }} />}
+            tittel={<SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />}
             validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
             valideringErOk={valideringErOk}
             skjema={skjema}
@@ -74,33 +72,10 @@ const InternKomponent: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
     );
 };
 
-const OmBarnetUtfyllende: React.FC = () => {
+const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
     const { søknad } = useApp();
-    const { barnInkludertISøknaden } = søknad;
-    const history = useHistory();
-    const location = useLocation();
-    const match = location.pathname.match(/\/barnet\/(.+)\/?/);
-
-    if (!barnInkludertISøknaden.length) {
-        history.push('/velg-barn');
-        return null;
-    }
-
-    if (!match || match.length < 2) {
-        history.push('/barnet/barn-1');
-        return null;
-    }
-    const navnParameter = match[1];
-
-    const barn = barnInkludertISøknaden.find(
-        (_barn, index) => `barn-${index + 1}` === navnParameter
-    );
-    if (!barn) {
-        history.push('/barnet');
-        return null;
-    }
-
-    return <InternKomponent barn={barn} />;
+    const barn = søknad.barnInkludertISøknaden.find(barn => barn.ident === barnetsIdent);
+    return barn ? <InternKomponent barn={barn} /> : null;
 };
 
 export default OmBarnetUtfyllende;

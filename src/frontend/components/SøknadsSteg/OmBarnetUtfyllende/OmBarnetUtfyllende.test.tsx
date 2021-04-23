@@ -6,14 +6,14 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
-import { RoutesProvider } from '../../../routing/RoutesContext';
+import { RoutesProvider } from '../../../context/RoutesContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
 import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import OmBarnetUtfyllende from './OmBarnetUtfyllende';
 
 jest.mock('../../../context/AppContext');
 
-const history = ['/barnet/barn-1'];
+const history = ['/om-barnet/barn-1'];
 
 jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),
@@ -30,11 +30,13 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
         barnInkludertISøknaden: [
             {
                 navn: 'Jens',
+                ident: '12345678910',
                 [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
                 [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.JA,
             },
             {
                 navn: 'Line',
+                ident: '12345678910',
                 [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
                 [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.NEI,
             },
@@ -44,7 +46,7 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
         <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
             <HttpProvider>
                 <RoutesProvider>
-                    <OmBarnetUtfyllende />
+                    <OmBarnetUtfyllende barnetsIdent={'12345678910'} />
                 </RoutesProvider>
             </HttpProvider>
         </SprakProvider>
@@ -56,11 +58,13 @@ test(`Kan navigere mellom barn og til oppsummering`, () => {
         barnInkludertISøknaden: [
             {
                 navn: 'Jens',
+                ident: '12345678910',
                 [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
                 [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.JA,
             },
             {
                 navn: 'Line',
+                ident: '12345678911',
                 [barnDataKeySpørsmål.erFosterbarn]: ESvar.NEI,
                 [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ESvar.NEI,
             },
@@ -69,12 +73,12 @@ test(`Kan navigere mellom barn og til oppsummering`, () => {
 
     const { getByText, rerender } = render(
         <SprakProvider
-            tekster={{ nb: { 'ombarnet-utfyllende.tittel': 'Om {navn}' } }}
+            tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
             defaultLocale={LocaleType.nb}
         >
             <HttpProvider>
                 <RoutesProvider>
-                    <OmBarnetUtfyllende />
+                    <OmBarnetUtfyllende barnetsIdent={'12345678910'} />
                 </RoutesProvider>
             </HttpProvider>
         </SprakProvider>
@@ -83,16 +87,16 @@ test(`Kan navigere mellom barn og til oppsummering`, () => {
     const jensTittel = getByText('Om Jens');
     expect(jensTittel).toBeInTheDocument();
 
-    const gåVidere = getByText(/felles.gåvidere/);
+    const gåVidere = getByText(/felles.navigasjon.gå-videre/);
     act(() => gåVidere.click());
     rerender(
         <SprakProvider
-            tekster={{ nb: { 'ombarnet-utfyllende.tittel': 'Om {navn}' } }}
+            tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
             defaultLocale={LocaleType.nb}
         >
             <HttpProvider>
                 <RoutesProvider>
-                    <OmBarnetUtfyllende />
+                    <OmBarnetUtfyllende barnetsIdent={'12345678911'} />
                 </RoutesProvider>
             </HttpProvider>
         </SprakProvider>
