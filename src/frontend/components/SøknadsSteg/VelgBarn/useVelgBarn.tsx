@@ -4,7 +4,7 @@ import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
-import { IBarn } from '../../../typer/person';
+import { IBarn, IBarnMedISøknad } from '../../../typer/person';
 import { genererInitialBarnMedISøknad } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -23,7 +23,9 @@ export const useVelgBarn = (): {
     const { søknad, settSøknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
     const { settBarnForRoutes } = useRoutes();
-    const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] = useState<IBarn[]>(barnInkludertISøknaden);
+    const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] = useState<IBarnMedISøknad[]>(
+        barnInkludertISøknaden
+    );
 
     useEffect(() => {
         settBarnForRoutes(barnSomSkalVæreMed);
@@ -40,10 +42,22 @@ export const useVelgBarn = (): {
     });
 
     const oppdaterSøknad = () => {
+        const barnSomAlleredeErLagtTil = barnSomSkalVæreMed.filter(
+            barnSomSkalVæreMed =>
+                !!barnInkludertISøknaden.find(barn => barn.ident === barnSomSkalVæreMed.ident)
+        );
+
+        const nyeBarnSomSkalLeggesTil = barnSomSkalVæreMed.filter(
+            barnSomSkalVæreMed =>
+                !barnSomAlleredeErLagtTil.find(
+                    barnLagtTil => barnLagtTil.ident === barnSomSkalVæreMed.ident
+                )
+        );
+
         settSøknad({
             ...søknad,
-            barnInkludertISøknaden: barnSomSkalVæreMed.map(barn =>
-                genererInitialBarnMedISøknad(barn)
+            barnInkludertISøknaden: barnSomAlleredeErLagtTil.concat(
+                nyeBarnSomSkalLeggesTil.map(barn => genererInitialBarnMedISøknad(barn))
             ),
         });
     };
