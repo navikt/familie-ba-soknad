@@ -25,6 +25,7 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
         valideringErOk,
         oppdaterSøknad,
     } = useOmBarnetUtfyllende(barnetsIdent);
+
     const barn = søknad.barnInkludertISøknaden.find(barn => barn.ident === barnetsIdent);
 
     return barn ? (

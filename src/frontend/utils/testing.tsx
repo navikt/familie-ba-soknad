@@ -15,6 +15,7 @@ export const spyOnUseApp = søknad => {
             settSisteUtfylteStegIndex: jest.fn(),
             sisteUtfylteStegIndex: 2,
             erStegUtfyltFrafør: jest.fn(),
+            settSøknad: jest.fn(),
         })
     );
 };

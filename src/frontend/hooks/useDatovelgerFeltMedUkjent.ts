@@ -9,7 +9,7 @@ const useDatovelgerFeltMedUkjent = (
     spørsmålId: string,
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent>,
     avhengighet: Felt<ESvar>,
-    avgrensDatoFremITid = false
+    skalFeltetVises: boolean
 ) => {
     return useFelt<ISODateString>({
         feltId: spørsmålId,
@@ -22,9 +22,10 @@ const useDatovelgerFeltMedUkjent = (
             ) {
                 return ok(felt);
             }
-            return validerDato(felt, avgrensDatoFremITid);
+            return validerDato(felt, false);
         },
         avhengigheter: { vetIkkeCheckbox: avhengighet },
+        skalFeltetVises: () => skalFeltetVises,
     });
 };
 

@@ -43,6 +43,10 @@ export const useOmBarnetUtfyllende = (
         return barn;
     };
 
+    const skalFeltetVises = (søknadsdataFelt: barnDataKeySpørsmål) => {
+        return finnGjeldendeBarnet()[søknadsdataFelt].svar === ESvar.JA;
+    };
+
     const institusjonsnavn = useFelt<string>({
         verdi: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonsnavn].svar,
         feltId: OmBarnetSpørsmålsId.institusjonsnavn,
@@ -50,6 +54,7 @@ export const useOmBarnetUtfyllende = (
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'ombarnet.institusjon.navn.feilmelding'} />),
+        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
     });
 
     const institusjonsadresse = useFelt<string>({
@@ -59,6 +64,7 @@ export const useOmBarnetUtfyllende = (
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'ombarnet.institusjon.adresse.feilmelding'} />),
+        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
     });
 
     const institusjonspostnummer = useFelt<string>({
@@ -68,10 +74,12 @@ export const useOmBarnetUtfyllende = (
             felt.verdi?.length === 4 && Number.parseInt(felt.verdi)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'ombarnet.institusjon.postnummer.feilmelding'} />),
+        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
     });
 
     const institusjonOppholdStart = useDatovelgerFelt(
-        finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdStart]
+        finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdStart],
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
     );
 
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
@@ -85,7 +93,8 @@ export const useOmBarnetUtfyllende = (
     const institusjonOppholdSlutt = useDatovelgerFeltMedUkjent(
         OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
         finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdSlutt],
-        institusjonOppholdSluttVetIkke
+        institusjonOppholdSluttVetIkke,
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
     );
 
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { erDatoFormatGodkjent, erDatoFremITid } from './useDatovelgerFelt';
+import { erDatoFormatGodkjent, erDatoFremITid } from './dato';
 
 describe('erDatoFormatGodkjent', () => {
     test('Skal returnere false dersom dato ikke er gyldig', () => {

@@ -15,7 +15,7 @@ import {
 } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
+import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLandDropdownFelt from '../../../hooks/useLanddropdownFelt';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -106,7 +106,7 @@ export const useOmdeg = (): {
         oppholderSegINorge
     );
 
-    const oppholdslandDato = useDatovelgerFelt(
+    const oppholdslandDato = useDatovelgerFeltMedJaNeiAvhengighet(
         søker.oppholdslandDato,
         ESvar.NEI,
         oppholderSegINorge,
@@ -119,7 +119,7 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
-    const komTilNorgeDato = useDatovelgerFelt(
+    const komTilNorgeDato = useDatovelgerFeltMedJaNeiAvhengighet(
         søker.komTilNorgeDato,
         ESvar.NEI,
         værtINorgeITolvMåneder,
