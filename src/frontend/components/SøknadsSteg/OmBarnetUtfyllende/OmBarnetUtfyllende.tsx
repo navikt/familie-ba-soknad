@@ -24,10 +24,12 @@ const InternKomponent: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
     return (
         <Steg
             tittel={<SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />}
-            validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
-            valideringErOk={valideringErOk}
-            skjema={skjema}
-            settSøknadsdataCallback={oppdaterSøknad}
+            skjema={{
+                validerFelterOgVisFeilmelding,
+                valideringErOk,
+                skjema,
+                settSøknadsdataCallback: oppdaterSøknad,
+            }}
         >
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <KomponentGruppe>

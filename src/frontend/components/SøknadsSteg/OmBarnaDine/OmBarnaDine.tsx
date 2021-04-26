@@ -33,10 +33,12 @@ const OmBarnaDine: React.FC = () => {
     return (
         <Steg
             tittel={<SpråkTekst id={'ombarna.sidetittel'} />}
-            validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
-            valideringErOk={valideringErOk}
-            skjema={skjema}
-            settSøknadsdataCallback={oppdaterSøknad}
+            skjema={{
+                validerFelterOgVisFeilmelding,
+                valideringErOk,
+                skjema,
+                settSøknadsdataCallback: oppdaterSøknad,
+            }}
         >
             <KomponentGruppe>
                 <JaNeiSpm
