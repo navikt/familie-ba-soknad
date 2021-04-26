@@ -55,6 +55,7 @@ const OmBarnaDine: React.FC = () => {
                     }
                     skjemafelt={skjema.felter.hvemErFosterbarn}
                     søknadsdatafelt={barnDataKeySpørsmål.erFosterbarn}
+                    nullstillValgteBarn={skjema.felter.erNoenAvBarnaFosterbarn.verdi === ESvar.NEI}
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
 
@@ -78,6 +79,9 @@ const OmBarnaDine: React.FC = () => {
                     }
                     skjemafelt={skjema.felter.hvemOppholderSegIInstitusjon}
                     søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIInstitusjon}
+                    nullstillValgteBarn={
+                        skjema.felter.oppholderBarnSegIInstitusjon.verdi === ESvar.NEI
+                    }
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
             </KomponentGruppe>
@@ -102,6 +106,7 @@ const OmBarnaDine: React.FC = () => {
                     }
                     skjemafelt={skjema.felter.hvemErAdoptertFraUtland}
                     søknadsdatafelt={barnDataKeySpørsmål.erAdoptertFraUtland}
+                    nullstillValgteBarn={skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.NEI}
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
                 {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
@@ -128,6 +133,7 @@ const OmBarnaDine: React.FC = () => {
                     }
                     skjemafelt={skjema.felter.hvemOppholderSegIUtland}
                     søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIUtland}
+                    nullstillValgteBarn={skjema.felter.oppholderBarnSegIUtland.verdi === ESvar.NEI}
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
             </KomponentGruppe>
@@ -146,6 +152,7 @@ const OmBarnaDine: React.FC = () => {
                     }
                     skjemafelt={skjema.felter.hvemErSøktAsylFor}
                     søknadsdatafelt={barnDataKeySpørsmål.erAsylsøker}
+                    nullstillValgteBarn={skjema.felter.søktAsylForBarn.verdi === ESvar.NEI}
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
                 {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
@@ -174,6 +181,9 @@ const OmBarnaDine: React.FC = () => {
                     }
                     skjemafelt={skjema.felter.hvemTolvMndSammenhengendeINorge}
                     søknadsdatafelt={barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd}
+                    nullstillValgteBarn={
+                        skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi === ESvar.JA
+                    }
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
             </KomponentGruppe>
@@ -200,6 +210,9 @@ const OmBarnaDine: React.FC = () => {
                     }
                     skjemafelt={skjema.felter.hvemBarnetrygdFraAnnetEøsland}
                     søknadsdatafelt={barnDataKeySpørsmål.barnetrygdFraAnnetEøsland}
+                    nullstillValgteBarn={
+                        skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.NEI
+                    }
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
             </KomponentGruppe>

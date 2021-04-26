@@ -15,12 +15,14 @@ interface Props {
     skjemafelt: Felt<BarnetsIdent[]>;
     visFeilmelding: boolean;
     søknadsdatafelt: barnDataKeySpørsmål;
+    nullstillValgteBarn: boolean;
 }
 
 const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
     legend,
     skjemafelt,
     søknadsdatafelt,
+    nullstillValgteBarn,
     visFeilmelding,
 }) => {
     const { søknad } = useApp();
@@ -31,8 +33,12 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
     );
 
     useEffect(() => {
-        skjemafelt.erSynlig && skjemafelt.hentNavInputProps(false).onChange(valgteBarn);
+        skjemafelt.hentNavInputProps(false).onChange(valgteBarn);
     }, [valgteBarn]);
+
+    useEffect(() => {
+        settValgteBarn([]);
+    }, [nullstillValgteBarn]);
 
     const oppdaterListeMedBarn = async (event: ChangeEvent) => {
         const barnetsIdent = event.target.id.substring(`${skjemafelt.id}`.length);
