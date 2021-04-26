@@ -31,6 +31,7 @@ const useBarnCheckboxFelt = (
                 : true;
         },
         avhengigheter: { jaNeiSpm: avhengighet },
+        nullstillVedAvhengighetEndring: false,
     });
 };
 

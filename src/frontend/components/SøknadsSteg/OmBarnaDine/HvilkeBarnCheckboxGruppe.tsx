@@ -37,7 +37,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
     }, [valgteBarn]);
 
     useEffect(() => {
-        settValgteBarn([]);
+        nullstillValgteBarn && settValgteBarn([]);
     }, [nullstillValgteBarn]);
 
     const oppdaterListeMedBarn = async (event: ChangeEvent) => {
