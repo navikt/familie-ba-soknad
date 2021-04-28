@@ -57,6 +57,7 @@ beforeEach(() => {
                 },
             },
         ],
+        sisteUtfylteStegIndex: 4,
     });
 });
 
@@ -86,11 +87,14 @@ test(`Kan navigere mellom barn og til oppsummering`, () => {
         </SprakProvider>
     );
 
+    expect(history[history.length - 1]).toEqual('/om-barnet/barn-1');
+
     const jensTittel = getByText('Om Jens');
     expect(jensTittel).toBeInTheDocument();
 
     const gåVidere = getByText(/felles.navigasjon.gå-videre/);
     act(() => gåVidere.click());
+
     expect(history[history.length - 1]).toEqual('/om-barnet/barn-2');
 
     rerender(
