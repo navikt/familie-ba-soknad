@@ -28,10 +28,12 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
     return barn ? (
         <Steg
             tittel={<SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />}
-            validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
-            valideringErOk={valideringErOk}
-            skjema={skjema}
-            settSøknadsdataCallback={oppdaterSøknad}
+            skjema={{
+                validerFelterOgVisFeilmelding,
+                valideringErOk,
+                skjema,
+                settSøknadsdataCallback: oppdaterSøknad,
+            }}
         >
             {barn.erFosterbarn.svar === ESvar.JA && (
                 <KomponentGruppe>

@@ -61,11 +61,21 @@ const StyledFlatKnapp = styled(Flatknapp)<{
     }
 `;
 
+type Knappetype = 'hoved' | 'standard';
+
 const Navigeringspanel: React.FC<{
     onAvbrytCallback: () => void;
     onTilbakeCallback: () => void;
-    valideringErOk: () => boolean;
+    valideringErOk: (() => boolean) | undefined;
 }> = ({ onAvbrytCallback, onTilbakeCallback, valideringErOk }) => {
+    const hentKnappetype = (): Knappetype => {
+        if (valideringErOk) {
+            return valideringErOk() ? 'hoved' : 'standard';
+        } else {
+            return 'hoved';
+        }
+    };
+
     return (
         <Container>
             <StyledKnappBase
@@ -78,7 +88,7 @@ const Navigeringspanel: React.FC<{
             </StyledKnappBase>
             <StyledKnappBase
                 htmlType={'submit'}
-                type={valideringErOk() ? 'hoved' : 'standard'}
+                type={hentKnappetype()}
                 placeself={'start'}
                 gridarea={'gåVidere'}
             >

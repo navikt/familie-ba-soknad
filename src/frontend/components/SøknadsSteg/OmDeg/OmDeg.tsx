@@ -24,10 +24,12 @@ const OmDeg: React.FC = () => {
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
-            validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
-            valideringErOk={valideringErOk}
-            skjema={skjema}
-            settSøknadsdataCallback={oppdaterSøknad}
+            skjema={{
+                validerFelterOgVisFeilmelding,
+                valideringErOk,
+                skjema,
+                settSøknadsdataCallback: oppdaterSøknad,
+            }}
         >
             <KomponentGruppe>
                 <Personopplysninger />
