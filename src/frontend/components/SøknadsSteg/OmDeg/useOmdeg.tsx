@@ -15,10 +15,10 @@ import {
 } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLandDropdownFelt from '../../../hooks/useLanddropdownFelt';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import useDatovelgerFeltMedJaNeiAvhengighet from './useDatovelgerFeltMedJaNeiAvhengighet';
 
 export type ESvarMedUbesvart = ESvar | undefined;
 

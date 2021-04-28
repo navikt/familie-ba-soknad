@@ -4,8 +4,6 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
-import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import {
     AlternativtDatoSvar,
     barnDataKeySpørsmål,
@@ -14,6 +12,8 @@ import {
 } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId } from './spørsmål';
+import useDatovelgerFelt from './useDatovelgerFelt';
+import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
 
 export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;
