@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -31,25 +31,25 @@ export const useOmBarnetUtfyllende = (
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
+    barn: IBarnMedISøknad;
 } => {
     const { søknad, settSøknad } = useApp();
 
-    const finnGjeldendeBarnet = (): IBarnMedISøknad => {
-        const barn = søknad.barnInkludertISøknaden.find(barn => barn.ident === barnetsIdent);
-        if (!barn) {
-            //TODO: håndtering av feil
-            throw new TypeError('Kunne ikke finne barn som skulle være her');
-        }
-        return barn;
-    };
+    const [barn] = useState(
+        søknad.barnInkludertISøknaden.find(barn => barn.ident === barnetsIdent)
+    );
+
+    if (!barn) {
+        throw new TypeError('Kunne ikke finne barn som skulle være her');
+    }
 
     const skalFeltetVises = (søknadsdataFelt: barnDataKeySpørsmål) => {
-        return finnGjeldendeBarnet()[søknadsdataFelt].svar === ESvar.JA;
+        return barn[søknadsdataFelt].svar === ESvar.JA;
     };
 
     const institusjonsnavn = useFelt<string>({
-        verdi: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonsnavn].svar,
-        feltId: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonsnavn].id,
+        verdi: barn[barnDataKeySpørsmål.institusjonsnavn].svar,
+        feltId: barn[barnDataKeySpørsmål.institusjonsnavn].id,
         valideringsfunksjon: felt =>
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
@@ -58,8 +58,8 @@ export const useOmBarnetUtfyllende = (
     });
 
     const institusjonsadresse = useFelt<string>({
-        verdi: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonsadresse].svar,
-        feltId: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonsadresse].id,
+        verdi: barn[barnDataKeySpørsmål.institusjonsadresse].svar,
+        feltId: barn[barnDataKeySpørsmål.institusjonsadresse].id,
         valideringsfunksjon: felt =>
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
@@ -68,8 +68,8 @@ export const useOmBarnetUtfyllende = (
     });
 
     const institusjonspostnummer = useFelt<string>({
-        verdi: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonspostnummer].svar,
-        feltId: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonspostnummer].id,
+        verdi: barn[barnDataKeySpørsmål.institusjonspostnummer].svar,
+        feltId: barn[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
             felt.verdi?.length === 4 && Number.parseInt(felt.verdi)
                 ? ok(felt)
@@ -78,20 +78,20 @@ export const useOmBarnetUtfyllende = (
     });
 
     const institusjonOppholdStart = useDatovelgerFelt(
-        finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdStart],
+        barn[barnDataKeySpørsmål.institusjonOppholdStart],
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
     );
 
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
         verdi:
-            finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdSlutt].svar === 'UKJENT'
+            barn[barnDataKeySpørsmål.institusjonOppholdSlutt].svar === 'UKJENT'
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
     });
 
     const institusjonOppholdSlutt = useDatovelgerFeltMedUkjent(
-        finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdSlutt],
+        barn[barnDataKeySpørsmål.institusjonOppholdSlutt],
         institusjonOppholdSluttVetIkke,
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
     );
@@ -154,5 +154,6 @@ export const useOmBarnetUtfyllende = (
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
+        barn,
     };
 };

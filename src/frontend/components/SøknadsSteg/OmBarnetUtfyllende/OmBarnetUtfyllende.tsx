@@ -4,7 +4,6 @@ import { Checkbox } from 'nav-frontend-skjema';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
 import { AlternativtDatoSvar } from '../../../typer/person';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -18,15 +17,13 @@ import { OmBarnetSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnetUtfyllende } from './useOmBarnetUtfyllende';
 
 const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
-    const { søknad } = useApp();
     const {
         skjema,
         validerFelterOgVisFeilmelding,
         valideringErOk,
         oppdaterSøknad,
+        barn,
     } = useOmBarnetUtfyllende(barnetsIdent);
-
-    const barn = søknad.barnInkludertISøknaden.find(barn => barn.ident === barnetsIdent);
 
     return barn ? (
         <Steg
