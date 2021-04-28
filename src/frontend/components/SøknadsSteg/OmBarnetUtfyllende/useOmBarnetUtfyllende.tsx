@@ -49,7 +49,7 @@ export const useOmBarnetUtfyllende = (
 
     const institusjonsnavn = useFelt<string>({
         verdi: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonsnavn].svar,
-        feltId: OmBarnetSpørsmålsId.institusjonsnavn,
+        feltId: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonsnavn].id,
         valideringsfunksjon: felt =>
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
@@ -59,7 +59,7 @@ export const useOmBarnetUtfyllende = (
 
     const institusjonsadresse = useFelt<string>({
         verdi: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonsadresse].svar,
-        feltId: OmBarnetSpørsmålsId.institusjonsadresse,
+        feltId: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonsadresse].id,
         valideringsfunksjon: felt =>
             felt.verdi && felt.verdi !== ''
                 ? ok(felt)
@@ -69,7 +69,7 @@ export const useOmBarnetUtfyllende = (
 
     const institusjonspostnummer = useFelt<string>({
         verdi: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonspostnummer].svar,
-        feltId: OmBarnetSpørsmålsId.institusjonspostnummer,
+        feltId: finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
             felt.verdi?.length === 4 && Number.parseInt(felt.verdi)
                 ? ok(felt)
@@ -91,7 +91,6 @@ export const useOmBarnetUtfyllende = (
     });
 
     const institusjonOppholdSlutt = useDatovelgerFeltMedUkjent(
-        OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
         finnGjeldendeBarnet()[barnDataKeySpørsmål.institusjonOppholdSlutt],
         institusjonOppholdSluttVetIkke,
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)

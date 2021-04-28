@@ -6,13 +6,12 @@ import { ISøknadSpørsmål } from '../typer/søknad';
 import { validerDato } from '../utils/dato';
 
 const useDatovelgerFeltMedUkjent = (
-    spørsmålId: string,
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent>,
     avhengighet: Felt<ESvar>,
     skalFeltetVises: boolean
 ) => {
     return useFelt<ISODateString>({
-        feltId: spørsmålId,
+        feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar !== AlternativtDatoSvar.UKJENT ? søknadsfelt.svar : '',
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
             if (
