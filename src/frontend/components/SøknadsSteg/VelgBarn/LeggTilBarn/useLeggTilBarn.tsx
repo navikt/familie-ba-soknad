@@ -32,6 +32,14 @@ export const useLeggTilBarn = (): {
     const { søknad, settSøknad } = useApp();
     const intl = useIntl();
 
+    const erBarnRegistrertFraFør = (ident: string) => {
+        const barnFraPdl = søknad.søker.barn.find(barn => barn.ident === ident);
+        const barnRegistrertManuelt = søknad.barnRegistrertManuelt.find(
+            barn => barn.ident === ident
+        );
+        return barnFraPdl || barnRegistrertManuelt;
+    };
+
     const erFødt = useFelt<ESvarMedUbesvart>({
         verdi: undefined,
         valideringsfunksjon: felt => {
@@ -64,9 +72,16 @@ export const useLeggTilBarn = (): {
         verdi: '',
         skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
         valideringsfunksjon: felt => {
-            return idnr(felt.verdi).status === 'valid'
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.feilmelding'} />);
+            if (erBarnRegistrertFraFør(felt.verdi)) {
+                return feil(
+                    felt,
+                    <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.duplikat-barn.feilmelding'} />
+                );
+            } else {
+                return idnr(felt.verdi).status === 'valid'
+                    ? ok(felt)
+                    : feil(felt, <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.feilmelding'} />);
+            }
         },
         avhengigheter: { erFødt },
     });
