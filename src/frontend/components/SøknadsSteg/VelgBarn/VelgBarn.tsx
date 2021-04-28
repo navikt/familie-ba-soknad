@@ -40,11 +40,13 @@ const VelgBarn: React.FC = () => {
     return (
         <Steg
             tittel={<SpråkTekst id={'hvilkebarn.sidetittel'} />}
-            skjema={skjema}
-            validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
-            valideringErOk={valideringErOk}
-            settSøknadsdataCallback={() => {
-                oppdaterSøknad();
+            skjema={{
+                validerFelterOgVisFeilmelding,
+                valideringErOk,
+                skjema,
+                settSøknadsdataCallback: () => {
+                    oppdaterSøknad();
+                },
             }}
         >
             <AlertStripe form={'inline'}>
