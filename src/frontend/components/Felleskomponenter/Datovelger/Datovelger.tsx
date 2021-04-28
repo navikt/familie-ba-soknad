@@ -14,10 +14,11 @@ import { SkjemaFeltTyper } from '../../../typer/skjema';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface DatoVelgerProps {
-    avgrensDatoFremITid: boolean;
+    avgrensDatoFremITid?: boolean;
     felt: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
     labelTekstId: string;
+    disabled?: boolean;
 }
 
 const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
@@ -41,6 +42,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     felt,
     skjema,
     labelTekstId,
+    disabled = false,
 }) => {
     const { formatMessage } = useIntl();
 
@@ -56,13 +58,14 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                         : {}
                 }
                 placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}
-                valgtDato={felt.verdi}
+                valgtDato={disabled ? '' : felt.verdi}
                 label={<SpråkTekst id={labelTekstId} />}
                 {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}
                 onChange={dato => {
                     felt.hentNavInputProps(false).onChange(dato);
                 }}
                 feil={!!(felt.feilmelding && skjema.visFeilmeldinger)}
+                disabled={disabled}
             />
             {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
         </>

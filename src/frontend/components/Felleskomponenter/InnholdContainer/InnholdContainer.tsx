@@ -18,7 +18,8 @@ const Container = styled.div`
     && label,
     a,
     p,
-    li {
+    li,
+    h2 {
         font-size: 18px;
         line-height: 26px;
     }

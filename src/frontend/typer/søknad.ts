@@ -1,6 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnetUtfyllende/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { INøkkelPar } from './common';
 import { ESivilstand, IBarn, IBarnMedISøknad, ISøker } from './person';
@@ -52,7 +53,7 @@ export interface ISøknad {
 }
 
 export interface ISøknadSpørsmål<T> {
-    id: OmDegSpørsmålId | OmBarnaDineSpørsmålId;
+    id: OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørsmålsId;
     svar: T;
 }
 

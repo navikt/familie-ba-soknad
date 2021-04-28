@@ -9,12 +9,13 @@ import { AppProvider } from '../context/AppContext';
 import { RoutesProvider } from '../context/RoutesContext';
 
 export const spyOnUseApp = søknad => {
-    jest.spyOn(appContext, 'useApp').mockImplementation(
+    return jest.spyOn(appContext, 'useApp').mockImplementation(
         jest.fn().mockReturnValue({
             søknad,
             settSisteUtfylteStegIndex: jest.fn(),
             sisteUtfylteStegIndex: 2,
-            erStegUtfyltFrafør: jest.fn(),
+            erStegUtfyltFrafør: jest.fn().mockImplementation(() => true),
+            settSøknad: jest.fn(),
         })
     );
 };
