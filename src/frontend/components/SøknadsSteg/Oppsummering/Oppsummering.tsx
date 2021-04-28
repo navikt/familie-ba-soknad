@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
+import styled from 'styled-components/macro';
 
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -16,14 +17,22 @@ interface IOppsummeringsFeltProps {
     søknadsvar?: string;
 }
 
+const StyledNormaltekst = styled(Normaltekst)`
+    padding-bottom: 4rem;
+`;
+
+const StyledOppsummeringsFelt = styled.div`
+    padding: 1rem 0 1rem 0;
+`;
+
 const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsvar }) => {
     return (
-        <>
+        <StyledOppsummeringsFelt>
             <Element>{tittel}</Element>
             <Normaltekst>
                 <SpråkTekst id={søknadsvar} />
             </Normaltekst>
-        </>
+        </StyledOppsummeringsFelt>
     );
 };
 
@@ -35,9 +44,9 @@ const Oppsummering: React.FC = () => {
 
     return (
         <Steg tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}>
-            <Normaltekst>
+            <StyledNormaltekst>
                 <SpråkTekst id={'oppsummering.info'} />
-            </Normaltekst>
+            </StyledNormaltekst>
             <Oppsummeringsbolk tittel={'omdeg.sidetittel'}>
                 <OppsummeringFelt
                     tittel={<SpråkTekst id={'omdeg.personopplysninger.fødselsnummer'} />}
