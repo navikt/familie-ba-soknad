@@ -4,29 +4,36 @@ import styled from 'styled-components/macro';
 
 import { FileContent } from '@navikt/ds-icons';
 
+import SpråkTekst from './SpråkTekst/SpråkTekst';
+
 const NotisWrapper = styled.div`
     display: flex;
 `;
 
 const StyledFileContent = styled(FileContent)`
-    --vedleggsikon-base-størrelse: 2rem;
-    width: var(--vedleggsikon-base-størrelse);
-    height: var(--vedleggsikon-base-størrelse);
+    width: 2.5rem;
+    height: fit-content;
     margin-right: 1rem;
 `;
 
-const NotisInnhold = styled.section`
+const NotisInnhold = styled.div`
     ul {
         margin: 0;
-        padding-left: 1rem; // For kulepunkt
+        padding-left: 1.3rem; // For kulepunkt
+    }
+
+    p {
+        margin: 0;
     }
 `;
 
-export const VedleggNotis: React.FC = ({ children }) => {
+export const VedleggNotis: React.FC<{ språkTekstId: string }> = ({ språkTekstId }) => {
     return (
         <NotisWrapper>
             <StyledFileContent />
-            <NotisInnhold>{children}</NotisInnhold>
+            <NotisInnhold>
+                <SpråkTekst id={språkTekstId} />
+            </NotisInnhold>
         </NotisWrapper>
     );
 };

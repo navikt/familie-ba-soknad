@@ -21,10 +21,12 @@ export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
     const navInputPropsFraFeltHook = felt.hentNavInputProps(visFeilmeldinger);
 
     return felt.erSynlig ? (
-        <Input
-            label={<SpråkTekst id={labelSpråkTekstId} />}
-            {...navInputPropsFraFeltHook}
-            {...øvrigePropsStøttetAvNavInput}
-        />
+        <div>
+            <Input
+                label={<SpråkTekst id={labelSpråkTekstId} />}
+                {...navInputPropsFraFeltHook}
+                {...øvrigePropsStøttetAvNavInput}
+            />
+        </div>
     ) : null;
 };
