@@ -135,7 +135,10 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
 
     const visFeiloppsummering = (skjema: ISkjema<SkjemaFeltTyper, string>): boolean => {
         const feil = Object.values(skjema.felter).find(
-            felt => felt.valideringsstatus === Valideringsstatus.FEIL
+            felt =>
+                felt.erSynlig &&
+                felt.feilmelding !== '' &&
+                felt.valideringsstatus === Valideringsstatus.FEIL
         );
         return !!feil;
     };
@@ -162,7 +165,10 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
                                 tittel={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}
                                 feil={Object.values(skjema.skjema.felter)
                                     .filter(felt => {
-                                        return felt.valideringsstatus === Valideringsstatus.FEIL;
+                                        return (
+                                            felt.erSynlig &&
+                                            felt.valideringsstatus === Valideringsstatus.FEIL
+                                        );
                                     })
                                     .map(
                                         (felt): FeiloppsummeringFeil => {
