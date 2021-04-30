@@ -3,6 +3,7 @@ import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnetUtfyllende/spørsmål';
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, IBarnRespons } from '../typer/person';
+import { ISøknad } from '../typer/søknad';
 
 export const hentAlder = (dato: string): string => {
     const idag = new Date();
@@ -13,6 +14,12 @@ export const hentAlder = (dato: string): string => {
         alder--;
     }
     return alder + ' år';
+};
+
+export const erBarnRegistrertFraFør = (søknad: ISøknad, ident: string) => {
+    const barnFraPdl = søknad.søker.barn.find(barn => barn.ident === ident);
+    const barnRegistrertManuelt = søknad.barnRegistrertManuelt.find(barn => barn.ident === ident);
+    return barnFraPdl || barnRegistrertManuelt;
 };
 
 const uppercaseFørsteBokstav = text => {

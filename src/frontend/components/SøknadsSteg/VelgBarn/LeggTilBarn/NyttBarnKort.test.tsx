@@ -26,7 +26,7 @@ test(`Kan legge til barn`, () => {
     const submitMock = jest.fn();
     jest.spyOn(appContext, 'useApp').mockImplementation(
         jest.fn().mockReturnValue({
-            søknad: { barnRegistrertManuelt: [] },
+            søknad: { barnRegistrertManuelt: [], søker: { barn: [] } },
             settSøknad: submitMock,
         })
     );
