@@ -10,7 +10,8 @@ import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 
 const useBarnCheckboxFelt = (
     datafeltNavn: barnDataKeySpørsmål,
-    avhengighet?: Felt<ESvar | undefined>
+    avhengighet: Felt<ESvar | undefined>,
+    avhengigJaNeiSpmSvarCondition = ESvar.JA
 ) => {
     const { søknad } = useApp();
     const barn = søknad.barnInkludertISøknaden;
@@ -27,7 +28,8 @@ const useBarnCheckboxFelt = (
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter && avhengigheter.jaNeiSpm
-                ? (avhengigheter.jaNeiSpm as Felt<ESvar | undefined>).verdi === ESvar.JA
+                ? (avhengigheter.jaNeiSpm as Felt<ESvar | undefined>).verdi ===
+                      avhengigJaNeiSpmSvarCondition
                 : true;
         },
         avhengigheter: { jaNeiSpm: avhengighet },

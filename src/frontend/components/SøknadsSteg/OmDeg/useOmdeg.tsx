@@ -70,7 +70,7 @@ export const useOmdeg = (): {
                       felt.verdi === undefined ? (
                           <SpråkTekst id={'felles.mangler-svar.feilmelding'} />
                       ) : (
-                          ''
+                          <SpråkTekst id={'omdeg.du-kan-ikke-søke.feilmelding'} />
                       )
                   );
         },
