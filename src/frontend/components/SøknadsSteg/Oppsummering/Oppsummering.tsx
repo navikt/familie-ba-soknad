@@ -89,6 +89,40 @@ const Oppsummering: React.FC = () => {
                     tittel={<SpråkTekst id={'omdeg.opphold-sammenhengende.spm'} />}
                     søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
                 />
+                {søknad.søker.komTilNorgeDato.svar !== '' && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'omdeg.opphold-sammenhengende.dato.spm'} />}
+                        søknadsvar={søknad.søker.komTilNorgeDato.svar}
+                    />
+                )}
+                <OppsummeringFelt
+                    tittel={<SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.spm'} />}
+                    søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
+                />
+                <OppsummeringFelt
+                    tittel={<SpråkTekst id={'omdeg.asylsøker.spm'} />}
+                    søknadsvar={søknad.søker.erAsylsøker.svar}
+                />
+                <OppsummeringFelt
+                    tittel={<SpråkTekst id={'omdeg.arbeid-utland.spm'} />}
+                    søknadsvar={søknad.søker.jobberPåBåt.svar}
+                />
+                {søknad.søker.arbeidsland.svar !== undefined && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'omdeg.arbeid-utland.land.spm'} />}
+                        søknadsvar={søknad.søker.arbeidsland.svar}
+                    />
+                )}
+                <OppsummeringFelt
+                    tittel={<SpråkTekst id={'omdeg.utenlandspensjon.spm'} />}
+                    søknadsvar={søknad.søker.mottarUtenlandspensjon.svar}
+                />
+                {søknad.søker.arbeidsland.svar !== undefined && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'omdeg.utenlandspensjon.land.spm'} />}
+                        søknadsvar={søknad.søker.pensjonsland.svar}
+                    />
+                )}
             </Oppsummeringsbolk>
         </Steg>
     );
