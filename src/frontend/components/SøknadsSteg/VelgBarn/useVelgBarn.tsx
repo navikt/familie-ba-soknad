@@ -36,7 +36,7 @@ export const useVelgBarn = (): {
         valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.barnSomSkalVæreMed.length > 0
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'velgbarn.feilmelding.du-må-velge-barn'} />);
+                : feil(felt, <SpråkTekst id={'hvilkebarn.ingen-barn-valgt.feilmelding'} />);
         },
         avhengigheter: { barnSomSkalVæreMed },
     });
