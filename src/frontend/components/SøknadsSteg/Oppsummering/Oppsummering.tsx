@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react';
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
+import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
@@ -10,6 +11,7 @@ import { landkodeTilSpråk } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
+import { useSendInnSkjema } from './useSendInnSkjema';
 
 interface IOppsummeringsFeltProps {
     tittel: ReactNode;
@@ -32,6 +34,7 @@ const Oppsummering: React.FC = () => {
 
     const { søknad } = useApp();
     console.log(søknad);
+    const { sendInnSkjema } = useSendInnSkjema();
 
     return (
         <Steg tittel={<SpråkTekst id={'ombarnadine.tittel'} />}>
@@ -80,6 +83,9 @@ const Oppsummering: React.FC = () => {
                     søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
                 />
             </Oppsummeringsbolk>
+            <Knapp htmlType={'button'} onClick={sendInnSkjema}>
+                Send inn søknad
+            </Knapp>
         </Steg>
     );
 };

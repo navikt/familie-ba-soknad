@@ -4,7 +4,7 @@ import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnetUtfyllende/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { INøkkelPar } from './common';
-import { ESivilstand, IBarn, IBarnMedISøknad, ISøker } from './person';
+import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, ISøker } from './person';
 
 export enum ESøknadstype {
     IKKE_SATT = 'IKKE_SATT',
@@ -55,6 +55,35 @@ export interface ISøknad {
 export interface ISøknadSpørsmål<T> {
     id: OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørsmålsId;
     svar: T;
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type SpørsmålMap = Record<string, ISøknadsfelt<any>>;
+
+export interface ISøknadKontrakt {
+    søknadstype: ESøknadstype;
+    søker: ISøknadKontraktSøker;
+    barn: ISøknadKontraktBarn[];
+    spørsmål: SpørsmålMap;
+    vedleggReferanser: Record<string, ISøknadsfelt<string>>;
+}
+
+export interface ISøknadKontraktSøker {
+    ident: ISøknadsfelt<string>;
+    navn: ISøknadsfelt<string>;
+    statsborgerskap: ISøknadsfelt<string[]>;
+    adresse: ISøknadsfelt<IAdresse>;
+    sivilstand: ISøknadsfelt<ESivilstand>;
+    telefonnummer: ISøknadsfelt<string>;
+    spørsmål: SpørsmålMap;
+}
+
+export interface ISøknadKontraktBarn {
+    ident: ISøknadsfelt<string>;
+    navn: ISøknadsfelt<string>;
+    borMedSøker: ISøknadsfelt<boolean>;
+    alder: ISøknadsfelt<string>;
+    spørsmål: SpørsmålMap;
 }
 
 export const initialStateSøknad: ISøknad = {
