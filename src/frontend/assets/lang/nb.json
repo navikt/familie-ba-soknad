@@ -157,7 +157,7 @@
   "ombarnet.institusjon.startdato.spm": "Når begynte oppholdet? (format dd.mm.åååå)",
   "ombarnet.institusjon.ukjent-sluttdato.spm": "Jeg vet ikke når oppholdet avsluttes",
   "ombarnet.les-mer-om-bosted.lenketekst": "Les mer om delt og fast bosted",
-  "ombarnet.oppholdutland": "Du har opplyst at {barns navn} oppholder seg i utlandet",
+  "ombarnet.oppholdutland": "Du har opplyst at {navn} oppholder seg i utlandet",
   "ombarnet.oppholdutland.land.spm": "Hvilket land oppholder barnet seg i?",
   "ombarnet.oppholdutland.sluttdato.spm": "Når skal oppholdet avsluttes? (format dd.mm.åååå)",
   "ombarnet.oppholdutland.startdato.spm": "Når begynte oppholdet? (format dd.mm.åååå)",

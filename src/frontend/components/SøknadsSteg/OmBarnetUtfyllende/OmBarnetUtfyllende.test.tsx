@@ -33,8 +33,8 @@ const jens = {
     [barnDataKeySpørsmål.institusjonsnavn]: { id: '3', svar: 'narvesen' },
     [barnDataKeySpørsmål.institusjonsadresse]: { id: '4', svar: 'narvesen' },
     [barnDataKeySpørsmål.institusjonspostnummer]: { id: '5', svar: '2030' },
-    [barnDataKeySpørsmål.institusjonOppholdStart]: { id: '6', svar: '2020-08-08' },
-    [barnDataKeySpørsmål.institusjonOppholdSlutt]: {
+    [barnDataKeySpørsmål.institusjonOppholdStartdato]: { id: '6', svar: '2020-08-08' },
+    [barnDataKeySpørsmål.institusjonOppholdSluttdato]: {
         id: '7',
         svar: AlternativtDatoSvar.UKJENT,
     },
@@ -47,8 +47,8 @@ const line = {
     [barnDataKeySpørsmål.institusjonsnavn]: { id: '', svar: '' },
     [barnDataKeySpørsmål.institusjonsadresse]: { id: '', svar: '' },
     [barnDataKeySpørsmål.institusjonspostnummer]: { id: '', svar: '' },
-    [barnDataKeySpørsmål.institusjonOppholdStart]: { id: '', svar: '' },
-    [barnDataKeySpørsmål.institusjonOppholdSlutt]: {
+    [barnDataKeySpørsmål.institusjonOppholdStartdato]: { id: '', svar: '' },
+    [barnDataKeySpørsmål.institusjonOppholdSluttdato]: {
         id: '',
         svar: '',
     },

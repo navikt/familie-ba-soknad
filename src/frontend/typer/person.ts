@@ -62,11 +62,14 @@ export enum barnDataKeySpørsmål {
     oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
     oppholdtSegINorgeSammenhengendeTolvMnd = 'oppholdtSegINorgeSammenhengendeTolvMnd',
     oppholderSegIUtland = 'oppholderSegIUtland',
+    oppholdsland = 'oppholdsland',
+    oppholdslandStartdato = 'oppholdslandStartdato',
+    oppholdslandSluttdato = 'oppholdslandSluttdato',
     institusjonsnavn = 'institusjonsnavn',
     institusjonsadresse = 'institusjonsadresse',
     institusjonspostnummer = 'institusjonspostnummer',
-    institusjonOppholdStart = 'institusjonOppholdStart',
-    institusjonOppholdSlutt = 'institusjonOppholdSlutt',
+    institusjonOppholdStartdato = 'institusjonOppholdStartdato',
+    institusjonOppholdSluttdato = 'institusjonOppholdSluttdato',
 }
 
 export interface IBarnRespons extends IPerson {
@@ -90,6 +93,9 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.oppholderSegIUtland]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.oppholdsland]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [barnDataKeySpørsmål.oppholdslandStartdato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.oppholdslandSluttdato]: ISøknadSpørsmål<ISODateString>;
     [barnDataKeySpørsmål.erAsylsøker]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd]: ISøknadSpørsmål<
         ESvar | undefined
@@ -98,6 +104,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.institusjonsnavn]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonsadresse]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonspostnummer]: ISøknadSpørsmål<string>;
-    [barnDataKeySpørsmål.institusjonOppholdStart]: ISøknadSpørsmål<ISODateString>;
-    [barnDataKeySpørsmål.institusjonOppholdSlutt]: ISøknadSpørsmål<DatoMedUkjent>;
+    [barnDataKeySpørsmål.institusjonOppholdStartdato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.institusjonOppholdSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
 }

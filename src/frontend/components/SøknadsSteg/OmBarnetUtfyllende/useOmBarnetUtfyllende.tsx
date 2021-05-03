@@ -19,8 +19,8 @@ export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;
     institusjonsadresse: string;
     institusjonspostnummer: string;
-    institusjonOppholdStart: ISODateString;
-    institusjonOppholdSlutt: DatoMedUkjent;
+    institusjonOppholdStartdato: ISODateString;
+    institusjonOppholdSluttdato: DatoMedUkjent;
     institusjonOppholdSluttVetIkke: ESvar;
 }
 
@@ -77,21 +77,21 @@ export const useOmBarnetUtfyllende = (
         skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
     });
 
-    const institusjonOppholdStart = useDatovelgerFelt(
-        barn[barnDataKeySpørsmål.institusjonOppholdStart],
+    const institusjonOppholdStartdato = useDatovelgerFelt(
+        barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
     );
 
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
         verdi:
-            barn[barnDataKeySpørsmål.institusjonOppholdSlutt].svar === 'UKJENT'
+            barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar === 'UKJENT'
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
     });
 
-    const institusjonOppholdSlutt = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.institusjonOppholdSlutt],
+    const institusjonOppholdSluttdato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.institusjonOppholdSluttdato],
         institusjonOppholdSluttVetIkke,
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
     );
@@ -102,8 +102,8 @@ export const useOmBarnetUtfyllende = (
                 institusjonsnavn,
                 institusjonsadresse,
                 institusjonspostnummer,
-                institusjonOppholdStart,
-                institusjonOppholdSlutt,
+                institusjonOppholdStartdato: institusjonOppholdStartdato,
+                institusjonOppholdSluttdato: institusjonOppholdSluttdato,
                 institusjonOppholdSluttVetIkke,
             },
             skjemanavn: 'om-barnet',
@@ -128,16 +128,16 @@ export const useOmBarnetUtfyllende = (
                               ...barn.institusjonspostnummer,
                               svar: institusjonspostnummer.verdi,
                           },
-                          institusjonOppholdStart: {
-                              ...barn.institusjonOppholdStart,
-                              svar: institusjonOppholdStart.verdi,
+                          institusjonOppholdStartdato: {
+                              ...barn.institusjonOppholdStartdato,
+                              svar: institusjonOppholdStartdato.verdi,
                           },
-                          institusjonOppholdSlutt: {
-                              ...barn.institusjonOppholdSlutt,
+                          institusjonOppholdSluttdato: {
+                              ...barn.institusjonOppholdSluttdato,
                               svar:
                                   institusjonOppholdSluttVetIkke.verdi === ESvar.JA
                                       ? AlternativtDatoSvar.UKJENT
-                                      : institusjonOppholdStart.verdi,
+                                      : institusjonOppholdStartdato.verdi,
                           },
                       }
                     : barn

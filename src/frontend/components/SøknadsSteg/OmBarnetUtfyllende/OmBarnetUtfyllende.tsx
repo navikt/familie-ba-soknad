@@ -4,7 +4,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { AlternativtDatoSvar } from '../../../typer/person';
+import { AlternativtDatoSvar, barnDataKeySpørsmål } from '../../../typer/person';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -35,7 +35,7 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            {barn.erFosterbarn.svar === ESvar.JA && (
+            {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <KomponentGruppe>
                     <Informasjonsbolk
                         tittelId={'ombarnet.fosterbarn'}
@@ -46,7 +46,7 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                 </KomponentGruppe>
             )}
 
-            {barn.oppholderSegIInstitusjon.svar === ESvar.JA && (
+            {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
                 <SkjemaFieldset tittelId={'ombarnet.institusjon'} språkValues={{ navn: barn.navn }}>
                     <SkjemaFeltInput
                         felt={skjema.felter.institusjonsnavn}
@@ -65,12 +65,12 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                         bredde={'S'}
                     />
                     <Datovelger
-                        felt={skjema.felter.institusjonOppholdStart}
+                        felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
                         labelTekstId={OmBarnetSpørsmålSpråkId['institusjon-opphold-startdato']}
                     />
                     <Datovelger
-                        felt={skjema.felter.institusjonOppholdSlutt}
+                        felt={skjema.felter.institusjonOppholdSluttdato}
                         skjema={skjema}
                         labelTekstId={OmBarnetSpørsmålSpråkId['institusjon-opphold-sluttdato']}
                         disabled={skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
@@ -82,7 +82,8 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                             />
                         }
                         defaultChecked={
-                            barn.institusjonOppholdSlutt.svar === AlternativtDatoSvar.UKJENT
+                            barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar ===
+                            AlternativtDatoSvar.UKJENT
                         }
                         onChange={event => {
                             skjema.felter.institusjonOppholdSluttVetIkke
