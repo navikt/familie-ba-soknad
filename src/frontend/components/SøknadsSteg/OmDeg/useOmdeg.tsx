@@ -32,16 +32,16 @@ export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | undefined;
     telefonnummer: string;
     oppholderSegINorge: ESvar | undefined;
-    oppholdsland: Alpha3Code | undefined;
+    oppholdsland: Alpha3Code | '';
     oppholdslandDato: ISODateString;
     værtINorgeITolvMåneder: ESvar | undefined;
     komTilNorgeDato: ISODateString;
     planleggerÅBoINorgeTolvMnd: ESvar | undefined;
     erAsylsøker: ESvar | undefined;
     jobberPåBåt: ESvar | undefined;
-    arbeidsland: Alpha3Code | undefined;
+    arbeidsland: Alpha3Code | '';
     mottarUtenlandspensjon: ESvar | undefined;
-    pensjonsland: Alpha3Code | undefined;
+    pensjonsland: Alpha3Code | '';
 }
 
 export const useOmdeg = (): {
