@@ -1,11 +1,8 @@
 import React from 'react';
 
-import { Checkbox } from 'nav-frontend-skjema';
-
 import { ESvar } from '@navikt/familie-form-elements';
-import { Felt } from '@navikt/familie-skjema';
 
-import { AlternativtDatoSvar, barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
+import { barnDataKeySpørsmål } from '../../../typer/person';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -17,25 +14,7 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnetUtfyllende } from './useOmBarnetUtfyllende';
-
-const VetIkkeCheckbox: React.FC<{
-    barn: IBarnMedISøknad;
-    labelSpråkId: string;
-    ukjentDatoCheckboxFelt: Felt<ESvar>;
-    søknadsdatafelt: string;
-}> = ({ barn, labelSpråkId, ukjentDatoCheckboxFelt, søknadsdatafelt }) => {
-    return (
-        <Checkbox
-            label={<SpråkTekst id={labelSpråkId} />}
-            defaultChecked={barn[søknadsdatafelt].svar === AlternativtDatoSvar.UKJENT}
-            onChange={event => {
-                ukjentDatoCheckboxFelt
-                    .hentNavInputProps(false)
-                    .onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
-            }}
-        />
-    );
-};
+import VetIkkeCheckbox from './VetIkkeCheckbox';
 
 const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
     const {
