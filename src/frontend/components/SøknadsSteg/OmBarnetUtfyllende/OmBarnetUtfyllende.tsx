@@ -102,7 +102,7 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                     <LandDropdown
                         felt={skjema.felter.oppholdsland}
                         skjema={skjema}
-                        label={OmBarnetSpørsmålSpråkId.oppholdsland}
+                        label={<SpråkTekst id={OmBarnetSpørsmålSpråkId.oppholdsland} />}
                     />
                 </SkjemaFieldset>
             )}
