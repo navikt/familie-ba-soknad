@@ -62,14 +62,14 @@ export enum barnDataKeySpørsmål {
     oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
     oppholdtSegINorgeSammenhengendeTolvMnd = 'oppholdtSegINorgeSammenhengendeTolvMnd',
     oppholderSegIUtland = 'oppholderSegIUtland',
-    oppholdsland = 'oppholdsland',
-    oppholdslandStartdato = 'oppholdslandStartdato',
-    oppholdslandSluttdato = 'oppholdslandSluttdato',
     institusjonsnavn = 'institusjonsnavn',
     institusjonsadresse = 'institusjonsadresse',
     institusjonspostnummer = 'institusjonspostnummer',
     institusjonOppholdStartdato = 'institusjonOppholdStartdato',
     institusjonOppholdSluttdato = 'institusjonOppholdSluttdato',
+    oppholdsland = 'oppholdsland',
+    oppholdslandStartdato = 'oppholdslandStartdato',
+    oppholdslandSluttdato = 'oppholdslandSluttdato',
 }
 
 export interface IBarnRespons extends IPerson {
