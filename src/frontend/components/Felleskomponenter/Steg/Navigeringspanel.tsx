@@ -8,7 +8,7 @@ import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
 import { DeleteFilled } from '@navikt/ds-icons';
 
 import { device } from '../../../Theme';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const Container = styled.div`
     padding: 2rem;
@@ -61,11 +61,21 @@ const StyledFlatKnapp = styled(Flatknapp)<{
     }
 `;
 
+type Knappetype = 'hoved' | 'standard';
+
 const Navigeringspanel: React.FC<{
     onAvbrytCallback: () => void;
     onTilbakeCallback: () => void;
-    valideringErOk: () => boolean;
+    valideringErOk: (() => boolean) | undefined;
 }> = ({ onAvbrytCallback, onTilbakeCallback, valideringErOk }) => {
+    const hentKnappetype = (): Knappetype => {
+        if (valideringErOk) {
+            return valideringErOk() ? 'hoved' : 'standard';
+        } else {
+            return 'hoved';
+        }
+    };
+
     return (
         <Container>
             <StyledKnappBase
@@ -74,15 +84,15 @@ const Navigeringspanel: React.FC<{
                 placeself={'end'}
                 gridarea={'tilbake'}
             >
-                <SpråkTekst id={'felles.tilbake'} />
+                <SpråkTekst id={'felles.navigasjon.tilbake'} />
             </StyledKnappBase>
             <StyledKnappBase
                 htmlType={'submit'}
-                type={valideringErOk() ? 'hoved' : 'standard'}
+                type={hentKnappetype()}
                 placeself={'start'}
                 gridarea={'gåVidere'}
             >
-                <SpråkTekst id={'felles.gåvidere'} />
+                <SpråkTekst id={'felles.navigasjon.gå-videre'} />
             </StyledKnappBase>
             <StyledFlatKnapp
                 mini
@@ -95,7 +105,7 @@ const Navigeringspanel: React.FC<{
                 gridarea={'avsluttOgFortsett'}
                 margintop={'0.5rem'}
             >
-                <SpråkTekst id={'felles.avslutt-fortsettsenere'} />
+                <SpråkTekst id={'felles.navigasjon.avsluttogfortsett'} />
             </StyledFlatKnapp>
             <StyledFlatKnapp
                 mini
@@ -107,7 +117,7 @@ const Navigeringspanel: React.FC<{
             >
                 <DeleteFilled />
                 <span>
-                    <SpråkTekst id={'felles.avbryt-slett'} />
+                    <SpråkTekst id={'felles.navigasjon.avsluttogslett'} />
                 </span>
             </StyledFlatKnapp>
         </Container>

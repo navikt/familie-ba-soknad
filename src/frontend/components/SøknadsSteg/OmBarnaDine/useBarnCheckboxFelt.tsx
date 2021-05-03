@@ -10,8 +10,8 @@ import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 
 const useBarnCheckboxFelt = (
     datafeltNavn: barnDataKeySpørsmål,
-    språkTekstIdForFeil: string,
-    avhengighet?: Felt<ESvar | undefined>
+    avhengighet: Felt<ESvar | undefined>,
+    avhengigJaNeiSpmSvarCondition = ESvar.JA
 ) => {
     const { søknad } = useApp();
     const barn = søknad.barnInkludertISøknaden;
@@ -24,14 +24,16 @@ const useBarnCheckboxFelt = (
         valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
             return felt.verdi.length > 0
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={språkTekstIdForFeil} />);
+                : feil(felt, <SpråkTekst id={'ombarna.barn-ikke-valgt.feilmelding'} />);
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter && avhengigheter.jaNeiSpm
-                ? (avhengigheter.jaNeiSpm as Felt<ESvar | undefined>).verdi === ESvar.JA
+                ? (avhengigheter.jaNeiSpm as Felt<ESvar | undefined>).verdi ===
+                      avhengigJaNeiSpmSvarCondition
                 : true;
         },
         avhengigheter: { jaNeiSpm: avhengighet },
+        nullstillVedAvhengighetEndring: false,
     });
 };
 

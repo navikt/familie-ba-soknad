@@ -6,9 +6,9 @@ import navFarger from 'nav-frontend-core';
 
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
-import norskeTekster from '../../assets/lang/nb.json';
-import { AppProvider } from '../../context/AppContext';
-import { RoutesProvider } from '../../routing/RoutesContext';
+import norskeTekster from '../../../assets/lang/nb.json';
+import { AppProvider } from '../../../context/AppContext';
+import { RoutesProvider } from '../../../context/RoutesContext';
 import { bekreftelseBoksBorderFarge } from './BekreftelseOgStartSoknad';
 import Forside from './Forside';
 import { BekreftelseStatus } from './useBekreftelseOgStartSoknad';

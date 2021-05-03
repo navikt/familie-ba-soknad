@@ -8,8 +8,8 @@ import KnappBase from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Informasjonsbolk from '../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
-import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';
+import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
 const FormContainer = styled.form`
@@ -50,18 +50,21 @@ const BekreftelseOgStartSoknad: React.FC<{
         <FormContainer onSubmit={event => onStartSøknad(event)}>
             <Informasjonsbolk tittelId="forside.bekreftelsesboks.tittel">
                 <StyledBekreftCheckboksPanel
-                    label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring' }, { navn })}
+                    label={formatMessage(
+                        { id: 'forside.bekreftelsesboks.erklæring.spm' },
+                        { navn }
+                    )}
                     onChange={bekreftelseOnChange}
                     checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                     feil={
                         bekreftelseStatus === BekreftelseStatus.FEIL && (
-                            <SpråkTekst id={'forside.bekreftelsesboks.feil'} />
+                            <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
                         )
                     }
                     status={bekreftelseStatus}
                 >
                     <Normaltekst>
-                        <SpråkTekst id="forside.dokumentasjonskrav.brødtekst" />
+                        <SpråkTekst id="forside.bekreftelsesboks.brødtekst" />
                     </Normaltekst>
                 </StyledBekreftCheckboksPanel>
             </Informasjonsbolk>
@@ -70,7 +73,7 @@ const BekreftelseOgStartSoknad: React.FC<{
                 type={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'hoved' : 'standard'}
                 htmlType={'submit'}
             >
-                <SpråkTekst id="forside.startsoknad" />
+                <SpråkTekst id="forside.start-soknad.knapp" />
             </StyledKnappBase>
         </FormContainer>
     );

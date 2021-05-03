@@ -13,21 +13,23 @@ import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { IRoute, useRoutes } from '../../../routing/RoutesContext';
+import { IRoute, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import Banner from '../../Felleskomponenter/Banner/Banner';
-import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import Banner from '../Banner/Banner';
+import InnholdContainer from '../InnholdContainer/InnholdContainer';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import Navigeringspanel from './Navigeringspanel';
 
 interface ISteg {
     tittel: ReactNode;
-    validerFelterOgVisFeilmelding: () => boolean;
-    valideringErOk: () => boolean;
-    skjema: ISkjema<SkjemaFeltTyper, string>;
-    settSøknadsdataCallback: () => void;
+    skjema?: {
+        validerFelterOgVisFeilmelding: () => boolean;
+        valideringErOk: () => boolean;
+        skjema: ISkjema<SkjemaFeltTyper, string>;
+        settSøknadsdataCallback: () => void;
+    };
 }
 
 const AvsluttKnappContainer = styled.div`
@@ -58,7 +60,7 @@ const ChildrenContainer = styled.div`
 
 const StyledSystemtittel = styled(Systemtittel)`
     && {
-        margin: 4rem auto 2rem auto;
+        margin: 4rem auto 3rem auto;
     }
 `;
 
@@ -66,14 +68,7 @@ const Form = styled.form`
     width: 100%;
 `;
 
-const Steg: React.FC<ISteg> = ({
-    tittel,
-    children,
-    validerFelterOgVisFeilmelding,
-    valideringErOk,
-    skjema,
-    settSøknadsdataCallback,
-}) => {
+const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, avbrytSøknad } = useApp();
@@ -100,8 +95,8 @@ const Steg: React.FC<ISteg> = ({
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (erStegUtfyltFrafør(nåværendeStegIndex)) {
-            Object.values(skjema.felter).forEach(felt => {
+        if (skjema && erStegUtfyltFrafør(nåværendeStegIndex)) {
+            Object.values(skjema.skjema.felter).forEach(felt => {
                 felt.validerOgSettFelt();
             });
         }
@@ -115,15 +110,22 @@ const Steg: React.FC<ISteg> = ({
         avbrytSøknad();
         history.push('/');
     };
+    const gåVidere = () => {
+        if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
+            settSisteUtfylteStegIndex(nåværendeStegIndex);
+        }
+        history.push(nesteRoute.path);
+    };
 
     const håndterGåVidere = event => {
         event.preventDefault();
-        if (validerFelterOgVisFeilmelding()) {
-            settSøknadsdataCallback();
-            if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
-                settSisteUtfylteStegIndex(nåværendeStegIndex);
+        if (skjema) {
+            if (skjema.validerFelterOgVisFeilmelding()) {
+                skjema.settSøknadsdataCallback();
+                gåVidere();
             }
-            history.push(nesteRoute.path);
+        } else {
+            gåVidere();
         }
     };
 
@@ -131,9 +133,9 @@ const Steg: React.FC<ISteg> = ({
         history.push(forrigeRoute.path);
     };
 
-    const visFeiloppsummering = (): boolean => {
+    const visFeiloppsummering = (skjema: ISkjema<SkjemaFeltTyper, string>): boolean => {
         const feil = Object.values(skjema.felter).find(
-            felt => felt.valideringsstatus === Valideringsstatus.FEIL
+            felt => felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL
         );
         return !!feil;
     };
@@ -141,7 +143,7 @@ const Steg: React.FC<ISteg> = ({
     return (
         <>
             <header>
-                <Banner språkTekstId={'felles.overskrift.ordinær-barnetrygd'} />
+                <Banner språkTekstId={'felles.banner'} />
                 <Stegindikator
                     autoResponsiv={true}
                     aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}
@@ -153,27 +155,32 @@ const Steg: React.FC<ISteg> = ({
                 <StyledSystemtittel>{tittel}</StyledSystemtittel>
                 <Form onSubmit={event => håndterGåVidere(event)}>
                     <ChildrenContainer>{children}</ChildrenContainer>
-                    {skjema.visFeilmeldinger && visFeiloppsummering() && (
-                        <Feiloppsummering
-                            tittel={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}
-                            feil={Object.values(skjema.felter)
-                                .filter(felt => {
-                                    return felt.valideringsstatus === Valideringsstatus.FEIL;
-                                })
-                                .map(
-                                    (felt): FeiloppsummeringFeil => {
-                                        return {
-                                            skjemaelementId: felt.id,
-                                            feilmelding: felt.feilmelding as string,
-                                        };
-                                    }
-                                )}
-                        />
-                    )}
+                    {skjema &&
+                        skjema.skjema.visFeilmeldinger &&
+                        visFeiloppsummering(skjema.skjema) && (
+                            <Feiloppsummering
+                                tittel={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}
+                                feil={Object.values(skjema.skjema.felter)
+                                    .filter(felt => {
+                                        return (
+                                            felt.erSynlig &&
+                                            felt.valideringsstatus === Valideringsstatus.FEIL
+                                        );
+                                    })
+                                    .map(
+                                        (felt): FeiloppsummeringFeil => {
+                                            return {
+                                                skjemaelementId: felt.id,
+                                                feilmelding: felt.feilmelding as string,
+                                            };
+                                        }
+                                    )}
+                            />
+                        )}
                     <Navigeringspanel
                         onTilbakeCallback={håndterTilbake}
                         onAvbrytCallback={håndterModalStatus}
-                        valideringErOk={valideringErOk}
+                        valideringErOk={skjema && skjema.valideringErOk}
                     />
                 </Form>
 

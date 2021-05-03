@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
 
-import { useApp } from '../../context/AppContext';
-import { IRoute, useRoutes } from '../../routing/RoutesContext';
-import { ILokasjon } from '../../typer/lokasjon';
+import { useApp } from '../../../context/AppContext';
+import { IRoute, useRoutes } from '../../../context/RoutesContext';
+import { ILokasjon } from '../../../typer/lokasjon';
 
 export enum BekreftelseStatus {
     NORMAL = 'NORMAL',

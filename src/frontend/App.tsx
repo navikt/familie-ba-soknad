@@ -4,7 +4,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 
 import AppContainer from './AppContainer';
 import { AppProvider } from './context/AppContext';
-import { RoutesProvider } from './routing/RoutesContext';
+import { RoutesProvider } from './context/RoutesContext';
 
 function App() {
     return (

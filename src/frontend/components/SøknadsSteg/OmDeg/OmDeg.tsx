@@ -11,10 +11,10 @@ import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import Steg from '../Steg/Steg';
+import Steg from '../../Felleskomponenter/Steg/Steg';
+import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
 import { Personopplysninger } from './Personopplysninger';
 import { omDegSpråkTekstId, OmDegSpørsmålId } from './spørsmål';
-import { SøkerBorIkkePåAdresse } from './SøkerBorIkkePåAdresse';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
@@ -23,11 +23,13 @@ const OmDeg: React.FC = () => {
     const { søker } = søknad;
     return (
         <Steg
-            tittel={<SpråkTekst id={'omdeg.tittel'} />}
-            validerFelterOgVisFeilmelding={validerFelterOgVisFeilmelding}
-            valideringErOk={valideringErOk}
-            skjema={skjema}
-            settSøknadsdataCallback={oppdaterSøknad}
+            tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
+            skjema={{
+                validerFelterOgVisFeilmelding,
+                valideringErOk,
+                skjema,
+                settSøknadsdataCallback: oppdaterSøknad,
+            }}
         >
             <KomponentGruppe>
                 <Personopplysninger />
@@ -39,20 +41,19 @@ const OmDeg: React.FC = () => {
                         skjema={skjema}
                         felt={skjema.felter.borPåRegistrertAdresse}
                         spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.borPåRegistrertAdresse]}
-                        tilleggsinfoTekstId={'personopplysninger.lesmer-innhold.riktigAdresse'}
+                        tilleggsinfoTekstId={'omdeg.borpådenneadressen.spm.tilleggsinfo'}
                     />
                 )}
 
                 {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <SøkerBorIkkePåAdresse
-                        advarselTekstId={'personopplysninger.alert.riktigAdresse'}
-                        utfyllendeAdvarselInfoId={'personopplysninger.info.endreAdresse'}
+                    <SøkerMåBrukePDF
+                        advarselTekstId={'omdeg.borpådenneadressen.kontakt-folkeregister.alert'}
+                        utfyllendeAdvarselInfoId={'omdeg.borpådenneadressen.ikke-endre-adresse'}
                     />
                 )}
                 {!søker.adresse && (
-                    <SøkerBorIkkePåAdresse
-                        advarselTekstId={'personopplysninger.info.ukjentadresse'}
-                        utfyllendeAdvarselInfoId={'personopplysninger.info.vi-trenger-din-adresse'}
+                    <SøkerMåBrukePDF
+                        advarselTekstId={'omdeg.personopplysninger.ikke-registrert.alert'}
                     />
                 )}
             </KomponentGruppe>
@@ -87,7 +88,7 @@ const OmDeg: React.FC = () => {
                     avgrensDatoFremITid={true}
                     felt={skjema.felter.oppholdslandDato}
                     skjema={skjema}
-                    labelTekstId={'omdeg.spm.landopphold.dato'}
+                    labelTekstId={omDegSpråkTekstId[OmDegSpørsmålId.oppholdslandDato]}
                 />
                 <JaNeiSpm
                     skjema={skjema}
@@ -98,7 +99,7 @@ const OmDeg: React.FC = () => {
                     avgrensDatoFremITid={true}
                     felt={skjema.felter.komTilNorgeDato}
                     skjema={skjema}
-                    labelTekstId={'omdeg.spm.komTilNorge.dato'}
+                    labelTekstId={omDegSpråkTekstId[OmDegSpørsmålId.komTilNorgeDato]}
                 />
                 <JaNeiSpm
                     skjema={skjema}
@@ -107,7 +108,7 @@ const OmDeg: React.FC = () => {
                 />
                 {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
                     <AlertStripe type={'advarsel'}>
-                        <SpråkTekst id={'omdeg.info.planlegger-ikke-å-bo-i-norge'} />
+                        <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
                     </AlertStripe>
                 )}
             </KomponentGruppe>
@@ -120,7 +121,7 @@ const OmDeg: React.FC = () => {
                 />
                 {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
                     <AlertStripe type={'info'}>
-                        <SpråkTekst id={'omdeg.info.oppholdstillatelse-UDI-vedtak'} />
+                        <SpråkTekst id={'omdeg.asylsøker.alert'} />
                     </AlertStripe>
                 )}
                 <JaNeiSpm

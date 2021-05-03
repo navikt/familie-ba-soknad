@@ -19,7 +19,7 @@ export enum ESivilstand {
 
 export interface IPerson {
     ident: string;
-    navn: string | undefined;
+    navn: string;
 }
 
 export interface ISøkerRespons extends IPerson {
@@ -33,16 +33,16 @@ export interface ISøker extends ISøkerRespons {
     telefonnummer: ISøknadSpørsmål<string>;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | undefined>;
     oppholderSegINorge: ISøknadSpørsmål<ESvar | undefined>;
-    oppholdsland: ISøknadSpørsmål<Alpha3Code | undefined>;
+    oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;
     oppholdslandDato: ISøknadSpørsmål<ISODateString>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | undefined>;
     komTilNorgeDato: ISøknadSpørsmål<ISODateString>;
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | undefined>;
     erAsylsøker: ISøknadSpørsmål<ESvar | undefined>;
     jobberPåBåt: ISøknadSpørsmål<ESvar | undefined>;
-    arbeidsland: ISøknadSpørsmål<Alpha3Code | undefined>;
+    arbeidsland: ISøknadSpørsmål<Alpha3Code | ''>;
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | undefined>;
-    pensjonsland: ISøknadSpørsmål<Alpha3Code | undefined>;
+    pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
 }
 
 export interface IAdresse {
@@ -62,6 +62,11 @@ export enum barnDataKeySpørsmål {
     oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
     oppholdtSegINorgeSammenhengendeTolvMnd = 'oppholdtSegINorgeSammenhengendeTolvMnd',
     oppholderSegIUtland = 'oppholderSegIUtland',
+    institusjonsnavn = 'institusjonsnavn',
+    institusjonsadresse = 'institusjonsadresse',
+    institusjonspostnummer = 'institusjonspostnummer',
+    institusjonOppholdStart = 'institusjonOppholdStart',
+    institusjonOppholdSlutt = 'institusjonOppholdSlutt',
 }
 
 export interface IBarnRespons extends IPerson {
@@ -74,6 +79,12 @@ export interface IBarn extends IPerson {
     alder: string | undefined;
 }
 
+export enum AlternativtDatoSvar {
+    UKJENT = 'UKJENT',
+}
+
+export type DatoMedUkjent = ISODateString | AlternativtDatoSvar.UKJENT;
+
 export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | undefined>;
@@ -84,4 +95,9 @@ export interface IBarnMedISøknad extends IBarn {
         ESvar | undefined
     >;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.institusjonsnavn]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.institusjonsadresse]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.institusjonspostnummer]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.institusjonOppholdStart]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.institusjonOppholdSlutt]: ISøknadSpørsmål<DatoMedUkjent>;
 }

@@ -1,7 +1,9 @@
 import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnetUtfyllende/spørsmål';
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, IBarnRespons } from '../typer/person';
+import { ISøknad } from '../typer/søknad';
 
 export const hentAlder = (dato: string): string => {
     const idag = new Date();
@@ -12,6 +14,12 @@ export const hentAlder = (dato: string): string => {
         alder--;
     }
     return alder + ' år';
+};
+
+export const erBarnRegistrertFraFør = (søknad: ISøknad, ident: string) => {
+    const barnFraPdl = søknad.søker.barn.find(barn => barn.ident === ident);
+    const barnRegistrertManuelt = søknad.barnRegistrertManuelt.find(barn => barn.ident === ident);
+    return barnFraPdl || barnRegistrertManuelt;
 };
 
 const uppercaseFørsteBokstav = text => {
@@ -39,7 +47,6 @@ export const landkodeTilSpråk = (landkode: string, locale: string) => {
 
 export const hentSivilstatus = (statuskode?: ESivilstand) => {
     switch (statuskode) {
-        case ESivilstand.UOPPGITT:
         case ESivilstand.UGIFT:
         case ESivilstand.GIFT:
         case ESivilstand.ENKE_ELLER_ENKEMANN:
@@ -49,10 +56,10 @@ export const hentSivilstatus = (statuskode?: ESivilstand) => {
         case ESivilstand.SEPARERT_PARTNER:
         case ESivilstand.SKILT_PARTNER:
         case ESivilstand.GJENLEVENDE_PARTNER:
-            return `sivilstatus.kode.${statuskode}`;
+            return `felles.sivilstatus.kode.${statuskode}`;
 
         default:
-            return 'sivilstatus.kode.ANNET';
+            return `felles.sivilstatus.kode.${ESivilstand.UOPPGITT}`;
     }
 };
 
@@ -86,6 +93,26 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         oppholderSegIUtland: {
             id: OmBarnaDineSpørsmålId.hvemOppholderSegIUtland,
             svar: undefined,
+        },
+        institusjonsnavn: {
+            id: OmBarnetSpørsmålsId.institusjonsnavn,
+            svar: '',
+        },
+        institusjonsadresse: {
+            id: OmBarnetSpørsmålsId.institusjonsadresse,
+            svar: '',
+        },
+        institusjonspostnummer: {
+            id: OmBarnetSpørsmålsId.institusjonspostnummer,
+            svar: '',
+        },
+        institusjonOppholdStart: {
+            id: OmBarnetSpørsmålsId.institusjonOppholdStart,
+            svar: '',
+        },
+        institusjonOppholdSlutt: {
+            id: OmBarnetSpørsmålsId.institusjonOppholdSlutt,
+            svar: '',
         },
     };
 };

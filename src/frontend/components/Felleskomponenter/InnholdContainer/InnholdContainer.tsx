@@ -13,10 +13,13 @@ const Container = styled.div`
     align-items: flex-start;
     margin: 2rem auto 20rem auto;
     color: ${navFarger.navMorkGra};
+    font-family: 'Source Sans Pro', Arial, sans-serif;
 
     && label,
     a,
-    p {
+    p,
+    li,
+    h2 {
         font-size: 18px;
         line-height: 26px;
     }
