@@ -33,16 +33,16 @@ export interface ISøker extends ISøkerRespons {
     telefonnummer: ISøknadSpørsmål<string>;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | undefined>;
     oppholderSegINorge: ISøknadSpørsmål<ESvar | undefined>;
-    oppholdsland: ISøknadSpørsmål<Alpha3Code | undefined>;
+    oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;
     oppholdslandDato: ISøknadSpørsmål<ISODateString>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | undefined>;
     komTilNorgeDato: ISøknadSpørsmål<ISODateString>;
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | undefined>;
     erAsylsøker: ISøknadSpørsmål<ESvar | undefined>;
     jobberPåBåt: ISøknadSpørsmål<ESvar | undefined>;
-    arbeidsland: ISøknadSpørsmål<Alpha3Code | undefined>;
+    arbeidsland: ISøknadSpørsmål<Alpha3Code | ''>;
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | undefined>;
-    pensjonsland: ISøknadSpørsmål<Alpha3Code | undefined>;
+    pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
 }
 
 export interface IAdresse {
