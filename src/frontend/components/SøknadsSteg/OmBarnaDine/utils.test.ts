@@ -3,6 +3,8 @@
 
 // Disabler ts for å kunne sende inn parametre med kun nødvendige felter i objektet, uten å måtte mocke hele objektet.
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from './utils';
 
 describe('genererSvarForSpørsmålBarn', () => {
@@ -19,7 +21,21 @@ describe('genererSvarForSpørsmålBarn', () => {
 });
 
 describe('genererOppdaterteBarn', () => {
-    const mockSøknad = { barnInkludertISøknaden: [{ ident: '12345678910' }] };
+    const mockSøknad = {
+        barnInkludertISøknaden: [
+            {
+                ident: '12345678910',
+                institusjonsnavn: { svar: 'Narvesen' },
+                institusjonsadresse: { svar: 'Narvesen' },
+                institusjonspostnummer: { svar: '2020' },
+                institusjonOppholdStartdato: { svar: '2020-09-08' },
+                institusjonOppholdSluttdato: { svar: 'UKJENT' },
+                oppholdsland: { svar: 'AUS' },
+                oppholdslandStartdato: { svar: '2020-08-08' },
+                oppholdslandSluttdato: { svar: 'UKJENT' },
+            },
+        ],
+    };
     const mockSkjema = {
         felter: {
             hvemErFosterbarn: { verdi: ['12345678910'] },
@@ -29,6 +45,27 @@ describe('genererOppdaterteBarn', () => {
             hvemTolvMndSammenhengendeINorge: { verdi: [] },
             hvemOppholderSegIUtland: { verdi: ['12345678910'] },
             hvemBarnetrygdFraAnnetEøsland: { verdi: [] },
+            erNoenAvBarnaFosterbarn: {
+                verdi: ESvar.JA,
+            },
+            oppholderBarnSegIInstitusjon: {
+                verdi: ESvar.NEI,
+            },
+            erBarnAdoptertFraUtland: {
+                verdi: ESvar.NEI,
+            },
+            oppholderBarnSegIUtland: {
+                verdi: ESvar.JA,
+            },
+            søktAsylForBarn: {
+                verdi: ESvar.JA,
+            },
+            barnOppholdtSegTolvMndSammenhengendeINorge: {
+                verdi: ESvar.NEI,
+            },
+            mottarBarnetrygdForBarnFraAnnetEøsland: {
+                verdi: ESvar.NEI,
+            },
         },
     };
 
@@ -43,6 +80,14 @@ describe('genererOppdaterteBarn', () => {
                 oppholdtSegINorgeSammenhengendeTolvMnd: { svar: 'NEI' },
                 oppholderSegIUtland: { svar: 'JA' },
                 barnetrygdFraAnnetEøsland: { svar: 'NEI' },
+                institusjonsnavn: { svar: '' },
+                institusjonsadresse: { svar: '' },
+                institusjonspostnummer: { svar: '' },
+                institusjonOppholdStartdato: { svar: '' },
+                institusjonOppholdSluttdato: { svar: '' },
+                oppholdsland: { svar: 'AUS' },
+                oppholdslandStartdato: { svar: '2020-08-08' },
+                oppholdslandSluttdato: { svar: 'UKJENT' },
             },
         ]);
     });

@@ -38,6 +38,10 @@ const jens = {
         id: '7',
         svar: AlternativtDatoSvar.UKJENT,
     },
+    [barnDataKeySpørsmål.oppholderSegIUtland]: { id: '8', svar: ESvar.JA },
+    [barnDataKeySpørsmål.oppholdsland]: { id: '9', svar: 'AUS' },
+    [barnDataKeySpørsmål.oppholdslandStartdato]: { id: '10', svar: '2020-08-08' },
+    [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: 'UKJENT' },
 };
 const line = {
     navn: 'Line',
@@ -52,6 +56,10 @@ const line = {
         id: '',
         svar: '',
     },
+    [barnDataKeySpørsmål.oppholderSegIUtland]: { id: '8', svar: 'A' },
+    [barnDataKeySpørsmål.oppholdsland]: { id: '9', svar: '' },
+    [barnDataKeySpørsmål.oppholdslandStartdato]: { id: '10', svar: '' },
+    [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: '' },
 };
 
 test(`Kan rendre Om Barnet Utfyllende`, () => {
