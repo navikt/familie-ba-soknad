@@ -17,7 +17,7 @@ describe('erRelevanteAvhengigheterValidert', () => {
         const oppholderSegINorgeFeltMock = mock<Felt<ESvar | undefined>>({
             valideringsstatus: Valideringsstatus.OK,
         });
-        const oppholdslandFeltMock = mock<Felt<Alpha3Code | undefined>>({
+        const oppholdslandFeltMock = mock<Felt<Alpha3Code | ''>>({
             valideringsstatus: Valideringsstatus.OK,
             erSynlig: true,
         });
@@ -45,7 +45,7 @@ describe('erRelevanteAvhengigheterValidert', () => {
         const oppholderSegINorgeFeltMock = mock<Felt<ESvar | undefined>>({
             valideringsstatus: Valideringsstatus.OK,
         });
-        const oppholdslandFeltMock = mock<Felt<Alpha3Code | undefined>>({
+        const oppholdslandFeltMock = mock<Felt<Alpha3Code | ''>>({
             valideringsstatus: Valideringsstatus.OK,
             erSynlig: true,
         });
@@ -73,7 +73,7 @@ describe('erRelevanteAvhengigheterValidert', () => {
         const oppholderSegINorgeFeltMock = mock<Felt<ESvar | undefined>>({
             valideringsstatus: Valideringsstatus.IKKE_VALIDERT,
         });
-        const oppholdslandFeltMock = mock<Felt<Alpha3Code | undefined>>({
+        const oppholdslandFeltMock = mock<Felt<Alpha3Code | ''>>({
             valideringsstatus: Valideringsstatus.IKKE_VALIDERT,
             erSynlig: false,
         });
@@ -101,7 +101,7 @@ describe('erRelevanteAvhengigheterValidert', () => {
         const oppholderSegINorgeFeltMock = mock<Felt<ESvar | undefined>>({
             valideringsstatus: Valideringsstatus.OK,
         });
-        const oppholdslandFeltMock = mock<Felt<Alpha3Code | undefined>>({
+        const oppholdslandFeltMock = mock<Felt<Alpha3Code | ''>>({
             valideringsstatus: Valideringsstatus.OK,
             erSynlig: false,
         });

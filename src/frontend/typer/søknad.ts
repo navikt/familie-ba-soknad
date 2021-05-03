@@ -119,7 +119,7 @@ export const initialStateSøknad: ISøknad = {
         },
         oppholdsland: {
             id: OmDegSpørsmålId.oppholdsland,
-            svar: undefined,
+            svar: '',
         },
         oppholdslandDato: {
             id: OmDegSpørsmålId.oppholdslandDato,
@@ -147,7 +147,7 @@ export const initialStateSøknad: ISøknad = {
         },
         arbeidsland: {
             id: OmDegSpørsmålId.arbeidsland,
-            svar: undefined,
+            svar: '',
         },
         mottarUtenlandspensjon: {
             id: OmDegSpørsmålId.mottarUtenlandspensjon,
@@ -155,7 +155,7 @@ export const initialStateSøknad: ISøknad = {
         },
         pensjonsland: {
             id: OmDegSpørsmålId.pensjonsland,
-            svar: undefined,
+            svar: '',
         },
     },
     erNoenAvBarnaFosterbarn: {
