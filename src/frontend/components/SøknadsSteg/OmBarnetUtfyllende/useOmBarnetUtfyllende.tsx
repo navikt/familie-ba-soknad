@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Alpha3Code } from 'i18n-iso-countries';
+
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
@@ -14,6 +16,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
+import useLanddropdownFelt from './useLanddropdownFelt';
 
 export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;
@@ -22,6 +25,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     institusjonOppholdStartdato: ISODateString;
     institusjonOppholdSluttdato: DatoMedUkjent;
     institusjonOppholdSluttVetIkke: ESvar;
+    oppholdsland: Alpha3Code | '';
 }
 
 export const useOmBarnetUtfyllende = (
@@ -96,6 +100,11 @@ export const useOmBarnetUtfyllende = (
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
     );
 
+    const oppholdsland = useLanddropdownFelt(
+        barn.oppholdsland,
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
+    );
+
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
@@ -105,6 +114,7 @@ export const useOmBarnetUtfyllende = (
                 institusjonOppholdStartdato: institusjonOppholdStartdato,
                 institusjonOppholdSluttdato: institusjonOppholdSluttdato,
                 institusjonOppholdSluttVetIkke,
+                oppholdsland,
             },
             skjemanavn: 'om-barnet',
         }
@@ -138,6 +148,10 @@ export const useOmBarnetUtfyllende = (
                                   institusjonOppholdSluttVetIkke.verdi === ESvar.JA
                                       ? AlternativtDatoSvar.UKJENT
                                       : institusjonOppholdStartdato.verdi,
+                          },
+                          oppholdsland: {
+                              ...barn.oppholdsland,
+                              svar: oppholdsland.verdi,
                           },
                       }
                     : barn

@@ -8,6 +8,7 @@ import { AlternativtDatoSvar, barnDataKeySpørsmål } from '../../../typer/perso
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -90,6 +91,18 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                                 .hentNavInputProps(false)
                                 .onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
                         }}
+                    />
+                </SkjemaFieldset>
+            )}
+            {barn[barnDataKeySpørsmål.oppholderSegIUtland].svar === ESvar.JA && (
+                <SkjemaFieldset
+                    tittelId={'ombarnet.oppholdutland'}
+                    språkValues={{ navn: barn.navn }}
+                >
+                    <LandDropdown
+                        felt={skjema.felter.oppholdsland}
+                        skjema={skjema}
+                        label={OmBarnetSpørsmålSpråkId.oppholdsland}
                     />
                 </SkjemaFieldset>
             )}

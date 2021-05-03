@@ -5,9 +5,10 @@ export enum OmBarnetSpørsmålsId {
     institusjonOppholdStartdato = 'institusjon-opphold-startdato',
     institusjonOppholdSluttdato = 'institusjon-opphold-sluttdato',
     institusjonOppholdVetIkke = 'institusjon-opphold-ukjent-sluttdato',
-    oppholdsland = '',
-    oppholdslandStartdato = '',
-    oppholdslandSluttdato = '',
+    oppholdsland = 'oppholdsland',
+    oppholdslandStartdato = 'utenlandsopphold-startdato ',
+    oppholdslandSluttdato = 'utenlandsopphold-sluttdato',
+    oppholdslandSluttDatoVetIkke = 'utenlandsopphold-ukjent-sluttdato',
 }
 
 export const OmBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
@@ -17,7 +18,9 @@ export const OmBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.institusjonOppholdStartdato]: 'ombarnet.institusjon.startdato.spm',
     [OmBarnetSpørsmålsId.institusjonOppholdSluttdato]: 'ombarnet.institusjon.sluttdato.spm',
     [OmBarnetSpørsmålsId.institusjonOppholdVetIkke]: 'ombarnet.institusjon.ukjent-sluttdato.spm',
-    [OmBarnetSpørsmålsId.oppholdsland]: '',
-    [OmBarnetSpørsmålsId.oppholdslandStartdato]: '',
-    [OmBarnetSpørsmålsId.oppholdslandSluttdato]: '',
+    [OmBarnetSpørsmålsId.oppholdsland]: 'ombarnet.oppholdutland.land.spm',
+    [OmBarnetSpørsmålsId.oppholdslandStartdato]: 'ombarnet.oppholdutland.startdato.spm',
+    [OmBarnetSpørsmålsId.oppholdslandSluttdato]: 'ombarnet.oppholdutland.sluttdato.spm',
+    [OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke]:
+        'ombarnet.oppholdutland.ukjent-sluttdato.spm',
 };
