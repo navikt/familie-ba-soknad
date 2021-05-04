@@ -12,6 +12,7 @@ const SpråkTekst: React.FC<MessageProps> = props => {
             b: msg => <b>{msg}</b>,
             punktliste: msg => <ul>{msg}</ul>,
             punkt: msg => <li>{msg}</li>,
+            p: msg => <p>{msg}</p>,
         },
     };
 

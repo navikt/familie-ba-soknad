@@ -8,6 +8,7 @@ import { idnr } from '@navikt/fnrvalidator';
 
 import { useApp } from '../../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarn } from '../../../../typer/person';
+import { erBarnRegistrertFraFør } from '../../../../utils/person';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
 import useNavnInputFelt from './useNavnInputFelt';
@@ -64,9 +65,21 @@ export const useLeggTilBarn = (): {
         verdi: '',
         skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
         valideringsfunksjon: felt => {
-            return idnr(felt.verdi).status === 'valid'
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.feilmelding'} />);
+            if (erBarnRegistrertFraFør(søknad, felt.verdi)) {
+                return feil(
+                    felt,
+                    <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.duplikat-barn.feilmelding'} />
+                );
+            } else if (felt.verdi === '') {
+                return feil(felt, <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.feilmelding'} />);
+            } else {
+                return idnr(felt.verdi).status === 'valid'
+                    ? ok(felt)
+                    : feil(
+                          felt,
+                          <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.feil-format.feilmelding'} />
+                      );
+            }
         },
         avhengigheter: { erFødt },
     });

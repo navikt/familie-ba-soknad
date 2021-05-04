@@ -43,7 +43,7 @@ From the top (rekkefølge er viktig, steg 5 krasjer hvis du ikke gjør steg 3 f�
     Git apply den følgende diffen
     ```diff
     diff --git "a/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt" "b/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt"
-    index 0efad49..ee059b4 100644
+    index 0efad49..bbda0d8 100644
     --- "a/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt"
     +++ "b/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt"
     @@ -8,6 +8,7 @@ import no.nav.familie.prosessering.domene.Task
@@ -63,15 +63,8 @@ From the top (rekkefølge er viktig, steg 5 krasjer hvis du ikke gjør steg 3 f�
              journalføringService.journalførSøknad(task.payload, pdf)
       }
     
-    @@ -25,4 +28,4 @@ class JournalførSøknadTask(private val pdfService: PdfService,
-    val log: Logger = LoggerFactory.getLogger(this::class.java)
-    }
-    
-    -}
-    \ No newline at end of file
-    +}
     diff --git a/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt b/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
-    index b4cf801..c644b58 100644
+    index b4cf801..2faa184 100644
     --- a/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
     +++ b/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
     @@ -11,6 +11,6 @@ class DevLauncherPostgres
@@ -81,10 +74,8 @@ From the top (rekkefølge er viktig, steg 5 krasjer hvis du ikke gjør steg 3 f�
     -            .profiles("postgres", "mock-dokarkiv", "mock-dokgen")
     +            .profiles("postgres", "mock-dokarkiv")
       app.run(*args)
-      -}
+      }
       \ No newline at end of file
-      +}
-    
     ```
     Kjør DevLauncherPostgres
 

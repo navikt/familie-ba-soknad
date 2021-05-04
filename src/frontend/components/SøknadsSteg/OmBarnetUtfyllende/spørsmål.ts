@@ -1,13 +1,26 @@
-export enum OmBarnetUfyllendeSpørsmålsId {
+export enum OmBarnetSpørsmålsId {
     institusjonsnavn = 'institusjonsnavn',
     institusjonsadresse = 'institusjonsadresse',
     institusjonspostnummer = 'institusjonspostnummer',
+    institusjonOppholdStartdato = 'institusjon-opphold-startdato',
+    institusjonOppholdSluttdato = 'institusjon-opphold-sluttdato',
+    institusjonOppholdVetIkke = 'institusjon-opphold-ukjent-sluttdato',
+    oppholdsland = 'oppholdsland',
+    oppholdslandStartdato = 'utenlandsopphold-startdato ',
+    oppholdslandSluttdato = 'utenlandsopphold-sluttdato',
+    oppholdslandSluttDatoVetIkke = 'utenlandsopphold-ukjent-sluttdato',
 }
 
-export const OmBarnetUfyllendeSpørsmålSpråkId: Record<OmBarnetUfyllendeSpørsmålsId, string> = {
-    [OmBarnetUfyllendeSpørsmålsId.institusjonsnavn]: 'ombarnet-utfyllende.spm.institusjonsnavn',
-    [OmBarnetUfyllendeSpørsmålsId.institusjonsadresse]:
-        'ombarnet-utfyllende.spm.institusjonsadresse',
-    [OmBarnetUfyllendeSpørsmålsId.institusjonspostnummer]:
-        'ombarnet-utfyllende.spm.institusjonspostnummer',
+export const OmBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
+    [OmBarnetSpørsmålsId.institusjonsnavn]: 'ombarnet.institusjon.navn.spm',
+    [OmBarnetSpørsmålsId.institusjonsadresse]: 'ombarnet.institusjon.adresse.spm',
+    [OmBarnetSpørsmålsId.institusjonspostnummer]: 'ombarnet.institusjon.postnummer.spm',
+    [OmBarnetSpørsmålsId.institusjonOppholdStartdato]: 'ombarnet.institusjon.startdato.spm',
+    [OmBarnetSpørsmålsId.institusjonOppholdSluttdato]: 'ombarnet.institusjon.sluttdato.spm',
+    [OmBarnetSpørsmålsId.institusjonOppholdVetIkke]: 'ombarnet.institusjon.ukjent-sluttdato.spm',
+    [OmBarnetSpørsmålsId.oppholdsland]: 'ombarnet.oppholdutland.land.spm',
+    [OmBarnetSpørsmålsId.oppholdslandStartdato]: 'ombarnet.oppholdutland.startdato.spm',
+    [OmBarnetSpørsmålsId.oppholdslandSluttdato]: 'ombarnet.oppholdutland.sluttdato.spm',
+    [OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke]:
+        'ombarnet.oppholdutland.ukjent-sluttdato.spm',
 };

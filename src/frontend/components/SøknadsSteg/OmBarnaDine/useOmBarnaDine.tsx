@@ -108,7 +108,8 @@ export const useOmBarnaDine = (): {
 
     const hvemTolvMndSammenhengendeINorge = useBarnCheckboxFelt(
         barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd,
-        barnOppholdtSegTolvMndSammenhengendeINorge
+        barnOppholdtSegTolvMndSammenhengendeINorge,
+        ESvar.NEI
     );
 
     const mottarBarnetrygdForBarnFraAnnetEøsland = useJaNeiSpmFelt(

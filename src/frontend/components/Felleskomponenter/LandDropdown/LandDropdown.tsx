@@ -12,7 +12,7 @@ import { device } from '../../../Theme';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 
 interface LandDropdownProps {
-    felt: Felt<Alpha3Code | undefined>;
+    felt: Felt<Alpha3Code | ''>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
     label?: ReactNode;
 }
@@ -25,11 +25,9 @@ const StyledSelect = styled(Select)`
 `;
 
 const Container = styled.div`
-    width: 50%;
     padding-right: 0.7rem;
 
     @media all and ${device.mobile} {
-        width: 100%;
         padding: 0;
     }
 `;
@@ -45,9 +43,9 @@ export const LandDropdown: React.FC<LandDropdownProps> = ({ felt, skjema, label 
         <Container id={felt.id}>
             <StyledSelect
                 label={label}
-                defaultValue={''}
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                 id={undefined}
+                bredde={'l'}
             >
                 <option
                     disabled={true}
