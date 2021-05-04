@@ -35,6 +35,7 @@ describe('genererOppdaterteBarn', () => {
                 oppholdslandSluttdato: { svar: 'UKJENT' },
                 nårKomBarnTilNorgeDato: { svar: '2020-07-07' },
                 planleggerÅBoINorge12Mnd: { svar: ESvar.JA },
+                barnetrygdFraEøslandHvilketLand: { svar: 'AUS' },
             },
         ],
     };
@@ -46,7 +47,7 @@ describe('genererOppdaterteBarn', () => {
             hvemOppholderSegIInstitusjon: { verdi: [] },
             hvemTolvMndSammenhengendeINorge: { verdi: [] },
             hvemOppholderSegIUtland: { verdi: ['12345678910'] },
-            hvemBarnetrygdFraAnnetEøsland: { verdi: [] },
+            hvemBarnetrygdFraAnnetEøsland: { verdi: ['12345678910'] },
             erNoenAvBarnaFosterbarn: {
                 verdi: ESvar.JA,
             },
@@ -66,7 +67,7 @@ describe('genererOppdaterteBarn', () => {
                 verdi: ESvar.NEI,
             },
             mottarBarnetrygdForBarnFraAnnetEøsland: {
-                verdi: ESvar.NEI,
+                verdi: ESvar.JA,
             },
         },
     };
@@ -81,7 +82,7 @@ describe('genererOppdaterteBarn', () => {
                 oppholderSegIInstitusjon: { svar: 'NEI' },
                 boddMindreEnn12MndINorge: { svar: 'NEI' },
                 oppholderSegIUtland: { svar: 'JA' },
-                barnetrygdFraAnnetEøsland: { svar: 'NEI' },
+                barnetrygdFraAnnetEøsland: { svar: 'JA' },
                 institusjonsnavn: { svar: '' },
                 institusjonsadresse: { svar: '' },
                 institusjonspostnummer: { svar: '' },
@@ -90,8 +91,9 @@ describe('genererOppdaterteBarn', () => {
                 oppholdsland: { svar: 'AUS' },
                 oppholdslandStartdato: { svar: '2020-08-08' },
                 oppholdslandSluttdato: { svar: 'UKJENT' },
-                nårKomBarnTilNorgeDato: { svar: '2020-07-07' },
-                planleggerÅBoINorge12Mnd: { svar: ESvar.JA },
+                nårKomBarnTilNorgeDato: { svar: '' },
+                planleggerÅBoINorge12Mnd: { svar: undefined },
+                barnetrygdFraEøslandHvilketLand: { svar: 'AUS' },
             },
         ]);
     });

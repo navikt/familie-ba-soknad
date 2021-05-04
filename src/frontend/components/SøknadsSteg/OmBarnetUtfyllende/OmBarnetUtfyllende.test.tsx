@@ -30,7 +30,6 @@ const jens = {
     ident: '12345678910',
     [barnDataKeySpørsmål.erFosterbarn]: { id: '1', svar: ESvar.NEI },
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: { id: '2', svar: ESvar.JA },
-    [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: { id: '', svar: ESvar.JA },
     [barnDataKeySpørsmål.institusjonsnavn]: { id: '3', svar: 'narvesen' },
     [barnDataKeySpørsmål.institusjonsadresse]: { id: '4', svar: 'narvesen' },
     [barnDataKeySpørsmål.institusjonspostnummer]: { id: '5', svar: '2030' },
@@ -45,6 +44,9 @@ const jens = {
     [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: 'UKJENT' },
     [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: { id: '12', svar: '2020-07-07' },
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: ESvar.JA },
+    [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: { id: '14', svar: ESvar.JA },
+    [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.JA },
+    [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: 'AUS' },
 };
 const line = {
     navn: 'Line',
@@ -66,6 +68,8 @@ const line = {
     [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: '' },
     [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: { id: '12', svar: '' },
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: undefined },
+    [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: '' },
 };
 
 test(`Kan rendre Om Barnet Utfyllende`, () => {
