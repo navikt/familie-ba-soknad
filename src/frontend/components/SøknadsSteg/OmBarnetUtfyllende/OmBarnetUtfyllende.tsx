@@ -3,6 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål } from '../../../typer/person';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -112,6 +113,16 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                         ukjentDatoCheckboxFelt={skjema.felter.oppholdslandSluttDatoVetIkke}
                         søknadsdatafelt={barnDataKeySpørsmål.oppholdslandSluttdato}
                     />
+                </SkjemaFieldset>
+            )}
+            {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
+                <SkjemaFieldset
+                    tittelId={'ombarnet.sammenhengende-opphold'}
+                    språkValues={{ navn: barn.navn }}
+                >
+                    <AlertStripe>
+                        <SpråkTekst id={'ombarnet.planlagt-sammenhengende-opphold.alert'} />
+                    </AlertStripe>
                 </SkjemaFieldset>
             )}
         </Steg>

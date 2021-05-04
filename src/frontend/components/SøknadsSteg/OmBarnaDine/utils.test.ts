@@ -77,7 +77,7 @@ describe('genererOppdaterteBarn', () => {
                 erAsylsøker: { svar: 'JA' },
                 erAdoptertFraUtland: { svar: 'NEI' },
                 oppholderSegIInstitusjon: { svar: 'NEI' },
-                oppholdtSegINorgeSammenhengendeTolvMnd: { svar: 'NEI' },
+                boddMindreEnn12MndINorge: { svar: 'NEI' },
                 oppholderSegIUtland: { svar: 'JA' },
                 barnetrygdFraAnnetEøsland: { svar: 'NEI' },
                 institusjonsnavn: { svar: '' },

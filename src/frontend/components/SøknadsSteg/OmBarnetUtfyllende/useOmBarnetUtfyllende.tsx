@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
-import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import {
@@ -29,6 +29,8 @@ export interface IOmBarnetUtvidetFeltTyper {
     oppholdslandStartdato: ISODateString;
     oppholdslandSluttdato: DatoMedUkjent;
     oppholdslandSluttDatoVetIkke: ESvar;
+    nårKomBarnTilNorgeDato: ISODateString;
+    planleggerÅBoINorge12Mnd: ESvar | undefined;
 }
 
 export const useOmBarnetUtfyllende = (
@@ -131,6 +133,27 @@ export const useOmBarnetUtfyllende = (
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
     );
 
+    /*---BODD SAMMENHENGENDE I NORGE---*/
+
+    const nårKomBarnTilNorgeDato = useDatovelgerFelt(
+        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
+        skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
+    );
+
+    const planleggerÅBoINorge12Mnd = useFelt<ESvar | undefined>({
+        feltId: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].id,
+        verdi: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar,
+        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+        },
+        skalFeltetVises: () => {
+            return skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge);
+        },
+        nullstillVedAvhengighetEndring: false,
+    });
+
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
@@ -144,6 +167,8 @@ export const useOmBarnetUtfyllende = (
                 oppholdslandStartdato,
                 oppholdslandSluttdato,
                 oppholdslandSluttDatoVetIkke,
+                nårKomBarnTilNorgeDato,
+                planleggerÅBoINorge12Mnd,
             },
             skjemanavn: 'om-barnet',
         }
@@ -192,6 +217,14 @@ export const useOmBarnetUtfyllende = (
                                   oppholdslandSluttDatoVetIkke.verdi === ESvar.JA
                                       ? AlternativtDatoSvar.UKJENT
                                       : oppholdslandSluttdato.verdi,
+                          },
+                          nårKomBarnTilNorgeDato: {
+                              ...barn.nårKomBarnTilNorgeDato,
+                              svar: nårKomBarnTilNorgeDato.verdi,
+                          },
+                          planleggerÅBoINorge12Mnd: {
+                              ...barn.planleggerÅBoINorge12Mnd,
+                              svar: planleggerÅBoINorge12Mnd.verdi,
                           },
                       }
                     : barn

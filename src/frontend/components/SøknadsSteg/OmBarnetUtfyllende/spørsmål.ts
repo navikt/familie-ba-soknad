@@ -9,6 +9,8 @@ export enum OmBarnetSpørsmålsId {
     oppholdslandStartdato = 'utenlandsopphold-startdato ',
     oppholdslandSluttdato = 'utenlandsopphold-sluttdato',
     oppholdslandSluttDatoVetIkke = 'utenlandsopphold-ukjent-sluttdato',
+    nårKomBarnetTilNorge = 'når-kom-barnet-til-norge',
+    planleggerÅBoINorge12Mnd = 'planlegger-å-bo-sammenhengende-i-norge-12mnd',
 }
 
 export const OmBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
@@ -23,4 +25,6 @@ export const OmBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.oppholdslandSluttdato]: 'ombarnet.oppholdutland.sluttdato.spm',
     [OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke]:
         'ombarnet.oppholdutland.ukjent-sluttdato.spm',
+    [OmBarnetSpørsmålsId.nårKomBarnetTilNorge]: 'ombarnet.sammenhengende-opphold.dato.spm',
+    [OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]: 'ombarnet.planlagt-sammenhengende-opphold.spm',
 };

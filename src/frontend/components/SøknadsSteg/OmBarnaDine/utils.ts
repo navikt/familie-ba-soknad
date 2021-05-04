@@ -20,91 +20,105 @@ export const genererOppdaterteBarn = (
     return søknad.barnInkludertISøknaden.map(barn => {
         return {
             ...barn,
-            erFosterbarn: {
+            [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
                 svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
             },
-            erAsylsøker: {
+            [barnDataKeySpørsmål.erAsylsøker]: {
                 ...barn[barnDataKeySpørsmål.erAsylsøker],
                 svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErSøktAsylFor),
             },
-            erAdoptertFraUtland: {
+            [barnDataKeySpørsmål.erAdoptertFraUtland]: {
                 ...barn[barnDataKeySpørsmål.erAdoptertFraUtland],
                 svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErAdoptertFraUtland),
             },
-            oppholderSegIInstitusjon: {
+            [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
                 ...barn[barnDataKeySpørsmål.oppholderSegIInstitusjon],
                 svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemOppholderSegIInstitusjon),
             },
-            oppholdtSegINorgeSammenhengendeTolvMnd: {
-                ...barn[barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd],
+            [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: {
+                ...barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge],
                 svar: genererSvarForSpørsmålBarn(
                     barn,
                     skjema.felter.hvemTolvMndSammenhengendeINorge
                 ),
             },
-            oppholderSegIUtland: {
+            [barnDataKeySpørsmål.oppholderSegIUtland]: {
                 ...barn[barnDataKeySpørsmål.oppholderSegIUtland],
                 svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemOppholderSegIUtland),
             },
-            barnetrygdFraAnnetEøsland: {
+            [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
                 ...barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland],
                 svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemBarnetrygdFraAnnetEøsland),
             },
-            institusjonsnavn: {
+            [barnDataKeySpørsmål.institusjonsnavn]: {
                 ...barn[barnDataKeySpørsmål.institusjonsnavn],
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     skjema.felter.oppholderBarnSegIInstitusjon,
                     barn[barnDataKeySpørsmål.institusjonsnavn]
                 ),
             },
-            institusjonsadresse: {
+            [barnDataKeySpørsmål.institusjonsadresse]: {
                 ...barn[barnDataKeySpørsmål.institusjonsadresse],
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     skjema.felter.oppholderBarnSegIInstitusjon,
                     barn[barnDataKeySpørsmål.institusjonsadresse]
                 ),
             },
-            institusjonspostnummer: {
+            [barnDataKeySpørsmål.institusjonspostnummer]: {
                 ...barn[barnDataKeySpørsmål.institusjonspostnummer],
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     skjema.felter.oppholderBarnSegIInstitusjon,
                     barn[barnDataKeySpørsmål.institusjonspostnummer]
                 ),
             },
-            institusjonOppholdStartdato: {
+            [barnDataKeySpørsmål.institusjonOppholdStartdato]: {
                 ...barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     skjema.felter.oppholderBarnSegIInstitusjon,
                     barn[barnDataKeySpørsmål.institusjonOppholdStartdato]
                 ),
             },
-            institusjonOppholdSluttdato: {
+            [barnDataKeySpørsmål.institusjonOppholdSluttdato]: {
                 ...barn[barnDataKeySpørsmål.institusjonOppholdSluttdato],
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     skjema.felter.oppholderBarnSegIInstitusjon,
                     barn[barnDataKeySpørsmål.institusjonOppholdSluttdato]
                 ),
             },
-            oppholdsland: {
+            [barnDataKeySpørsmål.oppholdsland]: {
                 ...barn[barnDataKeySpørsmål.oppholdsland],
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     skjema.felter.oppholderBarnSegIUtland,
                     barn[barnDataKeySpørsmål.oppholdsland]
                 ),
             },
-            oppholdslandStartdato: {
+            [barnDataKeySpørsmål.oppholdslandStartdato]: {
                 ...barn[barnDataKeySpørsmål.oppholdslandStartdato],
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     skjema.felter.oppholderBarnSegIUtland,
                     barn[barnDataKeySpørsmål.oppholdslandStartdato]
                 ),
             },
-            oppholdslandSluttdato: {
+            [barnDataKeySpørsmål.oppholdslandSluttdato]: {
                 ...barn[barnDataKeySpørsmål.oppholdslandSluttdato],
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     skjema.felter.oppholderBarnSegIUtland,
                     barn[barnDataKeySpørsmål.oppholdslandSluttdato]
+                ),
+            },
+            [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: {
+                ...barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
+                svar: genererSvarForOppfølgningspørsmålBarn(
+                    skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge,
+                    barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato]
+                ),
+            },
+            [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: {
+                ...barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
+                svar: genererSvarForOppfølgningspørsmålBarn(
+                    skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge,
+                    barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]
                 ),
             },
         };
