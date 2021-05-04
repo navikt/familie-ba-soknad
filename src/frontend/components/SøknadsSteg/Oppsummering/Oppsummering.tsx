@@ -6,7 +6,10 @@ import styled from 'styled-components/macro';
 
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { useApp } from '../../../context/AppContext';
+import { ESivilstand } from '../../../typer/person';
 import { landkodeTilSpråk } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -26,11 +29,18 @@ const StyledOppsummeringsFelt = styled.div`
 `;
 
 const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsvar }) => {
+    let språktekstid: boolean | string = false;
+    if (søknadsvar && søknadsvar in ESvar) {
+        språktekstid = 'felles.svaralternativ.' + søknadsvar.toLowerCase();
+    } else if (søknadsvar && søknadsvar in ESivilstand) {
+        språktekstid = 'felles.sivilstatus.kode.' + søknadsvar;
+    }
+
     return (
         <StyledOppsummeringsFelt>
             <Element>{tittel}</Element>
             <Normaltekst>
-                <SpråkTekst id={søknadsvar} />
+                {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
             </Normaltekst>
         </StyledOppsummeringsFelt>
     );
@@ -38,7 +48,7 @@ const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsv
 
 const Oppsummering: React.FC = () => {
     const intl = useIntl();
-
+    console.log(intl);
     const { søknad } = useApp();
     console.log(søknad);
 
@@ -49,21 +59,22 @@ const Oppsummering: React.FC = () => {
             </StyledNormaltekst>
             <Oppsummeringsbolk tittel={'omdeg.sidetittel'}>
                 <OppsummeringFelt
-                    tittel={<SpråkTekst id={'omdeg.personopplysninger.fødselsnummer'} />}
-                    søknadsvar={søknad.søker.ident}
-                />
-                <OppsummeringFelt
                     tittel={<SpråkTekst id={'omdeg.personopplysninger.statsborgerskap'} />}
                     søknadsvar={søknad.søker.statsborgerskap
                         .map((statsborgerskap: { landkode: Alpha3Code }) =>
-                            landkodeTilSpråk(statsborgerskap.landkode, intl.locale)
+                            landkodeTilSpråk(statsborgerskap.landkode, intl.defaultLocale)
                         )
                         .join(', ')}
+                />
+                <OppsummeringFelt
+                    tittel={<SpråkTekst id={'omdeg.personopplysninger.fødselsnummer'} />}
+                    søknadsvar={søknad.søker.ident}
                 />
                 <OppsummeringFelt
                     tittel={<SpråkTekst id={'omdeg.personopplysninger.sivilstatus'} />}
                     søknadsvar={søknad.søker.sivilstand.type}
                 />
+
                 <OppsummeringFelt
                     tittel={<SpråkTekst id={'omdeg.telefon.spm'} />}
                     søknadsvar={søknad.søker.telefonnummer.svar}
@@ -75,7 +86,10 @@ const Oppsummering: React.FC = () => {
                 {søknad.søker.oppholdsland.svar !== undefined && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.opphold-i-norge.land.spm'} />}
-                        søknadsvar={landkodeTilSpråk(søknad.søker.oppholdsland.svar, intl.locale)}
+                        søknadsvar={landkodeTilSpråk(
+                            søknad.søker.oppholdsland.svar,
+                            intl.defaultLocale
+                        )}
                     />
                 )}
                 {søknad.søker.oppholdslandDato.svar !== '' && (
@@ -123,6 +137,36 @@ const Oppsummering: React.FC = () => {
                         søknadsvar={søknad.søker.pensjonsland.svar}
                     />
                 )}
+            </Oppsummeringsbolk>
+
+            <Oppsummeringsbolk tittel={'hvilkebarn.sidetittel'}>
+                {søknad.barnInkludertISøknaden.map(barn => (
+                    <>
+                        {barn.navn && <OppsummeringFelt tittel={<SpråkTekst id={barn.navn} />} />}
+                        {barn.ident && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'hvilkebarn.barn.fødselsnummer'} />}
+                                søknadsvar={barn.ident}
+                            />
+                        )}
+
+                        {barn.borMedSøker ? (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'hvilkebarn.barn.bosted'} />}
+                                søknadsvar={intl.formatMessage({
+                                    id: 'hvilkebarn.barn.bosted.din-adresse',
+                                })}
+                            />
+                        ) : (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'hvilkebarn.barn.bosted'} />}
+                                søknadsvar={intl.formatMessage({
+                                    id: 'hvilkebarn.barn.bosted.ikke-din-adresse',
+                                })}
+                            />
+                        )}
+                    </>
+                ))}
             </Oppsummeringsbolk>
         </Steg>
     );
