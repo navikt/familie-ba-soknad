@@ -18,7 +18,6 @@ interface LandDropdownProps {
 }
 
 const StyledSelect = styled(Select)`
-    padding-top: 1rem;
     label {
         font-size: 1.125rem;
     }

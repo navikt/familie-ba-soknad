@@ -109,17 +109,17 @@ export const genererOppdaterteBarn = (
             },
             [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: {
                 ...barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge,
-                    barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato]
-                ),
+                svar:
+                    skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi === ESvar.NEI
+                        ? barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar
+                        : '',
             },
             [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: {
                 ...barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge,
-                    barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]
-                ),
+                svar:
+                    skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi === ESvar.NEI
+                        ? barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar
+                        : undefined,
             },
         };
     });
