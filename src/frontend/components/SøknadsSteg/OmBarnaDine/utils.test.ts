@@ -33,6 +33,8 @@ describe('genererOppdaterteBarn', () => {
                 oppholdsland: { svar: 'AUS' },
                 oppholdslandStartdato: { svar: '2020-08-08' },
                 oppholdslandSluttdato: { svar: 'UKJENT' },
+                nårKomBarnTilNorgeDato: { svar: '2020-07-07' },
+                planleggerÅBoINorge12Mnd: { svar: ESvar.JA },
             },
         ],
     };
@@ -88,6 +90,8 @@ describe('genererOppdaterteBarn', () => {
                 oppholdsland: { svar: 'AUS' },
                 oppholdslandStartdato: { svar: '2020-08-08' },
                 oppholdslandSluttdato: { svar: 'UKJENT' },
+                nårKomBarnTilNorgeDato: { svar: '2020-07-07' },
+                planleggerÅBoINorge12Mnd: { svar: ESvar.JA },
             },
         ]);
     });
