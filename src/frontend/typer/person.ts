@@ -59,6 +59,7 @@ export enum barnDataKeySpørsmål {
     erAdoptertFraUtland = 'erAdoptertFraUtland',
     erAsylsøker = 'erAsylsøker',
     barnetrygdFraAnnetEøsland = 'barnetrygdFraAnnetEøsland',
+    barnetrygdFraEøslandHvilketLand = 'barnetrygdFraEøslandHvilketLand',
     oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
     institusjonsnavn = 'institusjonsnavn',
     institusjonsadresse = 'institusjonsadresse',
@@ -108,4 +109,5 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: ISøknadSpørsmål<ISODateString>;
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
 }

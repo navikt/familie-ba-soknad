@@ -31,6 +31,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     oppholdslandSluttDatoVetIkke: ESvar;
     nårKomBarnTilNorgeDato: ISODateString;
     planleggerÅBoINorge12Mnd: ESvar | undefined;
+    barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
 }
 
 export const useOmBarnetUtfyllende = (
@@ -110,7 +111,7 @@ export const useOmBarnetUtfyllende = (
     /*---UTENLANDSOPPHOLD---*/
 
     const oppholdsland = useLanddropdownFelt(
-        barn.oppholdsland,
+        barn[barnDataKeySpørsmål.oppholdsland],
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
     );
 
@@ -154,6 +155,13 @@ export const useOmBarnetUtfyllende = (
         nullstillVedAvhengighetEndring: false,
     });
 
+    /*--- MOTTAR BARNETRYFD FRA ANNET EØSLAND ---*/
+
+    const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt(
+        barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
+        skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland)
+    );
+
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
@@ -169,6 +177,7 @@ export const useOmBarnetUtfyllende = (
                 oppholdslandSluttDatoVetIkke,
                 nårKomBarnTilNorgeDato,
                 planleggerÅBoINorge12Mnd,
+                barnetrygdFraEøslandHvilketLand,
             },
             skjemanavn: 'om-barnet',
         }
@@ -225,6 +234,10 @@ export const useOmBarnetUtfyllende = (
                           planleggerÅBoINorge12Mnd: {
                               ...barn.planleggerÅBoINorge12Mnd,
                               svar: planleggerÅBoINorge12Mnd.verdi,
+                          },
+                          barnetrygdFraEøslandHvilketLand: {
+                              ...barn.barnetrygdFraEøslandHvilketLand,
+                              svar: barnetrygdFraEøslandHvilketLand.verdi,
                           },
                       }
                     : barn

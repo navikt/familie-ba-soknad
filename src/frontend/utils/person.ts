@@ -141,6 +141,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd,
             svar: undefined,
         },
+        [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
+            id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
+            svar: '',
+        },
     };
 };
 

@@ -140,6 +140,22 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                     )}
                 </SkjemaFieldset>
             )}
+            {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
+                <SkjemaFieldset
+                    tittelId={'ombarnet.barnetrygd-eøs'}
+                    språkValues={{ navn: barn.navn }}
+                >
+                    <LandDropdown
+                        felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
+                        skjema={skjema}
+                        label={
+                            <SpråkTekst
+                                id={OmBarnetSpørsmålSpråkId['barnetrygd-hvilket-eøsland']}
+                            />
+                        }
+                    />
+                </SkjemaFieldset>
+            )}
         </Steg>
     ) : null;
 };
