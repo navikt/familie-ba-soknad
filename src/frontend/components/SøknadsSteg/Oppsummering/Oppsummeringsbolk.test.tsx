@@ -3,7 +3,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import { RouteEnum } from '../../../context/RoutesContext';
-import { brukUseAppMedTomSøknadForRouting } from '../../../utils/testing';
+import { brukUseAppMedTomSøknadForRouting, TestProvidere } from '../../../utils/testing';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
 
 jest.mock('react-router-dom', () => ({
@@ -17,9 +17,11 @@ test('Skal rendre barn i oppsummeringsbolk', () => {
     brukUseAppMedTomSøknadForRouting();
     const infotekst = 'Det er noe inni her også';
     const { getByText, getByRole, queryAllByText } = render(
-        <Oppsummeringsbolk tittel={'oppsummeringstittel'} lenke={RouteEnum.Kvittering}>
-            <div>{infotekst}</div>
-        </Oppsummeringsbolk>
+        <TestProvidere>
+            <Oppsummeringsbolk tittel={'oppsummeringstittel'} lenke={RouteEnum.Kvittering}>
+                <div>{infotekst}</div>
+            </Oppsummeringsbolk>
+        </TestProvidere>
     );
 
     expect(getByText('oppsummeringstittel')).toBeInTheDocument();
