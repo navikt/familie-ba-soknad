@@ -48,7 +48,6 @@ const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsv
 
 const Oppsummering: React.FC = () => {
     const intl = useIntl();
-    console.log(intl);
     const { søknad } = useApp();
     console.log(søknad);
 
@@ -104,15 +103,17 @@ const Oppsummering: React.FC = () => {
                     søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
                 />
                 {søknad.søker.komTilNorgeDato.svar !== '' && (
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'omdeg.opphold-sammenhengende.dato.spm'} />}
-                        søknadsvar={søknad.søker.komTilNorgeDato.svar}
-                    />
+                    <>
+                        <OppsummeringFelt
+                            tittel={<SpråkTekst id={'omdeg.opphold-sammenhengende.dato.spm'} />}
+                            søknadsvar={søknad.søker.komTilNorgeDato.svar}
+                        />
+                        <OppsummeringFelt
+                            tittel={<SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.spm'} />}
+                            søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
+                        />
+                    </>
                 )}
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.spm'} />}
-                    søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
-                />
                 <OppsummeringFelt
                     tittel={<SpråkTekst id={'omdeg.asylsøker.spm'} />}
                     søknadsvar={søknad.søker.erAsylsøker.svar}
@@ -124,17 +125,23 @@ const Oppsummering: React.FC = () => {
                 {søknad.søker.arbeidsland.svar !== undefined && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.arbeid-utland.land.spm'} />}
-                        søknadsvar={søknad.søker.arbeidsland.svar}
+                        søknadsvar={landkodeTilSpråk(
+                            søknad.søker.arbeidsland.svar,
+                            intl.defaultLocale
+                        )}
                     />
                 )}
                 <OppsummeringFelt
                     tittel={<SpråkTekst id={'omdeg.utenlandspensjon.spm'} />}
                     søknadsvar={søknad.søker.mottarUtenlandspensjon.svar}
                 />
-                {søknad.søker.arbeidsland.svar !== undefined && (
+                {søknad.søker.pensjonsland.svar !== undefined && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.utenlandspensjon.land.spm'} />}
-                        søknadsvar={søknad.søker.pensjonsland.svar}
+                        søknadsvar={landkodeTilSpråk(
+                            søknad.søker.pensjonsland.svar,
+                            intl.defaultLocale
+                        )}
                     />
                 )}
             </Oppsummeringsbolk>
@@ -163,6 +170,128 @@ const Oppsummering: React.FC = () => {
                                 søknadsvar={intl.formatMessage({
                                     id: 'hvilkebarn.barn.bosted.ikke-din-adresse',
                                 })}
+                            />
+                        )}
+                    </>
+                ))}
+            </Oppsummeringsbolk>
+            <Oppsummeringsbolk tittel={'ombarna.sidetittel'}>
+                {søknad.erNoenAvBarnaFosterbarn !== undefined && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'ombarna.fosterbarn.spm'} />}
+                        søknadsvar={søknad.erNoenAvBarnaFosterbarn.svar}
+                    />
+                )}
+                {søknad.barnInkludertISøknaden.map(barn => (
+                    <>
+                        {barn.erFosterbarn.svar === 'JA' && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarna.fosterbarn.hvem.spm'} />}
+                                søknadsvar={barn.navn}
+                            />
+                        )}
+                    </>
+                ))}
+
+                {søknad.oppholderBarnSegIInstitusjon !== undefined && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'ombarna.institusjon.spm'} />}
+                        søknadsvar={søknad.oppholderBarnSegIInstitusjon.svar}
+                    />
+                )}
+                {søknad.barnInkludertISøknaden.map(barn => (
+                    <>
+                        {barn.oppholderSegIInstitusjon.svar === 'JA' && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarna.institusjon.hvem.spm'} />}
+                                søknadsvar={barn.navn}
+                            />
+                        )}
+                    </>
+                ))}
+
+                {søknad.erBarnAdoptertFraUtland !== undefined && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'ombarna.adoptert.spm'} />}
+                        søknadsvar={søknad.oppholderBarnSegIInstitusjon.svar}
+                    />
+                )}
+                {søknad.barnInkludertISøknaden.map(barn => (
+                    <>
+                        {barn.erAdoptertFraUtland.svar === 'JA' && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarna.adoptert.hvem.spm'} />}
+                                søknadsvar={barn.navn}
+                            />
+                        )}
+                    </>
+                ))}
+
+                {søknad.oppholderBarnSegIUtland !== undefined && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'ombarna.opphold-utland.spm'} />}
+                        søknadsvar={søknad.oppholderBarnSegIUtland.svar}
+                    />
+                )}
+                {søknad.barnInkludertISøknaden.map(barn => (
+                    <>
+                        {barn.oppholderSegIUtland.svar === 'JA' && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarna.opphold-utland.hvem.spm'} />}
+                                søknadsvar={barn.navn}
+                            />
+                        )}
+                    </>
+                ))}
+
+                {søknad.søktAsylForBarn !== undefined && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'ombarna.asyl.spm'} />}
+                        søknadsvar={søknad.søktAsylForBarn.svar}
+                    />
+                )}
+                {søknad.barnInkludertISøknaden.map(barn => (
+                    <>
+                        {barn.erAsylsøker.svar === 'JA' && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarna.asyl.hvem.spm'} />}
+                                søknadsvar={barn.navn}
+                            />
+                        )}
+                    </>
+                ))}
+
+                {søknad.barnOppholdtSegTolvMndSammenhengendeINorge !== undefined && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'ombarna.sammenhengende-opphold.spm'} />}
+                        søknadsvar={søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar}
+                    />
+                )}
+                {søknad.barnInkludertISøknaden.map(barn => (
+                    <>
+                        {barn.oppholdtSegINorgeSammenhengendeTolvMnd.svar === 'NEI' && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst id={'ombarna.sammenhengende-opphold.hvem.spm'} />
+                                }
+                                søknadsvar={barn.navn}
+                            />
+                        )}
+                    </>
+                ))}
+
+                {søknad.mottarBarnetrygdForBarnFraAnnetEøsland !== undefined && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'ombarna.barnetrygd-eøs.spm'} />}
+                        søknadsvar={søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar}
+                    />
+                )}
+                {søknad.barnInkludertISøknaden.map(barn => (
+                    <>
+                        {barn.barnetrygdFraAnnetEøsland.svar === 'JA' && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarna.barnetrygd-eøs.hvem.spm'} />}
+                                søknadsvar={barn.navn}
                             />
                         )}
                     </>

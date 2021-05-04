@@ -34,7 +34,6 @@ export const hentAdressefelterSortert = (adresse: IAdresse) => {
 
 export const landkodeTilSpråk = (landkode: string, locale: string) => {
     const landkodeIso = alpha3ToAlpha2(landkode);
-    console.log(locale);
     return getName(landkodeIso, locale);
 };
 
