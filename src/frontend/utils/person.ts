@@ -106,12 +106,24 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnetSpørsmålsId.institusjonspostnummer,
             svar: '',
         },
-        institusjonOppholdStart: {
-            id: OmBarnetSpørsmålsId.institusjonOppholdStart,
+        institusjonOppholdStartdato: {
+            id: OmBarnetSpørsmålsId.institusjonOppholdStartdato,
             svar: '',
         },
-        institusjonOppholdSlutt: {
-            id: OmBarnetSpørsmålsId.institusjonOppholdSlutt,
+        institusjonOppholdSluttdato: {
+            id: OmBarnetSpørsmålsId.institusjonOppholdSluttdato,
+            svar: '',
+        },
+        oppholdsland: {
+            id: OmBarnetSpørsmålsId.oppholdsland,
+            svar: '',
+        },
+        oppholdslandSluttdato: {
+            id: OmBarnetSpørsmålsId.oppholdslandSluttdato,
+            svar: '',
+        },
+        oppholdslandStartdato: {
+            id: OmBarnetSpørsmålsId.oppholdslandStartdato,
             svar: '',
         },
     };

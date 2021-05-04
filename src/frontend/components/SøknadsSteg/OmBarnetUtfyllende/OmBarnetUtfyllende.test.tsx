@@ -33,11 +33,15 @@ const jens = {
     [barnDataKeySpørsmål.institusjonsnavn]: { id: '3', svar: 'narvesen' },
     [barnDataKeySpørsmål.institusjonsadresse]: { id: '4', svar: 'narvesen' },
     [barnDataKeySpørsmål.institusjonspostnummer]: { id: '5', svar: '2030' },
-    [barnDataKeySpørsmål.institusjonOppholdStart]: { id: '6', svar: '2020-08-08' },
-    [barnDataKeySpørsmål.institusjonOppholdSlutt]: {
+    [barnDataKeySpørsmål.institusjonOppholdStartdato]: { id: '6', svar: '2020-08-08' },
+    [barnDataKeySpørsmål.institusjonOppholdSluttdato]: {
         id: '7',
         svar: AlternativtDatoSvar.UKJENT,
     },
+    [barnDataKeySpørsmål.oppholderSegIUtland]: { id: '8', svar: ESvar.JA },
+    [barnDataKeySpørsmål.oppholdsland]: { id: '9', svar: 'AUS' },
+    [barnDataKeySpørsmål.oppholdslandStartdato]: { id: '10', svar: '2020-08-08' },
+    [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: 'UKJENT' },
 };
 const line = {
     navn: 'Line',
@@ -47,11 +51,15 @@ const line = {
     [barnDataKeySpørsmål.institusjonsnavn]: { id: '', svar: '' },
     [barnDataKeySpørsmål.institusjonsadresse]: { id: '', svar: '' },
     [barnDataKeySpørsmål.institusjonspostnummer]: { id: '', svar: '' },
-    [barnDataKeySpørsmål.institusjonOppholdStart]: { id: '', svar: '' },
-    [barnDataKeySpørsmål.institusjonOppholdSlutt]: {
+    [barnDataKeySpørsmål.institusjonOppholdStartdato]: { id: '', svar: '' },
+    [barnDataKeySpørsmål.institusjonOppholdSluttdato]: {
         id: '',
         svar: '',
     },
+    [barnDataKeySpørsmål.oppholderSegIUtland]: { id: '8', svar: 'A' },
+    [barnDataKeySpørsmål.oppholdsland]: { id: '9', svar: '' },
+    [barnDataKeySpørsmål.oppholdslandStartdato]: { id: '10', svar: '' },
+    [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: '' },
 };
 
 test(`Kan rendre Om Barnet Utfyllende`, () => {

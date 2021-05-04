@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { Checkbox } from 'nav-frontend-skjema';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { AlternativtDatoSvar } from '../../../typer/person';
+import { barnDataKeySpørsmål } from '../../../typer/person';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -15,6 +14,7 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnetUtfyllende } from './useOmBarnetUtfyllende';
+import VetIkkeCheckbox from './VetIkkeCheckbox';
 
 const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
     const {
@@ -35,7 +35,7 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            {barn.erFosterbarn.svar === ESvar.JA && (
+            {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <KomponentGruppe>
                     <Informasjonsbolk
                         tittelId={'ombarnet.fosterbarn'}
@@ -46,7 +46,7 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                 </KomponentGruppe>
             )}
 
-            {barn.oppholderSegIInstitusjon.svar === ESvar.JA && (
+            {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
                 <SkjemaFieldset tittelId={'ombarnet.institusjon'} språkValues={{ navn: barn.navn }}>
                     <SkjemaFeltInput
                         felt={skjema.felter.institusjonsnavn}
@@ -65,30 +65,52 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                         bredde={'S'}
                     />
                     <Datovelger
-                        felt={skjema.felter.institusjonOppholdStart}
+                        felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
                         labelTekstId={OmBarnetSpørsmålSpråkId['institusjon-opphold-startdato']}
                     />
                     <Datovelger
-                        felt={skjema.felter.institusjonOppholdSlutt}
+                        felt={skjema.felter.institusjonOppholdSluttdato}
                         skjema={skjema}
                         labelTekstId={OmBarnetSpørsmålSpråkId['institusjon-opphold-sluttdato']}
                         disabled={skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
                     />
-                    <Checkbox
-                        label={
-                            <SpråkTekst
-                                id={OmBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']}
-                            />
+                    <VetIkkeCheckbox
+                        barn={barn}
+                        labelSpråkId={
+                            OmBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
                         }
-                        defaultChecked={
-                            barn.institusjonOppholdSlutt.svar === AlternativtDatoSvar.UKJENT
-                        }
-                        onChange={event => {
-                            skjema.felter.institusjonOppholdSluttVetIkke
-                                .hentNavInputProps(false)
-                                .onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
-                        }}
+                        ukjentDatoCheckboxFelt={skjema.felter.institusjonOppholdSluttVetIkke}
+                        søknadsdatafelt={barnDataKeySpørsmål.institusjonOppholdSluttdato}
+                    />
+                </SkjemaFieldset>
+            )}
+            {barn[barnDataKeySpørsmål.oppholderSegIUtland].svar === ESvar.JA && (
+                <SkjemaFieldset
+                    tittelId={'ombarnet.oppholdutland'}
+                    språkValues={{ navn: barn.navn }}
+                >
+                    <LandDropdown
+                        felt={skjema.felter.oppholdsland}
+                        skjema={skjema}
+                        label={<SpråkTekst id={OmBarnetSpørsmålSpråkId.oppholdsland} />}
+                    />
+                    <Datovelger
+                        felt={skjema.felter.oppholdslandStartdato}
+                        skjema={skjema}
+                        labelTekstId={OmBarnetSpørsmålSpråkId['utenlandsopphold-startdato ']}
+                    />
+                    <Datovelger
+                        felt={skjema.felter.oppholdslandSluttdato}
+                        skjema={skjema}
+                        labelTekstId={OmBarnetSpørsmålSpråkId['utenlandsopphold-sluttdato']}
+                        disabled={skjema.felter.oppholdslandSluttDatoVetIkke.verdi === ESvar.JA}
+                    />
+                    <VetIkkeCheckbox
+                        barn={barn}
+                        labelSpråkId={OmBarnetSpørsmålSpråkId['utenlandsopphold-ukjent-sluttdato']}
+                        ukjentDatoCheckboxFelt={skjema.felter.oppholdslandSluttDatoVetIkke}
+                        søknadsdatafelt={barnDataKeySpørsmål.oppholdslandSluttdato}
                     />
                 </SkjemaFieldset>
             )}

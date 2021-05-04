@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Alpha3Code } from 'i18n-iso-countries';
+
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
@@ -14,14 +16,19 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
+import useLanddropdownFelt from './useLanddropdownFelt';
 
 export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;
     institusjonsadresse: string;
     institusjonspostnummer: string;
-    institusjonOppholdStart: ISODateString;
-    institusjonOppholdSlutt: DatoMedUkjent;
+    institusjonOppholdStartdato: ISODateString;
+    institusjonOppholdSluttdato: DatoMedUkjent;
     institusjonOppholdSluttVetIkke: ESvar;
+    oppholdsland: Alpha3Code | '';
+    oppholdslandStartdato: ISODateString;
+    oppholdslandSluttdato: DatoMedUkjent;
+    oppholdslandSluttDatoVetIkke: ESvar;
 }
 
 export const useOmBarnetUtfyllende = (
@@ -46,6 +53,8 @@ export const useOmBarnetUtfyllende = (
     const skalFeltetVises = (søknadsdataFelt: barnDataKeySpørsmål) => {
         return barn[søknadsdataFelt].svar === ESvar.JA;
     };
+
+    /*---INSTITUSJON---*/
 
     const institusjonsnavn = useFelt<string>({
         verdi: barn[barnDataKeySpørsmål.institusjonsnavn].svar,
@@ -77,23 +86,49 @@ export const useOmBarnetUtfyllende = (
         skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
     });
 
-    const institusjonOppholdStart = useDatovelgerFelt(
-        barn[barnDataKeySpørsmål.institusjonOppholdStart],
+    const institusjonOppholdStartdato = useDatovelgerFelt(
+        barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
     );
 
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
         verdi:
-            barn[barnDataKeySpørsmål.institusjonOppholdSlutt].svar === 'UKJENT'
+            barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar === 'UKJENT'
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
     });
 
-    const institusjonOppholdSlutt = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.institusjonOppholdSlutt],
+    const institusjonOppholdSluttdato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.institusjonOppholdSluttdato],
         institusjonOppholdSluttVetIkke,
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
+    );
+
+    /*---UTENLANDSOPPHOLD---*/
+
+    const oppholdsland = useLanddropdownFelt(
+        barn.oppholdsland,
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
+    );
+
+    const oppholdslandStartdato = useDatovelgerFelt(
+        barn[barnDataKeySpørsmål.oppholdslandStartdato],
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
+    );
+
+    const oppholdslandSluttDatoVetIkke = useFelt<ESvar>({
+        verdi:
+            barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar === 'UKJENT'
+                ? ESvar.JA
+                : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke,
+    });
+
+    const oppholdslandSluttdato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.oppholdslandSluttdato],
+        oppholdslandSluttDatoVetIkke,
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
     );
 
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
@@ -102,9 +137,13 @@ export const useOmBarnetUtfyllende = (
                 institusjonsnavn,
                 institusjonsadresse,
                 institusjonspostnummer,
-                institusjonOppholdStart,
-                institusjonOppholdSlutt,
+                institusjonOppholdStartdato,
+                institusjonOppholdSluttdato,
                 institusjonOppholdSluttVetIkke,
+                oppholdsland,
+                oppholdslandStartdato,
+                oppholdslandSluttdato,
+                oppholdslandSluttDatoVetIkke,
             },
             skjemanavn: 'om-barnet',
         }
@@ -128,16 +167,31 @@ export const useOmBarnetUtfyllende = (
                               ...barn.institusjonspostnummer,
                               svar: institusjonspostnummer.verdi,
                           },
-                          institusjonOppholdStart: {
-                              ...barn.institusjonOppholdStart,
-                              svar: institusjonOppholdStart.verdi,
+                          institusjonOppholdStartdato: {
+                              ...barn.institusjonOppholdStartdato,
+                              svar: institusjonOppholdStartdato.verdi,
                           },
-                          institusjonOppholdSlutt: {
-                              ...barn.institusjonOppholdSlutt,
+                          institusjonOppholdSluttdato: {
+                              ...barn.institusjonOppholdSluttdato,
                               svar:
                                   institusjonOppholdSluttVetIkke.verdi === ESvar.JA
                                       ? AlternativtDatoSvar.UKJENT
-                                      : institusjonOppholdStart.verdi,
+                                      : institusjonOppholdStartdato.verdi,
+                          },
+                          oppholdsland: {
+                              ...barn.oppholdsland,
+                              svar: oppholdsland.verdi,
+                          },
+                          oppholdslandStartdato: {
+                              ...barn.oppholdslandStartdato,
+                              svar: oppholdslandStartdato.verdi,
+                          },
+                          oppholdslandSluttdato: {
+                              ...barn.oppholdslandSluttdato,
+                              svar:
+                                  oppholdslandSluttDatoVetIkke.verdi === ESvar.JA
+                                      ? AlternativtDatoSvar.UKJENT
+                                      : oppholdslandSluttdato.verdi,
                           },
                       }
                     : barn
