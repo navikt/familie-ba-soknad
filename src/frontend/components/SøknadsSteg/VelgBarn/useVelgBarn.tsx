@@ -21,7 +21,11 @@ export const useVelgBarn = (): {
     barnSomSkalVæreMed: IBarn[];
 } => {
     const { søknad, settSøknad } = useApp();
-    const { barnInkludertISøknaden } = søknad;
+    const {
+        barnInkludertISøknaden,
+        barnRegistrertManuelt,
+        søker: { barn },
+    } = søknad;
     const { settBarnForRoutes } = useRoutes();
     const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] = useState<IBarnMedISøknad[]>(
         barnInkludertISøknaden
@@ -30,6 +34,17 @@ export const useVelgBarn = (): {
     useEffect(() => {
         settBarnForRoutes(barnSomSkalVæreMed);
     }, [barnSomSkalVæreMed]);
+
+    useEffect(() => {
+        // Når barn fjernes må state oppdateres, ellers beholder vi det fjerna barnet videre
+        const alleIdenter = barnRegistrertManuelt
+            .map(barn => barn.ident)
+            .concat(barn.map(barn => barn.ident));
+        const barnSomSkalVæreMedOgEksisterer = barnSomSkalVæreMed.filter(
+            barn => !!alleIdenter.find(ident => ident === barn.ident)
+        );
+        settBarnSomSkalVæreMed(barnSomSkalVæreMedOgEksisterer);
+    }, [barnRegistrertManuelt]);
 
     const barnMedISøknad = useFelt<IBarn[]>({
         verdi: barnSomSkalVæreMed,
