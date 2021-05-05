@@ -1,6 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
 import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg.js';
+import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
@@ -80,6 +81,7 @@ const samletSpørsmålSpråkTekstId = {
 const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
+    const { formatMessage } = useIntl();
     const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, avbrytSøknad } = useApp();
     const {
         routes,
@@ -180,7 +182,9 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
                                         (felt): FeiloppsummeringFeil => {
                                             return {
                                                 skjemaelementId: felt.id,
-                                                feilmelding: felt.feilmelding as string,
+                                                feilmelding: formatMessage({
+                                                    id: samletSpørsmålSpråkTekstId[felt.id],
+                                                }),
                                             };
                                         }
                                     )}
