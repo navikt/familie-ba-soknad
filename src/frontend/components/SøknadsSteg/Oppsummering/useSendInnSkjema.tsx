@@ -133,7 +133,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                 ),
                 barnOppholdtSegTolvMndSammenhengendeINorge: oppsamlingsfelt(
                     OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge,
-                    barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd,
+                    barnDataKeySpørsmål.boddMindreEnn12MndINorge,
                     ESvar.NEI
                 ),
                 erBarnAdoptertFraUtland: oppsamlingsfelt(

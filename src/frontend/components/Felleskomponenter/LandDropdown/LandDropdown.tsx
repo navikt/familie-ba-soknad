@@ -18,18 +18,15 @@ interface LandDropdownProps {
 }
 
 const StyledSelect = styled(Select)`
-    padding-top: 1rem;
     label {
         font-size: 1.125rem;
     }
 `;
 
 const Container = styled.div`
-    width: 50%;
     padding-right: 0.7rem;
 
     @media all and ${device.mobile} {
-        width: 100%;
         padding: 0;
     }
 `;
@@ -47,6 +44,7 @@ export const LandDropdown: React.FC<LandDropdownProps> = ({ felt, skjema, label 
                 label={label}
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                 id={undefined}
+                bredde={'l'}
             >
                 <option
                     disabled={true}

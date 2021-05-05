@@ -16,9 +16,9 @@ import {
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import useLandDropdownFelt from '../../../hooks/useLanddropdownFelt';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useDatovelgerFeltMedJaNeiAvhengighet from './useDatovelgerFeltMedJaNeiAvhengighet';
+import useLanddropdownFeltMedJaNeiAvhengighet from './useLanddropdownFeltMedJaNeiAvhengighet';
 
 export type ESvarMedUbesvart = ESvar | undefined;
 
@@ -99,9 +99,8 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
-    const oppholdsland = useLandDropdownFelt(
+    const oppholdsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.oppholdsland,
-        'felles.velg-land.feilmelding',
         ESvar.NEI,
         oppholderSegINorge
     );
@@ -177,9 +176,8 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
-    const arbeidsland = useLandDropdownFelt(
+    const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.arbeidsland,
-        'felles.velg-land.feilmelding',
         ESvar.JA,
         jobberPåBåt
     );
@@ -201,9 +199,8 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
-    const pensjonsland = useLandDropdownFelt(
+    const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.pensjonsland,
-        'felles.velg-land.feilmelding',
         ESvar.JA,
         mottarUtenlandspensjon
     );

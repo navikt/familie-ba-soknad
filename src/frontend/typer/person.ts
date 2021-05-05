@@ -59,14 +59,20 @@ export enum barnDataKeySpørsmål {
     erAdoptertFraUtland = 'erAdoptertFraUtland',
     erAsylsøker = 'erAsylsøker',
     barnetrygdFraAnnetEøsland = 'barnetrygdFraAnnetEøsland',
+    barnetrygdFraEøslandHvilketLand = 'barnetrygdFraEøslandHvilketLand',
     oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
-    oppholdtSegINorgeSammenhengendeTolvMnd = 'oppholdtSegINorgeSammenhengendeTolvMnd',
-    oppholderSegIUtland = 'oppholderSegIUtland',
     institusjonsnavn = 'institusjonsnavn',
     institusjonsadresse = 'institusjonsadresse',
     institusjonspostnummer = 'institusjonspostnummer',
-    institusjonOppholdStart = 'institusjonOppholdStart',
-    institusjonOppholdSlutt = 'institusjonOppholdSlutt',
+    institusjonOppholdStartdato = 'institusjonOppholdStartdato',
+    institusjonOppholdSluttdato = 'institusjonOppholdSluttdato',
+    oppholderSegIUtland = 'oppholderSegIUtland',
+    oppholdsland = 'oppholdsland',
+    oppholdslandStartdato = 'oppholdslandStartdato',
+    oppholdslandSluttdato = 'oppholdslandSluttdato',
+    boddMindreEnn12MndINorge = 'boddMindreEnn12MndINorge',
+    nårKomBarnTilNorgeDato = 'nårKomBarnTilNorgeDato',
+    planleggerÅBoINorge12Mnd = 'planleggerÅBoINorge12Mnd',
 }
 
 export interface IBarnRespons extends IPerson {
@@ -87,17 +93,21 @@ export type DatoMedUkjent = ISODateString | AlternativtDatoSvar.UKJENT;
 
 export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | undefined>;
-    [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | undefined>;
-    [barnDataKeySpørsmål.oppholderSegIUtland]: ISøknadSpørsmål<ESvar | undefined>;
-    [barnDataKeySpørsmål.erAsylsøker]: ISøknadSpørsmål<ESvar | undefined>;
-    [barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd]: ISøknadSpørsmål<
-        ESvar | undefined
-    >;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.erAsylsøker]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.oppholderSegIUtland]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.oppholdsland]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [barnDataKeySpørsmål.oppholdslandStartdato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.oppholdslandSluttdato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.institusjonsnavn]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonsadresse]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonspostnummer]: ISøknadSpørsmål<string>;
-    [barnDataKeySpørsmål.institusjonOppholdStart]: ISøknadSpørsmål<ISODateString>;
-    [barnDataKeySpørsmål.institusjonOppholdSlutt]: ISøknadSpørsmål<DatoMedUkjent>;
+    [barnDataKeySpørsmål.institusjonOppholdStartdato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.institusjonOppholdSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
+    [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
 }

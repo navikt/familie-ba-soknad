@@ -5,12 +5,11 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Avhengigheter, feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
-import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { ISøknadSpørsmål } from '../typer/søknad';
+import { ISøknadSpørsmål } from '../../../typer/søknad';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
-const useLandDropdownFelt = (
+const useLanddropdownFeltMedJaNeiAvhengighet = (
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,
-    språkTekstIdForFeil: string,
     avhengigSvarCondition: ESvar,
     avhengighet: Felt<ESvar | undefined>
 ) => {
@@ -27,7 +26,7 @@ const useLandDropdownFelt = (
         valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>) => {
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={språkTekstIdForFeil} />);
+                : feil(felt, <SpråkTekst id={'felles.velg-land.feilmelding'} />);
         },
         avhengigheter: { jaNeiSpm: avhengighet },
         nullstillVedAvhengighetEndring: false,
@@ -40,4 +39,4 @@ const useLandDropdownFelt = (
     return landDropdown;
 };
 
-export default useLandDropdownFelt;
+export default useLanddropdownFeltMedJaNeiAvhengighet;
