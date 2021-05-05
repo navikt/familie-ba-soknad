@@ -85,7 +85,7 @@ const Oppsummering: React.FC = () => {
                     tittel={<SpråkTekst id={'omdeg.opphold-i-norge.spm'} />}
                     søknadsvar={søknad.søker.oppholderSegINorge.svar}
                 />
-                {søknad.søker.oppholdsland.svar !== undefined && (
+                {søknad.søker.oppholdsland.svar && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.opphold-i-norge.land.spm'} />}
                         søknadsvar={landkodeTilSpråk(
@@ -94,7 +94,7 @@ const Oppsummering: React.FC = () => {
                         )}
                     />
                 )}
-                {søknad.søker.oppholdslandDato.svar !== '' && (
+                {søknad.søker.oppholdslandDato.svar && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.opphold-i-norge.dato.spm'} />}
                         søknadsvar={søknad.søker.oppholdslandDato.svar}
@@ -105,7 +105,7 @@ const Oppsummering: React.FC = () => {
                     tittel={<SpråkTekst id={'omdeg.opphold-sammenhengende.spm'} />}
                     søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
                 />
-                {søknad.søker.komTilNorgeDato.svar !== '' && (
+                {søknad.søker.komTilNorgeDato.svar && (
                     <>
                         <OppsummeringFelt
                             tittel={<SpråkTekst id={'omdeg.opphold-sammenhengende.dato.spm'} />}
@@ -125,7 +125,7 @@ const Oppsummering: React.FC = () => {
                     tittel={<SpråkTekst id={'omdeg.arbeid-utland.spm'} />}
                     søknadsvar={søknad.søker.jobberPåBåt.svar}
                 />
-                {søknad.søker.arbeidsland.svar !== undefined && (
+                {søknad.søker.arbeidsland.svar && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.arbeid-utland.land.spm'} />}
                         søknadsvar={landkodeTilSpråk(
@@ -138,7 +138,7 @@ const Oppsummering: React.FC = () => {
                     tittel={<SpråkTekst id={'omdeg.utenlandspensjon.spm'} />}
                     søknadsvar={søknad.søker.mottarUtenlandspensjon.svar}
                 />
-                {søknad.søker.pensjonsland.svar !== undefined && (
+                {søknad.søker.pensjonsland.svar && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.utenlandspensjon.land.spm'} />}
                         søknadsvar={landkodeTilSpråk(
@@ -196,7 +196,7 @@ const Oppsummering: React.FC = () => {
                     </>
                 ))}
 
-                {søknad.oppholderBarnSegIInstitusjon !== undefined && (
+                {søknad.oppholderBarnSegIInstitusjon && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.institusjon.spm'} />}
                         søknadsvar={søknad.oppholderBarnSegIInstitusjon.svar}
@@ -213,7 +213,7 @@ const Oppsummering: React.FC = () => {
                     </>
                 ))}
 
-                {søknad.erBarnAdoptertFraUtland !== undefined && (
+                {søknad.erBarnAdoptertFraUtland && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.adoptert.spm'} />}
                         søknadsvar={søknad.oppholderBarnSegIInstitusjon.svar}
@@ -230,7 +230,7 @@ const Oppsummering: React.FC = () => {
                     </>
                 ))}
 
-                {søknad.oppholderBarnSegIUtland !== undefined && (
+                {søknad.oppholderBarnSegIUtland && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.opphold-utland.spm'} />}
                         søknadsvar={søknad.oppholderBarnSegIUtland.svar}
@@ -247,7 +247,7 @@ const Oppsummering: React.FC = () => {
                     </>
                 ))}
 
-                {søknad.søktAsylForBarn !== undefined && (
+                {søknad.søktAsylForBarn && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.asyl.spm'} />}
                         søknadsvar={søknad.søktAsylForBarn.svar}
@@ -283,7 +283,7 @@ const Oppsummering: React.FC = () => {
                     </>
                 ))}
 
-                {søknad.mottarBarnetrygdForBarnFraAnnetEøsland !== undefined && (
+                {søknad.mottarBarnetrygdForBarnFraAnnetEøsland && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.barnetrygd-eøs.spm'} />}
                         søknadsvar={søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar}
