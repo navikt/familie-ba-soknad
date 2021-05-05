@@ -10,11 +10,7 @@ import { useApp } from '../../../../context/AppContext';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const StyledKnapp = styled(Knapp)`
-    margin-top: 1rem;
-    margin-bottom: -1rem;
-    && {
-        padding-left: 0;
-    }
+    margin: 1rem 0 -1rem -0.75rem; // -0.75 left kompanserer for padding-left fra .knapp--kompakt
 `;
 
 const StyledDeleteFilled = styled(DeleteFilled)`
