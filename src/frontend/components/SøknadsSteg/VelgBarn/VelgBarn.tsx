@@ -11,6 +11,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
+import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from './spørsmål';
 import { useVelgBarn } from './useVelgBarn';
 
 const BarnekortContainer = styled.div`
@@ -39,7 +40,7 @@ const VelgBarn: React.FC = () => {
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'hvilkebarn.sidetittel'} />}
+            tittel={<SpråkTekst id={velgBarnSpørsmålSpråkId['velg-barn']} />}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
@@ -58,7 +59,7 @@ const VelgBarn: React.FC = () => {
                 lenkeTekstSpråkId={'hvilkebarn.endre-opplysninger.lenketekst'}
             />
 
-            <BarnekortContainer id={'barnMedISøknad'}>
+            <BarnekortContainer id={VelgBarnSpørsmålId.velgBarn}>
                 {barn.map(barn => (
                     <Barnekort
                         key={barn.ident}

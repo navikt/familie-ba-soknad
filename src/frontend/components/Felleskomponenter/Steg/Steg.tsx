@@ -1,7 +1,6 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
 import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg.js';
-import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
@@ -11,7 +10,8 @@ import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import Stegindikator from 'nav-frontend-stegindikator';
 import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 
-import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { ESvar } from '@navikt/familie-form-elements';
+import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { IRoute, useRoutes } from '../../../context/RoutesContext';
@@ -20,7 +20,8 @@ import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { omBarnaDineSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
 import { omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnetUtfyllende/spørsmål';
-import { omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
+import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
+import { VelgBarnSpørsmålId } from '../../SøknadsSteg/VelgBarn/spørsmål';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -81,7 +82,6 @@ const samletSpørsmålSpråkTekstId = {
 const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { formatMessage } = useIntl();
     const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, avbrytSøknad } = useApp();
     const {
         routes,
@@ -151,6 +151,16 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
         return !!feil;
     };
 
+    // eslint-disable-next-line
+    const hentFeilmeldingTilOppsummering = (felt: Felt<any>) => {
+        return (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse && felt.verdi === ESvar.NEI) ||
+            felt.id === VelgBarnSpørsmålId.velgBarn ? (
+            felt.feilmelding
+        ) : (
+            <SpråkTekst id={samletSpørsmålSpråkTekstId[felt.id]} />
+        );
+    };
+
     return (
         <>
             <header>
@@ -182,9 +192,9 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
                                         (felt): FeiloppsummeringFeil => {
                                             return {
                                                 skjemaelementId: felt.id,
-                                                feilmelding: formatMessage({
-                                                    id: samletSpørsmålSpråkTekstId[felt.id],
-                                                }),
+                                                feilmelding: hentFeilmeldingTilOppsummering(
+                                                    felt
+                                                ) as string,
                                             };
                                         }
                                     )}
