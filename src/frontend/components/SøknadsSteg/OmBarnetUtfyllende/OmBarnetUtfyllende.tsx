@@ -3,8 +3,10 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål } from '../../../typer/person';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
@@ -111,6 +113,46 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                         labelSpråkId={OmBarnetSpørsmålSpråkId['utenlandsopphold-ukjent-sluttdato']}
                         ukjentDatoCheckboxFelt={skjema.felter.oppholdslandSluttDatoVetIkke}
                         søknadsdatafelt={barnDataKeySpørsmål.oppholdslandSluttdato}
+                    />
+                </SkjemaFieldset>
+            )}
+            {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
+                <SkjemaFieldset
+                    tittelId={'ombarnet.sammenhengende-opphold'}
+                    språkValues={{ navn: barn.navn }}
+                >
+                    <Datovelger
+                        felt={skjema.felter.nårKomBarnTilNorgeDato}
+                        skjema={skjema}
+                        labelTekstId={OmBarnetSpørsmålSpråkId['når-kom-barnet-til-norge']}
+                    />
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.planleggerÅBoINorge12Mnd}
+                        spørsmålTekstId={
+                            OmBarnetSpørsmålSpråkId['planlegger-å-bo-sammenhengende-i-norge-12mnd']
+                        }
+                    />
+                    {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
+                        <AlertStripe type={'advarsel'}>
+                            <SpråkTekst id={'ombarnet.planlagt-sammenhengende-opphold.alert'} />
+                        </AlertStripe>
+                    )}
+                </SkjemaFieldset>
+            )}
+            {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
+                <SkjemaFieldset
+                    tittelId={'ombarnet.barnetrygd-eøs'}
+                    språkValues={{ navn: barn.navn }}
+                >
+                    <LandDropdown
+                        felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
+                        skjema={skjema}
+                        label={
+                            <SpråkTekst
+                                id={OmBarnetSpørsmålSpråkId['barnetrygd-hvilket-eøsland']}
+                            />
+                        }
                     />
                 </SkjemaFieldset>
             )}

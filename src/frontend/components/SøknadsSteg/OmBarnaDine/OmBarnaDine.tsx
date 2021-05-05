@@ -182,7 +182,7 @@ const OmBarnaDine: React.FC = () => {
                         />
                     }
                     skjemafelt={skjema.felter.hvemTolvMndSammenhengendeINorge}
-                    søknadsdatafelt={barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd}
+                    søknadsdatafelt={barnDataKeySpørsmål.boddMindreEnn12MndINorge}
                     nullstillValgteBarn={
                         skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi === ESvar.JA
                     }

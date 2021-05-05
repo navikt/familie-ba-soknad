@@ -9,102 +9,153 @@ export const genererSvarForSpørsmålBarn = (barn: IBarn, felt: Felt<string[]>):
     felt.verdi.includes(barn.ident) ? ESvar.JA : ESvar.NEI;
 
 export const genererSvarForOppfølgningspørsmålBarn = (
-    feltSpørsmåletErAvhengigAv: Felt<ESvar | undefined>,
-    søknadsfelt
-) => (feltSpørsmåletErAvhengigAv.verdi === ESvar.JA ? søknadsfelt.svar : '');
+    svarPåGrunnSpørsmål,
+    søknadsfelt,
+    nullstillingsVerdi
+) => {
+    return svarPåGrunnSpørsmål === ESvar.JA ? søknadsfelt.svar : nullstillingsVerdi;
+};
 
 export const genererOppdaterteBarn = (
     søknad: ISøknad,
     skjema: ISkjema<IOmBarnaDineFeltTyper, string>
 ): IBarnMedISøknad[] => {
     return søknad.barnInkludertISøknaden.map(barn => {
+        const oppholderSegIInstitusjon = genererSvarForSpørsmålBarn(
+            barn,
+            skjema.felter.hvemOppholderSegIInstitusjon
+        );
+        const oppholderSegIUtlandet = genererSvarForSpørsmålBarn(
+            barn,
+            skjema.felter.hvemOppholderSegIUtland
+        );
+
+        const boddMindreEnn12MndINorge = genererSvarForSpørsmålBarn(
+            barn,
+            skjema.felter.hvemTolvMndSammenhengendeINorge
+        );
+
+        const mottarBarnetrygdFraAnnetEøsland = genererSvarForSpørsmålBarn(
+            barn,
+            skjema.felter.hvemBarnetrygdFraAnnetEøsland
+        );
+
         return {
             ...barn,
-            erFosterbarn: {
+            [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
                 svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
             },
-            erAsylsøker: {
+            [barnDataKeySpørsmål.erAsylsøker]: {
                 ...barn[barnDataKeySpørsmål.erAsylsøker],
                 svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErSøktAsylFor),
             },
-            erAdoptertFraUtland: {
+            [barnDataKeySpørsmål.erAdoptertFraUtland]: {
                 ...barn[barnDataKeySpørsmål.erAdoptertFraUtland],
                 svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErAdoptertFraUtland),
             },
-            oppholderSegIInstitusjon: {
+            [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
                 ...barn[barnDataKeySpørsmål.oppholderSegIInstitusjon],
-                svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemOppholderSegIInstitusjon),
+                svar: oppholderSegIInstitusjon,
             },
-            oppholdtSegINorgeSammenhengendeTolvMnd: {
-                ...barn[barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd],
-                svar: genererSvarForSpørsmålBarn(
-                    barn,
-                    skjema.felter.hvemTolvMndSammenhengendeINorge
-                ),
+            [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: {
+                ...barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge],
+                svar: boddMindreEnn12MndINorge,
             },
-            oppholderSegIUtland: {
+            [barnDataKeySpørsmål.oppholderSegIUtland]: {
                 ...barn[barnDataKeySpørsmål.oppholderSegIUtland],
-                svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemOppholderSegIUtland),
+                svar: oppholderSegIUtlandet,
             },
-            barnetrygdFraAnnetEøsland: {
+            [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
                 ...barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland],
-                svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemBarnetrygdFraAnnetEøsland),
+                svar: mottarBarnetrygdFraAnnetEøsland,
             },
-            institusjonsnavn: {
+            [barnDataKeySpørsmål.institusjonsnavn]: {
                 ...barn[barnDataKeySpørsmål.institusjonsnavn],
                 svar: genererSvarForOppfølgningspørsmålBarn(
-                    skjema.felter.oppholderBarnSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonsnavn]
+                    oppholderSegIInstitusjon,
+                    barn[barnDataKeySpørsmål.institusjonsnavn],
+                    ''
                 ),
             },
-            institusjonsadresse: {
+            [barnDataKeySpørsmål.institusjonsadresse]: {
                 ...barn[barnDataKeySpørsmål.institusjonsadresse],
                 svar: genererSvarForOppfølgningspørsmålBarn(
-                    skjema.felter.oppholderBarnSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonsadresse]
+                    oppholderSegIInstitusjon,
+                    barn[barnDataKeySpørsmål.institusjonsadresse],
+                    ''
                 ),
             },
-            institusjonspostnummer: {
+            [barnDataKeySpørsmål.institusjonspostnummer]: {
                 ...barn[barnDataKeySpørsmål.institusjonspostnummer],
                 svar: genererSvarForOppfølgningspørsmålBarn(
-                    skjema.felter.oppholderBarnSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonspostnummer]
+                    oppholderSegIInstitusjon,
+                    barn[barnDataKeySpørsmål.institusjonspostnummer],
+                    ''
                 ),
             },
-            institusjonOppholdStartdato: {
+            [barnDataKeySpørsmål.institusjonOppholdStartdato]: {
                 ...barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
                 svar: genererSvarForOppfølgningspørsmålBarn(
-                    skjema.felter.oppholderBarnSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonOppholdStartdato]
+                    oppholderSegIInstitusjon,
+                    barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
+                    ''
                 ),
             },
-            institusjonOppholdSluttdato: {
+            [barnDataKeySpørsmål.institusjonOppholdSluttdato]: {
                 ...barn[barnDataKeySpørsmål.institusjonOppholdSluttdato],
                 svar: genererSvarForOppfølgningspørsmålBarn(
-                    skjema.felter.oppholderBarnSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonOppholdSluttdato]
+                    oppholderSegIInstitusjon,
+                    barn[barnDataKeySpørsmål.institusjonOppholdSluttdato],
+                    ''
                 ),
             },
-            oppholdsland: {
+            [barnDataKeySpørsmål.oppholdsland]: {
                 ...barn[barnDataKeySpørsmål.oppholdsland],
                 svar: genererSvarForOppfølgningspørsmålBarn(
-                    skjema.felter.oppholderBarnSegIUtland,
-                    barn[barnDataKeySpørsmål.oppholdsland]
+                    oppholderSegIUtlandet,
+                    barn[barnDataKeySpørsmål.oppholdsland],
+                    ''
                 ),
             },
-            oppholdslandStartdato: {
+            [barnDataKeySpørsmål.oppholdslandStartdato]: {
                 ...barn[barnDataKeySpørsmål.oppholdslandStartdato],
                 svar: genererSvarForOppfølgningspørsmålBarn(
-                    skjema.felter.oppholderBarnSegIUtland,
-                    barn[barnDataKeySpørsmål.oppholdslandStartdato]
+                    oppholderSegIUtlandet,
+                    barn[barnDataKeySpørsmål.oppholdslandStartdato],
+                    ''
                 ),
             },
-            oppholdslandSluttdato: {
+            [barnDataKeySpørsmål.oppholdslandSluttdato]: {
                 ...barn[barnDataKeySpørsmål.oppholdslandSluttdato],
                 svar: genererSvarForOppfølgningspørsmålBarn(
-                    skjema.felter.oppholderBarnSegIUtland,
-                    barn[barnDataKeySpørsmål.oppholdslandSluttdato]
+                    oppholderSegIUtlandet,
+                    barn[barnDataKeySpørsmål.oppholdslandSluttdato],
+                    ''
+                ),
+            },
+            [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: {
+                ...barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
+                svar: genererSvarForOppfølgningspørsmålBarn(
+                    boddMindreEnn12MndINorge,
+                    barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
+                    ''
+                ),
+            },
+            [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: {
+                ...barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
+                svar: genererSvarForOppfølgningspørsmålBarn(
+                    boddMindreEnn12MndINorge,
+                    barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
+                    undefined
+                ),
+            },
+            [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
+                ...barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
+                svar: genererSvarForOppfølgningspørsmålBarn(
+                    mottarBarnetrygdFraAnnetEøsland,
+                    barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
+                    ''
                 ),
             },
         };

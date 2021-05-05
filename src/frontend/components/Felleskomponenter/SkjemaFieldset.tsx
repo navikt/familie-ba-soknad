@@ -19,7 +19,7 @@ const Container = styled.fieldset`
     }
 `;
 
-const StyledUndertittel = styled(Undertittel)`
+const StyledLegend = styled.legend`
     margin-bottom: 1.5rem;
 `;
 
@@ -29,11 +29,11 @@ const SkjemaFieldset: React.FC<{
 }> = ({ tittelId, språkValues, children }) => {
     return (
         <Container>
-            <legend>
-                <StyledUndertittel>
+            <StyledLegend>
+                <Undertittel>
                     <SpråkTekst id={tittelId} values={språkValues} />
-                </StyledUndertittel>
-            </legend>
+                </Undertittel>
+            </StyledLegend>
             {React.Children.map(children, child => {
                 return child && <div>{child}</div>;
             })}
