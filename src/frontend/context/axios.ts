@@ -42,7 +42,7 @@ export const håndterApiRessurs = <T>(ressurs: ApiRessurs<T>): Ressurs<T> => {
 };
 
 export const loggFeil = (error?: AxiosError, feilmelding?: string): void => {
-    if (process.env.NODE_ENV !== 'development') {
+    if (!['development', 'test'].find(env => env === process.env.NODE_ENV)) {
         apiLoggFeil(
             `${error ? `${error}${feilmelding ? ' - ' : ''}` : ''}${
                 feilmelding ? `Feilmelding: ${feilmelding}` : ''
