@@ -14,7 +14,7 @@ export enum OmBarnetSpørsmålsId {
     barnetrygdFraEøslandHvilketLand = 'barnetrygd-hvilket-eøsland',
 }
 
-export const OmBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
+export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
     [OmBarnetSpørsmålsId.institusjonsnavn]: 'ombarnet.institusjon.navn.spm',
     [OmBarnetSpørsmålsId.institusjonsadresse]: 'ombarnet.institusjon.adresse.spm',
     [OmBarnetSpørsmålsId.institusjonspostnummer]: 'ombarnet.institusjon.postnummer.spm',

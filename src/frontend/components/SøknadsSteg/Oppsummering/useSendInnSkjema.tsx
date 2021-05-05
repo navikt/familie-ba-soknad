@@ -12,7 +12,7 @@ import {
     ISøknadSpørsmål,
 } from '../../../typer/søknad';
 import { omBarnaDineSpråkTekstId, OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId, OmBarnetSpørsmålSpråkId } from '../OmBarnetUtfyllende/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnetUtfyllende/spørsmål';
 import { omDegSpråkTekstId, OmDegSpørsmålId } from '../OmDeg/spørsmål';
 
 type SpørsmålId = OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørsmålsId;
@@ -28,7 +28,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         for (const språkIndex of [
             omDegSpråkTekstId,
             omBarnaDineSpråkTekstId,
-            OmBarnetSpørsmålSpråkId,
+            omBarnetSpørsmålSpråkId,
         ]) {
             if (spørsmålId in språkIndex) {
                 return intl.formatMessage({ id: språkIndex[spørsmålId] });
