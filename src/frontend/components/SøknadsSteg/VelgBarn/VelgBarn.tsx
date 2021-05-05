@@ -40,7 +40,7 @@ const VelgBarn: React.FC = () => {
 
     return (
         <Steg
-            tittel={<SpråkTekst id={velgBarnSpørsmålSpråkId['velg-barn']} />}
+            tittel={<SpråkTekst id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]} />}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,

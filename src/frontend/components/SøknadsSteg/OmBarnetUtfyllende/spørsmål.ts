@@ -5,12 +5,12 @@ export enum OmBarnetSpørsmålsId {
     institusjonOppholdStartdato = 'institusjon-opphold-startdato',
     institusjonOppholdSluttdato = 'institusjon-opphold-sluttdato',
     institusjonOppholdVetIkke = 'institusjon-opphold-ukjent-sluttdato',
-    oppholdsland = 'oppholdsland',
-    oppholdslandStartdato = 'utenlandsopphold-startdato ',
-    oppholdslandSluttdato = 'utenlandsopphold-sluttdato',
-    oppholdslandSluttDatoVetIkke = 'utenlandsopphold-ukjent-sluttdato',
+    oppholdsland = 'barn-oppholdsland',
+    oppholdslandStartdato = 'barn-utenlandsopphold-startdato ',
+    oppholdslandSluttdato = 'barn-utenlandsopphold-sluttdato',
+    oppholdslandSluttDatoVetIkke = 'barn-utenlandsopphold-ukjent-sluttdato',
     nårKomBarnetTilNorge = 'når-kom-barnet-til-norge',
-    planleggerÅBoINorge12Mnd = 'planlegger-å-bo-sammenhengende-i-norge-12mnd',
+    planleggerÅBoINorge12Mnd = 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
     barnetrygdFraEøslandHvilketLand = 'barnetrygd-hvilket-eøsland',
 }
 
