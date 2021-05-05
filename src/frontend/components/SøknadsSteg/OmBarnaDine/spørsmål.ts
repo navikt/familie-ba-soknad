@@ -15,7 +15,7 @@ export enum OmBarnaDineSpørsmålId {
     hvemBarnetrygdFraAnnetEøsland = 'hvem-mottar-barnetrygd-eøsland',
 }
 
-export const omBarnaDineSpråkTekstId: Record<OmBarnaDineSpørsmålId, string> = {
+export const omBarnaDineSpørsmålSpråkId: Record<OmBarnaDineSpørsmålId, string> = {
     [OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn]: 'ombarna.fosterbarn.spm',
     [OmBarnaDineSpørsmålId.hvemErFosterbarn]: 'ombarna.fosterbarn.hvem.spm',
     [OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon]: 'ombarna.institusjon.spm',

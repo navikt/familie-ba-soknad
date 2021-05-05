@@ -17,6 +17,9 @@ import { IRoute, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { omBarnaDineSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
+import { omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnetUtfyllende/spørsmål';
+import { omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -67,6 +70,12 @@ const StyledSystemtittel = styled(Systemtittel)`
 const Form = styled.form`
     width: 100%;
 `;
+
+const samletSpørsmålSpråkTekstId = {
+    ...omDegSpørsmålSpråkId,
+    ...omBarnaDineSpørsmålSpråkId,
+    ...omBarnetSpørsmålSpråkId,
+};
 
 const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
     const history = useHistory();

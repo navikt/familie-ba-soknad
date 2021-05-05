@@ -14,7 +14,7 @@ export enum OmDegSpørsmålId {
     'pensjonsland' = 'pensjonsland',
 }
 
-export const omDegSpråkTekstId: Record<OmDegSpørsmålId, string> = {
+export const omDegSpørsmålSpråkId: Record<OmDegSpørsmålId, string> = {
     [OmDegSpørsmålId.borPåRegistrertAdresse]: 'omdeg.borpådenneadressen.spm',
     [OmDegSpørsmålId.telefonnummer]: 'omdeg.telefon.spm',
     [OmDegSpørsmålId.oppholderSegINorge]: 'omdeg.opphold-i-norge.spm',

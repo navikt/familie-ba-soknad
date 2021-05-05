@@ -11,9 +11,9 @@ import {
     ISøknadKontraktBarn,
     ISøknadSpørsmål,
 } from '../../../typer/søknad';
-import { omBarnaDineSpråkTekstId, OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
+import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnetUtfyllende/spørsmål';
-import { omDegSpråkTekstId, OmDegSpørsmålId } from '../OmDeg/spørsmål';
+import { omDegSpørsmålSpråkId, OmDegSpørsmålId } from '../OmDeg/spørsmål';
 
 type SpørsmålId = OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørsmålsId;
 
@@ -26,8 +26,8 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
 
     const språktekstFraSpørsmålId = (spørsmålId: SpørsmålId): string => {
         for (const språkIndex of [
-            omDegSpråkTekstId,
-            omBarnaDineSpråkTekstId,
+            omDegSpørsmålSpråkId,
+            omBarnaDineSpørsmålSpråkId,
             omBarnetSpørsmålSpråkId,
         ]) {
             if (spørsmålId in språkIndex) {
