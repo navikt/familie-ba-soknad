@@ -13,10 +13,6 @@ const StyledKnapp = styled(Knapp)`
     margin: 1rem 0 -1rem -0.75rem; // -0.75 left kompanserer for padding-left fra .knapp--kompakt
 `;
 
-const StyledDeleteFilled = styled(DeleteFilled)`
-    margin-right: 0.5rem;
-`;
-
 export const FjernBarnKnapp: React.FC<{ ident: string }> = ({ ident }) => {
     const { søknad, settSøknad } = useApp();
     const { barnRegistrertManuelt, barnInkludertISøknaden } = søknad;
@@ -30,8 +26,9 @@ export const FjernBarnKnapp: React.FC<{ ident: string }> = ({ ident }) => {
 
     return (
         <StyledKnapp htmlType={'button'} type={'flat'} kompakt={true} onClick={fjern}>
-            <StyledDeleteFilled />
-            <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
+            <span>
+                <DeleteFilled /> <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
+            </span>
         </StyledKnapp>
     );
 };
