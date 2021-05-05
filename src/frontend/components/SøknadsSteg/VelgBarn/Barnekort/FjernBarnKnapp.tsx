@@ -26,8 +26,9 @@ export const FjernBarnKnapp: React.FC<{ ident: string }> = ({ ident }) => {
 
     return (
         <StyledFlatknapp htmlType={'button'} mini={true} kompakt={true} onClick={fjern}>
+            <DeleteFilled />
             <span>
-                <DeleteFilled /> <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
+                <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
             </span>
         </StyledFlatknapp>
     );
