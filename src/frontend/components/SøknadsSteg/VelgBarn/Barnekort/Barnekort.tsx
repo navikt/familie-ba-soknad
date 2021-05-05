@@ -9,11 +9,13 @@ import { Ingress, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import barn1 from '../../../../assets/barn1.svg';
 import barn2 from '../../../../assets/barn2.svg';
 import barn3 from '../../../../assets/barn3.svg';
+import { useApp } from '../../../../context/AppContext';
 import { device } from '../../../../Theme';
 import { IBarn } from '../../../../typer/person';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
 import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { FjernBarnKnapp } from './FjernBarnKnapp';
 
 interface IBarnekortProps {
     velgBarnCallback: (barn: IBarn, barnMedISøknad: boolean) => void;
@@ -79,9 +81,16 @@ const StyledIngress = styled(Ingress)`
 
 const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæreMed }) => {
     const ikoner = [barn1, barn2, barn3];
+    const {
+        søknad: { barnRegistrertManuelt },
+    } = useApp();
 
     const erMedISøknad = !!barnSomSkalVæreMed.find(
         barnMedISøknad => barnMedISøknad.ident === barn.ident
+    );
+
+    const erRegistrertManuelt = !!barnRegistrertManuelt.find(
+        manueltRegistrertBarn => manueltRegistrertBarn.ident === barn.ident
     );
 
     return (
@@ -118,6 +127,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
                     onChange={() => velgBarnCallback(barn, erMedISøknad)}
                 />
             </InformasjonsboksInnhold>
+            {erRegistrertManuelt && <FjernBarnKnapp ident={barn.ident} />}
         </StyledBarnekort>
     );
 };

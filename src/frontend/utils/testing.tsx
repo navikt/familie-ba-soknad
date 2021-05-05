@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react';
 
+import * as reactRouterDom from 'react-router-dom';
+
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
@@ -9,15 +11,25 @@ import { AppProvider } from '../context/AppContext';
 import { RoutesProvider } from '../context/RoutesContext';
 
 export const spyOnUseApp = søknad => {
-    return jest.spyOn(appContext, 'useApp').mockImplementation(
-        jest.fn().mockReturnValue({
-            søknad,
-            settSisteUtfylteStegIndex: jest.fn(),
-            sisteUtfylteStegIndex: 2,
-            erStegUtfyltFrafør: jest.fn().mockImplementation(() => true),
-            settSøknad: jest.fn(),
-        })
-    );
+    const settSøknad = jest.fn();
+    const erStegUtfyltFrafør = jest.fn().mockImplementation(() => true);
+    const settSisteUtfylteStegIndex = jest.fn();
+
+    const useAppMock = jest.fn().mockReturnValue({
+        søknad,
+        settSisteUtfylteStegIndex,
+        erStegUtfyltFrafør,
+        settSøknad,
+        sisteUtfylteStegIndex: 2,
+    });
+    jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
+
+    return {
+        useAppMock,
+        settSøknad,
+        erStegUtfyltFrafør,
+        settSisteUtfylteStegIndex,
+    };
 };
 
 export const brukUseAppMedTomSøknadForRouting = () => spyOnUseApp({ barnInkludertISøknaden: [] });
@@ -70,3 +82,9 @@ export const TestProvidere: React.FC<{ tekster?: Record<string, string> }> = ({
 export const TestProvidereMedEkteTekster: React.FC = ({ children }) => (
     <TestProvidere tekster={norskeTekster}>{children}</TestProvidere>
 );
+
+export const mockHistory = (history: string[]): string[] => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore denne har vi definert i __mocks__/react-router-dom
+    return reactRouterDom.__setHistory(history);
+};

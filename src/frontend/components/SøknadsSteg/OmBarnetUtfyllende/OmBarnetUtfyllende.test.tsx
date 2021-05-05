@@ -8,20 +8,12 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import { RoutesProvider } from '../../../context/RoutesContext';
 import { AlternativtDatoSvar, barnDataKeySpørsmål } from '../../../typer/person';
-import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
+import { mockHistory, silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import OmBarnetUtfyllende from './OmBarnetUtfyllende';
 
 jest.mock('../../../context/AppContext');
 
-let mockHistory = ['/om-barnet/barn-1'];
-
-jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => ({
-        pathname: mockHistory[mockHistory.length - 1],
-    }),
-    useHistory: () => mockHistory,
-}));
+const mockedHistory = mockHistory(['/om-barnet/barn-1']);
 
 silenceConsoleErrors();
 
@@ -107,7 +99,7 @@ test(`Kan navigere mellom to barn`, () => {
         </SprakProvider>
     );
 
-    expect(mockHistory[mockHistory.length - 1]).toEqual('/om-barnet/barn-1');
+    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/om-barnet/barn-1');
 
     const jensTittel = getByText('Om Jens');
     expect(jensTittel).toBeInTheDocument();
@@ -115,11 +107,11 @@ test(`Kan navigere mellom to barn`, () => {
     const gåVidere = getByText(/felles.navigasjon.gå-videre/);
     act(() => gåVidere.click());
 
-    expect(mockHistory[mockHistory.length - 1]).toEqual('/om-barnet/barn-2');
+    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/om-barnet/barn-2');
 });
 
 test(`Kan navigere fra barn til oppsummering`, () => {
-    mockHistory = ['/om-barnet/barn-1'];
+    mockHistory(['/om-barnet/barn-1']);
 
     spyOnUseApp({
         barnInkludertISøknaden: [jens],
@@ -139,7 +131,7 @@ test(`Kan navigere fra barn til oppsummering`, () => {
         </SprakProvider>
     );
 
-    expect(mockHistory[mockHistory.length - 1]).toEqual('/om-barnet/barn-1');
+    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/om-barnet/barn-1');
 
     const jensTittel = getByText('Om Jens');
     expect(jensTittel).toBeInTheDocument();
@@ -147,5 +139,5 @@ test(`Kan navigere fra barn til oppsummering`, () => {
     const gåVidere = getByText(/felles.navigasjon.gå-videre/);
     act(() => gåVidere.click());
 
-    expect(mockHistory[mockHistory.length - 1]).toEqual('/oppsummering');
+    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/oppsummering');
 });
