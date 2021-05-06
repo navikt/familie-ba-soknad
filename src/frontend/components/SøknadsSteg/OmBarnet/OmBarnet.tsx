@@ -3,16 +3,16 @@ import React from 'react';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
-import { useOmBarnetUtfyllende } from './useOmBarnetUtfyllende';
+import { useOmBarnet } from './useOmBarnet';
 
-const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
+const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
     const {
         skjema,
         validerFelterOgVisFeilmelding,
         valideringErOk,
         oppdaterSøknad,
         barn,
-    } = useOmBarnetUtfyllende(barnetsIdent);
+    } = useOmBarnet(barnetsIdent);
 
     return barn ? (
         <Steg
@@ -29,4 +29,4 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
     ) : null;
 };
 
-export default OmBarnetUtfyllende;
+export default OmBarnet;

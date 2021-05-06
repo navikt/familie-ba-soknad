@@ -15,7 +15,7 @@ import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
-import { IOmBarnetUtvidetFeltTyper } from './useOmBarnetUtfyllende';
+import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
 import VetIkkeCheckbox from './VetIkkeCheckbox';
 
 const Oppfølgningsspørsmål: React.FC<{

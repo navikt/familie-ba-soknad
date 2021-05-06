@@ -7,9 +7,9 @@ import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import { RoutesProvider } from '../../../context/RoutesContext';
-import { AlternativtDatoSvar, barnDataKeySpørsmål } from '../../../typer/person';
+import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../../../typer/person';
 import { mockHistory, silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
-import OmBarnetUtfyllende from './OmBarnetUtfyllende';
+import OmBarnet from './OmBarnet';
 
 jest.mock('../../../context/AppContext');
 
@@ -28,7 +28,7 @@ const jens = {
     [barnDataKeySpørsmål.institusjonOppholdStartdato]: { id: '6', svar: '2020-08-08' },
     [barnDataKeySpørsmål.institusjonOppholdSluttdato]: {
         id: '7',
-        svar: AlternativtDatoSvar.UKJENT,
+        svar: AlternativtSvarForInput.UKJENT,
     },
     [barnDataKeySpørsmål.oppholderSegIUtland]: { id: '8', svar: ESvar.JA },
     [barnDataKeySpørsmål.oppholdsland]: { id: '9', svar: 'AUS' },
@@ -74,7 +74,7 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
         <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
             <HttpProvider>
                 <RoutesProvider>
-                    <OmBarnetUtfyllende barnetsIdent={'12345678910'} />
+                    <OmBarnet barnetsIdent={'12345678910'} />
                 </RoutesProvider>
             </HttpProvider>
         </SprakProvider>
@@ -93,7 +93,7 @@ test(`Kan navigere mellom to barn`, () => {
         >
             <HttpProvider>
                 <RoutesProvider>
-                    <OmBarnetUtfyllende barnetsIdent={'12345678910'} />
+                    <OmBarnet barnetsIdent={'12345678910'} />
                 </RoutesProvider>
             </HttpProvider>
         </SprakProvider>
@@ -125,7 +125,7 @@ test(`Kan navigere fra barn til oppsummering`, () => {
         >
             <HttpProvider>
                 <RoutesProvider>
-                    <OmBarnetUtfyllende barnetsIdent={'12345678910'} />
+                    <OmBarnet barnetsIdent={'12345678910'} />
                 </RoutesProvider>
             </HttpProvider>
         </SprakProvider>

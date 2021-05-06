@@ -7,7 +7,7 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 
 import { useApp } from '../../../context/AppContext';
 import {
-    AlternativtDatoSvar,
+    AlternativtSvarForInput,
     barnDataKeySpørsmål,
     DatoMedUkjent,
     IBarnMedISøknad,
@@ -34,7 +34,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
 }
 
-export const useOmBarnetUtfyllende = (
+export const useOmBarnet = (
     barnetsIdent: string
 ): {
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
@@ -162,8 +162,6 @@ export const useOmBarnetUtfyllende = (
         skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland)
     );
 
-    /*--- ANDRE FORELDER ---*/
-
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
@@ -211,7 +209,7 @@ export const useOmBarnetUtfyllende = (
                               ...barn.institusjonOppholdSluttdato,
                               svar:
                                   institusjonOppholdSluttVetIkke.verdi === ESvar.JA
-                                      ? AlternativtDatoSvar.UKJENT
+                                      ? AlternativtSvarForInput.UKJENT
                                       : institusjonOppholdStartdato.verdi,
                           },
                           oppholdsland: {
@@ -226,7 +224,7 @@ export const useOmBarnetUtfyllende = (
                               ...barn.oppholdslandSluttdato,
                               svar:
                                   oppholdslandSluttDatoVetIkke.verdi === ESvar.JA
-                                      ? AlternativtDatoSvar.UKJENT
+                                      ? AlternativtSvarForInput.UKJENT
                                       : oppholdslandSluttdato.verdi,
                           },
                           nårKomBarnTilNorgeDato: {
