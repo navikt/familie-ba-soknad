@@ -1,9 +1,9 @@
 import React from 'react';
 
+import Masonry from 'react-masonry-css';
 import styled from 'styled-components/macro';
 
 import { useApp } from '../../../context/AppContext';
-import { device } from '../../../Theme';
 import { mapBarnResponsTilBarn } from '../../../utils/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -14,13 +14,14 @@ import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from './spørsmål';
 import { useVelgBarn } from './useVelgBarn';
 
-const BarnekortContainer = styled.div`
-    columns: 2;
-    column-gap: 0.3rem;
+/**
+ * Vi har prøvd mye for å få til masonry, men før denne teknologien blir implementert
+ * av nettlesere ser det ut til at javascript må til for å få godt pakka barnekortkontainer.
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Masonry_Layout
+ */
+const BarnekortContainer = styled(Masonry)`
+    display: flex;
     margin-top: 5rem;
-    @media all and ${device.mobile} {
-        columns: 1;
-    }
 `;
 
 const VelgBarn: React.FC = () => {
@@ -59,7 +60,14 @@ const VelgBarn: React.FC = () => {
                 lenkeTekstSpråkId={'hvilkebarn.endre-opplysninger.lenketekst'}
             />
 
-            <BarnekortContainer id={VelgBarnSpørsmålId.velgBarn}>
+            <BarnekortContainer
+                id={VelgBarnSpørsmålId.velgBarn}
+                className={'BarnekortContainer'}
+                breakpointCols={{
+                    default: 2,
+                    480: 1,
+                }}
+            >
                 {barn.map(barn => (
                     <Barnekort
                         key={barn.ident}
