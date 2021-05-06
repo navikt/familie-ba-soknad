@@ -30,7 +30,6 @@ export const StyledBarnekort = styled.div`
     padding: 2rem;
     margin: 0 auto 0.625rem;
     background-color: ${navFarger.navLysGra};
-    break-inside: avoid;
     @media all and ${device.mobile} {
         width: 100%;
     }
