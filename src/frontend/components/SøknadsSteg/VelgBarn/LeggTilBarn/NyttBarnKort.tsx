@@ -163,7 +163,7 @@ export const NyttBarnKort: React.FC = () => {
                     {skjema.felter.ident.erSynlig && (
                         <StyledInput
                             {...skjema.felter.ident.hentNavInputProps(skalViseIdentFeil)}
-                            label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.spm'} />}
+                            label={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
                             disabled={skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI}
                         />
                     )}

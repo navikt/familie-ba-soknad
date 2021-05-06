@@ -25,7 +25,7 @@ export const Personopplysninger: React.FC = () => {
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={'omdeg.personopplysninger.fødselsnummer'} />
+                    <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
                 </Element>
                 <Normaltekst>{søker.ident}</Normaltekst>
             </Informasjonsbolk>
