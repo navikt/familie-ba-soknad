@@ -32,6 +32,10 @@ const useDatovelgerFeltMedUkjent = (
         datoFelt.validerOgSettFelt(datoFelt.verdi, avhengighet);
     }, [avhengighet]);
 
+    useEffect(() => {
+        !skalFeltetVises && datoFelt.validerOgSettFelt('', avhengighet);
+    }, [skalFeltetVises]);
+
     return datoFelt;
 };
 

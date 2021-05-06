@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
-import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import {
@@ -239,6 +239,13 @@ export const useOmBarnet = (
         }
     );
 
+    const svarForSpørsmålMedVetIkke = (
+        vetIkkeFelt: Felt<ESvar>,
+        spørsmålFelt: Felt<string>
+    ): string => {
+        return vetIkkeFelt.verdi === ESvar.JA ? AlternativtSvarForInput.UKJENT : spørsmålFelt.verdi;
+    };
+
     const oppdaterSøknad = () => {
         const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] = søknad.barnInkludertISøknaden.map(
             barn =>
@@ -263,10 +270,10 @@ export const useOmBarnet = (
                           },
                           institusjonOppholdSluttdato: {
                               ...barn.institusjonOppholdSluttdato,
-                              svar:
-                                  institusjonOppholdSluttVetIkke.verdi === ESvar.JA
-                                      ? AlternativtSvarForInput.UKJENT
-                                      : institusjonOppholdStartdato.verdi,
+                              svar: svarForSpørsmålMedVetIkke(
+                                  institusjonOppholdSluttVetIkke,
+                                  institusjonOppholdSluttdato
+                              ),
                           },
                           oppholdsland: {
                               ...barn.oppholdsland,
@@ -278,10 +285,10 @@ export const useOmBarnet = (
                           },
                           oppholdslandSluttdato: {
                               ...barn.oppholdslandSluttdato,
-                              svar:
-                                  oppholdslandSluttDatoVetIkke.verdi === ESvar.JA
-                                      ? AlternativtSvarForInput.UKJENT
-                                      : oppholdslandSluttdato.verdi,
+                              svar: svarForSpørsmålMedVetIkke(
+                                  oppholdslandSluttDatoVetIkke,
+                                  oppholdslandSluttdato
+                              ),
                           },
                           nårKomBarnTilNorgeDato: {
                               ...barn.nårKomBarnTilNorgeDato,
@@ -294,6 +301,27 @@ export const useOmBarnet = (
                           barnetrygdFraEøslandHvilketLand: {
                               ...barn.barnetrygdFraEøslandHvilketLand,
                               svar: barnetrygdFraEøslandHvilketLand.verdi,
+                          },
+                          andreForelderNavn: {
+                              ...barn.andreForelderNavn,
+                              svar: svarForSpørsmålMedVetIkke(
+                                  andreForelderNavnUkjent,
+                                  andreForelderNavn
+                              ),
+                          },
+                          andreForelderFnr: {
+                              ...barn.andreForelderFnr,
+                              svar: svarForSpørsmålMedVetIkke(
+                                  andreForelderFnrUkjent,
+                                  andreForelderFnr
+                              ),
+                          },
+                          andreForelderFødselsdato: {
+                              ...barn.andreForelderFødselsdato,
+                              svar: svarForSpørsmålMedVetIkke(
+                                  andreForelderFødselsdatoUkjent,
+                                  andreForelderFødselsdato
+                              ),
                           },
                       }
                     : barn

@@ -39,7 +39,9 @@ const useInputFeltMedUkjent = (
         avhengigheter: { vetIkkeCheckbox: avhengighet },
     });
     useEffect(() => {
-        inputFelt.validerOgSettFelt(inputFelt.verdi, avhengighet);
+        if (avhengighet.verdi === ESvar.JA) {
+            inputFelt.validerOgSettFelt('', avhengighet);
+        }
     }, [avhengighet]);
 
     return inputFelt;
