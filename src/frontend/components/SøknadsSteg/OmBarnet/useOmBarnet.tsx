@@ -34,7 +34,9 @@ export interface IOmBarnetUtvidetFeltTyper {
     planleggerÅBoINorge12Mnd: ESvar | undefined;
     barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
     andreForelderNavn: string;
+    andreForelderNavnUkjent: ESvar;
     andreForelderFnr: string;
+    andreForelderFnrUkjent: ESvar;
     andreForelderFødselsdatoUkjent: ESvar;
     andreForelderFødselsdato: DatoMedUkjent;
 }
@@ -177,6 +179,11 @@ export const useOmBarnet = (
                 : feil(felt, <SpråkTekst id={'ombarnet.andre-forelder.navn.feilmelding'} />),
     });
 
+    const andreForelderNavnUkjent = useFelt<ESvar>({
+        verdi: barn[barnDataKeySpørsmål.andreForelderNavn].svar === 'UKJENT' ? ESvar.JA : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
+    });
+
     const andreForelderFnr = useFelt<string>({
         verdi: barn[barnDataKeySpørsmål.andreForelderFnr].svar,
         feltId: barn[barnDataKeySpørsmål.andreForelderFnr].id,
@@ -184,6 +191,11 @@ export const useOmBarnet = (
             felt.verdi === '' || idnr(felt.verdi).status !== 'valid'
                 ? feil(felt, <SpråkTekst id={'ombarnet.andre-forelder.fnr.feilmelding'} />)
                 : ok(felt),
+    });
+
+    const andreForelderFnrUkjent = useFelt<ESvar>({
+        verdi: barn[barnDataKeySpørsmål.andreForelderFnr].svar === 'UKJENT' ? ESvar.JA : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.andreForelderFnrUkjent,
     });
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
@@ -217,7 +229,9 @@ export const useOmBarnet = (
                 planleggerÅBoINorge12Mnd,
                 barnetrygdFraEøslandHvilketLand,
                 andreForelderNavn,
+                andreForelderNavnUkjent,
                 andreForelderFnr,
+                andreForelderFnrUkjent,
                 andreForelderFødselsdato,
                 andreForelderFødselsdatoUkjent,
             },

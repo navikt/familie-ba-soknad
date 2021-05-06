@@ -41,6 +41,15 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                     labelSpråkTekstId={
                         omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavn]
                     }
+                    disabled={skjema.felter.andreForelderNavnUkjent.verdi === ESvar.JA}
+                />
+                <VetIkkeCheckbox
+                    barn={barn}
+                    labelSpråkId={
+                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavnUkjent]
+                    }
+                    ukjentDatoCheckboxFelt={skjema.felter.andreForelderNavnUkjent}
+                    søknadsdatafelt={barnDataKeySpørsmål.andreForelderNavn}
                 />
                 <SkjemaFeltInput
                     felt={skjema.felter.andreForelderFnr}
@@ -48,6 +57,15 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                     labelSpråkTekstId={
                         omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnr]
                     }
+                    disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
+                />
+                <VetIkkeCheckbox
+                    barn={barn}
+                    labelSpråkId={
+                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
+                    }
+                    ukjentDatoCheckboxFelt={skjema.felter.andreForelderFnrUkjent}
+                    søknadsdatafelt={barnDataKeySpørsmål.andreForelderFnr}
                 />
                 <Datovelger
                     felt={skjema.felter.andreForelderFødselsdato}
