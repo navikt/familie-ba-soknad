@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
-import { AlternativtDatoSvar, DatoMedUkjent } from '../../../typer/person';
+import { AlternativtSvarForInput, DatoMedUkjent } from '../../../typer/person';
 import { ISøknadSpørsmål } from '../../../typer/søknad';
 import { validerDato } from '../../../utils/dato';
 
@@ -14,7 +14,7 @@ const useDatovelgerFeltMedUkjent = (
 ) => {
     const datoFelt = useFelt<ISODateString>({
         feltId: søknadsfelt.id,
-        verdi: søknadsfelt.svar !== AlternativtDatoSvar.UKJENT ? søknadsfelt.svar : '',
+        verdi: søknadsfelt.svar !== AlternativtSvarForInput.UKJENT ? søknadsfelt.svar : '',
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
             if (
                 avhengigheter &&

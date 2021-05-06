@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
+import { ISkjema } from '@navikt/familie-skjema';
 
-import { barnDataKeySpørsmål } from '../../../typer/person';
+import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -12,31 +13,17 @@ import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown'
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
-import { useOmBarnetUtfyllende } from './useOmBarnetUtfyllende';
+import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
 import VetIkkeCheckbox from './VetIkkeCheckbox';
 
-const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
-    const {
-        skjema,
-        validerFelterOgVisFeilmelding,
-        valideringErOk,
-        oppdaterSøknad,
-        barn,
-    } = useOmBarnetUtfyllende(barnetsIdent);
-
-    return barn ? (
-        <Steg
-            tittel={<SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />}
-            skjema={{
-                validerFelterOgVisFeilmelding,
-                valideringErOk,
-                skjema,
-                settSøknadsdataCallback: oppdaterSøknad,
-            }}
-        >
+const Oppfølgningsspørsmål: React.FC<{
+    barn: IBarnMedISøknad;
+    skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
+}> = ({ barn, skjema }) => {
+    return (
+        <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <KomponentGruppe>
                     <Informasjonsbolk
@@ -184,8 +171,8 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                     />
                 </SkjemaFieldset>
             )}
-        </Steg>
-    ) : null;
+        </>
+    );
 };
 
-export default OmBarnetUtfyllende;
+export default Oppfølgningsspørsmål;

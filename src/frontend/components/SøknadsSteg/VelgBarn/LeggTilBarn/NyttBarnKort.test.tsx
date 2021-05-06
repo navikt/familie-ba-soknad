@@ -58,7 +58,7 @@ test(`Kan legge til barn`, () => {
 
     const fornavnLabel = getByText('hvilkebarn.leggtilbarn.fornavn.spm');
     const etternavnLabel = getByText('hvilkebarn.leggtilbarn.etternavn.spm');
-    const idnrLabel = getByText('hvilkebarn.leggtilbarn.fnr.spm');
+    const idnrLabel = getByText('felles.fødsels-eller-dnummer.label');
     expect(fornavnLabel).toBeInTheDocument();
     expect(etternavnLabel).toBeInTheDocument();
     expect(idnrLabel).toBeInTheDocument();

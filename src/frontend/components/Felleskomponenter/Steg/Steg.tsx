@@ -22,10 +22,7 @@ import {
     OmBarnaDineSpørsmålId,
     omBarnaDineSpørsmålSpråkId,
 } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
-import {
-    OmBarnetSpørsmålsId,
-    omBarnetSpørsmålSpråkId,
-} from '../../SøknadsSteg/OmBarnetUtfyllende/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
 import { VelgBarnSpørsmålId } from '../../SøknadsSteg/VelgBarn/spørsmål';
 import Banner from '../Banner/Banner';

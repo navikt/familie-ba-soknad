@@ -1,7 +1,7 @@
 import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnetUtfyllende/spørsmål';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
     barnDataKeySpørsmål,
     ESivilstand,
@@ -143,6 +143,18 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
             id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderNavn]: {
+            id: OmBarnetSpørsmålsId.andreForelderNavn,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderFnr]: {
+            id: OmBarnetSpørsmålsId.andreForelderFnr,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderFødselsdato]: {
+            id: OmBarnetSpørsmålsId.andreForelderFødselsdato,
             svar: '',
         },
     };

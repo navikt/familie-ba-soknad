@@ -5,7 +5,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
-import { AlternativtDatoSvar, IBarnMedISøknad } from '../../../typer/person';
+import { AlternativtSvarForInput, IBarnMedISøknad } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const VetIkkeCheckbox: React.FC<{
@@ -17,7 +17,7 @@ const VetIkkeCheckbox: React.FC<{
     return (
         <Checkbox
             label={<SpråkTekst id={labelSpråkId} />}
-            defaultChecked={barn[søknadsdatafelt].svar === AlternativtDatoSvar.UKJENT}
+            defaultChecked={barn[søknadsdatafelt].svar === AlternativtSvarForInput.UKJENT}
             onChange={event => {
                 ukjentDatoCheckboxFelt
                     .hentNavInputProps(false)
