@@ -12,6 +12,9 @@ export enum OmBarnetSpørsmålsId {
     nårKomBarnetTilNorge = 'når-kom-barnet-til-norge',
     planleggerÅBoINorge12Mnd = 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
     barnetrygdFraEøslandHvilketLand = 'barnetrygd-hvilket-eøsland',
+    andreForelderNavn = 'andre-forelder-navn',
+    andreForelderFnr = 'andre-forelder-fødsels-/dnummer',
+    andreForelderFødselsdato = 'andre-forelder-fødselsdato',
 }
 
 export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
@@ -29,4 +32,7 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.nårKomBarnetTilNorge]: 'ombarnet.sammenhengende-opphold.dato.spm',
     [OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]: 'ombarnet.planlagt-sammenhengende-opphold.spm',
     [OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand]: 'ombarnet.barnetrygd-eøs.land.spm',
+    [OmBarnetSpørsmålsId.andreForelderNavn]: 'ombarnet.andre-forelder.navn.spm',
+    [OmBarnetSpørsmålsId.andreForelderFnr]: 'felles.fødsels-eller-dnummer.label',
+    [OmBarnetSpørsmålsId.andreForelderFødselsdato]: 'felles.fødselsdato.label',
 };
