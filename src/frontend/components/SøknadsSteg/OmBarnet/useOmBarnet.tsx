@@ -4,6 +4,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { idnr } from '@navikt/fnrvalidator';
 
 import { useApp } from '../../../context/AppContext';
 import {
@@ -32,6 +33,10 @@ export interface IOmBarnetUtvidetFeltTyper {
     nårKomBarnTilNorgeDato: ISODateString;
     planleggerÅBoINorge12Mnd: ESvar | undefined;
     barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
+    andreForelderNavn: string;
+    andreForelderFnr: string;
+    andreForelderFødselsdatoUkjent: ESvar;
+    andreForelderFødselsdato: DatoMedUkjent;
 }
 
 export const useOmBarnet = (
@@ -162,6 +167,39 @@ export const useOmBarnet = (
         skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland)
     );
 
+    /*--- ANDRE FORELDER ---*/
+    const andreForelderNavn = useFelt<string>({
+        verdi: barn[barnDataKeySpørsmål.andreForelderNavn].svar,
+        feltId: barn[barnDataKeySpørsmål.andreForelderNavn].id,
+        valideringsfunksjon: felt =>
+            felt.verdi && felt.verdi !== ''
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'ombarnet.andre-forelder.navn.feilmelding'} />),
+    });
+
+    const andreForelderFnr = useFelt<string>({
+        verdi: barn[barnDataKeySpørsmål.andreForelderFnr].svar,
+        feltId: barn[barnDataKeySpørsmål.andreForelderFnr].id,
+        valideringsfunksjon: felt =>
+            felt.verdi === '' || idnr(felt.verdi).status !== 'valid'
+                ? feil(felt, <SpråkTekst id={'ombarnet.andre-forelder.fnr.feilmelding'} />)
+                : ok(felt),
+    });
+
+    const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
+        verdi:
+            barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar === 'UKJENT'
+                ? ESvar.JA
+                : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent,
+    });
+
+    const andreForelderFødselsdato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.andreForelderFødselsdato],
+        andreForelderFødselsdatoUkjent,
+        true
+    );
+
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
@@ -178,6 +216,10 @@ export const useOmBarnet = (
                 nårKomBarnTilNorgeDato,
                 planleggerÅBoINorge12Mnd,
                 barnetrygdFraEøslandHvilketLand,
+                andreForelderNavn,
+                andreForelderFnr,
+                andreForelderFødselsdato,
+                andreForelderFødselsdatoUkjent,
             },
             skjemanavn: 'om-barnet',
         }
