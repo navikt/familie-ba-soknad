@@ -14,7 +14,7 @@ import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
-import { OmBarnetSpørsmålSpråkId } from './spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnetUtfyllende } from './useOmBarnetUtfyllende';
 import VetIkkeCheckbox from './VetIkkeCheckbox';
 
@@ -53,34 +53,44 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                     <SkjemaFeltInput
                         felt={skjema.felter.institusjonsnavn}
                         visFeilmeldinger={skjema.visFeilmeldinger}
-                        labelSpråkTekstId={OmBarnetSpørsmålSpråkId.institusjonsnavn}
+                        labelSpråkTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonsnavn]
+                        }
                     />
                     <SkjemaFeltInput
                         felt={skjema.felter.institusjonsadresse}
                         visFeilmeldinger={skjema.visFeilmeldinger}
-                        labelSpråkTekstId={OmBarnetSpørsmålSpråkId.institusjonsadresse}
+                        labelSpråkTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonsadresse]
+                        }
                     />
                     <SkjemaFeltInput
                         felt={skjema.felter.institusjonspostnummer}
                         visFeilmeldinger={skjema.visFeilmeldinger}
-                        labelSpråkTekstId={OmBarnetSpørsmålSpråkId.institusjonspostnummer}
+                        labelSpråkTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonspostnummer]
+                        }
                         bredde={'S'}
                     />
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
-                        labelTekstId={OmBarnetSpørsmålSpråkId['institusjon-opphold-startdato']}
+                        labelTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdStartdato]
+                        }
                     />
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdSluttdato}
                         skjema={skjema}
-                        labelTekstId={OmBarnetSpørsmålSpråkId['institusjon-opphold-sluttdato']}
+                        labelTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdSluttdato]
+                        }
                         disabled={skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
                     />
                     <VetIkkeCheckbox
                         barn={barn}
                         labelSpråkId={
-                            OmBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdVetIkke]
                         }
                         ukjentDatoCheckboxFelt={skjema.felter.institusjonOppholdSluttVetIkke}
                         søknadsdatafelt={barnDataKeySpørsmål.institusjonOppholdSluttdato}
@@ -95,22 +105,34 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                     <LandDropdown
                         felt={skjema.felter.oppholdsland}
                         skjema={skjema}
-                        label={<SpråkTekst id={OmBarnetSpørsmålSpråkId.oppholdsland} />}
+                        label={
+                            <SpråkTekst
+                                id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdsland]}
+                            />
+                        }
                     />
                     <Datovelger
                         felt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
-                        labelTekstId={OmBarnetSpørsmålSpråkId['utenlandsopphold-startdato ']}
+                        labelTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdslandStartdato]
+                        }
                     />
                     <Datovelger
                         felt={skjema.felter.oppholdslandSluttdato}
                         skjema={skjema}
-                        labelTekstId={OmBarnetSpørsmålSpråkId['utenlandsopphold-sluttdato']}
+                        labelTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdslandSluttdato]
+                        }
                         disabled={skjema.felter.oppholdslandSluttDatoVetIkke.verdi === ESvar.JA}
                     />
                     <VetIkkeCheckbox
                         barn={barn}
-                        labelSpråkId={OmBarnetSpørsmålSpråkId['utenlandsopphold-ukjent-sluttdato']}
+                        labelSpråkId={
+                            omBarnetSpørsmålSpråkId[
+                                OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
+                            ]
+                        }
                         ukjentDatoCheckboxFelt={skjema.felter.oppholdslandSluttDatoVetIkke}
                         søknadsdatafelt={barnDataKeySpørsmål.oppholdslandSluttdato}
                     />
@@ -124,13 +146,15 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                     <Datovelger
                         felt={skjema.felter.nårKomBarnTilNorgeDato}
                         skjema={skjema}
-                        labelTekstId={OmBarnetSpørsmålSpråkId['når-kom-barnet-til-norge']}
+                        labelTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.nårKomBarnetTilNorge]
+                        }
                     />
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.planleggerÅBoINorge12Mnd}
                         spørsmålTekstId={
-                            OmBarnetSpørsmålSpråkId['planlegger-å-bo-sammenhengende-i-norge-12mnd']
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]
                         }
                     />
                     {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
@@ -150,7 +174,11 @@ const OmBarnetUtfyllende: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }
                         skjema={skjema}
                         label={
                             <SpråkTekst
-                                id={OmBarnetSpørsmålSpråkId['barnetrygd-hvilket-eøsland']}
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand
+                                    ]
+                                }
                             />
                         }
                     />
