@@ -11,20 +11,20 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 const VetIkkeCheckbox: React.FC<{
     barn: IBarnMedISøknad;
     labelSpråkId: string;
-    ukjentDatoCheckboxFelt: Felt<ESvar>;
+    checkboxUkjentFelt: Felt<ESvar>;
     søknadsdatafelt: string;
-}> = ({ barn, labelSpråkId, ukjentDatoCheckboxFelt, søknadsdatafelt }) => {
-    return (
+}> = ({ barn, labelSpråkId, checkboxUkjentFelt, søknadsdatafelt }) => {
+    return checkboxUkjentFelt.erSynlig ? (
         <Checkbox
             label={<SpråkTekst id={labelSpråkId} />}
             defaultChecked={barn[søknadsdatafelt].svar === AlternativtSvarForInput.UKJENT}
             onChange={event => {
-                ukjentDatoCheckboxFelt
+                checkboxUkjentFelt
                     .hentNavInputProps(false)
                     .onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
             }}
         />
-    );
+    ) : null;
 };
 
 export default VetIkkeCheckbox;

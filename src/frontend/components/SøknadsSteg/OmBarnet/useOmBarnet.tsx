@@ -197,11 +197,19 @@ export const useOmBarnet = (
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent,
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter &&
+                avhengigheter.andreForelderFnrUkjent &&
+                avhengigheter.andreForelderFnrUkjent.verdi === ESvar.JA
+            );
+        },
+        avhengigheter: andreForelderFnrUkjent,
     });
     const andreForelderFødselsdato = useDatovelgerFeltMedUkjent(
         barn[barnDataKeySpørsmål.andreForelderFødselsdato],
         andreForelderFødselsdatoUkjent,
-        true
+        andreForelderFnrUkjent.verdi === ESvar.JA
     );
 
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(

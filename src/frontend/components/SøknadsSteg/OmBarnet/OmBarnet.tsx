@@ -48,7 +48,7 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                     labelSpråkId={
                         omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavnUkjent]
                     }
-                    ukjentDatoCheckboxFelt={skjema.felter.andreForelderNavnUkjent}
+                    checkboxUkjentFelt={skjema.felter.andreForelderNavnUkjent}
                     søknadsdatafelt={barnDataKeySpørsmål.andreForelderNavn}
                 />
                 <SkjemaFeltInput
@@ -64,7 +64,7 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                     labelSpråkId={
                         omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
                     }
-                    ukjentDatoCheckboxFelt={skjema.felter.andreForelderFnrUkjent}
+                    checkboxUkjentFelt={skjema.felter.andreForelderFnrUkjent}
                     søknadsdatafelt={barnDataKeySpørsmål.andreForelderFnr}
                 />
                 <Datovelger
@@ -80,7 +80,7 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                     labelSpråkId={
                         omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]
                     }
-                    ukjentDatoCheckboxFelt={skjema.felter.andreForelderFødselsdatoUkjent}
+                    checkboxUkjentFelt={skjema.felter.andreForelderFødselsdatoUkjent}
                     søknadsdatafelt={barnDataKeySpørsmål.andreForelderFødselsdato}
                 />
             </SkjemaFieldset>
