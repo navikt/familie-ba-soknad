@@ -18,8 +18,14 @@ import { IRoute, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { omBarnaDineSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
-import { omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnetUtfyllende/spørsmål';
+import {
+    OmBarnaDineSpørsmålId,
+    omBarnaDineSpørsmålSpråkId,
+} from '../../SøknadsSteg/OmBarnaDine/spørsmål';
+import {
+    OmBarnetSpørsmålsId,
+    omBarnetSpørsmålSpråkId,
+} from '../../SøknadsSteg/OmBarnetUtfyllende/spørsmål';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
 import { VelgBarnSpørsmålId } from '../../SøknadsSteg/VelgBarn/spørsmål';
 import Banner from '../Banner/Banner';
@@ -77,6 +83,13 @@ const samletSpørsmålSpråkTekstId = {
     ...omDegSpørsmålSpråkId,
     ...omBarnaDineSpørsmålSpråkId,
     ...omBarnetSpørsmålSpråkId,
+};
+
+const samletSpørsmålId = {
+    ...OmDegSpørsmålId,
+    ...VelgBarnSpørsmålId,
+    ...OmBarnaDineSpørsmålId,
+    ...OmBarnetSpørsmålsId,
 };
 
 const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
@@ -153,7 +166,10 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
 
     /* eslint-disable @typescript-eslint/no-explicit-any */
     const hentFeilmeldingTilOppsummering = (felt: Felt<any>) => {
-        return (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse && felt.verdi === ESvar.NEI) ||
+        const gyldigId = !!Object.values(samletSpørsmålId).find(id => id === felt.id);
+
+        return !gyldigId ||
+            (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse && felt.verdi === ESvar.NEI) ||
             felt.id === VelgBarnSpørsmålId.velgBarn ? (
             felt.feilmelding
         ) : (
