@@ -162,6 +162,8 @@ export const useOmBarnetUtfyllende = (
         skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland)
     );
 
+    /*--- ANDRE FORELDER ---*/
+
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
