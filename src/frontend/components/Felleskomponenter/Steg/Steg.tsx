@@ -82,13 +82,14 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
 
     const [åpenModal, settÅpenModal] = useState(false);
 
-    const stegobjekter: StegindikatorStegProps[] = routes.map((steg: IRoute, index: number) => {
-        return {
-            label: steg.label,
-            index: index,
-        };
-    });
-
+    const stegobjekter: StegindikatorStegProps[] = routes
+        .filter(route => route.path !== '/')
+        .map((steg: IRoute, index: number) => {
+            return {
+                label: steg.label,
+                index: index,
+            };
+        });
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
