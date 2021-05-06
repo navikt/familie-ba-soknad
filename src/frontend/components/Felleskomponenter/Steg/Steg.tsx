@@ -151,7 +151,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
         return !!feil;
     };
 
-    // eslint-disable-next-line
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     const hentFeilmeldingTilOppsummering = (felt: Felt<any>) => {
         return (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse && felt.verdi === ESvar.NEI) ||
             felt.id === VelgBarnSpørsmålId.velgBarn ? (
