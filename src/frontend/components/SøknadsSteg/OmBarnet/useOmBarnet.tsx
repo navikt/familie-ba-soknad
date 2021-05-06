@@ -4,7 +4,6 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
-import { idnr } from '@navikt/fnrvalidator';
 
 import { useApp } from '../../../context/AppContext';
 import {
@@ -17,6 +16,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
+import useInputFeltMedUkjent from './useInputFeltMedUkjent';
 import useLanddropdownFelt from './useLanddropdownFelt';
 
 export interface IOmBarnetUtvidetFeltTyper {
@@ -170,33 +170,26 @@ export const useOmBarnet = (
     );
 
     /*--- ANDRE FORELDER ---*/
-    const andreForelderNavn = useFelt<string>({
-        verdi: barn[barnDataKeySpørsmål.andreForelderNavn].svar,
-        feltId: barn[barnDataKeySpørsmål.andreForelderNavn].id,
-        valideringsfunksjon: felt =>
-            felt.verdi && felt.verdi !== ''
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarnet.andre-forelder.navn.feilmelding'} />),
-    });
-
     const andreForelderNavnUkjent = useFelt<ESvar>({
         verdi: barn[barnDataKeySpørsmål.andreForelderNavn].svar === 'UKJENT' ? ESvar.JA : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
     });
-
-    const andreForelderFnr = useFelt<string>({
-        verdi: barn[barnDataKeySpørsmål.andreForelderFnr].svar,
-        feltId: barn[barnDataKeySpørsmål.andreForelderFnr].id,
-        valideringsfunksjon: felt =>
-            felt.verdi === '' || idnr(felt.verdi).status !== 'valid'
-                ? feil(felt, <SpråkTekst id={'ombarnet.andre-forelder.fnr.feilmelding'} />)
-                : ok(felt),
-    });
+    const andreForelderNavn = useInputFeltMedUkjent(
+        barn[barnDataKeySpørsmål.andreForelderNavn],
+        andreForelderNavnUkjent,
+        'ombarnet.andre-forelder.navn.feilmelding'
+    );
 
     const andreForelderFnrUkjent = useFelt<ESvar>({
         verdi: barn[barnDataKeySpørsmål.andreForelderFnr].svar === 'UKJENT' ? ESvar.JA : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.andreForelderFnrUkjent,
     });
+    const andreForelderFnr = useInputFeltMedUkjent(
+        barn[barnDataKeySpørsmål.andreForelderFnr],
+        andreForelderFnrUkjent,
+        'ombarnet.andre-forelder.fnr.feilmelding',
+        true
+    );
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
         verdi:
@@ -205,7 +198,6 @@ export const useOmBarnet = (
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent,
     });
-
     const andreForelderFødselsdato = useDatovelgerFeltMedUkjent(
         barn[barnDataKeySpørsmål.andreForelderFødselsdato],
         andreForelderFødselsdatoUkjent,
