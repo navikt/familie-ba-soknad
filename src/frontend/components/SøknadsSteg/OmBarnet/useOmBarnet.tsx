@@ -204,7 +204,8 @@ export const useOmBarnet = (
                 avhengigheter.andreForelderFnrUkjent.verdi === ESvar.JA
             );
         },
-        avhengigheter: andreForelderFnrUkjent,
+        avhengigheter: { andreForelderFnrUkjent },
+        nullstillVedAvhengighetEndring: false,
     });
     const andreForelderFødselsdato = useDatovelgerFeltMedUkjent(
         barn[barnDataKeySpørsmål.andreForelderFødselsdato],
