@@ -25,12 +25,16 @@ const useDatovelgerFeltMedUkjent = (
             }
             return validerDato(felt, false);
         },
-        avhengigheter: { vetIkkeCheckbox: avhengighet },
-        skalFeltetVises: () => skalFeltetVises,
+        avhengigheter: { vetIkkeCheckbox: avhengighet, skalFeltetVises },
+        skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalFeltetVises,
     });
     useEffect(() => {
         datoFelt.validerOgSettFelt(datoFelt.verdi, avhengighet);
     }, [avhengighet]);
+
+    useEffect(() => {
+        !skalFeltetVises && datoFelt.validerOgSettFelt('', avhengighet);
+    }, [skalFeltetVises]);
 
     return datoFelt;
 };

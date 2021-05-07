@@ -40,6 +40,8 @@
   "felles.dato-frem-i-tid.feilmelding": "Datoen er frem i tid",
   "felles.feiloppsummering.tittel": "Du må rette opp eller svare på følgende spørsmål for å gå videre",
   "felles.fødsels-eller-dnummer.label": "Fødselsnummer eller d-nummer",
+  "felles.fødselsdato.label": "Fødselsdato (format dd.mm.åååå)",
+  "felles.fødselsdato-ukjent": "Jeg kjenner ikke fødselsdato",
   "felles.mangler-svar.feilmelding": "Du må svare på dette spørsmålet for å gå videre",
   "felles.navigasjon.avsluttogfortsett": "Avslutt og fortsett senere",
   "felles.navigasjon.avsluttogslett": "Avbryt og slett søknad",

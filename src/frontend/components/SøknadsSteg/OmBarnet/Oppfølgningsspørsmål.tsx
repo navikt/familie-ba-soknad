@@ -79,7 +79,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         labelSpråkId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdVetIkke]
                         }
-                        ukjentDatoCheckboxFelt={skjema.felter.institusjonOppholdSluttVetIkke}
+                        checkboxUkjentFelt={skjema.felter.institusjonOppholdSluttVetIkke}
                         søknadsdatafelt={barnDataKeySpørsmål.institusjonOppholdSluttdato}
                     />
                 </SkjemaFieldset>
@@ -120,7 +120,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                 OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
                             ]
                         }
-                        ukjentDatoCheckboxFelt={skjema.felter.oppholdslandSluttDatoVetIkke}
+                        checkboxUkjentFelt={skjema.felter.oppholdslandSluttDatoVetIkke}
                         søknadsdatafelt={barnDataKeySpørsmål.oppholdslandSluttdato}
                     />
                 </SkjemaFieldset>
