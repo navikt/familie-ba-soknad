@@ -17,6 +17,7 @@ import { useApp } from '../../../context/AppContext';
 import { IRoute, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
+import { IBarnMedISøknad } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     OmBarnaDineSpørsmålId,
@@ -38,6 +39,7 @@ interface ISteg {
         skjema: ISkjema<SkjemaFeltTyper, string>;
         settSøknadsdataCallback: () => void;
     };
+    barn?: IBarnMedISøknad;
 }
 
 const AvsluttKnappContainer = styled.div`
@@ -89,7 +91,7 @@ const samletSpørsmålId = {
     ...OmBarnetSpørsmålsId,
 };
 
-const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
+const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, avbrytSøknad } = useApp();
@@ -170,7 +172,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
             felt.id === VelgBarnSpørsmålId.velgBarn ? (
             felt.feilmelding
         ) : (
-            <SpråkTekst id={samletSpørsmålSpråkTekstId[felt.id]} />
+            <SpråkTekst id={samletSpørsmålSpråkTekstId[felt.id]} values={{ navn: barn?.navn }} />
         );
     };
 

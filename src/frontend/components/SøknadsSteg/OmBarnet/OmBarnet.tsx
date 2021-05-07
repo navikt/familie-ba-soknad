@@ -24,6 +24,7 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                 skjema,
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
+            barn={barn}
         >
             <Oppfølgningsspørsmål barn={barn} skjema={skjema} />
             <AndreForelder barn={barn} skjema={skjema} />
