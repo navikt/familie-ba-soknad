@@ -103,7 +103,8 @@ export const useOmBarnet = (
 
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
         verdi:
-            barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar === 'UKJENT'
+            barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar ===
+            AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
@@ -129,7 +130,7 @@ export const useOmBarnet = (
 
     const oppholdslandSluttDatoVetIkke = useFelt<ESvar>({
         verdi:
-            barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar === 'UKJENT'
+            barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar === AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke,
@@ -171,7 +172,10 @@ export const useOmBarnet = (
 
     /*--- ANDRE FORELDER ---*/
     const andreForelderNavnUkjent = useFelt<ESvar>({
-        verdi: barn[barnDataKeySpørsmål.andreForelderNavn].svar === 'UKJENT' ? ESvar.JA : ESvar.NEI,
+        verdi:
+            barn[barnDataKeySpørsmål.andreForelderNavn].svar === AlternativtSvarForInput.UKJENT
+                ? ESvar.JA
+                : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
     });
     const andreForelderNavn = useInputFeltMedUkjent(
@@ -181,7 +185,10 @@ export const useOmBarnet = (
     );
 
     const andreForelderFnrUkjent = useFelt<ESvar>({
-        verdi: barn[barnDataKeySpørsmål.andreForelderFnr].svar === 'UKJENT' ? ESvar.JA : ESvar.NEI,
+        verdi:
+            barn[barnDataKeySpørsmål.andreForelderFnr].svar === AlternativtSvarForInput.UKJENT
+                ? ESvar.JA
+                : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.andreForelderFnrUkjent,
     });
     const andreForelderFnr = useInputFeltMedUkjent(
@@ -193,7 +200,8 @@ export const useOmBarnet = (
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
         verdi:
-            barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar === 'UKJENT'
+            barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar ===
+            AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent,

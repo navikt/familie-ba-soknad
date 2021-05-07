@@ -33,15 +33,18 @@ const jens = {
     [barnDataKeySpørsmål.oppholderSegIUtland]: { id: '8', svar: ESvar.JA },
     [barnDataKeySpørsmål.oppholdsland]: { id: '9', svar: 'AUS' },
     [barnDataKeySpørsmål.oppholdslandStartdato]: { id: '10', svar: '2020-08-08' },
-    [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: 'UKJENT' },
+    [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: AlternativtSvarForInput.UKJENT },
     [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: { id: '12', svar: '2020-07-07' },
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: ESvar.JA },
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: { id: '14', svar: ESvar.JA },
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.JA },
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: 'AUS' },
-    [barnDataKeySpørsmål.andreForelderNavn]: { id: '17', svar: 'UKJENT' },
-    [barnDataKeySpørsmål.andreForelderFnr]: { id: '18', svar: 'UKJENT' },
-    [barnDataKeySpørsmål.andreForelderFødselsdato]: { id: '19', svar: 'UKJENT' },
+    [barnDataKeySpørsmål.andreForelderNavn]: { id: '17', svar: AlternativtSvarForInput.UKJENT },
+    [barnDataKeySpørsmål.andreForelderFnr]: { id: '18', svar: AlternativtSvarForInput.UKJENT },
+    [barnDataKeySpørsmål.andreForelderFødselsdato]: {
+        id: '19',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
 };
 const line = {
     navn: 'Line',
@@ -65,9 +68,12 @@ const line = {
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: undefined },
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.NEI },
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: '' },
-    [barnDataKeySpørsmål.andreForelderNavn]: { id: '17', svar: 'UKJENT' },
-    [barnDataKeySpørsmål.andreForelderFnr]: { id: '18', svar: 'UKJENT' },
-    [barnDataKeySpørsmål.andreForelderFødselsdato]: { id: '19', svar: 'UKJENT' },
+    [barnDataKeySpørsmål.andreForelderNavn]: { id: '17', svar: AlternativtSvarForInput.UKJENT },
+    [barnDataKeySpørsmål.andreForelderFnr]: { id: '18', svar: AlternativtSvarForInput.UKJENT },
+    [barnDataKeySpørsmål.andreForelderFødselsdato]: {
+        id: '19',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
 };
 
 test(`Kan rendre Om Barnet Utfyllende`, () => {
