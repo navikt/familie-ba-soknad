@@ -6,6 +6,7 @@ import { barnDataKeySpørsmål } from '../../../typer/person';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -100,6 +101,19 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                         inkluderVetIkke={true}
                         språkValues={{ navn: barn.navn }}
                     />
+                    <LandDropdown
+                        felt={skjema.felter.andreForelderArbeidUtlandetHvilketLand}
+                        skjema={skjema}
+                        label={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
+                                    ]
+                                }
+                            />
+                        }
+                    />
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.andreForelderPensjonUtland}
@@ -108,6 +122,19 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                         }
                         inkluderVetIkke={true}
                         språkValues={{ navn: barn.navn }}
+                    />
+                    <LandDropdown
+                        felt={skjema.felter.andreForelderPensjonHvilketLand}
+                        skjema={skjema}
+                        label={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand
+                                    ]
+                                }
+                            />
+                        }
                     />
                 </KomponentGruppe>
             </SkjemaFieldset>

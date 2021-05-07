@@ -14,6 +14,7 @@ import {
     IBarnMedISøknad,
 } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import useLanddropdownFeltMedJaNeiAvhengighet from '../OmDeg/useLanddropdownFeltMedJaNeiAvhengighet';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
@@ -230,10 +231,13 @@ export const useOmBarnet = (
         barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet]
     );
 
-    const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFelt(
-        barn[barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand],
-        skalFeltetVises(barnDataKeySpørsmål.andreForelderArbeidUtlandet)
+    const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
+        barn.andreForelderArbeidUtlandetHvilketLand,
+        ESvar.JA,
+        andreForelderArbeidUtlandet
     );
+
+    console.log(andreForelderArbeidUtlandetHvilketLand);
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.andreForelderPensjonUtland]
