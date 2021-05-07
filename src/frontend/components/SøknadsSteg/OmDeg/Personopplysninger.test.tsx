@@ -8,8 +8,8 @@ import { LocaleType } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { preferredAxios } from '../../../context/axios';
-import { ESivilstand } from '../../../typer/person';
-import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
+import { ESivilstand, ISøker } from '../../../typer/person';
+import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { Personopplysninger } from './Personopplysninger';
 
 const axiosMock = new MockAdapter(preferredAxios);
@@ -23,50 +23,72 @@ const mockedSivilstand = ESivilstand.GIFT;
 
 silenceConsoleErrors();
 
-test('Test at rendrer adresse i personopplysninger', () => {
-    const søker = {
-        adresse: {
-            adressenavn: 'Testgata',
-            poststed: 'Oslo',
-        },
-        navn: 'Test Testdottir',
-        statsborgerskap: [{ landkode: 'NOR' }],
-        ident: '12345678901',
-        kontakttelefon: '40123456',
-        barn: [],
-        sivilstand: { type: mockedSivilstand },
-    };
+describe('Personopplysninger', () => {
+    test('Rendrer adresse i personopplysninger', () => {
+        const søker: Partial<ISøker> = {
+            adresse: {
+                adressenavn: 'Testgata',
+                poststed: 'Oslo',
+            },
+            navn: 'Test Testdottir',
+            statsborgerskap: [{ landkode: 'NOR' }],
+            ident: '12345678901',
+            barn: [],
+            sivilstand: { type: mockedSivilstand },
+        };
 
-    spyOnUseApp({ søker });
+        spyOnUseApp({ søker });
 
-    const { getByText } = render(
-        <IntlProvider locale={LocaleType.nb}>
-            <Personopplysninger />
-        </IntlProvider>
-    );
-    expect(getByText(/Testgata/)).toBeInTheDocument();
-    expect(getByText(/Oslo/)).toBeInTheDocument();
-});
+        const { getByText } = render(
+            <IntlProvider locale={LocaleType.nb}>
+                <Personopplysninger />
+            </IntlProvider>
+        );
+        expect(getByText(/Testgata/)).toBeInTheDocument();
+        expect(getByText(/Oslo/)).toBeInTheDocument();
+    });
 
-test('Kan rendre med tom adresse', () => {
-    const søker = {
-        adresse: null,
-        navn: 'Test Testdottir',
-        statsborgerskap: [{ landkode: 'NOR' }],
-        ident: '12345678901',
-        kontakttelefon: '40123456',
-        barn: [],
-        sivilstand: { type: mockedSivilstand },
-    };
+    test('Kan rendre med tom adresse', () => {
+        const søker: Partial<ISøker> = {
+            adresse: undefined,
+            navn: 'Test Testdottir',
+            statsborgerskap: [{ landkode: 'NOR' }],
+            ident: '12345678901',
+            barn: [],
+            sivilstand: { type: mockedSivilstand },
+        };
 
-    spyOnUseApp({ søker });
+        spyOnUseApp({ søker });
 
-    const { getByText } = render(
-        <IntlProvider locale={LocaleType.nb}>
-            <Personopplysninger />
-        </IntlProvider>
-    );
+        const { getByText } = render(
+            <IntlProvider locale={LocaleType.nb}>
+                <Personopplysninger />
+            </IntlProvider>
+        );
 
-    expect(getByText(/12345678901/)).toBeInTheDocument();
-    expect(getByText(/omdeg\.personopplysninger\.adresse-ukjent/)).toBeInTheDocument();
+        expect(getByText(/12345678901/)).toBeInTheDocument();
+        expect(getByText(/omdeg\.personopplysninger\.adresse-ukjent/)).toBeInTheDocument();
+    });
+
+    test('Viser riktig info og stopper søknad ved adressebeskyttelse', () => {
+        const søker: Partial<ISøker> = {
+            adresse: undefined,
+            navn: 'Test Testdottir',
+            statsborgerskap: [{ landkode: 'NOR' }],
+            ident: '12345678901',
+            barn: [],
+            sivilstand: { type: mockedSivilstand },
+            adressebeskyttelse: true,
+        };
+
+        spyOnUseApp({ søker });
+
+        const { getByText } = render(
+            <TestProvidere>
+                <Personopplysninger />
+            </TestProvidere>
+        );
+
+        expect(getByText(/omdeg\.personopplysninger\.adresse-sperret/)).toBeInTheDocument();
+    });
 });
