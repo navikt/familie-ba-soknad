@@ -29,7 +29,7 @@ describe('VelgBarn', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const { getByText, rerender } = render(
+        const { getByText } = render(
             <TestProvidere>
                 <VelgBarn />
             </TestProvidere>
@@ -37,16 +37,22 @@ describe('VelgBarn', () => {
         const fjernBarnKnapp = getByText(/hvilkebarn.fjern-barn.knapp/);
 
         act(() => fjernBarnKnapp.click());
-        // Vet ikke hvorfor, men uten denne rerenderen trigger ikke useEffecten i useVelgBarn
-        rerender(
-            <TestProvidere>
-                <VelgBarn />
-            </TestProvidere>
-        );
 
         const gåVidere = getByText(/felles.navigasjon.gå-videre/);
         act(() => gåVidere.click());
 
-        expect(søknad.barnInkludertISøknaden.length).toBe(1);
+        // Først blir barnet fjernet fra manuelt registrerte barn
+        expect(settSøknad).toHaveBeenNthCalledWith(1, {
+            barnRegistrertManuelt: [],
+            barnInkludertISøknaden: [manueltRegistrert, fraPdl],
+            søker: { barn: [fraPdl] },
+        });
+
+        // Når man trykker på gå videre blir det manuelt registrerte barnet fjernet fra søknaden
+        expect(settSøknad).toHaveBeenNthCalledWith(2, {
+            barnRegistrertManuelt: [],
+            barnInkludertISøknaden: [fraPdl],
+            søker: { barn: [fraPdl] },
+        });
     });
 });

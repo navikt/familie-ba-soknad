@@ -21,6 +21,7 @@ interface IBarnekortProps {
     velgBarnCallback: (barn: IBarn, barnMedISøknad: boolean) => void;
     barn: IBarn;
     barnSomSkalVæreMed: IBarn[];
+    fjernBarnCallback: (ident: string) => void;
 }
 
 export const StyledBarnekort = styled.div`
@@ -79,7 +80,12 @@ const StyledIngress = styled(Ingress)`
     }
 `;
 
-const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæreMed }) => {
+const Barnekort: React.FC<IBarnekortProps> = ({
+    barn,
+    velgBarnCallback,
+    barnSomSkalVæreMed,
+    fjernBarnCallback,
+}) => {
     const ikoner = [barn1, barn2, barn3];
     const {
         søknad: { barnRegistrertManuelt },
@@ -127,7 +133,9 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
                     onChange={() => velgBarnCallback(barn, erMedISøknad)}
                 />
             </InformasjonsboksInnhold>
-            {erRegistrertManuelt && <FjernBarnKnapp ident={barn.ident} />}
+            {erRegistrertManuelt && (
+                <FjernBarnKnapp ident={barn.ident} fjernBarnCallback={fjernBarnCallback} />
+            )}
         </StyledBarnekort>
     );
 };

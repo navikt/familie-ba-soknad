@@ -19,13 +19,10 @@ export const useVelgBarn = (): {
     oppdaterSøknad: () => void;
     håndterVelgBarnToggle: (barn: IBarn, erMedISøknad: boolean) => void;
     barnSomSkalVæreMed: IBarn[];
+    fjernBarn: (ident: string) => void;
 } => {
     const { søknad, settSøknad } = useApp();
-    const {
-        barnInkludertISøknaden,
-        barnRegistrertManuelt,
-        søker: { barn },
-    } = søknad;
+    const { barnInkludertISøknaden } = søknad;
     const { settBarnForRoutes } = useRoutes();
     const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] = useState<IBarnMedISøknad[]>(
         barnInkludertISøknaden
@@ -35,16 +32,15 @@ export const useVelgBarn = (): {
         settBarnForRoutes(barnSomSkalVæreMed);
     }, [barnSomSkalVæreMed]);
 
-    useEffect(() => {
-        // Når barn fjernes må state oppdateres, ellers beholder vi det fjerna barnet videre
-        const alleIdenter = barnRegistrertManuelt
-            .map(barn => barn.ident)
-            .concat(barn.map(barn => barn.ident));
-        const barnSomSkalVæreMedOgEksisterer = barnSomSkalVæreMed.filter(
-            barn => !!alleIdenter.find(ident => ident === barn.ident)
-        );
-        settBarnSomSkalVæreMed(barnSomSkalVæreMedOgEksisterer);
-    }, [barnRegistrertManuelt]);
+    const fjernBarn = (ident: string) => {
+        settSøknad({
+            ...søknad,
+            barnRegistrertManuelt: søknad.barnRegistrertManuelt.filter(
+                barn => ident !== barn.ident
+            ),
+        });
+        settBarnSomSkalVæreMed(barnSomSkalVæreMed.filter(barn => ident !== barn.ident));
+    };
 
     const barnMedISøknad = useFelt<IBarn[]>({
         verdi: barnSomSkalVæreMed,
@@ -100,5 +96,6 @@ export const useVelgBarn = (): {
         oppdaterSøknad,
         håndterVelgBarnToggle,
         barnSomSkalVæreMed,
+        fjernBarn,
     };
 };
