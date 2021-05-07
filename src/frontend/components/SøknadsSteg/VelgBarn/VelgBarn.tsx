@@ -33,6 +33,7 @@ const VelgBarn: React.FC = () => {
         oppdaterSøknad,
         håndterVelgBarnToggle,
         barnSomSkalVæreMed,
+        fjernBarn,
     } = useVelgBarn();
 
     const barnFraRespons = mapBarnResponsTilBarn(søknad.søker.barn);
@@ -74,6 +75,7 @@ const VelgBarn: React.FC = () => {
                         barn={barn}
                         velgBarnCallback={håndterVelgBarnToggle}
                         barnSomSkalVæreMed={barnSomSkalVæreMed}
+                        fjernBarnCallback={fjernBarn}
                     />
                 ))}
                 <NyttBarnKort />
