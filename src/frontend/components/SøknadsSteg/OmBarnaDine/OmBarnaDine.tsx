@@ -12,7 +12,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
-import { omBarnaDineSpråkTekstId, OmBarnaDineSpørsmålId } from './spørsmål';
+import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
 
 const OmBarnaDine: React.FC = () => {
@@ -46,13 +46,13 @@ const OmBarnaDine: React.FC = () => {
                     skjema={skjema}
                     felt={skjema.felter.erNoenAvBarnaFosterbarn}
                     spørsmålTekstId={
-                        omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn]
+                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn]
                     }
                 />
                 <HvilkeBarnCheckboxGruppe
                     legend={
                         <SpråkTekst
-                            id={omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.hvemErFosterbarn]}
+                            id={omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErFosterbarn]}
                         />
                     }
                     skjemafelt={skjema.felter.hvemErFosterbarn}
@@ -65,7 +65,9 @@ const OmBarnaDine: React.FC = () => {
                     skjema={skjema}
                     felt={skjema.felter.oppholderBarnSegIInstitusjon}
                     spørsmålTekstId={
-                        omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon]
+                        omBarnaDineSpørsmålSpråkId[
+                            OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon
+                        ]
                     }
                 />
 
@@ -73,7 +75,7 @@ const OmBarnaDine: React.FC = () => {
                     legend={
                         <SpråkTekst
                             id={
-                                omBarnaDineSpråkTekstId[
+                                omBarnaDineSpørsmålSpråkId[
                                     OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon
                                 ]
                             }
@@ -93,14 +95,14 @@ const OmBarnaDine: React.FC = () => {
                     skjema={skjema}
                     felt={skjema.felter.erBarnAdoptertFraUtland}
                     spørsmålTekstId={
-                        omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland]
+                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland]
                     }
                 />
                 <HvilkeBarnCheckboxGruppe
                     legend={
                         <SpråkTekst
                             id={
-                                omBarnaDineSpråkTekstId[
+                                omBarnaDineSpørsmålSpråkId[
                                     OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland
                                 ]
                             }
@@ -120,14 +122,14 @@ const OmBarnaDine: React.FC = () => {
                     skjema={skjema}
                     felt={skjema.felter.oppholderBarnSegIUtland}
                     spørsmålTekstId={
-                        omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.oppholderBarnSegIUtland]
+                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.oppholderBarnSegIUtland]
                     }
                 />
                 <HvilkeBarnCheckboxGruppe
                     legend={
                         <SpråkTekst
                             id={
-                                omBarnaDineSpråkTekstId[
+                                omBarnaDineSpørsmålSpråkId[
                                     OmBarnaDineSpørsmålId.hvemOppholderSegIUtland
                                 ]
                             }
@@ -144,12 +146,14 @@ const OmBarnaDine: React.FC = () => {
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.søktAsylForBarn}
-                    spørsmålTekstId={omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.søktAsylForBarn]}
+                    spørsmålTekstId={
+                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.søktAsylForBarn]
+                    }
                 />
                 <HvilkeBarnCheckboxGruppe
                     legend={
                         <SpråkTekst
-                            id={omBarnaDineSpråkTekstId[OmBarnaDineSpørsmålId.hvemErSøktAsylFor]}
+                            id={omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErSøktAsylFor]}
                         />
                     }
                     skjemafelt={skjema.felter.hvemErSøktAsylFor}
@@ -166,7 +170,7 @@ const OmBarnaDine: React.FC = () => {
                     skjema={skjema}
                     felt={skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge}
                     spørsmålTekstId={
-                        omBarnaDineSpråkTekstId[
+                        omBarnaDineSpørsmålSpråkId[
                             OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
                         ]
                     }
@@ -175,14 +179,14 @@ const OmBarnaDine: React.FC = () => {
                     legend={
                         <SpråkTekst
                             id={
-                                omBarnaDineSpråkTekstId[
+                                omBarnaDineSpørsmålSpråkId[
                                     OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge
                                 ]
                             }
                         />
                     }
                     skjemafelt={skjema.felter.hvemTolvMndSammenhengendeINorge}
-                    søknadsdatafelt={barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd}
+                    søknadsdatafelt={barnDataKeySpørsmål.boddMindreEnn12MndINorge}
                     nullstillValgteBarn={
                         skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi === ESvar.JA
                     }
@@ -195,7 +199,7 @@ const OmBarnaDine: React.FC = () => {
                     skjema={skjema}
                     felt={skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland}
                     spørsmålTekstId={
-                        omBarnaDineSpråkTekstId[
+                        omBarnaDineSpørsmålSpråkId[
                             OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland
                         ]
                     }
@@ -204,7 +208,7 @@ const OmBarnaDine: React.FC = () => {
                     legend={
                         <SpråkTekst
                             id={
-                                omBarnaDineSpråkTekstId[
+                                omBarnaDineSpørsmålSpråkId[
                                     OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland
                                 ]
                             }

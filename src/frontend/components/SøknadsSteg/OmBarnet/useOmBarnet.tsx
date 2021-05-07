@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
-import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import {
-    AlternativtDatoSvar,
+    AlternativtSvarForInput,
     barnDataKeySpørsmål,
     DatoMedUkjent,
     IBarnMedISøknad,
@@ -16,6 +16,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
+import useInputFeltMedUkjent from './useInputFeltMedUkjent';
 import useLanddropdownFelt from './useLanddropdownFelt';
 
 export interface IOmBarnetUtvidetFeltTyper {
@@ -29,9 +30,18 @@ export interface IOmBarnetUtvidetFeltTyper {
     oppholdslandStartdato: ISODateString;
     oppholdslandSluttdato: DatoMedUkjent;
     oppholdslandSluttDatoVetIkke: ESvar;
+    nårKomBarnTilNorgeDato: ISODateString;
+    planleggerÅBoINorge12Mnd: ESvar | undefined;
+    barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
+    andreForelderNavn: string;
+    andreForelderNavnUkjent: ESvar;
+    andreForelderFnr: string;
+    andreForelderFnrUkjent: ESvar;
+    andreForelderFødselsdatoUkjent: ESvar;
+    andreForelderFødselsdato: DatoMedUkjent;
 }
 
-export const useOmBarnetUtfyllende = (
+export const useOmBarnet = (
     barnetsIdent: string
 ): {
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
@@ -93,7 +103,8 @@ export const useOmBarnetUtfyllende = (
 
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
         verdi:
-            barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar === 'UKJENT'
+            barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar ===
+            AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
@@ -108,7 +119,7 @@ export const useOmBarnetUtfyllende = (
     /*---UTENLANDSOPPHOLD---*/
 
     const oppholdsland = useLanddropdownFelt(
-        barn.oppholdsland,
+        barn[barnDataKeySpørsmål.oppholdsland],
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
     );
 
@@ -119,7 +130,7 @@ export const useOmBarnetUtfyllende = (
 
     const oppholdslandSluttDatoVetIkke = useFelt<ESvar>({
         verdi:
-            barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar === 'UKJENT'
+            barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar === AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke,
@@ -129,6 +140,85 @@ export const useOmBarnetUtfyllende = (
         barn[barnDataKeySpørsmål.oppholdslandSluttdato],
         oppholdslandSluttDatoVetIkke,
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
+    );
+
+    /*---BODD SAMMENHENGENDE I NORGE---*/
+
+    const nårKomBarnTilNorgeDato = useDatovelgerFelt(
+        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
+        skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
+    );
+
+    const planleggerÅBoINorge12Mnd = useFelt<ESvar | undefined>({
+        feltId: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].id,
+        verdi: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar,
+        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+        },
+        skalFeltetVises: () => {
+            return skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge);
+        },
+        nullstillVedAvhengighetEndring: false,
+    });
+
+    /*--- MOTTAR BARNETRYFD FRA ANNET EØSLAND ---*/
+
+    const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt(
+        barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
+        skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland)
+    );
+
+    /*--- ANDRE FORELDER ---*/
+    const andreForelderNavnUkjent = useFelt<ESvar>({
+        verdi:
+            barn[barnDataKeySpørsmål.andreForelderNavn].svar === AlternativtSvarForInput.UKJENT
+                ? ESvar.JA
+                : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
+    });
+    const andreForelderNavn = useInputFeltMedUkjent(
+        barn[barnDataKeySpørsmål.andreForelderNavn],
+        andreForelderNavnUkjent,
+        'ombarnet.andre-forelder.navn.feilmelding'
+    );
+
+    const andreForelderFnrUkjent = useFelt<ESvar>({
+        verdi:
+            barn[barnDataKeySpørsmål.andreForelderFnr].svar === AlternativtSvarForInput.UKJENT
+                ? ESvar.JA
+                : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.andreForelderFnrUkjent,
+    });
+    const andreForelderFnr = useInputFeltMedUkjent(
+        barn[barnDataKeySpørsmål.andreForelderFnr],
+        andreForelderFnrUkjent,
+        'ombarnet.andre-forelder.fnr.feilmelding',
+        true
+    );
+
+    const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
+        verdi:
+            barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar ===
+            AlternativtSvarForInput.UKJENT
+                ? ESvar.JA
+                : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent,
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter &&
+                avhengigheter.andreForelderFnrUkjent &&
+                avhengigheter.andreForelderFnrUkjent.verdi === ESvar.JA
+            );
+        },
+        avhengigheter: { andreForelderFnrUkjent },
+        nullstillVedAvhengighetEndring: false,
+    });
+    const andreForelderFødselsdato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.andreForelderFødselsdato],
+        andreForelderFødselsdatoUkjent,
+        andreForelderFnrUkjent.verdi === ESvar.JA
     );
 
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
@@ -144,10 +234,26 @@ export const useOmBarnetUtfyllende = (
                 oppholdslandStartdato,
                 oppholdslandSluttdato,
                 oppholdslandSluttDatoVetIkke,
+                nårKomBarnTilNorgeDato,
+                planleggerÅBoINorge12Mnd,
+                barnetrygdFraEøslandHvilketLand,
+                andreForelderNavn,
+                andreForelderNavnUkjent,
+                andreForelderFnr,
+                andreForelderFnrUkjent,
+                andreForelderFødselsdato,
+                andreForelderFødselsdatoUkjent,
             },
             skjemanavn: 'om-barnet',
         }
     );
+
+    const svarForSpørsmålMedVetIkke = (
+        vetIkkeFelt: Felt<ESvar>,
+        spørsmålFelt: Felt<string>
+    ): string => {
+        return vetIkkeFelt.verdi === ESvar.JA ? AlternativtSvarForInput.UKJENT : spørsmålFelt.verdi;
+    };
 
     const oppdaterSøknad = () => {
         const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] = søknad.barnInkludertISøknaden.map(
@@ -173,10 +279,10 @@ export const useOmBarnetUtfyllende = (
                           },
                           institusjonOppholdSluttdato: {
                               ...barn.institusjonOppholdSluttdato,
-                              svar:
-                                  institusjonOppholdSluttVetIkke.verdi === ESvar.JA
-                                      ? AlternativtDatoSvar.UKJENT
-                                      : institusjonOppholdStartdato.verdi,
+                              svar: svarForSpørsmålMedVetIkke(
+                                  institusjonOppholdSluttVetIkke,
+                                  institusjonOppholdSluttdato
+                              ),
                           },
                           oppholdsland: {
                               ...barn.oppholdsland,
@@ -188,10 +294,43 @@ export const useOmBarnetUtfyllende = (
                           },
                           oppholdslandSluttdato: {
                               ...barn.oppholdslandSluttdato,
-                              svar:
-                                  oppholdslandSluttDatoVetIkke.verdi === ESvar.JA
-                                      ? AlternativtDatoSvar.UKJENT
-                                      : oppholdslandSluttdato.verdi,
+                              svar: svarForSpørsmålMedVetIkke(
+                                  oppholdslandSluttDatoVetIkke,
+                                  oppholdslandSluttdato
+                              ),
+                          },
+                          nårKomBarnTilNorgeDato: {
+                              ...barn.nårKomBarnTilNorgeDato,
+                              svar: nårKomBarnTilNorgeDato.verdi,
+                          },
+                          planleggerÅBoINorge12Mnd: {
+                              ...barn.planleggerÅBoINorge12Mnd,
+                              svar: planleggerÅBoINorge12Mnd.verdi,
+                          },
+                          barnetrygdFraEøslandHvilketLand: {
+                              ...barn.barnetrygdFraEøslandHvilketLand,
+                              svar: barnetrygdFraEøslandHvilketLand.verdi,
+                          },
+                          andreForelderNavn: {
+                              ...barn.andreForelderNavn,
+                              svar: svarForSpørsmålMedVetIkke(
+                                  andreForelderNavnUkjent,
+                                  andreForelderNavn
+                              ),
+                          },
+                          andreForelderFnr: {
+                              ...barn.andreForelderFnr,
+                              svar: svarForSpørsmålMedVetIkke(
+                                  andreForelderFnrUkjent,
+                                  andreForelderFnr
+                              ),
+                          },
+                          andreForelderFødselsdato: {
+                              ...barn.andreForelderFødselsdato,
+                              svar: svarForSpørsmålMedVetIkke(
+                                  andreForelderFødselsdatoUkjent,
+                                  andreForelderFødselsdato
+                              ),
                           },
                       }
                     : barn

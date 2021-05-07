@@ -55,6 +55,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                             ident: ressurs.data.ident,
                             adresse: ressurs.data.adresse,
                             sivilstand: ressurs.data.sivilstand,
+                            adressebeskyttelse: ressurs.data.adressebeskyttelse,
                         },
                     });
             });

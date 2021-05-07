@@ -1,8 +1,15 @@
 import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnetUtfyllende/spørsmål';
-import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, IBarnRespons } from '../typer/person';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import {
+    barnDataKeySpørsmål,
+    ESivilstand,
+    IAdresse,
+    IBarn,
+    IBarnMedISøknad,
+    IBarnRespons,
+} from '../typer/person';
 import { ISøknad } from '../typer/søknad';
 
 export const hentAlder = (dato: string): string => {
@@ -66,64 +73,88 @@ export const hentSivilstatus = (statuskode?: ESivilstand) => {
 export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => {
     return {
         ...barn,
-        erFosterbarn: {
+        [barnDataKeySpørsmål.erFosterbarn]: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
             svar: undefined,
         },
-        erAdoptertFraUtland: {
+        [barnDataKeySpørsmål.erAdoptertFraUtland]: {
             id: OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland,
             svar: undefined,
         },
-        erAsylsøker: {
+        [barnDataKeySpørsmål.erAsylsøker]: {
             id: OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
             svar: undefined,
         },
-        barnetrygdFraAnnetEøsland: {
+        [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
             id: OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland,
             svar: undefined,
         },
-        oppholderSegIInstitusjon: {
+        [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
             id: OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon,
             svar: undefined,
         },
-        oppholdtSegINorgeSammenhengendeTolvMnd: {
-            id: OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge,
-            svar: undefined,
-        },
-        oppholderSegIUtland: {
-            id: OmBarnaDineSpørsmålId.hvemOppholderSegIUtland,
-            svar: undefined,
-        },
-        institusjonsnavn: {
+        [barnDataKeySpørsmål.institusjonsnavn]: {
             id: OmBarnetSpørsmålsId.institusjonsnavn,
             svar: '',
         },
-        institusjonsadresse: {
+        [barnDataKeySpørsmål.institusjonsadresse]: {
             id: OmBarnetSpørsmålsId.institusjonsadresse,
             svar: '',
         },
-        institusjonspostnummer: {
+        [barnDataKeySpørsmål.institusjonspostnummer]: {
             id: OmBarnetSpørsmålsId.institusjonspostnummer,
             svar: '',
         },
-        institusjonOppholdStartdato: {
+        [barnDataKeySpørsmål.institusjonOppholdStartdato]: {
             id: OmBarnetSpørsmålsId.institusjonOppholdStartdato,
             svar: '',
         },
-        institusjonOppholdSluttdato: {
+        [barnDataKeySpørsmål.institusjonOppholdSluttdato]: {
             id: OmBarnetSpørsmålsId.institusjonOppholdSluttdato,
             svar: '',
         },
-        oppholdsland: {
+        [barnDataKeySpørsmål.oppholderSegIUtland]: {
+            id: OmBarnaDineSpørsmålId.hvemOppholderSegIUtland,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.oppholdsland]: {
             id: OmBarnetSpørsmålsId.oppholdsland,
             svar: '',
         },
-        oppholdslandSluttdato: {
+        [barnDataKeySpørsmål.oppholdslandSluttdato]: {
             id: OmBarnetSpørsmålsId.oppholdslandSluttdato,
             svar: '',
         },
-        oppholdslandStartdato: {
+        [barnDataKeySpørsmål.oppholdslandStartdato]: {
             id: OmBarnetSpørsmålsId.oppholdslandStartdato,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: {
+            id: OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: {
+            id: OmBarnetSpørsmålsId.nårKomBarnetTilNorge,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: {
+            id: OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
+            id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderNavn]: {
+            id: OmBarnetSpørsmålsId.andreForelderNavn,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderFnr]: {
+            id: OmBarnetSpørsmålsId.andreForelderFnr,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderFødselsdato]: {
+            id: OmBarnetSpørsmålsId.andreForelderFødselsdato,
             svar: '',
         },
     };
@@ -135,5 +166,6 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
         ident: barnRespons.ident,
         alder: barnRespons.fødselsdato && hentAlder(barnRespons.fødselsdato),
         borMedSøker: barnRespons.borMedSøker,
+        adressebeskyttelse: barnRespons.adressebeskyttelse,
     }));
 };

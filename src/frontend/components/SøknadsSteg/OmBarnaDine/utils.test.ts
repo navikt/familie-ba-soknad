@@ -5,6 +5,7 @@
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { AlternativtSvarForInput } from '../../../typer/person';
 import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from './utils';
 
 describe('genererSvarForSpørsmålBarn', () => {
@@ -29,10 +30,13 @@ describe('genererOppdaterteBarn', () => {
                 institusjonsadresse: { svar: 'Narvesen' },
                 institusjonspostnummer: { svar: '2020' },
                 institusjonOppholdStartdato: { svar: '2020-09-08' },
-                institusjonOppholdSluttdato: { svar: 'UKJENT' },
+                institusjonOppholdSluttdato: { svar: AlternativtSvarForInput.UKJENT },
                 oppholdsland: { svar: 'AUS' },
                 oppholdslandStartdato: { svar: '2020-08-08' },
-                oppholdslandSluttdato: { svar: 'UKJENT' },
+                oppholdslandSluttdato: { svar: AlternativtSvarForInput.UKJENT },
+                nårKomBarnTilNorgeDato: { svar: '2020-07-07' },
+                planleggerÅBoINorge12Mnd: { svar: ESvar.JA },
+                barnetrygdFraEøslandHvilketLand: { svar: 'AUS' },
             },
         ],
     };
@@ -44,7 +48,7 @@ describe('genererOppdaterteBarn', () => {
             hvemOppholderSegIInstitusjon: { verdi: [] },
             hvemTolvMndSammenhengendeINorge: { verdi: [] },
             hvemOppholderSegIUtland: { verdi: ['12345678910'] },
-            hvemBarnetrygdFraAnnetEøsland: { verdi: [] },
+            hvemBarnetrygdFraAnnetEøsland: { verdi: ['12345678910'] },
             erNoenAvBarnaFosterbarn: {
                 verdi: ESvar.JA,
             },
@@ -64,7 +68,7 @@ describe('genererOppdaterteBarn', () => {
                 verdi: ESvar.NEI,
             },
             mottarBarnetrygdForBarnFraAnnetEøsland: {
-                verdi: ESvar.NEI,
+                verdi: ESvar.JA,
             },
         },
     };
@@ -77,9 +81,9 @@ describe('genererOppdaterteBarn', () => {
                 erAsylsøker: { svar: 'JA' },
                 erAdoptertFraUtland: { svar: 'NEI' },
                 oppholderSegIInstitusjon: { svar: 'NEI' },
-                oppholdtSegINorgeSammenhengendeTolvMnd: { svar: 'NEI' },
+                boddMindreEnn12MndINorge: { svar: 'NEI' },
                 oppholderSegIUtland: { svar: 'JA' },
-                barnetrygdFraAnnetEøsland: { svar: 'NEI' },
+                barnetrygdFraAnnetEøsland: { svar: 'JA' },
                 institusjonsnavn: { svar: '' },
                 institusjonsadresse: { svar: '' },
                 institusjonspostnummer: { svar: '' },
@@ -87,7 +91,10 @@ describe('genererOppdaterteBarn', () => {
                 institusjonOppholdSluttdato: { svar: '' },
                 oppholdsland: { svar: 'AUS' },
                 oppholdslandStartdato: { svar: '2020-08-08' },
-                oppholdslandSluttdato: { svar: 'UKJENT' },
+                oppholdslandSluttdato: { svar: AlternativtSvarForInput.UKJENT },
+                nårKomBarnTilNorgeDato: { svar: '' },
+                planleggerÅBoINorge12Mnd: { svar: undefined },
+                barnetrygdFraEøslandHvilketLand: { svar: 'AUS' },
             },
         ]);
     });

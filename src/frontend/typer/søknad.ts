@@ -1,7 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnetUtfyllende/spørsmål';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { INøkkelPar } from './common';
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, ISøker } from './person';
@@ -97,6 +97,7 @@ export const initialStateSøknad: ISøknad = {
         statsborgerskap: [],
         ident: '',
         sivilstand: { type: ESivilstand.UOPPGITT },
+        adressebeskyttelse: false,
         adresse: {
             adressenavn: '',
             husbokstav: '',
