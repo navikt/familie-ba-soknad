@@ -6,6 +6,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
@@ -39,6 +40,10 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderFnrUkjent: ESvar;
     andreForelderFødselsdatoUkjent: ESvar;
     andreForelderFødselsdato: DatoMedUkjent;
+    andreForelderArbeidUtlandet: ESvar | undefined;
+    andreForelderArbeidUtlandetHvilketLand: Alpha3Code | '';
+    andreForelderPensjonUtland: ESvar | undefined;
+    andreForelderPensjonHvilketLand: Alpha3Code | '';
 }
 
 export const useOmBarnet = (
@@ -221,6 +226,24 @@ export const useOmBarnet = (
         andreForelderFnrUkjent.verdi === ESvar.JA
     );
 
+    const andreForelderArbeidUtlandet = useJaNeiSpmFelt(
+        barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet]
+    );
+
+    const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFelt(
+        barn[barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand],
+        skalFeltetVises(barnDataKeySpørsmål.andreForelderArbeidUtlandet)
+    );
+
+    const andreForelderPensjonUtland = useJaNeiSpmFelt(
+        barn[barnDataKeySpørsmål.andreForelderPensjonUtland]
+    );
+
+    const andreForelderPensjonHvilketLand = useLanddropdownFelt(
+        barn[barnDataKeySpørsmål.andreForelderPensjonHvilketLand],
+        skalFeltetVises(barnDataKeySpørsmål.andreForelderPensjonUtland)
+    );
+
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
@@ -243,6 +266,10 @@ export const useOmBarnet = (
                 andreForelderFnrUkjent,
                 andreForelderFødselsdato,
                 andreForelderFødselsdatoUkjent,
+                andreForelderArbeidUtlandet,
+                andreForelderArbeidUtlandetHvilketLand,
+                andreForelderPensjonUtland,
+                andreForelderPensjonHvilketLand,
             },
             skjemanavn: 'om-barnet',
         }
@@ -331,6 +358,22 @@ export const useOmBarnet = (
                                   andreForelderFødselsdatoUkjent,
                                   andreForelderFødselsdato
                               ),
+                          },
+                          andreForelderArbeidUtlandet: {
+                              ...barn.andreForelderArbeidUtlandet,
+                              svar: andreForelderArbeidUtlandet.verdi,
+                          },
+                          andreForelderArbeidUtlandetHvilketLand: {
+                              ...barn.andreForelderArbeidUtlandetHvilketLand,
+                              svar: andreForelderArbeidUtlandetHvilketLand.verdi,
+                          },
+                          andreForelderPensjonUtland: {
+                              ...barn.andreForelderPensjonUtland,
+                              svar: andreForelderPensjonUtland.verdi,
+                          },
+                          andreForelderPensjonHvilketLand: {
+                              ...barn.andreForelderPensjonHvilketLand,
+                              svar: andreForelderPensjonHvilketLand.verdi,
                           },
                       }
                     : barn
