@@ -3,6 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components/macro';
 
+import navFarger from 'nav-frontend-core';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Undertittel } from 'nav-frontend-typografi';
 
@@ -16,7 +17,19 @@ interface Props {
 }
 
 const StyledOppsummeringsbolk = styled.div`
-    border-bottom: 1px solid #78706a;
+    border-bottom: 2px solid ${navFarger.navGra60};
+    padding-bottom: 0.25rem;
+`;
+
+const StyledEkspanderbartpanel = styled(Ekspanderbartpanel)`
+    && button {
+        box-shadow: none;
+        border-radius: 0;
+        :focus {
+            border: solid 3px ${navFarger.fokusFarge};
+            border-radius: 0.25rem;
+        }
+    }
 `;
 
 const Oppsummeringsbolk: React.FC<Props> = ({ children, tittel, lenke }) => {
@@ -25,7 +38,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({ children, tittel, lenke }) => {
 
     return (
         <StyledOppsummeringsbolk>
-            <Ekspanderbartpanel
+            <StyledEkspanderbartpanel
                 tittel={
                     <Undertittel>
                         <SpråkTekst id={tittel} />
@@ -45,7 +58,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({ children, tittel, lenke }) => {
                         }
                     />
                 )}
-            </Ekspanderbartpanel>
+            </StyledEkspanderbartpanel>
         </StyledOppsummeringsbolk>
     );
 };
