@@ -15,11 +15,10 @@ export const spyOnUseApp = søknad => {
     const erStegUtfyltFrafør = jest.fn().mockImplementation(() => true);
     const settSisteUtfylteStegIndex = jest.fn();
 
+    søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
+
     const useAppMock = jest.fn().mockReturnValue({
-        søknad: {
-            ...søknad,
-            barnInkludertISøknaden: søknad.barnInkludertISøknaden ?? [],
-        },
+        søknad,
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
         settSøknad,
