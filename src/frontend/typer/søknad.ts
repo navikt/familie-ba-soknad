@@ -97,6 +97,7 @@ export const initialStateSøknad: ISøknad = {
         statsborgerskap: [],
         ident: '',
         sivilstand: { type: ESivilstand.UOPPGITT },
+        adressebeskyttelse: false,
         adresse: {
             adressenavn: '',
             husbokstav: '',

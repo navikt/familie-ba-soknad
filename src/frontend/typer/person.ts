@@ -20,6 +20,7 @@ export enum ESivilstand {
 export interface IPerson {
     ident: string;
     navn: string;
+    adressebeskyttelse: boolean;
 }
 
 export interface ISøkerRespons extends IPerson {
