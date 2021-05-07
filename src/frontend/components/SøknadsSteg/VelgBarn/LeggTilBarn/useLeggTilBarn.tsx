@@ -15,7 +15,10 @@ import useNavnInputFelt from './useNavnInputFelt';
 
 // Jeg har ikke funnet dokumentasjon på at man kan passe en enum til Omit, men det funker
 export interface ILeggTilBarnTyper
-    extends Omit<IBarn, 'borMedSøker' | 'alder' | 'navn' | barnDataKeySpørsmål> {
+    extends Omit<
+        IBarn,
+        'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | barnDataKeySpørsmål
+    > {
     erFødt: ESvarMedUbesvart;
     navnetErUbestemt: ESvar;
     harBarnetFåttIdNummer: ESvar;
@@ -125,6 +128,7 @@ export const useLeggTilBarn = (): {
                     ident: ident.verdi,
                     borMedSøker: undefined,
                     alder: undefined,
+                    adressebeskyttelse: false,
                 },
             ]),
         });
