@@ -120,7 +120,5 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.andreForelderFnr]: ISøknadSpørsmål<
         string | AlternativtSvarForInput.UKJENT
     >;
-    [barnDataKeySpørsmål.andreForelderFødselsdato]: ISøknadSpørsmål<
-        string | AlternativtSvarForInput.UKJENT
-    >;
+    [barnDataKeySpørsmål.andreForelderFødselsdato]: ISøknadSpørsmål<DatoMedUkjent>;
 }

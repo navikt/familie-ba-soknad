@@ -13,8 +13,11 @@ export enum OmBarnetSpørsmålsId {
     planleggerÅBoINorge12Mnd = 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
     barnetrygdFraEøslandHvilketLand = 'barnetrygd-hvilket-eøsland',
     andreForelderNavn = 'andre-forelder-navn',
+    andreForelderNavnUkjent = 'andre-forelder-navn-ukjent',
     andreForelderFnr = 'andre-forelder-fødsels-/dnummer',
+    andreForelderFnrUkjent = 'andre-forelder-fødsels-/dnummer-ukjent',
     andreForelderFødselsdato = 'andre-forelder-fødselsdato',
+    andreForelderFødselsdatoUkjent = 'andre-forelder-fødselsdato-ukjent',
 }
 
 export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
@@ -33,6 +36,9 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]: 'ombarnet.planlagt-sammenhengende-opphold.spm',
     [OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand]: 'ombarnet.barnetrygd-eøs.land.spm',
     [OmBarnetSpørsmålsId.andreForelderNavn]: 'ombarnet.andre-forelder.navn.spm',
+    [OmBarnetSpørsmålsId.andreForelderNavnUkjent]: 'ombarnet.andre-forelder.navn-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFnr]: 'felles.fødsels-eller-dnummer.label',
+    [OmBarnetSpørsmålsId.andreForelderFnrUkjent]: 'ombarnet.andre-forelder.fnr-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFødselsdato]: 'felles.fødselsdato.label',
+    [OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]: 'felles.fødselsdato-ukjent',
 };
