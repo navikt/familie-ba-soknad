@@ -7,6 +7,7 @@ import { useRoutes } from '../../../context/RoutesContext';
 import { IBarn, IBarnMedISøknad } from '../../../typer/person';
 import { genererInitialBarnMedISøknad } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { VelgBarnSpørsmålId } from './spørsmål';
 
 export interface IVelgBarnFeltTyper {
     barnMedISøknad: IBarn[];
@@ -43,6 +44,7 @@ export const useVelgBarn = (): {
     };
 
     const barnMedISøknad = useFelt<IBarn[]>({
+        feltId: VelgBarnSpørsmålId.velgBarn,
         verdi: barnSomSkalVæreMed,
         valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.barnSomSkalVæreMed.length > 0

@@ -40,7 +40,7 @@ const Oppsummering: React.FC = () => {
         <Steg tittel={<SpråkTekst id={'ombarnadine.tittel'} />}>
             <Oppsummeringsbolk tittel={'oppsummering.omdeg-tittel'}>
                 <OppsummeringFelt
-                    tittel={<SpråkTekst id={'omdeg.personopplysninger.fødselsnummer'} />}
+                    tittel={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
                     søknadsvar={søknad.søker.ident}
                 />
                 <OppsummeringFelt

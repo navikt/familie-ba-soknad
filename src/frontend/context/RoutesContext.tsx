@@ -6,7 +6,7 @@ import { matchPath } from 'react-router';
 import Forside from '../components/SøknadsSteg/Forside/Forside';
 import Kvittering from '../components/SøknadsSteg/Kvittering/Kvittering';
 import OmBarnaDine from '../components/SøknadsSteg/OmBarnaDine/OmBarnaDine';
-import OmBarnetUtfyllende from '../components/SøknadsSteg/OmBarnetUtfyllende/OmBarnetUtfyllende';
+import OmBarnet from '../components/SøknadsSteg/OmBarnet/OmBarnet';
 import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
@@ -25,7 +25,7 @@ export enum RouteEnum {
     OmDeg = 'Om deg',
     VelgBarn = 'Velg barn',
     OmBarna = 'Om barna',
-    OmBarnetUtfyllende = 'Om Barnet',
+    OmBarnet = 'Om Barnet',
     Oppsummering = 'Oppsummering',
     Kvittering = 'Kvittering',
 }
@@ -45,9 +45,9 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
               return {
                   path: `/${omBarnetBasePath}/barn-${index + 1}`,
                   label: `Om ${barn.navn}`,
-                  route: RouteEnum.OmBarnetUtfyllende,
+                  route: RouteEnum.OmBarnet,
                   komponent: () => {
-                      return <OmBarnetUtfyllende barnetsIdent={barn.ident} />;
+                      return <OmBarnet barnetsIdent={barn.ident} />;
                   },
               };
           })
@@ -55,8 +55,8 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
               {
                   path: `/${omBarnetBasePath}/`,
                   label: 'Om barnet',
-                  route: RouteEnum.OmBarnetUtfyllende,
-                  komponent: OmBarnetUtfyllende,
+                  route: RouteEnum.OmBarnet,
+                  komponent: OmBarnet,
               },
           ];
 

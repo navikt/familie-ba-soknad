@@ -10,13 +10,21 @@ import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import Stegindikator from 'nav-frontend-stegindikator';
 import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 
-import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { ESvar } from '@navikt/familie-form-elements';
+import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { IRoute, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import {
+    OmBarnaDineSpørsmålId,
+    omBarnaDineSpørsmålSpråkId,
+} from '../../SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
+import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
+import { VelgBarnSpørsmålId } from '../../SøknadsSteg/VelgBarn/spørsmål';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -67,6 +75,19 @@ const StyledSystemtittel = styled(Systemtittel)`
 const Form = styled.form`
     width: 100%;
 `;
+
+const samletSpørsmålSpråkTekstId = {
+    ...omDegSpørsmålSpråkId,
+    ...omBarnaDineSpørsmålSpråkId,
+    ...omBarnetSpørsmålSpråkId,
+};
+
+const samletSpørsmålId = {
+    ...OmDegSpørsmålId,
+    ...VelgBarnSpørsmålId,
+    ...OmBarnaDineSpørsmålId,
+    ...OmBarnetSpørsmålsId,
+};
 
 const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
     const history = useHistory();
@@ -140,6 +161,19 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
         return !!feil;
     };
 
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    const hentFeilmeldingTilOppsummering = (felt: Felt<any>) => {
+        const gyldigId = !!Object.values(samletSpørsmålId).find(id => id === felt.id);
+
+        return !gyldigId ||
+            (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse && felt.verdi === ESvar.NEI) ||
+            felt.id === VelgBarnSpørsmålId.velgBarn ? (
+            felt.feilmelding
+        ) : (
+            <SpråkTekst id={samletSpørsmålSpråkTekstId[felt.id]} />
+        );
+    };
+
     return (
         <>
             <header>
@@ -171,7 +205,9 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
                                         (felt): FeiloppsummeringFeil => {
                                             return {
                                                 skjemaelementId: felt.id,
-                                                feilmelding: felt.feilmelding as string,
+                                                feilmelding: hentFeilmeldingTilOppsummering(
+                                                    felt
+                                                ) as string,
                                             };
                                         }
                                     )}

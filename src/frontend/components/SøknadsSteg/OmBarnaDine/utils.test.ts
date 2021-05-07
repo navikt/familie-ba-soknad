@@ -5,6 +5,7 @@
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { AlternativtSvarForInput } from '../../../typer/person';
 import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from './utils';
 
 describe('genererSvarForSpørsmålBarn', () => {
@@ -29,10 +30,10 @@ describe('genererOppdaterteBarn', () => {
                 institusjonsadresse: { svar: 'Narvesen' },
                 institusjonspostnummer: { svar: '2020' },
                 institusjonOppholdStartdato: { svar: '2020-09-08' },
-                institusjonOppholdSluttdato: { svar: 'UKJENT' },
+                institusjonOppholdSluttdato: { svar: AlternativtSvarForInput.UKJENT },
                 oppholdsland: { svar: 'AUS' },
                 oppholdslandStartdato: { svar: '2020-08-08' },
-                oppholdslandSluttdato: { svar: 'UKJENT' },
+                oppholdslandSluttdato: { svar: AlternativtSvarForInput.UKJENT },
                 nårKomBarnTilNorgeDato: { svar: '2020-07-07' },
                 planleggerÅBoINorge12Mnd: { svar: ESvar.JA },
                 barnetrygdFraEøslandHvilketLand: { svar: 'AUS' },
@@ -90,7 +91,7 @@ describe('genererOppdaterteBarn', () => {
                 institusjonOppholdSluttdato: { svar: '' },
                 oppholdsland: { svar: 'AUS' },
                 oppholdslandStartdato: { svar: '2020-08-08' },
-                oppholdslandSluttdato: { svar: 'UKJENT' },
+                oppholdslandSluttdato: { svar: AlternativtSvarForInput.UKJENT },
                 nårKomBarnTilNorgeDato: { svar: '' },
                 planleggerÅBoINorge12Mnd: { svar: undefined },
                 barnetrygdFraEøslandHvilketLand: { svar: 'AUS' },
