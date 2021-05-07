@@ -106,16 +106,16 @@ const Oppsummering: React.FC = () => {
                     søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
                 />
                 {søknad.søker.komTilNorgeDato.svar && (
-                    <>
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'omdeg.opphold-sammenhengende.dato.spm'} />}
-                            søknadsvar={søknad.søker.komTilNorgeDato.svar}
-                        />
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.spm'} />}
-                            søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
-                        />
-                    </>
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'omdeg.opphold-sammenhengende.dato.spm'} />}
+                        søknadsvar={søknad.søker.komTilNorgeDato.svar}
+                    />
+                )}
+                {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.spm'} />}
+                        søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
+                    />
                 )}
                 <OppsummeringFelt
                     tittel={<SpråkTekst id={'omdeg.asylsøker.spm'} />}
@@ -152,49 +152,45 @@ const Oppsummering: React.FC = () => {
             <Oppsummeringsbolk tittel={'hvilkebarn.sidetittel'}>
                 {søknad.barnInkludertISøknaden.map(barn => (
                     <>
-                        {barn.navn && <OppsummeringFelt tittel={<SpråkTekst id={barn.navn} />} />}
-                        {barn.ident && (
+                        {barn.navn && (
                             <OppsummeringFelt
-                                tittel={<SpråkTekst id={'hvilkebarn.barn.fødselsnummer'} />}
-                                søknadsvar={barn.ident}
+                                tittel={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
+                                søknadsvar={barn.navn}
                             />
                         )}
 
-                        {barn.borMedSøker ? (
-                            <OppsummeringFelt
-                                tittel={<SpråkTekst id={'hvilkebarn.barn.bosted'} />}
-                                søknadsvar={intl.formatMessage({
-                                    id: 'hvilkebarn.barn.bosted.din-adresse',
-                                })}
-                            />
-                        ) : (
-                            <OppsummeringFelt
-                                tittel={<SpråkTekst id={'hvilkebarn.barn.bosted'} />}
-                                søknadsvar={intl.formatMessage({
-                                    id: 'hvilkebarn.barn.bosted.ikke-din-adresse',
-                                })}
-                            />
-                        )}
+                        <OppsummeringFelt
+                            tittel={<SpråkTekst id={'hvilkebarn.barn.fødselsnummer'} />}
+                            søknadsvar={barn.ident}
+                        />
+
+                        <OppsummeringFelt
+                            tittel={<SpråkTekst id={'hvilkebarn.barn.bosted'} />}
+                            søknadsvar={intl.formatMessage({
+                                id: barn.borMedSøker
+                                    ? 'hvilkebarn.barn.bosted.din-adresse'
+                                    : 'hvilkebarn.barn.bosted.ikke-din-adresse',
+                            })}
+                        />
                     </>
                 ))}
             </Oppsummeringsbolk>
             <Oppsummeringsbolk tittel={'ombarna.sidetittel'}>
-                {søknad.erNoenAvBarnaFosterbarn !== undefined && (
+                {søknad.erNoenAvBarnaFosterbarn && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.fosterbarn.spm'} />}
                         søknadsvar={søknad.erNoenAvBarnaFosterbarn.svar}
                     />
                 )}
-                {søknad.barnInkludertISøknaden.map(barn => (
-                    <>
-                        {barn.erFosterbarn.svar === 'JA' && (
-                            <OppsummeringFelt
-                                tittel={<SpråkTekst id={'ombarna.fosterbarn.hvem.spm'} />}
-                                søknadsvar={barn.navn}
-                            />
-                        )}
-                    </>
-                ))}
+                {søknad.erNoenAvBarnaFosterbarn.svar === 'JA' && (
+                    <OppsummeringFelt
+                        tittel={<SpråkTekst id={'ombarna.fosterbarn.hvem.spm'} />}
+                        søknadsvar={søknad.barnInkludertISøknaden
+                            .filter(barn => barn.erFosterbarn.svar === 'JA')
+                            .map(filtrertBarn => filtrertBarn.navn)
+                            .join(', ')}
+                    />
+                )}
 
                 {søknad.oppholderBarnSegIInstitusjon && (
                     <OppsummeringFelt
@@ -212,7 +208,6 @@ const Oppsummering: React.FC = () => {
                         )}
                     </>
                 ))}
-
                 {søknad.erBarnAdoptertFraUtland && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.adoptert.spm'} />}
@@ -229,7 +224,6 @@ const Oppsummering: React.FC = () => {
                         )}
                     </>
                 ))}
-
                 {søknad.oppholderBarnSegIUtland && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.opphold-utland.spm'} />}
@@ -246,7 +240,6 @@ const Oppsummering: React.FC = () => {
                         )}
                     </>
                 ))}
-
                 {søknad.søktAsylForBarn && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.asyl.spm'} />}
@@ -263,7 +256,6 @@ const Oppsummering: React.FC = () => {
                         )}
                     </>
                 ))}
-
                 {søknad.barnOppholdtSegTolvMndSammenhengendeINorge !== undefined && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.sammenhengende-opphold.spm'} />}
@@ -282,7 +274,6 @@ const Oppsummering: React.FC = () => {
                         )}
                     </>
                 ))}
-
                 {søknad.mottarBarnetrygdForBarnFraAnnetEøsland && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.barnetrygd-eøs.spm'} />}
