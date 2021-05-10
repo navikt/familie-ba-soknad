@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { act, render } from '@testing-library/react';
+import { mockDeep } from 'jest-mock-extended';
 
 import { ISøknad } from '../../../typer/søknad';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
@@ -54,5 +55,33 @@ describe('VelgBarn', () => {
             barnInkludertISøknaden: [fraPdl],
             søker: { barn: [fraPdl] },
         });
+    });
+
+    test('Rendrer ikke barn med adressebeskyttelse, rendrer infoblokk', () => {
+        silenceConsoleErrors();
+        const søknad = mockDeep<ISøknad>({
+            søker: {
+                barn: [
+                    {
+                        adressebeskyttelse: true,
+                        ident: '12345678901',
+                    },
+                ],
+            },
+            barnInkludertISøknaden: [],
+        });
+
+        spyOnUseApp(søknad);
+
+        const { queryByText } = render(
+            <TestProvidere>
+                <VelgBarn />
+            </TestProvidere>
+        );
+        const ident = queryByText(søknad.søker.barn[0].ident);
+        const infoTekst = queryByText(/hvilkebarn.adressesperreinformasjon/);
+
+        expect(ident).not.toBeInTheDocument();
+        expect(infoTekst).toBeInTheDocument();
     });
 });
