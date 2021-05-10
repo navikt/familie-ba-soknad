@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { guid } from 'nav-frontend-js-utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -14,6 +14,8 @@ interface IJaNeiSpmProps {
     felt: Felt<ESvar | undefined>;
     spørsmålTekstId: string;
     tilleggsinfoTekstId?: string;
+    inkluderVetIkke?: boolean;
+    språkValues?: Record<string, ReactNode> | undefined;
 }
 
 const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
@@ -21,6 +23,8 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     felt,
     spørsmålTekstId,
     tilleggsinfoTekstId,
+    inkluderVetIkke = false,
+    språkValues,
 }) => {
     return felt.erSynlig ? (
         <span id={felt.id}>
@@ -31,7 +35,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
                 legend={
                     <>
                         <Element>
-                            <SpråkTekst id={spørsmålTekstId} />
+                            <SpråkTekst id={spørsmålTekstId} values={språkValues} />
                         </Element>
                         {tilleggsinfoTekstId && (
                             <Normaltekst>
@@ -40,9 +44,12 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
                         )}
                     </>
                 }
-                labelTekstForJaNei={{
+                labelTekstForRadios={{
                     ja: <SpråkTekst id={'felles.svaralternativ.ja'} />,
                     nei: <SpråkTekst id={'felles.svaralternativ.nei'} />,
+                    vetikke: inkluderVetIkke ? (
+                        <SpråkTekst id={'felles.svaralternativ.vetikke'} />
+                    ) : undefined,
                 }}
             />
         </span>

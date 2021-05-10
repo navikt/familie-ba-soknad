@@ -28,11 +28,11 @@ describe('erRelevanteAvhengigheterValidert', () => {
 
         const avhengigheterMock = {
             oppholderSegINorge: {
-                jaNeiSpm: oppholderSegINorgeFeltMock,
+                hovedSpørsmål: oppholderSegINorgeFeltMock,
                 tilhørendeFelter: [oppholdslandFeltMock, oppholdslandDatoFeltMock],
             },
             værtINorgeITolvMånederFeltMock: {
-                jaNeiSpm: værtINorgeITolvMånederFeltMock,
+                hovedSpørsmål: værtINorgeITolvMånederFeltMock,
             },
         };
         expect(erRelevanteAvhengigheterValidert(avhengigheterMock)).toEqual(true);
@@ -56,11 +56,11 @@ describe('erRelevanteAvhengigheterValidert', () => {
 
         const avhengigheterMock = {
             oppholderSegINorge: {
-                jaNeiSpm: oppholderSegINorgeFeltMock,
+                hovedSpørsmål: oppholderSegINorgeFeltMock,
                 tilhørendeFelter: [oppholdslandFeltMock, oppholdslandDatoFeltMock],
             },
             værtINorgeITolvMånederFeltMock: {
-                jaNeiSpm: værtINorgeITolvMånederFeltMock,
+                hovedSpørsmål: værtINorgeITolvMånederFeltMock,
             },
         };
         expect(erRelevanteAvhengigheterValidert(avhengigheterMock)).toEqual(false);
@@ -84,11 +84,11 @@ describe('erRelevanteAvhengigheterValidert', () => {
 
         const avhengigheterMock = {
             oppholderSegINorge: {
-                jaNeiSpm: oppholderSegINorgeFeltMock,
+                hovedSpørsmål: oppholderSegINorgeFeltMock,
                 tilhørendeFelter: [oppholdslandFeltMock, oppholdslandDatoFeltMock],
             },
             værtINorgeITolvMånederFeltMock: {
-                jaNeiSpm: værtINorgeITolvMånederFeltMock,
+                hovedSpørsmål: værtINorgeITolvMånederFeltMock,
             },
         };
         expect(erRelevanteAvhengigheterValidert(avhengigheterMock)).toEqual(false);
@@ -112,11 +112,11 @@ describe('erRelevanteAvhengigheterValidert', () => {
 
         const avhengigheterMock = {
             oppholderSegINorge: {
-                jaNeiSpm: oppholderSegINorgeFeltMock,
+                hovedSpørsmål: oppholderSegINorgeFeltMock,
                 tilhørendeFelter: [oppholdslandFeltMock, oppholdslandDatoFeltMock],
             },
             værtINorgeITolvMånederFeltMock: {
-                jaNeiSpm: værtINorgeITolvMånederFeltMock,
+                hovedSpørsmål: værtINorgeITolvMånederFeltMock,
             },
         };
         expect(erRelevanteAvhengigheterValidert(avhengigheterMock)).toEqual(false);
@@ -136,7 +136,7 @@ describe('useJaNeiSpmFelt', () => {
     const { result } = renderHook(() =>
         useJaNeiSpmFelt(
             oppholderSegINorge,
-            { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresseFeltMock } },
+            { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresseFeltMock } },
             true
         )
     );

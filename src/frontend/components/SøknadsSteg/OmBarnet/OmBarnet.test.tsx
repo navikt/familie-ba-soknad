@@ -45,6 +45,10 @@ const jens = {
         id: '19',
         svar: AlternativtSvarForInput.UKJENT,
     },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: { id: '20', svar: ESvar.JA },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: { id: '21', svar: 'AUS' },
+    [barnDataKeySpørsmål.andreForelderPensjonUtland]: { id: '22', svar: ESvar.VET_IKKE },
+    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: { id: '23', svar: '' },
 };
 const line = {
     navn: 'Line',
@@ -74,6 +78,10 @@ const line = {
         id: '19',
         svar: AlternativtSvarForInput.UKJENT,
     },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: { id: '20', svar: ESvar.JA },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: { id: '21', svar: 'AUS' },
+    [barnDataKeySpørsmål.andreForelderPensjonUtland]: { id: '22', svar: ESvar.VET_IKKE },
+    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: { id: '23', svar: '' },
 };
 
 test(`Kan rendre Om Barnet Utfyllende`, () => {

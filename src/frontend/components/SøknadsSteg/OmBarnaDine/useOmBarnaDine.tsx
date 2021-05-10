@@ -49,11 +49,11 @@ export const useOmBarnaDine = (): {
 
     const erBarnAdoptertFraUtland = useJaNeiSpmFelt(søknad.erBarnAdoptertFraUtland, {
         erNoenAvBarnaFosterbarn: {
-            jaNeiSpm: erNoenAvBarnaFosterbarn,
+            hovedSpørsmål: erNoenAvBarnaFosterbarn,
             tilhørendeFelter: [hvemErFosterbarn],
         },
         oppholderBarnSegIInstitusjon: {
-            jaNeiSpm: oppholderBarnSegIInstitusjon,
+            hovedSpørsmål: oppholderBarnSegIInstitusjon,
             tilhørendeFelter: [hvemOppholderSegIInstitusjon],
         },
     });
@@ -65,11 +65,11 @@ export const useOmBarnaDine = (): {
 
     const oppholderBarnSegIUtland = useJaNeiSpmFelt(søknad.oppholderBarnSegIUtland, {
         erNoenAvBarnaFosterbarn: {
-            jaNeiSpm: erNoenAvBarnaFosterbarn,
+            hovedSpørsmål: erNoenAvBarnaFosterbarn,
             tilhørendeFelter: [hvemErFosterbarn],
         },
         oppholderBarnSegIInstitusjon: {
-            jaNeiSpm: oppholderBarnSegIInstitusjon,
+            hovedSpørsmål: oppholderBarnSegIInstitusjon,
             tilhørendeFelter: [hvemOppholderSegIInstitusjon],
         },
     });
@@ -81,11 +81,11 @@ export const useOmBarnaDine = (): {
 
     const søktAsylForBarn = useJaNeiSpmFelt(søknad.søktAsylForBarn, {
         erBarnAdoptertFraUtland: {
-            jaNeiSpm: erBarnAdoptertFraUtland,
+            hovedSpørsmål: erBarnAdoptertFraUtland,
             tilhørendeFelter: [hvemErAdoptertFraUtland],
         },
         oppholderBarnSegIUtland: {
-            jaNeiSpm: oppholderBarnSegIUtland,
+            hovedSpørsmål: oppholderBarnSegIUtland,
             tilhørendeFelter: [hvemOppholderSegIUtland],
         },
     });
@@ -96,11 +96,11 @@ export const useOmBarnaDine = (): {
         søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
         {
             erBarnAdoptertFraUtland: {
-                jaNeiSpm: erBarnAdoptertFraUtland,
+                hovedSpørsmål: erBarnAdoptertFraUtland,
                 tilhørendeFelter: [hvemErAdoptertFraUtland],
             },
             oppholderBarnSegIUtland: {
-                jaNeiSpm: oppholderBarnSegIUtland,
+                hovedSpørsmål: oppholderBarnSegIUtland,
                 tilhørendeFelter: [hvemOppholderSegIUtland],
             },
         }
@@ -115,9 +115,12 @@ export const useOmBarnaDine = (): {
     const mottarBarnetrygdForBarnFraAnnetEøsland = useJaNeiSpmFelt(
         søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
         {
-            søktAsylForBarn: { jaNeiSpm: søktAsylForBarn, tilhørendeFelter: [hvemErSøktAsylFor] },
+            søktAsylForBarn: {
+                hovedSpørsmål: søktAsylForBarn,
+                tilhørendeFelter: [hvemErSøktAsylFor],
+            },
             barnOppholdtSegTolvMndSammenhengendeINorge: {
-                jaNeiSpm: barnOppholdtSegTolvMndSammenhengendeINorge,
+                hovedSpørsmål: barnOppholdtSegTolvMndSammenhengendeINorge,
                 tilhørendeFelter: [hvemTolvMndSammenhengendeINorge],
             },
         }

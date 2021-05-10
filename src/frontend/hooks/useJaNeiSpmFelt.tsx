@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, FeltState, ok, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
+import { feil, Felt, FeltState, ok, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { FeltGruppe } from '../components/SøknadsSteg/OmDeg/useOmdeg';
 import { ISøknadSpørsmål } from '../typer/søknad';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export interface FeltGruppe {
+    hovedSpørsmål: Felt<any>;
+    tilhørendeFelter?: Felt<any>[];
+}
 
 export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]: FeltGruppe }) => {
     if (
         Object.values(avhengigheter).find(
-            feltGruppe => feltGruppe.jaNeiSpm.valideringsstatus !== Valideringsstatus.OK
+            feltGruppe => feltGruppe.hovedSpørsmål.valideringsstatus !== Valideringsstatus.OK
         )
     ) {
         return false;
@@ -54,7 +59,7 @@ const useJaNeiSpmFelt = (
             // borPåRegistrertAdresse er et spesialtilfelle for avhengighet, fordi hvis svaret på den er Nei må man søke på papir.
             if (
                 avhengigheter.borPåRegistrertAdresse &&
-                avhengigheter.borPåRegistrertAdresse.jaNeiSpm.verdi === ESvar.NEI
+                avhengigheter.borPåRegistrertAdresse.hovedSpørsmål.verdi === ESvar.NEI
             ) {
                 return false;
             }
