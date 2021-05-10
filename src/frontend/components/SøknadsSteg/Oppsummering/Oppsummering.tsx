@@ -71,7 +71,7 @@ const Oppsummering: React.FC = () => {
             <Oppsummeringsbolk tittel={'omdeg.sidetittel'}>
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
-                        tittel={<SpråkTekst id={'omdeg.personopplysninger.fødselsnummer'} />}
+                        tittel={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
                         søknadsvar={søknad.søker.ident}
                     />
                     <OppsummeringFelt
@@ -396,6 +396,48 @@ const Oppsummering: React.FC = () => {
                                     <SpråkTekst id={'ombarnet.andre-forelder.fødselsdato.spm'} />
                                 }
                                 søknadsvar={barn.andreForelderFødselsdato.svar}
+                            />
+                        )}
+                    </StyledOppsummeringsFeltGruppe>
+                    <StyledOppsummeringsFeltGruppe>
+                        <OppsummeringFelt
+                            tittel={<SpråkTekst id={'ombarnet.andre-forelder.arbeid-utland.spm'} />}
+                            søknadsvar={barn.andreForelderArbeidUtlandet.svar}
+                        />
+
+                        {barn.andreForelderArbeidUtlandetHvilketLand.svar && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={'ombarnet.andre-forelder.arbeid-utland.land.spm'}
+                                    />
+                                }
+                                søknadsvar={landkodeTilSpråk(
+                                    barn.andreForelderArbeidUtlandetHvilketLand.svar,
+                                    intl.defaultLocale
+                                )}
+                            />
+                        )}
+                    </StyledOppsummeringsFeltGruppe>
+                    <StyledOppsummeringsFeltGruppe>
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst id={'ombarnet.andre-forelder.utenlandspensjon.spm'} />
+                            }
+                            søknadsvar={barn.andreForelderPensjonUtland.svar}
+                        />
+
+                        {barn.andreForelderPensjonHvilketLand.svar && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={'ombarnet.andre-forelder.utenlandspensjon.land.spm'}
+                                    />
+                                }
+                                søknadsvar={landkodeTilSpråk(
+                                    barn.andreForelderPensjonHvilketLand.svar,
+                                    intl.defaultLocale
+                                )}
                             />
                         )}
                     </StyledOppsummeringsFeltGruppe>
