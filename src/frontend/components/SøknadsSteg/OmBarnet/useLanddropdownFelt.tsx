@@ -14,8 +14,8 @@ const useLanddropdownFelt = (
     return useFelt<Alpha3Code | ''>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
-        skalFeltetVises: () => {
-            return skalFeltetVises;
+        skalFeltetVises: avhengigheter => {
+            return avhengigheter && avhengigheter.skalFeltetVises;
         },
         valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>) => {
             return felt.verdi !== ''
@@ -23,6 +23,7 @@ const useLanddropdownFelt = (
                 : feil(felt, <SpråkTekst id={'felles.velg-land.feilmelding'} />);
         },
         nullstillVedAvhengighetEndring: false,
+        avhengigheter: { skalFeltetVises },
     });
 };
 
