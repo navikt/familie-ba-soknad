@@ -259,9 +259,10 @@ export const useOmBarnet = (
         }
     );
 
-    const andreForelderPensjonHvilketLand = useLanddropdownFelt(
-        barn[barnDataKeySpørsmål.andreForelderPensjonHvilketLand],
-        skalFeltetVises(barnDataKeySpørsmål.andreForelderPensjonUtland)
+    const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
+        barn.andreForelderPensjonHvilketLand,
+        ESvar.JA,
+        andreForelderPensjonUtland
     );
 
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
