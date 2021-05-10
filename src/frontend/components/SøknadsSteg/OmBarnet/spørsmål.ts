@@ -18,6 +18,10 @@ export enum OmBarnetSpørsmålsId {
     andreForelderFnrUkjent = 'andre-forelder-fødsels-/dnummer-ukjent',
     andreForelderFødselsdato = 'andre-forelder-fødselsdato',
     andreForelderFødselsdatoUkjent = 'andre-forelder-fødselsdato-ukjent',
+    andreForelderArbeidUtlandet = 'andre-forelder-arbeid',
+    andreForelderArbeidUtlandetHvilketLand = 'andre-forelder-arbeid-hvilket-land',
+    andreForelderPensjonUtland = 'andre-forelder-pensjon-utland',
+    andreForelderPensjonHvilketLand = 'andre-forelder-pensjon-hvilket-land',
 }
 
 export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
@@ -41,4 +45,11 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.andreForelderFnrUkjent]: 'ombarnet.andre-forelder.fnr-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFødselsdato]: 'felles.fødselsdato.label',
     [OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]: 'felles.fødselsdato-ukjent',
+    [OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]: 'ombarnet.andre-forelder.arbeid-utland.spm',
+    [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand]:
+        'ombarnet.andre-forelder.arbeid-utland.land.spm',
+    [OmBarnetSpørsmålsId.andreForelderPensjonUtland]:
+        'ombarnet.andre-forelder.utenlandspensjon.spm',
+    [OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand]:
+        'ombarnet.andre-forelder.utenlandspensjon.land.spm',
 };

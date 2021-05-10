@@ -6,6 +6,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
@@ -13,6 +14,7 @@ import {
     IBarnMedISøknad,
 } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import useLanddropdownFeltMedJaNeiAvhengighet from '../OmDeg/useLanddropdownFeltMedJaNeiAvhengighet';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
@@ -39,6 +41,10 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderFnrUkjent: ESvar;
     andreForelderFødselsdatoUkjent: ESvar;
     andreForelderFødselsdato: DatoMedUkjent;
+    andreForelderArbeidUtlandet: ESvar | undefined;
+    andreForelderArbeidUtlandetHvilketLand: Alpha3Code | '';
+    andreForelderPensjonUtland: ESvar | undefined;
+    andreForelderPensjonHvilketLand: Alpha3Code | '';
 }
 
 export const useOmBarnet = (
@@ -221,6 +227,44 @@ export const useOmBarnet = (
         andreForelderFnrUkjent.verdi === ESvar.JA
     );
 
+    const andreForelderArbeidUtlandet = useJaNeiSpmFelt(
+        barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet],
+        {
+            andreForelderNavn: {
+                hovedSpørsmål: andreForelderNavn,
+            },
+            andreForelderFnr: {
+                hovedSpørsmål: andreForelderFnr,
+                tilhørendeFelter: [andreForelderFødselsdato],
+            },
+        }
+    );
+
+    const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
+        barn.andreForelderArbeidUtlandetHvilketLand,
+        ESvar.JA,
+        andreForelderArbeidUtlandet
+    );
+
+    const andreForelderPensjonUtland = useJaNeiSpmFelt(
+        barn[barnDataKeySpørsmål.andreForelderPensjonUtland],
+        {
+            andreForelderNavn: {
+                hovedSpørsmål: andreForelderNavn,
+            },
+            andreForelderFnr: {
+                hovedSpørsmål: andreForelderFnr,
+                tilhørendeFelter: [andreForelderFødselsdato],
+            },
+        }
+    );
+
+    const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
+        barn.andreForelderPensjonHvilketLand,
+        ESvar.JA,
+        andreForelderPensjonUtland
+    );
+
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
@@ -243,6 +287,10 @@ export const useOmBarnet = (
                 andreForelderFnrUkjent,
                 andreForelderFødselsdato,
                 andreForelderFødselsdatoUkjent,
+                andreForelderArbeidUtlandet,
+                andreForelderArbeidUtlandetHvilketLand,
+                andreForelderPensjonUtland,
+                andreForelderPensjonHvilketLand,
             },
             skjemanavn: 'om-barnet',
         }
@@ -331,6 +379,22 @@ export const useOmBarnet = (
                                   andreForelderFødselsdatoUkjent,
                                   andreForelderFødselsdato
                               ),
+                          },
+                          andreForelderArbeidUtlandet: {
+                              ...barn.andreForelderArbeidUtlandet,
+                              svar: andreForelderArbeidUtlandet.verdi,
+                          },
+                          andreForelderArbeidUtlandetHvilketLand: {
+                              ...barn.andreForelderArbeidUtlandetHvilketLand,
+                              svar: andreForelderArbeidUtlandetHvilketLand.verdi,
+                          },
+                          andreForelderPensjonUtland: {
+                              ...barn.andreForelderPensjonUtland,
+                              svar: andreForelderPensjonUtland.verdi,
+                          },
+                          andreForelderPensjonHvilketLand: {
+                              ...barn.andreForelderPensjonHvilketLand,
+                              svar: andreForelderPensjonHvilketLand.verdi,
                           },
                       }
                     : barn

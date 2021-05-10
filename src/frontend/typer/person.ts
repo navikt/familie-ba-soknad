@@ -77,6 +77,10 @@ export enum barnDataKeySpørsmål {
     andreForelderNavn = 'andreForelderNavn',
     andreForelderFnr = 'andreForelderFnr',
     andreForelderFødselsdato = 'andreForelderFødselsdato',
+    andreForelderArbeidUtlandet = 'andreForelderArbeidUtlandet',
+    andreForelderArbeidUtlandetHvilketLand = 'andreForelderArbeidUtlandetHvilketLand',
+    andreForelderPensjonUtland = 'andreForelderPensjonUtland',
+    andreForelderPensjonHvilketLand = 'andreForelderPensjonHvilketLand',
 }
 
 export interface IBarnRespons extends IPerson {
@@ -121,4 +125,8 @@ export interface IBarnMedISøknad extends IBarn {
         string | AlternativtSvarForInput.UKJENT
     >;
     [barnDataKeySpørsmål.andreForelderFødselsdato]: ISøknadSpørsmål<DatoMedUkjent>;
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [barnDataKeySpørsmål.andreForelderPensjonUtland]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
 }
