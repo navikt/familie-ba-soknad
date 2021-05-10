@@ -45,6 +45,11 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderArbeidUtlandetHvilketLand: Alpha3Code | '';
     andreForelderPensjonUtland: ESvar | undefined;
     andreForelderPensjonHvilketLand: Alpha3Code | '';
+    borFastMedSøker: ESvar | undefined;
+    skriftligAvtaleOmDeltBosted: ESvar | undefined;
+    // søkerForSpesieltTidsrom: ESvar;
+    // søkerForSpesieltTidsromStartdato: ISODateString;
+    // søkerForSpesieltTidsromSluttdato: ISODateString;
 }
 
 export const useOmBarnet = (
@@ -265,6 +270,34 @@ export const useOmBarnet = (
         andreForelderPensjonUtland
     );
 
+    /*--- BOSTED ---*/
+
+    const borFastMedSøker = useJaNeiSpmFelt(barn[barnDataKeySpørsmål.borFastMedSøker], {
+        andreForelderArbeidUtlandet: {
+            hovedSpørsmål: andreForelderArbeidUtlandet,
+            tilhørendeFelter: [andreForelderArbeidUtlandetHvilketLand],
+        },
+        andreForelderPensjonUtland: {
+            hovedSpørsmål: andreForelderPensjonUtland,
+            tilhørendeFelter: [andreForelderPensjonHvilketLand],
+        },
+    });
+
+    const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(barn[barnDataKeySpørsmål.borFastMedSøker], {
+        andreForelderArbeidUtlandet: {
+            hovedSpørsmål: andreForelderArbeidUtlandet,
+            tilhørendeFelter: [andreForelderArbeidUtlandetHvilketLand],
+        },
+        andreForelderPensjonUtland: {
+            hovedSpørsmål: andreForelderPensjonUtland,
+            tilhørendeFelter: [andreForelderPensjonHvilketLand],
+        },
+    });
+
+    //let søkerForSpesieltTidsrom;
+    //let søkerForSpesieltTidsromStartdato;
+    //let søkerForSpesieltTidsromSluttdato;
+
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
@@ -291,6 +324,11 @@ export const useOmBarnet = (
                 andreForelderArbeidUtlandetHvilketLand,
                 andreForelderPensjonUtland,
                 andreForelderPensjonHvilketLand,
+                borFastMedSøker,
+                skriftligAvtaleOmDeltBosted,
+                //    søkerForSpesieltTidsrom,
+                //   søkerForSpesieltTidsromStartdato,
+                //  søkerForSpesieltTidsromSluttdato,
             },
             skjemanavn: 'om-barnet',
         }

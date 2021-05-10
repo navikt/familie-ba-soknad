@@ -137,6 +137,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.borFastMedSøker]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.søkerForSpesieltTidsrom]: ISøknadSpørsmål<ESvar>;
-    [barnDataKeySpørsmål.søkerForSpesieltTidsromStartdato]: ISøknadSpørsmål<ISODateString | ''>;
-    [barnDataKeySpørsmål.søkerForSpesieltTidsromSluttdato]: ISøknadSpørsmål<ISODateString | ''>;
+    [barnDataKeySpørsmål.søkerForSpesieltTidsromStartdato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.søkerForSpesieltTidsromSluttdato]: ISøknadSpørsmål<ISODateString>;
 }
