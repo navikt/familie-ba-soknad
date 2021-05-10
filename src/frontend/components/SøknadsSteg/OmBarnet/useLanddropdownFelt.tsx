@@ -15,7 +15,6 @@ const useLanddropdownFelt = (
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
         skalFeltetVises: avhengigheter => {
-            console.log(avhengigheter);
             return avhengigheter && avhengigheter.skalFeltetVises;
         },
         valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>) => {

@@ -237,8 +237,6 @@ export const useOmBarnet = (
         andreForelderArbeidUtlandet
     );
 
-    console.log(andreForelderArbeidUtlandetHvilketLand);
-
     const andreForelderPensjonUtland = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.andreForelderPensjonUtland]
     );
