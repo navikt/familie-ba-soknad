@@ -71,16 +71,16 @@ const Oppsummering: React.FC = () => {
             <Oppsummeringsbolk tittel={'omdeg.sidetittel'}>
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
+                        tittel={<SpråkTekst id={'omdeg.personopplysninger.fødselsnummer'} />}
+                        søknadsvar={søknad.søker.ident}
+                    />
+                    <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.personopplysninger.statsborgerskap'} />}
                         søknadsvar={søknad.søker.statsborgerskap
                             .map((statsborgerskap: { landkode: Alpha3Code }) =>
                                 landkodeTilSpråk(statsborgerskap.landkode, intl.defaultLocale)
                             )
                             .join(', ')}
-                    />
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'omdeg.personopplysninger.fødselsnummer'} />}
-                        søknadsvar={søknad.søker.ident}
                     />
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.personopplysninger.sivilstatus'} />}
@@ -267,7 +267,7 @@ const Oppsummering: React.FC = () => {
                         <OppsummeringFelt
                             tittel={<SpråkTekst id={'ombarna.sammenhengende-opphold.hvem.spm'} />}
                             søknadsvar={genererListeMedBarn(
-                                barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd
+                                barnDataKeySpørsmål.boddMindreEnn12MndINorge
                             )}
                         />
                     )}
