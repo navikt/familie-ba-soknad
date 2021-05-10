@@ -1,5 +1,7 @@
 import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
@@ -171,6 +173,26 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.borFastMedSøker]: {
+            id: OmBarnetSpørsmålsId.borFastMedSøker,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
+            id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.søkerForSpesieltTidsrom]: {
+            id: OmBarnetSpørsmålsId.søkerForSpesieltTidsrom,
+            svar: ESvar.NEI,
+        },
+        [barnDataKeySpørsmål.søkerForSpesieltTidsromStartdato]: {
+            id: OmBarnetSpørsmålsId.søkerForSpesieltTidsromStartdato,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.søkerForSpesieltTidsromSluttdato]: {
+            id: OmBarnetSpørsmålsId.søkerForSpesieltTidsromSluttdato,
             svar: '',
         },
     };
