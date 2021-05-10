@@ -228,7 +228,16 @@ export const useOmBarnet = (
     );
 
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt(
-        barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet]
+        barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet],
+        {
+            andreForelderNavn: {
+                hovedSpørsmål: andreForelderNavn,
+            },
+            andreForelderFnr: {
+                hovedSpørsmål: andreForelderFnr,
+                tilhørendeFelter: [andreForelderFødselsdato],
+            },
+        }
     );
 
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
@@ -238,7 +247,16 @@ export const useOmBarnet = (
     );
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt(
-        barn[barnDataKeySpørsmål.andreForelderPensjonUtland]
+        barn[barnDataKeySpørsmål.andreForelderPensjonUtland],
+        {
+            andreForelderNavn: {
+                hovedSpørsmål: andreForelderNavn,
+            },
+            andreForelderFnr: {
+                hovedSpørsmål: andreForelderFnr,
+                tilhørendeFelter: [andreForelderFødselsdato],
+            },
+        }
     );
 
     const andreForelderPensjonHvilketLand = useLanddropdownFelt(

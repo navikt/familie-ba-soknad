@@ -136,7 +136,7 @@ describe('useJaNeiSpmFelt', () => {
     const { result } = renderHook(() =>
         useJaNeiSpmFelt(
             oppholderSegINorge,
-            { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresseFeltMock } },
+            { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresseFeltMock } },
             true
         )
     );

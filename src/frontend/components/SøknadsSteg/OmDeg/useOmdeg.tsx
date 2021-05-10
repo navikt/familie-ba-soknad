@@ -6,7 +6,6 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import {
     Avhengigheter,
     feil,
-    Felt,
     FeltState,
     ISkjema,
     ok,
@@ -21,12 +20,6 @@ import useDatovelgerFeltMedJaNeiAvhengighet from './useDatovelgerFeltMedJaNeiAvh
 import useLanddropdownFeltMedJaNeiAvhengighet from './useLanddropdownFeltMedJaNeiAvhengighet';
 
 export type ESvarMedUbesvart = ESvar | undefined;
-
-export interface FeltGruppe {
-    jaNeiSpm: Felt<ESvar | undefined>;
-    // eslint-disable-next-line
-    tilhørendeFelter?: Felt<any>[];
-}
 
 export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | undefined;
@@ -95,7 +88,7 @@ export const useOmdeg = (): {
 
     const oppholderSegINorge = useJaNeiSpmFelt(
         søker.oppholderSegINorge,
-        { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
+        { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse } },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
@@ -114,7 +107,7 @@ export const useOmdeg = (): {
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
         søker.værtINorgeITolvMåneder,
-        { borPåRegistrertAdresse: { jaNeiSpm: borPåRegistrertAdresse } },
+        { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse } },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
@@ -146,13 +139,13 @@ export const useOmdeg = (): {
         søker.erAsylsøker,
         {
             borPåRegistrertAdresse: {
-                jaNeiSpm: borPåRegistrertAdresse,
+                hovedSpørsmål: borPåRegistrertAdresse,
             },
             værtINorgeITolvMåneder: {
-                jaNeiSpm: værtINorgeITolvMåneder,
+                hovedSpørsmål: værtINorgeITolvMåneder,
             },
             oppholderSegINorge: {
-                jaNeiSpm: oppholderSegINorge,
+                hovedSpørsmål: oppholderSegINorge,
                 tilhørendeFelter: [oppholdsland, oppholdslandDato],
             },
         },
@@ -163,13 +156,13 @@ export const useOmdeg = (): {
         søker.jobberPåBåt,
         {
             borPåRegistrertAdresse: {
-                jaNeiSpm: borPåRegistrertAdresse,
+                hovedSpørsmål: borPåRegistrertAdresse,
             },
             værtINorgeITolvMåneder: {
-                jaNeiSpm: værtINorgeITolvMåneder,
+                hovedSpørsmål: værtINorgeITolvMåneder,
             },
             oppholderSegINorge: {
-                jaNeiSpm: oppholderSegINorge,
+                hovedSpørsmål: oppholderSegINorge,
                 tilhørendeFelter: [oppholdsland, oppholdslandDato],
             },
         },
@@ -186,13 +179,13 @@ export const useOmdeg = (): {
         søker.mottarUtenlandspensjon,
         {
             borPåRegistrertAdresse: {
-                jaNeiSpm: borPåRegistrertAdresse,
+                hovedSpørsmål: borPåRegistrertAdresse,
             },
             værtINorgeITolvMåneder: {
-                jaNeiSpm: værtINorgeITolvMåneder,
+                hovedSpørsmål: værtINorgeITolvMåneder,
             },
             oppholderSegINorge: {
-                jaNeiSpm: oppholderSegINorge,
+                hovedSpørsmål: oppholderSegINorge,
                 tilhørendeFelter: [oppholdsland, oppholdslandDato],
             },
         },
