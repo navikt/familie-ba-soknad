@@ -37,7 +37,7 @@ export const Personopplysninger: React.FC = () => {
                 <Normaltekst>
                     {søker.statsborgerskap
                         .map((statsborgerskap: { landkode: Alpha3Code }) =>
-                            landkodeTilSpråk(statsborgerskap.landkode, intl.locale)
+                            landkodeTilSpråk(statsborgerskap.landkode, intl.defaultLocale)
                         )
                         .join(', ')}
                 </Normaltekst>
