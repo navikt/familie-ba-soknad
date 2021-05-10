@@ -9,6 +9,7 @@ import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { AdressebeskyttetKort } from './Barnekort/AdressebeskyttetKort';
 import Barnekort from './Barnekort/Barnekort';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from './spørsmål';
@@ -33,11 +34,15 @@ const VelgBarn: React.FC = () => {
         oppdaterSøknad,
         håndterVelgBarnToggle,
         barnSomSkalVæreMed,
+        fjernBarn,
     } = useVelgBarn();
 
-    const barnFraRespons = mapBarnResponsTilBarn(søknad.søker.barn);
+    const barnFraRespons = mapBarnResponsTilBarn(søknad.søker.barn).filter(
+        barn => !barn.adressebeskyttelse
+    );
     const barnManueltLagtTil = søknad.barnRegistrertManuelt;
     const barn = barnFraRespons.concat(barnManueltLagtTil);
+    const harBarnMedBeskyttaAdresse = !!søknad.søker.barn.find(barn => barn.adressebeskyttelse);
 
     return (
         <Steg
@@ -74,8 +79,10 @@ const VelgBarn: React.FC = () => {
                         barn={barn}
                         velgBarnCallback={håndterVelgBarnToggle}
                         barnSomSkalVæreMed={barnSomSkalVæreMed}
+                        fjernBarnCallback={fjernBarn}
                     />
                 ))}
+                {harBarnMedBeskyttaAdresse && <AdressebeskyttetKort />}
                 <NyttBarnKort />
             </BarnekortContainer>
         </Steg>

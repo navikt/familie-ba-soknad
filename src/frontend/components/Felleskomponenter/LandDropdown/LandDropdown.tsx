@@ -35,7 +35,7 @@ export const LandDropdown: React.FC<LandDropdownProps> = ({ felt, skjema, label 
     const intl = useIntl();
 
     const landkoderSortertPåNavn = Object.keys(getAlpha3Codes()).sort((a, b) => {
-        return getName(a, intl.locale) >= getName(b, intl.locale) ? 1 : -1;
+        return getName(a, intl.defaultLocale) >= getName(b, intl.defaultLocale) ? 1 : -1;
     });
 
     return felt.erSynlig ? (
@@ -55,7 +55,7 @@ export const LandDropdown: React.FC<LandDropdownProps> = ({ felt, skjema, label 
                     (alphaCode): ReactNode => (
                         <option
                             value={alphaCode}
-                            label={getName(alphaCode, intl.locale)}
+                            label={getName(alphaCode, intl.defaultLocale)}
                             key={alphaCode}
                         />
                     )

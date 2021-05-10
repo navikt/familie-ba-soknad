@@ -15,12 +15,14 @@ describe('FjernBarnKnapp', () => {
             navn: 'Test',
             borMedSøker: true,
             alder: undefined,
+            adressebeskyttelse: false,
         };
         const pdlBarn: IBarn = {
             ident: '54321',
             navn: 'Også test',
             borMedSøker: true,
             alder: undefined,
+            adressebeskyttelse: false,
         };
 
         spyOnUseApp({
@@ -51,6 +53,7 @@ describe('FjernBarnKnapp', () => {
             navn: 'Test',
             borMedSøker: true,
             alder: undefined,
+            adressebeskyttelse: false,
         };
 
         const { settSøknad } = spyOnUseApp({

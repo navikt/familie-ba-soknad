@@ -182,5 +182,6 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
         ident: barnRespons.ident,
         alder: barnRespons.fødselsdato && hentAlder(barnRespons.fødselsdato),
         borMedSøker: barnRespons.borMedSøker,
+        adressebeskyttelse: barnRespons.adressebeskyttelse,
     }));
 };

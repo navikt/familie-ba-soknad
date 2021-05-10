@@ -47,7 +47,7 @@ const Forside: React.FC = () => {
                 <EksternLenke lenkeSpråkId={'#'} lenkeTekstSpråkId={'forside.plikter.lenketekst'} />
             </Informasjonsbolk>
 
-            <BekreftelseOgStartSoknad navn={navn ? navn : '-'} />
+            <BekreftelseOgStartSoknad navn={navn} />
 
             <Informasjonsbolk>
                 <EksternLenke

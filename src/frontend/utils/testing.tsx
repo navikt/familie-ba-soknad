@@ -15,6 +15,8 @@ export const spyOnUseApp = søknad => {
     const erStegUtfyltFrafør = jest.fn().mockImplementation(() => true);
     const settSisteUtfylteStegIndex = jest.fn();
 
+    søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
+
     const useAppMock = jest.fn().mockReturnValue({
         søknad,
         settSisteUtfylteStegIndex,
@@ -40,7 +42,7 @@ export const brukUseAppMedTomSøknadForRouting = () => spyOnUseApp({ barnInklude
  * oversettelsesfeil igjen. Mulig vi heller burde mocke noe i intl.
  */
 export const silenceConsoleErrors = () => {
-    jest.spyOn(global.console, 'error').mockImplementation(() => {
+    return jest.spyOn(global.console, 'error').mockImplementation(() => {
         // Shut up about the missing translations;
     });
 };

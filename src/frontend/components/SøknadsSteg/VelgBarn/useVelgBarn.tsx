@@ -20,6 +20,7 @@ export const useVelgBarn = (): {
     oppdaterSøknad: () => void;
     håndterVelgBarnToggle: (barn: IBarn, erMedISøknad: boolean) => void;
     barnSomSkalVæreMed: IBarn[];
+    fjernBarn: (ident: string) => void;
 } => {
     const { søknad, settSøknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
@@ -31,6 +32,16 @@ export const useVelgBarn = (): {
     useEffect(() => {
         settBarnForRoutes(barnSomSkalVæreMed);
     }, [barnSomSkalVæreMed]);
+
+    const fjernBarn = (ident: string) => {
+        settSøknad({
+            ...søknad,
+            barnRegistrertManuelt: søknad.barnRegistrertManuelt.filter(
+                barn => ident !== barn.ident
+            ),
+        });
+        settBarnSomSkalVæreMed(barnSomSkalVæreMed.filter(barn => ident !== barn.ident));
+    };
 
     const barnMedISøknad = useFelt<IBarn[]>({
         feltId: VelgBarnSpørsmålId.velgBarn,
@@ -87,5 +98,6 @@ export const useVelgBarn = (): {
         oppdaterSøknad,
         håndterVelgBarnToggle,
         barnSomSkalVæreMed,
+        fjernBarn,
     };
 };

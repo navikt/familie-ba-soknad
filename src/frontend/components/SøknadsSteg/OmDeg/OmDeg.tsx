@@ -55,7 +55,11 @@ const OmDeg: React.FC = () => {
                 )}
                 {!søker.adresse && (
                     <SøkerMåBrukePDF
-                        advarselTekstId={'omdeg.personopplysninger.ikke-registrert.alert'}
+                        advarselTekstId={
+                            søker.adressebeskyttelse
+                                ? 'omdeg.personopplysninger.adressesperre.alert'
+                                : 'omdeg.personopplysninger.ikke-registrert.alert'
+                        }
                     />
                 )}
             </KomponentGruppe>
