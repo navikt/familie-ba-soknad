@@ -3,7 +3,16 @@ import React, { useState } from 'react';
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
-import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import {
+    feil,
+    Felt,
+    FeltState,
+    ISkjema,
+    ok,
+    useFelt,
+    useSkjema,
+    Valideringsstatus,
+} from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
@@ -47,9 +56,9 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderPensjonHvilketLand: Alpha3Code | '';
     borFastMedSøker: ESvar | undefined;
     skriftligAvtaleOmDeltBosted: ESvar | undefined;
-    // søkerForSpesieltTidsrom: ESvar;
-    // søkerForSpesieltTidsromStartdato: ISODateString;
-    // søkerForSpesieltTidsromSluttdato: ISODateString;
+    søkerForSpesieltTidsromCheckbox: ESvar;
+    søkerForSpesieltTidsromStartdato: ISODateString;
+    søkerForSpesieltTidsromSluttdato: ISODateString;
 }
 
 export const useOmBarnet = (
@@ -294,9 +303,31 @@ export const useOmBarnet = (
         },
     });
 
-    //let søkerForSpesieltTidsrom;
-    //let søkerForSpesieltTidsromStartdato;
-    //let søkerForSpesieltTidsromSluttdato;
+    /*--- SØKER FOR PERIODE ---*/
+    const søkerForSpesieltTidsromCheckbox = useFelt<ESvar>({
+        verdi: barn[barnDataKeySpørsmål.søkerForSpesieltTidsrom].svar,
+        feltId: OmBarnetSpørsmålsId.søkerForSpesieltTidsromCheckbox,
+        skalFeltetVises: avhengigheter =>
+            avhengigheter &&
+            avhengigheter.skriftligAvtaleOmDeltBosted &&
+            avhengigheter.borFastMedSøker &&
+            avhengigheter.skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK &&
+            avhengigheter.borFastMedSøker.valideringsstatus === Valideringsstatus.OK,
+        avhengigheter: { skriftligAvtaleOmDeltBosted, borFastMedSøker },
+    });
+
+    const søkerForSpesieltTidsromStartdato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.søkerForSpesieltTidsromStartdato],
+        søkerForSpesieltTidsromCheckbox,
+        borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
+            skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK
+    );
+    const søkerForSpesieltTidsromSluttdato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.søkerForSpesieltTidsromStartdato],
+        søkerForSpesieltTidsromCheckbox,
+        borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
+            skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK
+    );
 
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
@@ -326,9 +357,9 @@ export const useOmBarnet = (
                 andreForelderPensjonHvilketLand,
                 borFastMedSøker,
                 skriftligAvtaleOmDeltBosted,
-                //    søkerForSpesieltTidsrom,
-                //   søkerForSpesieltTidsromStartdato,
-                //  søkerForSpesieltTidsromSluttdato,
+                søkerForSpesieltTidsromCheckbox,
+                søkerForSpesieltTidsromStartdato,
+                søkerForSpesieltTidsromSluttdato,
             },
             skjemanavn: 'om-barnet',
         }

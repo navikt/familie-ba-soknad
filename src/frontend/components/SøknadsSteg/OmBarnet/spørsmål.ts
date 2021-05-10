@@ -27,7 +27,7 @@ export enum OmBarnetSpørsmålsId {
     søkerForSpesieltTidsrom = 'søker-for-spesielt-tidsrom',
     søkerForSpesieltTidsromStartdato = 'søker-for-spesielt-tidsrom-startdato',
     søkerForSpesieltTidsromSluttdato = 'søker-for-spesielt-tidsrom-sluttdato',
-    søkerForSpesieltTidsromSvarNei = '',
+    søkerForSpesieltTidsromCheckbox = 'søker-for-spesielt-tidsrom-checkbox',
 }
 
 export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
@@ -65,5 +65,5 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
         'ombarnet.søker-for-periode.startdato.spm',
     [OmBarnetSpørsmålsId.søkerForSpesieltTidsromSluttdato]:
         'ombarnet.søker-for-periode.sluttdato.spm',
-    [OmBarnetSpørsmålsId.søkerForSpesieltTidsromSvarNei]: 'ombarnet.søker-for-periode.vetikke.spm',
+    [OmBarnetSpørsmålsId.søkerForSpesieltTidsromCheckbox]: 'ombarnet.søker-for-periode.vetikke.spm',
 };
