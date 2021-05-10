@@ -288,6 +288,119 @@ const Oppsummering: React.FC = () => {
                     )}
                 </StyledOppsummeringsFeltGruppe>
             </Oppsummeringsbolk>
+
+            {søknad.barnInkludertISøknaden.map(barn => (
+                <Oppsummeringsbolk tittel={barn.navn}>
+                    <StyledOppsummeringsFeltGruppe>
+                        {barn.institusjonsnavn.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarnet.institusjon.navn.spm'} />}
+                                søknadsvar={barn.institusjonsnavn.svar}
+                            />
+                        )}
+                        {barn.institusjonsadresse.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarnet.institusjon.adresse.spm'} />}
+                                søknadsvar={barn.institusjonsadresse.svar}
+                            />
+                        )}
+                        {barn.institusjonspostnummer.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarnet.institusjon.postnummer.spm'} />}
+                                søknadsvar={barn.institusjonspostnummer.svar}
+                            />
+                        )}
+                        {barn.institusjonOppholdStartdato.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarnet.institusjon.startdato.spm'} />}
+                                søknadsvar={barn.institusjonOppholdStartdato.svar}
+                            />
+                        )}
+                        {barn.institusjonOppholdSluttdato.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarnet.institusjon.sluttdato.spm'} />}
+                                søknadsvar={barn.institusjonOppholdSluttdato.svar}
+                            />
+                        )}
+                    </StyledOppsummeringsFeltGruppe>
+                    <StyledOppsummeringsFeltGruppe>
+                        {barn.oppholdsland.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarnet.oppholdutland.land.spm'} />}
+                                søknadsvar={landkodeTilSpråk(
+                                    barn.oppholdsland.svar,
+                                    intl.defaultLocale
+                                )}
+                            />
+                        )}
+                        {barn.oppholdslandStartdato.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarnet.oppholdutland.startdato.spm'} />}
+                                søknadsvar={barn.oppholdslandStartdato.svar}
+                            />
+                        )}
+                        {barn.oppholdslandSluttdato.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarnet.oppholdutland.sluttdato.spm'} />}
+                                søknadsvar={barn.oppholdslandSluttdato.svar}
+                            />
+                        )}
+                    </StyledOppsummeringsFeltGruppe>
+                    <StyledOppsummeringsFeltGruppe>
+                        {barn.nårKomBarnTilNorgeDato.svar && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst id={'ombarnet.sammenhengende-opphold.dato.spm'} />
+                                }
+                                søknadsvar={barn.nårKomBarnTilNorgeDato.svar}
+                            />
+                        )}
+                        {barn.planleggerÅBoINorge12Mnd && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={'ombarnet.planlagt-sammenhengende-opphold.spm'}
+                                    />
+                                }
+                                søknadsvar={barn.planleggerÅBoINorge12Mnd.svar}
+                            />
+                        )}
+                    </StyledOppsummeringsFeltGruppe>
+                    <StyledOppsummeringsFeltGruppe>
+                        {barn.barnetrygdFraEøslandHvilketLand.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarnet.barnetrygd-eøs.land.spm'} />}
+                                søknadsvar={landkodeTilSpråk(
+                                    barn.barnetrygdFraEøslandHvilketLand.svar,
+                                    intl.defaultLocale
+                                )}
+                            />
+                        )}
+                    </StyledOppsummeringsFeltGruppe>
+                    <StyledOppsummeringsFeltGruppe>
+                        {barn.andreForelderNavn.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'ombarnet.andre-forelder'} />}
+                                søknadsvar={barn.andreForelderNavn.svar}
+                            />
+                        )}
+                        {barn.andreForelderFnr.svar && (
+                            <OppsummeringFelt
+                                tittel={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
+                                søknadsvar={barn.andreForelderFnr.svar}
+                            />
+                        )}
+                        {barn.andreForelderFødselsdato.svar && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst id={'ombarnet.andre-forelder.fødselsdato.spm'} />
+                                }
+                                søknadsvar={barn.andreForelderFødselsdato.svar}
+                            />
+                        )}
+                    </StyledOppsummeringsFeltGruppe>
+                </Oppsummeringsbolk>
+            ))}
             <Knapp htmlType={'button'} onClick={sendInnSkjema}>
                 Send inn søknad
             </Knapp>
