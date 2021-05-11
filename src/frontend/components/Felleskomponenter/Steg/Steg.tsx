@@ -14,7 +14,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { IRoute, useRoutes } from '../../../context/RoutesContext';
+import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
@@ -105,12 +105,14 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
 
     const [åpenModal, settÅpenModal] = useState(false);
 
-    const stegobjekter: StegindikatorStegProps[] = routes.map((steg: IRoute, index: number) => {
-        return {
-            label: steg.label,
-            index: index,
-        };
-    });
+    const stegobjekter: StegindikatorStegProps[] = routes
+        .filter(steg => steg.route !== RouteEnum.Forside)
+        .map((steg, index) => {
+            return {
+                label: steg.label,
+                index: index,
+            };
+        });
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
