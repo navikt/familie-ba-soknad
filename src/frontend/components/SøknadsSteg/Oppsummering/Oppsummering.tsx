@@ -267,7 +267,7 @@ const Oppsummering: React.FC = () => {
                         <OppsummeringFelt
                             tittel={<SpråkTekst id={'ombarna.sammenhengende-opphold.hvem.spm'} />}
                             søknadsvar={genererListeMedBarn(
-                                barnDataKeySpørsmål.oppholdtSegINorgeSammenhengendeTolvMnd
+                                barnDataKeySpørsmål.boddMindreEnn12MndINorge
                             )}
                         />
                     )}
