@@ -342,7 +342,7 @@ export const useOmBarnet = (
     });
 
     const søkerForTidsromStartdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
+        barn[barnDataKeySpørsmål.søkerForTidsromStartdato].id,
         barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar === AlternativtSvarForInput.UKJENT
             ? ''
             : barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar,
@@ -352,7 +352,7 @@ export const useOmBarnet = (
                 skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK)
     );
     const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato],
+        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].id,
         barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar === AlternativtSvarForInput.UKJENT
             ? ''
             : barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
