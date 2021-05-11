@@ -18,7 +18,6 @@ interface Props {
 
 const StyledOppsummeringsbolk = styled.div`
     border-bottom: 2px solid ${navFarger.navGra60};
-    padding-bottom: 0.25rem;
 `;
 
 const StyledEkspanderbartpanel = styled(Ekspanderbartpanel)`

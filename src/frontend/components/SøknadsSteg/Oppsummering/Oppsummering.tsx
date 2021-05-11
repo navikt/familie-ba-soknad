@@ -194,7 +194,6 @@ const Oppsummering: React.FC = () => {
                         tittel={<SpråkTekst id={'ombarna.fosterbarn.spm'} />}
                         søknadsvar={søknad.erNoenAvBarnaFosterbarn.svar}
                     />
-
                     {søknad.erNoenAvBarnaFosterbarn.svar === 'JA' && (
                         <OppsummeringFelt
                             tittel={<SpråkTekst id={'ombarna.fosterbarn.hvem.spm'} />}
