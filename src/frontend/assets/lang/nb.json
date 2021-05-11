@@ -214,8 +214,5 @@
   "oppsummering.endresvar.lenketekst": "Endre svarene dine",
   "oppsummering.info": "Les oppsummeringen nøye før du sender inn søknaden. {linjeskift} Hvis du vil gjøre endringer, kan du gå tilbake.",
   "oppsummering.sidetittel": "Oppsummering",
-  "oppsummering.overskrift.hvilkebarn": "2. Hvilke barn søker du for?",
-  "oppsummering.overskrift.ombarn": "{nummer}. Om {navn}",
-  "oppsummering.overskrift.ombarna": "3. Om barna dine?",
-  "oppsummering.overskrift.omdeg": "1. Om deg"
+  "oppsummering.deltittel.ombarnet": "{nummer}. Om {navn}"
 }

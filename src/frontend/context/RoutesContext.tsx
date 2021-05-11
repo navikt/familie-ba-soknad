@@ -80,6 +80,9 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
             komponent: Kvittering,
         },
     ];
+    const hentStegNummer = (route: RouteEnum) => {
+        return routes.findIndex(steg => steg.route === route);
+    };
 
     const hentRouteIndex = (currentPath: string): number => {
         return routes.findIndex(route => {
@@ -114,6 +117,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         hentForrigeRoute,
         hentNesteRoute,
         hentPath,
+        hentStegNummer,
         routes,
         settBarnForRoutes,
     };
