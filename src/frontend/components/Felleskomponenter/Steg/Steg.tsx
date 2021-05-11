@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
-import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg.js';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
@@ -14,7 +13,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { IRoute, useRoutes } from '../../../context/RoutesContext';
+import { useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
@@ -96,21 +95,14 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
     const location = useLocation<ILokasjon>();
     const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, avbrytSøknad } = useApp();
     const {
-        routes,
         hentNesteRoute,
         hentForrigeRoute,
         hentAktivtStegIndexForStegindikator,
         hentRouteIndex,
+        hentStegObjekterForStegIndikator,
     } = useRoutes();
 
     const [åpenModal, settÅpenModal] = useState(false);
-
-    const stegobjekter: StegindikatorStegProps[] = routes.map((steg: IRoute, index: number) => {
-        return {
-            label: steg.label,
-            index: index,
-        };
-    });
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
@@ -182,7 +174,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
                 <Stegindikator
                     autoResponsiv={true}
                     aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}
-                    steg={stegobjekter}
+                    steg={hentStegObjekterForStegIndikator()}
                     visLabel={false}
                 />
             </header>
