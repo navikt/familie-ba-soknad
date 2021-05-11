@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
+import { useLocation } from 'react-router-dom';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import {
@@ -15,7 +16,9 @@ import {
 } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useRoutes } from '../../../context/RoutesContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { ILokasjon } from '../../../typer/lokasjon';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
@@ -70,7 +73,9 @@ export const useOmBarnet = (
     oppdaterSøknad: () => void;
     barn: IBarnMedISøknad;
 } => {
-    const { søknad, settSøknad } = useApp();
+    const { søknad, settSøknad, erStegUtfyltFrafør } = useApp();
+    const { hentRouteIndex } = useRoutes();
+    const location = useLocation<ILokasjon>();
 
     const [barn] = useState(
         søknad.barnInkludertISøknaden.find(barn => barn.ident === barnetsIdent)
@@ -314,6 +319,8 @@ export const useOmBarnet = (
     });
 
     /*--- SØKER FOR PERIODE ---*/
+
+    const stegErFyltUt = erStegUtfyltFrafør(hentRouteIndex(location.pathname));
     const søkerForTidsromCheckbox = useFelt<ESvar>({
         verdi:
             barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar ===
@@ -324,27 +331,35 @@ export const useOmBarnet = (
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.søkerIkkeForTidsrom,
         skalFeltetVises: avhengigheter =>
-            avhengigheter &&
-            avhengigheter.skriftligAvtaleOmDeltBosted &&
-            avhengigheter.borFastMedSøker &&
-            avhengigheter.skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK &&
-            avhengigheter.borFastMedSøker.valideringsstatus === Valideringsstatus.OK,
+            stegErFyltUt ||
+            (avhengigheter &&
+                avhengigheter.skriftligAvtaleOmDeltBosted &&
+                avhengigheter.borFastMedSøker &&
+                avhengigheter.skriftligAvtaleOmDeltBosted.valideringsstatus ===
+                    Valideringsstatus.OK &&
+                avhengigheter.borFastMedSøker.valideringsstatus === Valideringsstatus.OK),
         avhengigheter: { skriftligAvtaleOmDeltBosted, borFastMedSøker },
     });
 
     const søkerForTidsromStartdato = useDatovelgerFeltMedUkjent(
         barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
-        barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar,
+        barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar === AlternativtSvarForInput.UKJENT
+            ? ''
+            : barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar,
         søkerForTidsromCheckbox,
-        borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
-            skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK
+        stegErFyltUt ||
+            (borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
+                skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK)
     );
     const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent(
         barn[barnDataKeySpørsmål.søkerForTidsromSluttdato],
-        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
+        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar === AlternativtSvarForInput.UKJENT
+            ? ''
+            : barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
         søkerForTidsromCheckbox,
-        borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
-            skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK
+        stegErFyltUt ||
+            (borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
+                skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK)
     );
 
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
