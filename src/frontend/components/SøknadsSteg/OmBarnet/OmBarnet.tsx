@@ -7,7 +7,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { barnDataKeySpørsmål } from '../../../typer/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -87,9 +86,9 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                     </SkjemaFieldset>
                 )}
 
-            {skjema.felter.søkerForSpesieltTidsromCheckbox.erSynlig &&
-                skjema.felter.søkerForSpesieltTidsromStartdato.erSynlig &&
-                skjema.felter.søkerForSpesieltTidsromSluttdato.erSynlig && (
+            {skjema.felter.søkerForTidsromCheckbox.erSynlig &&
+                skjema.felter.søkerForTidsromStartdato.erSynlig &&
+                skjema.felter.søkerForTidsromSluttdato.erSynlig && (
                     <SkjemaFieldset
                         tittelId={'ombarnet.søker-for-periode.spm'}
                         språkValues={{ navn: barn.navn }}
@@ -98,44 +97,40 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                             <SpråkTekst id={'ombarnet.søker-for-periode.alert'} />
                         </AlertStripe>
                         <Datovelger
-                            felt={skjema.felter.søkerForSpesieltTidsromStartdato}
+                            felt={skjema.felter.søkerForTidsromStartdato}
                             skjema={skjema}
                             labelTekstId={
                                 omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.søkerForSpesieltTidsromStartdato
+                                    OmBarnetSpørsmålsId.søkerForTidsromStartdato
                                 ]
                             }
-                            disabled={
-                                skjema.felter.søkerForSpesieltTidsromCheckbox.verdi === ESvar.JA
-                            }
+                            disabled={skjema.felter.søkerForTidsromCheckbox.verdi === ESvar.JA}
                         />
                         <Datovelger
-                            felt={skjema.felter.søkerForSpesieltTidsromSluttdato}
+                            felt={skjema.felter.søkerForTidsromSluttdato}
                             skjema={skjema}
                             labelTekstId={
                                 omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.søkerForSpesieltTidsromSluttdato
+                                    OmBarnetSpørsmålsId.søkerForTidsromSluttdato
                                 ]
                             }
-                            disabled={
-                                skjema.felter.søkerForSpesieltTidsromCheckbox.verdi === ESvar.JA
-                            }
+                            disabled={skjema.felter.søkerForTidsromCheckbox.verdi === ESvar.JA}
                         />
                         <Checkbox
                             label={
                                 <SpråkTekst
                                     id={
                                         omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerForSpesieltTidsromCheckbox
+                                            OmBarnetSpørsmålsId.søkerIkkeForTidsrom
                                         ]
                                     }
                                 />
                             }
                             defaultChecked={
-                                barn[barnDataKeySpørsmål.søkerForSpesieltTidsrom].svar === ESvar.JA
+                                skjema.felter.søkerForTidsromCheckbox.verdi === ESvar.JA
                             }
                             onChange={event => {
-                                skjema.felter.søkerForSpesieltTidsromCheckbox
+                                skjema.felter.søkerForTidsromCheckbox
                                     .hentNavInputProps(false)
                                     .onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
                             }}

@@ -56,9 +56,9 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderPensjonHvilketLand: Alpha3Code | '';
     borFastMedSøker: ESvar | undefined;
     skriftligAvtaleOmDeltBosted: ESvar | undefined;
-    søkerForSpesieltTidsromCheckbox: ESvar;
-    søkerForSpesieltTidsromStartdato: ISODateString;
-    søkerForSpesieltTidsromSluttdato: ISODateString;
+    søkerForTidsromCheckbox: ESvar;
+    søkerForTidsromStartdato: ISODateString;
+    søkerForTidsromSluttdato: ISODateString;
 }
 
 export const useOmBarnet = (
@@ -131,7 +131,11 @@ export const useOmBarnet = (
     });
 
     const institusjonOppholdSluttdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.institusjonOppholdSluttdato],
+        barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].id,
+        barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar !==
+            AlternativtSvarForInput.UKJENT
+            ? barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
+            : '',
         institusjonOppholdSluttVetIkke,
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
     );
@@ -157,7 +161,10 @@ export const useOmBarnet = (
     });
 
     const oppholdslandSluttdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.oppholdslandSluttdato],
+        barn[barnDataKeySpørsmål.oppholdslandSluttdato].id,
+        barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar !== AlternativtSvarForInput.UKJENT
+            ? barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar
+            : '',
         oppholdslandSluttDatoVetIkke,
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
     );
@@ -236,7 +243,10 @@ export const useOmBarnet = (
         nullstillVedAvhengighetEndring: false,
     });
     const andreForelderFødselsdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.andreForelderFødselsdato],
+        barn[barnDataKeySpørsmål.andreForelderFødselsdato].id,
+        barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar !== AlternativtSvarForInput.UKJENT
+            ? barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar
+            : '',
         andreForelderFødselsdatoUkjent,
         andreForelderFnrUkjent.verdi === ESvar.JA
     );
@@ -304,9 +314,15 @@ export const useOmBarnet = (
     });
 
     /*--- SØKER FOR PERIODE ---*/
-    const søkerForSpesieltTidsromCheckbox = useFelt<ESvar>({
-        verdi: barn[barnDataKeySpørsmål.søkerForSpesieltTidsrom].svar,
-        feltId: OmBarnetSpørsmålsId.søkerForSpesieltTidsromCheckbox,
+    const søkerForTidsromCheckbox = useFelt<ESvar>({
+        verdi:
+            barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar ===
+                AlternativtSvarForInput.UKJENT &&
+            barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar ===
+                AlternativtSvarForInput.UKJENT
+                ? ESvar.JA
+                : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.søkerIkkeForTidsrom,
         skalFeltetVises: avhengigheter =>
             avhengigheter &&
             avhengigheter.skriftligAvtaleOmDeltBosted &&
@@ -316,15 +332,17 @@ export const useOmBarnet = (
         avhengigheter: { skriftligAvtaleOmDeltBosted, borFastMedSøker },
     });
 
-    const søkerForSpesieltTidsromStartdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.søkerForSpesieltTidsromStartdato],
-        søkerForSpesieltTidsromCheckbox,
+    const søkerForTidsromStartdato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
+        barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar,
+        søkerForTidsromCheckbox,
         borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
             skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK
     );
-    const søkerForSpesieltTidsromSluttdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.søkerForSpesieltTidsromStartdato],
-        søkerForSpesieltTidsromCheckbox,
+    const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato],
+        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
+        søkerForTidsromCheckbox,
         borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
             skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK
     );
@@ -357,15 +375,15 @@ export const useOmBarnet = (
                 andreForelderPensjonHvilketLand,
                 borFastMedSøker,
                 skriftligAvtaleOmDeltBosted,
-                søkerForSpesieltTidsromCheckbox,
-                søkerForSpesieltTidsromStartdato,
-                søkerForSpesieltTidsromSluttdato,
+                søkerForTidsromCheckbox,
+                søkerForTidsromStartdato,
+                søkerForTidsromSluttdato,
             },
             skjemanavn: 'om-barnet',
         }
     );
 
-    const svarForSpørsmålMedVetIkke = (
+    const svarForSpørsmålMedUkjent = (
         vetIkkeFelt: Felt<ESvar>,
         spørsmålFelt: Felt<string>
     ): string => {
@@ -396,7 +414,7 @@ export const useOmBarnet = (
                           },
                           institusjonOppholdSluttdato: {
                               ...barn.institusjonOppholdSluttdato,
-                              svar: svarForSpørsmålMedVetIkke(
+                              svar: svarForSpørsmålMedUkjent(
                                   institusjonOppholdSluttVetIkke,
                                   institusjonOppholdSluttdato
                               ),
@@ -411,7 +429,7 @@ export const useOmBarnet = (
                           },
                           oppholdslandSluttdato: {
                               ...barn.oppholdslandSluttdato,
-                              svar: svarForSpørsmålMedVetIkke(
+                              svar: svarForSpørsmålMedUkjent(
                                   oppholdslandSluttDatoVetIkke,
                                   oppholdslandSluttdato
                               ),
@@ -430,21 +448,21 @@ export const useOmBarnet = (
                           },
                           andreForelderNavn: {
                               ...barn.andreForelderNavn,
-                              svar: svarForSpørsmålMedVetIkke(
+                              svar: svarForSpørsmålMedUkjent(
                                   andreForelderNavnUkjent,
                                   andreForelderNavn
                               ),
                           },
                           andreForelderFnr: {
                               ...barn.andreForelderFnr,
-                              svar: svarForSpørsmålMedVetIkke(
+                              svar: svarForSpørsmålMedUkjent(
                                   andreForelderFnrUkjent,
                                   andreForelderFnr
                               ),
                           },
                           andreForelderFødselsdato: {
                               ...barn.andreForelderFødselsdato,
-                              svar: svarForSpørsmålMedVetIkke(
+                              svar: svarForSpørsmålMedUkjent(
                                   andreForelderFødselsdatoUkjent,
                                   andreForelderFødselsdato
                               ),
@@ -464,6 +482,28 @@ export const useOmBarnet = (
                           andreForelderPensjonHvilketLand: {
                               ...barn.andreForelderPensjonHvilketLand,
                               svar: andreForelderPensjonHvilketLand.verdi,
+                          },
+                          borFastMedSøker: {
+                              ...barn.borFastMedSøker,
+                              svar: borFastMedSøker.verdi,
+                          },
+                          skriftligAvtaleOmDeltBosted: {
+                              ...barn.skriftligAvtaleOmDeltBosted,
+                              svar: skriftligAvtaleOmDeltBosted.verdi,
+                          },
+                          søkerForTidsromStartdato: {
+                              ...barn.søkerForTidsromStartdato,
+                              svar: svarForSpørsmålMedUkjent(
+                                  søkerForTidsromCheckbox,
+                                  søkerForTidsromStartdato
+                              ),
+                          },
+                          søkerForTidsromSluttdato: {
+                              ...barn.søkerForTidsromSluttdato,
+                              svar: svarForSpørsmålMedUkjent(
+                                  søkerForTidsromCheckbox,
+                                  søkerForTidsromSluttdato
+                              ),
                           },
                       }
                     : barn

@@ -24,10 +24,10 @@ export enum OmBarnetSpørsmålsId {
     andreForelderPensjonHvilketLand = 'andre-forelder-pensjon-hvilket-land',
     borFastMedSøker = 'bor-barnet-fast-med-deg',
     skriftligAvtaleOmDeltBosted = 'skriftlig-avtale-om-delt-bosted',
-    søkerForSpesieltTidsrom = 'søker-for-spesielt-tidsrom',
-    søkerForSpesieltTidsromStartdato = 'søker-for-spesielt-tidsrom-startdato',
-    søkerForSpesieltTidsromSluttdato = 'søker-for-spesielt-tidsrom-sluttdato',
-    søkerForSpesieltTidsromCheckbox = 'søker-for-spesielt-tidsrom-checkbox',
+    søkerForSpesieltTidsrom = 'søker-for-tidsrom',
+    søkerForTidsromStartdato = 'søker-for-tidsrom-startdato',
+    søkerForTidsromSluttdato = 'søker-for-tidsrom-sluttdato',
+    søkerIkkeForTidsrom = 'søker-ikke-for-tidsrom',
 }
 
 export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
@@ -61,9 +61,7 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.borFastMedSøker]: 'ombarnet.bor-fast.spm',
     [OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted]: 'ombarnet.delt-bosted.spm',
     [OmBarnetSpørsmålsId.søkerForSpesieltTidsrom]: 'ombarnet.søker-for-periode.spm',
-    [OmBarnetSpørsmålsId.søkerForSpesieltTidsromStartdato]:
-        'ombarnet.søker-for-periode.startdato.spm',
-    [OmBarnetSpørsmålsId.søkerForSpesieltTidsromSluttdato]:
-        'ombarnet.søker-for-periode.sluttdato.spm',
-    [OmBarnetSpørsmålsId.søkerForSpesieltTidsromCheckbox]: 'ombarnet.søker-for-periode.vetikke.spm',
+    [OmBarnetSpørsmålsId.søkerForTidsromStartdato]: 'ombarnet.søker-for-periode.startdato.spm',
+    [OmBarnetSpørsmålsId.søkerForTidsromSluttdato]: 'ombarnet.søker-for-periode.sluttdato.spm',
+    [OmBarnetSpørsmålsId.søkerIkkeForTidsrom]: 'ombarnet.søker-for-periode.vetikke.spm',
 };
