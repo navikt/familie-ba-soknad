@@ -37,7 +37,14 @@ const StyledOppsummeringsFeltGruppe = styled.div`
 const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsvar }) => {
     let språktekstid: boolean | string = false;
     if (søknadsvar && søknadsvar in ESvar) {
-        språktekstid = 'felles.svaralternativ.' + søknadsvar.toLowerCase();
+        switch (søknadsvar) {
+            case ESvar.NEI:
+            case ESvar.JA:
+                språktekstid = 'felles.svaralternativ.' + søknadsvar.toLowerCase();
+                break;
+            default:
+                språktekstid = 'felles.svaralternativ.vetikke';
+        }
     } else if (søknadsvar && søknadsvar in ESivilstand) {
         språktekstid = 'felles.sivilstatus.kode.' + søknadsvar;
     }
