@@ -68,7 +68,7 @@ const Oppsummering: React.FC = () => {
             <StyledNormaltekst>
                 <SpråkTekst id={'oppsummering.info'} />
             </StyledNormaltekst>
-            <Oppsummeringsbolk tittel={'omdeg.sidetittel'}>
+            <Oppsummeringsbolk tittel={'oppsummering.overskrift.omdeg'}>
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
@@ -162,7 +162,7 @@ const Oppsummering: React.FC = () => {
                 </StyledOppsummeringsFeltGruppe>
             </Oppsummeringsbolk>
 
-            <Oppsummeringsbolk tittel={'hvilkebarn.sidetittel'}>
+            <Oppsummeringsbolk tittel={'oppsummering.overskrift.hvilkebarn'}>
                 {søknad.barnInkludertISøknaden.map(barn => (
                     <StyledOppsummeringsFeltGruppe>
                         {barn.navn && (
@@ -188,7 +188,7 @@ const Oppsummering: React.FC = () => {
                     </StyledOppsummeringsFeltGruppe>
                 ))}
             </Oppsummeringsbolk>
-            <Oppsummeringsbolk tittel={'ombarna.sidetittel'}>
+            <Oppsummeringsbolk tittel={'oppsummering.overskrift.ombarna'}>
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.fosterbarn.spm'} />}
@@ -290,8 +290,9 @@ const Oppsummering: React.FC = () => {
             </Oppsummeringsbolk>
 
             {søknad.barnInkludertISøknaden.map(barn => (
-                <Oppsummeringsbolk tittel={barn.navn}>
+                <Oppsummeringsbolk tittel={'oppsummering.overskrift.ombarn'}>
                     <StyledOppsummeringsFeltGruppe>
+                        <OppsummeringFelt tittel={<SpråkTekst id={'ombarnet.institusjon'} />} />
                         {barn.institusjonsnavn.svar && (
                             <OppsummeringFelt
                                 tittel={<SpråkTekst id={'ombarnet.institusjon.navn.spm'} />}
@@ -326,7 +327,12 @@ const Oppsummering: React.FC = () => {
                     <StyledOppsummeringsFeltGruppe>
                         {barn.oppholdsland.svar && (
                             <OppsummeringFelt
-                                tittel={<SpråkTekst id={'ombarnet.oppholdutland.land.spm'} />}
+                                tittel={
+                                    <SpråkTekst
+                                        id={'ombarnet.oppholdutland.land.spm'}
+                                        values={{ navn: barn.navn }}
+                                    />
+                                }
                                 søknadsvar={landkodeTilSpråk(
                                     barn.oppholdsland.svar,
                                     intl.defaultLocale
@@ -422,7 +428,10 @@ const Oppsummering: React.FC = () => {
                     <StyledOppsummeringsFeltGruppe>
                         <OppsummeringFelt
                             tittel={
-                                <SpråkTekst id={'ombarnet.andre-forelder.utenlandspensjon.spm'} />
+                                <SpråkTekst
+                                    id={'ombarnet.andre-forelder.utenlandspensjon.spm'}
+                                    values={{ navn: barn.navn }}
+                                />
                             }
                             søknadsvar={barn.andreForelderPensjonUtland.svar}
                         />
@@ -432,6 +441,7 @@ const Oppsummering: React.FC = () => {
                                 tittel={
                                     <SpråkTekst
                                         id={'ombarnet.andre-forelder.utenlandspensjon.land.spm'}
+                                        values={{ navn: barn.navn }}
                                     />
                                 }
                                 søknadsvar={landkodeTilSpråk(
