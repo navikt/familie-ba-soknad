@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import createUseContext from 'constate';
+import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg';
 import { matchPath } from 'react-router';
 
 import Forside from '../components/SøknadsSteg/Forside/Forside';
@@ -108,6 +109,17 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         return routes.find(r => r.route === route)?.path;
     };
 
+    const hentStegObjekterForStegIndikator = (): StegindikatorStegProps[] => {
+        return routes
+            .filter(steg => steg.route !== RouteEnum.Forside)
+            .map((steg, index) => {
+                return {
+                    label: steg.label,
+                    index: index,
+                };
+            });
+    };
+
     return {
         hentRouteIndex,
         hentAktivtStegIndexForStegindikator,
@@ -116,6 +128,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         hentPath,
         routes,
         settBarnForRoutes,
+        hentStegObjekterForStegIndikator,
     };
 });
 
