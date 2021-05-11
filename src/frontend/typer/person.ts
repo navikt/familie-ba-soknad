@@ -81,6 +81,10 @@ export enum barnDataKeySpørsmål {
     andreForelderArbeidUtlandetHvilketLand = 'andreForelderArbeidUtlandetHvilketLand',
     andreForelderPensjonUtland = 'andreForelderPensjonUtland',
     andreForelderPensjonHvilketLand = 'andreForelderPensjonHvilketLand',
+    borFastMedSøker = 'borFastMedSøker',
+    skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
+    søkerForTidsromStartdato = 'søkerForTidsromStartdato',
+    søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
 }
 
 export interface IBarnRespons extends IPerson {
@@ -129,4 +133,8 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
     [barnDataKeySpørsmål.andreForelderPensjonUtland]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [barnDataKeySpørsmål.borFastMedSøker]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | undefined>;
+    [barnDataKeySpørsmål.søkerForTidsromStartdato]: ISøknadSpørsmål<DatoMedUkjent>;
+    [barnDataKeySpørsmål.søkerForTidsromSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
 }

@@ -49,6 +49,16 @@ const jens = {
     [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: { id: '21', svar: 'AUS' },
     [barnDataKeySpørsmål.andreForelderPensjonUtland]: { id: '22', svar: ESvar.VET_IKKE },
     [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: { id: '23', svar: '' },
+    [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: { id: '25', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
+        id: '26',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
+    [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
+        id: '27',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
 };
 const line = {
     navn: 'Line',
@@ -82,6 +92,16 @@ const line = {
     [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: { id: '21', svar: 'AUS' },
     [barnDataKeySpørsmål.andreForelderPensjonUtland]: { id: '22', svar: ESvar.VET_IKKE },
     [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: { id: '23', svar: '' },
+    [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: { id: '25', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
+        id: '26',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
+    [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
+        id: '27',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
 };
 
 test(`Kan rendre Om Barnet Utfyllende`, () => {

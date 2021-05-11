@@ -166,7 +166,6 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
     /* eslint-disable @typescript-eslint/no-explicit-any */
     const hentFeilmeldingTilOppsummering = (felt: Felt<any>) => {
         const gyldigId = !!Object.values(samletSpørsmålId).find(id => id === felt.id);
-
         return !gyldigId ||
             (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse && felt.verdi === ESvar.NEI) ||
             felt.id === VelgBarnSpørsmålId.velgBarn ? (

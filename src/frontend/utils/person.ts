@@ -173,6 +173,22 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
             svar: '',
         },
+        [barnDataKeySpørsmål.borFastMedSøker]: {
+            id: OmBarnetSpørsmålsId.borFastMedSøker,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
+            id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
+            id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
+            id: OmBarnetSpørsmålsId.søkerForTidsromSluttdato,
+            svar: '',
+        },
     };
 };
 

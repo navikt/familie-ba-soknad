@@ -25,7 +25,7 @@ const StyledLegend = styled.legend`
 
 const SkjemaFieldset: React.FC<{
     tittelId: string;
-    språkValues: { [key: string]: string };
+    språkValues?: { [key: string]: string };
 }> = ({ tittelId, språkValues, children }) => {
     return (
         <Container>
