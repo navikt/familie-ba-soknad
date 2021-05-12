@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 
+import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import { injectIntl, IntlShape } from 'react-intl';
-import styled from 'styled-components/macro';
 
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Modal from 'nav-frontend-modal';
@@ -10,6 +10,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Upload } from '@navikt/ds-icons';
 
+import Miljø from '../../../../Miljø';
 import { DokumentasjonsBehov, IDokumentasjon, IVedlegg } from '../../../../typer/søknad';
 import OpplastedeFiler from './OpplastedeFiler';
 import { formaterFilstørrelse } from './utils';
@@ -55,7 +56,7 @@ const Filopplaster: React.FC<Props> = ({
         filer => {
             const feilmeldingsliste: string[] = [];
             const nyeVedlegg: IVedlegg[] = [];
-
+            console.log('jeg kjører');
             filer.forEach((fil: File) => {
                 if (maxFilstørrelse && fil.size > maxFilstørrelse) {
                     const maks = formaterFilstørrelse(maxFilstørrelse);
@@ -76,8 +77,8 @@ const Filopplaster: React.FC<Props> = ({
                 const requestData = new FormData();
                 requestData.append('file', fil);
 
-                /*  axios
-                    .post<OpplastetVedlegg>(`${Environment().dokumentUrl}`, requestData, {
+                axios
+                    .post<OpplastetVedlegg>(`${Miljø().dokumentUrl}`, requestData, {
                         withCredentials: true,
                         headers: {
                             'content-type': 'multipart/form-data',
@@ -101,18 +102,15 @@ const Filopplaster: React.FC<Props> = ({
                         );
                     })
                     .catch(error => {
-                        feilmeldingsliste.push(
-                            intl.formatMessage({ id: 'filopplaster.feilmelding.generisk' })
-                        );
+                        feilmeldingsliste.push('filopplaster.feilmelding.generisk');
                         settFeilmeldinger(feilmeldingsliste);
                         settÅpenModal(true);
-                    });*/
+                    });
             });
         },
         // eslint-disable-next-line
         [dokumentasjon.opplastedeVedlegg]
     );
-
     const slettVedlegg = (fil: IVedlegg) => {
         const opplastedeVedlegg = dokumentasjon.opplastedeVedlegg || [];
         const nyVedleggsliste = opplastedeVedlegg.filter((obj: IVedlegg) => {

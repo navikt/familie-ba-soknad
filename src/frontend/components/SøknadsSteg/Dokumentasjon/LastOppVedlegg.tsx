@@ -35,17 +35,17 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjonsid }) => {
         opplastedeVedlegg: IVedlegg[] | undefined,
         harSendtInn: boolean
     ) => {
-        settSøknad({
-            ...søknad,
+        settSøknad(prevState => ({
+            ...prevState,
             dokumentasjon: [
-                ...søknad.dokumentasjon,
+                ...prevState.dokumentasjon,
                 {
                     id,
                     opplastedeVedlegg,
                     harSendtInn,
                 },
             ],
-        });
+        }));
     };
 
     return (
