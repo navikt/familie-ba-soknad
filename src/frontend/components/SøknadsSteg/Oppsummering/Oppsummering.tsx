@@ -555,6 +555,72 @@ const Oppsummering: React.FC = () => {
                                 />
                             )}
                         </StyledOppsummeringsFeltGruppe>
+                        <StyledOppsummeringsFeltGruppe>
+                            <OppsummeringFelt tittel={<SpråkTekst id={'ombarnet.bosted'} />} />
+
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={'ombarnet.bor-fast.spm'}
+                                        values={{ navn: barn.navn }}
+                                    />
+                                }
+                                søknadsvar={barn[barnDataKeySpørsmål.borFastMedSøker].svar}
+                            />
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={'ombarnet.delt-bosted.spm'}
+                                        values={{ navn: barn.navn }}
+                                    />
+                                }
+                                søknadsvar={
+                                    barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
+                                }
+                            />
+                        </StyledOppsummeringsFeltGruppe>
+                        <StyledOppsummeringsFeltGruppe>
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={'ombarnet.søker-for-periode.spm'}
+                                        values={{ navn: barn.navn }}
+                                    />
+                                }
+                            />
+
+                            {barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar !==
+                            'UKJENT' ? (
+                                <>
+                                    <OppsummeringFelt
+                                        tittel={
+                                            <SpråkTekst
+                                                id={'ombarnet.søker-for-periode.startdato.spm'}
+                                            />
+                                        }
+                                        søknadsvar={
+                                            barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar
+                                        }
+                                    />
+                                    <OppsummeringFelt
+                                        tittel={
+                                            <SpråkTekst
+                                                id={'ombarnet.søker-for-periode.sluttdato.spm'}
+                                            />
+                                        }
+                                        søknadsvar={
+                                            barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar
+                                        }
+                                    />
+                                </>
+                            ) : (
+                                <OppsummeringFelt
+                                    tittel={
+                                        <SpråkTekst id={'ombarnet.søker-for-periode.vetikke.spm'} />
+                                    }
+                                />
+                            )}
+                        </StyledOppsummeringsFeltGruppe>
                     </Oppsummeringsbolk>
                 );
             })}
