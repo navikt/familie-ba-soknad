@@ -13,6 +13,7 @@ import { useApp } from '../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { barnDataKeySpørsmål, ESivilstand } from '../../../typer/person';
 import { landkodeTilSpråk } from '../../../utils/person';
+import { genererAdresseVisning } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
@@ -49,7 +50,7 @@ const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsv
     } else if (søknadsvar && søknadsvar in ESivilstand) {
         språktekstid = 'felles.sivilstatus.kode.' + søknadsvar;
     }
-
+    console.log(søknadsvar);
     return (
         <StyledOppsummeringsFelt>
             <Element>{tittel}</Element>
@@ -95,6 +96,15 @@ const Oppsummering: React.FC = () => {
                         tittel={<SpråkTekst id={'omdeg.personopplysninger.sivilstatus'} />}
                         søknadsvar={søknad.søker.sivilstand.type}
                     />
+
+                    {søknad.søker.adresse && (
+                        <StyledOppsummeringsFelt>
+                            <Element>
+                                <SpråkTekst id={'omdeg.personopplysninger.adresse'} />
+                            </Element>
+                            {genererAdresseVisning(søknad.søker.adresse)}
+                        </StyledOppsummeringsFelt>
+                    )}
                 </StyledOppsummeringsFeltGruppe>
 
                 <StyledOppsummeringsFeltGruppe>
@@ -308,47 +318,52 @@ const Oppsummering: React.FC = () => {
                         tittel={'oppsummering.overskrift.ombarn'}
                         språkValues={{ nummer, navn: barn.navn }}
                     >
-                        <StyledOppsummeringsFeltGruppe>
-                            <OppsummeringFelt tittel={<SpråkTekst id={'ombarnet.institusjon'} />} />
-                            {barn.institusjonsnavn.svar && (
+                        {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
+                            <StyledOppsummeringsFeltGruppe>
+                                <OppsummeringFelt
+                                    tittel={<SpråkTekst id={'ombarnet.institusjon'} />}
+                                />
+
                                 <OppsummeringFelt
                                     tittel={<SpråkTekst id={'ombarnet.institusjon.navn.spm'} />}
-                                    søknadsvar={barn.institusjonsnavn.svar}
+                                    søknadsvar={barn[barnDataKeySpørsmål.institusjonsnavn].svar}
                                 />
-                            )}
-                            {barn.institusjonsadresse.svar && (
+
                                 <OppsummeringFelt
                                     tittel={<SpråkTekst id={'ombarnet.institusjon.adresse.spm'} />}
-                                    søknadsvar={barn.institusjonsadresse.svar}
+                                    søknadsvar={barn[barnDataKeySpørsmål.institusjonsadresse].svar}
                                 />
-                            )}
-                            {barn.institusjonspostnummer.svar && (
+
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst id={'ombarnet.institusjon.postnummer.spm'} />
                                     }
-                                    søknadsvar={barn.institusjonspostnummer.svar}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.institusjonspostnummer].svar
+                                    }
                                 />
-                            )}
-                            {barn.institusjonOppholdStartdato.svar && (
+
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst id={'ombarnet.institusjon.startdato.spm'} />
                                     }
-                                    søknadsvar={barn.institusjonOppholdStartdato.svar}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.institusjonOppholdStartdato].svar
+                                    }
                                 />
-                            )}
-                            {barn.institusjonOppholdSluttdato.svar && (
+
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst id={'ombarnet.institusjon.sluttdato.spm'} />
                                     }
-                                    søknadsvar={barn.institusjonOppholdSluttdato.svar}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
+                                    }
                                 />
-                            )}
-                        </StyledOppsummeringsFeltGruppe>
-                        <StyledOppsummeringsFeltGruppe>
-                            {barn.oppholdsland.svar && (
+                            </StyledOppsummeringsFeltGruppe>
+                        )}
+                        {barn[barnDataKeySpørsmål.oppholderSegIUtland].svar === ESvar.JA && (
+                            <StyledOppsummeringsFeltGruppe>
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst
@@ -357,84 +372,91 @@ const Oppsummering: React.FC = () => {
                                         />
                                     }
                                     søknadsvar={landkodeTilSpråk(
-                                        barn.oppholdsland.svar,
+                                        barn[barnDataKeySpørsmål.oppholdsland].svar,
                                         intl.defaultLocale
                                     )}
                                 />
-                            )}
-                            {barn.oppholdslandStartdato.svar && (
+
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst id={'ombarnet.oppholdutland.startdato.spm'} />
                                     }
-                                    søknadsvar={barn.oppholdslandStartdato.svar}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.oppholdslandStartdato].svar
+                                    }
                                 />
-                            )}
-                            {barn.oppholdslandSluttdato.svar && (
+
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst id={'ombarnet.oppholdutland.sluttdato.spm'} />
                                     }
-                                    søknadsvar={barn.oppholdslandSluttdato.svar}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar
+                                    }
                                 />
-                            )}
-                        </StyledOppsummeringsFeltGruppe>
-                        <StyledOppsummeringsFeltGruppe>
-                            {barn.nårKomBarnTilNorgeDato.svar && (
+                            </StyledOppsummeringsFeltGruppe>
+                        )}
+                        {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
+                            <StyledOppsummeringsFeltGruppe>
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst
                                             id={'ombarnet.sammenhengende-opphold.dato.spm'}
                                         />
                                     }
-                                    søknadsvar={barn.nårKomBarnTilNorgeDato.svar}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar
+                                    }
                                 />
-                            )}
-                            {barn.planleggerÅBoINorge12Mnd && (
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst
                                             id={'ombarnet.planlagt-sammenhengende-opphold.spm'}
                                         />
                                     }
-                                    søknadsvar={barn.planleggerÅBoINorge12Mnd.svar}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar
+                                    }
                                 />
-                            )}
-                        </StyledOppsummeringsFeltGruppe>
-                        <StyledOppsummeringsFeltGruppe>
-                            {barn.barnetrygdFraEøslandHvilketLand.svar && (
+                            </StyledOppsummeringsFeltGruppe>
+                        )}
+                        {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar && (
+                            <StyledOppsummeringsFeltGruppe>
                                 <OppsummeringFelt
                                     tittel={<SpråkTekst id={'ombarnet.barnetrygd-eøs.land.spm'} />}
                                     søknadsvar={landkodeTilSpråk(
-                                        barn.barnetrygdFraEøslandHvilketLand.svar,
+                                        barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]
+                                            .svar,
                                         intl.defaultLocale
                                     )}
                                 />
-                            )}
-                        </StyledOppsummeringsFeltGruppe>
+                            </StyledOppsummeringsFeltGruppe>
+                        )}
                         <StyledOppsummeringsFeltGruppe>
-                            {barn.andreForelderNavn.svar && (
+                            {barn[barnDataKeySpørsmål.andreForelderNavn].svar && (
                                 <OppsummeringFelt
                                     tittel={<SpråkTekst id={'ombarnet.andre-forelder'} />}
-                                    søknadsvar={barn.andreForelderNavn.svar}
+                                    søknadsvar={barn[barnDataKeySpørsmål.andreForelderNavn].svar}
                                 />
                             )}
-                            {barn.andreForelderFnr.svar && (
+                            {barn[barnDataKeySpørsmål.andreForelderFnr].svar && (
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
                                     }
-                                    søknadsvar={barn.andreForelderFnr.svar}
+                                    søknadsvar={barn[barnDataKeySpørsmål.andreForelderFnr].svar}
                                 />
                             )}
-                            {barn.andreForelderFødselsdato.svar && (
+                            {barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar && (
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst
                                             id={'ombarnet.andre-forelder.fødselsdato.spm'}
                                         />
                                     }
-                                    søknadsvar={barn.andreForelderFødselsdato.svar}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar
+                                    }
                                 />
                             )}
                         </StyledOppsummeringsFeltGruppe>
@@ -443,10 +465,12 @@ const Oppsummering: React.FC = () => {
                                 tittel={
                                     <SpråkTekst id={'ombarnet.andre-forelder.arbeid-utland.spm'} />
                                 }
-                                søknadsvar={barn.andreForelderArbeidUtlandet.svar}
+                                søknadsvar={
+                                    barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet].svar
+                                }
                             />
-
-                            {barn.andreForelderArbeidUtlandetHvilketLand.svar && (
+                            {barn[barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]
+                                .svar && (
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst
@@ -454,7 +478,10 @@ const Oppsummering: React.FC = () => {
                                         />
                                     }
                                     søknadsvar={landkodeTilSpråk(
-                                        barn.andreForelderArbeidUtlandetHvilketLand.svar,
+                                        barn[
+                                            barnDataKeySpørsmål
+                                                .andreForelderArbeidUtlandetHvilketLand
+                                        ].svar,
                                         intl.defaultLocale
                                     )}
                                 />
@@ -468,10 +495,11 @@ const Oppsummering: React.FC = () => {
                                         values={{ navn: barn.navn }}
                                     />
                                 }
-                                søknadsvar={barn.andreForelderPensjonUtland.svar}
+                                søknadsvar={
+                                    barn[barnDataKeySpørsmål.andreForelderPensjonUtland].svar
+                                }
                             />
-
-                            {barn.andreForelderPensjonHvilketLand.svar && (
+                            {barn[barnDataKeySpørsmål.andreForelderPensjonHvilketLand].svar && (
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst
@@ -480,7 +508,8 @@ const Oppsummering: React.FC = () => {
                                         />
                                     }
                                     søknadsvar={landkodeTilSpråk(
-                                        barn.andreForelderPensjonHvilketLand.svar,
+                                        barn[barnDataKeySpørsmål.andreForelderPensjonHvilketLand]
+                                            .svar,
                                         intl.defaultLocale
                                     )}
                                 />
