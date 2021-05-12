@@ -314,6 +314,7 @@ const Oppsummering: React.FC = () => {
                     <Oppsummeringsbolk
                         tittel={'oppsummering.deltittel.ombarnet'}
                         språkValues={{ nummer, navn: barn.navn }}
+                        key={index}
                     >
                         {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                             <OppsummeringFelt
