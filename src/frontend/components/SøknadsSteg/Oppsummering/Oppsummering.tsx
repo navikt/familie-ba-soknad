@@ -50,7 +50,7 @@ const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsv
     } else if (søknadsvar && søknadsvar in ESivilstand) {
         språktekstid = 'felles.sivilstatus.kode.' + søknadsvar;
     }
-    console.log(søknadsvar);
+
     return (
         <StyledOppsummeringsFelt>
             <Element>{tittel}</Element>
@@ -181,10 +181,7 @@ const Oppsummering: React.FC = () => {
                 </StyledOppsummeringsFeltGruppe>
             </Oppsummeringsbolk>
 
-            <Oppsummeringsbolk
-                route={RouteEnum.VelgBarn}
-                tittel={'oppsummering.overskrift.hvilkebarn'}
-            >
+            <Oppsummeringsbolk route={RouteEnum.VelgBarn} tittel={'hvilkebarn.sidetittel'}>
                 {søknad.barnInkludertISøknaden.map(barn => (
                     <StyledOppsummeringsFeltGruppe>
                         {barn.navn && (
@@ -315,13 +312,28 @@ const Oppsummering: React.FC = () => {
                 const nummer = (hentStegNummer(RouteEnum.OmBarna) + enIndeksert).toString();
                 return (
                     <Oppsummeringsbolk
-                        tittel={'oppsummering.overskrift.ombarn'}
+                        tittel={'oppsummering.deltittel.ombarnet'}
                         språkValues={{ nummer, navn: barn.navn }}
                     >
+                        {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={'ombarnet.fosterbarn'}
+                                        values={{ navn: barn.navn }}
+                                    />
+                                }
+                            />
+                        )}
                         {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
                             <StyledOppsummeringsFeltGruppe>
                                 <OppsummeringFelt
-                                    tittel={<SpråkTekst id={'ombarnet.institusjon'} />}
+                                    tittel={
+                                        <SpråkTekst
+                                            id={'ombarnet.institusjon'}
+                                            values={{ navn: barn.navn }}
+                                        />
+                                    }
                                 />
 
                                 <OppsummeringFelt
@@ -367,6 +379,14 @@ const Oppsummering: React.FC = () => {
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst
+                                            id={'ombarnet.oppholdutland'}
+                                            values={{ navn: barn.navn }}
+                                        />
+                                    }
+                                />
+                                <OppsummeringFelt
+                                    tittel={
+                                        <SpråkTekst
                                             id={'ombarnet.oppholdutland.land.spm'}
                                             values={{ navn: barn.navn }}
                                         />
@@ -401,6 +421,14 @@ const Oppsummering: React.FC = () => {
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst
+                                            id={'ombarnet.sammenhengende-opphold'}
+                                            values={{ navn: barn.navn }}
+                                        />
+                                    }
+                                />
+                                <OppsummeringFelt
+                                    tittel={
+                                        <SpråkTekst
                                             id={'ombarnet.sammenhengende-opphold.dato.spm'}
                                         />
                                     }
@@ -422,6 +450,14 @@ const Oppsummering: React.FC = () => {
                         )}
                         {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar && (
                             <StyledOppsummeringsFeltGruppe>
+                                <OppsummeringFelt
+                                    tittel={
+                                        <SpråkTekst
+                                            id={'ombarnet.barnetrygd-eøs'}
+                                            values={{ navn: barn.navn }}
+                                        />
+                                    }
+                                />
                                 <OppsummeringFelt
                                     tittel={<SpråkTekst id={'ombarnet.barnetrygd-eøs.land.spm'} />}
                                     søknadsvar={landkodeTilSpråk(
@@ -463,7 +499,10 @@ const Oppsummering: React.FC = () => {
                         <StyledOppsummeringsFeltGruppe>
                             <OppsummeringFelt
                                 tittel={
-                                    <SpråkTekst id={'ombarnet.andre-forelder.arbeid-utland.spm'} />
+                                    <SpråkTekst
+                                        id={'ombarnet.andre-forelder.arbeid-utland.spm'}
+                                        values={{ navn: barn.navn }}
+                                    />
                                 }
                                 søknadsvar={
                                     barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet].svar
