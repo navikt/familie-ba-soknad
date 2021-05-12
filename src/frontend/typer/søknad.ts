@@ -37,6 +37,23 @@ export interface ISøknadsfelt<T> {
     verdi: T;
 }
 
+export enum DokumentasjonsBehov {
+    DELT_BOSTED = 'DELT_BOSTED',
+}
+
+export interface IVedlegg {
+    dokumentId: string;
+    navn: string;
+    størrelse: number;
+    tidspunkt: string;
+}
+
+export interface IDokumentasjon {
+    id: DokumentasjonsBehov;
+    harSendtInn: boolean;
+    opplastedeVedlegg?: IVedlegg[];
+}
+
 export interface ISøknad {
     søknadstype: ESøknadstype;
     søker: ISøker;
@@ -50,6 +67,7 @@ export interface ISøknad {
     søktAsylForBarn: ISøknadSpørsmål<ESvar | undefined>;
     barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | undefined>;
     mottarBarnetrygdForBarnFraAnnetEøsland: ISøknadSpørsmål<ESvar | undefined>;
+    dokumentasjon: IDokumentasjon[];
 }
 
 export interface ISøknadSpørsmål<T> {
@@ -91,6 +109,9 @@ export const initialStateSøknad: ISøknad = {
     barnInkludertISøknaden: [],
     lestOgForståttBekreftelse: false,
     barnRegistrertManuelt: [],
+    dokumentasjon: [
+        { id: DokumentasjonsBehov.DELT_BOSTED, harSendtInn: false, opplastedeVedlegg: [] },
+    ],
     søker: {
         navn: '',
         barn: [],
