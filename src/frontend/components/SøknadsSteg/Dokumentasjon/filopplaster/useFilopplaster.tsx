@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useState } from 'react';
 
 import axios from 'axios';
-import { useIntl } from 'react-intl';
 
 import Miljø from '../../../../Miljø';
 import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { formaterFilstørrelse } from './utils';
 
 interface OpplastetVedlegg {
@@ -22,8 +22,7 @@ export const useFilopplaster = (
         harSendtInn: boolean
     ) => void
 ) => {
-    const { formatMessage } = useIntl();
-    const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
+    const [feilmeldinger, settFeilmeldinger] = useState<ReactNode[]>([]);
     const [åpenModal, settÅpenModal] = useState<boolean>(false);
 
     const datoTilStreng = (date: Date): string => {
@@ -33,18 +32,16 @@ export const useFilopplaster = (
 
     const onDrop = useCallback(
         filer => {
-            const feilmeldingsliste: string[] = [];
+            const feilmeldingsliste: ReactNode[] = [];
             const nyeVedlegg: IVedlegg[] = [];
             filer.forEach((fil: File) => {
                 if (maxFilstørrelse && fil.size > maxFilstørrelse) {
                     const maks = formaterFilstørrelse(maxFilstørrelse);
                     feilmeldingsliste.push(
-                        formatMessage(
-                            {
-                                id: 'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
-                            },
-                            { maks, filnavn: fil.name }
-                        )
+                        <SpråkTekst
+                            id={'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor'}
+                            values={{ maks, filnavn: fil.name }}
+                        />
                     );
 
                     settFeilmeldinger(feilmeldingsliste);
@@ -54,12 +51,10 @@ export const useFilopplaster = (
 
                 if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
                     feilmeldingsliste.push(
-                        formatMessage(
-                            {
-                                id: 'dokumentasjon.last-opp-dokumentasjon.feilmeldingtype',
-                            },
-                            { filnavn: fil.name }
-                        )
+                        <SpråkTekst
+                            id={'dokumentasjon.last-opp-dokumentasjon.feilmeldingtype'}
+                            values={{ filnavn: fil.name }}
+                        />
                     );
                     settFeilmeldinger(feilmeldingsliste);
                     settÅpenModal(true);
@@ -95,13 +90,12 @@ export const useFilopplaster = (
                     })
                     .catch(_error => {
                         feilmeldingsliste.push(
-                            formatMessage(
-                                {
-                                    id: 'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk',
-                                },
-                                { filnavn: fil.name }
-                            )
+                            <SpråkTekst
+                                id={'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk'}
+                                values={{ filnavn: fil.name }}
+                            />
                         );
+
                         settFeilmeldinger(feilmeldingsliste);
                         settÅpenModal(true);
                     });

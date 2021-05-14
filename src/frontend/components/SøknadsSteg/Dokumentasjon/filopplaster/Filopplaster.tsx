@@ -37,6 +37,12 @@ const FilopplastningBoks = styled.button`
     padding: 1rem;
     margin: 2rem 0;
     color: ${navFarger.navBla};
+
+    :focus,
+    :hover {
+        border: 2px solid ${navFarger.navBla};
+        cursor: pointer;
+    }
 `;
 
 const StyledUpload = styled(Upload)`
@@ -71,8 +77,8 @@ const Filopplaster: React.FC<Props> = ({
                 contentLabel="Modal"
             >
                 <FeilmeldingWrapper>
-                    {feilmeldinger.map(feilmelding => (
-                        <AlertStripe type={'feil'} form={'default'} key={feilmelding}>
+                    {feilmeldinger.map((feilmelding, index) => (
+                        <AlertStripe type={'feil'} form={'default'} key={index}>
                             {feilmelding}
                         </AlertStripe>
                     ))}
