@@ -11,8 +11,9 @@ export interface IVedlegg {
 
 export interface IDokumentasjon {
     dokumentasjonsbehov: Dokumentasjonsbehov;
-    tittelSpråkId: string;
-    beskrivelseSpråkId: string;
+    barnDetGjelderFor: string[];
     harSendtInn: boolean;
     opplastedeVedlegg?: IVedlegg[];
+    tittelSpråkId: string;
+    beskrivelseSpråkId: string;
 }
