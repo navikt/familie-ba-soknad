@@ -2,13 +2,14 @@ import React from 'react';
 
 import styled from 'styled-components/macro';
 
+import navFarger from 'nav-frontend-core';
 import { Flatknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { FileContent } from '@navikt/ds-icons';
-import { Delete } from '@navikt/ds-icons';
+import { Attachment, DeleteFilled } from '@navikt/ds-icons';
 
 import { IVedlegg } from '../../../../typer/dokumentasjon';
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { formaterFilstørrelse } from './utils';
 
 interface Props {
@@ -16,18 +17,23 @@ interface Props {
     slettVedlegg: (vedlegg: IVedlegg) => void;
 }
 
-const FilContainer = styled.div`
-    width: 100%;
+const FilRad = styled.div<{ skillelinje: boolean }>`
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    padding: 1rem 0;
+    border-bottom: ${props => (props.skillelinje ? `2px solid ${navFarger.navGra20}` : 'none')};
 `;
 
-const FilTekstContainer = styled.div`
+const FilTekstWrapper = styled.div`
     display: flex;
-    justify-content: center;
-    align-content: center;
     align-items: center;
+    word-break: break-all;
+    margin-right: 1rem;
+`;
+
+const StyledAttachment = styled(Attachment)`
+    margin-right: 1rem;
+    min-width: 1rem;
 `;
 
 const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
@@ -35,20 +41,20 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
         <>
             {filliste.map((fil: IVedlegg, index: number) => {
                 return (
-                    <FilContainer key={fil.dokumentId}>
-                        <FilTekstContainer>
-                            <FileContent />
-                            <Normaltekst>{fil.navn}</Normaltekst>
-                            <Normaltekst className="filstørrelse">
-                                ({formaterFilstørrelse(fil.størrelse)})
+                    <FilRad key={fil.dokumentId} skillelinje={index !== filliste.length - 1}>
+                        <FilTekstWrapper>
+                            <StyledAttachment />
+                            <Normaltekst>
+                                {`${fil.navn} (${formaterFilstørrelse(fil.størrelse)})`}
                             </Normaltekst>
-                        </FilTekstContainer>
+                        </FilTekstWrapper>
                         <Flatknapp mini kompakt onClick={() => slettVedlegg(fil)}>
-                            <span>Slett</span>
-                            <Delete />
+                            <span>
+                                <SpråkTekst id={'felles.slett'} />
+                            </span>
+                            <DeleteFilled />
                         </Flatknapp>
-                        {index === filliste.length - 1 ? '' : <hr />}
-                    </FilContainer>
+                    </FilRad>
                 );
             })}
         </>

@@ -42,7 +42,7 @@ const FilopplastningBoks = styled.div`
     border-radius: 4px;
     background-color: rgba(204, 222, 230, 0.5);
     height: 64px;
-    max-width: 575px;
+    max-width: 100%;
     color: ${navFarger.navBla};
     margin: 0 auto;
 
