@@ -3,8 +3,10 @@ import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import { injectIntl, IntlShape } from 'react-intl';
+import styled from 'styled-components/macro';
 
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import navFarger from 'nav-frontend-core';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -33,10 +35,32 @@ interface OpplastetVedlegg {
     filnavn: string;
 }
 
+const FilopplastningBoks = styled.div`
+    text-align: center;
+    font-weight: bold;
+    border: 2px dashed #59514b;
+    border-radius: 4px;
+    background-color: rgba(204, 222, 230, 0.5);
+    height: 64px;
+    max-width: 575px;
+    color: ${navFarger.navBla};
+    margin: 0 auto;
+
+    .tekst {
+        line-height: 64px;
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    .feilmelding {
+        margin: 1rem 0 0 0;
+        text-align: left;
+    }
+`;
+
 const Filopplaster: React.FC<Props> = ({
     oppdaterDokumentasjon,
     dokumentasjon,
-    beskrivelsesListe,
     tillatteFiltyper,
     maxFilstørrelse,
 }) => {
@@ -125,26 +149,7 @@ const Filopplaster: React.FC<Props> = ({
 
     return (
         <div className="filopplaster-wrapper">
-            <div className="tittel-wrapper">
-                {beskrivelsesListe ? (
-                    <ul className="opplasting-liste">
-                        {beskrivelsesListe.map(el => (
-                            <li>
-                                <Normaltekst>{el}</Normaltekst>
-                            </li>
-                        ))}
-                    </ul>
-                ) : null}
-
-                <div className="opplastede-filer">
-                    <OpplastedeFiler
-                        filliste={dokumentasjon.opplastedeVedlegg || []}
-                        slettVedlegg={slettVedlegg}
-                    />
-                </div>
-            </div>
-
-            <div className="filopplaster">
+            <FilopplastningBoks>
                 <Modal
                     isOpen={åpenModal}
                     onRequestClose={() => lukkModal()}
@@ -173,7 +178,11 @@ const Filopplaster: React.FC<Props> = ({
                         </>
                     )}
                 </div>
-            </div>
+            </FilopplastningBoks>
+            <OpplastedeFiler
+                filliste={dokumentasjon.opplastedeVedlegg || []}
+                slettVedlegg={slettVedlegg}
+            />
         </div>
     );
 };
