@@ -1,8 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 
-import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
-import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
@@ -11,12 +9,11 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Upload } from '@navikt/ds-icons';
 
-import Miljø from '../../../../Miljø';
 import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import AlertStripe from '../../../Felleskomponenter/AlertStripe/AlertStripe';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import OpplastedeFiler from './OpplastedeFiler';
-import { formaterFilstørrelse } from './utils';
+import { useFilopplaster } from './useFilopplaster';
 
 interface Props {
     oppdaterDokumentasjon: (
@@ -25,13 +22,8 @@ interface Props {
         harSendtInn: boolean
     ) => void;
     dokumentasjon: IDokumentasjon;
-    tillatteFiltyper?: string[];
-    maxFilstørrelse?: number;
-}
-
-interface OpplastetVedlegg {
-    dokumentId: string;
-    filnavn: string;
+    tillatteFiltyper: string[];
+    maxFilstørrelse: number;
 }
 
 const FilopplastningBoks = styled.button`
@@ -62,113 +54,16 @@ const Filopplaster: React.FC<Props> = ({
     tillatteFiltyper,
     maxFilstørrelse,
 }) => {
-    const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
-    const [åpenModal, settÅpenModal] = useState<boolean>(false);
-    const { formatMessage } = useIntl();
-
-    const lukkModal = () => {
-        settÅpenModal(false);
-    };
-
-    const datoTilStreng = (date: Date): string => {
-        return date.toISOString();
-    };
-    const dagensDatoStreng = datoTilStreng(new Date());
-
-    const onDrop = useCallback(
-        filer => {
-            const feilmeldingsliste: string[] = [];
-            const nyeVedlegg: IVedlegg[] = [];
-            filer.forEach((fil: File) => {
-                if (maxFilstørrelse && fil.size > maxFilstørrelse) {
-                    const maks = formaterFilstørrelse(maxFilstørrelse);
-                    feilmeldingsliste.push(
-                        formatMessage(
-                            {
-                                id: 'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
-                            },
-                            { maks, filnavn: fil.name }
-                        )
-                    );
-
-                    settFeilmeldinger(feilmeldingsliste);
-                    settÅpenModal(true);
-                    return;
-                }
-
-                if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-                    feilmeldingsliste.push(
-                        formatMessage(
-                            {
-                                id: 'dokumentasjon.last-opp-dokumentasjon.feilmeldingtype',
-                            },
-                            { filnavn: fil.name }
-                        )
-                    );
-                    settFeilmeldinger(feilmeldingsliste);
-                    settÅpenModal(true);
-                    return;
-                }
-
-                const requestData = new FormData();
-                requestData.append('file', fil);
-
-                axios
-                    .post<OpplastetVedlegg>(`${Miljø().dokumentUrl}`, requestData, {
-                        withCredentials: true,
-                        headers: {
-                            'content-type': 'multipart/form-data',
-                            accept: 'application/json',
-                        },
-                    })
-                    .then((response: { data: OpplastetVedlegg }) => {
-                        const { data } = response;
-                        nyeVedlegg.push({
-                            dokumentId: data.dokumentId,
-                            navn: fil.name,
-                            størrelse: fil.size,
-                            tidspunkt: dagensDatoStreng,
-                        });
-
-                        const opplastedeVedlegg = dokumentasjon.opplastedeVedlegg || [];
-                        oppdaterDokumentasjon(
-                            dokumentasjon.dokumentasjonsbehov,
-                            [...opplastedeVedlegg, ...nyeVedlegg],
-                            dokumentasjon.harSendtInn
-                        );
-                    })
-                    .catch(_error => {
-                        feilmeldingsliste.push(
-                            formatMessage(
-                                {
-                                    id: 'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk',
-                                },
-                                { filnavn: fil.name }
-                            )
-                        );
-                        settFeilmeldinger(feilmeldingsliste);
-                        settÅpenModal(true);
-                    });
-            });
-        },
-        [dokumentasjon.opplastedeVedlegg]
+    const { onDrop, åpenModal, lukkModal, feilmeldinger, slettVedlegg } = useFilopplaster(
+        maxFilstørrelse,
+        tillatteFiltyper,
+        dokumentasjon,
+        oppdaterDokumentasjon
     );
-    const slettVedlegg = (fil: IVedlegg) => {
-        const opplastedeVedlegg = dokumentasjon.opplastedeVedlegg || [];
-        const nyVedleggsliste = opplastedeVedlegg.filter((obj: IVedlegg) => {
-            return obj.dokumentId !== fil.dokumentId;
-        });
-        oppdaterDokumentasjon(
-            dokumentasjon.dokumentasjonsbehov,
-            nyVedleggsliste,
-            dokumentasjon.harSendtInn
-        );
-    };
-
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     return (
-        <div>
+        <>
             <Modal
                 isOpen={åpenModal}
                 onRequestClose={() => lukkModal()}
@@ -200,7 +95,7 @@ const Filopplaster: React.FC<Props> = ({
                 filliste={dokumentasjon.opplastedeVedlegg || []}
                 slettVedlegg={slettVedlegg}
             />
-        </div>
+        </>
     );
 };
 
