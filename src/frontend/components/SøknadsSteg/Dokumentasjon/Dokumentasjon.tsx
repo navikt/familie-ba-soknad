@@ -14,12 +14,15 @@ const Dokumentasjon: React.FC = () => {
 
     return (
         <Steg tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}>
-            {søknad.dokumentasjon.map((dokumentasjon, index) => (
-                <LastOppVedlegg
-                    key={index}
-                    dokumentasjonsbehov={dokumentasjon.dokumentasjonsbehov}
-                />
-            ))}
+            {søknad.dokumentasjon.map((dokumentasjon, index) => {
+                return (
+                    <LastOppVedlegg
+                        key={index}
+                        vedleggNr={index + 1}
+                        dokumentasjon={dokumentasjon}
+                    />
+                );
+            })}
         </Steg>
     );
 };

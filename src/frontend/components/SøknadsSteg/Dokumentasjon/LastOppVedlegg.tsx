@@ -1,28 +1,21 @@
 import React from 'react';
 
 import { Checkbox } from 'nav-frontend-skjema';
+import { Undertittel } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
-import { Dokumentasjonsbehov, IVedlegg } from '../../../typer/dokumentasjon';
+import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Filopplaster from './filopplaster/Filopplaster';
 import { EFiltyper } from './filopplaster/filtyper';
 
 interface Props {
-    dokumentasjonsbehov: Dokumentasjonsbehov;
+    dokumentasjon: IDokumentasjon;
+    vedleggNr: number;
 }
 
-const LastOppVedlegg: React.FC<Props> = ({ dokumentasjonsbehov }) => {
+const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
     const { søknad, settSøknad } = useApp();
-
-    const dokumentasjon = Object.values(søknad.dokumentasjon).find(
-        dokumentasjon => dokumentasjon.dokumentasjonsbehov === dokumentasjonsbehov
-    );
-
-    if (!dokumentasjon) {
-        return null;
-    }
-
-    const harSendtInn = dokumentasjon && dokumentasjon.harSendtInn;
 
     const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
         const huketAv = event.target.checked;
@@ -37,25 +30,29 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjonsbehov }) => {
     ) => {
         settSøknad(prevState => ({
             ...prevState,
-            dokumentasjon: [
-                ...prevState.dokumentasjon,
-                {
-                    dokumentasjonsbehov,
-                    opplastedeVedlegg,
-                    harSendtInn,
-                },
-            ],
+            dokumentasjon: prevState.dokumentasjon.map(dok =>
+                dok.dokumentasjonsbehov === dokumentasjonsbehov
+                    ? { ...dok, opplastedeVedlegg, harSendtInn }
+                    : dok
+            ),
         }));
     };
 
     return (
         <div>
-            <Checkbox
-                label={'Har sendt inn'}
-                checked={harSendtInn}
-                onChange={settHarSendtInnTidligere}
-            />
-            {!harSendtInn && (
+            <Undertittel>
+                <SpråkTekst
+                    id={'dokumentasjon.vedleggsnummer'}
+                    values={{
+                        vedleggsnummer: vedleggNr,
+                        antallvedlegg: søknad.dokumentasjon.length,
+                    }}
+                />
+                &nbsp;
+                <SpråkTekst id={dokumentasjon.tittelSpråkId} />
+            </Undertittel>
+            <SpråkTekst id={dokumentasjon.beskrivelseSpråkId} values={{ barn: 'TODO' }} />
+            {!dokumentasjon.harSendtInn && (
                 <Filopplaster
                     oppdaterDokumentasjon={oppdaterDokumentasjon}
                     dokumentasjon={dokumentasjon}
@@ -63,6 +60,12 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjonsbehov }) => {
                     tillatteFiltyper={[EFiltyper.PNG, EFiltyper.PDF, EFiltyper.JPG, EFiltyper.JPEG]}
                 />
             )}
+            <br />
+            <Checkbox
+                label={<SpråkTekst id={'dokumentasjon.har-sendt-inn.spm'} />}
+                checked={dokumentasjon.harSendtInn}
+                onChange={settHarSendtInnTidligere}
+            />
         </div>
     );
 };

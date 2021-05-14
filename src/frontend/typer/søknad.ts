@@ -96,6 +96,8 @@ export const initialStateSøknad: ISøknad = {
     dokumentasjon: [
         {
             dokumentasjonsbehov: Dokumentasjonsbehov.DELT_BOSTED,
+            tittelSpråkId: 'dokumentasjon.deltbosted.vedleggtittel',
+            beskrivelseSpråkId: 'dokumentasjon.deltbosted.informasjon',
             harSendtInn: false,
             opplastedeVedlegg: [],
         },
