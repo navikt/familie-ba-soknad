@@ -3,19 +3,19 @@ import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { DokumentasjonsBehov, IVedlegg } from '../../../typer/søknad';
+import { Dokumentasjonsbehov, IVedlegg } from '../../../typer/dokumentasjon';
 import Filopplaster from './filopplaster/Filopplaster';
 import { EFiltyper } from './filopplaster/filtyper';
 
 interface Props {
-    dokumentasjonsid: DokumentasjonsBehov;
+    dokumentasjonsbehov: Dokumentasjonsbehov;
 }
 
-const LastOppVedlegg: React.FC<Props> = ({ dokumentasjonsid }) => {
+const LastOppVedlegg: React.FC<Props> = ({ dokumentasjonsbehov }) => {
     const { søknad, settSøknad } = useApp();
 
     const dokumentasjon = Object.values(søknad.dokumentasjon).find(
-        dokumentasjon => dokumentasjon.id === dokumentasjonsid
+        dokumentasjon => dokumentasjon.dokumentasjonsbehov === dokumentasjonsbehov
     );
 
     if (!dokumentasjon) {
@@ -24,14 +24,14 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjonsid }) => {
 
     const harSendtInn = dokumentasjon && dokumentasjon.harSendtInn;
 
-    const settHarSendtInnTidligere = (e: any) => {
-        const huketAv = e.target.checked;
+    const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const huketAv = event.target.checked;
         const vedlegg = huketAv ? [] : dokumentasjon.opplastedeVedlegg;
-        oppdaterDokumentasjon(dokumentasjon.id, vedlegg, huketAv);
+        oppdaterDokumentasjon(dokumentasjon.dokumentasjonsbehov, vedlegg, huketAv);
     };
 
     const oppdaterDokumentasjon = (
-        id: DokumentasjonsBehov,
+        dokumentasjonsbehov: Dokumentasjonsbehov,
         opplastedeVedlegg: IVedlegg[] | undefined,
         harSendtInn: boolean
     ) => {
@@ -40,7 +40,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjonsid }) => {
             dokumentasjon: [
                 ...prevState.dokumentasjon,
                 {
-                    id,
+                    dokumentasjonsbehov,
                     opplastedeVedlegg,
                     harSendtInn,
                 },

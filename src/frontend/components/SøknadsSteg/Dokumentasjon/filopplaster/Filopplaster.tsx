@@ -11,14 +11,14 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { Upload } from '@navikt/ds-icons';
 
 import Miljø from '../../../../Miljø';
-import { DokumentasjonsBehov, IDokumentasjon, IVedlegg } from '../../../../typer/søknad';
+import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import OpplastedeFiler from './OpplastedeFiler';
 import { formaterFilstørrelse } from './utils';
 
 interface Props {
     intl: IntlShape;
     oppdaterDokumentasjon: (
-        id: DokumentasjonsBehov,
+        dokumentasjonsBehov: Dokumentasjonsbehov,
         opplastedeVedlegg: IVedlegg[] | undefined,
         harSendtInn: boolean
     ) => void;
@@ -56,7 +56,6 @@ const Filopplaster: React.FC<Props> = ({
         filer => {
             const feilmeldingsliste: string[] = [];
             const nyeVedlegg: IVedlegg[] = [];
-            console.log('jeg kjører');
             filer.forEach((fil: File) => {
                 if (maxFilstørrelse && fil.size > maxFilstørrelse) {
                     const maks = formaterFilstørrelse(maxFilstørrelse);
@@ -96,19 +95,18 @@ const Filopplaster: React.FC<Props> = ({
 
                         const opplastedeVedlegg = dokumentasjon.opplastedeVedlegg || [];
                         oppdaterDokumentasjon(
-                            dokumentasjon.id,
+                            dokumentasjon.dokumentasjonsbehov,
                             [...opplastedeVedlegg, ...nyeVedlegg],
                             dokumentasjon.harSendtInn
                         );
                     })
-                    .catch(error => {
+                    .catch(_error => {
                         feilmeldingsliste.push('filopplaster.feilmelding.generisk');
                         settFeilmeldinger(feilmeldingsliste);
                         settÅpenModal(true);
                     });
             });
         },
-        // eslint-disable-next-line
         [dokumentasjon.opplastedeVedlegg]
     );
     const slettVedlegg = (fil: IVedlegg) => {
@@ -116,7 +114,11 @@ const Filopplaster: React.FC<Props> = ({
         const nyVedleggsliste = opplastedeVedlegg.filter((obj: IVedlegg) => {
             return obj.dokumentId !== fil.dokumentId;
         });
-        oppdaterDokumentasjon(dokumentasjon.id, nyVedleggsliste, dokumentasjon.harSendtInn);
+        oppdaterDokumentasjon(
+            dokumentasjon.dokumentasjonsbehov,
+            nyVedleggsliste,
+            dokumentasjon.harSendtInn
+        );
     };
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });

@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { FileContent } from '@navikt/ds-icons';
 import { Delete } from '@navikt/ds-icons';
 
-import { IVedlegg } from '../../../../typer/søknad';
+import { IVedlegg } from '../../../../typer/dokumentasjon';
 import { formaterFilstørrelse } from './utils';
 
 interface Props {

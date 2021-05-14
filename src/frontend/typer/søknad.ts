@@ -4,6 +4,7 @@ import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { INøkkelPar } from './common';
+import { Dokumentasjonsbehov, IDokumentasjon } from './dokumentasjon';
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, ISøker } from './person';
 
 export enum ESøknadstype {
@@ -35,23 +36,6 @@ export const søknadstyper: INøkkelPar = {
 export interface ISøknadsfelt<T> {
     label: string;
     verdi: T;
-}
-
-export enum DokumentasjonsBehov {
-    DELT_BOSTED = 'DELT_BOSTED',
-}
-
-export interface IVedlegg {
-    dokumentId: string;
-    navn: string;
-    størrelse: number;
-    tidspunkt: string;
-}
-
-export interface IDokumentasjon {
-    id: DokumentasjonsBehov;
-    harSendtInn: boolean;
-    opplastedeVedlegg?: IVedlegg[];
 }
 
 export interface ISøknad {
@@ -105,12 +89,16 @@ export interface ISøknadKontraktBarn {
 }
 
 export const initialStateSøknad: ISøknad = {
-    søknadstype: ESøknadstype.IKKE_SATT,
+    søknadstype: ESøknadstype.ORDINÆR,
     barnInkludertISøknaden: [],
     lestOgForståttBekreftelse: false,
     barnRegistrertManuelt: [],
     dokumentasjon: [
-        { id: DokumentasjonsBehov.DELT_BOSTED, harSendtInn: false, opplastedeVedlegg: [] },
+        {
+            dokumentasjonsbehov: Dokumentasjonsbehov.DELT_BOSTED,
+            harSendtInn: false,
+            opplastedeVedlegg: [],
+        },
     ],
     søker: {
         navn: '',
