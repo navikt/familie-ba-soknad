@@ -21,7 +21,7 @@ const FilRad = styled.div<{ skillelinje: boolean }>`
     display: flex;
     justify-content: space-between;
     padding: 1rem 0;
-    border-bottom: ${props => (props.skillelinje ? `2px solid ${navFarger.navGra20}` : 'none')};
+    border-bottom: ${props => (props.skillelinje ? `1px solid ${navFarger.navGra20}` : 'none')};
 `;
 
 const FilTekstWrapper = styled.div`

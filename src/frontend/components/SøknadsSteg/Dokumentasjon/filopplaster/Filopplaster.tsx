@@ -2,10 +2,9 @@ import React, { useCallback, useState } from 'react';
 
 import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
-import { injectIntl, IntlShape } from 'react-intl';
+import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import navFarger from 'nav-frontend-core';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -14,18 +13,18 @@ import { Upload } from '@navikt/ds-icons';
 
 import Miljø from '../../../../Miljø';
 import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
+import AlertStripe from '../../../Felleskomponenter/AlertStripe/AlertStripe';
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import OpplastedeFiler from './OpplastedeFiler';
 import { formaterFilstørrelse } from './utils';
 
 interface Props {
-    intl: IntlShape;
     oppdaterDokumentasjon: (
         dokumentasjonsBehov: Dokumentasjonsbehov,
         opplastedeVedlegg: IVedlegg[] | undefined,
         harSendtInn: boolean
     ) => void;
     dokumentasjon: IDokumentasjon;
-    beskrivelsesListe?: string[];
     tillatteFiltyper?: string[];
     maxFilstørrelse?: number;
 }
@@ -35,27 +34,26 @@ interface OpplastetVedlegg {
     filnavn: string;
 }
 
-const FilopplastningBoks = styled.div`
-    text-align: center;
-    font-weight: bold;
-    border: 2px dashed #59514b;
+const FilopplastningBoks = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed ${navFarger.navGra80};
     border-radius: 4px;
     background-color: rgba(204, 222, 230, 0.5);
-    height: 64px;
-    max-width: 100%;
+    width: 100%;
+    padding: 1rem;
+    margin: 2rem 0;
     color: ${navFarger.navBla};
-    margin: 0 auto;
+`;
 
-    .tekst {
-        line-height: 64px;
-        display: inline-block;
-        margin-left: 10px;
-    }
+const StyledUpload = styled(Upload)`
+    margin-right: 1rem;
+    min-width: 1rem;
+`;
 
-    .feilmelding {
-        margin: 1rem 0 0 0;
-        text-align: left;
-    }
+const FeilmeldingWrapper = styled.div`
+    margin-right: 3rem;
 `;
 
 const Filopplaster: React.FC<Props> = ({
@@ -66,6 +64,7 @@ const Filopplaster: React.FC<Props> = ({
 }) => {
     const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
     const [åpenModal, settÅpenModal] = useState<boolean>(false);
+    const { formatMessage } = useIntl();
 
     const lukkModal = () => {
         settÅpenModal(false);
@@ -83,7 +82,14 @@ const Filopplaster: React.FC<Props> = ({
             filer.forEach((fil: File) => {
                 if (maxFilstørrelse && fil.size > maxFilstørrelse) {
                     const maks = formaterFilstørrelse(maxFilstørrelse);
-                    feilmeldingsliste.push(`Lastet opp for stor fil: ${fil.name} ${maks}`);
+                    feilmeldingsliste.push(
+                        formatMessage(
+                            {
+                                id: 'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
+                            },
+                            { maks, filnavn: fil.name }
+                        )
+                    );
 
                     settFeilmeldinger(feilmeldingsliste);
                     settÅpenModal(true);
@@ -91,7 +97,14 @@ const Filopplaster: React.FC<Props> = ({
                 }
 
                 if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-                    feilmeldingsliste.push(`Lastet opp feil filtype: ${fil.name}`);
+                    feilmeldingsliste.push(
+                        formatMessage(
+                            {
+                                id: 'dokumentasjon.last-opp-dokumentasjon.feilmeldingtype',
+                            },
+                            { filnavn: fil.name }
+                        )
+                    );
                     settFeilmeldinger(feilmeldingsliste);
                     settÅpenModal(true);
                     return;
@@ -125,7 +138,14 @@ const Filopplaster: React.FC<Props> = ({
                         );
                     })
                     .catch(_error => {
-                        feilmeldingsliste.push('filopplaster.feilmelding.generisk');
+                        feilmeldingsliste.push(
+                            formatMessage(
+                                {
+                                    id: 'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk',
+                                },
+                                { filnavn: fil.name }
+                            )
+                        );
                         settFeilmeldinger(feilmeldingsliste);
                         settÅpenModal(true);
                     });
@@ -148,36 +168,33 @@ const Filopplaster: React.FC<Props> = ({
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     return (
-        <div className="filopplaster-wrapper">
-            <FilopplastningBoks>
-                <Modal
-                    isOpen={åpenModal}
-                    onRequestClose={() => lukkModal()}
-                    closeButton={true}
-                    contentLabel="Modal"
-                >
-                    <div className="feilmelding">
-                        {feilmeldinger.map(feilmelding => (
-                            <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
-                                {feilmelding}
-                            </AlertStripeFeil>
-                        ))}
-                    </div>
-                </Modal>
-                <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    {isDragActive ? (
-                        <>
-                            <Upload />
-                            <Normaltekst>Slipp</Normaltekst>
-                        </>
-                    ) : (
-                        <>
-                            <Upload />
-                            <Normaltekst>Dra</Normaltekst>
-                        </>
-                    )}
-                </div>
+        <div>
+            <Modal
+                isOpen={åpenModal}
+                onRequestClose={() => lukkModal()}
+                closeButton={true}
+                contentLabel="Modal"
+            >
+                <FeilmeldingWrapper>
+                    {feilmeldinger.map(feilmelding => (
+                        <AlertStripe type={'feil'} form={'default'} key={feilmelding}>
+                            {feilmelding}
+                        </AlertStripe>
+                    ))}
+                </FeilmeldingWrapper>
+            </Modal>
+            <FilopplastningBoks type={'button'} {...getRootProps()}>
+                <input {...getInputProps()} />
+                <StyledUpload />
+                <Normaltekst>
+                    <SpråkTekst
+                        id={
+                            isDragActive
+                                ? 'dokumentasjon.last-opp-dokumentasjon.aktivknapp'
+                                : 'dokumentasjon.last-opp-dokumentasjon.knapp'
+                        }
+                    />
+                </Normaltekst>
             </FilopplastningBoks>
             <OpplastedeFiler
                 filliste={dokumentasjon.opplastedeVedlegg || []}
@@ -187,4 +204,4 @@ const Filopplaster: React.FC<Props> = ({
     );
 };
 
-export default injectIntl(Filopplaster);
+export default Filopplaster;
