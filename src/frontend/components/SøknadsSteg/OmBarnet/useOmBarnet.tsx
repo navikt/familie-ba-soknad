@@ -18,6 +18,7 @@ import {
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import { ILokasjon } from '../../../typer/lokasjon';
 import {
     AlternativtSvarForInput,
@@ -25,6 +26,7 @@ import {
     DatoMedUkjent,
     IBarnMedISøknad,
 } from '../../../typer/person';
+import { genererOppdatertDokumentasjon } from '../../../utils/dokumentasjon';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../OmDeg/useLanddropdownFeltMedJaNeiAvhengighet';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -32,7 +34,6 @@ import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
 import useInputFeltMedUkjent from './useInputFeltMedUkjent';
 import useLanddropdownFelt from './useLanddropdownFelt';
-import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 
 export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;
@@ -308,16 +309,19 @@ export const useOmBarnet = (
         },
     });
 
-    const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(barn[barnDataKeySpørsmål.borFastMedSøker], {
-        andreForelderArbeidUtlandet: {
-            hovedSpørsmål: andreForelderArbeidUtlandet,
-            tilhørendeFelter: [andreForelderArbeidUtlandetHvilketLand],
-        },
-        andreForelderPensjonUtland: {
-            hovedSpørsmål: andreForelderPensjonUtland,
-            tilhørendeFelter: [andreForelderPensjonHvilketLand],
-        },
-    });
+    const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(
+        barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
+        {
+            andreForelderArbeidUtlandet: {
+                hovedSpørsmål: andreForelderArbeidUtlandet,
+                tilhørendeFelter: [andreForelderArbeidUtlandetHvilketLand],
+            },
+            andreForelderPensjonUtland: {
+                hovedSpørsmål: andreForelderPensjonUtland,
+                tilhørendeFelter: [andreForelderPensjonHvilketLand],
+            },
+        }
+    );
 
     /*--- SØKER FOR PERIODE ---*/
 
@@ -524,36 +528,22 @@ export const useOmBarnet = (
                       }
                     : barn
         );
-        //TODO: fortsett her
-        const deltBostedDokFinnesFraFør = søknad.dokumentasjon.find(
-            dok => dok.dokumentasjonsbehov === Dokumentasjonsbehov.DELT_BOSTED
-        );
-        let oppdatertDeltBostedDok;
-        if (skriftligAvtaleOmDeltBosted.verdi === ESvar.JA) {
-            oppdatertDeltBostedDok = !deltBostedDokFinnesFraFør
-                ? {
-                      dokumentasjonsbehov: Dokumentasjonsbehov.DELT_BOSTED,
-                      tittelSpråkId: 'dokumentasjon.deltbosted.vedleggtittel',
-                      beskrivelseSpråkId: 'dokumentasjon.deltbosted.informasjon',
-                      barnDetGjelderFor: [],
-                      harSendtInn: false,
-                      opplastedeVedlegg: [],
-                  }
-                : !deltBostedDokFinnesFraFør.barnDetGjelderFor.includes(barn.id) && {
-                      ...deltBostedDokFinnesFraFør,
-                      barnDetGjelderFor: [...deltBostedDokFinnesFraFør.barnDetGjelderFor].concat(
-                          barn.id
-                      ),
-                  };
-        } else {
-            //fjern barn
-        }
 
         settSøknad({
             ...søknad,
             barnInkludertISøknaden: oppdatertBarnInkludertISøknaden,
+            dokumentasjon: søknad.dokumentasjon.map(dok =>
+                dok.dokumentasjonsbehov === Dokumentasjonsbehov.DELT_BOSTED
+                    ? genererOppdatertDokumentasjon(
+                          dok,
+                          skriftligAvtaleOmDeltBosted.verdi === ESvar.JA,
+                          barn.id
+                      )
+                    : dok
+            ),
         });
     };
+    console.log(søknad.dokumentasjon);
 
     return {
         oppdaterSøknad,

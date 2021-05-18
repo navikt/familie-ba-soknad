@@ -9,8 +9,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { Attachment, DeleteFilled } from '@navikt/ds-icons';
 
 import { IVedlegg } from '../../../../typer/dokumentasjon';
+import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { formaterFilstørrelse } from './utils';
 
 interface Props {
     filliste: IVedlegg[];

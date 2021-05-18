@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useApp } from '../../../context/AppContext';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -8,9 +8,7 @@ import LastOppVedlegg from './LastOppVedlegg';
 const Dokumentasjon: React.FC = () => {
     const { søknad } = useApp();
 
-    useEffect(() => {
-        console.log(søknad);
-    }, [søknad]);
+    console.log(søknad);
 
     return (
         <Steg tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}>

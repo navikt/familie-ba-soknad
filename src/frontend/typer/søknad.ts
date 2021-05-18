@@ -3,6 +3,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
+import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { INøkkelPar } from './common';
 import { Dokumentasjonsbehov, IDokumentasjon } from './dokumentasjon';
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, ISøker } from './person';
@@ -94,14 +95,11 @@ export const initialStateSøknad: ISøknad = {
     lestOgForståttBekreftelse: false,
     barnRegistrertManuelt: [],
     dokumentasjon: [
-        {
-            dokumentasjonsbehov: Dokumentasjonsbehov.DELT_BOSTED,
-            tittelSpråkId: 'dokumentasjon.deltbosted.vedleggtittel',
-            beskrivelseSpråkId: 'dokumentasjon.deltbosted.informasjon',
-            barnDetGjelderFor: [],
-            harSendtInn: false,
-            opplastedeVedlegg: [],
-        },
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.DELT_BOSTED,
+            'dokumentasjon.deltbosted.vedleggtittel',
+            'dokumentasjon.deltbosted.informasjon'
+        ),
     ],
     søker: {
         navn: '',

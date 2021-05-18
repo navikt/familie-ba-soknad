@@ -4,8 +4,8 @@ import axios from 'axios';
 
 import Miljø from '../../../../Miljø';
 import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
+import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { formaterFilstørrelse } from './utils';
 
 interface OpplastetVedlegg {
     dokumentId: string;

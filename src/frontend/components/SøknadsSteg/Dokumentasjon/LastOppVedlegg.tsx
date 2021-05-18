@@ -4,10 +4,14 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
-import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
+import {
+    Dokumentasjonsbehov,
+    EFiltyper,
+    IDokumentasjon,
+    IVedlegg,
+} from '../../../typer/dokumentasjon';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Filopplaster from './filopplaster/Filopplaster';
-import { EFiltyper } from './filopplaster/filtyper';
 
 interface Props {
     dokumentasjon: IDokumentasjon;
