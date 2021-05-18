@@ -8,6 +8,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
+import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål, ESivilstand } from '../../../typer/person';
@@ -63,6 +64,8 @@ const Oppsummering: React.FC = () => {
             .map(filtrertBarn => filtrertBarn.navn)
             .join(', ');
 
+    const [valgtLocale] = useSprakContext();
+
     return (
         <Steg tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}>
             <StyledNormaltekst>
@@ -74,7 +77,7 @@ const Oppsummering: React.FC = () => {
                         tittel={<SpråkTekst id={'omdeg.personopplysninger.statsborgerskap'} />}
                         søknadsvar={søknad.søker.statsborgerskap
                             .map((statsborgerskap: { landkode: Alpha3Code }) =>
-                                landkodeTilSpråk(statsborgerskap.landkode, intl.defaultLocale)
+                                landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
                             )
                             .join(', ')}
                     />
@@ -102,7 +105,7 @@ const Oppsummering: React.FC = () => {
                             tittel={<SpråkTekst id={'omdeg.opphold-i-norge.land.spm'} />}
                             søknadsvar={landkodeTilSpråk(
                                 søknad.søker.oppholdsland.svar,
-                                intl.defaultLocale
+                                valgtLocale
                             )}
                         />
                     )}
@@ -142,7 +145,7 @@ const Oppsummering: React.FC = () => {
                             tittel={<SpråkTekst id={'omdeg.arbeid-utland.land.spm'} />}
                             søknadsvar={landkodeTilSpråk(
                                 søknad.søker.arbeidsland.svar,
-                                intl.defaultLocale
+                                valgtLocale
                             )}
                         />
                     )}
@@ -155,7 +158,7 @@ const Oppsummering: React.FC = () => {
                             tittel={<SpråkTekst id={'omdeg.utenlandspensjon.land.spm'} />}
                             søknadsvar={landkodeTilSpråk(
                                 søknad.søker.pensjonsland.svar,
-                                intl.defaultLocale
+                                valgtLocale
                             )}
                         />
                     )}
