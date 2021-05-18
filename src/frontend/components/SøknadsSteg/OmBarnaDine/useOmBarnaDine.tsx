@@ -133,6 +133,14 @@ export const useOmBarnaDine = (): {
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
 
+    const mapFraIdentTilBarnId = (identer: string[]): string[] => {
+        const mapTilBarnMedISøknad = søknad.barnInkludertISøknaden.filter(barn =>
+            identer.includes(barn.ident)
+        );
+
+        return mapTilBarnMedISøknad.map(barn => barn.id);
+    };
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
@@ -171,19 +179,19 @@ export const useOmBarnaDine = (): {
                         return genererOppdatertDokumentasjon(
                             dok,
                             søktAsylForBarn.verdi === ESvar.JA,
-                            hvemErSøktAsylFor.verdi
+                            mapFraIdentTilBarnId(hvemErSøktAsylFor.verdi)
                         );
                     case Dokumentasjonsbehov.ADOPSJON_DATO:
                         return genererOppdatertDokumentasjon(
                             dok,
                             erBarnAdoptertFraUtland.verdi === ESvar.JA,
-                            hvemErAdoptertFraUtland.verdi
+                            mapFraIdentTilBarnId(hvemErAdoptertFraUtland.verdi)
                         );
                     case Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN:
                         return genererOppdatertDokumentasjon(
                             dok,
                             erNoenAvBarnaFosterbarn.verdi === ESvar.JA,
-                            hvemErFosterbarn.verdi
+                            mapFraIdentTilBarnId(hvemErFosterbarn.verdi)
                         );
                     default:
                         return dok;

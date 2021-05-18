@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styled from 'styled-components/macro';
+
 import { Checkbox } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 
@@ -17,6 +19,10 @@ interface Props {
     dokumentasjon: IDokumentasjon;
     vedleggNr: number;
 }
+
+const Container = styled.div`
+    margin-bottom: 3rem;
+`;
 
 const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
     const { søknad, settSøknad } = useApp();
@@ -46,6 +52,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
             dokumentasjon.barnDetGjelderFor.find(id => id === barn.id)
         );
+
         return barnDokGjelderFor.map((barn, index) => {
             if (index === 0) {
                 return barn.navn;
@@ -58,19 +65,26 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
     };
 
     return (
-        <div>
+        <Container>
             <Undertittel>
+                {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
+                    <>
+                        <SpråkTekst
+                            id={'dokumentasjon.vedleggsnummer'}
+                            values={{
+                                vedleggsnummer: vedleggNr,
+                                antallvedlegg: søknad.dokumentasjon.filter(
+                                    dok => dok.barnDetGjelderFor.length
+                                ).length,
+                            }}
+                        />
+                        &nbsp;
+                    </>
+                )}
                 <SpråkTekst
-                    id={'dokumentasjon.vedleggsnummer'}
-                    values={{
-                        vedleggsnummer: vedleggNr,
-                        antallvedlegg: søknad.dokumentasjon.filter(
-                            dok => dok.barnDetGjelderFor.length
-                        ).length,
-                    }}
+                    id={dokumentasjon.tittelSpråkId}
+                    values={{ barn: formatertListeMedBarn() }}
                 />
-                &nbsp;
-                <SpråkTekst id={dokumentasjon.tittelSpråkId} />
             </Undertittel>
             <SpråkTekst
                 id={dokumentasjon.beskrivelseSpråkId}
@@ -92,7 +106,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                 checked={dokumentasjon.harSendtInn}
                 onChange={settHarSendtInnTidligere}
             />
-        </div>
+        </Container>
     );
 };
 

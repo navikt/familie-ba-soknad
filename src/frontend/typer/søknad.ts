@@ -102,28 +102,28 @@ export const initialStateSøknad: ISøknad = {
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
-            'dokumentasjon.deltbosted.vedleggtittel',
-            'dokumentasjon.deltbosted.informasjon'
+            'dokumentasjon.oppholdstillatelse.vedleggtittel',
+            'dokumentasjon.oppholdstillatelse.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ADOPSJON_DATO,
-            'dokumentasjon.deltbosted.vedleggtittel',
-            'dokumentasjon.deltbosted.informasjon'
+            'dokumentasjon.adopsjon.vedleggtittel',
+            'dokumentasjon.adopsjon.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
-            'dokumentasjon.deltbosted.vedleggtittel',
-            'dokumentasjon.deltbosted.informasjon'
+            'dokumentasjon.bekreftelsebarnevernet.vedleggtittel',
+            'dokumentasjon.bekreftelsebarnevernet.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
-            'dokumentasjon.deltbosted.vedleggtittel',
-            'dokumentasjon.deltbosted.informasjon'
+            'dokumentasjon.bekreftelseborsammen.vedleggtittel',
+            'dokumentasjon.bekreftelseborsammen.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
-            'dokumentasjon.deltbosted.vedleggtittel',
-            'dokumentasjon.deltbosted.informasjon'
+            'dokumentasjon.annendokumentasjon.vedleggtittel',
+            'dokumentasjon.annendokumentasjon.informasjon'
         ),
     ],
     søker: {

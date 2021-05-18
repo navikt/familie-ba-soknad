@@ -35,7 +35,7 @@ const FilopplastningBoks = styled.button`
     background-color: rgba(204, 222, 230, 0.5);
     width: 100%;
     padding: 1rem;
-    margin: 2rem 0;
+    margin: 2rem 0 1rem 0;
     color: ${navFarger.navBla};
 
     :focus,
