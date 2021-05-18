@@ -38,6 +38,15 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         }));
     };
 
+    const formatertListeMedBarn = () => {
+        const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
+            dokumentasjon.barnDetGjelderFor.find(id => id === barn.id)
+        );
+        return barnDokGjelderFor.map((barn, index) =>
+            index === barnDokGjelderFor.length - 1 ? `og ${barn.navn}` : `${barn.navn}`
+        );
+    };
+
     return (
         <div>
             <Undertittel>
@@ -51,7 +60,12 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                 &nbsp;
                 <SpråkTekst id={dokumentasjon.tittelSpråkId} />
             </Undertittel>
-            <SpråkTekst id={dokumentasjon.beskrivelseSpråkId} values={{ barn: 'TODO' }} />
+            <SpråkTekst
+                id={dokumentasjon.beskrivelseSpråkId}
+                values={{
+                    barn: formatertListeMedBarn(),
+                }}
+            />
             {!dokumentasjon.harSendtInn && (
                 <Filopplaster
                     oppdaterDokumentasjon={oppdaterDokumentasjon}

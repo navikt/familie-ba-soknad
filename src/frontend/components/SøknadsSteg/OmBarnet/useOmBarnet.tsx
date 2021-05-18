@@ -32,6 +32,7 @@ import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
 import useInputFeltMedUkjent from './useInputFeltMedUkjent';
 import useLanddropdownFelt from './useLanddropdownFelt';
+import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 
 export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;
@@ -523,6 +524,30 @@ export const useOmBarnet = (
                       }
                     : barn
         );
+        //TODO: fortsett her
+        const deltBostedDokFinnesFraFør = søknad.dokumentasjon.find(
+            dok => dok.dokumentasjonsbehov === Dokumentasjonsbehov.DELT_BOSTED
+        );
+        let oppdatertDeltBostedDok;
+        if (skriftligAvtaleOmDeltBosted.verdi === ESvar.JA) {
+            oppdatertDeltBostedDok = !deltBostedDokFinnesFraFør
+                ? {
+                      dokumentasjonsbehov: Dokumentasjonsbehov.DELT_BOSTED,
+                      tittelSpråkId: 'dokumentasjon.deltbosted.vedleggtittel',
+                      beskrivelseSpråkId: 'dokumentasjon.deltbosted.informasjon',
+                      barnDetGjelderFor: [],
+                      harSendtInn: false,
+                      opplastedeVedlegg: [],
+                  }
+                : !deltBostedDokFinnesFraFør.barnDetGjelderFor.includes(barn.id) && {
+                      ...deltBostedDokFinnesFraFør,
+                      barnDetGjelderFor: [...deltBostedDokFinnesFraFør.barnDetGjelderFor].concat(
+                          barn.id
+                      ),
+                  };
+        } else {
+            //fjern barn
+        }
 
         settSøknad({
             ...søknad,
