@@ -11,7 +11,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
-import { barnDataKeySpørsmål, ESivilstand } from '../../../typer/person';
+import { AlternativtSvarForInput, barnDataKeySpørsmål, ESivilstand } from '../../../typer/person';
 import { landkodeTilSpråk } from '../../../utils/person';
 import { genererAdresseVisning } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -590,7 +590,7 @@ const Oppsummering: React.FC = () => {
                             />
 
                             {barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar !==
-                            'UKJENT' ? (
+                            AlternativtSvarForInput.UKJENT ? (
                                 <>
                                     <OppsummeringFelt
                                         tittel={
