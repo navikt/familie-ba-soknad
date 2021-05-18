@@ -96,7 +96,32 @@ export const initialStateSøknad: ISøknad = {
     barnRegistrertManuelt: [],
     dokumentasjon: [
         genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.DELT_BOSTED,
+            Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
+            'dokumentasjon.deltbosted.vedleggtittel',
+            'dokumentasjon.deltbosted.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
+            'dokumentasjon.deltbosted.vedleggtittel',
+            'dokumentasjon.deltbosted.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.ADOPSJON_DATO,
+            'dokumentasjon.deltbosted.vedleggtittel',
+            'dokumentasjon.deltbosted.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
+            'dokumentasjon.deltbosted.vedleggtittel',
+            'dokumentasjon.deltbosted.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
+            'dokumentasjon.deltbosted.vedleggtittel',
+            'dokumentasjon.deltbosted.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
             'dokumentasjon.deltbosted.vedleggtittel',
             'dokumentasjon.deltbosted.informasjon'
         ),

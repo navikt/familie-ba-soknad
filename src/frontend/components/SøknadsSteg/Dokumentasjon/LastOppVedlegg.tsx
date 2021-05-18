@@ -46,9 +46,15 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
             dokumentasjon.barnDetGjelderFor.find(id => id === barn.id)
         );
-        return barnDokGjelderFor.map((barn, index) =>
-            index === barnDokGjelderFor.length - 1 ? `og ${barn.navn}` : `${barn.navn}`
-        );
+        return barnDokGjelderFor.map((barn, index) => {
+            if (index === 0) {
+                return barn.navn;
+            } else {
+                return index === barnDokGjelderFor.length - 1
+                    ? ` og ${barn.navn}`
+                    : `, ${barn.navn}`;
+            }
+        });
     };
 
     return (
@@ -58,7 +64,9 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                     id={'dokumentasjon.vedleggsnummer'}
                     values={{
                         vedleggsnummer: vedleggNr,
-                        antallvedlegg: søknad.dokumentasjon.length,
+                        antallvedlegg: søknad.dokumentasjon.filter(
+                            dok => dok.barnDetGjelderFor.length
+                        ).length,
                     }}
                 />
                 &nbsp;

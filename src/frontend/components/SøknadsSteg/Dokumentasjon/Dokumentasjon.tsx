@@ -12,15 +12,15 @@ const Dokumentasjon: React.FC = () => {
 
     return (
         <Steg tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}>
-            {søknad.dokumentasjon.map((dokumentasjon, index) => {
-                return dokumentasjon.barnDetGjelderFor.length ? (
+            {søknad.dokumentasjon
+                .filter(dokumentasjon => dokumentasjon.barnDetGjelderFor.length)
+                .map((dokumentasjon, index) => (
                     <LastOppVedlegg
                         key={index}
                         vedleggNr={index + 1}
                         dokumentasjon={dokumentasjon}
                     />
-                ) : null;
-            })}
+                ))}
         </Steg>
     );
 };

@@ -532,15 +532,24 @@ export const useOmBarnet = (
         settSøknad({
             ...søknad,
             barnInkludertISøknaden: oppdatertBarnInkludertISøknaden,
-            dokumentasjon: søknad.dokumentasjon.map(dok =>
-                dok.dokumentasjonsbehov === Dokumentasjonsbehov.DELT_BOSTED
-                    ? genererOppdatertDokumentasjon(
-                          dok,
-                          skriftligAvtaleOmDeltBosted.verdi === ESvar.JA,
-                          barn.id
-                      )
-                    : dok
-            ),
+            dokumentasjon: søknad.dokumentasjon.map(dok => {
+                switch (dok.dokumentasjonsbehov) {
+                    case Dokumentasjonsbehov.AVTALE_DELT_BOSTED:
+                        return genererOppdatertDokumentasjon(
+                            dok,
+                            skriftligAvtaleOmDeltBosted.verdi === ESvar.JA,
+                            [barn.id]
+                        );
+                    case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
+                        return genererOppdatertDokumentasjon(
+                            dok,
+                            borFastMedSøker.verdi === ESvar.JA,
+                            [barn.id]
+                        );
+                    default:
+                        return dok;
+                }
+            }),
         });
     };
     console.log(søknad.dokumentasjon);

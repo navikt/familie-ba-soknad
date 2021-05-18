@@ -28,23 +28,25 @@ export const genererInitiellDokumentasjon = (
 export const genererOppdatertDokumentasjon = (
     dokumentasjon: IDokumentasjon,
     kreverDokumentasjon,
-    barnId
+    barneIder: string[]
 ) => {
     let oppdatertDokumentasjon = dokumentasjon;
 
-    if (kreverDokumentasjon) {
-        if (!dokumentasjon.barnDetGjelderFor.includes(barnId)) {
+    barneIder.forEach(barnId => {
+        if (kreverDokumentasjon) {
+            if (!dokumentasjon.barnDetGjelderFor.includes(barnId)) {
+                oppdatertDokumentasjon = {
+                    ...dokumentasjon,
+                    barnDetGjelderFor: [...dokumentasjon.barnDetGjelderFor].concat(barnId),
+                };
+            }
+        } else {
             oppdatertDokumentasjon = {
                 ...dokumentasjon,
-                barnDetGjelderFor: [...dokumentasjon.barnDetGjelderFor].concat(barnId),
+                barnDetGjelderFor: [...dokumentasjon.barnDetGjelderFor].filter(id => id !== barnId),
             };
         }
-    } else {
-        oppdatertDokumentasjon = {
-            ...dokumentasjon,
-            barnDetGjelderFor: [...dokumentasjon.barnDetGjelderFor].filter(id => id !== barnId),
-        };
-    }
+    });
 
     return oppdatertDokumentasjon;
 };

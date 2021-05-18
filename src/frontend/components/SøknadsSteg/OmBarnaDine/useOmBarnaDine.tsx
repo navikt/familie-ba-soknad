@@ -3,7 +3,9 @@ import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import { barnDataKeySpørsmål } from '../../../typer/person';
+import { genererOppdatertDokumentasjon } from '../../../utils/dokumentasjon';
 import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 import { genererOppdaterteBarn } from './utils';
@@ -136,33 +138,57 @@ export const useOmBarnaDine = (): {
             ...søknad,
             erNoenAvBarnaFosterbarn: {
                 ...søknad.erNoenAvBarnaFosterbarn,
-                svar: skjema.felter.erNoenAvBarnaFosterbarn.verdi,
+                svar: erNoenAvBarnaFosterbarn.verdi,
             },
             oppholderBarnSegIInstitusjon: {
                 ...søknad.oppholderBarnSegIInstitusjon,
-                svar: skjema.felter.oppholderBarnSegIInstitusjon.verdi,
+                svar: oppholderBarnSegIInstitusjon.verdi,
             },
             erBarnAdoptertFraUtland: {
                 ...søknad.erBarnAdoptertFraUtland,
-                svar: skjema.felter.erBarnAdoptertFraUtland.verdi,
+                svar: erBarnAdoptertFraUtland.verdi,
             },
             oppholderBarnSegIUtland: {
                 ...søknad.oppholderBarnSegIUtland,
-                svar: skjema.felter.oppholderBarnSegIUtland.verdi,
+                svar: oppholderBarnSegIUtland.verdi,
             },
             søktAsylForBarn: {
                 ...søknad.søktAsylForBarn,
-                svar: skjema.felter.søktAsylForBarn.verdi,
+                svar: søktAsylForBarn.verdi,
             },
             barnOppholdtSegTolvMndSammenhengendeINorge: {
                 ...søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
-                svar: skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi,
+                svar: barnOppholdtSegTolvMndSammenhengendeINorge.verdi,
             },
             mottarBarnetrygdForBarnFraAnnetEøsland: {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
-                svar: skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
+                svar: mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
             },
             barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema),
+            dokumentasjon: søknad.dokumentasjon.map(dok => {
+                switch (dok.dokumentasjonsbehov) {
+                    case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:
+                        return genererOppdatertDokumentasjon(
+                            dok,
+                            søktAsylForBarn.verdi === ESvar.JA,
+                            hvemErSøktAsylFor.verdi
+                        );
+                    case Dokumentasjonsbehov.ADOPSJON_DATO:
+                        return genererOppdatertDokumentasjon(
+                            dok,
+                            erBarnAdoptertFraUtland.verdi === ESvar.JA,
+                            hvemErAdoptertFraUtland.verdi
+                        );
+                    case Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN:
+                        return genererOppdatertDokumentasjon(
+                            dok,
+                            erNoenAvBarnaFosterbarn.verdi === ESvar.JA,
+                            hvemErFosterbarn.verdi
+                        );
+                    default:
+                        return dok;
+                }
+            }),
         });
     };
 
