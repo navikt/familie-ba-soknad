@@ -13,7 +13,7 @@ import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { IRoute, useRoutes } from '../../../context/RoutesContext';
+import { IRoute, RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -93,6 +93,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
+    const erPåKvitteringsside = routes[nåværendeStegIndex].route === RouteEnum.Kvittering;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -178,11 +179,13 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
                                     )}
                             />
                         )}
-                    <Navigeringspanel
-                        onTilbakeCallback={håndterTilbake}
-                        onAvbrytCallback={håndterModalStatus}
-                        valideringErOk={skjema && skjema.valideringErOk}
-                    />
+                    {!erPåKvitteringsside && (
+                        <Navigeringspanel
+                            onTilbakeCallback={håndterTilbake}
+                            onAvbrytCallback={håndterModalStatus}
+                            valideringErOk={skjema && skjema.valideringErOk}
+                        />
+                    )}
                 </Form>
 
                 <StyledModal
