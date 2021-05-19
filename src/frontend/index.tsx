@@ -34,8 +34,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Last ned land-navn for statsborgeskap
 import(`i18n-iso-countries/langs/nb.json`).then(result => registerLocale(result));
-//TODO fjerne engelsk språktekst siden vi ikke har det enda
-import(`i18n-iso-countries/langs/en.json`).then(result => registerLocale(result));
+import(`i18n-iso-countries/langs/nn.json`).then(result => registerLocale(result));
 
 ReactDOM.render(
     <React.StrictMode>
