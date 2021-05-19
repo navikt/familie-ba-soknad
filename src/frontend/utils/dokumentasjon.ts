@@ -32,9 +32,7 @@ export const genererOppdatertDokumentasjon = (
     barneIder: string[]
 ) => {
     let oppdatertDokumentasjon = dokumentasjon;
-    console.log('kjører');
     barneIder.forEach(barnId => {
-        console.log(kreverDokumentasjon);
         if (kreverDokumentasjon) {
             if (!dokumentasjon.gjelderForBarnId.includes(barnId)) {
                 oppdatertDokumentasjon = {
@@ -57,4 +55,5 @@ export const genererOppdatertDokumentasjon = (
 
 export const erDokumentasjonRelevant = (dokumentasjon: IDokumentasjon) =>
     dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON ||
+    dokumentasjon.gjelderForSøker ||
     dokumentasjon.gjelderForBarnId.length;
