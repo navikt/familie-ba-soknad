@@ -21,7 +21,7 @@ interface Props {
 }
 
 const Container = styled.div`
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 `;
 
 const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {

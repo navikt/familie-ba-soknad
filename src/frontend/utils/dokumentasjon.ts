@@ -53,3 +53,7 @@ export const genererOppdatertDokumentasjon = (
 
     return oppdatertDokumentasjon;
 };
+
+export const erDokumentasjonRelevant = (dokumentasjon: IDokumentasjon) =>
+    dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON ||
+    dokumentasjon.barnDetGjelderFor.length;

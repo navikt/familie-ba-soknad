@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useApp } from '../../../context/AppContext';
-import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
+import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import LastOppVedlegg from './LastOppVedlegg';
@@ -12,12 +12,7 @@ const Dokumentasjon: React.FC = () => {
     return (
         <Steg tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}>
             {søknad.dokumentasjon
-                .filter(
-                    dokumentasjon =>
-                        dokumentasjon.dokumentasjonsbehov ===
-                            Dokumentasjonsbehov.ANNEN_DOKUMENTASJON ||
-                        dokumentasjon.barnDetGjelderFor.length
-                )
+                .filter(dokumentasjon => erDokumentasjonRelevant(dokumentasjon))
                 .map((dokumentasjon, index) => (
                     <LastOppVedlegg
                         key={index}
