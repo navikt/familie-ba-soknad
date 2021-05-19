@@ -6,7 +6,8 @@ import { useIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
-import { hentAdressefelterSortert, hentSivilstatus, landkodeTilSpråk } from '../../../utils/person';
+import { hentSivilstatus, landkodeTilSpråk } from '../../../utils/person';
+import { genererAdresseVisning } from '../../../utils/visning';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -57,9 +58,7 @@ export const Personopplysninger: React.FC = () => {
                     <SpråkTekst id={'omdeg.personopplysninger.adresse'} />
                 </Element>
                 {søker.adresse ? (
-                    hentAdressefelterSortert(søker.adresse).map((adresseFelt, index) => (
-                        <Normaltekst key={index}>{adresseFelt}</Normaltekst>
-                    ))
+                    genererAdresseVisning(søker.adresse)
                 ) : (
                     <Normaltekst>
                         <SpråkTekst
