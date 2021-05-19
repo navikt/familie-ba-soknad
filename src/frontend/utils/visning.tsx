@@ -4,7 +4,9 @@ import styled from 'styled-components/macro';
 
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+import { IAdresse } from '../typer/person';
 import { ISøknadsfelt, ESøknadstype, søknadstyper } from '../typer/søknad';
+import { hentAdressefelterSortert } from './person';
 
 export const LabelOgSvarContainer = styled.div<{ marginTop: string }>`
     text-align: left;
@@ -40,4 +42,10 @@ export const verdiTilTekstsvar = (verdi: string | boolean | number | ESøknadsty
 
 export const formaterFnr = (fødselsnummer: string) => {
     return fødselsnummer.substring(0, 6) + ' ' + fødselsnummer.substring(6, 11);
+};
+
+export const genererAdresseVisning = (adresse: IAdresse) => {
+    return hentAdressefelterSortert(adresse).map((adresseFelt, index) => (
+        <Normaltekst key={index}>{adresseFelt}</Normaltekst>
+    ));
 };
