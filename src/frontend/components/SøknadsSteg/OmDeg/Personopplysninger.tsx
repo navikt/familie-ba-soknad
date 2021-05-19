@@ -1,18 +1,20 @@
 import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
-import { useIntl } from 'react-intl';
 
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+import { useSprakContext } from '@navikt/familie-sprakvelger';
+
 import { useApp } from '../../../context/AppContext';
-import { hentAdressefelterSortert, hentSivilstatus, landkodeTilSpråk } from '../../../utils/person';
+import { hentSivilstatus, landkodeTilSpråk } from '../../../utils/person';
+import { genererAdresseVisning } from '../../../utils/visning';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export const Personopplysninger: React.FC = () => {
-    const intl = useIntl();
+    const [valgtLocale] = useSprakContext();
 
     const { søknad } = useApp();
     const søker = søknad.søker;
@@ -37,7 +39,7 @@ export const Personopplysninger: React.FC = () => {
                 <Normaltekst>
                     {søker.statsborgerskap
                         .map((statsborgerskap: { landkode: Alpha3Code }) =>
-                            landkodeTilSpråk(statsborgerskap.landkode, intl.defaultLocale)
+                            landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
                         )
                         .join(', ')}
                 </Normaltekst>
@@ -57,9 +59,7 @@ export const Personopplysninger: React.FC = () => {
                     <SpråkTekst id={'omdeg.personopplysninger.adresse'} />
                 </Element>
                 {søker.adresse ? (
-                    hentAdressefelterSortert(søker.adresse).map((adresseFelt, index) => (
-                        <Normaltekst key={index}>{adresseFelt}</Normaltekst>
-                    ))
+                    genererAdresseVisning(søker.adresse)
                 ) : (
                     <Normaltekst>
                         <SpråkTekst

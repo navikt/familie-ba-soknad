@@ -180,7 +180,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
             </header>
             <InnholdContainer>
                 <StyledSystemtittel>{tittel}</StyledSystemtittel>
-                <Form onSubmit={event => håndterGåVidere(event)}>
+                <Form onSubmit={event => håndterGåVidere(event)} autoComplete="off">
                     <ChildrenContainer>{children}</ChildrenContainer>
                     {skjema &&
                         skjema.skjema.visFeilmeldinger &&
