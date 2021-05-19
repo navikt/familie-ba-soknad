@@ -73,7 +73,9 @@ const Oppsummering: React.FC = () => {
             .filter(barn => barn[søknadDatafelt].svar === 'JA')
             .map(filtrertBarn => filtrertBarn.navn)
             .join(', ');
+
     const [valgtLocale] = useSprakContext();
+
     return (
         <Steg tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}>
             <StyledNormaltekst>
