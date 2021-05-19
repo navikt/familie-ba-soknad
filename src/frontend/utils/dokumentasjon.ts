@@ -26,36 +26,6 @@ export const genererInitiellDokumentasjon = (
     opplastedeVedlegg: [],
 });
 
-// [12345, 12346]
-// [12345]
-
-export const genererOppdatertDokumentasjon = (
-    dokumentasjon: IDokumentasjon,
-    kreverDokumentasjon,
-    barneIder: string[]
-) => {
-    let oppdatertDokumentasjon = dokumentasjon;
-    barneIder.forEach(barnId => {
-        if (kreverDokumentasjon) {
-            if (!dokumentasjon.gjelderForBarnId.includes(barnId)) {
-                oppdatertDokumentasjon = {
-                    ...dokumentasjon,
-                    gjelderForBarnId: [...oppdatertDokumentasjon.gjelderForBarnId].concat(barnId),
-                };
-            }
-        } else {
-            oppdatertDokumentasjon = {
-                ...dokumentasjon,
-                gjelderForBarnId: [...oppdatertDokumentasjon.gjelderForBarnId].filter(
-                    id => id !== barnId
-                ),
-            };
-        }
-    });
-
-    return oppdatertDokumentasjon;
-};
-
 export const erDokumentasjonRelevant = (dokumentasjon: IDokumentasjon) =>
     dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON ||
     dokumentasjon.gjelderForSøker ||

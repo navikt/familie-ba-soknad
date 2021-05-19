@@ -18,7 +18,7 @@ import {
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
+import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
 import { ILokasjon } from '../../../typer/lokasjon';
 import {
     AlternativtSvarForInput,
@@ -26,7 +26,6 @@ import {
     DatoMedUkjent,
     IBarnMedISøknad,
 } from '../../../typer/person';
-import { genererOppdatertDokumentasjon } from '../../../utils/dokumentasjon';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../OmDeg/useLanddropdownFeltMedJaNeiAvhengighet';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -410,6 +409,31 @@ export const useOmBarnet = (
         return vetIkkeFelt.verdi === ESvar.JA ? AlternativtSvarForInput.UKJENT : spørsmålFelt.verdi;
     };
 
+    const genererOppdatertDokumentasjon = (
+        dokumentasjon: IDokumentasjon,
+        kreverDokumentasjon,
+        barnId: string
+    ) => {
+        let oppdatertDokumentasjon = dokumentasjon;
+        if (kreverDokumentasjon) {
+            if (!dokumentasjon.gjelderForBarnId.includes(barnId)) {
+                oppdatertDokumentasjon = {
+                    ...dokumentasjon,
+                    gjelderForBarnId: [...oppdatertDokumentasjon.gjelderForBarnId].concat(barnId),
+                };
+            }
+        } else {
+            oppdatertDokumentasjon = {
+                ...dokumentasjon,
+                gjelderForBarnId: [...oppdatertDokumentasjon.gjelderForBarnId].filter(
+                    id => id !== barnId
+                ),
+            };
+        }
+
+        return oppdatertDokumentasjon;
+    };
+
     const oppdaterSøknad = () => {
         const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] = søknad.barnInkludertISøknaden.map(
             barn =>
@@ -538,13 +562,13 @@ export const useOmBarnet = (
                         return genererOppdatertDokumentasjon(
                             dok,
                             skriftligAvtaleOmDeltBosted.verdi === ESvar.JA,
-                            [barn.id]
+                            barn.id
                         );
                     case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
                         return genererOppdatertDokumentasjon(
                             dok,
                             borFastMedSøker.verdi === ESvar.JA,
-                            [barn.id]
+                            barn.id
                         );
                     default:
                         return dok;
