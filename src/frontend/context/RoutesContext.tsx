@@ -95,6 +95,9 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         });
     };
 
+    const erPåKvitteringsside = (currentPath: string): boolean =>
+        routes[hentRouteIndex(currentPath)].route === RouteEnum.Kvittering;
+
     const hentAktivtStegIndexForStegindikator = (currentPath: string) => {
         // Trekker fra 1 fordi forsiden teller som en route
         return hentRouteIndex(currentPath) - 1;
@@ -133,6 +136,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         routes,
         settBarnForRoutes,
         hentStegObjekterForStegIndikator,
+        erPåKvitteringsside,
     };
 });
 

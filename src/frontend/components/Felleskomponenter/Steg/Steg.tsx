@@ -95,7 +95,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
     const location = useLocation<ILokasjon>();
     const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, avbrytSøknad } = useApp();
     const {
-        routes,
+        erPåKvitteringsside,
         hentNesteRoute,
         hentForrigeRoute,
         hentAktivtStegIndexForStegindikator,
@@ -108,7 +108,6 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
-    const erPåKvitteringsside = routes[nåværendeStegIndex].route === RouteEnum.Kvittering;
 
     useEffect(() => {
         window.scrollTo(0, 0);
