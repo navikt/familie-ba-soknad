@@ -14,11 +14,12 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 interface Props {
     tittel: string;
     lenke?: RouteEnum;
+    språkValues?: { [key: string]: string };
+    route?: RouteEnum;
 }
 
 const StyledOppsummeringsbolk = styled.div`
     border-bottom: 2px solid ${navFarger.navGra60};
-    padding-bottom: 0.25rem;
 `;
 
 const StyledEkspanderbartpanel = styled(Ekspanderbartpanel)`
@@ -32,16 +33,17 @@ const StyledEkspanderbartpanel = styled(Ekspanderbartpanel)`
     }
 `;
 
-const Oppsummeringsbolk: React.FC<Props> = ({ children, tittel, lenke }) => {
+const Oppsummeringsbolk: React.FC<Props> = ({ children, tittel, lenke, språkValues, route }) => {
     const history = useHistory();
-    const { hentPath } = useRoutes();
+    const { hentPath, hentStegNummer } = useRoutes();
 
     return (
         <StyledOppsummeringsbolk>
             <StyledEkspanderbartpanel
                 tittel={
                     <Undertittel>
-                        <SpråkTekst id={tittel} />
+                        {route && `${hentStegNummer(route)}. `}
+                        <SpråkTekst id={tittel} values={språkValues} />
                     </Undertittel>
                 }
                 border={false}

@@ -229,5 +229,6 @@
   "omdeg.utenlandspensjon.spm": "Får du pensjon fra utlandet?",
   "oppsummering.endresvar.lenketekst": "Endre svarene dine",
   "oppsummering.info": "Les oppsummeringen nøye før du sender inn søknaden. {linjeskift} Hvis du vil gjøre endringer, kan du gå tilbake.",
-  "oppsummering.sidetittel": "Oppsummering"
+  "oppsummering.sidetittel": "Oppsummering",
+  "oppsummering.deltittel.ombarnet": "{nummer}. Om {navn}"
 }
