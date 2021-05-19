@@ -27,6 +27,7 @@ export interface IDokumentasjon {
 export interface ISøknadKontraktVedlegg {
     dokumentId: string;
     navn: string;
+    tittel: Dokumentasjonsbehov;
 }
 
 export interface ISøknadKontraktDokumentasjon {

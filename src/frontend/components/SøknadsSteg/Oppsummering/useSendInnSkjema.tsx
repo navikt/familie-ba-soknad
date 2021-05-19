@@ -5,6 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import * as bokmålSpråktekster from '../../../assets/lang/nb.json';
 import { useApp } from '../../../context/AppContext';
 import {
+    Dokumentasjonsbehov,
     IDokumentasjon,
     ISøknadKontraktDokumentasjon,
     ISøknadKontraktVedlegg,
@@ -83,13 +84,17 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         dokumentasjonsbehov: dokumentasjon.dokumentasjonsbehov,
         harSendtInn: dokumentasjon.harSendtInn,
         opplastedeVedlegg: dokumentasjon.opplastedeVedlegg.map(vedlegg =>
-            vedleggISøknadFormat(vedlegg)
+            vedleggISøknadFormat(vedlegg, dokumentasjon.dokumentasjonsbehov)
         ),
     });
 
-    const vedleggISøknadFormat = (vedlegg: IVedlegg): ISøknadKontraktVedlegg => ({
+    const vedleggISøknadFormat = (
+        vedlegg: IVedlegg,
+        dokumentasjonsbehov: Dokumentasjonsbehov
+    ): ISøknadKontraktVedlegg => ({
         navn: vedlegg.navn,
         dokumentId: vedlegg.dokumentId,
+        tittel: dokumentasjonsbehov,
     });
 
     const oppsamlingsfelt = (
