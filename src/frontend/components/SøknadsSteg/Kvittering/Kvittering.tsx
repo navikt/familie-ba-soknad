@@ -17,7 +17,6 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SpråkLenke } from '../../Felleskomponenter/SpråkLenke/SpråkLenke';
 
 const Kvittering: React.FC = () => {
-    const intl = useIntl();
     const { settSisteUtfylteStegIndex } = useApp();
 
     const { innsendingStatus } = useApp();
@@ -40,8 +39,13 @@ const Kvittering: React.FC = () => {
         <Steg tittel={<SpråkTekst id={'kvittering.sidetittel'} />}>
             <KomponentGruppe>
                 <AlertStripe type="suksess">
-                    {` ${intl.formatMessage({ id: 'kvittering.mottatt' })} 
-                (${klokkeslett}, ${dato})`}
+                    <SpråkTekst
+                        id={'kvittering.mottatt'}
+                        values={{
+                            tidspunkt: klokkeslett,
+                            dato: dato,
+                        }}
+                    />
                 </AlertStripe>
             </KomponentGruppe>
             <KomponentGruppe>
