@@ -7,6 +7,7 @@ import styled from 'styled-components/macro';
 import { Select } from 'nav-frontend-skjema';
 
 import { Felt, ISkjema } from '@navikt/familie-skjema';
+import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { device } from '../../../Theme';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -33,9 +34,10 @@ const Container = styled.div`
 
 export const LandDropdown: React.FC<LandDropdownProps> = ({ felt, skjema, label }) => {
     const intl = useIntl();
+    const [valgtLocale] = useSprakContext();
 
     const landkoderSortertPåNavn = Object.keys(getAlpha3Codes()).sort((a, b) => {
-        return getName(a, intl.defaultLocale) >= getName(b, intl.defaultLocale) ? 1 : -1;
+        return getName(a, valgtLocale) >= getName(b, valgtLocale) ? 1 : -1;
     });
 
     return felt.erSynlig ? (
@@ -55,7 +57,7 @@ export const LandDropdown: React.FC<LandDropdownProps> = ({ felt, skjema, label 
                     (alphaCode): ReactNode => (
                         <option
                             value={alphaCode}
-                            label={getName(alphaCode, intl.defaultLocale)}
+                            label={getName(alphaCode, valgtLocale)}
                             key={alphaCode}
                         />
                     )

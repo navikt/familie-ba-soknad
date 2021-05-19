@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
-import { useIntl } from 'react-intl';
 
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+
+import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
 import { hentSivilstatus, landkodeTilSpråk } from '../../../utils/person';
@@ -13,7 +14,7 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export const Personopplysninger: React.FC = () => {
-    const intl = useIntl();
+    const [valgtLocale] = useSprakContext();
 
     const { søknad } = useApp();
     const søker = søknad.søker;
@@ -38,7 +39,7 @@ export const Personopplysninger: React.FC = () => {
                 <Normaltekst>
                     {søker.statsborgerskap
                         .map((statsborgerskap: { landkode: Alpha3Code }) =>
-                            landkodeTilSpråk(statsborgerskap.landkode, intl.defaultLocale)
+                            landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
                         )
                         .join(', ')}
                 </Normaltekst>

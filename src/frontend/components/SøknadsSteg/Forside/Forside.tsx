@@ -40,7 +40,7 @@ const Forside: React.FC = () => {
                 <SpråkTekst id="forside.sidetittel" />
             </StyledSidetittel>
 
-            <Sprakvelger støttedeSprak={[LocaleType.en, LocaleType.nb]} />
+            <Sprakvelger støttedeSprak={[LocaleType.nn, LocaleType.nb]} />
 
             <Informasjonsbolk>
                 <SpråkTekst id="forside.info.punktliste" values={{ b: msg => <b>{msg}</b> }} />
