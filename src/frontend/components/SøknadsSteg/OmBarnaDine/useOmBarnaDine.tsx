@@ -5,7 +5,6 @@ import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import { barnDataKeySpørsmål } from '../../../typer/person';
-import { genererOppdatertDokumentasjon } from '../../../utils/dokumentasjon';
 import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 import { genererOppdaterteBarn } from './utils';
@@ -176,23 +175,20 @@ export const useOmBarnaDine = (): {
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 switch (dok.dokumentasjonsbehov) {
                     case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:
-                        return genererOppdatertDokumentasjon(
-                            dok,
-                            søktAsylForBarn.verdi === ESvar.JA,
-                            mapFraIdentTilBarnId(hvemErSøktAsylFor.verdi)
-                        );
+                        return {
+                            ...dok,
+                            gjelderForBarnId: mapFraIdentTilBarnId(hvemErSøktAsylFor.verdi),
+                        };
                     case Dokumentasjonsbehov.ADOPSJON_DATO:
-                        return genererOppdatertDokumentasjon(
-                            dok,
-                            erBarnAdoptertFraUtland.verdi === ESvar.JA,
-                            mapFraIdentTilBarnId(hvemErAdoptertFraUtland.verdi)
-                        );
+                        return {
+                            ...dok,
+                            gjelderForBarnId: mapFraIdentTilBarnId(hvemErAdoptertFraUtland.verdi),
+                        };
                     case Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN:
-                        return genererOppdatertDokumentasjon(
-                            dok,
-                            erNoenAvBarnaFosterbarn.verdi === ESvar.JA,
-                            mapFraIdentTilBarnId(hvemErFosterbarn.verdi)
-                        );
+                        return {
+                            ...dok,
+                            gjelderForBarnId: mapFraIdentTilBarnId(hvemErFosterbarn.verdi),
+                        };
                     default:
                         return dok;
                 }

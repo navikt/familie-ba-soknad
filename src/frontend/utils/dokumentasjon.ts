@@ -26,6 +26,9 @@ export const genererInitiellDokumentasjon = (
     opplastedeVedlegg: [],
 });
 
+// [12345, 12346]
+// [12345]
+
 export const genererOppdatertDokumentasjon = (
     dokumentasjon: IDokumentasjon,
     kreverDokumentasjon,
