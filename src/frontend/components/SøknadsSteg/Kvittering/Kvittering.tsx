@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useIntl } from 'react-intl';
 
@@ -49,20 +49,20 @@ const Kvittering: React.FC = () => {
                     <SpråkTekst
                         id={'kvittering.info'}
                         values={{
-                            lenke: (
-                                <Lenke href={'https://www.nav.no/no/ditt-nav'}>
-                                    <SpråkTekst id={'kvittering.info.lenketittel'} />
-                                </Lenke>
+                            lenkeDineSaker: (
+                                <SpråkLenke
+                                    hrefId={'kvittering.dinesaker.lenke'}
+                                    lenkeTekstId={'kvittering.dinesaker.lenketekst'}
+                                />
+                            ),
+                            lenkeFinnSaksbehandlingstid: (
+                                <SpråkLenke
+                                    hrefId={'kvittering.saksbehandlingstid.lenketekst'}
+                                    lenkeTekstId={'kvittering.saksbehandlingstid.lenketekst'}
+                                />
                             ),
                         }}
                     />
-                    <Lenke
-                        href={
-                            'https://www.nav.no/no/nav-og-samfunn/om-nav/saksbehandlingstider-i-nav'
-                        }
-                    >
-                        <SpråkTekst id={'kvittering.info.finn-saksbehandlingstid'} />
-                    </Lenke>
                 </Normaltekst>
             </KomponentGruppe>
 
@@ -73,7 +73,7 @@ const Kvittering: React.FC = () => {
             </Informasjonsbolk>
             <EksternLenke
                 lenkeTekstSpråkId={'kvittering.ettersend-dokumentasjon.lenketekst'}
-                lenkeSpråkId={'https://www.nav.no/soknader/nb/person/familie/barnetrygd'}
+                lenkeSpråkId={'kvittering.ettersend-dokumentasjon.lenke'}
             />
         </Steg>
     );
