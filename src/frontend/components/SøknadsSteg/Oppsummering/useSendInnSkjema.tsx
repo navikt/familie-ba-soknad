@@ -4,6 +4,12 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import * as bokmålSpråktekster from '../../../assets/lang/nb.json';
 import { useApp } from '../../../context/AppContext';
+import {
+    IDokumentasjon,
+    ISøknadKontraktDokumentasjon,
+    ISøknadKontraktVedlegg,
+    IVedlegg,
+} from '../../../typer/dokumentasjon';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
 import {
     ISøknad,
@@ -11,6 +17,7 @@ import {
     ISøknadKontraktBarn,
     ISøknadSpørsmål,
 } from '../../../typer/søknad';
+import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import { omDegSpørsmålSpråkId, OmDegSpørsmålId } from '../OmDeg/spørsmål';
@@ -69,6 +76,21 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
             spørsmål: spørmålISøknadsFormat(typetBarnSpørsmål),
         };
     };
+
+    const dokumentasjonISøknadFormat = (
+        dokumentasjon: IDokumentasjon
+    ): ISøknadKontraktDokumentasjon => ({
+        dokumentasjonsbehov: dokumentasjon.dokumentasjonsbehov,
+        harSendtInn: dokumentasjon.harSendtInn,
+        opplastedeVedlegg: dokumentasjon.opplastedeVedlegg.map(vedlegg =>
+            vedleggISøknadFormat(vedlegg)
+        ),
+    });
+
+    const vedleggISøknadFormat = (vedlegg: IVedlegg): ISøknadKontraktVedlegg => ({
+        navn: vedlegg.navn,
+        dokumentId: vedlegg.dokumentId,
+    });
 
     const oppsamlingsfelt = (
         spørsmålId: OmBarnaDineSpørsmålId,
@@ -163,7 +185,9 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                     },
                 },
             },
-            vedleggReferanser: {},
+            dokumentasjon: søknad.dokumentasjon
+                .filter(dok => erDokumentasjonRelevant(dok))
+                .map(dok => dokumentasjonISøknadFormat(dok)),
         };
     };
 

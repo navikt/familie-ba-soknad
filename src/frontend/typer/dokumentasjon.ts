@@ -16,11 +16,23 @@ export interface IVedlegg {
 
 export interface IDokumentasjon {
     dokumentasjonsbehov: Dokumentasjonsbehov;
-    barnDetGjelderFor: string[];
+    gjelderForBarnId: string[];
+    gjelderForSøker: boolean;
     harSendtInn: boolean;
-    opplastedeVedlegg?: IVedlegg[];
+    opplastedeVedlegg: IVedlegg[];
     tittelSpråkId: string;
     beskrivelseSpråkId: string;
+}
+
+export interface ISøknadKontraktVedlegg {
+    dokumentId: string;
+    navn: string;
+}
+
+export interface ISøknadKontraktDokumentasjon {
+    dokumentasjonsbehov: Dokumentasjonsbehov;
+    harSendtInn: boolean;
+    opplastedeVedlegg: ISøknadKontraktVedlegg[];
 }
 
 export enum EFiltyper {

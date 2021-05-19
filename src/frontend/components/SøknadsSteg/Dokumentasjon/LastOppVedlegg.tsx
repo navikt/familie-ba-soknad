@@ -35,7 +35,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
 
     const oppdaterDokumentasjon = (
         dokumentasjonsbehov: Dokumentasjonsbehov,
-        opplastedeVedlegg: IVedlegg[] | undefined,
+        opplastedeVedlegg: IVedlegg[],
         harSendtInn: boolean
     ) => {
         settSøknad(prevState => ({
@@ -50,7 +50,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
 
     const formatertListeMedBarn = () => {
         const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
-            dokumentasjon.barnDetGjelderFor.find(id => id === barn.id)
+            dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
         );
 
         return barnDokGjelderFor.map((barn, index) => {
@@ -74,7 +74,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                             values={{
                                 vedleggsnummer: vedleggNr,
                                 antallvedlegg: søknad.dokumentasjon.filter(
-                                    dok => dok.barnDetGjelderFor.length
+                                    dok => dok.gjelderForBarnId.length
                                 ).length,
                             }}
                         />

@@ -18,7 +18,7 @@ import { useFilopplaster } from './useFilopplaster';
 interface Props {
     oppdaterDokumentasjon: (
         dokumentasjonsBehov: Dokumentasjonsbehov,
-        opplastedeVedlegg: IVedlegg[] | undefined,
+        opplastedeVedlegg: IVedlegg[],
         harSendtInn: boolean
     ) => void;
     dokumentasjon: IDokumentasjon;
@@ -98,7 +98,7 @@ const Filopplaster: React.FC<Props> = ({
                 </Normaltekst>
             </FilopplastningBoks>
             <OpplastedeFiler
-                filliste={dokumentasjon.opplastedeVedlegg || []}
+                filliste={dokumentasjon.opplastedeVedlegg}
                 slettVedlegg={slettVedlegg}
             />
         </>

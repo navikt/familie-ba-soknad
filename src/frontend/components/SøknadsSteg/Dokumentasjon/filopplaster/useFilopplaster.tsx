@@ -18,7 +18,7 @@ export const useFilopplaster = (
     dokumentasjon: IDokumentasjon,
     oppdaterDokumentasjon: (
         dokumentasjonsBehov: Dokumentasjonsbehov,
-        opplastedeVedlegg: IVedlegg[] | undefined,
+        opplastedeVedlegg: IVedlegg[],
         harSendtInn: boolean
     ) => void
 ) => {
@@ -81,10 +81,9 @@ export const useFilopplaster = (
                             tidspunkt: dagensDatoStreng,
                         });
 
-                        const opplastedeVedlegg = dokumentasjon.opplastedeVedlegg || [];
                         oppdaterDokumentasjon(
                             dokumentasjon.dokumentasjonsbehov,
-                            [...opplastedeVedlegg, ...nyeVedlegg],
+                            [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
                             dokumentasjon.harSendtInn
                         );
                     })
@@ -105,8 +104,7 @@ export const useFilopplaster = (
     );
 
     const slettVedlegg = (fil: IVedlegg) => {
-        const opplastedeVedlegg = dokumentasjon.opplastedeVedlegg || [];
-        const nyVedleggsliste = opplastedeVedlegg.filter((obj: IVedlegg) => {
+        const nyVedleggsliste = dokumentasjon.opplastedeVedlegg.filter((obj: IVedlegg) => {
             return obj.dokumentId !== fil.dokumentId;
         });
         oppdaterDokumentasjon(

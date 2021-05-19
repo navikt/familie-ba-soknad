@@ -5,7 +5,7 @@ import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spør
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { INøkkelPar } from './common';
-import { Dokumentasjonsbehov, IDokumentasjon } from './dokumentasjon';
+import { Dokumentasjonsbehov, IDokumentasjon, ISøknadKontraktDokumentasjon } from './dokumentasjon';
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, ISøker } from './person';
 
 export enum ESøknadstype {
@@ -68,7 +68,7 @@ export interface ISøknadKontrakt {
     søker: ISøknadKontraktSøker;
     barn: ISøknadKontraktBarn[];
     spørsmål: SpørsmålMap;
-    vedleggReferanser: Record<string, ISøknadsfelt<string>>;
+    dokumentasjon: ISøknadKontraktDokumentasjon[];
 }
 
 export interface ISøknadKontraktSøker {

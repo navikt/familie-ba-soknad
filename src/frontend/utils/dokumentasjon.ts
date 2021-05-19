@@ -20,7 +20,8 @@ export const genererInitiellDokumentasjon = (
     dokumentasjonsbehov,
     tittelSpråkId,
     beskrivelseSpråkId,
-    barnDetGjelderFor: [],
+    gjelderForBarnId: [],
+    gjelderForSøker: false,
     harSendtInn: false,
     opplastedeVedlegg: [],
 });
@@ -35,16 +36,16 @@ export const genererOppdatertDokumentasjon = (
     barneIder.forEach(barnId => {
         console.log(kreverDokumentasjon);
         if (kreverDokumentasjon) {
-            if (!dokumentasjon.barnDetGjelderFor.includes(barnId)) {
+            if (!dokumentasjon.gjelderForBarnId.includes(barnId)) {
                 oppdatertDokumentasjon = {
                     ...dokumentasjon,
-                    barnDetGjelderFor: [...oppdatertDokumentasjon.barnDetGjelderFor].concat(barnId),
+                    gjelderForBarnId: [...oppdatertDokumentasjon.gjelderForBarnId].concat(barnId),
                 };
             }
         } else {
             oppdatertDokumentasjon = {
                 ...dokumentasjon,
-                barnDetGjelderFor: [...oppdatertDokumentasjon.barnDetGjelderFor].filter(
+                gjelderForBarnId: [...oppdatertDokumentasjon.gjelderForBarnId].filter(
                     id => id !== barnId
                 ),
             };
@@ -56,4 +57,4 @@ export const genererOppdatertDokumentasjon = (
 
 export const erDokumentasjonRelevant = (dokumentasjon: IDokumentasjon) =>
     dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON ||
-    dokumentasjon.barnDetGjelderFor.length;
+    dokumentasjon.gjelderForBarnId.length;
