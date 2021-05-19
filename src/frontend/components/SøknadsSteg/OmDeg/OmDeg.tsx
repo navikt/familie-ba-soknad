@@ -14,7 +14,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
 import { Personopplysninger } from './Personopplysninger';
-import { omDegSpråkTekstId, OmDegSpørsmålId } from './spørsmål';
+import { omDegSpørsmålSpråkId, OmDegSpørsmålId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
@@ -40,7 +40,9 @@ const OmDeg: React.FC = () => {
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.borPåRegistrertAdresse}
-                        spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.borPåRegistrertAdresse]}
+                        spørsmålTekstId={
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]
+                        }
                         tilleggsinfoTekstId={'omdeg.borpådenneadressen.spm.tilleggsinfo'}
                     />
                 )}
@@ -53,7 +55,11 @@ const OmDeg: React.FC = () => {
                 )}
                 {!søker.adresse && (
                     <SøkerMåBrukePDF
-                        advarselTekstId={'omdeg.personopplysninger.ikke-registrert.alert'}
+                        advarselTekstId={
+                            søker.adressebeskyttelse
+                                ? 'omdeg.personopplysninger.adressesperre.alert'
+                                : 'omdeg.personopplysninger.ikke-registrert.alert'
+                        }
                     />
                 )}
             </KomponentGruppe>
@@ -67,7 +73,9 @@ const OmDeg: React.FC = () => {
                             )}
                             name={'Telefonnummer'}
                             label={
-                                <SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.telefonnummer]} />
+                                <SpråkTekst
+                                    id={omDegSpørsmålSpråkId[OmDegSpørsmålId.telefonnummer]}
+                                />
                             }
                             bredde={'M'}
                             type="tel"
@@ -77,34 +85,36 @@ const OmDeg: React.FC = () => {
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.oppholderSegINorge}
-                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.oppholderSegINorge]}
+                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholderSegINorge]}
                 />
                 <LandDropdown
                     felt={skjema.felter.oppholdsland}
                     skjema={skjema}
-                    label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.oppholdsland]} />}
+                    label={<SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdsland]} />}
                 />
                 <Datovelger
                     avgrensDatoFremITid={true}
                     felt={skjema.felter.oppholdslandDato}
                     skjema={skjema}
-                    labelTekstId={omDegSpråkTekstId[OmDegSpørsmålId.oppholdslandDato]}
+                    labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdslandDato]}
                 />
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.værtINorgeITolvMåneder}
-                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
+                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
                 />
                 <Datovelger
                     avgrensDatoFremITid={true}
                     felt={skjema.felter.komTilNorgeDato}
                     skjema={skjema}
-                    labelTekstId={omDegSpråkTekstId[OmDegSpørsmålId.komTilNorgeDato]}
+                    labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
                 />
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
-                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]}
+                    spørsmålTekstId={
+                        omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
+                    }
                 />
                 {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
                     <AlertStripe type={'advarsel'}>
@@ -117,7 +127,7 @@ const OmDeg: React.FC = () => {
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erAsylsøker}
-                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.erAsylsøker]}
+                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.erAsylsøker]}
                 />
                 {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
                     <AlertStripe type={'info'}>
@@ -127,24 +137,24 @@ const OmDeg: React.FC = () => {
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.jobberPåBåt}
-                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.jobberPåBåt]}
+                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.jobberPåBåt]}
                 />
 
                 <LandDropdown
                     felt={skjema.felter.arbeidsland}
                     skjema={skjema}
-                    label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.arbeidsland]} />}
+                    label={<SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.arbeidsland]} />}
                 />
 
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.mottarUtenlandspensjon}
-                    spørsmålTekstId={omDegSpråkTekstId[OmDegSpørsmålId.mottarUtenlandspensjon]}
+                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.mottarUtenlandspensjon]}
                 />
                 <LandDropdown
                     felt={skjema.felter.pensjonsland}
                     skjema={skjema}
-                    label={<SpråkTekst id={omDegSpråkTekstId[OmDegSpørsmålId.pensjonsland]} />}
+                    label={<SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.pensjonsland]} />}
                 />
             </KomponentGruppe>
         </Steg>

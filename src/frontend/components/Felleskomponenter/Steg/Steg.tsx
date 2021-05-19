@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
-import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg.js';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
@@ -10,13 +9,22 @@ import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import Stegindikator from 'nav-frontend-stegindikator';
 import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 
-import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { ESvar } from '@navikt/familie-form-elements';
+import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { IRoute, RouteEnum, useRoutes } from '../../../context/RoutesContext';
+import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
+import { IBarnMedISøknad } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import {
+    OmBarnaDineSpørsmålId,
+    omBarnaDineSpørsmålSpråkId,
+} from '../../SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
+import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
+import { VelgBarnSpørsmålId } from '../../SøknadsSteg/VelgBarn/spørsmål';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -30,6 +38,7 @@ interface ISteg {
         skjema: ISkjema<SkjemaFeltTyper, string>;
         settSøknadsdataCallback: () => void;
     };
+    barn?: IBarnMedISøknad;
 }
 
 const AvsluttKnappContainer = styled.div`
@@ -68,7 +77,20 @@ const Form = styled.form`
     width: 100%;
 `;
 
-const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
+const samletSpørsmålSpråkTekstId = {
+    ...omDegSpørsmålSpråkId,
+    ...omBarnaDineSpørsmålSpråkId,
+    ...omBarnetSpørsmålSpråkId,
+};
+
+const samletSpørsmålId = {
+    ...OmDegSpørsmålId,
+    ...VelgBarnSpørsmålId,
+    ...OmBarnaDineSpørsmålId,
+    ...OmBarnetSpørsmålsId,
+};
+
+const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, avbrytSøknad } = useApp();
@@ -78,18 +100,11 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
         hentForrigeRoute,
         hentAktivtStegIndexForStegindikator,
         hentRouteIndex,
+        hentStegObjekterForStegIndikator,
     } = useRoutes();
 
     const [åpenModal, settÅpenModal] = useState(false);
 
-    const stegobjekter: StegindikatorStegProps[] = routes
-        .filter(route => route.path !== '/')
-        .map((steg: IRoute, index: number) => {
-            return {
-                label: steg.label,
-                index: index,
-            };
-        });
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
@@ -142,6 +157,18 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
         return !!feil;
     };
 
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    const hentFeilmeldingTilOppsummering = (felt: Felt<any>) => {
+        const gyldigId = !!Object.values(samletSpørsmålId).find(id => id === felt.id);
+        return !gyldigId ||
+            (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse && felt.verdi === ESvar.NEI) ||
+            felt.id === VelgBarnSpørsmålId.velgBarn ? (
+            felt.feilmelding
+        ) : (
+            <SpråkTekst id={samletSpørsmålSpråkTekstId[felt.id]} values={{ navn: barn?.navn }} />
+        );
+    };
+
     return (
         <>
             <header>
@@ -149,7 +176,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
                 <Stegindikator
                     autoResponsiv={true}
                     aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}
-                    steg={stegobjekter}
+                    steg={hentStegObjekterForStegIndikator()}
                     visLabel={false}
                 />
             </header>
@@ -173,7 +200,9 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, children }) => {
                                         (felt): FeiloppsummeringFeil => {
                                             return {
                                                 skjemaelementId: felt.id,
-                                                feilmelding: felt.feilmelding as string,
+                                                feilmelding: hentFeilmeldingTilOppsummering(
+                                                    felt
+                                                ) as string,
                                             };
                                         }
                                     )}

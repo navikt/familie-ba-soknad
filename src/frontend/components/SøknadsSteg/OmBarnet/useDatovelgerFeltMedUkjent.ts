@@ -3,18 +3,17 @@ import { useEffect } from 'react';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
-import { AlternativtDatoSvar, DatoMedUkjent } from '../../../typer/person';
-import { ISøknadSpørsmål } from '../../../typer/søknad';
 import { validerDato } from '../../../utils/dato';
 
 const useDatovelgerFeltMedUkjent = (
-    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent>,
+    feltId,
+    initiellVerdi,
     avhengighet: Felt<ESvar>,
     skalFeltetVises: boolean
 ) => {
     const datoFelt = useFelt<ISODateString>({
-        feltId: søknadsfelt.id,
-        verdi: søknadsfelt.svar !== AlternativtDatoSvar.UKJENT ? søknadsfelt.svar : '',
+        feltId: feltId,
+        verdi: initiellVerdi,
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
             if (
                 avhengigheter &&
@@ -25,12 +24,16 @@ const useDatovelgerFeltMedUkjent = (
             }
             return validerDato(felt, false);
         },
-        avhengigheter: { vetIkkeCheckbox: avhengighet },
-        skalFeltetVises: () => skalFeltetVises,
+        avhengigheter: { vetIkkeCheckbox: avhengighet, skalFeltetVises },
+        skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalFeltetVises,
     });
     useEffect(() => {
         datoFelt.validerOgSettFelt(datoFelt.verdi, avhengighet);
     }, [avhengighet]);
+
+    useEffect(() => {
+        !skalFeltetVises && datoFelt.validerOgSettFelt('', avhengighet);
+    }, [skalFeltetVises]);
 
     return datoFelt;
 };

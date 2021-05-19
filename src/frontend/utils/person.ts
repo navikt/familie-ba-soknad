@@ -1,7 +1,7 @@
 import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnetUtfyllende/spørsmål';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
     barnDataKeySpørsmål,
     ESivilstand,
@@ -145,6 +145,50 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
             svar: '',
         },
+        [barnDataKeySpørsmål.andreForelderNavn]: {
+            id: OmBarnetSpørsmålsId.andreForelderNavn,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderFnr]: {
+            id: OmBarnetSpørsmålsId.andreForelderFnr,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderFødselsdato]: {
+            id: OmBarnetSpørsmålsId.andreForelderFødselsdato,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: {
+            id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: {
+            id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderPensjonUtland]: {
+            id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
+            id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.borFastMedSøker]: {
+            id: OmBarnetSpørsmålsId.borFastMedSøker,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
+            id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
+            svar: undefined,
+        },
+        [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
+            id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
+            id: OmBarnetSpørsmålsId.søkerForTidsromSluttdato,
+            svar: '',
+        },
     };
 };
 
@@ -154,5 +198,6 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
         ident: barnRespons.ident,
         alder: barnRespons.fødselsdato && hentAlder(barnRespons.fødselsdato),
         borMedSøker: barnRespons.borMedSøker,
+        adressebeskyttelse: barnRespons.adressebeskyttelse,
     }));
 };

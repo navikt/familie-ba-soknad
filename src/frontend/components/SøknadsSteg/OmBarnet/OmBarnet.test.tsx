@@ -7,21 +7,13 @@ import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import { RoutesProvider } from '../../../context/RoutesContext';
-import { AlternativtDatoSvar, barnDataKeySpørsmål } from '../../../typer/person';
-import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
-import OmBarnetUtfyllende from './OmBarnetUtfyllende';
+import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../../../typer/person';
+import { mockHistory, silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
+import OmBarnet from './OmBarnet';
 
 jest.mock('../../../context/AppContext');
 
-let mockHistory = ['/om-barnet/barn-1'];
-
-jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => ({
-        pathname: mockHistory[mockHistory.length - 1],
-    }),
-    useHistory: () => mockHistory,
-}));
+const mockedHistory = mockHistory(['/om-barnet/barn-1']);
 
 silenceConsoleErrors();
 
@@ -36,17 +28,37 @@ const jens = {
     [barnDataKeySpørsmål.institusjonOppholdStartdato]: { id: '6', svar: '2020-08-08' },
     [barnDataKeySpørsmål.institusjonOppholdSluttdato]: {
         id: '7',
-        svar: AlternativtDatoSvar.UKJENT,
+        svar: AlternativtSvarForInput.UKJENT,
     },
     [barnDataKeySpørsmål.oppholderSegIUtland]: { id: '8', svar: ESvar.JA },
     [barnDataKeySpørsmål.oppholdsland]: { id: '9', svar: 'AUS' },
     [barnDataKeySpørsmål.oppholdslandStartdato]: { id: '10', svar: '2020-08-08' },
-    [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: 'UKJENT' },
+    [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: AlternativtSvarForInput.UKJENT },
     [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: { id: '12', svar: '2020-07-07' },
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: ESvar.JA },
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: { id: '14', svar: ESvar.JA },
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.JA },
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: 'AUS' },
+    [barnDataKeySpørsmål.andreForelderNavn]: { id: '17', svar: AlternativtSvarForInput.UKJENT },
+    [barnDataKeySpørsmål.andreForelderFnr]: { id: '18', svar: AlternativtSvarForInput.UKJENT },
+    [barnDataKeySpørsmål.andreForelderFødselsdato]: {
+        id: '19',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: { id: '20', svar: ESvar.JA },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: { id: '21', svar: 'AUS' },
+    [barnDataKeySpørsmål.andreForelderPensjonUtland]: { id: '22', svar: ESvar.VET_IKKE },
+    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: { id: '23', svar: '' },
+    [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: { id: '25', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
+        id: '26',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
+    [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
+        id: '27',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
 };
 const line = {
     navn: 'Line',
@@ -70,6 +82,26 @@ const line = {
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: undefined },
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.NEI },
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: '' },
+    [barnDataKeySpørsmål.andreForelderNavn]: { id: '17', svar: AlternativtSvarForInput.UKJENT },
+    [barnDataKeySpørsmål.andreForelderFnr]: { id: '18', svar: AlternativtSvarForInput.UKJENT },
+    [barnDataKeySpørsmål.andreForelderFødselsdato]: {
+        id: '19',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: { id: '20', svar: ESvar.JA },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: { id: '21', svar: 'AUS' },
+    [barnDataKeySpørsmål.andreForelderPensjonUtland]: { id: '22', svar: ESvar.VET_IKKE },
+    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: { id: '23', svar: '' },
+    [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: { id: '25', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
+        id: '26',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
+    [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
+        id: '27',
+        svar: AlternativtSvarForInput.UKJENT,
+    },
 };
 
 test(`Kan rendre Om Barnet Utfyllende`, () => {
@@ -82,7 +114,7 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
         <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
             <HttpProvider>
                 <RoutesProvider>
-                    <OmBarnetUtfyllende barnetsIdent={'12345678910'} />
+                    <OmBarnet barnetsIdent={'12345678910'} />
                 </RoutesProvider>
             </HttpProvider>
         </SprakProvider>
@@ -101,13 +133,13 @@ test(`Kan navigere mellom to barn`, () => {
         >
             <HttpProvider>
                 <RoutesProvider>
-                    <OmBarnetUtfyllende barnetsIdent={'12345678910'} />
+                    <OmBarnet barnetsIdent={'12345678910'} />
                 </RoutesProvider>
             </HttpProvider>
         </SprakProvider>
     );
 
-    expect(mockHistory[mockHistory.length - 1]).toEqual('/om-barnet/barn-1');
+    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/om-barnet/barn-1');
 
     const jensTittel = getByText('Om Jens');
     expect(jensTittel).toBeInTheDocument();
@@ -115,11 +147,11 @@ test(`Kan navigere mellom to barn`, () => {
     const gåVidere = getByText(/felles.navigasjon.gå-videre/);
     act(() => gåVidere.click());
 
-    expect(mockHistory[mockHistory.length - 1]).toEqual('/om-barnet/barn-2');
+    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/om-barnet/barn-2');
 });
 
 test(`Kan navigere fra barn til oppsummering`, () => {
-    mockHistory = ['/om-barnet/barn-1'];
+    mockHistory(['/om-barnet/barn-1']);
 
     spyOnUseApp({
         barnInkludertISøknaden: [jens],
@@ -133,13 +165,13 @@ test(`Kan navigere fra barn til oppsummering`, () => {
         >
             <HttpProvider>
                 <RoutesProvider>
-                    <OmBarnetUtfyllende barnetsIdent={'12345678910'} />
+                    <OmBarnet barnetsIdent={'12345678910'} />
                 </RoutesProvider>
             </HttpProvider>
         </SprakProvider>
     );
 
-    expect(mockHistory[mockHistory.length - 1]).toEqual('/om-barnet/barn-1');
+    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/om-barnet/barn-1');
 
     const jensTittel = getByText('Om Jens');
     expect(jensTittel).toBeInTheDocument();
@@ -147,5 +179,5 @@ test(`Kan navigere fra barn til oppsummering`, () => {
     const gåVidere = getByText(/felles.navigasjon.gå-videre/);
     act(() => gåVidere.click());
 
-    expect(mockHistory[mockHistory.length - 1]).toEqual('/oppsummering');
+    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/oppsummering');
 });
