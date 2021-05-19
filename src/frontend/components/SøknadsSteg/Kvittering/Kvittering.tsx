@@ -14,9 +14,11 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { SpråkLenke } from '../../Felleskomponenter/SpråkLenke/SpråkLenke';
 
 const Kvittering: React.FC = () => {
     const intl = useIntl();
+    const { settSisteUtfylteStegIndex } = useApp();
 
     const { innsendingStatus } = useApp();
     const innsendtDato =
@@ -26,6 +28,13 @@ const Kvittering: React.FC = () => {
 
     const klokkeslett = innsendtDato?.toLocaleTimeString();
     const dato = innsendtDato?.toLocaleDateString();
+
+    useEffect(() => {
+        return () => {
+            // TODO: Vurder å nulle ut hele søknaden
+            settSisteUtfylteStegIndex(-1);
+        };
+    }, []);
 
     return (
         <Steg tittel={<SpråkTekst id={'kvittering.sidetittel'} />}>
