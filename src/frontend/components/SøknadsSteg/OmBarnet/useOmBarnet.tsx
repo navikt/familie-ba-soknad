@@ -552,8 +552,6 @@ export const useOmBarnet = (
             }),
         });
     };
-    console.log(søknad.dokumentasjon);
-
     return {
         oppdaterSøknad,
         skjema,

@@ -31,19 +31,22 @@ export const genererOppdatertDokumentasjon = (
     barneIder: string[]
 ) => {
     let oppdatertDokumentasjon = dokumentasjon;
-
+    console.log('kjører');
     barneIder.forEach(barnId => {
+        console.log(kreverDokumentasjon);
         if (kreverDokumentasjon) {
             if (!dokumentasjon.barnDetGjelderFor.includes(barnId)) {
                 oppdatertDokumentasjon = {
                     ...dokumentasjon,
-                    barnDetGjelderFor: [...dokumentasjon.barnDetGjelderFor].concat(barnId),
+                    barnDetGjelderFor: [...oppdatertDokumentasjon.barnDetGjelderFor].concat(barnId),
                 };
             }
         } else {
             oppdatertDokumentasjon = {
                 ...dokumentasjon,
-                barnDetGjelderFor: [...dokumentasjon.barnDetGjelderFor].filter(id => id !== barnId),
+                barnDetGjelderFor: [...oppdatertDokumentasjon.barnDetGjelderFor].filter(
+                    id => id !== barnId
+                ),
             };
         }
     });
