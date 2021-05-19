@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import dayjs, { Dayjs } from 'dayjs';
 import { useIntl } from 'react-intl';
 
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -12,21 +13,21 @@ import { useApp } from '../../../context/AppContext';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { SpråkLenke } from '../../Felleskomponenter/SpråkLenke/SpråkLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { SpråkLenke } from '../../Felleskomponenter/SpråkLenke/SpråkLenke';
 
 const Kvittering: React.FC = () => {
     const { settSisteUtfylteStegIndex } = useApp();
 
     const { innsendingStatus } = useApp();
-    const innsendtDato =
+    const innsendtDato: Dayjs =
         innsendingStatus.status === RessursStatus.SUKSESS
-            ? new Date(innsendingStatus.data.mottattDato)
-            : null;
+            ? dayjs(innsendingStatus.data.mottattDato)
+            : dayjs();
 
-    const klokkeslett = innsendtDato?.toLocaleTimeString();
-    const dato = innsendtDato?.toLocaleDateString();
+    const klokkeslett = innsendtDato.format('HH:mm');
+    const dato = innsendtDato.format('DD.MM.YY');
 
     useEffect(() => {
         return () => {
