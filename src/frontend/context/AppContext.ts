@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import createUseContext from 'constate';
 
+import { useSprakContext } from '@navikt/familie-sprakvelger';
 import {
     ApiRessurs,
     byggHenterRessurs,
@@ -11,7 +12,9 @@ import {
     RessursStatus,
 } from '@navikt/familie-typer';
 
+import Miljø from '../Miljø';
 import { IKvittering } from '../typer/kvittering';
+import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
@@ -26,6 +29,9 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [søknad, settSøknad] = useState<ISøknad>(initialStateSøknad);
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
+    const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
+
+    const [valgtLocale, setValgtLocale] = useSprakContext();
 
     autentiseringsInterceptor();
 
@@ -44,6 +50,7 @@ const [AppProvider, useApp] = createUseContext(() => {
             }).then(ressurs => {
                 settSluttbruker(ressurs);
 
+                hentOgSettMellomlagretData();
                 ressurs.status === RessursStatus.SUKSESS &&
                     settSøknad({
                         ...søknad,
@@ -61,6 +68,53 @@ const [AppProvider, useApp] = createUseContext(() => {
             });
         }
     }, [innloggetStatus]);
+
+    // TODO: egen useMellomlager ?
+    const hentOgSettMellomlagretData = () => {
+        axiosRequest<IMellomlagretBarnetrygd, void>({
+            url: Miljø().mellomlagerUrl,
+            withCredentials: true,
+            påvirkerSystemLaster: false,
+        }).then(ressurs => {
+            if (ressurs.status === RessursStatus.SUKSESS && ressurs.data) {
+                settMellomlagretVerdi(ressurs.data);
+            }
+        });
+    };
+
+    const brukMellomlagretVerdi = () => {
+        if (mellomlagretVerdi) {
+            settSøknad(mellomlagretVerdi.søknad);
+            settSisteUtfylteStegIndex(mellomlagretVerdi.sisteUtfylteStegIndex);
+            setValgtLocale(mellomlagretVerdi.locale);
+        }
+    };
+
+    const mellomlagre = () => {
+        const barnetrygd: IMellomlagretBarnetrygd = {
+            søknad: søknad,
+            modellVersjon: Miljø().modellVersjon,
+            sisteUtfylteStegIndex: sisteUtfylteStegIndex,
+            locale: valgtLocale,
+        };
+        axiosRequest<IMellomlagretBarnetrygd, IMellomlagretBarnetrygd>({
+            url: Miljø().mellomlagerUrl,
+            method: 'post',
+            withCredentials: true,
+            påvirkerSystemLaster: false,
+        });
+        settMellomlagretVerdi(barnetrygd);
+    };
+
+    const nullstillMellomlagretVerdi = () => {
+        axiosRequest<void, void>({
+            url: Miljø().mellomlagerUrl,
+            method: 'delete',
+            withCredentials: true,
+            påvirkerSystemLaster: false,
+        });
+        settMellomlagretVerdi(undefined);
+    };
 
     const axiosRequest = async <T, D>(
         config: AxiosRequestConfig & { data?: D; påvirkerSystemLaster?: boolean }
@@ -166,6 +220,10 @@ const [AppProvider, useApp] = createUseContext(() => {
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
         avbrytSøknad,
+        mellomlagretVerdi,
+        brukMellomlagretVerdi,
+        mellomlagre,
+        nullstillMellomlagretVerdi,
     };
 });
 
