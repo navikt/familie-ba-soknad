@@ -67,11 +67,23 @@ export const useVelgBarn = (): {
                 )
         );
 
+        const oppdaterteBarn = barnSomAlleredeErLagtTil.concat(
+            nyeBarnSomSkalLeggesTil.map(barn => genererInitialBarnMedISøknad(barn))
+        );
+        const mapIdentTilId = oppdaterteBarn.map(barn => barn.id);
+        const oppdatertDokumentasjon = søknad.dokumentasjon.map(dok => {
+            return {
+                ...dok,
+                gjelderForBarnId: dok.gjelderForBarnId.filter(barnId =>
+                    mapIdentTilId.includes(barnId)
+                ),
+            };
+        });
+
         settSøknad({
             ...søknad,
-            barnInkludertISøknaden: barnSomAlleredeErLagtTil.concat(
-                nyeBarnSomSkalLeggesTil.map(barn => genererInitialBarnMedISøknad(barn))
-            ),
+            barnInkludertISøknaden: oppdaterteBarn,
+            dokumentasjon: oppdatertDokumentasjon,
         });
     };
 
