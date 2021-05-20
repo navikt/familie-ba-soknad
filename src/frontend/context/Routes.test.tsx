@@ -20,7 +20,7 @@ describe('Routes', () => {
         });
         const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
         const { result } = renderHook(() => useRoutes(), { wrapper });
-        expect(result.current.routes.length).toEqual(7);
+        expect(result.current.routes.length).toEqual(8);
     });
 
     test(`hentStegObjekterForStegIndikator skal returnere en liste uten forside`, () => {
@@ -29,7 +29,7 @@ describe('Routes', () => {
         });
         const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
         const { result } = renderHook(() => useRoutes(), { wrapper });
-        expect(result.current.hentStegObjekterForStegIndikator().length).toEqual(6);
+        expect(result.current.hentStegObjekterForStegIndikator().length).toEqual(7);
     });
 
     test(`Kan hente neste route fra forsiden`, () => {
