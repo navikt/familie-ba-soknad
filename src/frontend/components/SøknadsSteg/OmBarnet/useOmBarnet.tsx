@@ -567,7 +567,7 @@ export const useOmBarnet = (
                     case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
                         return genererOppdatertDokumentasjon(
                             dok,
-                            borFastMedSøker.verdi === ESvar.JA,
+                            borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker,
                             barn.id
                         );
                     default:
