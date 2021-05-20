@@ -11,10 +11,6 @@ import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../../../typer/p
 import { mockHistory, silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import OmBarnet from './OmBarnet';
 
-jest.mock('../../../context/AppContext');
-
-const mockedHistory = mockHistory(['/om-barnet/barn-1']);
-
 silenceConsoleErrors();
 
 const jens = {
@@ -105,6 +101,7 @@ const line = {
 };
 
 test(`Kan rendre Om Barnet Utfyllende`, () => {
+    mockHistory(['/om-barnet/barn-1']);
     spyOnUseApp({
         barnInkludertISøknaden: [jens],
         sisteUtfylteStegIndex: 4,
@@ -122,9 +119,11 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
 });
 
 test(`Kan navigere mellom to barn`, () => {
+    const mockedHistory = mockHistory(['/om-barnet/barn-1']);
     spyOnUseApp({
         barnInkludertISøknaden: [jens, line],
         sisteUtfylteStegIndex: 4,
+        dokumentasjon: [],
     });
     const { getByText } = render(
         <SprakProvider
@@ -151,11 +150,13 @@ test(`Kan navigere mellom to barn`, () => {
 });
 
 test(`Kan navigere fra barn til oppsummering`, () => {
+    const mockedHistory = mockHistory(['/om-barnet/barn-1']);
     mockHistory(['/om-barnet/barn-1']);
 
     spyOnUseApp({
         barnInkludertISøknaden: [jens],
         sisteUtfylteStegIndex: 4,
+        dokumentasjon: [],
     });
 
     const { getByText } = render(
