@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 import { device } from '../../../../Theme';
-import { SpråkLenke } from '../../../Felleskomponenter/SpråkLenke/SpråkLenke';
+import EksternLenke from '../../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 // Dimensjoner tatt fra StyledBarnekort men fjernet bl.a. farge
@@ -26,14 +26,12 @@ export const AdressebeskyttetKort: React.FC = () => {
     return (
         <KortContainer>
             <SpråkTekst id={'hvilkebarn.adressesperreinformasjon'} />
-
             <LenkeContainer>
-                <SpråkLenke
-                    hrefId={'felles.bruk-pdfskjema.lenke'}
-                    lenkeTekstId={'felles.bruk-pdfskjema.lenketekst'}
+                <EksternLenke
+                    lenkeSpråkId={'felles.bruk-pdfskjema.lenke'}
+                    lenkeTekstSpråkId={'felles.bruk-pdfskjema.lenketekst'}
                 />
             </LenkeContainer>
-
             <SpråkTekst id={'felles.sende-skjema.info'} />
         </KortContainer>
     );
