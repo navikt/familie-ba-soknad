@@ -44,7 +44,12 @@ const BekreftelseOgStartSoknad: React.FC<{
     navn: string;
 }> = ({ navn }) => {
     const { formatMessage } = useIntl();
-    const { onStartSøknad, bekreftelseOnChange, bekreftelseStatus } = useBekreftelseOgStartSoknad();
+    const {
+        onStartSøknad,
+        bekreftelseOnChange,
+        bekreftelseStatus,
+        fortsettPåSøknaden,
+    } = useBekreftelseOgStartSoknad();
 
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
@@ -69,6 +74,9 @@ const BekreftelseOgStartSoknad: React.FC<{
                 </StyledBekreftCheckboksPanel>
             </Informasjonsbolk>
 
+            <StyledKnappBase onClick={fortsettPåSøknaden}>
+                Fortsett på søknaden (TODO: fiks forsiden)
+            </StyledKnappBase>
             <StyledKnappBase
                 type={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'hoved' : 'standard'}
                 htmlType={'submit'}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import createUseContext from 'constate';
 import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg';
@@ -39,6 +39,10 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
     } = useApp();
 
     const [barnForRoutes, settBarnForRoutes] = useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
+
+    useEffect(() => {
+        settBarnForRoutes(barnInkludertISøknaden);
+    }, [barnInkludertISøknaden]);
 
     // En route per barn som er valgt, eller en plassholder hvis ingen er valgt
     const barnRoutes: IRoute[] = barnForRoutes.length

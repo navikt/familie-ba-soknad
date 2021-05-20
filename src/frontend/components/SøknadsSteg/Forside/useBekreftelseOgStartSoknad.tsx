@@ -17,12 +17,20 @@ export const useBekreftelseOgStartSoknad = (): {
     onStartSøknad: (event: React.FormEvent) => void;
     bekreftelseOnChange: () => void;
     bekreftelseStatus: BekreftelseStatus;
+    fortsettPåSøknaden: () => void;
 } => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
 
     const { hentNesteRoute, hentRouteIndex } = useRoutes();
-    const { søknad, settSøknad, settSisteUtfylteStegIndex, erStegUtfyltFrafør } = useApp();
+    const {
+        søknad,
+        settSøknad,
+        settSisteUtfylteStegIndex,
+        erStegUtfyltFrafør,
+        brukMellomlagretVerdi,
+        mellomlagretVerdi,
+    } = useApp();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
@@ -30,6 +38,14 @@ export const useBekreftelseOgStartSoknad = (): {
 
     const nesteRoute: IRoute = hentNesteRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
+
+    const fortsettPåSøknaden = (): void => {
+        if (mellomlagretVerdi) {
+            brukMellomlagretVerdi();
+            // TODO: Pga dynamiske routes blir de ikke oppdatert og vi kan ikke gå direkte til rute > 5
+            history.push(nesteRoute.path);
+        }
+    };
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();
@@ -58,5 +74,6 @@ export const useBekreftelseOgStartSoknad = (): {
         onStartSøknad,
         bekreftelseOnChange,
         bekreftelseStatus,
+        fortsettPåSøknaden,
     };
 };

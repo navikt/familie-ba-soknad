@@ -30,7 +30,6 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
-
     const [valgtLocale, setValgtLocale] = useSprakContext();
 
     autentiseringsInterceptor();
@@ -69,27 +68,6 @@ const [AppProvider, useApp] = createUseContext(() => {
         }
     }, [innloggetStatus]);
 
-    // TODO: egen useMellomlager ?
-    const hentOgSettMellomlagretData = () => {
-        axiosRequest<IMellomlagretBarnetrygd, void>({
-            url: Miljø().mellomlagerUrl,
-            withCredentials: true,
-            påvirkerSystemLaster: false,
-        }).then(ressurs => {
-            if (ressurs.status === RessursStatus.SUKSESS && ressurs.data) {
-                settMellomlagretVerdi(ressurs.data);
-            }
-        });
-    };
-
-    const brukMellomlagretVerdi = () => {
-        if (mellomlagretVerdi) {
-            settSøknad(mellomlagretVerdi.søknad);
-            settSisteUtfylteStegIndex(mellomlagretVerdi.sisteUtfylteStegIndex);
-            setValgtLocale(mellomlagretVerdi.locale);
-        }
-    };
-
     const mellomlagre = () => {
         const barnetrygd: IMellomlagretBarnetrygd = {
             søknad: søknad,
@@ -102,10 +80,42 @@ const [AppProvider, useApp] = createUseContext(() => {
             method: 'post',
             withCredentials: true,
             påvirkerSystemLaster: false,
+            data: barnetrygd,
         });
         settMellomlagretVerdi(barnetrygd);
     };
 
+    useEffect(() => {
+        if (sisteUtfylteStegIndex > 0) {
+            mellomlagre();
+        }
+    }, [søknad, sisteUtfylteStegIndex]);
+
+    const hentOgSettMellomlagretData = () => {
+        preferredAxios
+            .get(Miljø().mellomlagerUrl, {
+                withCredentials: true,
+            })
+            .then((response: { data?: IMellomlagretBarnetrygd }) => {
+                if (response.data) {
+                    settMellomlagretVerdi(response.data);
+                }
+            })
+            .catch(() => {
+                // Do nothing
+            });
+    };
+
+    const brukMellomlagretVerdi = () => {
+        if (mellomlagretVerdi) {
+            settSøknad(mellomlagretVerdi.søknad);
+            settSisteUtfylteStegIndex(mellomlagretVerdi.sisteUtfylteStegIndex);
+            setValgtLocale(mellomlagretVerdi.locale);
+        }
+    };
+
+    // TODO: Nullstill etter innsending av søknad
+    // TODO: Fortsettknapp bør være en egen "side"
     const nullstillMellomlagretVerdi = () => {
         axiosRequest<void, void>({
             url: Miljø().mellomlagerUrl,
@@ -201,6 +211,7 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     const avbrytSøknad = () => {
         nullstillSøknadsobjekt();
+        nullstillMellomlagretVerdi();
         settSisteUtfylteStegIndex(-1);
     };
 
@@ -220,10 +231,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
         avbrytSøknad,
-        mellomlagretVerdi,
         brukMellomlagretVerdi,
-        mellomlagre,
-        nullstillMellomlagretVerdi,
+        mellomlagretVerdi,
     };
 });
 
