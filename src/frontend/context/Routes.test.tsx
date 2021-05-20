@@ -2,16 +2,10 @@ import React from 'react';
 
 import { renderHook } from '@testing-library/react-hooks';
 
-import { spyOnUseApp } from '../utils/testing';
+import { mockHistory, spyOnUseApp } from '../utils/testing';
 import { useRoutes, RouteEnum, RoutesProvider } from './RoutesContext';
 
-jest.mock('../context/AppContext');
-jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => ({
-        pathname: '/barnet/Jens',
-    }),
-}));
+mockHistory(['/om-barnet/barn-1']);
 
 describe('Routes', () => {
     test(`Kan hente routes før barn er valgt`, () => {
