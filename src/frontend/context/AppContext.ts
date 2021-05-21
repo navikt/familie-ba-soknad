@@ -81,6 +81,8 @@ const [AppProvider, useApp] = createUseContext(() => {
             withCredentials: true,
             påvirkerSystemLaster: false,
             data: barnetrygd,
+        }).catch(() => {
+            // do nothing
         });
         settMellomlagretVerdi(barnetrygd);
     };
@@ -114,8 +116,6 @@ const [AppProvider, useApp] = createUseContext(() => {
         }
     };
 
-    // TODO: Nullstill etter innsending av søknad
-    // TODO: Fortsettknapp bør være en egen "side"
     const nullstillMellomlagretVerdi = () => {
         axiosRequest<void, void>({
             url: Miljø().mellomlagerUrl,

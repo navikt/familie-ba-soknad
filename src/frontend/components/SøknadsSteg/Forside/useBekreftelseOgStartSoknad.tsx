@@ -18,6 +18,7 @@ export const useBekreftelseOgStartSoknad = (): {
     bekreftelseOnChange: () => void;
     bekreftelseStatus: BekreftelseStatus;
     fortsettPåSøknaden: () => void;
+    startPåNytt: () => void;
 } => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
@@ -29,7 +30,7 @@ export const useBekreftelseOgStartSoknad = (): {
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
         brukMellomlagretVerdi,
-        mellomlagretVerdi,
+        avbrytSøknad,
     } = useApp();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
@@ -40,11 +41,12 @@ export const useBekreftelseOgStartSoknad = (): {
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
 
     const fortsettPåSøknaden = (): void => {
-        if (mellomlagretVerdi) {
-            brukMellomlagretVerdi();
-            // TODO: Pga dynamiske routes blir de ikke oppdatert og vi kan ikke gå direkte til rute > 5
-            history.push(nesteRoute.path);
-        }
+        brukMellomlagretVerdi();
+        // TODO: Pga dynamiske routes blir de ikke oppdatert og vi kan ikke gå direkte til rute > 5
+        history.push(nesteRoute.path);
+    };
+    const startPåNytt = (): void => {
+        avbrytSøknad();
     };
 
     const onStartSøknad = (event: React.FormEvent) => {
@@ -75,5 +77,6 @@ export const useBekreftelseOgStartSoknad = (): {
         bekreftelseOnChange,
         bekreftelseStatus,
         fortsettPåSøknaden,
+        startPåNytt,
     };
 };

@@ -15,6 +15,7 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
+import FortsettPåSøknad from './FortsettPåSøknad';
 
 const StyledSidetittel = styled(Sidetittel)`
     && {
@@ -25,7 +26,7 @@ const StyledSidetittel = styled(Sidetittel)`
 const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
 
-    const { sluttbruker } = useApp();
+    const { sluttbruker, mellomlagretVerdi } = useApp();
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 
@@ -47,7 +48,7 @@ const Forside: React.FC = () => {
                 <EksternLenke lenkeSpråkId={'#'} lenkeTekstSpråkId={'forside.plikter.lenketekst'} />
             </Informasjonsbolk>
 
-            <BekreftelseOgStartSoknad navn={navn} />
+            {mellomlagretVerdi ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad navn={navn} />}
 
             <Informasjonsbolk>
                 <EksternLenke
