@@ -6,6 +6,17 @@ import { IBarn } from '../../../../typer/person';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../../utils/testing';
 import VelgBarn from '../VelgBarn';
 
+jest.mock('react-router-dom', () => ({
+    ...(jest.requireActual('react-router-dom') as object),
+    useLocation: () => ({
+        pathname: '/velg-barn',
+    }),
+    useHistory: () => ({
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        push: () => {},
+    }),
+}));
+
 describe('FjernBarnKnapp', () => {
     test(`Kan fjern-knapp dukker kun opp på manuelt registrerte barn`, () => {
         silenceConsoleErrors();

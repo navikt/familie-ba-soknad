@@ -5,6 +5,7 @@ import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-d
 import { useApp } from '../../../context/AppContext';
 
 interface RedirectTilStartProps extends RouteProps {
+    // eslint-disable-next-line
     component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 }
 const RedirectTilStart: React.FC<RedirectTilStartProps> = ({ component: Component, ...rest }) => {

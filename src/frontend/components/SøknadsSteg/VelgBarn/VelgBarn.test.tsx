@@ -7,6 +7,17 @@ import { ISøknad } from '../../../typer/søknad';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import VelgBarn from './VelgBarn';
 
+jest.mock('react-router-dom', () => ({
+    ...(jest.requireActual('react-router-dom') as object),
+    useLocation: () => ({
+        pathname: '/velg-barn',
+    }),
+    useHistory: () => ({
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        push: () => {},
+    }),
+}));
+
 describe('VelgBarn', () => {
     test('Kan fjerne manuelt registrerte barn', () => {
         silenceConsoleErrors();

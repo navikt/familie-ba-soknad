@@ -13,7 +13,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
+import { useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
@@ -207,7 +207,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
                                     )}
                             />
                         )}
-                    {!erPåKvitteringsside && (
+                    {!erPåKvitteringsside(location.pathname) && (
                         <Navigeringspanel
                             onTilbakeCallback={håndterTilbake}
                             onAvbrytCallback={håndterModalStatus}

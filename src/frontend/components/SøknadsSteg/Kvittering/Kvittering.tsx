@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 
 import dayjs, { Dayjs } from 'dayjs';
-import { useIntl } from 'react-intl';
 
 import AlertStripe from 'nav-frontend-alertstriper';
-import Lenke from 'nav-frontend-lenker';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { RessursStatus } from '@navikt/familie-typer';
