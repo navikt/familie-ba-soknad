@@ -1,34 +1,38 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import Lenke from 'nav-frontend-lenker';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { ExternalLink } from '@navikt/ds-icons';
-
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const StyledLenke = styled(Lenke)`
-    margin-top: 1.125rem;
     display: inline-block;
+    margin-top: 0.5rem;
 `;
 
 const StyledLenkeTekst = styled.span`
     padding-right: 0.2rem;
 `;
 
-const EksternLenke: React.FC<{ lenkeTekstSpråkId: string; lenkeSpråkId: string }> = ({
-    lenkeTekstSpråkId,
-    lenkeSpråkId,
-}) => {
+const EksternLenke: React.FC<{
+    lenkeTekstSpråkId: string;
+    lenkeSpråkId: string;
+    target?: string;
+}> = ({ lenkeTekstSpråkId, lenkeSpråkId, target }) => {
+    const intl = useIntl();
     return (
         <Normaltekst>
-            <StyledLenke href={lenkeSpråkId}>
+            <StyledLenke
+                href={intl.formatMessage({ id: lenkeSpråkId })}
+                target={target}
+                rel="noopener noreferrer"
+            >
                 <StyledLenkeTekst>
                     <SpråkTekst id={lenkeTekstSpråkId} />
                 </StyledLenkeTekst>
-                <ExternalLink strokeWidth={0.5} />
             </StyledLenke>
         </Normaltekst>
     );
