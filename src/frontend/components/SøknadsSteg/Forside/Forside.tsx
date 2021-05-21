@@ -44,15 +44,20 @@ const Forside: React.FC = () => {
 
             <Informasjonsbolk>
                 <SpråkTekst id="forside.info.punktliste" values={{ b: msg => <b>{msg}</b> }} />
-                <EksternLenke lenkeSpråkId={'#'} lenkeTekstSpråkId={'forside.plikter.lenketekst'} />
+                <EksternLenke
+                    lenkeSpråkId={'forside.plikter.lenke'}
+                    lenkeTekstSpråkId={'forside.plikter.lenketekst'}
+                    target="_blank"
+                />
             </Informasjonsbolk>
 
             <BekreftelseOgStartSoknad navn={navn} />
 
             <Informasjonsbolk>
                 <EksternLenke
+                    lenkeSpråkId={'forside.behandling-av-personopplysning.lenke'}
                     lenkeTekstSpråkId={'forside.behandling-av-personopplysning.lenketekst'}
-                    lenkeSpråkId={'#'}
+                    target="_blank"
                 />
             </Informasjonsbolk>
         </InnholdContainer>
