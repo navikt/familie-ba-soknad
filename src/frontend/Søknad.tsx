@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import RedirectTilStart from './components/Felleskomponenter/RedirectTilStart/RedirectTilStart';
 import Helse from './components/Helse/Helse';
 import Forside from './components/SøknadsSteg/Forside/Forside';
 import { useApp } from './context/AppContext';
@@ -19,7 +20,7 @@ const Søknad = () => {
                     <Route exact={true} path={'/helse'} component={Helse} />
                     <Route exact={true} path={'/'} component={Forside} />
                     {routes.map((steg, index) => (
-                        <Route
+                        <RedirectTilStart
                             key={index}
                             exact={true}
                             path={steg.path}
