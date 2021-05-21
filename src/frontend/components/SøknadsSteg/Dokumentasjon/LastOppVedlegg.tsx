@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import { Checkbox } from 'nav-frontend-skjema';
@@ -26,6 +27,7 @@ const Container = styled.div`
 
 const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
     const { søknad, settSøknad } = useApp();
+    const { formatMessage } = useIntl();
 
     const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
         const huketAv = event.target.checked;
@@ -58,7 +60,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                 return barn.navn;
             } else {
                 return index === barnDokGjelderFor.length - 1
-                    ? ` og ${barn.navn}`
+                    ? ` ${formatMessage({ id: 'felles.og' })} ${barn.navn}`
                     : `, ${barn.navn}`;
             }
         });
