@@ -31,7 +31,9 @@ export const useBekreftelseOgStartSoknad = (): {
         erStegUtfyltFrafør,
         brukMellomlagretVerdi,
         avbrytOgSlettSøknad,
+        mellomlagretVerdi,
     } = useApp();
+    const { settBarnForRoutes, hentGjeldendeRoutePåStegindex } = useRoutes();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
@@ -41,10 +43,20 @@ export const useBekreftelseOgStartSoknad = (): {
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
 
     const fortsettPåSøknaden = (): void => {
-        brukMellomlagretVerdi();
         // TODO: Pga dynamiske routes blir de ikke oppdatert og vi kan ikke gå direkte til rute > 5
-        history.push(nesteRoute.path);
+
+        if (mellomlagretVerdi) {
+            brukMellomlagretVerdi();
+            settBarnForRoutes(mellomlagretVerdi.søknad.barnInkludertISøknaden);
+            history.push(
+                hentGjeldendeRoutePåStegindex(mellomlagretVerdi.sisteUtfylteStegIndex).path
+            );
+        } else {
+            brukMellomlagretVerdi();
+            history.push(nesteRoute.path);
+        }
     };
+
     const startPåNytt = (): void => {
         avbrytOgSlettSøknad();
     };

@@ -115,6 +115,10 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         return routes[hentRouteIndex(currentPath) + 1];
     };
 
+    const hentGjeldendeRoutePåStegindex = (stegIndex: number) => {
+        return routes[stegIndex];
+    };
+
     const hentPath = (route: RouteEnum) => {
         return routes.find(r => r.route === route)?.path;
     };
@@ -135,6 +139,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         hentAktivtStegIndexForStegindikator,
         hentForrigeRoute,
         hentNesteRoute,
+        hentGjeldendeRoutePåStegindex,
         hentPath,
         hentStegNummer,
         routes,
