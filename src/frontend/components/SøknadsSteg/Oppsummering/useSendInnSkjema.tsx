@@ -1,10 +1,8 @@
 import { useIntl } from 'react-intl';
 
-import { ESvar } from '@navikt/familie-form-elements';
-
 import * as bokmålSpråktekster from '../../../assets/lang/nb.json';
 import { useApp } from '../../../context/AppContext';
-import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
+import { IBarnMedISøknad } from '../../../typer/person';
 import {
     ISøknad,
     ISøknadKontrakt,
@@ -70,22 +68,6 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         };
     };
 
-    const oppsamlingsfelt = (
-        spørsmålId: OmBarnaDineSpørsmålId,
-        barnDataKey: barnDataKeySpørsmål,
-        oppfølgingCondition = ESvar.JA
-    ) => {
-        const { barnInkludertISøknaden } = søknad;
-        return søknadsfelt(
-            språktekstFraSpørsmålId(spørsmålId),
-            barnInkludertISøknaden.reduce(
-                (accumulator, current) =>
-                    accumulator || current[barnDataKey].svar === oppfølgingCondition,
-                false
-            )
-        );
-    };
-
     const dataISøknadKontraktFormat = (søknad: ISøknad): ISøknadKontrakt => {
         const { søker } = søknad;
         // Raskeste måte å få tak i alle spørsmål minus de andre feltene på søker
@@ -119,34 +101,37 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
             },
             barn: barnInkludertISøknaden.map(barn => barnISøknadsFormat(barn)),
             spørsmål: {
-                erNoenAvBarnaFosterbarn: oppsamlingsfelt(
-                    OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
-                    barnDataKeySpørsmål.erFosterbarn
+                erNoenAvBarnaFosterbarn: søknadsfelt(
+                    språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),
+                    søknad.erNoenAvBarnaFosterbarn.svar
                 ),
-                erSøktAsylForBarn: oppsamlingsfelt(
-                    OmBarnaDineSpørsmålId.søktAsylForBarn,
-                    barnDataKeySpørsmål.erAsylsøker
+                søktAsylForBarn: søknadsfelt(
+                    språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.søktAsylForBarn),
+                    søknad.søktAsylForBarn.svar
                 ),
-                oppholderBarnSegIInstitusjon: oppsamlingsfelt(
-                    OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon,
-                    barnDataKeySpørsmål.oppholderSegIInstitusjon
+                oppholderBarnSegIInstitusjon: søknadsfelt(
+                    språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon),
+                    søknad.oppholderBarnSegIInstitusjon.svar
                 ),
-                barnOppholdtSegTolvMndSammenhengendeINorge: oppsamlingsfelt(
-                    OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge,
-                    barnDataKeySpørsmål.boddMindreEnn12MndINorge,
-                    ESvar.NEI
+                barnOppholdtSegTolvMndSammenhengendeINorge: søknadsfelt(
+                    språktekstFraSpørsmålId(
+                        OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
+                    ),
+                    søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar
                 ),
-                erBarnAdoptertFraUtland: oppsamlingsfelt(
-                    OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland,
-                    barnDataKeySpørsmål.erAdoptertFraUtland
+                erBarnAdoptertFraUtland: søknadsfelt(
+                    språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland),
+                    søknad.erBarnAdoptertFraUtland.svar
                 ),
-                mottarBarnetrygdForBarnFraAnnetEøsland: oppsamlingsfelt(
-                    OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
-                    barnDataKeySpørsmål.barnetrygdFraAnnetEøsland
+                mottarBarnetrygdForBarnFraAnnetEøsland: søknadsfelt(
+                    språktekstFraSpørsmålId(
+                        OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland
+                    ),
+                    søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar
                 ),
-                oppholderBarnSegIUtland: oppsamlingsfelt(
-                    OmBarnaDineSpørsmålId.oppholderBarnSegIUtland,
-                    barnDataKeySpørsmål.oppholderSegIUtland
+                oppholderBarnSegIUtland: søknadsfelt(
+                    språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.oppholderBarnSegIUtland),
+                    søknad.oppholderBarnSegIUtland.svar
                 ),
                 oppfølgingsspørsmåltekster: {
                     label:
@@ -158,6 +143,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                                 'ombarnet.institusjon',
                                 'ombarnet.oppholdutland',
                                 'ombarnet.sammenhengende-opphold',
+                                'ombarnet.barnetrygd-eøs',
                             ].map(tekstId => [tekstId, bokmålSpråktekster[tekstId]])
                         ),
                     },
