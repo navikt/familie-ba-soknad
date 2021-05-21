@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 
 import styled from 'styled-components/macro';
 
-import Lenke from 'nav-frontend-lenker';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import AlertStripe from './AlertStripe/AlertStripe';
+import EksternLenke from './EksternLenke/EksternLenke';
 import Informasjonsbolk from './Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from './SpråkTekst/SpråkTekst';
 
@@ -32,11 +32,10 @@ export const SøkerMåBrukePDF: FC<Props> = ({ advarselTekstId, utfyllendeAdvars
                 </Informasjonsbolk>
             )}
             <LenkeContainer>
-                <Normaltekst>
-                    <Lenke href={'#'}>
-                        <SpråkTekst id={'felles.bruk-pdfskjema.lenketekst'} />
-                    </Lenke>
-                </Normaltekst>
+                <EksternLenke
+                    lenkeSpråkId={'felles.bruk-pdfskjema.lenke'}
+                    lenkeTekstSpråkId={'felles.bruk-pdfskjema.lenketekst'}
+                />
             </LenkeContainer>
             <Normaltekst>
                 <SpråkTekst id={'felles.sende-skjema.info'} />

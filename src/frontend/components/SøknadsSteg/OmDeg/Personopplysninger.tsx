@@ -10,6 +10,7 @@ import { useApp } from '../../../context/AppContext';
 import { hentSivilstatus, landkodeTilSpråk } from '../../../utils/person';
 import { genererAdresseVisning } from '../../../utils/visning';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
+import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -23,6 +24,11 @@ export const Personopplysninger: React.FC = () => {
         <>
             <AlertStripe>
                 <SpråkTekst id={'omdeg.personopplysninger.info.alert'} />
+                <EksternLenke
+                    lenkeTekstSpråkId={'omdeg.endre-opplysninger.lenketekst'}
+                    lenkeSpråkId={'omdeg.endre-opplysninger.lenke'}
+                    target="_blank"
+                />
             </AlertStripe>
 
             <Informasjonsbolk>
