@@ -3,6 +3,7 @@ interface MiljøProps {
     visInnsendingsknapp: boolean;
     mellomlagerUrl: string;
     modellVersjon: number;
+    dokumentUrl: string;
 }
 const modellVersjon = 1;
 
@@ -14,6 +15,8 @@ const Miljø = (): MiljøProps => {
             mellomlagerUrl:
                 'https://familie-dokument.dev.nav.no/familie/dokument/api/soknad/barnetrygd',
             modellVersjon: modellVersjon,
+            dokumentUrl:
+                'https://familie-dokument.dev.nav.no/familie/dokument/api/mapper/ANYTTHING', //Vil uansett gå til bucket "familievedlegg" enn så lenge
         };
     } else if (window.location.hostname.indexOf('familie-ba-soknad.nav') > -1) {
         return {
@@ -21,6 +24,7 @@ const Miljø = (): MiljøProps => {
             visInnsendingsknapp: false,
             mellomlagerUrl: 'https://www.nav.no/familie/dokument/api/soknad/barnetrygd',
             modellVersjon: modellVersjon,
+            dokumentUrl: `https://www.nav.no/familie/dokument/api/mapper/ANYTTHING`, //Vil uansett gå til bucket "familievedlegg" enn så lenge,
         };
     } else {
         return {
@@ -28,6 +32,7 @@ const Miljø = (): MiljøProps => {
             visInnsendingsknapp: true,
             mellomlagerUrl: 'http://localhost:8082/api/soknad/barnetrygd',
             modellVersjon: modellVersjon,
+            dokumentUrl: `http://localhost:8082/api/mapper/ANYTTHING`,
         };
     }
 };

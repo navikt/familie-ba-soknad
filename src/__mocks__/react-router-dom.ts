@@ -1,18 +1,28 @@
+const reactRouterDom = jest.createMockFromModule('react-router-dom');
+
 const mockHistoryArray: string[] = [];
 
-const reactRouterDom = jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => ({
-        pathname: mockHistoryArray[mockHistoryArray.length - 1],
-    }),
-    useHistory: () => mockHistoryArray,
-    __setHistory: (history: string[]): string[] => {
-        while (mockHistoryArray.length > 0) {
-            mockHistoryArray.pop();
-        }
-        mockHistoryArray.push(...history);
-        return mockHistoryArray;
-    },
-}));
+const useLocation = () => ({
+    pathname: mockHistoryArray[mockHistoryArray.length - 1],
+});
 
-export default reactRouterDom;
+const useHistory = () => mockHistoryArray;
+
+const __setHistory = (history: string[]): string[] => {
+    while (mockHistoryArray.length > 0) {
+        mockHistoryArray.pop();
+    }
+    mockHistoryArray.push(...history);
+    return mockHistoryArray;
+};
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+reactRouterDom.useHistory = useHistory;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+reactRouterDom.useLocation = useLocation;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+reactRouterDom.__setHistory = __setHistory;
+
+module.exports = reactRouterDom;
