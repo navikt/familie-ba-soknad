@@ -13,6 +13,17 @@ import {
 import OmDeg from './OmDeg';
 import { omDegSpørsmålSpråkId } from './spørsmål';
 
+jest.mock('react-router-dom', () => ({
+    ...(jest.requireActual('react-router-dom') as object),
+    useLocation: () => ({
+        pathname: '/om-deg',
+    }),
+    useHistory: () => ({
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        push: () => {},
+    }),
+}));
+
 jest.mock('nav-frontend-alertstriper', () => ({ children }) => (
     <div data-testid="alertstripe">{children}</div>
 ));

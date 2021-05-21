@@ -18,6 +18,7 @@ import {
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
 import { ILokasjon } from '../../../typer/lokasjon';
 import {
     AlternativtSvarForInput,
@@ -307,16 +308,19 @@ export const useOmBarnet = (
         },
     });
 
-    const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(barn[barnDataKeySpørsmål.borFastMedSøker], {
-        andreForelderArbeidUtlandet: {
-            hovedSpørsmål: andreForelderArbeidUtlandet,
-            tilhørendeFelter: [andreForelderArbeidUtlandetHvilketLand],
-        },
-        andreForelderPensjonUtland: {
-            hovedSpørsmål: andreForelderPensjonUtland,
-            tilhørendeFelter: [andreForelderPensjonHvilketLand],
-        },
-    });
+    const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(
+        barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
+        {
+            andreForelderArbeidUtlandet: {
+                hovedSpørsmål: andreForelderArbeidUtlandet,
+                tilhørendeFelter: [andreForelderArbeidUtlandetHvilketLand],
+            },
+            andreForelderPensjonUtland: {
+                hovedSpørsmål: andreForelderPensjonUtland,
+                tilhørendeFelter: [andreForelderPensjonHvilketLand],
+            },
+        }
+    );
 
     /*--- SØKER FOR PERIODE ---*/
 
@@ -403,6 +407,31 @@ export const useOmBarnet = (
         spørsmålFelt: Felt<string>
     ): string => {
         return vetIkkeFelt.verdi === ESvar.JA ? AlternativtSvarForInput.UKJENT : spørsmålFelt.verdi;
+    };
+
+    const genererOppdatertDokumentasjon = (
+        dokumentasjon: IDokumentasjon,
+        kreverDokumentasjon,
+        barnId: string
+    ) => {
+        let oppdatertDokumentasjon = dokumentasjon;
+        if (kreverDokumentasjon) {
+            if (!dokumentasjon.gjelderForBarnId.includes(barnId)) {
+                oppdatertDokumentasjon = {
+                    ...dokumentasjon,
+                    gjelderForBarnId: [...oppdatertDokumentasjon.gjelderForBarnId].concat(barnId),
+                };
+            }
+        } else {
+            oppdatertDokumentasjon = {
+                ...dokumentasjon,
+                gjelderForBarnId: [...oppdatertDokumentasjon.gjelderForBarnId].filter(
+                    id => id !== barnId
+                ),
+            };
+        }
+
+        return oppdatertDokumentasjon;
     };
 
     const oppdaterSøknad = () => {
@@ -527,9 +556,26 @@ export const useOmBarnet = (
         settSøknad({
             ...søknad,
             barnInkludertISøknaden: oppdatertBarnInkludertISøknaden,
+            dokumentasjon: søknad.dokumentasjon.map(dok => {
+                switch (dok.dokumentasjonsbehov) {
+                    case Dokumentasjonsbehov.AVTALE_DELT_BOSTED:
+                        return genererOppdatertDokumentasjon(
+                            dok,
+                            skriftligAvtaleOmDeltBosted.verdi === ESvar.JA,
+                            barn.id
+                        );
+                    case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
+                        return genererOppdatertDokumentasjon(
+                            dok,
+                            borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker,
+                            barn.id
+                        );
+                    default:
+                        return dok;
+                }
+            }),
         });
     };
-
     return {
         oppdaterSøknad,
         skjema,

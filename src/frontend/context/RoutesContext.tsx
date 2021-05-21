@@ -4,6 +4,7 @@ import createUseContext from 'constate';
 import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg';
 import { matchPath } from 'react-router';
 
+import Dokumentasjon from '../components/SøknadsSteg/Dokumentasjon/Dokumentasjon';
 import Forside from '../components/SøknadsSteg/Forside/Forside';
 import Kvittering from '../components/SøknadsSteg/Kvittering/Kvittering';
 import OmBarnaDine from '../components/SøknadsSteg/OmBarnaDine/OmBarnaDine';
@@ -29,6 +30,7 @@ export enum RouteEnum {
     OmBarnet = 'Om Barnet',
     Oppsummering = 'Oppsummering',
     Kvittering = 'Kvittering',
+    Dokumentasjon = 'Dokumentasjon',
 }
 
 export const omBarnetBasePath = 'om-barnet';
@@ -75,6 +77,12 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
             komponent: Oppsummering,
         },
         {
+            path: '/dokumentasjon',
+            label: 'Dokumentasjon',
+            route: RouteEnum.Dokumentasjon,
+            komponent: Dokumentasjon,
+        },
+        {
             path: '/kvittering',
             label: 'Kvittering',
             route: RouteEnum.Kvittering,
@@ -94,6 +102,9 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
             return match !== null;
         });
     };
+
+    const erPåKvitteringsside = (currentPath: string): boolean =>
+        routes[hentRouteIndex(currentPath)].route === RouteEnum.Kvittering;
 
     const hentAktivtStegIndexForStegindikator = (currentPath: string) => {
         // Trekker fra 1 fordi forsiden teller som en route
@@ -133,6 +144,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         routes,
         settBarnForRoutes,
         hentStegObjekterForStegIndikator,
+        erPåKvitteringsside,
     };
 });
 

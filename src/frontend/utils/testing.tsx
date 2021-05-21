@@ -12,6 +12,7 @@ import { RoutesProvider } from '../context/RoutesContext';
 
 export const spyOnUseApp = søknad => {
     const settSøknad = jest.fn();
+    const erPåKvitteringsside = jest.fn().mockImplementation(() => false);
     const erStegUtfyltFrafør = jest.fn().mockImplementation(() => true);
     const settSisteUtfylteStegIndex = jest.fn();
 
@@ -23,6 +24,7 @@ export const spyOnUseApp = søknad => {
         erStegUtfyltFrafør,
         settSøknad,
         sisteUtfylteStegIndex: 2,
+        erPåKvitteringsside,
     });
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
 
@@ -31,6 +33,7 @@ export const spyOnUseApp = søknad => {
         settSøknad,
         erStegUtfyltFrafør,
         settSisteUtfylteStegIndex,
+        erPåKvitteringsside,
     };
 };
 
