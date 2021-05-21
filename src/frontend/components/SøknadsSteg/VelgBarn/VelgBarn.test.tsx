@@ -33,6 +33,7 @@ describe('VelgBarn', () => {
             barnRegistrertManuelt: [manueltRegistrert],
             barnInkludertISøknaden: [manueltRegistrert, fraPdl],
             søker: { barn: [fraPdl] },
+            dokumentasjon: [],
         };
         const { settSøknad } = spyOnUseApp(søknad);
 
@@ -58,6 +59,7 @@ describe('VelgBarn', () => {
             barnRegistrertManuelt: [],
             barnInkludertISøknaden: [manueltRegistrert, fraPdl],
             søker: { barn: [fraPdl] },
+            dokumentasjon: [],
         });
 
         // Når man trykker på gå videre blir det manuelt registrerte barnet fjernet fra søknaden
@@ -65,6 +67,7 @@ describe('VelgBarn', () => {
             barnRegistrertManuelt: [],
             barnInkludertISøknaden: [fraPdl],
             søker: { barn: [fraPdl] },
+            dokumentasjon: [],
         });
     });
 

@@ -11,6 +11,7 @@ import {
     IBarnRespons,
 } from '../typer/person';
 import { ISøknad } from '../typer/søknad';
+import { hentUid } from './uuid';
 
 export const hentAlder = (dato: string): string => {
     const idag = new Date();
@@ -73,6 +74,7 @@ export const hentSivilstatus = (statuskode?: ESivilstand) => {
 export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => {
     return {
         ...barn,
+        id: hentUid(),
         [barnDataKeySpørsmål.erFosterbarn]: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
             svar: undefined,

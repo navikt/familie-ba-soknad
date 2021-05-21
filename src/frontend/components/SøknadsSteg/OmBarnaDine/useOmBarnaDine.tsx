@@ -3,6 +3,7 @@ import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import { barnDataKeySpørsmål } from '../../../typer/person';
 import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
@@ -131,38 +132,67 @@ export const useOmBarnaDine = (): {
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
 
+    const mapFraIdentTilBarnId = (identer: string[]): string[] => {
+        const mapTilBarnMedISøknad = søknad.barnInkludertISøknaden.filter(barn =>
+            identer.includes(barn.ident)
+        );
+
+        return mapTilBarnMedISøknad.map(barn => barn.id);
+    };
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
             erNoenAvBarnaFosterbarn: {
                 ...søknad.erNoenAvBarnaFosterbarn,
-                svar: skjema.felter.erNoenAvBarnaFosterbarn.verdi,
+                svar: erNoenAvBarnaFosterbarn.verdi,
             },
             oppholderBarnSegIInstitusjon: {
                 ...søknad.oppholderBarnSegIInstitusjon,
-                svar: skjema.felter.oppholderBarnSegIInstitusjon.verdi,
+                svar: oppholderBarnSegIInstitusjon.verdi,
             },
             erBarnAdoptertFraUtland: {
                 ...søknad.erBarnAdoptertFraUtland,
-                svar: skjema.felter.erBarnAdoptertFraUtland.verdi,
+                svar: erBarnAdoptertFraUtland.verdi,
             },
             oppholderBarnSegIUtland: {
                 ...søknad.oppholderBarnSegIUtland,
-                svar: skjema.felter.oppholderBarnSegIUtland.verdi,
+                svar: oppholderBarnSegIUtland.verdi,
             },
             søktAsylForBarn: {
                 ...søknad.søktAsylForBarn,
-                svar: skjema.felter.søktAsylForBarn.verdi,
+                svar: søktAsylForBarn.verdi,
             },
             barnOppholdtSegTolvMndSammenhengendeINorge: {
                 ...søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
-                svar: skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi,
+                svar: barnOppholdtSegTolvMndSammenhengendeINorge.verdi,
             },
             mottarBarnetrygdForBarnFraAnnetEøsland: {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
-                svar: skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
+                svar: mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
             },
             barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema),
+            dokumentasjon: søknad.dokumentasjon.map(dok => {
+                switch (dok.dokumentasjonsbehov) {
+                    case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:
+                        return {
+                            ...dok,
+                            gjelderForBarnId: mapFraIdentTilBarnId(hvemErSøktAsylFor.verdi),
+                        };
+                    case Dokumentasjonsbehov.ADOPSJON_DATO:
+                        return {
+                            ...dok,
+                            gjelderForBarnId: mapFraIdentTilBarnId(hvemErAdoptertFraUtland.verdi),
+                        };
+                    case Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN:
+                        return {
+                            ...dok,
+                            gjelderForBarnId: mapFraIdentTilBarnId(hvemErFosterbarn.verdi),
+                        };
+                    default:
+                        return dok;
+                }
+            }),
         });
     };
 
