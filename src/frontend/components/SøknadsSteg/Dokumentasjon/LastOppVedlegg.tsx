@@ -64,6 +64,23 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         });
     };
 
+    const antallVedlegg = () => {
+        const dokSomKrevesForBarn = søknad.dokumentasjon.filter(dok => dok.gjelderForBarnId.length);
+        let antallVedlegg = dokSomKrevesForBarn.length;
+
+        const erOppholdtillatelseKravForSøkerMenIkkeBarn = søknad.dokumentasjon.find(
+            dok =>
+                dok.dokumentasjonsbehov === Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE &&
+                !dok.gjelderForBarnId.length &&
+                dok.gjelderForSøker
+        );
+
+        if (erOppholdtillatelseKravForSøkerMenIkkeBarn) {
+            antallVedlegg++;
+        }
+        return antallVedlegg;
+    };
+
     return (
         <Container>
             <Undertittel>
@@ -73,9 +90,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                             id={'dokumentasjon.vedleggsnummer'}
                             values={{
                                 vedleggsnummer: vedleggNr,
-                                antallvedlegg: søknad.dokumentasjon.filter(
-                                    dok => dok.gjelderForBarnId.length
-                                ).length,
+                                antallvedlegg: antallVedlegg(),
                             }}
                         />
                         &nbsp;
