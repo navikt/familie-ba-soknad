@@ -9,9 +9,9 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
+import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
-import { SpråkLenke } from '../../Felleskomponenter/SpråkLenke/SpråkLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
@@ -20,8 +20,8 @@ import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnet } from './useOmBarnet';
 
-const StyledSpråkLenke = styled(SpråkLenke)`
-    margin-top: 1.125rem;
+const EksternLenkeContainer = styled.div`
+    margin-bottom: 4rem;
 `;
 
 const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
@@ -58,10 +58,13 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                                 <SpråkTekst id={'ombarnet.bosted-info'} />
                             </Normaltekst>
                         </div>
-                        <StyledSpråkLenke
-                            hrefId={'#'}
-                            lenkeTekstId={'ombarnet.les-mer-om-bosted.lenketekst'}
-                        />
+                        <EksternLenkeContainer>
+                            <EksternLenke
+                                lenkeSpråkId={'ombarnet.les-mer-om-bosted.lenke'}
+                                lenkeTekstSpråkId={'ombarnet.les-mer-om-bosted.lenketekst'}
+                                target="_blank"
+                            />
+                        </EksternLenkeContainer>
                         <JaNeiSpm
                             skjema={skjema}
                             felt={skjema.felter.borFastMedSøker}
