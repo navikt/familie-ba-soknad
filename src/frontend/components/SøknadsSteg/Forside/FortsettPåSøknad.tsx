@@ -2,14 +2,16 @@ import React, { FC } from 'react';
 
 import styled from 'styled-components/macro';
 
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import KnappBase from 'nav-frontend-knapper';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 
+import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
 const StyledKnappBase = styled(KnappBase)`
-    margin: 2.3rem auto 0 auto;
+    margin: 0 auto 2rem auto;
 `;
 
 const StyledFortsettPåSøknad = styled.div`
@@ -23,9 +25,13 @@ const FortsettPåSøknad: FC = () => {
     const { fortsettPåSøknaden, startPåNytt } = useBekreftelseOgStartSoknad();
     return (
         <StyledFortsettPåSøknad>
-            <Undertittel>
-                <SpråkTekst id={'mellomlagring.info'} />
-            </Undertittel>
+            <KomponentGruppe>
+                <AlertStripeInfo>
+                    <Normaltekst>
+                        <SpråkTekst id={'mellomlagring.info'} />
+                    </Normaltekst>
+                </AlertStripeInfo>
+            </KomponentGruppe>
             <StyledKnappBase type={'hoved'} onClick={fortsettPåSøknaden}>
                 <SpråkTekst id={'mellomlagring.knapp.fortsett'} />
             </StyledKnappBase>

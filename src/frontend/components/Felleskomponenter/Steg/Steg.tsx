@@ -1,20 +1,17 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-import { Fareknapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import Stegindikator from 'nav-frontend-stegindikator';
-import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
-import { device } from '../../../Theme';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -40,28 +37,6 @@ interface ISteg {
     };
     barn?: IBarnMedISøknad;
 }
-
-const AvsluttKnappContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-
-    @media all and ${device.mobile} {
-        width: 100%;
-    }
-`;
-
-const StyledUndertittel = styled(Undertittel)`
-    && {
-        margin: 2rem 0 1rem 0;
-    }
-`;
-
-const StyledModal = styled(Modal)`
-    && {
-        padding: 2rem 2rem 2rem;
-    }
-`;
 
 const ChildrenContainer = styled.div`
     margin-bottom: 2rem;
@@ -93,17 +68,15 @@ const samletSpørsmålId = {
 const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, avbrytSøknad } = useApp();
+    const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, gåTilbakeTilStart } = useApp();
     const {
-        erPåKvitteringsside,
         hentNesteRoute,
         hentForrigeRoute,
         hentAktivtStegIndexForStegindikator,
         hentRouteIndex,
         hentStegObjekterForStegIndikator,
+        erPåKvitteringsside,
     } = useRoutes();
-
-    const [åpenModal, settÅpenModal] = useState(false);
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
@@ -118,12 +91,8 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
         }
     }, []);
 
-    const håndterModalStatus = () => {
-        settÅpenModal(!åpenModal);
-    };
-
     const håndterAvbryt = () => {
-        avbrytSøknad();
+        gåTilbakeTilStart();
         history.push('/');
     };
     const gåVidere = () => {
@@ -210,31 +179,11 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
                     {!erPåKvitteringsside(location.pathname) && (
                         <Navigeringspanel
                             onTilbakeCallback={håndterTilbake}
-                            onAvbrytCallback={håndterModalStatus}
+                            onAvbrytCallback={håndterAvbryt}
                             valideringErOk={skjema && skjema.valideringErOk}
                         />
                     )}
                 </Form>
-
-                <StyledModal
-                    isOpen={åpenModal}
-                    onRequestClose={håndterModalStatus}
-                    closeButton={true}
-                    contentLabel="avbryt-søknad-modal"
-                    shouldCloseOnOverlayClick={true}
-                >
-                    <StyledUndertittel>
-                        <SpråkTekst id={'felles.avbryt-søknadsprosess'} />
-                    </StyledUndertittel>
-                    <Normaltekst>
-                        <SpråkTekst id={'felles.slette-advarsel'} />
-                    </Normaltekst>
-                    <AvsluttKnappContainer>
-                        <Fareknapp onClick={håndterAvbryt}>
-                            <SpråkTekst id={'felles.avbryt-slett'} />
-                        </Fareknapp>
-                    </AvsluttKnappContainer>
-                </StyledModal>
             </InnholdContainer>
         </>
     );

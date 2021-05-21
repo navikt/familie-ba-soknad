@@ -30,7 +30,7 @@ export const useBekreftelseOgStartSoknad = (): {
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
         brukMellomlagretVerdi,
-        avbrytSøknad,
+        avbrytOgSlettSøknad,
     } = useApp();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
@@ -46,7 +46,7 @@ export const useBekreftelseOgStartSoknad = (): {
         history.push(nesteRoute.path);
     };
     const startPåNytt = (): void => {
-        avbrytSøknad();
+        avbrytOgSlettSøknad();
     };
 
     const onStartSøknad = (event: React.FormEvent) => {

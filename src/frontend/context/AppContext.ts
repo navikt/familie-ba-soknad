@@ -209,9 +209,14 @@ const [AppProvider, useApp] = createUseContext(() => {
     const erStegUtfyltFrafør = (nåværendeStegIndex: number) =>
         sisteUtfylteStegIndex >= nåværendeStegIndex;
 
-    const avbrytSøknad = () => {
+    const avbrytOgSlettSøknad = () => {
         nullstillSøknadsobjekt();
         nullstillMellomlagretVerdi();
+        settSisteUtfylteStegIndex(-1);
+    };
+
+    const gåTilbakeTilStart = () => {
+        nullstillSøknadsobjekt();
         settSisteUtfylteStegIndex(-1);
     };
 
@@ -230,7 +235,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         sisteUtfylteStegIndex,
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
-        avbrytSøknad,
+        avbrytOgSlettSøknad,
+        gåTilbakeTilStart,
         brukMellomlagretVerdi,
         mellomlagretVerdi,
     };
