@@ -11,12 +11,11 @@ import { useApp } from '../../../context/AppContext';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { SpråkLenke } from '../../Felleskomponenter/SpråkLenke/SpråkLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 const Kvittering: React.FC = () => {
-    const { settSisteUtfylteStegIndex } = useApp();
+    const { avbrytSøknad } = useApp();
 
     const { innsendingStatus } = useApp();
     const innsendtDato: Dayjs =
@@ -29,8 +28,7 @@ const Kvittering: React.FC = () => {
 
     useEffect(() => {
         return () => {
-            // TODO: Vurder å nulle ut hele søknaden
-            settSisteUtfylteStegIndex(-1);
+            avbrytSøknad();
         };
     }, []);
 
@@ -53,15 +51,15 @@ const Kvittering: React.FC = () => {
                         id={'kvittering.info'}
                         values={{
                             lenkeDineSaker: (
-                                <SpråkLenke
-                                    hrefId={'kvittering.dinesaker.lenke'}
-                                    lenkeTekstId={'kvittering.dinesaker.lenketekst'}
+                                <EksternLenke
+                                    lenkeSpråkId={'kvittering.dinesaker.lenke'}
+                                    lenkeTekstSpråkId={'kvittering.dinesaker.lenketekst'}
                                 />
                             ),
                             lenkeFinnSaksbehandlingstid: (
-                                <SpråkLenke
-                                    hrefId={'kvittering.saksbehandlingstid.lenketekst'}
-                                    lenkeTekstId={'kvittering.saksbehandlingstid.lenketekst'}
+                                <EksternLenke
+                                    lenkeTekstSpråkId={'kvittering.saksbehandlingstid.lenketekst'}
+                                    lenkeSpråkId={'kvittering.saksbehandlingstid.lenketekst'}
                                 />
                             ),
                         }}
