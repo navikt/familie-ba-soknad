@@ -1,20 +1,27 @@
 import React, { ReactNode } from 'react';
 
+import { mockDeep } from 'jest-mock-extended';
 import * as reactRouterDom from 'react-router-dom';
 
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
+import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import norskeTekster from '../assets/lang/nb.json';
 import * as appContext from '../context/AppContext';
 import { AppProvider } from '../context/AppContext';
 import { RoutesProvider } from '../context/RoutesContext';
+import { IKvittering } from '../typer/kvittering';
 
 export const spyOnUseApp = søknad => {
     const settSøknad = jest.fn();
     const erPåKvitteringsside = jest.fn().mockImplementation(() => false);
     const erStegUtfyltFrafør = jest.fn().mockImplementation(() => true);
     const settSisteUtfylteStegIndex = jest.fn();
+    const innsendingStatus = mockDeep<Ressurs<IKvittering>>({
+        status: RessursStatus.IKKE_HENTET,
+    });
+    const settInnsendingStatus = jest.fn();
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
 
@@ -25,6 +32,8 @@ export const spyOnUseApp = søknad => {
         settSøknad,
         sisteUtfylteStegIndex: 2,
         erPåKvitteringsside,
+        innsendingStatus,
+        settInnsendingStatus,
     });
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
 
