@@ -60,6 +60,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         bredde={'S'}
                     />
                     <Datovelger
+                        avgrensDatoFremITid={true}
                         felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
                         labelTekstId={
@@ -99,6 +100,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         }
                     />
                     <Datovelger
+                        avgrensDatoFremITid={true}
                         felt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
                         labelTekstId={
@@ -131,6 +133,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     språkValues={{ navn: barn.navn }}
                 >
                     <Datovelger
+                        avgrensDatoFremITid={true}
                         felt={skjema.felter.nårKomBarnTilNorgeDato}
                         skjema={skjema}
                         labelTekstId={
