@@ -24,6 +24,9 @@ const BarnekortContainer = styled(Masonry)`
     display: flex;
     margin-top: 5rem;
 `;
+const LenkeContainer = styled.div`
+    margin-top: 1.5rem;
+`;
 
 const VelgBarn: React.FC = () => {
     const { søknad } = useApp();
@@ -58,12 +61,12 @@ const VelgBarn: React.FC = () => {
         >
             <AlertStripe form={'inline'}>
                 <SpråkTekst id={'hvilkebarn.info.alert'} />
+                <EksternLenke
+                    lenkeSpråkId={'hvilkebarn.endre-opplysninger.lenke'}
+                    lenkeTekstSpråkId={'hvilkebarn.endre-opplysninger.lenketekst'}
+                    target="_blank"
+                />
             </AlertStripe>
-
-            <EksternLenke
-                lenkeSpråkId={'#'}
-                lenkeTekstSpråkId={'hvilkebarn.endre-opplysninger.lenketekst'}
-            />
 
             <BarnekortContainer
                 id={VelgBarnSpørsmålId.velgBarn}
@@ -85,6 +88,13 @@ const VelgBarn: React.FC = () => {
                 {harBarnMedBeskyttaAdresse && <AdressebeskyttetKort />}
                 <NyttBarnKort />
             </BarnekortContainer>
+            <LenkeContainer>
+                <EksternLenke
+                    lenkeSpråkId={'hvilkebarn.regelverk.lenke'}
+                    lenkeTekstSpråkId={'hvilkebarn.regelverk.lenketekst'}
+                    target="_blank"
+                />
+            </LenkeContainer>
         </Steg>
     );
 };

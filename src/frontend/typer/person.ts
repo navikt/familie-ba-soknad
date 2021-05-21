@@ -104,6 +104,7 @@ export enum AlternativtSvarForInput {
 export type DatoMedUkjent = ISODateString | AlternativtSvarForInput.UKJENT;
 
 export interface IBarnMedISøknad extends IBarn {
+    id: string;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | undefined>;

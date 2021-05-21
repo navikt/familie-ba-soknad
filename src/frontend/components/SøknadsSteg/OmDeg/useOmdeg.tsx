@@ -15,6 +15,7 @@ import {
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useDatovelgerFeltMedJaNeiAvhengighet from './useDatovelgerFeltMedJaNeiAvhengighet';
 import useLanddropdownFeltMedJaNeiAvhengighet from './useLanddropdownFeltMedJaNeiAvhengighet';
@@ -256,6 +257,11 @@ export const useOmdeg = (): {
                     svar: skjema.felter.pensjonsland.verdi,
                 },
             },
+            dokumentasjon: søknad.dokumentasjon.map(dok =>
+                dok.dokumentasjonsbehov === Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE
+                    ? { ...dok, gjelderForSøker: erAsylsøker.verdi === ESvar.JA }
+                    : dok
+            ),
         });
     };
 

@@ -7,6 +7,17 @@ import { ISøknad } from '../../../typer/søknad';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import VelgBarn from './VelgBarn';
 
+jest.mock('react-router-dom', () => ({
+    ...(jest.requireActual('react-router-dom') as object),
+    useLocation: () => ({
+        pathname: '/velg-barn',
+    }),
+    useHistory: () => ({
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        push: () => {},
+    }),
+}));
+
 describe('VelgBarn', () => {
     test('Kan fjerne manuelt registrerte barn', () => {
         silenceConsoleErrors();
@@ -22,6 +33,7 @@ describe('VelgBarn', () => {
             barnRegistrertManuelt: [manueltRegistrert],
             barnInkludertISøknaden: [manueltRegistrert, fraPdl],
             søker: { barn: [fraPdl] },
+            dokumentasjon: [],
         };
         const { settSøknad } = spyOnUseApp(søknad);
 
@@ -47,6 +59,7 @@ describe('VelgBarn', () => {
             barnRegistrertManuelt: [],
             barnInkludertISøknaden: [manueltRegistrert, fraPdl],
             søker: { barn: [fraPdl] },
+            dokumentasjon: [],
         });
 
         // Når man trykker på gå videre blir det manuelt registrerte barnet fjernet fra søknaden
@@ -54,6 +67,7 @@ describe('VelgBarn', () => {
             barnRegistrertManuelt: [],
             barnInkludertISøknaden: [fraPdl],
             søker: { barn: [fraPdl] },
+            dokumentasjon: [],
         });
     });
 

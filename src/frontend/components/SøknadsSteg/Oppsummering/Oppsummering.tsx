@@ -512,14 +512,15 @@ const Oppsummering: React.FC = () => {
                             {barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar && (
                                 <OppsummeringFelt
                                     tittel={<SpråkTekst id={'felles.fødselsdato.label'} />}
-                                    søknadsvar={intl.formatMessage({
-                                        id:
-                                            barn[barnDataKeySpørsmål.andreForelderFødselsdato]
-                                                .svar !== AlternativtSvarForInput.UKJENT
-                                                ? barn[barnDataKeySpørsmål.andreForelderFødselsdato]
-                                                      .svar
-                                                : 'felles.fødselsdato-ukjent',
-                                    })}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar ===
+                                        AlternativtSvarForInput.UKJENT
+                                            ? intl.formatMessage({
+                                                  id: 'felles.fødselsdato-ukjent',
+                                              })
+                                            : barn[barnDataKeySpørsmål.andreForelderFødselsdato]
+                                                  .svar
+                                    }
                                 />
                             )}
                         </StyledOppsummeringsFeltGruppe>

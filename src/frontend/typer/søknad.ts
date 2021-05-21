@@ -3,7 +3,9 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
+import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { INøkkelPar } from './common';
+import { Dokumentasjonsbehov, IDokumentasjon, ISøknadKontraktDokumentasjon } from './dokumentasjon';
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, ISøker } from './person';
 
 export enum ESøknadstype {
@@ -50,6 +52,7 @@ export interface ISøknad {
     søktAsylForBarn: ISøknadSpørsmål<ESvar | undefined>;
     barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | undefined>;
     mottarBarnetrygdForBarnFraAnnetEøsland: ISøknadSpørsmål<ESvar | undefined>;
+    dokumentasjon: IDokumentasjon[];
 }
 
 export interface ISøknadSpørsmål<T> {
@@ -65,7 +68,7 @@ export interface ISøknadKontrakt {
     søker: ISøknadKontraktSøker;
     barn: ISøknadKontraktBarn[];
     spørsmål: SpørsmålMap;
-    vedleggReferanser: Record<string, ISøknadsfelt<string>>;
+    dokumentasjon: ISøknadKontraktDokumentasjon[];
 }
 
 export interface ISøknadKontraktSøker {
@@ -87,10 +90,42 @@ export interface ISøknadKontraktBarn {
 }
 
 export const initialStateSøknad: ISøknad = {
-    søknadstype: ESøknadstype.IKKE_SATT,
+    søknadstype: ESøknadstype.ORDINÆR,
     barnInkludertISøknaden: [],
     lestOgForståttBekreftelse: false,
     barnRegistrertManuelt: [],
+    dokumentasjon: [
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
+            'dokumentasjon.deltbosted.vedleggtittel',
+            'dokumentasjon.deltbosted.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
+            'dokumentasjon.oppholdstillatelse.vedleggtittel',
+            'dokumentasjon.oppholdstillatelse.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.ADOPSJON_DATO,
+            'dokumentasjon.adopsjon.vedleggtittel',
+            'dokumentasjon.adopsjon.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
+            'dokumentasjon.bekreftelsebarnevernet.vedleggtittel',
+            'dokumentasjon.bekreftelsebarnevernet.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
+            'dokumentasjon.bekreftelseborsammen.vedleggtittel',
+            'dokumentasjon.bekreftelseborsammen.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
+            'dokumentasjon.annendokumentasjon.vedleggtittel',
+            'dokumentasjon.annendokumentasjon.informasjon'
+        ),
+    ],
     søker: {
         navn: '',
         barn: [],
