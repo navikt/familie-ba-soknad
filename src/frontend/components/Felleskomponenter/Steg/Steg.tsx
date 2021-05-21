@@ -95,6 +95,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
     const location = useLocation<ILokasjon>();
     const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, avbrytSøknad } = useApp();
     const {
+        erPåKvitteringsside,
         hentNesteRoute,
         hentForrigeRoute,
         hentAktivtStegIndexForStegindikator,
@@ -206,11 +207,13 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
                                     )}
                             />
                         )}
-                    <Navigeringspanel
-                        onTilbakeCallback={håndterTilbake}
-                        onAvbrytCallback={håndterModalStatus}
-                        valideringErOk={skjema && skjema.valideringErOk}
-                    />
+                    {!erPåKvitteringsside(location.pathname) && (
+                        <Navigeringspanel
+                            onTilbakeCallback={håndterTilbake}
+                            onAvbrytCallback={håndterModalStatus}
+                            valideringErOk={skjema && skjema.valideringErOk}
+                        />
+                    )}
                 </Form>
 
                 <StyledModal
