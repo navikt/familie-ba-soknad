@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
@@ -17,12 +17,28 @@ export const useBekreftelseOgStartSoknad = (): {
     onStartSøknad: (event: React.FormEvent) => void;
     bekreftelseOnChange: () => void;
     bekreftelseStatus: BekreftelseStatus;
+    fortsettPåSøknaden: () => void;
+    startPåNytt: () => void;
 } => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
 
     const { hentNesteRoute, hentRouteIndex } = useRoutes();
-    const { søknad, settSøknad, settSisteUtfylteStegIndex, erStegUtfyltFrafør } = useApp();
+    const {
+        søknad,
+        settSøknad,
+        settSisteUtfylteStegIndex,
+        erStegUtfyltFrafør,
+        brukMellomlagretVerdi,
+        avbrytOgSlettSøknad,
+        mellomlagretVerdi,
+    } = useApp();
+    const {
+        settBarnForRoutes,
+        hentGjeldendeRoutePåStegindex,
+        oppdatertEtterMellomlagring,
+        settOppdatertEtterMellomlagring,
+    } = useRoutes();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
@@ -30,6 +46,30 @@ export const useBekreftelseOgStartSoknad = (): {
 
     const nesteRoute: IRoute = hentNesteRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
+
+    useEffect(() => {
+        if (oppdatertEtterMellomlagring && mellomlagretVerdi) {
+            history.push(
+                hentGjeldendeRoutePåStegindex(mellomlagretVerdi.sisteUtfylteStegIndex).path
+            );
+            settOppdatertEtterMellomlagring(false);
+        }
+    }, [oppdatertEtterMellomlagring]);
+
+    const fortsettPåSøknaden = (): void => {
+        if (mellomlagretVerdi) {
+            brukMellomlagretVerdi();
+            settBarnForRoutes(mellomlagretVerdi.søknad.barnInkludertISøknaden);
+            settOppdatertEtterMellomlagring(true);
+        } else {
+            brukMellomlagretVerdi();
+            history.push(nesteRoute.path);
+        }
+    };
+
+    const startPåNytt = (): void => {
+        avbrytOgSlettSøknad();
+    };
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();
@@ -58,5 +98,7 @@ export const useBekreftelseOgStartSoknad = (): {
         onStartSøknad,
         bekreftelseOnChange,
         bekreftelseStatus,
+        fortsettPåSøknaden,
+        startPåNytt,
     };
 };

@@ -42,6 +42,9 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
 
     const [barnForRoutes, settBarnForRoutes] = useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
 
+    // Hack for å unngå race-condition mellom redirect og oppdatering av ruter med barn ved bruk av mellomlagret verdi
+    const [oppdatertEtterMellomlagring, settOppdatertEtterMellomlagring] = useState(false);
+
     // En route per barn som er valgt, eller en plassholder hvis ingen er valgt
     const barnRoutes: IRoute[] = barnForRoutes.length
         ? barnForRoutes.map((barn, index) => {
@@ -119,6 +122,10 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         return routes[hentRouteIndex(currentPath) + 1];
     };
 
+    const hentGjeldendeRoutePåStegindex = (stegIndex: number) => {
+        return routes[stegIndex];
+    };
+
     const hentPath = (route: RouteEnum) => {
         return routes.find(r => r.route === route)?.path;
     };
@@ -139,10 +146,13 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         hentAktivtStegIndexForStegindikator,
         hentForrigeRoute,
         hentNesteRoute,
+        hentGjeldendeRoutePåStegindex,
         hentPath,
         hentStegNummer,
         routes,
         settBarnForRoutes,
+        oppdatertEtterMellomlagring,
+        settOppdatertEtterMellomlagring,
         hentStegObjekterForStegIndikator,
         erPåKvitteringsside,
     };

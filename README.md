@@ -7,8 +7,11 @@ Frontend - søknad for barnetrygd.
 
 ## Kjør lokalt
 
+
 1. `yarn install`
 2. `yarn start:dev`
+
+For å kjøre med mellomlagring må du ha familie-dokument kjørende. 
 
 ## Kjør full app
 For å kunne se PDFen som blir sent til joark (arkivering) lokalt må vi kjøre en del apper i tillegg til denne.

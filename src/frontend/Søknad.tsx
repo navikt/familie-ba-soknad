@@ -27,6 +27,7 @@ const Søknad = () => {
                             component={steg.komponent}
                         />
                     ))}
+                    <Route path={'*'} component={Forside} />
                 </Switch>
             </Router>
         </div>
