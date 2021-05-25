@@ -638,9 +638,9 @@ const Oppsummering: React.FC = () => {
                                                 id={'ombarnet.søker-for-periode.startdato.spm'}
                                             />
                                         }
-                                        søknadsvar={
+                                        søknadsvar={formaterDato(
                                             barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar
-                                        }
+                                        )}
                                     />
                                     <OppsummeringFelt
                                         tittel={
@@ -648,9 +648,9 @@ const Oppsummering: React.FC = () => {
                                                 id={'ombarnet.søker-for-periode.sluttdato.spm'}
                                             />
                                         }
-                                        søknadsvar={
+                                        søknadsvar={formaterDato(
                                             barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar
-                                        }
+                                        )}
                                     />
                                 </>
                             ) : (
