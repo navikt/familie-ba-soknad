@@ -6,7 +6,6 @@ import styled from 'styled-components/macro';
 import navFarger from 'nav-frontend-core';
 import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
 
-import { DeleteFilled } from '@navikt/ds-icons';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
@@ -111,19 +110,7 @@ const Navigeringspanel: React.FC<{
                     }
                 />
             </StyledKnappBase>
-            <StyledFlatKnapp
-                mini
-                htmlType={'button'}
-                onClick={() => {
-                    //TODO: enten fjerne knapp eller legge til mellomlagring
-                    alert('ikke implementert enda');
-                }}
-                color={navFarger.navBla}
-                gridarea={'avsluttOgFortsett'}
-                margintop={'0.5rem'}
-            >
-                <SpråkTekst id={'felles.navigasjon.avsluttogfortsett'} />
-            </StyledFlatKnapp>
+
             <StyledFlatKnapp
                 mini
                 htmlType={'button'}
@@ -132,10 +119,7 @@ const Navigeringspanel: React.FC<{
                 gridarea={'avbrytOgSlett'}
                 margintop={'0'}
             >
-                <DeleteFilled />
-                <span>
-                    <SpråkTekst id={'felles.navigasjon.avsluttogslett'} />
-                </span>
+                <SpråkTekst id={'felles.navigasjon.avbryt'} />
             </StyledFlatKnapp>
         </Container>
     );

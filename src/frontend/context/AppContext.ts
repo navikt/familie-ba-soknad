@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import createUseContext from 'constate';
 
+import { useSprakContext } from '@navikt/familie-sprakvelger';
 import {
     ApiRessurs,
     byggHenterRessurs,
@@ -11,7 +12,9 @@ import {
     RessursStatus,
 } from '@navikt/familie-typer';
 
+import Miljø from '../Miljø';
 import { IKvittering } from '../typer/kvittering';
+import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
@@ -26,6 +29,8 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [søknad, settSøknad] = useState<ISøknad>(initialStateSøknad);
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
+    const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
+    const [valgtLocale, setValgtLocale] = useSprakContext();
 
     autentiseringsInterceptor();
 
@@ -44,6 +49,7 @@ const [AppProvider, useApp] = createUseContext(() => {
             }).then(ressurs => {
                 settSluttbruker(ressurs);
 
+                hentOgSettMellomlagretData();
                 ressurs.status === RessursStatus.SUKSESS &&
                     settSøknad({
                         ...søknad,
@@ -61,6 +67,64 @@ const [AppProvider, useApp] = createUseContext(() => {
             });
         }
     }, [innloggetStatus]);
+
+    const mellomlagre = () => {
+        const barnetrygd: IMellomlagretBarnetrygd = {
+            søknad: søknad,
+            modellVersjon: Miljø().modellVersjon,
+            sisteUtfylteStegIndex: sisteUtfylteStegIndex,
+            locale: valgtLocale,
+        };
+        axiosRequest<IMellomlagretBarnetrygd, IMellomlagretBarnetrygd>({
+            url: Miljø().mellomlagerUrl,
+            method: 'post',
+            withCredentials: true,
+            påvirkerSystemLaster: false,
+            data: barnetrygd,
+        }).catch(() => {
+            // do nothing
+        });
+        settMellomlagretVerdi(barnetrygd);
+    };
+
+    useEffect(() => {
+        if (sisteUtfylteStegIndex > 0) {
+            mellomlagre();
+        }
+    }, [søknad, sisteUtfylteStegIndex]);
+
+    const hentOgSettMellomlagretData = () => {
+        preferredAxios
+            .get(Miljø().mellomlagerUrl, {
+                withCredentials: true,
+            })
+            .then((response: { data?: IMellomlagretBarnetrygd }) => {
+                if (response.data) {
+                    settMellomlagretVerdi(response.data);
+                }
+            })
+            .catch(() => {
+                // Do nothing
+            });
+    };
+
+    const brukMellomlagretVerdi = () => {
+        if (mellomlagretVerdi) {
+            settSøknad(mellomlagretVerdi.søknad);
+            settSisteUtfylteStegIndex(mellomlagretVerdi.sisteUtfylteStegIndex);
+            setValgtLocale(mellomlagretVerdi.locale);
+        }
+    };
+
+    const nullstillMellomlagretVerdi = () => {
+        axiosRequest<void, void>({
+            url: Miljø().mellomlagerUrl,
+            method: 'delete',
+            withCredentials: true,
+            påvirkerSystemLaster: false,
+        });
+        settMellomlagretVerdi(undefined);
+    };
 
     const axiosRequest = async <T, D>(
         config: AxiosRequestConfig & { data?: D; påvirkerSystemLaster?: boolean }
@@ -145,7 +209,13 @@ const [AppProvider, useApp] = createUseContext(() => {
     const erStegUtfyltFrafør = (nåværendeStegIndex: number) =>
         sisteUtfylteStegIndex >= nåværendeStegIndex;
 
-    const avbrytSøknad = () => {
+    const avbrytOgSlettSøknad = () => {
+        nullstillSøknadsobjekt();
+        nullstillMellomlagretVerdi();
+        settSisteUtfylteStegIndex(-1);
+    };
+
+    const gåTilbakeTilStart = () => {
         nullstillSøknadsobjekt();
         settSisteUtfylteStegIndex(-1);
     };
@@ -165,7 +235,10 @@ const [AppProvider, useApp] = createUseContext(() => {
         sisteUtfylteStegIndex,
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
-        avbrytSøknad,
+        avbrytOgSlettSøknad,
+        gåTilbakeTilStart,
+        brukMellomlagretVerdi,
+        mellomlagretVerdi,
     };
 });
 

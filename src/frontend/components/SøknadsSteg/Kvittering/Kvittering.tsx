@@ -15,7 +15,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 const Kvittering: React.FC = () => {
-    const { avbrytSøknad } = useApp();
+    const { avbrytOgSlettSøknad } = useApp();
 
     const { innsendingStatus } = useApp();
     const innsendtDato: Dayjs =
@@ -28,7 +28,7 @@ const Kvittering: React.FC = () => {
 
     useEffect(() => {
         return () => {
-            avbrytSøknad();
+            avbrytOgSlettSøknad();
         };
     }, []);
 

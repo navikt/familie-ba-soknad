@@ -87,12 +87,12 @@ describe('nullstillSøknadsObject', () => {
     });
 });
 
-describe('avbrytSøknad', () => {
+describe('avbrytOgSlettSøknad', () => {
     test('Ved avbryt skal sisteUtfylteStegIndex settes til -1', () => {
         const wrapper = ({ children }) => <AppProvider>{children}</AppProvider>;
         const { result } = renderHook(() => useApp(), { wrapper });
         result.current.sisteUtfylteStegIndex = 3;
-        act(() => result.current.avbrytSøknad());
+        act(() => result.current.avbrytOgSlettSøknad());
         expect(result.current.sisteUtfylteStegIndex).toEqual(-1);
     });
 });
