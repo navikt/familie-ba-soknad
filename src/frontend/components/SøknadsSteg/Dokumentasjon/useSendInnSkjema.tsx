@@ -1,5 +1,7 @@
 import { useIntl } from 'react-intl';
 
+import { RessursStatus } from '@navikt/familie-typer';
+
 import * as bokmålSpråktekster from '../../../assets/lang/nb.json';
 import { useApp } from '../../../context/AppContext';
 import {
@@ -9,6 +11,7 @@ import {
     ISøknadKontraktVedlegg,
     IVedlegg,
 } from '../../../typer/dokumentasjon';
+import { IKvittering } from '../../../typer/kvittering';
 import { IBarnMedISøknad } from '../../../typer/person';
 import {
     ISøknad,
@@ -27,7 +30,7 @@ type SpørsmålId = OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørs
 type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
 
 export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } => {
-    const { axiosRequest, søknad } = useApp();
+    const { axiosRequest, søknad, settInnsendingStatus } = useApp();
     const intl = useIntl();
 
     const språktekstFraSpørsmålId = (spørsmålId: SpørsmålId): string => {
@@ -183,16 +186,26 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
     };
 
     const sendInnSkjema = async () => {
+        settInnsendingStatus({ status: RessursStatus.HENTER });
         const formatert = dataISøknadKontraktFormat(søknad);
 
-        return await axiosRequest({
+        return await axiosRequest<IKvittering, ISøknadKontrakt>({
             url: '/api/soknad',
             method: 'POST',
             withCredentials: true,
             data: formatert,
         }).then(
-            () => true,
-            () => false
+            res => {
+                settInnsendingStatus(res);
+                return true;
+            },
+            () => {
+                settInnsendingStatus({
+                    status: RessursStatus.FEILET,
+                    frontendFeilmelding: 'Kunne ikke sende inn søknaden',
+                });
+                return false;
+            }
         );
     };
 

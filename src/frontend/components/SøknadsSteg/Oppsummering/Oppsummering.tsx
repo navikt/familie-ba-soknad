@@ -4,7 +4,6 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
-import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -18,7 +17,6 @@ import { genererAdresseVisning } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
-import { useSendInnSkjema } from './useSendInnSkjema';
 
 interface IOppsummeringsFeltProps {
     tittel?: ReactNode;
@@ -67,7 +65,6 @@ const Oppsummering: React.FC = () => {
     const { søknad } = useApp();
     console.log(søknad);
     const { hentStegNummer } = useRoutes();
-    const { sendInnSkjema } = useSendInnSkjema();
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden
             .filter(barn => barn[søknadDatafelt].svar === 'JA')
@@ -651,9 +648,6 @@ const Oppsummering: React.FC = () => {
                     </Oppsummeringsbolk>
                 );
             })}
-            <Knapp htmlType={'button'} onClick={sendInnSkjema}>
-                Send inn søknad
-            </Knapp>
         </Steg>
     );
 };
