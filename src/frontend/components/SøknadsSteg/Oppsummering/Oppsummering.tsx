@@ -12,11 +12,18 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
-import { AlternativtSvarForInput, barnDataKeySpørsmål, ESivilstand } from '../../../typer/person';
+import {
+    AlternativtSvarForInput,
+    barnDataKeySpørsmål,
+    DatoMedUkjent,
+    ESivilstand,
+} from '../../../typer/person';
+import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/person';
 import { genererAdresseVisning } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
 import { useSendInnSkjema } from './useSendInnSkjema';
 
@@ -63,7 +70,7 @@ const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsv
 };
 
 const Oppsummering: React.FC = () => {
-    const intl = useIntl();
+    const { formatMessage } = useIntl();
     const { søknad } = useApp();
     console.log(søknad);
     const { hentStegNummer } = useRoutes();
@@ -75,6 +82,12 @@ const Oppsummering: React.FC = () => {
             .join(', ');
 
     const [valgtLocale] = useSprakContext();
+
+    const formaterDatoMedUkjent = (datoMedUkjent: DatoMedUkjent, språkIdForUkjent) => {
+        return datoMedUkjent === AlternativtSvarForInput.UKJENT
+            ? formatMessage({ id: språkIdForUkjent })
+            : formaterDato(datoMedUkjent);
+    };
 
     return (
         <Steg tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}>
@@ -141,7 +154,7 @@ const Oppsummering: React.FC = () => {
                     {søknad.søker.oppholdslandDato.svar && (
                         <OppsummeringFelt
                             tittel={<SpråkTekst id={'omdeg.opphold-i-norge.dato.spm'} />}
-                            søknadsvar={søknad.søker.oppholdslandDato.svar}
+                            søknadsvar={formaterDato(søknad.søker.oppholdslandDato.svar)}
                         />
                     )}
 
@@ -152,7 +165,7 @@ const Oppsummering: React.FC = () => {
                     {søknad.søker.komTilNorgeDato.svar && (
                         <OppsummeringFelt
                             tittel={<SpråkTekst id={'omdeg.opphold-sammenhengende.dato.spm'} />}
-                            søknadsvar={søknad.søker.komTilNorgeDato.svar}
+                            søknadsvar={formaterDato(søknad.søker.komTilNorgeDato.svar)}
                         />
                     )}
                     {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
@@ -211,7 +224,7 @@ const Oppsummering: React.FC = () => {
 
                         <OppsummeringFelt
                             tittel={<SpråkTekst id={'hvilkebarn.barn.bosted'} />}
-                            søknadsvar={intl.formatMessage({
+                            søknadsvar={formatMessage({
                                 id: barn.borMedSøker
                                     ? 'hvilkebarn.barn.bosted.din-adresse'
                                     : 'hvilkebarn.barn.bosted.ikke-din-adresse',
@@ -373,18 +386,21 @@ const Oppsummering: React.FC = () => {
                                     tittel={
                                         <SpråkTekst id={'ombarnet.institusjon.startdato.spm'} />
                                     }
-                                    søknadsvar={
+                                    søknadsvar={formaterDato(
                                         barn[barnDataKeySpørsmål.institusjonOppholdStartdato].svar
-                                    }
+                                    )}
                                 />
 
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst id={'ombarnet.institusjon.sluttdato.spm'} />
                                     }
-                                    søknadsvar={
-                                        barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
-                                    }
+                                    søknadsvar={formaterDatoMedUkjent(
+                                        barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar,
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.institusjonOppholdVetIkke
+                                        ]
+                                    )}
                                 />
                             </StyledOppsummeringsFeltGruppe>
                         )}
@@ -415,18 +431,21 @@ const Oppsummering: React.FC = () => {
                                     tittel={
                                         <SpråkTekst id={'ombarnet.oppholdutland.startdato.spm'} />
                                     }
-                                    søknadsvar={
+                                    søknadsvar={formaterDato(
                                         barn[barnDataKeySpørsmål.oppholdslandStartdato].svar
-                                    }
+                                    )}
                                 />
 
                                 <OppsummeringFelt
                                     tittel={
                                         <SpråkTekst id={'ombarnet.oppholdutland.sluttdato.spm'} />
                                     }
-                                    søknadsvar={
-                                        barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar
-                                    }
+                                    søknadsvar={formaterDatoMedUkjent(
+                                        barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar,
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
+                                        ]
+                                    )}
                                 />
                             </StyledOppsummeringsFeltGruppe>
                         )}
@@ -486,7 +505,7 @@ const Oppsummering: React.FC = () => {
                             {barn[barnDataKeySpørsmål.andreForelderNavn].svar && (
                                 <OppsummeringFelt
                                     tittel={<SpråkTekst id={'ombarnet.andre-forelder'} />}
-                                    søknadsvar={intl.formatMessage({
+                                    søknadsvar={formatMessage({
                                         id:
                                             barn[barnDataKeySpørsmål.andreForelderNavn].svar !==
                                             AlternativtSvarForInput.UKJENT
@@ -500,7 +519,7 @@ const Oppsummering: React.FC = () => {
                                     tittel={
                                         <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
                                     }
-                                    søknadsvar={intl.formatMessage({
+                                    søknadsvar={formatMessage({
                                         id:
                                             barn[barnDataKeySpørsmål.andreForelderFnr].svar !==
                                             AlternativtSvarForInput.UKJENT
@@ -512,15 +531,12 @@ const Oppsummering: React.FC = () => {
                             {barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar && (
                                 <OppsummeringFelt
                                     tittel={<SpråkTekst id={'felles.fødselsdato.label'} />}
-                                    søknadsvar={
-                                        barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar ===
-                                        AlternativtSvarForInput.UKJENT
-                                            ? intl.formatMessage({
-                                                  id: 'felles.fødselsdato-ukjent',
-                                              })
-                                            : barn[barnDataKeySpørsmål.andreForelderFødselsdato]
-                                                  .svar
-                                    }
+                                    søknadsvar={formaterDatoMedUkjent(
+                                        barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar,
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
+                                        ]
+                                    )}
                                 />
                             )}
                         </StyledOppsummeringsFeltGruppe>
@@ -642,7 +658,7 @@ const Oppsummering: React.FC = () => {
                                 </>
                             ) : (
                                 <OppsummeringFelt
-                                    søknadsvar={intl.formatMessage({
+                                    søknadsvar={formatMessage({
                                         id: 'ombarnet.søker-for-periode.vetikke.spm',
                                     })}
                                 />

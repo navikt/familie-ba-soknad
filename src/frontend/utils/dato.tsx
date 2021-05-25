@@ -34,3 +34,6 @@ export const validerDato = (
     }
     return ok(feltState);
 };
+
+export const formaterDato = (isoDateString: ISODateString) =>
+    dayjs(isoDateString).format('DD.MM.YY');
