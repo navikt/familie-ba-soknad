@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
@@ -33,7 +33,12 @@ export const useBekreftelseOgStartSoknad = (): {
         avbrytOgSlettSøknad,
         mellomlagretVerdi,
     } = useApp();
-    const { settBarnForRoutes, hentGjeldendeRoutePåStegindex } = useRoutes();
+    const {
+        settBarnForRoutes,
+        hentGjeldendeRoutePåStegindex,
+        oppdatertEtterMellomlagring,
+        settOppdatertEtterMellomlagring,
+    } = useRoutes();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
@@ -42,13 +47,20 @@ export const useBekreftelseOgStartSoknad = (): {
     const nesteRoute: IRoute = hentNesteRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
 
+    useEffect(() => {
+        if (oppdatertEtterMellomlagring && mellomlagretVerdi) {
+            history.push(
+                hentGjeldendeRoutePåStegindex(mellomlagretVerdi.sisteUtfylteStegIndex).path
+            );
+            settOppdatertEtterMellomlagring(false);
+        }
+    }, [oppdatertEtterMellomlagring]);
+
     const fortsettPåSøknaden = (): void => {
         if (mellomlagretVerdi) {
             brukMellomlagretVerdi();
             settBarnForRoutes(mellomlagretVerdi.søknad.barnInkludertISøknaden);
-            history.push(
-                hentGjeldendeRoutePåStegindex(mellomlagretVerdi.sisteUtfylteStegIndex).path
-            );
+            settOppdatertEtterMellomlagring(true);
         } else {
             brukMellomlagretVerdi();
             history.push(nesteRoute.path);

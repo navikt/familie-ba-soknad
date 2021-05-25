@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import createUseContext from 'constate';
 import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg';
@@ -42,9 +42,8 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
 
     const [barnForRoutes, settBarnForRoutes] = useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
 
-    useEffect(() => {
-        settBarnForRoutes(barnInkludertISøknaden);
-    }, [barnInkludertISøknaden]);
+    // Hack for å unngå race-condition mellom redirect og oppdatering av ruter med barn ved bruk av mellomlagret verdi
+    const [oppdatertEtterMellomlagring, settOppdatertEtterMellomlagring] = useState(false);
 
     // En route per barn som er valgt, eller en plassholder hvis ingen er valgt
     const barnRoutes: IRoute[] = barnForRoutes.length
@@ -152,6 +151,8 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         hentStegNummer,
         routes,
         settBarnForRoutes,
+        oppdatertEtterMellomlagring,
+        settOppdatertEtterMellomlagring,
         hentStegObjekterForStegIndikator,
         erPåKvitteringsside,
     };
