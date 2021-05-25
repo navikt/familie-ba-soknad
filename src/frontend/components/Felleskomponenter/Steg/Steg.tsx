@@ -36,6 +36,7 @@ interface ISteg {
         settSøknadsdataCallback: () => void;
     };
     barn?: IBarnMedISøknad;
+    gåVidereCallback?: () => Promise<boolean>;
 }
 
 const ChildrenContainer = styled.div`
@@ -65,7 +66,7 @@ const samletSpørsmålId = {
     ...OmBarnetSpørsmålsId,
 };
 
-const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
+const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, gåTilbakeTilStart } = useApp();
@@ -109,6 +110,8 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, children }) => {
                 skjema.settSøknadsdataCallback();
                 gåVidere();
             }
+        } else if (gåVidereCallback) {
+            gåVidereCallback().then(() => gåVidere());
         } else {
             gåVidere();
         }

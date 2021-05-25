@@ -1,10 +1,15 @@
 import React from 'react';
 
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
 import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
 
+import { RessursStatus } from '@navikt/familie-typer';
+
+import { useApp } from '../../../context/AppContext';
+import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -66,6 +71,11 @@ const Navigeringspanel: React.FC<{
     onTilbakeCallback: () => void;
     valideringErOk: (() => boolean) | undefined;
 }> = ({ onAvbrytCallback, onTilbakeCallback, valideringErOk }) => {
+    const { hentNesteRoute } = useRoutes();
+    const location = useLocation();
+    const nesteRoute = hentNesteRoute(location.pathname);
+    const { innsendingStatus } = useApp();
+
     const hentKnappetype = (): Knappetype => {
         if (valideringErOk) {
             return valideringErOk() ? 'hoved' : 'standard';
@@ -89,8 +99,16 @@ const Navigeringspanel: React.FC<{
                 type={hentKnappetype()}
                 placeself={'start'}
                 gridarea={'gåVidere'}
+                spinner={innsendingStatus.status === RessursStatus.HENTER}
+                autoDisableVedSpinner={true}
             >
-                <SpråkTekst id={'felles.navigasjon.gå-videre'} />
+                <SpråkTekst
+                    id={
+                        nesteRoute.route === RouteEnum.Kvittering
+                            ? 'dokumentasjon.send-søknad.knapp'
+                            : 'felles.navigasjon.gå-videre'
+                    }
+                />
             </StyledKnappBase>
 
             <StyledFlatKnapp
