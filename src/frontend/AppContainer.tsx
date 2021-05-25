@@ -4,6 +4,7 @@ import Alertstripe from 'nav-frontend-alertstriper';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
+import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';
 import { useApp } from './context/AppContext';
 import { RoutesProvider } from './context/RoutesContext';
@@ -29,11 +30,7 @@ const AppContainer = () => {
                     <Søknad />
                 </RoutesProvider>
             )}
-            {systemetFeiler() && !systemetLaster() && (
-                <div>
-                    <Alertstripe type="feil">En feil har oppstått!</Alertstripe>
-                </div>
-            )}
+            {systemetFeiler() && !systemetLaster() && <Feilside />}
         </main>
     );
 };
