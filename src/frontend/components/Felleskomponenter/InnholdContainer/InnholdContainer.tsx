@@ -2,8 +2,6 @@ import React from 'react';
 
 import styled from 'styled-components/macro';
 
-import navFarger from 'nav-frontend-core';
-
 import { device } from '../../../Theme';
 
 const Container = styled.div`
@@ -12,17 +10,6 @@ const Container = styled.div`
     flex-direction: column;
     align-items: flex-start;
     margin: 2rem auto 20rem auto;
-    color: ${navFarger.navMorkGra};
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-
-    && label,
-    a,
-    p,
-    li,
-    h2 {
-        font-size: 18px;
-        line-height: 26px;
-    }
 
     @media all and ${device.tablet} {
         max-width: 100%;
