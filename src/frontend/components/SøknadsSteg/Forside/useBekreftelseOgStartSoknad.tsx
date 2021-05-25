@@ -43,8 +43,6 @@ export const useBekreftelseOgStartSoknad = (): {
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
 
     const fortsettPåSøknaden = (): void => {
-        // TODO: Pga dynamiske routes blir de ikke oppdatert og vi kan ikke gå direkte til rute > 5
-
         if (mellomlagretVerdi) {
             brukMellomlagretVerdi();
             settBarnForRoutes(mellomlagretVerdi.søknad.barnInkludertISøknaden);
