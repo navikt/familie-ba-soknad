@@ -59,7 +59,7 @@ const Kvittering: React.FC = () => {
                             lenkeFinnSaksbehandlingstid: (
                                 <EksternLenke
                                     lenkeTekstSpråkId={'kvittering.saksbehandlingstid.lenketekst'}
-                                    lenkeSpråkId={'kvittering.saksbehandlingstid.lenketekst'}
+                                    lenkeSpråkId={'kvittering.saksbehandlingstid.lenke'}
                                 />
                             ),
                         }}
