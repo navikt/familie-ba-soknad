@@ -64,7 +64,9 @@
     ]
   },
   "resolutions": {
-    "styled-components": "^5"
+    "styled-components": "^5",
+    "browserslist": "^4.16.5",
+    "postcss": "^8.2.10"
   },
   "browserslist": {
     "production": [
