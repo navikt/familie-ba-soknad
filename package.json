@@ -86,6 +86,7 @@
     "@navikt/fnrvalidator": "^1.1.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@sentry/browser": "^6.2.0",
+    "@sentry/react": "^6.2.0",
     "@svgr/webpack": "5.4.0",
     "@testing-library/react-hooks": "^5.1.1",
     "@types/classnames": "^2.2.10",
