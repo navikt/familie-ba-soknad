@@ -6,7 +6,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Ingress, Innholdstittel } from 'nav-frontend-typografi';
+import { Element, Ingress, Innholdstittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
@@ -128,7 +128,11 @@ export const NyttBarnKort: React.FC = () => {
 
                 {skjema.felter.erFødt.valideringsstatus === Valideringsstatus.OK && (
                     <SkjemaGruppe
-                        legend={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
+                        legend={
+                            <Element>
+                                <SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />
+                            </Element>
+                        }
                     >
                         <Input
                             {...skjema.felter.fornavn.hentNavInputProps(skjema.visFeilmeldinger)}
