@@ -66,7 +66,7 @@ const OmDeg: React.FC = () => {
 
             <KomponentGruppe>
                 {skjema.felter.telefonnummer.erSynlig && (
-                    <span id={skjema.felter.telefonnummer.id}>
+                    <span id={skjema.felter.telefonnummer.id} aria-live={'polite'}>
                         <Input
                             {...skjema.felter.telefonnummer.hentNavInputProps(
                                 skjema.visFeilmeldinger

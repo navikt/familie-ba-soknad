@@ -49,6 +49,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     return felt.erSynlig ? (
         <>
             <StyledFamilieDatovelger
+                aria-live={'polite'}
                 allowInvalidDateSelection={false}
                 limitations={
                     avgrensDatoFremITid

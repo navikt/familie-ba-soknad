@@ -23,9 +23,10 @@ const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({
     tittelId,
     språkValues,
     children,
+    ...props
 }) => {
     return (
-        <InformasjonsbolkContainer>
+        <InformasjonsbolkContainer {...props}>
             {tittelId && (
                 <Undertittel>
                     <SpråkTekst id={tittelId} values={språkValues} />

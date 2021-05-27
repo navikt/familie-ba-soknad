@@ -17,7 +17,7 @@ const StyledAlertStripe = styled(NavAlertStripe)`
 
 const AlertStripe: React.FC<AlertStripeProps> = ({ type = 'info', form = 'inline', children }) => {
     return (
-        <StyledAlertStripe type={type} form={form}>
+        <StyledAlertStripe type={type} form={form} aria-live={'polite'}>
             <p>{children}</p>
         </StyledAlertStripe>
     );

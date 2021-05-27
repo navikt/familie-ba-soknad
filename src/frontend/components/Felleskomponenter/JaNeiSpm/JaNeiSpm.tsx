@@ -27,7 +27,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     språkValues,
 }) => {
     return felt.erSynlig ? (
-        <span id={felt.id}>
+        <span id={felt.id} aria-live={'polite'}>
             <JaNeiSpørsmål
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                 initiellVerdi={felt.verdi}
