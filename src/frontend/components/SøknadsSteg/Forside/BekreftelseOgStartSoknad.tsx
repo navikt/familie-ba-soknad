@@ -40,25 +40,27 @@ export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
     }
 };
 
-const BekreftelseOgStartSoknad: React.FC<{
-    navn: string;
-}> = ({ navn }) => {
+const BekreftelseOgStartSoknad: React.FC = () => {
     const { formatMessage } = useIntl();
-    const { onStartSøknad, bekreftelseOnChange, bekreftelseStatus } = useBekreftelseOgStartSoknad();
+    const {
+        onStartSøknad,
+        bekreftelseOnChange,
+        bekreftelseStatus,
+        feilmeldingRef,
+    } = useBekreftelseOgStartSoknad();
 
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
             <Informasjonsbolk tittelId="forside.bekreftelsesboks.tittel">
                 <StyledBekreftCheckboksPanel
-                    label={formatMessage(
-                        { id: 'forside.bekreftelsesboks.erklæring.spm' },
-                        { navn }
-                    )}
+                    label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
                     onChange={bekreftelseOnChange}
                     checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                     feil={
                         bekreftelseStatus === BekreftelseStatus.FEIL && (
-                            <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
+                            <span aria-live={'polite'} ref={feilmeldingRef} tabIndex={-1}>
+                                <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
+                            </span>
                         )
                     }
                     status={bekreftelseStatus}

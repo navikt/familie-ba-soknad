@@ -55,7 +55,7 @@ const Forside: React.FC = () => {
                 />
             </Informasjonsbolk>
 
-            {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad navn={navn} />}
+            {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
 
             <Informasjonsbolk>
                 <EksternLenke
