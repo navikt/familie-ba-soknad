@@ -59,6 +59,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
 
     return skjemafelt.erSynlig ? (
         <CheckboxGruppe
+            aria-live={'polite'}
             legend={legend}
             {...skjemafelt.hentNavBaseSkjemaProps(visFeilmelding)}
             utenFeilPropagering
