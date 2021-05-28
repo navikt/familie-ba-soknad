@@ -2,7 +2,7 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpack from 'webpack';
 import { mergeWithRules } from 'webpack-merge';
 
-import baseConfig, { publicUrl } from './webpack.common.config.js';
+import baseConfig from './webpack.common.config.js';
 
 const devConfig = mergeWithRules({
     module: {
@@ -17,7 +17,7 @@ const devConfig = mergeWithRules({
     devtool: 'inline-source-map',
     plugins: [new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin()],
     output: {
-        publicPath: publicUrl,
+        publicPath: '/',
     },
     module: {
         rules: [
