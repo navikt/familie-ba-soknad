@@ -15,7 +15,7 @@ const Søknad = () => {
 
     return (
         <div className={classNames(systemetLaster() && 'blur')}>
-            <Router>
+            <Router basename={'/familie/barnetrygd/soknad/ordinaer'}>
                 <Switch>
                     <Route exact={true} path={'/helse'} component={Helse} />
                     <Route exact={true} path={'/'} component={Forside} />

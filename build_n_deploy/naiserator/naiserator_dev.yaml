@@ -20,8 +20,7 @@ spec:
     path: /internal/isReady
     initialDelay: 5
   ingresses:
-    - "https://familie-ba-soknad.dev.nav.no"
-    - "https://dev.nav.no/familie/barnetrygd/soknad/ordinaer"
+    - "https://familie-ba-soknad.dev.nav.no/familie/barnetrygd/soknad/ordinaer"
   accessPolicy:
     outbound:
       rules:
