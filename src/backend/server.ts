@@ -23,11 +23,7 @@ app.set('view engine', 'mustache');
 app.engine('html', mustacheExpress());
 
 app.use(compression());
-if (environment().apiUrl.indexOf('localhost') > -1) {
-    app.use('/api', createApiForwardingFunction());
-} else {
-    app.use('/familie/barnetrygd/soknad/ordinaer/api', createApiForwardingFunction());
-}
+app.use('/familie/barnetrygd/soknad/ordinaer/api', createApiForwardingFunction());
 
 if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line
