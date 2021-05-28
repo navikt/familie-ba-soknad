@@ -15,6 +15,7 @@ export default {
             template: path.join(process.cwd(), 'src/frontend/public/index.html'),
             inject: 'body',
             alwaysWriteToDisk: true,
+            publicPath: '/familie/barnetrygd/soknad/ordinaer/',
         }),
         new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
             PUBLIC_URL: publicUrl,
@@ -33,7 +34,7 @@ export default {
     },
     output: {
         filename: 'main.js',
-        path: path.resolve(process.cwd(), 'dist'),
+        path: path.resolve(process.cwd(), 'dist/familie/barnetrygd/soknad/ordinaer/'),
     },
     module: {
         rules: [

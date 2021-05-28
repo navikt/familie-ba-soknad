@@ -32,7 +32,7 @@ const Miljø = (): MiljøProps => {
         };
     } else {
         return {
-            soknadApi: 'http://localhost:3000/api',
+            soknadApi: 'http://localhost:3000/familie/barnetrygd/soknad/ordinaer/api',
             loginService: `http://localhost:8080/local/cookie?subject=12345678901`,
             visInnsendingsknapp: true,
             mellomlagerUrl: 'http://localhost:8082/api/soknad/barnetrygd',

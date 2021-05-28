@@ -18,7 +18,7 @@ const app = express();
 
 const frontendMappe = path.join(process.cwd(), 'dist');
 
-app.set('views', frontendMappe);
+app.set('views', frontendMappe + '/familie/barnetrygd/soknad/ordinaer');
 app.set('view engine', 'mustache');
 app.engine('html', mustacheExpress());
 
