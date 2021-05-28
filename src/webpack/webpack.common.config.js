@@ -5,7 +5,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin.js';
 
-export const publicUrl = '/familie/barnetrygd/soknad/ordinaer/public';
+export const publicUrl = '/public';
 
 export default {
     mode: 'production',
