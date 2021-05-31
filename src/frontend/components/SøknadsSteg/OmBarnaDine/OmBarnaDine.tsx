@@ -90,138 +90,157 @@ const OmBarnaDine: React.FC = () => {
                 />
             </KomponentGruppe>
 
-            <KomponentGruppe dynamisk>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.erBarnAdoptertFraUtland}
-                    spørsmålTekstId={
-                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland]
-                    }
-                />
-                <HvilkeBarnCheckboxGruppe
-                    legend={
-                        <SpråkTekst
-                            id={
-                                omBarnaDineSpørsmålSpråkId[
-                                    OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland
-                                ]
-                            }
-                        />
-                    }
-                    skjemafelt={skjema.felter.hvemErAdoptertFraUtland}
-                    søknadsdatafelt={barnDataKeySpørsmål.erAdoptertFraUtland}
-                    nullstillValgteBarn={skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.NEI}
-                    visFeilmelding={skjema.visFeilmeldinger}
-                />
-                {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
-                    <AlertStripe dynamisk>
-                        <SpråkTekst id={'ombarna.adoptert.alert'} />
-                    </AlertStripe>
-                )}
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.oppholderBarnSegIUtland}
-                    spørsmålTekstId={
-                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.oppholderBarnSegIUtland]
-                    }
-                />
-                <HvilkeBarnCheckboxGruppe
-                    legend={
-                        <SpråkTekst
-                            id={
-                                omBarnaDineSpørsmålSpråkId[
-                                    OmBarnaDineSpørsmålId.hvemOppholderSegIUtland
-                                ]
-                            }
-                        />
-                    }
-                    skjemafelt={skjema.felter.hvemOppholderSegIUtland}
-                    søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIUtland}
-                    nullstillValgteBarn={skjema.felter.oppholderBarnSegIUtland.verdi === ESvar.NEI}
-                    visFeilmelding={skjema.visFeilmeldinger}
-                />
-            </KomponentGruppe>
+            {skjema.felter.erBarnAdoptertFraUtland.erSynlig && (
+                <KomponentGruppe dynamisk>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.erBarnAdoptertFraUtland}
+                        spørsmålTekstId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland
+                            ]
+                        }
+                    />
+                    <HvilkeBarnCheckboxGruppe
+                        legend={
+                            <SpråkTekst
+                                id={
+                                    omBarnaDineSpørsmålSpråkId[
+                                        OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland
+                                    ]
+                                }
+                            />
+                        }
+                        skjemafelt={skjema.felter.hvemErAdoptertFraUtland}
+                        søknadsdatafelt={barnDataKeySpørsmål.erAdoptertFraUtland}
+                        nullstillValgteBarn={
+                            skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.NEI
+                        }
+                        visFeilmelding={skjema.visFeilmeldinger}
+                    />
+                    {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
+                        <AlertStripe dynamisk>
+                            <SpråkTekst id={'ombarna.adoptert.alert'} />
+                        </AlertStripe>
+                    )}
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.oppholderBarnSegIUtland}
+                        spørsmålTekstId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.oppholderBarnSegIUtland
+                            ]
+                        }
+                    />
+                    <HvilkeBarnCheckboxGruppe
+                        legend={
+                            <SpråkTekst
+                                id={
+                                    omBarnaDineSpørsmålSpråkId[
+                                        OmBarnaDineSpørsmålId.hvemOppholderSegIUtland
+                                    ]
+                                }
+                            />
+                        }
+                        skjemafelt={skjema.felter.hvemOppholderSegIUtland}
+                        søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIUtland}
+                        nullstillValgteBarn={
+                            skjema.felter.oppholderBarnSegIUtland.verdi === ESvar.NEI
+                        }
+                        visFeilmelding={skjema.visFeilmeldinger}
+                    />
+                </KomponentGruppe>
+            )}
 
-            <KomponentGruppe dynamisk>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.søktAsylForBarn}
-                    spørsmålTekstId={
-                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.søktAsylForBarn]
-                    }
-                />
-                <HvilkeBarnCheckboxGruppe
-                    legend={
-                        <SpråkTekst
-                            id={omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErSøktAsylFor]}
-                        />
-                    }
-                    skjemafelt={skjema.felter.hvemErSøktAsylFor}
-                    søknadsdatafelt={barnDataKeySpørsmål.erAsylsøker}
-                    nullstillValgteBarn={skjema.felter.søktAsylForBarn.verdi === ESvar.NEI}
-                    visFeilmelding={skjema.visFeilmeldinger}
-                />
-                {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
-                    <AlertStripe dynamisk>
-                        <SpråkTekst id={'ombarna.asyl.alert'} />
-                    </AlertStripe>
-                )}
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge}
-                    spørsmålTekstId={
-                        omBarnaDineSpørsmålSpråkId[
-                            OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
-                        ]
-                    }
-                />
-                <HvilkeBarnCheckboxGruppe
-                    legend={
-                        <SpråkTekst
-                            id={
-                                omBarnaDineSpørsmålSpråkId[
-                                    OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge
-                                ]
-                            }
-                        />
-                    }
-                    skjemafelt={skjema.felter.hvemTolvMndSammenhengendeINorge}
-                    søknadsdatafelt={barnDataKeySpørsmål.boddMindreEnn12MndINorge}
-                    nullstillValgteBarn={
-                        skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi === ESvar.JA
-                    }
-                    visFeilmelding={skjema.visFeilmeldinger}
-                />
-            </KomponentGruppe>
+            {skjema.felter.søktAsylForBarn.erSynlig && (
+                <KomponentGruppe dynamisk>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.søktAsylForBarn}
+                        spørsmålTekstId={
+                            omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.søktAsylForBarn]
+                        }
+                    />
+                    <HvilkeBarnCheckboxGruppe
+                        legend={
+                            <SpråkTekst
+                                id={
+                                    omBarnaDineSpørsmålSpråkId[
+                                        OmBarnaDineSpørsmålId.hvemErSøktAsylFor
+                                    ]
+                                }
+                            />
+                        }
+                        skjemafelt={skjema.felter.hvemErSøktAsylFor}
+                        søknadsdatafelt={barnDataKeySpørsmål.erAsylsøker}
+                        nullstillValgteBarn={skjema.felter.søktAsylForBarn.verdi === ESvar.NEI}
+                        visFeilmelding={skjema.visFeilmeldinger}
+                    />
+                    {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
+                        <AlertStripe dynamisk>
+                            <SpråkTekst id={'ombarna.asyl.alert'} />
+                        </AlertStripe>
+                    )}
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge}
+                        spørsmålTekstId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
+                            ]
+                        }
+                    />
+                    <HvilkeBarnCheckboxGruppe
+                        legend={
+                            <SpråkTekst
+                                id={
+                                    omBarnaDineSpørsmålSpråkId[
+                                        OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge
+                                    ]
+                                }
+                            />
+                        }
+                        skjemafelt={skjema.felter.hvemTolvMndSammenhengendeINorge}
+                        søknadsdatafelt={barnDataKeySpørsmål.boddMindreEnn12MndINorge}
+                        nullstillValgteBarn={
+                            skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi ===
+                            ESvar.JA
+                        }
+                        visFeilmelding={skjema.visFeilmeldinger}
+                    />
+                </KomponentGruppe>
+            )}
 
-            <KomponentGruppe dynamisk>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland}
-                    spørsmålTekstId={
-                        omBarnaDineSpørsmålSpråkId[
-                            OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland
-                        ]
-                    }
-                />
-                <HvilkeBarnCheckboxGruppe
-                    legend={
-                        <SpråkTekst
-                            id={
-                                omBarnaDineSpørsmålSpråkId[
-                                    OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland
-                                ]
-                            }
-                        />
-                    }
-                    skjemafelt={skjema.felter.hvemBarnetrygdFraAnnetEøsland}
-                    søknadsdatafelt={barnDataKeySpørsmål.barnetrygdFraAnnetEøsland}
-                    nullstillValgteBarn={
-                        skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.NEI
-                    }
-                    visFeilmelding={skjema.visFeilmeldinger}
-                />
-            </KomponentGruppe>
+            {skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.erSynlig && (
+                <KomponentGruppe dynamisk>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland}
+                        spørsmålTekstId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland
+                            ]
+                        }
+                    />
+                    <HvilkeBarnCheckboxGruppe
+                        legend={
+                            <SpråkTekst
+                                id={
+                                    omBarnaDineSpørsmålSpråkId[
+                                        OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland
+                                    ]
+                                }
+                            />
+                        }
+                        skjemafelt={skjema.felter.hvemBarnetrygdFraAnnetEøsland}
+                        søknadsdatafelt={barnDataKeySpørsmål.barnetrygdFraAnnetEøsland}
+                        nullstillValgteBarn={
+                            skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.NEI
+                        }
+                        visFeilmelding={skjema.visFeilmeldinger}
+                    />
+                </KomponentGruppe>
+            )}
         </Steg>
     );
 };
