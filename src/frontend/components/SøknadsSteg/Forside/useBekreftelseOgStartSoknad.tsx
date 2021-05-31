@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState, MutableRefObject } from 'react';
 
 import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
@@ -19,9 +19,11 @@ export const useBekreftelseOgStartSoknad = (): {
     bekreftelseStatus: BekreftelseStatus;
     fortsettPåSøknaden: () => void;
     startPåNytt: () => void;
+    feilmeldingRef: MutableRefObject<null | HTMLDivElement>;
 } => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
+    const feilmeldingRef = useRef<HTMLDivElement>(null);
 
     const { hentNesteRoute, hentRouteIndex } = useRoutes();
     const {
@@ -84,6 +86,7 @@ export const useBekreftelseOgStartSoknad = (): {
             history.push(nesteRoute.path);
         } else {
             settBekreftelseStatus(BekreftelseStatus.FEIL);
+            feilmeldingRef.current && feilmeldingRef.current.focus();
         }
     };
 
@@ -100,5 +103,6 @@ export const useBekreftelseOgStartSoknad = (): {
         bekreftelseStatus,
         fortsettPåSøknaden,
         startPåNytt,
+        feilmeldingRef,
     };
 };

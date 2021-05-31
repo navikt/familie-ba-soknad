@@ -26,9 +26,10 @@ const StyledLegend = styled.legend`
 const SkjemaFieldset: React.FC<{
     tittelId: string;
     språkValues?: { [key: string]: string };
-}> = ({ tittelId, språkValues, children }) => {
+    dynamisk?: boolean;
+}> = ({ tittelId, språkValues, dynamisk = false, children }) => {
     return (
-        <Container>
+        <Container aria-live={dynamisk ? 'polite' : 'off'}>
             <StyledLegend>
                 <Undertittel>
                     <SpråkTekst id={tittelId} values={språkValues} />
