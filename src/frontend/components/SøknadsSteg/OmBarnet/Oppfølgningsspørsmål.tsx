@@ -148,7 +148,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         }
                     />
                     {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
-                        <AlertStripe type={'advarsel'}>
+                        <AlertStripe type={'advarsel'} dynamisk>
                             <SpråkTekst id={'ombarnet.planlagt-sammenhengende-opphold.alert'} />
                         </AlertStripe>
                     )}

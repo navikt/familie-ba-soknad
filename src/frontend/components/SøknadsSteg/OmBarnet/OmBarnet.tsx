@@ -52,6 +52,7 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                     <SkjemaFieldset
                         tittelId={'hvilkebarn.barn.bosted'}
                         språkValues={{ navn: barn.navn }}
+                        dynamisk
                     >
                         <div>
                             <Normaltekst>
@@ -84,7 +85,10 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                             språkValues={{ navn: barn.navn }}
                         />
                         {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
-                            <VedleggNotis språkTekstId={'ombarnet.delt-bosted.vedleggsinfo'} />
+                            <VedleggNotis
+                                språkTekstId={'ombarnet.delt-bosted.vedleggsinfo'}
+                                dynamisk
+                            />
                         )}
                     </SkjemaFieldset>
                 )}
@@ -95,6 +99,7 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                     <SkjemaFieldset
                         tittelId={'ombarnet.søker-for-periode.spm'}
                         språkValues={{ navn: barn.navn }}
+                        dynamisk
                     >
                         <AlertStripe>
                             <SpråkTekst id={'ombarnet.søker-for-periode.alert'} />

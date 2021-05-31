@@ -2,9 +2,9 @@ import React from 'react';
 
 import styled from 'styled-components/macro';
 
-const Container = styled.div`
+const Container = styled.div<{ inline: boolean }>`
     && {
-        margin-bottom: 4rem;
+        margin-bottom: ${props => (props.inline ? '2rem' : '4rem')};
     }
 
     > div :not(:last-child) {
@@ -14,9 +14,11 @@ const Container = styled.div`
 
 const KomponentGruppe: React.FC<{
     className?: string;
-}> = ({ className, children }) => {
+    inline?: boolean;
+    dynamisk?: boolean;
+}> = ({ className, inline = false, dynamisk = false, children }) => {
     return (
-        <Container className={className}>
+        <Container inline={inline} className={className} aria-live={dynamisk ? 'polite' : 'off'}>
             {React.Children.map(children, child => {
                 return child && <div>{child}</div>;
             })}

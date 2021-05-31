@@ -16,6 +16,7 @@ interface LandDropdownProps {
     felt: Felt<Alpha3Code | ''>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
     label?: ReactNode;
+    dynamisk?: boolean;
 }
 
 const StyledSelect = styled(Select)`
@@ -32,7 +33,12 @@ const Container = styled.div`
     }
 `;
 
-export const LandDropdown: React.FC<LandDropdownProps> = ({ felt, skjema, label }) => {
+export const LandDropdown: React.FC<LandDropdownProps> = ({
+    felt,
+    skjema,
+    label,
+    dynamisk = false,
+}) => {
     const intl = useIntl();
     const [valgtLocale] = useSprakContext();
 
@@ -41,7 +47,7 @@ export const LandDropdown: React.FC<LandDropdownProps> = ({ felt, skjema, label 
     });
 
     return felt.erSynlig ? (
-        <Container id={felt.id}>
+        <Container id={felt.id} aria-label={dynamisk ? 'polite' : 'off'}>
             <StyledSelect
                 label={label}
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}

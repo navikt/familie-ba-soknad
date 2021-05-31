@@ -28,9 +28,12 @@ const NotisInnhold = styled.div`
     }
 `;
 
-export const VedleggNotis: React.FC<{ språkTekstId: string }> = ({ språkTekstId }) => {
+export const VedleggNotis: React.FC<{ språkTekstId: string; dynamisk?: boolean }> = ({
+    språkTekstId,
+    dynamisk = false,
+}) => {
     return (
-        <NotisWrapper>
+        <NotisWrapper aria-live={dynamisk ? 'polite' : 'off'}>
             <StyledFileContent />
             <NotisInnhold>
                 <SpråkTekst id={språkTekstId} />

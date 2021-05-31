@@ -54,70 +54,84 @@ const AndreForelder: React.FC<{
                     checkboxUkjentFelt={skjema.felter.andreForelderFnrUkjent}
                     søknadsdatafelt={barnDataKeySpørsmål.andreForelderFnr}
                 />
-                <Datovelger
-                    felt={skjema.felter.andreForelderFødselsdato}
-                    skjema={skjema}
-                    labelTekstId={
-                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFødselsdato]
-                    }
-                    disabled={skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA}
-                />
-                <VetIkkeCheckbox
-                    barn={barn}
-                    labelSpråkId={
-                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]
-                    }
-                    checkboxUkjentFelt={skjema.felter.andreForelderFødselsdatoUkjent}
-                    søknadsdatafelt={barnDataKeySpørsmål.andreForelderFødselsdato}
-                />
+                {skjema.felter.andreForelderFødselsdato.erSynlig && (
+                    <KomponentGruppe inline dynamisk>
+                        <Datovelger
+                            felt={skjema.felter.andreForelderFødselsdato}
+                            skjema={skjema}
+                            labelTekstId={
+                                omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.andreForelderFødselsdato
+                                ]
+                            }
+                            disabled={
+                                skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA
+                            }
+                        />
+                        <VetIkkeCheckbox
+                            barn={barn}
+                            labelSpråkId={
+                                omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
+                                ]
+                            }
+                            checkboxUkjentFelt={skjema.felter.andreForelderFødselsdatoUkjent}
+                            søknadsdatafelt={barnDataKeySpørsmål.andreForelderFødselsdato}
+                        />
+                    </KomponentGruppe>
+                )}
             </KomponentGruppe>
 
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.andreForelderArbeidUtlandet}
-                    spørsmålTekstId={
-                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]
-                    }
-                    inkluderVetIkke={true}
-                    språkValues={{ navn: barn.navn }}
-                />
-                <LandDropdown
-                    felt={skjema.felter.andreForelderArbeidUtlandetHvilketLand}
-                    skjema={skjema}
-                    label={
-                        <SpråkTekst
-                            id={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
-                                ]
-                            }
-                        />
-                    }
-                />
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.andreForelderPensjonUtland}
-                    spørsmålTekstId={
-                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderPensjonUtland]
-                    }
-                    inkluderVetIkke={true}
-                    språkValues={{ navn: barn.navn }}
-                />
-                <LandDropdown
-                    felt={skjema.felter.andreForelderPensjonHvilketLand}
-                    skjema={skjema}
-                    label={
-                        <SpråkTekst
-                            id={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand
-                                ]
-                            }
-                        />
-                    }
-                />
-            </KomponentGruppe>
+            {skjema.felter.andreForelderArbeidUtlandet.erSynlig && (
+                <KomponentGruppe dynamisk>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.andreForelderArbeidUtlandet}
+                        spørsmålTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]
+                        }
+                        inkluderVetIkke={true}
+                        språkValues={{ navn: barn.navn }}
+                    />
+                    <LandDropdown
+                        felt={skjema.felter.andreForelderArbeidUtlandetHvilketLand}
+                        skjema={skjema}
+                        dynamisk
+                        label={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
+                                    ]
+                                }
+                            />
+                        }
+                    />
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.andreForelderPensjonUtland}
+                        spørsmålTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderPensjonUtland]
+                        }
+                        inkluderVetIkke={true}
+                        språkValues={{ navn: barn.navn }}
+                    />
+                    <LandDropdown
+                        felt={skjema.felter.andreForelderPensjonHvilketLand}
+                        skjema={skjema}
+                        dynamisk
+                        label={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand
+                                    ]
+                                }
+                            />
+                        }
+                    />
+                </KomponentGruppe>
+            )}
         </SkjemaFieldset>
     );
 };
