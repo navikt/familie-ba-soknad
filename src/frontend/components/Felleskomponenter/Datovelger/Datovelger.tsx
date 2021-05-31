@@ -19,6 +19,7 @@ interface DatoVelgerProps {
     skjema: ISkjema<SkjemaFeltTyper, string>;
     labelTekstId: string;
     disabled?: boolean;
+    dynamisk?: boolean;
 }
 
 const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
@@ -43,11 +44,12 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     skjema,
     labelTekstId,
     disabled = false,
+    dynamisk = false,
 }) => {
     const { formatMessage } = useIntl();
 
     return felt.erSynlig ? (
-        <>
+        <span aria-live={dynamisk ? 'polite' : 'off'}>
             <StyledFamilieDatovelger
                 allowInvalidDateSelection={false}
                 limitations={
@@ -68,7 +70,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 disabled={disabled}
             />
             {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
-        </>
+        </span>
     ) : null;
 };
 

@@ -115,14 +115,14 @@ const OmDeg: React.FC = () => {
                             omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
                         }
                     />
-                    <KomponentGruppe inline dynamisk>
-                        <Datovelger
-                            avgrensDatoFremITid={true}
-                            felt={skjema.felter.komTilNorgeDato}
-                            skjema={skjema}
-                            labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
-                        />
-                    </KomponentGruppe>
+                    <Datovelger
+                        avgrensDatoFremITid={true}
+                        felt={skjema.felter.komTilNorgeDato}
+                        skjema={skjema}
+                        labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
+                        dynamisk
+                    />
+
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
@@ -131,7 +131,7 @@ const OmDeg: React.FC = () => {
                         }
                     />
                     {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                        <AlertStripe type={'advarsel'}>
+                        <AlertStripe type={'advarsel'} dynamisk>
                             <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
                         </AlertStripe>
                     )}
@@ -139,7 +139,7 @@ const OmDeg: React.FC = () => {
             )}
 
             {skjema.felter.erAsylsøker.erSynlig && (
-                <KomponentGruppe>
+                <KomponentGruppe dynamisk>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.erAsylsøker}
@@ -156,17 +156,14 @@ const OmDeg: React.FC = () => {
                         spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.jobberPåBåt]}
                     />
 
-                    <KomponentGruppe inline dynamisk>
-                        <LandDropdown
-                            felt={skjema.felter.arbeidsland}
-                            skjema={skjema}
-                            label={
-                                <SpråkTekst
-                                    id={omDegSpørsmålSpråkId[OmDegSpørsmålId.arbeidsland]}
-                                />
-                            }
-                        />
-                    </KomponentGruppe>
+                    <LandDropdown
+                        felt={skjema.felter.arbeidsland}
+                        skjema={skjema}
+                        label={
+                            <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.arbeidsland]} />
+                        }
+                        dynamisk
+                    />
 
                     <JaNeiSpm
                         skjema={skjema}
@@ -175,17 +172,14 @@ const OmDeg: React.FC = () => {
                             omDegSpørsmålSpråkId[OmDegSpørsmålId.mottarUtenlandspensjon]
                         }
                     />
-                    <KomponentGruppe inline dynamisk>
-                        <LandDropdown
-                            felt={skjema.felter.pensjonsland}
-                            skjema={skjema}
-                            label={
-                                <SpråkTekst
-                                    id={omDegSpørsmålSpråkId[OmDegSpørsmålId.pensjonsland]}
-                                />
-                            }
-                        />
-                    </KomponentGruppe>
+                    <LandDropdown
+                        felt={skjema.felter.pensjonsland}
+                        skjema={skjema}
+                        label={
+                            <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.pensjonsland]} />
+                        }
+                        dynamisk
+                    />
                 </KomponentGruppe>
             )}
         </Steg>
