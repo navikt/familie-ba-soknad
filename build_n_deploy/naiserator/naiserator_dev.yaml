@@ -35,3 +35,6 @@ spec:
       memory: 512Mi
   envFrom:
     - secret: ba-soknad
+  env:
+    - name: BASE_PATH
+      value: '/familie/barnetrygd/soknad/ordinaer/'

@@ -14,15 +14,17 @@ const restream = (proxyReq: ClientRequest, req: Request, _res: Response) => {
     }
 };
 
+const apiPath = `^${process.env.BASE_PATH ?? '/'}api`;
+
 export const createApiForwardingFunction = () => {
-    return createProxyMiddleware('/familie/barnetrygd/soknad/ordinaer/api', {
+    return createProxyMiddleware(apiPath.replace('^', ''), {
         target: environment().apiUrl,
         changeOrigin: true,
         logLevel: 'debug',
         secure: true,
         onProxyReq: restream,
         pathRewrite: {
-            '^/familie/barnetrygd/soknad/ordinaer/api': '/api',
+            [apiPath]: '/api',
         },
     });
 };

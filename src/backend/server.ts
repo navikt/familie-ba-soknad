@@ -16,14 +16,15 @@ import { createApiForwardingFunction } from './proxy.js';
 dotenv.config();
 const app = express();
 
+const basePath = process.env.BASE_PATH ?? '/';
 const frontendMappe = path.join(process.cwd(), 'dist');
 
-app.set('views', frontendMappe + '/familie/barnetrygd/soknad/ordinaer');
+app.set('views', frontendMappe);
 app.set('view engine', 'mustache');
-app.engine('html', mustacheExpress());
 
+app.engine('html', mustacheExpress());
 app.use(compression());
-app.use('/familie/barnetrygd/soknad/ordinaer/api', createApiForwardingFunction());
+app.use(`${basePath}api`, createApiForwardingFunction());
 
 if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line
@@ -40,7 +41,7 @@ if (process.env.NODE_ENV === 'development') {
     app.use(webpackHotMiddleware(compiler));
 } else {
     // Static files
-    app.use(express.static(frontendMappe, { index: false }));
+    app.use(basePath, express.static(frontendMappe, { index: false }));
 }
 
 // Nais functions
