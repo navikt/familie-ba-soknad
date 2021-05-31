@@ -197,7 +197,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         }).then(
             res => {
                 settInnsendingStatus(res);
-                return true;
+                return res.status === RessursStatus.SUKSESS;
             },
             () => {
                 settInnsendingStatus({
