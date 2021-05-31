@@ -37,4 +37,4 @@ spec:
     - secret: ba-soknad
   env:
     - name: BASE_PATH
-      value: '/familie/barnetrygd/soknad/ordinaer/'
+      value: {{base_path}}

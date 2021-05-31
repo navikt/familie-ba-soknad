@@ -7,6 +7,7 @@ on:
 
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-soknad:${{ github.sha }}
+  BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
 
 jobs:
   test:
@@ -29,7 +30,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          docker build . -t ${IMAGE}
+          docker build . -t ${IMAGE} --build-arg base_path=${BASE_PATH}
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker push ${IMAGE}
   deploy:
@@ -45,3 +46,4 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
+          VAR: base_path=${BASE_PATH}
