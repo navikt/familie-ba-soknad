@@ -5,9 +5,7 @@ import Miljø from '../Miljø';
 
 const er401Feil = (error: AxiosError) => error && error.response && error.response.status === 401;
 const getLoginUrl = () => {
-    return `${Miljø().loginService}&redirect=${
-        window.location.origin
-    }/familie/barnetrygd/soknad/ordinaer/`;
+    return `${Miljø().loginService}&redirect=${window.location.origin}`;
 };
 
 export enum InnloggetStatus {
