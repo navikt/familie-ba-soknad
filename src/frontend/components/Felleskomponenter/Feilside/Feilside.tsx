@@ -7,7 +7,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 export const Feilside: React.FC = () => {
     return (
         <div>
-            <Alertstripe type="feil">
+            <Alertstripe type="feil" aria-live={'polite'}>
                 <SpråkTekst id={'felles.crashmelding'} />
             </Alertstripe>
         </div>
