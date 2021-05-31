@@ -90,7 +90,7 @@ const OmBarnaDine: React.FC = () => {
                 />
             </KomponentGruppe>
 
-            <KomponentGruppe>
+            <KomponentGruppe dynamisk>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erBarnAdoptertFraUtland}
@@ -114,7 +114,7 @@ const OmBarnaDine: React.FC = () => {
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
                 {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
-                    <AlertStripe>
+                    <AlertStripe dynamisk>
                         <SpråkTekst id={'ombarna.adoptert.alert'} />
                     </AlertStripe>
                 )}
@@ -142,7 +142,7 @@ const OmBarnaDine: React.FC = () => {
                 />
             </KomponentGruppe>
 
-            <KomponentGruppe>
+            <KomponentGruppe dynamisk>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.søktAsylForBarn}
@@ -162,7 +162,7 @@ const OmBarnaDine: React.FC = () => {
                     visFeilmelding={skjema.visFeilmeldinger}
                 />
                 {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
-                    <AlertStripe>
+                    <AlertStripe dynamisk>
                         <SpråkTekst id={'ombarna.asyl.alert'} />
                     </AlertStripe>
                 )}
@@ -194,7 +194,7 @@ const OmBarnaDine: React.FC = () => {
                 />
             </KomponentGruppe>
 
-            <KomponentGruppe>
+            <KomponentGruppe dynamisk>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland}

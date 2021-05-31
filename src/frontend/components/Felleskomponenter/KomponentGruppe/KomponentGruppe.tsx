@@ -15,9 +15,10 @@ const Container = styled.div<{ inline: boolean }>`
 const KomponentGruppe: React.FC<{
     className?: string;
     inline?: boolean;
-}> = ({ className, children }) => {
+    dynamisk?: boolean;
+}> = ({ className, inline = false, dynamisk = false, children }) => {
     return (
-        <Container inline className={className} aria-live={'polite'}>
+        <Container inline={inline} className={className} aria-live={dynamisk ? 'polite' : 'off'}>
             {React.Children.map(children, child => {
                 return child && <div>{child}</div>;
             })}
