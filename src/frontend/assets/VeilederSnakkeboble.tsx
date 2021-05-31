@@ -12,7 +12,7 @@ const VeilederSnakkeboble: React.FC<VeilederProps> = props => (
             aria-labelledby="veileder-title"
         >
             <title id="veileder-title">
-                <SpråkTekst id="veilederillustrasjon" />
+                <SpråkTekst id="felles.veilederillustrasjon.tittel" />
             </title>
             <path
                 fill="#e7e5e2"
