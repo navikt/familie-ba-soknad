@@ -50,7 +50,6 @@ app.get(/^\/(internal\/)?(isAlive|isReady)\/?$/, (_req, res) => res.sendStatus(2
 app.get('*', (_req, res) =>
     getDecorator()
         .then(fragments => {
-            console.log(_req);
             // eslint-disable-next-line
             // @ts-ignore
             res.render('index.html', fragments);
