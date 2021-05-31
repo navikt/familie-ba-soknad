@@ -4,6 +4,8 @@ import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin.js';
+import webpackModule from 'webpack';
+const { DefinePlugin } = webpackModule;
 
 export const publicUrl = '/public';
 
@@ -27,13 +29,17 @@ export default {
             ],
         }),
         new CaseSensitivePathsPlugin(),
+        new DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+            'process.env.BASE_PATH': JSON.stringify(process.env.BASE_PATH ?? '/'),
+        }),
     ],
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.less'],
     },
     output: {
         filename: 'main.js',
-        path: path.resolve(process.cwd(), 'dist'),
+        path: path.resolve(process.cwd(), 'dist/'),
     },
     module: {
         rules: [

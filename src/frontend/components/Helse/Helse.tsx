@@ -12,6 +12,7 @@ import {
 } from '@navikt/familie-typer';
 
 import { useApp } from '../../context/AppContext';
+import Miljø from '../../Miljø';
 
 const Helse: React.FC = () => {
     const { axiosRequest } = useApp();
@@ -19,6 +20,7 @@ const Helse: React.FC = () => {
     const [helseApi, settHelseApi] = useState(byggTomRessurs<string>());
     const [helseMottak, settHelseMottak] = useState(byggTomRessurs<string>());
     const [helsePdl, settHelsePdl] = useState(byggTomRessurs<string>());
+    const { soknadApi } = Miljø();
 
     useEffect(() => {
         settHelseApi(byggHenterRessurs());
@@ -26,7 +28,7 @@ const Helse: React.FC = () => {
         settHelsePdl(byggHenterRessurs());
 
         axiosRequest<string, void>({
-            url: '/api/helse/soknad-api',
+            url: `${soknadApi}/helse/soknad-api`,
             method: 'GET',
         })
             .then(ressurs => {
@@ -37,7 +39,7 @@ const Helse: React.FC = () => {
             });
 
         axiosRequest<string, void>({
-            url: '/api/helse/mottak',
+            url: `${soknadApi}/helse/mottak`,
             method: 'GET',
         })
             .then(ressurs => {
@@ -48,7 +50,7 @@ const Helse: React.FC = () => {
             });
 
         axiosRequest<string, void>({
-            url: '/api/helse/pdl',
+            url: `${soknadApi}/helse/pdl`,
             method: 'GET',
         })
             .then(ressurs => {

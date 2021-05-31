@@ -1,11 +1,11 @@
 import { AxiosError } from 'axios';
 
 import { preferredAxios as axios } from '../context/axios';
-import Miljø from '../Miljø';
+import Miljø, { basePath } from '../Miljø';
 
 const er401Feil = (error: AxiosError) => error && error.response && error.response.status === 401;
 const getLoginUrl = () => {
-    return `${Miljø().loginService}&redirect=${window.location.origin}`;
+    return `${Miljø().loginService}&redirect=${window.location.origin}${basePath}`;
 };
 
 export enum InnloggetStatus {

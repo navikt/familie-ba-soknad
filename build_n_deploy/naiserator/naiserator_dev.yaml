@@ -20,7 +20,7 @@ spec:
     path: /internal/isReady
     initialDelay: 5
   ingresses:
-    - "https://familie-ba-soknad.dev.nav.no"
+    - "https://familie-ba-soknad.dev.nav.no/familie/barnetrygd/soknad/ordinaer"
   accessPolicy:
     outbound:
       rules:
@@ -35,3 +35,6 @@ spec:
       memory: 512Mi
   envFrom:
     - secret: ba-soknad
+  env:
+    - name: BASE_PATH
+      value: {{base_path}}

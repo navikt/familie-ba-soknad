@@ -4,6 +4,7 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import * as bokmålSpråktekster from '../../../assets/lang/nb.json';
 import { useApp } from '../../../context/AppContext';
+import Miljø from '../../../Miljø';
 import {
     Dokumentasjonsbehov,
     IDokumentasjon,
@@ -32,6 +33,7 @@ type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
 export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } => {
     const { axiosRequest, søknad, settInnsendingStatus } = useApp();
     const intl = useIntl();
+    const { soknadApi } = Miljø();
 
     const språktekstFraSpørsmålId = (spørsmålId: SpørsmålId): string => {
         for (const språkIndex of [
@@ -190,7 +192,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         const formatert = dataISøknadKontraktFormat(søknad);
 
         return await axiosRequest<IKvittering, ISøknadKontrakt>({
-            url: '/api/soknad',
+            url: `${soknadApi}/soknad`,
             method: 'POST',
             withCredentials: true,
             data: formatert,
