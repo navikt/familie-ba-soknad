@@ -51,6 +51,7 @@ app.get('*', (_req, res) =>
     getDecorator()
         .then(fragments => {
             console.log(_req);
+            console.log(`Basepath: ${basePath}`);
             // eslint-disable-next-line
             // @ts-ignore
             res.render('index.html', fragments);
