@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 
 import { HttpProvider } from '@navikt/familie-http';
+import { byggDataRessurs } from '@navikt/familie-typer';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
 import * as appContext from '../../../../context/AppContext';
@@ -22,12 +23,13 @@ jest.mock('react-router-dom', () => ({
     }),
 }));
 
-test(`Kan legge til barn`, () => {
+test(`Kan legge til barn`, async () => {
     const submitMock = jest.fn();
     jest.spyOn(appContext, 'useApp').mockImplementation(
         jest.fn().mockReturnValue({
             søknad: { barnRegistrertManuelt: [], søker: { barn: [] } },
             settSøknad: submitMock,
+            axiosRequest: jest.fn().mockResolvedValue(byggDataRessurs(false)),
         })
     );
     jest.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
@@ -73,8 +75,10 @@ test(`Kan legge til barn`, () => {
     });
 
     expect(leggTilKnappIModal).toHaveClass('knapp--hoved');
+
+    // Her skjer det async kall med axios, som vi må vente på i de neste expectene
     act(() => leggTilKnappIModal?.click());
 
-    expect(modal).not.toBeInTheDocument();
-    expect(submitMock.mock.calls.length).toBe(1);
+    await waitFor(() => expect(modal).not.toBeInTheDocument());
+    await waitFor(() => expect(submitMock.mock.calls.length).toBe(1));
 });
