@@ -59,10 +59,12 @@ const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsv
 
     return (
         <StyledOppsummeringsFelt>
-            <Element>{tittel}</Element>
-            <Normaltekst>
-                {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
-            </Normaltekst>
+            {tittel && <Element>{tittel}</Element>}
+            {søknadsvar && (
+                <Normaltekst>
+                    {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
+                </Normaltekst>
+            )}
         </StyledOppsummeringsFelt>
     );
 };
@@ -205,8 +207,8 @@ const Oppsummering: React.FC = () => {
             </Oppsummeringsbolk>
 
             <Oppsummeringsbolk route={RouteEnum.VelgBarn} tittel={'hvilkebarn.sidetittel'}>
-                {søknad.barnInkludertISøknaden.map(barn => (
-                    <StyledOppsummeringsFeltGruppe>
+                {søknad.barnInkludertISøknaden.map((barn, index) => (
+                    <StyledOppsummeringsFeltGruppe key={index}>
                         {barn.navn && (
                             <OppsummeringFelt
                                 tittel={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
