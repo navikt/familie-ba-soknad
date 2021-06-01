@@ -46,4 +46,4 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
-          VAR: base_path=${{ env.BASE_PATH }}
+          VAR: image=${{ env.IMAGE }},base_path=${{ env.BASE_PATH }}
