@@ -114,7 +114,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                 feilOppsummeringRef.current && feilOppsummeringRef.current.focus();
             }
         } else if (gåVidereCallback) {
-            gåVidereCallback().then(() => gåVidere());
+            gåVidereCallback().then(resultat => resultat && gåVidere());
         } else {
             gåVidere();
         }
