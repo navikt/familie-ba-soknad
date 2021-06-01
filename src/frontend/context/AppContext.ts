@@ -31,6 +31,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
     const [valgtLocale, setValgtLocale] = useSprakContext();
+    const { soknadApi } = Miljø();
 
     autentiseringsInterceptor();
 
@@ -42,7 +43,7 @@ const [AppProvider, useApp] = createUseContext(() => {
             settSluttbruker(byggHenterRessurs());
 
             axiosRequest<ISøkerRespons, void>({
-                url: '/api/personopplysning',
+                url: `${soknadApi}/personopplysning`,
                 method: 'POST',
                 withCredentials: true,
                 påvirkerSystemLaster: true,
@@ -179,7 +180,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
     ) => {
         return axiosRequest({
-            url: '/api/innlogget',
+            url: `${soknadApi}/innlogget`,
             method: 'GET',
             withCredentials: true,
             påvirkerSystemLaster: true,

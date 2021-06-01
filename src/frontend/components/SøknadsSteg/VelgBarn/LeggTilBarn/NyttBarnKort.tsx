@@ -43,6 +43,7 @@ const StyledModal = styled(Modal)`
     && {
         padding: 2rem;
     }
+
     width: 45rem;
     min-height: 35rem;
     @media all and ${device.mobile} {
@@ -129,81 +130,96 @@ export const NyttBarnKort: React.FC = () => {
                             </AlertStripe>
                         )}
                     </SkjemaGruppe>
-
                     {skjema.felter.erFødt.valideringsstatus === Valideringsstatus.OK && (
-                        <SkjemaGruppe
-                            legend={
-                                <Element>
-                                    <SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />
-                                </Element>
-                            }
-                        >
-                            <Input
-                                {...skjema.felter.fornavn.hentNavInputProps(
-                                    skjema.visFeilmeldinger
-                                )}
-                                label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fornavn.spm'} />}
-                                disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
-                            />
+                        <span aria-live={'polite'}>
+                            <SkjemaGruppe
+                                legend={
+                                    <Element>
+                                        <SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />
+                                    </Element>
+                                }
+                            >
+                                <Input
+                                    {...skjema.felter.fornavn.hentNavInputProps(
+                                        skjema.visFeilmeldinger
+                                    )}
+                                    label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fornavn.spm'} />}
+                                    disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
+                                />
 
-                            <Input
-                                {...skjema.felter.etternavn.hentNavInputProps(
-                                    skjema.visFeilmeldinger
-                                )}
-                                label={<SpråkTekst id={'hvilkebarn.leggtilbarn.etternavn.spm'} />}
-                                disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
-                            />
+                                <Input
+                                    {...skjema.felter.etternavn.hentNavInputProps(
+                                        skjema.visFeilmeldinger
+                                    )}
+                                    label={
+                                        <SpråkTekst id={'hvilkebarn.leggtilbarn.etternavn.spm'} />
+                                    }
+                                    disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
+                                />
 
-                            <Checkbox
-                                {...skjema.felter.navnetErUbestemt.hentNavInputProps(
-                                    skjema.visFeilmeldinger
-                                )}
-                                label={
-                                    <SpråkTekst
-                                        id={'hvilkebarn.leggtilbarn.navn-ikke-bestemt.spm'}
+                                <Checkbox
+                                    {...skjema.felter.navnetErUbestemt.hentNavInputProps(
+                                        skjema.visFeilmeldinger
+                                    )}
+                                    label={
+                                        <SpråkTekst
+                                            id={'hvilkebarn.leggtilbarn.navn-ikke-bestemt.spm'}
+                                        />
+                                    }
+                                    onChange={event => {
+                                        const {
+                                            onChange,
+                                        } = skjema.felter.navnetErUbestemt.hentNavInputProps(false);
+                                        onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
+                                    }}
+                                />
+                            </SkjemaGruppe>
+
+                            <SkjemaGruppe>
+                                {skjema.felter.ident.erSynlig && (
+                                    <StyledInput
+                                        {...skjema.felter.ident.hentNavInputProps(
+                                            skalViseIdentFeil
+                                        )}
+                                        label={
+                                            <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
+                                        }
+                                        disabled={
+                                            skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI
+                                        }
                                     />
-                                }
-                                onChange={event => {
-                                    const {
-                                        onChange,
-                                    } = skjema.felter.navnetErUbestemt.hentNavInputProps(false);
-                                    onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
-                                }}
-                            />
-                        </SkjemaGruppe>
+                                )}
+
+                                {skjema.felter.harBarnetFåttIdNummer.erSynlig && (
+                                    <Checkbox
+                                        {...skjema.felter.harBarnetFåttIdNummer.hentNavInputProps(
+                                            false
+                                        )}
+                                        label={
+                                            <SpråkTekst
+                                                id={'hvilkebarn.leggtilbarn.ikke-fått-fnr.spm'}
+                                            />
+                                        }
+                                        onChange={event => {
+                                            const {
+                                                onChange,
+                                            } = skjema.felter.harBarnetFåttIdNummer.hentNavInputProps(
+                                                false
+                                            );
+                                            onChange(event.target.checked ? ESvar.NEI : ESvar.JA);
+                                        }}
+                                    />
+                                )}
+                                {skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI && (
+                                    <SøkerMåBrukePDF
+                                        advarselTekstId={
+                                            'hvilkebarn.leggtilbarn.ikke-fått-fnr.alert'
+                                        }
+                                    />
+                                )}
+                            </SkjemaGruppe>
+                        </span>
                     )}
-
-                    <SkjemaGruppe>
-                        {skjema.felter.ident.erSynlig && (
-                            <StyledInput
-                                {...skjema.felter.ident.hentNavInputProps(skalViseIdentFeil)}
-                                label={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
-                                disabled={skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI}
-                            />
-                        )}
-
-                        {skjema.felter.harBarnetFåttIdNummer.erSynlig && (
-                            <Checkbox
-                                {...skjema.felter.harBarnetFåttIdNummer.hentNavInputProps(false)}
-                                label={
-                                    <SpråkTekst id={'hvilkebarn.leggtilbarn.ikke-fått-fnr.spm'} />
-                                }
-                                onChange={event => {
-                                    const {
-                                        onChange,
-                                    } = skjema.felter.harBarnetFåttIdNummer.hentNavInputProps(
-                                        false
-                                    );
-                                    onChange(event.target.checked ? ESvar.NEI : ESvar.JA);
-                                }}
-                            />
-                        )}
-                        {skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI && (
-                            <SøkerMåBrukePDF
-                                advarselTekstId={'hvilkebarn.leggtilbarn.ikke-fått-fnr.alert'}
-                            />
-                        )}
-                    </SkjemaGruppe>
 
                     <StyledKnappIModal
                         type={valideringErOk() ? 'hoved' : 'standard'}

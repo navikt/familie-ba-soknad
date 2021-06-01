@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 
+import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
@@ -85,6 +86,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
     barnSomSkalVæreMed,
     fjernBarnCallback,
 }) => {
+    const { formatMessage } = useIntl();
     const ikoner = [barn1, barn2, barn3];
     const {
         søknad: { barnRegistrertManuelt },
@@ -101,7 +103,10 @@ const Barnekort: React.FC<IBarnekortProps> = ({
     return (
         <StyledBarnekort>
             <BarnekortHeader>
-                <img alt="barn" src={hentTilfeldigElement(ikoner)} />
+                <img
+                    alt={formatMessage({ id: 'felles.barneillustrasjon.tittel' })}
+                    src={hentTilfeldigElement(ikoner)}
+                />
             </BarnekortHeader>
             <InformasjonsboksInnhold>
                 <StyledUndertittel>{barn.navn}</StyledUndertittel>

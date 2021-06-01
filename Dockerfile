@@ -5,6 +5,10 @@ USER apprunner
 
 COPY --chown=apprunner:apprunner ./ /var/server/
 
+# Trenger å vite BASE_PATH før vi kjører webpack, siden webpack bruker DefinePlugin for å videresende basepath til frontend
+ARG base_path
+ENV BASE_PATH=$base_path
+
 RUN yarn
 RUN yarn build
 

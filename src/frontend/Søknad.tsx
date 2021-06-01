@@ -8,6 +8,7 @@ import Helse from './components/Helse/Helse';
 import Forside from './components/SøknadsSteg/Forside/Forside';
 import { useApp } from './context/AppContext';
 import { useRoutes } from './context/RoutesContext';
+import { basePath } from './Miljø';
 
 const Søknad = () => {
     const { systemetLaster } = useApp();
@@ -15,7 +16,7 @@ const Søknad = () => {
 
     return (
         <div className={classNames(systemetLaster() && 'blur')}>
-            <Router>
+            <Router basename={basePath}>
                 <Switch>
                     <Route exact={true} path={'/helse'} component={Helse} />
                     <Route exact={true} path={'/'} component={Forside} />
