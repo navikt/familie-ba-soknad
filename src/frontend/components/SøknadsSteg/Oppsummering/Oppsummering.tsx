@@ -72,7 +72,6 @@ const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsv
 const Oppsummering: React.FC = () => {
     const { formatMessage } = useIntl();
     const { søknad } = useApp();
-    console.log(søknad);
     const { hentStegNummer } = useRoutes();
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden
