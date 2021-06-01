@@ -27,9 +27,7 @@ const Kvittering: React.FC = () => {
     const dato = innsendtDato.format('DD.MM.YY');
 
     useEffect(() => {
-        return () => {
-            avbrytOgSlettSøknad();
-        };
+        avbrytOgSlettSøknad();
     }, []);
 
     return (
