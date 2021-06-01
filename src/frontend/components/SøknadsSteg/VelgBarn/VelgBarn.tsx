@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Masonry from 'react-masonry-css';
 import styled from 'styled-components/macro';
@@ -11,6 +11,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { AdressebeskyttetKort } from './Barnekort/AdressebeskyttetKort';
 import Barnekort from './Barnekort/Barnekort';
+import LeggTilBarnModal from './LeggTilBarn/LeggTilBarnModal';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from './spørsmål';
 import { useVelgBarn } from './useVelgBarn';
@@ -40,6 +41,8 @@ const VelgBarn: React.FC = () => {
         fjernBarn,
     } = useVelgBarn();
 
+    const [modalÅpen, settModalÅpen] = useState<boolean>(false);
+
     const barnFraRespons = mapBarnResponsTilBarn(søknad.søker.barn).filter(
         barn => !barn.adressebeskyttelse
     );
@@ -47,55 +50,62 @@ const VelgBarn: React.FC = () => {
     const barn = barnFraRespons.concat(barnManueltLagtTil);
     const harBarnMedBeskyttaAdresse = !!søknad.søker.barn.find(barn => barn.adressebeskyttelse);
 
-    return (
-        <Steg
-            tittel={<SpråkTekst id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]} />}
-            skjema={{
-                validerFelterOgVisFeilmelding,
-                valideringErOk,
-                skjema,
-                settSøknadsdataCallback: () => {
-                    oppdaterSøknad();
-                },
-            }}
-        >
-            <AlertStripe form={'inline'}>
-                <SpråkTekst id={'hvilkebarn.info.alert'} />
-                <EksternLenke
-                    lenkeSpråkId={'hvilkebarn.endre-opplysninger.lenke'}
-                    lenkeTekstSpråkId={'hvilkebarn.endre-opplysninger.lenketekst'}
-                    target="_blank"
-                />
-            </AlertStripe>
+    const toggleModal = () => {
+        settModalÅpen(!modalÅpen);
+    };
 
-            <BarnekortContainer
-                id={VelgBarnSpørsmålId.velgBarn}
-                className={'BarnekortContainer'}
-                breakpointCols={{
-                    default: 2,
-                    480: 1,
+    return (
+        <>
+            <Steg
+                tittel={<SpråkTekst id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]} />}
+                skjema={{
+                    validerFelterOgVisFeilmelding,
+                    valideringErOk,
+                    skjema,
+                    settSøknadsdataCallback: () => {
+                        oppdaterSøknad();
+                    },
                 }}
             >
-                {barn.map(barn => (
-                    <Barnekort
-                        key={barn.ident}
-                        barn={barn}
-                        velgBarnCallback={håndterVelgBarnToggle}
-                        barnSomSkalVæreMed={barnSomSkalVæreMed}
-                        fjernBarnCallback={fjernBarn}
+                <AlertStripe form={'inline'}>
+                    <SpråkTekst id={'hvilkebarn.info.alert'} />
+                    <EksternLenke
+                        lenkeSpråkId={'hvilkebarn.endre-opplysninger.lenke'}
+                        lenkeTekstSpråkId={'hvilkebarn.endre-opplysninger.lenketekst'}
+                        target="_blank"
                     />
-                ))}
-                {harBarnMedBeskyttaAdresse && <AdressebeskyttetKort />}
-                <NyttBarnKort />
-            </BarnekortContainer>
-            <LenkeContainer>
-                <EksternLenke
-                    lenkeSpråkId={'hvilkebarn.regelverk.lenke'}
-                    lenkeTekstSpråkId={'hvilkebarn.regelverk.lenketekst'}
-                    target="_blank"
-                />
-            </LenkeContainer>
-        </Steg>
+                </AlertStripe>
+
+                <BarnekortContainer
+                    id={VelgBarnSpørsmålId.velgBarn}
+                    className={'BarnekortContainer'}
+                    breakpointCols={{
+                        default: 2,
+                        480: 1,
+                    }}
+                >
+                    {barn.map(barn => (
+                        <Barnekort
+                            key={barn.ident}
+                            barn={barn}
+                            velgBarnCallback={håndterVelgBarnToggle}
+                            barnSomSkalVæreMed={barnSomSkalVæreMed}
+                            fjernBarnCallback={fjernBarn}
+                        />
+                    ))}
+                    {harBarnMedBeskyttaAdresse && <AdressebeskyttetKort />}
+                    <NyttBarnKort onLeggTilBarn={toggleModal} />
+                </BarnekortContainer>
+                <LenkeContainer>
+                    <EksternLenke
+                        lenkeSpråkId={'hvilkebarn.regelverk.lenke'}
+                        lenkeTekstSpråkId={'hvilkebarn.regelverk.lenketekst'}
+                        target="_blank"
+                    />
+                </LenkeContainer>
+            </Steg>
+            <LeggTilBarnModal modalÅpen={modalÅpen} settModalÅpen={settModalÅpen} />
+        </>
     );
 };
 
