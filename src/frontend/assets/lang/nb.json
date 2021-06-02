@@ -126,7 +126,7 @@
   "kvittering.info": "Spørsmålene i søknaden, sammen med eventuell dokumentasjon, gir oss svar på det det vi trenger for å behandle søknaden din. Hvis vi har bruk for mer informasjon vil vi ta kontakt med deg. {linjeskift} {linjeskift} Du kan finne søknaden i {lenkeDineSaker} når vi starter å behandle den. {linjeskift} {linjeskift}\n{lenkeFinnSaksbehandlingstid}",
   "kvittering.mottatt": "Søknaden din om barnetrygd er mottatt  {tidspunkt},  {dato}.",
   "kvittering.saksbehandlingstid.lenke": "https://www.nav.no/no/nav-og-samfunn/om-nav/saksbehandlingstider-i-nav",
-  "kvittering.saksbehandlingstid.lenketekst": "Finn saksbehandlingstiden for fylket dtt",
+  "kvittering.saksbehandlingstid.lenketekst": "Finn saksbehandlingstiden for fylket ditt",
   "kvittering.sidetittel": "Takk for søknaden",
   "mellomlagring.info": "Du har en påbegynt søknad. Vil du fortsette på denne eller starte en ny?",
   "mellomlagring.knapp.fortsett": "Fortsett på søknaden",
