@@ -11,6 +11,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import projectWebpackDevConfig from '../webpack/webpack.development.config.js';
 import getDecorator from './dekorator.js';
 import environment from './environment.js';
+import { escapeBody } from './escape.js';
 import { createApiForwardingFunction } from './proxy.js';
 
 dotenv.config();
@@ -24,6 +25,9 @@ app.set('view engine', 'mustache');
 
 app.engine('html', mustacheExpress());
 app.use(compression());
+
+app.use(`${basePath}api/soknad`, express.json());
+app.use(`${basePath}api/soknad`, escapeBody);
 app.use(`${basePath}api`, createApiForwardingFunction());
 
 if (process.env.NODE_ENV === 'development') {

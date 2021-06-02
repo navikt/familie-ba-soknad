@@ -160,7 +160,8 @@
     "react-refresh": "^0.9.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "webpack": "^5.21.2"
+    "webpack": "^5.21.2",
+    "xss": "^1.0.9"
   },
   "devDependencies": {
     "@axe-core/react": "^4.1.1",
