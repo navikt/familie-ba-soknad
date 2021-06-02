@@ -117,7 +117,6 @@ export const useLeggTilBarn = (): {
         if (!kanSendeSkjema()) {
             return false;
         }
-        // TODO: Bedre dato-løsning
         settSøknad({
             ...søknad,
             barnRegistrertManuelt: søknad.barnRegistrertManuelt.concat([

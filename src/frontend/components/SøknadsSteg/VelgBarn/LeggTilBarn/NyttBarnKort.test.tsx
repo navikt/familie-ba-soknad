@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 
 import { HttpProvider } from '@navikt/familie-http';
@@ -8,6 +8,7 @@ import * as fnrvalidator from '@navikt/fnrvalidator';
 
 import * as appContext from '../../../../context/AppContext';
 import { silenceConsoleErrors } from '../../../../utils/testing';
+import LeggTilBarnModal from './LeggTilBarnModal';
 import { NyttBarnKort } from './NyttBarnKort';
 
 silenceConsoleErrors();
@@ -22,7 +23,7 @@ jest.mock('react-router-dom', () => ({
     }),
 }));
 
-test(`Kan legge til barn`, () => {
+test(`Kan legge til barn`, async () => {
     const submitMock = jest.fn();
     jest.spyOn(appContext, 'useApp').mockImplementation(
         jest.fn().mockReturnValue({
@@ -31,11 +32,22 @@ test(`Kan legge til barn`, () => {
         })
     );
     jest.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
+    const åpen: number[] = [];
 
-    const { getByRole, getByText, getByLabelText } = render(
+    const { getByRole, getByText, getByLabelText, rerender } = render(
         <IntlProvider locale={'nb'}>
             <HttpProvider>
-                <NyttBarnKort />
+                <NyttBarnKort
+                    onLeggTilBarn={() => {
+                        åpen.push(1);
+                    }}
+                />
+                <LeggTilBarnModal
+                    modalÅpen={åpen.length > 0}
+                    settModalÅpen={() => {
+                        åpen.pop();
+                    }}
+                />
             </HttpProvider>
         </IntlProvider>
     );
@@ -44,7 +56,25 @@ test(`Kan legge til barn`, () => {
     expect(leggTilBarnKort).toBeInTheDocument();
     act(() => leggTilBarnKort.click());
 
-    const modal = getByLabelText('hvilkebarn.leggtilbarn.modal.tittel');
+    rerender(
+        <IntlProvider locale={'nb'}>
+            <HttpProvider>
+                <NyttBarnKort
+                    onLeggTilBarn={() => {
+                        åpen.push(1);
+                    }}
+                />
+                <LeggTilBarnModal
+                    modalÅpen={åpen.length > 0}
+                    settModalÅpen={() => {
+                        åpen.pop();
+                    }}
+                />
+            </HttpProvider>
+        </IntlProvider>
+    );
+
+    const modal = await waitFor(() => getByLabelText('hvilkebarn.leggtilbarn.modal.tittel'));
     const leggTilKnappIModal = modal.querySelector('button');
     expect(leggTilKnappIModal).toBeInTheDocument();
     expect(leggTilKnappIModal).toHaveClass('knapp--standard');
@@ -74,6 +104,24 @@ test(`Kan legge til barn`, () => {
 
     expect(leggTilKnappIModal).toHaveClass('knapp--hoved');
     act(() => leggTilKnappIModal?.click());
+
+    rerender(
+        <IntlProvider locale={'nb'}>
+            <HttpProvider>
+                <NyttBarnKort
+                    onLeggTilBarn={() => {
+                        åpen.push(1);
+                    }}
+                />
+                <LeggTilBarnModal
+                    modalÅpen={åpen.length > 0}
+                    settModalÅpen={() => {
+                        åpen.pop();
+                    }}
+                />
+            </HttpProvider>
+        </IntlProvider>
+    );
 
     expect(modal).not.toBeInTheDocument();
     expect(submitMock.mock.calls.length).toBe(1);
