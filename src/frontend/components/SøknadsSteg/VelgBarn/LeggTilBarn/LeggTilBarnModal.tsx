@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components/macro';
 
@@ -6,7 +6,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Element, Innholdstittel } from 'nav-frontend-typografi';
+import { Element, Feilmelding, Innholdstittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
@@ -48,12 +48,22 @@ const LeggTilBarnModal: React.FC<{
     modalÅpen: boolean;
     settModalÅpen: (åpen: boolean) => void;
 }> = ({ modalÅpen, settModalÅpen }) => {
-    const { skjema, nullstillSkjema, valideringErOk, submit } = useLeggTilBarn();
+    const {
+        skjema,
+        nullstillSkjema,
+        valideringErOk,
+        submit,
+        forsøkerBarnMedAdressebeskyttelse,
+    } = useLeggTilBarn();
     const { fornavn, etternavn, navnetErUbestemt, harBarnetFåttIdNummer } = skjema.felter;
+    const [venterPåLeggTil, settVenterPåLeggTil] = useState(false);
 
-    const submitOgLukk = event => {
+    const submitOgLukk = async event => {
         event.preventDefault();
-        submit() && settModalÅpen(false);
+        settVenterPåLeggTil(true);
+        const success = await submit();
+        settVenterPåLeggTil(false);
+        success && settModalÅpen(false);
     };
 
     const skalViseIdentFeil =
@@ -163,6 +173,18 @@ const LeggTilBarnModal: React.FC<{
                             {skjema.felter.ident.erSynlig && (
                                 <StyledInput
                                     {...skjema.felter.ident.hentNavInputProps(skalViseIdentFeil)}
+                                    feil={
+                                        forsøkerBarnMedAdressebeskyttelse ? (
+                                            <Feilmelding>
+                                                <SpråkTekst
+                                                    id={'hvilkebarn.adressesperreinformasjon'}
+                                                />
+                                            </Feilmelding>
+                                        ) : (
+                                            skjema.felter.ident.hentNavInputProps(skalViseIdentFeil)
+                                                .feil
+                                        )
+                                    }
                                     label={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
                                     disabled={
                                         skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI
@@ -202,6 +224,8 @@ const LeggTilBarnModal: React.FC<{
                 <StyledKnappIModal
                     type={valideringErOk() ? 'hoved' : 'standard'}
                     htmlType={'submit'}
+                    spinner={venterPåLeggTil}
+                    autoDisableVedSpinner={true}
                 >
                     <SpråkTekst id={'hvilkebarn.leggtilbarn.kort.knapp'} />
                 </StyledKnappIModal>
