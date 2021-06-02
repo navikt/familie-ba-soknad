@@ -186,7 +186,7 @@
   "ombarnet.oppholdutland.sluttdato.spm": "Når skal oppholdet avsluttes? (format dd.mm.åååå)",
   "ombarnet.oppholdutland.startdato.spm": "Når begynte oppholdet? (format dd.mm.åååå)",
   "ombarnet.oppholdutland.ukjent-sluttdato.spm": "Jeg vet ikke når oppholdet avsluttes",
-  "ombarnet.planlagt-sammenhengende-opphold.alert": "Fordi du planlegger at barnet skal være i Norge i mindre enn tolv måneder sammenhengende, har du som hovedregel ikke rett til barnetrygd. Du kan likevel ha rett til barnetrygd hvis du har flyttet til Norge fra et nordisk land eller fra et EØS land..",
+  "ombarnet.planlagt-sammenhengende-opphold.alert": "Fordi du planlegger at barnet skal være i Norge i mindre enn tolv måneder sammenhengende, har du som hovedregel ikke rett til barnetrygd. Du kan likevel ha rett til barnetrygd hvis du har flyttet til Norge fra et nordisk land eller fra et EØS land.",
   "ombarnet.planlagt-sammenhengende-opphold.spm": "Er det planlagt at barnet skal bo sammenhengende i Norge i mer enn tolv måneder?",
   "ombarnet.sammenhengende-opphold": "Du har opplyst at {navn} ikke har bodd\nsammenhengende i Norge de siste tolv månedene",
   "ombarnet.sammenhengende-opphold.dato.spm": "Når kom barnet til Norge? (format dd.mm.yyy)",
