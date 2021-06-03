@@ -6,7 +6,7 @@ interface MiljøProps {
     modellVersjon: number;
     dokumentUrl: string;
 }
-const modellVersjon = 1;
+const modellVersjon = 2;
 
 export const basePath = process.env.BASE_PATH ?? '/';
 
