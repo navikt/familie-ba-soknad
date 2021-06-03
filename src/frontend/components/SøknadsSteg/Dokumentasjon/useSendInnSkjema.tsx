@@ -170,6 +170,12 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                     språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.oppholderBarnSegIUtland),
                     søknad.oppholderBarnSegIUtland.svar
                 ),
+                lestOgForståttBekreftelse: søknadsfelt(
+                    intl.formatMessage({ id: 'forside.bekreftelsesboks.brødtekst' }),
+                    søknad.lestOgForståttBekreftelse
+                        ? intl.formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })
+                        : ESvar.NEI
+                ),
                 oppfølgingsspørsmåltekster: {
                     label:
                         'Tekster som ellers trengs til pdf-gen, typ "Du har opplyst at {navn} oppholder seg i institusjon"',
