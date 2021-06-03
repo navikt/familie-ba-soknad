@@ -110,7 +110,7 @@ const LeggTilBarnModal: React.FC<{
                 nullstillSkjema();
             }}
         >
-            <form onSubmit={event => submitOgLukk(event)}>
+            <form onSubmit={event => submitOgLukk(event)} autoComplete="off">
                 <StyledInnholdstittel>
                     <SpråkTekst id={'hvilkebarn.leggtilbarn.modal.tittel'} />
                 </StyledInnholdstittel>
@@ -141,6 +141,7 @@ const LeggTilBarnModal: React.FC<{
                                 )}
                                 label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fornavn.spm'} />}
                                 disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
+                                autoComplete={'none'}
                             />
 
                             <Input
@@ -149,6 +150,7 @@ const LeggTilBarnModal: React.FC<{
                                 )}
                                 label={<SpråkTekst id={'hvilkebarn.leggtilbarn.etternavn.spm'} />}
                                 disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
+                                autoComplete={'none'}
                             />
 
                             <Checkbox
@@ -189,6 +191,7 @@ const LeggTilBarnModal: React.FC<{
                                     disabled={
                                         skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI
                                     }
+                                    autoComplete={'none'}
                                 />
                             )}
 

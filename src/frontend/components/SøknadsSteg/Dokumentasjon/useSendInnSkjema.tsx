@@ -1,5 +1,6 @@
 import { useIntl } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import * as bokmålSpråktekster from '../../../assets/lang/nb.json';
@@ -13,7 +14,7 @@ import {
     IVedlegg,
 } from '../../../typer/dokumentasjon';
 import { IKvittering } from '../../../typer/kvittering';
-import { IBarnMedISøknad } from '../../../typer/person';
+import { AlternativtSvarForInput, IBarnMedISøknad } from '../../../typer/person';
 import {
     ISøknad,
     ISøknadKontrakt,
@@ -75,8 +76,12 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         return {
             navn: søknadsfelt('Navn', navn),
             ident: søknadsfelt('Ident', ident),
-            borMedSøker: søknadsfelt('Bor med søker', borMedSøker),
-            alder: søknadsfelt('Alder', alder),
+            borMedSøker: søknadsfelt(
+                'Bor med søker',
+                borMedSøker ??
+                    typetBarnSpørsmål[OmBarnetSpørsmålsId.borFastMedSøker].svar === ESvar.JA
+            ),
+            alder: søknadsfelt('Alder', alder ?? AlternativtSvarForInput.UKJENT),
             spørsmål: spørmålISøknadsFormat(typetBarnSpørsmål),
         };
     };
