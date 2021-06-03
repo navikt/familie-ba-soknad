@@ -20,7 +20,7 @@ export const createApiForwardingFunction = () => {
     return createProxyMiddleware(apiPath.replace('^', ''), {
         target: environment().apiUrl,
         changeOrigin: true,
-        logLevel: 'debug',
+        logLevel: process.env.ENV === 'prod' ? 'silent' : 'debug',
         secure: true,
         onProxyReq: restream,
         pathRewrite: {
