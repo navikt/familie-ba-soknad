@@ -36,4 +36,4 @@ export const validerDato = (
 };
 
 export const formaterDato = (isoDateString: ISODateString) =>
-    dayjs(isoDateString).format('DD.MM.YY');
+    dayjs(isoDateString).format('DD.MM.YYYY');

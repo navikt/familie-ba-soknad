@@ -189,7 +189,7 @@
   "ombarnet.planlagt-sammenhengende-opphold.alert": "Fordi du planlegg at barnet skal vere i Noreg i mindre enn tolv månadar samanhengande, har du som hovudregel ikkje rett til barnetrygd. Du kan likevel ha rett til barnetrygd dersom du har flytta til Noreg frå eit nordisk land eller frå eit EØS land.",
   "ombarnet.planlagt-sammenhengende-opphold.spm": "Er det planlagd at barnet skal bu i Noreg samanhengande i meir enn tolv månadar?",
   "ombarnet.sammenhengende-opphold": "Du har opplyst at {navn} ikkje har budd\nsamanhengande i Noreg dei siste tolv månadene.",
-  "ombarnet.sammenhengende-opphold.dato.spm": "Når kom barnet til Noreg?",
+  "ombarnet.sammenhengende-opphold.dato.spm": "Når kom barnet til Noreg? (format dd.mm.åååå)",
   "ombarnet.sidetittel": "Om {navn}",
   "ombarnet.svaralternativ.annen-bosituasjon": "Annan busituasjon",
   "ombarnet.svaralternativ.annen-forelder": "Annan forelder",
