@@ -14,7 +14,11 @@ import {
     IVedlegg,
 } from '../../../typer/dokumentasjon';
 import { IKvittering } from '../../../typer/kvittering';
-import { AlternativtSvarForInput, IBarnMedISøknad } from '../../../typer/person';
+import {
+    AlternativtSvarForInput,
+    barnDataKeySpørsmål,
+    IBarnMedISøknad,
+} from '../../../typer/person';
 import {
     ISøknad,
     ISøknadKontrakt,
@@ -79,7 +83,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
             borMedSøker: søknadsfelt(
                 'Bor med søker',
                 borMedSøker ??
-                    typetBarnSpørsmål[OmBarnetSpørsmålsId.borFastMedSøker].svar === ESvar.JA
+                    typetBarnSpørsmål[barnDataKeySpørsmål.borFastMedSøker].svar === ESvar.JA
             ),
             alder: søknadsfelt('Alder', alder ?? AlternativtSvarForInput.UKJENT),
             spørsmål: spørmålISøknadsFormat(typetBarnSpørsmål),
