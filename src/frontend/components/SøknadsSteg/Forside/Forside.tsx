@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import AlertStripe from 'nav-frontend-alertstriper';
+import Lenke from 'nav-frontend-lenker';
 import { Sidetittel } from 'nav-frontend-typografi';
 
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
@@ -57,11 +58,13 @@ const Forside: React.FC = () => {
                     This application is currently only available in Norwegian. If you need to apply
                     in English you have to use the PDF-form.
                 </div>
-                <EksternLenke
-                    lenkeSpråkId={'felles.bruk-pdfskjema.lenke'}
-                    lenkeTekstSpråkId={'Use PDF-form'}
-                    target="_blank"
-                />
+                <Lenke
+                    href={'https://www.nav.no/soknader/en/person/familie/barnetrygd'}
+                    target={'_blank'}
+                    rel="noopener noreferrer"
+                >
+                    {'Use PDF-form'}
+                </Lenke>
             </StyledAlertStripe>
             <Informasjonsbolk>
                 <SpråkTekst id="forside.info.punktliste" values={{ b: msg => <b>{msg}</b> }} />
