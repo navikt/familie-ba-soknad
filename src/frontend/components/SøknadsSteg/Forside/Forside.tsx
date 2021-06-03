@@ -3,6 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
+import AlertStripe from 'nav-frontend-alertstriper';
 import { Sidetittel } from 'nav-frontend-typografi';
 
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
@@ -21,6 +22,12 @@ import FortsettPåSøknad from './FortsettPåSøknad';
 const StyledSidetittel = styled(Sidetittel)`
     && {
         margin: 4rem 0 2.3rem 0;
+    }
+`;
+
+const StyledAlertStripe = styled(AlertStripe)`
+    && {
+        margin-top: 2rem;
     }
 `;
 
@@ -45,7 +52,17 @@ const Forside: React.FC = () => {
             </StyledSidetittel>
 
             <Sprakvelger støttedeSprak={[LocaleType.nn, LocaleType.nb]} />
-
+            <StyledAlertStripe type={'info'}>
+                <div>
+                    This application is currently only available in Norwegian. If you need to apply
+                    in English you have to use the PDF-form.
+                </div>
+                <EksternLenke
+                    lenkeSpråkId={'felles.bruk-pdfskjema.lenke'}
+                    lenkeTekstSpråkId={'Use PDF-form'}
+                    target="_blank"
+                />
+            </StyledAlertStripe>
             <Informasjonsbolk>
                 <SpråkTekst id="forside.info.punktliste" values={{ b: msg => <b>{msg}</b> }} />
                 <EksternLenke
