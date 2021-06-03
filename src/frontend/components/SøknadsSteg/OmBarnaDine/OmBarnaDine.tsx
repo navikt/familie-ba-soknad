@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components/macro';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -14,6 +15,10 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
+
+const AlertStripeWrapper = styled.div`
+    margin: -1.5rem 0 4.5rem 0;
+`;
 
 const OmBarnaDine: React.FC = () => {
     const {
@@ -119,9 +124,11 @@ const OmBarnaDine: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
-                        <AlertStripe dynamisk>
-                            <SpråkTekst id={'ombarna.adoptert.alert'} />
-                        </AlertStripe>
+                        <AlertStripeWrapper>
+                            <AlertStripe dynamisk>
+                                <SpråkTekst id={'ombarna.adoptert.alert'} />
+                            </AlertStripe>
+                        </AlertStripeWrapper>
                     )}
                     <JaNeiSpm
                         skjema={skjema}
@@ -177,9 +184,11 @@ const OmBarnaDine: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
-                        <AlertStripe dynamisk>
-                            <SpråkTekst id={'ombarna.asyl.alert'} />
-                        </AlertStripe>
+                        <AlertStripeWrapper>
+                            <AlertStripe dynamisk>
+                                <SpråkTekst id={'ombarna.asyl.alert'} />
+                            </AlertStripe>
+                        </AlertStripeWrapper>
                     )}
                     <JaNeiSpm
                         skjema={skjema}
