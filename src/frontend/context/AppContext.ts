@@ -163,10 +163,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     };
 
     const systemetFeiler = () => {
-        return (
-            innloggetStatus === InnloggetStatus.FEILET ||
-            sluttbruker.status === RessursStatus.FEILET
-        );
+        return sluttbruker.status === RessursStatus.FEILET;
     };
 
     const systemetOK = () => {
