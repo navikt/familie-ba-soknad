@@ -43,7 +43,12 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
                 return (
                     <FilRad key={fil.dokumentId} skillelinje={index !== filliste.length - 1}>
                         <FilTekstWrapper>
-                            <StyledAttachment />
+                            <StyledAttachment
+                                focusable={false}
+                                role={'img'}
+                                aria-hidden={true}
+                                aria-label={''}
+                            />
                             <Normaltekst>
                                 {`${fil.navn} (${formaterFilstørrelse(fil.størrelse)})`}
                             </Normaltekst>
@@ -52,7 +57,7 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
                             <span>
                                 <SpråkTekst id={'felles.slett'} />
                             </span>
-                            <DeleteFilled />
+                            <DeleteFilled focusable={false} />
                         </Flatknapp>
                     </FilRad>
                 );

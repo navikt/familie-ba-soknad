@@ -24,7 +24,7 @@ const StyledFortsettPåSøknad = styled.div`
 const FortsettPåSøknad: FC = () => {
     const { fortsettPåSøknaden, startPåNytt } = useBekreftelseOgStartSoknad();
     return (
-        <StyledFortsettPåSøknad>
+        <StyledFortsettPåSøknad role={'navigation'}>
             <KomponentGruppe>
                 <AlertStripeInfo>
                     <Normaltekst>

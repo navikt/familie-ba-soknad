@@ -28,7 +28,6 @@ const Container = styled.div`
 const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
     const { søknad, settSøknad } = useApp();
     const { formatMessage } = useIntl();
-
     const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
         const huketAv = event.target.checked;
         const vedlegg = huketAv ? [] : dokumentasjon.opplastedeVedlegg;
@@ -83,6 +82,11 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         return antallVedlegg;
     };
 
+    const dokTittel = formatMessage(
+        { id: dokumentasjon.tittelSpråkId },
+        { barn: formatertListeMedBarn() }
+    );
+
     return (
         <Container>
             <Undertittel>
@@ -98,10 +102,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                         &nbsp;
                     </>
                 )}
-                <SpråkTekst
-                    id={dokumentasjon.tittelSpråkId}
-                    values={{ barn: formatertListeMedBarn() }}
-                />
+                {dokTittel}
             </Undertittel>
             <SpråkTekst
                 id={dokumentasjon.beskrivelseSpråkId}
@@ -120,6 +121,9 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
             <br />
             <Checkbox
                 label={<SpråkTekst id={'dokumentasjon.har-sendt-inn.spm'} />}
+                aria-label={`${formatMessage({
+                    id: 'dokumentasjon.har-sendt-inn.spm',
+                })} (${dokTittel})`}
                 checked={dokumentasjon.harSendtInn}
                 onChange={settHarSendtInnTidligere}
             />

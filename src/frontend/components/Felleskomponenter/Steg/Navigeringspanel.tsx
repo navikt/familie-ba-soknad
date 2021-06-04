@@ -85,7 +85,7 @@ const Navigeringspanel: React.FC<{
     };
 
     return (
-        <Container>
+        <Container role={'navigation'}>
             <StyledKnappBase
                 htmlType={'button'}
                 onClick={onTilbakeCallback}

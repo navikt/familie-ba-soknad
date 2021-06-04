@@ -86,7 +86,7 @@ const Filopplaster: React.FC<Props> = ({
             </Modal>
             <FilopplastningBoks type={'button'} {...getRootProps()}>
                 <input {...getInputProps()} />
-                <StyledUpload />
+                <StyledUpload focusable={false} />
                 <Normaltekst>
                     <SpråkTekst
                         id={

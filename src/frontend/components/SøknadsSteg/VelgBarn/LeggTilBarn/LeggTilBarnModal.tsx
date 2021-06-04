@@ -109,6 +109,8 @@ const LeggTilBarnModal: React.FC<{
                 settModalÅpen(!modalÅpen);
                 nullstillSkjema();
             }}
+            /* aria-modal blir satt til true så vi trenger ikke å gjøre aria-hidden på appen */
+            ariaHideApp={false}
         >
             <form onSubmit={event => submitOgLukk(event)} autoComplete="off">
                 <StyledInnholdstittel>
