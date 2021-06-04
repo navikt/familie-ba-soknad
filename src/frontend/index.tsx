@@ -24,7 +24,7 @@ Sentry.init({
     release: packageJson.version,
     environment,
     autoSessionTracking: false,
-    //enabled: process.env.NODE_ENV !== 'development', - TODO legge til denne når vi går live
+    enabled: process.env.NODE_ENV !== 'development',
 });
 
 if (process.env.NODE_ENV !== 'production') {

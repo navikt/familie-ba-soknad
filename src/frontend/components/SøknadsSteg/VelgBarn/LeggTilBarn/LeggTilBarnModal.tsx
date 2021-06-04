@@ -142,6 +142,7 @@ const LeggTilBarnModal: React.FC<{
                                 label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fornavn.spm'} />}
                                 disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                                 autoComplete={'none'}
+                                maxLength={500}
                             />
 
                             <Input
@@ -151,6 +152,7 @@ const LeggTilBarnModal: React.FC<{
                                 label={<SpråkTekst id={'hvilkebarn.leggtilbarn.etternavn.spm'} />}
                                 disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                                 autoComplete={'none'}
+                                maxLength={500}
                             />
 
                             <Checkbox

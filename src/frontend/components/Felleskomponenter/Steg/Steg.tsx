@@ -5,7 +5,7 @@ import styled from 'styled-components/macro';
 
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import Stegindikator from 'nav-frontend-stegindikator';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Element, Systemtittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
@@ -165,7 +165,11 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                                 tabIndex={-1}
                                 innerRef={feilOppsummeringRef}
                                 aria-live={'polite'}
-                                tittel={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}
+                                tittel={
+                                    <Element>
+                                        <SpråkTekst id={'felles.feiloppsummering.tittel'} />
+                                    </Element>
+                                }
                                 feil={Object.values(skjema.skjema.felter)
                                     .filter(felt => {
                                         return (

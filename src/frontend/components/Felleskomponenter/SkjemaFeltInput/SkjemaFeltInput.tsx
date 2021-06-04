@@ -27,6 +27,7 @@ export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
                 label={<SpråkTekst id={labelSpråkTekstId} />}
                 {...navInputPropsFraFeltHook}
                 {...øvrigePropsStøttetAvNavInput}
+                maxLength={500}
             />
         </div>
     ) : null;

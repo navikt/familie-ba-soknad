@@ -79,6 +79,7 @@ const OmDeg: React.FC = () => {
                             }
                             bredde={'M'}
                             type="tel"
+                            maxLength={20}
                         />
                     </span>
                     <JaNeiSpm
