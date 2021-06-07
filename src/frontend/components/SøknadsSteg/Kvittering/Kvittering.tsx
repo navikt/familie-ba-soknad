@@ -8,6 +8,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
+import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -15,7 +16,8 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 const Kvittering: React.FC = () => {
-    const { avbrytOgSlettSøknad } = useApp();
+    const { avbrytOgSlettSøknad, sisteUtfylteStegIndex, settFåttGyldigKvittering } = useApp();
+    const { hentStegNummer } = useRoutes();
 
     const { innsendingStatus } = useApp();
     const innsendtDato: Dayjs =
@@ -27,7 +29,10 @@ const Kvittering: React.FC = () => {
     const dato = innsendtDato.format('DD.MM.YY');
 
     useEffect(() => {
-        avbrytOgSlettSøknad();
+        if (sisteUtfylteStegIndex === hentStegNummer(RouteEnum.Dokumentasjon)) {
+            settFåttGyldigKvittering(true);
+            avbrytOgSlettSøknad();
+        }
     }, []);
 
     return (

@@ -13,7 +13,7 @@ const NotisWrapper = styled.div`
 const StyledFileContent = styled(FileContent)`
     max-width: 1.125rem;
     min-width: 1.125rem;
-    height: fit-content;
+    max-height: fit-content;
     margin-right: 1rem;
 `;
 
