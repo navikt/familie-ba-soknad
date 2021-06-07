@@ -31,6 +31,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
     const [valgtLocale, setValgtLocale] = useSprakContext();
+    const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
     const { soknadApi } = Miljø();
 
     autentiseringsInterceptor();
@@ -237,6 +238,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         gåTilbakeTilStart,
         brukMellomlagretVerdi,
         mellomlagretVerdi,
+        fåttGyldigKvittering,
+        settFåttGyldigKvittering,
     };
 });
 

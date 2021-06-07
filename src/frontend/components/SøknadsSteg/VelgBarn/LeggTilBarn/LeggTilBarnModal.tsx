@@ -32,7 +32,6 @@ const StyledModal = styled(Modal)`
     }
 
     width: 45rem;
-    min-height: 35rem;
     @media all and ${device.mobile} {
         width: 95%;
     }
