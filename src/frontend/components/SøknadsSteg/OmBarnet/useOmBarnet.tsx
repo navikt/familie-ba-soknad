@@ -343,6 +343,7 @@ export const useOmBarnet = (
                     Valideringsstatus.OK &&
                 avhengigheter.borFastMedSøker.valideringsstatus === Valideringsstatus.OK),
         avhengigheter: { skriftligAvtaleOmDeltBosted, borFastMedSøker },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const søkerForTidsromStartdato = useDatovelgerFeltMedUkjent(
