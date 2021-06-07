@@ -19,7 +19,7 @@ export default {
             alwaysWriteToDisk: true,
         }),
         new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
-            PUBLIC_URL: publicUrl,
+            PUBLIC_URL: (process.env.BASE_PATH ?? '/') + publicUrl.substr(1),
         }),
         new CopyWebpackPlugin({
             patterns: [

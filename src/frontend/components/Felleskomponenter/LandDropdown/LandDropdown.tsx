@@ -47,7 +47,7 @@ export const LandDropdown: React.FC<LandDropdownProps> = ({
     });
 
     return felt.erSynlig ? (
-        <Container id={felt.id} aria-label={dynamisk ? 'polite' : 'off'}>
+        <Container id={felt.id} aria-live={dynamisk ? 'polite' : 'off'}>
             <StyledSelect
                 label={label}
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}

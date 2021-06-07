@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Input } from 'nav-frontend-skjema';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -10,6 +8,7 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
+import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
@@ -67,17 +66,11 @@ const OmDeg: React.FC = () => {
             {skjema.felter.telefonnummer.erSynlig && (
                 <KomponentGruppe dynamisk>
                     <span id={skjema.felter.telefonnummer.id}>
-                        <Input
-                            {...skjema.felter.telefonnummer.hentNavInputProps(
-                                skjema.visFeilmeldinger
-                            )}
-                            name={'Telefonnummer'}
-                            label={
-                                <SpråkTekst
-                                    id={omDegSpørsmålSpråkId[OmDegSpørsmålId.telefonnummer]}
-                                />
-                            }
-                            bredde={'M'}
+                        <SkjemaFeltInput
+                            felt={skjema.felter.telefonnummer}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            labelSpråkTekstId={omDegSpørsmålSpråkId.telefonnummer}
+                            bredde="M"
                             type="tel"
                             maxLength={20}
                         />

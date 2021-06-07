@@ -34,7 +34,7 @@ export const VedleggNotis: React.FC<{ språkTekstId: string; dynamisk?: boolean 
 }) => {
     return (
         <NotisWrapper aria-live={dynamisk ? 'polite' : 'off'}>
-            <StyledFileContent />
+            <StyledFileContent role={'img'} focusable={false} aria-label={'vedleggsikon'} />
             <NotisInnhold>
                 <SpråkTekst id={språkTekstId} />
             </NotisInnhold>

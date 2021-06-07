@@ -134,6 +134,9 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 <StyledCheckbox
                     checked={erMedISøknad}
                     label={<SpråkTekst id={'hvilkebarn.barn.søk-om.spm'} />}
+                    aria-label={
+                        formatMessage({ id: 'hvilkebarn.barn.søk-om.spm' }) + ` (${barn.navn})`
+                    }
                     onChange={() => velgBarnCallback(barn, erMedISøknad)}
                 />
             </InformasjonsboksInnhold>
