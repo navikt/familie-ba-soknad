@@ -10,7 +10,6 @@ const VeilederSnakkeboble: React.FC<VeilederProps> = props => (
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 54 93"
             aria-labelledby="veileder-title"
-            focusable={false}
             role={'img'}
         >
             <title id="veileder-title">
