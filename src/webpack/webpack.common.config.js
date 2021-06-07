@@ -9,15 +9,21 @@ const { DefinePlugin } = webpackModule;
 
 export const publicUrl = '/public';
 
+export const createHtmlWebpackPlugin = prodMode => {
+    return new HtmlWebpackPlugin({
+        template: path.join(process.cwd(), 'src/frontend/public/index.html'),
+        inject: 'body',
+        alwaysWriteToDisk: true,
+        // Dette gjør at hvis vi navigerer direkte til /basepath/om-barna/ så henter vi fortsatt main.js fra /basepath/main.js
+        // Det trengs kun i prod-mode, i dev-mode tar webpackDevMiddleware seg av alt
+        publicPath: prodMode ? process.env.BASE_PATH ?? '/' : 'auto',
+    });
+};
+
 export default {
     mode: 'production',
     entry: ['./src/frontend/index.tsx'],
     plugins: [
-        new HtmlWebpackPlugin({
-            template: path.join(process.cwd(), 'src/frontend/public/index.html'),
-            inject: 'body',
-            alwaysWriteToDisk: true,
-        }),
         new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
             PUBLIC_URL: (process.env.BASE_PATH ?? '/') + publicUrl.substr(1),
         }),
