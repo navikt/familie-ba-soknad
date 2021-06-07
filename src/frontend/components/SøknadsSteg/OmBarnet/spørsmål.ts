@@ -6,7 +6,7 @@ export enum OmBarnetSpørsmålsId {
     institusjonOppholdSluttdato = 'institusjon-opphold-sluttdato',
     institusjonOppholdVetIkke = 'institusjon-opphold-ukjent-sluttdato',
     oppholdsland = 'barn-oppholdsland',
-    oppholdslandStartdato = 'barn-utenlandsopphold-startdato ',
+    oppholdslandStartdato = 'barn-utenlandsopphold-startdato',
     oppholdslandSluttdato = 'barn-utenlandsopphold-sluttdato',
     oppholdslandSluttDatoVetIkke = 'barn-utenlandsopphold-ukjent-sluttdato',
     nårKomBarnetTilNorge = 'når-kom-barnet-til-norge',
