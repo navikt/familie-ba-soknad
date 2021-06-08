@@ -5,7 +5,7 @@ import styled from 'styled-components/macro';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { Checkbox, Input, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Input, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element, Feilmelding, Innholdstittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -13,6 +13,8 @@ import { Valideringsstatus } from '@navikt/familie-skjema';
 
 import { device } from '../../../../Theme';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { SøkerMåBrukePDF } from '../../../Felleskomponenter/SøkerMåBrukePDF';
 import { useLeggTilBarn } from './useLeggTilBarn';
@@ -34,12 +36,6 @@ const StyledModal = styled(Modal)`
     width: 45rem;
     @media all and ${device.mobile} {
         width: 95%;
-    }
-`;
-
-const StyledInput = styled(Input)`
-    @media all and ${device.tablet} {
-        max-width: 30rem;
     }
 `;
 
@@ -67,6 +63,8 @@ const LeggTilBarnModal: React.FC<{
 
     const skalViseIdentFeil =
         skjema.visFeilmeldinger && skjema.felter.harBarnetFåttIdNummer.verdi !== ESvar.NEI;
+
+    const identInputProps = skjema.felter.ident.hentNavInputProps(skalViseIdentFeil);
 
     useEffect(() => {
         fornavn.validerOgSettFelt('');
@@ -99,7 +97,6 @@ const LeggTilBarnModal: React.FC<{
     useEffect(() => {
         navnetErUbestemt.validerOgSettFelt(ESvar.NEI);
     }, [navnetErUbestemt.erSynlig]);
-
     return (
         <StyledModal
             isOpen={modalÅpen}
@@ -136,48 +133,31 @@ const LeggTilBarnModal: React.FC<{
                                 </Element>
                             }
                         >
-                            <Input
-                                {...skjema.felter.fornavn.hentNavInputProps(
-                                    skjema.visFeilmeldinger
-                                )}
-                                label={<SpråkTekst id={'hvilkebarn.leggtilbarn.fornavn.spm'} />}
+                            <SkjemaFeltInput
+                                felt={skjema.felter.fornavn}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={'hvilkebarn.leggtilbarn.fornavn.spm'}
                                 disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
-                                autoComplete={'none'}
-                                maxLength={500}
                             />
 
-                            <Input
-                                {...skjema.felter.etternavn.hentNavInputProps(
-                                    skjema.visFeilmeldinger
-                                )}
-                                label={<SpråkTekst id={'hvilkebarn.leggtilbarn.etternavn.spm'} />}
+                            <SkjemaFeltInput
+                                felt={skjema.felter.etternavn}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={'hvilkebarn.leggtilbarn.etternavn.spm'}
                                 disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
-                                autoComplete={'none'}
-                                maxLength={500}
                             />
 
-                            <Checkbox
-                                {...skjema.felter.navnetErUbestemt.hentNavInputProps(
-                                    skjema.visFeilmeldinger
-                                )}
-                                label={
-                                    <SpråkTekst
-                                        id={'hvilkebarn.leggtilbarn.navn-ikke-bestemt.spm'}
-                                    />
-                                }
-                                onChange={event => {
-                                    const {
-                                        onChange,
-                                    } = skjema.felter.navnetErUbestemt.hentNavInputProps(false);
-                                    onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
-                                }}
+                            <SkjemaCheckbox
+                                felt={skjema.felter.navnetErUbestemt}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={'hvilkebarn.leggtilbarn.navn-ikke-bestemt.spm'}
                             />
                         </SkjemaGruppe>
 
                         <SkjemaGruppe>
                             {skjema.felter.ident.erSynlig && (
-                                <StyledInput
-                                    {...skjema.felter.ident.hentNavInputProps(skalViseIdentFeil)}
+                                <Input
+                                    {...identInputProps}
                                     feil={
                                         forsøkerBarnMedAdressebeskyttelse ? (
                                             <Feilmelding>
@@ -186,8 +166,7 @@ const LeggTilBarnModal: React.FC<{
                                                 />
                                             </Feilmelding>
                                         ) : (
-                                            skjema.felter.ident.hentNavInputProps(skalViseIdentFeil)
-                                                .feil
+                                            identInputProps.feil
                                         )
                                     }
                                     label={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
@@ -199,23 +178,10 @@ const LeggTilBarnModal: React.FC<{
                             )}
 
                             {skjema.felter.harBarnetFåttIdNummer.erSynlig && (
-                                <Checkbox
-                                    {...skjema.felter.harBarnetFåttIdNummer.hentNavInputProps(
-                                        false
-                                    )}
-                                    label={
-                                        <SpråkTekst
-                                            id={'hvilkebarn.leggtilbarn.ikke-fått-fnr.spm'}
-                                        />
-                                    }
-                                    onChange={event => {
-                                        const {
-                                            onChange,
-                                        } = skjema.felter.harBarnetFåttIdNummer.hentNavInputProps(
-                                            false
-                                        );
-                                        onChange(event.target.checked ? ESvar.NEI : ESvar.JA);
-                                    }}
+                                <SkjemaCheckbox
+                                    felt={skjema.felter.harBarnetFåttIdNummer}
+                                    visFeilmeldinger={false}
+                                    labelSpråkTekstId={'hvilkebarn.leggtilbarn.ikke-fått-fnr.spm'}
                                 />
                             )}
                             {skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI && (

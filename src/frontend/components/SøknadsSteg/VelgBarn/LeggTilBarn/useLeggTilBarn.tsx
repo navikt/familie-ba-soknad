@@ -37,6 +37,7 @@ export const useLeggTilBarn = (): {
     forsøkerBarnMedAdressebeskyttelse: boolean;
 } => {
     const { søknad, settSøknad, axiosRequest } = useApp();
+    const { barnRegistrertManuelt } = søknad;
     const intl = useIntl();
     const [forsøkerBarnMedAdressebeskyttelse, settForsøkerBarnMedAdressebeskyttelse] = useState(
         false
@@ -90,7 +91,7 @@ export const useLeggTilBarn = (): {
                       );
             }
         },
-        avhengigheter: { erFødt },
+        avhengigheter: { erFødt, barnRegistrertManuelt },
     });
 
     useEffect(() => {
