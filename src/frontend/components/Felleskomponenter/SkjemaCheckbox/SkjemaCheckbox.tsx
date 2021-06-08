@@ -12,10 +12,13 @@ export const SkjemaCheckbox: React.FC<{
     felt: Felt<any>;
     visFeilmeldinger: boolean;
     labelSpråkTekstId: string;
-}> = ({ felt, visFeilmeldinger, labelSpråkTekstId }) => {
+    invers?: boolean;
+}> = ({ felt, visFeilmeldinger, labelSpråkTekstId, invers = false }) => {
     const onChange = event => {
         const { onChange: feltOnChange } = felt.hentNavInputProps(false);
-        feltOnChange(event.target.checked ? ESvar.JA : ESvar.NEI);
+        const jaNei: boolean = invers ? !event.target.checked : event.target.checked;
+
+        feltOnChange(jaNei ? ESvar.JA : ESvar.NEI);
     };
 
     return (

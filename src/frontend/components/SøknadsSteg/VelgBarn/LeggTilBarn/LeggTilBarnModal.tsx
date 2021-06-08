@@ -182,6 +182,7 @@ const LeggTilBarnModal: React.FC<{
                                     felt={skjema.felter.harBarnetFåttIdNummer}
                                     visFeilmeldinger={false}
                                     labelSpråkTekstId={'hvilkebarn.leggtilbarn.ikke-fått-fnr.spm'}
+                                    invers={true}
                                 />
                             )}
                             {skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI && (
