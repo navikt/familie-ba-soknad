@@ -68,7 +68,6 @@ const BekreftelseOgStartSoknad: React.FC = () => {
 
             <StyledKnappBase
                 type={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'hoved' : 'standard'}
-                role={'navigation'}
                 htmlType={'submit'}
             >
                 <SpråkTekst id="forside.start-soknad.knapp" />
