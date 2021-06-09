@@ -53,7 +53,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                     checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                     feil={
                         bekreftelseStatus === BekreftelseStatus.FEIL && (
-                            <span aria-live={'polite'}>
+                            <span role={'alert'}>
                                 <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
                             </span>
                         )

@@ -159,7 +159,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                         skjema.skjema.visFeilmeldinger &&
                         visFeiloppsummering(skjema.skjema) && (
                             <Feiloppsummering
-                                aria-live={'polite'}
+                                role={'alert'}
                                 tittel={
                                     <Element>
                                         <SpråkTekst id={'felles.feiloppsummering.tittel'} />
