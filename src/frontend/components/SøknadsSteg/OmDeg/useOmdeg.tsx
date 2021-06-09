@@ -15,6 +15,7 @@ import {
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { useKunUtvidetFelt } from '../../../hooks/useKunUtvidetFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useDatovelgerFeltMedJaNeiAvhengighet from './useDatovelgerFeltMedJaNeiAvhengighet';
@@ -36,6 +37,7 @@ export interface IOmDegFeltTyper {
     arbeidsland: Alpha3Code | '';
     mottarUtenlandspensjon: ESvar | undefined;
     pensjonsland: Alpha3Code | '';
+    hvorforUtvidet: string;
 }
 
 export const useOmdeg = (): {
@@ -190,7 +192,8 @@ export const useOmdeg = (): {
                 tilhørendeFelter: [oppholdsland, oppholdslandDato],
             },
         },
-        borPåRegistrertAdresse.verdi === ESvar.NEI
+        borPåRegistrertAdresse.verdi === ESvar.NEI,
+        true
     );
 
     const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet(
@@ -198,6 +201,17 @@ export const useOmdeg = (): {
         ESvar.JA,
         mottarUtenlandspensjon
     );
+
+    /**
+     * Dette feltet vil gi skalVises = false så lenge søknad.søknadstype !== ESøknadstype.UTVIDET
+     */
+    const hvorforUtvidet = useKunUtvidetFelt<string>({
+        verdi: '',
+        valideringsfunksjon: felt =>
+            felt.verdi === 'derfor' ? ok(felt) : feil(felt, 'Nei hvorfor'),
+        skalFeltetVises: avhengigheter => avhengigheter.mottarUtenlandspensjon.verdi,
+        avhengigheter: { mottarUtenlandspensjon },
+    });
 
     const oppdaterSøknad = () => {
         settSøknad({
@@ -280,6 +294,7 @@ export const useOmdeg = (): {
             arbeidsland,
             mottarUtenlandspensjon,
             pensjonsland,
+            hvorforUtvidet,
         },
         skjemanavn: 'omdeg',
     });

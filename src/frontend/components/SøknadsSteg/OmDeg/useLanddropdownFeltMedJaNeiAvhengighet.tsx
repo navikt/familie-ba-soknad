@@ -5,17 +5,20 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Avhengigheter, feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
+import { useKunUtvidetFelt } from '../../../hooks/useKunUtvidetFelt';
 import { ISøknadSpørsmål } from '../../../typer/søknad';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const useLanddropdownFeltMedJaNeiAvhengighet = (
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,
     avhengigSvarCondition: ESvar,
-    avhengighet: Felt<ESvar | undefined>
+    avhengighet: Felt<ESvar | undefined>,
+    kunUtvidet = false
 ) => {
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
+    const feltFunksjon = kunUtvidet ? useKunUtvidetFelt : useFelt;
 
-    const landDropdown = useFelt<Alpha3Code | ''>({
+    const landDropdown = feltFunksjon<Alpha3Code | ''>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {

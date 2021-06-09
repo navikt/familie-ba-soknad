@@ -5,6 +5,7 @@ import { feil, Felt, FeltState, ok, useFelt, Valideringsstatus } from '@navikt/f
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ISøknadSpørsmål } from '../typer/søknad';
+import { useKunUtvidetFelt } from './useKunUtvidetFelt';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface FeltGruppe {
@@ -40,11 +41,14 @@ const useJaNeiSpmFelt = (
     avhengigheter?: {
         [key: string]: FeltGruppe;
     },
-    nullstillVedAvhengighetEndring = false
+    nullstillVedAvhengighetEndring = false,
+    kunUtvidet = false
 ) => {
     const [harBlittVist, settHarBlittVist] = useState<boolean>(!avhengigheter);
 
-    return useFelt<ESvar | undefined>({
+    const feltFunksjon = kunUtvidet ? useKunUtvidetFelt : useFelt;
+
+    return feltFunksjon<ESvar | undefined>({
         feltId: søknadsfelt.id,
         nullstillVedAvhengighetEndring,
         verdi: søknadsfelt.svar,
@@ -68,7 +72,10 @@ const useJaNeiSpmFelt = (
                 return true;
             }
 
-            const skalVises = erRelevanteAvhengigheterValidert(avhengigheter);
+            // Hvis kall kommer fra useKunUtvidetFelt har vi med et felt "søknadstype" som ikke er en FeltGruppe
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { søknadstype, ...avhengigheterUtenSøknadstype } = avhengigheter;
+            const skalVises = erRelevanteAvhengigheterValidert(avhengigheterUtenSøknadstype);
             skalVises && settHarBlittVist(true);
 
             return skalVises;

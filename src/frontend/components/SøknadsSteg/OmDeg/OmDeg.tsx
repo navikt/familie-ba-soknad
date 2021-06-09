@@ -1,8 +1,11 @@
 import React from 'react';
 
+import { Knapp } from 'nav-frontend-knapper';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { ESøknadstype } from '../../../typer/søknad';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -18,8 +21,9 @@ import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmdeg();
-    const { søknad } = useApp();
-    const { søker } = søknad;
+    const { søknad, settSøknad } = useApp();
+    const { søker, søknadstype } = søknad;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
@@ -176,6 +180,26 @@ const OmDeg: React.FC = () => {
                     />
                 </KomponentGruppe>
             )}
+            <SkjemaFeltInput
+                felt={skjema.felter.hvorforUtvidet}
+                visFeilmeldinger={skjema.visFeilmeldinger}
+                labelSpråkTekstId={'kvittering.dinesaker.lenketekst'}
+            />
+            <Knapp
+                onClick={() => {
+                    settSøknad({
+                        ...søknad,
+                        søknadstype:
+                            søknadstype === ESøknadstype.UTVIDET
+                                ? ESøknadstype.ORDINÆR
+                                : ESøknadstype.UTVIDET,
+                    });
+                }}
+                htmlType={'button'}
+            >
+                Endre søknadstype til{' '}
+                {søknadstype === ESøknadstype.UTVIDET ? ESøknadstype.ORDINÆR : ESøknadstype.UTVIDET}
+            </Knapp>
         </Steg>
     );
 };
