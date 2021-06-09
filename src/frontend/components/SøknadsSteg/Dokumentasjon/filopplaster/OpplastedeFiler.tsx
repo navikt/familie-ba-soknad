@@ -22,7 +22,6 @@ const FilListe = styled.ul`
 `;
 
 const FilRad = styled.li<{ skillelinje: boolean }>`
-    key: ${props => props.key};
     display: flex;
     justify-content: space-between;
     padding: 1rem 0;
