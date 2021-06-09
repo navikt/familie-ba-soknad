@@ -85,7 +85,8 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     };
 
     useEffect(() => {
-        /** Hvis dette feltet settes før avhengighetsfeltet settes bør vi opdatere dette feltet
+        /**
+         * Hvis dette feltet settes før avhengighetsfeltet settes bør vi opdatere dette feltet
          * slik at vi holder oss innenfor de satte begresningene.
          */
         fraOgMedFelt?.valideringsstatus === Valideringsstatus.OK &&
