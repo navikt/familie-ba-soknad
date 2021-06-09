@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
@@ -78,7 +78,6 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         hentStegObjekterForStegIndikator,
         erPåKvitteringsside,
     } = useRoutes();
-    const feilOppsummeringRef = useRef<HTMLDivElement>(null);
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
@@ -110,8 +109,6 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
             if (skjema.validerFelterOgVisFeilmelding()) {
                 skjema.settSøknadsdataCallback();
                 gåVidere();
-            } else {
-                feilOppsummeringRef.current && feilOppsummeringRef.current.focus();
             }
         } else if (gåVidereCallback) {
             gåVidereCallback().then(resultat => resultat && gåVidere());
@@ -162,8 +159,6 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                         skjema.skjema.visFeilmeldinger &&
                         visFeiloppsummering(skjema.skjema) && (
                             <Feiloppsummering
-                                tabIndex={-1}
-                                innerRef={feilOppsummeringRef}
                                 aria-live={'polite'}
                                 tittel={
                                     <Element>

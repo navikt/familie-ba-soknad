@@ -42,12 +42,7 @@ export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
 
 const BekreftelseOgStartSoknad: React.FC = () => {
     const { formatMessage } = useIntl();
-    const {
-        onStartSøknad,
-        bekreftelseOnChange,
-        bekreftelseStatus,
-        feilmeldingRef,
-    } = useBekreftelseOgStartSoknad();
+    const { onStartSøknad, bekreftelseOnChange, bekreftelseStatus } = useBekreftelseOgStartSoknad();
 
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
@@ -58,7 +53,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                     checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                     feil={
                         bekreftelseStatus === BekreftelseStatus.FEIL && (
-                            <span aria-live={'polite'} ref={feilmeldingRef} tabIndex={-1}>
+                            <span aria-live={'polite'}>
                                 <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
                             </span>
                         )
