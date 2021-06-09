@@ -13,7 +13,7 @@ import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-const Container = styled.div`
+const Container = styled.nav`
     padding: 2rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -85,7 +85,7 @@ const Navigeringspanel: React.FC<{
     };
 
     return (
-        <Container role={'navigation'}>
+        <Container>
             <StyledKnappBase
                 htmlType={'button'}
                 onClick={onTilbakeCallback}

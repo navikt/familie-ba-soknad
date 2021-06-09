@@ -17,7 +17,11 @@ interface Props {
     slettVedlegg: (vedlegg: IVedlegg) => void;
 }
 
-const FilRad = styled.div<{ skillelinje: boolean }>`
+const FilListe = styled.ul`
+    padding: 0;
+`;
+
+const FilRad = styled.li<{ skillelinje: boolean }>`
     display: flex;
     justify-content: space-between;
     padding: 1rem 0;
@@ -38,7 +42,7 @@ const StyledAttachment = styled(Attachment)`
 
 const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
     return (
-        <>
+        <FilListe>
             {filliste.map((fil: IVedlegg, index: number) => {
                 return (
                     <FilRad key={fil.dokumentId} skillelinje={index !== filliste.length - 1}>
@@ -62,7 +66,7 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
                     </FilRad>
                 );
             })}
-        </>
+        </FilListe>
     );
 };
 
