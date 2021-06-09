@@ -22,6 +22,7 @@ export const spyOnUseApp = søknad => {
         status: RessursStatus.IKKE_HENTET,
     });
     const settInnsendingStatus = jest.fn();
+    const axiosRequestMock = jest.fn();
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
 
@@ -34,6 +35,7 @@ export const spyOnUseApp = søknad => {
         erPåKvitteringsside,
         innsendingStatus,
         settInnsendingStatus,
+        axiosRequest: axiosRequestMock,
     });
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
 
@@ -43,6 +45,7 @@ export const spyOnUseApp = søknad => {
         erStegUtfyltFrafør,
         settSisteUtfylteStegIndex,
         erPåKvitteringsside,
+        axiosRequestMock,
     };
 };
 
