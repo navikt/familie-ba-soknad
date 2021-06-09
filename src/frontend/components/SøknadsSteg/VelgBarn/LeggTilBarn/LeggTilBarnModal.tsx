@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -52,6 +53,7 @@ const LeggTilBarnModal: React.FC<{
     } = useLeggTilBarn();
     const { fornavn, etternavn, navnetErUbestemt, harBarnetFåttIdNummer } = skjema.felter;
     const [venterPåLeggTil, settVenterPåLeggTil] = useState(false);
+    const { formatMessage } = useIntl();
 
     const submitOgLukk = async event => {
         event.preventDefault();
@@ -100,7 +102,7 @@ const LeggTilBarnModal: React.FC<{
     return (
         <StyledModal
             isOpen={modalÅpen}
-            contentLabel={'hvilkebarn.leggtilbarn.modal.tittel'}
+            contentLabel={formatMessage({ id: 'hvilkebarn.leggtilbarn.modal.tittel' })}
             onRequestClose={() => {
                 settModalÅpen(!modalÅpen);
                 nullstillSkjema();
