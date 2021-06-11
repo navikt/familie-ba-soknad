@@ -1,5 +1,7 @@
 import React, { ReactNode, useEffect } from 'react';
 
+import { Location } from 'history';
+import { createPortal } from 'react-dom';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
@@ -66,18 +68,37 @@ const samletSpørsmålId = {
     ...OmBarnetSpørsmålsId,
 };
 
+const StegHeader: React.FC<{ location: Location }> = ({ location }) => {
+    const { hentAktivtStegIndexForStegindikator, hentStegObjekterForStegIndikator } = useRoutes();
+    return (
+        <>
+            <Banner språkTekstId={'felles.banner'} />
+            <Stegindikator
+                autoResponsiv={true}
+                aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}
+                steg={hentStegObjekterForStegIndikator()}
+                visLabel={false}
+            />
+        </>
+    );
+};
+
+const StegHeaderIPortal: React.FC<{ location: Location }> = ({ location }) => {
+    const eksisterendeHeader = document.querySelector('header');
+    return eksisterendeHeader ? (
+        createPortal(<StegHeader location={location} />, eksisterendeHeader)
+    ) : (
+        <header>
+            <StegHeader location={location} />
+        </header>
+    );
+};
+
 const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
     const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, gåTilbakeTilStart } = useApp();
-    const {
-        hentNesteRoute,
-        hentForrigeRoute,
-        hentAktivtStegIndexForStegindikator,
-        hentRouteIndex,
-        hentStegObjekterForStegIndikator,
-        erPåKvitteringsside,
-    } = useRoutes();
+    const { hentNesteRoute, hentForrigeRoute, hentRouteIndex, erPåKvitteringsside } = useRoutes();
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
@@ -142,15 +163,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
 
     return (
         <>
-            <header>
-                <Banner språkTekstId={'felles.banner'} />
-                <Stegindikator
-                    autoResponsiv={true}
-                    aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}
-                    steg={hentStegObjekterForStegIndikator()}
-                    visLabel={false}
-                />
-            </header>
+            <StegHeaderIPortal location={location} />
             <InnholdContainer>
                 <StyledSystemtittel>{tittel}</StyledSystemtittel>
                 <Form onSubmit={event => håndterGåVidere(event)} autoComplete="off">

@@ -7,7 +7,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Input, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Element, Feilmelding, Innholdstittel } from 'nav-frontend-typografi';
+import { Element, Innholdstittel } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
@@ -162,11 +162,9 @@ const LeggTilBarnModal: React.FC<{
                                     {...identInputProps}
                                     feil={
                                         forsøkerBarnMedAdressebeskyttelse ? (
-                                            <Feilmelding>
-                                                <SpråkTekst
-                                                    id={'hvilkebarn.adressesperreinformasjon'}
-                                                />
-                                            </Feilmelding>
+                                            <SpråkTekst
+                                                id={'hvilkebarn.adressesperreinformasjon'}
+                                            />
                                         ) : (
                                             identInputProps.feil
                                         )
