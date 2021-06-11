@@ -8,7 +8,7 @@ import { validerDato } from '../../../utils/dato';
 const useDatovelgerFeltMedUkjent = (
     feltId,
     initiellVerdi,
-    avhengighet: Felt<ESvar>,
+    vetIkkeCheckbox: Felt<ESvar>,
     skalFeltetVises: boolean
 ) => {
     const datoFelt = useFelt<ISODateString>({
@@ -24,16 +24,24 @@ const useDatovelgerFeltMedUkjent = (
             }
             return validerDato(felt, false);
         },
-        avhengigheter: { vetIkkeCheckbox: avhengighet, skalFeltetVises },
+        avhengigheter: { vetIkkeCheckbox, skalFeltetVises },
         skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalFeltetVises,
     });
-    useEffect(() => {
-        datoFelt.validerOgSettFelt(datoFelt.verdi, avhengighet);
-    }, [avhengighet]);
 
     useEffect(() => {
-        !skalFeltetVises && datoFelt.validerOgSettFelt('', avhengighet);
-    }, [skalFeltetVises]);
+        vetIkkeCheckbox.verdi === ESvar.JA &&
+            datoFelt.validerOgSettFelt(datoFelt.verdi, vetIkkeCheckbox);
+    }, [vetIkkeCheckbox]);
+
+    useEffect(() => {
+        skalFeltetVises &&
+            datoFelt.verdi !== '' &&
+            datoFelt.validerOgSettFelt(datoFelt.verdi, vetIkkeCheckbox);
+
+        return () => {
+            !skalFeltetVises && datoFelt.validerOgSettFelt('', vetIkkeCheckbox);
+        };
+    }, [skalFeltetVises, vetIkkeCheckbox]);
 
     return datoFelt;
 };
