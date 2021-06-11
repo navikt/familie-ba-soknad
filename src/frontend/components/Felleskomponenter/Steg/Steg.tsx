@@ -68,7 +68,7 @@ const samletSpørsmålId = {
     ...OmBarnetSpørsmålsId,
 };
 
-const StegHeader: React.FC<{ location: Location }> = ({ location }) => {
+const StegHeaderInnhold: React.FC<{ location: Location }> = ({ location }) => {
     const { hentAktivtStegIndexForStegindikator, hentStegObjekterForStegIndikator } = useRoutes();
     return (
         <>
@@ -86,10 +86,10 @@ const StegHeader: React.FC<{ location: Location }> = ({ location }) => {
 const StegHeaderIPortal: React.FC<{ location: Location }> = ({ location }) => {
     const eksisterendeHeader = document.querySelector('header');
     return eksisterendeHeader ? (
-        createPortal(<StegHeader location={location} />, eksisterendeHeader)
+        createPortal(<StegHeaderInnhold location={location} />, eksisterendeHeader)
     ) : (
         <header>
-            <StegHeader location={location} />
+            <StegHeaderInnhold location={location} />
         </header>
     );
 };
