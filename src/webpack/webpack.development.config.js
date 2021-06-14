@@ -2,7 +2,7 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpack from 'webpack';
 import { mergeWithRules } from 'webpack-merge';
 
-import baseConfig, { createHtmlWebpackPlugin, publicUrl } from './webpack.common.config.js';
+import baseConfig, { createHtmlWebpackPlugin } from './webpack.common.config.js';
 
 const devConfig = mergeWithRules({
     module: {
@@ -20,9 +20,6 @@ const devConfig = mergeWithRules({
         new webpack.HotModuleReplacementPlugin(),
         new ReactRefreshWebpackPlugin(),
     ],
-    output: {
-        publicPath: publicUrl,
-    },
     module: {
         rules: [
             {

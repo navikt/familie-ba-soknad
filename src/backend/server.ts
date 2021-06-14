@@ -9,7 +9,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import projectWebpackDevConfig from '../webpack/webpack.development.config.js';
-import getDecorator from './dekorator.js';
+import { indexHandler } from './dekorator.js';
 import environment from './environment.js';
 import { escapeBody } from './escape.js';
 import { createApiForwardingFunction } from './proxy.js';
@@ -30,18 +30,17 @@ app.use(`${basePath}api/soknad`, express.json());
 app.use(`${basePath}api/soknad`, escapeBody);
 app.use(`${basePath}api`, createApiForwardingFunction());
 
+app.get('/', indexHandler);
+
 if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line
     // @ts-ignore
     const compiler = webpack(projectWebpackDevConfig);
-    app.use(
-        webpackDevMiddleware(compiler, {
-            // eslint-disable-next-line
-            // @ts-ignore
-            publicPath: projectWebpackDevConfig.output.publicPath,
-            writeToDisk: true,
-        })
-    );
+    const devMiddlewareOptions = {
+        // Vi må write to disk for at index.html skal havne på et sted der mustacheExpress-renderen kan finne den
+        writeToDisk: true,
+    };
+    app.use(webpackDevMiddleware(compiler, devMiddlewareOptions));
     app.use(webpackHotMiddleware(compiler));
 } else {
     // Static files
@@ -51,20 +50,9 @@ if (process.env.NODE_ENV === 'development') {
 // Nais functions
 app.get(/^\/(internal\/)?(isAlive|isReady)\/?$/, (_req, res) => res.sendStatus(200));
 
-app.get('*', (_req, res) =>
-    getDecorator()
-        .then(fragments => {
-            // eslint-disable-next-line
-            // @ts-ignore
-            res.render('index.html', fragments);
-        })
-        .catch(e => {
-            console.log(e);
-            const error = `En feil oppstod. Klikk <a href="https://www.nav.no">her</a> for å gå tilbake til nav.no. Kontakt kundestøtte hvis problemet vedvarer.`;
-            res.status(500).send(error);
-        })
-);
+// Fallback, alt vi ikke treffer med andre handlere returnerer index.html
+app.get('*', indexHandler);
 
-console.log(`Starting server on localhost: http://localhost:${environment().port}`);
+console.log(`Starting server on localhost: http://localhost:${environment().port}${basePath}`);
 
 app.listen(environment().port);

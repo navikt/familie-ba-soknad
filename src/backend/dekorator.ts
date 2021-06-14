@@ -1,3 +1,4 @@
+import { RequestHandler } from 'express';
 import jsdom from 'jsdom';
 import NodeCache from 'node-cache';
 import request from 'request';
@@ -15,9 +16,16 @@ const cache = new NodeCache({
     checkperiod: SECONDS_PER_MINUTE,
 });
 
-const getDecorator = () =>
+interface DekoratørRespons {
+    NAV_SCRIPTS: string;
+    NAV_STYLES: string;
+    NAV_HEADING: string;
+    NAV_FOOTER: string;
+}
+
+const getDecorator = (): Promise<DekoratørRespons> =>
     new Promise((resolve, reject) => {
-        const decorator = cache.get('main-cache');
+        const decorator = cache.get<DekoratørRespons>('main-cache');
         if (decorator) {
             resolve(decorator);
         } else {
@@ -40,4 +48,17 @@ const getDecorator = () =>
         }
     });
 
-export default getDecorator;
+export const indexHandler: RequestHandler = (_req, res) => {
+    getDecorator()
+        .then(fragments => {
+            // eslint-disable-next-line
+            // @ts-ignore
+            res.render('index.html', fragments);
+        })
+        .catch(e => {
+            console.log(e);
+            const error = `En feil oppstod. Klikk <a href="https://www.nav.no">her</a> for å gå tilbake til nav.no. Kontakt kundestøtte hvis problemet vedvarer.`;
+            res.status(500).send(error);
+        });
+};
+export default indexHandler;
