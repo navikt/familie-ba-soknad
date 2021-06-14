@@ -66,6 +66,10 @@ const samletSpørsmålId = {
     ...OmBarnetSpørsmålsId,
 };
 
+const StegindikatorContainer = styled.div`
+    margin: 0 1rem;
+`;
+
 const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
@@ -144,12 +148,14 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         <>
             <header>
                 <Banner språkTekstId={'felles.banner'} />
-                <Stegindikator
-                    autoResponsiv={true}
-                    aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}
-                    steg={hentStegObjekterForStegIndikator()}
-                    visLabel={false}
-                />
+                <StegindikatorContainer>
+                    <Stegindikator
+                        autoResponsiv={true}
+                        aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}
+                        steg={hentStegObjekterForStegIndikator()}
+                        visLabel={false}
+                    />
+                </StegindikatorContainer>
             </header>
             <InnholdContainer>
                 <StyledSystemtittel>{tittel}</StyledSystemtittel>
