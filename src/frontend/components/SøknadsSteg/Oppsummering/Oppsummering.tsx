@@ -503,13 +503,14 @@ const Oppsummering: React.FC = () => {
                             {barn[barnDataKeySpørsmål.andreForelderNavn].svar && (
                                 <OppsummeringFelt
                                     tittel={<SpråkTekst id={'ombarnet.andre-forelder'} />}
-                                    søknadsvar={formatMessage({
-                                        id:
-                                            barn[barnDataKeySpørsmål.andreForelderNavn].svar !==
-                                            AlternativtSvarForInput.UKJENT
-                                                ? barn[barnDataKeySpørsmål.andreForelderNavn].svar
-                                                : 'ombarnet.andre-forelder.navn-ukjent.spm',
-                                    })}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.andreForelderNavn].svar !==
+                                        AlternativtSvarForInput.UKJENT
+                                            ? barn[barnDataKeySpørsmål.andreForelderNavn].svar
+                                            : formatMessage({
+                                                  id: 'ombarnet.andre-forelder.navn-ukjent.spm',
+                                              })
+                                    }
                                 />
                             )}
                             {barn[barnDataKeySpørsmål.andreForelderFnr].svar && (
@@ -517,13 +518,14 @@ const Oppsummering: React.FC = () => {
                                     tittel={
                                         <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
                                     }
-                                    søknadsvar={formatMessage({
-                                        id:
-                                            barn[barnDataKeySpørsmål.andreForelderFnr].svar !==
-                                            AlternativtSvarForInput.UKJENT
-                                                ? barn[barnDataKeySpørsmål.andreForelderFnr].svar
-                                                : 'ombarnet.andre-forelder.fnr-ukjent.spm',
-                                    })}
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.andreForelderFnr].svar !==
+                                        AlternativtSvarForInput.UKJENT
+                                            ? barn[barnDataKeySpørsmål.andreForelderFnr].svar
+                                            : formatMessage({
+                                                  id: 'ombarnet.andre-forelder.fnr-ukjent.spm',
+                                              })
+                                    }
                                 />
                             )}
                             {barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar && (

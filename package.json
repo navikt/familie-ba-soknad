@@ -167,7 +167,7 @@
   "devDependencies": {
     "@axe-core/react": "^4.1.1",
     "@navikt/familie-skjema": "^1.1.2",
-    "@navikt/familie-sprakvelger": "2.0.20",
+    "@navikt/familie-sprakvelger": "2.0.21",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.0.11",

@@ -37,6 +37,10 @@ const AlertStripeWrapper = styled.div`
     }
 `;
 
+const StyledSpråkvelger = styled(Sprakvelger)`
+    margin: auto;
+`;
+
 const Forside: React.FC = () => {
     const location = useLocation<ILokasjon>();
 
@@ -65,7 +69,7 @@ const Forside: React.FC = () => {
                 <SpråkTekst id="forside.sidetittel" />
             </StyledSidetittel>
 
-            <Sprakvelger støttedeSprak={[LocaleType.nn, LocaleType.nb]} />
+            <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb]} />
             <AlertStripeWrapper>
                 <AlertStripe type={'info'} form={'default'}>
                     This application is currently only available in Norwegian. If you need to apply
