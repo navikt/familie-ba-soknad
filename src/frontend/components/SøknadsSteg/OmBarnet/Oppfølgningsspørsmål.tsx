@@ -69,6 +69,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdSluttdato}
+                        fraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
                         labelTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdSluttdato]
@@ -109,6 +110,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <Datovelger
                         felt={skjema.felter.oppholdslandSluttdato}
+                        fraOgMedFelt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
                         labelTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdslandSluttdato]
