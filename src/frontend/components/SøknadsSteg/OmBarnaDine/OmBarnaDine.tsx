@@ -12,6 +12,7 @@ import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
@@ -248,6 +249,7 @@ const OmBarnaDine: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
+                    <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
                 </KomponentGruppe>
             )}
         </Steg>
