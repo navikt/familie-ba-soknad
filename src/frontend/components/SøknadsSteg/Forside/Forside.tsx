@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useIntl } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import Lenke from 'nav-frontend-lenker';
@@ -12,7 +13,10 @@ import { RessursStatus } from '@navikt/familie-typer';
 import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
 import AlertStripe from '../../../components/Felleskomponenter/AlertStripe/AlertStripe';
 import { useApp } from '../../../context/AppContext';
+import { useRoutes } from '../../../context/RoutesContext';
 import Miljø from '../../../Miljø';
+import { ILokasjon } from '../../../typer/lokasjon';
+import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
@@ -34,9 +38,17 @@ const AlertStripeWrapper = styled.div`
 `;
 
 const Forside: React.FC = () => {
-    const { formatMessage } = useIntl();
+    const location = useLocation<ILokasjon>();
 
+    const { formatMessage } = useIntl();
     const { sluttbruker, mellomlagretVerdi } = useApp();
+    const { hentNåværendeRoute } = useRoutes();
+
+    const nåværendeRoute = hentNåværendeRoute(location.pathname).route;
+
+    useEffect(() => {
+        logSidevisningOrdinærBarnetrygd(nåværendeRoute);
+    }, []);
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
     const kanFortsettePåSøknad =

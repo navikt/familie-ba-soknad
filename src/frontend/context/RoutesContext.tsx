@@ -27,7 +27,7 @@ export enum RouteEnum {
     OmDeg = 'Om deg',
     VelgBarn = 'Velg barn',
     OmBarna = 'Om barna',
-    OmBarnet = 'Om Barnet',
+    OmBarnet = 'Om barnet',
     Oppsummering = 'Oppsummering',
     Kvittering = 'Kvittering',
     Dokumentasjon = 'Dokumentasjon',
@@ -122,6 +122,10 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         return routes[hentRouteIndex(currentPath) + 1];
     };
 
+    const hentNåværendeRoute = (currentPath: string) => {
+        return routes[hentRouteIndex(currentPath)];
+    };
+
     const hentGjeldendeRoutePåStegindex = (stegIndex: number) => {
         return routes[stegIndex];
     };
@@ -155,6 +159,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         settOppdatertEtterMellomlagring,
         hentStegObjekterForStegIndikator,
         erPåKvitteringsside,
+        hentNåværendeRoute,
     };
 });
 
