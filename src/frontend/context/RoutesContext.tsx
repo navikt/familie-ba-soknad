@@ -24,13 +24,13 @@ export interface IRoute {
 
 export enum RouteEnum {
     Forside = 'Forside',
-    OmDeg = 'Om deg',
-    VelgBarn = 'Velg barn',
-    OmBarna = 'Om barna',
-    OmBarnet = 'Om barnet',
+    OmDeg = 'OmDeg',
+    VelgBarn = 'VelgBarn',
+    OmBarna = 'OmBarna',
+    OmBarnet = 'OmBarnet',
     Oppsummering = 'Oppsummering',
-    Kvittering = 'Kvittering',
     Dokumentasjon = 'Dokumentasjon',
+    Kvittering = 'Kvittering',
 }
 
 export const omBarnetBasePath = 'om-barnet';
