@@ -9,6 +9,7 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import norskeTekster from '../../../assets/lang/nb.json';
 import { AppProvider } from '../../../context/AppContext';
 import { RoutesProvider } from '../../../context/RoutesContext';
+import * as routesContext from '../../../context/RoutesContext';
 import { bekreftelseBoksBorderFarge } from './BekreftelseOgStartSoknad';
 import Forside from './Forside';
 import { BekreftelseStatus } from './useBekreftelseOgStartSoknad';
@@ -24,7 +25,22 @@ jest.mock('react-router-dom', () => ({
     }),
 }));
 
+const spyOnUseRoutes = () => {
+    const useRoutesMock = jest.fn().mockReturnValue({
+        hentNåværendeRoute: jest.fn().mockReturnValue('Forside'),
+        hentNesteRoute: jest.fn(),
+        hentRouteIndex: jest.fn(),
+    });
+    jest.spyOn(routesContext, 'useRoutes').mockImplementation(useRoutesMock);
+
+    return {
+        useRoutesMock,
+    };
+};
+
 test('Kan rendre Forside', () => {
+    spyOnUseRoutes();
+
     render(
         <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
             <AppProvider>
@@ -38,6 +54,8 @@ test('Kan rendre Forside', () => {
 });
 
 test('Alle tekster finnes i språkfil', () => {
+    spyOnUseRoutes();
+
     render(
         <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
             <AppProvider>
