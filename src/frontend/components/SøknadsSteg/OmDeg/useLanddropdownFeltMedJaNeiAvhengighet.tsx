@@ -29,11 +29,18 @@ const useLanddropdownFeltMedJaNeiAvhengighet = (
                 : feil(felt, <SpråkTekst id={'felles.velg-land.feilmelding'} />);
         },
         avhengigheter: { jaNeiSpm: avhengighet },
-        nullstillVedAvhengighetEndring: false,
     });
 
     useEffect(() => {
-        !skalFeltetVises(avhengighet.verdi) && landDropdown.validerOgSettFelt('');
+        const skalVises = skalFeltetVises(avhengighet.verdi);
+
+        skalVises &&
+            landDropdown.verdi !== '' &&
+            landDropdown.validerOgSettFelt(landDropdown.verdi);
+
+        return () => {
+            !skalFeltetVises(avhengighet.verdi) && landDropdown.validerOgSettFelt('');
+        };
     }, [avhengighet]);
 
     return landDropdown;

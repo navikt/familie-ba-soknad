@@ -26,11 +26,16 @@ const useDatovelgerFeltMedJaNeiAvhengighet = (
                 : true;
         },
         avhengigheter: { jaNeiSpm: avhengighet },
-        nullstillVedAvhengighetEndring: false,
     });
 
     useEffect(() => {
-        !skalFeltetVises(avhengighet.verdi) && dato.validerOgSettFelt('');
+        const skalVises = skalFeltetVises(avhengighet.verdi);
+
+        skalVises && dato.verdi !== '' && dato.validerOgSettFelt(dato.verdi);
+
+        return () => {
+            !skalFeltetVises(avhengighet.verdi) && dato.validerOgSettFelt('');
+        };
     }, [avhengighet]);
 
     return dato;

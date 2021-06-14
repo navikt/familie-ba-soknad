@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Avhengigheter, feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
@@ -16,7 +16,9 @@ const useBarnCheckboxFelt = (
     const { søknad } = useApp();
     const barn = søknad.barnInkludertISøknaden;
 
-    return useFelt<BarnetsIdent[]>({
+    const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigJaNeiSpmSvarCondition;
+
+    const checkbox = useFelt<BarnetsIdent[]>({
         feltId: barn[0][datafeltNavn].id,
         verdi: søknad.barnInkludertISøknaden
             .filter(barn => barn[datafeltNavn].svar === ESvar.JA)
@@ -33,8 +35,19 @@ const useBarnCheckboxFelt = (
                 : true;
         },
         avhengigheter: { jaNeiSpm: avhengighet },
-        nullstillVedAvhengighetEndring: false,
     });
+
+    useEffect(() => {
+        const skalVises = skalFeltetVises(avhengighet.verdi);
+
+        skalVises && checkbox.verdi.length > 0 && checkbox.validerOgSettFelt(checkbox.verdi);
+
+        return () => {
+            !skalFeltetVises(avhengighet.verdi) && checkbox.validerOgSettFelt([]);
+        };
+    }, [avhengighet]);
+
+    return checkbox;
 };
 
 export default useBarnCheckboxFelt;

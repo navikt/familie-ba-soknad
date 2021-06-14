@@ -116,6 +116,7 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
                         />
                         <Datovelger
                             felt={skjema.felter.søkerForTidsromSluttdato}
+                            fraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
                             skjema={skjema}
                             labelTekstId={
                                 omBarnetSpørsmålSpråkId[
