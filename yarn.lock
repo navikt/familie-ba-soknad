@@ -1646,10 +1646,10 @@
     deep-equal "^2.0.5"
     hashids "^2.2.8"
 
-"@navikt/familie-sprakvelger@2.0.20":
-  version "2.0.20"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-sprakvelger/-/familie-sprakvelger-2.0.20.tgz#c126aa273992084ff7094dd5b791c3dadeeee133"
-  integrity sha512-wrpLSn/SrX06VQP9YMWzOzprZC1KwPS3nJQ9Ze7guTsKgV6Kl7pVE+lDrr1TysyK1pJdNT/cos+LYOYjeyknAA==
+"@navikt/familie-sprakvelger@2.0.21":
+  version "2.0.21"
+  resolved "https://registry.yarnpkg.com/@navikt/familie-sprakvelger/-/familie-sprakvelger-2.0.21.tgz#773c3ecf019b29d806a27b0997a5a3c4bb2fe4a2"
+  integrity sha512-xXeF5kGsu73dBm5ath2QltZh2cx0zA88TiQTnA0LNzHOkYzWul2jkyN8vABISrwYem3A8xq9xjy4WAvcnB0jBg==
   dependencies:
     "@navikt/ds-icons" "^0.2.1"
     "@navikt/familie-form-elements" "^3.0.2"
