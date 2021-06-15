@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import { useIntl } from 'react-intl';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import Lenke from 'nav-frontend-lenker';
@@ -13,9 +12,8 @@ import { RessursStatus } from '@navikt/familie-typer';
 import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
 import AlertStripe from '../../../components/Felleskomponenter/AlertStripe/AlertStripe';
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../context/RoutesContext';
+import { RouteEnum } from '../../../context/RoutesContext';
 import Miljø from '../../../Miljø';
-import { ILokasjon } from '../../../typer/lokasjon';
 import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -42,21 +40,18 @@ const StyledSpråkvelger = styled(Sprakvelger)`
 `;
 
 const Forside: React.FC = () => {
-    const location = useLocation<ILokasjon>();
-
     const { formatMessage } = useIntl();
     const { sluttbruker, mellomlagretVerdi } = useApp();
-    const { hentNåværendeRoute } = useRoutes();
 
-    const nåværendeRoute = hentNåværendeRoute(location.pathname).route;
-
-    useEffect(() => {
-        logSidevisningOrdinærBarnetrygd(nåværendeRoute);
-    }, []);
-
-    const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
     const kanFortsettePåSøknad =
         mellomlagretVerdi && mellomlagretVerdi.modellVersjon === Miljø().modellVersjon;
+
+    useEffect(() => {
+        !kanFortsettePåSøknad &&
+            logSidevisningOrdinærBarnetrygd(`${RouteEnum.Forside} (ny søknad)`);
+    }, [kanFortsettePåSøknad]);
+
+    const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 
     return (
         <InnholdContainer>
