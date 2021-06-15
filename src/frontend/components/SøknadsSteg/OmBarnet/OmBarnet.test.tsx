@@ -119,7 +119,7 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
 });
 
 test(`Kan navigere mellom to barn`, () => {
-    const mockedHistory = mockHistory(['/om-barnet/barn-1']);
+    const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
     spyOnUseApp({
         barnInkludertISøknaden: [jens, line],
         sisteUtfylteStegIndex: 4,
@@ -138,7 +138,7 @@ test(`Kan navigere mellom to barn`, () => {
         </SprakProvider>
     );
 
-    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/om-barnet/barn-1');
+    expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
 
     const jensTittel = getByText('Om Jens');
     expect(jensTittel).toBeInTheDocument();
@@ -146,11 +146,11 @@ test(`Kan navigere mellom to barn`, () => {
     const gåVidere = getByText(/felles.navigasjon.gå-videre/);
     act(() => gåVidere.click());
 
-    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/om-barnet/barn-2');
+    expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-2');
 });
 
 test(`Kan navigere fra barn til oppsummering`, () => {
-    const mockedHistory = mockHistory(['/om-barnet/barn-1']);
+    const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
     mockHistory(['/om-barnet/barn-1']);
 
     spyOnUseApp({
@@ -172,7 +172,7 @@ test(`Kan navigere fra barn til oppsummering`, () => {
         </SprakProvider>
     );
 
-    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/om-barnet/barn-1');
+    expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
 
     const jensTittel = getByText('Om Jens');
     expect(jensTittel).toBeInTheDocument();
@@ -180,5 +180,5 @@ test(`Kan navigere fra barn til oppsummering`, () => {
     const gåVidere = getByText(/felles.navigasjon.gå-videre/);
     act(() => gåVidere.click());
 
-    expect(mockedHistory[mockedHistory.length - 1]).toEqual('/oppsummering');
+    expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/oppsummering');
 });
