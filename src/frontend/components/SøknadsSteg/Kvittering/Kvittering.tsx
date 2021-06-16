@@ -9,6 +9,7 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
+import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -79,6 +80,7 @@ const Kvittering: React.FC = () => {
                 lenkeTekstSpråkId={'kvittering.ettersend-dokumentasjon.lenketekst'}
                 lenkeSpråkId={'kvittering.ettersend-dokumentasjon.lenke'}
             />
+            <BlokkerTilbakeKnappModal />
         </Steg>
     );
 };
