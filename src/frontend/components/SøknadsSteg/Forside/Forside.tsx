@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
@@ -12,7 +12,9 @@ import { RessursStatus } from '@navikt/familie-typer';
 import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
 import AlertStripe from '../../../components/Felleskomponenter/AlertStripe/AlertStripe';
 import { useApp } from '../../../context/AppContext';
+import { RouteEnum } from '../../../context/RoutesContext';
 import Miljø from '../../../Miljø';
+import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
@@ -39,12 +41,17 @@ const StyledSpråkvelger = styled(Sprakvelger)`
 
 const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
-
     const { sluttbruker, mellomlagretVerdi } = useApp();
 
-    const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
     const kanFortsettePåSøknad =
         mellomlagretVerdi && mellomlagretVerdi.modellVersjon === Miljø().modellVersjon;
+
+    useEffect(() => {
+        !kanFortsettePåSøknad &&
+            logSidevisningOrdinærBarnetrygd(`${RouteEnum.Forside} (ny søknad)`);
+    }, [kanFortsettePåSøknad]);
+
+    const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 
     return (
         <InnholdContainer>

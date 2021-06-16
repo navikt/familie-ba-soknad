@@ -24,13 +24,13 @@ export interface IRoute {
 
 export enum RouteEnum {
     Forside = 'Forside',
-    OmDeg = 'Om deg',
-    VelgBarn = 'Velg barn',
-    OmBarna = 'Om barna',
-    OmBarnet = 'Om Barnet',
+    OmDeg = 'OmDeg',
+    VelgBarn = 'VelgBarn',
+    OmBarna = 'OmBarna',
+    OmBarnet = 'OmBarnet',
     Oppsummering = 'Oppsummering',
-    Kvittering = 'Kvittering',
     Dokumentasjon = 'Dokumentasjon',
+    Kvittering = 'Kvittering',
 }
 
 export const omBarnetBasePath = 'om-barnet';
@@ -122,6 +122,10 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         return routes[hentRouteIndex(currentPath) + 1];
     };
 
+    const hentNåværendeRoute = (currentPath: string) => {
+        return routes[hentRouteIndex(currentPath)];
+    };
+
     const hentGjeldendeRoutePåStegindex = (stegIndex: number) => {
         return routes[stegIndex];
     };
@@ -155,6 +159,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         settOppdatertEtterMellomlagring,
         hentStegObjekterForStegIndikator,
         erPåKvitteringsside,
+        hentNåværendeRoute,
     };
 });
 
