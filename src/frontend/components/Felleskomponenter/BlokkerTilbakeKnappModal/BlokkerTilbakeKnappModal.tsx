@@ -38,7 +38,7 @@ const BlokkerTilbakeKnappModal = () => {
     const [show, setShow] = useState(false);
     const { formatMessage } = useIntl();
 
-    const handleNavigation = () => {
+    const håndterNavigasjon = () => {
         setShow(true);
         return false;
     };
@@ -48,7 +48,7 @@ const BlokkerTilbakeKnappModal = () => {
 
     return (
         <>
-            <Prompt message={handleNavigation} />
+            <Prompt message={håndterNavigasjon} />
             <StyledModal
                 onRequestClose={() => setShow(false)}
                 isOpen={show}
