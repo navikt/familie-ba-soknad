@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
 
+import * as history from 'history';
+import { History } from 'history';
 import { mockDeep } from 'jest-mock-extended';
-import * as reactRouterDom from 'react-router-dom';
 
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
@@ -100,8 +101,10 @@ export const TestProvidereMedEkteTekster: React.FC = ({ children }) => (
     <TestProvidere tekster={norskeTekster}>{children}</TestProvidere>
 );
 
-export const mockHistory = (history: string[]): string[] => {
+export const mockHistory = (
+    newHistory: string[]
+): { mockedHistory: History; mockedHistoryArray: string[] } => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore denne har vi definert i __mocks__/react-router-dom
-    return reactRouterDom.__setHistory(history);
+    // @ts-ignore denne har vi definert i __mocks__/history
+    return history.__setHistory(newHistory);
 };

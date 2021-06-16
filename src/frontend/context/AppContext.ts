@@ -147,7 +147,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                 loggFeil(error);
 
                 const responsRessurs: ApiRessurs<T> = error.response?.data;
-                return håndterApiRessurs(responsRessurs);
+                return håndterApiRessurs(responsRessurs ?? { status: RessursStatus.FEILET });
             });
     };
 
