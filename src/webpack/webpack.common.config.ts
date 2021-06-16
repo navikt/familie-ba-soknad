@@ -5,20 +5,12 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin.js';
 import webpackModule from 'webpack';
+import webpack from 'webpack';
+
+import { unslash } from '../shared-utils/unslash';
 const { DefinePlugin } = webpackModule;
 
 export const publicUrl = '/public';
-
-const unslash = value => {
-    let returnValue = value;
-    while (returnValue.indexOf('/') === 0) {
-        returnValue = returnValue.substr(1);
-    }
-    while (returnValue.lastIndexOf('/') === returnValue.length - 1) {
-        returnValue = returnValue.substring(0, returnValue.length - 1);
-    }
-    return returnValue;
-};
 
 export const createHtmlWebpackPlugin = prodMode => {
     return new HtmlWebpackPlugin({
@@ -31,7 +23,7 @@ export const createHtmlWebpackPlugin = prodMode => {
     });
 };
 
-export default {
+const commonConfig: webpack.Configuration = {
     mode: 'production',
     entry: ['./src/frontend/index.tsx'],
     plugins: [
@@ -100,3 +92,5 @@ export default {
         ],
     },
 };
+
+export default commonConfig;
