@@ -9,28 +9,18 @@ import { Dokumentasjonsbehov, IDokumentasjon, ISøknadKontraktDokumentasjon } fr
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, ISøker } from './person';
 
 export enum ESøknadstype {
-    IKKE_SATT = 'IKKE_SATT',
     ORDINÆR = 'ORDINÆR',
-    UTVIDET = 'UTIVIDET',
-    EØS = 'EØS',
+    UTVIDET = 'UTVIDET',
 }
 
 export const søknadstyper: INøkkelPar = {
-    IKKE_SATT: {
-        id: 'IKKE_SATT',
-        navn: 'Velg søknadstype',
-    },
     ORDINÆR: {
         id: 'ORDINÆR',
-        navn: 'Ordinær',
+        navn: 'Ordinær barnetrygd',
     },
     UTVIDET: {
         id: 'UTVIDET',
-        navn: 'Utvidet',
-    },
-    EØS: {
-        id: 'EØS',
-        navn: 'EØS',
+        navn: 'Utvidet barnetrygd',
     },
 };
 

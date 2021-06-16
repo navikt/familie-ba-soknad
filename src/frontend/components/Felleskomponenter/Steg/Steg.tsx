@@ -15,6 +15,7 @@ import { useRoutes } from '../../../context/RoutesContext';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
 import {
     OmBarnaDineSpørsmålId,
     omBarnaDineSpørsmålSpråkId,
@@ -81,11 +82,17 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         hentRouteIndex,
         hentStegObjekterForStegIndikator,
         erPåKvitteringsside,
+        hentNåværendeRoute,
     } = useRoutes();
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
+    const nåværendeRoute = hentNåværendeRoute(location.pathname).route;
+
+    useEffect(() => {
+        logSidevisningOrdinærBarnetrygd(nåværendeRoute);
+    }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0);
