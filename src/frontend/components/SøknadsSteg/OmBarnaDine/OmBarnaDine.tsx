@@ -249,7 +249,9 @@ const OmBarnaDine: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-                    <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
+                    {skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.JA && (
+                        <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
+                    )}
                 </KomponentGruppe>
             )}
         </Steg>
