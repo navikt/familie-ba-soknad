@@ -6,13 +6,15 @@ import navFarger from 'nav-frontend-core';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { useRoutes, RouteEnum } from '../../../context/RoutesContext';
+import { IRoute, RouteEnum, useRoutes } from '../../../context/RoutesContext';
+import { AppLenke } from '../../Felleskomponenter/AppLenke/AppLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
     tittel: string;
     språkValues?: { [key: string]: string };
-    route?: RouteEnum;
+    route?: IRoute;
 }
 
 const StyledOppsummeringsbolk = styled.div`
@@ -30,15 +32,22 @@ const StyledEkspanderbartpanel = styled(Ekspanderbartpanel)`
     }
 `;
 
-const Oppsummeringsbolk: React.FC<Props> = ({ children, tittel, språkValues, route }) => {
-    const { hentStegNummer } = useRoutes();
+const Oppsummeringsbolk: React.FC<Props> = ({
+    children,
+    tittel,
+    språkValues,
+    route,
+}) => {
+    const { hentStegNummer, hentNåværendeRoute } = useRoutes();
+    const { pathname } = useLocation();
+    const inneværendeRoute = hentNåværendeRoute(pathname);
 
     return (
         <StyledOppsummeringsbolk>
             <StyledEkspanderbartpanel
                 tittel={
                     <Undertittel>
-                        {route && `${hentStegNummer(route)}. `}
+                        {`${hentStegNummer(route?.route ?? RouteEnum.OmDeg)}. `}
                         <SpråkTekst id={tittel} values={språkValues} />
                     </Undertittel>
                 }
@@ -46,6 +55,13 @@ const Oppsummeringsbolk: React.FC<Props> = ({ children, tittel, språkValues, ro
                 apen={true}
             >
                 {children}
+                {route && (
+                    <AppLenke
+                        route={route}
+                        språkTekstId={'oppsummering.endresvar.lenketekst'}
+                        returnTo={inneværendeRoute}
+                    />
+                )}
             </StyledEkspanderbartpanel>
         </StyledOppsummeringsbolk>
     );

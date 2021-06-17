@@ -11,7 +11,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../context/RoutesContext';
+import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -27,6 +27,8 @@ import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import Navigeringspanel from './Navigeringspanel';
+import { useAppNavigation } from '../../../context/AppNavigationContext';
+import { TilbakeTilOppsummeringKnapp } from './TilbakeTilOppsummeringKnapp';
 
 interface ISteg {
     tittel: ReactNode;
@@ -84,6 +86,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         erPåKvitteringsside,
         hentNåværendeRoute,
     } = useRoutes();
+    const { komFra, settKomFra } = useAppNavigation();
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
@@ -111,7 +114,9 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
             settSisteUtfylteStegIndex(nåværendeStegIndex);
         }
-        history.push(nesteRoute.path);
+        const målPath = komFra?.path ?? nesteRoute.path;
+        komFra && settKomFra(undefined);
+        history.push(målPath);
     };
 
     const håndterGåVidere = event => {
@@ -197,13 +202,19 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                                     )}
                             />
                         )}
-                    {!erPåKvitteringsside(location.pathname) && (
-                        <Navigeringspanel
-                            onTilbakeCallback={håndterTilbake}
-                            onAvbrytCallback={håndterAvbryt}
-                            valideringErOk={skjema && skjema.valideringErOk}
-                        />
-                    )}
+                    {!erPåKvitteringsside(location.pathname) && komFra?.route === RouteEnum.Oppsummering
+                        ? (
+                            <TilbakeTilOppsummeringKnapp>
+                                Tilbake til oppsummering
+                            </TilbakeTilOppsummeringKnapp>
+                        )
+                        : (
+                            <Navigeringspanel
+                                onTilbakeCallback={håndterTilbake}
+                                onAvbrytCallback={håndterAvbryt}
+                                valideringErOk={skjema && skjema.valideringErOk}
+                            />
+                        )}
                 </Form>
             </InnholdContainer>
         </>

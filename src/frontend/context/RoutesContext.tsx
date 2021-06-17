@@ -20,6 +20,8 @@ export interface IRoute {
     label: string;
     route: RouteEnum;
     komponent: React.FC | React.FC<{ barnetsIdent: string }>;
+    // Vi kan ha routes som ser helt like ut (to barn uten navn f.eks), trenger å kunne skille mellom dem
+    spesifisering?: string;
 }
 
 export enum RouteEnum {
@@ -55,6 +57,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
                   komponent: () => {
                       return <OmBarnet barnetsIdent={barn.ident} />;
                   },
+                  spesifisering: barn.id
               };
           })
         : [
@@ -130,8 +133,8 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         return routes[stegIndex];
     };
 
-    const hentPath = (route: RouteEnum) => {
-        return routes.find(r => r.route === route)?.path;
+    const hentPath = (route: RouteEnum): string => {
+        return routes.find(r => r.route === route)?.path ?? '/';
     };
 
     const hentStegObjekterForStegIndikator = (): StegindikatorStegProps[] => {
@@ -144,6 +147,14 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
                 };
             });
     };
+
+    const hentStegObjektForRoute = (route: RouteEnum): IRoute => {
+        return routes.find(steg => steg.route === route) ?? routes[0];
+    }
+
+    const hentStegObjektForBarn = (barn: IBarnMedISøknad): IRoute | undefined => {
+        return routes.find(route => route.spesifisering === barn.id);
+    }
 
     return {
         hentRouteIndex,
@@ -160,6 +171,8 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         hentStegObjekterForStegIndikator,
         erPåKvitteringsside,
         hentNåværendeRoute,
+        hentStegObjektForRoute,
+        hentStegObjektForBarn,
     };
 });
 

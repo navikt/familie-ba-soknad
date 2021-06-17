@@ -67,18 +67,12 @@ export interface IOmBarnetUtvidetFeltTyper {
 
 export const useOmBarnet = (
     barnetsIdent: string
-): {
-    skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
-    validerFelterOgVisFeilmelding: () => boolean;
-    valideringErOk: () => boolean;
-    oppdaterSøknad: () => void;
-    barn: IBarnMedISøknad;
-} => {
+): { skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>; barn: IBarnMedISøknad | undefined; validerFelterOgVisFeilmelding: () => boolean; valideringErOk: () => boolean; oppdaterSøknad: () => void; validerAlleSynligeFelter: () => void } => {
     const { søknad, settSøknad, erStegUtfyltFrafør } = useApp();
     const { hentRouteIndex } = useRoutes();
     const location = useLocation<ILokasjon>();
 
-    const [barn] = useState(
+    const [barn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.ident === barnetsIdent)
     );
 
@@ -367,7 +361,7 @@ export const useOmBarnet = (
                 skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK)
     );
 
-    const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
+    const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
                 institusjonsnavn,
@@ -583,5 +577,6 @@ export const useOmBarnet = (
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
         barn,
+        validerAlleSynligeFelter
     };
 };

@@ -21,6 +21,7 @@ export const useVelgBarn = (): {
     håndterVelgBarnToggle: (barn: IBarn, erMedISøknad: boolean) => void;
     barnSomSkalVæreMed: IBarn[];
     fjernBarn: (ident: string) => void;
+    validerAlleSynligeFelter: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
@@ -96,7 +97,7 @@ export const useVelgBarn = (): {
         );
     };
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IVelgBarnFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<IVelgBarnFeltTyper, string>({
         felter: {
             barnMedISøknad,
         },
@@ -111,5 +112,6 @@ export const useVelgBarn = (): {
         håndterVelgBarnToggle,
         barnSomSkalVæreMed,
         fjernBarn,
+        validerAlleSynligeFelter
     };
 };

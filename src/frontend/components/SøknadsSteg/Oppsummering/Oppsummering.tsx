@@ -24,6 +24,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
+import { useOppsummeringValidering } from './useOppsummeringValidering';
 
 interface IOppsummeringsFeltProps {
     tittel?: ReactNode;
@@ -72,7 +73,7 @@ const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsv
 const Oppsummering: React.FC = () => {
     const { formatMessage } = useIntl();
     const { søknad } = useApp();
-    const { hentStegNummer } = useRoutes();
+    const { hentStegNummer, hentStegObjektForRoute, hentStegObjektForBarn } = useRoutes();
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden
             .filter(barn => barn[søknadDatafelt].svar === 'JA')
@@ -80,6 +81,7 @@ const Oppsummering: React.FC = () => {
             .join(', ');
 
     const [valgtLocale] = useSprakContext();
+    const { ugyldigeSteg } = useOppsummeringValidering();
 
     const formaterDatoMedUkjent = (datoMedUkjent: DatoMedUkjent, språkIdForUkjent) => {
         return datoMedUkjent === AlternativtSvarForInput.UKJENT
@@ -89,10 +91,11 @@ const Oppsummering: React.FC = () => {
 
     return (
         <Steg tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}>
+            {ugyldigeSteg.map(steg => steg.label)}
             <StyledNormaltekst>
                 <SpråkTekst id={'oppsummering.info'} />
             </StyledNormaltekst>
-            <Oppsummeringsbolk route={RouteEnum.OmDeg} tittel={'omdeg.sidetittel'}>
+            <Oppsummeringsbolk route={hentStegObjektForRoute(RouteEnum.OmDeg)} tittel={'omdeg.sidetittel'}>
                 <StyledOppsummeringsFeltGruppe>
                     <Element>
                         <SpråkTekst id={'forside.bekreftelsesboks.brødtekst'} />
@@ -205,7 +208,7 @@ const Oppsummering: React.FC = () => {
                 </StyledOppsummeringsFeltGruppe>
             </Oppsummeringsbolk>
 
-            <Oppsummeringsbolk route={RouteEnum.VelgBarn} tittel={'hvilkebarn.sidetittel'}>
+            <Oppsummeringsbolk route={hentStegObjektForRoute(RouteEnum.VelgBarn)} tittel={'hvilkebarn.sidetittel'}>
                 {søknad.barnInkludertISøknaden.map((barn, index) => (
                     <StyledOppsummeringsFeltGruppe key={index}>
                         {barn.navn && (
@@ -231,7 +234,7 @@ const Oppsummering: React.FC = () => {
                     </StyledOppsummeringsFeltGruppe>
                 ))}
             </Oppsummeringsbolk>
-            <Oppsummeringsbolk route={RouteEnum.OmBarna} tittel={'ombarna.sidetittel'}>
+            <Oppsummeringsbolk route={hentStegObjektForRoute(RouteEnum.OmBarna)} tittel={'ombarna.sidetittel'}>
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.fosterbarn.spm'} />}
@@ -339,6 +342,7 @@ const Oppsummering: React.FC = () => {
                         tittel={'oppsummering.deltittel.ombarnet'}
                         språkValues={{ nummer, navn: barn.navn }}
                         key={index}
+                        route={hentStegObjektForBarn(barn)}
                     >
                         {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                             <OppsummeringFelt
