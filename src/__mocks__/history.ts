@@ -73,4 +73,8 @@ history.__setHistory = __setHistory;
 // @ts-ignore
 history.__getMockedHistoryArray = () => mockedHistoryArray;
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+history.__getMockedHistory = () => historyHolder.mockedHistory;
+
 module.exports = history;
