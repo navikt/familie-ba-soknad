@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
@@ -11,12 +11,7 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
-import {
-    AlternativtSvarForInput,
-    barnDataKeySpørsmål,
-    DatoMedUkjent,
-    ESivilstand,
-} from '../../../typer/person';
+import { AlternativtSvarForInput, barnDataKeySpørsmål, DatoMedUkjent } from '../../../typer/person';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/person';
 import { genererAdresseVisning } from '../../../utils/visning';
@@ -27,51 +22,16 @@ import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/s
 import { useOmBarnet } from '../OmBarnet/useOmBarnet';
 import { useOmdeg } from '../OmDeg/useOmdeg';
 import { useVelgBarn } from '../VelgBarn/useVelgBarn';
+import { OppsummeringFelt } from './OppsummeringFelt';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
-
-interface IOppsummeringsFeltProps {
-    tittel?: ReactNode;
-    søknadsvar?: string;
-}
 
 const StyledNormaltekst = styled(Normaltekst)`
     padding-bottom: 4rem;
 `;
 
-const StyledOppsummeringsFelt = styled.div`
-    padding: 0.25rem 0 0.25rem 0;
-`;
-
 const StyledOppsummeringsFeltGruppe = styled.div`
     padding: 1rem 0 1rem 0;
 `;
-
-const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsvar }) => {
-    let språktekstid: boolean | string = false;
-    if (søknadsvar && søknadsvar in ESvar) {
-        switch (søknadsvar) {
-            case ESvar.NEI:
-            case ESvar.JA:
-                språktekstid = 'felles.svaralternativ.' + søknadsvar.toLowerCase();
-                break;
-            default:
-                språktekstid = 'felles.svaralternativ.vetikke';
-        }
-    } else if (søknadsvar && søknadsvar in ESivilstand) {
-        språktekstid = 'felles.sivilstatus.kode.' + søknadsvar;
-    }
-
-    return (
-        <StyledOppsummeringsFelt>
-            {tittel && <Element>{tittel}</Element>}
-            {søknadsvar && (
-                <Normaltekst>
-                    {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
-                </Normaltekst>
-            )}
-        </StyledOppsummeringsFelt>
-    );
-};
 
 const Oppsummering: React.FC = () => {
     const { formatMessage } = useIntl();
@@ -130,12 +90,10 @@ const Oppsummering: React.FC = () => {
                     />
 
                     {søknad.søker.adresse && (
-                        <StyledOppsummeringsFelt>
-                            <Element>
-                                <SpråkTekst id={'omdeg.personopplysninger.adresse'} />
-                            </Element>
-                            {genererAdresseVisning(søknad.søker.adresse)}
-                        </StyledOppsummeringsFelt>
+                        <OppsummeringFelt
+                            tittel={<SpråkTekst id={'omdeg.personopplysninger.adresse'} />}
+                            children={genererAdresseVisning(søknad.søker.adresse)}
+                        />
                     )}
                 </StyledOppsummeringsFeltGruppe>
 
