@@ -5,7 +5,6 @@ import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -37,7 +36,7 @@ const StyledOppsummeringsFeltGruppe = styled.div`
 
 const Oppsummering: React.FC = () => {
     const { formatMessage } = useIntl();
-    const { søknad, settSøknad } = useApp();
+    const { søknad } = useApp();
     const { hentStegNummer, hentStegObjektForRoute, hentStegObjektForBarn } = useRoutes();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
     const { push: pushHistory } = useHistory();
@@ -76,23 +75,6 @@ const Oppsummering: React.FC = () => {
             <StyledNormaltekst>
                 <SpråkTekst id={'oppsummering.info'} />
             </StyledNormaltekst>
-            <Knapp
-                htmlType={'button'}
-                onClick={() => {
-                    settSøknad({
-                        ...søknad,
-                        søker: {
-                            ...søknad.søker,
-                            erAsylsøker: {
-                                id: søknad.søker.erAsylsøker.id,
-                                svar: undefined,
-                            },
-                        },
-                    });
-                }}
-            >
-                Føkk opp søknadsobjektet
-            </Knapp>
             <Oppsummeringsbolk
                 route={hentStegObjektForRoute(RouteEnum.OmDeg)}
                 tittel={'omdeg.sidetittel'}
