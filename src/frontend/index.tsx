@@ -8,6 +8,8 @@ import Modal from 'nav-frontend-modal';
 
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
+import * as bokmålPSG from '@navikt/sif-common-core/lib/components/picture-scanning-guide/picturescanningguide.nb.json';
+import * as nynorskPSG from '@navikt/sif-common-core/lib/components/picture-scanning-guide/picturescanningguide.nn.json';
 
 import packageJson from './../../package.json';
 import './index.less';
@@ -40,7 +42,10 @@ import(`i18n-iso-countries/langs/nn.json`).then(result => registerLocale(result)
 ReactDOM.render(
     <React.StrictMode>
         <GlobalStyle />
-        <SprakProvider tekster={{ nb: bokmål, nn: nynorsk }} defaultLocale={LocaleType.nb}>
+        <SprakProvider
+            tekster={{ nb: { ...bokmål, ...bokmålPSG }, nn: { ...nynorsk, ...nynorskPSG } }}
+            defaultLocale={LocaleType.nb}
+        >
             <HttpProvider>
                 <Sentry.ErrorBoundary fallback={Feilside}>
                     <App />
