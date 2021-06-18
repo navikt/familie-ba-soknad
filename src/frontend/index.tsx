@@ -18,6 +18,7 @@ import * as bokmål from './assets/lang/nb.json';
 import * as nynorsk from './assets/lang/nn.json';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import { GlobalStyle } from './Theme';
+import { labelWithFamilieBaSoknad } from './utils/sentry';
 
 const environment = window.location.hostname;
 
@@ -27,6 +28,7 @@ Sentry.init({
     environment,
     autoSessionTracking: false,
     enabled: process.env.NODE_ENV !== 'development',
+    ignoreErrors: ['NetworkError when attempting to fetch resource.'],
 });
 
 if (process.env.NODE_ENV !== 'production') {
@@ -42,12 +44,26 @@ import(`i18n-iso-countries/langs/nn.json`).then(result => registerLocale(result)
 ReactDOM.render(
     <React.StrictMode>
         <GlobalStyle />
+        <button
+            onClick={() => {
+                throw new Error('outside error boundary');
+            }}
+        >
+            Test: Shouldn't get tagget
+        </button>
         <SprakProvider
             tekster={{ nb: { ...bokmål, ...bokmålPSG }, nn: { ...nynorsk, ...nynorskPSG } }}
             defaultLocale={LocaleType.nb}
         >
             <HttpProvider>
-                <Sentry.ErrorBoundary fallback={Feilside}>
+                <Sentry.ErrorBoundary fallback={Feilside} beforeCapture={labelWithFamilieBaSoknad}>
+                    <button
+                        onClick={() => {
+                            throw new Error('inside error boundary. should be tagged');
+                        }}
+                    >
+                        Test: tag it!
+                    </button>
                     <App />
                 </Sentry.ErrorBoundary>
             </HttpProvider>
