@@ -97,7 +97,10 @@ export const useVelgBarn = (): {
         );
     };
 
-    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<IVelgBarnFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
+        IVelgBarnFeltTyper,
+        string
+    >({
         felter: {
             barnMedISøknad,
         },
@@ -112,6 +115,6 @@ export const useVelgBarn = (): {
         håndterVelgBarnToggle,
         barnSomSkalVæreMed,
         fjernBarn,
-        validerAlleSynligeFelter
+        validerAlleSynligeFelter,
     };
 };

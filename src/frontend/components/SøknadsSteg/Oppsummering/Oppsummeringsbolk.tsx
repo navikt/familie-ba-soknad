@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components/macro';
 
@@ -6,15 +6,27 @@ import navFarger from 'nav-frontend-core';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Undertittel } from 'nav-frontend-typografi';
 
+import { ISkjema } from '@navikt/familie-skjema';
+
+import { useApp } from '../../../context/AppContext';
 import { IRoute, RouteEnum, useRoutes } from '../../../context/RoutesContext';
+import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { AppLenke } from '../../Felleskomponenter/AppLenke/AppLenke';
+import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { useLocation } from 'react-router-dom';
+
+interface IHookReturn {
+    valideringErOk: () => boolean;
+    validerAlleSynligeFelter: () => void;
+    skjema: ISkjema<SkjemaFeltTyper, string>;
+}
 
 interface Props {
     tittel: string;
     språkValues?: { [key: string]: string };
     route?: IRoute;
+    skjemaHook: (...args: string[]) => IHookReturn;
+    ident?: string;
 }
 
 const StyledOppsummeringsbolk = styled.div`
@@ -37,10 +49,24 @@ const Oppsummeringsbolk: React.FC<Props> = ({
     tittel,
     språkValues,
     route,
+    skjemaHook,
+    ident,
 }) => {
-    const { hentStegNummer, hentNåværendeRoute } = useRoutes();
-    const { pathname } = useLocation();
-    const inneværendeRoute = hentNåværendeRoute(pathname);
+    const { hentStegNummer } = useRoutes();
+    const { søknad } = useApp();
+    const { validerAlleSynligeFelter, valideringErOk, skjema } = ident
+        ? skjemaHook(ident)
+        : skjemaHook();
+    const [visFeil, settVisFeil] = useState(false);
+
+    useEffect(() => {
+        // Når felter valideres blir nye synlige, så vi må kjøre denne igjen til vi har validert alt
+        validerAlleSynligeFelter();
+    }, [søknad, skjema]);
+
+    useEffect(() => {
+        settVisFeil(!valideringErOk());
+    }, [skjema]);
 
     return (
         <StyledOppsummeringsbolk>
@@ -55,12 +81,12 @@ const Oppsummeringsbolk: React.FC<Props> = ({
                 apen={true}
             >
                 {children}
-                {route && (
-                    <AppLenke
-                        route={route}
-                        språkTekstId={'oppsummering.endresvar.lenketekst'}
-                        returnTo={inneværendeRoute}
-                    />
+
+                {visFeil && (
+                    <SkjemaFeiloppsummering skjema={skjema} routeForFeilmeldinger={route} />
+                )}
+                {route && !visFeil && (
+                    <AppLenke route={route} språkTekstId={'oppsummering.endresvar.lenketekst'} />
                 )}
             </StyledEkspanderbartpanel>
         </StyledOppsummeringsbolk>

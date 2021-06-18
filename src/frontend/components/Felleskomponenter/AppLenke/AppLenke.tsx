@@ -4,29 +4,39 @@ import { useHistory } from 'react-router-dom';
 
 import Lenke from 'nav-frontend-lenker';
 
+import { unslash } from '../../../../shared-utils/unslash';
+import { useAppNavigation } from '../../../context/AppNavigationContext';
 import { IRoute } from '../../../context/RoutesContext';
 import { basePath } from '../../../Miljø';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { unslash } from '../../../../shared-utils/unslash';
-import { useAppNavigation } from '../../../context/AppNavigationContext';
 
-export const AppLenke: React.FC<{ route: IRoute; språkTekstId: string, returnTo?: IRoute }> = ({
-    route,
-    språkTekstId,
-    returnTo
-}) => {
-    const { push } = useHistory();
+interface Props {
+    route: IRoute;
+    hash?: string;
+    språkTekstId?: string;
+    returnTo?: IRoute;
+}
+
+export const AppLenke: React.FC<Props> = ({ route, hash, språkTekstId, returnTo, children }) => {
+    const { push: pushHistory } = useHistory();
     const { settKomFra } = useAppNavigation();
 
     const clickHandler: MouseEventHandler = event => {
         event.preventDefault();
         returnTo && settKomFra(returnTo);
-        push(route.path);
+        pushHistory({
+            pathname: route.path,
+            hash,
+        });
     };
 
     return (
-        <Lenke href={basePath + unslash(route.path)} rel="noopener noreferrer" onClick={clickHandler}>
-            <SpråkTekst id={språkTekstId} />
+        <Lenke
+            href={basePath + unslash(route.path) + (hash ? '#' + hash : '')}
+            rel="noopener noreferrer"
+            onClick={clickHandler}
+        >
+            {språkTekstId ? <SpråkTekst id={språkTekstId} /> : children}
         </Lenke>
     );
 };

@@ -1,16 +1,16 @@
 import { useState } from 'react';
 
 import createUseContext from 'constate';
-import { IRoute } from './RoutesContext';
 
+import { IRoute } from './RoutesContext';
 
 const [AppNavigationProvider, useAppNavigation] = createUseContext(() => {
     const [komFra, settKomFra] = useState<IRoute>();
 
     return {
         komFra,
-        settKomFra
-    }
+        settKomFra,
+    };
 });
 
 export { AppNavigationProvider, useAppNavigation };

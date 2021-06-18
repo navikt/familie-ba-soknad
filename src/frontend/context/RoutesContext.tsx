@@ -57,7 +57,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
                   komponent: () => {
                       return <OmBarnet barnetsIdent={barn.ident} />;
                   },
-                  spesifisering: barn.id
+                  spesifisering: barn.id,
               };
           })
         : [
@@ -150,11 +150,11 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
 
     const hentStegObjektForRoute = (route: RouteEnum): IRoute => {
         return routes.find(steg => steg.route === route) ?? routes[0];
-    }
+    };
 
     const hentStegObjektForBarn = (barn: IBarnMedISøknad): IRoute | undefined => {
         return routes.find(route => route.spesifisering === barn.id);
-    }
+    };
 
     return {
         hentRouteIndex,

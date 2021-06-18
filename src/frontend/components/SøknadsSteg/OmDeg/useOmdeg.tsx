@@ -266,7 +266,10 @@ export const useOmdeg = (): {
         });
     };
 
-    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<IOmDegFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
+        IOmDegFeltTyper,
+        string
+    >({
         felter: {
             borPåRegistrertAdresse,
             telefonnummer,
