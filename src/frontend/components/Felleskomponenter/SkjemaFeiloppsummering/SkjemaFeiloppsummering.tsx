@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Feiloppsummering, FeiloppsummeringFeil, FeiloppsummeringProps } from 'nav-frontend-skjema';
+import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -32,16 +32,18 @@ const samletSpørsmålId = {
     ...OmBarnetSpørsmålsId,
 };
 
-interface Props extends Pick<FeiloppsummeringProps, 'customFeilRender'> {
+interface Props {
     skjema: ISkjema<SkjemaFeltTyper, string>;
     barn?: IBarn;
     routeForFeilmeldinger?: IRoute;
+    id?: string;
 }
 
 export const SkjemaFeiloppsummering: React.FC<Props> = ({
     skjema,
     barn,
     routeForFeilmeldinger,
+    id,
 }) => {
     /* eslint-disable @typescript-eslint/no-explicit-any */
     const hentFeilmelding = (felt: Felt<any>) => {
@@ -58,6 +60,7 @@ export const SkjemaFeiloppsummering: React.FC<Props> = ({
     return (
         <Feiloppsummering
             role={'alert'}
+            id={id}
             tittel={
                 <Element>
                     <SpråkTekst id={'felles.feiloppsummering.tittel'} />

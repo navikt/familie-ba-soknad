@@ -27,6 +27,7 @@ interface Props {
     route?: IRoute;
     skjemaHook: (...args: string[]) => IHookReturn;
     ident?: string;
+    settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const StyledOppsummeringsbolk = styled.div`
@@ -51,6 +52,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
     route,
     skjemaHook,
     ident,
+    settFeilAnchors,
 }) => {
     const { hentStegNummer } = useRoutes();
     const { søknad } = useApp();
@@ -59,14 +61,26 @@ const Oppsummeringsbolk: React.FC<Props> = ({
         : skjemaHook();
     const [visFeil, settVisFeil] = useState(false);
 
+    const feilOppsummeringId = skjema.skjemanavn + '-feil';
+
     useEffect(() => {
         // Når felter valideres blir nye synlige, så vi må kjøre denne igjen til vi har validert alt
         validerAlleSynligeFelter();
     }, [søknad, skjema]);
 
     useEffect(() => {
-        settVisFeil(!valideringErOk());
+        visFeil !== !valideringErOk() && settVisFeil(!valideringErOk());
     }, [skjema]);
+
+    useEffect(() => {
+        settFeilAnchors &&
+            settFeilAnchors(prevState => {
+                const utenDetteSkjemaet = prevState.filter(anchor => {
+                    return anchor !== feilOppsummeringId;
+                });
+                return visFeil ? [...utenDetteSkjemaet, feilOppsummeringId] : utenDetteSkjemaet;
+            });
+    }, [visFeil]);
 
     return (
         <StyledOppsummeringsbolk>
@@ -83,7 +97,11 @@ const Oppsummeringsbolk: React.FC<Props> = ({
                 {children}
 
                 {visFeil && (
-                    <SkjemaFeiloppsummering skjema={skjema} routeForFeilmeldinger={route} />
+                    <SkjemaFeiloppsummering
+                        skjema={skjema}
+                        routeForFeilmeldinger={route}
+                        id={feilOppsummeringId}
+                    />
                 )}
                 {route && !visFeil && (
                     <AppLenke route={route} språkTekstId={'oppsummering.endresvar.lenketekst'} />

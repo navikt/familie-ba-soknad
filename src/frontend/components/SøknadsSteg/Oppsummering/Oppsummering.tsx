@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
+import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -35,8 +37,11 @@ const StyledOppsummeringsFeltGruppe = styled.div`
 
 const Oppsummering: React.FC = () => {
     const { formatMessage } = useIntl();
-    const { søknad } = useApp();
+    const { søknad, settSøknad } = useApp();
     const { hentStegNummer, hentStegObjektForRoute, hentStegObjektForBarn } = useRoutes();
+    const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
+    const { push: pushHistory } = useHistory();
+
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden
             .filter(barn => barn[søknadDatafelt].svar === 'JA')
@@ -51,15 +56,48 @@ const Oppsummering: React.FC = () => {
             : formaterDato(datoMedUkjent);
     };
 
+    const scrollTilFeil = (elementId: string) => {
+        // Gjør dette for syns skyld, men push scroller ikke vinduet
+        pushHistory({ hash: elementId });
+        const element = document.getElementById(elementId);
+        element && element.scrollIntoView();
+    };
+
+    const gåVidereCallback = (): Promise<boolean> => {
+        feilAnchors[0] && scrollTilFeil(feilAnchors[0]);
+        return Promise.resolve(feilAnchors.length === 0);
+    };
+
     return (
-        <Steg tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}>
+        <Steg
+            tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}
+            gåVidereCallback={gåVidereCallback}
+        >
             <StyledNormaltekst>
                 <SpråkTekst id={'oppsummering.info'} />
             </StyledNormaltekst>
+            <Knapp
+                htmlType={'button'}
+                onClick={() => {
+                    settSøknad({
+                        ...søknad,
+                        søker: {
+                            ...søknad.søker,
+                            erAsylsøker: {
+                                id: søknad.søker.erAsylsøker.id,
+                                svar: undefined,
+                            },
+                        },
+                    });
+                }}
+            >
+                Føkk opp søknadsobjektet
+            </Knapp>
             <Oppsummeringsbolk
                 route={hentStegObjektForRoute(RouteEnum.OmDeg)}
                 tittel={'omdeg.sidetittel'}
                 skjemaHook={useOmdeg}
+                settFeilAnchors={settFeilAnchors}
             >
                 <StyledOppsummeringsFeltGruppe>
                     <Element>
@@ -175,6 +213,7 @@ const Oppsummering: React.FC = () => {
                 route={hentStegObjektForRoute(RouteEnum.VelgBarn)}
                 tittel={'hvilkebarn.sidetittel'}
                 skjemaHook={useVelgBarn}
+                settFeilAnchors={settFeilAnchors}
             >
                 {søknad.barnInkludertISøknaden.map((barn, index) => (
                     <StyledOppsummeringsFeltGruppe key={index}>
@@ -205,6 +244,7 @@ const Oppsummering: React.FC = () => {
                 route={hentStegObjektForRoute(RouteEnum.OmBarna)}
                 tittel={'ombarna.sidetittel'}
                 skjemaHook={useOmBarnaDine}
+                settFeilAnchors={settFeilAnchors}
             >
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
@@ -316,6 +356,7 @@ const Oppsummering: React.FC = () => {
                         route={hentStegObjektForBarn(barn)}
                         skjemaHook={useOmBarnet}
                         ident={barn.ident}
+                        settFeilAnchors={settFeilAnchors}
                     >
                         {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                             <OppsummeringFelt
