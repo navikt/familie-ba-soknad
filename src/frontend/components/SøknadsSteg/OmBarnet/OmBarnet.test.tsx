@@ -6,9 +6,15 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
+import { AppNavigationProvider } from '../../../context/AppNavigationContext';
 import { RoutesProvider } from '../../../context/RoutesContext';
 import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../../../typer/person';
-import { mockHistory, silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
+import {
+    mockHistory,
+    silenceConsoleErrors,
+    spyOnUseApp,
+    TestProvidere,
+} from '../../../utils/testing';
 import OmBarnet from './OmBarnet';
 
 silenceConsoleErrors();
@@ -108,13 +114,9 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
     });
 
     render(
-        <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
-            <HttpProvider>
-                <RoutesProvider>
-                    <OmBarnet barnetsIdent={'12345678910'} />
-                </RoutesProvider>
-            </HttpProvider>
-        </SprakProvider>
+        <TestProvidere>
+            <OmBarnet barnetsIdent={'12345678910'} />
+        </TestProvidere>
     );
 });
 
@@ -131,9 +133,11 @@ test(`Kan navigere mellom to barn`, () => {
             defaultLocale={LocaleType.nb}
         >
             <HttpProvider>
-                <RoutesProvider>
-                    <OmBarnet barnetsIdent={'12345678910'} />
-                </RoutesProvider>
+                <AppNavigationProvider>
+                    <RoutesProvider>
+                        <OmBarnet barnetsIdent={'12345678910'} />
+                    </RoutesProvider>
+                </AppNavigationProvider>
             </HttpProvider>
         </SprakProvider>
     );
@@ -165,9 +169,11 @@ test(`Kan navigere fra barn til oppsummering`, () => {
             defaultLocale={LocaleType.nb}
         >
             <HttpProvider>
-                <RoutesProvider>
-                    <OmBarnet barnetsIdent={'12345678910'} />
-                </RoutesProvider>
+                <AppNavigationProvider>
+                    <RoutesProvider>
+                        <OmBarnet barnetsIdent={'12345678910'} />
+                    </RoutesProvider>
+                </AppNavigationProvider>
             </HttpProvider>
         </SprakProvider>
     );
