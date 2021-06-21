@@ -402,7 +402,7 @@ export const useOmBarnet = (
             søkerForTidsromStartdato,
             søkerForTidsromSluttdato,
         },
-        skjemanavn: 'om-barnet',
+        skjemanavn: `om-barnet-${barn.id}`,
     });
 
     const svarForSpørsmålMedUkjent = (
