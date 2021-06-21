@@ -19,9 +19,12 @@ export const useBekreftelseOgStartSoknad = (): {
     bekreftelseStatus: BekreftelseStatus;
     fortsettPåSøknaden: () => void;
     startPåNytt: () => void;
+    visStartPåNyttModal: boolean;
+    settVisStartPåNyttModal: (synlig: boolean) => void;
 } => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
+    const [visStartPåNyttModal, settVisStartPåNyttModal] = useState(false);
 
     const { hentNesteRoute, hentRouteIndex } = useRoutes();
     const {
@@ -100,5 +103,7 @@ export const useBekreftelseOgStartSoknad = (): {
         bekreftelseStatus,
         fortsettPåSøknaden,
         startPåNytt,
+        visStartPåNyttModal,
+        settVisStartPåNyttModal,
     };
 };
