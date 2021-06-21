@@ -63,6 +63,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     søkerForTidsromCheckbox: ESvar;
     søkerForTidsromStartdato: ISODateString;
     søkerForTidsromSluttdato: ISODateString;
+    sammeForelderSomAnnetBarn: undefined | string;
 }
 
 export const useOmBarnet = (
@@ -73,6 +74,7 @@ export const useOmBarnet = (
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
     barn: IBarnMedISøknad;
+    andreBarnSomErFyltUt: IBarnMedISøknad[];
 } => {
     const { søknad, settSøknad, erStegUtfyltFrafør } = useApp();
     const { hentRouteIndex } = useRoutes();
@@ -89,6 +91,10 @@ export const useOmBarnet = (
     const skalFeltetVises = (søknadsdataFelt: barnDataKeySpørsmål) => {
         return barn[søknadsdataFelt].svar === ESvar.JA;
     };
+
+    const andreBarnSomErFyltUt = søknad.barnInkludertISøknaden.filter(
+        barnISøknad => barnISøknad.barnErFyltUt && barnISøknad.id !== barn.id
+    );
 
     /*---INSTITUSJON---*/
 
@@ -367,6 +373,17 @@ export const useOmBarnet = (
                 skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK)
     );
 
+    const sammeForelderSomAnnetBarn = useFelt<string | undefined>({
+        feltId: 'sammeForelderSomAnnetBarn',
+        verdi: undefined,
+        valideringsfunksjon: (felt: FeltState<string | undefined>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+        },
+        skalFeltetVises: () => andreBarnSomErFyltUt.length > 0,
+    });
+
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
             felter: {
@@ -398,6 +415,7 @@ export const useOmBarnet = (
                 søkerForTidsromCheckbox,
                 søkerForTidsromStartdato,
                 søkerForTidsromSluttdato,
+                sammeForelderSomAnnetBarn,
             },
             skjemanavn: 'om-barnet',
         }
@@ -441,6 +459,7 @@ export const useOmBarnet = (
                 barn.ident === barnetsIdent
                     ? {
                           ...barn,
+                          barnErFyltUt: true,
                           institusjonsnavn: {
                               ...barn.institusjonsnavn,
                               svar: institusjonsnavn.verdi,
@@ -583,5 +602,6 @@ export const useOmBarnet = (
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
         barn,
+        andreBarnSomErFyltUt,
     };
 };

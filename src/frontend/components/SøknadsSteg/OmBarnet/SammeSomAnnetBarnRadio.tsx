@@ -1,0 +1,60 @@
+import React, { useState } from 'react';
+
+import styled from 'styled-components';
+
+import { RadioPanelGruppe } from 'nav-frontend-skjema';
+
+import { ESvar } from '@navikt/familie-form-elements';
+import { ISkjema } from '@navikt/familie-skjema';
+
+import { IBarnMedISøknad } from '../../../typer/person';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
+
+const StyledRadioPanelGruppe = styled(RadioPanelGruppe)`
+    && label:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+`;
+
+const ANNEN_FORELDER = 'ANNEN_FORELDER';
+
+const SammeSomAnnetBarnRadio: React.FC<{
+    andreBarnSomErFyltUt: IBarnMedISøknad[];
+    skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
+}> = ({ andreBarnSomErFyltUt, skjema }) => {
+    const [checked, setChecked] = useState(ESvar.NEI);
+
+    const felt = skjema.felter.sammeForelderSomAnnetBarn;
+
+    const radios = andreBarnSomErFyltUt
+        .map(barn => ({
+            label: (
+                <SpråkTekst
+                    id={'ombarnet.svaralternativ.samme-som-barn'}
+                    values={{ navn: barn.navn }}
+                />
+            ),
+            value: barn.id,
+        }))
+        .concat({
+            label: <SpråkTekst id={'ombarnet.svaralternativ.annen-forelder'} />,
+            value: ANNEN_FORELDER,
+        });
+
+    return (
+        <StyledRadioPanelGruppe
+            {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
+            name={'sammeForelderSomAnnetBarn'}
+            radios={radios}
+            checked={checked}
+            onChange={(_event, value) => {
+                setChecked(value);
+                felt.onChange(value);
+            }}
+            feil={felt.feilmelding}
+        />
+    );
+};
+
+export default SammeSomAnnetBarnRadio;

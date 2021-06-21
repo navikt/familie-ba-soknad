@@ -105,6 +105,7 @@ export type DatoMedUkjent = ISODateString | AlternativtSvarForInput.UKJENT;
 
 export interface IBarnMedISøknad extends IBarn {
     id: string;
+    barnErFyltUt: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | undefined>;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | undefined>;

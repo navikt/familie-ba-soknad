@@ -75,6 +75,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
     return {
         ...barn,
         id: hentUid(),
+        barnErFyltUt: false,
         [barnDataKeySpørsmål.erFosterbarn]: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
             svar: undefined,
