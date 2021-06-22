@@ -4,6 +4,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 
 import AppContainer from './AppContainer';
 import { AppProvider } from './context/AppContext';
+import { AppNavigationProvider } from './context/AppNavigationContext';
 import { RoutesProvider } from './context/RoutesContext';
 
 function App() {
@@ -18,7 +19,9 @@ function App() {
                 </AlertStripe>
             )}
             <RoutesProvider>
-                <AppContainer />
+                <AppNavigationProvider>
+                    <AppContainer />
+                </AppNavigationProvider>
             </RoutesProvider>
         </AppProvider>
     );
