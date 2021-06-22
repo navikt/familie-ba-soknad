@@ -1,14 +1,14 @@
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpack from 'webpack';
-import { mergeWithRules } from 'webpack-merge';
+import { CustomizeRule, mergeWithRules } from 'webpack-merge';
 
-import baseConfig, { createHtmlWebpackPlugin } from './webpack.common.config.js';
+import baseConfig, { createHtmlWebpackPlugin } from './webpack.common.config';
 
-const devConfig = mergeWithRules({
+const devConfig: webpack.Configuration = mergeWithRules({
     module: {
         rules: {
-            test: 'match',
-            options: 'replace',
+            test: CustomizeRule.Match,
+            options: CustomizeRule.Replace,
         },
     },
 })(baseConfig, {
