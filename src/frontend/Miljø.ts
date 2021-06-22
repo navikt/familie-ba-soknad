@@ -8,7 +8,7 @@ interface MiljøProps {
 }
 const modellVersjon = 3;
 
-export const basePath = process.env.BASE_PATH ?? '/';
+export const basePath = process.env.BASE_PATH;
 
 const Miljø = (): MiljøProps => {
     if (window.location.hostname.indexOf('familie-ba-soknad.dev') > -1) {

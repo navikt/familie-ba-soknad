@@ -31,6 +31,7 @@ export const useOmBarnaDine = (): {
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
+    validerAlleSynligeFelter: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
 
@@ -196,7 +197,10 @@ export const useOmBarnaDine = (): {
         });
     };
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IOmBarnaDineFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
+        IOmBarnaDineFeltTyper,
+        string
+    >({
         felter: {
             erNoenAvBarnaFosterbarn,
             oppholderBarnSegIInstitusjon,
@@ -221,5 +225,6 @@ export const useOmBarnaDine = (): {
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
         oppdaterSøknad,
+        validerAlleSynligeFelter,
     };
 };
