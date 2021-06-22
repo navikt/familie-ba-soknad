@@ -12,6 +12,7 @@ import projectWebpackDevConfig from '../webpack/webpack.development.config';
 import { indexHandler } from './dekorator';
 import environment from './environment';
 import { escapeBody } from './escape';
+import { expressToggleInterceptor } from './feature-toggles';
 import { createApiForwardingFunction } from './proxy';
 
 dotenv.config();
@@ -25,6 +26,7 @@ app.set('view engine', 'mustache');
 
 app.engine('html', mustacheExpress());
 app.use(compression());
+app.use(expressToggleInterceptor);
 
 app.use(`${basePath}api/soknad`, express.json());
 app.use(`${basePath}api/soknad`, escapeBody);
