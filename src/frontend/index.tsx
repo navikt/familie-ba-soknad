@@ -47,7 +47,10 @@ ReactDOM.render(
             defaultLocale={LocaleType.nb}
         >
             <HttpProvider>
-                <Sentry.ErrorBoundary fallback={Feilside}>
+                <Sentry.ErrorBoundary
+                    fallback={Feilside}
+                    beforeCapture={scope => scope.setTag('scope', 'familie-ba-soknad')}
+                >
                     <App />
                 </Sentry.ErrorBoundary>
             </HttpProvider>
