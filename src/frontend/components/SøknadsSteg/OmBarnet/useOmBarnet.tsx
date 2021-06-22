@@ -33,6 +33,7 @@ import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
 import useInputFeltMedUkjent from './useInputFeltMedUkjent';
 import useLanddropdownFelt from './useLanddropdownFelt';
+import { formaterInitVerdiForInputMedUkjent } from './utils';
 
 export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;
@@ -75,6 +76,7 @@ export const useOmBarnet = (
     oppdaterSøknad: () => void;
     barn: IBarnMedISøknad;
     andreBarnSomErFyltUt: IBarnMedISøknad[];
+    settSammeForelder: (radioVerdi: string) => void;
 } => {
     const { søknad, settSøknad, erStegUtfyltFrafør } = useApp();
     const { hentRouteIndex } = useRoutes();
@@ -210,11 +212,11 @@ export const useOmBarnet = (
     );
 
     /*--- ANDRE FORELDER ---*/
+    const formaterVerdiForCheckbox = (svar: string | AlternativtSvarForInput) =>
+        svar === AlternativtSvarForInput.UKJENT ? ESvar.JA : ESvar.NEI;
+
     const andreForelderNavnUkjent = useFelt<ESvar>({
-        verdi:
-            barn[barnDataKeySpørsmål.andreForelderNavn].svar === AlternativtSvarForInput.UKJENT
-                ? ESvar.JA
-                : ESvar.NEI,
+        verdi: formaterVerdiForCheckbox(barn[barnDataKeySpørsmål.andreForelderNavn].svar),
         feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
     });
     const andreForelderNavn = useInputFeltMedUkjent(
@@ -224,10 +226,7 @@ export const useOmBarnet = (
     );
 
     const andreForelderFnrUkjent = useFelt<ESvar>({
-        verdi:
-            barn[barnDataKeySpørsmål.andreForelderFnr].svar === AlternativtSvarForInput.UKJENT
-                ? ESvar.JA
-                : ESvar.NEI,
+        verdi: formaterVerdiForCheckbox(barn[barnDataKeySpørsmål.andreForelderFnr].svar),
         feltId: OmBarnetSpørsmålsId.andreForelderFnrUkjent,
     });
     const andreForelderFnr = useInputFeltMedUkjent(
@@ -238,11 +237,7 @@ export const useOmBarnet = (
     );
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
-        verdi:
-            barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar ===
-            AlternativtSvarForInput.UKJENT
-                ? ESvar.JA
-                : ESvar.NEI,
+        verdi: formaterVerdiForCheckbox(barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar),
         feltId: OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent,
         skalFeltetVises: avhengigheter => {
             return (
@@ -256,9 +251,7 @@ export const useOmBarnet = (
     });
     const andreForelderFødselsdato = useDatovelgerFeltMedUkjent(
         barn[barnDataKeySpørsmål.andreForelderFødselsdato].id,
-        barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar !== AlternativtSvarForInput.UKJENT
-            ? barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar
-            : '',
+        formaterInitVerdiForInputMedUkjent(barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar),
         andreForelderFødselsdatoUkjent,
         andreForelderFnrUkjent.verdi === ESvar.JA
     );
@@ -300,6 +293,68 @@ export const useOmBarnet = (
         ESvar.JA,
         andreForelderPensjonUtland
     );
+
+    const sammeForelderSomAnnetBarn = useFelt<string | undefined>({
+        feltId: 'sammeForelderSomAnnetBarn',
+        verdi: undefined,
+        valideringsfunksjon: (felt: FeltState<string | undefined>) => {
+            return felt.verdi !== undefined
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+        },
+        skalFeltetVises: () => andreBarnSomErFyltUt.length > 0,
+    });
+
+    const settSammeForelder = (radioVerdi: string) => {
+        const annetBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === radioVerdi);
+        if (annetBarn) {
+            andreForelderNavn.validerOgSettFelt(
+                formaterInitVerdiForInputMedUkjent(annetBarn.andreForelderNavn.svar)
+            );
+            andreForelderFnr.validerOgSettFelt(
+                formaterInitVerdiForInputMedUkjent(annetBarn.andreForelderFnr.svar)
+            );
+            andreForelderNavnUkjent.validerOgSettFelt(
+                formaterVerdiForCheckbox(annetBarn.andreForelderNavn.svar)
+            );
+            andreForelderFnrUkjent.validerOgSettFelt(
+                formaterVerdiForCheckbox(annetBarn.andreForelderFnr.svar)
+            );
+
+            andreForelderFødselsdato.validerOgSettFelt(
+                formaterInitVerdiForInputMedUkjent(annetBarn.andreForelderFødselsdato.svar)
+            );
+            andreForelderFødselsdatoUkjent.validerOgSettFelt(
+                formaterVerdiForCheckbox(annetBarn.andreForelderFødselsdato.svar)
+            );
+
+            andreForelderArbeidUtlandet.validerOgSettFelt(
+                annetBarn.andreForelderArbeidUtlandet.svar
+            );
+            andreForelderArbeidUtlandetHvilketLand.validerOgSettFelt(
+                annetBarn.andreForelderArbeidUtlandetHvilketLand.svar
+            );
+            andreForelderPensjonUtland.validerOgSettFelt(annetBarn.andreForelderPensjonUtland.svar);
+            andreForelderPensjonHvilketLand.validerOgSettFelt(
+                annetBarn.andreForelderPensjonHvilketLand.svar
+            );
+        } else {
+            nullstillAndreForelderFelter();
+        }
+    };
+
+    const nullstillAndreForelderFelter = () => {
+        andreForelderNavn.validerOgSettFelt('');
+        andreForelderNavnUkjent.validerOgSettFelt(ESvar.NEI);
+        andreForelderFnr.validerOgSettFelt('');
+        andreForelderFnrUkjent.validerOgSettFelt(ESvar.NEI);
+        andreForelderFødselsdato.validerOgSettFelt('');
+        andreForelderFødselsdatoUkjent.validerOgSettFelt(ESvar.NEI);
+        andreForelderArbeidUtlandet.validerOgSettFelt(undefined);
+        andreForelderArbeidUtlandetHvilketLand.validerOgSettFelt('');
+        andreForelderPensjonUtland.validerOgSettFelt(undefined);
+        andreForelderPensjonHvilketLand.validerOgSettFelt('');
+    };
 
     /*--- BOSTED ---*/
 
@@ -372,17 +427,6 @@ export const useOmBarnet = (
             (borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
                 skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK)
     );
-
-    const sammeForelderSomAnnetBarn = useFelt<string | undefined>({
-        feltId: 'sammeForelderSomAnnetBarn',
-        verdi: undefined,
-        valideringsfunksjon: (felt: FeltState<string | undefined>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
-        },
-        skalFeltetVises: () => andreBarnSomErFyltUt.length > 0,
-    });
 
     const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
         {
@@ -603,5 +647,6 @@ export const useOmBarnet = (
         valideringErOk,
         barn,
         andreBarnSomErFyltUt,
+        settSammeForelder,
     };
 };

@@ -17,12 +17,13 @@ const StyledRadioPanelGruppe = styled(RadioPanelGruppe)`
     }
 `;
 
-const ANNEN_FORELDER = 'ANNEN_FORELDER';
+export const ANNEN_FORELDER = 'ANNEN_FORELDER';
 
 const SammeSomAnnetBarnRadio: React.FC<{
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
-}> = ({ andreBarnSomErFyltUt, skjema }) => {
+    onChangeCallback: (radioVerdi: string) => void;
+}> = ({ andreBarnSomErFyltUt, skjema, onChangeCallback }) => {
     const [checked, setChecked] = useState(ESvar.NEI);
 
     const felt = skjema.felter.sammeForelderSomAnnetBarn;
@@ -51,6 +52,7 @@ const SammeSomAnnetBarnRadio: React.FC<{
             onChange={(_event, value) => {
                 setChecked(value);
                 felt.onChange(value);
+                onChangeCallback(value);
             }}
             feil={felt.feilmelding}
         />

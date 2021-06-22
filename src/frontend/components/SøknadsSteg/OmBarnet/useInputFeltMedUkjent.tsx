@@ -4,9 +4,10 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
 
-import { AlternativtSvarForInput, DatoMedUkjent } from '../../../typer/person';
+import { DatoMedUkjent } from '../../../typer/person';
 import { ISøknadSpørsmål } from '../../../typer/søknad';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { formaterInitVerdiForInputMedUkjent } from './utils';
 
 const useInputFeltMedUkjent = (
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent>,
@@ -16,7 +17,7 @@ const useInputFeltMedUkjent = (
 ) => {
     const inputFelt = useFelt<ISODateString>({
         feltId: søknadsfelt.id,
-        verdi: søknadsfelt.svar !== AlternativtSvarForInput.UKJENT ? søknadsfelt.svar : '',
+        verdi: formaterInitVerdiForInputMedUkjent(søknadsfelt.svar),
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
             if (
                 avhengigheter &&

@@ -32,6 +32,7 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
         oppdaterSøknad,
         barn,
         andreBarnSomErFyltUt,
+        settSammeForelder,
     } = useOmBarnet(barnetsIdent);
 
     return barn ? (
@@ -47,6 +48,7 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
         >
             <Oppfølgningsspørsmål barn={barn} skjema={skjema} />
             <AndreForelder
+                settSammeForelder={settSammeForelder}
                 barn={barn}
                 skjema={skjema}
                 andreBarnSomErFyltUt={andreBarnSomErFyltUt}
