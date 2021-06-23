@@ -184,6 +184,7 @@ export const mekkGyldigSøknad = (): ISøknad => {
         barnInkludertISøknaden: [
             {
                 ...genererInitialBarnMedISøknad({
+                    id: 'random-id',
                     ident: '1234',
                     navn: 'Datter Dattersdottir',
                     adressebeskyttelse: false,

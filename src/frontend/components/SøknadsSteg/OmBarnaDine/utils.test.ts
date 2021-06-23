@@ -1,17 +1,20 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
-// Disabler ts for å kunne sende inn parametre med kun nødvendige felter i objektet, uten å måtte mocke hele objektet.
+import { mockDeep } from 'jest-mock-extended';
+import { DeepPartial } from 'ts-essentials';
 
 import { ESvar } from '@navikt/familie-form-elements';
+import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { AlternativtSvarForInput } from '../../../typer/person';
+import { AlternativtSvarForInput, IBarnMedISøknad } from '../../../typer/person';
+import { ISøknad } from '../../../typer/søknad';
+import { IOmBarnaDineFeltTyper } from './useOmBarnaDine';
 import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from './utils';
 
 describe('genererSvarForSpørsmålBarn', () => {
-    const mockBarn = { ident: '12345678910' };
-    const mockFeltSomInkludererBarn = { verdi: ['12345678910'] };
-    const mockFeltSomIkkeInkludererBarn = { verdi: ['12345678911', '12345678912'] };
+    const mockBarn = mockDeep<IBarnMedISøknad>({ id: 'random-id' });
+    const mockFeltSomInkludererBarn = mockDeep<Felt<string[]>>({ verdi: ['random-id'] });
+    const mockFeltSomIkkeInkludererBarn = mockDeep<Felt<string[]>>({
+        verdi: ['random-id-1', 'random-id-2'],
+    });
 
     test('Returner JA dersom barn er inkludert i feltets verdi (array)', () => {
         expect(genererSvarForSpørsmålBarn(mockBarn, mockFeltSomInkludererBarn)).toEqual('JA');
@@ -22,10 +25,11 @@ describe('genererSvarForSpørsmålBarn', () => {
 });
 
 describe('genererOppdaterteBarn', () => {
-    const mockSøknad = {
+    const { objectContaining } = expect;
+    const mockSøknad = mockDeep<ISøknad>({
         barnInkludertISøknaden: [
             {
-                ident: '12345678910',
+                id: 'random-id',
                 institusjonsnavn: { svar: 'Narvesen' },
                 institusjonsadresse: { svar: 'Narvesen' },
                 institusjonspostnummer: { svar: '2020' },
@@ -39,16 +43,17 @@ describe('genererOppdaterteBarn', () => {
                 barnetrygdFraEøslandHvilketLand: { svar: 'AUS' },
             },
         ],
-    };
-    const mockSkjema = {
+    });
+
+    const mockSkjema = mockDeep<ISkjema<IOmBarnaDineFeltTyper, string>>({
         felter: {
-            hvemErFosterbarn: { verdi: ['12345678910'] },
-            hvemErSøktAsylFor: { verdi: ['12345678910'] },
+            hvemErFosterbarn: { verdi: ['random-id'] },
+            hvemErSøktAsylFor: { verdi: ['random-id'] },
             hvemErAdoptertFraUtland: { verdi: [] },
             hvemOppholderSegIInstitusjon: { verdi: [] },
             hvemTolvMndSammenhengendeINorge: { verdi: [] },
-            hvemOppholderSegIUtland: { verdi: ['12345678910'] },
-            hvemBarnetrygdFraAnnetEøsland: { verdi: ['12345678910'] },
+            hvemOppholderSegIUtland: { verdi: ['random-id'] },
+            hvemBarnetrygdFraAnnetEøsland: { verdi: ['random-id'] },
             erNoenAvBarnaFosterbarn: {
                 verdi: ESvar.JA,
             },
@@ -71,31 +76,31 @@ describe('genererOppdaterteBarn', () => {
                 verdi: ESvar.JA,
             },
         },
-    };
+    });
 
     test('Returner objekt med barn, med forventede verdier', () => {
         expect(genererOppdaterteBarn(mockSøknad, mockSkjema)).toEqual([
-            {
-                ident: '12345678910',
-                erFosterbarn: { svar: 'JA' },
-                erAsylsøker: { svar: 'JA' },
-                erAdoptertFraUtland: { svar: 'NEI' },
-                oppholderSegIInstitusjon: { svar: 'NEI' },
-                boddMindreEnn12MndINorge: { svar: 'NEI' },
-                oppholderSegIUtland: { svar: 'JA' },
-                barnetrygdFraAnnetEøsland: { svar: 'JA' },
-                institusjonsnavn: { svar: '' },
-                institusjonsadresse: { svar: '' },
-                institusjonspostnummer: { svar: '' },
-                institusjonOppholdStartdato: { svar: '' },
-                institusjonOppholdSluttdato: { svar: '' },
-                oppholdsland: { svar: 'AUS' },
-                oppholdslandStartdato: { svar: '2020-08-08' },
-                oppholdslandSluttdato: { svar: AlternativtSvarForInput.UKJENT },
-                nårKomBarnTilNorgeDato: { svar: '' },
-                planleggerÅBoINorge12Mnd: { svar: undefined },
-                barnetrygdFraEøslandHvilketLand: { svar: 'AUS' },
-            },
+            objectContaining<DeepPartial<IBarnMedISøknad>>({
+                id: 'random-id',
+                erFosterbarn: objectContaining({ svar: 'JA' }),
+                erAsylsøker: objectContaining({ svar: 'JA' }),
+                erAdoptertFraUtland: objectContaining({ svar: 'NEI' }),
+                oppholderSegIInstitusjon: objectContaining({ svar: 'NEI' }),
+                boddMindreEnn12MndINorge: objectContaining({ svar: 'NEI' }),
+                oppholderSegIUtland: objectContaining({ svar: 'JA' }),
+                barnetrygdFraAnnetEøsland: objectContaining({ svar: 'JA' }),
+                institusjonsnavn: objectContaining({ svar: '' }),
+                institusjonsadresse: objectContaining({ svar: '' }),
+                institusjonspostnummer: objectContaining({ svar: '' }),
+                institusjonOppholdStartdato: objectContaining({ svar: '' }),
+                institusjonOppholdSluttdato: objectContaining({ svar: '' }),
+                oppholdsland: objectContaining({ svar: 'AUS' }),
+                oppholdslandStartdato: objectContaining({ svar: '2020-08-08' }),
+                oppholdslandSluttdato: objectContaining({ svar: AlternativtSvarForInput.UKJENT }),
+                nårKomBarnTilNorgeDato: objectContaining({ svar: '' }),
+                planleggerÅBoINorge12Mnd: objectContaining({ svar: undefined }),
+                barnetrygdFraEøslandHvilketLand: objectContaining({ svar: 'AUS' }),
+            }),
         ]);
     });
 });

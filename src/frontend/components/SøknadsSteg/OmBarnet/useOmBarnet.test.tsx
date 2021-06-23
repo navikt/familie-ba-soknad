@@ -10,6 +10,7 @@ import { useOmBarnet } from './useOmBarnet';
 
 describe('useOmBarnet', () => {
     const barnFraPdl: IBarn = {
+        id: 'random-id-1',
         navn: 'Barn Barnessen',
         ident: '1234',
         borMedSøker: true,
@@ -34,7 +35,7 @@ describe('useOmBarnet', () => {
 
         const { result } = renderHook(
             () => {
-                return useOmBarnet('1234');
+                return useOmBarnet('random-id-1');
             },
             { wrapper: TestProvidere }
         );
@@ -78,7 +79,7 @@ describe('useOmBarnet', () => {
 
         const { result } = renderHook(
             () => {
-                return useOmBarnet('1234');
+                return useOmBarnet('random-id-1');
             },
             { wrapper: TestProvidere }
         );
@@ -112,7 +113,7 @@ describe('useOmBarnet', () => {
 
         const { result } = renderHook(
             () => {
-                return useOmBarnet('1234');
+                return useOmBarnet('random-id-1');
             },
             { wrapper: TestProvidere }
         );

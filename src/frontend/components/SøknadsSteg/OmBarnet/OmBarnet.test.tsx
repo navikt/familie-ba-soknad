@@ -21,6 +21,7 @@ silenceConsoleErrors();
 
 const jens = {
     navn: 'Jens',
+    id: 'random-id-jens',
     ident: '12345678910',
     [barnDataKeySpørsmål.erFosterbarn]: { id: '1', svar: ESvar.NEI },
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: { id: '2', svar: ESvar.JA },
@@ -64,6 +65,7 @@ const jens = {
 };
 const line = {
     navn: 'Line',
+    id: 'random-id-line',
     ident: '12345678911',
     [barnDataKeySpørsmål.erFosterbarn]: { id: '', svar: ESvar.NEI },
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: { id: '', svar: ESvar.NEI },
@@ -115,7 +117,7 @@ test(`Kan rendre Om Barnet Utfyllende`, () => {
 
     render(
         <TestProvidere>
-            <OmBarnet barnetsIdent={'12345678910'} />
+            <OmBarnet barnetsId={'random-id-jens'} />
         </TestProvidere>
     );
 });
@@ -135,7 +137,7 @@ test(`Kan navigere mellom to barn`, () => {
             <HttpProvider>
                 <AppNavigationProvider>
                     <RoutesProvider>
-                        <OmBarnet barnetsIdent={'12345678910'} />
+                        <OmBarnet barnetsId={'random-id-jens'} />
                     </RoutesProvider>
                 </AppNavigationProvider>
             </HttpProvider>
@@ -171,7 +173,7 @@ test(`Kan navigere fra barn til oppsummering`, () => {
             <HttpProvider>
                 <AppNavigationProvider>
                     <RoutesProvider>
-                        <OmBarnet barnetsIdent={'12345678910'} />
+                        <OmBarnet barnetsId={'random-id-jens'} />
                     </RoutesProvider>
                 </AppNavigationProvider>
             </HttpProvider>
