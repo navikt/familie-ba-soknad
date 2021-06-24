@@ -11,7 +11,8 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 const useLanddropdownFeltMedJaNeiAvhengighet = (
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,
     avhengigSvarCondition: ESvar,
-    avhengighet: Felt<ESvar | undefined>
+    avhengighet: Felt<ESvar | undefined>,
+    nullstillVedAvhengighetEndring = true
 ) => {
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
 
@@ -28,6 +29,7 @@ const useLanddropdownFeltMedJaNeiAvhengighet = (
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.velg-land.feilmelding'} />);
         },
+        nullstillVedAvhengighetEndring,
         avhengigheter: { jaNeiSpm: avhengighet },
     });
 

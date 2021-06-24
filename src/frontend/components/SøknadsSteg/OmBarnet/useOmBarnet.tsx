@@ -28,6 +28,7 @@ import {
 } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../OmDeg/useLanddropdownFeltMedJaNeiAvhengighet';
+import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
@@ -212,6 +213,17 @@ export const useOmBarnet = (
     );
 
     /*--- ANDRE FORELDER ---*/
+    const sammeForelderSomAnnetBarn = useFelt<string | null>({
+        feltId: 'sammeForelderSomAnnetBarn',
+        verdi: null,
+        valideringsfunksjon: (felt: FeltState<string | null>) => {
+            return felt.verdi !== null
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+        },
+        skalFeltetVises: () => andreBarnSomErFyltUt.length > 0,
+    });
+
     const andreForelderNavnUkjent = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(barn[barnDataKeySpørsmål.andreForelderNavn].svar),
         feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
@@ -269,7 +281,9 @@ export const useOmBarnet = (
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
         barn.andreForelderArbeidUtlandetHvilketLand,
         ESvar.JA,
-        andreForelderArbeidUtlandet
+        andreForelderArbeidUtlandet,
+        sammeForelderSomAnnetBarn.verdi === null ||
+            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER
     );
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt(
@@ -288,19 +302,10 @@ export const useOmBarnet = (
     const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
         barn.andreForelderPensjonHvilketLand,
         ESvar.JA,
-        andreForelderPensjonUtland
+        andreForelderPensjonUtland,
+        sammeForelderSomAnnetBarn.verdi === null ||
+            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER
     );
-
-    const sammeForelderSomAnnetBarn = useFelt<string | undefined>({
-        feltId: 'sammeForelderSomAnnetBarn',
-        verdi: undefined,
-        valideringsfunksjon: (felt: FeltState<string | undefined>) => {
-            return felt.verdi !== undefined
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
-        },
-        skalFeltetVises: () => andreBarnSomErFyltUt.length > 0,
-    });
 
     const settSammeForelder = (radioVerdi: string) => {
         const annetBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === radioVerdi);
