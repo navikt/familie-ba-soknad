@@ -25,7 +25,7 @@ const AndreForelder: React.FC<{
     return (
         <SkjemaFieldset tittelId={'ombarnet.andre-forelder'} språkValues={{ navn: barn.navn }}>
             <KomponentGruppe>
-                {andreBarnSomErFyltUt.length > 0 && (
+                {skjema.felter.sammeForelderSomAnnetBarn.erSynlig && (
                     <SammeSomAnnetBarnRadio
                         onChangeCallback={settSammeForelder}
                         andreBarnSomErFyltUt={andreBarnSomErFyltUt}

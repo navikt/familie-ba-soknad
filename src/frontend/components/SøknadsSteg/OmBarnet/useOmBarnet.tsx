@@ -65,7 +65,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     søkerForTidsromCheckbox: ESvar;
     søkerForTidsromStartdato: ISODateString;
     søkerForTidsromSluttdato: ISODateString;
-    sammeForelderSomAnnetBarn: undefined | string;
+    sammeForelderSomAnnetBarn: string | null;
 }
 
 export const useOmBarnet = (
@@ -221,7 +221,7 @@ export const useOmBarnet = (
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
         },
-        skalFeltetVises: () => andreBarnSomErFyltUt.length > 0,
+        skalFeltetVises: () => !barn.barnErFyltUt && andreBarnSomErFyltUt.length > 0,
     });
 
     const andreForelderNavnUkjent = useFelt<ESvar>({
