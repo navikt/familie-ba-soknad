@@ -1,7 +1,8 @@
-import React, { ReactNode } from 'react';
+import React, { useState } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -11,68 +12,35 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
-import {
-    AlternativtSvarForInput,
-    barnDataKeySpørsmål,
-    DatoMedUkjent,
-    ESivilstand,
-} from '../../../typer/person';
+import { AlternativtSvarForInput, barnDataKeySpørsmål, DatoMedUkjent } from '../../../typer/person';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/person';
 import { genererAdresseVisning } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { useOmBarnaDine } from '../OmBarnaDine/useOmBarnaDine';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
+import { useOmBarnet } from '../OmBarnet/useOmBarnet';
+import { useOmdeg } from '../OmDeg/useOmdeg';
+import { useVelgBarn } from '../VelgBarn/useVelgBarn';
+import { OppsummeringFelt } from './OppsummeringFelt';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
-
-interface IOppsummeringsFeltProps {
-    tittel?: ReactNode;
-    søknadsvar?: string;
-}
 
 const StyledNormaltekst = styled(Normaltekst)`
     padding-bottom: 4rem;
-`;
-
-const StyledOppsummeringsFelt = styled.div`
-    padding: 0.25rem 0 0.25rem 0;
 `;
 
 const StyledOppsummeringsFeltGruppe = styled.div`
     padding: 1rem 0 1rem 0;
 `;
 
-const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsvar }) => {
-    let språktekstid: boolean | string = false;
-    if (søknadsvar && søknadsvar in ESvar) {
-        switch (søknadsvar) {
-            case ESvar.NEI:
-            case ESvar.JA:
-                språktekstid = 'felles.svaralternativ.' + søknadsvar.toLowerCase();
-                break;
-            default:
-                språktekstid = 'felles.svaralternativ.vetikke';
-        }
-    } else if (søknadsvar && søknadsvar in ESivilstand) {
-        språktekstid = 'felles.sivilstatus.kode.' + søknadsvar;
-    }
-
-    return (
-        <StyledOppsummeringsFelt>
-            {tittel && <Element>{tittel}</Element>}
-            {søknadsvar && (
-                <Normaltekst>
-                    {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
-                </Normaltekst>
-            )}
-        </StyledOppsummeringsFelt>
-    );
-};
-
 const Oppsummering: React.FC = () => {
     const { formatMessage } = useIntl();
     const { søknad } = useApp();
-    const { hentStegNummer } = useRoutes();
+    const { hentStegNummer, hentStegObjektForRoute, hentStegObjektForBarn } = useRoutes();
+    const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
+    const { push: pushHistory } = useHistory();
+
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden
             .filter(barn => barn[søknadDatafelt].svar === 'JA')
@@ -87,12 +55,32 @@ const Oppsummering: React.FC = () => {
             : formaterDato(datoMedUkjent);
     };
 
+    const scrollTilFeil = (elementId: string) => {
+        // Gjør dette for syns skyld, men push scroller ikke vinduet
+        pushHistory({ hash: elementId });
+        const element = document.getElementById(elementId);
+        element && element.scrollIntoView();
+    };
+
+    const gåVidereCallback = (): Promise<boolean> => {
+        feilAnchors[0] && scrollTilFeil(feilAnchors[0]);
+        return Promise.resolve(feilAnchors.length === 0);
+    };
+
     return (
-        <Steg tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}>
+        <Steg
+            tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}
+            gåVidereCallback={gåVidereCallback}
+        >
             <StyledNormaltekst>
                 <SpråkTekst id={'oppsummering.info'} />
             </StyledNormaltekst>
-            <Oppsummeringsbolk route={RouteEnum.OmDeg} tittel={'omdeg.sidetittel'}>
+            <Oppsummeringsbolk
+                route={hentStegObjektForRoute(RouteEnum.OmDeg)}
+                tittel={'omdeg.sidetittel'}
+                skjemaHook={useOmdeg}
+                settFeilAnchors={settFeilAnchors}
+            >
                 <StyledOppsummeringsFeltGruppe>
                     <Element>
                         <SpråkTekst id={'forside.bekreftelsesboks.brødtekst'} />
@@ -122,12 +110,10 @@ const Oppsummering: React.FC = () => {
                     />
 
                     {søknad.søker.adresse && (
-                        <StyledOppsummeringsFelt>
-                            <Element>
-                                <SpråkTekst id={'omdeg.personopplysninger.adresse'} />
-                            </Element>
-                            {genererAdresseVisning(søknad.søker.adresse)}
-                        </StyledOppsummeringsFelt>
+                        <OppsummeringFelt
+                            tittel={<SpråkTekst id={'omdeg.personopplysninger.adresse'} />}
+                            children={genererAdresseVisning(søknad.søker.adresse)}
+                        />
                     )}
                 </StyledOppsummeringsFeltGruppe>
 
@@ -205,7 +191,12 @@ const Oppsummering: React.FC = () => {
                 </StyledOppsummeringsFeltGruppe>
             </Oppsummeringsbolk>
 
-            <Oppsummeringsbolk route={RouteEnum.VelgBarn} tittel={'hvilkebarn.sidetittel'}>
+            <Oppsummeringsbolk
+                route={hentStegObjektForRoute(RouteEnum.VelgBarn)}
+                tittel={'hvilkebarn.sidetittel'}
+                skjemaHook={useVelgBarn}
+                settFeilAnchors={settFeilAnchors}
+            >
                 {søknad.barnInkludertISøknaden.map((barn, index) => (
                     <StyledOppsummeringsFeltGruppe key={index}>
                         {barn.navn && (
@@ -231,7 +222,12 @@ const Oppsummering: React.FC = () => {
                     </StyledOppsummeringsFeltGruppe>
                 ))}
             </Oppsummeringsbolk>
-            <Oppsummeringsbolk route={RouteEnum.OmBarna} tittel={'ombarna.sidetittel'}>
+            <Oppsummeringsbolk
+                route={hentStegObjektForRoute(RouteEnum.OmBarna)}
+                tittel={'ombarna.sidetittel'}
+                skjemaHook={useOmBarnaDine}
+                settFeilAnchors={settFeilAnchors}
+            >
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarna.fosterbarn.spm'} />}
@@ -339,6 +335,10 @@ const Oppsummering: React.FC = () => {
                         tittel={'oppsummering.deltittel.ombarnet'}
                         språkValues={{ nummer, navn: barn.navn }}
                         key={index}
+                        route={hentStegObjektForBarn(barn)}
+                        skjemaHook={useOmBarnet}
+                        ident={barn.ident}
+                        settFeilAnchors={settFeilAnchors}
                     >
                         {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                             <OppsummeringFelt

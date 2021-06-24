@@ -3,30 +3,23 @@ import React, { ReactNode, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import Stegindikator from 'nav-frontend-stegindikator';
-import { Element, Systemtittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 
-import { ESvar } from '@navikt/familie-form-elements';
-import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useAppNavigation } from '../../../context/AppNavigationContext';
 import { useRoutes } from '../../../context/RoutesContext';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
-import {
-    OmBarnaDineSpørsmålId,
-    omBarnaDineSpørsmålSpråkId,
-} from '../../SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
-import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
-import { VelgBarnSpørsmålId } from '../../SøknadsSteg/VelgBarn/spørsmål';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import Navigeringspanel from './Navigeringspanel';
+import { ScrollHandler } from './ScrollHandler';
 
 interface ISteg {
     tittel: ReactNode;
@@ -54,19 +47,6 @@ const Form = styled.form`
     width: 100%;
 `;
 
-const samletSpørsmålSpråkTekstId = {
-    ...omDegSpørsmålSpråkId,
-    ...omBarnaDineSpørsmålSpråkId,
-    ...omBarnetSpørsmålSpråkId,
-};
-
-const samletSpørsmålId = {
-    ...OmDegSpørsmålId,
-    ...VelgBarnSpørsmålId,
-    ...OmBarnaDineSpørsmålId,
-    ...OmBarnetSpørsmålsId,
-};
-
 const StegindikatorContainer = styled.div`
     margin: 0 1rem;
 `;
@@ -84,6 +64,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         erPåKvitteringsside,
         hentNåværendeRoute,
     } = useRoutes();
+    const { komFra, settKomFra } = useAppNavigation();
 
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
@@ -107,11 +88,14 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         gåTilbakeTilStart();
         history.push('/');
     };
+
     const gåVidere = () => {
         if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
             settSisteUtfylteStegIndex(nåværendeStegIndex);
         }
-        history.push(nesteRoute.path);
+        const målPath = komFra?.path ?? nesteRoute.path;
+        komFra && settKomFra(undefined);
+        history.push(målPath);
     };
 
     const håndterGåVidere = event => {
@@ -139,20 +123,9 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         return !!feil;
     };
 
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    const hentFeilmeldingTilOppsummering = (felt: Felt<any>) => {
-        const gyldigId = !!Object.values(samletSpørsmålId).find(id => id === felt.id);
-        return !gyldigId ||
-            (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse && felt.verdi === ESvar.NEI) ||
-            felt.id === VelgBarnSpørsmålId.velgBarn ? (
-            felt.feilmelding
-        ) : (
-            <SpråkTekst id={samletSpørsmålSpråkTekstId[felt.id]} values={{ navn: barn?.navn }} />
-        );
-    };
-
     return (
         <>
+            <ScrollHandler />
             <header>
                 <Banner språkTekstId={'felles.banner'} />
                 <StegindikatorContainer>
@@ -171,30 +144,9 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                     {skjema &&
                         skjema.skjema.visFeilmeldinger &&
                         visFeiloppsummering(skjema.skjema) && (
-                            <Feiloppsummering
-                                role={'alert'}
-                                tittel={
-                                    <Element>
-                                        <SpråkTekst id={'felles.feiloppsummering.tittel'} />
-                                    </Element>
-                                }
-                                feil={Object.values(skjema.skjema.felter)
-                                    .filter(felt => {
-                                        return (
-                                            felt.erSynlig &&
-                                            felt.valideringsstatus === Valideringsstatus.FEIL
-                                        );
-                                    })
-                                    .map(
-                                        (felt): FeiloppsummeringFeil => {
-                                            return {
-                                                skjemaelementId: felt.id,
-                                                feilmelding: hentFeilmeldingTilOppsummering(
-                                                    felt
-                                                ) as string,
-                                            };
-                                        }
-                                    )}
+                            <SkjemaFeiloppsummering
+                                skjema={skjema.skjema}
+                                barn={barn ?? undefined}
                             />
                         )}
                     {!erPåKvitteringsside(location.pathname) && (
