@@ -38,22 +38,25 @@ const AndreForelder: React.FC<{
                     checkboxUkjentFelt={skjema.felter.andreForelderNavnUkjent}
                     søknadsdatafelt={barnDataKeySpørsmål.andreForelderNavn}
                 />
-                <SkjemaFeltInput
-                    felt={skjema.felter.andreForelderFnr}
-                    visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnr]
-                    }
-                    disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
-                />
-                <VetIkkeCheckbox
-                    barn={barn}
-                    labelSpråkId={
-                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
-                    }
-                    checkboxUkjentFelt={skjema.felter.andreForelderFnrUkjent}
-                    søknadsdatafelt={barnDataKeySpørsmål.andreForelderFnr}
-                />
+
+                <KomponentGruppe inline dynamisk>
+                    <SkjemaFeltInput
+                        felt={skjema.felter.andreForelderFnr}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnr]
+                        }
+                        disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
+                    />
+                    <VetIkkeCheckbox
+                        barn={barn}
+                        labelSpråkId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
+                        }
+                        checkboxUkjentFelt={skjema.felter.andreForelderFnrUkjent}
+                        søknadsdatafelt={barnDataKeySpørsmål.andreForelderFnr}
+                    />
+                </KomponentGruppe>
                 {skjema.felter.andreForelderFødselsdato.erSynlig && (
                     <KomponentGruppe inline dynamisk>
                         <Datovelger

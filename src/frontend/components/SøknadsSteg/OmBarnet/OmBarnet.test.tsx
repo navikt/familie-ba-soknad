@@ -9,12 +9,7 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import { AppNavigationProvider } from '../../../context/AppNavigationContext';
 import { RoutesProvider } from '../../../context/RoutesContext';
 import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../../../typer/person';
-import {
-    mockHistory,
-    silenceConsoleErrors,
-    spyOnUseApp,
-    TestProvidere,
-} from '../../../utils/testing';
+import { mockHistory, silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import OmBarnet from './OmBarnet';
 
 silenceConsoleErrors();
@@ -106,85 +101,131 @@ const line = {
     },
 };
 
-test(`Kan rendre Om Barnet Utfyllende`, () => {
-    mockHistory(['/om-barnet/barn-1']);
-    spyOnUseApp({
-        barnInkludertISøknaden: [jens],
-        sisteUtfylteStegIndex: 4,
-    });
+describe('OmBarnet', () => {
+    test(`Kan rendre Om Barnet Utfyllende`, () => {
+        mockHistory(['/om-barnet/barn-1']);
+        spyOnUseApp({
+            barnInkludertISøknaden: [jens],
+            sisteUtfylteStegIndex: 4,
+        });
 
-    render(
-        <TestProvidere>
-            <OmBarnet barnetsIdent={'12345678910'} />
-        </TestProvidere>
-    );
-});
-
-test(`Kan navigere mellom to barn`, () => {
-    const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
-    spyOnUseApp({
-        barnInkludertISøknaden: [jens, line],
-        sisteUtfylteStegIndex: 4,
-        dokumentasjon: [],
-    });
-    const { getByText } = render(
-        <SprakProvider
-            tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
-            defaultLocale={LocaleType.nb}
-        >
-            <HttpProvider>
-                <AppNavigationProvider>
+        render(
+            <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
+                <HttpProvider>
                     <RoutesProvider>
                         <OmBarnet barnetsIdent={'12345678910'} />
                     </RoutesProvider>
-                </AppNavigationProvider>
-            </HttpProvider>
-        </SprakProvider>
-    );
-
-    expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
-
-    const jensTittel = getByText('Om Jens');
-    expect(jensTittel).toBeInTheDocument();
-
-    const gåVidere = getByText(/felles.navigasjon.gå-videre/);
-    act(() => gåVidere.click());
-
-    expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-2');
-});
-
-test(`Kan navigere fra barn til oppsummering`, () => {
-    const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
-    mockHistory(['/om-barnet/barn-1']);
-
-    spyOnUseApp({
-        barnInkludertISøknaden: [jens],
-        sisteUtfylteStegIndex: 4,
-        dokumentasjon: [],
+                </HttpProvider>
+            </SprakProvider>
+        );
     });
 
-    const { getByText } = render(
-        <SprakProvider
-            tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
-            defaultLocale={LocaleType.nb}
-        >
-            <HttpProvider>
-                <AppNavigationProvider>
-                    <RoutesProvider>
-                        <OmBarnet barnetsIdent={'12345678910'} />
-                    </RoutesProvider>
-                </AppNavigationProvider>
-            </HttpProvider>
-        </SprakProvider>
-    );
+    test(`Kan navigere mellom to barn`, () => {
+        const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
+        spyOnUseApp({
+            barnInkludertISøknaden: [jens, line],
+            sisteUtfylteStegIndex: 4,
+            dokumentasjon: [],
+        });
+        const { getByText } = render(
+            <SprakProvider
+                tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
+                defaultLocale={LocaleType.nb}
+            >
+                <HttpProvider>
+                    <AppNavigationProvider>
+                        <RoutesProvider>
+                            <OmBarnet barnetsIdent={'12345678910'} />
+                        </RoutesProvider>
+                    </AppNavigationProvider>
+                </HttpProvider>
+            </SprakProvider>
+        );
 
-    expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
+        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
 
-    const jensTittel = getByText('Om Jens');
-    expect(jensTittel).toBeInTheDocument();
+        const jensTittel = getByText('Om Jens');
+        expect(jensTittel).toBeInTheDocument();
 
-    const gåVidere = getByText(/felles.navigasjon.gå-videre/);
-    act(() => gåVidere.click());
+        const gåVidere = getByText(/felles.navigasjon.gå-videre/);
+        act(() => gåVidere.click());
 
-    expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/oppsummering');
+        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-2');
+    });
+
+    test(`Kan navigere fra barn til oppsummering`, () => {
+        const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
+        mockHistory(['/om-barnet/barn-1']);
+
+        spyOnUseApp({
+            barnInkludertISøknaden: [jens],
+            sisteUtfylteStegIndex: 4,
+            dokumentasjon: [],
+        });
+
+        const { getByText } = render(
+            <SprakProvider
+                tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
+                defaultLocale={LocaleType.nb}
+            >
+                <HttpProvider>
+                    <AppNavigationProvider>
+                        <RoutesProvider>
+                            <OmBarnet barnetsIdent={'12345678910'} />
+                        </RoutesProvider>
+                    </AppNavigationProvider>
+                </HttpProvider>
+            </SprakProvider>
+        );
+
+        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
+
+        const jensTittel = getByText('Om Jens');
+        expect(jensTittel).toBeInTheDocument();
+
+        const gåVidere = getByText(/felles.navigasjon.gå-videre/);
+        act(() => gåVidere.click());
+
+        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/oppsummering');
+    });
+
+    test('Fødselnummer til andre forelder blir fjernet om man huker av ikke oppgi opplysninger om den', () => {
+        mockHistory(['/om-barnet/barn-1']);
+
+        spyOnUseApp({
+            barnInkludertISøknaden: [
+                {
+                    ...jens,
+                    [barnDataKeySpørsmål.andreForelderNavn]: { id: '17', svar: '' },
+                    [barnDataKeySpørsmål.andreForelderFnr]: { id: '18', svar: '' },
+                },
+            ],
+            sisteUtfylteStegIndex: 4,
+            dokumentasjon: [],
+        });
+
+        const { getByLabelText, getByText, queryByText } = render(
+            <SprakProvider
+                tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
+                defaultLocale={LocaleType.nb}
+            >
+                <HttpProvider>
+                    <AppNavigationProvider>
+                        <RoutesProvider>
+                            <OmBarnet barnetsIdent={'12345678910'} />
+                        </RoutesProvider>
+                    </AppNavigationProvider>
+                </HttpProvider>
+            </SprakProvider>
+        );
+
+        const ikkeOppgiOpplysninger = getByLabelText(/ombarnet.andre-forelder.navn-ukjent.spm/);
+        const andreForelderFnrLabel = getByText(/felles.fødsels-eller-dnummer.label/);
+
+        expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
+        expect(andreForelderFnrLabel).toBeInTheDocument();
+        act(() => ikkeOppgiOpplysninger.click());
+        expect(andreForelderFnrLabel).not.toBeInTheDocument();
+        expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
+    });
 });

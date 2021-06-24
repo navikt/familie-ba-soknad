@@ -224,12 +224,23 @@ export const useOmBarnet = (
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.andreForelderFnrUkjent,
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter &&
+                avhengigheter.andreForelderNavnUkjent &&
+                avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
+            );
+        },
+        avhengigheter: { andreForelderNavnUkjent },
+        nullstillVedAvhengighetEndring: false,
     });
+
     const andreForelderFnr = useInputFeltMedUkjent(
         barn[barnDataKeySpørsmål.andreForelderFnr],
         andreForelderFnrUkjent,
         'ombarnet.andre-forelder.fnr.feilmelding',
-        true
+        true,
+        andreForelderNavnUkjent.verdi === ESvar.NEI
     );
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
@@ -243,10 +254,11 @@ export const useOmBarnet = (
             return (
                 avhengigheter &&
                 avhengigheter.andreForelderFnrUkjent &&
-                avhengigheter.andreForelderFnrUkjent.verdi === ESvar.JA
+                avhengigheter.andreForelderFnrUkjent.verdi === ESvar.JA &&
+                avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
             );
         },
-        avhengigheter: { andreForelderFnrUkjent },
+        avhengigheter: { andreForelderFnrUkjent, andreForelderNavnUkjent },
         nullstillVedAvhengighetEndring: false,
     });
     const andreForelderFødselsdato = useDatovelgerFeltMedUkjent(
@@ -255,7 +267,7 @@ export const useOmBarnet = (
             ? barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar
             : '',
         andreForelderFødselsdatoUkjent,
-        andreForelderFnrUkjent.verdi === ESvar.JA
+        andreForelderFnrUkjent.verdi === ESvar.JA && andreForelderNavnUkjent.verdi === ESvar.NEI
     );
 
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt(
@@ -264,10 +276,13 @@ export const useOmBarnet = (
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
             },
-            andreForelderFnr: {
-                hovedSpørsmål: andreForelderFnr,
-                tilhørendeFelter: [andreForelderFødselsdato],
-            },
+            andreForelderFnr:
+                andreForelderNavnUkjent.verdi === ESvar.NEI
+                    ? {
+                          hovedSpørsmål: andreForelderFnr,
+                          tilhørendeFelter: [andreForelderFødselsdato],
+                      }
+                    : undefined,
         }
     );
 
@@ -283,10 +298,13 @@ export const useOmBarnet = (
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
             },
-            andreForelderFnr: {
-                hovedSpørsmål: andreForelderFnr,
-                tilhørendeFelter: [andreForelderFødselsdato],
-            },
+            andreForelderFnr:
+                andreForelderNavnUkjent.verdi === ESvar.NEI
+                    ? {
+                          hovedSpørsmål: andreForelderFnr,
+                          tilhørendeFelter: [andreForelderFødselsdato],
+                      }
+                    : undefined,
         }
     );
 
