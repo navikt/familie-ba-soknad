@@ -2,10 +2,16 @@ import { renderHook } from '@testing-library/react-hooks';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { barnDataKeySpørsmål, IBarn, IBarnMedISøknad } from '../../../typer/person';
+import {
+    AlternativtSvarForInput,
+    barnDataKeySpørsmål,
+    IBarn,
+    IBarnMedISøknad,
+} from '../../../typer/person';
 import { genererInitialBarnMedISøknad } from '../../../utils/person';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from './spørsmål';
 import { useOmBarnet } from './useOmBarnet';
 
 describe('useOmBarnet', () => {
@@ -129,5 +135,38 @@ describe('useOmBarnet', () => {
         expect(nårKomBarnTilNorgeDato.erSynlig).toEqual(false);
         expect(planleggerÅBoINorge12Mnd.verdi).toEqual(undefined);
         expect(planleggerÅBoINorge12Mnd.erSynlig).toEqual(false);
+    });
+
+    it('Fjerner at man skal oppgi andre foreldrens fødselsnummer når man ikke vil oppgi personopplysninger', () => {
+        const barn: Partial<IBarnMedISøknad> = {
+            ...genererInitialBarnMedISøknad(barnFraPdl),
+            [barnDataKeySpørsmål.andreForelderNavn]: {
+                svar: AlternativtSvarForInput.UKJENT,
+                id: OmBarnetSpørsmålsId.andreForelderNavn,
+            },
+        };
+
+        spyOnUseApp({ barnInkludertISøknaden: [barn] });
+
+        const { result } = renderHook(
+            () => {
+                return useOmBarnet('1234');
+            },
+            { wrapper: TestProvidere }
+        );
+
+        const {
+            current: {
+                skjema: {
+                    felter: { andreForelderNavn, andreForelderNavnUkjent, andreForelderFnr },
+                },
+            },
+        } = result;
+
+        expect(andreForelderNavn.verdi).toEqual('');
+        expect(andreForelderNavn.erSynlig).toEqual(true);
+        expect(andreForelderNavnUkjent.erSynlig).toEqual(true);
+        expect(andreForelderNavnUkjent.verdi).toEqual(ESvar.JA);
+        expect(andreForelderFnr.erSynlig).toEqual(false);
     });
 });

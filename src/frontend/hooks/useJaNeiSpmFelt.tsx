@@ -15,20 +15,24 @@ export interface FeltGruppe {
 export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]: FeltGruppe }) => {
     if (
         Object.values(avhengigheter).find(
-            feltGruppe => feltGruppe.hovedSpørsmål.valideringsstatus !== Valideringsstatus.OK
+            feltGruppe =>
+                feltGruppe && feltGruppe.hovedSpørsmål.valideringsstatus !== Valideringsstatus.OK
         )
     ) {
         return false;
     }
 
     const tilhørendeSomIkkeErValidert = Object.values(avhengigheter).filter(feltGruppe => {
-        if (!feltGruppe.tilhørendeFelter) {
+        if (!(feltGruppe && feltGruppe.tilhørendeFelter)) {
             return false;
         } else {
-            return !!feltGruppe.tilhørendeFelter.find(
-                tilhørendeFelt =>
-                    tilhørendeFelt.erSynlig &&
-                    tilhørendeFelt.valideringsstatus !== Valideringsstatus.OK
+            return !!(
+                feltGruppe &&
+                feltGruppe.tilhørendeFelter.find(
+                    tilhørendeFelt =>
+                        tilhørendeFelt.erSynlig &&
+                        tilhørendeFelt.valideringsstatus !== Valideringsstatus.OK
+                )
             );
         }
     });
@@ -38,7 +42,7 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
 const useJaNeiSpmFelt = (
     søknadsfelt: ISøknadSpørsmål<ESvar | undefined>,
     avhengigheter?: {
-        [key: string]: FeltGruppe;
+        [key: string]: FeltGruppe | undefined;
     },
     nullstillVedAvhengighetEndring = false
 ) => {
