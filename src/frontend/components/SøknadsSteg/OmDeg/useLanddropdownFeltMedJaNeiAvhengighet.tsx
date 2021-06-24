@@ -11,7 +11,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 const useLanddropdownFeltMedJaNeiAvhengighet = (
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,
     avhengigSvarCondition: ESvar,
-    avhengighet: Felt<ESvar | undefined>,
+    avhengighet: Felt<ESvar | null>,
     nullstillVedAvhengighetEndring = true
 ) => {
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
@@ -20,7 +20,7 @@ const useLanddropdownFeltMedJaNeiAvhengighet = (
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            return avhengigheter && (avhengigheter.jaNeiSpm as Felt<ESvar | undefined>)
+            return avhengigheter && (avhengigheter.jaNeiSpm as Felt<ESvar | null>)
                 ? skalFeltetVises(avhengigheter.jaNeiSpm.verdi)
                 : true;
         },

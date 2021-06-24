@@ -20,21 +20,21 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useDatovelgerFeltMedJaNeiAvhengighet from './useDatovelgerFeltMedJaNeiAvhengighet';
 import useLanddropdownFeltMedJaNeiAvhengighet from './useLanddropdownFeltMedJaNeiAvhengighet';
 
-export type ESvarMedUbesvart = ESvar | undefined;
+export type ESvarMedUbesvart = ESvar | null;
 
 export interface IOmDegFeltTyper {
-    borPåRegistrertAdresse: ESvar | undefined;
+    borPåRegistrertAdresse: ESvar | null;
     telefonnummer: string;
-    oppholderSegINorge: ESvar | undefined;
+    oppholderSegINorge: ESvar | null;
     oppholdsland: Alpha3Code | '';
     oppholdslandDato: ISODateString;
-    værtINorgeITolvMåneder: ESvar | undefined;
+    værtINorgeITolvMåneder: ESvar | null;
     komTilNorgeDato: ISODateString;
-    planleggerÅBoINorgeTolvMnd: ESvar | undefined;
-    erAsylsøker: ESvar | undefined;
-    jobberPåBåt: ESvar | undefined;
+    planleggerÅBoINorgeTolvMnd: ESvar | null;
+    erAsylsøker: ESvar | null;
+    jobberPåBåt: ESvar | null;
     arbeidsland: Alpha3Code | '';
-    mottarUtenlandspensjon: ESvar | undefined;
+    mottarUtenlandspensjon: ESvar | null;
     pensjonsland: Alpha3Code | '';
 }
 
@@ -47,10 +47,10 @@ export const useOmdeg = (): {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
 
-    const borPåRegistrertAdresse = useFelt<ESvar | undefined>({
+    const borPåRegistrertAdresse = useFelt<ESvar | null>({
         feltId: søker.borPåRegistrertAdresse.id,
         verdi: søker.borPåRegistrertAdresse.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
+        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
             /**
              * Hvis man svarer nei setter vi felt til Feil-state slik at man ikke kan gå videre,
              * og setter feilmelding til en tom string, siden personopplysningskomponenten har egen
@@ -61,7 +61,7 @@ export const useOmdeg = (): {
                 ? ok(felt)
                 : feil(
                       felt,
-                      felt.verdi === undefined ? (
+                      !felt.verdi ? (
                           <SpråkTekst id={'felles.mangler-svar.feilmelding'} />
                       ) : (
                           <SpråkTekst id={'omdeg.du-kan-ikke-søke.feilmelding'} />
@@ -119,11 +119,11 @@ export const useOmdeg = (): {
         true
     );
 
-    const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | undefined>({
+    const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({
         feltId: søker.planleggerÅBoINorgeTolvMnd.id,
         verdi: søker.planleggerÅBoINorgeTolvMnd.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
-            return felt.verdi !== undefined
+        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
+            return felt.verdi
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
         },

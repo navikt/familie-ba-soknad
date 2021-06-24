@@ -36,7 +36,7 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
 };
 
 const useJaNeiSpmFelt = (
-    søknadsfelt: ISøknadSpørsmål<ESvar | undefined>,
+    søknadsfelt: ISøknadSpørsmål<ESvar | null>,
     avhengigheter?: {
         [key: string]: FeltGruppe;
     },
@@ -44,12 +44,12 @@ const useJaNeiSpmFelt = (
 ) => {
     const [harBlittVist, settHarBlittVist] = useState<boolean>(!avhengigheter);
 
-    return useFelt<ESvar | undefined>({
+    return useFelt<ESvar | null>({
         feltId: søknadsfelt.id,
         nullstillVedAvhengighetEndring,
         verdi: søknadsfelt.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
-            return felt.verdi !== undefined
+        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
+            return felt.verdi !== null
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
         },

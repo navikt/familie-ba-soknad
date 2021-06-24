@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
 import { guid } from 'nav-frontend-js-utils';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
@@ -12,7 +12,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface IJaNeiSpmProps {
     skjema: ISkjema<SkjemaFeltTyper, string>;
-    felt: Felt<ESvar | undefined>;
+    felt: Felt<ESvar | null>;
     spørsmålTekstId: string;
     tilleggsinfoTekstId?: string;
     inkluderVetIkke?: boolean;
@@ -28,14 +28,16 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     språkValues,
 }) => {
     const ref = useRef<RadioPanelGruppe>(null);
+    const [mounted, settMounted] = useState(false);
 
     useEffect(() => {
         const jaNeiRef = ref.current;
-        if (jaNeiRef) {
+        if (mounted && jaNeiRef) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             jaNeiRef.props.onChange(null, felt.verdi);
         }
+        settMounted(true);
     }, [felt.verdi]);
 
     return felt.erSynlig ? (

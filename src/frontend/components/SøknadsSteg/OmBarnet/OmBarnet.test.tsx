@@ -75,7 +75,7 @@ const line = {
     [barnDataKeySpørsmål.oppholdslandStartdato]: { id: '10', svar: '' },
     [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: '' },
     [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: { id: '12', svar: '' },
-    [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: undefined },
+    [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: null },
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.NEI },
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: '' },
     [barnDataKeySpørsmål.andreForelderNavn]: { id: '17', svar: AlternativtSvarForInput.UKJENT },

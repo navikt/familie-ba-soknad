@@ -48,7 +48,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     oppholdslandSluttdato: DatoMedUkjent;
     oppholdslandSluttDatoVetIkke: ESvar;
     nårKomBarnTilNorgeDato: ISODateString;
-    planleggerÅBoINorge12Mnd: ESvar | undefined;
+    planleggerÅBoINorge12Mnd: ESvar | null;
     barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
     andreForelderNavn: string;
     andreForelderNavnUkjent: ESvar;
@@ -56,12 +56,12 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderFnrUkjent: ESvar;
     andreForelderFødselsdatoUkjent: ESvar;
     andreForelderFødselsdato: DatoMedUkjent;
-    andreForelderArbeidUtlandet: ESvar | undefined;
+    andreForelderArbeidUtlandet: ESvar | null;
     andreForelderArbeidUtlandetHvilketLand: Alpha3Code | '';
-    andreForelderPensjonUtland: ESvar | undefined;
+    andreForelderPensjonUtland: ESvar | null;
     andreForelderPensjonHvilketLand: Alpha3Code | '';
-    borFastMedSøker: ESvar | undefined;
-    skriftligAvtaleOmDeltBosted: ESvar | undefined;
+    borFastMedSøker: ESvar | null;
+    skriftligAvtaleOmDeltBosted: ESvar | null;
     søkerForTidsromCheckbox: ESvar;
     søkerForTidsromStartdato: ISODateString;
     søkerForTidsromSluttdato: ISODateString;
@@ -191,11 +191,11 @@ export const useOmBarnet = (
         skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
     );
 
-    const planleggerÅBoINorge12Mnd = useFelt<ESvar | undefined>({
+    const planleggerÅBoINorge12Mnd = useFelt<ESvar | null>({
         feltId: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].id,
         verdi: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | undefined>) => {
-            return felt.verdi !== undefined
+        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
+            return felt.verdi !== null
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
         },
@@ -231,7 +231,10 @@ export const useOmBarnet = (
     const andreForelderNavn = useInputFeltMedUkjent(
         barn[barnDataKeySpørsmål.andreForelderNavn],
         andreForelderNavnUkjent,
-        'ombarnet.andre-forelder.navn.feilmelding'
+        'ombarnet.andre-forelder.navn.feilmelding',
+        false,
+        !sammeForelderSomAnnetBarn.erSynlig ||
+            sammeForelderSomAnnetBarn.valideringsstatus === Valideringsstatus.OK
     );
 
     const andreForelderFnrUkjent = useFelt<ESvar>({

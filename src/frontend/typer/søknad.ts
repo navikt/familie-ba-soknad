@@ -35,13 +35,13 @@ export interface ISøknad {
     lestOgForståttBekreftelse: boolean;
     barnInkludertISøknaden: IBarnMedISøknad[];
     barnRegistrertManuelt: IBarn[];
-    erNoenAvBarnaFosterbarn: ISøknadSpørsmål<ESvar | undefined>;
-    oppholderBarnSegIInstitusjon: ISøknadSpørsmål<ESvar | undefined>;
-    erBarnAdoptertFraUtland: ISøknadSpørsmål<ESvar | undefined>;
-    oppholderBarnSegIUtland: ISøknadSpørsmål<ESvar | undefined>;
-    søktAsylForBarn: ISøknadSpørsmål<ESvar | undefined>;
-    barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | undefined>;
-    mottarBarnetrygdForBarnFraAnnetEøsland: ISøknadSpørsmål<ESvar | undefined>;
+    erNoenAvBarnaFosterbarn: ISøknadSpørsmål<ESvar | null>;
+    oppholderBarnSegIInstitusjon: ISøknadSpørsmål<ESvar | null>;
+    erBarnAdoptertFraUtland: ISøknadSpørsmål<ESvar | null>;
+    oppholderBarnSegIUtland: ISøknadSpørsmål<ESvar | null>;
+    søktAsylForBarn: ISøknadSpørsmål<ESvar | null>;
+    barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | null>;
+    mottarBarnetrygdForBarnFraAnnetEøsland: ISøknadSpørsmål<ESvar | null>;
     dokumentasjon: IDokumentasjon[];
 }
 
@@ -133,7 +133,7 @@ export const initialStateSøknad: ISøknad = {
         },
         borPåRegistrertAdresse: {
             id: OmDegSpørsmålId.borPåRegistrertAdresse,
-            svar: undefined,
+            svar: null,
         },
         telefonnummer: {
             id: OmDegSpørsmålId.telefonnummer,
@@ -141,7 +141,7 @@ export const initialStateSøknad: ISøknad = {
         },
         oppholderSegINorge: {
             id: OmDegSpørsmålId.oppholderSegINorge,
-            svar: undefined,
+            svar: null,
         },
         oppholdsland: {
             id: OmDegSpørsmålId.oppholdsland,
@@ -153,7 +153,7 @@ export const initialStateSøknad: ISøknad = {
         },
         værtINorgeITolvMåneder: {
             id: OmDegSpørsmålId.værtINorgeITolvMåneder,
-            svar: undefined,
+            svar: null,
         },
         komTilNorgeDato: {
             id: OmDegSpørsmålId.komTilNorgeDato,
@@ -161,15 +161,15 @@ export const initialStateSøknad: ISøknad = {
         },
         planleggerÅBoINorgeTolvMnd: {
             id: OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd,
-            svar: undefined,
+            svar: null,
         },
         erAsylsøker: {
             id: OmDegSpørsmålId.erAsylsøker,
-            svar: undefined,
+            svar: null,
         },
         jobberPåBåt: {
             id: OmDegSpørsmålId.jobberPåBåt,
-            svar: undefined,
+            svar: null,
         },
         arbeidsland: {
             id: OmDegSpørsmålId.arbeidsland,
@@ -177,7 +177,7 @@ export const initialStateSøknad: ISøknad = {
         },
         mottarUtenlandspensjon: {
             id: OmDegSpørsmålId.mottarUtenlandspensjon,
-            svar: undefined,
+            svar: null,
         },
         pensjonsland: {
             id: OmDegSpørsmålId.pensjonsland,
@@ -186,30 +186,30 @@ export const initialStateSøknad: ISøknad = {
     },
     erNoenAvBarnaFosterbarn: {
         id: OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
-        svar: undefined,
+        svar: null,
     },
     oppholderBarnSegIInstitusjon: {
         id: OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon,
-        svar: undefined,
+        svar: null,
     },
     erBarnAdoptertFraUtland: {
         id: OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland,
-        svar: undefined,
+        svar: null,
     },
     oppholderBarnSegIUtland: {
         id: OmBarnaDineSpørsmålId.oppholderBarnSegIUtland,
-        svar: undefined,
+        svar: null,
     },
     søktAsylForBarn: {
         id: OmBarnaDineSpørsmålId.søktAsylForBarn,
-        svar: undefined,
+        svar: null,
     },
     barnOppholdtSegTolvMndSammenhengendeINorge: {
         id: OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge,
-        svar: undefined,
+        svar: null,
     },
     mottarBarnetrygdForBarnFraAnnetEøsland: {
         id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
-        svar: undefined,
+        svar: null,
     },
 };

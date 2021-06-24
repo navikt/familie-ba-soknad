@@ -13,7 +13,8 @@ const useInputFeltMedUkjent = (
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent>,
     avhengighet: Felt<ESvar>,
     feilmeldingSpråkId: string,
-    erFnrInput = false
+    erFnrInput = false,
+    skalFeltetVises = true
 ) => {
     const inputFelt = useFelt<ISODateString>({
         feltId: søknadsfelt.id,
@@ -37,7 +38,8 @@ const useInputFeltMedUkjent = (
                     : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
             }
         },
-        avhengigheter: { vetIkkeCheckbox: avhengighet },
+        avhengigheter: { vetIkkeCheckbox: avhengighet, skalFeltetVises },
+        skalFeltetVises: avhengigheter => avhengigheter.skalFeltetVises,
     });
     useEffect(() => {
         if (avhengighet.verdi === ESvar.JA) {
