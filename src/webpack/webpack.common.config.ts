@@ -17,6 +17,7 @@ export const createHtmlWebpackPlugin = prodMode => {
         template: path.join(process.cwd(), 'src/frontend/public/index.html'),
         inject: 'body',
         alwaysWriteToDisk: true,
+        excludeChunks: ['disabled'],
         // Dette gjør at hvis vi navigerer direkte til /basepath/om-barna/ så henter vi fortsatt main.js fra /basepath/main.js
         // Det trengs kun i prod-mode, i dev-mode tar webpackDevMiddleware seg av alt
         publicPath: prodMode ? process.env.BASE_PATH ?? '/' : 'auto',
@@ -25,10 +26,18 @@ export const createHtmlWebpackPlugin = prodMode => {
 
 const commonConfig: webpack.Configuration = {
     mode: 'production',
-    entry: ['./src/frontend/index.tsx'],
+    entry: { main: './src/frontend/index.tsx', disabled: './src/frontend/disabled.tsx' },
     plugins: [
         new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
             PUBLIC_URL: (process.env.BASE_PATH ?? '/') + publicUrl.substr(1),
+        }),
+        new HtmlWebpackPlugin({
+            template: path.join(process.cwd(), 'src/frontend/public/index.html'),
+            alwaysWriteToDisk: true,
+            inject: 'body',
+            // Her skal det være mulig å inkludere en egen app om ønskelig
+            chunks: ['disabled'],
+            filename: 'disabled.html',
         }),
         new CopyWebpackPlugin({
             patterns: [
@@ -47,7 +56,7 @@ const commonConfig: webpack.Configuration = {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.less'],
     },
     output: {
-        filename: 'main.js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(process.cwd(), 'dist/'),
     },
     module: {

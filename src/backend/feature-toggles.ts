@@ -1,5 +1,9 @@
+import * as path from 'path';
+
 import { RequestHandler } from 'express';
 import { initialize, Strategy } from 'unleash-client';
+
+import { getDecorator } from './dekorator';
 
 class ByClusterStrategy extends Strategy {
     private cluster: string = process.env.NAIS_CLUSTER_NAME ?? 'lokalutvikling';
@@ -27,6 +31,20 @@ export const isEnabled = (feature: string): boolean => {
 /**
  * Express-middleware som returnerer en feil-side hvis familie-ba-soknad.disable-soknad er skrudd på i unleash
  */
-export const expressToggleInterceptor: RequestHandler = (_req, res, next) => {
-    isEnabled('familie-ba-soknad.disable-soknad') ? res.send('Haha nei') : next();
+export const expressToggleInterceptor: RequestHandler = (req, res, next) => {
+    const { path: urlPath } = req;
+    const { ext } = path.parse(urlPath);
+    // Vi lar requests til disse filtypene gå igjennom, ellers rendrer vi disabled.html.
+    const tillatteExtensions = ['.json', '.js', '.png'];
+    const slippIgjenomForFiltype = !!tillatteExtensions.find(tillatt => tillatt === ext);
+
+    const renderDisabled = () =>
+        getDecorator()
+            .then(fragments => res.render('disabled.html', fragments))
+            // Selv om dekoratøren feiler vil vi rendre siden, vil bare få noen ekle hbs-tags i sidevisningen og mangle no styling
+            .catch(() => res.render('disabled.html'));
+
+    isEnabled('familie-ba-soknad.disable-soknad') && !slippIgjenomForFiltype
+        ? renderDisabled()
+        : next();
 };
