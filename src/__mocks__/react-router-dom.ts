@@ -3,7 +3,7 @@ const reactRouterDom = jest.requireActual('react-router-dom');
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const { __getMockedHistoryArray } = history;
+const { __getMockedHistoryArray, __getMockedHistory } = history;
 
 const useLocation = () => {
     const array = __getMockedHistoryArray();
@@ -12,7 +12,7 @@ const useLocation = () => {
     };
 };
 
-const useHistory = () => __getMockedHistoryArray();
+const useHistory = () => __getMockedHistory();
 
 module.exports = {
     ...reactRouterDom,

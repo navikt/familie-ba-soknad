@@ -8,11 +8,11 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import projectWebpackDevConfig from '../webpack/webpack.development.config.js';
-import { indexHandler } from './dekorator.js';
-import environment from './environment.js';
-import { escapeBody } from './escape.js';
-import { createApiForwardingFunction } from './proxy.js';
+import projectWebpackDevConfig from '../webpack/webpack.development.config';
+import { indexHandler } from './dekorator';
+import environment from './environment';
+import { escapeBody } from './escape';
+import { createApiForwardingFunction } from './proxy';
 
 dotenv.config();
 const app = express();

@@ -72,18 +72,19 @@ export const useOmBarnet = (
     barnetsIdent: string
 ): {
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
+    barn: IBarnMedISøknad | undefined;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
-    barn: IBarnMedISøknad;
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     settSammeForelder: (radioVerdi: string) => void;
+    validerAlleSynligeFelter: () => void;
 } => {
     const { søknad, settSøknad, erStegUtfyltFrafør } = useApp();
     const { hentRouteIndex } = useRoutes();
     const location = useLocation<ILokasjon>();
 
-    const [barn] = useState(
+    const [barn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.ident === barnetsIdent)
     );
 
@@ -240,12 +241,23 @@ export const useOmBarnet = (
     const andreForelderFnrUkjent = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(barn[barnDataKeySpørsmål.andreForelderFnr].svar),
         feltId: OmBarnetSpørsmålsId.andreForelderFnrUkjent,
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter &&
+                avhengigheter.andreForelderNavnUkjent &&
+                avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
+            );
+        },
+        avhengigheter: { andreForelderNavnUkjent },
+        nullstillVedAvhengighetEndring: false,
     });
+
     const andreForelderFnr = useInputFeltMedUkjent(
         barn[barnDataKeySpørsmål.andreForelderFnr],
         andreForelderFnrUkjent,
         'ombarnet.andre-forelder.fnr.feilmelding',
-        true
+        true,
+        andreForelderNavnUkjent.verdi === ESvar.NEI
     );
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
@@ -255,17 +267,18 @@ export const useOmBarnet = (
             return (
                 avhengigheter &&
                 avhengigheter.andreForelderFnrUkjent &&
-                avhengigheter.andreForelderFnrUkjent.verdi === ESvar.JA
+                avhengigheter.andreForelderFnrUkjent.verdi === ESvar.JA &&
+                avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
             );
         },
-        avhengigheter: { andreForelderFnrUkjent },
+        avhengigheter: { andreForelderFnrUkjent, andreForelderNavnUkjent },
         nullstillVedAvhengighetEndring: false,
     });
     const andreForelderFødselsdato = useDatovelgerFeltMedUkjent(
         barn[barnDataKeySpørsmål.andreForelderFødselsdato].id,
         formaterInitVerdiForInputMedUkjent(barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar),
         andreForelderFødselsdatoUkjent,
-        andreForelderFnrUkjent.verdi === ESvar.JA
+        andreForelderFnrUkjent.verdi === ESvar.JA && andreForelderNavnUkjent.verdi === ESvar.NEI
     );
 
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt(
@@ -274,10 +287,13 @@ export const useOmBarnet = (
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
             },
-            andreForelderFnr: {
-                hovedSpørsmål: andreForelderFnr,
-                tilhørendeFelter: [andreForelderFødselsdato],
-            },
+            andreForelderFnr:
+                andreForelderNavnUkjent.verdi === ESvar.NEI
+                    ? {
+                          hovedSpørsmål: andreForelderFnr,
+                          tilhørendeFelter: [andreForelderFødselsdato],
+                      }
+                    : undefined,
         }
     );
 
@@ -295,10 +311,13 @@ export const useOmBarnet = (
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
             },
-            andreForelderFnr: {
-                hovedSpørsmål: andreForelderFnr,
-                tilhørendeFelter: [andreForelderFødselsdato],
-            },
+            andreForelderFnr:
+                andreForelderNavnUkjent.verdi === ESvar.NEI
+                    ? {
+                          hovedSpørsmål: andreForelderFnr,
+                          tilhørendeFelter: [andreForelderFødselsdato],
+                      }
+                    : undefined,
         }
     );
 
@@ -433,42 +452,43 @@ export const useOmBarnet = (
                 skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK)
     );
 
-    const { kanSendeSkjema, skjema, valideringErOk } = useSkjema<IOmBarnetUtvidetFeltTyper, string>(
-        {
-            felter: {
-                institusjonsnavn,
-                institusjonsadresse,
-                institusjonspostnummer,
-                institusjonOppholdStartdato,
-                institusjonOppholdSluttdato,
-                institusjonOppholdSluttVetIkke,
-                oppholdsland,
-                oppholdslandStartdato,
-                oppholdslandSluttdato,
-                oppholdslandSluttDatoVetIkke,
-                nårKomBarnTilNorgeDato,
-                planleggerÅBoINorge12Mnd,
-                barnetrygdFraEøslandHvilketLand,
-                andreForelderNavn,
-                andreForelderNavnUkjent,
-                andreForelderFnr,
-                andreForelderFnrUkjent,
-                andreForelderFødselsdato,
-                andreForelderFødselsdatoUkjent,
-                andreForelderArbeidUtlandet,
-                andreForelderArbeidUtlandetHvilketLand,
-                andreForelderPensjonUtland,
-                andreForelderPensjonHvilketLand,
-                borFastMedSøker,
-                skriftligAvtaleOmDeltBosted,
-                søkerForTidsromCheckbox,
-                søkerForTidsromStartdato,
-                søkerForTidsromSluttdato,
-                sammeForelderSomAnnetBarn,
-            },
-            skjemanavn: 'om-barnet',
-        }
-    );
+    const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
+        IOmBarnetUtvidetFeltTyper,
+        string
+    >({
+        felter: {
+            institusjonsnavn,
+            institusjonsadresse,
+            institusjonspostnummer,
+            institusjonOppholdStartdato,
+            institusjonOppholdSluttdato,
+            institusjonOppholdSluttVetIkke,
+            oppholdsland,
+            oppholdslandStartdato,
+            oppholdslandSluttdato,
+            oppholdslandSluttDatoVetIkke,
+            nårKomBarnTilNorgeDato,
+            planleggerÅBoINorge12Mnd,
+            barnetrygdFraEøslandHvilketLand,
+            andreForelderNavn,
+            andreForelderNavnUkjent,
+            andreForelderFnr,
+            andreForelderFnrUkjent,
+            andreForelderFødselsdato,
+            andreForelderFødselsdatoUkjent,
+            andreForelderArbeidUtlandet,
+            andreForelderArbeidUtlandetHvilketLand,
+            andreForelderPensjonUtland,
+            andreForelderPensjonHvilketLand,
+            borFastMedSøker,
+            skriftligAvtaleOmDeltBosted,
+            søkerForTidsromCheckbox,
+            søkerForTidsromStartdato,
+            søkerForTidsromSluttdato,
+            sammeForelderSomAnnetBarn,
+        },
+        skjemanavn: `om-barnet-${barn.id}`,
+    });
 
     const svarForSpørsmålMedUkjent = (
         vetIkkeFelt: Felt<ESvar>,
@@ -653,5 +673,6 @@ export const useOmBarnet = (
         barn,
         andreBarnSomErFyltUt,
         settSammeForelder,
+        validerAlleSynligeFelter,
     };
 };

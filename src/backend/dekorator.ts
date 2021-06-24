@@ -3,7 +3,7 @@ import jsdom from 'jsdom';
 import NodeCache from 'node-cache';
 import request from 'request';
 
-import environment from './environment.js';
+import environment from './environment';
 
 const { JSDOM } = jsdom;
 

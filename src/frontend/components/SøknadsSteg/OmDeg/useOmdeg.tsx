@@ -43,6 +43,7 @@ export const useOmdeg = (): {
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
+    validerAlleSynligeFelter: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
@@ -265,7 +266,10 @@ export const useOmdeg = (): {
         });
     };
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IOmDegFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
+        IOmDegFeltTyper,
+        string
+    >({
         felter: {
             borPåRegistrertAdresse,
             telefonnummer,
@@ -287,6 +291,7 @@ export const useOmdeg = (): {
     return {
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
+        validerAlleSynligeFelter,
         valideringErOk,
         oppdaterSøknad,
     };

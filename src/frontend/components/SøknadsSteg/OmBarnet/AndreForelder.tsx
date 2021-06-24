@@ -48,20 +48,22 @@ const AndreForelder: React.FC<{
                         }
                         checkboxUkjentFelt={skjema.felter.andreForelderNavnUkjent}
                     />
-                    <SkjemaFeltInput
-                        felt={skjema.felter.andreForelderFnr}
-                        visFeilmeldinger={skjema.visFeilmeldinger}
-                        labelSpråkTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnr]
-                        }
-                        disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
-                    />
-                    <VetIkkeCheckbox
-                        labelSpråkId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
-                        }
-                        checkboxUkjentFelt={skjema.felter.andreForelderFnrUkjent}
-                    />
+                    <KomponentGruppe inline dynamisk>
+                        <SkjemaFeltInput
+                            felt={skjema.felter.andreForelderFnr}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            labelSpråkTekstId={
+                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnr]
+                            }
+                            disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
+                        />
+                        <VetIkkeCheckbox
+                            labelSpråkId={
+                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
+                            }
+                            checkboxUkjentFelt={skjema.felter.andreForelderFnrUkjent}
+                        />
+                    </KomponentGruppe>
                     {skjema.felter.andreForelderFødselsdato.erSynlig && (
                         <KomponentGruppe inline dynamisk>
                             <Datovelger
