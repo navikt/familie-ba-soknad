@@ -13,7 +13,10 @@ class ByClusterStrategy extends Strategy {
     }
 
     isEnabled(parameters: Record<string, string> | undefined): boolean {
-        return parameters !== undefined && parameters['cluster'] === this.cluster;
+        const clustersKommaseparert: string = parameters ? parameters['cluster'] : '';
+        const clusters = clustersKommaseparert.split(',');
+
+        return !!clusters.find(enabletForCluster => enabletForCluster === this.cluster);
     }
 }
 

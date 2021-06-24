@@ -1,13 +1,17 @@
 import React from 'react';
 
 import ReactDOM from 'react-dom';
+import { IntlProvider } from 'react-intl';
 
+import { DisabledApp } from './components/Disabled/DisabledApp';
 import { GlobalStyle } from './Theme';
 
 ReactDOM.render(
     <React.StrictMode>
         <GlobalStyle />
-        <div>Vi har desverre skrudd av søknaden midlertidig</div>
+        <IntlProvider locale={'nb'}>
+            <DisabledApp />
+        </IntlProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );
