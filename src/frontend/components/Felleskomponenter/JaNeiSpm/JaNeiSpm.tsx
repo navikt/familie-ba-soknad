@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 
 import { guid } from 'nav-frontend-js-utils';
+import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
@@ -26,12 +27,24 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     inkluderVetIkke = false,
     språkValues,
 }) => {
+    const ref = useRef<RadioPanelGruppe>(null);
+
+    useEffect(() => {
+        const jaNeiRef = ref.current;
+        if (jaNeiRef) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            jaNeiRef.props.onChange(null, felt.verdi);
+        }
+    }, [felt.verdi]);
+
     return felt.erSynlig ? (
         <span id={felt.id}>
             <JaNeiSpørsmål
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                 initiellVerdi={felt.verdi}
                 name={guid()}
+                ref={ref}
                 legend={
                     <>
                         <Element>

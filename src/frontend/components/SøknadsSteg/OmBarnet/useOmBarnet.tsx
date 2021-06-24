@@ -33,7 +33,7 @@ import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
 import useInputFeltMedUkjent from './useInputFeltMedUkjent';
 import useLanddropdownFelt from './useLanddropdownFelt';
-import { formaterInitVerdiForInputMedUkjent } from './utils';
+import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from './utils';
 
 export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;
@@ -212,9 +212,6 @@ export const useOmBarnet = (
     );
 
     /*--- ANDRE FORELDER ---*/
-    const formaterVerdiForCheckbox = (svar: string | AlternativtSvarForInput) =>
-        svar === AlternativtSvarForInput.UKJENT ? ESvar.JA : ESvar.NEI;
-
     const andreForelderNavnUkjent = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(barn[barnDataKeySpørsmål.andreForelderNavn].svar),
         feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
@@ -350,9 +347,9 @@ export const useOmBarnet = (
         andreForelderFnrUkjent.validerOgSettFelt(ESvar.NEI);
         andreForelderFødselsdato.validerOgSettFelt('');
         andreForelderFødselsdatoUkjent.validerOgSettFelt(ESvar.NEI);
-        andreForelderArbeidUtlandet.validerOgSettFelt(undefined);
+        andreForelderArbeidUtlandet.validerOgSettFelt(null);
         andreForelderArbeidUtlandetHvilketLand.validerOgSettFelt('');
-        andreForelderPensjonUtland.validerOgSettFelt(undefined);
+        andreForelderPensjonUtland.validerOgSettFelt(null);
         andreForelderPensjonHvilketLand.validerOgSettFelt('');
     };
 
