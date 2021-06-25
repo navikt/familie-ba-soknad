@@ -1,4 +1,5 @@
-import { ESvar } from '../../../../../../familie-felles-frontend/packages/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { AlternativtSvarForInput } from '../../../typer/person';
 
 export const formaterInitVerdiForInputMedUkjent = (verdi: string) =>
