@@ -133,7 +133,7 @@ describe('useOmBarnet', () => {
 
         expect(nårKomBarnTilNorgeDato.verdi).toEqual('');
         expect(nårKomBarnTilNorgeDato.erSynlig).toEqual(false);
-        expect(planleggerÅBoINorge12Mnd.verdi).toEqual(undefined);
+        expect(planleggerÅBoINorge12Mnd.verdi).toEqual(null);
         expect(planleggerÅBoINorge12Mnd.erSynlig).toEqual(false);
     });
 
