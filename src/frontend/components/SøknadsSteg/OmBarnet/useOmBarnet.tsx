@@ -233,9 +233,7 @@ export const useOmBarnet = (
         barn[barnDataKeySpørsmål.andreForelderNavn],
         andreForelderNavnUkjent,
         'ombarnet.andre-forelder.navn.feilmelding',
-        false,
-        !sammeForelderSomAnnetBarn.erSynlig ||
-            sammeForelderSomAnnetBarn.valideringsstatus === Valideringsstatus.OK
+        false
     );
 
     const andreForelderFnrUkjent = useFelt<ESvar>({
