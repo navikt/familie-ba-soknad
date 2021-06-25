@@ -11,7 +11,8 @@
     "test-ci": "CI=true build",
     "test": "jest",
     "start": "NODE_ENV=production node --es-module-specifier-resolution=node build/backend/server.js",
-    "clean": "rm -rf dist build"
+    "clean": "rm -rf dist build",
+    "typecheck": "tsc --noEmit -p src/frontend/tsconfig.json"
   },
   "jest": {
     "roots": [
@@ -55,7 +56,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && yarn run typecheck"
     }
   },
   "lint-staged": {
