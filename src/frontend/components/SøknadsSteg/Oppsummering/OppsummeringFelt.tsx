@@ -15,7 +15,7 @@ const StyledOppsummeringsFelt = styled.div`
 
 interface IOppsummeringsFeltProps {
     tittel?: ReactNode;
-    søknadsvar?: string;
+    søknadsvar?: string | null;
 }
 export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
     tittel,

@@ -276,7 +276,9 @@ export const useOmBarnet = (
         barn[barnDataKeySpørsmål.andreForelderFødselsdato].id,
         formaterInitVerdiForInputMedUkjent(barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar),
         andreForelderFødselsdatoUkjent,
-        andreForelderFnrUkjent.verdi === ESvar.JA && andreForelderNavnUkjent.verdi === ESvar.NEI
+        andreForelderFnrUkjent.verdi === ESvar.JA && andreForelderNavnUkjent.verdi === ESvar.NEI,
+        sammeForelderSomAnnetBarn.verdi === null ||
+            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER
     );
 
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt(
