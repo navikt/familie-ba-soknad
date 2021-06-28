@@ -10,13 +10,13 @@ import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 import { genererOppdaterteBarn } from './utils';
 
 export interface IOmBarnaDineFeltTyper {
-    erNoenAvBarnaFosterbarn: ESvar | undefined;
-    oppholderBarnSegIInstitusjon: ESvar | undefined;
-    erBarnAdoptertFraUtland: ESvar | undefined;
-    oppholderBarnSegIUtland: ESvar | undefined;
-    søktAsylForBarn: ESvar | undefined;
-    barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | undefined;
-    mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | undefined;
+    erNoenAvBarnaFosterbarn: ESvar | null;
+    oppholderBarnSegIInstitusjon: ESvar | null;
+    erBarnAdoptertFraUtland: ESvar | null;
+    oppholderBarnSegIUtland: ESvar | null;
+    søktAsylForBarn: ESvar | null;
+    barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | null;
+    mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | null;
     hvemErFosterbarn: BarnetsId[];
     hvemOppholderSegIInstitusjon: BarnetsId[];
     hvemErAdoptertFraUtland: BarnetsId[];

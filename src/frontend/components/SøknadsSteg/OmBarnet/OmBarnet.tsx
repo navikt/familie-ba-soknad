@@ -32,6 +32,8 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         valideringErOk,
         oppdaterSøknad,
         barn,
+        andreBarnSomErFyltUt,
+        settSammeForelder,
     } = useOmBarnet(barnetsId);
 
     return barn ? (
@@ -46,7 +48,12 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             barn={barn}
         >
             <Oppfølgningsspørsmål barn={barn} skjema={skjema} />
-            <AndreForelder barn={barn} skjema={skjema} />
+            <AndreForelder
+                settSammeForelder={settSammeForelder}
+                barn={barn}
+                skjema={skjema}
+                andreBarnSomErFyltUt={andreBarnSomErFyltUt}
+            />
 
             {skjema.felter.borFastMedSøker.erSynlig &&
                 skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (

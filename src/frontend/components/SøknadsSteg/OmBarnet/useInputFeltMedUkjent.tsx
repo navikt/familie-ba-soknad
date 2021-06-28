@@ -4,19 +4,21 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
 
-import { AlternativtSvarForInput, DatoMedUkjent } from '../../../typer/person';
+import { DatoMedUkjent } from '../../../typer/person';
 import { ISøknadSpørsmål } from '../../../typer/søknad';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { formaterInitVerdiForInputMedUkjent } from './utils';
 
 const useInputFeltMedUkjent = (
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent>,
     avhengighet: Felt<ESvar>,
     feilmeldingSpråkId: string,
-    erFnrInput = false
+    erFnrInput = false,
+    skalVises = true
 ) => {
     const inputFelt = useFelt<ISODateString>({
         feltId: søknadsfelt.id,
-        verdi: søknadsfelt.svar !== AlternativtSvarForInput.UKJENT ? søknadsfelt.svar : '',
+        verdi: formaterInitVerdiForInputMedUkjent(søknadsfelt.svar),
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
             if (
                 avhengigheter &&
@@ -36,7 +38,8 @@ const useInputFeltMedUkjent = (
                     : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
             }
         },
-        avhengigheter: { vetIkkeCheckbox: avhengighet },
+        avhengigheter: { vetIkkeCheckbox: avhengighet, skalVises },
+        skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalVises,
     });
     useEffect(() => {
         if (avhengighet.verdi === ESvar.JA) {

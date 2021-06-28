@@ -98,7 +98,7 @@ describe('genererOppdaterteBarn', () => {
                 oppholdslandStartdato: objectContaining({ svar: '2020-08-08' }),
                 oppholdslandSluttdato: objectContaining({ svar: AlternativtSvarForInput.UKJENT }),
                 nårKomBarnTilNorgeDato: objectContaining({ svar: '' }),
-                planleggerÅBoINorge12Mnd: objectContaining({ svar: undefined }),
+                planleggerÅBoINorge12Mnd: objectContaining({ svar: null }),
                 barnetrygdFraEøslandHvilketLand: objectContaining({ svar: 'AUS' }),
             }),
         ]);

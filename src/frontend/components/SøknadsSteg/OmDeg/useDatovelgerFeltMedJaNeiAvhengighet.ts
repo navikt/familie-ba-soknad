@@ -9,7 +9,7 @@ import { validerDato } from '../../../utils/dato';
 const useDatovelgerFeltMedJaNeiAvhengighet = (
     søknadsfelt: ISøknadSpørsmål<ISODateString>,
     avhengigSvarCondition: ESvar,
-    avhengighet: Felt<ESvar | undefined>,
+    avhengighet: Felt<ESvar | null>,
     avgrensDatoFremITid = false
 ) => {
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
@@ -21,7 +21,7 @@ const useDatovelgerFeltMedJaNeiAvhengighet = (
             return validerDato(felt, avgrensDatoFremITid);
         },
         skalFeltetVises: avhengigheter => {
-            return avhengigheter && (avhengigheter.jaNeiSpm as Felt<ESvar | undefined>)
+            return avhengigheter && (avhengigheter.jaNeiSpm as Felt<ESvar | null>)
                 ? skalFeltetVises(avhengigheter.jaNeiSpm.verdi)
                 : true;
         },
