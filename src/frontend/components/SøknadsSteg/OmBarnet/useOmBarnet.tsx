@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useLocation } from 'react-router-dom';
@@ -280,6 +280,15 @@ export const useOmBarnet = (
         sammeForelderSomAnnetBarn.verdi === null ||
             sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER
     );
+
+    useEffect(() => {
+        if (andreForelderNavnUkjent.verdi === ESvar.JA) {
+            andreForelderFnr.validerOgSettFelt('');
+            andreForelderFnrUkjent.validerOgSettFelt(ESvar.NEI);
+            andreForelderFødselsdato.validerOgSettFelt('');
+            andreForelderFødselsdatoUkjent.validerOgSettFelt(ESvar.NEI);
+        }
+    }, [andreForelderNavnUkjent.verdi]);
 
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet],
