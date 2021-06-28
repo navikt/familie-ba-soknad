@@ -104,12 +104,14 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                 )}
                 {dokTittel}
             </Undertittel>
-            <SpråkTekst
-                id={dokumentasjon.beskrivelseSpråkId}
-                values={{
-                    barn: formatertListeMedBarn(),
-                }}
-            />
+            {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
+                <SpråkTekst
+                    id={dokumentasjon.beskrivelseSpråkId}
+                    values={{
+                        barn: formatertListeMedBarn(),
+                    }}
+                />
+            )}
             {!dokumentasjon.harSendtInn && (
                 <Filopplaster
                     oppdaterDokumentasjon={oppdaterDokumentasjon}
@@ -119,14 +121,16 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                 />
             )}
             <br />
-            <Checkbox
-                label={<SpråkTekst id={'dokumentasjon.har-sendt-inn.spm'} />}
-                aria-label={`${formatMessage({
-                    id: 'dokumentasjon.har-sendt-inn.spm',
-                })} (${dokTittel})`}
-                checked={dokumentasjon.harSendtInn}
-                onChange={settHarSendtInnTidligere}
-            />
+            {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
+                <Checkbox
+                    label={<SpråkTekst id={'dokumentasjon.har-sendt-inn.spm'} />}
+                    aria-label={`${formatMessage({
+                        id: 'dokumentasjon.har-sendt-inn.spm',
+                    })} (${dokTittel})`}
+                    checked={dokumentasjon.harSendtInn}
+                    onChange={settHarSendtInnTidligere}
+                />
+            )}
         </Container>
     );
 };
