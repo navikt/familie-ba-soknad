@@ -44,7 +44,7 @@ export const useLeggTilBarn = (): {
     );
 
     const erFødt = useFelt<ESvarMedUbesvart>({
-        verdi: undefined,
+        verdi: null,
         valideringsfunksjon: felt => {
             switch (felt.verdi) {
                 case ESvar.JA:

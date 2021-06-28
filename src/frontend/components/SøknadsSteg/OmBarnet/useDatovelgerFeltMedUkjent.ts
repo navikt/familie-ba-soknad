@@ -9,7 +9,8 @@ const useDatovelgerFeltMedUkjent = (
     feltId,
     initiellVerdi,
     vetIkkeCheckbox: Felt<ESvar>,
-    skalFeltetVises: boolean
+    skalFeltetVises: boolean,
+    nullstillVedAvhengighetEndring = true
 ) => {
     const datoFelt = useFelt<ISODateString>({
         feltId: feltId,
@@ -25,6 +26,7 @@ const useDatovelgerFeltMedUkjent = (
             return validerDato(felt, false);
         },
         avhengigheter: { vetIkkeCheckbox, skalFeltetVises },
+        nullstillVedAvhengighetEndring,
         skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalFeltetVises,
     });
 

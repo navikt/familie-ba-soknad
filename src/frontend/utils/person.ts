@@ -75,25 +75,26 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
     return {
         ...barn,
         id: hentUid(),
+        barnErFyltUt: false,
         [barnDataKeySpørsmål.erFosterbarn]: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.erAdoptertFraUtland]: {
             id: OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.erAsylsøker]: {
             id: OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
             id: OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
             id: OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.institusjonsnavn]: {
             id: OmBarnetSpørsmålsId.institusjonsnavn,
@@ -117,7 +118,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.oppholderSegIUtland]: {
             id: OmBarnaDineSpørsmålId.hvemOppholderSegIUtland,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.oppholdsland]: {
             id: OmBarnetSpørsmålsId.oppholdsland,
@@ -133,7 +134,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: {
             id: OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: {
             id: OmBarnetSpørsmålsId.nårKomBarnetTilNorge,
@@ -141,7 +142,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: {
             id: OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
             id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
@@ -161,7 +162,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: {
             id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: {
             id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
@@ -169,7 +170,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.andreForelderPensjonUtland]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
@@ -177,11 +178,11 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.borFastMedSøker]: {
             id: OmBarnetSpørsmålsId.borFastMedSøker,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
             id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
-            svar: undefined,
+            svar: null,
         },
         [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
             id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,

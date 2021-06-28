@@ -5,19 +5,16 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
-import { AlternativtSvarForInput, IBarnMedISøknad } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const VetIkkeCheckbox: React.FC<{
-    barn: IBarnMedISøknad;
     labelSpråkId: string;
     checkboxUkjentFelt: Felt<ESvar>;
-    søknadsdatafelt: string;
-}> = ({ barn, labelSpråkId, checkboxUkjentFelt, søknadsdatafelt }) => {
+}> = ({ labelSpråkId, checkboxUkjentFelt }) => {
     return checkboxUkjentFelt.erSynlig ? (
         <Checkbox
             label={<SpråkTekst id={labelSpråkId} />}
-            defaultChecked={barn[søknadsdatafelt].svar === AlternativtSvarForInput.UKJENT}
+            checked={checkboxUkjentFelt.verdi === ESvar.JA}
             onChange={event => {
                 checkboxUkjentFelt
                     .hentNavInputProps(false)

@@ -3,7 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
-import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
+import { IBarnMedISøknad } from '../../../typer/person';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -11,6 +11,7 @@ import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown'
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import SammeSomAnnetBarnRadio from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
 import VetIkkeCheckbox from './VetIkkeCheckbox';
@@ -18,71 +19,76 @@ import VetIkkeCheckbox from './VetIkkeCheckbox';
 const AndreForelder: React.FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
-}> = ({ barn, skjema }) => {
+    andreBarnSomErFyltUt: IBarnMedISøknad[];
+    settSammeForelder: (radioVerdi: string) => void;
+}> = ({ barn, skjema, andreBarnSomErFyltUt, settSammeForelder }) => {
     return (
         <SkjemaFieldset tittelId={'ombarnet.andre-forelder'} språkValues={{ navn: barn.navn }}>
             <KomponentGruppe>
-                <SkjemaFeltInput
-                    felt={skjema.felter.andreForelderNavn}
-                    visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavn]
-                    }
-                    disabled={skjema.felter.andreForelderNavnUkjent.verdi === ESvar.JA}
-                />
-                <VetIkkeCheckbox
-                    barn={barn}
-                    labelSpråkId={
-                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavnUkjent]
-                    }
-                    checkboxUkjentFelt={skjema.felter.andreForelderNavnUkjent}
-                    søknadsdatafelt={barnDataKeySpørsmål.andreForelderNavn}
-                />
+                {skjema.felter.sammeForelderSomAnnetBarn.erSynlig && (
+                    <SammeSomAnnetBarnRadio
+                        onChangeCallback={settSammeForelder}
+                        andreBarnSomErFyltUt={andreBarnSomErFyltUt}
+                        skjema={skjema}
+                    />
+                )}
 
-                <KomponentGruppe inline dynamisk>
+                <KomponentGruppe>
                     <SkjemaFeltInput
-                        felt={skjema.felter.andreForelderFnr}
+                        felt={skjema.felter.andreForelderNavn}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         labelSpråkTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnr]
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavn]
                         }
-                        disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
+                        disabled={skjema.felter.andreForelderNavnUkjent.verdi === ESvar.JA}
                     />
                     <VetIkkeCheckbox
-                        barn={barn}
                         labelSpråkId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavnUkjent]
                         }
-                        checkboxUkjentFelt={skjema.felter.andreForelderFnrUkjent}
-                        søknadsdatafelt={barnDataKeySpørsmål.andreForelderFnr}
+                        checkboxUkjentFelt={skjema.felter.andreForelderNavnUkjent}
                     />
-                </KomponentGruppe>
-                {skjema.felter.andreForelderFødselsdato.erSynlig && (
                     <KomponentGruppe inline dynamisk>
-                        <Datovelger
-                            felt={skjema.felter.andreForelderFødselsdato}
-                            skjema={skjema}
-                            labelTekstId={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.andreForelderFødselsdato
-                                ]
+                        <SkjemaFeltInput
+                            felt={skjema.felter.andreForelderFnr}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            labelSpråkTekstId={
+                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnr]
                             }
-                            disabled={
-                                skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA
-                            }
+                            disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
                         />
                         <VetIkkeCheckbox
-                            barn={barn}
                             labelSpråkId={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
-                                ]
+                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
                             }
-                            checkboxUkjentFelt={skjema.felter.andreForelderFødselsdatoUkjent}
-                            søknadsdatafelt={barnDataKeySpørsmål.andreForelderFødselsdato}
+                            checkboxUkjentFelt={skjema.felter.andreForelderFnrUkjent}
                         />
                     </KomponentGruppe>
-                )}
+                    {skjema.felter.andreForelderFødselsdato.erSynlig && (
+                        <KomponentGruppe inline dynamisk>
+                            <Datovelger
+                                felt={skjema.felter.andreForelderFødselsdato}
+                                skjema={skjema}
+                                labelTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.andreForelderFødselsdato
+                                    ]
+                                }
+                                disabled={
+                                    skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA
+                                }
+                            />
+                            <VetIkkeCheckbox
+                                labelSpråkId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
+                                    ]
+                                }
+                                checkboxUkjentFelt={skjema.felter.andreForelderFødselsdatoUkjent}
+                            />
+                        </KomponentGruppe>
+                    )}
+                </KomponentGruppe>
             </KomponentGruppe>
 
             {skjema.felter.andreForelderArbeidUtlandet.erSynlig && (

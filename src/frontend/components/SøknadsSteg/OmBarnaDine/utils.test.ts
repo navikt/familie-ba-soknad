@@ -93,7 +93,7 @@ describe('genererOppdaterteBarn', () => {
                 oppholdslandStartdato: { svar: '2020-08-08' },
                 oppholdslandSluttdato: { svar: AlternativtSvarForInput.UKJENT },
                 nårKomBarnTilNorgeDato: { svar: '' },
-                planleggerÅBoINorge12Mnd: { svar: undefined },
+                planleggerÅBoINorge12Mnd: { svar: null },
                 barnetrygdFraEøslandHvilketLand: { svar: 'AUS' },
             },
         ]);

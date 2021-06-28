@@ -147,7 +147,7 @@ export const genererOppdaterteBarn = (
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     boddMindreEnn12MndINorge,
                     barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
-                    undefined
+                    null
                 ),
             },
             [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
