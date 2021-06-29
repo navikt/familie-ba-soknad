@@ -6,7 +6,7 @@ import { Avhengigheter, feil, Felt, FeltState, ok, useFelt } from '@navikt/famil
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
+import { BarnetsId } from './HvilkeBarnCheckboxGruppe';
 
 const useBarnCheckboxFelt = (
     datafeltNavn: barnDataKeySpørsmål,
@@ -18,12 +18,12 @@ const useBarnCheckboxFelt = (
 
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigJaNeiSpmSvarCondition;
 
-    const checkbox = useFelt<BarnetsIdent[]>({
+    const checkbox = useFelt<BarnetsId[]>({
         feltId: barn[0][datafeltNavn].id,
         verdi: søknad.barnInkludertISøknaden
             .filter(barn => barn[datafeltNavn].svar === ESvar.JA)
-            .map(barn => barn.ident),
-        valideringsfunksjon: (felt: FeltState<BarnetsIdent[]>) => {
+            .map(barn => barn.id),
+        valideringsfunksjon: (felt: FeltState<BarnetsId[]>) => {
             return felt.verdi.length > 0
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'ombarna.barn-ikke-valgt.feilmelding'} />);

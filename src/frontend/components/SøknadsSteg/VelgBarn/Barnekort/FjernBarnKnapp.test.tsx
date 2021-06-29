@@ -22,6 +22,7 @@ describe('FjernBarnKnapp', () => {
         silenceConsoleErrors();
 
         const registrertBarn: IBarn = {
+            id: 'random-id-manuell',
             ident: '12345',
             navn: 'Test',
             borMedSøker: true,
@@ -29,6 +30,7 @@ describe('FjernBarnKnapp', () => {
             adressebeskyttelse: false,
         };
         const pdlBarn: IBarn = {
+            id: 'random-id-pdl',
             ident: '54321',
             navn: 'Også test',
             borMedSøker: true,
@@ -60,6 +62,7 @@ describe('FjernBarnKnapp', () => {
         silenceConsoleErrors();
 
         const registrertBarn: IBarn = {
+            id: 'random-id',
             ident: '12345',
             navn: 'Test',
             borMedSøker: true,

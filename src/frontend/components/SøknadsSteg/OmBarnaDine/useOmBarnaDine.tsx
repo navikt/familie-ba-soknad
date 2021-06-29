@@ -5,7 +5,7 @@ import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import { barnDataKeySpørsmål } from '../../../typer/person';
-import { BarnetsIdent } from './HvilkeBarnCheckboxGruppe';
+import { BarnetsId } from './HvilkeBarnCheckboxGruppe';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 import { genererOppdaterteBarn } from './utils';
 
@@ -17,13 +17,13 @@ export interface IOmBarnaDineFeltTyper {
     søktAsylForBarn: ESvar | null;
     barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | null;
     mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | null;
-    hvemErFosterbarn: BarnetsIdent[];
-    hvemOppholderSegIInstitusjon: BarnetsIdent[];
-    hvemErAdoptertFraUtland: BarnetsIdent[];
-    hvemOppholderSegIUtland: BarnetsIdent[];
-    hvemBarnetrygdFraAnnetEøsland: BarnetsIdent[];
-    hvemTolvMndSammenhengendeINorge: BarnetsIdent[];
-    hvemErSøktAsylFor: BarnetsIdent[];
+    hvemErFosterbarn: BarnetsId[];
+    hvemOppholderSegIInstitusjon: BarnetsId[];
+    hvemErAdoptertFraUtland: BarnetsId[];
+    hvemOppholderSegIUtland: BarnetsId[];
+    hvemBarnetrygdFraAnnetEøsland: BarnetsId[];
+    hvemTolvMndSammenhengendeINorge: BarnetsId[];
+    hvemErSøktAsylFor: BarnetsId[];
 }
 
 export const useOmBarnaDine = (): {
@@ -133,14 +133,6 @@ export const useOmBarnaDine = (): {
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
 
-    const mapFraIdentTilBarnId = (identer: string[]): string[] => {
-        const mapTilBarnMedISøknad = søknad.barnInkludertISøknaden.filter(barn =>
-            identer.includes(barn.ident)
-        );
-
-        return mapTilBarnMedISøknad.map(barn => barn.id);
-    };
-
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
@@ -178,17 +170,17 @@ export const useOmBarnaDine = (): {
                     case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:
                         return {
                             ...dok,
-                            gjelderForBarnId: mapFraIdentTilBarnId(hvemErSøktAsylFor.verdi),
+                            gjelderForBarnId: hvemErSøktAsylFor.verdi,
                         };
                     case Dokumentasjonsbehov.ADOPSJON_DATO:
                         return {
                             ...dok,
-                            gjelderForBarnId: mapFraIdentTilBarnId(hvemErAdoptertFraUtland.verdi),
+                            gjelderForBarnId: hvemErAdoptertFraUtland.verdi,
                         };
                     case Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN:
                         return {
                             ...dok,
-                            gjelderForBarnId: mapFraIdentTilBarnId(hvemErFosterbarn.verdi),
+                            gjelderForBarnId: hvemErFosterbarn.verdi,
                         };
                     default:
                         return dok;

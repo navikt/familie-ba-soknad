@@ -92,12 +92,10 @@ const Barnekort: React.FC<IBarnekortProps> = ({
         søknad: { barnRegistrertManuelt },
     } = useApp();
 
-    const erMedISøknad = !!barnSomSkalVæreMed.find(
-        barnMedISøknad => barnMedISøknad.ident === barn.ident
-    );
+    const erMedISøknad = !!barnSomSkalVæreMed.find(barnMedISøknad => barnMedISøknad.id === barn.id);
 
     const erRegistrertManuelt = !!barnRegistrertManuelt.find(
-        manueltRegistrertBarn => manueltRegistrertBarn.ident === barn.ident
+        manueltRegistrertBarn => manueltRegistrertBarn.id === barn.id
     );
 
     return (
@@ -110,10 +108,12 @@ const Barnekort: React.FC<IBarnekortProps> = ({
             </BarnekortHeader>
             <InformasjonsboksInnhold>
                 <StyledUndertittel>{barn.navn}</StyledUndertittel>
-                <BarneKortInfo
-                    labelId={'hvilkebarn.barn.fødselsnummer'}
-                    verdi={formaterFnr(barn.ident)}
-                />
+                {barn.ident && (
+                    <BarneKortInfo
+                        labelId={'hvilkebarn.barn.fødselsnummer'}
+                        verdi={formaterFnr(barn.ident)}
+                    />
+                )}
                 {barn.alder && ( // Barn som søker har lagt inn selv har ikke fødselsdato
                     <BarneKortInfo labelId={'hvilkebarn.barn.alder'} verdi={barn.alder} />
                 )}
@@ -141,7 +141,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 />
             </InformasjonsboksInnhold>
             {erRegistrertManuelt && (
-                <FjernBarnKnapp ident={barn.ident} fjernBarnCallback={fjernBarnCallback} />
+                <FjernBarnKnapp barnId={barn.id} fjernBarnCallback={fjernBarnCallback} />
             )}
         </StyledBarnekort>
     );
