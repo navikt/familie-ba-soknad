@@ -30,7 +30,11 @@ Sentry.init({
     ignoreErrors: [
         "NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.",
     ],
-    allowUrls: ['https://www.nav.no/familie/barnetrygd/soknad/ordinaer'],
+    allowUrls: [
+        'https://www.nav.no/familie/barnetrygd/soknad/ordinaer',
+        'https://familie-ba-soknad.dev.nav.no/familie/barnetrygd/soknad/ordinaer',
+        'http://localhost:3000',
+    ],
 });
 
 if (process.env.NODE_ENV !== 'production') {
