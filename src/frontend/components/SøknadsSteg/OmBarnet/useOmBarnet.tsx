@@ -97,7 +97,10 @@ export const useOmBarnet = (
     };
 
     const andreBarnSomErFyltUt = søknad.barnInkludertISøknaden.filter(
-        barnISøknad => barnISøknad.barnErFyltUt && barnISøknad.id !== barn.id
+        barnISøknad =>
+            barnISøknad.barnErFyltUt &&
+            barnISøknad.id !== barn.id &&
+            !barnISøknad[barnDataKeySpørsmål.erFosterbarn]
     );
 
     /*---INSTITUSJON---*/
@@ -391,29 +394,29 @@ export const useOmBarnet = (
 
     /*--- BOSTED ---*/
 
-    const borFastMedSøker = useJaNeiSpmFelt(barn[barnDataKeySpørsmål.borFastMedSøker], {
-        andreForelderArbeidUtlandet: {
-            hovedSpørsmål: andreForelderArbeidUtlandet,
-            tilhørendeFelter: [andreForelderArbeidUtlandetHvilketLand],
-        },
-        andreForelderPensjonUtland: {
-            hovedSpørsmål: andreForelderPensjonUtland,
-            tilhørendeFelter: [andreForelderPensjonHvilketLand],
-        },
-    });
+    const avhengigheterForBosted = () => {
+        return !(barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA)
+            ? {
+                  andreForelderArbeidUtlandet: {
+                      hovedSpørsmål: andreForelderArbeidUtlandet,
+                      tilhørendeFelter: [andreForelderArbeidUtlandetHvilketLand],
+                  },
+                  andreForelderPensjonUtland: {
+                      hovedSpørsmål: andreForelderPensjonUtland,
+                      tilhørendeFelter: [andreForelderPensjonHvilketLand],
+                  },
+              }
+            : undefined;
+    };
+
+    const borFastMedSøker = useJaNeiSpmFelt(
+        barn[barnDataKeySpørsmål.borFastMedSøker],
+        avhengigheterForBosted()
+    );
 
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
-        {
-            andreForelderArbeidUtlandet: {
-                hovedSpørsmål: andreForelderArbeidUtlandet,
-                tilhørendeFelter: [andreForelderArbeidUtlandetHvilketLand],
-            },
-            andreForelderPensjonUtland: {
-                hovedSpørsmål: andreForelderPensjonUtland,
-                tilhørendeFelter: [andreForelderPensjonHvilketLand],
-            },
-        }
+        avhengigheterForBosted()
     );
 
     /*--- SØKER FOR PERIODE ---*/
