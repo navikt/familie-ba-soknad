@@ -19,7 +19,7 @@ export interface IRoute {
     path: string;
     label: string;
     route: RouteEnum;
-    komponent: React.FC | React.FC<{ barnetsIdent: string }>;
+    komponent: React.FC | React.FC<{ barnetsId: string }>;
     // Vi kan ha routes som ser helt like ut (to barn uten navn f.eks), trenger å kunne skille mellom dem
     spesifisering?: string;
 }
@@ -55,7 +55,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
                   label: `Om ${barn.navn}`,
                   route: RouteEnum.OmBarnet,
                   komponent: () => {
-                      return <OmBarnet barnetsIdent={barn.ident} />;
+                      return <OmBarnet barnetsId={barn.id} />;
                   },
                   spesifisering: barn.id,
               };

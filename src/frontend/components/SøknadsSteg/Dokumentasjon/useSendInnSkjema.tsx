@@ -79,7 +79,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
 
         return {
             navn: søknadsfelt('Navn', navn),
-            ident: søknadsfelt('Ident', ident),
+            ident: søknadsfelt('Ident', ident ?? 'Ikke oppgitt'),
             borMedSøker: søknadsfelt(
                 'Bor med søker',
                 borMedSøker ??

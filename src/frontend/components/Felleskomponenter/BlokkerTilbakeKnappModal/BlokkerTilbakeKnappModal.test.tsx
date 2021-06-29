@@ -3,6 +3,7 @@ import React from 'react';
 import { act, render, waitFor } from '@testing-library/react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
+import { IBarn, IBarnRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import {
     mockHistory,
@@ -12,11 +13,11 @@ import {
 } from '../../../utils/testing';
 import BlokkerTilbakeKnappModal from './BlokkerTilbakeKnappModal';
 
-const manueltRegistrert = {
+const manueltRegistrert: Partial<IBarn> = {
     ident: '12345',
     navn: 'A',
 };
-const fraPdl = {
+const fraPdl: Partial<IBarnRespons> = {
     ident: '54321',
     navn: 'B',
 };

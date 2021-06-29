@@ -7,6 +7,7 @@ import { useRoutes } from '../../../context/RoutesContext';
 import { IBarn, IBarnMedISøknad } from '../../../typer/person';
 import { genererInitialBarnMedISøknad } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { BarnetsId } from '../OmBarnaDine/HvilkeBarnCheckboxGruppe';
 import { VelgBarnSpørsmålId } from './spørsmål';
 
 export interface IVelgBarnFeltTyper {
@@ -34,14 +35,12 @@ export const useVelgBarn = (): {
         settBarnForRoutes(barnSomSkalVæreMed);
     }, [barnSomSkalVæreMed]);
 
-    const fjernBarn = (ident: string) => {
+    const fjernBarn = (id: BarnetsId) => {
         settSøknad({
             ...søknad,
-            barnRegistrertManuelt: søknad.barnRegistrertManuelt.filter(
-                barn => ident !== barn.ident
-            ),
+            barnRegistrertManuelt: søknad.barnRegistrertManuelt.filter(barn => id !== barn.id),
         });
-        settBarnSomSkalVæreMed(barnSomSkalVæreMed.filter(barn => ident !== barn.ident));
+        settBarnSomSkalVæreMed(barnSomSkalVæreMed.filter(barn => id !== barn.id));
     };
 
     const barnMedISøknad = useFelt<IBarn[]>({
@@ -58,13 +57,13 @@ export const useVelgBarn = (): {
     const oppdaterSøknad = () => {
         const barnSomAlleredeErLagtTil = barnSomSkalVæreMed.filter(
             barnSomSkalVæreMed =>
-                !!barnInkludertISøknaden.find(barn => barn.ident === barnSomSkalVæreMed.ident)
+                !!barnInkludertISøknaden.find(barn => barn.id === barnSomSkalVæreMed.id)
         );
 
         const nyeBarnSomSkalLeggesTil = barnSomSkalVæreMed.filter(
             barnSomSkalVæreMed =>
                 !barnSomAlleredeErLagtTil.find(
-                    barnLagtTil => barnLagtTil.ident === barnSomSkalVæreMed.ident
+                    barnLagtTil => barnLagtTil.id === barnSomSkalVæreMed.id
                 )
         );
 
@@ -93,7 +92,7 @@ export const useVelgBarn = (): {
         settBarnSomSkalVæreMed(prevState =>
             skalVæreMed
                 ? prevState.concat(genererInitialBarnMedISøknad(barn))
-                : prevState.filter(barnMedISøknad => barnMedISøknad.ident !== barn.ident)
+                : prevState.filter(barnMedISøknad => barnMedISøknad.id !== barn.id)
         );
     };
 

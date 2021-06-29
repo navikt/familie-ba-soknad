@@ -2,6 +2,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
+import { BarnetsId } from '../components/SøknadsSteg/OmBarnaDine/HvilkeBarnCheckboxGruppe';
 import { ISøknadSpørsmål } from './søknad';
 
 export enum ESivilstand {
@@ -30,7 +31,8 @@ export interface ISøkerRespons extends IPerson {
     sivilstand: { type: ESivilstand };
 }
 
-export interface ISøker extends ISøkerRespons {
+export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
+    barn: IBarn[];
     telefonnummer: ISøknadSpørsmål<string>;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
     oppholderSegINorge: ISøknadSpørsmål<ESvar | null>;
@@ -87,12 +89,15 @@ export enum barnDataKeySpørsmål {
     søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
 }
 
-export interface IBarnRespons extends IPerson {
+export interface IBarnRespons extends Omit<IPerson, 'ident'> {
+    ident?: string;
     borMedSøker: boolean;
     fødselsdato: string | undefined;
 }
 
-export interface IBarn extends IPerson {
+export interface IBarn extends Omit<IPerson, 'ident'> {
+    ident?: string;
+    id: BarnetsId;
     borMedSøker: boolean | undefined;
     alder: string | undefined;
 }
@@ -104,7 +109,6 @@ export enum AlternativtSvarForInput {
 export type DatoMedUkjent = ISODateString | AlternativtSvarForInput.UKJENT;
 
 export interface IBarnMedISøknad extends IBarn {
-    id: string;
     barnErFyltUt: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;

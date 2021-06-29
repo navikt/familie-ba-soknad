@@ -18,6 +18,7 @@ import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
+import { mapBarnResponsTilBarn } from '../utils/person';
 import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
 
 const [AppProvider, useApp] = createUseContext(() => {
@@ -59,7 +60,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                             ...søknad.søker,
                             navn: ressurs.data.navn,
                             statsborgerskap: ressurs.data.statsborgerskap,
-                            barn: ressurs.data.barn,
+                            barn: mapBarnResponsTilBarn(ressurs.data.barn),
                             ident: ressurs.data.ident,
                             adresse: ressurs.data.adresse,
                             sivilstand: ressurs.data.sivilstand,
