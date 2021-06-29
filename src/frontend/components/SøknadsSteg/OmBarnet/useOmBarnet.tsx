@@ -100,7 +100,7 @@ export const useOmBarnet = (
         barnISøknad =>
             barnISøknad.barnErFyltUt &&
             barnISøknad.id !== barn.id &&
-            !barnISøknad[barnDataKeySpørsmål.erFosterbarn]
+            barnISøknad[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
     );
 
     /*---INSTITUSJON---*/
@@ -225,18 +225,23 @@ export const useOmBarnet = (
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
         },
-        skalFeltetVises: () => !barn.barnErFyltUt && andreBarnSomErFyltUt.length > 0,
+        skalFeltetVises: () =>
+            !barn.barnErFyltUt &&
+            barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI &&
+            andreBarnSomErFyltUt.length > 0,
     });
 
     const andreForelderNavnUkjent = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(barn[barnDataKeySpørsmål.andreForelderNavn].svar),
         feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
+        skalFeltetVises: () => barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI,
     });
     const andreForelderNavn = useInputFeltMedUkjent(
         barn[barnDataKeySpørsmål.andreForelderNavn],
         andreForelderNavnUkjent,
         'ombarnet.andre-forelder.navn.feilmelding',
-        false
+        false,
+        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
     );
 
     const andreForelderFnrUkjent = useFelt<ESvar>({
@@ -244,6 +249,7 @@ export const useOmBarnet = (
         feltId: OmBarnetSpørsmålsId.andreForelderFnrUkjent,
         skalFeltetVises: avhengigheter => {
             return (
+                barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI &&
                 avhengigheter &&
                 avhengigheter.andreForelderNavnUkjent &&
                 avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
@@ -258,7 +264,8 @@ export const useOmBarnet = (
         andreForelderFnrUkjent,
         'ombarnet.andre-forelder.fnr.feilmelding',
         true,
-        andreForelderNavnUkjent.verdi === ESvar.NEI
+        andreForelderNavnUkjent.verdi === ESvar.NEI &&
+            barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
     );
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
