@@ -68,13 +68,13 @@ const Forside: React.FC = () => {
             <AlertStripeWrapper>
                 <AlertStripe type={'info'} form={'default'}>
                     This application is currently only available in Norwegian. If you need to apply
-                    in English you have to use the PDF-form.
+                    in English you have to use the PDF/paper applicationform.
                     <Lenke
                         href={'/soknader/en/person/familie/barnetrygd'}
                         target={'_blank'}
                         rel="noopener noreferrer"
                     >
-                        Use PDF-form
+                        Use PDF/paper form.
                     </Lenke>
                 </AlertStripe>
             </AlertStripeWrapper>

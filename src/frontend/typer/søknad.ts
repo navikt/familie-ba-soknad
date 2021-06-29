@@ -113,7 +113,7 @@ export const initialStateSøknad: ISøknad = {
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
             'dokumentasjon.annendokumentasjon.vedleggtittel',
-            'dokumentasjon.annendokumentasjon.informasjon'
+            ''
         ),
     ],
     søker: {
