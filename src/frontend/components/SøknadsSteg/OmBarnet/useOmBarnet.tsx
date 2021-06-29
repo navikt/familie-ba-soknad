@@ -27,6 +27,7 @@ import {
     IBarnMedISøknad,
 } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { BarnetsId } from '../OmBarnaDine/HvilkeBarnCheckboxGruppe';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../OmDeg/useLanddropdownFeltMedJaNeiAvhengighet';
 import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -69,7 +70,7 @@ export interface IOmBarnetUtvidetFeltTyper {
 }
 
 export const useOmBarnet = (
-    barnetsIdent: string
+    barnetsUuid: BarnetsId
 ): {
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     barn: IBarnMedISøknad | undefined;
@@ -85,7 +86,7 @@ export const useOmBarnet = (
     const location = useLocation<ILokasjon>();
 
     const [barn] = useState<IBarnMedISøknad | undefined>(
-        søknad.barnInkludertISøknaden.find(barn => barn.ident === barnetsIdent)
+        søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
     );
 
     if (!barn) {
@@ -544,7 +545,7 @@ export const useOmBarnet = (
     const oppdaterSøknad = () => {
         const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] = søknad.barnInkludertISøknaden.map(
             barn =>
-                barn.ident === barnetsIdent
+                barn.id === barnetsUuid
                     ? {
                           ...barn,
                           barnErFyltUt: true,

@@ -26,7 +26,7 @@ interface Props {
     språkValues?: { [key: string]: string };
     route?: IRoute;
     skjemaHook: (...args: string[]) => IHookReturn;
-    ident?: string;
+    barnId?: string;
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
@@ -51,13 +51,13 @@ const Oppsummeringsbolk: React.FC<Props> = ({
     språkValues,
     route,
     skjemaHook,
-    ident,
+    barnId,
     settFeilAnchors,
 }) => {
     const { hentStegNummer } = useRoutes();
     const { søknad } = useApp();
-    const { validerAlleSynligeFelter, valideringErOk, skjema } = ident
-        ? skjemaHook(ident)
+    const { validerAlleSynligeFelter, valideringErOk, skjema } = barnId
+        ? skjemaHook(barnId)
         : skjemaHook();
     const [visFeil, settVisFeil] = useState(false);
 

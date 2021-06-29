@@ -333,7 +333,7 @@ const Oppsummering: React.FC = () => {
                         key={index}
                         route={hentStegObjektForBarn(barn)}
                         skjemaHook={useOmBarnet}
-                        ident={barn.ident}
+                        barnId={barn.id}
                         settFeilAnchors={settFeilAnchors}
                     >
                         {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (

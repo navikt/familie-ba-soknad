@@ -74,7 +74,6 @@ export const hentSivilstatus = (statuskode?: ESivilstand) => {
 export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => {
     return {
         ...barn,
-        id: hentUid(),
         barnErFyltUt: false,
         [barnDataKeySpørsmål.erFosterbarn]: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
@@ -197,6 +196,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
 
 export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
     return barn.map(barnRespons => ({
+        id: hentUid(),
         navn: barnRespons.navn,
         ident: barnRespons.ident,
         alder: barnRespons.fødselsdato && hentAlder(barnRespons.fødselsdato),
