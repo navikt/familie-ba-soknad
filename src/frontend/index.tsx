@@ -27,6 +27,10 @@ Sentry.init({
     environment,
     autoSessionTracking: false,
     enabled: process.env.NODE_ENV !== 'development',
+    ignoreErrors: [
+        "NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.",
+    ],
+    allowUrls: ['https://www.nav.no/familie/barnetrygd/soknad/ordinaer'],
 });
 
 if (process.env.NODE_ENV !== 'production') {
