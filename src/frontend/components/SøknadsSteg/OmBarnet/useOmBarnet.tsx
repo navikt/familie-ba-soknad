@@ -402,7 +402,7 @@ export const useOmBarnet = (
     /*--- BOSTED ---*/
 
     const avhengigheterForBosted = () => {
-        return !(barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA)
+        return barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
             ? {
                   andreForelderArbeidUtlandet: {
                       hovedSpørsmål: andreForelderArbeidUtlandet,
