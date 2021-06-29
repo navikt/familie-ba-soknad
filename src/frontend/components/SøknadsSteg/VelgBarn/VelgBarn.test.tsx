@@ -2,10 +2,12 @@ import React from 'react';
 
 import { act, fireEvent, render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
+import { DeepPartial } from 'ts-essentials';
 
 import { byggSuksessRessurs } from '@navikt/familie-typer';
 import fnrvalidator from '@navikt/fnrvalidator';
 
+import { IBarn, IBarnRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import VelgBarn from './VelgBarn';
@@ -23,13 +25,19 @@ jest.mock('react-router-dom', () => ({
     }),
 }));
 
-const manueltRegistrert = {
+const manueltRegistrert: Partial<IBarn> = {
+    id: 'random-id-1',
     ident: '12345',
     navn: 'A',
 };
-const fraPdl = {
+const fraPdl: Partial<IBarnRespons> = {
     ident: '54321',
     navn: 'B',
+};
+
+const fraPdlSomIBarn: Partial<IBarn> = {
+    ...fraPdl,
+    id: 'random-id-2',
 };
 
 describe('VelgBarn', () => {
@@ -37,7 +45,7 @@ describe('VelgBarn', () => {
         silenceConsoleErrors();
         const søknad = {
             barnRegistrertManuelt: [manueltRegistrert],
-            barnInkludertISøknaden: [manueltRegistrert, fraPdl],
+            barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarn],
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
         };
@@ -63,7 +71,7 @@ describe('VelgBarn', () => {
         // Først blir barnet fjernet fra manuelt registrerte barn
         expect(settSøknad).toHaveBeenNthCalledWith(1, {
             barnRegistrertManuelt: [],
-            barnInkludertISøknaden: [manueltRegistrert, fraPdl],
+            barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarn],
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
         });
@@ -71,7 +79,7 @@ describe('VelgBarn', () => {
         // Når man trykker på gå videre blir det manuelt registrerte barnet fjernet fra søknaden
         expect(settSøknad).toHaveBeenNthCalledWith(2, {
             barnRegistrertManuelt: [],
-            barnInkludertISøknaden: [fraPdl],
+            barnInkludertISøknaden: [fraPdlSomIBarn],
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
         });
@@ -98,7 +106,7 @@ describe('VelgBarn', () => {
                 <VelgBarn />
             </TestProvidere>
         );
-        const ident = queryByText(søknad.søker.barn[0].ident);
+        const ident = queryByText(søknad.søker.barn[0].ident ?? 'finnes-ikke-kast-feil');
         const infoTekst = queryByText(/hvilkebarn.adressesperreinformasjon/);
 
         expect(ident).not.toBeInTheDocument();
@@ -162,5 +170,37 @@ describe('VelgBarn', () => {
         expect(søknad.barnRegistrertManuelt.length).toBe(1);
         // Først fjernet vi barnet, så la vi det til igjen
         expect(settSøknad).toHaveBeenCalledTimes(2);
+    });
+
+    test('Kan huke av for barn', () => {
+        silenceConsoleErrors();
+
+        const søknad: DeepPartial<ISøknad> = {
+            søker: {
+                barn: [
+                    {
+                        navn: 'Jens',
+                        ident: '12345',
+                        adressebeskyttelse: false,
+                        borMedSøker: true,
+                        alder: '2 år',
+                    },
+                ],
+            },
+            barnRegistrertManuelt: [],
+        };
+        spyOnUseApp(søknad);
+
+        const { getByLabelText } = render(
+            <TestProvidere>
+                <VelgBarn />
+            </TestProvidere>
+        );
+        const checkbox: HTMLInputElement = getByLabelText(
+            /hvilkebarn.barn.søk-om.spm/
+        ) as HTMLInputElement;
+        act(() => checkbox.click());
+
+        expect(checkbox.checked).toBe(true);
     });
 });
