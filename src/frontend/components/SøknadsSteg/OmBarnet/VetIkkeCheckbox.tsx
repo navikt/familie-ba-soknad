@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Checkbox } from 'nav-frontend-skjema';
 
@@ -11,6 +11,10 @@ const VetIkkeCheckbox: React.FC<{
     labelSpråkId: string;
     checkboxUkjentFelt: Felt<ESvar>;
 }> = ({ labelSpråkId, checkboxUkjentFelt }) => {
+    useEffect(() => {
+        checkboxUkjentFelt.validerOgSettFelt(checkboxUkjentFelt.verdi);
+    }, []);
+
     return checkboxUkjentFelt.erSynlig ? (
         <Checkbox
             label={<SpråkTekst id={labelSpråkId} />}
