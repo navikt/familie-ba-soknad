@@ -16,6 +16,7 @@ silenceConsoleErrors();
 
 const jens = {
     navn: 'Jens',
+    id: 'random-id-jens',
     ident: '12345678910',
     [barnDataKeySpørsmål.erFosterbarn]: { id: '1', svar: ESvar.NEI },
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: { id: '2', svar: ESvar.JA },
@@ -59,6 +60,7 @@ const jens = {
 };
 const line = {
     navn: 'Line',
+    id: 'random-id-line',
     ident: '12345678911',
     [barnDataKeySpørsmål.erFosterbarn]: { id: '', svar: ESvar.NEI },
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: { id: '', svar: ESvar.NEI },
@@ -76,7 +78,7 @@ const line = {
     [barnDataKeySpørsmål.oppholdslandStartdato]: { id: '10', svar: '' },
     [barnDataKeySpørsmål.oppholdslandSluttdato]: { id: '11', svar: '' },
     [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: { id: '12', svar: '' },
-    [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: undefined },
+    [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: null },
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.NEI },
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: '' },
     [barnDataKeySpørsmål.andreForelderNavn]: { id: '17', svar: AlternativtSvarForInput.UKJENT },
@@ -113,7 +115,7 @@ describe('OmBarnet', () => {
             <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
                 <HttpProvider>
                     <RoutesProvider>
-                        <OmBarnet barnetsIdent={'12345678910'} />
+                        <OmBarnet barnetsId={'random-id-jens'} />
                     </RoutesProvider>
                 </HttpProvider>
             </SprakProvider>
@@ -135,7 +137,7 @@ describe('OmBarnet', () => {
                 <HttpProvider>
                     <AppNavigationProvider>
                         <RoutesProvider>
-                            <OmBarnet barnetsIdent={'12345678910'} />
+                            <OmBarnet barnetsId={'random-id-jens'} />
                         </RoutesProvider>
                     </AppNavigationProvider>
                 </HttpProvider>
@@ -171,7 +173,7 @@ describe('OmBarnet', () => {
                 <HttpProvider>
                     <AppNavigationProvider>
                         <RoutesProvider>
-                            <OmBarnet barnetsIdent={'12345678910'} />
+                            <OmBarnet barnetsId={'random-id-jens'} />
                         </RoutesProvider>
                     </AppNavigationProvider>
                 </HttpProvider>
@@ -212,7 +214,7 @@ describe('OmBarnet', () => {
                 <HttpProvider>
                     <AppNavigationProvider>
                         <RoutesProvider>
-                            <OmBarnet barnetsIdent={'12345678910'} />
+                            <OmBarnet barnetsId={'random-id-jens'} />
                         </RoutesProvider>
                     </AppNavigationProvider>
                 </HttpProvider>

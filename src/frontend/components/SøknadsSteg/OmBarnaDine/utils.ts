@@ -1,12 +1,12 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { barnDataKeySpørsmål, IBarn, IBarnMedISøknad } from '../../../typer/person';
+import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import { IOmBarnaDineFeltTyper } from './useOmBarnaDine';
 
-export const genererSvarForSpørsmålBarn = (barn: IBarn, felt: Felt<string[]>): ESvar =>
-    felt.verdi.includes(barn.ident) ? ESvar.JA : ESvar.NEI;
+export const genererSvarForSpørsmålBarn = (barn: IBarnMedISøknad, felt: Felt<string[]>): ESvar =>
+    felt.verdi.includes(barn.id) ? ESvar.JA : ESvar.NEI;
 
 export const genererSvarForOppfølgningspørsmålBarn = (
     svarPåGrunnSpørsmål,
@@ -147,7 +147,7 @@ export const genererOppdaterteBarn = (
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     boddMindreEnn12MndINorge,
                     barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
-                    undefined
+                    null
                 ),
             },
             [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {

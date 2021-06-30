@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
 import { guid } from 'nav-frontend-js-utils';
+import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
@@ -11,7 +12,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface IJaNeiSpmProps {
     skjema: ISkjema<SkjemaFeltTyper, string>;
-    felt: Felt<ESvar | undefined>;
+    felt: Felt<ESvar | null>;
     spørsmålTekstId: string;
     tilleggsinfoTekstId?: string;
     inkluderVetIkke?: boolean;
@@ -26,12 +27,26 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     inkluderVetIkke = false,
     språkValues,
 }) => {
+    const ref = useRef<RadioPanelGruppe>(null);
+    const [mounted, settMounted] = useState(false);
+
+    useEffect(() => {
+        const jaNeiRef = ref.current;
+        if (mounted && jaNeiRef) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            jaNeiRef.props.onChange(null, felt.verdi);
+        }
+        settMounted(true);
+    }, [felt.verdi]);
+
     return felt.erSynlig ? (
         <span id={felt.id}>
             <JaNeiSpørsmål
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                 initiellVerdi={felt.verdi}
                 name={guid()}
+                ref={ref}
                 legend={
                     <>
                         <Element>

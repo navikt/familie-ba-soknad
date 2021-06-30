@@ -11,6 +11,7 @@ import { useApp } from '../../../../context/AppContext';
 import Miljø from '../../../../Miljø';
 import { barnDataKeySpørsmål, IBarn } from '../../../../typer/person';
 import { erBarnRegistrertFraFør } from '../../../../utils/person';
+import { hentUid } from '../../../../utils/uuid';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
 import useNavnInputFelt from './useNavnInputFelt';
@@ -19,8 +20,9 @@ import useNavnInputFelt from './useNavnInputFelt';
 export interface ILeggTilBarnTyper
     extends Omit<
         IBarn,
-        'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | barnDataKeySpørsmål
+        'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | 'id' | barnDataKeySpørsmål
     > {
+    ident: string;
     erFødt: ESvarMedUbesvart;
     navnetErUbestemt: ESvar;
     harBarnetFåttIdNummer: ESvar;
@@ -44,7 +46,7 @@ export const useLeggTilBarn = (): {
     );
 
     const erFødt = useFelt<ESvarMedUbesvart>({
-        verdi: undefined,
+        verdi: null,
         valideringsfunksjon: felt => {
             switch (felt.verdi) {
                 case ESvar.JA:
@@ -145,6 +147,7 @@ export const useLeggTilBarn = (): {
                 ...søknad,
                 barnRegistrertManuelt: søknad.barnRegistrertManuelt.concat([
                     {
+                        id: hentUid(),
                         navn:
                             fulltNavn() ||
                             intl.formatMessage({ id: 'hvilkebarn.barn.ingen-navn.placeholder' }),

@@ -16,6 +16,7 @@ import { useOmBarnet } from './useOmBarnet';
 
 describe('useOmBarnet', () => {
     const barnFraPdl: IBarn = {
+        id: 'random-id-1',
         navn: 'Barn Barnessen',
         ident: '1234',
         borMedSøker: true,
@@ -40,7 +41,7 @@ describe('useOmBarnet', () => {
 
         const { result } = renderHook(
             () => {
-                return useOmBarnet('1234');
+                return useOmBarnet('random-id-1');
             },
             { wrapper: TestProvidere }
         );
@@ -84,7 +85,7 @@ describe('useOmBarnet', () => {
 
         const { result } = renderHook(
             () => {
-                return useOmBarnet('1234');
+                return useOmBarnet('random-id-1');
             },
             { wrapper: TestProvidere }
         );
@@ -118,7 +119,7 @@ describe('useOmBarnet', () => {
 
         const { result } = renderHook(
             () => {
-                return useOmBarnet('1234');
+                return useOmBarnet('random-id-1');
             },
             { wrapper: TestProvidere }
         );
@@ -133,7 +134,7 @@ describe('useOmBarnet', () => {
 
         expect(nårKomBarnTilNorgeDato.verdi).toEqual('');
         expect(nårKomBarnTilNorgeDato.erSynlig).toEqual(false);
-        expect(planleggerÅBoINorge12Mnd.verdi).toEqual(undefined);
+        expect(planleggerÅBoINorge12Mnd.verdi).toEqual(null);
         expect(planleggerÅBoINorge12Mnd.erSynlig).toEqual(false);
     });
 
@@ -150,7 +151,7 @@ describe('useOmBarnet', () => {
 
         const { result } = renderHook(
             () => {
-                return useOmBarnet('1234');
+                return useOmBarnet('random-id-1');
             },
             { wrapper: TestProvidere }
         );

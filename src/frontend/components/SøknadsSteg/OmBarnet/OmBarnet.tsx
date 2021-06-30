@@ -15,6 +15,7 @@ import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { BarnetsId } from '../OmBarnaDine/HvilkeBarnCheckboxGruppe';
 import AndreForelder from './AndreForelder';
 import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
@@ -24,14 +25,16 @@ const EksternLenkeContainer = styled.div`
     margin-bottom: 4rem;
 `;
 
-const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
+const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     const {
         skjema,
         validerFelterOgVisFeilmelding,
         valideringErOk,
         oppdaterSøknad,
         barn,
-    } = useOmBarnet(barnetsIdent);
+        andreBarnSomErFyltUt,
+        settSammeForelder,
+    } = useOmBarnet(barnetsId);
 
     return barn ? (
         <Steg
@@ -45,7 +48,12 @@ const OmBarnet: React.FC<{ barnetsIdent: string }> = ({ barnetsIdent }) => {
             barn={barn}
         >
             <Oppfølgningsspørsmål barn={barn} skjema={skjema} />
-            <AndreForelder barn={barn} skjema={skjema} />
+            <AndreForelder
+                settSammeForelder={settSammeForelder}
+                barn={barn}
+                skjema={skjema}
+                andreBarnSomErFyltUt={andreBarnSomErFyltUt}
+            />
 
             {skjema.felter.borFastMedSøker.erSynlig &&
                 skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (

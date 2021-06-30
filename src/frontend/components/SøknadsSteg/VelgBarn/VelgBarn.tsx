@@ -4,7 +4,6 @@ import Masonry from 'react-masonry-css';
 import styled from 'styled-components/macro';
 
 import { useApp } from '../../../context/AppContext';
-import { mapBarnResponsTilBarn } from '../../../utils/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -43,9 +42,7 @@ const VelgBarn: React.FC = () => {
 
     const [modalÅpen, settModalÅpen] = useState<boolean>(false);
 
-    const barnFraRespons = mapBarnResponsTilBarn(søknad.søker.barn).filter(
-        barn => !barn.adressebeskyttelse
-    );
+    const barnFraRespons = søknad.søker.barn.filter(barn => !barn.adressebeskyttelse);
     const barnManueltLagtTil = søknad.barnRegistrertManuelt;
     const barn = barnFraRespons.concat(barnManueltLagtTil);
     const harBarnMedBeskyttaAdresse = !!søknad.søker.barn.find(barn => barn.adressebeskyttelse);
@@ -84,10 +81,10 @@ const VelgBarn: React.FC = () => {
                         480: 1,
                     }}
                 >
-                    {barn.map(barn => (
+                    {barn.map(barnet => (
                         <Barnekort
-                            key={barn.ident}
-                            barn={barn}
+                            key={barnet.id}
+                            barn={barnet}
                             velgBarnCallback={håndterVelgBarnToggle}
                             barnSomSkalVæreMed={barnSomSkalVæreMed}
                             fjernBarnCallback={fjernBarn}

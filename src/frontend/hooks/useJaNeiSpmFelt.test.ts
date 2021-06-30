@@ -11,10 +11,10 @@ import useJaNeiSpmFelt, { erRelevanteAvhengigheterValidert } from './useJaNeiSpm
 
 describe('erRelevanteAvhengigheterValidert', () => {
     test('Skal returnere true dersom alle felter er validert til OK', () => {
-        const værtINorgeITolvMånederFeltMock = mock<Felt<ESvar | undefined>>({
+        const værtINorgeITolvMånederFeltMock = mock<Felt<ESvar | null>>({
             valideringsstatus: Valideringsstatus.OK,
         });
-        const oppholderSegINorgeFeltMock = mock<Felt<ESvar | undefined>>({
+        const oppholderSegINorgeFeltMock = mock<Felt<ESvar | null>>({
             valideringsstatus: Valideringsstatus.OK,
         });
         const oppholdslandFeltMock = mock<Felt<Alpha3Code | ''>>({
@@ -39,10 +39,10 @@ describe('erRelevanteAvhengigheterValidert', () => {
     });
 
     test('Skal returnere false dersom tilhørende og relevant felt ikke er validert OK', () => {
-        const værtINorgeITolvMånederFeltMock = mock<Felt<ESvar | undefined>>({
+        const værtINorgeITolvMånederFeltMock = mock<Felt<ESvar | null>>({
             valideringsstatus: Valideringsstatus.OK,
         });
-        const oppholderSegINorgeFeltMock = mock<Felt<ESvar | undefined>>({
+        const oppholderSegINorgeFeltMock = mock<Felt<ESvar | null>>({
             valideringsstatus: Valideringsstatus.OK,
         });
         const oppholdslandFeltMock = mock<Felt<Alpha3Code | ''>>({
@@ -67,10 +67,10 @@ describe('erRelevanteAvhengigheterValidert', () => {
     });
 
     test('Skal returnere false dersom et avhengig JaNeiSpm med tilhørende felter ikke er validert til OK', () => {
-        const værtINorgeITolvMånederFeltMock = mock<Felt<ESvar | undefined>>({
+        const værtINorgeITolvMånederFeltMock = mock<Felt<ESvar | null>>({
             valideringsstatus: Valideringsstatus.OK,
         });
-        const oppholderSegINorgeFeltMock = mock<Felt<ESvar | undefined>>({
+        const oppholderSegINorgeFeltMock = mock<Felt<ESvar | null>>({
             valideringsstatus: Valideringsstatus.IKKE_VALIDERT,
         });
         const oppholdslandFeltMock = mock<Felt<Alpha3Code | ''>>({
@@ -95,10 +95,10 @@ describe('erRelevanteAvhengigheterValidert', () => {
     });
 
     test('Skal returnere false dersom et avhengig JaNeiSpm ikke er validert til OK', () => {
-        const værtINorgeITolvMånederFeltMock = mock<Felt<ESvar | undefined>>({
+        const værtINorgeITolvMånederFeltMock = mock<Felt<ESvar | null>>({
             valideringsstatus: Valideringsstatus.IKKE_VALIDERT,
         });
-        const oppholderSegINorgeFeltMock = mock<Felt<ESvar | undefined>>({
+        const oppholderSegINorgeFeltMock = mock<Felt<ESvar | null>>({
             valideringsstatus: Valideringsstatus.OK,
         });
         const oppholdslandFeltMock = mock<Felt<Alpha3Code | ''>>({
@@ -124,12 +124,12 @@ describe('erRelevanteAvhengigheterValidert', () => {
 });
 
 describe('useJaNeiSpmFelt', () => {
-    const oppholderSegINorge: ISøknadSpørsmål<ESvar | undefined> = {
+    const oppholderSegINorge: ISøknadSpørsmål<ESvar | null> = {
         id: OmDegSpørsmålId.oppholderSegINorge,
-        svar: undefined,
+        svar: null,
     };
 
-    const borPåRegistrertAdresseFeltMock = mock<Felt<ESvar | undefined>>({
+    const borPåRegistrertAdresseFeltMock = mock<Felt<ESvar | null>>({
         valideringsstatus: Valideringsstatus.IKKE_VALIDERT,
     });
 
@@ -143,5 +143,5 @@ describe('useJaNeiSpmFelt', () => {
 
     expect(result.current.erSynlig).toEqual(false);
     expect(result.current.valideringsstatus).toEqual(Valideringsstatus.IKKE_VALIDERT);
-    expect(result.current.verdi).toEqual(undefined);
+    expect(result.current.verdi).toEqual(null);
 });

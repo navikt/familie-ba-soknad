@@ -11,7 +11,8 @@
     "test-ci": "CI=true build",
     "test": "jest",
     "start": "NODE_ENV=production node --es-module-specifier-resolution=node build/backend/server.js",
-    "clean": "rm -rf dist build"
+    "clean": "rm -rf dist build",
+    "typecheck": "tsc --noEmit -p src/frontend/tsconfig.json"
   },
   "jest": {
     "roots": [
@@ -55,7 +56,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && yarn run typecheck"
     }
   },
   "lint-staged": {
@@ -83,7 +84,7 @@
   "dependencies": {
     "@babel/core": "7.12.3",
     "@navikt/ds-icons": "^0.3.2",
-    "@navikt/familie-form-elements": "^3.0.2",
+    "@navikt/familie-form-elements": "^3.1.0",
     "@navikt/familie-typer": "^3.0.13",
     "@navikt/fnrvalidator": "^1.1.2",
     "@navikt/sif-common-core": "^9.4.1",
@@ -220,6 +221,7 @@
     "style-loader": "^2.0.0",
     "terser": "^5.6.0-beta",
     "terser-webpack-plugin": "^5.1.1",
+    "ts-essentials": "^7.0.2",
     "ts-jest": "^26.4.4",
     "ts-loader": "^8.0.16",
     "ts-node": "^9.1.1",
