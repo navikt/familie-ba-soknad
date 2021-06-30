@@ -23,7 +23,7 @@ interface DekoratørRespons {
     NAV_FOOTER: string;
 }
 
-const getDecorator = (): Promise<DekoratørRespons> =>
+export const getDecorator = (): Promise<DekoratørRespons> =>
     new Promise((resolve, reject) => {
         const decorator = cache.get<DekoratørRespons>('main-cache');
         if (decorator) {
