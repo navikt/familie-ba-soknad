@@ -13,7 +13,7 @@ const devConfig: webpack.Configuration = mergeWithRules({
     },
 })(baseConfig, {
     mode: 'development',
-    entry: ['webpack-hot-middleware/client'],
+    entry: { hotReload: 'webpack-hot-middleware/client' },
     devtool: 'inline-source-map',
     plugins: [
         createHtmlWebpackPlugin(false),
