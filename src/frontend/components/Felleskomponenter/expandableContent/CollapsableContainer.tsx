@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { Collapse } from 'react-collapse';
-
-import bemUtils from '../PictureScanningGuide/bemUtils';
-import './collapsableContainer.less';
+import { css } from 'styled-components';
+import styled from 'styled-components/macro';
 
 export interface Props {
     children: React.ReactNode;
@@ -12,7 +11,21 @@ export interface Props {
     animated?: boolean;
 }
 
-const bem = bemUtils('collapsableContainer');
+const StyledCollapse = styled(Collapse)<{ isOpened }>`
+    opacity: 0;
+    transition: opacity 0.5s ease;
+
+    .typo-element {
+        margin-bottom: 0.5rem;
+    }
+
+    ${props =>
+        props.isOpened &&
+        css`
+            opacity: 1;
+            margin-bottom: 1.5rem;
+        `}
+`;
 
 const CollapsableContainer = ({
     children,
@@ -24,14 +37,7 @@ const CollapsableContainer = ({
     if (!animated) {
         return content;
     }
-    return (
-        <Collapse
-            isOpened={isOpen}
-            className={bem.classNames(bem.block, bem.modifierConditional('isOpen', isOpen))}
-        >
-            {content}
-        </Collapse>
-    );
+    return <StyledCollapse isOpened={isOpen}>{content}</StyledCollapse>;
 };
 
 export default CollapsableContainer;

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
+import { css } from 'styled-components';
+import styled from 'styled-components/macro';
+
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { guid } from 'nav-frontend-js-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import bemUtils from '../PictureScanningGuide/bemUtils';
 import CollapsableContainer from './CollapsableContainer';
 import InfoToggleButton from './InfoToggleButton';
-import './expandableInfo.less';
 
 interface Props {
     children: React.ReactNode;
@@ -17,7 +18,31 @@ interface Props {
     filledBackground?: boolean;
 }
 
-const bem = bemUtils('expandableInfo');
+const Container = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin-bottom: 1rem;
+`;
+
+const ButtonContainer = styled.div<{ isOpen }>`
+    width: 100%;
+
+    ${props =>
+        props.isOpen &&
+        css`
+            margin-bottom: 0.5rem;
+        `}
+`;
+
+const InnholdContainer = styled.div`
+    width: 100%;
+
+    .ReactCollapse--collapse {
+        transition: height 0.25s ease-in-out !important;
+    }
+`;
 
 const ExpandableInfo = ({
     children,
@@ -30,8 +55,8 @@ const ExpandableInfo = ({
     const [toggleContentId] = useState(guid());
 
     return (
-        <div className={bem.block}>
-            <div className={bem.element('toggler', isOpen ? 'open' : undefined)}>
+        <Container>
+            <ButtonContainer isOpen={isOpen}>
                 <InfoToggleButton
                     onToggle={() => setIsOpen(!isOpen)}
                     isOpen={isOpen}
@@ -39,13 +64,13 @@ const ExpandableInfo = ({
                 >
                     <Normaltekst tag="span">{isOpen ? closeTitle || title : title}</Normaltekst>
                 </InfoToggleButton>
-            </div>
-            <div className={bem.element('content')} id={toggleContentId}>
+            </ButtonContainer>
+            <InnholdContainer id={toggleContentId}>
                 <CollapsableContainer isOpen={isOpen} animated={true} ariaLive="polite">
                     {filledBackground ? <AlertStripeInfo>{children}</AlertStripeInfo> : children}
                 </CollapsableContainer>
-            </div>
-        </div>
+            </InnholdContainer>
+        </Container>
     );
 };
 

@@ -4,7 +4,6 @@ import styled from 'styled-components/macro';
 
 import { Element } from 'nav-frontend-typografi';
 
-import bemUtils from './bemUtils';
 import StatusIkon, { StatusIconStatusKey } from './StatusIcon';
 
 interface Props {
@@ -13,8 +12,6 @@ interface Props {
     statusText: string;
     description: string;
 }
-
-const bem = bemUtils('pictureScanningGuide').child('example');
 
 const ImageContainer = styled.div`
     padding-left: 1rem;
@@ -41,7 +38,7 @@ const PictureScanningExample = ({ image, status, statusText, description }: Prop
             </StatusIkonContainer>
             {statusText}
         </StyledElement>
-        <div className={bem.element('description')}>{description}</div>
+        <div>{description}</div>
     </div>
 );
 
