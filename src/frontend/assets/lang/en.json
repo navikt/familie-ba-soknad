@@ -107,7 +107,7 @@
   "hvilkebarn.leggtilbarn.ikke-fått-fnr.alert": "You cannot use this digital application if the child does not have a Norwegian national identity number yet. You can apply using the PDF/paper application form.",
   "hvilkebarn.leggtilbarn.ikke-fått-fnr.spm": "The child has not been given a Norwegian national identity number or D-number yet",
   "hvilkebarn.leggtilbarn.kort": "Do you want to apply for child benefit for other children who live with you on a permanent basis?",
-  "hvilkebarn.leggtilbarn.kort.knapp": "ADD ANOTHER CHILD",
+  "hvilkebarn.leggtilbarn.kort.knapp": "ADD CHILD",
   "hvilkebarn.leggtilbarn.modal.tittel": "Add another child",
   "hvilkebarn.leggtilbarn.navn-ikke-bestemt.spm": "Name still not decided",
   "hvilkebarn.regelverk.lenke": "https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd#chapter-1",

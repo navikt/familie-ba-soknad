@@ -11,6 +11,18 @@ import { BarnetsId } from '../../OmBarnaDine/HvilkeBarnCheckboxGruppe';
 
 const StyledFlatknapp = styled(Flatknapp)`
     margin: 1rem 0 -1rem -0.75rem; // -0.75 left kompanserer for padding-left fra .knapp--kompakt
+    max-width: 100%;
+    && {
+        white-space: normal;
+    }
+`;
+
+const StyledDeleteFilled = styled(DeleteFilled)`
+    min-width: 1rem;
+`;
+
+const TekstContainer = styled.span`
+    text-align: left;
 `;
 
 export const FjernBarnKnapp: React.FC<{
@@ -24,10 +36,10 @@ export const FjernBarnKnapp: React.FC<{
             kompakt={true}
             onClick={() => fjernBarnCallback(barnId)}
         >
-            <DeleteFilled />
-            <span>
+            <StyledDeleteFilled />
+            <TekstContainer>
                 <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
-            </span>
+            </TekstContainer>
         </StyledFlatknapp>
     );
 };
