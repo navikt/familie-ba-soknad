@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styled from 'styled-components/macro';
+
 import { Element } from 'nav-frontend-typografi';
 
 import bemUtils from './bemUtils';
@@ -14,15 +16,31 @@ interface Props {
 
 const bem = bemUtils('pictureScanningGuide').child('example');
 
+const ImageContainer = styled.div`
+    padding-left: 1rem;
+    margin-bottom: 0.75rem;
+`;
+
+const StyledElement = styled(Element)`
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+`;
+
+const StatusIkonContainer = styled.span`
+    padding-right: 0.5rem;
+    line-height: 0;
+`;
+
 const PictureScanningExample = ({ image, status, statusText, description }: Props) => (
-    <div className={bem.block}>
-        <div className={bem.element('image')}>{image}</div>
-        <Element tag="div" className={bem.element('title')}>
-            <span className={bem.element('statusIcon')} role="presentation">
+    <div>
+        <ImageContainer>{image}</ImageContainer>
+        <StyledElement tag="div">
+            <StatusIkonContainer role="presentation">
                 <StatusIkon status={status} />
-            </span>
+            </StatusIkonContainer>
             {statusText}
-        </Element>
+        </StyledElement>
         <div className={bem.element('description')}>{description}</div>
     </div>
 );
