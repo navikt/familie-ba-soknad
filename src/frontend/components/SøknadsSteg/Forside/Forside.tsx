@@ -64,7 +64,7 @@ const Forside: React.FC = () => {
                 <SpråkTekst id="forside.sidetittel" />
             </StyledSidetittel>
 
-            <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb]} />
+            <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
             <AlertStripeWrapper>
                 <AlertStripe type={'info'} form={'default'}>
                     This application is currently only available in Norwegian. If you need to apply
