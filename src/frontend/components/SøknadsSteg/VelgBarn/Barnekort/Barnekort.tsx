@@ -98,6 +98,16 @@ const Barnekort: React.FC<IBarnekortProps> = ({
         manueltRegistrertBarn => manueltRegistrertBarn.id === barn.id
     );
 
+    const hentBostedSpråkId = () => {
+        if (barn.adressebeskyttelse) {
+            return 'hvilkebarn.barn.bosted.adressesperre';
+        } else if (barn.borMedSøker) {
+            return 'hvilkebarn.barn.bosted.din-adresse';
+        } else {
+            return 'hvilkebarn.barn.bosted.ikke-din-adresse';
+        }
+    };
+
     return (
         <StyledBarnekort>
             <BarnekortHeader>
@@ -107,8 +117,14 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 />
             </BarnekortHeader>
             <InformasjonsboksInnhold>
-                <StyledUndertittel>{barn.navn}</StyledUndertittel>
-                {barn.ident && (
+                <StyledUndertittel>
+                    {barn.adressebeskyttelse ? (
+                        <SpråkTekst id={'hvilkebarn.barn.anonym'} />
+                    ) : (
+                        barn.navn
+                    )}
+                </StyledUndertittel>
+                {barn.ident && !barn.adressebeskyttelse && (
                     <BarneKortInfo
                         labelId={'hvilkebarn.barn.fødselsnummer'}
                         verdi={formaterFnr(barn.ident)}
@@ -117,18 +133,10 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 {barn.alder && ( // Barn som søker har lagt inn selv har ikke fødselsdato
                     <BarneKortInfo labelId={'hvilkebarn.barn.alder'} verdi={barn.alder} />
                 )}
-                {barn.borMedSøker !== undefined && (
+                {!erRegistrertManuelt && (
                     <BarneKortInfo
                         labelId={'hvilkebarn.barn.bosted'}
-                        verdi={
-                            <SpråkTekst
-                                id={
-                                    barn.borMedSøker
-                                        ? 'hvilkebarn.barn.bosted.din-adresse'
-                                        : 'hvilkebarn.barn.bosted.ikke-din-adresse'
-                                }
-                            />
-                        }
+                        verdi={<SpråkTekst id={hentBostedSpråkId()} />}
                     />
                 )}
                 <StyledCheckbox
