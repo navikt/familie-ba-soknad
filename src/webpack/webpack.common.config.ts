@@ -26,10 +26,7 @@ export const createHtmlWebpackPlugin = prodMode => {
 
 const commonConfig: webpack.Configuration = {
     mode: 'production',
-    entry: {
-        main: './src/frontend/index.tsx',
-        disabled: './src/frontend/disabled.tsx',
-    },
+    entry: { main: './src/frontend/index.tsx', disabled: './src/frontend/disabled.tsx' },
     plugins: [
         new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
             PUBLIC_URL: (process.env.BASE_PATH ?? '/') + publicUrl.substr(1),
