@@ -33,6 +33,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         const vedlegg = huketAv ? [] : dokumentasjon.opplastedeVedlegg;
         oppdaterDokumentasjon(dokumentasjon.dokumentasjonsbehov, vedlegg, huketAv);
     };
+    console.log(søknad);
 
     const oppdaterDokumentasjon = (
         dokumentasjonsbehov: Dokumentasjonsbehov,
