@@ -7,6 +7,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { formaterFnr } from '../../../utils/visning';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -38,7 +39,16 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
 
     return barn ? (
         <Steg
-            tittel={<SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />}
+            tittel={
+                barn.adressebeskyttelse && barn.ident ? (
+                    <SpråkTekst
+                        id={'ombarnet.sidetittel.anonym'}
+                        values={{ fødselsnummer: formaterFnr(barn.ident) }}
+                    />
+                ) : (
+                    <SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />
+                )
+            }
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
