@@ -41,7 +41,7 @@ const StyledKnappBase = styled(KnappBase)<{
     gridarea: 'tilbake' | 'gåVidere';
 }>`
     grid-area: ${props => props.gridarea};
-    width: 10rem;
+    min-width: 10rem;
     place-self: ${props => props.placeself};
     font-size: 1.125rem;
 
@@ -87,6 +87,7 @@ const Navigeringspanel: React.FC<{
     return (
         <Container>
             <StyledKnappBase
+                kompakt={true}
                 htmlType={'button'}
                 onClick={onTilbakeCallback}
                 placeself={'end'}
@@ -95,6 +96,7 @@ const Navigeringspanel: React.FC<{
                 <SpråkTekst id={'felles.navigasjon.tilbake'} />
             </StyledKnappBase>
             <StyledKnappBase
+                kompakt={true}
                 htmlType={'submit'}
                 type={hentKnappetype()}
                 placeself={'start'}
