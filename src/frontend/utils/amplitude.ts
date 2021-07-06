@@ -41,3 +41,12 @@ export const logForsettPåSkjemaMellomlagring = () => {
         team_id: 'familie',
     });
 };
+
+export const logSkjemaStegFullført = (steg: number) => {
+    logEvent('skjemasteg fullført', {
+        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
+        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        team_id: 'familie',
+        steg,
+    });
+};

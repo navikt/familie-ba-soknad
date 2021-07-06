@@ -15,7 +15,7 @@ import useFørsteRender from '../../../hooks/useFørsteRender';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
+import { logSidevisningOrdinærBarnetrygd, logSkjemaStegFullført } from '../../../utils/amplitude';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -94,6 +94,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         }
         const målPath = komFra?.path ?? nesteRoute.path;
         komFra && settKomFra(undefined);
+        logSkjemaStegFullført(hentAktivtStegIndexForStegindikator(location.pathname));
         history.push(målPath);
     };
 
