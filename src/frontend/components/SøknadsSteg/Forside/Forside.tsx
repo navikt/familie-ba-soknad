@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
@@ -11,6 +11,7 @@ import { RessursStatus } from '@navikt/familie-typer';
 import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
 import { useApp } from '../../../context/AppContext';
 import { RouteEnum } from '../../../context/RoutesContext';
+import useFørsteRender from '../../../hooks/useFørsteRender';
 import Miljø from '../../../Miljø';
 import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -34,13 +35,10 @@ const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
     const { sluttbruker, mellomlagretVerdi } = useApp();
 
+    useFørsteRender(() => logSidevisningOrdinærBarnetrygd(`${RouteEnum.Forside}`));
+
     const kanFortsettePåSøknad =
         mellomlagretVerdi && mellomlagretVerdi.modellVersjon === Miljø().modellVersjon;
-
-    useEffect(() => {
-        !kanFortsettePåSøknad &&
-            logSidevisningOrdinærBarnetrygd(`${RouteEnum.Forside} (ny søknad)`);
-    }, [kanFortsettePåSøknad]);
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 

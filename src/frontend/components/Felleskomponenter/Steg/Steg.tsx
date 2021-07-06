@@ -11,10 +11,15 @@ import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
 import { useRoutes } from '../../../context/RoutesContext';
+import useFørsteRender from '../../../hooks/useFørsteRender';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
+import {
+    logKlikkGåVidere,
+    logSidevisningOrdinærBarnetrygd,
+    logSkjemaStegFullført,
+} from '../../../utils/amplitude';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -71,9 +76,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
     const nåværendeRoute = hentNåværendeRoute(location.pathname).route;
 
-    useEffect(() => {
-        logSidevisningOrdinærBarnetrygd(nåværendeRoute);
-    }, []);
+    useFørsteRender(() => logSidevisningOrdinærBarnetrygd(nåværendeRoute));
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -95,11 +98,13 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         }
         const målPath = komFra?.path ?? nesteRoute.path;
         komFra && settKomFra(undefined);
+        logSkjemaStegFullført(hentAktivtStegIndexForStegindikator(location.pathname) + 1);
         history.push(målPath);
     };
 
     const håndterGåVidere = event => {
         event.preventDefault();
+        logKlikkGåVidere(hentAktivtStegIndexForStegindikator(location.pathname) + 1);
         if (skjema) {
             if (skjema.validerFelterOgVisFeilmelding()) {
                 skjema.settSøknadsdataCallback();

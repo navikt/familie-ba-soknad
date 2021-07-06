@@ -1,5 +1,5 @@
 export interface IPar {
-    id: string;
+    id: number;
     navn: string;
 }
 
