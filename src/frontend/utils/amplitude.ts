@@ -22,5 +22,40 @@ export const logSidevisningOrdinærBarnetrygd = (side: string) => {
         side,
         team_id: 'familie',
         skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
+        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+    });
+};
+
+export const logSkjemaStartet = () => {
+    logEvent('skjema startet', {
+        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
+        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        team_id: 'familie',
+    });
+};
+
+export const logForsettPåSøknad = () => {
+    logEvent('fortsett på søknad', {
+        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
+        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        team_id: 'familie',
+    });
+};
+
+export const logSkjemaStegFullført = (steg: number) => {
+    logEvent('skjemasteg fullført', {
+        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
+        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        team_id: 'familie',
+        steg,
+    });
+};
+
+export const logKlikkGåVidere = (steg: number) => {
+    logEvent('klikk gå videre', {
+        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
+        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        team_id: 'familie',
+        steg,
     });
 };
