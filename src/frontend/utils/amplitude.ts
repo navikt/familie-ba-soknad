@@ -27,7 +27,7 @@ export const logSidevisningOrdinærBarnetrygd = (side: string) => {
 };
 
 export const logSkjemaStartet = () => {
-    logEvent('skjema_startet', {
+    logEvent('skjema startet', {
         skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
         skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
         team_id: 'familie',
@@ -35,7 +35,7 @@ export const logSkjemaStartet = () => {
 };
 
 export const logForsettPåSkjemaMellomlagring = () => {
-    logEvent('fortsett_skjema_mellomlagring', {
+    logEvent('fortsett på søknad', {
         skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
         skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
         team_id: 'familie',
