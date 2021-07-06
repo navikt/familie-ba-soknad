@@ -98,13 +98,13 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         }
         const målPath = komFra?.path ?? nesteRoute.path;
         komFra && settKomFra(undefined);
-        logSkjemaStegFullført(hentAktivtStegIndexForStegindikator(location.pathname));
+        logSkjemaStegFullført(hentAktivtStegIndexForStegindikator(location.pathname) + 1);
         history.push(målPath);
     };
 
     const håndterGåVidere = event => {
         event.preventDefault();
-        logKlikkGåVidere(hentAktivtStegIndexForStegindikator(location.pathname));
+        logKlikkGåVidere(hentAktivtStegIndexForStegindikator(location.pathname) + 1);
         if (skjema) {
             if (skjema.validerFelterOgVisFeilmelding()) {
                 skjema.settSøknadsdataCallback();
