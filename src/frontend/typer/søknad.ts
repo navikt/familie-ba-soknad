@@ -15,11 +15,11 @@ export enum ESøknadstype {
 
 export const søknadstyper: INøkkelPar = {
     ORDINÆR: {
-        id: 'ORDINÆR',
+        id: 'ORDINÆR_BARNTETRYGD',
         navn: 'Ordinær barnetrygd',
     },
     UTVIDET: {
-        id: 'UTVIDET',
+        id: 'UTVIDET_BARNETRYGD',
         navn: 'Utvidet barnetrygd',
     },
 };
