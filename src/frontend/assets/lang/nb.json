@@ -21,7 +21,7 @@
   "dokumentasjon.send-søknad.knapp": "Send søknad",
   "dokumentasjon.sidetittel": "Last opp dokumentasjon",
   "dokumentasjon.vedleggsnummer": "Vedlegg {vedleggsnummer} av {antallvedlegg}:",
-  "felles.anonym.barn.fnr": "Barn {fødselsnummer}",
+  "felles.anonym.barn.fnr": "BARN {fødselsnummer}",
   "felles.banner": "Søknad om ordinær barnetrygd",
   "felles.barneillustrasjon.tittel": "Barneillustrasjon",
   "felles.blokkerTilbakeKnapp.modal.avbrytKnapp": "Lukk",

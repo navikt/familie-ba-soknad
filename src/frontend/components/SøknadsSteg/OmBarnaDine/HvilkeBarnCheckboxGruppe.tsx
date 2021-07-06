@@ -7,7 +7,7 @@ import { Felt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
-import { formaterFnr } from '../../../utils/visning';
+import { barnetsNavnValue } from '../../../utils/visning';
 
 export type BarnetsId = string;
 
@@ -67,11 +67,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
                 return (
                     <Checkbox
                         key={index}
-                        label={
-                            barnISøknad.adressebeskyttelse && barnISøknad.ident
-                                ? formaterFnr(barnISøknad.ident)
-                                : barnISøknad.navn
-                        }
+                        label={barnetsNavnValue(barnISøknad)}
                         defaultChecked={!!valgteBarn.find(barnId => barnId === barnISøknad.id)}
                         id={`${skjemafelt.id}${barnISøknad.id}`}
                         onChange={event => oppdaterListeMedBarn(event, barnISøknad.id)}
