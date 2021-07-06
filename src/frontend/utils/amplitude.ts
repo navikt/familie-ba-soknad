@@ -34,7 +34,7 @@ export const logSkjemaStartet = () => {
     });
 };
 
-export const logForsettPåSkjemaMellomlagring = () => {
+export const logForsettPåSøknad = () => {
     logEvent('fortsett på søknad', {
         skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
         skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
@@ -44,6 +44,15 @@ export const logForsettPåSkjemaMellomlagring = () => {
 
 export const logSkjemaStegFullført = (steg: number) => {
     logEvent('skjemasteg fullført', {
+        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
+        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        team_id: 'familie',
+        steg,
+    });
+};
+
+export const logKlikkGåVidere = (steg: number) => {
+    logEvent('klikk gå videre', {
         skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
         skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
         team_id: 'familie',
