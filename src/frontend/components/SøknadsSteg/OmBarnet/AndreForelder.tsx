@@ -1,9 +1,12 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/person';
+import { barnetsNavnValue } from '../../../utils/visning';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -22,6 +25,8 @@ const AndreForelder: React.FC<{
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     settSammeForelder: (radioVerdi: string) => void;
 }> = ({ barn, skjema, andreBarnSomErFyltUt, settSammeForelder }) => {
+    const intl = useIntl();
+
     return (
         <SkjemaFieldset tittelId={'ombarnet.andre-forelder'} språkValues={{ navn: barn.navn }}>
             <KomponentGruppe>
@@ -104,7 +109,7 @@ const AndreForelder: React.FC<{
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]
                         }
                         inkluderVetIkke={true}
-                        språkValues={{ navn: barn.navn }}
+                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                     />
                     <LandDropdown
                         felt={skjema.felter.andreForelderArbeidUtlandetHvilketLand}
@@ -127,7 +132,7 @@ const AndreForelder: React.FC<{
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderPensjonUtland]
                         }
                         inkluderVetIkke={true}
-                        språkValues={{ navn: barn.navn }}
+                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                     />
                     <LandDropdown
                         felt={skjema.felter.andreForelderPensjonHvilketLand}

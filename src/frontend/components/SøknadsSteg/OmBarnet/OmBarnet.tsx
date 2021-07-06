@@ -40,7 +40,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     return barn ? (
         <Steg
             tittel={
-                barn.adressebeskyttelse && barn.ident ? (
+                barn.adressebeskyttelse ? (
                     <SpråkTekst
                         id={'ombarnet.sidetittel.anonym'}
                         values={{ fødselsnummer: formaterFnr(barn.ident) }}

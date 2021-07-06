@@ -124,7 +124,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                         barn.navn
                     )}
                 </StyledUndertittel>
-                {barn.ident && !barn.adressebeskyttelse && (
+                {!barn.adressebeskyttelse && (
                     <BarneKortInfo
                         labelId={'hvilkebarn.barn.fødselsnummer'}
                         verdi={formaterFnr(barn.ident)}
