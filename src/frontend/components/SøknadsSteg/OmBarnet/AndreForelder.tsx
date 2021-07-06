@@ -24,7 +24,7 @@ const AndreForelder: React.FC<{
     settSammeForelder: (radioVerdi: string) => void;
 }> = ({ barn, skjema, andreBarnSomErFyltUt, settSammeForelder }) => {
     return (
-        <SkjemaFieldset tittelId={'ombarnet.andre-forelder'} språkValues={{ navn: barn.navn }}>
+        <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
             <KomponentGruppe>
                 {skjema.felter.sammeForelderSomAnnetBarn.erSynlig && (
                     <SammeSomAnnetBarnRadio
