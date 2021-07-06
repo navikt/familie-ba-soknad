@@ -11,6 +11,7 @@ import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
 import { useRoutes } from '../../../context/RoutesContext';
+import useFørsteRender from '../../../hooks/useFørsteRender';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -71,9 +72,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
     const nåværendeRoute = hentNåværendeRoute(location.pathname).route;
 
-    useEffect(() => {
-        logSidevisningOrdinærBarnetrygd(nåværendeRoute);
-    }, []);
+    useFørsteRender(() => logSidevisningOrdinærBarnetrygd(nåværendeRoute));
 
     useEffect(() => {
         window.scrollTo(0, 0);
