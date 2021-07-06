@@ -8,6 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/person';
+import { barnetsNavnValue } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
 
@@ -33,7 +34,7 @@ const SammeSomAnnetBarnRadio: React.FC<{
             label: (
                 <SpråkTekst
                     id={'ombarnet.svaralternativ.samme-som-barn'}
-                    values={{ navn: barn.navn }}
+                    values={{ navn: barnetsNavnValue(barn) }}
                 />
             ),
             value: barn.id,
