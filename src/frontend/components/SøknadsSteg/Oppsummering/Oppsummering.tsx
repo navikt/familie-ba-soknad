@@ -199,12 +199,16 @@ const Oppsummering: React.FC = () => {
             >
                 {søknad.barnInkludertISøknaden.map((barn, index) => (
                     <StyledOppsummeringsFeltGruppe key={index}>
-                        {barn.navn && (
-                            <OppsummeringFelt
-                                tittel={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
-                                søknadsvar={barn.navn}
-                            />
-                        )}
+                        <OppsummeringFelt
+                            tittel={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
+                            søknadsvar={
+                                barn.adressebeskyttelse
+                                    ? intl.formatMessage({
+                                          id: 'hvilkebarn.barn.bosted.adressesperre',
+                                      })
+                                    : barn.navn
+                            }
+                        />
 
                         <OppsummeringFelt
                             tittel={<SpråkTekst id={'hvilkebarn.barn.fødselsnummer'} />}
