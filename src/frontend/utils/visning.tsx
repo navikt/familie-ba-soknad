@@ -4,7 +4,7 @@ import { IntlShape } from 'react-intl';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { IAdresse, IBarnMedISøknad } from '../typer/person';
+import { IAdresse, IBarn } from '../typer/person';
 import { hentAdressefelterSortert } from './person';
 
 export const formaterFnr = (fødselsnummer: string) => {
@@ -17,7 +17,7 @@ export const genererAdresseVisning = (adresse: IAdresse) => {
     ));
 };
 
-export const barnetsNavnValue = (barn: IBarnMedISøknad, intl: IntlShape): string => {
+export const barnetsNavnValue = (barn: IBarn, intl: IntlShape): string => {
     return barn.adressebeskyttelse
         ? (intl.formatMessage(
               { id: 'felles.anonym.barn.fnr' },

@@ -343,7 +343,7 @@ const Oppsummering: React.FC = () => {
                                 tittel={
                                     <SpråkTekst
                                         id={'ombarnet.fosterbarn'}
-                                        values={{ navn: barn.navn }}
+                                        values={{ navn: barnetsNavnValue(barn, intl) }}
                                     />
                                 }
                             />
@@ -354,7 +354,7 @@ const Oppsummering: React.FC = () => {
                                     tittel={
                                         <SpråkTekst
                                             id={'ombarnet.institusjon'}
-                                            values={{ navn: barn.navn }}
+                                            values={{ navn: barnetsNavnValue(barn, intl) }}
                                         />
                                     }
                                 />
@@ -406,7 +406,7 @@ const Oppsummering: React.FC = () => {
                                     tittel={
                                         <SpråkTekst
                                             id={'ombarnet.oppholdutland'}
-                                            values={{ navn: barn.navn }}
+                                            values={{ navn: barnetsNavnValue(barn, intl) }}
                                         />
                                     }
                                 />
@@ -414,7 +414,7 @@ const Oppsummering: React.FC = () => {
                                     tittel={
                                         <SpråkTekst
                                             id={'ombarnet.oppholdutland.land.spm'}
-                                            values={{ navn: barn.navn }}
+                                            values={{ navn: barnetsNavnValue(barn, intl) }}
                                         />
                                     }
                                     søknadsvar={landkodeTilSpråk(
@@ -451,7 +451,7 @@ const Oppsummering: React.FC = () => {
                                     tittel={
                                         <SpråkTekst
                                             id={'ombarnet.sammenhengende-opphold'}
-                                            values={{ navn: barn.navn }}
+                                            values={{ navn: barnetsNavnValue(barn, intl) }}
                                         />
                                     }
                                 />
@@ -483,7 +483,7 @@ const Oppsummering: React.FC = () => {
                                     tittel={
                                         <SpråkTekst
                                             id={'ombarnet.barnetrygd-eøs'}
-                                            values={{ navn: barn.navn }}
+                                            values={{ navn: barnetsNavnValue(barn, intl) }}
                                         />
                                     }
                                 />
@@ -543,7 +543,7 @@ const Oppsummering: React.FC = () => {
                                 tittel={
                                     <SpråkTekst
                                         id={'ombarnet.andre-forelder.arbeid-utland.spm'}
-                                        values={{ navn: barn.navn }}
+                                        values={{ navn: barnetsNavnValue(barn, intl) }}
                                     />
                                 }
                                 søknadsvar={
@@ -573,7 +573,7 @@ const Oppsummering: React.FC = () => {
                                 tittel={
                                     <SpråkTekst
                                         id={'ombarnet.andre-forelder.utenlandspensjon.spm'}
-                                        values={{ navn: barn.navn }}
+                                        values={{ navn: barnetsNavnValue(barn, intl) }}
                                     />
                                 }
                                 søknadsvar={
@@ -585,7 +585,7 @@ const Oppsummering: React.FC = () => {
                                     tittel={
                                         <SpråkTekst
                                             id={'ombarnet.andre-forelder.utenlandspensjon.land.spm'}
-                                            values={{ navn: barn.navn }}
+                                            values={{ navn: barnetsNavnValue(barn, intl) }}
                                         />
                                     }
                                     søknadsvar={landkodeTilSpråk(
@@ -603,7 +603,7 @@ const Oppsummering: React.FC = () => {
                                 tittel={
                                     <SpråkTekst
                                         id={'ombarnet.bor-fast.spm'}
-                                        values={{ navn: barn.navn }}
+                                        values={{ navn: barnetsNavnValue(barn, intl) }}
                                     />
                                 }
                                 søknadsvar={barn[barnDataKeySpørsmål.borFastMedSøker].svar}
@@ -612,7 +612,7 @@ const Oppsummering: React.FC = () => {
                                 tittel={
                                     <SpråkTekst
                                         id={'ombarnet.delt-bosted.spm'}
-                                        values={{ navn: barn.navn }}
+                                        values={{ navn: barnetsNavnValue(barn, intl) }}
                                     />
                                 }
                                 søknadsvar={
@@ -625,7 +625,7 @@ const Oppsummering: React.FC = () => {
                                 tittel={
                                     <SpråkTekst
                                         id={'ombarnet.søker-for-periode.spm'}
-                                        values={{ navn: barn.navn }}
+                                        values={{ navn: barnetsNavnValue(barn, intl) }}
                                     />
                                 }
                             />
