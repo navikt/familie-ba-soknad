@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
@@ -23,13 +25,14 @@ const Oppfølgningsspørsmål: React.FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
 }> = ({ barn, skjema }) => {
+    const intl = useIntl();
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <KomponentGruppe>
                     <Informasjonsbolk
                         tittelId={'ombarnet.fosterbarn'}
-                        språkValues={{ navn: barnetsNavnValue(barn) }}
+                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                     >
                         <VedleggNotis språkTekstId={'ombarnet.fosterbarn.vedleggsinfo'} />
                     </Informasjonsbolk>
@@ -39,7 +42,7 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.institusjon'}
-                    språkValues={{ navn: barnetsNavnValue(barn) }}
+                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     <SkjemaFeltInput
                         felt={skjema.felter.institusjonsnavn}
@@ -91,7 +94,7 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.oppholderSegIUtland].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.oppholdutland'}
-                    språkValues={{ navn: barnetsNavnValue(barn) }}
+                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     <LandDropdown
                         felt={skjema.felter.oppholdsland}
@@ -132,7 +135,7 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.sammenhengende-opphold'}
-                    språkValues={{ navn: barnetsNavnValue(barn) }}
+                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     <Datovelger
                         avgrensDatoFremITid={true}
@@ -159,7 +162,7 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.barnetrygd-eøs'}
-                    språkValues={{ navn: barnetsNavnValue(barn) }}
+                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     <LandDropdown
                         felt={skjema.felter.barnetrygdFraEøslandHvilketLand}

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import { Checkbox } from 'nav-frontend-skjema';
@@ -7,7 +8,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { barnetsNavnValue, formaterFnr } from '../../../utils/visning';
+import { barnetsNavnValue } from '../../../utils/visning';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -36,18 +37,15 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         andreBarnSomErFyltUt,
         settSammeForelder,
     } = useOmBarnet(barnetsId);
+    const intl = useIntl();
 
     return barn ? (
         <Steg
             tittel={
-                barn.adressebeskyttelse ? (
-                    <SpråkTekst
-                        id={'ombarnet.sidetittel.anonym'}
-                        values={{ fødselsnummer: formaterFnr(barn.ident) }}
-                    />
-                ) : (
-                    <SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />
-                )
+                <SpråkTekst
+                    id={'ombarnet.sidetittel'}
+                    values={{ navn: barnetsNavnValue(barn, intl) }}
+                />
             }
             skjema={{
                 validerFelterOgVisFeilmelding,
@@ -86,7 +84,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             spørsmålTekstId={
                                 omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.borFastMedSøker]
                             }
-                            språkValues={{ navn: barnetsNavnValue(barn) }}
+                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                         />
                         <JaNeiSpm
                             skjema={skjema}
@@ -96,7 +94,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                     OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
                                 ]
                             }
-                            språkValues={{ navn: barnetsNavnValue(barn) }}
+                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                         />
                         {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
                             <VedleggNotis
@@ -112,7 +110,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 skjema.felter.søkerForTidsromSluttdato.erSynlig && (
                     <SkjemaFieldset
                         tittelId={'ombarnet.søker-for-periode.spm'}
-                        språkValues={{ navn: barnetsNavnValue(barn) }}
+                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                         dynamisk
                     >
                         <AlertStripe>

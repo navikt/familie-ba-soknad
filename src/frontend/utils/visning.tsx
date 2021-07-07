@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
+
+import { IntlShape } from 'react-intl';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IAdresse, IBarnMedISøknad } from '../typer/person';
 import { hentAdressefelterSortert } from './person';
 
@@ -16,13 +17,11 @@ export const genererAdresseVisning = (adresse: IAdresse) => {
     ));
 };
 
-export const barnetsNavnValue = (barn: IBarnMedISøknad): ReactNode => {
-    return barn.adressebeskyttelse ? (
-        <SpråkTekst
-            id={'felles.anonym.barn.fnr'}
-            values={{ fødselsnummer: formaterFnr(barn.ident) }}
-        />
-    ) : (
-        barn.navn.toUpperCase()
-    );
+export const barnetsNavnValue = (barn: IBarnMedISøknad, intl: IntlShape): string => {
+    return barn.adressebeskyttelse
+        ? (intl.formatMessage(
+              { id: 'felles.anonym.barn.fnr' },
+              { fødselsnummer: formaterFnr(barn.ident) }
+          ) as string)
+        : barn.navn.toUpperCase();
 };

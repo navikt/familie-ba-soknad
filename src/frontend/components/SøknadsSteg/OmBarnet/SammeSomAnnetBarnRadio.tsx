@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
@@ -26,6 +27,7 @@ const SammeSomAnnetBarnRadio: React.FC<{
     onChangeCallback: (radioVerdi: string) => void;
 }> = ({ andreBarnSomErFyltUt, skjema, onChangeCallback }) => {
     const [checked, setChecked] = useState(ESvar.NEI);
+    const intl = useIntl();
 
     const felt = skjema.felter.sammeForelderSomAnnetBarn;
 
@@ -34,7 +36,7 @@ const SammeSomAnnetBarnRadio: React.FC<{
             label: (
                 <SpråkTekst
                     id={'ombarnet.svaralternativ.samme-som-barn'}
-                    values={{ navn: barnetsNavnValue(barn) }}
+                    values={{ navn: barnetsNavnValue(barn, intl) }}
                 />
             ),
             value: barn.id,

@@ -204,3 +204,13 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
         adressebeskyttelse: barnRespons.adressebeskyttelse,
     }));
 };
+
+export const hentBostedSpråkId = (barn: IBarn) => {
+    if (barn.adressebeskyttelse) {
+        return 'hvilkebarn.barn.bosted.adressesperre';
+    } else if (barn.borMedSøker) {
+        return 'hvilkebarn.barn.bosted.din-adresse';
+    } else {
+        return 'hvilkebarn.barn.bosted.ikke-din-adresse';
+    }
+};

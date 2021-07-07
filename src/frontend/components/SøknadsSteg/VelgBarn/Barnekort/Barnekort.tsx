@@ -14,6 +14,7 @@ import { useApp } from '../../../../context/AppContext';
 import { device } from '../../../../Theme';
 import { IBarn } from '../../../../typer/person';
 import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
+import { hentBostedSpråkId } from '../../../../utils/person';
 import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { FjernBarnKnapp } from './FjernBarnKnapp';
@@ -98,16 +99,6 @@ const Barnekort: React.FC<IBarnekortProps> = ({
         manueltRegistrertBarn => manueltRegistrertBarn.id === barn.id
     );
 
-    const hentBostedSpråkId = () => {
-        if (barn.adressebeskyttelse) {
-            return 'hvilkebarn.barn.bosted.adressesperre';
-        } else if (barn.borMedSøker) {
-            return 'hvilkebarn.barn.bosted.din-adresse';
-        } else {
-            return 'hvilkebarn.barn.bosted.ikke-din-adresse';
-        }
-    };
-
     return (
         <StyledBarnekort>
             <BarnekortHeader>
@@ -136,7 +127,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 {!erRegistrertManuelt && (
                     <BarneKortInfo
                         labelId={'hvilkebarn.barn.bosted'}
-                        verdi={<SpråkTekst id={hentBostedSpråkId()} />}
+                        verdi={<SpråkTekst id={hentBostedSpråkId(barn)} />}
                     />
                 )}
                 <StyledCheckbox
