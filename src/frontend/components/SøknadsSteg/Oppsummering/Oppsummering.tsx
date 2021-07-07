@@ -335,7 +335,7 @@ const Oppsummering: React.FC = () => {
                 return (
                     <Oppsummeringsbolk
                         tittel={'oppsummering.deltittel.ombarnet'}
-                        språkValues={{ nummer, navn: barn.navn }}
+                        språkValues={{ nummer, navn: barnetsNavnValue(barn, intl) }}
                         key={index}
                         route={hentStegObjektForBarn(barn)}
                         skjemaHook={useOmBarnet}
