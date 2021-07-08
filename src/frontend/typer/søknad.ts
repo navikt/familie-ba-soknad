@@ -79,8 +79,20 @@ export interface ISøknadKontraktBarn {
     spørsmål: SpørsmålMap;
 }
 
+const genererSøknadstype = () => {
+    if (process.env.NODE_ENV === 'production') {
+        // PROD OG PREPROD
+        return window.location.pathname.includes('utvidet')
+            ? ESøknadstype.UTVIDET
+            : ESøknadstype.ORDINÆR;
+    } else {
+        // LOKAL UTVIKLING
+        return ESøknadstype.UTVIDET;
+    }
+};
+
 export const initialStateSøknad: ISøknad = {
-    søknadstype: ESøknadstype.ORDINÆR,
+    søknadstype: genererSøknadstype(),
     barnInkludertISøknaden: [],
     lestOgForståttBekreftelse: false,
     barnRegistrertManuelt: [],

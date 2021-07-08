@@ -13,6 +13,7 @@ import { useApp } from '../../../context/AppContext';
 import { RouteEnum } from '../../../context/RoutesContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import Miljø from '../../../Miljø';
+import { ESøknadstype } from '../../../typer/søknad';
 import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -33,7 +34,7 @@ const StyledSpråkvelger = styled(Sprakvelger)`
 
 const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
-    const { sluttbruker, mellomlagretVerdi } = useApp();
+    const { sluttbruker, mellomlagretVerdi, søknad } = useApp();
 
     useFørsteRender(() => logSidevisningOrdinærBarnetrygd(`${RouteEnum.Forside}`));
 
@@ -50,7 +51,11 @@ const Forside: React.FC = () => {
             />
 
             <StyledSidetittel>
-                <SpråkTekst id="forside.sidetittel" />
+                {søknad.søknadstype === ESøknadstype.ORDINÆR ? (
+                    <SpråkTekst id="forside.sidetittel" />
+                ) : (
+                    'UTVIDET BARNETRYGD'
+                )}
             </StyledSidetittel>
 
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
