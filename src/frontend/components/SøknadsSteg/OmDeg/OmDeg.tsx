@@ -61,59 +61,64 @@ const OmDeg: React.FC = () => {
                     />
                 )}
             </KomponentGruppe>
+            {skjema.felter.oppholderSegINorge.erSynlig && (
+                <KomponentGruppe dynamisk>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.oppholderSegINorge}
+                        spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholderSegINorge]}
+                    />
 
-            <KomponentGruppe dynamisk>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.oppholderSegINorge}
-                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholderSegINorge]}
-                />
+                    {skjema.felter.oppholdsland.erSynlig && (
+                        <KomponentGruppe inline dynamisk>
+                            <LandDropdown
+                                felt={skjema.felter.oppholdsland}
+                                skjema={skjema}
+                                label={
+                                    <SpråkTekst
+                                        id={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdsland]}
+                                    />
+                                }
+                            />
+                            <Datovelger
+                                avgrensDatoFremITid={true}
+                                felt={skjema.felter.oppholdslandDato}
+                                skjema={skjema}
+                                labelTekstId={
+                                    omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdslandDato]
+                                }
+                            />
+                        </KomponentGruppe>
+                    )}
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.værtINorgeITolvMåneder}
+                        spørsmålTekstId={
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
+                        }
+                    />
+                    <Datovelger
+                        avgrensDatoFremITid={true}
+                        felt={skjema.felter.komTilNorgeDato}
+                        skjema={skjema}
+                        labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
+                        dynamisk
+                    />
 
-                {skjema.felter.oppholdsland.erSynlig && (
-                    <KomponentGruppe inline dynamisk>
-                        <LandDropdown
-                            felt={skjema.felter.oppholdsland}
-                            skjema={skjema}
-                            label={
-                                <SpråkTekst
-                                    id={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdsland]}
-                                />
-                            }
-                        />
-                        <Datovelger
-                            avgrensDatoFremITid={true}
-                            felt={skjema.felter.oppholdslandDato}
-                            skjema={skjema}
-                            labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdslandDato]}
-                        />
-                    </KomponentGruppe>
-                )}
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.værtINorgeITolvMåneder}
-                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
-                />
-                <Datovelger
-                    avgrensDatoFremITid={true}
-                    felt={skjema.felter.komTilNorgeDato}
-                    skjema={skjema}
-                    labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
-                    dynamisk
-                />
-
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
-                    spørsmålTekstId={
-                        omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
-                    }
-                />
-                {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                    <AlertStripe type={'advarsel'} dynamisk>
-                        <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
-                    </AlertStripe>
-                )}
-            </KomponentGruppe>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
+                        spørsmålTekstId={
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
+                        }
+                    />
+                    {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
+                        <AlertStripe type={'advarsel'} dynamisk>
+                            <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
+                        </AlertStripe>
+                    )}
+                </KomponentGruppe>
+            )}
 
             {skjema.felter.erAsylsøker.erSynlig && (
                 <KomponentGruppe dynamisk>
