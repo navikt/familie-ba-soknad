@@ -12,6 +12,8 @@ import Søknad from './Søknad';
 
 const AppContainer = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK, innsendingStatus } = useApp();
+    console.log('systemet laster: ' + systemetLaster());
+    console.log('systemt feiler: ' + systemetFeiler());
     return (
         <main>
             {systemetLaster() && <SystemetLaster />}
