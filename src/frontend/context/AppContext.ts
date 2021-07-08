@@ -42,7 +42,6 @@ const [AppProvider, useApp] = createUseContext(() => {
             verifiserAtBrukerErAutentisert(settInnloggetStatus);
         }
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
-            console.log('innloggetStatus er autentisert');
             settSluttbruker(byggHenterRessurs());
 
             axiosRequest<ISøkerRespons, void>({
@@ -186,15 +185,13 @@ const [AppProvider, useApp] = createUseContext(() => {
             påvirkerSystemLaster: true,
         })
             .then(ressurs => {
-                console.log(ressurs);
                 if (ressurs.status === RessursStatus.SUKSESS) {
                     settInnloggetStatus(InnloggetStatus.AUTENTISERT);
                 } else {
                     settInnloggetStatus(InnloggetStatus.FEILET);
                 }
             })
-            .catch(feil => {
-                console.log(feil);
+            .catch(_ => {
                 settInnloggetStatus(InnloggetStatus.FEILET);
             });
     };
