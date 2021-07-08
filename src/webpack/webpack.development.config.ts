@@ -13,13 +13,19 @@ const devConfig: webpack.Configuration = mergeWithRules({
     },
 })(baseConfig, {
     mode: 'development',
-    entry: { hotReload: 'webpack-hot-middleware/client' },
+    entry: {
+        main: ['webpack-hot-middleware/client', './src/frontend/index.tsx'],
+        disabled: './src/frontend/disabled.tsx',
+    },
     devtool: 'inline-source-map',
     plugins: [
         createHtmlWebpackPlugin(false),
         new webpack.HotModuleReplacementPlugin(),
         new ReactRefreshWebpackPlugin(),
     ],
+    optimization: {
+        runtimeChunk: 'single',
+    },
     module: {
         rules: [
             {

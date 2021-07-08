@@ -8,12 +8,11 @@ import Modal from 'nav-frontend-modal';
 
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
-import * as bokmålPSG from '@navikt/sif-common-core/lib/components/picture-scanning-guide/picturescanningguide.nb.json';
-import * as nynorskPSG from '@navikt/sif-common-core/lib/components/picture-scanning-guide/picturescanningguide.nn.json';
 
 import packageJson from './../../package.json';
 import './index.less';
 import App from './App';
+import * as engelsk from './assets/lang/en.json';
 import * as bokmål from './assets/lang/nb.json';
 import * as nynorsk from './assets/lang/nn.json';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
@@ -38,12 +37,17 @@ if (process.env.NODE_ENV !== 'production') {
 // Last ned land-navn for statsborgeskap
 import(`i18n-iso-countries/langs/nb.json`).then(result => registerLocale(result));
 import(`i18n-iso-countries/langs/nn.json`).then(result => registerLocale(result));
+import(`i18n-iso-countries/langs/en.json`).then(result => registerLocale(result));
 
 ReactDOM.render(
     <React.StrictMode>
         <GlobalStyle />
         <SprakProvider
-            tekster={{ nb: { ...bokmål, ...bokmålPSG }, nn: { ...nynorsk, ...nynorskPSG } }}
+            tekster={{
+                nb: bokmål,
+                nn: nynorsk,
+                en: engelsk,
+            }}
             defaultLocale={LocaleType.nb}
         >
             <HttpProvider>
