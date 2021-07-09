@@ -160,6 +160,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         />
                     </SkjemaFieldset>
                 )}
+
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.søkerHarBoddMedAndreForelder}
+                spørsmålTekstId={
+                    omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder]
+                }
+            />
         </Steg>
     ) : null;
 };

@@ -23,6 +23,7 @@ import { ILokasjon } from '../../../typer/lokasjon';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
+    barnDataKeySpørsmålUtvidet,
     DatoMedUkjent,
     IBarnMedISøknad,
 } from '../../../typer/person';
@@ -67,6 +68,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     søkerForTidsromStartdato: ISODateString;
     søkerForTidsromSluttdato: ISODateString;
     sammeForelderSomAnnetBarn: string | null;
+    søkerHarBoddMedAndreForelder;
 }
 
 export const useOmBarnet = (
@@ -462,6 +464,20 @@ export const useOmBarnet = (
                 skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK)
     );
 
+    /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
+
+    const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt(
+        barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder],
+        {
+            borFastMedSøker: {
+                hovedSpørsmål: borFastMedSøker,
+            },
+            skriftligAvtaleOmDeltBosted: {
+                hovedSpørsmål: skriftligAvtaleOmDeltBosted,
+            },
+        }
+    );
+
     const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IOmBarnetUtvidetFeltTyper,
         string
@@ -496,6 +512,7 @@ export const useOmBarnet = (
             søkerForTidsromStartdato,
             søkerForTidsromSluttdato,
             sammeForelderSomAnnetBarn,
+            søkerHarBoddMedAndreForelder,
         },
         skjemanavn: `om-barnet-${barn.id}`,
     });
@@ -647,6 +664,12 @@ export const useOmBarnet = (
                                   søkerForTidsromCheckbox,
                                   søkerForTidsromSluttdato
                               ),
+                          },
+                          utvidet: {
+                              søkerHarBoddMedAndreForelder: {
+                                  ...barn.utvidet.søkerHarBoddMedAndreForelder,
+                                  svar: søkerHarBoddMedAndreForelder.verdi,
+                              },
                           },
                       }
                     : barn
