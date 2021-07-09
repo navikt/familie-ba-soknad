@@ -33,7 +33,6 @@ export interface ISøkerRespons extends IPerson {
 
 export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     barn: IBarn[];
-    telefonnummer: ISøknadSpørsmål<string>;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
     oppholderSegINorge: ISøknadSpørsmål<ESvar | null>;
     oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;

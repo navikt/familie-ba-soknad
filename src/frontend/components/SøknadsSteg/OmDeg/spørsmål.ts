@@ -1,6 +1,5 @@
 export enum OmDegSpørsmålId {
     borPåRegistrertAdresse = 'bor-på-registrert-adresse',
-    telefonnummer = 'telefonnummer',
     oppholderSegINorge = 'søker-oppholder-seg-i-norge',
     oppholdsland = 'søker-oppholdsland',
     oppholdslandDato = 'søker-oppholdsland-dato',
@@ -16,7 +15,6 @@ export enum OmDegSpørsmålId {
 
 export const omDegSpørsmålSpråkId: Record<OmDegSpørsmålId, string> = {
     [OmDegSpørsmålId.borPåRegistrertAdresse]: 'omdeg.borpådenneadressen.spm',
-    [OmDegSpørsmålId.telefonnummer]: 'omdeg.telefon.spm',
     [OmDegSpørsmålId.oppholderSegINorge]: 'omdeg.opphold-i-norge.spm',
     [OmDegSpørsmålId.oppholdsland]: 'omdeg.opphold-i-norge.land.spm',
     [OmDegSpørsmålId.oppholdslandDato]: 'omdeg.opphold-i-norge.dato.spm',

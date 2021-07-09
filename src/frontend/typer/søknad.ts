@@ -67,7 +67,6 @@ export interface ISøknadKontraktSøker {
     statsborgerskap: ISøknadsfelt<string[]>;
     adresse: ISøknadsfelt<IAdresse>;
     sivilstand: ISøknadsfelt<ESivilstand>;
-    telefonnummer: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
 }
 
@@ -134,10 +133,6 @@ export const initialStateSøknad: ISøknad = {
         borPåRegistrertAdresse: {
             id: OmDegSpørsmålId.borPåRegistrertAdresse,
             svar: null,
-        },
-        telefonnummer: {
-            id: OmDegSpørsmålId.telefonnummer,
-            svar: '',
         },
         oppholderSegINorge: {
             id: OmDegSpørsmålId.oppholderSegINorge,

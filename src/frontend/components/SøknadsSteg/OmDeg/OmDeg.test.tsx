@@ -93,7 +93,5 @@ describe('OmDeg', () => {
 
         const jaKnapp = getByText(/felles.svaralternativ.ja/);
         act(() => jaKnapp.click());
-
-        expect(queryByText(omDegSpørsmålSpråkId['telefonnummer'])).toBeInTheDocument();
     });
 });

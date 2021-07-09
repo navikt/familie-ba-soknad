@@ -119,10 +119,6 @@ const Oppsummering: React.FC = () => {
 
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
-                        tittel={<SpråkTekst id={'omdeg.telefon.spm'} />}
-                        søknadsvar={søknad.søker.telefonnummer.svar}
-                    />
-                    <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.opphold-i-norge.spm'} />}
                         søknadsvar={søknad.søker.oppholderSegINorge.svar}
                     />
