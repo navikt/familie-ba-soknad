@@ -15,7 +15,7 @@ import {
 import Miljø from '../Miljø';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
-import { ISøkerRespons } from '../typer/person';
+import { ESivilstand, ISøkerRespons } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/person';
@@ -63,7 +63,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                             barn: mapBarnResponsTilBarn(ressurs.data.barn),
                             ident: ressurs.data.ident,
                             adresse: ressurs.data.adresse,
-                            sivilstand: ressurs.data.sivilstand,
+                            sivilstand: { type: ESivilstand.SKILT },
                             adressebeskyttelse: ressurs.data.adressebeskyttelse,
                         },
                     });
