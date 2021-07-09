@@ -89,6 +89,10 @@ export enum barnDataKeySpørsmål {
     søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
 }
 
+export enum barnDataKeySpørsmålUtvidet {
+    søkerHarBoddMedAndreForelder = 'søkerHarBoddMedAndreForelder',
+}
+
 export interface IBarnRespons extends Omit<IPerson, 'ident'> {
     ident?: string;
     borMedSøker: boolean;
@@ -143,4 +147,7 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.søkerForTidsromStartdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.søkerForTidsromSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
+    utvidet: {
+        [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
+    };
 }

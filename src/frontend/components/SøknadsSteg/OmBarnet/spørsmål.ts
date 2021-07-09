@@ -28,6 +28,7 @@ export enum OmBarnetSpørsmålsId {
     søkerForTidsromStartdato = 'søker-for-tidsrom-startdato',
     søkerForTidsromSluttdato = 'søker-for-tidsrom-sluttdato',
     søkerIkkeForTidsrom = 'søker-ikke-for-tidsrom',
+    søkerHarBoddMedAndreForelder = 'søker-har-bodd-med-andre-forelder',
 }
 
 export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
@@ -64,4 +65,5 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.søkerForTidsromStartdato]: 'ombarnet.søker-for-periode.startdato.spm',
     [OmBarnetSpørsmålsId.søkerForTidsromSluttdato]: 'ombarnet.søker-for-periode.sluttdato.spm',
     [OmBarnetSpørsmålsId.søkerIkkeForTidsrom]: 'ombarnet.søker-for-periode.vetikke.spm',
+    [OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder]: 'ombarnet.boddsammenmedandreforelder.spm',
 };

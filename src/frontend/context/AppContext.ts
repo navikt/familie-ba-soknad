@@ -15,8 +15,8 @@ import {
 import Miljø from '../Miljø';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
-import { ISøkerRespons } from '../typer/person';
-import { initialStateSøknad, ISøknad } from '../typer/søknad';
+import { ESivilstand, ISøkerRespons } from '../typer/person';
+import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/person';
 import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
@@ -63,7 +63,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                             barn: mapBarnResponsTilBarn(ressurs.data.barn),
                             ident: ressurs.data.ident,
                             adresse: ressurs.data.adresse,
-                            sivilstand: ressurs.data.sivilstand,
+                            sivilstand: { type: ESivilstand.SKILT },
                             adressebeskyttelse: ressurs.data.adressebeskyttelse,
                         },
                     });
@@ -226,6 +226,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         settSisteUtfylteStegIndex(-1);
     };
 
+    const erUtvidet = søknad.søknadstype === ESøknadstype.UTVIDET;
+
     return {
         axiosRequest,
         sluttbruker,
@@ -247,6 +249,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         mellomlagretVerdi,
         fåttGyldigKvittering,
         settFåttGyldigKvittering,
+        erUtvidet,
     };
 });
 

@@ -34,7 +34,7 @@ test('Kan rendre Forside', () => {
             </AppProvider>
         </SprakProvider>
     );
-    expect(screen.getByText('Velkommen til søknad på ordinær barnetrygd')).toBeInTheDocument();
+    expect(screen.getByText('Vi stoler på deg')).toBeInTheDocument();
 });
 
 // TODO: Bug med Node og intl-versjon. Disabler testen til det er fikset.

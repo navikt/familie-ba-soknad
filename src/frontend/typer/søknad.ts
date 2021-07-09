@@ -79,8 +79,20 @@ export interface ISøknadKontraktBarn {
     spørsmål: SpørsmålMap;
 }
 
+const hentSøknadstype = () => {
+    if (process.env.NODE_ENV === 'production') {
+        // PROD OG PREPROD
+        return window.location.pathname.includes('utvidet')
+            ? ESøknadstype.UTVIDET
+            : ESøknadstype.ORDINÆR;
+    } else {
+        // LOKAL UTVIKLING
+        return ESøknadstype.UTVIDET;
+    }
+};
+
 export const initialStateSøknad: ISøknad = {
-    søknadstype: ESøknadstype.ORDINÆR,
+    søknadstype: hentSøknadstype(),
     barnInkludertISøknaden: [],
     lestOgForståttBekreftelse: false,
     barnRegistrertManuelt: [],
@@ -113,7 +125,9 @@ export const initialStateSøknad: ISøknad = {
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
             'dokumentasjon.annendokumentasjon.vedleggtittel',
-            ''
+            hentSøknadstype() === ESøknadstype.UTVIDET
+                ? 'dokumentasjon.annendokumentasjon.utvidet.informasjon'
+                : null
         ),
     ],
     søker: {

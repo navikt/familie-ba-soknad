@@ -11,8 +11,10 @@ import OmBarnaDine from '../components/SøknadsSteg/OmBarnaDine/OmBarnaDine';
 import OmBarnet from '../components/SøknadsSteg/OmBarnet/OmBarnet';
 import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
+import DinLivssituasjon from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/DinLivssituasjon';
 import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
 import { IBarnMedISøknad } from '../typer/person';
+import { ESøknadstype } from '../typer/søknad';
 import { useApp } from './AppContext';
 
 export interface IRoute {
@@ -27,6 +29,7 @@ export interface IRoute {
 export enum RouteEnum {
     Forside = 'Forside',
     OmDeg = 'OmDeg',
+    DinLivssituasjon = 'DinLivssituasjon',
     VelgBarn = 'VelgBarn',
     OmBarna = 'OmBarna',
     OmBarnet = 'OmBarnet',
@@ -39,7 +42,7 @@ export const omBarnetBasePath = 'om-barnet';
 
 const [RoutesProvider, useRoutes] = createUseContext(() => {
     const {
-        søknad: { barnInkludertISøknaden },
+        søknad: { barnInkludertISøknaden, søknadstype },
     } = useApp();
 
     const [barnForRoutes, settBarnForRoutes] = useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
@@ -73,6 +76,17 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
     const routes: IRoute[] = [
         { path: '/', label: 'Forside', route: RouteEnum.Forside, komponent: Forside },
         { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
+        ...(søknadstype === ESøknadstype.UTVIDET
+            ? [
+                  {
+                      path: '/din-livssituasjon',
+                      label: 'Din Livssituasjon',
+                      route: RouteEnum.DinLivssituasjon,
+                      komponent: DinLivssituasjon,
+                  },
+              ]
+            : []),
+
         { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
         { path: '/om-barna', label: 'Om barna', route: RouteEnum.OmBarna, komponent: OmBarnaDine },
         ...barnRoutes,
@@ -95,6 +109,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
             komponent: Kvittering,
         },
     ];
+
     const hentStegNummer = (route: RouteEnum) => {
         return routes.findIndex(steg => steg.route === route);
     };

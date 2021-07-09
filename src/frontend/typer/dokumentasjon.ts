@@ -21,7 +21,7 @@ export interface IDokumentasjon {
     harSendtInn: boolean;
     opplastedeVedlegg: IVedlegg[];
     tittelSpråkId: string;
-    beskrivelseSpråkId: string;
+    beskrivelseSpråkId: string | null;
 }
 
 export interface ISøknadKontraktVedlegg {

@@ -13,6 +13,8 @@ import {
     IDokumentasjon,
     IVedlegg,
 } from '../../../typer/dokumentasjon';
+import { ESivilstand } from '../../../typer/person';
+import { ESøknadstype } from '../../../typer/søknad';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Filopplaster from './filopplaster/Filopplaster';
 
@@ -87,6 +89,14 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         { barn: formatertListeMedBarn() }
     );
 
+    const skalViseAnnenDokumentasjonsBeskrivelse = () => {
+        return (
+            dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON ||
+            (søknad.søknadstype === ESøknadstype.UTVIDET &&
+                søknad.søker.sivilstand.type === ESivilstand.SKILT)
+        );
+    };
+
     return (
         <Container>
             <Undertittel>
@@ -104,7 +114,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                 )}
                 {dokTittel}
             </Undertittel>
-            {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
+            {dokumentasjon.beskrivelseSpråkId && skalViseAnnenDokumentasjonsBeskrivelse() && (
                 <SpråkTekst
                     id={dokumentasjon.beskrivelseSpråkId}
                     values={{
