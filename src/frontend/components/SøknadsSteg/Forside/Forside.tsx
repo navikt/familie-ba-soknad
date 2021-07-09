@@ -33,12 +33,14 @@ const StyledSpråkvelger = styled(Sprakvelger)`
 
 const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
-    const { sluttbruker, mellomlagretVerdi, erUtvidet } = useApp();
+    const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad } = useApp();
 
     useFørsteRender(() => logSidevisningOrdinærBarnetrygd(`${RouteEnum.Forside}`));
 
     const kanFortsettePåSøknad =
-        mellomlagretVerdi && mellomlagretVerdi.modellVersjon === Miljø().modellVersjon;
+        mellomlagretVerdi &&
+        mellomlagretVerdi.modellVersjon === Miljø().modellVersjon &&
+        mellomlagretVerdi.søknad.søknadstype === søknad.søknadstype;
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 

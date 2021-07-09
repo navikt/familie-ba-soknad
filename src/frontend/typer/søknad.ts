@@ -79,7 +79,7 @@ export interface ISøknadKontraktBarn {
     spørsmål: SpørsmålMap;
 }
 
-const genererSøknadstype = () => {
+const hentSøknadstype = () => {
     if (process.env.NODE_ENV === 'production') {
         // PROD OG PREPROD
         return window.location.pathname.includes('utvidet')
@@ -92,7 +92,7 @@ const genererSøknadstype = () => {
 };
 
 export const initialStateSøknad: ISøknad = {
-    søknadstype: genererSøknadstype(),
+    søknadstype: hentSøknadstype(),
     barnInkludertISøknaden: [],
     lestOgForståttBekreftelse: false,
     barnRegistrertManuelt: [],
@@ -125,7 +125,9 @@ export const initialStateSøknad: ISøknad = {
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
             'dokumentasjon.annendokumentasjon.vedleggtittel',
-            ''
+            hentSøknadstype() === ESøknadstype.UTVIDET
+                ? 'dokumentasjon.annendokumentasjon.utvidet.informasjon'
+                : null
         ),
     ],
     søker: {

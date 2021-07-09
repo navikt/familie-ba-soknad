@@ -104,7 +104,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                 )}
                 {dokTittel}
             </Undertittel>
-            {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
+            {dokumentasjon.beskrivelseSpråkId && (
                 <SpråkTekst
                     id={dokumentasjon.beskrivelseSpråkId}
                     values={{
