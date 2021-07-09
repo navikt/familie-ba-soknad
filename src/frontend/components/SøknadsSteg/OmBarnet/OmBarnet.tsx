@@ -48,12 +48,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             barn={barn}
         >
             <Oppfølgningsspørsmål barn={barn} skjema={skjema} />
-            <AndreForelder
-                settSammeForelder={settSammeForelder}
-                barn={barn}
-                skjema={skjema}
-                andreBarnSomErFyltUt={andreBarnSomErFyltUt}
-            />
+            {skjema.felter.andreForelderNavn.erSynlig && (
+                <AndreForelder
+                    settSammeForelder={settSammeForelder}
+                    barn={barn}
+                    skjema={skjema}
+                    andreBarnSomErFyltUt={andreBarnSomErFyltUt}
+                />
+            )}
 
             {skjema.felter.borFastMedSøker.erSynlig &&
                 skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
