@@ -90,13 +90,13 @@ export enum barnDataKeySpørsmål {
 }
 
 export interface IBarnRespons extends Omit<IPerson, 'ident'> {
-    ident?: string;
+    ident: string;
     borMedSøker: boolean;
     fødselsdato: string | undefined;
 }
 
 export interface IBarn extends Omit<IPerson, 'ident'> {
-    ident?: string;
+    ident: string;
     id: BarnetsId;
     borMedSøker: boolean | undefined;
     alder: string | undefined;

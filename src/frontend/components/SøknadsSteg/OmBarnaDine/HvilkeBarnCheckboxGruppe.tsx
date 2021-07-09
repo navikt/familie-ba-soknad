@@ -1,5 +1,7 @@
 import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -7,6 +9,7 @@ import { Felt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
+import { barnetsNavnValue } from '../../../utils/visning';
 
 export type BarnetsId = string;
 
@@ -31,6 +34,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
             .filter(barn => barn[søknadsdatafelt].svar === ESvar.JA)
             .map(barn => barn.id)
     );
+    const intl = useIntl();
 
     useEffect(() => {
         skjemafelt.hentNavInputProps(false).onChange(valgteBarn);
@@ -66,7 +70,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
                 return (
                     <Checkbox
                         key={index}
-                        label={barnISøknad.navn}
+                        label={barnetsNavnValue(barnISøknad, intl)}
                         defaultChecked={!!valgteBarn.find(barnId => barnId === barnISøknad.id)}
                         id={`${skjemafelt.id}${barnISøknad.id}`}
                         onChange={event => oppdaterListeMedBarn(event, barnISøknad.id)}

@@ -85,7 +85,7 @@ describe('VelgBarn', () => {
         });
     });
 
-    test('Rendrer ikke barn med adressebeskyttelse, rendrer infoblokk', () => {
+    test('Rendrer anonymt barnekort dersom det har adressebeskyttelse', () => {
         silenceConsoleErrors();
         const søknad = mockDeep<ISøknad>({
             søker: {
@@ -107,7 +107,7 @@ describe('VelgBarn', () => {
             </TestProvidere>
         );
         const ident = queryByText(søknad.søker.barn[0].ident ?? 'finnes-ikke-kast-feil');
-        const infoTekst = queryByText(/hvilkebarn.adressesperreinformasjon/);
+        const infoTekst = queryByText(/hvilkebarn.barn.bosted.adressesperre/);
 
         expect(ident).not.toBeInTheDocument();
         expect(infoTekst).toBeInTheDocument();

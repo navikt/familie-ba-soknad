@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 
@@ -9,6 +11,7 @@ import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 import { IRoute } from '../../../context/RoutesContext';
 import { IBarn } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { barnetsNavnValue } from '../../../utils/visning';
 import {
     OmBarnaDineSpørsmålId,
     omBarnaDineSpørsmålSpråkId,
@@ -45,6 +48,8 @@ export const SkjemaFeiloppsummering: React.FC<Props> = ({
     routeForFeilmeldinger,
     id,
 }) => {
+    const intl = useIntl();
+
     /* eslint-disable @typescript-eslint/no-explicit-any */
     const hentFeilmelding = (felt: Felt<any>) => {
         const gyldigId = !!Object.values(samletSpørsmålId).find(id => id === felt.id);
@@ -53,7 +58,10 @@ export const SkjemaFeiloppsummering: React.FC<Props> = ({
             felt.id === VelgBarnSpørsmålId.velgBarn ? (
             felt.feilmelding
         ) : (
-            <SpråkTekst id={samletSpørsmålSpråkTekstId[felt.id]} values={{ navn: barn?.navn }} />
+            <SpråkTekst
+                id={samletSpørsmålSpråkTekstId[felt.id]}
+                values={{ navn: barn && barnetsNavnValue(barn, intl) }}
+            />
         );
     };
 

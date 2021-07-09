@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import styled from 'styled-components/macro';
 
@@ -25,7 +25,7 @@ const StyledLegend = styled.legend`
 
 const SkjemaFieldset: React.FC<{
     tittelId: string;
-    språkValues?: { [key: string]: string };
+    språkValues?: { [key: string]: ReactNode };
     dynamisk?: boolean;
 }> = ({ tittelId, språkValues, dynamisk = false, children }) => {
     return (
