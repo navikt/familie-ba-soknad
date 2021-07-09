@@ -13,7 +13,6 @@ import { useApp } from '../../../context/AppContext';
 import { RouteEnum } from '../../../context/RoutesContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import Miljø from '../../../Miljø';
-import { ESøknadstype } from '../../../typer/søknad';
 import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -34,7 +33,7 @@ const StyledSpråkvelger = styled(Sprakvelger)`
 
 const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
-    const { sluttbruker, mellomlagretVerdi, søknad } = useApp();
+    const { sluttbruker, mellomlagretVerdi, erUtvidet } = useApp();
 
     useFørsteRender(() => logSidevisningOrdinærBarnetrygd(`${RouteEnum.Forside}`));
 
@@ -51,11 +50,7 @@ const Forside: React.FC = () => {
             />
 
             <StyledSidetittel>
-                {søknad.søknadstype === ESøknadstype.ORDINÆR ? (
-                    <SpråkTekst id="forside.sidetittel" />
-                ) : (
-                    'UTVIDET BARNETRYGD'
-                )}
+                <SpråkTekst id={erUtvidet ? 'forside.utvidet.sidetittel' : 'forside.sidetittel'} />
             </StyledSidetittel>
 
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
@@ -66,6 +61,13 @@ const Forside: React.FC = () => {
                     lenkeTekstSpråkId={'forside.plikter.lenketekst'}
                     target="_blank"
                 />
+                {erUtvidet && (
+                    <EksternLenke
+                        lenkeSpråkId={'forside.hvemharrettpåutvidet.lenke'}
+                        lenkeTekstSpråkId={'forside.hvemharrettpåutvidet.lenketekst'}
+                        target="_blank"
+                    />
+                )}
             </Informasjonsbolk>
 
             {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
