@@ -21,6 +21,7 @@
   "dokumentasjon.send-søknad.knapp": "Submit application",
   "dokumentasjon.sidetittel": "Upload documentation",
   "dokumentasjon.vedleggsnummer": "Attachment {vedleggsnummer} of {antallvedlegg}:",
+  "felles.anonym.barn.fnr": "CHILD {fødselsnummer}",
   "felles.banner": "Application for ordinary child benefit",
   "felles.barneillustrasjon.tittel": "Child illustration",
   "felles.blokkerTilbakeKnapp.modal.avbrytKnapp": "Close",

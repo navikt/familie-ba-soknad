@@ -26,6 +26,7 @@ import {
     ISøknadSpørsmål,
 } from '../../../typer/søknad';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
+import { formaterFnr } from '../../../utils/visning';
 import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import { omDegSpørsmålSpråkId, OmDegSpørsmålId } from '../OmDeg/spørsmål';
@@ -74,11 +75,11 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
     };
 
     const barnISøknadsFormat = (barn: IBarnMedISøknad): ISøknadKontraktBarn => {
-        const { ident, navn, borMedSøker, alder, ...barnSpørsmål } = barn;
+        const { ident, navn, borMedSøker, alder, adressebeskyttelse, ...barnSpørsmål } = barn;
         const typetBarnSpørsmål = (barnSpørsmål as unknown) as SpørsmålMap;
 
         return {
-            navn: søknadsfelt('Navn', navn),
+            navn: søknadsfelt('Navn', adressebeskyttelse ? `Barn ${formaterFnr(ident)}` : navn),
             ident: søknadsfelt('Ident', ident ?? 'Ikke oppgitt'),
             borMedSøker: søknadsfelt(
                 'Bor med søker',
