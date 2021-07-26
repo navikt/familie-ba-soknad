@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import styled from 'styled-components/macro';
 
@@ -8,7 +8,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 export interface IInformasjonsbolkProps {
     tittelId?: string;
-    språkValues?: { [key: string]: string };
+    språkValues?: { [key: string]: ReactNode };
 }
 
 const InformasjonsbolkContainer = styled.div`
