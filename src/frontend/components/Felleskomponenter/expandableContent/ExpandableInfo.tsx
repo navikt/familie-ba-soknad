@@ -62,7 +62,7 @@ const ExpandableInfo = ({
                     isOpen={isOpen}
                     controlsId={toggleContentId}
                 >
-                    <Normaltekst tag="span">{isOpen ? closeTitle || title : title}</Normaltekst>
+                    <Normaltekst>{isOpen ? closeTitle || title : title}</Normaltekst>
                 </InfoToggleButton>
             </ButtonContainer>
             <InnholdContainer id={toggleContentId}>
