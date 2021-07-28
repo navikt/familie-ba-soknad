@@ -144,6 +144,17 @@ const Oppfølgningsspørsmål: React.FC<{
                         labelTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.nårKomBarnetTilNorge]
                         }
+                        disabled={
+                            skjema.felter.nårKomBarnTilNorgeDatoIkkeAnkommet.verdi === ESvar.JA
+                        }
+                    />
+                    <VetIkkeCheckbox
+                        labelSpråkId={
+                            omBarnetSpørsmålSpråkId[
+                                OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
+                            ]
+                        }
+                        checkboxUkjentFelt={skjema.felter.nårKomBarnTilNorgeDatoIkkeAnkommet}
                     />
                     <JaNeiSpm
                         skjema={skjema}
