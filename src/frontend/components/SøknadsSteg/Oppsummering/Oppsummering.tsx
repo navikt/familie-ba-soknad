@@ -465,8 +465,11 @@ const Oppsummering: React.FC = () => {
                                             id={'ombarnet.sammenhengende-opphold.dato.spm'}
                                         />
                                     }
-                                    søknadsvar={formaterDato(
-                                        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar
+                                    søknadsvar={formaterDatoMedUkjent(
+                                        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar,
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
+                                        ]
                                     )}
                                 />
                                 <OppsummeringFelt
