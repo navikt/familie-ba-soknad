@@ -26,7 +26,8 @@ import {
     ISøknadSpørsmål,
 } from '../../../typer/søknad';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
-import { formaterFnr } from '../../../utils/visning';
+import { isAlpha3Code } from '../../../utils/hjelpefunksjoner';
+import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
 import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import { omDegSpørsmålSpråkId, OmDegSpørsmålId } from '../OmDeg/spørsmål';
@@ -65,9 +66,20 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                     string,
                     { label: string; verdi: any }
                 ] => {
+                    const verdi = entry[1].svar;
+                    let formatertVerdi: string;
+
+                    if (isAlpha3Code(verdi)) {
+                        formatertVerdi = landkodeTilSpråk(verdi, 'nb');
+                    } else if (verdi === ESvar.VET_IKKE) {
+                        formatertVerdi = ESvar.VET_IKKE.replace('_', ' ');
+                    } else {
+                        formatertVerdi = verdi;
+                    }
+
                     return [
                         entry[0],
-                        søknadsfelt(språktekstFraSpørsmålId(entry[1].id), entry[1].svar),
+                        søknadsfelt(språktekstFraSpørsmålId(entry[1].id), formatertVerdi),
                     ];
                 })
                 .filter(entry => entry[1].verdi)
@@ -135,7 +147,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                 sivilstand: søknadsfelt('Sivilstand', søker.sivilstand.type),
                 statsborgerskap: søknadsfelt(
                     'Statsborgerskap',
-                    søker.statsborgerskap.map(objekt => objekt.landkode)
+                    søker.statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, 'nb'))
                 ),
                 telefonnummer: søknadsfelt('Telefonnummer', søker.telefonnummer.svar),
                 adresse: søknadsfelt('Adresse', søker.adresse),
