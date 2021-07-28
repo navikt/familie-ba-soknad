@@ -49,6 +49,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     oppholdslandSluttdato: DatoMedUkjent;
     oppholdslandSluttDatoVetIkke: ESvar;
     nårKomBarnTilNorgeDato: ISODateString;
+    nårKomBarnTilNorgeDatoIkkeAnkommet: ESvar;
     planleggerÅBoINorge12Mnd: ESvar | null;
     barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
     andreForelderNavn: string;
@@ -190,9 +191,20 @@ export const useOmBarnet = (
     );
 
     /*---BODD SAMMENHENGENDE I NORGE---*/
+    const nårKomBarnTilNorgeDatoIkkeAnkommet = useFelt<ESvar>({
+        verdi:
+            barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar === AlternativtSvarForInput.UKJENT
+                ? ESvar.JA
+                : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet,
+    });
 
-    const nårKomBarnTilNorgeDato = useDatovelgerFelt(
-        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
+    const nårKomBarnTilNorgeDato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].id,
+        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar !== AlternativtSvarForInput.UKJENT
+            ? barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar
+            : '',
+        nårKomBarnTilNorgeDatoIkkeAnkommet,
         skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
     );
 
@@ -488,6 +500,7 @@ export const useOmBarnet = (
             oppholdslandSluttdato,
             oppholdslandSluttDatoVetIkke,
             nårKomBarnTilNorgeDato,
+            nårKomBarnTilNorgeDatoIkkeAnkommet,
             planleggerÅBoINorge12Mnd,
             barnetrygdFraEøslandHvilketLand,
             andreForelderNavn,
@@ -589,7 +602,10 @@ export const useOmBarnet = (
                           },
                           nårKomBarnTilNorgeDato: {
                               ...barn.nårKomBarnTilNorgeDato,
-                              svar: nårKomBarnTilNorgeDato.verdi,
+                              svar: svarForSpørsmålMedUkjent(
+                                  nårKomBarnTilNorgeDatoIkkeAnkommet,
+                                  nårKomBarnTilNorgeDato
+                              ),
                           },
                           planleggerÅBoINorge12Mnd: {
                               ...barn.planleggerÅBoINorge12Mnd,

@@ -10,6 +10,7 @@ import {
     IBarnMedISøknad,
 } from '../../../typer/person';
 import { landkodeTilSpråk } from '../../../utils/person';
+import { barnetsNavnValue } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import { StyledOppsummeringsFeltGruppe } from './Oppsummering';
@@ -17,7 +18,8 @@ import { OppsummeringFelt } from './OppsummeringFelt';
 import { formaterDatoMedUkjent } from './utils';
 
 const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
-    const { formatMessage } = useIntl();
+    const intl = useIntl();
+    const { formatMessage } = intl;
     const [valgtLocale] = useSprakContext();
 
     return (
@@ -69,7 +71,7 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                     tittel={
                         <SpråkTekst
                             id={'ombarnet.andre-forelder.arbeid-utland.spm'}
-                            values={{ navn: barn.navn }}
+                            values={{ navn: barnetsNavnValue(barn, intl) }}
                         />
                     }
                     søknadsvar={barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet].svar}
@@ -91,7 +93,7 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                     tittel={
                         <SpråkTekst
                             id={'ombarnet.andre-forelder.utenlandspensjon.spm'}
-                            values={{ navn: barn.navn }}
+                            values={{ navn: barnetsNavnValue(barn, intl) }}
                         />
                     }
                     søknadsvar={barn[barnDataKeySpørsmål.andreForelderPensjonUtland].svar}
@@ -101,7 +103,7 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                         tittel={
                             <SpråkTekst
                                 id={'ombarnet.andre-forelder.utenlandspensjon.land.spm'}
-                                values={{ navn: barn.navn }}
+                                values={{ navn: barnetsNavnValue(barn, intl) }}
                             />
                         }
                         søknadsvar={landkodeTilSpråk(

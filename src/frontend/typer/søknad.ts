@@ -15,11 +15,11 @@ export enum ESøknadstype {
 
 export const søknadstyper: INøkkelPar = {
     ORDINÆR: {
-        id: 'ORDINÆR',
+        id: 330007,
         navn: 'Ordinær barnetrygd',
     },
     UTVIDET: {
-        id: 'UTVIDET',
+        id: 330009,
         navn: 'Utvidet barnetrygd',
     },
 };
@@ -113,7 +113,7 @@ export const initialStateSøknad: ISøknad = {
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
             'dokumentasjon.annendokumentasjon.vedleggtittel',
-            'dokumentasjon.annendokumentasjon.informasjon'
+            ''
         ),
     ],
     søker: {

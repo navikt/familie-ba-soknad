@@ -184,10 +184,16 @@ const [AppProvider, useApp] = createUseContext(() => {
             withCredentials: true,
             påvirkerSystemLaster: true,
         })
-            .then(_ => {
-                settInnloggetStatus(InnloggetStatus.AUTENTISERT);
+            .then(ressurs => {
+                if (ressurs.status === RessursStatus.SUKSESS) {
+                    settInnloggetStatus(InnloggetStatus.AUTENTISERT);
+                } else {
+                    settInnloggetStatus(InnloggetStatus.FEILET);
+                }
             })
-            .catch(_ => settInnloggetStatus(InnloggetStatus.FEILET));
+            .catch(_ => {
+                settInnloggetStatus(InnloggetStatus.FEILET);
+            });
     };
 
     const nullstillSøknadsobjekt = () => {
