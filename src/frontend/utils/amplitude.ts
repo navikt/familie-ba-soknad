@@ -59,3 +59,13 @@ export const logKlikkGåVidere = (steg: number) => {
         steg,
     });
 };
+
+export const loggError = (error: Error) => {
+    logEvent('logg feil', {
+        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
+        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        team_id: 'familie',
+        errorType: error.name,
+        errorMessage: error.message,
+    });
+};
