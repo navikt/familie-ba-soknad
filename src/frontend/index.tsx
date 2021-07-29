@@ -16,7 +16,7 @@ import * as engelsk from './assets/lang/en.json';
 import * as bokmål from './assets/lang/nb.json';
 import * as nynorsk from './assets/lang/nn.json';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
-import { loggError } from './utils/amplitude';
+import { logError } from './utils/amplitude';
 
 const environment = window.location.hostname;
 
@@ -53,7 +53,7 @@ ReactDOM.render(
                 <Sentry.ErrorBoundary
                     fallback={Feilside}
                     beforeCapture={scope => scope.setTag('scope', 'familie-ba-soknad')}
-                    onError={loggError}
+                    onError={logError}
                 >
                     <App />
                 </Sentry.ErrorBoundary>

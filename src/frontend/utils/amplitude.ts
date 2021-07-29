@@ -60,7 +60,7 @@ export const logKlikkGåVidere = (steg: number) => {
     });
 };
 
-export const loggError = (error: Error) => {
+export const logError = (error: Error) => {
     logEvent('logg feil', {
         skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
         skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
