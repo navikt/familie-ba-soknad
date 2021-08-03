@@ -199,7 +199,7 @@
   "ombarnet.søker-for-periode.spm": "Are you applying for child benefit for a particular period of time for {navn}?",
   "ombarnet.søker-for-periode.startdato.spm": "From (dd.mm.yyyy format)",
   "ombarnet.søker-for-periode.vetikke.spm": "I am not applying for a particular period of time",
-  "ombarnet.undertittel": "Child {x} of {antall barn}",
+  "ombarnet.undertittel": "Child {x} of {antall}",
   "omdeg.arbeid-utland.land.spm": "Which country do you work in?",
   "omdeg.arbeid-utland.spm": "Do you work abroad, on a foreign ship or on another country’s continental shelf?",
   "omdeg.asylsøker.alert": "You will need to submit a decision from the UDI granting you permission to reside later on in the application if this is the first time you are applying for child benefit.",

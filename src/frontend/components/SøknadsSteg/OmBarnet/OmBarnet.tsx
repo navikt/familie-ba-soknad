@@ -19,6 +19,7 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { BarnetsId } from '../OmBarnaDine/HvilkeBarnCheckboxGruppe';
 import AndreForelder from './AndreForelder';
+import { OmBarnetHeader } from './OmBarnetHeader';
 import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnet } from './useOmBarnet';
@@ -55,6 +56,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             }}
             barn={barn}
         >
+            <OmBarnetHeader barn={barn} />
             <Oppfølgningsspørsmål barn={barn} skjema={skjema} />
             <AndreForelder
                 settSammeForelder={settSammeForelder}
