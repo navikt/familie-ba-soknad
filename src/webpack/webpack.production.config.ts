@@ -4,7 +4,7 @@ import TerserWebpackPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
 import { CustomizeRule, mergeWithRules } from 'webpack-merge';
 
-import baseConfig, { createHtmlWebpackPlugin } from './webpack.common.config';
+import baseConfig from './webpack.common.config';
 
 const prodConfig: webpack.Configuration = mergeWithRules({
     module: {
@@ -16,7 +16,6 @@ const prodConfig: webpack.Configuration = mergeWithRules({
 })(baseConfig, {
     mode: 'production',
     plugins: [
-        createHtmlWebpackPlugin(true),
         new MiniCssExtractPlugin({
             filename: '[name].css',
         }),
