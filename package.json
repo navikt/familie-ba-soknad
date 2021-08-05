@@ -40,7 +40,7 @@
       "<rootDir>/src"
     ],
     "moduleNameMapper": {
-      "\\.(css|less|svg)$": "<rootDir>/src/mockStyle.js",
+      "\\.(css|less)$": "<rootDir>/src/mockStyle.js",
       "nav-(.*)-style": "<rootDir>/src/mockStyle.js",
       "nav-frontend-core": "<rootDir>/src/mockStyle.js",
       "styled-components/macro": "styled-components"
@@ -54,7 +54,8 @@
       "\\.pnp\\.[^\\/]+$"
     ],
     "transform": {
-      "\\.[jt]sx?$": "babel-jest"
+      "\\.[jt]sx?$": "babel-jest",
+      "\\.svg$": "jest-svg-transformer"
     },
     "resetMocks": true
   },
@@ -218,6 +219,7 @@
     "jest-circus": "^26.6.3",
     "jest-mock-extended": "^1.0.13",
     "jest-resolve": "26.6.0",
+    "jest-svg-transformer": "^1.0.0",
     "jest-watch-typeahead": "0.6.1",
     "less": "^4.1.1",
     "less-loader": "^7.3.0",
