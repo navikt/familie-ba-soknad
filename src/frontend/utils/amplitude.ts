@@ -1,5 +1,6 @@
 import amplitude from 'amplitude-js';
 
+import * as bokmålTekster from '../assets/lang/nb.json';
 import { ESøknadstype, søknadstyper } from '../typer/søknad';
 
 const amplitudeInstance = amplitude.getInstance();
@@ -62,6 +63,23 @@ export const logKlikkGåVidere = (steg: number) => {
         team_id: 'familie',
         steg,
     });
+};
+
+export const logSpørsmålBesvart = (spørsmålSpråktekstId: string, svar: string) => {
+    /**
+     * Vil ikke tulle med språkcontext, skal uansett ikke formatere spørsmålene (alle må være like uansett hva barnets navn er)
+     * derfor bruker vi språktekstene fa bokmålfila direkte uten intl.formatMessage
+     */
+    const spørsmål = bokmålTekster[spørsmålSpråktekstId] ?? false;
+
+    spørsmål &&
+        logEvent('skjemaspørsmål besvart', {
+            skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
+            skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+            team_id: 'familie',
+            spørsmål,
+            svar,
+        });
 };
 
 export const setUserProperty = (key: UserProperty, value: string | number) => {

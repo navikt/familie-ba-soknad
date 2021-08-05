@@ -7,7 +7,9 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { AlternativtSvarForInput } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { logSpørsmålBesvart } from '../../../utils/amplitude';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface IJaNeiSpmProps {
@@ -36,6 +38,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             jaNeiRef.props.onChange(null, felt.verdi);
+            logSpørsmålBesvart(spørsmålTekstId, felt.verdi ?? AlternativtSvarForInput.UKJENT);
         }
         settMounted(true);
     }, [felt.verdi]);
