@@ -7,16 +7,13 @@ import navFarger from 'nav-frontend-core';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Ingress, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import barn1 from '../../../../assets/barn1.svg';
-import barn2 from '../../../../assets/barn2.svg';
-import barn3 from '../../../../assets/barn3.svg';
 import { useApp } from '../../../../context/AppContext';
 import { device } from '../../../../Theme';
 import { IBarn } from '../../../../typer/person';
-import { hentTilfeldigElement } from '../../../../utils/hjelpefunksjoner';
 import { hentBostedSpråkId } from '../../../../utils/person';
 import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { TilfeldigBarnIkon } from '../../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
 import { FjernBarnKnapp } from './FjernBarnKnapp';
 
 interface IBarnekortProps {
@@ -88,7 +85,6 @@ const Barnekort: React.FC<IBarnekortProps> = ({
     fjernBarnCallback,
 }) => {
     const { formatMessage } = useIntl();
-    const ikoner = [barn1, barn2, barn3];
     const {
         søknad: { barnRegistrertManuelt },
     } = useApp();
@@ -102,10 +98,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
     return (
         <StyledBarnekort>
             <BarnekortHeader>
-                <img
-                    alt={formatMessage({ id: 'felles.barneillustrasjon.tittel' })}
-                    src={hentTilfeldigElement(ikoner)}
-                />
+                <TilfeldigBarnIkon />
             </BarnekortHeader>
             <InformasjonsboksInnhold>
                 <StyledUndertittel>

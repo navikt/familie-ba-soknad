@@ -1,6 +1,7 @@
 import path from 'path';
 
 import compression from 'compression';
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import express from 'express';
 import mustacheExpress from 'mustache-express';
@@ -27,6 +28,9 @@ process.env.NODE_ENV === 'development' && app.set('view cache', false);
 
 // Alltid bruk gzip-compression på alt vi server med express
 app.use(compression());
+
+// Parse cookies for bruk i dekoratør-fetch
+app.use(cookieParser());
 
 // Middleware for unleash kill-switch
 app.use(expressToggleInterceptor);
