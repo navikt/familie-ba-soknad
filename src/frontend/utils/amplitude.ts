@@ -82,6 +82,16 @@ export const logSpørsmålBesvart = (spørsmålSpråktekstId: string, svar: stri
         });
 };
 
+export const logError = (error: Error) => {
+    logEvent('logg feil', {
+        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
+        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        team_id: 'familie',
+        errorType: error.name,
+        errorMessage: error.message,
+    });
+};
+
 export const setUserProperty = (key: UserProperty, value: string | number) => {
     const identify = new amplitudeInstance.Identify().set(key, value);
     amplitudeInstance.identify(identify);
