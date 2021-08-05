@@ -13,6 +13,10 @@ amplitudeInstance.init('default', '', {
     platform: window.location.toString(),
 });
 
+export enum UserProperty {
+    ANTALL_VALGTE_BARN = 'antallValgteBarn',
+}
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function logEvent(eventName: string, eventProperties: any) {
     amplitudeInstance.logEvent(eventName, eventProperties);
@@ -76,4 +80,9 @@ export const logSpørsmålBesvart = (spørsmålSpråktekstId: string, svar: stri
             spørsmål,
             svar,
         });
+};
+
+export const setUserProperty = (key: UserProperty, value: string | number) => {
+    const identify = new amplitudeInstance.Identify().set(key, value);
+    amplitudeInstance.identify(identify);
 };
