@@ -12,18 +12,6 @@ const { DefinePlugin } = webpackModule;
 
 export const publicUrl = '/public';
 
-export const createHtmlWebpackPlugin = prodMode => {
-    return new HtmlWebpackPlugin({
-        template: path.join(process.cwd(), 'src/frontend/public/index.html'),
-        inject: 'body',
-        alwaysWriteToDisk: true,
-        excludeChunks: ['disabled'],
-        // Dette gjør at hvis vi navigerer direkte til /basepath/om-barna/ så henter vi fortsatt main.js fra /basepath/main.js
-        // Det trengs kun i prod-mode, i dev-mode tar webpackDevMiddleware seg av alt
-        publicPath: prodMode ? process.env.BASE_PATH ?? '/' : 'auto',
-    });
-};
-
 const commonConfig: webpack.Configuration = {
     mode: 'production',
     entry: { main: './src/frontend/index.tsx', disabled: './src/frontend/disabled.tsx' },
@@ -33,9 +21,16 @@ const commonConfig: webpack.Configuration = {
         }),
         new HtmlWebpackPlugin({
             template: path.join(process.cwd(), 'src/frontend/public/index.html'),
+            inject: 'body',
+            alwaysWriteToDisk: true,
+            excludeChunks: ['disabled'],
+            // Dette gjør at hvis vi navigerer direkte til /basepath/om-barna/ så henter vi fortsatt main.js fra /basepath/main.js
+            publicPath: process.env.BASE_PATH ?? '/',
+        }),
+        new HtmlWebpackPlugin({
+            template: path.join(process.cwd(), 'src/frontend/public/index.html'),
             alwaysWriteToDisk: true,
             inject: 'body',
-            // Her skal det være mulig å inkludere en egen app om ønskelig
             chunks: ['disabled'],
             filename: 'disabled.html',
         }),
