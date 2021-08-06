@@ -8,6 +8,7 @@ import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
+import { DekoratørenSpråkHandler } from '../Felleskomponenter/Dekoratøren/DekoratørenSpråkHandler';
 import InnholdContainer from '../Felleskomponenter/InnholdContainer/InnholdContainer';
 import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -24,6 +25,7 @@ const StyledSidetittel = styled(Sidetittel)`
 export const DisabledApp: React.FC = () => {
     return (
         <main>
+            <DekoratørenSpråkHandler />
             <InnholdContainer>
                 {
                     // TODO: Dekoratøren språk-handling fra PR: #265
