@@ -93,5 +93,9 @@ describe('OmDeg', () => {
 
         const jaKnapp = getByText(/felles.svaralternativ.ja/);
         act(() => jaKnapp.click());
+
+        expect(
+            queryByText(omDegSpørsmålSpråkId['søker-oppholder-seg-i-norge'])
+        ).toBeInTheDocument();
     });
 });
