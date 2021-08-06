@@ -48,5 +48,7 @@ export const expressToggleInterceptor: RequestHandler = (req, res, next) => {
             // Selv om dekoratøren feiler vil vi rendre siden, vil bare få noen ekle hbs-tags i sidevisningen og mangle no styling
             .catch(() => res.render('disabled.html'));
 
-    !slippIgjenomForFiltype ? renderDisabled() : next();
+    isEnabled('familie-ba-soknad.disable-soknad') && !slippIgjenomForFiltype
+        ? renderDisabled()
+        : next();
 };
