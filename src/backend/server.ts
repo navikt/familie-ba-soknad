@@ -32,6 +32,9 @@ app.use(compression());
 // Parse cookies for bruk i dekoratør-fetch
 app.use(cookieParser());
 
+// Serve alle statiske filer utenom index.html direkte fra dist-mappen
+app.use(basePath, express.static(frontendMappe, { index: false }));
+
 // Middleware for unleash kill-switch
 app.use(expressToggleInterceptor);
 
@@ -42,9 +45,6 @@ app.use(`${basePath}api`, createApiForwardingFunction());
 
 // Rendrer index.html med dekoratøren
 app.get('/', indexHandler);
-
-// Serve alle statiske filer utenom index.html direkte fra dist-mappen
-app.use(basePath, express.static(frontendMappe, { index: false }));
 
 // Nais functions
 app.get(/^\/(internal\/)?(isAlive|isReady)\/?$/, (_req, res) => res.sendStatus(200));
