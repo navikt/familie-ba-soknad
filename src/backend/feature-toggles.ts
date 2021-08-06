@@ -40,14 +40,13 @@ export const expressToggleInterceptor: RequestHandler = (req, res, next) => {
     // Vi lar requests til disse filtypene gå igjennom, ellers rendrer vi disabled.html.
     const tillatteExtensions = ['.json', '.js', '.png'];
     const slippIgjenomForFiltype = !!tillatteExtensions.find(tillatt => tillatt === ext);
+    const språk: string | undefined = req.cookies['decorator-language'];
 
     const renderDisabled = () =>
-        getDecorator()
+        getDecorator(språk)
             .then(fragments => res.render('disabled.html', fragments))
             // Selv om dekoratøren feiler vil vi rendre siden, vil bare få noen ekle hbs-tags i sidevisningen og mangle no styling
             .catch(() => res.render('disabled.html'));
 
-    isEnabled('familie-ba-soknad.disable-soknad') && !slippIgjenomForFiltype
-        ? renderDisabled()
-        : next();
+    !slippIgjenomForFiltype ? renderDisabled() : next();
 };
