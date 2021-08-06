@@ -6,10 +6,12 @@ import AppContainer from './AppContainer';
 import { AppProvider } from './context/AppContext';
 import { AppNavigationProvider } from './context/AppNavigationContext';
 import { RoutesProvider } from './context/RoutesContext';
+import { GlobalStyle } from './Theme';
 
 function App() {
     return (
         <AppProvider>
+            <GlobalStyle />
             {process.env.NODE_ENV !== 'production' && (
                 <AlertStripe type="advarsel">
                     {`Denne siden er under utvikling. `}

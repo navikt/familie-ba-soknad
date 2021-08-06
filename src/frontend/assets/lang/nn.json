@@ -199,7 +199,7 @@
   "ombarnet.søker-for-periode.spm": "Søker du barnetrygd for eit spesielt tidsrom for {navn}?",
   "ombarnet.søker-for-periode.startdato.spm": "Frå og med (format dd.mm.åååå)",
   "ombarnet.søker-for-periode.vetikke.spm": "Eg søker ikkje for eit spesielt tidsrom",
-  "ombarnet.undertittel": "Barn {x} av {antall barn}",
+  "ombarnet.undertittel": "Barn {x} av {antall}",
   "omdeg.arbeid-utland.land.spm": "Kva land arbeidar du i?",
   "omdeg.arbeid-utland.spm": "Arbeidar du i utlandet, på utanlandsk skip eller på utanlandsk kontinentalsokkel?",
   "omdeg.asylsøker.alert": "Du må legge ved vedtak frå UDI om opphaldsløyve seinare i søknaden dersom det er første gong du søker om barnetrygd. ",
