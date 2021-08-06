@@ -8,7 +8,6 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
-import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
@@ -62,19 +61,8 @@ const OmDeg: React.FC = () => {
                     />
                 )}
             </KomponentGruppe>
-
-            {skjema.felter.telefonnummer.erSynlig && (
+            {skjema.felter.oppholderSegINorge.erSynlig && (
                 <KomponentGruppe dynamisk>
-                    <span id={skjema.felter.telefonnummer.id}>
-                        <SkjemaFeltInput
-                            felt={skjema.felter.telefonnummer}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={omDegSpørsmålSpråkId.telefonnummer}
-                            bredde="M"
-                            type="tel"
-                            maxLength={20}
-                        />
-                    </span>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.oppholderSegINorge}
