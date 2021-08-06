@@ -126,16 +126,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         const { søker } = søknad;
         // Raskeste måte å få tak i alle spørsmål minus de andre feltene på søker
         /* eslint-disable @typescript-eslint/no-unused-vars */
-        const {
-            navn,
-            ident,
-            sivilstand,
-            statsborgerskap,
-            telefonnummer,
-            adresse,
-            barn,
-            ...søkerSpørsmål
-        } = søker;
+        const { navn, ident, sivilstand, statsborgerskap, adresse, barn, ...søkerSpørsmål } = søker;
         const { barnInkludertISøknaden } = søknad;
         const typetSøkerSpørsmål: SpørsmålMap = (søkerSpørsmål as unknown) as SpørsmålMap;
 
@@ -149,7 +140,6 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                     'Statsborgerskap',
                     søker.statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, 'nb'))
                 ),
-                telefonnummer: søknadsfelt('Telefonnummer', søker.telefonnummer.svar),
                 adresse: søknadsfelt('Adresse', søker.adresse),
                 spørsmål: spørmålISøknadsFormat(typetSøkerSpørsmål),
             },
