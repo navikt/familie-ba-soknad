@@ -436,12 +436,32 @@ export const useOmBarnet = (
 
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
-        avhengigheterForBosted()
+        avhengigheterForBosted(),
+        false,
+        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
     );
 
     /*--- SØKER FOR PERIODE ---*/
 
     const stegErFyltUt = erStegUtfyltFrafør(hentRouteIndex(location.pathname));
+    const tidsromSkalVises = avhengigheter => {
+        const avhengigheterEksisterer =
+            avhengigheter &&
+            avhengigheter.skriftligAvtaleOmDeltBosted &&
+            avhengigheter.borFastMedSøker;
+        const skriftligAvtaleValidert =
+            avhengigheterEksisterer &&
+            avhengigheter.skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK;
+        const borFastMedSøkerValidert =
+            avhengigheterEksisterer &&
+            avhengigheter.borFastMedSøker.valideringsstatus === Valideringsstatus.OK;
+        return (
+            stegErFyltUt ||
+            (borFastMedSøkerValidert &&
+                (barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA ||
+                    skriftligAvtaleValidert))
+        );
+    };
     const søkerForTidsromCheckbox = useFelt<ESvar>({
         verdi:
             barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar ===
@@ -451,14 +471,7 @@ export const useOmBarnet = (
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.søkerIkkeForTidsrom,
-        skalFeltetVises: avhengigheter =>
-            stegErFyltUt ||
-            (avhengigheter &&
-                avhengigheter.skriftligAvtaleOmDeltBosted &&
-                avhengigheter.borFastMedSøker &&
-                avhengigheter.skriftligAvtaleOmDeltBosted.valideringsstatus ===
-                    Valideringsstatus.OK &&
-                avhengigheter.borFastMedSøker.valideringsstatus === Valideringsstatus.OK),
+        skalFeltetVises: tidsromSkalVises,
         avhengigheter: { skriftligAvtaleOmDeltBosted, borFastMedSøker },
         nullstillVedAvhengighetEndring: false,
     });
@@ -469,9 +482,7 @@ export const useOmBarnet = (
             ? ''
             : barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar,
         søkerForTidsromCheckbox,
-        stegErFyltUt ||
-            (borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
-                skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK)
+        tidsromSkalVises({ borFastMedSøker, skriftligAvtaleOmDeltBosted })
     );
     const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent(
         barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].id,
@@ -479,9 +490,7 @@ export const useOmBarnet = (
             ? ''
             : barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
         søkerForTidsromCheckbox,
-        stegErFyltUt ||
-            (borFastMedSøker.valideringsstatus === Valideringsstatus.OK &&
-                skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK)
+        tidsromSkalVises({ borFastMedSøker, skriftligAvtaleOmDeltBosted })
     );
 
     const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<

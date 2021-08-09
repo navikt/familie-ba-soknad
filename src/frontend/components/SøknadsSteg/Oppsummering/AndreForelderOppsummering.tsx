@@ -9,8 +9,7 @@ import {
     barnDataKeySpørsmål,
     IBarnMedISøknad,
 } from '../../../typer/person';
-import { landkodeTilSpråk } from '../../../utils/person';
-import { barnetsNavnValue } from '../../../utils/visning';
+import { landkodeTilSpråk, barnetsNavnValue } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import { StyledOppsummeringsFeltGruppe } from './Oppsummering';

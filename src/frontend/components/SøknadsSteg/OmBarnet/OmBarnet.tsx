@@ -67,47 +67,51 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 />
             )}
 
-            {skjema.felter.borFastMedSøker.erSynlig &&
-                skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
-                    <SkjemaFieldset tittelId={'hvilkebarn.barn.bosted'} dynamisk>
-                        <div>
-                            <Normaltekst>
-                                <SpråkTekst id={'ombarnet.bosted-info'} />
-                            </Normaltekst>
-                        </div>
-                        <EksternLenkeContainer>
-                            <EksternLenke
-                                lenkeSpråkId={'ombarnet.les-mer-om-bosted.lenke'}
-                                lenkeTekstSpråkId={'ombarnet.les-mer-om-bosted.lenketekst'}
-                                target="_blank"
-                            />
-                        </EksternLenkeContainer>
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.borFastMedSøker}
-                            spørsmålTekstId={
-                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.borFastMedSøker]
-                            }
-                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+            {skjema.felter.borFastMedSøker.erSynlig && (
+                <SkjemaFieldset tittelId={'hvilkebarn.barn.bosted'} dynamisk>
+                    <div>
+                        <Normaltekst>
+                            <SpråkTekst id={'ombarnet.bosted-info'} />
+                        </Normaltekst>
+                    </div>
+                    <EksternLenkeContainer>
+                        <EksternLenke
+                            lenkeSpråkId={'ombarnet.les-mer-om-bosted.lenke'}
+                            lenkeTekstSpråkId={'ombarnet.les-mer-om-bosted.lenketekst'}
+                            target="_blank"
                         />
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.skriftligAvtaleOmDeltBosted}
-                            spørsmålTekstId={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
-                                ]
-                            }
-                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
-                        />
-                        {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
-                            <VedleggNotis
-                                språkTekstId={'ombarnet.delt-bosted.vedleggsinfo'}
-                                dynamisk
+                    </EksternLenkeContainer>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.borFastMedSøker}
+                        spørsmålTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.borFastMedSøker]
+                        }
+                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                    />
+
+                    {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
+                        <>
+                            <JaNeiSpm
+                                skjema={skjema}
+                                felt={skjema.felter.skriftligAvtaleOmDeltBosted}
+                                spørsmålTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
+                                    ]
+                                }
+                                språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                             />
-                        )}
-                    </SkjemaFieldset>
-                )}
+                            {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
+                                <VedleggNotis
+                                    språkTekstId={'ombarnet.delt-bosted.vedleggsinfo'}
+                                    dynamisk
+                                />
+                            )}
+                        </>
+                    )}
+                </SkjemaFieldset>
+            )}
 
             {skjema.felter.søkerForTidsromCheckbox.erSynlig &&
                 skjema.felter.søkerForTidsromStartdato.erSynlig &&

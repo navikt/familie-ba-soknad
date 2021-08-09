@@ -518,17 +518,19 @@ const Oppsummering: React.FC = () => {
                                 }
                                 søknadsvar={barn[barnDataKeySpørsmål.borFastMedSøker].svar}
                             />
-                            <OppsummeringFelt
-                                tittel={
-                                    <SpråkTekst
-                                        id={'ombarnet.delt-bosted.spm'}
-                                        values={{ navn: barnetsNavnValue(barn, intl) }}
-                                    />
-                                }
-                                søknadsvar={
-                                    barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
-                                }
-                            />
+                            {barn[barnDataKeySpørsmål.erFosterbarn].svar !== ESvar.JA && (
+                                <OppsummeringFelt
+                                    tittel={
+                                        <SpråkTekst
+                                            id={'ombarnet.delt-bosted.spm'}
+                                            values={{ navn: barnetsNavnValue(barn, intl) }}
+                                        />
+                                    }
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
+                                    }
+                                />
+                            )}
                         </StyledOppsummeringsFeltGruppe>
                         <StyledOppsummeringsFeltGruppe>
                             <OppsummeringFelt
