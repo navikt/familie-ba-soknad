@@ -14,8 +14,8 @@ import { useApp } from '../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../../../typer/person';
 import { formaterDato } from '../../../utils/dato';
-import { hentBostedSpråkId, landkodeTilSpråk } from '../../../utils/person';
-import { barnetsNavnValue, genererAdresseVisning } from '../../../utils/visning';
+import { hentBostedSpråkId } from '../../../utils/person';
+import { barnetsNavnValue, genererAdresseVisning, landkodeTilSpråk } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { useOmBarnaDine } from '../OmBarnaDine/useOmBarnaDine';
@@ -115,10 +115,6 @@ const Oppsummering: React.FC = () => {
                 </StyledOppsummeringsFeltGruppe>
 
                 <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'omdeg.telefon.spm'} />}
-                        søknadsvar={søknad.søker.telefonnummer.svar}
-                    />
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'omdeg.opphold-i-norge.spm'} />}
                         søknadsvar={søknad.søker.oppholderSegINorge.svar}

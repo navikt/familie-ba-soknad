@@ -128,10 +128,6 @@ export const mekkGyldigSøknad = (): ISøknad => {
                 id: OmDegSpørsmålId.borPåRegistrertAdresse,
                 svar: ESvar.JA,
             },
-            telefonnummer: {
-                id: OmDegSpørsmålId.telefonnummer,
-                svar: '12345678',
-            },
             oppholderSegINorge: {
                 id: OmDegSpørsmålId.oppholderSegINorge,
                 svar: ESvar.JA,

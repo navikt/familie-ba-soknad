@@ -1,5 +1,6 @@
 import { ESivilstand, IAdresse } from '../typer/person';
-import { hentAdressefelterSortert, hentSivilstatus, landkodeTilSpråk } from './person';
+import { hentAdressefelterSortert, hentSivilstatus } from './person';
+import { landkodeTilSpråk } from './visning';
 
 test('Kan rendre standard adresse', () => {
     const adresse: IAdresse = {

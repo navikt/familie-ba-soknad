@@ -1,8 +1,9 @@
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpack from 'webpack';
 import { CustomizeRule, mergeWithRules } from 'webpack-merge';
+import { WebpackPluginServe } from 'webpack-plugin-serve';
 
-import baseConfig, { createHtmlWebpackPlugin } from './webpack.common.config';
+import baseConfig from './webpack.common.config';
 
 const devConfig: webpack.Configuration = mergeWithRules({
     module: {
@@ -14,15 +15,11 @@ const devConfig: webpack.Configuration = mergeWithRules({
 })(baseConfig, {
     mode: 'development',
     entry: {
-        main: ['webpack-hot-middleware/client', './src/frontend/index.tsx'],
-        disabled: './src/frontend/disabled.tsx',
+        main: ['webpack-plugin-serve/client', './src/frontend/index.tsx'],
+        disabled: ['webpack-plugin-serve/client', './src/frontend/disabled.tsx'],
     },
     devtool: 'inline-source-map',
-    plugins: [
-        createHtmlWebpackPlugin(false),
-        new webpack.HotModuleReplacementPlugin(),
-        new ReactRefreshWebpackPlugin(),
-    ],
+    plugins: [new ReactRefreshWebpackPlugin(), new WebpackPluginServe()],
     optimization: {
         runtimeChunk: 'single',
     },
@@ -38,6 +35,10 @@ const devConfig: webpack.Configuration = mergeWithRules({
                 },
             },
         ],
+    },
+    watch: true,
+    watchOptions: {
+        ignored: ['/node_modules/**', 'src/backend/**'],
     },
 });
 
