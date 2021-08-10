@@ -695,7 +695,8 @@ export const useOmBarnet = (
                     case Dokumentasjonsbehov.AVTALE_DELT_BOSTED:
                         return genererOppdatertDokumentasjon(
                             dok,
-                            skriftligAvtaleOmDeltBosted.verdi === ESvar.JA,
+                            skriftligAvtaleOmDeltBosted.verdi === ESvar.JA &&
+                                barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI,
                             barn.id
                         );
                     case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:

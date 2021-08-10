@@ -19,7 +19,7 @@ const devConfig: webpack.Configuration = mergeWithRules({
         disabled: ['webpack-plugin-serve/client', './src/frontend/disabled.tsx'],
     },
     devtool: 'inline-source-map',
-    plugins: [new ReactRefreshWebpackPlugin(), new WebpackPluginServe()],
+    plugins: [new ReactRefreshWebpackPlugin(), new WebpackPluginServe({ port: 55554 })],
     optimization: {
         runtimeChunk: 'single',
     },
