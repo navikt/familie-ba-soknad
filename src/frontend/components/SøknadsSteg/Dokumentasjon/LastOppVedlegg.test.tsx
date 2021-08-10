@@ -1,8 +1,11 @@
 import React from 'react';
 
 import { render } from '@testing-library/react';
+import { mockDeep } from 'jest-mock-extended';
 
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
+import { ESivilstand, ISøker } from '../../../typer/person';
+import { ESøknadstype } from '../../../typer/søknad';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import LastOppVedlegg from './LastOppVedlegg';
 
@@ -48,8 +51,13 @@ describe('LastOppVedlegg', () => {
         expect(checkBoxTitle).toBeNull();
     });
 
-    it('Viser info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON når utvidet', () => {
-        spyOnUseApp({});
+    it('Viser info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON når utvidet og skilt', () => {
+        const søker = mockDeep<ISøker>({
+            sivilstand: {
+                type: ESivilstand.SKILT,
+            },
+        });
+        spyOnUseApp({ søker, søknadstype: ESøknadstype.UTVIDET });
 
         jest.spyOn(window, 'location', 'get').mockReturnValue({
             ...window.location,
