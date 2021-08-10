@@ -44,7 +44,8 @@ const useJaNeiSpmFelt = (
     avhengigheter?: {
         [key: string]: FeltGruppe | undefined;
     },
-    nullstillVedAvhengighetEndring = false
+    nullstillVedAvhengighetEndring = false,
+    skalSkjules = false
 ) => {
     const [harBlittVist, settHarBlittVist] = useState<boolean>(!avhengigheter);
 
@@ -58,6 +59,7 @@ const useJaNeiSpmFelt = (
                 : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
         },
         skalFeltetVises: (avhengigheter: { [key: string]: FeltGruppe }) => {
+            if (skalSkjules) return false;
             if (!avhengigheter) return harBlittVist;
 
             // borPåRegistrertAdresse er et spesialtilfelle for avhengighet, fordi hvis svaret på den er Nei må man søke på papir.

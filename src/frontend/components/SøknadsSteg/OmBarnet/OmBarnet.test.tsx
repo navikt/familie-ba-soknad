@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { act, render } from '@testing-library/react';
+import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
@@ -8,8 +9,17 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import { AppNavigationProvider } from '../../../context/AppNavigationContext';
 import { RoutesProvider } from '../../../context/RoutesContext';
-import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../../../typer/person';
-import { mockHistory, silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
+import {
+    AlternativtSvarForInput,
+    barnDataKeySpørsmål,
+    IBarnMedISøknad,
+} from '../../../typer/person';
+import {
+    mockHistory,
+    silenceConsoleErrors,
+    spyOnUseApp,
+    TestProvidere,
+} from '../../../utils/testing';
 import OmBarnet from './OmBarnet';
 
 silenceConsoleErrors();
@@ -229,5 +239,86 @@ describe('OmBarnet', () => {
         act(() => ikkeOppgiOpplysninger.click());
         expect(andreForelderFnrLabel).not.toBeInTheDocument();
         expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
+    });
+
+    test('Rendrer tidsrom hvis fosterbarn og bor fast med søker er satt', async () => {
+        mockHistory(['/om-barnet/barn-1']);
+        const fakeBarn = mockDeep<IBarnMedISøknad>({
+            id: 'random-id',
+            erFosterbarn: {
+                svar: ESvar.JA,
+            },
+            borFastMedSøker: {
+                svar: null,
+            },
+            søkerForTidsromStartdato: {
+                svar: '',
+            },
+            søkerForTidsromSluttdato: {
+                svar: '',
+            },
+        });
+
+        const { erStegUtfyltFrafør } = spyOnUseApp({
+            barnInkludertISøknaden: [fakeBarn],
+        });
+        erStegUtfyltFrafør.mockReturnValue(false);
+
+        const { getByLabelText, getByText, queryByText } = render(
+            <TestProvidere>
+                <OmBarnet barnetsId={'random-id'} />
+            </TestProvidere>
+        );
+
+        expect(queryByText(/ombarnet.søker-for-periode.spm/)).not.toBeInTheDocument();
+
+        const jaKnapp = getByLabelText('felles.svaralternativ.ja');
+        act(() => jaKnapp.click());
+
+        expect(getByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
+    });
+
+    test('Rendrer tidsrom hvis ikke fosterbarn og både bor fast med søker og avtale om delt bosted er satt', async () => {
+        mockHistory(['/om-barnet/barn-1']);
+        const fakeBarn = mockDeep<IBarnMedISøknad>({
+            id: 'random-id',
+            erFosterbarn: {
+                svar: ESvar.NEI,
+            },
+            andreForelderNavn: {
+                svar: AlternativtSvarForInput.UKJENT,
+            },
+            søkerForTidsromStartdato: {
+                svar: '',
+            },
+            søkerForTidsromSluttdato: {
+                svar: '',
+            },
+        });
+
+        const { erStegUtfyltFrafør } = spyOnUseApp({
+            barnInkludertISøknaden: [fakeBarn],
+        });
+        erStegUtfyltFrafør.mockReturnValue(false);
+
+        const { queryByText, getAllByLabelText } = render(
+            <TestProvidere>
+                <OmBarnet barnetsId={'random-id'} />
+            </TestProvidere>
+        );
+
+        /**
+         * For en eller annen grunn hjelper det ikke å sette verdier på barnet her, seksjonen for om barnet bor fast med søker
+         * dukker ikke opp, vi er nødt til å trykke oss igjennom spørsmålene med act for at vi skal komme frem.
+         */
+
+        const vetIkkeKnapper = getAllByLabelText(/felles.svaralternativ.vetikke/);
+        act(() => vetIkkeKnapper.forEach(knapp => knapp.click()));
+
+        const neiKnapper = getAllByLabelText(/felles.svaralternativ.nei/);
+        // Dette endrer svarene vi hadde satt til vet_ikke, men utfallet er det samme så lenge vi ikke endrer til ja
+        act(() => neiKnapper.forEach(knapp => knapp.click()));
+
+        expect(queryByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
     });
 });
