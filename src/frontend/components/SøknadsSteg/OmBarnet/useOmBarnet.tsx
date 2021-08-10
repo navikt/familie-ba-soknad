@@ -84,7 +84,7 @@ export const useOmBarnet = (
     settSammeForelder: (radioVerdi: string) => void;
     validerAlleSynligeFelter: () => void;
 } => {
-    const { søknad, settSøknad, erStegUtfyltFrafør } = useApp();
+    const { søknad, settSøknad, erStegUtfyltFrafør, erUtvidet } = useApp();
     const { hentRouteIndex } = useRoutes();
     const location = useLocation<ILokasjon>();
 
@@ -446,7 +446,7 @@ export const useOmBarnet = (
     /*--- SØKER FOR PERIODE ---*/
 
     const stegErFyltUt = erStegUtfyltFrafør(hentRouteIndex(location.pathname));
-    const tidsromSkalVises = avhengigheter => {
+    const tidsromSkalVises = (avhengigheter): boolean => {
         const avhengigheterEksisterer =
             avhengigheter &&
             avhengigheter.skriftligAvtaleOmDeltBosted &&
@@ -499,14 +499,22 @@ export const useOmBarnet = (
 
     const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt(
         barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder],
-        {
-            borFastMedSøker: {
-                hovedSpørsmål: borFastMedSøker,
-            },
-            skriftligAvtaleOmDeltBosted: {
-                hovedSpørsmål: skriftligAvtaleOmDeltBosted,
-            },
-        }
+        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
+            ? {
+                  borFastMedSøker: {
+                      hovedSpørsmål: borFastMedSøker,
+                  },
+                  skriftligAvtaleOmDeltBosted: {
+                      hovedSpørsmål: skriftligAvtaleOmDeltBosted,
+                  },
+              }
+            : {
+                  borFastMedSøker: {
+                      hovedSpørsmål: borFastMedSøker,
+                  },
+              },
+        false,
+        !erUtvidet
     );
 
     const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
