@@ -12,6 +12,7 @@ import { RoutesProvider } from '../../../context/RoutesContext';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
+    barnDataKeySpørsmålUtvidet,
     IBarnMedISøknad,
 } from '../../../typer/person';
 import {
@@ -67,6 +68,9 @@ const jens = {
         id: '27',
         svar: AlternativtSvarForInput.UKJENT,
     },
+    utvidet: {
+        [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: { id: 26, svar: ESvar.NEI },
+    },
 };
 const line = {
     navn: 'Line',
@@ -110,6 +114,9 @@ const line = {
     [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
         id: '27',
         svar: AlternativtSvarForInput.UKJENT,
+    },
+    utvidet: {
+        [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: { id: 26, svar: ESvar.NEI },
     },
 };
 
