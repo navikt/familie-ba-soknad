@@ -5,6 +5,7 @@ import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
 import { IBarn, IBarnMedISøknad } from '../../../typer/person';
+import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import { genererInitialBarnMedISøknad } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { BarnetsId } from '../OmBarnaDine/HvilkeBarnCheckboxGruppe';
@@ -79,6 +80,8 @@ export const useVelgBarn = (): {
                 ),
             };
         });
+
+        setUserProperty(UserProperty.ANTALL_VALGTE_BARN, oppdaterteBarn.length);
 
         settSøknad({
             ...søknad,

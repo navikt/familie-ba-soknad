@@ -7,8 +7,8 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
-import { hentSivilstatus, landkodeTilSpråk } from '../../../utils/person';
-import { genererAdresseVisning } from '../../../utils/visning';
+import { hentSivilstatus } from '../../../utils/person';
+import { genererAdresseVisning, landkodeTilSpråk } from '../../../utils/visning';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';

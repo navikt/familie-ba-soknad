@@ -213,7 +213,7 @@
   "ombarnet.søker-for-periode.spm": "Søker du barnetrygd for et spesielt tidsrom for {navn}?",
   "ombarnet.søker-for-periode.startdato.spm": "Fra og med (format dd.mm.åååå)",
   "ombarnet.søker-for-periode.vetikke.spm": "Jeg søker ikke for et spesielt tidsrom",
-  "ombarnet.undertittel": "Barn {x} av {antall barn}",
+  "ombarnet.undertittel": "Barn {x} av {antall}",
   "omdeg.annensamboer.spm": "Har du hatt annen samboer i perioden du søker barnetrygd for?",
   "omdeg.arbeid-utland.land.spm": "Hvilket land arbeider du i?",
   "omdeg.arbeid-utland.spm": "Arbeider du i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?",

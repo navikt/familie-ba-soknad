@@ -8,6 +8,7 @@ import SpråkTekst from './SpråkTekst/SpråkTekst';
 
 const NotisWrapper = styled.div`
     display: flex;
+    margin-top: 1rem;
 `;
 
 const StyledFileContent = styled(FileContent)`

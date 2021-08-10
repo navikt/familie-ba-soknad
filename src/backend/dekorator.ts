@@ -23,13 +23,20 @@ interface DekoratørRespons {
     NAV_FOOTER: string;
 }
 
-export const getDecorator = (): Promise<DekoratørRespons> =>
+export const getDecorator = (språk?: string): Promise<DekoratørRespons> =>
     new Promise((resolve, reject) => {
-        const decorator = cache.get<DekoratørRespons>('main-cache');
+        const params = new URLSearchParams({
+            simple: 'true',
+            language: språk ?? 'nb',
+        });
+        const cacheKey = `main-cache-${params.get('language')}`;
+
+        const decorator = cache.get<DekoratørRespons>(cacheKey);
         if (decorator) {
             resolve(decorator);
         } else {
-            request(environment().dekoratørUrl, (error, response, body) => {
+            const dekoratørUrl = [environment().dekoratørUrl, params.toString()].join('?');
+            request(dekoratørUrl, (error, response, body) => {
                 if (!error && response.statusCode >= 200 && response.statusCode < 400) {
                     const { document } = new JSDOM(body).window;
                     const prop = 'innerHTML';
@@ -39,7 +46,7 @@ export const getDecorator = (): Promise<DekoratørRespons> =>
                         NAV_HEADING: document.getElementById('header-withmenu')[prop],
                         NAV_FOOTER: document.getElementById('footer-withmenu')[prop],
                     };
-                    cache.set('main-cache', data);
+                    cache.set(cacheKey, data);
                     resolve(data);
                 } else {
                     reject(new Error(error));
@@ -48,8 +55,10 @@ export const getDecorator = (): Promise<DekoratørRespons> =>
         }
     });
 
-export const indexHandler: RequestHandler = (_req, res) => {
-    getDecorator()
+export const indexHandler: RequestHandler = (req, res) => {
+    const språk = req.cookies['decorator-language'];
+
+    getDecorator(språk)
         .then(fragments => {
             // eslint-disable-next-line
             // @ts-ignore

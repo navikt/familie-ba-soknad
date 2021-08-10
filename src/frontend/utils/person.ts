@@ -1,5 +1,3 @@
-import { alpha3ToAlpha2, getName } from 'i18n-iso-countries';
-
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
@@ -47,11 +45,6 @@ export const hentAdressefelterSortert = (adresse: IAdresse) => {
     ]
         .map(linje => linje.replace(/\s{2+}/, ' ').trim())
         .filter(value => value);
-};
-
-export const landkodeTilSpråk = (landkode: string, locale: string) => {
-    const landkodeIso = alpha3ToAlpha2(landkode);
-    return getName(landkodeIso, locale);
 };
 
 export const hentSivilstatus = (statuskode?: ESivilstand) => {
@@ -210,4 +203,14 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
         borMedSøker: barnRespons.borMedSøker,
         adressebeskyttelse: barnRespons.adressebeskyttelse,
     }));
+};
+
+export const hentBostedSpråkId = (barn: IBarn) => {
+    if (barn.adressebeskyttelse) {
+        return 'hvilkebarn.barn.bosted.adressesperre';
+    } else if (barn.borMedSøker) {
+        return 'hvilkebarn.barn.bosted.din-adresse';
+    } else {
+        return 'hvilkebarn.barn.bosted.ikke-din-adresse';
+    }
 };

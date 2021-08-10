@@ -8,7 +8,6 @@ import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { AdressebeskyttetKort } from './Barnekort/AdressebeskyttetKort';
 import Barnekort from './Barnekort/Barnekort';
 import LeggTilBarnModal from './LeggTilBarn/LeggTilBarnModal';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
@@ -42,10 +41,9 @@ const VelgBarn: React.FC = () => {
 
     const [modalÅpen, settModalÅpen] = useState<boolean>(false);
 
-    const barnFraRespons = søknad.søker.barn.filter(barn => !barn.adressebeskyttelse);
+    const barnFraRespons = søknad.søker.barn;
     const barnManueltLagtTil = søknad.barnRegistrertManuelt;
     const barn = barnFraRespons.concat(barnManueltLagtTil);
-    const harBarnMedBeskyttaAdresse = !!søknad.søker.barn.find(barn => barn.adressebeskyttelse);
 
     const toggleModal = () => {
         settModalÅpen(!modalÅpen);
@@ -90,7 +88,6 @@ const VelgBarn: React.FC = () => {
                             fjernBarnCallback={fjernBarn}
                         />
                     ))}
-                    {harBarnMedBeskyttaAdresse && <AdressebeskyttetKort />}
                     <NyttBarnKort onLeggTilBarn={toggleModal} />
                 </BarnekortContainer>
                 <LenkeContainer>

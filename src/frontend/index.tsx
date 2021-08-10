@@ -16,7 +16,7 @@ import * as engelsk from './assets/lang/en.json';
 import * as bokmål from './assets/lang/nb.json';
 import * as nynorsk from './assets/lang/nn.json';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
-import { GlobalStyle } from './Theme';
+import { logError } from './utils/amplitude';
 
 const environment = window.location.hostname;
 
@@ -41,7 +41,6 @@ import(`i18n-iso-countries/langs/en.json`).then(result => registerLocale(result)
 
 ReactDOM.render(
     <React.StrictMode>
-        <GlobalStyle />
         <SprakProvider
             tekster={{
                 nb: bokmål,
@@ -54,6 +53,7 @@ ReactDOM.render(
                 <Sentry.ErrorBoundary
                     fallback={Feilside}
                     beforeCapture={scope => scope.setTag('scope', 'familie-ba-soknad')}
+                    onError={logError}
                 >
                     <App />
                 </Sentry.ErrorBoundary>

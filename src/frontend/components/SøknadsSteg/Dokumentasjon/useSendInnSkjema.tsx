@@ -26,6 +26,8 @@ import {
     ISøknadSpørsmål,
 } from '../../../typer/søknad';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
+import { isAlpha3Code } from '../../../utils/hjelpefunksjoner';
+import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
 import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import { omDegSpørsmålSpråkId, OmDegSpørsmålId } from '../OmDeg/spørsmål';
@@ -64,9 +66,20 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                     string,
                     { label: string; verdi: any }
                 ] => {
+                    const verdi = entry[1].svar;
+                    let formatertVerdi: string;
+
+                    if (isAlpha3Code(verdi)) {
+                        formatertVerdi = landkodeTilSpråk(verdi, 'nb');
+                    } else if (verdi === ESvar.VET_IKKE) {
+                        formatertVerdi = ESvar.VET_IKKE.replace('_', ' ');
+                    } else {
+                        formatertVerdi = verdi;
+                    }
+
                     return [
                         entry[0],
-                        søknadsfelt(språktekstFraSpørsmålId(entry[1].id), entry[1].svar),
+                        søknadsfelt(språktekstFraSpørsmålId(entry[1].id), formatertVerdi),
                     ];
                 })
                 .filter(entry => entry[1].verdi)
@@ -74,11 +87,11 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
     };
 
     const barnISøknadsFormat = (barn: IBarnMedISøknad): ISøknadKontraktBarn => {
-        const { ident, navn, borMedSøker, alder, ...barnSpørsmål } = barn;
+        const { ident, navn, borMedSøker, alder, adressebeskyttelse, ...barnSpørsmål } = barn;
         const typetBarnSpørsmål = (barnSpørsmål as unknown) as SpørsmålMap;
 
         return {
-            navn: søknadsfelt('Navn', navn),
+            navn: søknadsfelt('Navn', adressebeskyttelse ? `Barn ${formaterFnr(ident)}` : navn),
             ident: søknadsfelt('Ident', ident ?? 'Ikke oppgitt'),
             borMedSøker: søknadsfelt(
                 'Bor med søker',
@@ -113,16 +126,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         const { søker } = søknad;
         // Raskeste måte å få tak i alle spørsmål minus de andre feltene på søker
         /* eslint-disable @typescript-eslint/no-unused-vars */
-        const {
-            navn,
-            ident,
-            sivilstand,
-            statsborgerskap,
-            telefonnummer,
-            adresse,
-            barn,
-            ...søkerSpørsmål
-        } = søker;
+        const { navn, ident, sivilstand, statsborgerskap, adresse, barn, ...søkerSpørsmål } = søker;
         const { barnInkludertISøknaden } = søknad;
         const typetSøkerSpørsmål: SpørsmålMap = (søkerSpørsmål as unknown) as SpørsmålMap;
 
@@ -134,9 +138,8 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                 sivilstand: søknadsfelt('Sivilstand', søker.sivilstand.type),
                 statsborgerskap: søknadsfelt(
                     'Statsborgerskap',
-                    søker.statsborgerskap.map(objekt => objekt.landkode)
+                    søker.statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, 'nb'))
                 ),
-                telefonnummer: søknadsfelt('Telefonnummer', søker.telefonnummer.svar),
                 adresse: søknadsfelt('Adresse', søker.adresse),
                 spørsmål: spørmålISøknadsFormat(typetSøkerSpørsmål),
             },

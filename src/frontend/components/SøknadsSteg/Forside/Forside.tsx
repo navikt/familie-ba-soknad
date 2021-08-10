@@ -47,7 +47,10 @@ const Forside: React.FC = () => {
     return (
         <InnholdContainer>
             <VeilederSnakkeboble
-                tekst={formatMessage({ id: 'forside.veilederhilsen' }, { navn: navn })}
+                tekst={formatMessage(
+                    { id: 'forside.veilederhilsen' },
+                    { navn: navn.toUpperCase() }
+                )}
                 posisjon={'høyre'}
             />
 

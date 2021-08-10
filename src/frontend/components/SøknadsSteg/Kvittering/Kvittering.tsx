@@ -9,6 +9,7 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
+import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -17,7 +18,12 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 const Kvittering: React.FC = () => {
-    const { avbrytOgSlettSøknad, sisteUtfylteStegIndex, settFåttGyldigKvittering } = useApp();
+    const {
+        avbrytOgSlettSøknad,
+        sisteUtfylteStegIndex,
+        settFåttGyldigKvittering,
+        søknad,
+    } = useApp();
     const { hentStegNummer } = useRoutes();
 
     const { innsendingStatus } = useApp();
@@ -32,6 +38,10 @@ const Kvittering: React.FC = () => {
     useEffect(() => {
         if (sisteUtfylteStegIndex === hentStegNummer(RouteEnum.Dokumentasjon)) {
             settFåttGyldigKvittering(true);
+
+            // I tilfelle vi kommer via mellomlagring og ikke har satt denne fra før, sett den her før vi nullstiller søknaden
+            setUserProperty(UserProperty.ANTALL_VALGTE_BARN, søknad.barnInkludertISøknaden.length);
+
             avbrytOgSlettSøknad();
         }
     }, []);

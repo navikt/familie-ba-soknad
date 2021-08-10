@@ -3,15 +3,7 @@ import React from 'react';
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
-import {
-    Avhengigheter,
-    feil,
-    FeltState,
-    ISkjema,
-    ok,
-    useFelt,
-    useSkjema,
-} from '@navikt/familie-skjema';
+import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
@@ -24,7 +16,6 @@ export type ESvarMedUbesvart = ESvar | null;
 
 export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | null;
-    telefonnummer: string;
     oppholderSegINorge: ESvar | null;
     oppholdsland: Alpha3Code | '';
     oppholdslandDato: ISODateString;
@@ -69,23 +60,6 @@ export const useOmdeg = (): {
                       )
                   );
         },
-    });
-
-    const telefonnummer = useFelt<string>({
-        feltId: søker.telefonnummer.id,
-        verdi: søker.telefonnummer.svar,
-        valideringsfunksjon: (felt: FeltState<string>) => {
-            return felt.verdi.length >= 8 && /^[+\d\s]+$/.test(felt.verdi)
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.telefon.feilmelding'} />);
-        },
-        skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            return avhengigheter.borPåRegistrertAdresse.verdi === ESvar.JA;
-        },
-        avhengigheter: {
-            borPåRegistrertAdresse,
-        },
-        nullstillVedAvhengighetEndring: borPåRegistrertAdresse.verdi === ESvar.NEI,
     });
 
     const oppholderSegINorge = useJaNeiSpmFelt(
@@ -209,10 +183,7 @@ export const useOmdeg = (): {
                     ...søker.borPåRegistrertAdresse,
                     svar: skjema.felter.borPåRegistrertAdresse.verdi,
                 },
-                telefonnummer: {
-                    ...søker.telefonnummer,
-                    svar: skjema.felter.telefonnummer.verdi,
-                },
+
                 oppholderSegINorge: {
                     ...søker.oppholderSegINorge,
                     svar: skjema.felter.oppholderSegINorge.verdi,
@@ -272,7 +243,6 @@ export const useOmdeg = (): {
     >({
         felter: {
             borPåRegistrertAdresse,
-            telefonnummer,
             oppholderSegINorge,
             oppholdsland,
             oppholdslandDato,

@@ -145,6 +145,10 @@ describe('useOmBarnet', () => {
                 svar: AlternativtSvarForInput.UKJENT,
                 id: OmBarnetSpørsmålsId.andreForelderNavn,
             },
+            [barnDataKeySpørsmål.erFosterbarn]: {
+                svar: ESvar.NEI,
+                id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
+            },
         };
 
         spyOnUseApp({ barnInkludertISøknaden: [barn] });

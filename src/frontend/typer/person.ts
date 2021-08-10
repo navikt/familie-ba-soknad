@@ -33,7 +33,6 @@ export interface ISøkerRespons extends IPerson {
 
 export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     barn: IBarn[];
-    telefonnummer: ISøknadSpørsmål<string>;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
     oppholderSegINorge: ISøknadSpørsmål<ESvar | null>;
     oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;
@@ -94,13 +93,13 @@ export enum barnDataKeySpørsmålUtvidet {
 }
 
 export interface IBarnRespons extends Omit<IPerson, 'ident'> {
-    ident?: string;
+    ident: string;
     borMedSøker: boolean;
     fødselsdato: string | undefined;
 }
 
 export interface IBarn extends Omit<IPerson, 'ident'> {
-    ident?: string;
+    ident: string;
     id: BarnetsId;
     borMedSøker: boolean | undefined;
     alder: string | undefined;
@@ -129,7 +128,7 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.institusjonOppholdStartdato]: ISøknadSpørsmål<ISODateString>;
     [barnDataKeySpørsmål.institusjonOppholdSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
     [barnDataKeySpørsmål.andreForelderNavn]: ISøknadSpørsmål<
