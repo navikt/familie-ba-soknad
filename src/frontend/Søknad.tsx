@@ -9,21 +9,11 @@ import Helse from './components/Helse/Helse';
 import Forside from './components/SøknadsSteg/Forside/Forside';
 import { useApp } from './context/AppContext';
 import { useRoutes } from './context/RoutesContext';
-import { basePath } from './Miljø';
+import { routerBasePath } from './Miljø';
 
 const Søknad = () => {
     const { systemetLaster } = useApp();
     const { routes } = useRoutes();
-    const { pathname } = window.location;
-
-    /**
-     * Vi må fortsatt hente scripts og ressurser fra /ordinaer med mindre vi ønsker å gjøre
-     * endringer på express-appen, og vi kan forwarde requests til APIet via /ordinaer, det eneste
-     * som må endres for å støtte utvidet søknad er basepath for react-routeren, derfor gjør vi dette her.
-     */
-    const routerBasePath = pathname.split('/').includes('utvidet')
-        ? basePath.replace('ordinaer', 'utvidet')
-        : basePath;
 
     return (
         <div className={classNames(systemetLaster() && 'blur')}>
