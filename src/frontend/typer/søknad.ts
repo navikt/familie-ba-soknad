@@ -79,15 +79,13 @@ export interface ISøknadKontraktBarn {
 }
 
 const hentSøknadstype = () => {
-    if (process.env.NODE_ENV === 'production') {
-        // PROD OG PREPROD
-        return window.location.pathname.includes('utvidet')
-            ? ESøknadstype.UTVIDET
-            : ESøknadstype.ORDINÆR;
-    } else {
-        // LOKAL UTVIKLING
-        return ESøknadstype.UTVIDET;
-    }
+    const location = window.location;
+    const pathname = window.location.pathname;
+
+    const type = window.location.pathname.includes('utvidet')
+        ? ESøknadstype.UTVIDET
+        : ESøknadstype.ORDINÆR;
+    return type;
 };
 
 export const initialStateSøknad: ISøknad = {

@@ -10,23 +10,33 @@ import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjo
 import { silenceConsoleErrors, spyOnUseApp } from '../../../utils/testing';
 import LastOppVedlegg from './LastOppVedlegg';
 
-silenceConsoleErrors();
+const hentAnnenDokumentasjon = (): IDokumentasjon => {
+    jest.resetModules();
+    const { initialStateSøknad } = jest.requireActual('../../../typer/søknad');
+
+    const dokumentasjon = initialStateSøknad.dokumentasjon.find(
+        dok => dok.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
+    );
+
+    if (dokumentasjon === undefined) {
+        throw new Error("Fant ikke dokumentasjonsbehov ANNEN_DOKUMENTASJON");
+    }
+    return dokumentasjon;
+}
+
+// Fra initialState generator
+const tittelSpråkId = 'dokumentasjon.annendokumentasjon.vedleggtittel';
+const beskrivelseSpråkId = 'dokumentasjon.annendokumentasjon.utvidet.informasjon';
 
 describe('LastOppVedlegg', () => {
+    beforeEach( () => {
+        silenceConsoleErrors();
+    });
+    
     it('Viser ikke info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON', () => {
         spyOnUseApp({});
+        const dokumentasjon = hentAnnenDokumentasjon();
 
-        const tittelSpråkId = 'id på tittel for ANNEN_DOKUMENTASJON';
-        const beskrivelseSpråkId = 'id på beskrivelse for ANNEN_DOKUMENTASJON';
-        const dokumentasjon: IDokumentasjon = {
-            dokumentasjonsbehov: Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
-            gjelderForBarnId: [],
-            gjelderForSøker: false,
-            harSendtInn: false,
-            opplastedeVedlegg: [],
-            tittelSpråkId: tittelSpråkId,
-            beskrivelseSpråkId: beskrivelseSpråkId,
-        };
         const { getByText, queryByText } = render(
             <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
                 <HttpProvider>
@@ -41,6 +51,33 @@ describe('LastOppVedlegg', () => {
         expect(tittel).toBeInTheDocument();
         const infoTekst: HTMLElement | null = queryByText(beskrivelseSpråkId);
         expect(infoTekst).toBeNull();
+        const checkBoxTitle: HTMLElement | null = queryByText('dokumentasjon.har-sendt-inn.spm');
+        expect(checkBoxTitle).toBeNull();
+    });
+
+    it('Viser info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON når utvidet', () => {
+        spyOnUseApp({});
+        window.location = {
+            ...window.location,
+            pathname: '/utvidet/'
+        };
+
+        const dokumentasjon = hentAnnenDokumentasjon();
+
+        const { getByText, queryByText } = render(
+            <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
+                <HttpProvider>
+                    <RoutesProvider>
+                        <LastOppVedlegg dokumentasjon={dokumentasjon} vedleggNr={1} />
+                    </RoutesProvider>
+                </HttpProvider>
+            </SprakProvider>
+        );
+
+        const tittel = getByText(tittelSpråkId);
+        expect(tittel).toBeInTheDocument();
+        const infoTekst: HTMLElement | null = queryByText(beskrivelseSpråkId);
+        expect(infoTekst).not.toBeNull();
         const checkBoxTitle: HTMLElement | null = queryByText('dokumentasjon.har-sendt-inn.spm');
         expect(checkBoxTitle).toBeNull();
     });
