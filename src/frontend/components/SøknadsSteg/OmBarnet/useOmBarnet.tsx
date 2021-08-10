@@ -69,7 +69,9 @@ export interface IOmBarnetUtvidetFeltTyper {
     søkerForTidsromStartdato: ISODateString;
     søkerForTidsromSluttdato: ISODateString;
     sammeForelderSomAnnetBarn: string | null;
-    søkerHarBoddMedAndreForelder;
+    søkerHarBoddMedAndreForelder: ESvar | null;
+    borMedAndreForelderCheckbox: ESvar;
+    søkerFlyttetFraAndreForelderDato: ISODateString;
 }
 
 export const useOmBarnet = (
@@ -517,6 +519,31 @@ export const useOmBarnet = (
         !erUtvidet
     );
 
+    const borMedAndreForelderCheckbox = useFelt<ESvar>({
+        verdi:
+            barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar ===
+            AlternativtSvarForInput.UKJENT
+                ? ESvar.JA
+                : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.søkerBorMedAndreForelder,
+        skalFeltetVises: avhengigheter =>
+            avhengigheter &&
+            avhengigheter.søkerHarBoddMedAndreForelder &&
+            avhengigheter.søkerHarBoddMedAndreForelder.verdi === ESvar.JA,
+        avhengigheter: { søkerHarBoddMedAndreForelder },
+        nullstillVedAvhengighetEndring: false,
+    });
+
+    const søkerFlyttetFraAndreForelderDato = useDatovelgerFeltMedUkjent(
+        barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].id,
+        barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar ===
+            AlternativtSvarForInput.UKJENT
+            ? ''
+            : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar,
+        borMedAndreForelderCheckbox,
+        søkerHarBoddMedAndreForelder.verdi === ESvar.JA
+    );
+
     const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IOmBarnetUtvidetFeltTyper,
         string
@@ -553,6 +580,8 @@ export const useOmBarnet = (
             søkerForTidsromSluttdato,
             sammeForelderSomAnnetBarn,
             søkerHarBoddMedAndreForelder,
+            borMedAndreForelderCheckbox,
+            søkerFlyttetFraAndreForelderDato,
         },
         skjemanavn: `om-barnet-${barn.id}`,
     });
@@ -712,6 +741,10 @@ export const useOmBarnet = (
                               søkerHarBoddMedAndreForelder: {
                                   ...barn.utvidet.søkerHarBoddMedAndreForelder,
                                   svar: søkerHarBoddMedAndreForelder.verdi,
+                              },
+                              søkerFlyttetFraAndreForelderDato: {
+                                  ...barn.utvidet.søkerFlyttetFraAndreForelderDato,
+                                  svar: søkerFlyttetFraAndreForelderDato.verdi,
                               },
                           },
                       }

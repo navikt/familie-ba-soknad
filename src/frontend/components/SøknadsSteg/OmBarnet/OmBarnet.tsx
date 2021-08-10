@@ -180,6 +180,27 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder]
                 }
             />
+            <Datovelger
+                felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
+                skjema={skjema}
+                labelTekstId={
+                    omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato]
+                }
+                disabled={skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA}
+            />
+            <Checkbox
+                label={
+                    <SpråkTekst
+                        id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerBorMedAndreForelder]}
+                    />
+                }
+                defaultChecked={skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA}
+                onChange={event => {
+                    skjema.felter.borMedAndreForelderCheckbox
+                        .hentNavInputProps(false)
+                        .onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
+                }}
+            />
         </Steg>
     ) : null;
 };
