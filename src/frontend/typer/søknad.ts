@@ -79,13 +79,9 @@ export interface ISøknadKontraktBarn {
 }
 
 const hentSøknadstype = () => {
-    if (process.env.NODE_ENV === 'production') {
-        return window.location.pathname.includes('utvidet')
-            ? ESøknadstype.UTVIDET
-            : ESøknadstype.ORDINÆR;
-    } else {
-        return ESøknadstype.UTVIDET;
-    }
+    return window.location.pathname.includes('utvidet')
+        ? ESøknadstype.UTVIDET
+        : ESøknadstype.ORDINÆR;
 };
 
 export const initialStateSøknad: ISøknad = {

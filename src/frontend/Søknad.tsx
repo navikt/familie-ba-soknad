@@ -14,11 +14,21 @@ import { basePath } from './Miljø';
 const Søknad = () => {
     const { systemetLaster } = useApp();
     const { routes } = useRoutes();
+    const { pathname } = window.location;
+
+    /**
+     * Vi må fortsatt hente scripts og ressurser fra /ordinaer med mindre vi ønsker å gjøre
+     * endringer på express-appen, og vi kan forwarde requests til APIet via /ordinaer, det eneste
+     * som må endres for å støtte utvidet søknad er basepath for react-routeren, derfor gjør vi dette her.
+     */
+    const routerBasePath = pathname.split('/').includes('utvidet')
+        ? basePath.replace('ordinaer', 'utvidet')
+        : basePath;
 
     return (
         <div className={classNames(systemetLaster() && 'blur')}>
             <DekoratørenSpråkHandler />
-            <Router basename={basePath}>
+            <Router basename={routerBasePath}>
                 <Switch>
                     <Route exact={true} path={'/helse'} component={Helse} />
                     <Route exact={true} path={'/'} component={Forside} />
