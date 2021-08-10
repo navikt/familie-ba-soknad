@@ -14,7 +14,6 @@ import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
 import DinLivssituasjon from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/DinLivssituasjon';
 import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
 import { IBarnMedISøknad } from '../typer/person';
-import { ESøknadstype } from '../typer/søknad';
 import { useApp } from './AppContext';
 
 export interface IRoute {
@@ -43,7 +42,7 @@ export const omBarnetBasePath = 'om-barnet';
 const [RoutesProvider, useRoutes] = createUseContext(() => {
     const {
         søknad: { barnInkludertISøknaden },
-        erUtvidet
+        erUtvidet,
     } = useApp();
 
     const [barnForRoutes, settBarnForRoutes] = useState<IBarnMedISøknad[]>(barnInkludertISøknaden);

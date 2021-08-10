@@ -13,8 +13,6 @@ import {
     IDokumentasjon,
     IVedlegg,
 } from '../../../typer/dokumentasjon';
-import { ESivilstand } from '../../../typer/person';
-import { ESøknadstype } from '../../../typer/søknad';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Filopplaster from './filopplaster/Filopplaster';
 

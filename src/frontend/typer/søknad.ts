@@ -79,13 +79,9 @@ export interface ISøknadKontraktBarn {
 }
 
 const hentSøknadstype = () => {
-    const location = window.location;
-    const pathname = window.location.pathname;
-
-    const type = window.location.pathname.includes('utvidet')
+    return window.location.pathname.includes('utvidet')
         ? ESøknadstype.UTVIDET
         : ESøknadstype.ORDINÆR;
-    return type;
 };
 
 export const initialStateSøknad: ISøknad = {
