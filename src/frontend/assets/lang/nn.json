@@ -73,7 +73,7 @@
   "forside.bekreftelsesboks.erklæring.spm": "Eg stadfestar at eg har lese og forstått",
   "forside.bekreftelsesboks.feilmelding": "Du må stadfeste dette før du kan starte søknaden",
   "forside.bekreftelsesboks.tittel": "Vi stolar på deg",
-  "forside.info.punktliste": "<punktliste>\n<punkt>Du må svare på alle spørsmåla på kvar side for å kome vidare.</punkt>\n<punkt>Vi lagrar søknaden din ut morgondagen. Derfor kan du ta pausar når du fyller ut.</punkt>\n<punkt>Du kan avbryte søknaden og slette opplysningane du har lagt inn.</punkt>\n<punkt>For å gå vidare med søknaden må du stadfeste at du har lese og forstått pliktene dine.</punkt>\n<punkt>Dersom du skal søke om utvida barnetrygd eller EØS barnetrygd må du bruke PDF/papir-skjema.</punkt>\n</punktliste>",
+  "forside.info.ordinær.punktliste": "<punktliste>\n<punkt>Du må svare på alle spørsmåla på kvar side for å kome vidare.</punkt>\n<punkt>Vi lagrar søknaden din ut morgondagen. Derfor kan du ta pausar når du fyller ut.</punkt>\n<punkt>Du kan avbryte søknaden og slette opplysningane du har lagt inn.</punkt>\n<punkt>For å gå vidare med søknaden må du stadfeste at du har lese og forstått pliktene dine.</punkt>\n<punkt>Dersom du skal søke om utvida barnetrygd eller EØS barnetrygd må du bruke PDF/papir-skjema.</punkt>\n</punktliste>",
   "forside.plikter.lenke": "https://www.nav.no/no/nav-og-samfunn/om-nav/nynorsk/du-har-plikt-til-a-gje-nav-riktige-opplysningar",
   "forside.plikter.lenketekst": "Les om pliktene dine (åpnes i nytt vindauge)",
   "forside.sidetittel": "Velkomen til søknad på ordinær barnetrygd",

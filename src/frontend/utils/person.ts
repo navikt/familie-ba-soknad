@@ -2,6 +2,7 @@ import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
     barnDataKeySpørsmål,
+    barnDataKeySpørsmålUtvidet,
     ESivilstand,
     IAdresse,
     IBarn,
@@ -68,6 +69,12 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
     return {
         ...barn,
         barnErFyltUt: false,
+        utvidet: {
+            [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: {
+                id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,
+                svar: null,
+            },
+        },
         [barnDataKeySpørsmål.erFosterbarn]: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
             svar: null,

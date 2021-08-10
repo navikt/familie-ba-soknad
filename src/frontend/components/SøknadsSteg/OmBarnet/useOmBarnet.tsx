@@ -23,6 +23,7 @@ import { ILokasjon } from '../../../typer/lokasjon';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
+    barnDataKeySpørsmålUtvidet,
     DatoMedUkjent,
     IBarnMedISøknad,
 } from '../../../typer/person';
@@ -68,6 +69,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     søkerForTidsromStartdato: ISODateString;
     søkerForTidsromSluttdato: ISODateString;
     sammeForelderSomAnnetBarn: string | null;
+    søkerHarBoddMedAndreForelder;
 }
 
 export const useOmBarnet = (
@@ -82,7 +84,7 @@ export const useOmBarnet = (
     settSammeForelder: (radioVerdi: string) => void;
     validerAlleSynligeFelter: () => void;
 } => {
-    const { søknad, settSøknad, erStegUtfyltFrafør } = useApp();
+    const { søknad, settSøknad, erStegUtfyltFrafør, erUtvidet } = useApp();
     const { hentRouteIndex } = useRoutes();
     const location = useLocation<ILokasjon>();
 
@@ -444,7 +446,7 @@ export const useOmBarnet = (
     /*--- SØKER FOR PERIODE ---*/
 
     const stegErFyltUt = erStegUtfyltFrafør(hentRouteIndex(location.pathname));
-    const tidsromSkalVises = avhengigheter => {
+    const tidsromSkalVises = (avhengigheter): boolean => {
         const avhengigheterEksisterer =
             avhengigheter &&
             avhengigheter.skriftligAvtaleOmDeltBosted &&
@@ -493,6 +495,28 @@ export const useOmBarnet = (
         tidsromSkalVises({ borFastMedSøker, skriftligAvtaleOmDeltBosted })
     );
 
+    /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
+
+    const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt(
+        barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder],
+        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
+            ? {
+                  borFastMedSøker: {
+                      hovedSpørsmål: borFastMedSøker,
+                  },
+                  skriftligAvtaleOmDeltBosted: {
+                      hovedSpørsmål: skriftligAvtaleOmDeltBosted,
+                  },
+              }
+            : {
+                  borFastMedSøker: {
+                      hovedSpørsmål: borFastMedSøker,
+                  },
+              },
+        false,
+        !erUtvidet
+    );
+
     const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IOmBarnetUtvidetFeltTyper,
         string
@@ -528,6 +552,7 @@ export const useOmBarnet = (
             søkerForTidsromStartdato,
             søkerForTidsromSluttdato,
             sammeForelderSomAnnetBarn,
+            søkerHarBoddMedAndreForelder,
         },
         skjemanavn: `om-barnet-${barn.id}`,
     });
@@ -682,6 +707,12 @@ export const useOmBarnet = (
                                   søkerForTidsromCheckbox,
                                   søkerForTidsromSluttdato
                               ),
+                          },
+                          utvidet: {
+                              søkerHarBoddMedAndreForelder: {
+                                  ...barn.utvidet.søkerHarBoddMedAndreForelder,
+                                  svar: søkerHarBoddMedAndreForelder.verdi,
+                              },
                           },
                       }
                     : barn

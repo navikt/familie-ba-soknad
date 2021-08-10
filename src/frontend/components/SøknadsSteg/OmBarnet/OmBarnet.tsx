@@ -8,6 +8,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../context/AppContext';
+import { ESivilstand } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/visning';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
@@ -29,6 +31,7 @@ const EksternLenkeContainer = styled.div`
 `;
 
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
+    const { erUtvidet, søknad } = useApp();
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -134,6 +137,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             }
                             disabled={skjema.felter.søkerForTidsromCheckbox.verdi === ESvar.JA}
                         />
+                        {erUtvidet && søknad.søker.sivilstand.type === ESivilstand.SKILT && (
+                            <VedleggNotis språkTekstId={'ombarnet.barnetrygdtilbakeitid.info'} />
+                        )}
                         <Datovelger
                             felt={skjema.felter.søkerForTidsromSluttdato}
                             fraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
@@ -166,6 +172,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         />
                     </SkjemaFieldset>
                 )}
+
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.søkerHarBoddMedAndreForelder}
+                spørsmålTekstId={
+                    omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder]
+                }
+            />
         </Steg>
     ) : null;
 };
