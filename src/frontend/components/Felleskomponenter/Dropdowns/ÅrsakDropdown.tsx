@@ -5,29 +5,29 @@ import { useIntl } from 'react-intl';
 import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 
 export enum Årsak {
-    SEPARERT = 'SEPARERT ',
-    SKILT = 'SKILT',
-    BRUDD_I_SAMBOERFORHOLD = 'BRUDD_I_SAMBOERFORHOLD',
-    BODD_ALENE_ETTER_AT_JEG_FIKK_BARN = 'BODD_ALENE_ETTER_AT_JEG_FIKK_BARN',
-    ENKE_ENKEMANN = 'ENKE_ENKEMANN',
-    SAMBOER_EKTEFELLE_FENGSEL_VARETEKT = 'SAMBOER_EKTEFELLE_FENGSEL_VARETEKT',
-    GIFT_MEN_BRUDD_I_FORHOLD = 'GIFT_MEN_BRUDD_I_FORHOLD',
+    SEPARERT = 'omdeg.velgårsak.separert',
+    SKILT = 'omdeg.velgårsak.skilt',
+    BRUDD_SAMBOER = 'omdeg.velgårsak.bruddsamboer',
+    BODD_ALENE = 'omdeg.velgårsak.boddalene',
+    ENKE_ENKEMANN = 'omdeg.velgårsak.enkeenkemann',
+    FENGSEL_VARETEKT = 'omdeg.velgårsak.fengselvaretekt',
+    BURDD_GIFT = 'omdeg.velgårsak.burddgift',
 }
 
 export const muligeÅrsaker: Årsak[] = [
     Årsak.SEPARERT,
     Årsak.SKILT,
-    Årsak.BRUDD_I_SAMBOERFORHOLD,
-    Årsak.BODD_ALENE_ETTER_AT_JEG_FIKK_BARN,
+    Årsak.BRUDD_SAMBOER,
+    Årsak.BODD_ALENE,
     Årsak.ENKE_ENKEMANN,
-    Årsak.SAMBOER_EKTEFELLE_FENGSEL_VARETEKT,
-    Årsak.GIFT_MEN_BRUDD_I_FORHOLD,
+    Årsak.FENGSEL_VARETEKT,
+    Årsak.BURDD_GIFT,
 ];
 
 const ÅrsakDropdown: React.FC<StyledDropdownProps<Årsak | ''>> = props => {
     const intl = useIntl();
     return (
-        <StyledDropdown<Årsak | ''> {...props}>
+        <StyledDropdown<Årsak | ''> {...props} bredde={'fullbredde'}>
             {muligeÅrsaker.map(
                 (årsak): ReactNode => (
                     <option value={årsak} label={intl.formatMessage({ id: årsak })} key={årsak} />
