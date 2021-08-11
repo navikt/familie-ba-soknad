@@ -747,7 +747,10 @@ export const useOmBarnet = (
                               },
                               søkerFlyttetFraAndreForelderDato: {
                                   ...barn.utvidet.søkerFlyttetFraAndreForelderDato,
-                                  svar: søkerFlyttetFraAndreForelderDato.verdi,
+                                  svar: svarForSpørsmålMedUkjent(
+                                      borMedAndreForelderCheckbox,
+                                      søkerFlyttetFraAndreForelderDato
+                                  ),
                               },
                           },
                       }
