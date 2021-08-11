@@ -53,9 +53,11 @@ const Forside: React.FC = () => {
                 )}
                 posisjon={'høyre'}
             />
+
             <StyledSidetittel>
                 <SpråkTekst id={erUtvidet ? 'forside.utvidet.sidetittel' : 'forside.sidetittel'} />
             </StyledSidetittel>
+
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
             <Informasjonsbolk>
                 <SpråkTekst
@@ -75,7 +77,9 @@ const Forside: React.FC = () => {
                     />
                 )}
             </Informasjonsbolk>
+
             {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
+
             <Informasjonsbolk>
                 <EksternLenke
                     lenkeSpråkId={'forside.behandling-av-personopplysning.lenke'}
