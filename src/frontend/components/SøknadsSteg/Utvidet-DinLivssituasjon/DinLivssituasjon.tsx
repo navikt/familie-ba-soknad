@@ -16,7 +16,9 @@ const DinLivssituasjon: React.FC = () => {
                 skjema,
                 settSøknadsdataCallback: oppdaterSøknad,
             }}*/
-        />
+        >
+            <div>Hvorfor søker du om utvidet barnetrygd.</div>
+        </Steg>
     );
 };
 
