@@ -173,49 +173,65 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         />
                     </SkjemaFieldset>
                 )}
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.søkerHarBoddMedAndreForelder}
-                    spørsmålTekstId={
-                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder]
-                    }
-                />
-                <Datovelger
-                    felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
-                    skjema={skjema}
-                    labelTekstId={
-                        omBarnetSpørsmålSpråkId[
-                            OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                        ]
-                    }
-                    disabled={skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA}
-                />
-                {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
-                    <div>
-                        <Checkbox
-                            label={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerBorMedAndreForelder
-                                        ]
-                                    }
-                                />
-                            }
-                            defaultChecked={
-                                skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
-                            }
-                            onChange={event => {
-                                skjema.felter.borMedAndreForelderCheckbox
-                                    .hentNavInputProps(false)
-                                    .onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
-                            }}
-                        />
-                        <VedleggNotis språkTekstId={'ombarnet.nårflyttetfra.info'} dynamisk />
-                    </div>
-                )}
-            </KomponentGruppe>
+            {skjema.felter.søkerHarBoddMedAndreForelder.erSynlig && (
+                <KomponentGruppe dynamisk>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.søkerHarBoddMedAndreForelder}
+                        spørsmålTekstId={
+                            omBarnetSpørsmålSpråkId[
+                                OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
+                            ]
+                        }
+                    />
+                    {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
+                        <KomponentGruppe inline dynamisk>
+                            <Datovelger
+                                felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
+                                skjema={skjema}
+                                labelTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                                    ]
+                                }
+                                disabled={
+                                    skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
+                                }
+                            />
+                            {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
+                                <div>
+                                    <Checkbox
+                                        label={
+                                            <SpråkTekst
+                                                id={
+                                                    omBarnetSpørsmålSpråkId[
+                                                        OmBarnetSpørsmålsId.søkerBorMedAndreForelder
+                                                    ]
+                                                }
+                                            />
+                                        }
+                                        defaultChecked={
+                                            skjema.felter.borMedAndreForelderCheckbox.verdi ===
+                                            ESvar.JA
+                                        }
+                                        onChange={event => {
+                                            skjema.felter.borMedAndreForelderCheckbox
+                                                .hentNavInputProps(false)
+                                                .onChange(
+                                                    event.target.checked ? ESvar.JA : ESvar.NEI
+                                                );
+                                        }}
+                                    />
+                                    <VedleggNotis
+                                        språkTekstId={'ombarnet.nårflyttetfra.info'}
+                                        dynamisk
+                                    />
+                                </div>
+                            )}
+                        </KomponentGruppe>
+                    )}
+                </KomponentGruppe>
+            )}
         </Steg>
     ) : null;
 };
