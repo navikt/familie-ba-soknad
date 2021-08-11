@@ -8,7 +8,7 @@ interface MiljøProps {
 }
 const modellVersjon = 6;
 
-export const basePath = process.env.BASE_PATH;
+export const basePath = process.env.BASE_PATH ?? '/';
 
 /**
  * Vi må fortsatt hente scripts og ressurser fra /ordinaer med mindre vi ønsker å gjøre endringer på
