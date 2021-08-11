@@ -207,6 +207,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             .onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
                     }}
                 />
+                <VedleggNotis språkTekstId={'ombarnet.nårflyttetfra.info'} dynamisk />
             </SkjemaFieldset>
         </Steg>
     ) : null;
