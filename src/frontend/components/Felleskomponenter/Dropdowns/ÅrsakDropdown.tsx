@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 
 import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 
-enum Årsak {
+export enum Årsak {
     SEPARERT = 'SEPARERT ',
     SKILT = 'SKILT',
     BRUDD_I_SAMBOERFORHOLD = 'BRUDD_I_SAMBOERFORHOLD',
@@ -14,7 +14,7 @@ enum Årsak {
     GIFT_MEN_BRUDD_I_FORHOLD = 'GIFT_MEN_BRUDD_I_FORHOLD',
 }
 
-const options: Årsak[] = [
+export const muligeÅrsaker: Årsak[] = [
     Årsak.SEPARERT,
     Årsak.SKILT,
     Årsak.BRUDD_I_SAMBOERFORHOLD,
@@ -24,17 +24,13 @@ const options: Årsak[] = [
     Årsak.GIFT_MEN_BRUDD_I_FORHOLD,
 ];
 
-const ÅrsakDropdown: React.FC<StyledDropdownProps<Årsak>> = props => {
+const ÅrsakDropdown: React.FC<StyledDropdownProps<Årsak | ''>> = props => {
     const intl = useIntl();
     return (
-        <StyledDropdown {...props}>
-            {options.map(
+        <StyledDropdown<Årsak | ''> {...props}>
+            {muligeÅrsaker.map(
                 (årsak): ReactNode => (
-                    <option
-                        value={årsak}
-                        label={intl.formatMessage({ id: 'fix.dropdown.label.arsak' })}
-                        key={årsak}
-                    />
+                    <option value={årsak} label={intl.formatMessage({ id: årsak })} key={årsak} />
                 )
             )}
         </StyledDropdown>

@@ -3,6 +3,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
+import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { INøkkelPar } from './common';
 import { Dokumentasjonsbehov, IDokumentasjon, ISøknadKontraktDokumentasjon } from './dokumentasjon';
@@ -46,7 +47,7 @@ export interface ISøknad {
 }
 
 export interface ISøknadSpørsmål<T> {
-    id: OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørsmålsId;
+    id: OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørsmålsId | DinLivssituasjonSpørsmålId;
     svar: T;
 }
 
@@ -189,6 +190,12 @@ export const initialStateSøknad: ISøknad = {
         pensjonsland: {
             id: OmDegSpørsmålId.pensjonsland,
             svar: '',
+        },
+        utvidet: {
+            årsak: {
+                id: DinLivssituasjonSpørsmålId.årsak,
+                svar: '',
+            },
         },
     },
     erNoenAvBarnaFosterbarn: {

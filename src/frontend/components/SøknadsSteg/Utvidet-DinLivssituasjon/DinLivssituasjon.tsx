@@ -1,23 +1,36 @@
 import React from 'react';
 
+import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
+import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { useDinLivssituasjon } from './useDinLivssituasjon';
 
 const DinLivssituasjon: React.FC = () => {
-    /*    const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmdeg();
-    const { søknad } = useApp();
-    const { søker } = søknad;*/
+    const {
+        skjema,
+        validerFelterOgVisFeilmelding,
+        valideringErOk,
+        oppdaterSøknad,
+    } = useDinLivssituasjon();
+
     return (
         <Steg
             tittel={<SpråkTekst id={'dinlivssituasjon.sidetittel'} />}
-            /* skjema={{
+            skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
                 skjema,
                 settSøknadsdataCallback: oppdaterSøknad,
-            }}*/
+            }}
         >
-            <div>Hvorfor søker du om utvidet barnetrygd.</div>
+            <KomponentGruppe>
+                <ÅrsakDropdown
+                    felt={skjema.felter.årsak}
+                    skjema={skjema}
+                    placeholder={'fix placeholder'}
+                />
+            </KomponentGruppe>
         </Steg>
     );
 };
