@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+  frontend:
+    build:
+      context: ./
+      args:
+        base_path: /familie/barnetrygd/soknad/ordinaer/
+    environment:
+      BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
+      ENV: docker-compose
+    volumes:
+      - ./src:/var/server/src
+    ports:
+      - "3000:3000"
+      - "55554:55554"
+    command: ["yarn", "start:dev:ts-server"]
+
+  api:
+    build:
+      context: ./dockerstuff/soknad-api
+      args:
+        # Trenger auth for mvn clean install, er mest sannsynlig i $HOME/.m2/settings.xml, klipp og lim inn. (password er token)
+        github_username: FYLL_INN_M2_SETTINGS
+        github_token: FYLL_INN_M2_SETTINGS
+    volumes:
+      - ./dockerstuff/logs:/secure-logs
+      - ./dockerstuff/keys:/keys
+    ports:
+      - "8080:8080"
+    environment:
+      LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/selvbetjening/.well-known/openid-configuration
+      TOKEN_X_WELL_KNOWN_URL: http://tokendings:1111/tokenx/.well-known/openid-configuration
+      TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-soknad-api.json'
+      PDL_API_APIKEY: test
+      MOTTAK_APIKEY: test
+      KODEVERK_API_KEY: test
+      STS_APIKEY: test
+      CREDENTIAL_USERNAME: test
+      CREDENTIAL_PASSWORD: test
+
+  oauthmock:
+    image: ghcr.io/navikt/mock-oauth2-server:0.3.4
+
+  key_generator:
+    # Will generate tokenx keys and then shut down
+    build:
+      context: dockerstuff/jwker
+    environment:
+      APPS: "familie-ba-soknad,familie-ba-soknad-api,familie-ba-mottak,familie-dokument"
+      KEY_OUTPUT_DIRECTORY: /keys
+    volumes:
+      - ./dockerstuff/keys:/keys
+
+  tokendings:
+    build:
+      context: dockerstuff/tokendings
+
+  testentry:
+    # Denne er bare hvis du trenger å logge inn i en docker-service for å se om de andre kan nås på det interne nettverket
+    image: alpine
+    command: ["sleep", "10000000"]

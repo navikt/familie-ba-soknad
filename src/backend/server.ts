@@ -24,7 +24,7 @@ app.set('view engine', 'mustache');
 app.engine('html', mustacheExpress());
 
 // I dev-mode vil vi ikke cache index.html, siden denne oppdateres med nye js-bundles når vi endrer ting i appen
-process.env.NODE_ENV === 'development' && app.set('view cache', false);
+process.env.NODE_ENV !== 'production' && app.set('view cache', false);
 
 // Alltid bruk gzip-compression på alt vi server med express
 app.use(compression());

@@ -1,0 +1,55 @@
+diff --git a/build.gradle.kts b/build.gradle.kts
+index d70d64e..b72bf40 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -21,7 +21,7 @@ val nimbusSdkVersion = "8.30"
+ val postgresqlVersion = "42.2.23"
+ val testcontainersPostgresVersion = "1.15.2"
+ 
+-val mainClassKt = "io.nais.security.oauth2.TokenExchangeAppKt"
++val mainClassKt = "io.nais.security.oauth2.mock.MockTokenExchangeAppKt"
+ 
+ plugins {
+     application
+@@ -86,13 +86,19 @@ dependencies {
+     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
+ }
+ 
++project.configurations.testImplementation.get().isCanBeResolved = true
++
+ tasks {
+     withType<org.jmailen.gradle.kotlinter.tasks.LintTask> {
+         dependsOn("formatKotlin")
+     }
+     withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+         archiveBaseName.set("app")
+-        archiveClassifier.set("")
++        archiveClassifier.set("tests")
++        from(sourceSets.test.get().output)
++        configurations = listOf(
++            project.configurations.testImplementation.get()
++        )
+         manifest {
+             attributes(
+                 mapOf(
+diff --git a/src/test/kotlin/io/nais/security/oauth2/mock/MockTokenExchangeApp.kt b/src/test/kotlin/io/nais/security/oauth2/mock/MockTokenExchangeApp.kt
+index 7c95809..4f7e3ca 100644
+--- a/src/test/kotlin/io/nais/security/oauth2/mock/MockTokenExchangeApp.kt
++++ b/src/test/kotlin/io/nais/security/oauth2/mock/MockTokenExchangeApp.kt
+@@ -14,6 +14,7 @@ import io.nais.security.oauth2.tokenExchangeApp
+ import mu.KotlinLogging
+ import no.nav.security.mock.oauth2.MockOAuth2Server
+ import no.nav.security.mock.oauth2.OAuth2Config
++import java.net.InetAddress
+ import java.net.URL
+ 
+ val log = KotlinLogging.logger { }
+@@ -54,7 +55,7 @@ private fun startMockOAuth2Server(): MockOAuth2Server =
+             interactiveLogin = true
+         )
+     ).apply {
+-        this.start(1111)
++        this.start(InetAddress.getByName("0.0.0.0"), 1111)
+     }
+ 
+ fun String.asResource(): URL = object {}.javaClass.classLoader.getResource(this)!!
