@@ -3,5 +3,5 @@ export enum DinLivssituasjonSpørsmålId {
 }
 
 export const dinLivssituasjonSpørsmålSpråkId: Record<DinLivssituasjonSpørsmålId, string> = {
-    [DinLivssituasjonSpørsmålId.årsak]: 'dinlivssituasjon.årsak.spm',
+    [DinLivssituasjonSpørsmålId.årsak]: 'omdeg.hvorforsøkerutvidet.spm',
 };

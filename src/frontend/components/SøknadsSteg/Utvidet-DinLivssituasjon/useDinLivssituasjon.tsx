@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
@@ -24,7 +26,7 @@ export const useDinLivssituasjon = (): {
         valideringsfunksjon: (felt: FeltState<Årsak | ''>) => {
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, () => SpråkTekst({ id: 'felles.mangler-svar.feilmelding' }));
+                : feil(felt, <SpråkTekst id={'omdeg.velgårsak.feilmelding'} />);
         },
     });
 
