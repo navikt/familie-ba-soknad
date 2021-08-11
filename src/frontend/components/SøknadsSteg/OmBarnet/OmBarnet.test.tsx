@@ -70,6 +70,7 @@ const jens = {
     },
     utvidet: {
         [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: { id: 26, svar: ESvar.NEI },
+        [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: { id: 27, svar: ESvar.JA },
     },
 };
 const line = {
