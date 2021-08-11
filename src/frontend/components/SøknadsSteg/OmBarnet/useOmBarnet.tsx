@@ -526,10 +526,13 @@ export const useOmBarnet = (
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.søkerBorMedAndreForelder,
-        skalFeltetVises: avhengigheter =>
-            avhengigheter &&
-            avhengigheter.søkerHarBoddMedAndreForelder &&
-            avhengigheter.søkerHarBoddMedAndreForelder.verdi === ESvar.JA,
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter &&
+                avhengigheter.søkerHarBoddMedAndreForelder &&
+                avhengigheter.søkerHarBoddMedAndreForelder.verdi === ESvar.JA
+            );
+        },
         avhengigheter: { søkerHarBoddMedAndreForelder },
         nullstillVedAvhengighetEndring: false,
     });
