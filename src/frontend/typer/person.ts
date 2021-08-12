@@ -94,6 +94,7 @@ export enum barnDataKeySpørsmål {
 
 export enum barnDataKeySpørsmålUtvidet {
     søkerHarBoddMedAndreForelder = 'søkerHarBoddMedAndreForelder',
+    søkerFlyttetFraAndreForelderDato = 'søkerFlyttetFraAndreForelderDato',
 }
 
 export interface IBarnRespons extends Omit<IPerson, 'ident'> {
@@ -152,5 +153,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.søkerForTidsromSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
     utvidet: {
         [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
+        [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: ISøknadSpørsmål<DatoMedUkjent>;
     };
 }
