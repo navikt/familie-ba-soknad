@@ -120,13 +120,6 @@ export const initialStateSøknad: ISøknad = {
             'dokumentasjon.bekreftelseborsammen.informasjon'
         ),
         genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
-            'dokumentasjon.annendokumentasjon.vedleggtittel',
-            hentSøknadstype() === ESøknadstype.UTVIDET
-                ? 'dokumentasjon.annendokumentasjon.utvidet.informasjon'
-                : null
-        ),
-        genererInitiellDokumentasjon(
             Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
             'dokumentasjon.separasjonskilsmissedødsfall.vedleggtittel',
             'dokumentasjon.separasjonskilsmissedødsfall.informasjon'
@@ -135,6 +128,13 @@ export const initialStateSøknad: ISøknad = {
             Dokumentasjonsbehov.MEKLINGSATTEST,
             'dokumentasjon.meklingsattest.vedleggtittel',
             'dokumentasjon.meklingsattest.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
+            'dokumentasjon.annendokumentasjon.vedleggtittel',
+            hentSøknadstype() === ESøknadstype.UTVIDET
+                ? 'dokumentasjon.annendokumentasjon.utvidet.informasjon'
+                : null
         ),
     ],
     søker: {
