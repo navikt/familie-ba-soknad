@@ -3,8 +3,8 @@ import React from 'react';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { Årsak } from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { Årsak } from './types-and-utilities';
 
 export interface IDinLivssituasjonFeltTyper {
     årsak: Årsak | '';

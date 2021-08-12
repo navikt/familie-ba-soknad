@@ -2,8 +2,8 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
-import { Årsak } from '../components/Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import { BarnetsId } from '../components/SøknadsSteg/OmBarnaDine/HvilkeBarnCheckboxGruppe';
+import { Årsak } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/types-and-utilities';
 import { ISøknadSpørsmål } from './søknad';
 
 export enum ESivilstand {
