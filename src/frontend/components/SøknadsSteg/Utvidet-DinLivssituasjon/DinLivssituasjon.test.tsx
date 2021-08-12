@@ -1,51 +1,51 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
+import { queryByText, render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
-import { ISøknad } from '../../../typer/søknad';
-import {
-    mockHistory,
-    silenceConsoleErrors,
-    spyOnUseApp,
-    TestProvidere,
-} from '../../../utils/testing';
+import { silenceConsoleErrors, TestProvidereMedEkteTekster } from '../../../utils/testing';
 import DinLivssituasjon from './DinLivssituasjon';
-import { DinLivssituasjonSpørsmålId } from './spørsmål';
+
+jest.mock('react-router-dom', () => ({
+    ...(jest.requireActual('react-router-dom') as object),
+    useLocation: () => ({
+        pathname: '/din-livssituasjon',
+    }),
+    useHistory: () => ({
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        push: () => {},
+    }),
+}));
+
+jest.mock('nav-frontend-alertstriper', () => ({ children }) => (
+    <div data-testid="alertstripe">{children}</div>
+));
 
 describe('DinLivssituasjon', () => {
-    it('Stopper fra å gå videre hvis siden har mangler', () => {
-        const søknad = mockDeep<ISøknad>({
-            søker: {
-                utvidet: {
-                    årsak: {
-                        id: DinLivssituasjonSpørsmålId.årsak,
-                        svar: '',
-                    },
-                },
-            },
-        });
-        spyOnUseApp(søknad);
-        const { mockedHistoryArray } = mockHistory(['/din-livssituasjon']);
-
+    it('rendrer DinLivssituasjon steg og inneholder sidetittel', () => {
         silenceConsoleErrors();
-
-        const { getByText, getAllByRole, debug, container } = render(
-            <TestProvidere>
+        const { getByText } = render(
+            <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
-            </TestProvidere>
+            </TestProvidereMedEkteTekster>
         );
+        expect(getByText('Din livssituasjon')).toBeInTheDocument();
+    });
 
-        const gåVidere = getByText('felles.navigasjon.gå-videre');
+    it('Stopper fra å gå videre hvis årsak ikke er valgt', () => {
+        silenceConsoleErrors();
+        const { getByText, getByRole } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        const gåVidere = getByText('GÅ VIDERE');
         act(() => gåVidere.click());
-
-        debug(container, 100000);
-
-        const omDegFeil = getAllByRole('alert')[0];
-
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({ hash: 'omdeg-feil' });
-        expect(omDegFeil).toBeInTheDocument();
-        expect(omDegFeil).toBeVisible();
+        const alerts: HTMLElement = getByRole('alert');
+        const result: HTMLElement | null = queryByText(
+            alerts,
+            'Hvorfor søker du om utvidet barnetrygd?'
+        );
+        expect(result).not.toBeNull();
     });
 });
