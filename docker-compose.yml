@@ -1,4 +1,10 @@
-version: "3"
+version: "3.4"
+
+x-common-variables: &common-variables
+  # Trenger auth for mvn clean install, er mest sannsynlig i $HOME/.m2/settings.xml, klipp og lim inn. (password er token)
+  github_username: FYLL_INN_M2_SETTINGS
+  github_token: FYLL_INN_M2_SETTINGS
+
 
 services:
   frontend:
@@ -19,10 +25,7 @@ services:
   api:
     build:
       context: ./dockerstuff/soknad-api
-      args:
-        # Trenger auth for mvn clean install, er mest sannsynlig i $HOME/.m2/settings.xml, klipp og lim inn. (password er token)
-        github_username: FYLL_INN_M2_SETTINGS
-        github_token: FYLL_INN_M2_SETTINGS
+      args: *common-variables
     volumes:
       - ./dockerstuff/logs:/secure-logs
       - ./dockerstuff/keys:/keys
@@ -32,12 +35,6 @@ services:
       LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/selvbetjening/.well-known/openid-configuration
       TOKEN_X_WELL_KNOWN_URL: http://tokendings:1111/tokenx/.well-known/openid-configuration
       TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-soknad-api.json'
-      PDL_API_APIKEY: test
-      MOTTAK_APIKEY: test
-      KODEVERK_API_KEY: test
-      STS_APIKEY: test
-      CREDENTIAL_USERNAME: test
-      CREDENTIAL_PASSWORD: test
 
   oauthmock:
     image: ghcr.io/navikt/mock-oauth2-server:0.3.4
