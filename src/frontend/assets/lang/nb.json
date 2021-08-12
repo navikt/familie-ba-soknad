@@ -17,7 +17,7 @@
   "dokumentasjon.last-opp-dokumentasjon.feilmeldingstor": "Filen du prøvde å laste opp er for stor. Maksimal størrelse er {maks}. {linjeskift} Fil: {filnavn}",
   "dokumentasjon.last-opp-dokumentasjon.feilmeldingtype": "Filen du prøvde å laste opp har feil filtype. Godkjente filtyper er png, PDF, jpg og jpeg. {linjeskift} Fil: {filnavn}",
   "dokumentasjon.last-opp-dokumentasjon.knapp": "Last opp dokumentasjon",
-  "dokumentasjon.meklingsattest.informasjon": "Du må legge ved meklingsattest fordi du har opplyst at du ikke bor sammen med BARN BARNESEN III sin andre forelder. \n\nDokumentasjonen må vise at ...",
+  "dokumentasjon.meklingsattest.informasjon": "<p>Du må legge ved meklingsattest fordi du har opplyst at du ikke bor sammen med BARN BARNESEN III sin andre forelder. {linjeskift} {linjeskift} Dokumentasjonen må vise at ... </p>",
   "dokumentasjon.meklingsattest.vedleggtittel": "Meklingsattest",
   "dokumentasjon.oppholdstillatelse.informasjon": "<p>Du må legge ved vedtak fra UDI om oppholdstillatelse fordi du har opplyst at det er søkt om asyl for deg og/eller noen av barna dine. {linjeskift} {linjeskift} Vedtaket må inneholde:</p>\n<punktliste> \n<punkt> Hvilken dato vedtaket var gjort </punkt>\n<punkt> Hvem vedtaket gjelder </punkt>\n<punkt> Hvor lenge oppholdstillatelsen gjelder. </punkt>\n</punktliste> ",
   "dokumentasjon.oppholdstillatelse.vedleggtittel": "Vedtak om oppholdstillatelse",
