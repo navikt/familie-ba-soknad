@@ -15,6 +15,7 @@ import {
 } from '../../../typer/dokumentasjon';
 import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype } from '../../../typer/søknad';
+import { barnetsNavnValue } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Filopplaster from './filopplaster/Filopplaster';
 
@@ -29,7 +30,7 @@ const Container = styled.div`
 
 const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
     const { søknad, settSøknad } = useApp();
-    const { formatMessage } = useIntl();
+    const intl = useIntl();
     const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
         const huketAv = event.target.checked;
         const vedlegg = huketAv ? [] : dokumentasjon.opplastedeVedlegg;
@@ -57,12 +58,13 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         );
 
         return barnDokGjelderFor.map((barn, index) => {
+            const visningsNavn = barnetsNavnValue(barn, intl);
             if (index === 0) {
-                return barn.navn;
+                return visningsNavn;
             } else {
                 return index === barnDokGjelderFor.length - 1
-                    ? ` ${formatMessage({ id: 'felles.og' })} ${barn.navn}`
-                    : `, ${barn.navn}`;
+                    ? ` ${intl.formatMessage({ id: 'felles.og' })} ${visningsNavn}`
+                    : `, ${visningsNavn}`;
             }
         });
     };
@@ -84,7 +86,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         return antallVedlegg;
     };
 
-    const dokTittel = formatMessage(
+    const dokTittel = intl.formatMessage(
         { id: dokumentasjon.tittelSpråkId },
         { barn: formatertListeMedBarn() }
     );
@@ -134,7 +136,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
             {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
                 <Checkbox
                     label={<SpråkTekst id={'dokumentasjon.har-sendt-inn.spm'} />}
-                    aria-label={`${formatMessage({
+                    aria-label={`${intl.formatMessage({
                         id: 'dokumentasjon.har-sendt-inn.spm',
                     })} (${dokTittel})`}
                     checked={dokumentasjon.harSendtInn}
