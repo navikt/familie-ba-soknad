@@ -126,6 +126,16 @@ export const initialStateSøknad: ISøknad = {
                 ? 'dokumentasjon.annendokumentasjon.utvidet.informasjon'
                 : null
         ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
+            'dokumentasjon.separasjonskilsmissedødsfall.vedleggtittel',
+            'dokumentasjon.separasjonskilsmissedødsfall.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.MEKLINGSATTEST,
+            'dokumentasjon.meklingsattest.vedleggtittel',
+            'dokumentasjon.meklingsattest.informasjon'
+        ),
     ],
     søker: {
         navn: '',
