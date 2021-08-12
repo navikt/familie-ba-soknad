@@ -23,7 +23,7 @@
   "dokumentasjon.oppholdstillatelse.vedleggtittel": "Vedtak om oppholdstillatelse",
   "dokumentasjon.opplastededokumenter": "Opplastede dokumenter",
   "dokumentasjon.send-søknad.knapp": "Send søknad",
-  "dokumentasjon.separasjonskilsmissedødsfall.informasjon": "Du må legge ved dokumentasjon på separasjon, skilsmisse eller dødsfall fordi du har opplyst at du er separert, skilt eller enke/enkemann uten at dette er registrert i folkeregisteret i Norge. \n\nDokumentasjonen må vise at du er separert, skilt eller enke/enkemann, i hvilket land, og fra hvilken dato det gjelder.",
+  "dokumentasjon.separasjonskilsmissedødsfall.informasjon": "<p>Du må legge ved dokumentasjon på separasjon, skilsmisse eller dødsfall fordi du har opplyst at du er separert, skilt eller enke/enkemann uten at dette er registrert i folkeregisteret i Norge. {linjeskift} {linjeskift} Dokumentasjonen må vise at du er separert, skilt eller enke/enkemann, i hvilket land, og fra hvilken dato det gjelder.</p>",
   "dokumentasjon.separasjonskilsmissedødsfall.vedleggtittel": "Dokumentasjon på separasjon, skilsmisse eller dødsfall.",
   "dokumentasjon.sidetittel": "Last opp dokumentasjon",
   "dokumentasjon.vedleggsnummer": "Vedlegg {vedleggsnummer} av {antallvedlegg}:",
