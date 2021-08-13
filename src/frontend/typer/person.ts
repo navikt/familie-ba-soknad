@@ -3,6 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { BarnetsId } from '../components/SøknadsSteg/OmBarnaDine/HvilkeBarnCheckboxGruppe';
+import { Årsak } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/types-and-utilities';
 import { ISøknadSpørsmål } from './søknad';
 
 export enum ESivilstand {
@@ -45,6 +46,9 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     arbeidsland: ISøknadSpørsmål<Alpha3Code | ''>;
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | null>;
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    utvidet: {
+        årsak: ISøknadSpørsmål<Årsak | ''>;
+    };
 }
 
 export interface IAdresse {
