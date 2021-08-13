@@ -2,9 +2,12 @@ version: "3.4"
 
 x-common-variables: &common-variables
   # Trenger auth for mvn clean install, er mest sannsynlig i $HOME/.m2/settings.xml, klipp og lim inn. (password er token)
-  github_username: FYLL_INN_M2_SETTINGS
-  github_token: FYLL_INN_M2_SETTINGS
+  github_username: bjornsnoen-nav
+  github_token: 743762a501ae1c64c6ab3d009a0876bdd6734422
 
+volumes:
+  keys:
+  secure-logs:
 
 services:
   frontend:
@@ -26,15 +29,37 @@ services:
     build:
       context: ./dockerstuff/soknad-api
       args: *common-variables
+    depends_on:
+      - key_generator
     volumes:
-      - ./dockerstuff/logs:/secure-logs
-      - ./dockerstuff/keys:/keys
+      - secure-logs:/secure-logs
+      - keys:/keys
     ports:
       - "8080:8080"
     environment:
       LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/selvbetjening/.well-known/openid-configuration
       TOKEN_X_WELL_KNOWN_URL: http://tokendings:1111/tokenx/.well-known/openid-configuration
       TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-soknad-api.json'
+      TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-soknad-api'
+
+  mottak:
+    build:
+      context: ./dockerstuff/mottak
+      args: *common-variables
+    depends_on:
+      - key_generator
+      - postgres
+      - kafka
+      - configurator
+    volumes:
+      - keys:/keys
+      - secure-logs:/secure-logs
+    environment:
+      LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/selvbetjening/.well-known/openid-configuration
+      TOKEN_X_WELL_KNOWN_URL: http://tokendings:1111/tokenx/.well-known/openid-configuration
+      TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-mottak.json'
+      TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-mottak'
+      KAFKA_BROKERS: http://kafka:9092
 
   oauthmock:
     image: ghcr.io/navikt/mock-oauth2-server:0.3.4
@@ -47,7 +72,7 @@ services:
       APPS: "familie-ba-soknad,familie-ba-soknad-api,familie-ba-mottak,familie-dokument"
       KEY_OUTPUT_DIRECTORY: /keys
     volumes:
-      - ./dockerstuff/keys:/keys
+      - keys:/keys
 
   tokendings:
     build:
@@ -57,3 +82,108 @@ services:
     # Denne er bare hvis du trenger å logge inn i en docker-service for å se om de andre kan nås på det interne nettverket
     image: alpine
     command: ["sleep", "10000000"]
+
+  openldap:
+    build:
+      context: https://github.com/navikt/navkafka-docker-compose.git#:ldap
+    container_name: ldap
+    ports:
+      - "10636:636"
+      - "10389:389"
+    environment:
+      - "LDAP_TLS_VERIFY_CLIENT=try"
+
+  zookeeper:
+    build:
+      context: https://github.com/navikt/navkafka-docker-compose.git#:zookeeper
+    container_name: zookeeper
+    environment:
+      - "ZOOKEEPER_CLIENT_PORT=2181"
+      - "ZOOKEEPER_AUTH_PROVIDER_1=org.apache.zookeeper.server.auth.SASLAuthenticationProvider"
+    ports:
+      - "2181:2181"
+
+  kafka:
+    build:
+      context: https://github.com/navikt/navkafka-docker-compose.git#:kafka
+    container_name: kafka
+    restart: unless-stopped
+    environment:
+      - "KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181"
+      - "KAFKA_LISTENERS=SASLPLAINTEXT://0.0.0.0:9092,SASLINTERNAL://kafka:9093"
+      - "KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=SASLPLAINTEXT:SASL_PLAINTEXT,SASLINTERNAL:SASL_PLAINTEXT"
+      - "KAFKA_ADVERTISED_LISTENERS=SASLPLAINTEXT://kafka:9092,SASLINTERNAL://kafka:9093"
+      - "KAFKA_PROTOCOL_NAME=SASLPLAINTEXT,SASLINTERNAL"
+      - "KAFKA_LISTENER_NAME_SASLPLAINTEXT_PLAIN_SASL_SERVER_CALLBACK_HANDLER_CLASS=no.nav.common.security.authentication.SimpleLDAPAuthentication"
+      - "KAFKA_LISTENER_NAME_SASLINTERNAL_PLAIN_SASL_SERVER_CALLBACK_HANDLER_CLASS=no.nav.common.security.authentication.SimpleLDAPAuthentication"
+      - "KAFKA_AUTHORIZER_CLASS_NAME=no.nav.common.security.authorization.SimpleLDAPAuthorizer"
+      - "KAFKA_SUPER_USERS=User:igroup"
+      - "KAFKA_INTER_BROKER_LISTENER_NAME=SASLINTERNAL"
+      - "KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL=PLAIN"
+      - "KAFKA_SASL_ENABLED_MECHANISMS=PLAIN"
+      - "KAFKA_DEFAULT_REPLICATION_FACTOR=1"
+      - "KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1"
+      - "KAFKA_AUTO_CREATE_TOPICS_ENABLE=false"
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+      - openldap
+
+  kafkadminrest:
+    image: "navikt/kafka-adminrest"
+    ports:
+      - "8840:8080"
+    environment:
+      - "LDAP_CONNTIMEOUT=2000"
+      - "LDAP_USERATTRNAME=cn"
+      - "LDAP_AUTH_HOST=ldap"
+      - "LDAP_AUTH_PORT=636"
+      - "LDAP_SRVUSERBASE=OU=ServiceAccounts,DC=test,DC=local"
+      - "LDAP_GROUPBASE=OU=kafka,OU=AccountGroupNotInRemedy,OU=Groups,OU=NAV,OU=BusinessUnits,DC=test,DC=local"
+      - "LDAP_GROUPATTRNAME=cn"
+      - "LDAP_GRPMEMBERATTRNAME=member"
+      - "LDAP_USER=igroup"
+      - "LDAP_PASSWORD=itest"
+      - "KAFKA_BROKERS=kafka:9093"
+      - "KAFKA_CLIENTID=kafka-adminrest"
+      - "KAFKA_SECURITY=TRUE"
+      - "KAFKA_SECPROT=SASL_PLAINTEXT"
+      - "KAFKA_SASLMEC=PLAIN"
+      - "KAFKA_USER=igroup"
+      - "LDAP_HOST=ldap"
+      - "LDAP_PORT=636"
+      - "LDAP_AUTH_USERBASE=ou=Users,ou=NAV,dc=test,dc=local"
+      - "KAFKA_PASSWORD=itest"
+
+  schema-registry:
+    image: "confluentinc/cp-schema-registry:5.0.1"
+    depends_on:
+      - zookeeper
+      - kafka
+    ports:
+      - "8081:8081"
+    environment:
+      - "SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS=SASL_PLAINTEXT://kafka:9093"
+      - "SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM=PLAIN"
+      - "SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username=\"igroup\" password=\"itest\";"
+      - "SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL=SASL_PLAINTEXT"
+      - "SCHEMA_REGISTRY_HOST_NAME=schema-registry"
+      - "SCHEMA_REGISTRY_LISTENERS=http://0.0.0.0:8081"
+
+  postgres:
+    image: "postgres"
+    container_name: "postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "test"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "familie-ba-mottak"
+
+  configurator:
+    build:
+      context: ./dockerstuff/configurator
+    depends_on:
+      - kafka
+      - kafkadminrest
