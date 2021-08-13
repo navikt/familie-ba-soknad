@@ -5,6 +5,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
+import useFørsteRender from '../../../hooks/useFørsteRender';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 export const SkjemaCheckbox: React.FC<{
@@ -14,6 +15,10 @@ export const SkjemaCheckbox: React.FC<{
     labelSpråkTekstId: string;
     invers?: boolean;
 }> = ({ felt, visFeilmeldinger, labelSpråkTekstId, invers = false }) => {
+    useFørsteRender(() => {
+        felt.validerOgSettFelt(felt.verdi);
+    });
+
     const onChange = event => {
         const { onChange: feltOnChange } = felt.hentNavInputProps(false);
         const jaNei: boolean = invers ? !event.target.checked : event.target.checked;
@@ -23,6 +28,7 @@ export const SkjemaCheckbox: React.FC<{
 
     return (
         <Checkbox
+            defaultChecked={felt.verdi === (invers ? ESvar.NEI : ESvar.JA)}
             {...felt.hentNavInputProps(visFeilmeldinger)}
             label={<SpråkTekst id={labelSpråkTekstId} />}
             onChange={onChange}
