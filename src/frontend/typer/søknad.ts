@@ -84,7 +84,7 @@ const hentSøknadstype = () => {
             ? ESøknadstype.UTVIDET
             : ESøknadstype.ORDINÆR;
     } else {
-        return ESøknadstype.UTVIDET;
+        return ESøknadstype.ORDINÆR;
     }
 };
 

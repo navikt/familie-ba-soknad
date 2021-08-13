@@ -59,7 +59,12 @@ const StegindikatorContainer = styled.div`
 const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { settSisteUtfylteStegIndex, erStegUtfyltFrafør, gåTilbakeTilStart } = useApp();
+    const {
+        settSisteUtfylteStegIndex,
+        erStegUtfyltFrafør,
+        gåTilbakeTilStart,
+        erUtvidet,
+    } = useApp();
     const {
         hentNesteRoute,
         hentForrigeRoute,
@@ -132,7 +137,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         <>
             <ScrollHandler />
             <header>
-                <Banner språkTekstId={'felles.banner'} />
+                <Banner språkTekstId={erUtvidet ? 'felles.banner.utvidet' : 'felles.banner'} />
                 <StegindikatorContainer>
                     <Stegindikator
                         autoResponsiv={true}
