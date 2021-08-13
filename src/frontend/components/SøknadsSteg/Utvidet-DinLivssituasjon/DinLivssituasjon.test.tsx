@@ -1,10 +1,17 @@
 import React from 'react';
 
 import { queryByText, render } from '@testing-library/react';
+import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
-import { silenceConsoleErrors, TestProvidereMedEkteTekster } from '../../../utils/testing';
+import { ESøknadstype, ISøknad } from '../../../typer/søknad';
+import {
+    silenceConsoleErrors,
+    spyOnUseApp,
+    TestProvidereMedEkteTekster,
+} from '../../../utils/testing';
 import DinLivssituasjon from './DinLivssituasjon';
+import { DinLivssituasjonSpørsmålId } from './spørsmål';
 
 jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),
@@ -22,8 +29,28 @@ jest.mock('nav-frontend-alertstriper', () => ({ children }) => (
 ));
 
 describe('DinLivssituasjon', () => {
-    it('rendrer DinLivssituasjon steg og inneholder sidetittel', () => {
+    beforeEach(() => {
         silenceConsoleErrors();
+        const søknad = mockDeep<ISøknad>({
+            søknadstype: ESøknadstype.UTVIDET,
+            barnInkludertISøknaden: [
+                {
+                    ident: '1234',
+                },
+            ],
+            søker: {
+                utvidet: {
+                    årsak: {
+                        id: DinLivssituasjonSpørsmålId.årsak,
+                        svar: '',
+                    },
+                },
+            },
+        });
+        spyOnUseApp(søknad);
+    });
+
+    it('rendrer DinLivssituasjon steg og inneholder sidetittel', () => {
         const { getByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
@@ -33,7 +60,6 @@ describe('DinLivssituasjon', () => {
     });
 
     it('Stopper fra å gå videre hvis årsak ikke er valgt', () => {
-        silenceConsoleErrors();
         const { getByText, getByRole } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
