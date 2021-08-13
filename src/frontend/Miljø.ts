@@ -8,7 +8,16 @@ interface MiljøProps {
 }
 const modellVersjon = 9;
 
-export const basePath = process.env.BASE_PATH;
+export const basePath = process.env.BASE_PATH ?? '/';
+
+/**
+ * Vi må fortsatt hente scripts og ressurser fra /ordinaer med mindre vi ønsker å gjøre endringer på
+ * express-appen, og vi kan forwarde requests til APIet via /ordinaer, det eneste som må endres for
+ * å støtte utvidet søknad er basepath for react-routeren og login-redirect, derfor gjør vi dette her.
+ */
+export const routerBasePath = window.location.pathname.includes('utvidet')
+    ? basePath.replace('ordinaer', 'utvidet')
+    : basePath;
 
 const Miljø = (): MiljøProps => {
     if (window.location.hostname.indexOf('familie-ba-soknad.dev') > -1) {
