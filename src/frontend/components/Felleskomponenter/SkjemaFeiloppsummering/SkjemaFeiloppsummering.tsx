@@ -18,6 +18,10 @@ import {
 } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
+import {
+    DinLivssituasjonSpørsmålId,
+    dinLivssituasjonSpørsmålSpråkId,
+} from '../../SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
 import { VelgBarnSpørsmålId } from '../../SøknadsSteg/VelgBarn/spørsmål';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { lagRouteFeilRenderer } from './lagRouteFeilRenderer';
@@ -26,6 +30,7 @@ const samletSpørsmålSpråkTekstId = {
     ...omDegSpørsmålSpråkId,
     ...omBarnaDineSpørsmålSpråkId,
     ...omBarnetSpørsmålSpråkId,
+    ...dinLivssituasjonSpørsmålSpråkId,
 };
 
 const samletSpørsmålId = {
@@ -33,6 +38,7 @@ const samletSpørsmålId = {
     ...VelgBarnSpørsmålId,
     ...OmBarnaDineSpørsmålId,
     ...OmBarnetSpørsmålsId,
+    ...DinLivssituasjonSpørsmålId,
 };
 
 interface Props {
