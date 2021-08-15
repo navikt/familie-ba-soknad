@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 import requests
 from typing import List
+from os import getenv
 
 
 @dataclass_json
@@ -23,8 +24,11 @@ def create_kafka_topic(name: str, members: List[TopicMember], num_partitions: in
         "Accept": "application/json",
         "Content-Type": "application/json"
     }
+    # In the navkafka repo the docker-compose file port maps kafkadmin:8080 to localhost:8840
+    kafkadmin = getenv("KAFKA_ADMIN_ADDRESS", "localhost:8840")
+
     response = requests.post(
-        url="http://igroup:itest@kafkadminrest:8080/api/v1/topics",
+        url=f"http://igroup:itest@{kafkadmin}/api/v1/topics",
         json=payload,
         headers=headers
     )

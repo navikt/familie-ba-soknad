@@ -11,6 +11,7 @@ volumes:
 
 services:
   frontend:
+    container_name: "frontend"
     build:
       context: ./
       args:
@@ -26,6 +27,7 @@ services:
     command: ["yarn", "start:dev:ts-server"]
 
   api:
+    container_name: "soknad-api"
     build:
       context: ./dockerstuff/soknad-api
       args: *common-variables
@@ -43,6 +45,7 @@ services:
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-soknad-api'
 
   mottak:
+    container_name: "mottak"
     build:
       context: ./dockerstuff/mottak
       args: *common-variables
@@ -62,9 +65,11 @@ services:
       KAFKA_BROKERS: http://kafka:9092
 
   oauthmock:
+    container_name: "idporten-ish"
     image: ghcr.io/navikt/mock-oauth2-server:0.3.4
 
   key_generator:
+    container_name: "jwk-generator"
     # Will generate tokenx keys and then shut down
     build:
       context: dockerstuff/jwker
@@ -75,10 +80,12 @@ services:
       - keys:/keys
 
   tokendings:
+    container_name: "tokendings"
     build:
       context: dockerstuff/tokendings
 
   testentry:
+    container_name: "test-entry"
     # Denne er bare hvis du trenger å logge inn i en docker-service for å se om de andre kan nås på det interne nettverket
     image: alpine
     command: ["sleep", "10000000"]
@@ -182,8 +189,12 @@ services:
       POSTGRES_DB: "familie-ba-mottak"
 
   configurator:
+    container_name: "cluster-configurator"
     build:
       context: ./dockerstuff/configurator
+    restart: on-failure
     depends_on:
       - kafka
       - kafkadminrest
+    environment:
+      KAFKA_ADMIN_ADDRESS: "kafkadminrest:8080"
