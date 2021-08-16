@@ -15,6 +15,7 @@ import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -172,14 +173,65 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         />
                     </SkjemaFieldset>
                 )}
-
-            <JaNeiSpm
-                skjema={skjema}
-                felt={skjema.felter.søkerHarBoddMedAndreForelder}
-                spørsmålTekstId={
-                    omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder]
-                }
-            />
+            {skjema.felter.søkerHarBoddMedAndreForelder.erSynlig && (
+                <KomponentGruppe dynamisk>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.søkerHarBoddMedAndreForelder}
+                        spørsmålTekstId={
+                            omBarnetSpørsmålSpråkId[
+                                OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
+                            ]
+                        }
+                    />
+                    {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
+                        <KomponentGruppe inline dynamisk>
+                            <Datovelger
+                                felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
+                                skjema={skjema}
+                                labelTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                                    ]
+                                }
+                                disabled={
+                                    skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
+                                }
+                            />
+                            {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
+                                <div>
+                                    <Checkbox
+                                        label={
+                                            <SpråkTekst
+                                                id={
+                                                    omBarnetSpørsmålSpråkId[
+                                                        OmBarnetSpørsmålsId.søkerBorMedAndreForelder
+                                                    ]
+                                                }
+                                            />
+                                        }
+                                        defaultChecked={
+                                            skjema.felter.borMedAndreForelderCheckbox.verdi ===
+                                            ESvar.JA
+                                        }
+                                        onChange={event => {
+                                            skjema.felter.borMedAndreForelderCheckbox
+                                                .hentNavInputProps(false)
+                                                .onChange(
+                                                    event.target.checked ? ESvar.JA : ESvar.NEI
+                                                );
+                                        }}
+                                    />
+                                    <VedleggNotis
+                                        språkTekstId={'ombarnet.nårflyttetfra.info'}
+                                        dynamisk
+                                    />
+                                </div>
+                            )}
+                        </KomponentGruppe>
+                    )}
+                </KomponentGruppe>
+            )}
         </Steg>
     ) : null;
 };

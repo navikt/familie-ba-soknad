@@ -74,6 +74,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
                 id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,
                 svar: null,
             },
+            [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: {
+                id: OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato,
+                svar: '',
+            },
         },
         [barnDataKeySpørsmål.erFosterbarn]: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,

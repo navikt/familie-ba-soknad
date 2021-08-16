@@ -31,8 +31,16 @@ import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
 import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import { omDegSpørsmålSpråkId, OmDegSpørsmålId } from '../OmDeg/spørsmål';
+import {
+    DinLivssituasjonSpørsmålId,
+    dinLivssituasjonSpørsmålSpråkId,
+} from '../Utvidet-DinLivssituasjon/spørsmål';
 
-type SpørsmålId = OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørsmålsId;
+type SpørsmålId =
+    | OmDegSpørsmålId
+    | OmBarnaDineSpørsmålId
+    | OmBarnetSpørsmålsId
+    | DinLivssituasjonSpørsmålId;
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
@@ -47,6 +55,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
             omDegSpørsmålSpråkId,
             omBarnaDineSpørsmålSpråkId,
             omBarnetSpørsmålSpråkId,
+            dinLivssituasjonSpørsmålSpråkId,
         ]) {
             if (spørsmålId in språkIndex) {
                 return intl.formatMessage({ id: språkIndex[spørsmålId] });
