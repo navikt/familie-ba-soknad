@@ -4,3 +4,4 @@ dist/
 dockerstuff/
 docker-compose.yml
 .git/
+.idea/
