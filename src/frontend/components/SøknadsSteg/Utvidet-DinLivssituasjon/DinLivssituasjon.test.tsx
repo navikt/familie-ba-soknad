@@ -4,6 +4,7 @@ import { queryByText, render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
+import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype, ISøknad } from '../../../typer/søknad';
 import {
     silenceConsoleErrors,
@@ -39,6 +40,7 @@ describe('DinLivssituasjon', () => {
                 },
             ],
             søker: {
+                sivilstand: { type: ESivilstand.UGIFT },
                 utvidet: {
                     årsak: {
                         id: DinLivssituasjonSpørsmålId.årsak,
@@ -73,5 +75,13 @@ describe('DinLivssituasjon', () => {
             'Hvorfor søker du om utvidet barnetrygd?'
         );
         expect(result).not.toBeNull();
+    });
+    it('Viser spørsmål om er du separert, enke eller skilt om sivilstand GIFT', () => {
+        const { queryByText } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        expect(queryByText(/omdeg.separertellerskilt.spm/)).not.toBeInTheDocument();
     });
 });
