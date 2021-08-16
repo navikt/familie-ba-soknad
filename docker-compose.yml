@@ -1,6 +1,6 @@
 version: "3.4"
 
-x-common-variables: &common-variables
+x-common-variables: &common-build-variables
   # Trenger auth for mvn clean install, er mest sannsynlig i $HOME/.m2/settings.xml, klipp og lim inn. (password er token)
   github_username: bjornsnoen-nav
   github_token: 743762a501ae1c64c6ab3d009a0876bdd6734422
@@ -35,8 +35,8 @@ services:
   api:
     container_name: "soknad-api"
     build:
-      context: ./dockerstuff/soknad-api
-      args: *common-variables
+      context: dockerstuff/soknad-api
+      args: *common-build-variables
     depends_on:
       - key_generator
       - oauthmock
@@ -52,13 +52,14 @@ services:
   mottak:
     container_name: "mottak"
     build:
-      context: ./dockerstuff/mottak
-      args: *common-variables
+      context: dockerstuff/mottak
+      args: *common-build-variables
     depends_on:
       - key_generator
       - postgres
       - kafka
       - configurator
+      - oauthmock
     volumes:
       - keys:/keys
       - secure-logs:/secure-logs
@@ -67,6 +68,25 @@ services:
       TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-mottak.json'
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-mottak'
       KAFKA_BROKERS: http://kafka:9092
+      FAMILIE_DOKUMENT_API_URL: http://dokument:8082
+
+  dokument:
+    container_name: "familie-dokument"
+    build:
+      context: dockerstuff/dokument
+      args: *common-build-variables
+    depends_on:
+      - key_generator
+      - oauthmock
+    volumes:
+      - keys:/keys
+      - secure-logs:/secure-logs
+    ports:
+      - "8082:8082"
+    environment:
+      <<: *common-token-environment
+      TOKEN_X_PRIVATE_JWK: '/keys/familie-dokument.json'
+      TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-dokument'
 
   oauthmock:
     container_name: "idporten-ish"
@@ -91,7 +111,7 @@ services:
     build:
       context: dockerstuff/jwker
     environment:
-      APPS: "familie-ba-soknad,familie-ba-soknad-api,familie-ba-mottak,familie-dokument"
+      APPS: "familie-ba-soknad-api,familie-ba-mottak,familie-dokument"
       KEY_OUTPUT_DIRECTORY: /keys
     volumes:
       - keys:/keys
@@ -99,7 +119,7 @@ services:
   configurator:
     container_name: "cluster-configurator"
     build:
-      context: ./dockerstuff/configurator
+      context: dockerstuff/configurator
     restart: on-failure
     depends_on:
       - kafka
@@ -112,6 +132,9 @@ services:
     # Denne er bare hvis du trenger å logge inn i en docker-service for å se om de andre kan nås på det interne nettverket
     image: alpine
     command: ["sleep", "10000000"]
+    volumes:
+      - keys:/keys
+      - secure-logs:/secure-logs
 
   openldap:
     build:

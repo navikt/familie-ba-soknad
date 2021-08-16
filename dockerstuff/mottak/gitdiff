@@ -15,6 +15,18 @@ index efb7152..300e01d 100644
      </dependencies>
 
      <repositories>
+diff --git a/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt b/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
+index b02b735..621e705 100644
+--- a/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
++++ b/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
+@@ -16,7 +16,6 @@ import org.springframework.web.client.RestOperations
+         RestTemplateSts::class)
+ class RestTemplateConfig {
+
+-    @Profile("!dev || !e2e || !postgres")
+     @Bean("clientCredentials")
+     fun restTemplateClientCredentials(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                                       bearerTokenClientInterceptor: BearerTokenClientInterceptor): RestOperations {
 diff --git a/src/main/resources/application-postgres.yaml b/src/main/resources/application-postgres.yaml
 index 51a0aef..90fe6a3 100644
 --- a/src/main/resources/application-postgres.yaml
@@ -70,10 +82,10 @@ index 6c92612..24fa324 100644
 
  fun main(args: Array<String>) {
 diff --git a/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt b/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
-index b4cf801..53ba659 100644
+index b4cf801..16ffa74 100644
 --- a/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
 +++ b/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
-@@ -1,16 +1,15 @@
+@@ -1,16 +1,14 @@
  package no.nav.familie.ba.mottak
 
  import no.nav.familie.ba.mottak.config.ApplicationConfig
@@ -82,8 +94,8 @@ index b4cf801..53ba659 100644
  import org.springframework.context.annotation.Import
 
 -@Import(TokenGeneratorConfiguration::class, ApplicationConfig::class)
+-
 +@Import(ApplicationConfig::class)
-
  class DevLauncherPostgres
 
  fun main(args: Array<String>) {
@@ -93,3 +105,75 @@ index b4cf801..53ba659 100644
      app.run(*args)
  }
 \ No newline at end of file
+diff --git a/src/test/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt b/src/test/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
+deleted file mode 100644
+index 4cd15eb..0000000
+--- a/src/test/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
++++ /dev/null
+@@ -1,66 +0,0 @@
+-package no.nav.familie.ba.mottak.config
+-
+-import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
+-import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
+-import no.nav.familie.http.interceptor.StsBearerTokenClientInterceptor
+-import no.nav.familie.kontrakter.felles.objectMapper
+-import org.springframework.boot.web.client.RestTemplateBuilder
+-import org.springframework.context.annotation.Bean
+-import org.springframework.context.annotation.Configuration
+-import org.springframework.context.annotation.Import
+-import org.springframework.context.annotation.Profile
+-import org.springframework.http.converter.ByteArrayHttpMessageConverter
+-import org.springframework.http.converter.StringHttpMessageConverter
+-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+-import org.springframework.web.client.RestOperations
+-import org.springframework.web.client.RestTemplate
+-import java.nio.charset.StandardCharsets
+-
+-@Configuration
+-@Profile("dev")
+-@Import(ConsumerIdClientInterceptor::class, MdcValuesPropagatingClientInterceptor::class, StsBearerTokenClientInterceptor::class,)
+-class RestTemplateConfig {
+-
+-    @Bean
+-    fun restTemplate(): RestTemplate {
+-        return RestTemplate(listOf(StringHttpMessageConverter(StandardCharsets.UTF_8), ByteArrayHttpMessageConverter()))
+-    }
+-
+-    @Bean("jwtBearer")
+-    fun restTemplateJwtBearer(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+-                              mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
+-
+-        return RestTemplateBuilder()
+-                .additionalCustomizers(NaisProxyCustomizer())
+-                .additionalInterceptors(consumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor)
+-                .build()
+-    }
+-
+-
+-    @Bean("clientCredentials")
+-    fun restTemplateClientCredentials(consumerIdClientInterceptor: ConsumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
+-        return RestTemplateBuilder()
+-                .additionalCustomizers(NaisProxyCustomizer())
+-                .additionalInterceptors(consumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor)
+-                .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
+-                .build()
+-    }
+-
+-    @Bean("restTemplateUnsecured")
+-    fun restTemplate(restTemplateBuilder: RestTemplateBuilder,
+-                     mdcInterceptor: MdcValuesPropagatingClientInterceptor,
+-                     consumerIdClientInterceptor: ConsumerIdClientInterceptor): RestOperations {
+-        return restTemplateBuilder.interceptors(mdcInterceptor, consumerIdClientInterceptor).build()
+-    }
+-
+-    @Bean("sts")
+-    fun restTemplateSts(stsBearerTokenClientInterceptor: StsBearerTokenClientInterceptor,
+-                        consumerIdClientInterceptor: ConsumerIdClientInterceptor): RestOperations {
+-
+-        return RestTemplateBuilder()
+-                .interceptors(consumerIdClientInterceptor,
+-                              stsBearerTokenClientInterceptor,
+-                              MdcValuesPropagatingClientInterceptor())
+-                .build()
+-    }
+-}
