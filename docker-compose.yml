@@ -69,6 +69,7 @@ services:
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-mottak'
       KAFKA_BROKERS: http://kafka:9092
       FAMILIE_DOKUMENT_API_URL: http://dokument:8082
+      FAMILIE_BA_DOKGEN_API_URL: http://dokgen:8080
 
   dokument:
     container_name: "familie-dokument"
@@ -87,6 +88,15 @@ services:
       <<: *common-token-environment
       TOKEN_X_PRIVATE_JWK: '/keys/familie-dokument.json'
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-dokument'
+
+  dokgen:
+    container_name: dokgen
+    build:
+      context: git@github.com:navikt/familie-ba-dokgen.git
+    environment:
+      RUNTIME_OPTS: "--write.access=true"
+    volumes:
+      - secure-logs:/secure-logs
 
   oauthmock:
     container_name: "idporten-ish"
