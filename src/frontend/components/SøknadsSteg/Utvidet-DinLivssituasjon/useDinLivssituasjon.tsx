@@ -5,6 +5,7 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { ESivilstand } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { Årsak } from './types-and-utilities';
 
@@ -20,7 +21,7 @@ export const useDinLivssituasjon = (): {
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
 } => {
-    const { søknad, settSøknad, erUtvidet } = useApp();
+    const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
 
     const årsak = useFelt<Årsak | ''>({
@@ -37,7 +38,7 @@ export const useDinLivssituasjon = (): {
         søker.utvidet.separertEnkeSkilt,
         {},
         false,
-        !erUtvidet
+        søker.sivilstand.type !== ESivilstand.GIFT
     );
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
