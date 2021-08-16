@@ -192,6 +192,10 @@ export const initialStateSøknad: ISøknad = {
                 id: DinLivssituasjonSpørsmålId.årsak,
                 svar: '',
             },
+            separertEnkeSkilt: {
+                id: DinLivssituasjonSpørsmålId.separertEnkeSkilt,
+                svar: null,
+            },
         },
     },
     erNoenAvBarnaFosterbarn: {

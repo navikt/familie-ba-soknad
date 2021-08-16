@@ -1,13 +1,16 @@
 import React from 'react';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { Årsak } from './types-and-utilities';
 
 export interface IDinLivssituasjonFeltTyper {
     årsak: Årsak | '';
+    separertEnkeSkilt: ESvar | null;
 }
 
 export const useDinLivssituasjon = (): {
@@ -17,7 +20,7 @@ export const useDinLivssituasjon = (): {
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
 } => {
-    const { søknad, settSøknad } = useApp();
+    const { søknad, settSøknad, erUtvidet } = useApp();
     const søker = søknad.søker;
 
     const årsak = useFelt<Årsak | ''>({
@@ -30,12 +33,20 @@ export const useDinLivssituasjon = (): {
         },
     });
 
+    const separertEnkeSkilt = useJaNeiSpmFelt(
+        søker.utvidet.separertEnkeSkilt,
+        {},
+        false,
+        !erUtvidet
+    );
+
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,
         string
     >({
         felter: {
             årsak,
+            separertEnkeSkilt,
         },
         skjemanavn: 'dinlivssituasjon',
     });
@@ -49,6 +60,10 @@ export const useDinLivssituasjon = (): {
                     årsak: {
                         ...søknad.søker.utvidet.årsak,
                         svar: skjema.felter.årsak.verdi,
+                    },
+                    separertEnkeSkilt: {
+                        ...søknad.søker.utvidet.separertEnkeSkilt,
+                        svar: skjema.felter.separertEnkeSkilt.verdi,
                     },
                 },
             },

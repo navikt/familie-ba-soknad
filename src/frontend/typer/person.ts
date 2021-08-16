@@ -48,6 +48,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
     utvidet: {
         årsak: ISøknadSpørsmål<Årsak | ''>;
+        separertEnkeSkilt: ISøknadSpørsmål<ESvar | null>;
     };
 }
 
