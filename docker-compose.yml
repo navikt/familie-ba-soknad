@@ -5,6 +5,12 @@ x-common-variables: &common-variables
   github_username: bjornsnoen-nav
   github_token: 743762a501ae1c64c6ab3d009a0876bdd6734422
 
+x-common-token-environment: &common-token-environment
+  LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/fake/.well-known/openid-configuration
+  # Hardkodet i fakedings for fake idporten
+  LOGINSERVICE_IDPORTEN_AUDIENCE: "notfound"
+  TOKEN_X_WELL_KNOWN_URL: http://oauthmock:8080/tokenx/.well-known/openid-configuration
+
 volumes:
   keys:
   secure-logs:
@@ -38,10 +44,7 @@ services:
       - secure-logs:/secure-logs
       - keys:/keys
     environment:
-      LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/fake/.well-known/openid-configuration
-      # Hardkodet i fakedings for fake idporten
-      LOGINSERVICE_IDPORTEN_AUDIENCE: "notfound"
-      TOKEN_X_WELL_KNOWN_URL: http://oauthmock:8080/tokenx/.well-known/openid-configuration
+      <<: *common-token-environment
       TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-soknad-api.json'
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-soknad-api'
       FAMILIE_BA_MOTTAK_URL: 'http://mottak:8090'
@@ -60,9 +63,7 @@ services:
       - keys:/keys
       - secure-logs:/secure-logs
     environment:
-      LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/fake/.well-known/openid-configuration
-      LOGINSERVICE_IDPORTEN_AUDIENCE: "notfound"
-      TOKEN_X_WELL_KNOWN_URL: http://oauthmock:8080/tokenx/.well-known/openid-configuration
+      <<: *common-token-environment
       TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-mottak.json'
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-mottak'
       KAFKA_BROKERS: http://kafka:9092
