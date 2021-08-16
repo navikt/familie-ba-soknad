@@ -33,16 +33,18 @@ services:
       args: *common-variables
     depends_on:
       - key_generator
+      - oauthmock
     volumes:
       - secure-logs:/secure-logs
       - keys:/keys
-    ports:
-      - "8080:8080"
     environment:
-      LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/selvbetjening/.well-known/openid-configuration
-      TOKEN_X_WELL_KNOWN_URL: http://tokendings:1111/tokenx/.well-known/openid-configuration
+      LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/fake/.well-known/openid-configuration
+      # Hardkodet i fakedings for fake idporten
+      LOGINSERVICE_IDPORTEN_AUDIENCE: "notfound"
+      TOKEN_X_WELL_KNOWN_URL: http://oauthmock:8080/tokenx/.well-known/openid-configuration
       TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-soknad-api.json'
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-soknad-api'
+      FAMILIE_BA_MOTTAK_URL: 'http://mottak:8090'
 
   mottak:
     container_name: "mottak"
@@ -58,15 +60,29 @@ services:
       - keys:/keys
       - secure-logs:/secure-logs
     environment:
-      LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/selvbetjening/.well-known/openid-configuration
-      TOKEN_X_WELL_KNOWN_URL: http://tokendings:1111/tokenx/.well-known/openid-configuration
+      LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/fake/.well-known/openid-configuration
+      LOGINSERVICE_IDPORTEN_AUDIENCE: "notfound"
+      TOKEN_X_WELL_KNOWN_URL: http://oauthmock:8080/tokenx/.well-known/openid-configuration
       TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-mottak.json'
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-mottak'
       KAFKA_BROKERS: http://kafka:9092
 
   oauthmock:
     container_name: "idporten-ish"
-    image: ghcr.io/navikt/mock-oauth2-server:0.3.4
+    image: "ghcr.io/navikt/fakedings/fakedings:b1244f187badb294b47e0e3c3042abec91e04658"
+    ports:
+      - "8083:8080"
+
+  loginservice:
+    depends_on:
+      - oauthmock
+    build:
+      context: dockerstuff/loginservice
+    ports:
+      - "8080:80"
+    environment:
+      FAKEDINGS_ADDRESS: "http://oauthmock:8080/fake/idporten"
+      TOKEN_COOKIE_NAME: "selvbetjening-idtoken"
 
   key_generator:
     container_name: "jwk-generator"
@@ -79,10 +95,16 @@ services:
     volumes:
       - keys:/keys
 
-  tokendings:
-    container_name: "tokendings"
+  configurator:
+    container_name: "cluster-configurator"
     build:
-      context: dockerstuff/tokendings
+      context: ./dockerstuff/configurator
+    restart: on-failure
+    depends_on:
+      - kafka
+      - kafkadminrest
+    environment:
+      KAFKA_ADMIN_ADDRESS: "kafkadminrest:8080"
 
   testentry:
     container_name: "test-entry"
@@ -187,14 +209,3 @@ services:
       POSTGRES_PASSWORD: "test"
       POSTGRES_USER: "postgres"
       POSTGRES_DB: "familie-ba-mottak"
-
-  configurator:
-    container_name: "cluster-configurator"
-    build:
-      context: ./dockerstuff/configurator
-    restart: on-failure
-    depends_on:
-      - kafka
-      - kafkadminrest
-    environment:
-      KAFKA_ADMIN_ADDRESS: "kafkadminrest:8080"

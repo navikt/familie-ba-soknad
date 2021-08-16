@@ -14,5 +14,9 @@ ENV GITHUB_TOKEN=$github_token
 
 RUN mvn clean install --settings .m2/maven-settings.xml
 
+# Unmock mottak and jwt validation, set up tokenx
+COPY ./gitdiff gitdiff
+RUN git apply ./gitdiff
+
 COPY ./soknad-magic-invocation.sh /soknad-launch.sh
 CMD ["/soknad-launch.sh"]
