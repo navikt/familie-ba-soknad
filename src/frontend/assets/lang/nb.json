@@ -25,6 +25,7 @@
   "dokumentasjon.vedleggsnummer": "Vedlegg {vedleggsnummer} av {antallvedlegg}:",
   "felles.anonym.barn.fnr": "BARN {fødselsnummer}",
   "felles.banner": "Søknad om ordinær barnetrygd",
+  "felles.banner.utvidet": "Søknad om utvidet barnetrygd",
   "felles.barneillustrasjon.tittel": "Barneillustrasjon",
   "felles.blokkerTilbakeKnapp.modal.avbrytKnapp": "Lukk",
   "felles.blokkerTilbakeKnapp.modal.tekst": "Siden søknaden din er sendt inn kan du ikke gå tilbake til forrige steg. Du kan finne søknaden din i Dine saker når vi starter å behandle den. ",
