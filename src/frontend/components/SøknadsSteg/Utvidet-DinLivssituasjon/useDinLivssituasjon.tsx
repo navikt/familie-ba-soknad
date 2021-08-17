@@ -21,8 +21,8 @@ export const useDinLivssituasjon = (): {
     const søker = søknad.søker;
 
     const årsak = useFelt<Årsak | ''>({
-        feltId: søker.utvidet.årsak.id,
-        verdi: søker.utvidet.årsak.svar,
+        feltId: søker.utvidet.spørsmål.årsak.id,
+        verdi: søker.utvidet.spørsmål.årsak.svar,
         valideringsfunksjon: (felt: FeltState<Årsak | ''>) => {
             return felt.verdi !== ''
                 ? ok(felt)
@@ -46,9 +46,13 @@ export const useDinLivssituasjon = (): {
             søker: {
                 ...søknad.søker,
                 utvidet: {
-                    årsak: {
-                        ...søknad.søker.utvidet.årsak,
-                        svar: skjema.felter.årsak.verdi,
+                    ...søknad.søker.utvidet,
+                    spørsmål: {
+                        ...søknad.søker.utvidet.spørsmål,
+                        årsak: {
+                            ...søknad.søker.utvidet.spørsmål.årsak,
+                            svar: skjema.felter.årsak.verdi,
+                        },
                     },
                 },
             },

@@ -47,8 +47,28 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | null>;
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
     utvidet: {
-        årsak: ISøknadSpørsmål<Årsak | ''>;
+        spørsmål: {
+            årsak: ISøknadSpørsmål<Årsak | ''>;
+            separertEnkeSkilt: ISøknadSpørsmål<ESvar | null>;
+            separertEnkeSkiltUtland: ISøknadSpørsmål<ESvar | null>;
+            separertEnkeSkiltDato: ISøknadSpørsmål<ISODateString>;
+            harSamboerNå: ISøknadSpørsmål<ESvar | null>;
+            hattAnnenSamboerForSøktPeriode: ISøknadSpørsmål<ESvar | null>;
+        };
+        nåværendeSamboer: ISamboer | null;
+        tidligereSamboere: ITidligereSamboer[];
     };
+}
+
+export interface ISamboer {
+    navn: ISøknadSpørsmål<string>;
+    ident: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
+    fødselsdato: ISøknadSpørsmål<DatoMedUkjent>;
+    samboerFraDato: ISøknadSpørsmål<ISODateString>;
+}
+
+export interface ITidligereSamboer extends ISamboer {
+    samboerTilDato: ISøknadSpørsmål<ISODateString>;
 }
 
 export interface IAdresse {
