@@ -10,7 +10,7 @@ import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
-import OmBarnetOppsummering from './OppsummeringSteg/OmBarnetOppsummering';
+import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
 import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
 import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 

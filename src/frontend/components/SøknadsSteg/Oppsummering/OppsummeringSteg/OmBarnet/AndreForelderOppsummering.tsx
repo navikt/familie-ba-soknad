@@ -8,13 +8,13 @@ import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
     IBarnMedISøknad,
-} from '../../../typer/person';
-import { landkodeTilSpråk, barnetsNavnValue } from '../../../utils/visning';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
-import { StyledOppsummeringsFeltGruppe } from './Oppsummering';
-import { OppsummeringFelt } from './OppsummeringFelt';
-import { formaterDatoMedUkjent } from './utils';
+} from '../../../../../typer/person';
+import { landkodeTilSpråk, barnetsNavnValue } from '../../../../../utils/visning';
+import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
+import { StyledOppsummeringsFeltGruppe } from '../../Oppsummering';
+import { OppsummeringFelt } from '../../OppsummeringFelt';
+import { formaterDatoMedUkjent } from '../../utils';
 
 const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
     const intl = useIntl();

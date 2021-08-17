@@ -5,22 +5,22 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { useRoutes } from '../../../../context/RoutesContext';
+import { useRoutes } from '../../../../../context/RoutesContext';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
     IBarnMedISøknad,
-} from '../../../../typer/person';
-import { formaterDato } from '../../../../utils/dato';
-import { barnetsNavnValue, landkodeTilSpråk } from '../../../../utils/visning';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../OmBarnet/spørsmål';
-import { useOmBarnet } from '../../OmBarnet/useOmBarnet';
-import AndreForelderOppsummering from '../AndreForelderOppsummering';
-import { StyledOppsummeringsFeltGruppe } from '../Oppsummering';
-import { OppsummeringFelt } from '../OppsummeringFelt';
-import Oppsummeringsbolk from '../Oppsummeringsbolk';
-import { formaterDatoMedUkjent } from '../utils';
+} from '../../../../../typer/person';
+import { formaterDato } from '../../../../../utils/dato';
+import { barnetsNavnValue, landkodeTilSpråk } from '../../../../../utils/visning';
+import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
+import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';
+import { StyledOppsummeringsFeltGruppe } from '../../Oppsummering';
+import { OppsummeringFelt } from '../../OppsummeringFelt';
+import Oppsummeringsbolk from '../../Oppsummeringsbolk';
+import { formaterDatoMedUkjent } from '../../utils';
+import AndreForelderOppsummering from './AndreForelderOppsummering';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
