@@ -21,9 +21,9 @@ import { useOmBarnet } from '../OmBarnet/useOmBarnet';
 import AndreForelderOppsummering from './AndreForelderOppsummering';
 import { OppsummeringFelt } from './OppsummeringFelt';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
-import OmBarnaOppsummering from './StegOppsummering/OmBarnaOppsummering';
-import OmDegOppsummering from './StegOppsummering/OmDegOppsummering';
-import VelgBarnOppsummering from './StegOppsummering/VelgBarnOppsummering';
+import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
+import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
+import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 import { formaterDatoMedUkjent } from './utils';
 
 const StyledNormaltekst = styled(Normaltekst)`
