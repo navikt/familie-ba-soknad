@@ -87,7 +87,8 @@ const Oppsummeringsbolk: React.FC<Props> = ({
             <StyledEkspanderbartpanel
                 tittel={
                     <Undertittel>
-                        {`${hentStegNummer(route?.route ?? RouteEnum.OmDeg)}. `}
+                        {route?.route !== RouteEnum.OmBarnet &&
+                            `${hentStegNummer(route?.route ?? RouteEnum.OmDeg)}. `}
                         <SpråkTekst id={tittel} values={språkValues} />
                     </Undertittel>
                 }
