@@ -160,9 +160,12 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         tittel={<SpråkTekst id={'ombarnet.sammenhengende-opphold.dato.spm'} />}
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar,
-                            omBarnetSpørsmålSpråkId[
-                                OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
-                            ]
+                            formatMessage({
+                                id:
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
+                                    ],
+                            })
                         )}
                     />
                     <OppsummeringFelt
