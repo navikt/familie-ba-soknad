@@ -1,5 +1,5 @@
 diff --git a/pom.xml b/pom.xml
-index efb7152..300e01d 100644
+index 1229a24..2395521 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -243,12 +243,6 @@
@@ -28,7 +28,7 @@ index b02b735..621e705 100644
      fun restTemplateClientCredentials(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
                                        bearerTokenClientInterceptor: BearerTokenClientInterceptor): RestOperations {
 diff --git a/src/main/resources/application-postgres.yaml b/src/main/resources/application-postgres.yaml
-index 51a0aef..90fe6a3 100644
+index 51a0aef..71c16de 100644
 --- a/src/main/resources/application-postgres.yaml
 +++ b/src/main/resources/application-postgres.yaml
 @@ -1,9 +1,12 @@
@@ -47,6 +47,15 @@ index 51a0aef..90fe6a3 100644
        # Kommenteres ut ved lokal testing av innsending av søknad
      #    azuread:
      #      discoveryurl: https://login.microsoftonline.com/navq.onmicrosoft.com/v2.0/.well-known/openid-configuration
+@@ -23,7 +26,7 @@ no.nav.security.jwt:
+           client-auth-method: client_secret_basic
+       integrasjoner-clientcredentials:
+         resource-url: ${FAMILIE_INTEGRASJONER_API_URL}
+-        token-endpoint-url: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/token
++        well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
+         grant-type: client_credentials
+         scope: ${FAMILIE_INTEGRASJONER_SCOPE}
+         authentication:
 @@ -39,6 +42,16 @@ no.nav.security.jwt:
            client-id: ${CLIENT_ID}
            client-secret: ${CLIENT_SECRET}
@@ -82,7 +91,7 @@ index 6c92612..24fa324 100644
 
  fun main(args: Array<String>) {
 diff --git a/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt b/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
-index b4cf801..16ffa74 100644
+index b4cf801..31ca7f5 100644
 --- a/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
 +++ b/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
 @@ -1,16 +1,14 @@
@@ -101,7 +110,7 @@ index b4cf801..16ffa74 100644
  fun main(args: Array<String>) {
      val app = SpringApplicationBuilder(DevLauncherPostgres::class.java)
 -            .profiles("postgres", "mock-dokarkiv", "mock-dokgen")
-+            .profiles("postgres", "mock-dokarkiv")
++            .profiles("postgres")
      app.run(*args)
  }
 \ No newline at end of file

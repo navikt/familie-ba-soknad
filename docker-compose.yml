@@ -70,7 +70,7 @@ services:
       KAFKA_BROKERS: http://kafka:9092
       FAMILIE_DOKUMENT_API_URL: http://dokument:8082
       FAMILIE_BA_DOKGEN_API_URL: http://dokgen:8080
-
+      FAMILIE_INTEGRASJONER_API_URL: http://journalforing
   dokument:
     container_name: "familie-dokument"
     build:
@@ -114,6 +114,14 @@ services:
     environment:
       FAKEDINGS_ADDRESS: "http://oauthmock:8080/fake/idporten"
       TOKEN_COOKIE_NAME: "selvbetjening-idtoken"
+
+  journalforing:
+    build:
+      context: dockerstuff/journalføring
+    volumes:
+      - ./mottatte_soknader:/var/mottatte_soknader
+    environment:
+      STORAGE_DIRECTORY: /var/mottatte_soknader
 
   key_generator:
     container_name: "jwk-generator"
