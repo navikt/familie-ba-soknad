@@ -13,13 +13,13 @@ import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
-import VetIkkeCheckbox from './VetIkkeCheckbox';
 
 const Oppfølgningsspørsmål: React.FC<{
     barn: IBarnMedISøknad;
@@ -83,11 +83,11 @@ const Oppfølgningsspørsmål: React.FC<{
                         }
                         disabled={skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
                     />
-                    <VetIkkeCheckbox
-                        labelSpråkId={
+                    <SkjemaCheckbox
+                        labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdVetIkke]
                         }
-                        checkboxUkjentFelt={skjema.felter.institusjonOppholdSluttVetIkke}
+                        felt={skjema.felter.institusjonOppholdSluttVetIkke}
                     />
                 </SkjemaFieldset>
             )}
@@ -122,13 +122,13 @@ const Oppfølgningsspørsmål: React.FC<{
                         }
                         disabled={skjema.felter.oppholdslandSluttDatoVetIkke.verdi === ESvar.JA}
                     />
-                    <VetIkkeCheckbox
-                        labelSpråkId={
+                    <SkjemaCheckbox
+                        labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[
                                 OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
                             ]
                         }
-                        checkboxUkjentFelt={skjema.felter.oppholdslandSluttDatoVetIkke}
+                        felt={skjema.felter.oppholdslandSluttDatoVetIkke}
                     />
                 </SkjemaFieldset>
             )}
@@ -148,13 +148,13 @@ const Oppfølgningsspørsmål: React.FC<{
                             skjema.felter.nårKomBarnTilNorgeDatoIkkeAnkommet.verdi === ESvar.JA
                         }
                     />
-                    <VetIkkeCheckbox
-                        labelSpråkId={
+                    <SkjemaCheckbox
+                        labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[
                                 OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
                             ]
                         }
-                        checkboxUkjentFelt={skjema.felter.nårKomBarnTilNorgeDatoIkkeAnkommet}
+                        felt={skjema.felter.nårKomBarnTilNorgeDatoIkkeAnkommet}
                     />
                     <JaNeiSpm
                         skjema={skjema}

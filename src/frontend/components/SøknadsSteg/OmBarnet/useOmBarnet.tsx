@@ -781,6 +781,7 @@ export const useOmBarnet = (
             }),
         });
     };
+
     return {
         oppdaterSøknad,
         skjema,

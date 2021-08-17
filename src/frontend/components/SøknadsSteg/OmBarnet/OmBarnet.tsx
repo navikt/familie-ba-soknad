@@ -3,7 +3,6 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
-import { Checkbox } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -16,6 +15,7 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -152,24 +152,12 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             }
                             disabled={skjema.felter.søkerForTidsromCheckbox.verdi === ESvar.JA}
                         />
-                        <Checkbox
-                            label={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerIkkeForTidsrom
-                                        ]
-                                    }
-                                />
+                        <SkjemaCheckbox
+                            felt={skjema.felter.søkerForTidsromCheckbox}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            labelSpråkTekstId={
+                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerIkkeForTidsrom]
                             }
-                            defaultChecked={
-                                skjema.felter.søkerForTidsromCheckbox.verdi === ESvar.JA
-                            }
-                            onChange={event => {
-                                skjema.felter.søkerForTidsromCheckbox
-                                    .hentNavInputProps(false)
-                                    .onChange(event.target.checked ? ESvar.JA : ESvar.NEI);
-                            }}
                         />
                     </SkjemaFieldset>
                 )}
@@ -200,27 +188,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             />
                             {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
                                 <div>
-                                    <Checkbox
-                                        label={
-                                            <SpråkTekst
-                                                id={
-                                                    omBarnetSpørsmålSpråkId[
-                                                        OmBarnetSpørsmålsId.søkerBorMedAndreForelder
-                                                    ]
-                                                }
-                                            />
+                                    <SkjemaCheckbox
+                                        felt={skjema.felter.borMedAndreForelderCheckbox}
+                                        visFeilmeldinger={skjema.visFeilmeldinger}
+                                        labelSpråkTekstId={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.søkerBorMedAndreForelder
+                                            ]
                                         }
-                                        defaultChecked={
-                                            skjema.felter.borMedAndreForelderCheckbox.verdi ===
-                                            ESvar.JA
-                                        }
-                                        onChange={event => {
-                                            skjema.felter.borMedAndreForelderCheckbox
-                                                .hentNavInputProps(false)
-                                                .onChange(
-                                                    event.target.checked ? ESvar.JA : ESvar.NEI
-                                                );
-                                        }}
                                     />
                                     <VedleggNotis
                                         språkTekstId={'ombarnet.nårflyttetfra.info'}
