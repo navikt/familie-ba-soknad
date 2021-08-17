@@ -6,15 +6,15 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { useApp } from '../../../context/AppContext';
-import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
-import { formaterDato } from '../../../utils/dato';
-import { genererAdresseVisning, landkodeTilSpråk } from '../../../utils/visning';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { useOmdeg } from '../OmDeg/useOmdeg';
-import { StyledOppsummeringsFeltGruppe } from './Oppsummering';
-import { OppsummeringFelt } from './OppsummeringFelt';
-import Oppsummeringsbolk from './Oppsummeringsbolk';
+import { useApp } from '../../../../context/AppContext';
+import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
+import { formaterDato } from '../../../../utils/dato';
+import { genererAdresseVisning, landkodeTilSpråk } from '../../../../utils/visning';
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { useOmdeg } from '../../OmDeg/useOmdeg';
+import { StyledOppsummeringsFeltGruppe } from '../Oppsummering';
+import { OppsummeringFelt } from '../OppsummeringFelt';
+import Oppsummeringsbolk from '../Oppsummeringsbolk';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;

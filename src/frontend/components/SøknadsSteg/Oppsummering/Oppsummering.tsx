@@ -13,18 +13,17 @@ import { useApp } from '../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../../../typer/person';
 import { formaterDato } from '../../../utils/dato';
-import { hentBostedSpråkId } from '../../../utils/person';
 import { barnetsNavnValue, landkodeTilSpråk } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { useOmBarnaDine } from '../OmBarnaDine/useOmBarnaDine';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import { useOmBarnet } from '../OmBarnet/useOmBarnet';
-import { useVelgBarn } from '../VelgBarn/useVelgBarn';
 import AndreForelderOppsummering from './AndreForelderOppsummering';
-import OmDegOppsummering from './OmDegOppsummering';
 import { OppsummeringFelt } from './OppsummeringFelt';
 import Oppsummeringsbolk from './Oppsummeringsbolk';
+import OmBarnaOppsummering from './StegOppsummering/OmBarnaOppsummering';
+import OmDegOppsummering from './StegOppsummering/OmDegOppsummering';
+import VelgBarnOppsummering from './StegOppsummering/VelgBarnOppsummering';
 import { formaterDatoMedUkjent } from './utils';
 
 const StyledNormaltekst = styled(Normaltekst)`
@@ -39,16 +38,10 @@ const Oppsummering: React.FC = () => {
     const intl = useIntl();
     const { formatMessage } = intl;
     const { søknad } = useApp();
-    const { hentStegNummer, hentStegObjektForRoute, hentStegObjektForBarn } = useRoutes();
+    const { hentStegNummer, hentStegObjektForBarn } = useRoutes();
     const { push: pushHistory } = useHistory();
     const [valgtLocale] = useSprakContext();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
-
-    const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
-        søknad.barnInkludertISøknaden
-            .filter(barn => barn[søknadDatafelt].svar === 'JA')
-            .map(filtrertBarn => barnetsNavnValue(filtrertBarn, intl))
-            .join(', ');
 
     const scrollTilFeil = (elementId: string) => {
         // Gjør dette for syns skyld, men push scroller ikke vinduet
@@ -72,144 +65,8 @@ const Oppsummering: React.FC = () => {
             </StyledNormaltekst>
 
             <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
-
-            <Oppsummeringsbolk
-                route={hentStegObjektForRoute(RouteEnum.VelgBarn)}
-                tittel={'hvilkebarn.sidetittel'}
-                skjemaHook={useVelgBarn}
-                settFeilAnchors={settFeilAnchors}
-            >
-                {søknad.barnInkludertISøknaden.map((barn, index) => (
-                    <StyledOppsummeringsFeltGruppe key={index}>
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
-                            søknadsvar={
-                                barn.adressebeskyttelse
-                                    ? intl.formatMessage({
-                                          id: 'hvilkebarn.barn.bosted.adressesperre',
-                                      })
-                                    : barn.navn
-                            }
-                        />
-
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'hvilkebarn.barn.fødselsnummer'} />}
-                            søknadsvar={barn.ident}
-                        />
-
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'hvilkebarn.barn.bosted'} />}
-                            søknadsvar={intl.formatMessage({
-                                id: hentBostedSpråkId(barn),
-                            })}
-                        />
-                    </StyledOppsummeringsFeltGruppe>
-                ))}
-            </Oppsummeringsbolk>
-            <Oppsummeringsbolk
-                route={hentStegObjektForRoute(RouteEnum.OmBarna)}
-                tittel={'ombarna.sidetittel'}
-                skjemaHook={useOmBarnaDine}
-                settFeilAnchors={settFeilAnchors}
-            >
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'ombarna.fosterbarn.spm'} />}
-                        søknadsvar={søknad.erNoenAvBarnaFosterbarn.svar}
-                    />
-                    {søknad.erNoenAvBarnaFosterbarn.svar === 'JA' && (
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'ombarna.fosterbarn.hvem.spm'} />}
-                            søknadsvar={genererListeMedBarn(barnDataKeySpørsmål.erFosterbarn)}
-                        />
-                    )}
-                </StyledOppsummeringsFeltGruppe>
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'ombarna.institusjon.spm'} />}
-                        søknadsvar={søknad.oppholderBarnSegIInstitusjon.svar}
-                    />
-
-                    {søknad.oppholderBarnSegIInstitusjon.svar === 'JA' && (
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'ombarna.institusjon.hvem.spm'} />}
-                            søknadsvar={genererListeMedBarn(
-                                barnDataKeySpørsmål.oppholderSegIInstitusjon
-                            )}
-                        />
-                    )}
-                </StyledOppsummeringsFeltGruppe>
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'ombarna.adoptert.spm'} />}
-                        søknadsvar={søknad.erBarnAdoptertFraUtland.svar}
-                    />
-                    {søknad.erBarnAdoptertFraUtland.svar === 'JA' && (
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'ombarna.adoptert.hvem.spm'} />}
-                            søknadsvar={genererListeMedBarn(
-                                barnDataKeySpørsmål.erAdoptertFraUtland
-                            )}
-                        />
-                    )}
-                </StyledOppsummeringsFeltGruppe>
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'ombarna.opphold-utland.spm'} />}
-                        søknadsvar={søknad.oppholderBarnSegIUtland.svar}
-                    />
-                    {søknad.oppholderBarnSegIUtland.svar === 'JA' && (
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'ombarna.opphold-utland.hvem.spm'} />}
-                            søknadsvar={genererListeMedBarn(
-                                barnDataKeySpørsmål.oppholderSegIUtland
-                            )}
-                        />
-                    )}
-                </StyledOppsummeringsFeltGruppe>
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'ombarna.asyl.spm'} />}
-                        søknadsvar={søknad.søktAsylForBarn.svar}
-                    />
-                    {søknad.søktAsylForBarn.svar === 'JA' && (
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'ombarna.asyl.hvem.spm'} />}
-                            søknadsvar={genererListeMedBarn(barnDataKeySpørsmål.erAsylsøker)}
-                        />
-                    )}
-                </StyledOppsummeringsFeltGruppe>
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'ombarna.sammenhengende-opphold.spm'} />}
-                        søknadsvar={søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar}
-                    />
-
-                    {søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar === 'NEI' && (
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'ombarna.sammenhengende-opphold.hvem.spm'} />}
-                            søknadsvar={genererListeMedBarn(
-                                barnDataKeySpørsmål.boddMindreEnn12MndINorge
-                            )}
-                        />
-                    )}
-                </StyledOppsummeringsFeltGruppe>
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'ombarna.barnetrygd-eøs.spm'} />}
-                        søknadsvar={søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar}
-                    />
-
-                    {søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar === 'JA' && (
-                        <OppsummeringFelt
-                            tittel={<SpråkTekst id={'ombarna.barnetrygd-eøs.hvem.spm'} />}
-                            søknadsvar={genererListeMedBarn(
-                                barnDataKeySpørsmål.barnetrygdFraAnnetEøsland
-                            )}
-                        />
-                    )}
-                </StyledOppsummeringsFeltGruppe>
-            </Oppsummeringsbolk>
+            <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} />
+            <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} />
 
             {søknad.barnInkludertISøknaden.map((barn, index) => {
                 const enIndeksert = index + 1;
