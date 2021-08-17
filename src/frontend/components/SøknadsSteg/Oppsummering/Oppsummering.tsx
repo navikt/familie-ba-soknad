@@ -58,6 +58,7 @@ const Oppsummering: React.FC = () => {
                 const nummer = (hentStegNummer(RouteEnum.OmBarna) + enIndeksert).toString();
                 return (
                     <OmBarnetOppsummering
+                        key={index}
                         barn={barn}
                         nummer={nummer}
                         settFeilAnchors={settFeilAnchors}
