@@ -148,7 +148,7 @@ export const initialStateSøknad: ISøknad = {
             svar: null,
         },
         oppholdsland: {
-            id: OmDegSpørsmålId.oppholdsland,
+            id: OmDegSpørsmålId.søkerOppholdsland,
             svar: '',
         },
         oppholdslandDato: {
