@@ -2,9 +2,8 @@
 
 namespace App;
 
-use DateTimeImmutable;
+use Dflydev\FigCookies\FigResponseCookies;
 use Dflydev\FigCookies\SetCookie;
-use Dflydev\FigCookies\SetCookies;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -19,8 +18,17 @@ class LoginMock implements RequestHandlerInterface
         private ResponseFactoryInterface $responseFactory,
         private RequestFactoryInterface $requestFactory,
         private ClientInterface $httpClient
-    ) {}
+    ) {
+    }
 
+    /**
+     * Logs the user in by getting a fake idporten token from a fake oauth server, sets the cookie specified by the
+     * environment variable TOKEN_COOKIE_NAME and redirects back to the app.
+     * Expects the GET parameters 'redirect' and 'subject' to be present on the request, throws if they are missing.
+     *
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         ['redirect' => $redirect, 'subject' => $personId] = $request->getQueryParams();
@@ -36,13 +44,12 @@ class LoginMock implements RequestHandlerInterface
         $tokenCookieName = getenv("TOKEN_COOKIE_NAME");
         $cookie = SetCookie::create($tokenCookieName, $token)
             ->withDomain("localhost")
-            ->withExpires(new DateTimeImmutable("tomorrow"))
+            ->withExpires(0)
             ->withPath("/")
             ->withSecure(false)
             ->withHttpOnly(false);
 
-        $cookies = SetCookies::fromResponse($response)->with($cookie);
-        return $cookies->renderIntoSetCookieHeader($response);
+        return FigResponseCookies::set($response, $cookie);
     }
 
     /**
@@ -50,7 +57,8 @@ class LoginMock implements RequestHandlerInterface
      */
     private function getUserToken(string $personId): string
     {
-        $url = sprintf("%s?%s",
+        $url = sprintf(
+            "%s?%s",
             getenv("FAKEDINGS_ADDRESS") ?? "http://fakedings",
             http_build_query([
                 'acr' => 'Level4',
