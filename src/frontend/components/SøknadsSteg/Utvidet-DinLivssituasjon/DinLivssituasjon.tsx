@@ -3,6 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -39,6 +40,15 @@ const DinLivssituasjon: React.FC = () => {
                         />
                     }
                     dynamisk
+                />
+            </KomponentGruppe>
+            <KomponentGruppe>
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.harSamboerNå}
+                    spørsmålTekstId={
+                        dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.harSamboerNå]
+                    }
                 />
             </KomponentGruppe>
         </Steg>

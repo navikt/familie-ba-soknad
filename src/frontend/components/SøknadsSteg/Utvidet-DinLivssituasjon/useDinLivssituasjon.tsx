@@ -1,13 +1,16 @@
 import React from 'react';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { Årsak } from './types-and-utilities';
 
 export interface IDinLivssituasjonFeltTyper {
     årsak: Årsak | '';
+    harSamboerNå: ESvar | null;
 }
 
 export const useDinLivssituasjon = (): {
@@ -30,12 +33,15 @@ export const useDinLivssituasjon = (): {
         },
     });
 
+    const harSamboerNå = useJaNeiSpmFelt(søker.utvidet.spørsmål.harSamboerNå);
+
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,
         string
     >({
         felter: {
             årsak,
+            harSamboerNå,
         },
         skjemanavn: 'dinlivssituasjon',
     });
@@ -52,6 +58,10 @@ export const useDinLivssituasjon = (): {
                         årsak: {
                             ...søknad.søker.utvidet.spørsmål.årsak,
                             svar: skjema.felter.årsak.verdi,
+                        },
+                        harSamboerNå: {
+                            ...søknad.søker.utvidet.spørsmål.harSamboerNå,
+                            svar: skjema.felter.harSamboerNå.verdi,
                         },
                     },
                 },
