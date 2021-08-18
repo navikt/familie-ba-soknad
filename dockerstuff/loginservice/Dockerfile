@@ -10,13 +10,13 @@ RUN apt-get update \
 
 WORKDIR /var/app/
 COPY ./composer.json ./composer.lock /var/app/
-RUN composer install
-
-COPY ./ /var/app/
-
+RUN composer install && a2enmod rewrite
 
 # Change apache settings to hide src dir and redirect all paths to app
 ENV APACHE_DOCUMENT_ROOT /var/app/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+
+COPY ./ /var/app/

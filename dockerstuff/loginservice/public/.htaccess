@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^local/cookie$ /index.php [L]

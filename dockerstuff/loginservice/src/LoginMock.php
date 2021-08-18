@@ -33,7 +33,9 @@ class LoginMock implements RequestHandlerInterface
     {
         ['redirect' => $redirect, 'subject' => $personId] = $request->getQueryParams();
 
-        $response = $this->responseFactory->createResponse(301)->withHeader("Location", $redirect);
+        $response = $this->responseFactory->createResponse(301)
+            ->withHeader('Cache-Control', 'no-store')
+            ->withHeader("Location", $redirect);
 
         try {
             $token = $this->getUserToken($personId);
