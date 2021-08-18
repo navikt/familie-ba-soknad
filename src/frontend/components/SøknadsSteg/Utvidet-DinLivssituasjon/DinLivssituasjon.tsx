@@ -7,6 +7,7 @@ import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import NåværendeSamboerSkjema from './NåværendeSamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import { useDinLivssituasjon } from './useDinLivssituasjon';
 
@@ -51,6 +52,7 @@ const DinLivssituasjon: React.FC = () => {
                     }
                 />
             </KomponentGruppe>
+            <NåværendeSamboerSkjema skjema={skjema} />
         </Steg>
     );
 };

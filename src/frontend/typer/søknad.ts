@@ -3,7 +3,10 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
-import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
+import {
+    DinLivssituasjonSpørsmålId,
+    SamboerSpørsmålId,
+} from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { INøkkelPar } from './common';
 import { Dokumentasjonsbehov, IDokumentasjon, ISøknadKontraktDokumentasjon } from './dokumentasjon';
@@ -46,8 +49,15 @@ export interface ISøknad {
     dokumentasjon: IDokumentasjon[];
 }
 
+export type SpørsmålId =
+    | OmDegSpørsmålId
+    | OmBarnaDineSpørsmålId
+    | OmBarnetSpørsmålsId
+    | DinLivssituasjonSpørsmålId
+    | SamboerSpørsmålId;
+
 export interface ISøknadSpørsmål<T> {
-    id: OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørsmålsId | DinLivssituasjonSpørsmålId;
+    id: SpørsmålId;
     svar: T;
 }
 

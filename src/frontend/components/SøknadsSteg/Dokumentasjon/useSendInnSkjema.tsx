@@ -24,23 +24,18 @@ import {
     ISøknadKontrakt,
     ISøknadKontraktBarn,
     ISøknadSpørsmål,
+    SpørsmålId,
 } from '../../../typer/søknad';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { isAlpha3Code } from '../../../utils/hjelpefunksjoner';
 import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
-import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
-import { omDegSpørsmålSpråkId, OmDegSpørsmålId } from '../OmDeg/spørsmål';
+import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from '../OmBarnaDine/spørsmål';
+import { omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
+import { omDegSpørsmålSpråkId } from '../OmDeg/spørsmål';
 import {
-    DinLivssituasjonSpørsmålId,
     dinLivssituasjonSpørsmålSpråkId,
+    samboerSpørsmålSpråkId,
 } from '../Utvidet-DinLivssituasjon/spørsmål';
-
-type SpørsmålId =
-    | OmDegSpørsmålId
-    | OmBarnaDineSpørsmålId
-    | OmBarnetSpørsmålsId
-    | DinLivssituasjonSpørsmålId;
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
@@ -56,6 +51,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
             omBarnaDineSpørsmålSpråkId,
             omBarnetSpørsmålSpråkId,
             dinLivssituasjonSpørsmålSpråkId,
+            samboerSpørsmålSpråkId,
         ]) {
             if (spørsmålId in språkIndex) {
                 return intl.formatMessage({ id: språkIndex[spørsmålId] });

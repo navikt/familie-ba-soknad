@@ -15,3 +15,21 @@ export const dinLivssituasjonSpørsmålSpråkId: Record<DinLivssituasjonSpørsm�
     [DinLivssituasjonSpørsmålId.harSamboerNå]: 'omdeg.samboernå.spm',
     [DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode]: 'omdeg.annensamboer.spm',
 };
+
+export enum SamboerSpørsmålId {
+    navn = 'utvidet-nåværende-samboer-navn',
+    fnr = 'utvidet-nåværende-samboer-ident',
+    fnrUkjent = 'utvidet-nåværende-samboer-identUkjent',
+    fødselsdato = 'utvidet-nåværende-samboer-fødselsdato',
+    fødselsdatoUkjent = 'utvidet-nåværende-samboer-fødselsdatoUkjent',
+    samboerFraDato = 'utvidet-nåværende-samboer-samboerFraDato',
+}
+
+export const samboerSpørsmålSpråkId: Record<SamboerSpørsmålId, string> = {
+    [SamboerSpørsmålId.navn]: 'felles.samboernavn.spm',
+    [SamboerSpørsmålId.fnr]: 'felles.fødsels-eller-dnummer.label',
+    [SamboerSpørsmålId.fnrUkjent]: 'omdeg.nåværendeSamboer.ident.ukjent',
+    [SamboerSpørsmålId.fødselsdato]: 'felles.fødselsdato.label',
+    [SamboerSpørsmålId.fødselsdatoUkjent]: 'felles.fødselsdato-ukjent',
+    [SamboerSpørsmålId.samboerFraDato]: 'omdeg.nårstartetsamboerforhold.spm',
+};
