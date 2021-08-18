@@ -2,8 +2,8 @@ version: "3.4"
 
 x-common-variables: &common-build-variables
   # Trenger auth for mvn clean install, er mest sannsynlig i $HOME/.m2/settings.xml, klipp og lim inn. (password er token)
-  github_username: bjornsnoen-nav
-  github_token: 743762a501ae1c64c6ab3d009a0876bdd6734422
+  github_username: FYLL_INN_GITHUB_BRUKER
+  github_token: FYLL_INN_GITHUB_TOKEN
 
 x-common-token-environment: &common-token-environment
   LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/fake/.well-known/openid-configuration
