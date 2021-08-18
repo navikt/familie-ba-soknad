@@ -45,6 +45,10 @@ describe('DinLivssituasjon', () => {
                             id: DinLivssituasjonSpørsmålId.årsak,
                             svar: '',
                         },
+                        harSamboerNå: {
+                            id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                            svar: null,
+                        },
                     },
                 },
             },
@@ -74,6 +78,28 @@ describe('DinLivssituasjon', () => {
             alerts,
             'Hvorfor søker du om utvidet barnetrygd?'
         );
+        expect(result).not.toBeNull();
+    });
+
+    it('Viser spørsmål harSamboerNå', () => {
+        const { getByText } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        const result = getByText('Har du samboer nå?');
+        expect(result).toBeDefined();
+    });
+    it('Viser feilmelding med spørsmål tittel når ikke utfylt', () => {
+        const { getByText, getByRole } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        const gåVidere = getByText('GÅ VIDERE');
+        act(() => gåVidere.click());
+        const alerts: HTMLElement = getByRole('alert');
+        const result: HTMLElement | null = queryByText(alerts, 'Har du samboer nå?');
         expect(result).not.toBeNull();
     });
 });
