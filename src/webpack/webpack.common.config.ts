@@ -33,6 +33,7 @@ const commonConfig: webpack.Configuration = {
             inject: 'body',
             chunks: ['disabled'],
             filename: 'disabled.html',
+            publicPath: process.env.BASE_PATH ?? '/',
         }),
         new CopyWebpackPlugin({
             patterns: [
