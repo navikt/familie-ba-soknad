@@ -22,7 +22,6 @@ const commonConfig: webpack.Configuration = {
         new HtmlWebpackPlugin({
             template: path.join(process.cwd(), 'src/frontend/public/index.html'),
             inject: 'body',
-            alwaysWriteToDisk: true,
             excludeChunks: ['disabled'],
             // Dette gjør at hvis vi navigerer direkte til /basepath/om-barna/ så henter vi fortsatt main.js fra /basepath/main.js
             publicPath: process.env.BASE_PATH ?? '/',
@@ -33,6 +32,7 @@ const commonConfig: webpack.Configuration = {
             inject: 'body',
             chunks: ['disabled'],
             filename: 'disabled.html',
+            publicPath: process.env.BASE_PATH ?? '/',
         }),
         new CopyWebpackPlugin({
             patterns: [
