@@ -36,7 +36,7 @@ export const useDinLivssituasjon = (): {
 
     const separertEnkeSkilt = useJaNeiSpmFelt(
         søker.utvidet.separertEnkeSkilt,
-        {},
+        { undefined },
         false,
         søker.sivilstand.type !== ESivilstand.GIFT
     );
