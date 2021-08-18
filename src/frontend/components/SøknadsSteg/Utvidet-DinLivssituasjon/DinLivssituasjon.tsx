@@ -48,16 +48,6 @@ const DinLivssituasjon: React.FC = () => {
             <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
-                    felt={skjema.felter.harSamboerNå}
-                    spørsmålTekstId={
-                        dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.harSamboerNå]
-                    }
-                />
-            </KomponentGruppe>
-
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
                     felt={skjema.felter.separertEnkeSkilt}
                     spørsmålTekstId={
                         dinLivssituasjonSpørsmålSpråkId[
@@ -68,6 +58,15 @@ const DinLivssituasjon: React.FC = () => {
                 {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
                     <VedleggNotis språkTekstId={'omdeg.separertellerskilt.info'} dynamisk />
                 )}
+            </KomponentGruppe>
+            <KomponentGruppe>
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.harSamboerNå}
+                    spørsmålTekstId={
+                        dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.harSamboerNå]
+                    }
+                />
             </KomponentGruppe>
         </Steg>
     );
