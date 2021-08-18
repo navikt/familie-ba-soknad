@@ -36,7 +36,9 @@ services:
     container_name: "soknad-api"
     build:
       context: dockerstuff/soknad-api
-      args: *common-build-variables
+      args:
+        <<: *common-build-variables
+        git_commit: 6763718ff31719cb1e107783e83c39051233c7ef
     depends_on:
       - key_generator
       - oauthmock
@@ -53,7 +55,9 @@ services:
     container_name: "mottak"
     build:
       context: dockerstuff/mottak
-      args: *common-build-variables
+      args:
+        <<: *common-build-variables
+        git_commit: b77c44c8cc5534b7029184329f330cd590b77433
     depends_on:
       - key_generator
       - postgres
@@ -71,11 +75,14 @@ services:
       FAMILIE_DOKUMENT_API_URL: http://dokument:8082
       FAMILIE_BA_DOKGEN_API_URL: http://dokgen:8080
       FAMILIE_INTEGRASJONER_API_URL: http://journalforing
+
   dokument:
     container_name: "familie-dokument"
     build:
       context: dockerstuff/dokument
-      args: *common-build-variables
+      args:
+        <<: *common-build-variables
+        git_commit: 16125c5016e082f283a525d0e69d2c785f38621e
     depends_on:
       - key_generator
       - oauthmock
@@ -119,7 +126,7 @@ services:
     build:
       context: dockerstuff/journalføring
     volumes:
-      - ./mottatte_soknader:/var/mottatte_soknader
+      - ./var/mottatte_soknader:/var/mottatte_soknader
     environment:
       STORAGE_DIRECTORY: /var/mottatte_soknader
 
@@ -128,6 +135,8 @@ services:
     # Will generate tokenx keys and then shut down
     build:
       context: dockerstuff/jwker
+      args:
+        git_commit: 850963d98bfd4e04836212fcb2efb218d56db7f5
     environment:
       APPS: "familie-ba-soknad-api,familie-ba-mottak,familie-dokument"
       KEY_OUTPUT_DIRECTORY: /keys

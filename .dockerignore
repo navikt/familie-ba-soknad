@@ -5,3 +5,5 @@ dockerstuff/
 docker-compose.yml
 .git/
 .idea/
+var/
+*.log
