@@ -50,8 +50,8 @@ export const useDinLivssituasjon = (): {
     >({
         felter: {
             årsak,
-            harSamboerNå,
             separertEnkeSkilt,
+            harSamboerNå,
         },
         skjemanavn: 'dinlivssituasjon',
     });
