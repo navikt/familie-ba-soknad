@@ -34,6 +34,7 @@ export const isEnabled = (feature: string): boolean => {
  */
 export const expressToggleInterceptor: RequestHandler = (req, res, next) => {
     const språk: string | undefined = req.cookies['decorator-language'];
+    const erUtvidet = req.url.includes('utvidet');
 
     const renderDisabled = () =>
         getDecorator(språk)
@@ -41,9 +42,13 @@ export const expressToggleInterceptor: RequestHandler = (req, res, next) => {
             // Selv om dekoratøren feiler vil vi rendre siden, vil bare få noen ekle hbs-tags i sidevisningen og mangle no styling
             .catch(() => res.render('disabled.html'));
 
-    const skalRendreDisabledApp = !!(
-        process.env.FORCE_DISABLED ?? isEnabled('familie-ba-soknad.disable-soknad')
-    );
-
+    let skalRendreDisabledApp;
+    if (process.env.FORCE_DISABLED) {
+        skalRendreDisabledApp = true;
+    } else if (erUtvidet) {
+        skalRendreDisabledApp = isEnabled('familie-ba-soknad.disable-soknad-utvidet');
+    } else {
+        skalRendreDisabledApp = isEnabled('familie-ba-soknad.disable-soknad-ordinaer');
+    }
     skalRendreDisabledApp ? renderDisabled() : next();
 };
