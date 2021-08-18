@@ -30,4 +30,7 @@ $requestHandlerRunner = new RequestHandlerRunner(
     serverRequestErrorResponseGenerator: fn (Throwable $t) => $psr17Factory->createResponse(500, $t->getMessage())
 );
 
+// Make all files and directories r/w by everybody so they can be deleted on the host system
+umask(0);
+
 $requestHandlerRunner->run();

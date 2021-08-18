@@ -2,6 +2,7 @@
 
 namespace App;
 
+use finfo as FileInfo;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -38,9 +39,8 @@ class RequestDumper implements RequestHandlerInterface
     {
         $requestData = json_decode($request->getBody()->getContents(), associative: true);
 
-        $identifier = md5(json_encode($requestData)).substr(0, 5);
+        $identifier = substr(md5(json_encode($requestData)), 0, 7);
         $directory = (getenv("STORAGE_DIRECTORY") ?: "/tmp") . "/$identifier";
-
         mkdir($directory);
 
         $filePath = "$directory/request.json";
@@ -50,16 +50,22 @@ class RequestDumper implements RequestHandlerInterface
         file_put_contents($filePath, json_encode($requestData));
 
         foreach ($requestData["hoveddokumentvarianter"] as $document) {
-            $extension = match ($document["filtype"]) {
-                "PDFA" => "pdf",
-                default => "json"
-            };
-            $contents = base64_decode($document["dokument"]);
-
-            $filePath = "$directory/hoveddok.$extension";
-            $this->logger->info("Writing main document $extension to $filePath");
-            file_put_contents($filePath, $contents);
+            $this->writeDocument($document, $directory, "hoveddokument");
         }
+
+        foreach ($requestData["vedleggsdokumenter"] as $idx => $document) {
+            $this->writeDocument($document, $directory, "vedlegg-$idx");
+        }
+    }
+
+    private function writeDocument(array $document, string $directory, $filename): void
+    {
+        $contents = base64_decode($document["dokument"]);
+        $extension = $this->findFileExtension($document);
+
+        $filePath = "$directory/$filename.$extension";
+        $this->logger->info("Writing document $extension to $filePath");
+        file_put_contents($filePath, $contents);
     }
 
     private function fakeArchiveResponseResource(): string
@@ -73,5 +79,37 @@ class RequestDumper implements RequestHandlerInterface
             'status' => 'SUKSESS',
             'melding' => 'OK'
         ]);
+    }
+
+    private function findFileExtension(array $document): string
+    {
+        $documentContent = base64_decode($document["dokument"]);
+        /**
+         * Ordinarily we'd just do this but in devmode familie-dokument doesn't convert attachments to pdf
+         *
+         * $extension = match ($document["filtype"]) {
+         *      "PDFA" => "pdf",
+         *      default => "json"
+         * };
+         *
+         * So instead we have to figure out the file type from the contents and choose an ext based on that.
+         * We'll still use it as a fallback if finfo gets confused
+         */
+
+        $fallbackExtension = match ($document["filtype"]) {
+            "PDFA" => "pdf",
+            default => "json"
+        };
+
+        $finfo = new FileInfo(flags: FILEINFO_EXTENSION);
+        $extensions = $finfo->buffer($documentContent) ?: "txt";
+        $extension = explode('/', $extensions)[0];
+
+        // No idea why but sometimes the discovered extension is ???, treat it as not found
+        if ($extension === "???" || $extension == false) {
+            return $fallbackExtension;
+        }
+
+        return $extension;
     }
 }
