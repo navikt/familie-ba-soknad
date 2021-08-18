@@ -5,12 +5,14 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { ESivilstand } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { Årsak } from './types-and-utilities';
 
 export interface IDinLivssituasjonFeltTyper {
     årsak: Årsak | '';
     harSamboerNå: ESvar | null;
+    separertEnkeSkilt: ESvar | null;
 }
 
 export const useDinLivssituasjon = (): {
@@ -33,6 +35,13 @@ export const useDinLivssituasjon = (): {
         },
     });
 
+    const separertEnkeSkilt = useJaNeiSpmFelt(
+        søker.utvidet.spørsmål.separertEnkeSkilt,
+        undefined,
+        false,
+        søker.sivilstand.type !== ESivilstand.GIFT
+    );
+
     const harSamboerNå = useJaNeiSpmFelt(søker.utvidet.spørsmål.harSamboerNå);
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
@@ -41,6 +50,7 @@ export const useDinLivssituasjon = (): {
     >({
         felter: {
             årsak,
+            separertEnkeSkilt,
             harSamboerNå,
         },
         skjemanavn: 'dinlivssituasjon',
@@ -58,6 +68,10 @@ export const useDinLivssituasjon = (): {
                         årsak: {
                             ...søknad.søker.utvidet.spørsmål.årsak,
                             svar: skjema.felter.årsak.verdi,
+                        },
+                        separertEnkeSkilt: {
+                            ...søknad.søker.utvidet.spørsmål.separertEnkeSkilt,
+                            svar: skjema.felter.separertEnkeSkilt.verdi,
                         },
                         harSamboerNå: {
                             ...søknad.søker.utvidet.spørsmål.harSamboerNå,

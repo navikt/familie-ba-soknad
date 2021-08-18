@@ -2,11 +2,14 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import { useDinLivssituasjon } from './useDinLivssituasjon';
 
@@ -41,6 +44,20 @@ const DinLivssituasjon: React.FC = () => {
                     }
                     dynamisk
                 />
+            </KomponentGruppe>
+            <KomponentGruppe>
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.separertEnkeSkilt}
+                    spørsmålTekstId={
+                        dinLivssituasjonSpørsmålSpråkId[
+                            DinLivssituasjonSpørsmålId.separertEnkeSkilt
+                        ]
+                    }
+                />
+                {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
+                    <VedleggNotis språkTekstId={'omdeg.separertellerskilt.info'} dynamisk />
+                )}
             </KomponentGruppe>
             <KomponentGruppe>
                 <JaNeiSpm
