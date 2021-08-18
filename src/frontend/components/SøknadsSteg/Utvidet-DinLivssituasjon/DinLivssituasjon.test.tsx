@@ -40,9 +40,11 @@ describe('DinLivssituasjon', () => {
             ],
             søker: {
                 utvidet: {
-                    årsak: {
-                        id: DinLivssituasjonSpørsmålId.årsak,
-                        svar: '',
+                    spørsmål: {
+                        årsak: {
+                            id: DinLivssituasjonSpørsmålId.årsak,
+                            svar: '',
+                        },
                     },
                 },
             },
