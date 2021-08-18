@@ -42,9 +42,15 @@ describe('DinLivssituasjon', () => {
             søker: {
                 sivilstand: { type: ESivilstand.UGIFT },
                 utvidet: {
-                    årsak: {
-                        id: DinLivssituasjonSpørsmålId.årsak,
-                        svar: '',
+                    spørsmål: {
+                        årsak: {
+                            id: DinLivssituasjonSpørsmålId.årsak,
+                            svar: '',
+                        },
+                        harSamboerNå: {
+                            id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                            svar: null,
+                        },
                     },
                 },
             },
@@ -83,5 +89,27 @@ describe('DinLivssituasjon', () => {
             </TestProvidereMedEkteTekster>
         );
         expect(queryByText(/omdeg.separertellerskilt.spm/)).not.toBeInTheDocument();
+    });
+
+    it('Viser spørsmål harSamboerNå', () => {
+        const { getByText } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        const result = getByText('Har du samboer nå?');
+        expect(result).toBeDefined();
+    });
+    it('Viser feilmelding med spørsmål tittel når ikke utfylt', () => {
+        const { getByText, getByRole } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        const gåVidere = getByText('GÅ VIDERE');
+        act(() => gåVidere.click());
+        const alerts: HTMLElement = getByRole('alert');
+        const result: HTMLElement | null = queryByText(alerts, 'Har du samboer nå?');
+        expect(result).not.toBeNull();
     });
 });

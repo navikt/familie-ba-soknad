@@ -76,7 +76,7 @@ const OmDeg: React.FC = () => {
                                 skjema={skjema}
                                 label={
                                     <SpråkTekst
-                                        id={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdsland]}
+                                        id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerOppholdsland]}
                                     />
                                 }
                             />

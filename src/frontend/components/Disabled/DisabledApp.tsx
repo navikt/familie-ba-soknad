@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
 import Lenke from 'nav-frontend-lenker';
@@ -23,6 +24,7 @@ const StyledSidetittel = styled(Sidetittel)`
 `;
 
 export const DisabledApp: React.FC = () => {
+    const { formatMessage } = useIntl();
     return (
         <main>
             <DekoratørenSpråkHandler />
@@ -41,7 +43,7 @@ export const DisabledApp: React.FC = () => {
                 <Normaltekst>
                     <SpråkTekst id={'vedlikehold.brødtekst'} />
                 </Normaltekst>
-                <Lenke href={'felles.bruk-pdfskjema.lenke'}>
+                <Lenke href={formatMessage({ id: 'felles.bruk-pdfskjema.lenke' })}>
                     <SpråkTekst id={'felles.bruk-pdfskjema.lenketekst'} />
                 </Lenke>
             </InnholdContainer>

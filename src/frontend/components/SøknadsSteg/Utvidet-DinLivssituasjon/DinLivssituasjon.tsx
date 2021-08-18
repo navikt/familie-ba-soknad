@@ -45,6 +45,15 @@ const DinLivssituasjon: React.FC = () => {
                     dynamisk
                 />
             </KomponentGruppe>
+            <KomponentGruppe>
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.harSamboerNå}
+                    spørsmålTekstId={
+                        dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.harSamboerNå]
+                    }
+                />
+            </KomponentGruppe>
 
             <KomponentGruppe>
                 <JaNeiSpm

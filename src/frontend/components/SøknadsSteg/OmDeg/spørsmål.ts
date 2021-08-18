@@ -1,7 +1,7 @@
 export enum OmDegSpørsmålId {
     borPåRegistrertAdresse = 'bor-på-registrert-adresse',
     oppholderSegINorge = 'søker-oppholder-seg-i-norge',
-    oppholdsland = 'søker-oppholdsland',
+    søkerOppholdsland = 'søker-oppholdsland',
     oppholdslandDato = 'søker-oppholdsland-dato',
     værtINorgeITolvMåneder = 'søker-vært-i-norge-sammenhengende-tolv-måneder',
     komTilNorgeDato = 'søker-kom-til-norge-dato',
@@ -16,7 +16,7 @@ export enum OmDegSpørsmålId {
 export const omDegSpørsmålSpråkId: Record<OmDegSpørsmålId, string> = {
     [OmDegSpørsmålId.borPåRegistrertAdresse]: 'omdeg.borpådenneadressen.spm',
     [OmDegSpørsmålId.oppholderSegINorge]: 'omdeg.opphold-i-norge.spm',
-    [OmDegSpørsmålId.oppholdsland]: 'omdeg.opphold-i-norge.land.spm',
+    [OmDegSpørsmålId.søkerOppholdsland]: 'omdeg.opphold-i-norge.land.spm',
     [OmDegSpørsmålId.oppholdslandDato]: 'omdeg.opphold-i-norge.dato.spm',
     [OmDegSpørsmålId.værtINorgeITolvMåneder]: 'omdeg.opphold-sammenhengende.spm',
     [OmDegSpørsmålId.komTilNorgeDato]: 'omdeg.opphold-sammenhengende.dato.spm',

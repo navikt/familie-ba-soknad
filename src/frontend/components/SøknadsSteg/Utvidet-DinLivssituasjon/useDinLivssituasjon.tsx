@@ -11,6 +11,7 @@ import { Årsak } from './types-and-utilities';
 
 export interface IDinLivssituasjonFeltTyper {
     årsak: Årsak | '';
+    harSamboerNå: ESvar | null;
     separertEnkeSkilt: ESvar | null;
 }
 
@@ -25,8 +26,8 @@ export const useDinLivssituasjon = (): {
     const søker = søknad.søker;
 
     const årsak = useFelt<Årsak | ''>({
-        feltId: søker.utvidet.årsak.id,
-        verdi: søker.utvidet.årsak.svar,
+        feltId: søker.utvidet.spørsmål.årsak.id,
+        verdi: søker.utvidet.spørsmål.årsak.svar,
         valideringsfunksjon: (felt: FeltState<Årsak | ''>) => {
             return felt.verdi !== ''
                 ? ok(felt)
@@ -41,12 +42,15 @@ export const useDinLivssituasjon = (): {
         søker.sivilstand.type !== ESivilstand.GIFT
     );
 
+    const harSamboerNå = useJaNeiSpmFelt(søker.utvidet.spørsmål.harSamboerNå);
+
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,
         string
     >({
         felter: {
             årsak,
+            harSamboerNå,
             separertEnkeSkilt,
         },
         skjemanavn: 'dinlivssituasjon',
@@ -58,13 +62,21 @@ export const useDinLivssituasjon = (): {
             søker: {
                 ...søknad.søker,
                 utvidet: {
-                    årsak: {
-                        ...søknad.søker.utvidet.årsak,
-                        svar: skjema.felter.årsak.verdi,
-                    },
-                    separertEnkeSkilt: {
-                        ...søknad.søker.utvidet.separertEnkeSkilt,
-                        svar: skjema.felter.separertEnkeSkilt.verdi,
+                    ...søknad.søker.utvidet,
+                    spørsmål: {
+                        ...søknad.søker.utvidet.spørsmål,
+                        årsak: {
+                            ...søknad.søker.utvidet.spørsmål.årsak,
+                            svar: skjema.felter.årsak.verdi,
+                        },
+                        separertEnkeSkilt: {
+                            ...søknad.søker.utvidet.separertEnkeSkilt,
+                            svar: skjema.felter.separertEnkeSkilt.verdi,
+                        },
+                        harSamboerNå: {
+                            ...søknad.søker.utvidet.spørsmål.harSamboerNå,
+                            svar: skjema.felter.harSamboerNå.verdi,
+                        },
                     },
                 },
             },
