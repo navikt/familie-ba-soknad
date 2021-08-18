@@ -76,7 +76,7 @@ describe('DinLivssituasjon', () => {
         );
         expect(result).not.toBeNull();
     });
-    it('Viser spørsmål om er du separert, enke eller skilt om sivilstand GIFT', () => {
+    it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', () => {
         const { queryByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
