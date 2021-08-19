@@ -228,7 +228,7 @@
   "omdeg.endre-opplysninger.lenke": "https://www.skatteetaten.no/person/folkeregister/endre/",
   "omdeg.endre-opplysninger.lenketekst": "Endre opplysninger i folkeregisteret (åpnes i nytt vindu)",
   "omdeg.ersamboerforelder.spm": "Er din nåværende eller tidligere samboer forelder til noen av barna du søker barnetrygd for?",
-  "omdeg.frahvilkendatoseparertskilt.spm": "Fra hvilken dato er du separert, skilt eller enke/enkemann? ",
+  "omdeg.frahvilkendatoseparertskilt.spm": "Fra hvilken dato er du separert, skilt eller enke/enkemann? (format dd.mm.åååå)",
   "omdeg.hvorforsøkerutvidet.spm": "Hvorfor søker du om utvidet barnetrygd?",
   "omdeg.leggtilfleresamboere.leggtil": "Legg til samboer",
   "omdeg.leggtilfleresamboere.spm": "Har du hatt flere samboere i perioden du søker barnetrygd for?",
