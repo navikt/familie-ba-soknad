@@ -91,6 +91,17 @@ const DinLivssituasjon: React.FC = () => {
                     }
                 />
             </KomponentGruppe>
+            <KomponentGruppe>
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.hattAnnenSamboerForSøktPeriode}
+                    spørsmålTekstId={
+                        dinLivssituasjonSpørsmålSpråkId[
+                            DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
+                        ]
+                    }
+                />
+            </KomponentGruppe>
         </Steg>
     );
 };
