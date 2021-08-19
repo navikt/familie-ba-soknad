@@ -9,81 +9,27 @@ Frontend - søknad for barnetrygd.
 
 
 1. `yarn install`
-2. `yarn start:dev`
+2. `yarn start:dev` evt `docker-compose up -d`
 
-For å kjøre med mellomlagring må du ha familie-dokument kjørende. 
+For å kjøre med mellomlagring må du ha familie-dokument kjørende (er en del av docker-compose stacken). 
 
 ## Kjør full app
 For å kunne se PDFen som blir sent til joark (arkivering) lokalt må vi kjøre en del apper i tillegg til denne.
-From the top (rekkefølge er viktig, steg 5 krasjer hvis du ikke gjør steg 3 først f.eks.)
+Alle disse tjenestene bygges og kjøres via docker-compose, kjør `docker-compose up` eller åpne `docker-compose.yml`
+i intellij og start alle servicene for å komme i gang.
 
-1.  ### [familie-ba-soknad-api](https://github.com/navikt/familie-ba-soknad-api)
-    Kjør LokalLauncher
-   
-2.  ### [navkafka-docker-compose](https://github.com/navikt/navkafka-docker-compose)
-    Kjør `docker-compose up -d`
-    
-3.  ### [postgres](https://hub.docker.com/_/postgres)
-    Kjør
-    ```shell
-    docker run \
-        --name postgres \
-        --rm \
-        -p 5432:5432 \
-        -e POSTGRES_PASSWORD=test \
-        -e POSTGRES_USER=postgres \
-        -e POSTGRES_DB=familie-ba-mottak \
-        -d \
-        postgres
-    ```
-    
-    Eller legg til tilsvarende service i `navkafka-docker-compose/docker-compose.yml`
+Når `docker-compose` sier at alle tjenestene er oppe betyr det bare at containerene har startet og at init-programmet
+kjører. Følg med på loggen til frontend-containeren for å se når webpack er ferdig, og følg med på loggen til mottak
+for å se når den er klar til å ta imot søknader fra frontend.
 
-4.  ### [familie-ba-dokgen](https://github.com/navikt/familie-ba-dokgen)
-    Kjør `docker-compose up -d`
-   
-5.  ### [familie-ba-mottak](https://github.com/navikt/familie-ba-mottak)
-    Git apply den følgende diffen
-    ```diff
-    diff --git "a/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt" "b/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt"
-    index 0efad49..bbda0d8 100644
-    --- "a/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt"
-    +++ "b/src/main/kotlin/no/nav/familie/ba/mottak/task/Journalf\303\270rS\303\270knadTask.kt"
-    @@ -8,6 +8,7 @@ import no.nav.familie.prosessering.domene.Task
-    import org.slf4j.Logger
-    import org.slf4j.LoggerFactory
-    import org.springframework.stereotype.Service
-    +import java.io.File
-    
-    @Service
-    @TaskStepBeskrivelse(taskStepType = JournalførSøknadTask.JOURNALFØR_SØKNAD, beskrivelse = "Journalfør søknad")
-    @@ -17,6 +18,8 @@ class JournalførSøknadTask(private val pdfService: PdfService,
-    override fun doTask(task: Task) {
-    log.info("Generer pdf og journalfør søknad")
-    val pdf = pdfService.lagPdf(task.payload)
-    +        val home: String = System.getenv("HOME") + "/mottak-pdf.pdf"
-    +        val outputFile = File(home).writeBytes(pdf)
-             journalføringService.journalførSøknad(task.payload, pdf)
-      }
-    
-    diff --git a/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt b/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
-    index b4cf801..2faa184 100644
-    --- a/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
-    +++ b/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
-    @@ -11,6 +11,6 @@ class DevLauncherPostgres
-    
-    fun main(args: Array<String>) {
-    val app = SpringApplicationBuilder(DevLauncherPostgres::class.java)
-    -            .profiles("postgres", "mock-dokarkiv", "mock-dokgen")
-    +            .profiles("postgres", "mock-dokarkiv")
-      app.run(*args)
-      }
-      \ No newline at end of file
-    ```
-    Kjør DevLauncherPostgres
+Genererte søknader og vedlegg lagres til `var/mottatte_soknader` i roten av repoet. IntelliJ synker ikke umiddelbart
+filsystem-endringer, så hvis loggen til mottak sier at søknaden er prosessert men filene ikke har dukket opp i mappen
+kan du høyreklikke på mappen og reloade den fra disk for å se søknadsfilene. Filene som lagres er
 
-6.  ### [Gå igjennom søknaden](http://localhost:3000/)
-    Pdf blir lagret i home directory som `mottak-pdf.pdf`
+* hoveddokument.json - selve søknaden som json
+* hoveddokument.pdf - det genererte PDF-dokumentet
+* request.json - hele requestet som sendes til familie-integrasjoner for journalføring
+* vedlegg-x.ext - de opplastede vedleggene som i prod ville vært konvertert til PDFer
 
 # Bygg og deploy
 Appen bygges hos github actions, og gir beskjed til nais deploy om å deployere appen i gcp. Alle commits til feature brancher går til dev miljøet og master går til produksjon.
