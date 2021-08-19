@@ -1,9 +1,9 @@
 version: "3.4"
 
 x-common-variables: &common-build-variables
-  # Trenger auth for mvn clean install, er mest sannsynlig i $HOME/.m2/settings.xml, klipp og lim inn. (password er token)
-  github_username: FYLL_INN_GITHUB_BRUKER
-  github_token: FYLL_INN_GITHUB_TOKEN
+  # Trenger auth for mvn clean install, kjør `yarn setup:docker:env` for å konfigurere
+  github_username: ${GITHUB_USER}
+  github_token: ${GITHUB_TOKEN}
 
 x-common-token-environment: &common-token-environment
   LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://oauthmock:8080/fake/.well-known/openid-configuration
@@ -99,7 +99,7 @@ services:
   dokgen:
     container_name: dokgen
     build:
-      context: git@github.com:navikt/familie-ba-dokgen.git
+      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git"
     environment:
       RUNTIME_OPTS: "--write.access=true"
     volumes:

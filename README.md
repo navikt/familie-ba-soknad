@@ -16,7 +16,8 @@ For å kjøre med mellomlagring må du ha familie-dokument kjørende (er en del 
 ## Kjør full app
 For å kunne se PDFen som blir sent til joark (arkivering) lokalt må vi kjøre en del apper i tillegg til denne.
 Alle disse tjenestene bygges og kjøres via docker-compose, kjør `docker-compose up` eller åpne `docker-compose.yml`
-i intellij og start alle servicene for å komme i gang.
+i intellij og start alle servicene for å komme i gang. For å bygge containerene trenger vi github credentials
+og å sette en docker-config. Kjør `yarn setup:docker:env` for å gjøre dette enkelt.
 
 Når `docker-compose` sier at alle tjenestene er oppe betyr det bare at containerene har startet og at init-programmet
 kjører. Følg med på loggen til frontend-containeren for å se når webpack er ferdig, og følg med på loggen til mottak
@@ -59,4 +60,3 @@ Interne henvendelser kan sendes via Slack i kanalen #team-familie.
 https://sentry.gc.nav.no/nav/familie-ba-soknad/
 
 Bruk tag ``` scope:familie-ba-soknad ``` for å filtrere på kun exceptions fanget opp av Sentry.ErrorBoundary (dette vil f eks filtrere ut alle exceptions som nav-dokoratøren kaster)
-
