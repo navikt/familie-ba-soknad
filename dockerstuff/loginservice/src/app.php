@@ -1,6 +1,7 @@
 <?php
 
 use App\LoginMock;
+use App\LoginService;
 use Buzz\Client\Curl;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Laminas\HttpHandlerRunner\RequestHandlerRunner;
@@ -17,10 +18,15 @@ $serverRequestCreator = new ServerRequestCreator(
     streamFactory: $psr17Factory
 );
 
+$loginService = new LoginService(
+    requestFactory: $psr17Factory,
+    streamFactory: $psr17Factory,
+    httpClient: new Curl($psr17Factory)
+);
+
 $requestHandler = new LoginMock(
     responseFactory: $psr17Factory,
-    requestFactory: $psr17Factory,
-    httpClient: new Curl(responseFactory: $psr17Factory)
+    loginService: $loginService
 );
 
 $requestHandlerRunner = new RequestHandlerRunner(

@@ -119,7 +119,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      FAKEDINGS_ADDRESS: "http://oauthmock:8080/fake/idporten"
+      FAKEDINGS_ADDRESS: "http://oauthmock:8080"
       TOKEN_COOKIE_NAME: "selvbetjening-idtoken"
 
   journalforing:
