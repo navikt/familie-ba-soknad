@@ -31,6 +31,16 @@ kan du høyreklikke på mappen og reloade den fra disk for å se søknadsfilene.
 * request.json - hele requestet som sendes til familie-integrasjoner for journalføring
 * vedlegg-x.ext - de opplastede vedleggene som i prod ville vært konvertert til PDFer
 
+# Endre PDF i familie-ba-dokgen
+Ved å mounte inn templates fra [familie-ba-dokgen](https://github.com/navikt/familie-ba-dokgen) kan du bruke
+`docker-compose`-stacken til å gjøre endringer i PDF-genereringen. Fremgangsmåte:
+
+* Klon ned familie-ba-dokgen ned lokalt start `compiler.py` der
+* Uncomment volume mount under dokgen i `docker-compose.yml` i dette prosjektet og endre pathen til familie-ba-dokgen-repoet
+* Start dokgen-servicen på nytt
+* Når du er fornøyd, commit uncompiled og compiled templates i familie-ba-dokgen og push.
+* Når du merger endringene i familie-ba-dokgen, oppdater `docker-compose.yml` til å bruke den nye commit-hashen for dokgen
+
 # Bygg og deploy
 Appen bygges hos github actions, og gir beskjed til nais deploy om å deployere appen i gcp. Alle commits til feature brancher går til dev miljøet og master går til produksjon.
 

@@ -104,6 +104,7 @@ services:
       RUNTIME_OPTS: "--write.access=true"
     volumes:
       - secure-logs:/secure-logs
+      # - ../familie-ba-dokgen/content:/app/content
 
   oauthmock:
     container_name: "idporten-ish"
