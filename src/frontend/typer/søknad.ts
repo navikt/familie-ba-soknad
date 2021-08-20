@@ -148,7 +148,7 @@ export const initialStateSøknad: ISøknad = {
             svar: null,
         },
         oppholdsland: {
-            id: OmDegSpørsmålId.oppholdsland,
+            id: OmDegSpørsmålId.søkerOppholdsland,
             svar: '',
         },
         oppholdslandDato: {
@@ -188,10 +188,34 @@ export const initialStateSøknad: ISøknad = {
             svar: '',
         },
         utvidet: {
-            årsak: {
-                id: DinLivssituasjonSpørsmålId.årsak,
-                svar: '',
+            spørsmål: {
+                årsak: {
+                    id: DinLivssituasjonSpørsmålId.årsak,
+                    svar: '',
+                },
+                separertEnkeSkilt: {
+                    id: DinLivssituasjonSpørsmålId.separertEnkeSkilt,
+                    svar: null,
+                },
+                separertEnkeSkiltUtland: {
+                    id: DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland,
+                    svar: null,
+                },
+                separertEnkeSkiltDato: {
+                    id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
+                    svar: '',
+                },
+                harSamboerNå: {
+                    id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                    svar: null,
+                },
+                hattAnnenSamboerForSøktPeriode: {
+                    id: DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode,
+                    svar: null,
+                },
             },
+            nåværendeSamboer: null,
+            tidligereSamboere: [],
         },
     },
     erNoenAvBarnaFosterbarn: {

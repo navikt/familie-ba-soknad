@@ -63,8 +63,7 @@ const LeggTilBarnModal: React.FC<{
         success && settModalÅpen(false);
     };
 
-    const skalViseIdentFeil =
-        skjema.visFeilmeldinger && skjema.felter.harBarnetFåttIdNummer.verdi !== ESvar.NEI;
+    const skalViseIdentFeil = skjema.visFeilmeldinger && harBarnetFåttIdNummer.verdi !== ESvar.NEI;
 
     const identInputProps = skjema.felter.ident.hentNavInputProps(skalViseIdentFeil);
 
@@ -92,13 +91,7 @@ const LeggTilBarnModal: React.FC<{
      * siden den interne useEffecten nullstiller til initiell FeltState, som innebærer
      * valideringsstatus satt til IKKE_VALIDERT.
      */
-    useEffect(() => {
-        harBarnetFåttIdNummer.validerOgSettFelt(ESvar.JA);
-    }, [harBarnetFåttIdNummer.erSynlig]);
 
-    useEffect(() => {
-        navnetErUbestemt.validerOgSettFelt(ESvar.NEI);
-    }, [navnetErUbestemt.erSynlig]);
     return (
         <StyledModal
             isOpen={modalÅpen}
