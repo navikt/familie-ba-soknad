@@ -11,40 +11,12 @@ import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 import { IRoute } from '../../../context/RoutesContext';
 import { IBarn } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { samletSpørsmålId, samletSpørsmålSpråkTekstId } from '../../../utils/språk';
 import { barnetsNavnValue } from '../../../utils/visning';
-import {
-    OmBarnaDineSpørsmålId,
-    omBarnaDineSpørsmålSpråkId,
-} from '../../SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
-import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
-import {
-    DinLivssituasjonSpørsmålId,
-    dinLivssituasjonSpørsmålSpråkId,
-    SamboerSpørsmålId,
-    samboerSpørsmålSpråkId,
-} from '../../SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
-import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../../SøknadsSteg/VelgBarn/spørsmål';
+import { OmDegSpørsmålId } from '../../SøknadsSteg/OmDeg/spørsmål';
+import { VelgBarnSpørsmålId } from '../../SøknadsSteg/VelgBarn/spørsmål';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { lagRouteFeilRenderer } from './lagRouteFeilRenderer';
-
-const samletSpørsmålSpråkTekstId = {
-    ...omDegSpørsmålSpråkId,
-    ...velgBarnSpørsmålSpråkId,
-    ...omBarnaDineSpørsmålSpråkId,
-    ...omBarnetSpørsmålSpråkId,
-    ...dinLivssituasjonSpørsmålSpråkId,
-    ...samboerSpørsmålSpråkId,
-};
-
-const samletSpørsmålId = {
-    ...OmDegSpørsmålId,
-    ...VelgBarnSpørsmålId,
-    ...OmBarnaDineSpørsmålId,
-    ...OmBarnetSpørsmålsId,
-    ...DinLivssituasjonSpørsmålId,
-    ...SamboerSpørsmålId,
-};
 
 interface Props {
     skjema: ISkjema<SkjemaFeltTyper, string>;

@@ -7,6 +7,7 @@ import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
 } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
+import { VelgBarnSpørsmålId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { INøkkelPar } from './common';
 import { Dokumentasjonsbehov, IDokumentasjon, ISøknadKontraktDokumentasjon } from './dokumentasjon';
@@ -51,6 +52,7 @@ export interface ISøknad {
 
 export type SpørsmålId =
     | OmDegSpørsmålId
+    | VelgBarnSpørsmålId
     | OmBarnaDineSpørsmålId
     | OmBarnetSpørsmålsId
     | DinLivssituasjonSpørsmålId

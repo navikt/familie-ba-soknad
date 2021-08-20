@@ -28,17 +28,12 @@ import {
 } from '../../../typer/søknad';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { isAlpha3Code } from '../../../utils/hjelpefunksjoner';
+import { språkIndexListe } from '../../../utils/språk';
 import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
-import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from '../OmBarnaDine/spørsmål';
-import { omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
-import { omDegSpørsmålSpråkId } from '../OmDeg/spørsmål';
-import {
-    dinLivssituasjonSpørsmålSpråkId,
-    samboerSpørsmålSpråkId,
-} from '../Utvidet-DinLivssituasjon/spørsmål';
+import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
+export type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
 
 export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } => {
     const { axiosRequest, søknad, settInnsendingStatus } = useApp();
@@ -46,13 +41,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
     const { soknadApi } = Miljø();
 
     const språktekstFraSpørsmålId = (spørsmålId: SpørsmålId): string => {
-        for (const språkIndex of [
-            omDegSpørsmålSpråkId,
-            omBarnaDineSpørsmålSpråkId,
-            omBarnetSpørsmålSpråkId,
-            dinLivssituasjonSpørsmålSpråkId,
-            samboerSpørsmålSpråkId,
-        ]) {
+        for (const språkIndex of språkIndexListe) {
             if (spørsmålId in språkIndex) {
                 return intl.formatMessage({ id: språkIndex[spørsmålId] });
             }
