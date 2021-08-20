@@ -24,6 +24,8 @@ const isRunningMacOS = async () => {
 const rebootDockerMachine = async () => {
     console.log('Starter docker på nytt med de nye innstillingene');
     await exec(`osascript -e 'quit app "Docker"'`);
+    // Ta en pause, ellers crasher stuff
+    await exec(`sleep 1`);
     await exec(`open -a Docker`);
 };
 
