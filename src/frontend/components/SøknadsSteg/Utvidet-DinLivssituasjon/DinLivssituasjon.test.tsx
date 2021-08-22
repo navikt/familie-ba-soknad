@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { queryByText, render } from '@testing-library/react';
+import { queryByText, render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
@@ -50,6 +50,7 @@ describe('DinLivssituasjon', () => {
                             svar: null,
                         },
                     },
+                    nåværendeSamboer: null,
                 },
             },
         });
@@ -101,5 +102,34 @@ describe('DinLivssituasjon', () => {
         const alerts: HTMLElement = getByRole('alert');
         const result: HTMLElement | null = queryByText(alerts, 'Har du samboer nå?');
         expect(result).not.toBeNull();
+    });
+
+    it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', () => {
+        const { getByText, getByRole } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        const harSamboerNåSpmFieldset: HTMLElement = getByRole('group', {
+            name: /Har du samboer nå?/i,
+        });
+        const jaKnapp: HTMLElement = within(harSamboerNåSpmFieldset).getByText('Ja');
+        act(() => jaKnapp.click());
+
+        const gåVidereKnapp = getByText('GÅ VIDERE');
+        act(() => gåVidereKnapp.click());
+
+        const feiloppsummering = getByRole('alert');
+
+        const navnFeilmelding = within(feiloppsummering).getByText('Samboerens navn');
+        expect(navnFeilmelding).toBeInTheDocument();
+        const fødselsnummerFeilmelding = within(feiloppsummering).getByText(
+            'Du må oppgi fødselsnummeret til samboeren din (TODO)'
+        );
+        expect(fødselsnummerFeilmelding).toBeInTheDocument();
+        const forholdStartFeilmelding = within(feiloppsummering).getByText(
+            'Når startet samboerforholdet?'
+        );
+        expect(forholdStartFeilmelding).toBeInTheDocument();
     });
 });
