@@ -18,6 +18,7 @@ import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/Skjema
 import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { SøkerMåBrukePDF } from '../../../Felleskomponenter/SøkerMåBrukePDF';
+import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../spørsmål';
 import { useLeggTilBarn } from './useLeggTilBarn';
 
 const StyledInnholdstittel = styled(Innholdstittel)`
@@ -124,7 +125,9 @@ const LeggTilBarnModal: React.FC<{
                         <SkjemaGruppe
                             legend={
                                 <Element>
-                                    <SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />
+                                    <SpråkTekst
+                                        id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.barnetsNavn]}
+                                    />
                                 </Element>
                             }
                         >

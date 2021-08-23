@@ -39,7 +39,11 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                 )}
                 {barn[barnDataKeySpørsmål.andreForelderFnr].svar && (
                     <OppsummeringFelt
-                        tittel={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
+                        tittel={
+                            <SpråkTekst
+                                id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnr]}
+                            />
+                        }
                         søknadsvar={
                             barn[barnDataKeySpørsmål.andreForelderFnr].svar !==
                             AlternativtSvarForInput.UKJENT
@@ -52,7 +56,15 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                 )}
                 {barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar && (
                     <OppsummeringFelt
-                        tittel={<SpråkTekst id={'felles.fødselsdato.label'} />}
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.andreForelderFødselsdato
+                                    ]
+                                }
+                            />
+                        }
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar,
                             formatMessage({
@@ -69,7 +81,11 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
-                            id={'ombarnet.andre-forelder.arbeid-utland.spm'}
+                            id={
+                                omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.andreForelderArbeidUtlandet
+                                ]
+                            }
                             values={{ navn: barnetsNavnValue(barn, intl) }}
                         />
                     }
@@ -78,7 +94,13 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                 {barn[barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand].svar && (
                     <OppsummeringFelt
                         tittel={
-                            <SpråkTekst id={'ombarnet.andre-forelder.arbeid-utland.land.spm'} />
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
+                                    ]
+                                }
+                            />
                         }
                         søknadsvar={landkodeTilSpråk(
                             barn[barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand].svar,
@@ -91,7 +113,11 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
-                            id={'ombarnet.andre-forelder.utenlandspensjon.spm'}
+                            id={
+                                omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.andreForelderPensjonUtland
+                                ]
+                            }
                             values={{ navn: barnetsNavnValue(barn, intl) }}
                         />
                     }
@@ -101,7 +127,11 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
-                                id={'ombarnet.andre-forelder.utenlandspensjon.land.spm'}
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand
+                                    ]
+                                }
                                 values={{ navn: barnetsNavnValue(barn, intl) }}
                             />
                         }
