@@ -11,7 +11,7 @@ import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 import { IRoute } from '../../../context/RoutesContext';
 import { IBarn } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { samletSpørsmålId, samletSpørsmålSpråkTekstId } from '../../../utils/språk';
+import { samletSpørsmålId, samletSpørsmålSpråkTekstId } from '../../../utils/spørsmål';
 import { barnetsNavnValue } from '../../../utils/visning';
 import { OmDegSpørsmålId } from '../../SøknadsSteg/OmDeg/spørsmål';
 import { VelgBarnSpørsmålId } from '../../SøknadsSteg/VelgBarn/spørsmål';

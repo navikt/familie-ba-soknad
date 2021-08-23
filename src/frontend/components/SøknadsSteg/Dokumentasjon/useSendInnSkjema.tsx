@@ -28,7 +28,7 @@ import {
 } from '../../../typer/søknad';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { isAlpha3Code } from '../../../utils/hjelpefunksjoner';
-import { språkIndexListe } from '../../../utils/språk';
+import { språkIndexListe } from '../../../utils/spørsmål';
 import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 

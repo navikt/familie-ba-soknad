@@ -10,10 +10,10 @@ import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaF
 import { SamboerSpørsmålId, samboerSpørsmålSpråkId } from './spørsmål';
 import { IDinLivssituasjonFeltTyper } from './useDinLivssituasjon';
 
-const NåværendeSamboerSkjema: React.FC<{
+const SamboerSkjema: React.FC<{
     skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
 }> = ({ skjema }) => {
-    return skjema.felter.harSamboerNå.verdi === ESvar.JA ? (
+    return (
         <KomponentGruppe dynamisk>
             <SkjemaFeltInput
                 felt={skjema.felter.nåværendeSamboerNavn}
@@ -47,7 +47,7 @@ const NåværendeSamboerSkjema: React.FC<{
                 labelTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.samboerFraDato]}
             />
         </KomponentGruppe>
-    ) : null;
+    );
 };
 
-export default NåværendeSamboerSkjema;
+export default SamboerSkjema;

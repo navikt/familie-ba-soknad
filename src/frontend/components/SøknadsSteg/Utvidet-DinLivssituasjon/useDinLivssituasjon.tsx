@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
-import { idnr } from '@navikt/fnrvalidator';
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import { DatoMedUkjent } from '../../../typer/person';
-import { ESivilstand } from '../../../typer/person';
+import {
+    AlternativtSvarForInput,
+    barnDataKeySpørsmål,
+    DatoMedUkjent,
+    ESivilstand,
+    ISamboer,
+} from '../../../typer/person';
 import { validerDato } from '../../../utils/dato';
+import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import useInputFeltMedUkjent from '../OmBarnet/useInputFeltMedUkjent';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../OmDeg/useDatovelgerFeltMedJaNeiAvhengighet';
 import { SamboerSpørsmålId } from './spørsmål';
 import { Årsak } from './types-and-utilities';
@@ -87,7 +93,7 @@ export const useDinLivssituasjon = (): {
 
     const navn = useFelt<string>({
         feltId: SamboerSpørsmålId.navn,
-        verdi: '',
+        verdi: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
         valideringsfunksjon: (felt: FeltState<string>) => {
             return felt.verdi !== ''
                 ? ok(felt)
@@ -97,47 +103,77 @@ export const useDinLivssituasjon = (): {
         skalFeltetVises: avhengigheter => avhengigheter.harSamboerNå.verdi === ESvar.JA,
     });
 
-    const fnrUkjent: Felt<ESvar> = useFelt<ESvar>({
-        feltId: 'utvidet-nåværende-samboer-kjennerIkkeIdent',
-        verdi: ESvar.VET_IKKE,
+    const fnrUkjentInitiellVerdi = (nåværendeSamboer: ISamboer | null): ESvar => {
+        if (nåværendeSamboer === null) return ESvar.NEI;
+        if (nåværendeSamboer.ident.svar === AlternativtSvarForInput.UKJENT) return ESvar.JA;
+        return ESvar.NEI;
+    };
+    const fnrUkjent = useFelt<ESvar>({
+        feltId: SamboerSpørsmålId.fnrUkjent,
+        verdi: fnrUkjentInitiellVerdi(søker.utvidet.nåværendeSamboer),
         avhengigheter: { harSamboerNå },
         skalFeltetVises: avhengigheter => avhengigheter.harSamboerNå.verdi === ESvar.JA,
+        nullstillVedAvhengighetEndring: false,
     });
-    const fnr = useFelt<string>({
-        feltId: 'utvidet-nåværende-samboer-fnr',
-        verdi: '',
-        avhengigheter: { vetIkkeCheckbox: fnrUkjent, harSamboerNå },
-        skalFeltetVises: avhengigheter => avhengigheter.harSamboerNå.verdi === ESvar.JA,
-        valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
-            if (
-                avhengigheter &&
-                avhengigheter.vetIkkeCheckbox &&
-                avhengigheter.vetIkkeCheckbox.verdi &&
-                avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA
-            ) {
-                return ok(felt);
-            }
-            if (felt.verdi === '') {
-                return feil(
-                    felt,
-                    <SpråkTekst id={'omdeg.nåværendeSamboer.ident.ikkebesvart.feilmelding'} />
-                );
-            }
-            return idnr(felt.verdi).status === 'valid'
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.nåværendeSamboer.fnr.ugyldig.feilmelding'} />);
+    const fnrInitiellVerdi = (nåværendeSamboer: ISamboer | null) => {
+        if (nåværendeSamboer === null) return '';
+        if (nåværendeSamboer.ident.svar === AlternativtSvarForInput.UKJENT) return '';
+        return nåværendeSamboer.ident.svar;
+    };
+    const fnr = useInputFeltMedUkjent(
+        {
+            id: SamboerSpørsmålId.fnr,
+            svar: fnrInitiellVerdi(søker.utvidet.nåværendeSamboer),
         },
-    });
+        fnrUkjent,
+        'omdeg.nåværendeSamboer.ident.ikkebesvart.feilmelding',
+        true,
+        harSamboerNå.verdi === ESvar.JA
+    );
+    // const fnr = useFelt<string>({
+    //     feltId: SamboerSpørsmålId.fnr,
+    //     verdi: fnrInitiellVerdi(søker.utvidet.nåværendeSamboer),
+    //     avhengigheter: { vetIkkeCheckbox: fnrUkjent, harSamboerNå },
+    //     skalFeltetVises: avhengigheter => avhengigheter.harSamboerNå.verdi === ESvar.JA,
+    //     valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
+    //         if (
+    //             avhengigheter &&
+    //             avhengigheter.vetIkkeCheckbox &&
+    //             avhengigheter.vetIkkeCheckbox.verdi &&
+    //             avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA
+    //         ) {
+    //             return ok(felt);
+    //         }
+    //         if (felt.verdi === '') {
+    //             return feil(
+    //                 felt,
+    //                 <SpråkTekst id={'omdeg.nåværendeSamboer.ident.ikkebesvart.feilmelding'} />
+    //             );
+    //         }
+    //         return idnr(felt.verdi).status === 'valid'
+    //             ? ok(felt)
+    //             : feil(
+    //                   felt,
+    //                   <SpråkTekst id={'omdeg.nåværendeSamboer.ident.ugyldig.feilmelding'} />
+    //               );
+    //     },
+    // });
 
+    const settKjennerIkkeFødselsdatoInitialValue = (nåværendeSamboer: ISamboer | null): ESvar => {
+        if (nåværendeSamboer === null) return ESvar.VET_IKKE;
+        if (nåværendeSamboer.fødselsdato.svar === '') return ESvar.JA;
+        return ESvar.NEI;
+    };
     const kjennerIkkeFødselsdato = useFelt<ESvar>({
-        feltId: 'utvidet-nåværende-samboer-kjennerIkkeFødselsdato',
-        verdi: ESvar.VET_IKKE,
+        feltId: SamboerSpørsmålId.fødselsdatoUkjent,
+        verdi: settKjennerIkkeFødselsdatoInitialValue(søker.utvidet.nåværendeSamboer),
         avhengigheter: { fnrUkjent },
         skalFeltetVises: avhengigheter => avhengigheter.fnrUkjent.verdi === ESvar.JA,
+        nullstillVedAvhengighetEndring: false,
     });
     const fødselsdato = useFelt<string>({
-        feltId: 'utvidet-nåværende-samboer-fødselsdato',
-        verdi: '',
+        feltId: SamboerSpørsmålId.fødselsdato,
+        verdi: søker.utvidet.nåværendeSamboer?.fødselsdato.svar || '',
         avhengigheter: { vetIkkeCheckbox: kjennerIkkeFødselsdato, fnrUkjent },
         skalFeltetVises: avhengigheter => avhengigheter.fnrUkjent.verdi === ESvar.JA,
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
@@ -154,12 +190,18 @@ export const useDinLivssituasjon = (): {
     });
 
     const samboerFraDato = useFelt<ISODateString>({
-        feltId: 'utvidet-nåværende-samboer-samboerFraDato',
-        verdi: '',
+        feltId: SamboerSpørsmålId.samboerFraDato,
+        verdi: søker.utvidet.nåværendeSamboer?.samboerFraDato.svar || '',
         avhengigheter: { harSamboerNå },
         skalFeltetVises: avhengigheter => avhengigheter.harSamboerNå.verdi === ESvar.JA,
         valideringsfunksjon: (felt: FeltState<string>) => validerDato(felt, true),
     });
+    //
+    // useEffect(() => {
+    //     if (søker.utvidet.nåværendeSamboer) {
+    //         samboerFraDato.valider();
+    //     }
+    // });
 
     const hattAnnenSamboerForSøktPeriode = useJaNeiSpmFelt(
         søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode
@@ -220,25 +262,34 @@ export const useDinLivssituasjon = (): {
                             svar: skjema.felter.hattAnnenSamboerForSøktPeriode.verdi,
                         },
                     },
-                    nåværendeSamboer: {
-                        ...søknad.søker.utvidet.nåværendeSamboer,
-                        navn: {
-                            id: SamboerSpørsmålId.navn,
-                            svar: skjema.felter.nåværendeSamboerNavn.verdi,
-                        },
-                        ident: {
-                            id: SamboerSpørsmålId.fnr,
-                            svar: skjema.felter.nåværendeSamboerFnr.verdi,
-                        },
-                        fødselsdato: {
-                            id: SamboerSpørsmålId.fødselsdato,
-                            svar: skjema.felter.nåværendeSamboerFødselsdato.verdi,
-                        },
-                        samboerFraDato: {
-                            id: SamboerSpørsmålId.samboerFraDato,
-                            svar: skjema.felter.nåværendeSamboerFraDato.verdi,
-                        },
-                    },
+                    nåværendeSamboer:
+                        harSamboerNå.verdi === ESvar.JA
+                            ? {
+                                  ...søknad.søker.utvidet.nåværendeSamboer,
+                                  navn: {
+                                      id: SamboerSpørsmålId.navn,
+                                      svar: skjema.felter.nåværendeSamboerNavn.verdi,
+                                  },
+                                  ident: {
+                                      id: SamboerSpørsmålId.fnr,
+                                      svar: svarForSpørsmålMedUkjent(
+                                          skjema.felter.nåværendeSamboerFnrUkjent,
+                                          skjema.felter.nåværendeSamboerFnr
+                                      ),
+                                  },
+                                  fødselsdato: {
+                                      id: SamboerSpørsmålId.fødselsdato,
+                                      svar: svarForSpørsmålMedUkjent(
+                                          skjema.felter.nåværendeSamboerFødselsdatoUkjent,
+                                          skjema.felter.nåværendeSamboerFødselsdato
+                                      ),
+                                  },
+                                  samboerFraDato: {
+                                      id: SamboerSpørsmålId.samboerFraDato,
+                                      svar: skjema.felter.nåværendeSamboerFraDato.verdi,
+                                  },
+                              }
+                            : null,
                 },
             },
         });

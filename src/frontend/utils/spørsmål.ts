@@ -1,3 +1,6 @@
+import { ESvar } from '@navikt/familie-form-elements';
+import { Felt } from '@navikt/familie-skjema';
+
 import {
     OmBarnaDineSpørsmålId,
     omBarnaDineSpørsmålSpråkId,
@@ -17,8 +20,10 @@ import {
     VelgBarnSpørsmålId,
     velgBarnSpørsmålSpråkId,
 } from '../components/SøknadsSteg/VelgBarn/spørsmål';
+import { AlternativtSvarForInput } from '../typer/person';
+import { SpørsmålId } from '../typer/søknad';
 
-export const samletSpørsmålId = {
+export const samletSpørsmålId: { [key: string]: SpørsmålId } = {
     ...OmDegSpørsmålId,
     ...VelgBarnSpørsmålId,
     ...OmBarnaDineSpørsmålId,
@@ -27,7 +32,7 @@ export const samletSpørsmålId = {
     ...SamboerSpørsmålId,
 };
 
-export const samletSpørsmålSpråkTekstId = {
+export const samletSpørsmålSpråkTekstId: Record<SpørsmålId, string> = {
     ...omDegSpørsmålSpråkId,
     ...velgBarnSpørsmålSpråkId,
     ...omBarnaDineSpørsmålSpråkId,
@@ -44,3 +49,9 @@ export const språkIndexListe = [
     dinLivssituasjonSpørsmålSpråkId,
     samboerSpørsmålSpråkId,
 ];
+export const svarForSpørsmålMedUkjent = (
+    vetIkkeFelt: Felt<ESvar>,
+    spørsmålFelt: Felt<string>
+): string => {
+    return vetIkkeFelt.verdi === ESvar.JA ? AlternativtSvarForInput.UKJENT : spørsmålFelt.verdi;
+};

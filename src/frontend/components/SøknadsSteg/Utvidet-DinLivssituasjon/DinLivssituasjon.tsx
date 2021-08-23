@@ -11,7 +11,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
-import NåværendeSamboerSkjema from './NåværendeSamboerSkjema';
+import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import { useDinLivssituasjon } from './useDinLivssituasjon';
 
@@ -92,7 +92,7 @@ const DinLivssituasjon: React.FC = () => {
                     }
                 />
             </KomponentGruppe>
-            <NåværendeSamboerSkjema skjema={skjema} />
+            {skjema.felter.harSamboerNå.verdi === ESvar.JA && <SamboerSkjema skjema={skjema} />}
             <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
