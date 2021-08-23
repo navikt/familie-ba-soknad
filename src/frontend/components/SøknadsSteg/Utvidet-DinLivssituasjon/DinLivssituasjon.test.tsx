@@ -8,10 +8,11 @@ import { ESøknadstype, ISøknad } from '../../../typer/søknad';
 import {
     silenceConsoleErrors,
     spyOnUseApp,
+    TestProvidere,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import DinLivssituasjon from './DinLivssituasjon';
-import { DinLivssituasjonSpørsmålId } from './spørsmål';
+import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 
 jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),
@@ -81,6 +82,18 @@ describe('DinLivssituasjon', () => {
         );
         expect(result).not.toBeNull();
     });
+    it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', () => {
+        const { queryByText } = render(
+            <TestProvidere>
+                <DinLivssituasjon />
+            </TestProvidere>
+        );
+
+        const spørsmål = queryByText(
+            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
+        );
+        expect(spørsmål).not.toBeInTheDocument();
+    });
 
     it('Viser spørsmål harSamboerNå', () => {
         const { getByText } = render(
@@ -91,6 +104,7 @@ describe('DinLivssituasjon', () => {
         const result = getByText('Har du samboer nå?');
         expect(result).toBeDefined();
     });
+
     it('Viser feilmelding med spørsmål tittel når ikke utfylt', () => {
         const { getByText, getByRole } = render(
             <TestProvidereMedEkteTekster>

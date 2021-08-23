@@ -16,7 +16,8 @@
     "test": "jest",
     "start": "NODE_ENV=production node --es-module-specifier-resolution=node build/backend/server.js",
     "clean": "rm -rf dist build",
-    "typecheck": "tsc --noEmit -p src/frontend/tsconfig.json"
+    "typecheck": "tsc --noEmit -p src/frontend/tsconfig.json",
+    "setup:docker:env": "node dockerstuff/dcp-configurator.js"
   },
   "jest": {
     "roots": [
@@ -89,7 +90,7 @@
   "dependencies": {
     "@babel/core": "7.12.3",
     "@navikt/ds-icons": "^0.3.2",
-    "@navikt/familie-form-elements": "^3.1.0",
+    "@navikt/familie-form-elements": "^3.2.0",
     "@navikt/familie-typer": "^3.0.13",
     "@navikt/fnrvalidator": "^1.1.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",

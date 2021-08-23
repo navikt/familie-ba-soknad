@@ -1,0 +1,62 @@
+diff --git a/pom.xml b/pom.xml
+index b7db0b9..b90ce00 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -111,12 +111,6 @@
+             <version>${mockk.version}</version>
+             <scope>test</scope>
+         </dependency>
+-        <dependency>
+-            <groupId>no.nav.security</groupId>
+-            <artifactId>token-validation-test-support</artifactId>
+-            <version>${token-validation-spring.version}</version>
+-            <scope>test</scope>
+-        </dependency>
+         <dependency>
+             <groupId>org.jetbrains.kotlin</groupId>
+             <artifactId>kotlin-test</artifactId>
+diff --git a/src/main/resources/application-lokal.yaml b/src/main/resources/application-lokal.yaml
+index d5a69f0..4330b0a 100644
+--- a/src/main/resources/application-lokal.yaml
++++ b/src/main/resources/application-lokal.yaml
+@@ -18,14 +18,11 @@ TOKEN_X_PRIVATE_JWK: '{
+ TOKEN_X_CLIENT_ID: dev-local:teamfamilie:familie-ba-soknad-api
+
+ no.nav.security.jwt:
+-  issuer.selvbetjening:
+-    discoveryurl: http://metadata
+-    accepted_audience: aud-localhost
+-    cookie_name: localhost-idtoken
+   client:
+     registration:
+       mottak-clientcredentials:
+-        token-endpoint-url: http://metadata # Uten denne prøver token-support å kalle well-known uri i contructor og krasjer appen
++        token-exchange:
++          audience: dev-local:teamfamilie:familie-ba-mottak
+
+ CREDENTIAL_USERNAME: dummy
+ CREDENTIAL_PASSWORD: dummy
+diff --git a/src/test/kotlin/no/nav/familie/ba/soknad/api/LokalLauncher.kt b/src/test/kotlin/no/nav/familie/ba/soknad/api/LokalLauncher.kt
+index 11a1855..b25c8af 100644
+--- a/src/test/kotlin/no/nav/familie/ba/soknad/api/LokalLauncher.kt
++++ b/src/test/kotlin/no/nav/familie/ba/soknad/api/LokalLauncher.kt
+@@ -1,18 +1,15 @@
+ package no.nav.familie.ba.soknad.api
+
+ import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
+-import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration
+ import org.springframework.boot.SpringApplication
+ import org.springframework.boot.autoconfigure.SpringBootApplication
+-import org.springframework.context.annotation.Import
+
+-@Import(TokenGeneratorConfiguration::class)
+ @SpringBootApplication(scanBasePackages = ["no.nav.familie.ba.soknad.api"])
+ @EnableJwtTokenValidation
+ class LokalLauncher
+
+ fun main(args: Array<String>) {
+     val springApp = SpringApplication(LokalLauncher::class.java)
+-    springApp.setAdditionalProfiles("lokal", "mock-sts", "mock-pdl", "mock-kodeverk", "mock-mottak")
++    springApp.setAdditionalProfiles("lokal", "mock-sts", "mock-pdl", "mock-kodeverk")
+     springApp.run(*args)
+ }

@@ -17,6 +17,7 @@ import {
 
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
+import useFørsteRender from '../../../hooks/useFørsteRender';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
 import { ILokasjon } from '../../../typer/lokasjon';
@@ -108,6 +109,13 @@ export const useOmBarnet = (
             barnISøknad.id !== barn.id &&
             barnISøknad[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
     );
+
+    useFørsteRender(() => {
+        if (barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA) {
+            nullstillAndreForelderFelter();
+            skriftligAvtaleOmDeltBosted.validerOgSettFelt(null);
+        }
+    });
 
     /*---INSTITUSJON---*/
 
