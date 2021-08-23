@@ -1,2 +1,9 @@
 node_modules/
 build/
+dist/
+dockerstuff/
+docker-compose.yml
+.git/
+.idea/
+var/
+*.log
