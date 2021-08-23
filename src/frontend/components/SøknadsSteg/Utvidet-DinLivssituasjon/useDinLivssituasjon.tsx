@@ -16,6 +16,9 @@ import { Årsak } from './types-and-utilities';
 
 export interface IDinLivssituasjonFeltTyper {
     årsak: Årsak | '';
+    separertEnkeSkilt: ESvar | null;
+    separertEnkeSkiltUtland: ESvar | null;
+    separertEnkeSkiltDato: ISODateString;
     harSamboerNå: ESvar | null;
     nåværendeSamboerNavn: string;
     nåværendeSamboerFnr: string;
@@ -23,9 +26,6 @@ export interface IDinLivssituasjonFeltTyper {
     nåværendeSamboerFødselsdato: DatoMedUkjent;
     nåværendeSamboerFødselsdatoUkjent: ESvar;
     nåværendeSamboerFraDato: ISODateString;
-    separertEnkeSkilt: ESvar | null;
-    separertEnkeSkiltUtland: ESvar | null;
-    separertEnkeSkiltDato: ISODateString;
     hattAnnenSamboerForSøktPeriode: ESvar | null;
 }
 
