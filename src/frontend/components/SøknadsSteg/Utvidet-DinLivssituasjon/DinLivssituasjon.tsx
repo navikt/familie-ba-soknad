@@ -92,6 +92,7 @@ const DinLivssituasjon: React.FC = () => {
                     }
                 />
             </KomponentGruppe>
+            <NåværendeSamboerSkjema skjema={skjema} />
             <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
@@ -103,7 +104,6 @@ const DinLivssituasjon: React.FC = () => {
                     }
                 />
             </KomponentGruppe>
-            <NåværendeSamboerSkjema skjema={skjema} />
         </Steg>
     );
 };
