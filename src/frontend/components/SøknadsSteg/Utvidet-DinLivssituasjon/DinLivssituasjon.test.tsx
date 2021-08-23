@@ -67,7 +67,7 @@ describe('DinLivssituasjon', () => {
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        expect(getByText('Din livssituasjon')).toBeInTheDocument();
+        expect(getByText('Livssituasjonen din')).toBeInTheDocument();
     });
 
     it('Stopper fra å gå videre hvis årsak ikke er valgt', () => {
