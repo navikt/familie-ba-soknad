@@ -38,7 +38,7 @@ const TidligereSamboere: React.FC<Props> = ({ skjema }) => {
                 />
             </KomponentGruppe>
             {skjema.felter.hattAnnenSamboerForSøktPeriode.verdi === ESvar.JA && (
-                <>
+                <div aria-live={'polite'}>
                     <Element>
                         <SpråkTekst
                             id={
@@ -60,7 +60,7 @@ const TidligereSamboere: React.FC<Props> = ({ skjema }) => {
                             <SpråkTekst id={'omdeg.leggtilfleresamboere.leggtil'} />
                         </span>
                     </StyledFlatKnapp>
-                </>
+                </div>
             )}
         </>
     );
