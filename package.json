@@ -5,8 +5,8 @@
   "scripts": {
     "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "build_and_serve": "yarn build; yarn start",
-    "start:dev": "yarn clean && concurrently \"npm:dev:*\"",
-    "start:dev:ts-server": "yarn clean && concurrently \"npm:dev:webpack\" \"npm:ts:server\"",
+    "start:dev": "BASE_PATH=/familie/barnetrygd/soknad/ordinaer/ yarn clean && concurrently \"npm:dev:*\"",
+    "start:dev:ts-server": "BASE_PATH=/familie/barnetrygd/soknad/ordinaer/ yarn clean && concurrently \"npm:dev:webpack\" \"npm:ts:server\"",
     "dev:server": "tsc -p tsconfig.backend.json && NODE_ENV=development node --es-module-specifier-resolution=node build/backend/server.js",
     "ts:server": "NODE_ENV=development TS_NODE_PROJECT=tsconfig.backend.json nodemon --exec 'node' --watch src/backend -e ts --es-module-specifier-resolution=node --loader ts-node/esm src/backend/server.ts",
     "dev:webpack": "TS_NODE_PROJECT=src/webpack/tsconfig.json NODE_ENV=development webpack -c src/webpack/webpack.development.config.ts",
@@ -16,7 +16,8 @@
     "test": "jest",
     "start": "NODE_ENV=production node --es-module-specifier-resolution=node build/backend/server.js",
     "clean": "rm -rf dist build",
-    "typecheck": "tsc --noEmit -p src/frontend/tsconfig.json"
+    "typecheck": "tsc --noEmit -p src/frontend/tsconfig.json",
+    "setup:docker:env": "node dockerstuff/dcp-configurator.js"
   },
   "jest": {
     "roots": [
@@ -89,7 +90,7 @@
   "dependencies": {
     "@babel/core": "7.12.3",
     "@navikt/ds-icons": "^0.3.2",
-    "@navikt/familie-form-elements": "^3.1.0",
+    "@navikt/familie-form-elements": "^3.2.0",
     "@navikt/familie-typer": "^3.0.13",
     "@navikt/fnrvalidator": "^1.1.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",

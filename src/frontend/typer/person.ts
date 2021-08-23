@@ -3,6 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { BarnetsId } from '../components/SøknadsSteg/OmBarnaDine/HvilkeBarnCheckboxGruppe';
+import { Årsak } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/types-and-utilities';
 import { ISøknadSpørsmål } from './søknad';
 
 export enum ESivilstand {
@@ -45,6 +46,29 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     arbeidsland: ISøknadSpørsmål<Alpha3Code | ''>;
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | null>;
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    utvidet: {
+        spørsmål: {
+            årsak: ISøknadSpørsmål<Årsak | ''>;
+            separertEnkeSkilt: ISøknadSpørsmål<ESvar | null>;
+            separertEnkeSkiltUtland: ISøknadSpørsmål<ESvar | null>;
+            separertEnkeSkiltDato: ISøknadSpørsmål<ISODateString>;
+            harSamboerNå: ISøknadSpørsmål<ESvar | null>;
+            hattAnnenSamboerForSøktPeriode: ISøknadSpørsmål<ESvar | null>;
+        };
+        nåværendeSamboer: ISamboer | null;
+        tidligereSamboere: ITidligereSamboer[];
+    };
+}
+
+export interface ISamboer {
+    navn: ISøknadSpørsmål<string>;
+    ident: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
+    fødselsdato: ISøknadSpørsmål<DatoMedUkjent>;
+    samboerFraDato: ISøknadSpørsmål<ISODateString>;
+}
+
+export interface ITidligereSamboer extends ISamboer {
+    samboerTilDato: ISøknadSpørsmål<ISODateString>;
 }
 
 export interface IAdresse {

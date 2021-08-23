@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^arkiv/v4$ /index.php [L]

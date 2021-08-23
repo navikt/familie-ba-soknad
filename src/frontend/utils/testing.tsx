@@ -32,6 +32,7 @@ export const spyOnUseApp = søknad => {
     });
     const settInnsendingStatus = jest.fn();
     const axiosRequestMock = jest.fn();
+    const erUtvidet = søknad.søknadstype === 'UTVIDET';
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
 
@@ -45,6 +46,7 @@ export const spyOnUseApp = søknad => {
         innsendingStatus,
         settInnsendingStatus,
         axiosRequest: axiosRequestMock,
+        erUtvidet,
     });
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
 

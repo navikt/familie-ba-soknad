@@ -8,16 +8,16 @@ import { ISkjema } from '@navikt/familie-skjema';
 import { IBarnMedISøknad } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/visning';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
+import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
+import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import SammeSomAnnetBarnRadio from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
-import VetIkkeCheckbox from './VetIkkeCheckbox';
 
 const AndreForelder: React.FC<{
     barn: IBarnMedISøknad;
@@ -46,11 +46,11 @@ const AndreForelder: React.FC<{
                         }
                         disabled={skjema.felter.andreForelderNavnUkjent.verdi === ESvar.JA}
                     />
-                    <VetIkkeCheckbox
-                        labelSpråkId={
+                    <SkjemaCheckbox
+                        labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavnUkjent]
                         }
-                        checkboxUkjentFelt={skjema.felter.andreForelderNavnUkjent}
+                        felt={skjema.felter.andreForelderNavnUkjent}
                     />
                     {skjema.felter.andreForelderFnr.erSynlig && (
                         <KomponentGruppe inline dynamisk>
@@ -62,13 +62,13 @@ const AndreForelder: React.FC<{
                                 }
                                 disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
                             />
-                            <VetIkkeCheckbox
-                                labelSpråkId={
+                            <SkjemaCheckbox
+                                labelSpråkTekstId={
                                     omBarnetSpørsmålSpråkId[
                                         OmBarnetSpørsmålsId.andreForelderFnrUkjent
                                     ]
                                 }
-                                checkboxUkjentFelt={skjema.felter.andreForelderFnrUkjent}
+                                felt={skjema.felter.andreForelderFnrUkjent}
                             />
                         </KomponentGruppe>
                     )}
@@ -86,13 +86,13 @@ const AndreForelder: React.FC<{
                                     skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA
                                 }
                             />
-                            <VetIkkeCheckbox
-                                labelSpråkId={
+                            <SkjemaCheckbox
+                                labelSpråkTekstId={
                                     omBarnetSpørsmålSpråkId[
                                         OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
                                     ]
                                 }
-                                checkboxUkjentFelt={skjema.felter.andreForelderFødselsdatoUkjent}
+                                felt={skjema.felter.andreForelderFødselsdatoUkjent}
                             />
                         </KomponentGruppe>
                     )}

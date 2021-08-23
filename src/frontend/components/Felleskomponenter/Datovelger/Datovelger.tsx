@@ -5,7 +5,7 @@ import { css } from 'styled-components';
 import styled from 'styled-components/macro';
 
 import navFarger from 'nav-frontend-core';
-import { Feilmelding } from 'nav-frontend-typografi';
+import { Feilmelding, Normaltekst } from 'nav-frontend-typografi';
 
 import {
     DatepickerLimitations,
@@ -101,6 +101,11 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     return felt.erSynlig ? (
         <span aria-live={dynamisk ? 'polite' : 'off'}>
             <StyledFamilieDatovelger
+                description={
+                    <Normaltekst>
+                        <SpråkTekst id={'felles.velg-dato.hjelpetekst'} />
+                    </Normaltekst>
+                }
                 allowInvalidDateSelection={false}
                 limitations={hentBegrensninger()}
                 placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}

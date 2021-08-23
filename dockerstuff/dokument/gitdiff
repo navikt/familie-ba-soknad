@@ -1,0 +1,191 @@
+diff --git a/pom.xml b/pom.xml
+index 37c247b..dc288fd 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -190,12 +190,6 @@
+             <version>1.15.3</version>
+             <scope>test</scope>
+         </dependency>
+-        <dependency>
+-            <groupId>no.nav.security</groupId>
+-            <artifactId>token-validation-test-support</artifactId>
+-            <version>${token-validation-spring.version}</version>
+-            <scope>test</scope>
+-        </dependency>
+ 
+         <!-- PDFgen -->
+         <dependency>
+diff --git a/src/test/kotlin/no/nav/familie/dokument/ApiFeilIntegrationTest.kt b/src/test/kotlin/no/nav/familie/dokument/ApiFeilIntegrationTest.kt
+deleted file mode 100644
+index 2dea019..0000000
+--- a/src/test/kotlin/no/nav/familie/dokument/ApiFeilIntegrationTest.kt
++++ /dev/null
+@@ -1,110 +0,0 @@
+-package no.nav.familie.dokument
+-
+-
+-import no.nav.security.token.support.core.JwtTokenConstants
+-import no.nav.security.token.support.core.api.ProtectedWithClaims
+-import no.nav.security.token.support.core.api.Unprotected
+-import no.nav.security.token.support.test.JwtTokenGenerator
+-import org.glassfish.jersey.logging.LoggingFeature
+-import org.junit.jupiter.api.Test
+-import org.junit.jupiter.api.extension.ExtendWith
+-import org.springframework.beans.factory.annotation.Value
+-import org.springframework.boot.test.context.SpringBootTest
+-import org.springframework.context.annotation.Profile
+-import org.springframework.http.MediaType
+-import org.springframework.test.context.ActiveProfiles
+-import org.springframework.test.context.junit.jupiter.SpringExtension
+-import org.springframework.web.bind.annotation.*
+-import javax.ws.rs.client.ClientBuilder
+-import javax.ws.rs.client.Entity
+-import javax.ws.rs.core.Response
+-import kotlin.test.assertEquals
+-
+-@Profile("feil-controller")
+-@RestController
+-@RequestMapping(path = ["/api"], produces = [MediaType.APPLICATION_JSON_VALUE])
+-class FeilController {
+-
+-    @GetMapping("feil")
+-    @Unprotected
+-    fun feil(): Unit = throw RuntimeException("Feil")
+-
+-    @GetMapping("ok")
+-    @ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+-    fun ok(): Map<String, String> = mapOf("a" to "b")
+-
+-    @PostMapping("ok")
+-    @ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+-    fun ok(@RequestBody body: List<String>): Map<String, String> = mapOf("a" to "b")
+-}
+-
+-@ActiveProfiles("dev", "feil-controller")
+-@ExtendWith(SpringExtension::class)
+-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [DevLauncher::class])
+-class ApiFeilIntegrationTest {
+-
+-    @Value("\${local.server.port}")
+-    val port: Int = 0
+-    val contextPath = "/api"
+-    val tokenSubject = "12345678911"
+-
+-    @Test
+-    fun `skal få 200 når autentisert og vi bruker get`() {
+-        val response = webTarget().path("/ok")
+-                .request()
+-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+-                .get()
+-        assertEquals(Response.Status.OK.statusCode, response.status)
+-    }
+-
+-    @Test
+-    fun `skal få 400 når man sender inn feil type objekt, liste i stedet for objekt`() {
+-        val response = webTarget().path("/ok")
+-                .request()
+-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+-                .post(Entity.json("{}"))
+-        assertEquals(Response.Status.BAD_REQUEST.statusCode, response.status)
+-    }
+-
+-    @Test // Tester handleExceptionInternal
+-    fun `skal få 415 når man sender inn feil type Content-Type`() {
+-        val response = webTarget().path("/ok")
+-                .request()
+-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+-                .post(Entity.text("Hei"))
+-        assertEquals(Response.Status.UNSUPPORTED_MEDIA_TYPE.statusCode, response.status)
+-    }
+-
+-    @Test
+-    fun `skal få 401 når ikke autentisert `() {
+-        val response = webTarget().path("/ok")
+-                .request()
+-                .get()
+-        assertEquals(Response.Status.UNAUTHORIZED.statusCode, response.status)
+-    }
+-
+-    @Test
+-    fun `skal få 404 når endepunkt ikke eksisterer`() {
+-        val response = webTarget().path("/eksistererIkke")
+-                .request()
+-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+-                .get()
+-        assertEquals(Response.Status.NOT_FOUND.statusCode, response.status)
+-    }
+-
+-    @Test
+-    fun `skal få 500 når endepunkt kaster feil`() {
+-        val response = webTarget().path("/feil")
+-                .request()
+-                .get()
+-        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.statusCode, response.status)
+-    }
+-
+-    private fun webTarget() = client().target("http://localhost:$port$contextPath")
+-
+-    private fun client() = ClientBuilder.newClient().register(LoggingFeature::class.java)
+-
+-    private fun serializedJWTToken() = JwtTokenGenerator.createSignedJWT(tokenSubject).serialize()
+-
+-}
+-
+diff --git a/src/test/kotlin/no/nav/familie/dokument/DevLauncher.kt b/src/test/kotlin/no/nav/familie/dokument/DevLauncher.kt
+index f352510..f6cd034 100644
+--- a/src/test/kotlin/no/nav/familie/dokument/DevLauncher.kt
++++ b/src/test/kotlin/no/nav/familie/dokument/DevLauncher.kt
+@@ -1,13 +1,10 @@
+ package no.nav.familie.dokument
+ 
+ import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
+-import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration
+ import org.springframework.boot.SpringApplication
+ import org.springframework.boot.autoconfigure.SpringBootApplication
+-import org.springframework.context.annotation.Import
+ 
+ @SpringBootApplication(scanBasePackages = ["no.nav.familie.dokument"])
+-@Import(TokenGeneratorConfiguration::class)
+ @EnableJwtTokenValidation
+ class DevLauncher
+ 
+diff --git a/src/test/kotlin/no/nav/familie/dokument/config/TestStorageConfiguration.kt b/src/test/kotlin/no/nav/familie/dokument/config/TestStorageConfiguration.kt
+index 2fd0566..92c35a0 100644
+--- a/src/test/kotlin/no/nav/familie/dokument/config/TestStorageConfiguration.kt
++++ b/src/test/kotlin/no/nav/familie/dokument/config/TestStorageConfiguration.kt
+@@ -10,7 +10,6 @@ import no.nav.familie.dokument.storage.encryption.EncryptedStorage
+ import no.nav.familie.dokument.storage.encryption.EncryptedStorageConfiguration.Companion.ATTACHMENT_ENCRYPTED_STORAGE
+ import no.nav.familie.dokument.storage.encryption.EncryptedStorageConfiguration.Companion.STONAD_ENCRYPTED_STORAGE
+ import no.nav.familie.dokument.virusscan.VirusScanService
+-import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration
+ import org.springframework.beans.factory.annotation.Autowired
+ import org.springframework.beans.factory.annotation.Qualifier
+ import org.springframework.context.annotation.*
+@@ -19,7 +18,6 @@ import java.io.InputStream
+ 
+ @Profile("dev")
+ @Configuration
+-@Import(TokenGeneratorConfiguration::class)
+ class TestStorageConfiguration {
+ 
+     val lokalStorage: MutableMap<String, ByteArray> = HashMap()
+diff --git a/src/test/resources/application-dev.yaml b/src/test/resources/application-dev.yaml
+index c0a4130..dd23613 100644
+--- a/src/test/resources/application-dev.yaml
++++ b/src/test/resources/application-dev.yaml
+@@ -7,11 +7,9 @@ cors:
+     - "http://localhost:3000"
+ 
+ no.nav.security.jwt:
+-  issuers: selvbetjening
+-  issuer.selvbetjening:
+-    discoveryurl: http://metadata
+-    accepted_audience: aud-localhost
+-    cookie_name: localhost-idtoken
++  issuer.tokenx:
++    discoveryurl: ${TOKEN_X_WELL_KNOWN_URL}
++    accepted_audience: ${TOKEN_X_CLIENT_ID}
+ 
+ FAMILIE_DOKUMENT_STORAGE_ENCRYPTION_PASSWORD: not-a-real-pw
+ FAMILIE_DOKUMENT_FNR_SECRET_SALT: detteErIkkeSaltMenHemmeligSalt
+

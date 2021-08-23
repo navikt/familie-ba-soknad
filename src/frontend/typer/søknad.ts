@@ -3,6 +3,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
+import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { INøkkelPar } from './common';
 import { Dokumentasjonsbehov, IDokumentasjon, ISøknadKontraktDokumentasjon } from './dokumentasjon';
@@ -46,7 +47,7 @@ export interface ISøknad {
 }
 
 export interface ISøknadSpørsmål<T> {
-    id: OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørsmålsId;
+    id: OmDegSpørsmålId | OmBarnaDineSpørsmålId | OmBarnetSpørsmålsId | DinLivssituasjonSpørsmålId;
     svar: T;
 }
 
@@ -79,13 +80,9 @@ export interface ISøknadKontraktBarn {
 }
 
 const hentSøknadstype = () => {
-    if (process.env.NODE_ENV === 'production') {
-        return window.location.pathname.includes('utvidet')
-            ? ESøknadstype.UTVIDET
-            : ESøknadstype.ORDINÆR;
-    } else {
-        return ESøknadstype.UTVIDET;
-    }
+    return window.location.pathname.includes('utvidet')
+        ? ESøknadstype.UTVIDET
+        : ESøknadstype.ORDINÆR;
 };
 
 export const initialStateSøknad: ISøknad = {
@@ -161,7 +158,7 @@ export const initialStateSøknad: ISøknad = {
             svar: null,
         },
         oppholdsland: {
-            id: OmDegSpørsmålId.oppholdsland,
+            id: OmDegSpørsmålId.søkerOppholdsland,
             svar: '',
         },
         oppholdslandDato: {
@@ -199,6 +196,36 @@ export const initialStateSøknad: ISøknad = {
         pensjonsland: {
             id: OmDegSpørsmålId.pensjonsland,
             svar: '',
+        },
+        utvidet: {
+            spørsmål: {
+                årsak: {
+                    id: DinLivssituasjonSpørsmålId.årsak,
+                    svar: '',
+                },
+                separertEnkeSkilt: {
+                    id: DinLivssituasjonSpørsmålId.separertEnkeSkilt,
+                    svar: null,
+                },
+                separertEnkeSkiltUtland: {
+                    id: DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland,
+                    svar: null,
+                },
+                separertEnkeSkiltDato: {
+                    id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
+                    svar: '',
+                },
+                harSamboerNå: {
+                    id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                    svar: null,
+                },
+                hattAnnenSamboerForSøktPeriode: {
+                    id: DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode,
+                    svar: null,
+                },
+            },
+            nåværendeSamboer: null,
+            tidligereSamboere: [],
         },
     },
     erNoenAvBarnaFosterbarn: {

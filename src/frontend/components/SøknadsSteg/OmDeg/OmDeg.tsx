@@ -5,9 +5,9 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
+import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { LandDropdown } from '../../Felleskomponenter/LandDropdown/LandDropdown';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
@@ -76,7 +76,7 @@ const OmDeg: React.FC = () => {
                                 skjema={skjema}
                                 label={
                                     <SpråkTekst
-                                        id={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdsland]}
+                                        id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerOppholdsland]}
                                     />
                                 }
                             />
