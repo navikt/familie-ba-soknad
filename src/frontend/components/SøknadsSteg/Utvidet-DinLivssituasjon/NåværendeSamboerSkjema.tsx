@@ -14,7 +14,7 @@ const NåværendeSamboerSkjema: React.FC<{
     skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
 }> = ({ skjema }) => {
     return skjema.felter.harSamboerNå.verdi === ESvar.JA ? (
-        <KomponentGruppe>
+        <KomponentGruppe dynamisk>
             <SkjemaFeltInput
                 felt={skjema.felter.nåværendeSamboerNavn}
                 visFeilmeldinger={skjema.visFeilmeldinger}
