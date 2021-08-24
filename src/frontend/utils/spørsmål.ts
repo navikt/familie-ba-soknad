@@ -53,5 +53,9 @@ export const svarForSpørsmålMedUkjent = (
     vetIkkeFelt: Felt<ESvar>,
     spørsmålFelt: Felt<string>
 ): string => {
-    return vetIkkeFelt.verdi === ESvar.JA ? AlternativtSvarForInput.UKJENT : spørsmålFelt.verdi;
+    if (!spørsmålFelt.erSynlig) {
+        return '';
+    } else {
+        return vetIkkeFelt.verdi === ESvar.JA ? AlternativtSvarForInput.UKJENT : spørsmålFelt.verdi;
+    }
 };

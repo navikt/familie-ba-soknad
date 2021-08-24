@@ -189,7 +189,7 @@ describe('Test av nåværende samboer skjema', () => {
         expect(samboerFraDato.value).toBe('');
     });
 
-    it('med gyldig nåværende samboer på søknaden', () => {
+    it('har alle felter riktig og validert ved gyldig nåværende samboer som initiell verdi fra Søknad.', () => {
         const { container, getByText } = renderDinLivssituasjon(søknadGyldigNåværendeSamboerBase);
         const [
             navn,
