@@ -18,33 +18,37 @@ const SamboerSkjema: React.FC<{
             <SkjemaFeltInput
                 felt={skjema.felter.nåværendeSamboerNavn}
                 visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.navn]}
+                labelSpråkTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerNavn]}
             />
             <SkjemaFeltInput
                 felt={skjema.felter.nåværendeSamboerFnr}
                 visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.fnr]}
+                labelSpråkTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerFnr]}
                 disabled={skjema.felter.nåværendeSamboerFnrUkjent.verdi === ESvar.JA}
                 bredde={'XL'}
             />
             <SkjemaCheckbox
-                labelSpråkTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.fnrUkjent]}
+                labelSpråkTekstId={
+                    samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerFnrUkjent]
+                }
                 felt={skjema.felter.nåværendeSamboerFnrUkjent}
             />
             <Datovelger
                 skjema={skjema}
                 felt={skjema.felter.nåværendeSamboerFødselsdato}
-                labelTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.fødselsdato]}
+                labelTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerFødselsdato]}
                 disabled={skjema.felter.nåværendeSamboerFødselsdatoUkjent.verdi === ESvar.JA}
             />
             <SkjemaCheckbox
-                labelSpråkTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.fødselsdatoUkjent]}
+                labelSpråkTekstId={
+                    samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerFødselsdatoUkjent]
+                }
                 felt={skjema.felter.nåværendeSamboerFødselsdatoUkjent}
             />
             <Datovelger
                 skjema={skjema}
                 felt={skjema.felter.nåværendeSamboerFraDato}
-                labelTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.samboerFraDato]}
+                labelTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerFraDato]}
             />
         </KomponentGruppe>
     );

@@ -4,7 +4,7 @@ import { queryByText, render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
-import { AlternativtSvarForInput, ESivilstand } from '../../../typer/person';
+import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype, ISøknad } from '../../../typer/søknad';
 import {
     silenceConsoleErrors,
@@ -13,12 +13,7 @@ import {
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import DinLivssituasjon from './DinLivssituasjon';
-import {
-    DinLivssituasjonSpørsmålId,
-    dinLivssituasjonSpørsmålSpråkId,
-    SamboerSpørsmålId,
-} from './spørsmål';
-import { useDinLivssituasjon } from './useDinLivssituasjon';
+import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 
 jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),

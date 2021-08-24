@@ -23,7 +23,6 @@ const DinLivssituasjon: React.FC = () => {
         valideringErOk,
         oppdaterSøknad,
     } = useDinLivssituasjon();
-
     return (
         <Steg
             tittel={<SpråkTekst id={'dinlivssituasjon.sidetittel'} />}

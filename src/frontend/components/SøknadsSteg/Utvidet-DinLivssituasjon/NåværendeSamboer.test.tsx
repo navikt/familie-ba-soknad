@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { queryByAttribute, render } from '@testing-library/react';
+import { act, getByRole, getByText, queryByText, render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -13,94 +13,14 @@ import {
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import DinLivssituasjon from './DinLivssituasjon';
+import { getAllNåværendeSamboerFields } from './NåværendeSamboerTestUtils';
 import { DinLivssituasjonSpørsmålId, SamboerSpørsmålId } from './spørsmål';
-import { useDinLivssituasjon } from './useDinLivssituasjon';
-
-const getById = queryByAttribute.bind(null, 'id');
-
-const getNavn = (container: Element) =>
-    getById(container as HTMLElement, 'utvidet-nåværende-samboer-navn') as HTMLInputElement;
-const getFnr = (container: Element) =>
-    getById(container as HTMLElement, 'utvidet-nåværende-samboer-ident') as HTMLInputElement;
-const getFnrUkjent = (container: Element) =>
-    getById(container as HTMLElement, 'utvidet-nåværende-samboer-identUkjent') as HTMLInputElement;
-const getFødselsdato = (container: Element) =>
-    getById(container as HTMLElement, 'utvidet-nåværende-samboer-fødselsdato') as HTMLInputElement;
-const getFødselsdatoUkjent = (container: Element) =>
-    getById(
-        container as HTMLElement,
-        'utvidet-nåværende-samboer-fødselsdatoUkjent'
-    ) as HTMLInputElement;
-const getSamboerFraDato = (container: Element) =>
-    getById(
-        container as HTMLElement,
-        'utvidet-nåværende-samboer-samboerFraDato'
-    ) as HTMLInputElement;
-
-const getAllNåværendeSamboerFields = (container: Element) => {
-    return [
-        getNavn(container),
-        getFnr(container),
-        getFnrUkjent(container),
-        getFødselsdato(container),
-        getFødselsdatoUkjent(container),
-        getSamboerFraDato(container),
-    ];
-};
-
-const valideringsStatusIdNavn = 'status-validering-navn';
-const valideringsStatusIdFnr = 'status-validering-fnr';
-const valideringsStatusIdFnrUkjent = 'status-validering-fnr-ukjent';
-const valideringsStatusIdFødselsdato = 'status-validering-fødselsdato';
-const valideringsStatusIdFødselsdatoUkjent = 'status-validering-fødselsdato-ukjent';
-const valideringsStatusIdSamboerFraDato = 'status-validering-samboer-fra-dato';
-
-const getValideringsStatus = container => {
-    return {
-        navnStatus: getById(container, valideringsStatusIdNavn) as HTMLElement,
-        fnrStatus: getById(container, valideringsStatusIdFnr) as HTMLElement,
-        fnrUkjentStatus: getById(container, valideringsStatusIdFnrUkjent) as HTMLElement,
-        fødselsdatoStatus: getById(container, valideringsStatusIdFødselsdato) as HTMLElement,
-        fødselsdatoUkjentStatus: getById(
-            container,
-            valideringsStatusIdFødselsdatoUkjent
-        ) as HTMLElement,
-        samboerFraDatoStatus: getById(container, valideringsStatusIdSamboerFraDato) as HTMLElement,
-    };
-};
-
-const ValideringsStatusOversikt = () => {
-    const { skjema } = useDinLivssituasjon();
-    return (
-        <div>
-            <div id={valideringsStatusIdNavn}>
-                {skjema.felter.nåværendeSamboerNavn.valideringsstatus}
-            </div>
-            <div id={valideringsStatusIdFnr}>
-                {skjema.felter.nåværendeSamboerFnr.valideringsstatus}
-            </div>
-            <div id={valideringsStatusIdFnrUkjent}>
-                {skjema.felter.nåværendeSamboerFnrUkjent.valideringsstatus}
-            </div>
-            <div id={valideringsStatusIdFødselsdato}>
-                {skjema.felter.nåværendeSamboerFødselsdato.valideringsstatus}
-            </div>
-            <div id={valideringsStatusIdFødselsdatoUkjent}>
-                {skjema.felter.nåværendeSamboerFødselsdatoUkjent.valideringsstatus}
-            </div>
-            <div id={valideringsStatusIdSamboerFraDato}>
-                {skjema.felter.nåværendeSamboerFraDato.valideringsstatus}
-            </div>
-        </div>
-    );
-};
 
 const renderDinLivssituasjon = søknad => {
     const søknadMock = mockDeep<ISøknad>(søknad);
     spyOnUseApp(søknadMock);
     return render(
         <TestProvidereMedEkteTekster>
-            <ValideringsStatusOversikt />
             <DinLivssituasjon />
         </TestProvidereMedEkteTekster>
     );
@@ -145,19 +65,19 @@ const søknadGyldigNåværendeSamboerBase = {
             ...søknad.søker.utvidet,
             nåværendeSamboer: {
                 navn: {
-                    id: SamboerSpørsmålId.navn,
+                    id: SamboerSpørsmålId.nåværendeSamboerNavn,
                     svar: 'Initial verdi for samboer sitt navn',
                 },
                 ident: {
-                    id: SamboerSpørsmålId.fnr,
+                    id: SamboerSpørsmålId.nåværendeSamboerFnr,
                     svar: AlternativtSvarForInput.UKJENT,
                 },
                 fødselsdato: {
-                    id: SamboerSpørsmålId.fødselsdato,
+                    id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
                     svar: AlternativtSvarForInput.UKJENT,
                 },
                 samboerFraDato: {
-                    id: SamboerSpørsmålId.samboerFraDato,
+                    id: SamboerSpørsmålId.nåværendeSamboerFraDato,
                     svar: '01.01.2000',
                 },
             },
@@ -171,7 +91,7 @@ describe('Test av nåværende samboer skjema', () => {
     });
 
     it('nåværende samboer null initiell verdi', () => {
-        const { container, debug } = renderDinLivssituasjon(søknad);
+        const { container } = renderDinLivssituasjon(søknad);
         const [
             navn,
             fnr,
@@ -189,8 +109,13 @@ describe('Test av nåværende samboer skjema', () => {
         expect(samboerFraDato.value).toBe('');
     });
 
-    it('har alle felter riktig og validert ved gyldig nåværende samboer som initiell verdi fra Søknad.', () => {
-        const { container, getByText } = renderDinLivssituasjon(søknadGyldigNåværendeSamboerBase);
+    it('har alle felter riktig og validert ved gyldig nåværende samboer som initiell verdi fra Søknad.', async () => {
+        await act(async () => {
+            renderDinLivssituasjon(søknadGyldigNåværendeSamboerBase);
+        });
+
+        const container: HTMLElement = document.body;
+
         const [
             navn,
             fnr,
@@ -199,28 +124,33 @@ describe('Test av nåværende samboer skjema', () => {
             fødselsdatoUkjent,
             samboerFraDato,
         ] = getAllNåværendeSamboerFields(container);
+        const gåVidere = getByText(container, 'GÅ VIDERE');
 
         expect(navn.value).toBe('Initial verdi for samboer sitt navn');
         expect(fnr.value).toBe('');
+        expect(fnr.disabled).toBe(true);
         expect(fnrUkjent.value).toBe(ESvar.JA);
         expect(fødselsdato.value).toBe('');
+        expect(fødselsdato.disabled).toBe(true);
         expect(fødselsdatoUkjent.value).toBe(ESvar.JA);
         expect(samboerFraDato.value).toBe('01.01.2000');
 
-        const {
-            navnStatus,
-            fnrStatus,
-            fnrUkjentStatus,
-            fødselsdatoStatus,
-            fødselsdatoUkjentStatus,
-            samboerFraDatoStatus,
-        } = getValideringsStatus(container);
+        act(() => {
+            fnrUkjent.click();
+        });
 
-        expect(navnStatus.textContent).toBe('OK');
-        expect(fnrStatus.textContent).toBe('OK');
-        expect(fnrUkjentStatus.textContent).toBe('OK');
-        expect(fødselsdato.textContent).toBe('OK');
-        expect(fødselsdatoStatus.textContent).toBe('OK');
-        expect(samboerFraDatoStatus.textContent).toBe('OK');
+        expect(fnr.disabled).toBe(false);
+        expect(fødselsdato).not.toBeInTheDocument();
+        expect(fødselsdatoUkjent).not.toBeInTheDocument();
+
+        act(() => gåVidere.click());
+
+        const feilOppsummering: HTMLElement = getByRole(container, 'alert');
+        const fnrFeil: HTMLElement | null = queryByText(
+            feilOppsummering,
+            'Fødselsnummer eller d-nummer'
+        );
+
+        expect(fnrFeil).toBeInTheDocument();
     });
 });
