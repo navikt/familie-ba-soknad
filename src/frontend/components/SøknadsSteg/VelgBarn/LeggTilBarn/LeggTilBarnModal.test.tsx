@@ -10,7 +10,7 @@ describe('LeggTilBarnModal', function () {
         silenceConsoleErrors();
         const { getByText } = render(
             <TestProvidere>
-                <LeggTilBarnModal modalÅpen={true} settModalÅpen={jest.fn()} />
+                <LeggTilBarnModal erÅpen={true} toggleModal={jest.fn()} />
             </TestProvidere>
         );
         const erFødtJa = getByText(/felles.svaralternativ.ja/);

@@ -45,8 +45,8 @@ test(`Kan legge til barn`, async () => {
                     }}
                 />
                 <LeggTilBarnModal
-                    modalÅpen={åpen.length > 0}
-                    settModalÅpen={() => {
+                    erÅpen={åpen.length > 0}
+                    toggleModal={() => {
                         åpen.pop();
                     }}
                 />
@@ -67,8 +67,8 @@ test(`Kan legge til barn`, async () => {
                     }}
                 />
                 <LeggTilBarnModal
-                    modalÅpen={åpen.length > 0}
-                    settModalÅpen={() => {
+                    erÅpen={åpen.length > 0}
+                    toggleModal={() => {
                         åpen.pop();
                     }}
                 />
@@ -119,8 +119,8 @@ test(`Kan legge til barn`, async () => {
                     }}
                 />
                 <LeggTilBarnModal
-                    modalÅpen={åpen.length > 0}
-                    settModalÅpen={() => {
+                    erÅpen={åpen.length > 0}
+                    toggleModal={() => {
                         åpen.pop();
                     }}
                 />
