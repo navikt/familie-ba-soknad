@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -7,7 +7,6 @@ import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import {
     AlternativtSvarForInput,
-    barnDataKeySpørsmål,
     DatoMedUkjent,
     ESivilstand,
     ISamboer,
@@ -19,6 +18,7 @@ import useInputFeltMedUkjent from '../OmBarnet/useInputFeltMedUkjent';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../OmDeg/useDatovelgerFeltMedJaNeiAvhengighet';
 import { SamboerSpørsmålId } from './spørsmål';
 import { Årsak } from './types-and-utilities';
+import useInputFelt from './useInputFelt';
 
 export interface IDinLivssituasjonFeltTyper {
     årsak: Årsak | '';
@@ -91,17 +91,14 @@ export const useDinLivssituasjon = (): {
 
     const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt(søker.utvidet.spørsmål.harSamboerNå);
 
-    const navn = useFelt<string>({
-        feltId: SamboerSpørsmålId.navn,
-        verdi: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
-        valideringsfunksjon: (felt: FeltState<string>) => {
-            return felt.verdi !== ''
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.samboernå.feilmelding'} />);
+    const navn = useInputFelt(
+        {
+            id: SamboerSpørsmålId.navn,
+            svar: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
         },
-        avhengigheter: { harSamboerNå },
-        skalFeltetVises: avhengigheter => avhengigheter.harSamboerNå.verdi === ESvar.JA,
-    });
+        'omdeg.samboernå.feilmelding',
+        harSamboerNå.verdi === ESvar.JA
+    );
 
     const fnrUkjentInitiellVerdi = (nåværendeSamboer: ISamboer | null): ESvar => {
         if (nåværendeSamboer === null) return ESvar.NEI;
