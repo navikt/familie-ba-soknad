@@ -13,7 +13,7 @@ import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
+import { OmDegPersonopplysningerId, omDegPersonopplysningerSpråkId } from './spørsmål';
 
 export const Personopplysninger: React.FC = () => {
     const [valgtLocale] = useSprakContext();
@@ -41,7 +41,13 @@ export const Personopplysninger: React.FC = () => {
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerStatsborgerskap]} />
+                    <SpråkTekst
+                        id={
+                            omDegPersonopplysningerSpråkId[
+                                OmDegPersonopplysningerId.søkerStatsborgerskap
+                            ]
+                        }
+                    />
                 </Element>
                 <Normaltekst>
                     {søker.statsborgerskap
@@ -54,7 +60,9 @@ export const Personopplysninger: React.FC = () => {
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.sivilstatus]} />
+                    <SpråkTekst
+                        id={omDegPersonopplysningerSpråkId[OmDegPersonopplysningerId.sivilstatus]}
+                    />
                 </Element>
                 <Normaltekst>
                     <SpråkTekst id={hentSivilstatus(søker.sivilstand.type)} />
@@ -63,7 +71,9 @@ export const Personopplysninger: React.FC = () => {
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerAdresse]} />
+                    <SpråkTekst
+                        id={omDegPersonopplysningerSpråkId[OmDegPersonopplysningerId.søkerAdresse]}
+                    />
                 </Element>
                 {søker.adresse ? (
                     genererAdresseVisning(søker.adresse)

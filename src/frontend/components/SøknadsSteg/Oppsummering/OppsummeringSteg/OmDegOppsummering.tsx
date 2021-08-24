@@ -11,7 +11,12 @@ import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
 import { formaterDato } from '../../../../utils/dato';
 import { genererAdresseVisning, landkodeTilSpråk } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../../OmDeg/spørsmål';
+import {
+    OmDegPersonopplysningerId,
+    omDegPersonopplysningerSpråkId,
+    OmDegSpørsmålId,
+    omDegSpørsmålSpråkId,
+} from '../../OmDeg/spørsmål';
 import { useOmdeg } from '../../OmDeg/useOmdeg';
 import { StyledOppsummeringsFeltGruppe } from '../Oppsummering';
 import { OppsummeringFelt } from '../OppsummeringFelt';
@@ -51,7 +56,11 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
-                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerStatsborgerskap]}
+                            id={
+                                omDegPersonopplysningerSpråkId[
+                                    OmDegPersonopplysningerId.søkerStatsborgerskap
+                                ]
+                            }
                         />
                     }
                     søknadsvar={søknad.søker.statsborgerskap
@@ -61,14 +70,28 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         .join(', ')}
                 />
                 <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.sivilstatus]} />}
+                    tittel={
+                        <SpråkTekst
+                            id={
+                                omDegPersonopplysningerSpråkId[
+                                    OmDegPersonopplysningerId.sivilstatus
+                                ]
+                            }
+                        />
+                    }
                     søknadsvar={søknad.søker.sivilstand.type}
                 />
 
                 {søknad.søker.adresse && (
                     <OppsummeringFelt
                         tittel={
-                            <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerAdresse]} />
+                            <SpråkTekst
+                                id={
+                                    omDegPersonopplysningerSpråkId[
+                                        OmDegPersonopplysningerId.søkerAdresse
+                                    ]
+                                }
+                            />
                         }
                         children={genererAdresseVisning(søknad.søker.adresse)}
                     />
