@@ -345,7 +345,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                 ) : (
                     <OppsummeringFelt
                         søknadsvar={formatMessage({
-                            id: 'ombarnet.søker-for-periode.vetikke.spm',
+                            id: omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerIkkeForTidsrom],
                         })}
                     />
                 )}

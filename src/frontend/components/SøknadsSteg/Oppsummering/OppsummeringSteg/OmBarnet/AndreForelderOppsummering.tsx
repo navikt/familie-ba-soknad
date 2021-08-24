@@ -32,7 +32,10 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                             AlternativtSvarForInput.UKJENT
                                 ? barn[barnDataKeySpørsmål.andreForelderNavn].svar
                                 : formatMessage({
-                                      id: 'ombarnet.andre-forelder.navn-ukjent.spm',
+                                      id:
+                                          omBarnetSpørsmålSpråkId[
+                                              OmBarnetSpørsmålsId.andreForelderNavnUkjent
+                                          ],
                                   })
                         }
                     />
@@ -49,7 +52,10 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                             AlternativtSvarForInput.UKJENT
                                 ? barn[barnDataKeySpørsmål.andreForelderFnr].svar
                                 : formatMessage({
-                                      id: 'ombarnet.andre-forelder.fnr-ukjent.spm',
+                                      id:
+                                          omBarnetSpørsmålSpråkId[
+                                              OmBarnetSpørsmålsId.andreForelderFnrUkjent
+                                          ],
                                   })
                         }
                     />

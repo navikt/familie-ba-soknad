@@ -1,4 +1,7 @@
 export enum OmDegSpørsmålId {
+    søkerStatsborgerskap = 'søker-statborgerskap',
+    sivilstatus = 'søker-sivilstatus',
+    søkerAdresse = 'søker-adresse',
     borPåRegistrertAdresse = 'bor-på-registrert-adresse',
     oppholderSegINorge = 'søker-oppholder-seg-i-norge',
     søkerOppholdsland = 'søker-oppholdsland',
@@ -14,6 +17,9 @@ export enum OmDegSpørsmålId {
 }
 
 export const omDegSpørsmålSpråkId: Record<OmDegSpørsmålId, string> = {
+    [OmDegSpørsmålId.søkerStatsborgerskap]: 'omdeg.personopplysninger.statsborgerskap',
+    [OmDegSpørsmålId.sivilstatus]: 'omdeg.personopplysninger.sivilstatus',
+    [OmDegSpørsmålId.søkerAdresse]: 'omdeg.personopplysninger.adresse',
     [OmDegSpørsmålId.borPåRegistrertAdresse]: 'omdeg.borpådenneadressen.spm',
     [OmDegSpørsmålId.oppholderSegINorge]: 'omdeg.opphold-i-norge.spm',
     [OmDegSpørsmålId.søkerOppholdsland]: 'omdeg.opphold-i-norge.land.spm',

@@ -49,7 +49,11 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.søker.ident}
                 />
                 <OppsummeringFelt
-                    tittel={<SpråkTekst id={'omdeg.personopplysninger.statsborgerskap'} />}
+                    tittel={
+                        <SpråkTekst
+                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerStatsborgerskap]}
+                        />
+                    }
                     søknadsvar={søknad.søker.statsborgerskap
                         .map((statsborgerskap: { landkode: Alpha3Code }) =>
                             landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
@@ -57,13 +61,15 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         .join(', ')}
                 />
                 <OppsummeringFelt
-                    tittel={<SpråkTekst id={'omdeg.personopplysninger.sivilstatus'} />}
+                    tittel={<SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.sivilstatus]} />}
                     søknadsvar={søknad.søker.sivilstand.type}
                 />
 
                 {søknad.søker.adresse && (
                     <OppsummeringFelt
-                        tittel={<SpråkTekst id={'omdeg.personopplysninger.adresse'} />}
+                        tittel={
+                            <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerAdresse]} />
+                        }
                         children={genererAdresseVisning(søknad.søker.adresse)}
                     />
                 )}

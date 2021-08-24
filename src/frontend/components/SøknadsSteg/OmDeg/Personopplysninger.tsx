@@ -13,6 +13,7 @@ import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 
 export const Personopplysninger: React.FC = () => {
     const [valgtLocale] = useSprakContext();
@@ -40,7 +41,7 @@ export const Personopplysninger: React.FC = () => {
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={'omdeg.personopplysninger.statsborgerskap'} />
+                    <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerStatsborgerskap]} />
                 </Element>
                 <Normaltekst>
                     {søker.statsborgerskap
@@ -53,7 +54,7 @@ export const Personopplysninger: React.FC = () => {
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={'omdeg.personopplysninger.sivilstatus'} />
+                    <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.sivilstatus]} />
                 </Element>
                 <Normaltekst>
                     <SpråkTekst id={hentSivilstatus(søker.sivilstand.type)} />
@@ -62,7 +63,7 @@ export const Personopplysninger: React.FC = () => {
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={'omdeg.personopplysninger.adresse'} />
+                    <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerAdresse]} />
                 </Element>
                 {søker.adresse ? (
                     genererAdresseVisning(søker.adresse)
