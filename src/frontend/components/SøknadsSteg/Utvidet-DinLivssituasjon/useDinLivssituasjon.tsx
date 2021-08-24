@@ -4,6 +4,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import {
     AlternativtSvarForInput,
@@ -18,7 +19,6 @@ import useInputFeltMedUkjent from '../OmBarnet/useInputFeltMedUkjent';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../OmDeg/useDatovelgerFeltMedJaNeiAvhengighet';
 import { SamboerSpørsmålId } from './spørsmål';
 import { Årsak } from './types-and-utilities';
-import useInputFelt from './useInputFelt';
 
 export interface IDinLivssituasjonFeltTyper {
     årsak: Årsak | '';

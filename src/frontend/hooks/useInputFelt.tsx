@@ -2,8 +2,8 @@ import React from 'react';
 
 import { feil, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
-import { ISøknadSpørsmål } from '../../../typer/søknad';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { ISøknadSpørsmål } from '../typer/søknad';
 
 const useInputFelt = (
     søknadsfelt: ISøknadSpørsmål<string>,
