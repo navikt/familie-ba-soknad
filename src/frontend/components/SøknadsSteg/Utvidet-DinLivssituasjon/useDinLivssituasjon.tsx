@@ -157,8 +157,8 @@ export const useDinLivssituasjon = (): {
     // });
 
     const settKjennerIkkeFødselsdatoInitialValue = (nåværendeSamboer: ISamboer | null): ESvar => {
-        if (nåværendeSamboer === null) return ESvar.VET_IKKE;
-        if (nåværendeSamboer.fødselsdato.svar === '') return ESvar.JA;
+        if (nåværendeSamboer === null) return ESvar.NEI;
+        if (nåværendeSamboer.fødselsdato.svar === AlternativtSvarForInput.UKJENT) return ESvar.JA;
         return ESvar.NEI;
     };
     const kjennerIkkeFødselsdato = useFelt<ESvar>({
@@ -168,9 +168,14 @@ export const useDinLivssituasjon = (): {
         skalFeltetVises: avhengigheter => avhengigheter.fnrUkjent.verdi === ESvar.JA,
         nullstillVedAvhengighetEndring: false,
     });
+    const getInitialFødselsdato = (nåværendeSamboer: ISamboer | null) => {
+        if (nåværendeSamboer === null) return '';
+        if (nåværendeSamboer.fødselsdato.svar === AlternativtSvarForInput.UKJENT) return '';
+        return nåværendeSamboer.fødselsdato.svar;
+    };
     const fødselsdato = useFelt<string>({
         feltId: SamboerSpørsmålId.fødselsdato,
-        verdi: søker.utvidet.nåværendeSamboer?.fødselsdato.svar || '',
+        verdi: getInitialFødselsdato(søker.utvidet.nåværendeSamboer),
         avhengigheter: { vetIkkeCheckbox: kjennerIkkeFødselsdato, fnrUkjent },
         skalFeltetVises: avhengigheter => avhengigheter.fnrUkjent.verdi === ESvar.JA,
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
@@ -193,12 +198,6 @@ export const useDinLivssituasjon = (): {
         skalFeltetVises: avhengigheter => avhengigheter.harSamboerNå.verdi === ESvar.JA,
         valideringsfunksjon: (felt: FeltState<string>) => validerDato(felt, true),
     });
-    //
-    // useEffect(() => {
-    //     if (søker.utvidet.nåværendeSamboer) {
-    //         samboerFraDato.valider();
-    //     }
-    // });
 
     const hattAnnenSamboerForSøktPeriode = useJaNeiSpmFelt(
         søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode
