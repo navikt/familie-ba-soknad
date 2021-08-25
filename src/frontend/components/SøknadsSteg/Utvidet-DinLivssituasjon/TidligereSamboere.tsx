@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styled from 'styled-components/macro';
 
@@ -6,29 +6,23 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 
 import { AddCircle } from '@navikt/ds-icons';
-import { ISkjema } from '@navikt/familie-skjema';
 
 import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
-import { IDinLivssituasjonFeltTyper } from './useDinLivssituasjon';
 
 const StyledFlatKnapp = styled(Flatknapp)`
     margin-top: 0.5rem;
 `;
 
 interface Props {
-    skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
+    leggTilTidligereSamboer: () => void;
+    tidligereSamboere: string[];
 }
 
-const TidligereSamboere: React.FC<Props> = ({ skjema }) => {
-    const [tidligereSamboere, settTidligereSamboere] = useState<string[]>([]);
+const TidligereSamboere: React.FC<Props> = ({ leggTilTidligereSamboer, tidligereSamboere }) => {
     const { toggleModal, erÅpen } = useModal();
-
-    const leggTilTidligereSamboerIntern = () => {
-        settTidligereSamboere(prevState => prevState.concat('ny samboer'));
-    };
 
     return (
         <>
@@ -82,8 +76,7 @@ const TidligereSamboere: React.FC<Props> = ({ skjema }) => {
                 erÅpen={erÅpen}
                 toggleModal={toggleModal}
                 onSubmitCallback={() => {
-                    console.log('jeg kjører');
-                    leggTilTidligereSamboerIntern();
+                    leggTilTidligereSamboer();
                     toggleModal();
                 }}
                 valideringErOk={() => true} //TODO

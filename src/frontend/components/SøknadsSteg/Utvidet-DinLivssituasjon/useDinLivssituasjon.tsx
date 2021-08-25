@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -40,9 +40,12 @@ export const useDinLivssituasjon = (): {
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
+    leggTilTidligereSamboer: () => void;
+    tidligereSamboere: string[];
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
+    const [tidligereSamboere, settTidligereSamboere] = useState<string[]>([]); // TODO: endre typen til ITidligereSamboer når vi kobler på skjema
 
     const årsak = useFelt<Årsak | ''>({
         feltId: søker.utvidet.spørsmål.årsak.id,
@@ -199,6 +202,10 @@ export const useDinLivssituasjon = (): {
         skjemanavn: 'dinlivssituasjon',
     });
 
+    const leggTilTidligereSamboer = () => {
+        settTidligereSamboere(prevState => prevState.concat('ny samboer')); //TODO legge til av typen ITidligereSamboer i stedet for string
+    };
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
@@ -268,5 +275,7 @@ export const useDinLivssituasjon = (): {
         validerAlleSynligeFelter,
         valideringErOk,
         oppdaterSøknad,
+        tidligereSamboere,
+        leggTilTidligereSamboer,
     };
 };

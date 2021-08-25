@@ -23,6 +23,8 @@ const DinLivssituasjon: React.FC = () => {
         validerFelterOgVisFeilmelding,
         valideringErOk,
         oppdaterSøknad,
+        tidligereSamboere,
+        leggTilTidligereSamboer,
     } = useDinLivssituasjon();
     return (
         <Steg
@@ -93,18 +95,10 @@ const DinLivssituasjon: React.FC = () => {
                 />
             </KomponentGruppe>
             {skjema.felter.harSamboerNå.verdi === ESvar.JA && <SamboerSkjema skjema={skjema} />}
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.hattAnnenSamboerForSøktPeriode}
-                    spørsmålTekstId={
-                        dinLivssituasjonSpørsmålSpråkId[
-                            DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
-                        ]
-                    }
-                />
-            </KomponentGruppe>
-            <TidligereSamboere skjema={skjema} />
+            <TidligereSamboere
+                tidligereSamboere={tidligereSamboere}
+                leggTilTidligereSamboer={leggTilTidligereSamboer}
+            />
         </Steg>
     );
 };
