@@ -1,13 +1,7 @@
-export enum OmDegPersonopplysningerId {
-    søkerStatsborgerskap = 'søker-statborgerskap',
-    sivilstatus = 'søker-sivilstatus',
-    søkerAdresse = 'søker-adresse',
-}
-
-export const omDegPersonopplysningerSpråkId: Record<OmDegPersonopplysningerId, string> = {
-    [OmDegPersonopplysningerId.søkerStatsborgerskap]: 'omdeg.personopplysninger.statsborgerskap',
-    [OmDegPersonopplysningerId.sivilstatus]: 'omdeg.personopplysninger.sivilstatus',
-    [OmDegPersonopplysningerId.søkerAdresse]: 'omdeg.personopplysninger.adresse',
+export const omDegPersonopplysningerSpråkId = {
+    søkerStatsborgerskap: 'omdeg.personopplysninger.statsborgerskap',
+    søkerSivilstatus: 'omdeg.personopplysninger.sivilstatus',
+    søkerAdresse: 'omdeg.personopplysninger.adresse',
 };
 
 export enum OmDegSpørsmålId {

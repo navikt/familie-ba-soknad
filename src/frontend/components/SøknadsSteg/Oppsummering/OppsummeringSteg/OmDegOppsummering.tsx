@@ -12,7 +12,6 @@ import { formaterDato } from '../../../../utils/dato';
 import { genererAdresseVisning, landkodeTilSpråk } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
-    OmDegPersonopplysningerId,
     omDegPersonopplysningerSpråkId,
     OmDegSpørsmålId,
     omDegSpørsmålSpråkId,
@@ -54,15 +53,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.søker.ident}
                 />
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                omDegPersonopplysningerSpråkId[
-                                    OmDegPersonopplysningerId.søkerStatsborgerskap
-                                ]
-                            }
-                        />
-                    }
+                    tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />}
                     søknadsvar={søknad.søker.statsborgerskap
                         .map((statsborgerskap: { landkode: Alpha3Code }) =>
                             landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
@@ -70,29 +61,13 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         .join(', ')}
                 />
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                omDegPersonopplysningerSpråkId[
-                                    OmDegPersonopplysningerId.sivilstatus
-                                ]
-                            }
-                        />
-                    }
+                    tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />}
                     søknadsvar={søknad.søker.sivilstand.type}
                 />
 
                 {søknad.søker.adresse && (
                     <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omDegPersonopplysningerSpråkId[
-                                        OmDegPersonopplysningerId.søkerAdresse
-                                    ]
-                                }
-                            />
-                        }
+                        tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
                         children={genererAdresseVisning(søknad.søker.adresse)}
                     />
                 )}
