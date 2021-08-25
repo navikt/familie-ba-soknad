@@ -11,7 +11,9 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
+import TidligereSamboere from './TidligereSamboere';
 import { useDinLivssituasjon } from './useDinLivssituasjon';
 
 const DinLivssituasjon: React.FC = () => {
@@ -21,8 +23,9 @@ const DinLivssituasjon: React.FC = () => {
         validerFelterOgVisFeilmelding,
         valideringErOk,
         oppdaterSøknad,
+        tidligereSamboere,
+        leggTilTidligereSamboer,
     } = useDinLivssituasjon();
-
     return (
         <Steg
             tittel={<SpråkTekst id={'dinlivssituasjon.sidetittel'} />}
@@ -91,17 +94,11 @@ const DinLivssituasjon: React.FC = () => {
                     }
                 />
             </KomponentGruppe>
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.hattAnnenSamboerForSøktPeriode}
-                    spørsmålTekstId={
-                        dinLivssituasjonSpørsmålSpråkId[
-                            DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
-                        ]
-                    }
-                />
-            </KomponentGruppe>
+            {skjema.felter.harSamboerNå.verdi === ESvar.JA && <SamboerSkjema skjema={skjema} />}
+            <TidligereSamboere
+                tidligereSamboere={tidligereSamboere}
+                leggTilTidligereSamboer={leggTilTidligereSamboer}
+            />
         </Steg>
     );
 };

@@ -11,35 +11,12 @@ import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 import { IRoute } from '../../../context/RoutesContext';
 import { IBarn } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { samletSpørsmålId, samletSpørsmålSpråkTekstId } from '../../../utils/spørsmål';
 import { barnetsNavnValue } from '../../../utils/visning';
-import {
-    OmBarnaDineSpørsmålId,
-    omBarnaDineSpørsmålSpråkId,
-} from '../../SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
-import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../../SøknadsSteg/OmDeg/spørsmål';
-import {
-    DinLivssituasjonSpørsmålId,
-    dinLivssituasjonSpørsmålSpråkId,
-} from '../../SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
+import { OmDegSpørsmålId } from '../../SøknadsSteg/OmDeg/spørsmål';
 import { VelgBarnSpørsmålId } from '../../SøknadsSteg/VelgBarn/spørsmål';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { lagRouteFeilRenderer } from './lagRouteFeilRenderer';
-
-const samletSpørsmålSpråkTekstId = {
-    ...omDegSpørsmålSpråkId,
-    ...omBarnaDineSpørsmålSpråkId,
-    ...omBarnetSpørsmålSpråkId,
-    ...dinLivssituasjonSpørsmålSpråkId,
-};
-
-const samletSpørsmålId = {
-    ...OmDegSpørsmålId,
-    ...VelgBarnSpørsmålId,
-    ...OmBarnaDineSpørsmålId,
-    ...OmBarnetSpørsmålsId,
-    ...DinLivssituasjonSpørsmålId,
-};
 
 interface Props {
     skjema: ISkjema<SkjemaFeltTyper, string>;

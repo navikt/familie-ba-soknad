@@ -1581,10 +1581,10 @@
     nav-frontend-typografi "^3.1.1"
     react-select "^4.0.13"
 
-"@navikt/familie-http@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-http/-/familie-http-1.0.4.tgz#81d9eeb6b7421d9119d3585919c0e8c0cec4b7ca"
-  integrity sha512-bYrZlFcskQYF9xUzY3zJvuhPge5LE7ePxL64qSZXSV7F27nMKplBlkh9RgdIWyBvvwzFgNQmgIFJbbI99RQ53g==
+"@navikt/familie-http@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@navikt/familie-http/-/familie-http-1.0.5.tgz#94831ecf83dfd196c81572ca311c0af683b57516"
+  integrity sha512-0KE0IG4grjDXHVC0ZRbpA43q/hoCotdKDIWzGpT8glKM57utUIbP7K8pmWN/6bt3pX44SDf7KzwhN3GJj1ZWqg==
   dependencies:
     "@navikt/familie-typer" "^3.0.13"
     "@sentry/core" "^6.2.1"
@@ -1597,12 +1597,12 @@
   dependencies:
     "@navikt/familie-typer" "^3.0.13"
 
-"@navikt/familie-skjema@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-skjema/-/familie-skjema-1.1.2.tgz#45bd0991efc991372766c6907cc1b9407fa36be5"
-  integrity sha512-CIE5uxYQMx8/EdKS9HL1JkqWj6I0OrBgwf9x582kMpcf2vcbv7EfWJQ6quBtEFU2UpFHhwIAeZe1j2lAYHZGEA==
+"@navikt/familie-skjema@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@navikt/familie-skjema/-/familie-skjema-1.1.6.tgz#24ed2bbf0b31087a9fce1619e845ace8773f4e4b"
+  integrity sha512-MDhZI5m6GprcxJJYY51to3EKrA9IvcPrk86vRokWerPit6uz1DdMeN7LgEqebsTKT9VKQZ6hK5b7IgFK6puXoA==
   dependencies:
-    "@navikt/familie-http" "^1.0.4"
+    "@navikt/familie-http" "^1.0.5"
     "@navikt/familie-typer" "^3.0.13"
     "@types/deep-equal" "^1.0.1"
     deep-equal "^2.0.5"

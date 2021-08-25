@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Masonry from 'react-masonry-css';
 import styled from 'styled-components/macro';
@@ -6,6 +6,7 @@ import styled from 'styled-components/macro';
 import { useApp } from '../../../context/AppContext';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import Barnekort from './Barnekort/Barnekort';
@@ -29,6 +30,7 @@ const LenkeContainer = styled.div`
 
 const VelgBarn: React.FC = () => {
     const { søknad } = useApp();
+    const { toggleModal, erÅpen } = useModal();
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -39,15 +41,9 @@ const VelgBarn: React.FC = () => {
         fjernBarn,
     } = useVelgBarn();
 
-    const [modalÅpen, settModalÅpen] = useState<boolean>(false);
-
     const barnFraRespons = søknad.søker.barn;
     const barnManueltLagtTil = søknad.barnRegistrertManuelt;
     const barn = barnFraRespons.concat(barnManueltLagtTil);
-
-    const toggleModal = () => {
-        settModalÅpen(!modalÅpen);
-    };
 
     return (
         <>
@@ -98,7 +94,7 @@ const VelgBarn: React.FC = () => {
                     />
                 </LenkeContainer>
             </Steg>
-            <LeggTilBarnModal modalÅpen={modalÅpen} settModalÅpen={settModalÅpen} />
+            <LeggTilBarnModal erÅpen={erÅpen} toggleModal={toggleModal} />
         </>
     );
 };
