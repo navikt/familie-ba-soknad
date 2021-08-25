@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components/macro';
 
@@ -6,12 +6,10 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 
 import { AddCircle } from '@navikt/ds-icons';
-import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
-import { ITidligereSamboer } from '../../../typer/person';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import { IDinLivssituasjonFeltTyper } from './useDinLivssituasjon';
@@ -25,56 +23,29 @@ interface Props {
 }
 
 const TidligereSamboere: React.FC<Props> = ({ skjema }) => {
-    const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>([]);
+    const [tidligereSamboere, settTidligereSamboere] = useState<string[]>([]);
+    const { toggleModal, erÅpen } = useModal();
 
-    useEffect(() => {
-        if (skjema.felter.hattAnnenSamboerForSøktPeriode.verdi === ESvar.NEI) {
-            settTidligereSamboere([]);
-        } else {
-            populerInitiellTidligereSamboerListe();
-        }
-    }, [skjema.felter.hattAnnenSamboerForSøktPeriode.verdi]);
-
-    const populerInitiellTidligereSamboerListe = () => {
-        settTidligereSamboere([nySamboer()]);
-    };
-
-    const nySamboer = (): ITidligereSamboer => {
-        return {
-            fødselsdato: { id: '', svar: '' },
-            ident: { id: '', svar: '' },
-            navn: { id: '', svar: 'navn' },
-            samboerFraDato: { id: '', svar: '' },
-            samboerTilDato: { id: '', svar: '' },
-        };
-    };
-
-    const leggTilTidligereSamboer = () => {
-        settTidligereSamboere(prevState => prevState.concat(nySamboer()));
+    const leggTilTidligereSamboerIntern = () => {
+        settTidligereSamboere(prevState => prevState.concat('ny samboer'));
     };
 
     return (
         <>
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.hattAnnenSamboerForSøktPeriode}
-                    spørsmålTekstId={
+            <Element>
+                <SpråkTekst
+                    id={
                         dinLivssituasjonSpørsmålSpråkId[
                             DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
                         ]
                     }
                 />
-            </KomponentGruppe>
-            {skjema.felter.hattAnnenSamboerForSøktPeriode.verdi === ESvar.JA && (
-                <div aria-live={'polite'}>
-                    {tidligereSamboere.map((samboer: ITidligereSamboer, index: number) => (
-                        <div key={index}>
-                            DETTE ER EN TIDLIGERE SAMBOER NUMMER {index} med navn
-                            {samboer.navn.svar}
-                        </div>
-                    ))}
-
+            </Element>
+            {tidligereSamboere[0] && (
+                <div>DETTE ER EN PLACEHOLDER FOR FØRSTE TIDLIGERE SAMBOER MED NUMMER 0</div>
+            )}
+            {tidligereSamboere.length > 0 && (
+                <>
                     <Element>
                         <SpråkTekst
                             id={
@@ -84,20 +55,41 @@ const TidligereSamboere: React.FC<Props> = ({ skjema }) => {
                             }
                         />
                     </Element>
-                    <StyledFlatKnapp
-                        htmlType={'button'}
-                        kompakt
-                        onClick={() => {
-                            leggTilTidligereSamboer();
-                        }}
-                    >
-                        <AddCircle />
-                        <span>
-                            <SpråkTekst id={'omdeg.leggtilfleresamboere.leggtil'} />
-                        </span>
-                    </StyledFlatKnapp>
-                </div>
+                    {tidligereSamboere.slice(1).map((_samboer: string, index: number) => (
+                        <div key={index}>
+                            DETTE ER EN PLACEHOLDER FOR FØRSTE TIDLIGERE SAMBOER MED NUMMER
+                            {index + 1}
+                        </div>
+                    ))}
+                </>
             )}
+            <StyledFlatKnapp
+                htmlType={'button'}
+                kompakt
+                onClick={() => {
+                    toggleModal();
+                }}
+            >
+                <AddCircle />
+                <span>
+                    <SpråkTekst id={'omdeg.leggtilfleresamboere.leggtil'} />
+                </span>
+            </StyledFlatKnapp>
+
+            <SkjemaModal
+                modalTittelSpråkId={'Her kommer en tittel på å legge til samboer'}
+                submitKnappSpråkId={'Her kommer en tekst'}
+                erÅpen={erÅpen}
+                toggleModal={toggleModal}
+                onSubmitCallback={() => {
+                    console.log('jeg kjører');
+                    leggTilTidligereSamboerIntern();
+                    toggleModal();
+                }}
+                valideringErOk={() => true} //TODO
+            >
+                <p>HER KOMMER DET EN FORM</p>
+            </SkjemaModal>
         </>
     );
 };

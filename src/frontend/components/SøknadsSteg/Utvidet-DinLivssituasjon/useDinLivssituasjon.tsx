@@ -16,7 +16,6 @@ export interface IDinLivssituasjonFeltTyper {
     separertEnkeSkilt: ESvar | null;
     separertEnkeSkiltUtland: ESvar | null;
     separertEnkeSkiltDato: ISODateString;
-    hattAnnenSamboerForSøktPeriode: ESvar | null;
 }
 
 export const useDinLivssituasjon = (): {
@@ -75,10 +74,6 @@ export const useDinLivssituasjon = (): {
 
     const harSamboerNå = useJaNeiSpmFelt(søker.utvidet.spørsmål.harSamboerNå);
 
-    const hattAnnenSamboerForSøktPeriode = useJaNeiSpmFelt(
-        søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode
-    );
-
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,
         string
@@ -89,7 +84,6 @@ export const useDinLivssituasjon = (): {
             separertEnkeSkiltUtland,
             separertEnkeSkiltDato,
             harSamboerNå,
-            hattAnnenSamboerForSøktPeriode,
         },
         skjemanavn: 'dinlivssituasjon',
     });
@@ -122,10 +116,6 @@ export const useDinLivssituasjon = (): {
                         harSamboerNå: {
                             ...søknad.søker.utvidet.spørsmål.harSamboerNå,
                             svar: skjema.felter.harSamboerNå.verdi,
-                        },
-                        hattAnnenSamboerForSøktPeriode: {
-                            ...søknad.søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode,
-                            svar: skjema.felter.hattAnnenSamboerForSøktPeriode.verdi,
                         },
                     },
                 },

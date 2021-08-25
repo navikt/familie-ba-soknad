@@ -62,12 +62,7 @@ const SkjemaModal: React.FC<{
             /* aria-modal blir satt til true så vi trenger ikke å gjøre aria-hidden på appen */
             ariaHideApp={false}
         >
-            <form
-                onSubmit={event => {
-                    event.preventDefault();
-                    onSubmitCallback();
-                }}
-            >
+            <form>
                 <StyledInnholdstittel>
                     <SpråkTekst id={modalTittelSpråkId} />
                 </StyledInnholdstittel>
@@ -77,6 +72,10 @@ const SkjemaModal: React.FC<{
                     htmlType={'submit'}
                     spinner={submitSpinner}
                     autoDisableVedSpinner={true}
+                    onClick={event => {
+                        event.preventDefault();
+                        onSubmitCallback();
+                    }}
                 >
                     <SpråkTekst id={submitKnappSpråkId} />
                 </StyledKnappIModal>
