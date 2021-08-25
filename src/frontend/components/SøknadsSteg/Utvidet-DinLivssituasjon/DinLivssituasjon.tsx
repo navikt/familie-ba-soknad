@@ -94,7 +94,21 @@ const DinLivssituasjon: React.FC = () => {
                     }
                 />
             </KomponentGruppe>
-            {skjema.felter.harSamboerNå.verdi === ESvar.JA && <SamboerSkjema skjema={skjema} />}
+            {skjema.felter.harSamboerNå.verdi === ESvar.JA && (
+                <KomponentGruppe dynamisk>
+                    <SamboerSkjema
+                        skjema={skjema}
+                        samboerFelter={{
+                            navn: skjema.felter.nåværendeSamboerNavn,
+                            fnr: skjema.felter.nåværendeSamboerFnr,
+                            fnrUkjent: skjema.felter.nåværendeSamboerFnrUkjent,
+                            fødselsdato: skjema.felter.nåværendeSamboerFødselsdato,
+                            fødselsdatoUkjent: skjema.felter.nåværendeSamboerFødselsdatoUkjent,
+                            samboerFraDato: skjema.felter.nåværendeSamboerFraDato,
+                        }}
+                    />
+                </KomponentGruppe>
+            )}
             <TidligereSamboere
                 tidligereSamboere={tidligereSamboere}
                 leggTilTidligereSamboer={leggTilTidligereSamboer}
