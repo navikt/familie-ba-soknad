@@ -11,6 +11,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import { useDinLivssituasjon } from './useDinLivssituasjon';
 
@@ -22,7 +23,6 @@ const DinLivssituasjon: React.FC = () => {
         valideringErOk,
         oppdaterSøknad,
     } = useDinLivssituasjon();
-
     return (
         <Steg
             tittel={<SpråkTekst id={'dinlivssituasjon.sidetittel'} />}
@@ -91,6 +91,7 @@ const DinLivssituasjon: React.FC = () => {
                     }
                 />
             </KomponentGruppe>
+            {skjema.felter.harSamboerNå.verdi === ESvar.JA && <SamboerSkjema skjema={skjema} />}
             <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}

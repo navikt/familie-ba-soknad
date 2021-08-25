@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { queryByText, render } from '@testing-library/react';
+import { queryByText, render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
@@ -25,6 +25,30 @@ jest.mock('react-router-dom', () => ({
         push: () => {},
     }),
 }));
+const søknad = mockDeep<ISøknad>({
+    søknadstype: ESøknadstype.UTVIDET,
+    barnInkludertISøknaden: [
+        {
+            ident: '1234',
+        },
+    ],
+    søker: {
+        sivilstand: { type: ESivilstand.UGIFT },
+        utvidet: {
+            spørsmål: {
+                årsak: {
+                    id: DinLivssituasjonSpørsmålId.årsak,
+                    svar: '',
+                },
+                harSamboerNå: {
+                    id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                    svar: null,
+                },
+            },
+            nåværendeSamboer: null,
+        },
+    },
+});
 
 jest.mock('nav-frontend-alertstriper', () => ({ children }) => (
     <div data-testid="alertstripe">{children}</div>
@@ -34,107 +58,132 @@ describe('DinLivssituasjon', () => {
     beforeEach(() => {
         silenceConsoleErrors();
     });
-    describe('Søknadsobjekt med søkers sivilstand annet enn GIFT', () => {
-        beforeEach(() => {
-            const søknad = mockDeep<ISøknad>({
-                søknadstype: ESøknadstype.UTVIDET,
-                barnInkludertISøknaden: [
-                    {
-                        ident: '1234',
-                    },
-                ],
-                søker: {
-                    sivilstand: { type: ESivilstand.UGIFT },
-                    utvidet: {
-                        spørsmål: {
-                            årsak: {
-                                id: DinLivssituasjonSpørsmålId.årsak,
-                                svar: '',
-                            },
-                            harSamboerNå: {
-                                id: DinLivssituasjonSpørsmålId.harSamboerNå,
-                                svar: null,
-                            },
-                        },
-                    },
-                },
-            });
-            spyOnUseApp(søknad);
-        });
 
-        it('rendrer DinLivssituasjon steg og inneholder sidetittel', () => {
-            const { getByText } = render(
-                <TestProvidereMedEkteTekster>
-                    <DinLivssituasjon />
-                </TestProvidereMedEkteTekster>
-            );
-            expect(getByText('Din livssituasjon')).toBeInTheDocument();
-        });
+    it('rendrer DinLivssituasjon steg og inneholder sidetittel', () => {
+        spyOnUseApp(søknad);
 
-        it('Stopper fra å gå videre hvis årsak ikke er valgt', () => {
-            const { getByText, getByRole } = render(
-                <TestProvidereMedEkteTekster>
-                    <DinLivssituasjon />
-                </TestProvidereMedEkteTekster>
-            );
-            const gåVidere = getByText('GÅ VIDERE');
-            act(() => gåVidere.click());
-            const alerts: HTMLElement = getByRole('alert');
-            const result: HTMLElement | null = queryByText(
-                alerts,
-                'Hvorfor søker du om utvidet barnetrygd?'
-            );
-            expect(result).not.toBeNull();
-        });
-        it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', () => {
-            const { queryByText } = render(
-                <TestProvidere>
-                    <DinLivssituasjon />
-                </TestProvidere>
-            );
+        const { getByText } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        expect(getByText('Livssituasjonen din')).toBeInTheDocument();
+    });
 
-            const spørsmål = queryByText(
-                dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
-            );
-            expect(spørsmål).not.toBeInTheDocument();
-        });
+    it('Stopper fra å gå videre hvis årsak ikke er valgt', () => {
+        spyOnUseApp(søknad);
 
-        it('Viser spørsmål harSamboerNå', () => {
-            const { getByText } = render(
-                <TestProvidereMedEkteTekster>
-                    <DinLivssituasjon />
-                </TestProvidereMedEkteTekster>
-            );
-            const result = getByText('Har du samboer nå?');
-            expect(result).toBeDefined();
+        const { getByText, getByRole } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        const gåVidere = getByText('GÅ VIDERE');
+        act(() => gåVidere.click());
+        const alerts: HTMLElement = getByRole('alert');
+        const result: HTMLElement | null = queryByText(
+            alerts,
+            'Hvorfor søker du om utvidet barnetrygd?'
+        );
+        expect(result).not.toBeNull();
+    });
+    it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', () => {
+        spyOnUseApp(søknad);
+
+        const { queryByText } = render(
+            <TestProvidere>
+                <DinLivssituasjon />
+            </TestProvidere>
+        );
+
+        const spørsmål = queryByText(
+            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
+        );
+        expect(spørsmål).not.toBeInTheDocument();
+    });
+
+    it('Viser spørsmål harSamboerNå', () => {
+        spyOnUseApp(søknad);
+
+        const { getByText } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        const result = getByText('Har du samboer nå?');
+        expect(result).toBeDefined();
+    });
+
+    it('Viser feilmelding med spørsmål tittel når ikke utfylt', () => {
+        spyOnUseApp(søknad);
+
+        const { getByText, getByRole } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        const gåVidere = getByText('GÅ VIDERE');
+        act(() => gåVidere.click());
+        const alerts: HTMLElement = getByRole('alert');
+        const result: HTMLElement | null = queryByText(alerts, 'Har du samboer nå?');
+        expect(result).not.toBeNull();
+    });
+
+    it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', () => {
+        spyOnUseApp(søknad);
+
+        const { getByText, getByRole } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        const harSamboerNåSpmFieldset: HTMLElement = getByRole('group', {
+            name: /Har du samboer nå?/i,
         });
-        it('Viser feilmelding med spørsmål tittel når ikke utfylt', () => {
-            const { getByText, getByRole } = render(
-                <TestProvidereMedEkteTekster>
-                    <DinLivssituasjon />
-                </TestProvidereMedEkteTekster>
-            );
-            const gåVidere = getByText('GÅ VIDERE');
-            act(() => gåVidere.click());
-            const alerts: HTMLElement = getByRole('alert');
-            const result: HTMLElement | null = queryByText(alerts, 'Har du samboer nå?');
-            expect(result).not.toBeNull();
-        });
+        const jaKnapp: HTMLElement = within(harSamboerNåSpmFieldset).getByText('Ja');
+        act(() => jaKnapp.click());
+
+        const gåVidereKnapp = getByText('GÅ VIDERE');
+        act(() => gåVidereKnapp.click());
+
+        const feiloppsummering = getByRole('alert');
+
+        const navnFeilmelding = within(feiloppsummering).getByText('Samboerens navn');
+        expect(navnFeilmelding).toBeInTheDocument();
+        const fødselsnummerFeilmelding = within(feiloppsummering).getByText(
+            'Fødselsnummer eller d-nummer'
+        );
+        expect(fødselsnummerFeilmelding).toBeInTheDocument();
+        const forholdStartFeilmelding = within(feiloppsummering).getByText(
+            'Når startet samboerforholdet?'
+        );
+        expect(forholdStartFeilmelding).toBeInTheDocument();
+    });
+
+    it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand annet enn GIFT', () => {
+        spyOnUseApp(søknad);
+
+        const { queryByText } = render(
+            <TestProvidere>
+                <DinLivssituasjon />
+            </TestProvidere>
+        );
+
+        const spørsmål = queryByText(
+            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
+        );
+        expect(spørsmål).not.toBeInTheDocument();
     });
 
     it('Viser spørsmål om er du separert, enke eller skilt om sivilstand GIFT', () => {
-        const søknad = mockDeep<ISøknad>({
-            søknadstype: ESøknadstype.UTVIDET,
-            barnInkludertISøknaden: [
-                {
-                    ident: '1234',
-                },
-            ],
+        spyOnUseApp({
+            ...søknad,
             søker: {
+                ...søknad.søker,
                 sivilstand: { type: ESivilstand.GIFT },
             },
         });
-        spyOnUseApp(søknad);
+
         const { queryByText } = render(
             <TestProvidere>
                 <DinLivssituasjon />
