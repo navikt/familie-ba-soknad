@@ -13,6 +13,7 @@ import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/Skje
 import SkjemaModal from '../../../Felleskomponenter/SkjemaModal/SkjemaModal';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { SøkerMåBrukePDF } from '../../../Felleskomponenter/SøkerMåBrukePDF';
+import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../spørsmål';
 import { useLeggTilBarn } from './useLeggTilBarn';
 
 const LeggTilBarnModal: React.FC<{
@@ -93,7 +94,9 @@ const LeggTilBarnModal: React.FC<{
                     <SkjemaGruppe
                         legend={
                             <Element>
-                                <SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />
+                                <SpråkTekst
+                                    id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.barnetsNavn]}
+                                />
                             </Element>
                         }
                     >

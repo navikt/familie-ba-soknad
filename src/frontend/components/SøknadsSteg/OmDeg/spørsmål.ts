@@ -1,3 +1,9 @@
+export const omDegPersonopplysningerSpråkId = {
+    søkerStatsborgerskap: 'omdeg.personopplysninger.statsborgerskap',
+    søkerSivilstatus: 'omdeg.personopplysninger.sivilstatus',
+    søkerAdresse: 'omdeg.personopplysninger.adresse',
+};
+
 export enum OmDegSpørsmålId {
     borPåRegistrertAdresse = 'bor-på-registrert-adresse',
     oppholderSegINorge = 'søker-oppholder-seg-i-norge',
