@@ -6,6 +6,7 @@ import { useApp } from '../../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
 import { hentBostedSpråkId } from '../../../../utils/person';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../../VelgBarn/spørsmål';
 import { useVelgBarn } from '../../VelgBarn/useVelgBarn';
 import { StyledOppsummeringsFeltGruppe } from '../Oppsummering';
 import { OppsummeringFelt } from '../OppsummeringFelt';
@@ -23,14 +24,18 @@ const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     return (
         <Oppsummeringsbolk
             route={hentStegObjektForRoute(RouteEnum.VelgBarn)}
-            tittel={'hvilkebarn.sidetittel'}
+            tittel={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]}
             skjemaHook={useVelgBarn}
             settFeilAnchors={settFeilAnchors}
         >
             {søknad.barnInkludertISøknaden.map((barn, index) => (
                 <StyledOppsummeringsFeltGruppe key={index}>
                     <OppsummeringFelt
-                        tittel={<SpråkTekst id={'hvilkebarn.leggtilbarn.barnets-navn'} />}
+                        tittel={
+                            <SpråkTekst
+                                id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.barnetsNavn]}
+                            />
+                        }
                         søknadsvar={
                             barn.adressebeskyttelse
                                 ? formatMessage({
