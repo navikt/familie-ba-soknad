@@ -7,9 +7,9 @@ import { Element } from 'nav-frontend-typografi';
 
 import { AddCircle } from '@navikt/ds-icons';
 
-import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import LeggTilSamboerModal from './LeggTilSamboerModal';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 
 const StyledFlatKnapp = styled(Flatknapp)`
@@ -21,34 +21,36 @@ interface Props {
     tidligereSamboere: string[];
 }
 
+const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
+    <Element>
+        <SpråkTekst id={språkId} />
+    </Element>
+);
+
 const TidligereSamboere: React.FC<Props> = ({ leggTilTidligereSamboer, tidligereSamboere }) => {
     const { toggleModal, erÅpen } = useModal();
 
     return (
         <>
-            <Element>
-                <SpråkTekst
-                    id={
-                        dinLivssituasjonSpørsmålSpråkId[
-                            DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
-                        ]
-                    }
-                />
-            </Element>
+            <Spørsmål
+                språkId={
+                    dinLivssituasjonSpørsmålSpråkId[
+                        DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
+                    ]
+                }
+            />
             {tidligereSamboere[0] && (
                 <div>DETTE ER EN PLACEHOLDER FOR FØRSTE TIDLIGERE SAMBOER MED NUMMER 0</div>
             )}
             {tidligereSamboere.length > 0 && (
                 <>
-                    <Element>
-                        <SpråkTekst
-                            id={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode
-                                ]
-                            }
-                        />
-                    </Element>
+                    <Spørsmål
+                        språkId={
+                            dinLivssituasjonSpørsmålSpråkId[
+                                DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode
+                            ]
+                        }
+                    />
                     {tidligereSamboere.slice(1).map((_samboer: string, index: number) => (
                         <div key={index}>
                             DETTE ER EN PLACEHOLDER FOR FØRSTE TIDLIGERE SAMBOER MED NUMMER
@@ -69,20 +71,11 @@ const TidligereSamboere: React.FC<Props> = ({ leggTilTidligereSamboer, tidligere
                     <SpråkTekst id={'omdeg.leggtilfleresamboere.leggtil'} />
                 </span>
             </StyledFlatKnapp>
-
-            <SkjemaModal
-                modalTittelSpråkId={'Her kommer en tittel på å legge til samboer'}
-                submitKnappSpråkId={'Her kommer en tekst'}
-                erÅpen={erÅpen}
+            <LeggTilSamboerModal
+                leggTilTidligereSamboer={leggTilTidligereSamboer}
                 toggleModal={toggleModal}
-                onSubmitCallback={() => {
-                    leggTilTidligereSamboer();
-                    toggleModal();
-                }}
-                valideringErOk={() => true} //TODO
-            >
-                <p>HER KOMMER DET EN FORM</p>
-            </SkjemaModal>
+                erÅpen={erÅpen}
+            />
         </>
     );
 };
