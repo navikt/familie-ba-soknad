@@ -44,3 +44,22 @@ export const samboerSpørsmålSpråkId: Record<SamboerSpørsmålId, string> = {
     [SamboerSpørsmålId.nåværendeSamboerFødselsdatoUkjent]: samboerSpråkIder.fødselsdatoUkjent,
     [SamboerSpørsmålId.nåværendeSamboerFraDato]: samboerSpråkIder.samboerFraDato,
 };
+
+export enum TidligereSamboerSpørsmålId {
+    tidligereSamboerNavn = 'utvidet-tidligere-samboer-navn',
+    tidligereSamboerFnr = 'utvidet-tidligere-samboer-fnr',
+    tidligereSamboerFnrUkjent = 'utvidet-tidligere-samboer-fnrUkjent',
+    tidligereSamboerFødselsdato = 'utvidet-tidligere-samboer-fødselsdato',
+    tidligereSamboerFødselsdatoUkjent = 'utvidet-tidligere-samboer-fødselsdatoUkjent',
+    tidligereSamboerFraDato = 'utvidet-tidligere-samboer-samboerFraDato',
+}
+
+export const tidligereSamboerSpørsmålSpråkId: Record<TidligereSamboerSpørsmålId, string> = {
+    [TidligereSamboerSpørsmålId.tidligereSamboerNavn]: samboerSpråkIder.navn,
+    [TidligereSamboerSpørsmålId.tidligereSamboerFnr]: samboerSpråkIder.fnr,
+    [TidligereSamboerSpørsmålId.tidligereSamboerFnrUkjent]: samboerSpråkIder.fnrUkjent,
+    [TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato]: samboerSpråkIder.fødselsdato,
+    [TidligereSamboerSpørsmålId.tidligereSamboerFødselsdatoUkjent]:
+        samboerSpråkIder.fødselsdatoUkjent,
+    [TidligereSamboerSpørsmålId.tidligereSamboerFraDato]: samboerSpråkIder.samboerFraDato,
+};

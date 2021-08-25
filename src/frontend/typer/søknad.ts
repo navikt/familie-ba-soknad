@@ -6,6 +6,7 @@ import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
+    TidligereSamboerSpørsmålId,
 } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
 import { VelgBarnSpørsmålId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
@@ -56,7 +57,8 @@ export type SpørsmålId =
     | OmBarnaDineSpørsmålId
     | OmBarnetSpørsmålsId
     | DinLivssituasjonSpørsmålId
-    | SamboerSpørsmålId;
+    | SamboerSpørsmålId
+    | TidligereSamboerSpørsmålId;
 
 export interface ISøknadSpørsmål<T> {
     id: SpørsmålId;

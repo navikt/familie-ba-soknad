@@ -1,6 +1,8 @@
 import React from 'react';
 
 import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
+import SamboerSkjema from './SamboerSkjema';
+import { useTidligereSamboer } from './useTidligereSamboer';
 
 interface Props {
     leggTilTidligereSamboer: () => void;
@@ -9,6 +11,8 @@ interface Props {
 }
 
 const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleModal, erÅpen }) => {
+    const { skjema, valideringErOk } = useTidligereSamboer();
+
     return (
         <SkjemaModal
             modalTittelSpråkId={'Her kommer en tittel på å legge til samboer'}
@@ -19,9 +23,19 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
                 leggTilTidligereSamboer();
                 toggleModal();
             }}
-            valideringErOk={() => true} //TODO
+            valideringErOk={valideringErOk}
         >
-            <p>HER KOMMER DET EN FORM</p>
+            <SamboerSkjema
+                skjema={skjema}
+                samboerFelter={{
+                    navn: skjema.felter.tidligereSamboerNavn,
+                    fnr: skjema.felter.tidligereSamboerFnr,
+                    fnrUkjent: skjema.felter.tidligereSamboerFnrUkjent,
+                    fødselsdato: skjema.felter.tidligereSamboerFødselsdato,
+                    fødselsdatoUkjent: skjema.felter.tidligereSamboerFødselsdatoUkjent,
+                    samboerFraDato: skjema.felter.tidligereSamboerFraDato,
+                }}
+            />
         </SkjemaModal>
     );
 };

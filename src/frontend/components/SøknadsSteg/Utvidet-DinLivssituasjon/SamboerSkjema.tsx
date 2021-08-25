@@ -10,9 +10,10 @@ import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaChe
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import { samboerSpråkIder } from './spørsmål';
 import { IDinLivssituasjonFeltTyper } from './useDinLivssituasjon';
+import { ITidligereSamboerFeltTyper } from './useTidligereSamboer';
 
 const SamboerSkjema: React.FC<{
-    skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
+    skjema: ISkjema<IDinLivssituasjonFeltTyper | ITidligereSamboerFeltTyper, string>;
     samboerFelter: {
         navn: Felt<string>;
         fnr: Felt<string>;
