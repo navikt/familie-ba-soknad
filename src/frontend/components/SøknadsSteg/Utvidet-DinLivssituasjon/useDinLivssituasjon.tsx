@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -32,7 +32,6 @@ export interface IDinLivssituasjonFeltTyper {
     nåværendeSamboerFødselsdato: DatoMedUkjent;
     nåværendeSamboerFødselsdatoUkjent: ESvar;
     nåværendeSamboerFraDato: ISODateString;
-    hattAnnenSamboerForSøktPeriode: ESvar | null;
 }
 
 export const useDinLivssituasjon = (): {
@@ -41,9 +40,12 @@ export const useDinLivssituasjon = (): {
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
+    leggTilTidligereSamboer: () => void;
+    tidligereSamboere: string[];
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
+    const [tidligereSamboere, settTidligereSamboere] = useState<string[]>([]); // TODO: endre typen til ITidligereSamboer når vi kobler på skjema
 
     const årsak = useFelt<Årsak | ''>({
         feltId: søker.utvidet.spørsmål.årsak.id,
@@ -180,10 +182,6 @@ export const useDinLivssituasjon = (): {
         valideringsfunksjon: (felt: FeltState<string>) => validerDato(felt, true),
     });
 
-    const hattAnnenSamboerForSøktPeriode = useJaNeiSpmFelt(
-        søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode
-    );
-
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,
         string
@@ -194,7 +192,6 @@ export const useDinLivssituasjon = (): {
             separertEnkeSkiltUtland,
             separertEnkeSkiltDato,
             harSamboerNå,
-            hattAnnenSamboerForSøktPeriode,
             nåværendeSamboerNavn,
             nåværendeSamboerFnr,
             nåværendeSamboerFnrUkjent,
@@ -204,6 +201,10 @@ export const useDinLivssituasjon = (): {
         },
         skjemanavn: 'dinlivssituasjon',
     });
+
+    const leggTilTidligereSamboer = () => {
+        settTidligereSamboere(prevState => prevState.concat('ny samboer')); //TODO legge til av typen ITidligereSamboer i stedet for string
+    };
 
     const oppdaterSøknad = () => {
         settSøknad({
@@ -233,10 +234,6 @@ export const useDinLivssituasjon = (): {
                         harSamboerNå: {
                             ...søknad.søker.utvidet.spørsmål.harSamboerNå,
                             svar: skjema.felter.harSamboerNå.verdi,
-                        },
-                        hattAnnenSamboerForSøktPeriode: {
-                            ...søknad.søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode,
-                            svar: skjema.felter.hattAnnenSamboerForSøktPeriode.verdi,
                         },
                     },
                     nåværendeSamboer:
@@ -278,5 +275,7 @@ export const useDinLivssituasjon = (): {
         validerAlleSynligeFelter,
         valideringErOk,
         oppdaterSøknad,
+        tidligereSamboere,
+        leggTilTidligereSamboer,
     };
 };

@@ -221,10 +221,6 @@ export const initialStateSøknad: ISøknad = {
                     id: DinLivssituasjonSpørsmålId.harSamboerNå,
                     svar: null,
                 },
-                hattAnnenSamboerForSøktPeriode: {
-                    id: DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode,
-                    svar: null,
-                },
             },
             nåværendeSamboer: null,
             tidligereSamboere: [],
