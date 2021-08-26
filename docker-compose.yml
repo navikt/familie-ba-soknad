@@ -27,6 +27,7 @@ services:
       ENV: docker-compose
     volumes:
       - ./src:/var/server/src
+      - secure-logs:/secure-logs
     ports:
       - "3000:3000"
       - "55554:55554"
