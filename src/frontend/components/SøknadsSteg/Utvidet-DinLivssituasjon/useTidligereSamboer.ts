@@ -15,6 +15,7 @@ export interface ITidligereSamboerFeltTyper {
     tidligereSamboerFødselsdato: DatoMedUkjent;
     tidligereSamboerFødselsdatoUkjent: ESvar;
     tidligereSamboerFraDato: ISODateString;
+    tidligereSamboerTilDato: ISODateString;
 }
 
 export const useTidligereSamboer = (): {
@@ -70,6 +71,14 @@ export const useTidligereSamboer = (): {
         true
     );
 
+    const tidligereSamboerTilDato = useDatovelgerFelt(
+        {
+            id: TidligereSamboerSpørsmålId.tidligereSamboerTilDato,
+            svar: '',
+        },
+        true
+    );
+
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
         ITidligereSamboerFeltTyper,
         string
@@ -81,6 +90,7 @@ export const useTidligereSamboer = (): {
             tidligereSamboerFødselsdato,
             tidligereSamboerFødselsdatoUkjent,
             tidligereSamboerFraDato,
+            tidligereSamboerTilDato,
         },
         skjemanavn: 'tidligereSamboer',
     });

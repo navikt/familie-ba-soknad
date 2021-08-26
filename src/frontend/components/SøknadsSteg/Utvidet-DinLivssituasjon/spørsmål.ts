@@ -25,6 +25,7 @@ export const samboerSpråkIder = {
     fødselsdato: 'felles.fødselsdato.label',
     fødselsdatoUkjent: 'felles.fødselsdato-ukjent',
     samboerFraDato: 'omdeg.nårstartetsamboerforhold.spm',
+    samboerTilDato: 'omdeg.nårsamboerforholdavsluttet.spm',
 };
 
 export enum SamboerSpørsmålId {
@@ -52,6 +53,7 @@ export enum TidligereSamboerSpørsmålId {
     tidligereSamboerFødselsdato = 'utvidet-tidligere-samboer-fødselsdato',
     tidligereSamboerFødselsdatoUkjent = 'utvidet-tidligere-samboer-fødselsdatoUkjent',
     tidligereSamboerFraDato = 'utvidet-tidligere-samboer-samboerFraDato',
+    tidligereSamboerTilDato = 'utvidet-tidligere-samboer-samboerTilDato',
 }
 
 export const tidligereSamboerSpørsmålSpråkId: Record<TidligereSamboerSpørsmålId, string> = {
@@ -62,4 +64,5 @@ export const tidligereSamboerSpørsmålSpråkId: Record<TidligereSamboerSpørsm�
     [TidligereSamboerSpørsmålId.tidligereSamboerFødselsdatoUkjent]:
         samboerSpråkIder.fødselsdatoUkjent,
     [TidligereSamboerSpørsmålId.tidligereSamboerFraDato]: samboerSpråkIder.samboerFraDato,
+    [TidligereSamboerSpørsmålId.tidligereSamboerTilDato]: samboerSpråkIder.samboerTilDato,
 };

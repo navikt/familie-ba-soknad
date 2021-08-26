@@ -57,6 +57,13 @@ const SamboerSkjema: React.FC<{
                 felt={samboerFelter.samboerFraDato}
                 labelTekstId={samboerSpråkIder.samboerFraDato}
             />
+            {samboerFelter.samboerTilDato && (
+                <Datovelger
+                    skjema={skjema}
+                    felt={samboerFelter.samboerTilDato}
+                    labelTekstId={samboerSpråkIder.samboerTilDato}
+                />
+            )}
         </KomponentGruppe>
     );
 };

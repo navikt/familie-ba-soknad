@@ -46,6 +46,7 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
                     fødselsdato: skjema.felter.tidligereSamboerFødselsdato,
                     fødselsdatoUkjent: skjema.felter.tidligereSamboerFødselsdatoUkjent,
                     samboerFraDato: skjema.felter.tidligereSamboerFraDato,
+                    samboerTilDato: skjema.felter.tidligereSamboerTilDato,
                 }}
             />
         </SkjemaModal>
