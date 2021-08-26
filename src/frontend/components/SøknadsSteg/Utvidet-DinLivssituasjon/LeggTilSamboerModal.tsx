@@ -29,8 +29,8 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
 
     return (
         <SkjemaModal
-            modalTittelSpråkId={'Her kommer en tittel på å legge til samboer'}
-            submitKnappSpråkId={'Her kommer en tekst'}
+            modalTittelSpråkId={'omdeg.leggtilfleresamboere.leggtil'}
+            submitKnappSpråkId={'omdeg.leggtilfleresamboere.leggtil'}
             erÅpen={erÅpen}
             toggleModal={toggleModal}
             onSubmitCallback={onLeggTil}
