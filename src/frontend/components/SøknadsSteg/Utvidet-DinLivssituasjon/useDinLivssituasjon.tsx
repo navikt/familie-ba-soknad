@@ -42,6 +42,7 @@ export const useDinLivssituasjon = (): {
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
+    fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
     tidligereSamboere: ITidligereSamboer[];
 } => {
     const { søknad, settSøknad } = useApp();
@@ -209,6 +210,12 @@ export const useDinLivssituasjon = (): {
         settTidligereSamboere(prevState => prevState.concat(samboer));
     };
 
+    const fjernTidligereSamboer = (samboerSomSkalFjernes: ITidligereSamboer) => {
+        settTidligereSamboere(prevState =>
+            prevState.filter(samboer => samboer !== samboerSomSkalFjernes)
+        );
+    };
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
@@ -281,5 +288,6 @@ export const useDinLivssituasjon = (): {
         oppdaterSøknad,
         tidligereSamboere,
         leggTilTidligereSamboer,
+        fjernTidligereSamboer,
     };
 };

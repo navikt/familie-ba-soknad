@@ -25,6 +25,7 @@ const DinLivssituasjon: React.FC = () => {
         oppdaterSøknad,
         tidligereSamboere,
         leggTilTidligereSamboer,
+        fjernTidligereSamboer,
     } = useDinLivssituasjon();
     return (
         <Steg
@@ -112,6 +113,7 @@ const DinLivssituasjon: React.FC = () => {
             <TidligereSamboere
                 tidligereSamboere={tidligereSamboere}
                 leggTilTidligereSamboer={leggTilTidligereSamboer}
+                fjernTidligereSamboer={fjernTidligereSamboer}
             />
         </Steg>
     );

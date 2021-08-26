@@ -21,6 +21,7 @@ const StyledFlatKnapp = styled(Flatknapp)`
 interface Props {
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
     tidligereSamboere: ITidligereSamboer[];
+    fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
 }
 
 const StyledElement = styled(Element)`
@@ -35,7 +36,11 @@ const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
     </StyledElement>
 );
 
-const TidligereSamboere: React.FC<Props> = ({ leggTilTidligereSamboer, tidligereSamboere }) => {
+const TidligereSamboere: React.FC<Props> = ({
+    leggTilTidligereSamboer,
+    tidligereSamboere,
+    fjernTidligereSamboer,
+}) => {
     const { toggleModal, erÅpen } = useModal();
 
     return (
@@ -48,7 +53,11 @@ const TidligereSamboere: React.FC<Props> = ({ leggTilTidligereSamboer, tidligere
                 }
             />
             {tidligereSamboere.map((samboer: ITidligereSamboer, index: number) => (
-                <SamboerOpplysninger key={index} samboer={samboer} />
+                <SamboerOpplysninger
+                    key={index}
+                    samboer={samboer}
+                    fjernTidligereSamboer={fjernTidligereSamboer}
+                />
             ))}
             {tidligereSamboere.length > 0 && (
                 <Spørsmål

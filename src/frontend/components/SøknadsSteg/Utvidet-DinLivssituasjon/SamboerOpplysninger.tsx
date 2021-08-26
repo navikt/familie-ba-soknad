@@ -34,7 +34,10 @@ const SlettKnapp = styled(Flatknapp)`
     margin-bottom: 1.5rem;
 `;
 
-const SamboerOpplysninger: React.FC<{ samboer: ITidligereSamboer }> = ({ samboer }) => (
+const SamboerOpplysninger: React.FC<{
+    samboer: ITidligereSamboer;
+    fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
+}> = ({ samboer, fjernTidligereSamboer }) => (
     <SamboerContainer>
         <Element>{samboer.navn.svar.toUpperCase()}</Element>
         <Informasjonsbolk>
@@ -55,13 +58,7 @@ const SamboerOpplysninger: React.FC<{ samboer: ITidligereSamboer }> = ({ samboer
             <Spørsmål språkId={samboerSpråkIder.samboerTilDato} />
             <Normaltekst>{samboer.samboerTilDato.svar}</Normaltekst>
         </Informasjonsbolk>
-        <SlettKnapp
-            htmlType={'button'}
-            kompakt
-            onClick={() => {
-                alert('ikke implementert');
-            }}
-        >
+        <SlettKnapp htmlType={'button'} kompakt onClick={() => fjernTidligereSamboer(samboer)}>
             <DeleteFilled />
             <span>
                 <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />
