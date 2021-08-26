@@ -46,7 +46,9 @@ export const useDinLivssituasjon = (): {
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
-    const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>([]);
+    const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
+        søker.utvidet.tidligereSamboere
+    );
 
     const årsak = useFelt<Årsak | ''>({
         feltId: søker.utvidet.spørsmål.årsak.id,
