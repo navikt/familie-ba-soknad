@@ -7,6 +7,7 @@ import { Element } from 'nav-frontend-typografi';
 
 import { AddCircle } from '@navikt/ds-icons';
 
+import { ITidligereSamboer } from '../../../typer/person';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import LeggTilSamboerModal from './LeggTilSamboerModal';
@@ -17,8 +18,8 @@ const StyledFlatKnapp = styled(Flatknapp)`
 `;
 
 interface Props {
-    leggTilTidligereSamboer: () => void;
-    tidligereSamboere: string[];
+    leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
+    tidligereSamboere: ITidligereSamboer[];
 }
 
 const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
@@ -51,12 +52,14 @@ const TidligereSamboere: React.FC<Props> = ({ leggTilTidligereSamboer, tidligere
                             ]
                         }
                     />
-                    {tidligereSamboere.slice(1).map((_samboer: string, index: number) => (
-                        <div key={index}>
-                            DETTE ER EN PLACEHOLDER FOR FØRSTE TIDLIGERE SAMBOER MED NUMMER
-                            {index + 1}
-                        </div>
-                    ))}
+                    {tidligereSamboere
+                        .slice(1)
+                        .map((_samboer: ITidligereSamboer, index: number) => (
+                            <div key={index}>
+                                DETTE ER EN PLACEHOLDER FOR FØRSTE TIDLIGERE SAMBOER MED NUMMER
+                                {index + 1}
+                            </div>
+                        ))}
                 </>
             )}
             <StyledFlatKnapp

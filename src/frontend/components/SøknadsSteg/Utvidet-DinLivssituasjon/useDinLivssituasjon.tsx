@@ -11,6 +11,7 @@ import {
     DatoMedUkjent,
     ESivilstand,
     ISamboer,
+    ITidligereSamboer,
 } from '../../../typer/person';
 import { validerDato } from '../../../utils/dato';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -40,12 +41,12 @@ export const useDinLivssituasjon = (): {
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
-    leggTilTidligereSamboer: () => void;
-    tidligereSamboere: string[];
+    leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
+    tidligereSamboere: ITidligereSamboer[];
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
-    const [tidligereSamboere, settTidligereSamboere] = useState<string[]>([]); // TODO: endre typen til ITidligereSamboer når vi kobler på skjema
+    const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>([]);
 
     const årsak = useFelt<Årsak | ''>({
         feltId: søker.utvidet.spørsmål.årsak.id,
@@ -202,8 +203,8 @@ export const useDinLivssituasjon = (): {
         skjemanavn: 'dinlivssituasjon',
     });
 
-    const leggTilTidligereSamboer = () => {
-        settTidligereSamboere(prevState => prevState.concat('ny samboer')); //TODO legge til av typen ITidligereSamboer i stedet for string
+    const leggTilTidligereSamboer = (samboer: ITidligereSamboer) => {
+        settTidligereSamboere(prevState => prevState.concat(samboer));
     };
 
     const oppdaterSøknad = () => {
@@ -213,6 +214,7 @@ export const useDinLivssituasjon = (): {
                 ...søknad.søker,
                 utvidet: {
                     ...søknad.søker.utvidet,
+                    tidligereSamboere,
                     spørsmål: {
                         ...søknad.søker.utvidet.spørsmål,
                         årsak: {

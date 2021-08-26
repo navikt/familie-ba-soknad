@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { ITidligereSamboer } from '../../../typer/person';
 import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
 import SamboerSkjema from './SamboerSkjema';
+import { TidligereSamboerSpørsmålId } from './spørsmål';
 import { useTidligereSamboer } from './useTidligereSamboer';
 
 interface Props {
-    leggTilTidligereSamboer: () => void;
+    leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
     toggleModal: () => void;
     erÅpen: boolean;
 }
@@ -22,7 +24,28 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
-        leggTilTidligereSamboer();
+        leggTilTidligereSamboer({
+            navn: {
+                id: TidligereSamboerSpørsmålId.tidligereSamboerNavn,
+                svar: skjema.felter.tidligereSamboerNavn.verdi,
+            },
+            ident: {
+                id: TidligereSamboerSpørsmålId.tidligereSamboerFnr,
+                svar: skjema.felter.tidligereSamboerFnr.verdi,
+            },
+            fødselsdato: {
+                id: TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato,
+                svar: skjema.felter.tidligereSamboerFødselsdato.verdi,
+            },
+            samboerFraDato: {
+                id: TidligereSamboerSpørsmålId.tidligereSamboerFraDato,
+                svar: skjema.felter.tidligereSamboerFraDato.verdi,
+            },
+            samboerTilDato: {
+                id: TidligereSamboerSpørsmålId.tidligereSamboerTilDato,
+                svar: skjema.felter.tidligereSamboerTilDato.verdi,
+            },
+        });
         toggleModal();
         nullstillSkjema();
     };
