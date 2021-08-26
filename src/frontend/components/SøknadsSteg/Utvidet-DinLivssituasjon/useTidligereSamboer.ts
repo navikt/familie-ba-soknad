@@ -29,7 +29,7 @@ export const useTidligereSamboer = (): {
             id: TidligereSamboerSpørsmålId.tidligereSamboerNavn,
             svar: '',
         },
-        'omdeg.samboernå.feilmelding'
+        'omdeg.samboerNavn.feilmelding'
     );
 
     const tidligereSamboerFnrUkjent = useFelt<ESvar>({
@@ -44,7 +44,7 @@ export const useTidligereSamboer = (): {
             svar: '',
         },
         tidligereSamboerFnrUkjent,
-        'omdeg.tidligereSamboer.ident.ikkebesvart.feilmelding',
+        'omdeg.samboer.ident.ikkebesvart.feilmelding',
         true
     );
 

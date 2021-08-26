@@ -98,7 +98,7 @@ export const useDinLivssituasjon = (): {
             id: SamboerSpørsmålId.nåværendeSamboerNavn,
             svar: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
         },
-        'omdeg.samboernå.feilmelding',
+        'omdeg.samboerNavn.feilmelding',
         harSamboerNå.verdi === ESvar.JA
     );
 
@@ -125,7 +125,7 @@ export const useDinLivssituasjon = (): {
             svar: fnrInitiellVerdi(søker.utvidet.nåværendeSamboer),
         },
         nåværendeSamboerFnrUkjent,
-        'omdeg.nåværendeSamboer.ident.ikkebesvart.feilmelding',
+        'omdeg.samboer.ident.ikkebesvart.feilmelding',
         true,
         harSamboerNå.verdi === ESvar.JA
     );
