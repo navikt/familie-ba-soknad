@@ -52,22 +52,13 @@ const TidligereSamboere: React.FC<Props> = ({
                     ]
                 }
             />
-            {tidligereSamboere.map((samboer: ITidligereSamboer, index: number) => (
+            {tidligereSamboere?.map((samboer: ITidligereSamboer, index: number) => (
                 <SamboerOpplysninger
                     key={index}
                     samboer={samboer}
                     fjernTidligereSamboer={fjernTidligereSamboer}
                 />
             ))}
-            {tidligereSamboere.length > 0 && (
-                <Spørsmål
-                    språkId={
-                        dinLivssituasjonSpørsmålSpråkId[
-                            DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode
-                        ]
-                    }
-                />
-            )}
             <StyledFlatKnapp
                 htmlType={'button'}
                 kompakt
