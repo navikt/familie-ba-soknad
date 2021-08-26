@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import styled from 'styled-components/macro';
 
@@ -7,7 +7,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { DeleteFilled } from '@navikt/ds-icons';
 
-import { ITidligereSamboer } from '../../../typer/person';
+import { AlternativtSvarForInput, ITidligereSamboer } from '../../../typer/person';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { samboerSpråkIder } from './spørsmål';
@@ -37,34 +37,46 @@ const SlettKnapp = styled(Flatknapp)`
 const SamboerOpplysninger: React.FC<{
     samboer: ITidligereSamboer;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
-}> = ({ samboer, fjernTidligereSamboer }) => (
-    <SamboerContainer>
-        <Element>{samboer.navn.svar.toUpperCase()}</Element>
-        <Informasjonsbolk>
-            <Spørsmål språkId={samboerSpråkIder.fnr} />
-            <Normaltekst>{samboer.ident.svar}</Normaltekst>
-        </Informasjonsbolk>
-        {samboer.fødselsdato.svar && (
+}> = ({ samboer, fjernTidligereSamboer }) => {
+    const svarSomKanVæreUkjent = (svar: string, språkIdForUkjent: string): ReactNode =>
+        svar === AlternativtSvarForInput.UKJENT ? <SpråkTekst id={språkIdForUkjent} /> : svar;
+
+    return (
+        <SamboerContainer>
+            <Element>{samboer.navn.svar.toUpperCase()}</Element>
             <Informasjonsbolk>
-                <Spørsmål språkId={samboerSpråkIder.fødselsdato} />
-                <Normaltekst>{samboer.fødselsdato.svar}</Normaltekst>
+                <Spørsmål språkId={samboerSpråkIder.fnr} />
+                <Normaltekst>
+                    {svarSomKanVæreUkjent(samboer.ident.svar, samboerSpråkIder.fnrUkjent)}
+                </Normaltekst>
             </Informasjonsbolk>
-        )}
-        <Informasjonsbolk>
-            <Spørsmål språkId={samboerSpråkIder.samboerFraDato} />
-            <Normaltekst>{samboer.samboerFraDato.svar}</Normaltekst>
-        </Informasjonsbolk>
-        <Informasjonsbolk>
-            <Spørsmål språkId={samboerSpråkIder.samboerTilDato} />
-            <Normaltekst>{samboer.samboerTilDato.svar}</Normaltekst>
-        </Informasjonsbolk>
-        <SlettKnapp htmlType={'button'} kompakt onClick={() => fjernTidligereSamboer(samboer)}>
-            <DeleteFilled />
-            <span>
-                <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />
-            </span>
-        </SlettKnapp>
-    </SamboerContainer>
-);
+            {samboer.fødselsdato.svar && (
+                <Informasjonsbolk>
+                    <Spørsmål språkId={samboerSpråkIder.fødselsdato} />
+                    <Normaltekst>
+                        {svarSomKanVæreUkjent(
+                            samboer.fødselsdato.svar,
+                            samboerSpråkIder.fødselsdatoUkjent
+                        )}
+                    </Normaltekst>
+                </Informasjonsbolk>
+            )}
+            <Informasjonsbolk>
+                <Spørsmål språkId={samboerSpråkIder.samboerFraDato} />
+                <Normaltekst>{samboer.samboerFraDato.svar}</Normaltekst>
+            </Informasjonsbolk>
+            <Informasjonsbolk>
+                <Spørsmål språkId={samboerSpråkIder.samboerTilDato} />
+                <Normaltekst>{samboer.samboerTilDato.svar}</Normaltekst>
+            </Informasjonsbolk>
+            <SlettKnapp htmlType={'button'} kompakt onClick={() => fjernTidligereSamboer(samboer)}>
+                <DeleteFilled />
+                <span>
+                    <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />
+                </span>
+            </SlettKnapp>
+        </SamboerContainer>
+    );
+};
 
 export default SamboerOpplysninger;

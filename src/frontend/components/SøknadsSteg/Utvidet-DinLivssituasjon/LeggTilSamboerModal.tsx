@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ITidligereSamboer } from '../../../typer/person';
+import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
 import SamboerSkjema from './SamboerSkjema';
 import { TidligereSamboerSpørsmålId } from './spørsmål';
@@ -31,11 +32,17 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
             },
             ident: {
                 id: TidligereSamboerSpørsmålId.tidligereSamboerFnr,
-                svar: skjema.felter.tidligereSamboerFnr.verdi,
+                svar: svarForSpørsmålMedUkjent(
+                    skjema.felter.tidligereSamboerFnrUkjent,
+                    skjema.felter.tidligereSamboerFnr
+                ),
             },
             fødselsdato: {
                 id: TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato,
-                svar: skjema.felter.tidligereSamboerFødselsdato.verdi,
+                svar: svarForSpørsmålMedUkjent(
+                    skjema.felter.tidligereSamboerFødselsdatoUkjent,
+                    skjema.felter.tidligereSamboerFødselsdato
+                ),
             },
             samboerFraDato: {
                 id: TidligereSamboerSpørsmålId.tidligereSamboerFraDato,
