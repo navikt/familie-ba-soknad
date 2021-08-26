@@ -21,7 +21,7 @@ export const useTidligereSamboer = (): {
     skjema: ISkjema<ITidligereSamboerFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
-    validerAlleSynligeFelter: () => void;
+    nullstillSkjema: () => void;
 } => {
     const tidligereSamboerNavn = useInputFelt(
         {
@@ -70,7 +70,7 @@ export const useTidligereSamboer = (): {
         true
     );
 
-    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
+    const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
         ITidligereSamboerFeltTyper,
         string
     >({
@@ -88,7 +88,7 @@ export const useTidligereSamboer = (): {
     return {
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
-        validerAlleSynligeFelter,
         valideringErOk,
+        nullstillSkjema,
     };
 };

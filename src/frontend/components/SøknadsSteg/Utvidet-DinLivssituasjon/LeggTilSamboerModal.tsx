@@ -11,7 +11,21 @@ interface Props {
 }
 
 const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleModal, erÅpen }) => {
-    const { skjema, valideringErOk } = useTidligereSamboer();
+    const {
+        skjema,
+        valideringErOk,
+        nullstillSkjema,
+        validerFelterOgVisFeilmelding,
+    } = useTidligereSamboer();
+
+    const onLeggTil = () => {
+        if (!validerFelterOgVisFeilmelding()) {
+            return false;
+        }
+        leggTilTidligereSamboer();
+        toggleModal();
+        nullstillSkjema();
+    };
 
     return (
         <SkjemaModal
@@ -19,11 +33,9 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
             submitKnappSpråkId={'Her kommer en tekst'}
             erÅpen={erÅpen}
             toggleModal={toggleModal}
-            onSubmitCallback={() => {
-                leggTilTidligereSamboer();
-                toggleModal();
-            }}
+            onSubmitCallback={onLeggTil}
             valideringErOk={valideringErOk}
+            onAvbrytCallback={nullstillSkjema}
         >
             <SamboerSkjema
                 skjema={skjema}
