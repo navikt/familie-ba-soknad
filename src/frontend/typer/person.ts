@@ -53,7 +53,6 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
             separertEnkeSkiltUtland: ISøknadSpørsmål<ESvar | null>;
             separertEnkeSkiltDato: ISøknadSpørsmål<ISODateString>;
             harSamboerNå: ISøknadSpørsmål<ESvar | null>;
-            hattAnnenSamboerForSøktPeriode: ISøknadSpørsmål<ESvar | null>;
         };
         nåværendeSamboer: ISamboer | null;
         tidligereSamboere: ITidligereSamboer[];

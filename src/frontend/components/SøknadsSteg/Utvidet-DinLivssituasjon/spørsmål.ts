@@ -5,6 +5,7 @@ export enum DinLivssituasjonSpørsmålId {
     separertEnkeSkiltDato = 'separert-enke-skilt-dato',
     harSamboerNå = 'har-samboer-nå',
     hattAnnenSamboerForSøktPeriode = 'hatt-annen-samboer-i-perioden',
+    hattFlereSamboereForSøktPeriode = 'hatt-flere-samboere-i-perioden',
 }
 
 export const dinLivssituasjonSpørsmålSpråkId: Record<DinLivssituasjonSpørsmålId, string> = {
@@ -14,4 +15,23 @@ export const dinLivssituasjonSpørsmålSpråkId: Record<DinLivssituasjonSpørsm�
     [DinLivssituasjonSpørsmålId.separertEnkeSkiltDato]: 'omdeg.frahvilkendatoseparertskilt.spm',
     [DinLivssituasjonSpørsmålId.harSamboerNå]: 'omdeg.samboernå.spm',
     [DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode]: 'omdeg.annensamboer.spm',
+    [DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode]: 'omdeg.leggtilfleresamboere.spm',
+};
+
+export enum SamboerSpørsmålId {
+    nåværendeSamboerNavn = 'utvidet-nåværende-samboer-navn',
+    nåværendeSamboerFnr = 'utvidet-nåværende-samboer-fnr',
+    nåværendeSamboerFnrUkjent = 'utvidet-nåværende-samboer-fnrUkjent',
+    nåværendeSamboerFødselsdato = 'utvidet-nåværende-samboer-fødselsdato',
+    nåværendeSamboerFødselsdatoUkjent = 'utvidet-nåværende-samboer-fødselsdatoUkjent',
+    nåværendeSamboerFraDato = 'utvidet-nåværende-samboer-samboerFraDato',
+}
+
+export const samboerSpørsmålSpråkId: Record<SamboerSpørsmålId, string> = {
+    [SamboerSpørsmålId.nåværendeSamboerNavn]: 'felles.samboernavn.spm',
+    [SamboerSpørsmålId.nåværendeSamboerFnr]: 'felles.fødsels-eller-dnummer.label',
+    [SamboerSpørsmålId.nåværendeSamboerFnrUkjent]: 'omdeg.nåværendeSamboer.ident.ukjent',
+    [SamboerSpørsmålId.nåværendeSamboerFødselsdato]: 'felles.fødselsdato.label',
+    [SamboerSpørsmålId.nåværendeSamboerFødselsdatoUkjent]: 'felles.fødselsdato-ukjent',
+    [SamboerSpørsmålId.nåværendeSamboerFraDato]: 'omdeg.nårstartetsamboerforhold.spm',
 };

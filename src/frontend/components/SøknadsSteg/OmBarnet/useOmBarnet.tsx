@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import {
     feil,
-    Felt,
     FeltState,
     ISkjema,
     ok,
@@ -28,6 +27,7 @@ import {
     DatoMedUkjent,
     IBarnMedISøknad,
 } from '../../../typer/person';
+import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { BarnetsId } from '../OmBarnaDine/HvilkeBarnCheckboxGruppe';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../OmDeg/useLanddropdownFeltMedJaNeiAvhengighet';
@@ -596,13 +596,6 @@ export const useOmBarnet = (
         },
         skjemanavn: `om-barnet-${barn.id}`,
     });
-
-    const svarForSpørsmålMedUkjent = (
-        vetIkkeFelt: Felt<ESvar>,
-        spørsmålFelt: Felt<string>
-    ): string => {
-        return vetIkkeFelt.verdi === ESvar.JA ? AlternativtSvarForInput.UKJENT : spørsmålFelt.verdi;
-    };
 
     const genererOppdatertDokumentasjon = (
         dokumentasjon: IDokumentasjon,
