@@ -62,15 +62,7 @@ export const svarForSpørsmålMedUkjent = (
     }
 };
 
-export const jaNeiSvarTilSpråkId = (svar: ESvar) => {
-    let språktekstid: string;
-    switch (svar) {
-        case ESvar.NEI:
-        case ESvar.JA:
-            språktekstid = 'felles.svaralternativ.' + svar.toLowerCase();
-            break;
-        default:
-            språktekstid = 'felles.svaralternativ.vetikke';
-    }
-    return språktekstid;
-};
+export const jaNeiSvarTilSpråkId = (svar: ESvar) =>
+    svar === ESvar.VET_IKKE
+        ? 'felles.svaralternativ.vetikke'
+        : 'felles.svaralternativ.' + svar.toLowerCase();
