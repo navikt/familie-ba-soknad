@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
-
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { useIntl } from 'react-intl';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
@@ -29,6 +28,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentStegObjektForRoute } = useRoutes();
     const { søknad } = useApp();
     const [valgtLocale] = useSprakContext();
+    const { formatMessage } = useIntl();
 
     return (
         <Oppsummeringsbolk
@@ -38,14 +38,10 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             settFeilAnchors={settFeilAnchors}
         >
             <StyledOppsummeringsFeltGruppe>
-                <Element>
-                    <SpråkTekst id={'forside.bekreftelsesboks.brødtekst'} />
-                </Element>
-                <StyledOppsummeringsFeltGruppe>
-                    <Normaltekst>
-                        <SpråkTekst id={'forside.bekreftelsesboks.erklæring.spm'} />
-                    </Normaltekst>
-                </StyledOppsummeringsFeltGruppe>
+                <OppsummeringFelt
+                    tittel={<SpråkTekst id={'forside.bekreftelsesboks.brødtekst'} />}
+                    søknadsvar={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
+                />
             </StyledOppsummeringsFeltGruppe>
             <StyledOppsummeringsFeltGruppe>
                 <OppsummeringFelt
