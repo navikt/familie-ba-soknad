@@ -1,55 +1,69 @@
 import React from 'react';
 
-import { ESvar } from '@navikt/familie-form-elements';
-import { ISkjema } from '@navikt/familie-skjema';
+import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { DatoMedUkjent } from '../../../typer/person';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
-import { SamboerSpørsmålId, samboerSpørsmålSpråkId } from './spørsmål';
+import { samboerSpråkIder } from './spørsmål';
 import { IDinLivssituasjonFeltTyper } from './useDinLivssituasjon';
+import { ITidligereSamboerFeltTyper } from './useTidligereSamboer';
 
 const SamboerSkjema: React.FC<{
-    skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
-}> = ({ skjema }) => {
+    skjema: ISkjema<IDinLivssituasjonFeltTyper | ITidligereSamboerFeltTyper, string>;
+    samboerFelter: {
+        navn: Felt<string>;
+        fnr: Felt<string>;
+        fnrUkjent: Felt<ESvar>;
+        fødselsdato: Felt<DatoMedUkjent>;
+        fødselsdatoUkjent: Felt<ESvar>;
+        samboerFraDato: Felt<ISODateString>;
+        samboerTilDato?: Felt<ISODateString>;
+    };
+}> = ({ skjema, samboerFelter }) => {
     return (
-        <KomponentGruppe dynamisk>
+        <KomponentGruppe inline>
             <SkjemaFeltInput
-                felt={skjema.felter.nåværendeSamboerNavn}
+                felt={samboerFelter.navn}
                 visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerNavn]}
+                labelSpråkTekstId={samboerSpråkIder.navn}
             />
             <SkjemaFeltInput
-                felt={skjema.felter.nåværendeSamboerFnr}
+                felt={samboerFelter.fnr}
                 visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerFnr]}
-                disabled={skjema.felter.nåværendeSamboerFnrUkjent.verdi === ESvar.JA}
+                labelSpråkTekstId={samboerSpråkIder.fnr}
+                disabled={samboerFelter.fnrUkjent.verdi === ESvar.JA}
                 bredde={'XL'}
             />
             <SkjemaCheckbox
-                labelSpråkTekstId={
-                    samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerFnrUkjent]
-                }
-                felt={skjema.felter.nåværendeSamboerFnrUkjent}
+                labelSpråkTekstId={samboerSpråkIder.fnrUkjent}
+                felt={samboerFelter.fnrUkjent}
             />
             <Datovelger
                 skjema={skjema}
-                felt={skjema.felter.nåværendeSamboerFødselsdato}
-                labelTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerFødselsdato]}
-                disabled={skjema.felter.nåværendeSamboerFødselsdatoUkjent.verdi === ESvar.JA}
+                felt={samboerFelter.fødselsdato}
+                labelTekstId={samboerSpråkIder.fødselsdato}
+                disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
             />
             <SkjemaCheckbox
-                labelSpråkTekstId={
-                    samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerFødselsdatoUkjent]
-                }
-                felt={skjema.felter.nåværendeSamboerFødselsdatoUkjent}
+                labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
+                felt={samboerFelter.fødselsdatoUkjent}
             />
             <Datovelger
                 skjema={skjema}
-                felt={skjema.felter.nåværendeSamboerFraDato}
-                labelTekstId={samboerSpørsmålSpråkId[SamboerSpørsmålId.nåværendeSamboerFraDato]}
+                felt={samboerFelter.samboerFraDato}
+                labelTekstId={samboerSpråkIder.samboerFraDato}
             />
+            {samboerFelter.samboerTilDato && (
+                <Datovelger
+                    skjema={skjema}
+                    felt={samboerFelter.samboerTilDato}
+                    labelTekstId={samboerSpråkIder.samboerTilDato}
+                />
+            )}
         </KomponentGruppe>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -11,10 +11,11 @@ import {
     DatoMedUkjent,
     ESivilstand,
     ISamboer,
+    ITidligereSamboer,
 } from '../../../typer/person';
-import { validerDato } from '../../../utils/dato';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import useDatovelgerFeltMedUkjent from '../OmBarnet/useDatovelgerFeltMedUkjent';
 import useInputFeltMedUkjent from '../OmBarnet/useInputFeltMedUkjent';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../OmDeg/useDatovelgerFeltMedJaNeiAvhengighet';
 import { SamboerSpørsmålId } from './spørsmål';
@@ -40,12 +41,15 @@ export const useDinLivssituasjon = (): {
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
-    leggTilTidligereSamboer: () => void;
-    tidligereSamboere: string[];
+    leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
+    fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
+    tidligereSamboere: ITidligereSamboer[];
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
-    const [tidligereSamboere, settTidligereSamboere] = useState<string[]>([]); // TODO: endre typen til ITidligereSamboer når vi kobler på skjema
+    const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
+        søker.utvidet.tidligereSamboere
+    );
 
     const årsak = useFelt<Årsak | ''>({
         feltId: søker.utvidet.spørsmål.årsak.id,
@@ -98,7 +102,7 @@ export const useDinLivssituasjon = (): {
             id: SamboerSpørsmålId.nåværendeSamboerNavn,
             svar: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
         },
-        'omdeg.samboernå.feilmelding',
+        'omdeg.samboerNavn.feilmelding',
         harSamboerNå.verdi === ESvar.JA
     );
 
@@ -125,7 +129,7 @@ export const useDinLivssituasjon = (): {
             svar: fnrInitiellVerdi(søker.utvidet.nåværendeSamboer),
         },
         nåværendeSamboerFnrUkjent,
-        'omdeg.nåværendeSamboer.ident.ikkebesvart.feilmelding',
+        'omdeg.samboer.ident.ikkebesvart.feilmelding',
         true,
         harSamboerNå.verdi === ESvar.JA
     );
@@ -146,41 +150,23 @@ export const useDinLivssituasjon = (): {
         if (nåværendeSamboer.fødselsdato.svar === AlternativtSvarForInput.UKJENT) return '';
         return nåværendeSamboer.fødselsdato.svar;
     };
-    const nåværendeSamboerFødselsdato = useFelt<string>({
-        feltId: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-        verdi: getInitialFødselsdato(søker.utvidet.nåværendeSamboer),
-        avhengigheter: {
-            vetIkkeCheckbox: nåværendeSamboerFødselsdatoUkjent,
-            fnrUkjent: nåværendeSamboerFnrUkjent,
-        },
-        skalFeltetVises: avhengigheter => avhengigheter.fnrUkjent.verdi === ESvar.JA,
-        valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
-            if (
-                avhengigheter &&
-                avhengigheter.vetIkkeCheckbox &&
-                avhengigheter.vetIkkeCheckbox.verdi &&
-                avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA
-            ) {
-                return ok(felt);
-            }
-            return validerDato(felt, true);
-        },
-    });
 
-    useEffect(() => {
-        if (nåværendeSamboerFnrUkjent.verdi === ESvar.NEI) {
-            nåværendeSamboerFødselsdato.validerOgSettFelt('');
-            nåværendeSamboerFødselsdatoUkjent.validerOgSettFelt(ESvar.NEI);
-        }
-    }, [nåværendeSamboerFnrUkjent.verdi]);
+    const nåværendeSamboerFødselsdato = useDatovelgerFeltMedUkjent(
+        SamboerSpørsmålId.nåværendeSamboerFødselsdato,
+        getInitialFødselsdato(søker.utvidet.nåværendeSamboer),
+        nåværendeSamboerFødselsdatoUkjent,
+        nåværendeSamboerFnrUkjent.verdi === ESvar.JA
+    );
 
-    const nåværendeSamboerFraDato = useFelt<ISODateString>({
-        feltId: SamboerSpørsmålId.nåværendeSamboerFraDato,
-        verdi: søker.utvidet.nåværendeSamboer?.samboerFraDato.svar || '',
-        avhengigheter: { harSamboerNå },
-        skalFeltetVises: avhengigheter => avhengigheter.harSamboerNå.verdi === ESvar.JA,
-        valideringsfunksjon: (felt: FeltState<string>) => validerDato(felt, true),
-    });
+    const nåværendeSamboerFraDato = useDatovelgerFeltMedJaNeiAvhengighet(
+        {
+            id: SamboerSpørsmålId.nåværendeSamboerFraDato,
+            svar: søker.utvidet.nåværendeSamboer?.samboerFraDato.svar || '',
+        },
+        ESvar.JA,
+        harSamboerNå,
+        true
+    );
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,
@@ -202,8 +188,14 @@ export const useDinLivssituasjon = (): {
         skjemanavn: 'dinlivssituasjon',
     });
 
-    const leggTilTidligereSamboer = () => {
-        settTidligereSamboere(prevState => prevState.concat('ny samboer')); //TODO legge til av typen ITidligereSamboer i stedet for string
+    const leggTilTidligereSamboer = (samboer: ITidligereSamboer) => {
+        settTidligereSamboere(prevState => prevState.concat(samboer));
+    };
+
+    const fjernTidligereSamboer = (samboerSomSkalFjernes: ITidligereSamboer) => {
+        settTidligereSamboere(prevState =>
+            prevState.filter(samboer => samboer !== samboerSomSkalFjernes)
+        );
     };
 
     const oppdaterSøknad = () => {
@@ -213,6 +205,7 @@ export const useDinLivssituasjon = (): {
                 ...søknad.søker,
                 utvidet: {
                     ...søknad.søker.utvidet,
+                    tidligereSamboere,
                     spørsmål: {
                         ...søknad.søker.utvidet.spørsmål,
                         årsak: {
@@ -277,5 +270,6 @@ export const useDinLivssituasjon = (): {
         oppdaterSøknad,
         tidligereSamboere,
         leggTilTidligereSamboer,
+        fjernTidligereSamboer,
     };
 };

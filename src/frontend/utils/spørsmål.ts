@@ -15,6 +15,7 @@ import {
     dinLivssituasjonSpørsmålSpråkId,
     SamboerSpørsmålId,
     samboerSpørsmålSpråkId,
+    tidligereSamboerSpørsmålSpråkId,
 } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
 import {
     VelgBarnSpørsmålId,
@@ -39,6 +40,7 @@ export const samletSpørsmålSpråkTekstId: Record<SpørsmålId, string> = {
     ...omBarnetSpørsmålSpråkId,
     ...dinLivssituasjonSpørsmålSpråkId,
     ...samboerSpørsmålSpråkId,
+    ...tidligereSamboerSpørsmålSpråkId,
 };
 
 export const språkIndexListe = [
