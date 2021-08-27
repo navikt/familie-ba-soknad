@@ -11,13 +11,20 @@ import { jaNeiSvarTilSpråkId } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const StyledOppsummeringsFelt = styled.div`
-    padding: 0.25rem 0 0.25rem 0;
+    margin-bottom: 1rem;
 `;
 
 interface IOppsummeringsFeltProps {
     tittel?: ReactNode;
     søknadsvar?: string | null;
 }
+
+const StyledElement = styled(Element)`
+    && {
+        margin-bottom: 0.3rem;
+    }
+`;
+
 export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
     tittel,
     søknadsvar,
@@ -32,7 +39,7 @@ export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
 
     return (
         <StyledOppsummeringsFelt>
-            {tittel && <Element>{tittel}</Element>}
+            {tittel && <StyledElement>{tittel}</StyledElement>}
             {søknadsvar ? (
                 <Normaltekst>
                     {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}

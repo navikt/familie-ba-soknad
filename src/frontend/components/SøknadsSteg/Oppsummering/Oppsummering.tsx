@@ -20,7 +20,7 @@ const StyledNormaltekst = styled(Normaltekst)`
 `;
 
 export const StyledOppsummeringsFeltGruppe = styled.div`
-    padding: 1rem 0 1rem 0;
+    margin-bottom: 2.5rem;
 `;
 
 const Oppsummering: React.FC = () => {
