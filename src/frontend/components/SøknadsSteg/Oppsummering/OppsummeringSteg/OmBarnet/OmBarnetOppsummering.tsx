@@ -5,10 +5,12 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { useApp } from '../../../../../context/AppContext';
 import { useRoutes } from '../../../../../context/RoutesContext';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
+    barnDataKeySpørsmålUtvidet,
     IBarnMedISøknad,
 } from '../../../../../typer/person';
 import { formaterDato } from '../../../../../utils/dato';
@@ -34,6 +36,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
     const { formatMessage } = intl;
     const { hentStegObjektForBarn } = useRoutes();
     const [valgtLocale] = useSprakContext();
+    const { erUtvidet } = useApp();
 
     return (
         <Oppsummeringsbolk
@@ -350,6 +353,53 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                 )}
             </StyledOppsummeringsFeltGruppe>
+            {erUtvidet && (
+                <StyledOppsummeringsFeltGruppe>
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
+                                    ]
+                                }
+                            />
+                        }
+                        søknadsvar={
+                            barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]
+                                .svar
+                        }
+                    />
+                    {barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder].svar ===
+                        ESvar.JA && (
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={(() => {
+                                const svar =
+                                    barn.utvidet[
+                                        barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato
+                                    ].svar;
+                                return svar === AlternativtSvarForInput.UKJENT
+                                    ? formatMessage({
+                                          id:
+                                              omBarnetSpørsmålSpråkId[
+                                                  OmBarnetSpørsmålsId.søkerBorMedAndreForelder
+                                              ],
+                                      })
+                                    : formaterDato(svar);
+                            })()}
+                        />
+                    )}
+                </StyledOppsummeringsFeltGruppe>
+            )}
         </Oppsummeringsbolk>
     );
 };
