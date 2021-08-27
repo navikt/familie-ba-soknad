@@ -37,6 +37,16 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.søker.utvidet.spørsmål.årsak.svar}
                 />
             </StyledOppsummeringsFeltGruppe>
+            <StyledOppsummeringsFeltGruppe>
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.årsak]}
+                        />
+                    }
+                    søknadsvar={søknad.søker.utvidet.spørsmål.årsak.svar}
+                />
+            </StyledOppsummeringsFeltGruppe>
         </Oppsummeringsbolk>
     );
 };
