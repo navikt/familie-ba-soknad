@@ -83,6 +83,15 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         if (erOppholdtillatelseKravForSøkerMenIkkeBarn) {
             antallVedlegg++;
         }
+        if (
+            søknad.dokumentasjon.find(
+                dok =>
+                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE &&
+                    dok.gjelderForSøker
+            )
+        ) {
+            antallVedlegg++;
+        }
         return antallVedlegg;
     };
 
