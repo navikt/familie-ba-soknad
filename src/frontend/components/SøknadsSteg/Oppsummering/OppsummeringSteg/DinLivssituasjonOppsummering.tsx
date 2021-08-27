@@ -2,18 +2,25 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { Normaltekst } from 'nav-frontend-typografi';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
-import { AlternativtSvarForInput, ESivilstand } from '../../../../typer/person';
+import {
+    AlternativtSvarForInput,
+    ESivilstand,
+    ISamboer,
+    ITidligereSamboer,
+} from '../../../../typer/person';
 import { formaterDato } from '../../../../utils/dato';
+import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
     DinLivssituasjonSpørsmålId,
     dinLivssituasjonSpørsmålSpråkId,
-    SamboerSpørsmålId,
-    samboerSpørsmålSpråkId,
+    samboerSpråkIder,
 } from '../../Utvidet-DinLivssituasjon/spørsmål';
 import { toÅrsakSpråkId } from '../../Utvidet-DinLivssituasjon/types-and-utilities';
 import { useDinLivssituasjon } from '../../Utvidet-DinLivssituasjon/useDinLivssituasjon';
@@ -25,10 +32,57 @@ interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
+const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> = ({ samboer }) => {
+    const { formatMessage } = useIntl();
+
+    return (
+        <>
+            <OppsummeringFelt
+                tittel={<SpråkTekst id={samboerSpråkIder.navn} />}
+                søknadsvar={samboer.navn.svar}
+            />
+            <OppsummeringFelt
+                tittel={<SpråkTekst id={samboerSpråkIder.fnr} />}
+                søknadsvar={
+                    samboer.ident.svar === AlternativtSvarForInput.UKJENT
+                        ? formatMessage({
+                              id: samboerSpråkIder.fnrUkjent,
+                          })
+                        : samboer.ident.svar
+                }
+            />
+            {samboer.fødselsdato.svar && (
+                <OppsummeringFelt
+                    tittel={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}
+                    søknadsvar={
+                        samboer.fødselsdato.svar === AlternativtSvarForInput.UKJENT
+                            ? formatMessage({
+                                  id: samboerSpråkIder.fødselsdatoUkjent,
+                              })
+                            : formaterDato(samboer.fødselsdato.svar)
+                    }
+                />
+            )}
+            <OppsummeringFelt
+                tittel={<SpråkTekst id={samboerSpråkIder.samboerFraDato} />}
+                søknadsvar={formaterDato(samboer.samboerFraDato.svar)}
+            />
+            {'samboerTilDato' in samboer && (
+                <OppsummeringFelt
+                    tittel={<SpråkTekst id={samboerSpråkIder.samboerTilDato} />}
+                    søknadsvar={formaterDato(samboer.samboerTilDato.svar)}
+                />
+            )}
+        </>
+    );
+};
+
 const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentStegObjektForRoute } = useRoutes();
     const { søknad } = useApp();
     const { formatMessage } = useIntl();
+
+    const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
 
     return (
         <Oppsummeringsbolk
@@ -113,83 +167,31 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.søker.utvidet.spørsmål.harSamboerNå.svar}
                 />
                 {søknad.søker.utvidet.nåværendeSamboer && (
-                    <>
-                        <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        samboerSpørsmålSpråkId[
-                                            SamboerSpørsmålId.nåværendeSamboerNavn
-                                        ]
-                                    }
-                                />
-                            }
-                            søknadsvar={søknad.søker.utvidet.nåværendeSamboer.navn.svar}
-                        />
-                        <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        samboerSpørsmålSpråkId[
-                                            SamboerSpørsmålId.nåværendeSamboerFnr
-                                        ]
-                                    }
-                                />
-                            }
-                            søknadsvar={
-                                søknad.søker.utvidet.nåværendeSamboer.ident.svar ===
-                                AlternativtSvarForInput.UKJENT
-                                    ? formatMessage({
-                                          id:
-                                              samboerSpørsmålSpråkId[
-                                                  SamboerSpørsmålId.nåværendeSamboerFnrUkjent
-                                              ],
-                                      })
-                                    : søknad.søker.utvidet.nåværendeSamboer.ident.svar
+                    <SamboerOppsummering samboer={søknad.søker.utvidet.nåværendeSamboer} />
+                )}
+            </StyledOppsummeringsFeltGruppe>
+            <StyledOppsummeringsFeltGruppe>
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={
+                                dinLivssituasjonSpørsmålSpråkId[
+                                    DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
+                                ]
                             }
                         />
-                        {søknad.søker.utvidet.nåværendeSamboer.fødselsdato.svar && (
-                            <OppsummeringFelt
-                                tittel={
-                                    <SpråkTekst
-                                        id={
-                                            samboerSpørsmålSpråkId[
-                                                SamboerSpørsmålId.nåværendeSamboerFødselsdato
-                                            ]
-                                        }
-                                    />
-                                }
-                                søknadsvar={
-                                    søknad.søker.utvidet.nåværendeSamboer.fødselsdato.svar ===
-                                    AlternativtSvarForInput.UKJENT
-                                        ? formatMessage({
-                                              id:
-                                                  samboerSpørsmålSpråkId[
-                                                      SamboerSpørsmålId
-                                                          .nåværendeSamboerFødselsdatoUkjent
-                                                  ],
-                                          })
-                                        : formaterDato(
-                                              søknad.søker.utvidet.nåværendeSamboer.fødselsdato.svar
-                                          )
-                                }
-                            />
-                        )}
-                        <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        samboerSpørsmålSpråkId[
-                                            SamboerSpørsmålId.nåværendeSamboerFraDato
-                                        ]
-                                    }
-                                />
-                            }
-                            søknadsvar={formaterDato(
-                                søknad.søker.utvidet.nåværendeSamboer.samboerFraDato.svar
-                            )}
-                        />
-                    </>
+                    }
+                />
+                {tidligereSamboere && tidligereSamboere.length > 0 ? (
+                    tidligereSamboere.map(tidligereSamboer => (
+                        <StyledOppsummeringsFeltGruppe>
+                            <SamboerOppsummering samboer={tidligereSamboer} />
+                        </StyledOppsummeringsFeltGruppe>
+                    ))
+                ) : (
+                    <Normaltekst>
+                        <SpråkTekst id={jaNeiSvarTilSpråkId(ESvar.NEI)} />
+                    </Normaltekst>
                 )}
             </StyledOppsummeringsFeltGruppe>
         </Oppsummeringsbolk>

@@ -7,6 +7,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESivilstand } from '../../../typer/person';
+import { jaNeiSvarTilSpråkId } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const StyledOppsummeringsFelt = styled.div`
@@ -24,14 +25,7 @@ export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
 }) => {
     let språktekstid: boolean | string = false;
     if (søknadsvar && søknadsvar in ESvar) {
-        switch (søknadsvar) {
-            case ESvar.NEI:
-            case ESvar.JA:
-                språktekstid = 'felles.svaralternativ.' + søknadsvar.toLowerCase();
-                break;
-            default:
-                språktekstid = 'felles.svaralternativ.vetikke';
-        }
+        språktekstid = jaNeiSvarTilSpråkId(søknadsvar as ESvar);
     } else if (søknadsvar && søknadsvar in ESivilstand) {
         språktekstid = 'felles.sivilstatus.kode.' + søknadsvar;
     }

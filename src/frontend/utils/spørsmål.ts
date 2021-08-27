@@ -61,3 +61,16 @@ export const svarForSpørsmålMedUkjent = (
         return vetIkkeFelt.verdi === ESvar.JA ? AlternativtSvarForInput.UKJENT : spørsmålFelt.verdi;
     }
 };
+
+export const jaNeiSvarTilSpråkId = (svar: ESvar) => {
+    let språktekstid: string;
+    switch (svar) {
+        case ESvar.NEI:
+        case ESvar.JA:
+            språktekstid = 'felles.svaralternativ.' + svar.toLowerCase();
+            break;
+        default:
+            språktekstid = 'felles.svaralternativ.vetikke';
+    }
+    return språktekstid;
+};
