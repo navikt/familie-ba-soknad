@@ -17,7 +17,6 @@ import { IKvittering } from '../../../typer/kvittering';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
-    erTidligereSamboer,
     IBarnMedISøknad,
     ISamboer,
     ITidligereSamboer,
@@ -35,6 +34,7 @@ import {
 } from '../../../typer/søknad';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { isAlpha3Code } from '../../../utils/hjelpefunksjoner';
+import { erTidligereSamboer } from '../../../utils/person';
 import { språkIndexListe } from '../../../utils/spørsmål';
 import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';

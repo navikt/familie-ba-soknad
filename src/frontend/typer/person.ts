@@ -70,12 +70,6 @@ export interface ITidligereSamboer extends ISamboer {
     samboerTilDato: ISøknadSpørsmål<ISODateString>;
 }
 
-export const erTidligereSamboer = (
-    samboer: ISamboer | ITidligereSamboer
-): samboer is ITidligereSamboer => {
-    return 'samboerTilDato' in samboer;
-};
-
 export interface IAdresse {
     adressenavn?: string;
     postnummer?: string;
