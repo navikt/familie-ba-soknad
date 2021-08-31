@@ -6,7 +6,7 @@ metadata:
   labels:
     team: teamfamilie
 spec:
-  image: {{ image }}
+  image: { { image } }
   team: teamfamilie
   replicas:
     min: 1
@@ -24,6 +24,7 @@ spec:
     path: /metrics
   ingresses:
     - "https://www.nav.no/familie/barnetrygd/soknad/ordinaer"
+    - "https://www.nav.no/familie/barnetrygd/soknad/utvidet"
   accessPolicy:
     outbound:
       rules:
