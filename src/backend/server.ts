@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mustacheExpress from 'mustache-express';
 
+import { logInfo } from '@navikt/familie-logging';
+
 import { indexHandler } from './dekorator';
 import environment from './environment';
 import { escapeBody } from './escape';
@@ -52,6 +54,6 @@ app.get(/^\/(internal\/)?(isAlive|isReady)\/?$/, (_req, res) => res.sendStatus(2
 // Fallback, alt vi ikke treffer med andre handlere returnerer index.html
 app.get('*', indexHandler);
 
-console.log(`Starting server on localhost: http://localhost:${environment().port}${basePath}`);
+logInfo(`Starting server on localhost: http://localhost:${environment().port}${basePath}`);
 
 app.listen(environment().port);
