@@ -776,6 +776,13 @@ export const useOmBarnet = (
                             borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker,
                             barn.id
                         );
+                    case Dokumentasjonsbehov.MEKLINGSATTEST:
+                        return genererOppdatertDokumentasjon(
+                            dok,
+                            søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
+                                borMedAndreForelderCheckbox.verdi === ESvar.NEI,
+                            barn.id
+                        );
                     default:
                         return dok;
                 }

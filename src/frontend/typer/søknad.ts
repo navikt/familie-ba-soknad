@@ -148,6 +148,16 @@ export const initialStateSøknad: ISøknad = {
             'dokumentasjon.bekreftelseborsammen.informasjon'
         ),
         genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
+            'dokumentasjon.separasjonskilsmissedødsfall.vedleggtittel',
+            'dokumentasjon.separasjonskilsmissedødsfall.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.MEKLINGSATTEST,
+            'dokumentasjon.meklingsattest.vedleggtittel',
+            'dokumentasjon.meklingsattest.informasjon'
+        ),
+        genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
             'dokumentasjon.annendokumentasjon.vedleggtittel',
             hentSøknadstype() === ESøknadstype.UTVIDET
