@@ -297,7 +297,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         const formatert = dataISøknadKontraktFormat(søknad);
 
         return await axiosRequest<IKvittering, ISøknadKontrakt>({
-            url: `${soknadApi}/soknad`,
+            url: `${soknadApi}/soknad/v3`,
             method: 'POST',
             withCredentials: true,
             data: formatert,
