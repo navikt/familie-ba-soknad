@@ -6,7 +6,7 @@ metadata:
   labels:
     team: teamfamilie
 spec:
-  image: { { image } }
+  image: {{ image }}
   team: teamfamilie
   replicas:
     min: 1
