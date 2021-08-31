@@ -3,6 +3,8 @@ import { ClientRequest } from 'http';
 import { Request, Response } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
+import { logError, logSecure } from '@navikt/familie-logging';
+
 import environment from './environment';
 
 const restream = (proxyReq: ClientRequest, req: Request, _res: Response) => {
@@ -23,6 +25,10 @@ export const createApiForwardingFunction = () => {
         logLevel: process.env.ENV === 'prod' ? 'silent' : 'debug',
         secure: true,
         onProxyReq: restream,
+        onError: (err: Error, req: Request, res: Response) => {
+            logError('Feil under proxy til apiet, se i securelog');
+            logSecure('Feil under proxy til apiet', { err, req, res });
+        },
         pathRewrite: {
             [apiPath]: '/api',
         },

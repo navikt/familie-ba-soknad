@@ -3,6 +3,8 @@ import jsdom from 'jsdom';
 import NodeCache from 'node-cache';
 import request from 'request';
 
+import { logError } from '@navikt/familie-logging';
+
 import environment from './environment';
 
 const { JSDOM } = jsdom;
@@ -60,12 +62,10 @@ export const indexHandler: RequestHandler = (req, res) => {
 
     getDecorator(språk)
         .then(fragments => {
-            // eslint-disable-next-line
-            // @ts-ignore
             res.render('index.html', fragments);
         })
-        .catch(e => {
-            console.log(e);
+        .catch((e: Error) => {
+            logError('Feilmelding når vi henter dekoratøren: ', e);
             const error = `En feil oppstod. Klikk <a href="https://www.nav.no">her</a> for å gå tilbake til nav.no. Kontakt kundestøtte hvis problemet vedvarer.`;
             res.status(500).send(error);
         });
