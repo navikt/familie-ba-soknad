@@ -171,7 +171,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         });
     };
 
-    const tidligerSamboerISøknadKontraktFormat = (
+    const tidligereSamboerISøknadKontraktFormat = (
         samboer: ITidligereSamboer
     ): ISøknadsfelt<IKontraktTidligereSamboer> => {
         const { samboerTilDato, navn } = samboer;
@@ -222,7 +222,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                         ? søknadsfelt('Utvidet', {
                               spørsmål: spørmålISøknadsFormat(typetUtvidaSpørsmål),
                               tidligereSamboere: tidligereSamboere.map(
-                                  tidligerSamboerISøknadKontraktFormat
+                                  tidligereSamboerISøknadKontraktFormat
                               ),
                               nåværendeSamboer: nåværendeSamboer
                                   ? samboerISøknadKontraktFormat(nåværendeSamboer)
