@@ -24,6 +24,7 @@ spec:
     path: /metrics
   ingresses:
     - "https://www.nav.no/familie/barnetrygd/soknad/ordinaer"
+    - "https://www.nav.no/familie/barnetrygd/soknad/utvidet"
   accessPolicy:
     outbound:
       rules:
@@ -41,3 +42,5 @@ spec:
   env:
     - name: BASE_PATH
       value: {{base_path}}
+  secureLogs:
+    enabled: true
