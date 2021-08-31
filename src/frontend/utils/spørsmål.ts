@@ -15,6 +15,7 @@ import {
     dinLivssituasjonSpørsmålSpråkId,
     SamboerSpørsmålId,
     samboerSpørsmålSpråkId,
+    tidligereSamboerSpørsmålSpråkId,
 } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
 import {
     VelgBarnSpørsmålId,
@@ -39,6 +40,7 @@ export const samletSpørsmålSpråkTekstId: Record<SpørsmålId, string> = {
     ...omBarnetSpørsmålSpråkId,
     ...dinLivssituasjonSpørsmålSpråkId,
     ...samboerSpørsmålSpråkId,
+    ...tidligereSamboerSpørsmålSpråkId,
 };
 
 export const språkIndexListe = [
@@ -59,3 +61,8 @@ export const svarForSpørsmålMedUkjent = (
         return vetIkkeFelt.verdi === ESvar.JA ? AlternativtSvarForInput.UKJENT : spørsmålFelt.verdi;
     }
 };
+
+export const jaNeiSvarTilSpråkId = (svar: ESvar) =>
+    svar === ESvar.VET_IKKE
+        ? 'felles.svaralternativ.vetikke'
+        : 'felles.svaralternativ.' + svar.toLowerCase();

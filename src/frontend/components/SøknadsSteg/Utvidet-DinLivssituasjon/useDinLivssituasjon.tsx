@@ -11,6 +11,7 @@ import {
     DatoMedUkjent,
     ESivilstand,
     ISamboer,
+    ITidligereSamboer,
 } from '../../../typer/person';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -40,12 +41,15 @@ export const useDinLivssituasjon = (): {
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
-    leggTilTidligereSamboer: () => void;
-    tidligereSamboere: string[];
+    leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
+    fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
+    tidligereSamboere: ITidligereSamboer[];
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
-    const [tidligereSamboere, settTidligereSamboere] = useState<string[]>([]); // TODO: endre typen til ITidligereSamboer når vi kobler på skjema
+    const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
+        søker.utvidet.tidligereSamboere
+    );
 
     const årsak = useFelt<Årsak | ''>({
         feltId: søker.utvidet.spørsmål.årsak.id,
@@ -98,7 +102,7 @@ export const useDinLivssituasjon = (): {
             id: SamboerSpørsmålId.nåværendeSamboerNavn,
             svar: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
         },
-        'omdeg.samboernå.feilmelding',
+        'omdeg.samboerNavn.feilmelding',
         harSamboerNå.verdi === ESvar.JA
     );
 
@@ -125,7 +129,7 @@ export const useDinLivssituasjon = (): {
             svar: fnrInitiellVerdi(søker.utvidet.nåværendeSamboer),
         },
         nåværendeSamboerFnrUkjent,
-        'omdeg.nåværendeSamboer.ident.ikkebesvart.feilmelding',
+        'omdeg.samboer.ident.ikkebesvart.feilmelding',
         true,
         harSamboerNå.verdi === ESvar.JA
     );
@@ -184,8 +188,14 @@ export const useDinLivssituasjon = (): {
         skjemanavn: 'dinlivssituasjon',
     });
 
-    const leggTilTidligereSamboer = () => {
-        settTidligereSamboere(prevState => prevState.concat('ny samboer')); //TODO legge til av typen ITidligereSamboer i stedet for string
+    const leggTilTidligereSamboer = (samboer: ITidligereSamboer) => {
+        settTidligereSamboere(prevState => prevState.concat(samboer));
+    };
+
+    const fjernTidligereSamboer = (samboerSomSkalFjernes: ITidligereSamboer) => {
+        settTidligereSamboere(prevState =>
+            prevState.filter(samboer => samboer !== samboerSomSkalFjernes)
+        );
     };
 
     const oppdaterSøknad = () => {
@@ -195,6 +205,7 @@ export const useDinLivssituasjon = (): {
                 ...søknad.søker,
                 utvidet: {
                     ...søknad.søker.utvidet,
+                    tidligereSamboere,
                     spørsmål: {
                         ...søknad.søker.utvidet.spørsmål,
                         årsak: {
@@ -259,5 +270,6 @@ export const useDinLivssituasjon = (): {
         oppdaterSøknad,
         tidligereSamboere,
         leggTilTidligereSamboer,
+        fjernTidligereSamboer,
     };
 };

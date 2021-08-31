@@ -7,9 +7,11 @@ import { Element } from 'nav-frontend-typografi';
 
 import { AddCircle } from '@navikt/ds-icons';
 
+import { ITidligereSamboer } from '../../../typer/person';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import LeggTilSamboerModal from './LeggTilSamboerModal';
+import SamboerOpplysninger from './SamboerOpplysninger';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 
 const StyledFlatKnapp = styled(Flatknapp)`
@@ -17,17 +19,28 @@ const StyledFlatKnapp = styled(Flatknapp)`
 `;
 
 interface Props {
-    leggTilTidligereSamboer: () => void;
-    tidligereSamboere: string[];
+    leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
+    tidligereSamboere: ITidligereSamboer[];
+    fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
 }
 
+const StyledElement = styled(Element)`
+    && {
+        margin-bottom: 0.5rem;
+    }
+`;
+
 const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
-    <Element>
+    <StyledElement>
         <SpråkTekst id={språkId} />
-    </Element>
+    </StyledElement>
 );
 
-const TidligereSamboere: React.FC<Props> = ({ leggTilTidligereSamboer, tidligereSamboere }) => {
+const TidligereSamboere: React.FC<Props> = ({
+    leggTilTidligereSamboer,
+    tidligereSamboere,
+    fjernTidligereSamboer,
+}) => {
     const { toggleModal, erÅpen } = useModal();
 
     return (
@@ -39,26 +52,13 @@ const TidligereSamboere: React.FC<Props> = ({ leggTilTidligereSamboer, tidligere
                     ]
                 }
             />
-            {tidligereSamboere[0] && (
-                <div>DETTE ER EN PLACEHOLDER FOR FØRSTE TIDLIGERE SAMBOER MED NUMMER 0</div>
-            )}
-            {tidligereSamboere.length > 0 && (
-                <>
-                    <Spørsmål
-                        språkId={
-                            dinLivssituasjonSpørsmålSpråkId[
-                                DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode
-                            ]
-                        }
-                    />
-                    {tidligereSamboere.slice(1).map((_samboer: string, index: number) => (
-                        <div key={index}>
-                            DETTE ER EN PLACEHOLDER FOR FØRSTE TIDLIGERE SAMBOER MED NUMMER
-                            {index + 1}
-                        </div>
-                    ))}
-                </>
-            )}
+            {tidligereSamboere?.map((samboer: ITidligereSamboer, index: number) => (
+                <SamboerOpplysninger
+                    key={index}
+                    samboer={samboer}
+                    fjernTidligereSamboer={fjernTidligereSamboer}
+                />
+            ))}
             <StyledFlatKnapp
                 htmlType={'button'}
                 kompakt

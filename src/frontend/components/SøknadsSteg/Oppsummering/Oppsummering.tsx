@@ -9,6 +9,7 @@ import { useApp } from '../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import DinLivssituasjonOppsummering from './OppsummeringSteg/DinLivssituasjonOppsummering';
 import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
 import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
 import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
@@ -19,11 +20,11 @@ const StyledNormaltekst = styled(Normaltekst)`
 `;
 
 export const StyledOppsummeringsFeltGruppe = styled.div`
-    padding: 1rem 0 1rem 0;
+    margin-bottom: 2.5rem;
 `;
 
 const Oppsummering: React.FC = () => {
-    const { søknad } = useApp();
+    const { søknad, erUtvidet } = useApp();
     const { hentStegNummer } = useRoutes();
     const { push: pushHistory } = useHistory();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
@@ -50,6 +51,7 @@ const Oppsummering: React.FC = () => {
             </StyledNormaltekst>
 
             <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
+            {erUtvidet && <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />}
             <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} />
             <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} />
 

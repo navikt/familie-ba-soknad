@@ -7,16 +7,24 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESivilstand } from '../../../typer/person';
+import { jaNeiSvarTilSpråkId } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const StyledOppsummeringsFelt = styled.div`
-    padding: 0.25rem 0 0.25rem 0;
+    margin-bottom: 1rem;
 `;
 
 interface IOppsummeringsFeltProps {
     tittel?: ReactNode;
     søknadsvar?: string | null;
 }
+
+const StyledElement = styled(Element)`
+    && {
+        margin-bottom: 0.3rem;
+    }
+`;
+
 export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
     tittel,
     søknadsvar,
@@ -24,21 +32,14 @@ export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
 }) => {
     let språktekstid: boolean | string = false;
     if (søknadsvar && søknadsvar in ESvar) {
-        switch (søknadsvar) {
-            case ESvar.NEI:
-            case ESvar.JA:
-                språktekstid = 'felles.svaralternativ.' + søknadsvar.toLowerCase();
-                break;
-            default:
-                språktekstid = 'felles.svaralternativ.vetikke';
-        }
+        språktekstid = jaNeiSvarTilSpråkId(søknadsvar as ESvar);
     } else if (søknadsvar && søknadsvar in ESivilstand) {
         språktekstid = 'felles.sivilstatus.kode.' + søknadsvar;
     }
 
     return (
         <StyledOppsummeringsFelt>
-            {tittel && <Element>{tittel}</Element>}
+            {tittel && <StyledElement>{tittel}</StyledElement>}
             {søknadsvar ? (
                 <Normaltekst>
                     {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
