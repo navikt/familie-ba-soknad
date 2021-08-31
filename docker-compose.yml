@@ -38,7 +38,7 @@ services:
       context: dockerstuff/soknad-api
       args:
         <<: *common-build-variables
-        git_commit: 6763718ff31719cb1e107783e83c39051233c7ef
+        git_commit: 8be4ede7a76601707460e5bd6b4768729042d376
     depends_on:
       - key_generator
       - oauthmock
@@ -57,7 +57,7 @@ services:
       context: dockerstuff/mottak
       args:
         <<: *common-build-variables
-        git_commit: b77c44c8cc5534b7029184329f330cd590b77433
+        git_commit: 1c451640164580914cd458504f3aae9172627208
     depends_on:
       - key_generator
       - postgres
@@ -99,9 +99,11 @@ services:
   dokgen:
     container_name: dokgen
     build:
-      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git"
+      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#feature/utvidet-barnetrygd-barn-bodd-med-annen-forelder"
     environment:
       RUNTIME_OPTS: "--write.access=true"
+    ports:
+      - "5914:8080"
     volumes:
       - secure-logs:/secure-logs
       # - ../familie-ba-dokgen/content:/app/content
