@@ -24,6 +24,7 @@ spec:
     path: /metrics
   ingresses:
     - "https://www.nav.no/familie/barnetrygd/soknad/ordinaer"
+    - "https://www.nav.no/familie/barnetrygd/soknad/utvidet"
   accessPolicy:
     outbound:
       rules:
