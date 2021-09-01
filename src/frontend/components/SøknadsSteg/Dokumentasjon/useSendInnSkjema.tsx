@@ -42,6 +42,7 @@ import {
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
 } from '../Utvidet-DinLivssituasjon/spørsmål';
+import { toÅrsakSpråkId, Årsak } from '../Utvidet-DinLivssituasjon/types-and-utilities';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
@@ -78,6 +79,8 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                         formatertVerdi = landkodeTilSpråk(verdi, 'nb');
                     } else if (verdi === ESvar.VET_IKKE) {
                         formatertVerdi = ESvar.VET_IKKE.replace('_', ' ');
+                    } else if (verdi in Årsak) {
+                        formatertVerdi = intl.formatMessage({ id: toÅrsakSpråkId(verdi) });
                     } else {
                         formatertVerdi = verdi;
                     }
