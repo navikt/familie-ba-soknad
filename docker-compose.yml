@@ -58,7 +58,7 @@ services:
       context: dockerstuff/mottak
       args:
         <<: *common-build-variables
-        git_commit: bc4af52d211d565d59ed15ce243d24e5ac407d39
+        git_commit: aaead17d59c33d58576a8753279a5343498a1a65
     depends_on:
       - key_generator
       - postgres
