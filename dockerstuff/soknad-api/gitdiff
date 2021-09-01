@@ -16,10 +16,10 @@ index b7db0b9..b90ce00 100644
              <groupId>org.jetbrains.kotlin</groupId>
              <artifactId>kotlin-test</artifactId>
 diff --git a/src/main/resources/application-lokal.yaml b/src/main/resources/application-lokal.yaml
-index d5a69f0..4330b0a 100644
+index 00b9464..d26ac06 100644
 --- a/src/main/resources/application-lokal.yaml
 +++ b/src/main/resources/application-lokal.yaml
-@@ -18,14 +18,11 @@ TOKEN_X_PRIVATE_JWK: '{
+@@ -24,15 +24,11 @@ TOKEN_X_PRIVATE_JWK: '{
  TOKEN_X_CLIENT_ID: dev-local:teamfamilie:familie-ba-soknad-api
 
  no.nav.security.jwt:
@@ -30,6 +30,7 @@ index d5a69f0..4330b0a 100644
    client:
      registration:
        mottak-clientcredentials:
+-        # bytt ut token-endpoint-url: http://metadata med grant-type: client_credentials dersom man skal kjøre api med mottak lokalt.
 -        token-endpoint-url: http://metadata # Uten denne prøver token-support å kalle well-known uri i contructor og krasjer appen
 +        token-exchange:
 +          audience: dev-local:teamfamilie:familie-ba-mottak

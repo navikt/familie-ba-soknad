@@ -50,6 +50,7 @@ export const språkIndexListe = [
     omBarnetSpørsmålSpråkId,
     dinLivssituasjonSpørsmålSpråkId,
     samboerSpørsmålSpråkId,
+    tidligereSamboerSpørsmålSpråkId,
 ];
 export const svarForSpørsmålMedUkjent = (
     vetIkkeFelt: Felt<ESvar>,
