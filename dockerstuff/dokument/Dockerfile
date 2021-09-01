@@ -10,14 +10,14 @@ RUN git clone https://github.com/navikt/familie-dokument.git /app \
     && git checkout $git_commit
 WORKDIR /app
 
+# Unmock jwt validation og fjern tester som ikke compiler som følge
+COPY ./gitdiff gitdiff
+RUN git apply ./gitdiff
+
 ENV GITHUB_USERNAME=$github_username
 ENV GITHUB_TOKEN=$github_token
 
 RUN mvn clean install --settings .m2/maven-settings.xml
-
-# Unmock jwt validation og fjern tester som ikke compiler som følge
-COPY ./gitdiff gitdiff
-RUN git apply ./gitdiff
 
 COPY ./dokument-magic-invocation.sh /dokument-launch.sh
 CMD ["/dokument-launch.sh"]

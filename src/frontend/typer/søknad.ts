@@ -1,4 +1,4 @@
-import { ESvar } from '@navikt/familie-form-elements';
+import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
@@ -76,6 +76,17 @@ export interface ISøknadKontrakt {
     dokumentasjon: ISøknadKontraktDokumentasjon[];
 }
 
+export interface IKontraktNåværendeSamboer {
+    navn: ISøknadsfelt<string>;
+    ident: ISøknadsfelt<string>;
+    fødselsdato: ISøknadsfelt<string>;
+    samboerFraDato: ISøknadsfelt<ISODateString>;
+}
+
+export interface IKontraktTidligereSamboer extends IKontraktNåværendeSamboer {
+    samboerTilDato: ISøknadsfelt<ISODateString>;
+}
+
 export interface ISøknadKontraktSøker {
     ident: ISøknadsfelt<string>;
     navn: ISøknadsfelt<string>;
@@ -83,6 +94,11 @@ export interface ISøknadKontraktSøker {
     adresse: ISøknadsfelt<IAdresse>;
     sivilstand: ISøknadsfelt<ESivilstand>;
     spørsmål: SpørsmålMap;
+    utvidet?: ISøknadsfelt<{
+        tidligereSamboere: IKontraktTidligereSamboer[];
+        nåværendeSamboer: IKontraktNåværendeSamboer | null;
+        spørsmål: SpørsmålMap;
+    }>;
 }
 
 export interface ISøknadKontraktBarn {
@@ -91,6 +107,7 @@ export interface ISøknadKontraktBarn {
     borMedSøker: ISøknadsfelt<boolean>;
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
+    utvidet?: SpørsmålMap;
 }
 
 const hentSøknadstype = () => {
@@ -129,6 +146,16 @@ export const initialStateSøknad: ISøknad = {
             Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
             'dokumentasjon.bekreftelseborsammen.vedleggtittel',
             'dokumentasjon.bekreftelseborsammen.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
+            'dokumentasjon.separasjonskilsmissedødsfall.vedleggtittel',
+            'dokumentasjon.separasjonskilsmissedødsfall.informasjon'
+        ),
+        genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.MEKLINGSATTEST,
+            'dokumentasjon.meklingsattest.vedleggtittel',
+            'dokumentasjon.meklingsattest.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,

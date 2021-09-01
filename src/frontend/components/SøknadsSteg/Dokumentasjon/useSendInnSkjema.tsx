@@ -18,19 +18,30 @@ import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
     IBarnMedISøknad,
+    ISamboer,
+    ITidligereSamboer,
 } from '../../../typer/person';
 import {
+    ESøknadstype,
+    IKontraktNåværendeSamboer,
+    IKontraktTidligereSamboer,
     ISøknad,
     ISøknadKontrakt,
     ISøknadKontraktBarn,
+    ISøknadsfelt,
     ISøknadSpørsmål,
     SpørsmålId,
 } from '../../../typer/søknad';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { isAlpha3Code } from '../../../utils/hjelpefunksjoner';
+import { erTidligereSamboer } from '../../../utils/person';
 import { språkIndexListe } from '../../../utils/spørsmål';
 import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
+import {
+    SamboerSpørsmålId,
+    TidligereSamboerSpørsmålId,
+} from '../Utvidet-DinLivssituasjon/spørsmål';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
@@ -81,7 +92,15 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
     };
 
     const barnISøknadsFormat = (barn: IBarnMedISøknad): ISøknadKontraktBarn => {
-        const { ident, navn, borMedSøker, alder, adressebeskyttelse, ...barnSpørsmål } = barn;
+        const {
+            ident,
+            navn,
+            borMedSøker,
+            alder,
+            adressebeskyttelse,
+            utvidet,
+            ...barnSpørsmål
+        } = barn;
         const typetBarnSpørsmål = (barnSpørsmål as unknown) as SpørsmålMap;
 
         return {
@@ -94,6 +113,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
             ),
             alder: søknadsfelt('Alder', alder ?? AlternativtSvarForInput.UKJENT),
             spørsmål: spørmålISøknadsFormat(typetBarnSpørsmål),
+            utvidet: utvidet ? spørmålISøknadsFormat(utvidet) : undefined,
         };
     };
 
@@ -116,13 +136,74 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         tittel: dokumentasjonsbehov,
     });
 
+    const samboerISøknadKontraktFormat = (
+        samboer: ISamboer
+    ): ISøknadsfelt<IKontraktNåværendeSamboer> => {
+        const { ident, samboerFraDato, navn, fødselsdato } = samboer;
+        const erTidligere = erTidligereSamboer(samboer);
+        const språktekster = {
+            navn: språktekstFraSpørsmålId(
+                erTidligere
+                    ? TidligereSamboerSpørsmålId.tidligereSamboerNavn
+                    : SamboerSpørsmålId.nåværendeSamboerNavn
+            ),
+            ident: språktekstFraSpørsmålId(
+                erTidligere
+                    ? TidligereSamboerSpørsmålId.tidligereSamboerFnr
+                    : SamboerSpørsmålId.nåværendeSamboerFnr
+            ),
+            fødselsdato: språktekstFraSpørsmålId(
+                erTidligere
+                    ? TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato
+                    : SamboerSpørsmålId.nåværendeSamboerFødselsdato
+            ),
+            samboerFraDato: språktekstFraSpørsmålId(
+                erTidligere
+                    ? TidligereSamboerSpørsmålId.tidligereSamboerFraDato
+                    : SamboerSpørsmålId.nåværendeSamboerFraDato
+            ),
+        };
+        return søknadsfelt('Samboer', {
+            navn: søknadsfelt(språktekster.navn, navn.svar),
+            ident: søknadsfelt(språktekster.ident, ident.svar),
+            fødselsdato: søknadsfelt(språktekster.fødselsdato, fødselsdato.svar),
+            samboerFraDato: søknadsfelt(språktekster.samboerFraDato, samboerFraDato.svar),
+        });
+    };
+
+    const tidligereSamboerISøknadKontraktFormat = (
+        samboer: ITidligereSamboer
+    ): ISøknadsfelt<IKontraktTidligereSamboer> => {
+        const { samboerTilDato, navn } = samboer;
+        const { verdi: samboerIKontraktFormat } = samboerISøknadKontraktFormat(samboer);
+
+        return søknadsfelt(`Tidligere samboer: ${navn.svar}`, {
+            ...samboerIKontraktFormat,
+            samboerTilDato: søknadsfelt(
+                språktekstFraSpørsmålId(TidligereSamboerSpørsmålId.tidligereSamboerTilDato),
+                samboerTilDato.svar
+            ),
+        });
+    };
+
     const dataISøknadKontraktFormat = (søknad: ISøknad): ISøknadKontrakt => {
         const { søker } = søknad;
         // Raskeste måte å få tak i alle spørsmål minus de andre feltene på søker
         /* eslint-disable @typescript-eslint/no-unused-vars */
-        const { navn, ident, sivilstand, statsborgerskap, adresse, barn, ...søkerSpørsmål } = søker;
+        const {
+            navn,
+            ident,
+            sivilstand,
+            statsborgerskap,
+            adresse,
+            barn,
+            utvidet,
+            ...søkerSpørsmål
+        } = søker;
+        const { spørsmål: utvidaSpørsmål, nåværendeSamboer, tidligereSamboere } = utvidet;
         const { barnInkludertISøknaden } = søknad;
         const typetSøkerSpørsmål: SpørsmålMap = (søkerSpørsmål as unknown) as SpørsmålMap;
+        const typetUtvidaSpørsmål: SpørsmålMap = (utvidaSpørsmål as unknown) as SpørsmålMap;
 
         return {
             søknadstype: søknad.søknadstype,
@@ -136,6 +217,18 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                 ),
                 adresse: søknadsfelt('Adresse', søker.adresse),
                 spørsmål: spørmålISøknadsFormat(typetSøkerSpørsmål),
+                utvidet:
+                    søknad.søknadstype === ESøknadstype.UTVIDET
+                        ? søknadsfelt('Utvidet', {
+                              spørsmål: spørmålISøknadsFormat(typetUtvidaSpørsmål),
+                              tidligereSamboere: tidligereSamboere.map(
+                                  tidligereSamboerISøknadKontraktFormat
+                              ),
+                              nåværendeSamboer: nåværendeSamboer
+                                  ? samboerISøknadKontraktFormat(nåværendeSamboer)
+                                  : null,
+                          })
+                        : undefined,
             },
             barn: barnInkludertISøknaden.map(barn => barnISøknadsFormat(barn)),
             spørsmål: {
@@ -204,7 +297,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         const formatert = dataISøknadKontraktFormat(søknad);
 
         return await axiosRequest<IKvittering, ISøknadKontrakt>({
-            url: `${soknadApi}/soknad`,
+            url: `${soknadApi}/soknad/v3`,
             method: 'POST',
             withCredentials: true,
             data: formatert,
