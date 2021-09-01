@@ -100,7 +100,7 @@ services:
   dokgen:
     container_name: dokgen
     build:
-      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#feature/utvidet-barnetrygd-barn-bodd-med-annen-forelder"
+      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#7f1015f4f657330e5ba606a179621d155e4937bc"
     environment:
       RUNTIME_OPTS: "--write.access=true"
     ports:
