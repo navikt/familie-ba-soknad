@@ -73,7 +73,8 @@
   },
   "resolutions": {
     "styled-components": "^5",
-    "browserslist": "^4.16.5"
+    "browserslist": "^4.16.5",
+    "nav-datovelger": "^12.1.1"
   },
   "browserslist": {
     "production": [
@@ -90,7 +91,7 @@
   "dependencies": {
     "@babel/core": "7.12.3",
     "@navikt/ds-icons": "^0.3.2",
-    "@navikt/familie-form-elements": "^3.2.0",
+    "@navikt/familie-form-elements": "^3.2.1",
     "@navikt/familie-logging": "^1.0.5",
     "@navikt/familie-typer": "^3.0.13",
     "@navikt/fnrvalidator": "^1.1.2",
