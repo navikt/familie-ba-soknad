@@ -56,12 +56,18 @@ const SamboerSkjema: React.FC<{
                 skjema={skjema}
                 felt={samboerFelter.samboerFraDato}
                 labelTekstId={samboerSpråkIder.samboerFraDato}
+                avgrensDatoFremITid={
+                    /* Tidligere samboereforhold kan ikke starte i fremtiden, nåværende kan */
+                    !!samboerFelter.samboerTilDato
+                }
             />
             {samboerFelter.samboerTilDato && (
                 <Datovelger
                     skjema={skjema}
                     felt={samboerFelter.samboerTilDato}
                     labelTekstId={samboerSpråkIder.samboerTilDato}
+                    fraOgMedFelt={samboerFelter.samboerFraDato}
+                    avgrensDatoFremITid={true}
                 />
             )}
         </KomponentGruppe>
