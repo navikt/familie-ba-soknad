@@ -180,6 +180,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         return axiosRequest({
             url: `${soknadApi}/innlogget`,
             method: 'GET',
+            params: { søknadstype: søknad.søknadstype },
             withCredentials: true,
             påvirkerSystemLaster: true,
         })

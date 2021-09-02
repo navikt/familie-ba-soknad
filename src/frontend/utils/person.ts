@@ -22,7 +22,7 @@ export const hentAlder = (dato: string): string => {
     if (månedDiff < 0 || (månedDiff === 0 && idag.getDate() < fødselsdato.getDate())) {
         alder--;
     }
-    return alder + ' år';
+    return alder.toString();
 };
 
 export const erBarnRegistrertFraFør = (søknad: ISøknad, ident: string) => {
