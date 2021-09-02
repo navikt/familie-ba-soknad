@@ -115,7 +115,10 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                     />
                 )}
                 {barn.alder && ( // Barn som søker har lagt inn selv har ikke fødselsdato
-                    <BarneKortInfo labelId={'hvilkebarn.barn.alder'} verdi={barn.alder} />
+                    <BarneKortInfo
+                        labelId={'hvilkebarn.barn.alder'}
+                        verdi={<SpråkTekst id={'felles.år'} values={{ alder: barn.alder }} />}
+                    />
                 )}
                 {!erRegistrertManuelt && (
                     <BarneKortInfo
