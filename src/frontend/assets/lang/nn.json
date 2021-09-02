@@ -158,6 +158,7 @@
   "ombarna.asyl.hvem.feilmelding": "Du må velje kven av barna som det er søkt asylt for for å gå vidare",
   "ombarna.asyl.hvem.spm": "Kven av barna er det søkt om asyl for?",
   "ombarna.asyl.spm": "Er det søkt om asyl i Noreg for nokre av barna?",
+  "ombarna.barn-ikke-valgt.feilmelding": "Du må velje barn for å gå vidare",
   "ombarna.barnetrygd-eøs.alert": "Då du får eller har søkt om barnetrygd for nokre av barna frå eit anna EØS-land, kan du ikkje bruke den digitale søknaden. Du kan bruke PDF/papir-søknaden.",
   "ombarna.barnetrygd-eøs.feilmelding": "Du må oppgje om du får eller har søkt om barnetrygd for nokre av barna frå eit anna EØS land for å gå vidare",
   "ombarna.barnetrygd-eøs.hvem.feilmelding": "Du må velje kven av barna du får eller har søkt om barnetrygd for for å gå vidare",

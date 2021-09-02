@@ -158,6 +158,7 @@
   "ombarna.asyl.hvem.feilmelding": "You must select which of the children an application for asylum been submitted for in order to be able to proceed",
   "ombarna.asyl.hvem.spm": "For which of the children has an application for asylum been submitted?",
   "ombarna.asyl.spm": "Has an application for asylum been submitted for any of the children?",
+  "ombarna.barn-ikke-valgt.feilmelding": "You must select a child in order to be able to proceed",
   "ombarna.barnetrygd-eøs.alert": "Since you are receiving or have applied for child benefit for some of the children from another EEA country, you cannot use the digital application. You can apply using the PDF/paper application form.",
   "ombarna.barnetrygd-eøs.feilmelding": "You must state whether you are receiving or have applied for child benefit for some of the children from another EEA country in order to be able to proceed",
   "ombarna.barnetrygd-eøs.hvem.feilmelding": "You must select which of the children you are receiving or have applied for child benefit for in order to be able to proceed",
