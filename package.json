@@ -90,7 +90,7 @@
   "dependencies": {
     "@babel/core": "7.12.3",
     "@navikt/ds-icons": "^0.3.2",
-    "@navikt/familie-form-elements": "^3.2.0",
+    "@navikt/familie-form-elements": "^3.2.2",
     "@navikt/familie-logging": "^1.0.5",
     "@navikt/familie-typer": "^3.0.13",
     "@navikt/fnrvalidator": "^1.1.2",
@@ -177,7 +177,7 @@
   "devDependencies": {
     "@axe-core/react": "^4.1.1",
     "@navikt/familie-skjema": "^1.1.6",
-    "@navikt/familie-sprakvelger": "2.0.21",
+    "@navikt/familie-sprakvelger": "^2.0.26",
     "@navikt/nav-dekoratoren-moduler": "^1.4.0",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.2.3",
