@@ -23,6 +23,10 @@ describe('Oppsummering', () => {
             barnInkludertISøknaden: [
                 {
                     ident: '1234',
+                    institusjonsnavn: { svar: '' },
+                    institusjonsadresse: { svar: '' },
+                    andreForelderNavn: { svar: '' },
+                    andreForelderFnr: { svar: '' },
                 },
             ],
         });
