@@ -5,6 +5,7 @@ import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/
 
 import { useApp } from '../../../context/AppContext';
 import useInputFelt from '../../../hooks/useInputFelt';
+import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import {
@@ -17,7 +18,6 @@ import {
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useDatovelgerFeltMedUkjent from '../OmBarnet/useDatovelgerFeltMedUkjent';
-import useInputFeltMedUkjent from '../OmBarnet/useInputFeltMedUkjent';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../OmDeg/useDatovelgerFeltMedJaNeiAvhengighet';
 import { SamboerSpørsmålId } from './spørsmål';
 import { Årsak } from './types-and-utilities';

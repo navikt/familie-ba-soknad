@@ -8,13 +8,13 @@ import { RessursStatus } from '@navikt/familie-typer';
 import { idnr } from '@navikt/fnrvalidator';
 
 import { useApp } from '../../../../context/AppContext';
+import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
 import Miljø from '../../../../Miljø';
 import { barnDataKeySpørsmål, IBarn } from '../../../../typer/person';
 import { erBarnRegistrertFraFør } from '../../../../utils/person';
 import { hentUid } from '../../../../utils/uuid';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
-import useNavnInputFelt from './useNavnInputFelt';
 
 // Jeg har ikke funnet dokumentasjon på at man kan passe en enum til Omit, men det funker
 export interface ILeggTilBarnTyper
@@ -26,8 +26,8 @@ export interface ILeggTilBarnTyper
     erFødt: ESvarMedUbesvart;
     navnetErUbestemt: ESvar;
     harBarnetFåttIdNummer: ESvar;
-    fornavn: string | undefined;
-    etternavn: string | undefined;
+    fornavn: string;
+    etternavn: string;
 }
 
 export const useLeggTilBarn = (): {
@@ -65,13 +65,17 @@ export const useLeggTilBarn = (): {
         avhengigheter: { erFødt },
     });
 
-    const fornavn = useNavnInputFelt('hvilkebarn.leggtilbarn.fornavn.feilmelding', {
+    const fornavn = useInputFeltMedUkjent(
+        null,
         navnetErUbestemt,
-    });
+        'hvilkebarn.leggtilbarn.fornavn.feilmelding'
+    );
 
-    const etternavn = useNavnInputFelt('hvilkebarn.leggtilbarn.etternavn.feilmelding', {
+    const etternavn = useInputFeltMedUkjent(
+        null,
         navnetErUbestemt,
-    });
+        'hvilkebarn.leggtilbarn.etternavn.feilmelding'
+    );
 
     const ident = useFelt<string>({
         verdi: '',

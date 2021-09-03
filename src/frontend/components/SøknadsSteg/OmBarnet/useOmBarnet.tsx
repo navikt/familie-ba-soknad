@@ -17,6 +17,7 @@ import {
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
+import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
 import { ILokasjon } from '../../../typer/lokasjon';
@@ -35,7 +36,6 @@ import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
-import useInputFeltMedUkjent from './useInputFeltMedUkjent';
 import useLanddropdownFelt from './useLanddropdownFelt';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from './utils';
 

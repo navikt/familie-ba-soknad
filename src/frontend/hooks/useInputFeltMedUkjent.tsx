@@ -4,21 +4,21 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
 
-import { DatoMedUkjent } from '../../../typer/person';
-import { ISøknadSpørsmål } from '../../../typer/søknad';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { formaterInitVerdiForInputMedUkjent } from './utils';
+import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { formaterInitVerdiForInputMedUkjent } from '../components/SøknadsSteg/OmBarnet/utils';
+import { DatoMedUkjent } from '../typer/person';
+import { ISøknadSpørsmål } from '../typer/søknad';
 
 const useInputFeltMedUkjent = (
-    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent>,
+    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | null,
     avhengighet: Felt<ESvar>,
     feilmeldingSpråkId: string,
     erFnrInput = false,
     skalVises = true
 ) => {
     const inputFelt = useFelt<ISODateString>({
-        feltId: søknadsfelt.id,
-        verdi: formaterInitVerdiForInputMedUkjent(søknadsfelt.svar),
+        feltId: søknadsfelt ? søknadsfelt.id : '',
+        verdi: søknadsfelt ? formaterInitVerdiForInputMedUkjent(søknadsfelt.svar) : '',
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
             if (
                 avhengigheter &&
@@ -33,7 +33,7 @@ const useInputFeltMedUkjent = (
                     ? feil(felt, <SpråkTekst id={feilmeldingSpråkId} />)
                     : ok(felt);
             } else {
-                return felt.verdi && felt.verdi !== ''
+                return felt.verdi !== ''
                     ? ok(felt)
                     : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
             }
