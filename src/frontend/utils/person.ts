@@ -8,6 +8,8 @@ import {
     IBarn,
     IBarnMedISøknad,
     IBarnRespons,
+    ISamboer,
+    ITidligereSamboer,
 } from '../typer/person';
 import { ISøknad } from '../typer/søknad';
 import { hentUid } from './uuid';
@@ -20,7 +22,7 @@ export const hentAlder = (dato: string): string => {
     if (månedDiff < 0 || (månedDiff === 0 && idag.getDate() < fødselsdato.getDate())) {
         alder--;
     }
-    return alder + ' år';
+    return alder.toString();
 };
 
 export const erBarnRegistrertFraFør = (søknad: ISøknad, ident: string) => {
@@ -217,4 +219,10 @@ export const hentBostedSpråkId = (barn: IBarn) => {
     } else {
         return 'hvilkebarn.barn.bosted.ikke-din-adresse';
     }
+};
+
+export const erTidligereSamboer = (
+    samboer: ISamboer | ITidligereSamboer
+): samboer is ITidligereSamboer => {
+    return 'samboerTilDato' in samboer;
 };

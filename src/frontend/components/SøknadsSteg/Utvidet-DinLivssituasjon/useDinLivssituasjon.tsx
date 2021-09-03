@@ -6,6 +6,7 @@ import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/
 import { useApp } from '../../../context/AppContext';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import {
     AlternativtSvarForInput,
     DatoMedUkjent,
@@ -201,6 +202,11 @@ export const useDinLivssituasjon = (): {
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
+            dokumentasjon: søknad.dokumentasjon.map(dok =>
+                dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE
+                    ? { ...dok, gjelderForSøker: separertEnkeSkilt.verdi === ESvar.JA }
+                    : dok
+            ),
             søker: {
                 ...søknad.søker,
                 utvidet: {
