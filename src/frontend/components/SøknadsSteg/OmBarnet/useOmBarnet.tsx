@@ -17,6 +17,7 @@ import {
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
+import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
@@ -28,6 +29,7 @@ import {
     DatoMedUkjent,
     IBarnMedISøknad,
 } from '../../../typer/person';
+import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { BarnetsId } from '../OmBarnaDine/HvilkeBarnCheckboxGruppe';
@@ -119,31 +121,23 @@ export const useOmBarnet = (
 
     /*---INSTITUSJON---*/
 
-    const institusjonsnavn = useFelt<string>({
-        verdi: barn[barnDataKeySpørsmål.institusjonsnavn].svar,
-        feltId: barn[barnDataKeySpørsmål.institusjonsnavn].id,
-        valideringsfunksjon: felt =>
-            felt.verdi && felt.verdi !== ''
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarnet.institusjon.navn.feilmelding'} />),
-        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
-    });
+    const institusjonsnavn = useInputFelt(
+        barn[barnDataKeySpørsmål.institusjonsnavn],
+        'ombarnet.institusjon.navn.feilmelding',
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
+    );
 
-    const institusjonsadresse = useFelt<string>({
-        verdi: barn[barnDataKeySpørsmål.institusjonsadresse].svar,
-        feltId: barn[barnDataKeySpørsmål.institusjonsadresse].id,
-        valideringsfunksjon: felt =>
-            felt.verdi && felt.verdi !== ''
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarnet.institusjon.adresse.feilmelding'} />),
-        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
-    });
+    const institusjonsadresse = useInputFelt(
+        barn[barnDataKeySpørsmål.institusjonsadresse],
+        'ombarnet.institusjon.adresse.feilmelding',
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
+    );
 
     const institusjonspostnummer = useFelt<string>({
         verdi: barn[barnDataKeySpørsmål.institusjonspostnummer].svar,
         feltId: barn[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
-            felt.verdi?.length === 4 && Number.parseInt(felt.verdi)
+            felt.verdi.match(/^[0-9]+$/) && felt.verdi.length === 4
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'ombarnet.institusjon.postnummer.feilmelding'} />),
         skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
@@ -631,11 +625,11 @@ export const useOmBarnet = (
                           barnErFyltUt: true,
                           institusjonsnavn: {
                               ...barn.institusjonsnavn,
-                              svar: institusjonsnavn.verdi,
+                              svar: trimWhiteSpace(institusjonsnavn.verdi),
                           },
                           institusjonsadresse: {
                               ...barn.institusjonsadresse,
-                              svar: institusjonsadresse.verdi,
+                              svar: trimWhiteSpace(institusjonsadresse.verdi),
                           },
                           institusjonspostnummer: {
                               ...barn.institusjonspostnummer,
@@ -684,9 +678,11 @@ export const useOmBarnet = (
                           },
                           andreForelderNavn: {
                               ...barn.andreForelderNavn,
-                              svar: svarForSpørsmålMedUkjent(
-                                  andreForelderNavnUkjent,
-                                  andreForelderNavn
+                              svar: trimWhiteSpace(
+                                  svarForSpørsmålMedUkjent(
+                                      andreForelderNavnUkjent,
+                                      andreForelderNavn
+                                  )
                               ),
                           },
                           andreForelderFnr: {
