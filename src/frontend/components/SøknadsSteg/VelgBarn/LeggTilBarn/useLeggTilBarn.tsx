@@ -11,6 +11,7 @@ import { useApp } from '../../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
 import Miljø from '../../../../Miljø';
 import { barnDataKeySpørsmål, IBarn } from '../../../../typer/person';
+import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { erBarnRegistrertFraFør } from '../../../../utils/person';
 import { hentUid } from '../../../../utils/uuid';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -127,7 +128,9 @@ export const useLeggTilBarn = (): {
     });
 
     const fulltNavn = () => {
-        return fornavn.verdi && etternavn.verdi ? `${fornavn.verdi} ${etternavn.verdi}` : '';
+        return fornavn.verdi && etternavn.verdi
+            ? trimWhiteSpace(`${fornavn.verdi} ${etternavn.verdi}`)
+            : '';
     };
 
     const submit = async () => {

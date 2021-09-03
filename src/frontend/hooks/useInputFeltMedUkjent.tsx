@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 
+import { guid } from 'nav-frontend-js-utils';
+
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
@@ -8,6 +10,7 @@ import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst
 import { formaterInitVerdiForInputMedUkjent } from '../components/SøknadsSteg/OmBarnet/utils';
 import { DatoMedUkjent } from '../typer/person';
 import { ISøknadSpørsmål } from '../typer/søknad';
+import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 
 const useInputFeltMedUkjent = (
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | null,
@@ -17,9 +20,13 @@ const useInputFeltMedUkjent = (
     skalVises = true
 ) => {
     const inputFelt = useFelt<ISODateString>({
-        feltId: søknadsfelt ? søknadsfelt.id : '',
-        verdi: søknadsfelt ? formaterInitVerdiForInputMedUkjent(søknadsfelt.svar) : '',
+        feltId: søknadsfelt ? søknadsfelt.id : guid(),
+        verdi: søknadsfelt
+            ? trimWhiteSpace(formaterInitVerdiForInputMedUkjent(søknadsfelt.svar))
+            : '',
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
+            const feltVerdi = trimWhiteSpace(felt.verdi);
+
             if (
                 avhengigheter &&
                 avhengigheter.vetIkkeCheckbox &&
@@ -29,11 +36,11 @@ const useInputFeltMedUkjent = (
             }
 
             if (erFnrInput) {
-                return felt.verdi === '' || idnr(felt.verdi).status !== 'valid'
+                return feltVerdi === '' || idnr(feltVerdi).status !== 'valid'
                     ? feil(felt, <SpråkTekst id={feilmeldingSpråkId} />)
                     : ok(felt);
             } else {
-                return felt.verdi !== ''
+                return feltVerdi !== ''
                     ? ok(felt)
                     : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
             }
