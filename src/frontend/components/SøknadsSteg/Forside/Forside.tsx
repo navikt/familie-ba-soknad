@@ -61,7 +61,7 @@ const Forside: React.FC = () => {
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
             <Informasjonsbolk>
                 <SpråkTekst
-                    id={erUtvidet ? 'forside.info.punktliste' : 'forside.info.ordinær.punktliste'}
+                    id={'forside.info.ordinær.punktliste'}
                     values={{ b: msg => <b>{msg}</b> }}
                 />
                 <EksternLenke
