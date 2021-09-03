@@ -15,6 +15,7 @@ import {
     ISamboer,
     ITidligereSamboer,
 } from '../../../typer/person';
+import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useDatovelgerFeltMedUkjent from '../OmBarnet/useDatovelgerFeltMedUkjent';
@@ -241,7 +242,9 @@ export const useDinLivssituasjon = (): {
                                   ...søknad.søker.utvidet.nåværendeSamboer,
                                   navn: {
                                       id: SamboerSpørsmålId.nåværendeSamboerNavn,
-                                      svar: skjema.felter.nåværendeSamboerNavn.verdi,
+                                      svar: trimWhiteSpace(
+                                          skjema.felter.nåværendeSamboerNavn.verdi
+                                      ),
                                   },
                                   ident: {
                                       id: SamboerSpørsmålId.nåværendeSamboerFnr,
