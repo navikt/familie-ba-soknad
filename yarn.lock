@@ -6324,10 +6324,15 @@ image-size@~0.5.0:
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
   integrity sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=
 
-immer@8.0.1, immer@^8.0.1:
+immer@8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.1.tgz#9c73db683e2b3975c424fb0572af5889877ae656"
   integrity sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
+
+immer@^9.0.6:
+  version "9.0.6"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.6.tgz#7a96bf2674d06c8143e327cbf73539388ddf1a73"
+  integrity sha512-G95ivKpy+EvVAnAab4fVa4YGYn24J1SpEktnJX7JJ45Bd7xqME/SCplFzYFmTbrkwZbQ4xJK1xMTUYBkN6pWsQ==
 
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -10955,9 +10960,9 @@ tapable@^2.0.0, tapable@^2.1.1, tapable@^2.2.0:
   integrity sha512-FBk4IesMV1rBxX2tfiK8RAmogtWn53puLOQlvO8XuwlgxcYbP4mVPS9Ph4aeamSyyVjOl24aYWAuc8U5kCVwMw==
 
 tar@^6.0.2:
-  version "6.1.5"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.5.tgz#6e25bee1cfda94317aedc3f5d49290ae68361d73"
-  integrity sha512-FiK6MQyyaqd5vHuUjbg/NpO8BuEGeSXcmlH7Pt/JkugWS8s0w8nKybWjHDJiwzCAIKZ66uof4ghm4tBADjcqRA==
+  version "6.1.11"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.11.tgz#6760a38f003afa1b2ffd0ffe9e9abbd0eab3d621"
+  integrity sha512-an/KZQzQUkZCkuoAA64hM92X0Urb6VpRhAFllDzz44U2mcD5scmT3zBc4VgVpkugF580+DQn8eAFSyoQt0tznA==
   dependencies:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"
