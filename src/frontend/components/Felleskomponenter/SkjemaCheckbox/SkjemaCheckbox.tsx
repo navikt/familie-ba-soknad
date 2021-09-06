@@ -27,7 +27,7 @@ export const SkjemaCheckbox: React.FC<{
 
     return felt.erSynlig ? (
         <Checkbox
-            defaultChecked={felt.verdi === (invers ? ESvar.NEI : ESvar.JA)}
+            checked={felt.verdi === (invers ? ESvar.NEI : ESvar.JA)}
             {...felt.hentNavInputProps(visFeilmeldinger)}
             label={<SpråkTekst id={labelSpråkTekstId} />}
             onChange={onChange}
