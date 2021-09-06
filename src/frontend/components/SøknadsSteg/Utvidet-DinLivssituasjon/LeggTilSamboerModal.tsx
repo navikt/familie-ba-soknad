@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ITidligereSamboer } from '../../../typer/person';
+import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
 import SamboerSkjema from './SamboerSkjema';
@@ -28,7 +29,7 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
         leggTilTidligereSamboer({
             navn: {
                 id: TidligereSamboerSpørsmålId.tidligereSamboerNavn,
-                svar: skjema.felter.tidligereSamboerNavn.verdi,
+                svar: trimWhiteSpace(skjema.felter.tidligereSamboerNavn.verdi),
             },
             ident: {
                 id: TidligereSamboerSpørsmålId.tidligereSamboerFnr,

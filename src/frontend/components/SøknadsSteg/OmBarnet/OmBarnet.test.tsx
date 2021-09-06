@@ -266,6 +266,10 @@ describe('OmBarnet', () => {
             søkerForTidsromSluttdato: {
                 svar: '',
             },
+            andreForelderNavn: { svar: '' },
+            institusjonsnavn: { svar: '' },
+            institusjonsadresse: { svar: '' },
+            andreForelderFnr: { svar: '' },
         });
 
         const { erStegUtfyltFrafør } = spyOnUseApp({
@@ -303,6 +307,9 @@ describe('OmBarnet', () => {
             søkerForTidsromSluttdato: {
                 svar: '',
             },
+            institusjonsnavn: { svar: '' },
+            institusjonsadresse: { svar: '' },
+            andreForelderFnr: { svar: '' },
         });
 
         const { erStegUtfyltFrafør } = spyOnUseApp({
