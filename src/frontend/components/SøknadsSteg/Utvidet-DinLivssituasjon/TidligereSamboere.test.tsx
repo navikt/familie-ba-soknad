@@ -3,6 +3,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
+import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype, ISøknad } from '../../../typer/søknad';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import DinLivssituasjon from './DinLivssituasjon';
@@ -27,7 +28,17 @@ const søknad = mockDeep<ISøknad>({
         },
     ],
     søker: {
+        sivilstand: { type: ESivilstand.SKILT },
         utvidet: {
+            spørsmål: {
+                årsak: { svar: '' },
+            },
+            nåværendeSamboer: {
+                navn: { svar: '' },
+                ident: { svar: '' },
+                fødselsdato: { svar: '' },
+                samboerFraDato: { svar: '' },
+            },
             tidligereSamboere: [],
         },
     },
