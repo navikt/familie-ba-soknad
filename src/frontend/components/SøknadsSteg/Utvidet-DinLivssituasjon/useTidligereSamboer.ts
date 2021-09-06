@@ -2,10 +2,10 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { ISkjema, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import useInputFelt from '../../../hooks/useInputFelt';
+import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import { DatoMedUkjent } from '../../../typer/person';
 import useDatovelgerFelt from '../OmBarnet/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../OmBarnet/useDatovelgerFeltMedUkjent';
-import useInputFeltMedUkjent from '../OmBarnet/useInputFeltMedUkjent';
 import { TidligereSamboerSpørsmålId } from './spørsmål';
 
 export interface ITidligereSamboerFeltTyper {

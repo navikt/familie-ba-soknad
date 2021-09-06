@@ -31,7 +31,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
-    const [valgtLocale, setValgtLocale] = useSprakContext();
+    const [valgtLocale] = useSprakContext();
     const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
     const { soknadApi } = Miljø();
 
@@ -115,7 +115,6 @@ const [AppProvider, useApp] = createUseContext(() => {
         if (mellomlagretVerdi) {
             settSøknad(mellomlagretVerdi.søknad);
             settSisteUtfylteStegIndex(mellomlagretVerdi.sisteUtfylteStegIndex);
-            setValgtLocale(mellomlagretVerdi.locale);
         }
     };
 
@@ -181,6 +180,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         return axiosRequest({
             url: `${soknadApi}/innlogget`,
             method: 'GET',
+            params: { søknadstype: søknad.søknadstype },
             withCredentials: true,
             påvirkerSystemLaster: true,
         })

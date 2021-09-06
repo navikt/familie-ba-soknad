@@ -63,7 +63,7 @@ export const Personopplysninger: React.FC = () => {
 
             <Informasjonsbolk>
                 <Element>
-                    <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />
+                    <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />
                 </Element>
                 {søker.adresse ? (
                     genererAdresseVisning(søker.adresse)

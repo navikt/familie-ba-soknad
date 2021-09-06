@@ -58,7 +58,7 @@ services:
       context: dockerstuff/mottak
       args:
         <<: *common-build-variables
-        git_commit: aaead17d59c33d58576a8753279a5343498a1a65
+        git_commit: 816281fd7e40c94087b5010b2bbe6bbea9e68f10
     depends_on:
       - key_generator
       - postgres
@@ -100,7 +100,7 @@ services:
   dokgen:
     container_name: dokgen
     build:
-      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#feature/utvidet-barnetrygd-barn-bodd-med-annen-forelder"
+      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#072ecc7ccc37fc7d9485f89ef95a6d3a24790c05"
     environment:
       RUNTIME_OPTS: "--write.access=true"
     ports:

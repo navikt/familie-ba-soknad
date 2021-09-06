@@ -13,6 +13,7 @@ import {
     ISODateString,
 } from '@navikt/familie-form-elements';
 import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -63,6 +64,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     dynamisk = false,
 }) => {
     const { formatMessage } = useIntl();
+    const [valgtLocale] = useSprakContext();
 
     const hentBegrensninger = () => {
         const limitations: DatepickerLimitations = {};
@@ -117,6 +119,8 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 }}
                 feil={!!(felt.feilmelding && skjema.visFeilmeldinger)}
                 disabled={disabled}
+                locale={valgtLocale}
+                allowNavigationToDisabledMonths={true}
             />
             {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
         </span>
