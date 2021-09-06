@@ -1,6 +1,6 @@
 import { useIntl } from 'react-intl';
 
-import { ESvar } from '@navikt/familie-form-elements';
+import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import * as bokmålSpråktekster from '../../../assets/lang/nb.json';
@@ -38,6 +38,7 @@ import { erTidligereSamboer } from '../../../utils/person';
 import { språkIndexListe } from '../../../utils/spørsmål';
 import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '../OmBarnet/spørsmål';
 import {
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
@@ -106,6 +107,9 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         } = barn;
         const typetBarnSpørsmål = (barnSpørsmål as unknown) as SpørsmålMap;
 
+        const søkerFraTilDatoVerdi = (svar: ISODateString | AlternativtSvarForInput) =>
+            svar === AlternativtSvarForInput.UKJENT ? 'Ikke oppgitt' : svar;
+
         return {
             navn: søknadsfelt('Navn', adressebeskyttelse ? `Barn ${formaterFnr(ident)}` : navn),
             ident: søknadsfelt('Ident', ident ?? 'Ikke oppgitt'),
@@ -115,7 +119,17 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                     typetBarnSpørsmål[barnDataKeySpørsmål.borFastMedSøker].svar === ESvar.JA
             ),
             alder: søknadsfelt('Alder', alder ?? AlternativtSvarForInput.UKJENT),
-            spørsmål: spørmålISøknadsFormat(typetBarnSpørsmål),
+            spørsmål: {
+                ...spørmålISøknadsFormat(typetBarnSpørsmål),
+                [barnDataKeySpørsmål.søkerForTidsromStartdato]: søknadsfelt(
+                    språktekstFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromStartdato),
+                    søkerFraTilDatoVerdi(barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar)
+                ),
+                [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfelt(
+                    språktekstFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),
+                    søkerFraTilDatoVerdi(barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar)
+                ),
+            },
             utvidet: utvidet ? spørmålISøknadsFormat(utvidet) : undefined,
         };
     };
