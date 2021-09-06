@@ -118,7 +118,6 @@ export const useDinLivssituasjon = (): {
         verdi: fnrUkjentInitiellVerdi(søker.utvidet.nåværendeSamboer),
         avhengigheter: { harSamboerNå },
         skalFeltetVises: avhengigheter => avhengigheter.harSamboerNå.verdi === ESvar.JA,
-        nullstillVedAvhengighetEndring: false,
     });
     const fnrInitiellVerdi = (nåværendeSamboer: ISamboer | null) => {
         if (nåværendeSamboer === null) return '';
