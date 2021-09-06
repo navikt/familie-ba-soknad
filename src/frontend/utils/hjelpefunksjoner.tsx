@@ -7,3 +7,7 @@ export const hentTilfeldigElement = (array: string[]): string => {
 export const isAlpha3Code = (code: string): code is Alpha3Code => {
     return code in getAlpha3Codes();
 };
+
+export const trimWhiteSpace = (str: string) => {
+    return str.split(/\s+/).join(' ').trim();
+};
