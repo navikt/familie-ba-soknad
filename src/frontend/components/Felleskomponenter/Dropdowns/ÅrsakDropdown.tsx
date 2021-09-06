@@ -15,11 +15,9 @@ const ÅrsakDropdown: React.FC<StyledDropdownProps<Årsak | ''>> = props => {
         <StyledDropdown<Årsak | ''> {...props} bredde={'fullbredde'}>
             {muligeÅrsaker.map(
                 (årsak): ReactNode => (
-                    <option
-                        value={årsak}
-                        label={intl.formatMessage({ id: toÅrsakSpråkId(årsak) })}
-                        key={årsak}
-                    />
+                    <option value={årsak} key={årsak}>
+                        {intl.formatMessage({ id: toÅrsakSpråkId(årsak) })}
+                    </option>
                 )
             )}
         </StyledDropdown>
