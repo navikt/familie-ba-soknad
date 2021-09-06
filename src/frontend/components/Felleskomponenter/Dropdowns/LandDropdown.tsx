@@ -31,11 +31,9 @@ export const LandDropdown: React.FC<LandDropdownProps> = props => {
         >
             {landkoderSortertPåNavn.map(
                 (alphaCode): ReactNode => (
-                    <option
-                        value={alphaCode}
-                        label={getName(alphaCode, valgtLocale)}
-                        key={alphaCode}
-                    />
+                    <option value={alphaCode} key={alphaCode}>
+                        {getName(alphaCode, valgtLocale)}
+                    </option>
                 )
             )}
         </StyledDropdown>
