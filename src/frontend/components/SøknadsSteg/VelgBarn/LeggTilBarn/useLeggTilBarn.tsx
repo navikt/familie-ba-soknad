@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
-import { RessursStatus } from '@navikt/familie-typer';
 import { idnr } from '@navikt/fnrvalidator';
 
 import { useApp } from '../../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
-import Miljø from '../../../../Miljø';
 import { barnDataKeySpørsmål, IBarn } from '../../../../typer/person';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { erBarnRegistrertFraFør } from '../../../../utils/person';
@@ -36,15 +34,11 @@ export const useLeggTilBarn = (): {
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
     nullstillSkjema: () => void;
-    submit: () => Promise<boolean>;
-    forsøkerBarnMedAdressebeskyttelse: boolean;
+    leggTilBarn: () => void;
 } => {
-    const { søknad, settSøknad, axiosRequest } = useApp();
+    const { søknad, settSøknad } = useApp();
     const { barnRegistrertManuelt } = søknad;
     const intl = useIntl();
-    const [forsøkerBarnMedAdressebeskyttelse, settForsøkerBarnMedAdressebeskyttelse] = useState(
-        false
-    );
 
     const erFødt = useFelt<ESvarMedUbesvart>({
         verdi: null,
@@ -101,10 +95,6 @@ export const useLeggTilBarn = (): {
         avhengigheter: { erFødt, barnRegistrertManuelt },
     });
 
-    useEffect(() => {
-        settForsøkerBarnMedAdressebeskyttelse(false);
-    }, [ident.verdi]);
-
     const harBarnetFåttIdNummer = useFelt<ESvar>({
         verdi: ESvar.JA,
         valideringsfunksjon: felt => (felt.verdi === ESvar.JA ? ok(felt) : feil(felt, '')),
@@ -133,44 +123,23 @@ export const useLeggTilBarn = (): {
             : '';
     };
 
-    const submit = async () => {
-        if (!kanSendeSkjema()) {
-            return false;
-        }
-
-        const result = await axiosRequest<boolean, unknown>({
-            url: `${Miljø().soknadApi}/adressebeskyttelse`,
-            method: 'POST',
-            data: `ident=${ident.verdi}`,
-            withCredentials: true,
+    const leggTilBarn = () => {
+        settSøknad({
+            ...søknad,
+            barnRegistrertManuelt: søknad.barnRegistrertManuelt.concat([
+                {
+                    id: hentUid(),
+                    navn:
+                        fulltNavn() ||
+                        intl.formatMessage({ id: 'hvilkebarn.barn.ingen-navn.placeholder' }),
+                    ident: ident.verdi,
+                    borMedSøker: undefined,
+                    alder: undefined,
+                    adressebeskyttelse: false,
+                },
+            ]),
         });
-
-        // Hvis requestet feilet for noen grunn, behandle det som om barnet har beskyttelse
-        const harAdressebeskyttelseRespons =
-            result.status === RessursStatus.SUKSESS ? result.data : true;
-
-        if (!harAdressebeskyttelseRespons) {
-            settSøknad({
-                ...søknad,
-                barnRegistrertManuelt: søknad.barnRegistrertManuelt.concat([
-                    {
-                        id: hentUid(),
-                        navn:
-                            fulltNavn() ||
-                            intl.formatMessage({ id: 'hvilkebarn.barn.ingen-navn.placeholder' }),
-                        ident: ident.verdi,
-                        borMedSøker: undefined,
-                        alder: undefined,
-                        adressebeskyttelse: false,
-                    },
-                ]),
-            });
-            nullstillSkjema();
-            return true;
-        }
-
-        settForsøkerBarnMedAdressebeskyttelse(true);
-        return false;
+        nullstillSkjema();
     };
 
     return {
@@ -178,7 +147,6 @@ export const useLeggTilBarn = (): {
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
         nullstillSkjema,
-        submit,
-        forsøkerBarnMedAdressebeskyttelse,
+        leggTilBarn,
     };
 };
