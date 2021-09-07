@@ -61,12 +61,10 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.søker.sivilstand.type}
                 />
 
-                {søknad.søker.adresse && (
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
-                        children={genererAdresseVisning(søknad.søker.adresse)}
-                    />
-                )}
+                <OppsummeringFelt
+                    tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
+                    children={genererAdresseVisning(søknad.søker)}
+                />
             </StyledOppsummeringsFeltGruppe>
 
             <StyledOppsummeringsFeltGruppe>

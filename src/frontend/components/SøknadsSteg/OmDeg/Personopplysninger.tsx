@@ -65,19 +65,7 @@ export const Personopplysninger: React.FC = () => {
                 <Element>
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />
                 </Element>
-                {søker.adresse ? (
-                    genererAdresseVisning(søker.adresse)
-                ) : (
-                    <Normaltekst>
-                        <SpråkTekst
-                            id={
-                                søker.adressebeskyttelse
-                                    ? 'omdeg.personopplysninger.adresse-sperret'
-                                    : 'omdeg.personopplysninger.adresse-ukjent'
-                            }
-                        />
-                    </Normaltekst>
-                )}
+                {genererAdresseVisning(søker)}
             </Informasjonsbolk>
         </>
     );

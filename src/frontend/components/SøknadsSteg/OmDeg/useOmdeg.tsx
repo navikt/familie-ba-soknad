@@ -49,16 +49,14 @@ export const useOmdeg = (): {
              * feilmelding for det tilfellet.
              * Hvis man ikke svarer vises vanlig feilmelding.
              */
-            return felt.verdi === ESvar.JA
-                ? ok(felt)
-                : feil(
-                      felt,
-                      !felt.verdi ? (
-                          <SpråkTekst id={'felles.mangler-svar.feilmelding'} />
-                      ) : (
-                          <SpråkTekst id={'omdeg.du-kan-ikke-søke.feilmelding'} />
-                      )
-                  );
+
+            if (felt.verdi === ESvar.JA) {
+                return ok(felt);
+            }
+
+            return (!søker.adressebeskyttelse && !søker.adresse) || felt.verdi === ESvar.NEI
+                ? feil(felt, <SpråkTekst id={'omdeg.du-kan-ikke-søke.feilmelding'} />)
+                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
         },
     });
 
