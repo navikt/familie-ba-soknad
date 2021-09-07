@@ -50,12 +50,16 @@ const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         søknadsvar={barn.ident}
                     />
 
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={'hvilkebarn.barn.bosted'} />}
-                        søknadsvar={formatMessage({
-                            id: hentBostedSpråkId(barn),
-                        })}
-                    />
+                    {!søknad.barnRegistrertManuelt.find(
+                        barnRegistrertManuelt => barnRegistrertManuelt.ident === barn.ident
+                    ) && (
+                        <OppsummeringFelt
+                            tittel={<SpråkTekst id={'hvilkebarn.barn.bosted'} />}
+                            søknadsvar={formatMessage({
+                                id: hentBostedSpråkId(barn),
+                            })}
+                        />
+                    )}
                 </StyledOppsummeringsFeltGruppe>
             ))}
         </Oppsummeringsbolk>

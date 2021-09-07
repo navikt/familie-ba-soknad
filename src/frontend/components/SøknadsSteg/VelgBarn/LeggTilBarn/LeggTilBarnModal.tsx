@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Input, SkjemaGruppe } from 'nav-frontend-skjema';
@@ -24,17 +24,17 @@ const LeggTilBarnModal: React.FC<{
         skjema,
         nullstillSkjema,
         valideringErOk,
-        submit,
-        forsøkerBarnMedAdressebeskyttelse,
+        leggTilBarn,
+        validerFelterOgVisFeilmelding,
     } = useLeggTilBarn();
     const { fornavn, etternavn, navnetErUbestemt, harBarnetFåttIdNummer } = skjema.felter;
-    const [venterPåLeggTil, settVenterPåLeggTil] = useState(false);
 
-    const submitOgLukk = async () => {
-        settVenterPåLeggTil(true);
-        const success = await submit();
-        settVenterPåLeggTil(false);
-        success && toggleModal();
+    const submitOgLukk = () => {
+        if (!validerFelterOgVisFeilmelding()) {
+            return;
+        }
+        leggTilBarn();
+        toggleModal();
     };
 
     const skalViseIdentFeil = skjema.visFeilmeldinger && harBarnetFåttIdNummer.verdi !== ESvar.NEI;
@@ -72,7 +72,6 @@ const LeggTilBarnModal: React.FC<{
             submitKnappSpråkId={'hvilkebarn.leggtilbarn.kort.knapp'}
             erÅpen={erÅpen}
             toggleModal={toggleModal}
-            submitSpinner={venterPåLeggTil}
             valideringErOk={valideringErOk}
             onSubmitCallback={submitOgLukk}
             onAvbrytCallback={nullstillSkjema}
@@ -125,13 +124,7 @@ const LeggTilBarnModal: React.FC<{
                         {skjema.felter.ident.erSynlig && (
                             <Input
                                 {...identInputProps}
-                                feil={
-                                    forsøkerBarnMedAdressebeskyttelse ? (
-                                        <SpråkTekst id={'hvilkebarn.adressesperreinformasjon'} />
-                                    ) : (
-                                        identInputProps.feil
-                                    )
-                                }
+                                feil={identInputProps.feil}
                                 label={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
                                 disabled={skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI}
                                 autoComplete={'none'}
