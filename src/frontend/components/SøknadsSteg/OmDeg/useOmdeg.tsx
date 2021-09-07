@@ -54,9 +54,14 @@ export const useOmdeg = (): {
                 return ok(felt);
             }
 
-            return (!søker.adressebeskyttelse && !søker.adresse) || felt.verdi === ESvar.NEI
-                ? feil(felt, <SpråkTekst id={'omdeg.du-kan-ikke-søke.feilmelding'} />)
-                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+            let feilmeldingId;
+
+            if (felt.verdi === ESvar.NEI) feilmeldingId = 'omdeg.du-kan-ikke-søke.feilmelding';
+            else if (!søker.adressebeskyttelse && !søker.adresse)
+                feilmeldingId = 'omdeg.personopplysninger.ikke-registrert.feilmelding';
+            else feilmeldingId = 'felles.mangler-svar.feilmelding';
+
+            return feil(felt, <SpråkTekst id={feilmeldingId} />);
         },
     });
 

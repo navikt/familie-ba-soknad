@@ -306,6 +306,8 @@
   "omdeg.personopplysninger.adresse-ukjent": "Unknown",
   "omdeg.personopplysninger.adressesperre.alert": "You are registered with a blocked address",
   "omdeg.personopplysninger.ikke-registrert.alert": "You are not registered with a residential address in Norway",
+  "omdeg.personopplysninger.ikke-registrert.feilmelding": "You cannot use this digital application if you are not registered with a residential address in Norway.",
+  "omdeg.personopplysninger.ikke-registrert.info": "You cannot use this digital application if you are not registered with a residential address in Norway. You can apply using the PDF/paper application form.",
   "omdeg.personopplysninger.info.alert": "If the information we have about you is incorrect, you must change it in the National Registry (folkeregisteret).",
   "omdeg.personopplysninger.sivilstatus": "Marital status",
   "omdeg.personopplysninger.statsborgerskap": "Nationality",
