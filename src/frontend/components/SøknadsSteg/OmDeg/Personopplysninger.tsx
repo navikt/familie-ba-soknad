@@ -67,6 +67,13 @@ export const Personopplysninger: React.FC = () => {
                 </Element>
                 {genererAdresseVisning(søker)}
             </Informasjonsbolk>
+            {søker.adressebeskyttelse && (
+                <Informasjonsbolk>
+                    <AlertStripe>
+                        <SpråkTekst id={'omdeg.personopplysninger.adressesperre.alert'} />
+                    </AlertStripe>
+                </Informasjonsbolk>
+            )}
         </>
     );
 };
