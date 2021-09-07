@@ -47,7 +47,11 @@ const OmDeg: React.FC = () => {
                             spørsmålTekstId={
                                 omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]
                             }
-                            tilleggsinfoTekstId={'omdeg.borpådenneadressen.spm.tilleggsinfo'}
+                            tilleggsinfoTekstId={
+                                søker.adressebeskyttelse
+                                    ? 'omdeg.borpådenneadressen.spm.tilleggsinfo'
+                                    : ''
+                            }
                         />
 
                         {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
