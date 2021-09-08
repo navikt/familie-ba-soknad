@@ -5,17 +5,18 @@ import {
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
-import { inputISøknad, outputSoknadKontrakt } from './testData1';
+import { erGyldigUtvidetISøknadKontrakt } from '../../../utils/typeguards';
+import { inputISøknad } from './testData1';
 import { useSendInnSkjema } from './useSendInnSkjema';
 
 describe('useSendInnSkjema', () => {
-    it('test1', async () => {
+    it('mapper til gyldig utvidet kontrakt', async () => {
         silenceConsoleErrors();
         spyOnUseApp(inputISøknad);
         const { result } = renderHook(() => useSendInnSkjema(), {
             wrapper: TestProvidereMedEkteTekster,
         });
         const [_, formatert] = await result.current.sendInnSkjema();
-        expect(formatert).toEqual(outputSoknadKontrakt);
+        expect(erGyldigUtvidetISøknadKontrakt(formatert)).toBeTruthy();
     });
 });
