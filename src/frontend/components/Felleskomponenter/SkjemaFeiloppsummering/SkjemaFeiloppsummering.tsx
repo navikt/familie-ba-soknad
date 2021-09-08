@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
+import styled from 'styled-components/macro';
 
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
@@ -24,6 +25,10 @@ interface Props {
     routeForFeilmeldinger?: IRoute;
     id?: string;
 }
+
+const Container = styled.div`
+    margin-top: 2rem;
+`;
 
 export const SkjemaFeiloppsummering: React.FC<Props> = ({
     skjema,
@@ -49,29 +54,31 @@ export const SkjemaFeiloppsummering: React.FC<Props> = ({
     };
 
     return (
-        <Feiloppsummering
-            role={'alert'}
-            id={id}
-            tittel={
-                <Element>
-                    <SpråkTekst id={'felles.feiloppsummering.tittel'} />
-                </Element>
-            }
-            customFeilRender={
-                routeForFeilmeldinger ? lagRouteFeilRenderer(routeForFeilmeldinger) : undefined
-            }
-            feil={Object.values(skjema.felter)
-                .filter(felt => {
-                    return felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL;
-                })
-                .map(
-                    (felt): FeiloppsummeringFeil => {
-                        return {
-                            skjemaelementId: felt.id,
-                            feilmelding: hentFeilmelding(felt) as string,
-                        };
-                    }
-                )}
-        />
+        <Container>
+            <Feiloppsummering
+                role={'alert'}
+                id={id}
+                tittel={
+                    <Element>
+                        <SpråkTekst id={'felles.feiloppsummering.tittel'} />
+                    </Element>
+                }
+                customFeilRender={
+                    routeForFeilmeldinger ? lagRouteFeilRenderer(routeForFeilmeldinger) : undefined
+                }
+                feil={Object.values(skjema.felter)
+                    .filter(felt => {
+                        return felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL;
+                    })
+                    .map(
+                        (felt): FeiloppsummeringFeil => {
+                            return {
+                                skjemaelementId: felt.id,
+                                feilmelding: hentFeilmelding(felt) as string,
+                            };
+                        }
+                    )}
+            />
+        </Container>
     );
 };
