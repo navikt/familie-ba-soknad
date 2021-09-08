@@ -163,7 +163,6 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.1.1",
-    "@babel/preset-typescript": "^7.15.0",
     "@navikt/familie-skjema": "^1.1.6",
     "@navikt/familie-sprakvelger": "^2.0.26",
     "@navikt/nav-dekoratoren-moduler": "^1.4.0",
