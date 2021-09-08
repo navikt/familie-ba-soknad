@@ -1,11 +1,12 @@
 import { renderHook } from '@testing-library/react-hooks';
 
+import { ISøknadKontrakt } from '../../../typer/søknad';
 import {
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
-import { erGyldigUtvidetISøknadKontrakt } from '../../../utils/typeguards';
+import { erGyldigISøknadKontraktUtvidet } from '../../../utils/typeguards';
 import { inputISøknad } from './testData1';
 import { useSendInnSkjema } from './useSendInnSkjema';
 
@@ -16,7 +17,7 @@ describe('useSendInnSkjema', () => {
         const { result } = renderHook(() => useSendInnSkjema(), {
             wrapper: TestProvidereMedEkteTekster,
         });
-        const [_, formatert] = await result.current.sendInnSkjema();
-        expect(erGyldigUtvidetISøknadKontrakt(formatert)).toBeTruthy();
+        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
+        expect(erGyldigISøknadKontraktUtvidet(formatert)).toBeTruthy();
     });
 });

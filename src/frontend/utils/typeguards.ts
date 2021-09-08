@@ -10,20 +10,63 @@ import {
     SpørsmålMap,
 } from '../typer/søknad';
 
-const utvidetForSøkerErGyldig = (
-    input?: ISøknadsfelt<{
-        tidligereSamboere: IKontraktTidligereSamboer[];
-        nåværendeSamboer: IKontraktNåværendeSamboer | null;
-        spørsmål: SpørsmålMap;
-    }>
-): boolean => !!(input && input.verdi);
+interface ISøkerUtvidetFelter {
+    tidligereSamboere: IKontraktTidligereSamboer[];
+    nåværendeSamboer: IKontraktNåværendeSamboer | null;
+    spørsmål: SpørsmålMap;
+}
+
+export const erGyldigIKontraktNåværendeSamboer = (
+    input: IKontraktNåværendeSamboer
+): input is IKontraktNåværendeSamboer =>
+    !!(input && input.navn && input.ident && input.fødselsdato && input.samboerFraDato);
+
+export const erGyldigNåværendeSamboer = (
+    harSamboerNå: ISøknadsfelt<string>,
+    nåværendeSamboer: IKontraktNåværendeSamboer | null
+): boolean => {
+    if (harSamboerNå.verdi === 'NEI') {
+        return true;
+    }
+    if (
+        harSamboerNå.verdi === 'JA' &&
+        nåværendeSamboer &&
+        erGyldigIKontraktNåværendeSamboer(nåværendeSamboer)
+    ) {
+        return true;
+    }
+    return false;
+};
+
+export const erGyldigIKontraktTidligereSamboer = (
+    input: IKontraktTidligereSamboer
+): input is IKontraktTidligereSamboer =>
+    !!(input && erGyldigIKontraktNåværendeSamboer(input) && input.samboerTilDato);
+
+export const erGyldigTidligereSamboere = (input: ISøkerUtvidetFelter): boolean =>
+    input &&
+    input.tidligereSamboere &&
+    Array.isArray(input.tidligereSamboere) &&
+    input.tidligereSamboere
+        .map(erGyldigIKontraktTidligereSamboer)
+        .reduce((prev, curr) => !!(prev && curr), true);
+
+export const utvidetForSøkerErGyldig = (input?: ISøknadsfelt<ISøkerUtvidetFelter>): boolean =>
+    !!(
+        input &&
+        input.verdi &&
+        input.verdi.spørsmål &&
+        input.verdi.spørsmål.harSamboerNå &&
+        erGyldigNåværendeSamboer(input.verdi.spørsmål.harSamboerNå, input.verdi.nåværendeSamboer) &&
+        erGyldigTidligereSamboere(input.verdi)
+    );
 
 export const erGyldigISøknadKontraktSøker = (
     input: ISøknadKontraktSøker
 ): input is ISøknadKontraktSøker =>
     !!(input.ident && input.navn && input.statsborgerskap && input.adresse && input.sivilstand);
 
-export const erGyldigSøkerForUtvidet = (
+export const erGyldigISøknadKontraktSøkerUtvidet = (
     input: ISøknadKontraktSøker
 ): input is ISøknadKontraktSøker =>
     input && erGyldigISøknadKontraktSøker(input) && utvidetForSøkerErGyldig(input.utvidet);
@@ -35,9 +78,8 @@ export const erGyldigISøknadsKontraktBarn = (
 
 export const erGyldigISøknadsKontraktBarnUtvidet = (
     input: ISøknadKontraktBarn
-): input is ISøknadKontraktBarn => {
-    return !!(input && erGyldigISøknadsKontraktBarn(input) && input.utvidet);
-};
+): input is ISøknadKontraktBarn =>
+    !!(input && erGyldigISøknadsKontraktBarn(input) && input.utvidet);
 
 export const erGyldigeBarnUtvidet = (
     input: ISøknadKontraktBarn[]
@@ -53,12 +95,12 @@ export const erGyldigDokumentasjonUtvidet = (
     return true;
 };
 
-export const erGyldigUtvidetISøknadKontrakt = (input: ISøknadKontrakt): input is ISøknadKontrakt =>
+export const erGyldigISøknadKontraktUtvidet = (input: ISøknadKontrakt): input is ISøknadKontrakt =>
     !!(
         input &&
         input.søknadstype &&
         input.søknadstype === ESøknadstype.UTVIDET &&
-        erGyldigSøkerForUtvidet(input.søker) &&
+        erGyldigISøknadKontraktSøkerUtvidet(input.søker) &&
         erGyldigeBarnUtvidet(input.barn) &&
         erGyldigDokumentasjonUtvidet(input.dokumentasjon)
     );
