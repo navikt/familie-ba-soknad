@@ -49,7 +49,9 @@ import { toÅrsakSpråkId, Årsak } from '../Utvidet-DinLivssituasjon/types-and-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
 
-export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } => {
+export const useSendInnSkjema = (): {
+    sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;
+} => {
     const { axiosRequest, søknad, settInnsendingStatus } = useApp();
     const intl = useIntl();
     const { soknadApi } = Miljø();
@@ -328,7 +330,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         };
     };
 
-    const sendInnSkjema = async () => {
+    const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
         const formatert = dataISøknadKontraktFormat(søknad);
 
@@ -340,14 +342,14 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         }).then(
             res => {
                 settInnsendingStatus(res);
-                return res.status === RessursStatus.SUKSESS;
+                return [res.status === RessursStatus.SUKSESS, formatert];
             },
             () => {
                 settInnsendingStatus({
                     status: RessursStatus.FEILET,
                     frontendFeilmelding: 'Kunne ikke sende inn søknaden',
                 });
-                return false;
+                return [false, formatert];
             }
         );
     };
