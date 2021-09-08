@@ -305,6 +305,8 @@
   "omdeg.personopplysninger.adresse-ukjent": "Ukjend",
   "omdeg.personopplysninger.adressesperre.alert": "Du er registrert med adressesperre",
   "omdeg.personopplysninger.ikke-registrert.alert": "Du er ikkje registrert med bustadsadresse i Noreg",
+  "omdeg.personopplysninger.ikke-registrert.feilmelding": "Du kan ikkje bruke den digitale søknaden dersom du ikkje er registrert med bustadsadresse i Noreg.",
+  "omdeg.personopplysninger.ikke-registrert.info": "Du kan ikkje bruke den digitale søknaden dersom du ikkje er registrert med bustadsadresse i Noreg. Du kan bruke PDF/papir-skjema.",
   "omdeg.personopplysninger.info.alert": "Dersom opplysningane vi har om deg ikkje stemmer, må du endre dei hos folkeregisteret.",
   "omdeg.personopplysninger.sivilstatus": "Sivilstatus",
   "omdeg.personopplysninger.statsborgerskap": "Statsborgarskap",

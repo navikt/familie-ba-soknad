@@ -8,6 +8,7 @@ import { Element } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { IRoute } from '../../../context/RoutesContext';
 import { IBarn } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -32,12 +33,15 @@ export const SkjemaFeiloppsummering: React.FC<Props> = ({
     id,
 }) => {
     const intl = useIntl();
+    const { søknad } = useApp();
 
     /* eslint-disable @typescript-eslint/no-explicit-any */
     const hentFeilmelding = (felt: Felt<any>) => {
         const gyldigId = !!Object.values(samletSpørsmålId).find(id => id === felt.id);
         return !gyldigId ||
-            (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse && felt.verdi === ESvar.NEI) ||
+            (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse &&
+                (felt.verdi === ESvar.NEI ||
+                    (!søknad.søker.adresse && !søknad.søker.adressebeskyttelse))) ||
             felt.id === VelgBarnSpørsmålId.velgBarn ? (
             felt.feilmelding
         ) : (
