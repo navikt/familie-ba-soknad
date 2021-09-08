@@ -20,5 +20,5 @@ export const visFeiloppsummering = (skjema: ISkjema<SkjemaFeltTyper, string>): b
     const feil = Object.values(skjema.felter).find(
         felt => felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL
     );
-    return !!feil;
+    return skjema.visFeilmeldinger && !!feil;
 };

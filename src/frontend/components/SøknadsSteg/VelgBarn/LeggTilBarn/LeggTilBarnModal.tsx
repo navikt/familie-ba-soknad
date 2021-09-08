@@ -57,7 +57,7 @@ const LeggTilBarnModal: React.FC<{
                 />
                 {skjema.felter.erFødt.verdi === ESvar.NEI && (
                     <AlertStripe type={'advarsel'} form={'inline'}>
-                        <SpråkTekst id={'hvilkebarn.leggtilbarn.barndfødt.ikke-født.alert'} />
+                        <SpråkTekst id={'hvilkebarn.leggtilbarn.barn-ikke-født.alert'} />
                     </AlertStripe>
                 )}
             </SkjemaGruppe>
@@ -103,7 +103,7 @@ const LeggTilBarnModal: React.FC<{
 
                         <SkjemaCheckbox
                             felt={skjema.felter.harBarnetFåttIdNummer}
-                            visFeilmeldinger={false}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
                             labelSpråkTekstId={'hvilkebarn.leggtilbarn.ikke-fått-fnr.spm'}
                             invers={true}
                         />

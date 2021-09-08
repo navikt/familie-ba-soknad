@@ -145,14 +145,9 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                 <StyledSystemtittel>{tittel}</StyledSystemtittel>
                 <Form onSubmit={event => håndterGåVidere(event)} autoComplete="off">
                     <ChildrenContainer>{children}</ChildrenContainer>
-                    {skjema &&
-                        skjema.skjema.visFeilmeldinger &&
-                        visFeiloppsummering(skjema.skjema) && (
-                            <SkjemaFeiloppsummering
-                                skjema={skjema.skjema}
-                                barn={barn ?? undefined}
-                            />
-                        )}
+                    {skjema && visFeiloppsummering(skjema.skjema) && (
+                        <SkjemaFeiloppsummering skjema={skjema.skjema} barn={barn ?? undefined} />
+                    )}
                     {!erPåKvitteringsside(location.pathname) && (
                         <Navigeringspanel
                             onTilbakeCallback={håndterTilbake}

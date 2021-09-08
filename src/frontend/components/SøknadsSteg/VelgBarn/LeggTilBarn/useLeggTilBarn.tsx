@@ -49,7 +49,7 @@ export const useLeggTilBarn = (): {
                 case ESvar.NEI:
                     return feil(
                         felt,
-                        <SpråkTekst id={'hvilkebarn.leggtilbarn.barndfødt.ikke-født.feilmelding'} />
+                        <SpråkTekst id={'hvilkebarn.leggtilbarn.barn-ikke-født.feilmelding'} />
                     );
                 default:
                     return feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
@@ -104,7 +104,13 @@ export const useLeggTilBarn = (): {
 
     const harBarnetFåttIdNummer = useFelt<ESvar>({
         verdi: ESvar.JA,
-        valideringsfunksjon: felt => (felt.verdi === ESvar.JA ? ok(felt) : feil(felt, '')),
+        valideringsfunksjon: felt =>
+            felt.verdi === ESvar.JA
+                ? ok(felt)
+                : feil(
+                      felt,
+                      <SpråkTekst id={'hvilkebarn.leggtilbarn.ikke-fått-fnr.feilmelding'} />
+                  ),
         skalFeltetVises: ({ erFødt }) => erFødt.verdi === ESvar.JA,
         avhengigheter: { erFødt },
     });
