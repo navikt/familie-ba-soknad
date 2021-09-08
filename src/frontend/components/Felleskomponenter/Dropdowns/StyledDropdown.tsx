@@ -40,7 +40,9 @@ const StyledDropdown = <ConstrainedString extends string>({
                 id={undefined}
                 bredde={bredde || 'l'}
             >
-                <option disabled={true} value={''} label={placeholder} />
+                <option disabled={true} value={''}>
+                    {placeholder}
+                </option>
                 {children}
             </StyledSelect>
         </div>
