@@ -31,7 +31,12 @@ export const spyOnUseApp = søknad => {
         status: RessursStatus.IKKE_HENTET,
     });
     const settInnsendingStatus = jest.fn();
-    const axiosRequestMock = jest.fn();
+    const axiosRequestMock = jest
+        .fn()
+        .mockImplementation(
+            (): Promise<Ressurs<unknown>> =>
+                Promise.resolve({ status: RessursStatus.SUKSESS, data: {} })
+        );
     const erUtvidet = søknad.søknadstype === 'UTVIDET';
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
