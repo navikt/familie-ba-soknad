@@ -47,7 +47,10 @@ export const useLeggTilBarn = (): {
                 case ESvar.JA:
                     return ok(felt);
                 case ESvar.NEI:
-                    return feil(felt, 'hvilkebarn.leggtilbarn.barndfødt.ikke-født.feilmelding');
+                    return feil(
+                        felt,
+                        <SpråkTekst id={'hvilkebarn.leggtilbarn.barndfødt.ikke-født.feilmelding'} />
+                    );
                 default:
                     return feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
             }
@@ -63,13 +66,17 @@ export const useLeggTilBarn = (): {
     const fornavn = useInputFeltMedUkjent(
         null,
         navnetErUbestemt,
-        'hvilkebarn.leggtilbarn.fornavn.feilmelding'
+        'hvilkebarn.leggtilbarn.fornavn.feilmelding',
+        false,
+        erFødt.valideringsstatus === Valideringsstatus.OK
     );
 
     const etternavn = useInputFeltMedUkjent(
         null,
         navnetErUbestemt,
-        'hvilkebarn.leggtilbarn.etternavn.feilmelding'
+        'hvilkebarn.leggtilbarn.etternavn.feilmelding',
+        false,
+        erFødt.valideringsstatus === Valideringsstatus.OK
     );
 
     const ident = useFelt<string>({

@@ -52,7 +52,7 @@ const useInputFeltMedUkjent = (
         if (avhengighet.verdi === ESvar.JA) {
             inputFelt.validerOgSettFelt('', avhengighet);
         } else {
-            inputFelt.validerOgSettFelt(inputFelt.verdi);
+            inputFelt.verdi && inputFelt.validerOgSettFelt(inputFelt.verdi);
         }
     }, [avhengighet]);
 
