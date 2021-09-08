@@ -111,6 +111,7 @@
   "hvilkebarn.info.alert": "If the information we have about the children is incorrect, you must change it in the National Registry (folkeregisteret).",
   "hvilkebarn.ingen-barn-valgt.feilmelding": "You must select a child in order to be able to proceed",
   "hvilkebarn.leggtilbarn.barndfødt.ikke-født.alert": "You cannot apply for child benefit for children who have not been born yet.",
+  "hvilkebarn.leggtilbarn.barndfødt.ikke-født.feilmelding": "You cannot add a child who has not been born",
   "hvilkebarn.leggtilbarn.barnets-navn": "The child’s name",
   "hvilkebarn.leggtilbarn.barnfødt.feilmelding": "You must state whether the child has been born in order to be able to proceed",
   "hvilkebarn.leggtilbarn.barnfødt.spm": "Has the child been born?",

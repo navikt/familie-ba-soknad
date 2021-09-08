@@ -47,7 +47,7 @@ export const useLeggTilBarn = (): {
                 case ESvar.JA:
                     return ok(felt);
                 case ESvar.NEI:
-                    return feil(felt, '');
+                    return feil(felt, 'hvilkebarn.leggtilbarn.barndfødt.ikke-født.feilmelding');
                 default:
                     return feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
             }

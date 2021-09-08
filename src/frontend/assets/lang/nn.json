@@ -111,6 +111,7 @@
   "hvilkebarn.info.alert": "Dersom opplysningane om barna ikkje stemmer, må du endre dei hos folkeregisteret.",
   "hvilkebarn.ingen-barn-valgt.feilmelding": "Du må velje eitt barn for å gå vidare",
   "hvilkebarn.leggtilbarn.barndfødt.ikke-født.alert": "Du kan ikkje søke om barnetrygd for barn som ikkje er fødd.",
+  "hvilkebarn.leggtilbarn.barndfødt.ikke-født.feilmelding": "Du kan ikkje legge til eit barn som ikkje er fødd",
   "hvilkebarn.leggtilbarn.barnets-navn": "Barnet sitt namn",
   "hvilkebarn.leggtilbarn.barnfødt.feilmelding": "Du må oppgje om barnet er fødd for å gå vidare",
   "hvilkebarn.leggtilbarn.barnfødt.spm": "Er barnet fødd?",
