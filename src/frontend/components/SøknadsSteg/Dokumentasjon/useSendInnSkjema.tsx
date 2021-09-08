@@ -17,6 +17,7 @@ import { IKvittering } from '../../../typer/kvittering';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
+    barnDataKeySpørsmålUtvidet,
     IBarnMedISøknad,
     ISamboer,
     ITidligereSamboer,
@@ -110,6 +111,10 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         const søkerFraTilDatoVerdi = (svar: ISODateString | AlternativtSvarForInput) =>
             svar === AlternativtSvarForInput.UKJENT ? 'Ikke oppgitt' : svar;
 
+        const søkerFlyttetFraAndreForelderDatoVerdi = (
+            svar: ISODateString | AlternativtSvarForInput
+        ) => (svar === AlternativtSvarForInput.UKJENT ? 'Vi bor sammen nå' : svar);
+
         return {
             navn: søknadsfelt('Navn', adressebeskyttelse ? `Barn ${formaterFnr(ident)}` : navn),
             ident: søknadsfelt('Ident', ident ?? 'Ikke oppgitt'),
@@ -130,7 +135,21 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                     søkerFraTilDatoVerdi(barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar)
                 ),
             },
-            utvidet: utvidet ? spørmålISøknadsFormat(utvidet) : undefined,
+            utvidet: utvidet
+                ? {
+                      ...spørmålISøknadsFormat(utvidet),
+                      [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: søknadsfelt(
+                          språktekstFraSpørsmålId(
+                              OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                          ),
+                          søkerFlyttetFraAndreForelderDatoVerdi(
+                              barn.utvidet[
+                                  barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato
+                              ].svar
+                          )
+                      ),
+                  }
+                : undefined,
         };
     };
 
