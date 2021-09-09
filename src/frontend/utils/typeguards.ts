@@ -16,9 +16,7 @@ interface ISøkerUtvidetFelter {
     spørsmål: SpørsmålMap;
 }
 
-export const erGyldigIKontraktNåværendeSamboer = (
-    input: IKontraktNåværendeSamboer
-): input is IKontraktNåværendeSamboer =>
+export const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>
     !!(input && input.navn && input.ident && input.fødselsdato && input.samboerFraDato);
 
 export const erGyldigNåværendeSamboer = (
@@ -39,10 +37,8 @@ export const erGyldigNåværendeSamboer = (
     return false;
 };
 
-export const erGyldigIKontraktTidligereSamboer = (
-    input: IKontraktTidligereSamboer
-): input is IKontraktTidligereSamboer =>
-    !!(input && erGyldigIKontraktNåværendeSamboer(input) && input.samboerTilDato);
+export const erGyldigIKontraktTidligereSamboer = (input): input is IKontraktTidligereSamboer =>
+    !!(input && input.samboerTilDato && erGyldigIKontraktNåværendeSamboer(input));
 
 export const erGyldigTidligereSamboere = (input: ISøkerUtvidetFelter): boolean =>
     input &&
@@ -64,41 +60,34 @@ export const utvidetForSøkerErGyldig = (input?: ISøknadsfelt<ISøkerUtvidetFel
         erGyldigTidligereSamboere(input.verdi)
     );
 
-export const erGyldigISøknadKontraktSøker = (
-    input: ISøknadKontraktSøker
-): input is ISøknadKontraktSøker =>
+export const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontraktSøker =>
     !!(input.ident && input.navn && input.statsborgerskap && input.adresse && input.sivilstand);
 
-export const erGyldigISøknadKontraktSøkerUtvidet = (
-    input: ISøknadKontraktSøker
-): input is ISøknadKontraktSøker =>
+export const erGyldigISøknadKontraktSøkerUtvidet = (input): input is ISøknadKontraktSøker =>
     input && erGyldigISøknadKontraktSøker(input) && utvidetForSøkerErGyldig(input.utvidet);
 
-export const erGyldigISøknadsKontraktBarn = (
-    input: ISøknadKontraktBarn
-): input is ISøknadKontraktBarn =>
+export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadKontraktBarn =>
     !!(input && input.ident && input.navn && input.borMedSøker && input.alder && input.spørsmål);
 
-export const erGyldigISøknadsKontraktBarnUtvidet = (
-    input: ISøknadKontraktBarn
-): input is ISøknadKontraktBarn =>
+export const erGyldigISøknadsKontraktBarnUtvidet = (input): input is ISøknadKontraktBarn =>
     !!(input && erGyldigISøknadsKontraktBarn(input) && input.utvidet);
 
-export const erGyldigeBarnUtvidet = (
-    input: ISøknadKontraktBarn[]
-): input is ISøknadKontraktBarn[] =>
+export const erGyldigeBarnUtvidet = (input): input is ISøknadKontraktBarn[] =>
     input &&
     Array.isArray(input) &&
     input.map(erGyldigISøknadsKontraktBarnUtvidet).reduce((prev, curr) => !!(prev && curr), true);
 
-export const erGyldigDokumentasjonUtvidet = (
-    input: ISøknadKontraktDokumentasjon[]
-): input is ISøknadKontraktDokumentasjon[] => {
-    // TODO
-    return true;
-};
+export const erGyldigISøknadKontraktDokumentasjon = (
+    input
+): input is ISøknadKontraktDokumentasjon =>
+    input.dokumentasjonsbehov && input.harSendtInn !== undefined && input.opplastedeVedlegg;
 
-export const erGyldigISøknadKontraktUtvidet = (input: ISøknadKontrakt): input is ISøknadKontrakt =>
+export const erGyldigDokumentasjonUtvidet = (input): input is ISøknadKontraktDokumentasjon[] =>
+    input &&
+    Array.isArray(input) &&
+    input.map(erGyldigISøknadKontraktDokumentasjon).reduce((prev, curr) => !!(prev && curr), true);
+
+export const erGyldigISøknadKontraktUtvidet = (input): input is ISøknadKontrakt =>
     !!(
         input &&
         input.søknadstype &&
