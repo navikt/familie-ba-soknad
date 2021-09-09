@@ -10,6 +10,7 @@ import { logInfo } from '@navikt/familie-logging';
 
 import { indexHandler } from './dekorator';
 import environment from './environment';
+import { erklaeringInterceptor } from './erklaering-interceptor';
 import { escapeBody } from './escape';
 import { expressToggleInterceptor } from './feature-toggles';
 import { createApiForwardingFunction } from './proxy';
@@ -42,6 +43,7 @@ app.use(expressToggleInterceptor);
 
 // Sett opp middleware for input-sanitering
 app.use(`${basePath}api/soknad`, express.json());
+app.use(`${basePath}api/soknad`, erklaeringInterceptor);
 app.use(`${basePath}api/soknad`, escapeBody);
 app.use(`${basePath}api`, createApiForwardingFunction());
 
