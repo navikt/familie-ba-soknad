@@ -13,7 +13,10 @@ import { useApp } from '../../../context/AppContext';
 import { RouteEnum } from '../../../context/RoutesContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import Miljø from '../../../Miljø';
-import { logSidevisningOrdinærBarnetrygd } from '../../../utils/amplitude';
+import {
+    logSidevisningOrdinærBarnetrygd,
+    logSidevisningUtvidetBarnetrygd,
+} from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
@@ -35,7 +38,11 @@ const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
     const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad } = useApp();
 
-    useFørsteRender(() => logSidevisningOrdinærBarnetrygd(`${RouteEnum.Forside}`));
+    useFørsteRender(() => {
+        erUtvidet
+            ? logSidevisningUtvidetBarnetrygd(`${RouteEnum.Forside}`)
+            : logSidevisningOrdinærBarnetrygd(`${RouteEnum.Forside}`);
+    });
 
     const kanFortsettePåSøknad =
         mellomlagretVerdi &&

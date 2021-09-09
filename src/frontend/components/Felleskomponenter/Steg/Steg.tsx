@@ -18,6 +18,7 @@ import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     logKlikkGåVidere,
     logSidevisningOrdinærBarnetrygd,
+    logSidevisningUtvidetBarnetrygd,
     logSkjemaStegFullført,
 } from '../../../utils/amplitude';
 import Banner from '../Banner/Banner';
@@ -81,7 +82,11 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
     const nåværendeRoute = hentNåværendeRoute(location.pathname).route;
 
-    useFørsteRender(() => logSidevisningOrdinærBarnetrygd(nåværendeRoute));
+    useFørsteRender(() => {
+        if (nåværendeRoute.includes('utvidet')) {
+            logSidevisningUtvidetBarnetrygd(nåværendeRoute);
+        } else logSidevisningOrdinærBarnetrygd(nåværendeRoute);
+    });
 
     useEffect(() => {
         window.scrollTo(0, 0);

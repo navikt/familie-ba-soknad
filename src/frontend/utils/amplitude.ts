@@ -23,7 +23,7 @@ export function logEvent(eventName: string, eventProperties: any) {
 }
 
 export const logSidevisningOrdinærBarnetrygd = (side: string) => {
-    logEvent('sidevisning', {
+    logEvent('sidevisning ordinær', {
         side,
         team_id: 'familie',
         skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
@@ -31,18 +31,27 @@ export const logSidevisningOrdinærBarnetrygd = (side: string) => {
     });
 };
 
-export const logSkjemaStartet = () => {
+export const logSidevisningUtvidetBarnetrygd = (side: string) => {
+    logEvent('sidevisning utvidet', {
+        side,
+        team_id: 'familie',
+        skjemanavn: søknadstyper[ESøknadstype.UTVIDET].navn,
+        skjemaId: søknadstyper[ESøknadstype.UTVIDET].id,
+    });
+};
+
+export const logSkjemaStartet = (søknadstype: ESøknadstype) => {
     logEvent('skjema startet', {
-        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
-        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        skjemanavn: søknadstyper[søknadstype].navn,
+        skjemaId: søknadstyper[søknadstype].id,
         team_id: 'familie',
     });
 };
 
-export const logForsettPåSøknad = () => {
+export const logForsettPåSøknad = (søknadstype: ESøknadstype) => {
     logEvent('fortsett på søknad', {
-        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
-        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        skjemanavn: søknadstyper[søknadstype].navn,
+        skjemaId: søknadstyper[søknadstype].id,
         team_id: 'familie',
     });
 };
