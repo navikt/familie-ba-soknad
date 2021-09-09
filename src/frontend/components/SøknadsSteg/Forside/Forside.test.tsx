@@ -9,6 +9,7 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import norskeTekster from '../../../assets/lang/nb.json';
 import { AppProvider } from '../../../context/AppContext';
 import { RoutesProvider } from '../../../context/RoutesContext';
+import { TestProvidereMedEkteTekster } from '../../../utils/testing';
 import { bekreftelseBoksBorderFarge } from './BekreftelseOgStartSoknad';
 import Forside from './Forside';
 import { BekreftelseStatus } from './useBekreftelseOgStartSoknad';
@@ -37,19 +38,14 @@ test('Kan rendre Forside', () => {
     expect(screen.getByText('Vi stoler på deg')).toBeInTheDocument();
 });
 
-// TODO: Bug med Node og intl-versjon. Disabler testen til det er fikset.
-/*test('Alle tekster finnes i språkfil', () => {
+test('Alle tekster finnes i språkfil', () => {
     render(
-        <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
-            <AppProvider>
-                <RoutesProvider>
-                    <Forside />
-                </RoutesProvider>
-            </AppProvider>
-        </SprakProvider>
+        <TestProvidereMedEkteTekster>
+            <Forside />
+        </TestProvidereMedEkteTekster>
     );
     expect(console.error).toHaveBeenCalledTimes(0);
-});*/
+});
 
 test('Return riktig borderfarge basert på status', () => {
     expect(bekreftelseBoksBorderFarge(BekreftelseStatus.FEIL)).toEqual(navFarger.navRod);
