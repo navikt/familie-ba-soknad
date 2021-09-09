@@ -3,8 +3,15 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
-import { idnr } from '@navikt/fnrvalidator';
+import {
+    feil,
+    FeltState,
+    ISkjema,
+    ok,
+    useFelt,
+    useSkjema,
+    Valideringsstatus,
+} from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
@@ -14,6 +21,7 @@ import { erBarnRegistrertFraFør } from '../../../../utils/person';
 import { hentUid } from '../../../../utils/uuid';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
+import { VelgBarnSpørsmålId } from '../spørsmål';
 
 // Jeg har ikke funnet dokumentasjon på at man kan passe en enum til Omit, men det funker
 export interface ILeggTilBarnTyper
@@ -24,7 +32,7 @@ export interface ILeggTilBarnTyper
     ident: string;
     erFødt: ESvarMedUbesvart;
     navnetErUbestemt: ESvar;
-    harBarnetFåttIdNummer: ESvar;
+    ikkeFåttIdentChecked: ESvar;
     fornavn: string;
     etternavn: string;
 }
@@ -37,11 +45,11 @@ export const useLeggTilBarn = (): {
     leggTilBarn: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
-    const { barnRegistrertManuelt } = søknad;
     const intl = useIntl();
 
     const erFødt = useFelt<ESvarMedUbesvart>({
         verdi: null,
+        feltId: VelgBarnSpørsmålId.leggTilBarnErFødt,
         valideringsfunksjon: felt => {
             switch (felt.verdi) {
                 case ESvar.JA:
@@ -59,12 +67,13 @@ export const useLeggTilBarn = (): {
 
     const navnetErUbestemt = useFelt<ESvar>({
         verdi: ESvar.NEI,
+        feltId: VelgBarnSpørsmålId.leggTilBarnNavnIkkeBestemt,
         skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
         avhengigheter: { erFødt },
     });
 
     const fornavn = useInputFeltMedUkjent(
-        null,
+        { id: VelgBarnSpørsmålId.leggTilBarnFornavn, svar: '' },
         navnetErUbestemt,
         'hvilkebarn.leggtilbarn.fornavn.feilmelding',
         false,
@@ -72,40 +81,17 @@ export const useLeggTilBarn = (): {
     );
 
     const etternavn = useInputFeltMedUkjent(
-        null,
+        { id: VelgBarnSpørsmålId.leggTilBarnEtternavn, svar: '' },
         navnetErUbestemt,
         'hvilkebarn.leggtilbarn.etternavn.feilmelding',
         false,
         erFødt.valideringsstatus === Valideringsstatus.OK
     );
 
-    const ident = useFelt<string>({
-        verdi: '',
-        skalFeltetVises: ({ erFødt }) => erFødt.valideringsstatus === Valideringsstatus.OK,
-        valideringsfunksjon: felt => {
-            if (erBarnRegistrertFraFør(søknad, felt.verdi)) {
-                return feil(
-                    felt,
-                    <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.duplikat-barn.feilmelding'} />
-                );
-            } else if (felt.verdi === '') {
-                return feil(felt, <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.feilmelding'} />);
-            } else {
-                return idnr(felt.verdi).status === 'valid'
-                    ? ok(felt)
-                    : feil(
-                          felt,
-                          <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.feil-format.feilmelding'} />
-                      );
-            }
-        },
-        avhengigheter: { erFødt, barnRegistrertManuelt },
-    });
-
-    const harBarnetFåttIdNummer = useFelt<ESvar>({
-        verdi: ESvar.JA,
+    const ikkeFåttIdentChecked = useFelt<ESvar>({
+        verdi: ESvar.NEI,
         valideringsfunksjon: felt =>
-            felt.verdi === ESvar.JA
+            felt.verdi === ESvar.NEI
                 ? ok(felt)
                 : feil(
                       felt,
@@ -114,6 +100,25 @@ export const useLeggTilBarn = (): {
         skalFeltetVises: ({ erFødt }) => erFødt.verdi === ESvar.JA,
         avhengigheter: { erFødt },
     });
+
+    const ident = useInputFeltMedUkjent(
+        {
+            id: VelgBarnSpørsmålId.leggTilBarnFnr,
+            svar: '',
+        },
+        ikkeFåttIdentChecked,
+        'hvilkebarn.leggtilbarn.fnr.feilmelding',
+        true,
+        erFødt.valideringsstatus === Valideringsstatus.OK,
+        (felt: FeltState<string>) => {
+            return erBarnRegistrertFraFør(søknad, felt.verdi)
+                ? feil(
+                      felt,
+                      <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.duplikat-barn.feilmelding'} />
+                  )
+                : ok(felt);
+        }
+    );
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
         ILeggTilBarnTyper,
@@ -125,7 +130,7 @@ export const useLeggTilBarn = (): {
             fornavn,
             etternavn,
             navnetErUbestemt,
-            harBarnetFåttIdNummer,
+            ikkeFåttIdentChecked,
         },
         skjemanavn: 'velgbarn',
     });

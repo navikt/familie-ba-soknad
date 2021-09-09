@@ -53,7 +53,7 @@ const LeggTilBarnModal: React.FC<{
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erFødt}
-                    spørsmålTekstId={'hvilkebarn.leggtilbarn.barnfødt.spm'}
+                    spørsmålTekstId={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnErFødt]}
                 />
                 {skjema.felter.erFødt.verdi === ESvar.NEI && (
                     <AlertStripe type={'advarsel'} form={'inline'}>
@@ -75,21 +75,29 @@ const LeggTilBarnModal: React.FC<{
                         <SkjemaFeltInput
                             felt={skjema.felter.fornavn}
                             visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={'hvilkebarn.leggtilbarn.fornavn.spm'}
+                            labelSpråkTekstId={
+                                velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnFornavn]
+                            }
                             disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                         />
 
                         <SkjemaFeltInput
                             felt={skjema.felter.etternavn}
                             visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={'hvilkebarn.leggtilbarn.etternavn.spm'}
+                            labelSpråkTekstId={
+                                velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnEtternavn]
+                            }
                             disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                         />
 
                         <SkjemaCheckbox
                             felt={skjema.felter.navnetErUbestemt}
                             visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={'hvilkebarn.leggtilbarn.navn-ikke-bestemt.spm'}
+                            labelSpråkTekstId={
+                                velgBarnSpørsmålSpråkId[
+                                    VelgBarnSpørsmålId.leggTilBarnNavnIkkeBestemt
+                                ]
+                            }
                         />
                     </SkjemaGruppe>
 
@@ -97,17 +105,20 @@ const LeggTilBarnModal: React.FC<{
                         <SkjemaFeltInput
                             felt={skjema.felter.ident}
                             visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={'felles.fødsels-eller-dnummer.label'}
-                            disabled={skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI}
+                            labelSpråkTekstId={
+                                velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnFnr]
+                            }
+                            disabled={skjema.felter.ikkeFåttIdentChecked.verdi === ESvar.JA}
                         />
 
                         <SkjemaCheckbox
-                            felt={skjema.felter.harBarnetFåttIdNummer}
+                            felt={skjema.felter.ikkeFåttIdentChecked}
                             visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={'hvilkebarn.leggtilbarn.ikke-fått-fnr.spm'}
-                            invers={true}
+                            labelSpråkTekstId={
+                                velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnIkkeFåttFnr]
+                            }
                         />
-                        {skjema.felter.harBarnetFåttIdNummer.verdi === ESvar.NEI && (
+                        {skjema.felter.ikkeFåttIdentChecked.verdi === ESvar.JA && (
                             <SøkerMåBrukePDF
                                 advarselTekstId={'hvilkebarn.leggtilbarn.ikke-fått-fnr.alert'}
                             />

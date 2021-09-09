@@ -47,7 +47,8 @@ export const SkjemaFeiloppsummering: React.FC<Props> = ({
             (felt.id === OmDegSpørsmålId.borPåRegistrertAdresse &&
                 (felt.verdi === ESvar.NEI ||
                     (!søknad.søker.adresse && !søknad.søker.adressebeskyttelse))) ||
-            felt.id === VelgBarnSpørsmålId.velgBarn ? (
+            felt.id === VelgBarnSpørsmålId.velgBarn ||
+            (felt.id === VelgBarnSpørsmålId.leggTilBarnErFødt && felt.verdi === ESvar.NEI) ? (
             felt.feilmelding
         ) : (
             <SpråkTekst
