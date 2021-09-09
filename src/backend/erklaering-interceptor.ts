@@ -33,8 +33,8 @@ export const erklaeringInterceptor: RequestHandler = (request, response, next) =
     if (aksepterteSvar.includes(svar.verdi)) {
         next();
     } else {
-        return response.status(403).send(byggFeiletRessurs(
-            'Du må huke av for at du oppgir korrekte opplysninger'
-        ));
+        return response
+            .status(403)
+            .send(byggFeiletRessurs('Du må huke av for at du oppgir korrekte opplysninger'));
     }
 };
