@@ -49,7 +49,9 @@ import { toÅrsakSpråkId, Årsak } from '../Utvidet-DinLivssituasjon/types-and-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
 
-export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } => {
+export const useSendInnSkjema = (): {
+    sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;
+} => {
     const { axiosRequest, søknad, settInnsendingStatus } = useApp();
     const intl = useIntl();
     const { soknadApi } = Miljø();
@@ -63,7 +65,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         return 'ukjent-spørsmål';
     };
 
-    const søknadsfelt = (label, value) => {
+    const søknadsfelt = <T extends any>(label: string, value: T): ISøknadsfelt<T> => {
         return { label: label, verdi: value };
     };
 
@@ -251,7 +253,9 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
                     'Statsborgerskap',
                     søker.statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, 'nb'))
                 ),
-                adresse: søknadsfelt('Adresse', søker.adresse),
+                adresse: søker.adresse
+                    ? søknadsfelt('Adresse', søker.adresse)
+                    : søknadsfelt('Adresse', {}),
                 spørsmål: spørmålISøknadsFormat(typetSøkerSpørsmål),
                 utvidet:
                     søknad.søknadstype === ESøknadstype.UTVIDET
@@ -328,7 +332,7 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         };
     };
 
-    const sendInnSkjema = async () => {
+    const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
         const formatert = dataISøknadKontraktFormat(søknad);
 
@@ -340,14 +344,14 @@ export const useSendInnSkjema = (): { sendInnSkjema: () => Promise<boolean> } =>
         }).then(
             res => {
                 settInnsendingStatus(res);
-                return res.status === RessursStatus.SUKSESS;
+                return [res.status === RessursStatus.SUKSESS, formatert];
             },
             () => {
                 settInnsendingStatus({
                     status: RessursStatus.FEILET,
                     frontendFeilmelding: 'Kunne ikke sende inn søknaden',
                 });
-                return false;
+                return [false, formatert];
             }
         );
     };
