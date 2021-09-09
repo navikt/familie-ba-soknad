@@ -1,19 +1,18 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { ISøknadKontrakt } from '../../../../typer/søknad';
+import { ISøknadKontrakt } from '../../../typer/søknad';
 import {
-    silenceConsoleErrors,
+    mekkGyldigUtvidetSøknad,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
-} from '../../../../utils/testing';
-import { erGyldigISøknadKontraktUtvidet } from '../../../../utils/typeguards';
-import { useSendInnSkjema } from '../useSendInnSkjema';
-import { inputISøknad } from './ISøknadMockData';
+} from '../../../utils/testing';
+import { erGyldigISøknadKontraktUtvidet } from '../../../utils/typeguards';
+import { useSendInnSkjema } from './useSendInnSkjema';
 
 describe('useSendInnSkjema', () => {
     it('mapper til gyldig utvidet kontrakt', async () => {
-        silenceConsoleErrors();
-        spyOnUseApp(inputISøknad);
+        const iSøknad = mekkGyldigUtvidetSøknad();
+        spyOnUseApp(iSøknad);
         const { result } = renderHook(() => useSendInnSkjema(), {
             wrapper: TestProvidereMedEkteTekster,
         });
