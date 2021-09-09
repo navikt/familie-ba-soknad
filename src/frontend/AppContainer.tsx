@@ -11,7 +11,7 @@ import { RoutesProvider } from './context/RoutesContext';
 import Søknad from './Søknad';
 
 const AppContainer = () => {
-    const { systemetLaster, systemetFeiler, sluttbruker, systemetOK, innsendingStatus } = useApp();
+    const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
     return (
         <main>
             {systemetLaster() && <SystemetLaster />}
@@ -25,7 +25,6 @@ const AppContainer = () => {
                     </Alertstripe>
                 </div>
             )}
-            {innsendingStatus.status === RessursStatus.FEILET && <Feilside />}
             {systemetOK() && (
                 <RoutesProvider>
                     <Søknad />
