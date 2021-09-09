@@ -64,7 +64,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         erStegUtfyltFrafør,
         gåTilbakeTilStart,
         erUtvidet,
-        setNåværendeRoute,
+        settNåværendeRoute,
     } = useApp();
     const {
         hentNesteRoute,
@@ -99,7 +99,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     };
 
     const gåVidere = () => {
-        setNåværendeRoute(nåværendeRoute);
+        settNåværendeRoute(nåværendeRoute);
         if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
             settSisteUtfylteStegIndex(nåværendeStegIndex);
         }

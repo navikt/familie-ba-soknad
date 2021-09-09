@@ -34,7 +34,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
     const [valgtLocale] = useSprakContext();
     const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
-    const [nåværendeRoute, setNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
+    const [nåværendeRoute, settNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
     const { soknadApi } = Miljø();
 
     autentiseringsInterceptor();
@@ -252,7 +252,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         fåttGyldigKvittering,
         settFåttGyldigKvittering,
         erUtvidet,
-        setNåværendeRoute,
+        settNåværendeRoute,
     };
 });
 

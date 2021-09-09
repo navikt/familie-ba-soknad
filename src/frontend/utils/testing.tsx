@@ -33,7 +33,7 @@ export const spyOnUseApp = søknad => {
     const settInnsendingStatus = jest.fn();
     const axiosRequestMock = jest.fn();
     const erUtvidet = søknad.søknadstype === 'UTVIDET';
-    const setNåværendeRoute = jest.fn();
+    const settNåværendeRoute = jest.fn();
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
 
@@ -48,7 +48,7 @@ export const spyOnUseApp = søknad => {
         settInnsendingStatus,
         axiosRequest: axiosRequestMock,
         erUtvidet,
-        setNåværendeRoute,
+        settNåværendeRoute,
     });
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
 
@@ -119,6 +119,13 @@ export const mockHistory = (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore denne har vi definert i __mocks__/history
     return history.__setHistory(newHistory);
+};
+
+export const mekkGyldigUtvidetSøknad = () => {
+    return {
+        ...mekkGyldigSøknad(),
+        søknadstype: ESøknadstype.UTVIDET,
+    };
 };
 
 export const mekkGyldigSøknad = (): ISøknad => {
