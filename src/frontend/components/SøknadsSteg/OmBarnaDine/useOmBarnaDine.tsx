@@ -4,8 +4,7 @@ import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
-import { barnDataKeySpørsmål } from '../../../typer/person';
-import { BarnetsId } from './HvilkeBarnCheckboxGruppe';
+import { barnDataKeySpørsmål, BarnetsId } from '../../../typer/person';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 import { genererOppdaterteBarn } from './utils';
 
