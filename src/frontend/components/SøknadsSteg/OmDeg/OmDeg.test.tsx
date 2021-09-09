@@ -30,6 +30,15 @@ jest.mock('nav-frontend-alertstriper', () => ({ children }) => (
 
 describe('OmDeg', () => {
     silenceConsoleErrors();
+    test('Alle tekster finnes i språkfil', () => {
+        render(
+            <TestProvidereMedEkteTekster>
+                <OmDeg />
+            </TestProvidereMedEkteTekster>
+        );
+        expect(console.error).toHaveBeenCalledTimes(0);
+    });
+
     test('Skal rendre alertstripe i OmDeg', () => {
         const { getByTestId } = render(
             <TestProvidereMedEkteTekster>
