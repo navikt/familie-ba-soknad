@@ -95,8 +95,8 @@ export interface ISøknadKontraktSøker {
     sivilstand: ISøknadsfelt<ESivilstand>;
     spørsmål: SpørsmålMap;
     utvidet?: ISøknadsfelt<{
-        tidligereSamboere: IKontraktTidligereSamboer[];
-        nåværendeSamboer: IKontraktNåværendeSamboer | null;
+        tidligereSamboere: ISøknadsfelt<IKontraktTidligereSamboer>[];
+        nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null; // TODO: Noe som ikke stemmer her. Skal ikke denne være en ISøknadfelt<IKontraktNåværendeSamboer> ?
         spørsmål: SpørsmålMap;
     }>;
 }

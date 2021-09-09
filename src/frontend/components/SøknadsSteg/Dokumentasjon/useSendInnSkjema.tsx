@@ -65,7 +65,7 @@ export const useSendInnSkjema = (): {
         return 'ukjent-spørsmål';
     };
 
-    const søknadsfelt = (label, value) => {
+    const søknadsfelt = <T extends any>(label: string, value: T): ISøknadsfelt<T> => {
         return { label: label, verdi: value };
     };
 
@@ -253,7 +253,9 @@ export const useSendInnSkjema = (): {
                     'Statsborgerskap',
                     søker.statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, 'nb'))
                 ),
-                adresse: søknadsfelt('Adresse', søker.adresse),
+                adresse: søker.adresse
+                    ? søknadsfelt('Adresse', søker.adresse)
+                    : søknadsfelt('Adresse', {}),
                 spørsmål: spørmålISøknadsFormat(typetSøkerSpørsmål),
                 utvidet:
                     søknad.søknadstype === ESøknadstype.UTVIDET

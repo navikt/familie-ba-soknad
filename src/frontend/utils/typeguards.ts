@@ -11,8 +11,8 @@ import {
 } from '../typer/søknad';
 
 interface ISøkerUtvidetFelter {
-    tidligereSamboere: IKontraktTidligereSamboer[];
-    nåværendeSamboer: IKontraktNåværendeSamboer | null;
+    tidligereSamboere: ISøknadsfelt<IKontraktTidligereSamboer>[];
+    nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null;
     spørsmål: SpørsmålMap;
 }
 
@@ -23,7 +23,7 @@ export const erGyldigIKontraktNåværendeSamboer = (
 
 export const erGyldigNåværendeSamboer = (
     harSamboerNå: ISøknadsfelt<string>,
-    nåværendeSamboer: IKontraktNåværendeSamboer | null
+    nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null
 ): boolean => {
     if (harSamboerNå.verdi === 'NEI') {
         return true;
@@ -31,7 +31,8 @@ export const erGyldigNåværendeSamboer = (
     if (
         harSamboerNå.verdi === 'JA' &&
         nåværendeSamboer &&
-        erGyldigIKontraktNåværendeSamboer(nåværendeSamboer)
+        nåværendeSamboer.verdi &&
+        erGyldigIKontraktNåværendeSamboer(nåværendeSamboer.verdi)
     ) {
         return true;
     }
@@ -48,7 +49,9 @@ export const erGyldigTidligereSamboere = (input: ISøkerUtvidetFelter): boolean 
     input.tidligereSamboere &&
     Array.isArray(input.tidligereSamboere) &&
     input.tidligereSamboere
-        .map(erGyldigIKontraktTidligereSamboer)
+        .map(tidligereSamboerSøknadsfelt =>
+            erGyldigIKontraktTidligereSamboer(tidligereSamboerSøknadsfelt.verdi)
+        )
         .reduce((prev, curr) => !!(prev && curr), true);
 
 export const utvidetForSøkerErGyldig = (input?: ISøknadsfelt<ISøkerUtvidetFelter>): boolean =>
