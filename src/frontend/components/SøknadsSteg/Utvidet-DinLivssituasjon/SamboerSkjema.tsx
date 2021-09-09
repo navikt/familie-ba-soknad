@@ -42,16 +42,20 @@ const SamboerSkjema: React.FC<{
                 labelSpråkTekstId={samboerSpråkIder.fnrUkjent}
                 felt={samboerFelter.fnrUkjent}
             />
-            <Datovelger
-                skjema={skjema}
-                felt={samboerFelter.fødselsdato}
-                labelTekstId={samboerSpråkIder.fødselsdato}
-                disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
-            />
-            <SkjemaCheckbox
-                labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
-                felt={samboerFelter.fødselsdatoUkjent}
-            />
+            {samboerFelter.fødselsdato.erSynlig && (
+                <KomponentGruppe inline dynamisk>
+                    <Datovelger
+                        skjema={skjema}
+                        felt={samboerFelter.fødselsdato}
+                        labelTekstId={samboerSpråkIder.fødselsdato}
+                        disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
+                    />
+                    <SkjemaCheckbox
+                        labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
+                        felt={samboerFelter.fødselsdatoUkjent}
+                    />
+                </KomponentGruppe>
+            )}
             <Datovelger
                 skjema={skjema}
                 felt={samboerFelter.samboerFraDato}

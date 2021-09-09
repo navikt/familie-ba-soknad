@@ -34,31 +34,37 @@ const OmDeg: React.FC = () => {
             </KomponentGruppe>
 
             <KomponentGruppe>
-                {søker.adresse && (
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.borPåRegistrertAdresse}
-                        spørsmålTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]
-                        }
-                        tilleggsinfoTekstId={'omdeg.borpådenneadressen.spm.tilleggsinfo'}
+                {!søker.adresse && !søker.adressebeskyttelse ? (
+                    <SøkerMåBrukePDF
+                        advarselTekstId={'omdeg.personopplysninger.ikke-registrert.alert'}
+                        utfyllendeAdvarselInfoId={'omdeg.personopplysninger.ikke-registrert.info'}
                     />
-                )}
+                ) : (
+                    <>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.borPåRegistrertAdresse}
+                            spørsmålTekstId={
+                                omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]
+                            }
+                            tilleggsinfoTekstId={
+                                søker.adressebeskyttelse
+                                    ? 'omdeg.borpådenneadressen.spm.tilleggsinfo'
+                                    : ''
+                            }
+                        />
 
-                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <SøkerMåBrukePDF
-                        advarselTekstId={'omdeg.borpådenneadressen.kontakt-folkeregister.alert'}
-                        utfyllendeAdvarselInfoId={'omdeg.borpådenneadressen.ikke-endre-adresse'}
-                    />
-                )}
-                {!søker.adresse && (
-                    <SøkerMåBrukePDF
-                        advarselTekstId={
-                            søker.adressebeskyttelse
-                                ? 'omdeg.personopplysninger.adressesperre.alert'
-                                : 'omdeg.personopplysninger.ikke-registrert.alert'
-                        }
-                    />
+                        {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
+                            <SøkerMåBrukePDF
+                                advarselTekstId={
+                                    'omdeg.borpådenneadressen.kontakt-folkeregister.alert'
+                                }
+                                utfyllendeAdvarselInfoId={
+                                    'omdeg.borpådenneadressen.ikke-endre-adresse'
+                                }
+                            />
+                        )}
+                    </>
                 )}
             </KomponentGruppe>
             {skjema.felter.oppholderSegINorge.erSynlig && (
