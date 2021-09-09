@@ -1,14 +1,14 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { ISøknadKontrakt } from '../../../typer/søknad';
+import { ISøknadKontrakt } from '../../../../typer/søknad';
 import {
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
-} from '../../../utils/testing';
-import { erGyldigISøknadKontraktUtvidet } from '../../../utils/typeguards';
-import { inputISøknad } from './testData1';
-import { useSendInnSkjema } from './useSendInnSkjema';
+} from '../../../../utils/testing';
+import { erGyldigISøknadKontraktUtvidet } from '../../../../utils/typeguards';
+import { useSendInnSkjema } from '../useSendInnSkjema';
+import { inputISøknad } from './ISøknadMockData';
 
 describe('useSendInnSkjema', () => {
     it('mapper til gyldig utvidet kontrakt', async () => {
