@@ -121,13 +121,6 @@ export const mockHistory = (
     return history.__setHistory(newHistory);
 };
 
-export const mekkGyldigUtvidetSøknad = () => {
-    return {
-        ...mekkGyldigSøknad(),
-        søknadstype: ESøknadstype.UTVIDET,
-    };
-};
-
 export const mekkGyldigSøknad = (): ISøknad => {
     return {
         ...initialStateSøknad,
