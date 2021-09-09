@@ -69,7 +69,7 @@ export const useBekreftelseOgStartSoknad = (): {
             brukMellomlagretVerdi();
             history.push(nesteRoute.path);
         }
-        logForsettPåSøknad(søknad.søknadstype);
+        logForsettPåSøknad();
     };
 
     const startPåNytt = (): void => {
@@ -86,7 +86,7 @@ export const useBekreftelseOgStartSoknad = (): {
             if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
                 settSisteUtfylteStegIndex(nåværendeStegIndex);
             }
-            logSkjemaStartet(søknad.søknadstype);
+            logSkjemaStartet();
             history.push(nesteRoute.path);
         } else {
             settBekreftelseStatus(BekreftelseStatus.FEIL);

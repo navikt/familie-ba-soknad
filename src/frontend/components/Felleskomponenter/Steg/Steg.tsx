@@ -17,8 +17,7 @@ import { IBarnMedISøknad } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     logKlikkGåVidere,
-    logSidevisningOrdinærBarnetrygd,
-    logSidevisningUtvidetBarnetrygd,
+    logSidevisningBarnetrygd,
     logSkjemaStegFullført,
 } from '../../../utils/amplitude';
 import Banner from '../Banner/Banner';
@@ -83,9 +82,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     const nåværendeRoute = hentNåværendeRoute(location.pathname).route;
 
     useFørsteRender(() => {
-        if (nåværendeRoute.includes('utvidet')) {
-            logSidevisningUtvidetBarnetrygd(nåværendeRoute);
-        } else logSidevisningOrdinærBarnetrygd(nåværendeRoute);
+        logSidevisningBarnetrygd(nåværendeRoute);
     });
 
     useEffect(() => {

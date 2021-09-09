@@ -110,7 +110,7 @@ export interface ISøknadKontraktBarn {
     utvidet?: SpørsmålMap;
 }
 
-const hentSøknadstype = () => {
+export const hentSøknadstype = () => {
     return window.location.pathname.includes('utvidet')
         ? ESøknadstype.UTVIDET
         : ESøknadstype.ORDINÆR;
