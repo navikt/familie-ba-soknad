@@ -11,6 +11,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
+import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
@@ -134,9 +135,7 @@ const OmDeg: React.FC = () => {
                         spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.erAsylsøker]}
                     />
                     {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
-                        <AlertStripe type={'info'} dynamisk>
-                            <SpråkTekst id={'omdeg.asylsøker.alert'} />
-                        </AlertStripe>
+                        <VedleggNotis dynamisk språkTekstId={'omdeg.asylsøker.alert'} />
                     )}
                     <JaNeiSpm
                         skjema={skjema}
