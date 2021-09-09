@@ -22,8 +22,8 @@ const Dokumentasjon: React.FC = () => {
         <Steg
             tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
             gåVidereCallback={async () => {
-                const response = await sendInnSkjema();
-                return response[0];
+                const [success, _] = await sendInnSkjema();
+                return success;
             }}
         >
             <KomponentGruppe>
