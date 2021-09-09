@@ -252,7 +252,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         fåttGyldigKvittering,
         settFåttGyldigKvittering,
         erUtvidet,
-        setCurrentRoute: setNåværendeRoute,
+        setNåværendeRoute,
     };
 });
 
