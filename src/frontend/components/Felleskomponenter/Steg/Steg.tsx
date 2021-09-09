@@ -81,9 +81,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
     const nåværendeRoute = hentNåværendeRoute(location.pathname).route;
 
-    useFørsteRender(() => {
-        logSidevisningBarnetrygd(nåværendeRoute);
-    });
+    useFørsteRender(() => logSidevisningBarnetrygd(nåværendeRoute));
 
     useEffect(() => {
         window.scrollTo(0, 0);

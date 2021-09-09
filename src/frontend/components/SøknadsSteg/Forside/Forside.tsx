@@ -35,9 +35,7 @@ const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
     const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad } = useApp();
 
-    useFørsteRender(() => {
-        logSidevisningBarnetrygd(`${RouteEnum.Forside}`);
-    });
+    useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
 
     const kanFortsettePåSøknad =
         mellomlagretVerdi &&
