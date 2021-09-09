@@ -17,6 +17,7 @@ interface IJaNeiSpmProps {
     felt: Felt<ESvar | null>;
     spørsmålTekstId: string;
     tilleggsinfoTekstId?: string;
+    tilleggsinfo?: ReactNode;
     inkluderVetIkke?: boolean;
     språkValues?: Record<string, ReactNode> | undefined;
 }
@@ -26,6 +27,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     felt,
     spørsmålTekstId,
     tilleggsinfoTekstId,
+    tilleggsinfo,
     inkluderVetIkke = false,
     språkValues,
 }) => {
@@ -60,6 +62,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
                                 <SpråkTekst id={tilleggsinfoTekstId} />
                             </Normaltekst>
                         )}
+                        {tilleggsinfo}
                     </>
                 }
                 labelTekstForRadios={{

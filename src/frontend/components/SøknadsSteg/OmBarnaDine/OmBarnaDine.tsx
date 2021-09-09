@@ -14,11 +14,15 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
-import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from './spørsmål';
+import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
 
 const AlertStripeWrapper = styled.div`
     margin: -1.5rem 0 4.5rem 0;
+`;
+
+const TilleggsinfoWrapper = styled.div`
+    margin-top: 0.5rem;
 `;
 
 const OmBarnaDine: React.FC = () => {
@@ -105,6 +109,13 @@ const OmBarnaDine: React.FC = () => {
                             omBarnaDineSpørsmålSpråkId[
                                 OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland
                             ]
+                        }
+                        tilleggsinfo={
+                            <TilleggsinfoWrapper>
+                                <AlertStripe dynamisk>
+                                    <SpråkTekst id={'ombarna.adoptert.info'} />
+                                </AlertStripe>
+                            </TilleggsinfoWrapper>
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
