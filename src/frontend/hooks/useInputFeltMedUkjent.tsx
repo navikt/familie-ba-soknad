@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { guid } from 'nav-frontend-js-utils';
 
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
 
@@ -20,7 +20,7 @@ const useInputFeltMedUkjent = (
     skalVises = true,
     customValidering: ((felt: FeltState<string>) => FeltState<string>) | undefined = undefined
 ) => {
-    const inputFelt = useFelt<ISODateString>({
+    const inputFelt = useFelt<string>({
         feltId: søknadsfelt ? søknadsfelt.id : guid(),
         verdi: søknadsfelt
             ? trimWhiteSpace(formaterInitVerdiForInputMedUkjent(søknadsfelt.svar))
