@@ -6,11 +6,11 @@ import styled from 'styled-components/macro';
 import Stegindikator from 'nav-frontend-stegindikator';
 import { Systemtittel } from 'nav-frontend-typografi';
 
-import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
-import { useRoutes } from '../../../context/RoutesContext';
+import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
@@ -20,6 +20,7 @@ import {
     logSidevisningBarnetrygd,
     logSkjemaStegFullført,
 } from '../../../utils/amplitude';
+import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -64,6 +65,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         erStegUtfyltFrafør,
         gåTilbakeTilStart,
         erUtvidet,
+        settNåværendeRoute,
     } = useApp();
     const {
         hentNesteRoute,
@@ -79,7 +81,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
-    const nåværendeRoute = hentNåværendeRoute(location.pathname).route;
+    const nåværendeRoute: RouteEnum = hentNåværendeRoute(location.pathname).route;
 
     useFørsteRender(() => logSidevisningBarnetrygd(nåværendeRoute));
 
@@ -98,6 +100,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     };
 
     const gåVidere = () => {
+        settNåværendeRoute(nåværendeRoute);
         if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
             settSisteUtfylteStegIndex(nåværendeStegIndex);
         }
@@ -126,13 +129,6 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         history.push(forrigeRoute.path);
     };
 
-    const visFeiloppsummering = (skjema: ISkjema<SkjemaFeltTyper, string>): boolean => {
-        const feil = Object.values(skjema.felter).find(
-            felt => felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL
-        );
-        return !!feil;
-    };
-
     return (
         <>
             <ScrollHandler />
@@ -151,14 +147,9 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                 <StyledSystemtittel>{tittel}</StyledSystemtittel>
                 <Form onSubmit={event => håndterGåVidere(event)} autoComplete="off">
                     <ChildrenContainer>{children}</ChildrenContainer>
-                    {skjema &&
-                        skjema.skjema.visFeilmeldinger &&
-                        visFeiloppsummering(skjema.skjema) && (
-                            <SkjemaFeiloppsummering
-                                skjema={skjema.skjema}
-                                barn={barn ?? undefined}
-                            />
-                        )}
+                    {skjema && visFeiloppsummering(skjema.skjema) && (
+                        <SkjemaFeiloppsummering skjema={skjema.skjema} barn={barn ?? undefined} />
+                    )}
                     {!erPåKvitteringsside(location.pathname) && (
                         <Navigeringspanel
                             onTilbakeCallback={håndterTilbake}

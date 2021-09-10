@@ -3,11 +3,13 @@ import React from 'react';
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
 import { formaterDato } from '../../../../utils/dato';
+import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import { genererAdresseVisning, landkodeTilSpråk } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
@@ -40,7 +42,11 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             <StyledOppsummeringsFeltGruppe>
                 <OppsummeringFelt
                     tittel={<SpråkTekst id={'forside.bekreftelsesboks.brødtekst'} />}
-                    søknadsvar={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
+                    søknadsvar={formatMessage({
+                        id: søknad.lestOgForståttBekreftelse
+                            ? 'forside.bekreftelsesboks.erklæring.spm'
+                            : jaNeiSvarTilSpråkId(ESvar.NEI),
+                    })}
                 />
             </StyledOppsummeringsFeltGruppe>
             <StyledOppsummeringsFeltGruppe>
@@ -61,12 +67,10 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.søker.sivilstand.type}
                 />
 
-                {søknad.søker.adresse && (
-                    <OppsummeringFelt
-                        tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
-                        children={genererAdresseVisning(søknad.søker.adresse)}
-                    />
-                )}
+                <OppsummeringFelt
+                    tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
+                    children={genererAdresseVisning(søknad.søker)}
+                />
             </StyledOppsummeringsFeltGruppe>
 
             <StyledOppsummeringsFeltGruppe>

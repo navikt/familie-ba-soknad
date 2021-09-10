@@ -11,6 +11,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
+import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
@@ -34,31 +35,37 @@ const OmDeg: React.FC = () => {
             </KomponentGruppe>
 
             <KomponentGruppe>
-                {søker.adresse && (
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.borPåRegistrertAdresse}
-                        spørsmålTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]
-                        }
-                        tilleggsinfoTekstId={'omdeg.borpådenneadressen.spm.tilleggsinfo'}
+                {!søker.adresse && !søker.adressebeskyttelse ? (
+                    <SøkerMåBrukePDF
+                        advarselTekstId={'omdeg.personopplysninger.ikke-registrert.alert'}
+                        utfyllendeAdvarselInfoId={'omdeg.personopplysninger.ikke-registrert.info'}
                     />
-                )}
+                ) : (
+                    <>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.borPåRegistrertAdresse}
+                            spørsmålTekstId={
+                                omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]
+                            }
+                            tilleggsinfoTekstId={
+                                søker.adressebeskyttelse
+                                    ? 'omdeg.borpådenneadressen.spm.tilleggsinfo'
+                                    : ''
+                            }
+                        />
 
-                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <SøkerMåBrukePDF
-                        advarselTekstId={'omdeg.borpådenneadressen.kontakt-folkeregister.alert'}
-                        utfyllendeAdvarselInfoId={'omdeg.borpådenneadressen.ikke-endre-adresse'}
-                    />
-                )}
-                {!søker.adresse && (
-                    <SøkerMåBrukePDF
-                        advarselTekstId={
-                            søker.adressebeskyttelse
-                                ? 'omdeg.personopplysninger.adressesperre.alert'
-                                : 'omdeg.personopplysninger.ikke-registrert.alert'
-                        }
-                    />
+                        {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
+                            <SøkerMåBrukePDF
+                                advarselTekstId={
+                                    'omdeg.borpådenneadressen.kontakt-folkeregister.alert'
+                                }
+                                utfyllendeAdvarselInfoId={
+                                    'omdeg.borpådenneadressen.ikke-endre-adresse'
+                                }
+                            />
+                        )}
+                    </>
                 )}
             </KomponentGruppe>
             {skjema.felter.oppholderSegINorge.erSynlig && (
@@ -128,9 +135,7 @@ const OmDeg: React.FC = () => {
                         spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.erAsylsøker]}
                     />
                     {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
-                        <AlertStripe type={'info'} dynamisk>
-                            <SpråkTekst id={'omdeg.asylsøker.alert'} />
-                        </AlertStripe>
+                        <VedleggNotis dynamisk språkTekstId={'omdeg.asylsøker.alert'} />
                     )}
                     <JaNeiSpm
                         skjema={skjema}

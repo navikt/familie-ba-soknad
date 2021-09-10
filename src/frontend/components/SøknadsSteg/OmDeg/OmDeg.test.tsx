@@ -57,11 +57,11 @@ describe('OmDeg', () => {
         expect(getByText(/omdeg.personopplysninger.adressesperre.alert/)).toBeInTheDocument();
     });
 
-    test('Kan ikke gå videre i søknad ved adressesperre', () => {
+    test('Kan ikke gå videre i søknad ved adresse som er ukjent', () => {
         spyOnUseApp({
             søker: mockDeep<ISøker>({
                 adresse: undefined,
-                adressebeskyttelse: true,
+                adressebeskyttelse: false,
                 statsborgerskap: [{ landkode: 'NOR' }],
             }),
         });
@@ -80,6 +80,29 @@ describe('OmDeg', () => {
         spyOnUseApp({
             søker: mockDeep<ISøker>({
                 adressebeskyttelse: false,
+                statsborgerskap: [{ landkode: 'NOR' }],
+            }),
+        });
+        const { queryByText, getByText } = render(
+            <TestProvidere>
+                <OmDeg />
+            </TestProvidere>
+        );
+
+        expect(queryByText(omDegSpørsmålSpråkId['bor-på-registrert-adresse'])).toBeInTheDocument();
+
+        const jaKnapp = getByText(/felles.svaralternativ.ja/);
+        act(() => jaKnapp.click());
+
+        expect(
+            queryByText(omDegSpørsmålSpråkId['søker-oppholder-seg-i-norge'])
+        ).toBeInTheDocument();
+    });
+
+    test('Kan gå videre hvis søker har adressesperre', () => {
+        spyOnUseApp({
+            søker: mockDeep<ISøker>({
+                adressebeskyttelse: true,
                 statsborgerskap: [{ landkode: 'NOR' }],
             }),
         });

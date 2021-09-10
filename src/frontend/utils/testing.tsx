@@ -13,6 +13,12 @@ import norskeTekster from '../assets/lang/nb.json';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
+import {
+    DinLivssituasjonSpørsmålId,
+    SamboerSpørsmålId,
+    TidligereSamboerSpørsmålId,
+} from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
+import { Årsak } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/types-and-utilities';
 import * as appContext from '../context/AppContext';
 import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
@@ -31,8 +37,14 @@ export const spyOnUseApp = søknad => {
         status: RessursStatus.IKKE_HENTET,
     });
     const settInnsendingStatus = jest.fn();
-    const axiosRequestMock = jest.fn();
+    const axiosRequestMock = jest
+        .fn()
+        .mockImplementation(
+            (): Promise<Ressurs<unknown>> =>
+                Promise.resolve({ status: RessursStatus.SUKSESS, data: {} })
+        );
     const erUtvidet = søknad.søknadstype === 'UTVIDET';
+    const settNåværendeRoute = jest.fn();
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
 
@@ -47,6 +59,7 @@ export const spyOnUseApp = søknad => {
         settInnsendingStatus,
         axiosRequest: axiosRequestMock,
         erUtvidet,
+        settNåværendeRoute,
     });
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
 
@@ -227,5 +240,87 @@ export const mekkGyldigSøknad = (): ISøknad => {
                 },
             },
         ],
+    };
+};
+
+export const mekkGyldigUtvidetSøknad = (): ISøknad => {
+    const base: ISøknad = mekkGyldigSøknad();
+    return {
+        ...base,
+        søknadstype: ESøknadstype.UTVIDET,
+        søker: {
+            ...base.søker,
+            utvidet: {
+                spørsmål: {
+                    årsak: { id: DinLivssituasjonSpørsmålId.årsak, svar: Årsak.SKILT },
+                    separertEnkeSkilt: {
+                        id: DinLivssituasjonSpørsmålId.separertEnkeSkilt,
+                        svar: ESvar.JA,
+                    },
+                    separertEnkeSkiltUtland: {
+                        id: DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland,
+                        svar: ESvar.NEI,
+                    },
+                    separertEnkeSkiltDato: {
+                        id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
+                        svar: '2021-09-09',
+                    },
+                    harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
+                },
+                nåværendeSamboer: {
+                    navn: { id: SamboerSpørsmålId.nåværendeSamboerNavn, svar: 'Gunnar' },
+                    ident: {
+                        id: SamboerSpørsmålId.nåværendeSamboerFnr,
+                        svar: AlternativtSvarForInput.UKJENT,
+                    },
+                    fødselsdato: {
+                        id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
+                        svar: AlternativtSvarForInput.UKJENT,
+                    },
+                    samboerFraDato: {
+                        id: SamboerSpørsmålId.nåværendeSamboerFraDato,
+                        svar: '2021-08-11',
+                    },
+                },
+                tidligereSamboere: [
+                    {
+                        navn: {
+                            id: TidligereSamboerSpørsmålId.tidligereSamboerNavn,
+                            svar: 'Donald',
+                        },
+                        ident: {
+                            id: TidligereSamboerSpørsmålId.tidligereSamboerFnr,
+                            svar: AlternativtSvarForInput.UKJENT,
+                        },
+                        fødselsdato: {
+                            id: TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato,
+                            svar: '2021-09-02',
+                        },
+                        samboerFraDato: {
+                            id: TidligereSamboerSpørsmålId.tidligereSamboerFraDato,
+                            svar: '2021-08-04',
+                        },
+                        samboerTilDato: {
+                            id: TidligereSamboerSpørsmålId.tidligereSamboerTilDato,
+                            svar: '2021-08-19',
+                        },
+                    },
+                ],
+            },
+        },
+        barnInkludertISøknaden: base.barnInkludertISøknaden.map(barn => ({
+            ...barn,
+            utvidet: {
+                ...barn.utvidet,
+                søkerHarBoddMedAndreForelder: {
+                    id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,
+                    svar: ESvar.JA,
+                },
+                søkerFlyttetFraAndreForelderDato: {
+                    id: OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato,
+                    svar: AlternativtSvarForInput.UKJENT,
+                },
+            },
+        })),
     };
 };
