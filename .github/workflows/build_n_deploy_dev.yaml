@@ -17,6 +17,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Installer node-pakker
         run: npx yarn
+      - name: Kjør typecheck
+        run: npx yarn typecheck
       - name: Kjør tester
         env:
           CI: true
