@@ -11,7 +11,7 @@ import {
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import OmDeg from './OmDeg';
-import { omDegSpørsmålSpråkId } from './spørsmål';
+import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 
 jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),
@@ -99,26 +99,57 @@ describe('OmDeg', () => {
         ).toBeInTheDocument();
     });
 
-    test('Kan gå videre hvis søker har adressesperre', () => {
+    test('Søker med adressesperre får ikke opp spørsmål om bosted', () => {
         spyOnUseApp({
             søker: mockDeep<ISøker>({
                 adressebeskyttelse: true,
                 statsborgerskap: [{ landkode: 'NOR' }],
             }),
         });
-        const { queryByText, getByText } = render(
+        const { queryByText } = render(
             <TestProvidere>
                 <OmDeg />
             </TestProvidere>
         );
 
-        expect(queryByText(omDegSpørsmålSpråkId['bor-på-registrert-adresse'])).toBeInTheDocument();
-
-        const jaKnapp = getByText(/felles.svaralternativ.ja/);
-        act(() => jaKnapp.click());
+        expect(
+            queryByText(omDegSpørsmålSpråkId['bor-på-registrert-adresse'])
+        ).not.toBeInTheDocument();
 
         expect(
             queryByText(omDegSpørsmålSpråkId['søker-oppholder-seg-i-norge'])
         ).toBeInTheDocument();
+
+        expect(
+            queryByText(omDegSpørsmålSpråkId['søker-vært-i-norge-sammenhengende-tolv-måneder'])
+        ).toBeInTheDocument();
+    });
+
+    test('Søker med adressesperre kommer seg videre til er asylsøker', () => {
+        spyOnUseApp({
+            søker: mockDeep<ISøker>({
+                adressebeskyttelse: true,
+                statsborgerskap: [{ landkode: 'NOR' }],
+                oppholderSegINorge: {
+                    id: OmDegSpørsmålId.oppholderSegINorge,
+                    svar: null,
+                },
+            }),
+        });
+        const { queryByText, getByText, getAllByLabelText } = render(
+            <TestProvidere>
+                <OmDeg />
+            </TestProvidere>
+        );
+
+        expect(getByText(/omdeg.opphold-i-norge.spm/)).toBeInTheDocument();
+
+        expect(getByText(/omdeg.opphold-sammenhengende.spm/)).toBeInTheDocument();
+
+        expect(queryByText(/omdeg.asylsøker.spm/)).not.toBeInTheDocument();
+
+        const jaKnapper = getAllByLabelText(/felles.svaralternativ.ja/);
+        act(() => jaKnapper.forEach(knapp => knapp.click()));
+        expect(getByText(/omdeg.asylsøker.spm/)).toBeInTheDocument();
     });
 });
