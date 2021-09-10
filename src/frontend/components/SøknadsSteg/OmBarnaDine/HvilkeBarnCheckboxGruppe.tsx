@@ -8,10 +8,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { barnDataKeySpørsmål } from '../../../typer/person';
+import { barnDataKeySpørsmål, BarnetsId } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/visning';
-
-export type BarnetsId = string;
 
 interface Props {
     legend: ReactNode;
