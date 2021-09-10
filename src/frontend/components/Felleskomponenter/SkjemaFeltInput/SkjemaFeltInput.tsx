@@ -23,7 +23,6 @@ export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
     return felt.erSynlig ? (
         <div>
             <Input
-                autoComplete={'none'}
                 label={<SpråkTekst id={labelSpråkTekstId} />}
                 {...navInputPropsFraFeltHook}
                 {...øvrigePropsStøttetAvNavInput}

@@ -6,7 +6,7 @@ import styled from 'styled-components/macro';
 import Stegindikator from 'nav-frontend-stegindikator';
 import { Systemtittel } from 'nav-frontend-typografi';
 
-import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
@@ -20,6 +20,7 @@ import {
     logSidevisningOrdinærBarnetrygd,
     logSkjemaStegFullført,
 } from '../../../utils/amplitude';
+import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -128,13 +129,6 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         history.push(forrigeRoute.path);
     };
 
-    const visFeiloppsummering = (skjema: ISkjema<SkjemaFeltTyper, string>): boolean => {
-        const feil = Object.values(skjema.felter).find(
-            felt => felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL
-        );
-        return !!feil;
-    };
-
     return (
         <>
             <ScrollHandler />
@@ -153,14 +147,9 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                 <StyledSystemtittel>{tittel}</StyledSystemtittel>
                 <Form onSubmit={event => håndterGåVidere(event)} autoComplete="off">
                     <ChildrenContainer>{children}</ChildrenContainer>
-                    {skjema &&
-                        skjema.skjema.visFeilmeldinger &&
-                        visFeiloppsummering(skjema.skjema) && (
-                            <SkjemaFeiloppsummering
-                                skjema={skjema.skjema}
-                                barn={barn ?? undefined}
-                            />
-                        )}
+                    {skjema && visFeiloppsummering(skjema.skjema) && (
+                        <SkjemaFeiloppsummering skjema={skjema.skjema} barn={barn ?? undefined} />
+                    )}
                     {!erPåKvitteringsside(location.pathname) && (
                         <Navigeringspanel
                             onTilbakeCallback={håndterTilbake}
