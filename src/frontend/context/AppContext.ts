@@ -20,6 +20,7 @@ import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/person';
 import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
+import { RouteEnum } from './RoutesContext';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>()); // legacy
@@ -33,6 +34,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
     const [valgtLocale] = useSprakContext();
     const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
+    const [nåværendeRoute, settNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
     const { soknadApi } = Miljø();
 
     autentiseringsInterceptor();
@@ -91,10 +93,10 @@ const [AppProvider, useApp] = createUseContext(() => {
     };
 
     useEffect(() => {
-        if (sisteUtfylteStegIndex > 0) {
+        if (sisteUtfylteStegIndex > 0 && nåværendeRoute !== RouteEnum.Dokumentasjon) {
             mellomlagre();
         }
-    }, [søknad, sisteUtfylteStegIndex]);
+    }, [søknad, sisteUtfylteStegIndex, nåværendeRoute]);
 
     const hentOgSettMellomlagretData = () => {
         preferredAxios
@@ -250,6 +252,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         fåttGyldigKvittering,
         settFåttGyldigKvittering,
         erUtvidet,
+        settNåværendeRoute,
     };
 });
 

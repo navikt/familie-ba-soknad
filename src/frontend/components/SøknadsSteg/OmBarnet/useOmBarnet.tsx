@@ -26,13 +26,13 @@ import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
     barnDataKeySpørsmålUtvidet,
+    BarnetsId,
     DatoMedUkjent,
     IBarnMedISøknad,
 } from '../../../typer/person';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { BarnetsId } from '../OmBarnaDine/HvilkeBarnCheckboxGruppe';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../OmDeg/useLanddropdownFeltMedJaNeiAvhengighet';
 import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';

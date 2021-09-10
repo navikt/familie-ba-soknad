@@ -10,7 +10,7 @@ import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
-import { useRoutes } from '../../../context/RoutesContext';
+import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { ILokasjon } from '../../../typer/lokasjon';
 import { IBarnMedISøknad } from '../../../typer/person';
@@ -64,6 +64,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         erStegUtfyltFrafør,
         gåTilbakeTilStart,
         erUtvidet,
+        settNåværendeRoute,
     } = useApp();
     const {
         hentNesteRoute,
@@ -79,7 +80,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
-    const nåværendeRoute = hentNåværendeRoute(location.pathname).route;
+    const nåværendeRoute: RouteEnum = hentNåværendeRoute(location.pathname).route;
 
     useFørsteRender(() => logSidevisningOrdinærBarnetrygd(nåværendeRoute));
 
@@ -98,6 +99,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     };
 
     const gåVidere = () => {
+        settNåværendeRoute(nåværendeRoute);
         if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
             settSisteUtfylteStegIndex(nåværendeStegIndex);
         }

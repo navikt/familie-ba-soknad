@@ -4,11 +4,10 @@ import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
-import { IBarn, IBarnMedISøknad } from '../../../typer/person';
+import { BarnetsId, IBarn, IBarnMedISøknad } from '../../../typer/person';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import { genererInitialBarnMedISøknad } from '../../../utils/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { BarnetsId } from '../OmBarnaDine/HvilkeBarnCheckboxGruppe';
 import { VelgBarnSpørsmålId } from './spørsmål';
 
 export interface IVelgBarnFeltTyper {
