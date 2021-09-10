@@ -63,11 +63,17 @@ export const useOmdeg = (): {
 
             return feil(felt, <SpråkTekst id={feilmeldingId} />);
         },
+        skalFeltetVises: () => søker.adressebeskyttelse === false,
     });
 
     const oppholderSegINorge = useJaNeiSpmFelt(
         søker.oppholderSegINorge,
-        { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse } },
+        {
+            borPåRegistrertAdresse:
+                søker.adressebeskyttelse === false
+                    ? { hovedSpørsmål: borPåRegistrertAdresse }
+                    : undefined,
+        },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
@@ -86,7 +92,12 @@ export const useOmdeg = (): {
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
         søker.værtINorgeITolvMåneder,
-        { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse } },
+        {
+            borPåRegistrertAdresse:
+                søker.adressebeskyttelse === false
+                    ? { hovedSpørsmål: borPåRegistrertAdresse }
+                    : undefined,
+        },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
@@ -117,9 +128,10 @@ export const useOmdeg = (): {
     const erAsylsøker = useJaNeiSpmFelt(
         søker.erAsylsøker,
         {
-            borPåRegistrertAdresse: {
-                hovedSpørsmål: borPåRegistrertAdresse,
-            },
+            borPåRegistrertAdresse:
+                søker.adressebeskyttelse === false
+                    ? { hovedSpørsmål: borPåRegistrertAdresse }
+                    : undefined,
             værtINorgeITolvMåneder: {
                 hovedSpørsmål: værtINorgeITolvMåneder,
             },
@@ -134,9 +146,10 @@ export const useOmdeg = (): {
     const jobberPåBåt = useJaNeiSpmFelt(
         søker.jobberPåBåt,
         {
-            borPåRegistrertAdresse: {
-                hovedSpørsmål: borPåRegistrertAdresse,
-            },
+            borPåRegistrertAdresse:
+                søker.adressebeskyttelse === false
+                    ? { hovedSpørsmål: borPåRegistrertAdresse }
+                    : undefined,
             værtINorgeITolvMåneder: {
                 hovedSpørsmål: værtINorgeITolvMåneder,
             },
@@ -157,9 +170,10 @@ export const useOmdeg = (): {
     const mottarUtenlandspensjon = useJaNeiSpmFelt(
         søker.mottarUtenlandspensjon,
         {
-            borPåRegistrertAdresse: {
-                hovedSpørsmål: borPåRegistrertAdresse,
-            },
+            borPåRegistrertAdresse:
+                søker.adressebeskyttelse === false
+                    ? { hovedSpørsmål: borPåRegistrertAdresse }
+                    : undefined,
             værtINorgeITolvMåneder: {
                 hovedSpørsmål: værtINorgeITolvMåneder,
             },
