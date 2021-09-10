@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { guid } from 'nav-frontend-js-utils';
 
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
 
@@ -17,14 +17,15 @@ const useInputFeltMedUkjent = (
     avhengighet: Felt<ESvar>,
     feilmeldingSpråkId: string,
     erFnrInput = false,
-    skalVises = true
+    skalVises = true,
+    customValidering: ((felt: FeltState<string>) => FeltState<string>) | undefined = undefined
 ) => {
-    const inputFelt = useFelt<ISODateString>({
+    const inputFelt = useFelt<string>({
         feltId: søknadsfelt ? søknadsfelt.id : guid(),
         verdi: søknadsfelt
             ? trimWhiteSpace(formaterInitVerdiForInputMedUkjent(søknadsfelt.svar))
             : '',
-        valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
+        valideringsfunksjon: (felt: FeltState<string>, avhengigheter): FeltState<string> => {
             const feltVerdi = trimWhiteSpace(felt.verdi);
 
             if (
@@ -36,12 +37,18 @@ const useInputFeltMedUkjent = (
             }
 
             if (erFnrInput) {
-                return feltVerdi === '' || idnr(feltVerdi).status !== 'valid'
-                    ? feil(felt, <SpråkTekst id={feilmeldingSpråkId} />)
-                    : ok(felt);
+                if (feltVerdi === '') {
+                    return feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
+                } else if (idnr(feltVerdi).status !== 'valid') {
+                    return feil(felt, <SpråkTekst id={'felles.fnr.feil-format.feilmelding'} />);
+                } else {
+                    return customValidering ? customValidering(felt) : ok(felt);
+                }
             } else {
                 return feltVerdi !== ''
-                    ? ok(felt)
+                    ? customValidering
+                        ? customValidering(felt)
+                        : ok(felt)
                     : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
             }
         },
@@ -52,7 +59,7 @@ const useInputFeltMedUkjent = (
         if (avhengighet.verdi === ESvar.JA) {
             inputFelt.validerOgSettFelt('', avhengighet);
         } else {
-            inputFelt.validerOgSettFelt(inputFelt.verdi);
+            inputFelt.verdi && inputFelt.validerOgSettFelt(inputFelt.verdi);
         }
     }, [avhengighet]);
 

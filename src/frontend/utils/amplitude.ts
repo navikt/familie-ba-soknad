@@ -1,7 +1,7 @@
 import amplitude from 'amplitude-js';
 
 import * as bokmålTekster from '../assets/lang/nb.json';
-import { ESøknadstype, søknadstyper } from '../typer/søknad';
+import { hentSøknadstype, søknadstyper } from '../typer/søknad';
 
 const amplitudeInstance = amplitude.getInstance();
 
@@ -22,35 +22,35 @@ export function logEvent(eventName: string, eventProperties: any) {
     amplitudeInstance.logEvent(eventName, eventProperties);
 }
 
-export const logSidevisningOrdinærBarnetrygd = (side: string) => {
+export const logSidevisningBarnetrygd = (side: string) => {
     logEvent('sidevisning', {
         side,
         team_id: 'familie',
-        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
-        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        skjemanavn: søknadstyper[hentSøknadstype()].navn,
+        skjemaId: søknadstyper[hentSøknadstype()].id,
     });
 };
 
 export const logSkjemaStartet = () => {
     logEvent('skjema startet', {
-        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
-        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        skjemanavn: søknadstyper[hentSøknadstype()].navn,
+        skjemaId: søknadstyper[hentSøknadstype()].id,
         team_id: 'familie',
     });
 };
 
 export const logForsettPåSøknad = () => {
     logEvent('fortsett på søknad', {
-        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
-        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        skjemanavn: søknadstyper[hentSøknadstype()].navn,
+        skjemaId: søknadstyper[hentSøknadstype()].id,
         team_id: 'familie',
     });
 };
 
 export const logSkjemaStegFullført = (steg: number) => {
     logEvent('skjemasteg fullført', {
-        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
-        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        skjemanavn: søknadstyper[hentSøknadstype()].navn,
+        skjemaId: søknadstyper[hentSøknadstype()].id,
         team_id: 'familie',
         steg,
     });
@@ -58,8 +58,8 @@ export const logSkjemaStegFullført = (steg: number) => {
 
 export const logKlikkGåVidere = (steg: number) => {
     logEvent('klikk gå videre', {
-        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
-        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        skjemanavn: søknadstyper[hentSøknadstype()].navn,
+        skjemaId: søknadstyper[hentSøknadstype()].id,
         team_id: 'familie',
         steg,
     });
@@ -74,8 +74,8 @@ export const logSpørsmålBesvart = (spørsmålSpråktekstId: string, svar: stri
 
     spørsmål &&
         logEvent('skjemaspørsmål besvart', {
-            skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
-            skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+            skjemanavn: søknadstyper[hentSøknadstype()].navn,
+            skjemaId: søknadstyper[hentSøknadstype()].id,
             team_id: 'familie',
             spørsmål,
             svar,
@@ -84,8 +84,8 @@ export const logSpørsmålBesvart = (spørsmålSpråktekstId: string, svar: stri
 
 export const logError = (error: Error) => {
     logEvent('logg feil', {
-        skjemanavn: søknadstyper[ESøknadstype.ORDINÆR].navn,
-        skjemaId: søknadstyper[ESøknadstype.ORDINÆR].id,
+        skjemanavn: søknadstyper[hentSøknadstype()].navn,
+        skjemaId: søknadstyper[hentSøknadstype()].id,
         team_id: 'familie',
         errorType: error.name,
         errorMessage: error.message,

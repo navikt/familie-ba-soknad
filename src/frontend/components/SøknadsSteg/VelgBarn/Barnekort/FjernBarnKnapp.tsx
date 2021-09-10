@@ -6,8 +6,8 @@ import { Flatknapp } from 'nav-frontend-knapper';
 
 import { DeleteFilled } from '@navikt/ds-icons';
 
+import { BarnetsId } from '../../../../typer/person';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { BarnetsId } from '../../OmBarnaDine/HvilkeBarnCheckboxGruppe';
 
 const StyledFlatknapp = styled(Flatknapp)`
     margin: 1rem 0 -1rem -0.75rem; // -0.75 left kompanserer for padding-left fra .knapp--kompakt
