@@ -7,6 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -14,11 +15,15 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
-import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from './spørsmål';
+import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
 
 const VedleggNotisWrapper = styled.div`
     margin: -1.5rem 0 4.5rem 0;
+`;
+
+const TilleggsinfoWrapper = styled.div`
+    margin-top: 0.5rem;
 `;
 
 const OmBarnaDine: React.FC = () => {
@@ -105,6 +110,13 @@ const OmBarnaDine: React.FC = () => {
                             omBarnaDineSpørsmålSpråkId[
                                 OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland
                             ]
+                        }
+                        tilleggsinfo={
+                            <TilleggsinfoWrapper>
+                                <AlertStripe dynamisk>
+                                    <SpråkTekst id={'ombarna.adoptert.info'} />
+                                </AlertStripe>
+                            </TilleggsinfoWrapper>
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
