@@ -53,14 +53,11 @@ const BarnekortHeader = styled.div`
     border-radius: 0.3rem 0.3rem 0 0;
     display: flex;
     align-items: flex-end;
+    justify-content: center;
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
-    > img {
-        display: block;
-        margin: 0 auto;
-    }
 `;
 
 const StyledUndertittel = styled(Undertittel)`
