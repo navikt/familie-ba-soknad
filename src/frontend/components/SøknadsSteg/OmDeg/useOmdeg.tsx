@@ -105,7 +105,10 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
             return felt.verdi
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+                : feil(
+                      felt,
+                      <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.feilmelding'} />
+                  );
         },
         skalFeltetVises: avhengigheter => {
             return (

@@ -220,7 +220,10 @@ export const useOmBarnet = (
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
             return felt.verdi !== null
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+                : feil(
+                      felt,
+                      <SpråkTekst id={'ombarnet.planlagt-sammenhengende-opphold.feilmelding'} />
+                  );
         },
         skalFeltetVises: () => {
             return skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge);
@@ -321,6 +324,7 @@ export const useOmBarnet = (
 
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet],
+        'ombarnet.andre-forelder.arbeid-utland.feilmelding',
         {
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
@@ -345,6 +349,7 @@ export const useOmBarnet = (
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.andreForelderPensjonUtland],
+        'ombarnet.andre-forelder.utenlandspensjon.feilmelding',
         {
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
@@ -437,11 +442,13 @@ export const useOmBarnet = (
 
     const borFastMedSøker = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.borFastMedSøker],
+        'ombarnet.bor-fast.feilmelding', // TODO: Insert name of child
         avhengigheterForBosted()
     );
 
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
+        'ombarnet.delt-bosted.feilmelding', // TODO: Insert name of child
         avhengigheterForBosted(),
         false,
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
@@ -503,6 +510,7 @@ export const useOmBarnet = (
 
     const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt(
         barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder],
+        'ombarnet.boddsammenmedandreforelder.feilmelding',
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
             ? {
                   borFastMedSøker: {
