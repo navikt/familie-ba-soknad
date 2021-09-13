@@ -16,8 +16,9 @@ import {
 import Oppsummering from './Oppsummering';
 
 describe('Oppsummering', () => {
+    beforeEach(silenceConsoleErrors);
+
     it('Alle tekster finnes i språkfil', () => {
-        silenceConsoleErrors();
         mockHistory(['/oppsummering']);
         spyOnUseApp(mekkGyldigSøknad());
 
