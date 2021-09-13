@@ -20,6 +20,7 @@ import {
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
+    TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import OmBarnet from './OmBarnet';
 
@@ -123,7 +124,7 @@ const line = {
 };
 
 describe('OmBarnet', () => {
-    test(`Kan rendre Om Barnet Utfyllende`, () => {
+    test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, () => {
         mockHistory(['/om-barnet/barn-1']);
         spyOnUseApp({
             barnInkludertISøknaden: [jens],
@@ -131,14 +132,12 @@ describe('OmBarnet', () => {
         });
 
         render(
-            <SprakProvider tekster={{}} defaultLocale={LocaleType.nb}>
-                <HttpProvider>
-                    <RoutesProvider>
-                        <OmBarnet barnetsId={'random-id-jens'} />
-                    </RoutesProvider>
-                </HttpProvider>
-            </SprakProvider>
+            <TestProvidereMedEkteTekster>
+                <OmBarnet barnetsId={'random-id-jens'} />
+            </TestProvidereMedEkteTekster>
         );
+
+        expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     test(`Kan navigere mellom to barn`, () => {
