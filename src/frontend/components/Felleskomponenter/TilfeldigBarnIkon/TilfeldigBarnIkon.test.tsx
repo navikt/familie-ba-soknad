@@ -10,7 +10,7 @@ describe('TilfeldigBarnIkon', () => {
     beforeEach(silenceConsoleErrors);
 
     it('velger nytt ikon ved rerender by default', () => {
-        const spy = jest.spyOn(hjelpefunksjoner, 'hentTilfeldigElement');
+        const spy = jest.spyOn(hjelpefunksjoner, 'randomIntFraIntervall');
         const { rerender } = render(
             <TestProvidereMedEkteTekster>
                 <TilfeldigBarnIkon />
@@ -36,7 +36,8 @@ describe('TilfeldigBarnIkon', () => {
     });
 
     it('kan låse barnikon mellom rerenders med prop', () => {
-        const spy = jest.spyOn(hjelpefunksjoner, 'hentTilfeldigElement');
+        const spy = jest.spyOn(hjelpefunksjoner, 'randomIntFraIntervall');
+
         const { rerender } = render(
             <TestProvidereMedEkteTekster>
                 <TilfeldigBarnIkon byttVedRerender={false} />

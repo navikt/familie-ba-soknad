@@ -12,7 +12,11 @@ export const TilfeldigBarnIkon: React.FC<{ byttVedRerender?: boolean }> = ({
     // Bruker callback istedenfor direkte verdi slik at vi kun kaller randomIntFraIntervall ved første render
     const [fastsattIkonIndex] = useState<number>(() => randomIntFraIntervall(0, ikoner.length - 1));
 
-    return byttVedRerender
-        ? ikoner[randomIntFraIntervall(0, ikoner.length - 1)]
-        : ikoner[fastsattIkonIndex];
+    return (
+        <>
+            {byttVedRerender
+                ? ikoner[randomIntFraIntervall(0, ikoner.length - 1)]
+                : ikoner[fastsattIkonIndex]}
+        </>
+    );
 };
