@@ -41,6 +41,7 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
 
 const useJaNeiSpmFelt = (
     søknadsfelt: ISøknadSpørsmål<ESvar | null>,
+    feilmeldingSpråkId: string,
     avhengigheter?: {
         [key: string]: FeltGruppe | undefined;
     },
@@ -56,7 +57,7 @@ const useJaNeiSpmFelt = (
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
             return felt.verdi !== null
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+                : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
         },
         skalFeltetVises: (avhengigheter: { [key: string]: FeltGruppe }) => {
             if (skalSkjules) return false;
