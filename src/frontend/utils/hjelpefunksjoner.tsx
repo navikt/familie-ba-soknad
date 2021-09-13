@@ -4,8 +4,9 @@ import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../typer/skjema';
 
-export const hentTilfeldigElement = (array: string[]): string => {
-    return array[Math.floor(Math.random() * array.length)];
+export const randomIntFraIntervall = (min, max) => {
+    // min and max inkludert
+    return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 export const isAlpha3Code = (code: string): code is Alpha3Code => {
