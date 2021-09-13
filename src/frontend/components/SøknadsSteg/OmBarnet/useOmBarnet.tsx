@@ -336,7 +336,10 @@ export const useOmBarnet = (
                           tilhørendeFelter: [andreForelderFødselsdato],
                       }
                     : undefined,
-        }
+        },
+        false,
+        false,
+        { navn: barn.navn }
     );
 
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
@@ -361,7 +364,10 @@ export const useOmBarnet = (
                           tilhørendeFelter: [andreForelderFødselsdato],
                       }
                     : undefined,
-        }
+        },
+        false,
+        false,
+        { navn: barn.navn }
     );
 
     const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
@@ -442,16 +448,20 @@ export const useOmBarnet = (
 
     const borFastMedSøker = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.borFastMedSøker],
-        'ombarnet.bor-fast.feilmelding', // TODO: Insert name of child
-        avhengigheterForBosted()
+        'ombarnet.bor-fast.feilmelding',
+        avhengigheterForBosted(),
+        false,
+        false,
+        { navn: barn.navn }
     );
 
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
-        'ombarnet.delt-bosted.feilmelding', // TODO: Insert name of child
+        'ombarnet.delt-bosted.feilmelding',
         avhengigheterForBosted(),
         false,
-        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
+        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
+        { navn: barn.navn }
     );
 
     /*--- SØKER FOR PERIODE ---*/
