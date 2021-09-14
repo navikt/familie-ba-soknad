@@ -9,6 +9,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const useBarnCheckboxFelt = (
     datafeltNavn: barnDataKeySpørsmål,
+    feilmeldingSpråkId: string,
     avhengighet: Felt<ESvar | null>,
     avhengigJaNeiSpmSvarCondition = ESvar.JA
 ) => {
@@ -25,7 +26,7 @@ const useBarnCheckboxFelt = (
         valideringsfunksjon: (felt: FeltState<BarnetsId[]>) => {
             return felt.verdi.length > 0
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarna.barn-ikke-valgt.feilmelding'} />);
+                : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter && avhengigheter.jaNeiSpm
