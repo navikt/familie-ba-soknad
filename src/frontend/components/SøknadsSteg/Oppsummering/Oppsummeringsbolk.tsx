@@ -35,7 +35,7 @@ const StyledOppsummeringsbolk = styled.div`
 `;
 
 const StyledEkspanderbartpanel = styled(Ekspanderbartpanel)`
-    && button {
+    && :hover {
         box-shadow: none;
         border-radius: 0;
         :focus {

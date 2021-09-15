@@ -65,6 +65,7 @@ export const useDinLivssituasjon = (): {
 
     const separertEnkeSkilt = useJaNeiSpmFelt(
         søker.utvidet.spørsmål.separertEnkeSkilt,
+        'omdeg.separertellerskilt.feilmelding',
         undefined,
         false,
         søker.sivilstand.type !== ESivilstand.GIFT
@@ -79,7 +80,7 @@ export const useDinLivssituasjon = (): {
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
             return felt.verdi !== null
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+                : feil(felt, <SpråkTekst id={'omdeg.separertskiltiutlandet.feilmelding'} />);
         },
         skalFeltetVises: avhengigheter => {
             return (
@@ -97,7 +98,10 @@ export const useDinLivssituasjon = (): {
         separertEnkeSkilt
     );
 
-    const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt(søker.utvidet.spørsmål.harSamboerNå);
+    const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt(
+        søker.utvidet.spørsmål.harSamboerNå,
+        'omdeg.samboernå.feilmelding'
+    );
 
     const nåværendeSamboerNavn = useInputFelt(
         {

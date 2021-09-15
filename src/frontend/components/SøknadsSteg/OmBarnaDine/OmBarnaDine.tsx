@@ -13,12 +13,17 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
+import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
-import { omBarnaDineSpørsmålSpråkId, OmBarnaDineSpørsmålId } from './spørsmål';
+import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
 
-const AlertStripeWrapper = styled.div`
+const VedleggNotisWrapper = styled.div`
     margin: -1.5rem 0 4.5rem 0;
+`;
+
+const TilleggsinfoWrapper = styled.div`
+    margin-top: 0.5rem;
 `;
 
 const OmBarnaDine: React.FC = () => {
@@ -106,6 +111,13 @@ const OmBarnaDine: React.FC = () => {
                                 OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland
                             ]
                         }
+                        tilleggsinfo={
+                            <TilleggsinfoWrapper>
+                                <AlertStripe dynamisk>
+                                    <SpråkTekst id={'ombarna.adoptert.info'} />
+                                </AlertStripe>
+                            </TilleggsinfoWrapper>
+                        }
                     />
                     <HvilkeBarnCheckboxGruppe
                         legend={
@@ -125,11 +137,9 @@ const OmBarnaDine: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
-                        <AlertStripeWrapper>
-                            <AlertStripe dynamisk>
-                                <SpråkTekst id={'ombarna.adoptert.alert'} />
-                            </AlertStripe>
-                        </AlertStripeWrapper>
+                        <VedleggNotisWrapper>
+                            <VedleggNotis dynamisk språkTekstId={'ombarna.adoptert.alert'} />
+                        </VedleggNotisWrapper>
                     )}
                     <JaNeiSpm
                         skjema={skjema}
@@ -185,11 +195,9 @@ const OmBarnaDine: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
-                        <AlertStripeWrapper>
-                            <AlertStripe dynamisk>
-                                <SpråkTekst id={'ombarna.asyl.alert'} />
-                            </AlertStripe>
-                        </AlertStripeWrapper>
+                        <VedleggNotisWrapper>
+                            <VedleggNotis dynamisk språkTekstId={'ombarna.asyl.alert'} />
+                        </VedleggNotisWrapper>
                     )}
                     <JaNeiSpm
                         skjema={skjema}

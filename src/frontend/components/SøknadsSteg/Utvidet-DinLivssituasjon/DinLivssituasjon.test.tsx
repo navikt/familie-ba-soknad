@@ -7,6 +7,7 @@ import { act } from 'react-dom/test-utils';
 import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype, ISøknad } from '../../../typer/søknad';
 import {
+    mockHistory,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
@@ -15,16 +16,6 @@ import {
 import DinLivssituasjon from './DinLivssituasjon';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 
-jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => ({
-        pathname: '/din-livssituasjon',
-    }),
-    useHistory: () => ({
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        push: () => {},
-    }),
-}));
 const søknad = mockDeep<ISøknad>({
     søknadstype: ESøknadstype.UTVIDET,
     barnInkludertISøknaden: [
@@ -55,8 +46,21 @@ jest.mock('nav-frontend-alertstriper', () => ({ children }) => (
 ));
 
 describe('DinLivssituasjon', () => {
+    mockHistory(['/din-livssituasjon']);
+
     beforeEach(() => {
         silenceConsoleErrors();
+    });
+
+    it('Alle tekster finnes i språkfil', () => {
+        spyOnUseApp(søknad);
+
+        render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+        expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     it('rendrer DinLivssituasjon steg og inneholder sidetittel', () => {
