@@ -1,3 +1,4 @@
+import SentryCliPlugin from '@sentry/webpack-plugin';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserWebpackPlugin from 'terser-webpack-plugin';
@@ -15,11 +16,20 @@ const prodConfig: webpack.Configuration = mergeWithRules({
     },
 })(baseConfig, {
     mode: 'production',
+    devtool: 'source-map',
     plugins: [
         new MiniCssExtractPlugin({
             filename: '[name].css',
         }),
         new CssMinimizerWebpackPlugin(),
+        new SentryCliPlugin({
+            include: 'dist',
+            org: 'nav',
+            project: 'familie-ba-soknad',
+            authToken: process.env.SENTRY_AUTH_TOKEN,
+            url: 'https://sentry.gc.nav.no/',
+            release: process.env.SENTRY_RELEASE,
+        }),
     ],
     output: {
         filename: '[name].[contenthash].js',
