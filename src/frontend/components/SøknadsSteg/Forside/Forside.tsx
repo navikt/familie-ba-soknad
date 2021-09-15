@@ -3,7 +3,6 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 
-import { Knapp } from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
@@ -85,14 +84,6 @@ const Forside: React.FC = () => {
                     target="_blank"
                 />
             </Informasjonsbolk>
-            <Knapp
-                onClick={() => {
-                    throw Error();
-                }}
-                htmlType={'button'}
-            >
-                jeg feiler
-            </Knapp>
         </InnholdContainer>
     );
 };
