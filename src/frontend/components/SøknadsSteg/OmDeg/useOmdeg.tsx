@@ -59,15 +59,21 @@ export const useOmdeg = (): {
             if (felt.verdi === ESvar.NEI) feilmeldingId = 'omdeg.du-kan-ikke-søke.feilmelding';
             else if (!søker.adressebeskyttelse && !søker.adresse)
                 feilmeldingId = 'omdeg.personopplysninger.ikke-registrert.feilmelding';
-            else feilmeldingId = 'felles.mangler-svar.feilmelding';
+            else feilmeldingId = 'omdeg.borpådenneadressen.feilmelding';
 
             return feil(felt, <SpråkTekst id={feilmeldingId} />);
         },
+        skalFeltetVises: () => søker.adressebeskyttelse === false,
     });
 
     const oppholderSegINorge = useJaNeiSpmFelt(
         søker.oppholderSegINorge,
-        { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse } },
+        'omdeg.opphold-i-norge.feilmelding',
+        {
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+        },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
@@ -86,7 +92,12 @@ export const useOmdeg = (): {
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
         søker.værtINorgeITolvMåneder,
-        { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse } },
+        'omdeg.opphold-sammenhengende.feilmelding',
+        {
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+        },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
@@ -103,7 +114,10 @@ export const useOmdeg = (): {
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
             return felt.verdi
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+                : feil(
+                      felt,
+                      <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.feilmelding'} />
+                  );
         },
         skalFeltetVises: avhengigheter => {
             return (
@@ -116,10 +130,11 @@ export const useOmdeg = (): {
 
     const erAsylsøker = useJaNeiSpmFelt(
         søker.erAsylsøker,
+        'omdeg.asylsøker.feilmelding',
         {
-            borPåRegistrertAdresse: {
-                hovedSpørsmål: borPåRegistrertAdresse,
-            },
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
             værtINorgeITolvMåneder: {
                 hovedSpørsmål: værtINorgeITolvMåneder,
             },
@@ -133,10 +148,11 @@ export const useOmdeg = (): {
 
     const jobberPåBåt = useJaNeiSpmFelt(
         søker.jobberPåBåt,
+        'omdeg.arbeid-utland.feilmelding',
         {
-            borPåRegistrertAdresse: {
-                hovedSpørsmål: borPåRegistrertAdresse,
-            },
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
             værtINorgeITolvMåneder: {
                 hovedSpørsmål: værtINorgeITolvMåneder,
             },
@@ -156,10 +172,12 @@ export const useOmdeg = (): {
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt(
         søker.mottarUtenlandspensjon,
+        'omdeg.utenlandspensjon.feilmelding',
         {
-            borPåRegistrertAdresse: {
-                hovedSpørsmål: borPåRegistrertAdresse,
-            },
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+
             værtINorgeITolvMåneder: {
                 hovedSpørsmål: værtINorgeITolvMåneder,
             },
