@@ -34,7 +34,7 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_RELEASE: ${{ env.GITHUB_SHA }}
         run: |
-          docker build . -t ${IMAGE} --build-arg base_path=${BASE_PATH}
+          docker build . -t ${IMAGE} -t ${IMAGE_LATEST} --build-arg base_path=${BASE_PATH} --build-arg sentry_auth_token=${SENTRY_AUTH_TOKEN} --build-arg sentry_release=${SENTRY_RELEASE}
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker push ${IMAGE}
   deploy:
