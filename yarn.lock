@@ -20,12 +20,12 @@
     "@amplitude/types" "^1.6.1"
     tslib "^1.9.3"
 
-"@axe-core/react@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@axe-core/react/-/react-4.1.1.tgz#0737cf723ab8d93b508540d0392c62b6945d1e39"
-  integrity sha512-XwhMezqRw5/pEXMW4P19RCA/jx4ZBD4ZLdOoU6i9GWX1i0UlWF2apUZiiE6IrbIx9U4NppsiWij8O1Wu6TU5wQ==
+"@axe-core/react@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@axe-core/react/-/react-4.2.2.tgz#a595df8150cf9b8c5758a7b76c58dae418458d66"
+  integrity sha512-qmh/1DGFrN9G7NqTNARA4aT1k37mUfyb5syWkEQN7iqo77VoO2GCsvVyfLystr8uwJYYihW17+Lgl0UTiz8q2Q==
   dependencies:
-    axe-core "^4.1.1"
+    axe-core "^4.2.3"
     requestidlecallback "^0.3.0"
 
 "@babel/code-frame@7.10.4":
@@ -3182,15 +3182,10 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axe-core@^4.0.2:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.1.1.tgz#70a7855888e287f7add66002211a423937063eaf"
-  integrity sha512-5Kgy8Cz6LPC9DJcNb3yjAXTu3XihQgEdnIg50c//zOC/MyLP0Clg+Y8Sh9ZjjnvBrDZU4DgXS9C3T9r4/scGZQ==
-
-axe-core@^4.1.1:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.1.2.tgz#7cf783331320098bfbef620df3b3c770147bc224"
-  integrity sha512-V+Nq70NxKhYt89ArVcaNL9FDryB3vQOd+BFXZIfO3RP6rwtj+2yqqqdHEkacutglPaZLkJeuXKCjCJDMGPtPqg==
+axe-core@^4.0.2, axe-core@^4.2.3:
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.3.tgz#b55cd8e8ddf659fe89b064680e1c6a4dceab0325"
+  integrity sha512-/lqqLAmuIPi79WYfRpy2i8z+x+vxU3zX2uAm0gs1q52qTuKwolOj1P8XbufpXcsydrpKx2yGn2wzAnxCMV86QA==
 
 axios-mock-adapter@^1.19.0:
   version "1.19.0"
