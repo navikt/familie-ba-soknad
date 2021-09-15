@@ -63,12 +63,17 @@ export const useOmdeg = (): {
 
             return feil(felt, <SpråkTekst id={feilmeldingId} />);
         },
+        skalFeltetVises: () => søker.adressebeskyttelse === false,
     });
 
     const oppholderSegINorge = useJaNeiSpmFelt(
         søker.oppholderSegINorge,
         'omdeg.opphold-i-norge.feilmelding',
-        { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse } },
+        {
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+        },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
@@ -88,7 +93,11 @@ export const useOmdeg = (): {
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
         søker.værtINorgeITolvMåneder,
         'omdeg.opphold-sammenhengende.feilmelding',
-        { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse } },
+        {
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+        },
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
@@ -123,9 +132,9 @@ export const useOmdeg = (): {
         søker.erAsylsøker,
         'omdeg.asylsøker.feilmelding',
         {
-            borPåRegistrertAdresse: {
-                hovedSpørsmål: borPåRegistrertAdresse,
-            },
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
             værtINorgeITolvMåneder: {
                 hovedSpørsmål: værtINorgeITolvMåneder,
             },
@@ -141,9 +150,9 @@ export const useOmdeg = (): {
         søker.jobberPåBåt,
         'omdeg.arbeid-utland.feilmelding',
         {
-            borPåRegistrertAdresse: {
-                hovedSpørsmål: borPåRegistrertAdresse,
-            },
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
             værtINorgeITolvMåneder: {
                 hovedSpørsmål: værtINorgeITolvMåneder,
             },
@@ -165,9 +174,10 @@ export const useOmdeg = (): {
         søker.mottarUtenlandspensjon,
         'omdeg.utenlandspensjon.feilmelding',
         {
-            borPåRegistrertAdresse: {
-                hovedSpørsmål: borPåRegistrertAdresse,
-            },
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+
             værtINorgeITolvMåneder: {
                 hovedSpørsmål: værtINorgeITolvMåneder,
             },
