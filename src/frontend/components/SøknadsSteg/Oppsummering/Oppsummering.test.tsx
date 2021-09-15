@@ -11,10 +11,25 @@ import {
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
+    TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import Oppsummering from './Oppsummering';
 
 describe('Oppsummering', () => {
+    beforeEach(silenceConsoleErrors);
+
+    it('Alle tekster finnes i språkfil', () => {
+        mockHistory(['/oppsummering']);
+        spyOnUseApp(mekkGyldigSøknad());
+
+        render(
+            <TestProvidereMedEkteTekster>
+                <Oppsummering />
+            </TestProvidereMedEkteTekster>
+        );
+        expect(console.error).toHaveBeenCalledTimes(0);
+    });
+
     it('stopper fra å gå videre hvis søknaden har mangler', () => {
         const søknad = mockDeep<ISøknad>({
             søker: {
@@ -32,8 +47,6 @@ describe('Oppsummering', () => {
         });
         spyOnUseApp(søknad);
         const { mockedHistoryArray } = mockHistory(['/oppsummering']);
-
-        silenceConsoleErrors();
 
         const { getByText, getAllByRole } = render(
             <TestProvidere>
@@ -55,8 +68,6 @@ describe('Oppsummering', () => {
         const søknad = mekkGyldigSøknad();
         spyOnUseApp(søknad);
         const { mockedHistoryArray } = mockHistory(['/oppsummering']);
-
-        silenceConsoleErrors();
 
         const { getByText, queryAllByRole } = render(
             <TestProvidere>

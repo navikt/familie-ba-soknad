@@ -210,6 +210,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                 statsborgerskap: søknad.søker.statsborgerskap,
                 adresse: søknad.søker.adresse,
                 sivilstand: søknad.søker.sivilstand,
+                adressebeskyttelse: søknad.søker.adressebeskyttelse,
             },
         });
     };

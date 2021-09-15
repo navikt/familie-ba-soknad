@@ -10,17 +10,19 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { TilfeldigBarnIkon } from '../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
 
 const HeaderWrapper = styled.div`
-    text-align: center;
     margin-bottom: 2rem;
-    img {
-        margin: auto;
-        display: block;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const BarnCounterWrapper = styled.div`
-    border-top: 1px solid black;
     padding: 1rem;
+`;
+
+const HorisontalLinje = styled.span`
+    width: 100%;
+    border-bottom: 1px solid black;
 `;
 
 export const OmBarnetHeader: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
@@ -32,6 +34,7 @@ export const OmBarnetHeader: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) =
     return (
         <HeaderWrapper>
             <TilfeldigBarnIkon byttVedRerender={false} />
+            <HorisontalLinje />
             <BarnCounterWrapper>
                 <Systemtittel>
                     <SpråkTekst
