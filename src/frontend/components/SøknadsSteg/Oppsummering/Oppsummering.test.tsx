@@ -13,6 +13,7 @@ import {
     TestProvidere,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
+import { OmDegSpørsmålId } from '../OmDeg/spørsmål';
 import Oppsummering from './Oppsummering';
 
 describe('Oppsummering', () => {
@@ -34,6 +35,7 @@ describe('Oppsummering', () => {
         const søknad = mockDeep<ISøknad>({
             søker: {
                 statsborgerskap: [{ landkode: 'NOR' }],
+                oppholderSegINorge: { id: OmDegSpørsmålId.oppholderSegINorge, svar: null },
             },
             barnInkludertISøknaden: [
                 {
