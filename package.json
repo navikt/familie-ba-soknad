@@ -102,7 +102,7 @@
     "axios": "^0.21.3",
     "babel-loader": "8.1.0",
     "babel-preset-react-app": "^10.0.0",
-    "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "case-sensitive-paths-webpack-plugin": "2.4.0",
     "classnames": "^2.2.6",
     "compression": "^1.7.4",
     "constate": "^3.1.0",
