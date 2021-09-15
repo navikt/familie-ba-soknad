@@ -29,6 +29,7 @@ const prodConfig: webpack.Configuration = mergeWithRules({
             authToken: process.env.SENTRY_AUTH_TOKEN,
             url: 'https://sentry.gc.nav.no/',
             release: process.env.SENTRY_RELEASE,
+            urlPrefix: `~${process.env.BASE_PATH}`,
         }),
     ],
     output: {
