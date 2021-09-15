@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -9,7 +9,6 @@ import { ISøknad } from '../../../typer/søknad';
 import {
     silenceConsoleErrors,
     spyOnUseApp,
-    TestProvidere,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import OmBarnaDine from './OmBarnaDine';
@@ -49,22 +48,5 @@ describe('OmBarnaDine', () => {
             </TestProvidereMedEkteTekster>
         );
         expect(console.error).toHaveBeenCalledTimes(0);
-    });
-
-    test('Kan huke av for barn i liste med checkbox', () => {
-        spyOnUseApp(søknad);
-
-        const { getByLabelText } = render(
-            <TestProvidere>
-                <OmBarnaDine />
-            </TestProvidere>
-        );
-        const checkbox: HTMLInputElement = getByLabelText(
-            /ombarna.fosterbarn.spm/
-        ) as HTMLInputElement;
-        expect(checkbox.checked).toBe(false);
-        act(() => checkbox.click());
-
-        expect(checkbox.checked).toBe(true);
     });
 });
