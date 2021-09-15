@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ok, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
@@ -41,11 +41,13 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
 
 const useJaNeiSpmFelt = (
     søknadsfelt: ISøknadSpørsmål<ESvar | null>,
+    feilmeldingSpråkId: string,
     avhengigheter?: {
         [key: string]: FeltGruppe | undefined;
     },
     nullstillVedAvhengighetEndring = false,
-    skalSkjules = false
+    skalSkjules = false,
+    feilmeldingSpråkVerdier?: { [key: string]: ReactNode }
 ) => {
     const [harBlittVist, settHarBlittVist] = useState<boolean>(!avhengigheter);
 
@@ -56,7 +58,10 @@ const useJaNeiSpmFelt = (
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
             return felt.verdi !== null
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+                : feil(
+                      felt,
+                      <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
+                  );
         },
         skalFeltetVises: (avhengigheter: { [key: string]: FeltGruppe }) => {
             if (skalSkjules) return false;
