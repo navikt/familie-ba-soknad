@@ -34,7 +34,10 @@ export const useOmBarnaDine = (): {
 } => {
     const { søknad, settSøknad } = useApp();
 
-    const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt(søknad.erNoenAvBarnaFosterbarn);
+    const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt(
+        søknad.erNoenAvBarnaFosterbarn,
+        'ombarna.fosterbarn.feilmelding'
+    );
 
     const hvemErFosterbarn = useBarnCheckboxFelt(
         barnDataKeySpørsmål.erFosterbarn,
@@ -42,7 +45,10 @@ export const useOmBarnaDine = (): {
         erNoenAvBarnaFosterbarn
     );
 
-    const oppholderBarnSegIInstitusjon = useJaNeiSpmFelt(søknad.oppholderBarnSegIInstitusjon);
+    const oppholderBarnSegIInstitusjon = useJaNeiSpmFelt(
+        søknad.oppholderBarnSegIInstitusjon,
+        'ombarna.institusjon.feilmelding'
+    );
 
     const hvemOppholderSegIInstitusjon = useBarnCheckboxFelt(
         barnDataKeySpørsmål.oppholderSegIInstitusjon,
@@ -50,16 +56,20 @@ export const useOmBarnaDine = (): {
         oppholderBarnSegIInstitusjon
     );
 
-    const erBarnAdoptertFraUtland = useJaNeiSpmFelt(søknad.erBarnAdoptertFraUtland, {
-        erNoenAvBarnaFosterbarn: {
-            hovedSpørsmål: erNoenAvBarnaFosterbarn,
-            tilhørendeFelter: [hvemErFosterbarn],
-        },
-        oppholderBarnSegIInstitusjon: {
-            hovedSpørsmål: oppholderBarnSegIInstitusjon,
-            tilhørendeFelter: [hvemOppholderSegIInstitusjon],
-        },
-    });
+    const erBarnAdoptertFraUtland = useJaNeiSpmFelt(
+        søknad.erBarnAdoptertFraUtland,
+        'ombarna.adoptert.feilmelding',
+        {
+            erNoenAvBarnaFosterbarn: {
+                hovedSpørsmål: erNoenAvBarnaFosterbarn,
+                tilhørendeFelter: [hvemErFosterbarn],
+            },
+            oppholderBarnSegIInstitusjon: {
+                hovedSpørsmål: oppholderBarnSegIInstitusjon,
+                tilhørendeFelter: [hvemOppholderSegIInstitusjon],
+            },
+        }
+    );
 
     const hvemErAdoptertFraUtland = useBarnCheckboxFelt(
         barnDataKeySpørsmål.erAdoptertFraUtland,
@@ -67,16 +77,20 @@ export const useOmBarnaDine = (): {
         erBarnAdoptertFraUtland
     );
 
-    const oppholderBarnSegIUtland = useJaNeiSpmFelt(søknad.oppholderBarnSegIUtland, {
-        erNoenAvBarnaFosterbarn: {
-            hovedSpørsmål: erNoenAvBarnaFosterbarn,
-            tilhørendeFelter: [hvemErFosterbarn],
-        },
-        oppholderBarnSegIInstitusjon: {
-            hovedSpørsmål: oppholderBarnSegIInstitusjon,
-            tilhørendeFelter: [hvemOppholderSegIInstitusjon],
-        },
-    });
+    const oppholderBarnSegIUtland = useJaNeiSpmFelt(
+        søknad.oppholderBarnSegIUtland,
+        'ombarna.opphold-utland.feilmelding',
+        {
+            erNoenAvBarnaFosterbarn: {
+                hovedSpørsmål: erNoenAvBarnaFosterbarn,
+                tilhørendeFelter: [hvemErFosterbarn],
+            },
+            oppholderBarnSegIInstitusjon: {
+                hovedSpørsmål: oppholderBarnSegIInstitusjon,
+                tilhørendeFelter: [hvemOppholderSegIInstitusjon],
+            },
+        }
+    );
 
     const hvemOppholderSegIUtland = useBarnCheckboxFelt(
         barnDataKeySpørsmål.oppholderSegIUtland,
@@ -84,7 +98,7 @@ export const useOmBarnaDine = (): {
         oppholderBarnSegIUtland
     );
 
-    const søktAsylForBarn = useJaNeiSpmFelt(søknad.søktAsylForBarn, {
+    const søktAsylForBarn = useJaNeiSpmFelt(søknad.søktAsylForBarn, 'ombarna.asyl.feilmelding', {
         erBarnAdoptertFraUtland: {
             hovedSpørsmål: erBarnAdoptertFraUtland,
             tilhørendeFelter: [hvemErAdoptertFraUtland],
@@ -103,6 +117,7 @@ export const useOmBarnaDine = (): {
 
     const barnOppholdtSegTolvMndSammenhengendeINorge = useJaNeiSpmFelt(
         søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
+        'ombarna.sammenhengende-opphold.feilmelding',
         {
             erBarnAdoptertFraUtland: {
                 hovedSpørsmål: erBarnAdoptertFraUtland,
@@ -124,6 +139,7 @@ export const useOmBarnaDine = (): {
 
     const mottarBarnetrygdForBarnFraAnnetEøsland = useJaNeiSpmFelt(
         søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
+        'ombarna.barnetrygd-eøs.feilmelding',
         {
             søktAsylForBarn: {
                 hovedSpørsmål: søktAsylForBarn,

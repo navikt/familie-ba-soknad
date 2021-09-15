@@ -60,7 +60,10 @@ export const useLeggTilBarn = (): {
                         <SpråkTekst id={'hvilkebarn.leggtilbarn.barn-ikke-født.feilmelding'} />
                     );
                 default:
-                    return feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
+                    return feil(
+                        felt,
+                        <SpråkTekst id={'hvilkebarn.leggtilbarn.barnfødt.feilmelding'} />
+                    );
             }
         },
     });
