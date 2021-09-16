@@ -87,6 +87,7 @@
     ]
   },
   "dependencies": {
+    "@navikt/familie-logging": "^1.0.5",
     "axios": "^0.21.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
@@ -106,7 +107,6 @@
     "@babel/core": "7.12.3",
     "@navikt/ds-icons": "^0.5.2",
     "@navikt/familie-form-elements": "^3.2.2",
-    "@navikt/familie-logging": "^1.0.5",
     "@navikt/familie-skjema": "^1.1.9",
     "@navikt/familie-sprakvelger": "^2.0.27",
     "@navikt/familie-typer": "^3.0.14",
