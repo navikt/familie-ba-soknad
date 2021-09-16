@@ -1,0 +1,12 @@
+FROM navikt/node-express:14-alpine
+USER root
+RUN apk --no-cache add curl
+USER apprunner
+
+COPY --chown=apprunner:apprunner ./yarn.lock ./package.json /var/server/
+
+RUN yarn install
+
+COPY --chown=apprunner:apprunner ./ /var/server/
+
+CMD ["yarn", "start:dev:ts-server"]
