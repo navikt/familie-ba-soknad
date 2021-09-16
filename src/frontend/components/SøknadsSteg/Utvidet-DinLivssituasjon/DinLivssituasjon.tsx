@@ -76,6 +76,7 @@ const DinLivssituasjon: React.FC = () => {
                         />
                         <Datovelger
                             felt={skjema.felter.separertEnkeSkiltDato}
+                            feilmeldingSpråkId={'omdeg.frahvilkendatoseparertskilt.feilmelding'}
                             skjema={skjema}
                             labelTekstId={
                                 dinLivssituasjonSpørsmålSpråkId[
