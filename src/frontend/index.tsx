@@ -9,7 +9,6 @@ import Modal from 'nav-frontend-modal';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
-import packageJson from './../../package.json';
 import './index.less';
 import App from './App';
 import * as engelsk from './assets/lang/en.json';
@@ -22,7 +21,6 @@ const environment = window.location.hostname;
 
 Sentry.init({
     dsn: 'https://75e165345c514862b5829a724a4e8e45@sentry.gc.nav.no/71',
-    release: packageJson.version,
     environment,
     autoSessionTracking: false,
     enabled: process.env.NODE_ENV !== 'development',
