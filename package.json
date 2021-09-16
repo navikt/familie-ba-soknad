@@ -1,6 +1,5 @@
 {
   "name": "familie-ba-soknad",
-  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
@@ -166,6 +165,7 @@
     "@navikt/familie-skjema": "^1.1.9",
     "@navikt/familie-sprakvelger": "^2.0.27",
     "@navikt/nav-dekoratoren-moduler": "^1.5.0",
+    "@sentry/webpack-plugin": "^1.17.1",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.0.11",
