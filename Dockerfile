@@ -1,4 +1,4 @@
-FROM navikt/node-express:14-alpine
+FROM navikt/node-express:14-alpine as prod-builder
 USER root
 RUN apk --no-cache add curl
 USER apprunner
@@ -16,7 +16,16 @@ ARG sentry_release
 ENV SENTRY_RELEASE=$sentry_release
 
 COPY --chown=apprunner:apprunner ./ /var/server/
+
 RUN yarn build
+
+# Fjern alle pakker som vi kun trengte for webpack
+RUN rm -rf node_modules
+RUN yarn install --prod
+
+
+FROM navikt/node-express:14-alpine as prod-runner
+COPY --from=prod-builder /var/server/ /var/server
 
 EXPOSE 9000
 CMD ["yarn", "start"]

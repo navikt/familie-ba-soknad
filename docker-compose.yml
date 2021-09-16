@@ -20,8 +20,7 @@ services:
     container_name: "frontend"
     build:
       context: ./
-      args:
-        base_path: /familie/barnetrygd/soknad/ordinaer/
+      dockerfile: Dockerfile.local
     environment:
       BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
       ENV: docker-compose
@@ -31,7 +30,6 @@ services:
     ports:
       - "3000:3000"
       - "55554:55554"
-    command: ["yarn", "start:dev:ts-server"]
 
   api:
     container_name: "soknad-api"
