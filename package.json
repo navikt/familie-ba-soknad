@@ -88,6 +88,7 @@
   },
   "dependencies": {
     "@navikt/familie-logging": "^1.0.5",
+    "@navikt/familie-typer": "^3.0.14",
     "axios": "^0.21.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
@@ -109,7 +110,6 @@
     "@navikt/familie-form-elements": "^3.2.2",
     "@navikt/familie-skjema": "^1.1.9",
     "@navikt/familie-sprakvelger": "^2.0.27",
-    "@navikt/familie-typer": "^3.0.14",
     "@navikt/fnrvalidator": "^1.1.4",
     "@navikt/nav-dekoratoren-moduler": "^1.5.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
