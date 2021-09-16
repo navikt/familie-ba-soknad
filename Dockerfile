@@ -20,7 +20,7 @@ COPY --chown=apprunner:apprunner ./ /var/server/
 RUN yarn build
 
 # Fjern alle pakker som vi kun trengte for webpack
-RUN rm -rf node_modules .cache
+RUN rm -rf node_modules
 RUN yarn install --prod
 RUN rm -rf .cache
 
