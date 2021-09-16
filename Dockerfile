@@ -20,8 +20,9 @@ COPY --chown=apprunner:apprunner ./ /var/server/
 RUN yarn build
 
 # Fjern alle pakker som vi kun trengte for webpack
-RUN rm -rf node_modules
+RUN rm -rf node_modules .cache
 RUN yarn install --prod
+RUN rm -rf .cache
 
 
 FROM navikt/node-express:14-alpine as prod-runner
