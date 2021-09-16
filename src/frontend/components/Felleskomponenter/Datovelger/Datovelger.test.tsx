@@ -2,18 +2,14 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import { mockDeep } from 'jest-mock-extended';
+import { mock, mockDeep } from 'jest-mock-extended';
 import { IntlProvider } from 'react-intl';
 
 import { ISODateString } from '@navikt/familie-form-elements';
-import { ISkjema, useFelt } from '@navikt/familie-skjema';
+import { Felt, ISkjema, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import {
-    silenceConsoleErrors,
-    TestProvidere,
-    TestProvidereMedEkteTekster,
-} from '../../../utils/testing';
+import { silenceConsoleErrors, TestProvidere } from '../../../utils/testing';
 import Datovelger from './Datovelger';
 
 describe(`Datovelger`, () => {
@@ -99,32 +95,21 @@ describe(`Datovelger`, () => {
         const skjemaMock = mockDeep<ISkjema<SkjemaFeltTyper, string>>({
             visFeilmeldinger: true,
         });
+        const oppholdslandDatoFeltMock = mock<Felt<ISODateString>>({
+            valideringsstatus: Valideringsstatus.FEIL,
+            erSynlig: true,
+        });
 
-        const {
-            result: { current },
-        } = renderHook(
-            () => {
-                const fraOgMed = useFelt<ISODateString>({
-                    verdi: '22',
-                    feltId: 'fra-og-med',
-                });
-                return {
-                    fraOgMed,
-                };
-            },
-            { wrapper: IntlProvider, initialProps: { locale: 'nb' } }
-        );
-
-        const { getByText } = render(
-            <TestProvidereMedEkteTekster>
+        const { queryByText } = render(
+            <TestProvidere>
                 <Datovelger
-                    felt={current.fraOgMed}
-                    feilmeldingSpråkId={'ombarnet.sammenhengende-opphold.dato.feilmelding'}
+                    felt={oppholdslandDatoFeltMock}
+                    feilmeldingSpråkId={'omdeg.opphold-i-norge.dato.feilmelding'}
                     skjema={skjemaMock}
                     labelTekstId={'test-fra-og-med'}
                 />
-            </TestProvidereMedEkteTekster>
+            </TestProvidere>
         );
-        expect(getByText(/ombarnet.sammenhengende-opphold.dato.feilmelding/)).toBeInTheDocument();
+        expect(queryByText(/omdeg.opphold-i-norge.dato.feilmelding/)).toBeInTheDocument();
     });
 });
