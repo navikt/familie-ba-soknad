@@ -16,6 +16,7 @@ import {
     IBarnMedISøknad,
 } from '../../../typer/person';
 import {
+    mekkGyldigSøknad,
     mockHistory,
     silenceConsoleErrors,
     spyOnUseApp,
@@ -337,31 +338,42 @@ describe('OmBarnet', () => {
         expect(queryByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
     });
 
-    test('Får opp feilmelding ved feil postnummer', () => {
+    test('Får opp feilmelding ved feil postnummer', async () => {
         mockHistory(['/om-barnet/barn-1']);
-        const fakeBarn = mockDeep<IBarnMedISøknad>({
-            id: 'random-id',
+
+        //henter ut en gyldig søknad
+        const søknadpostnummer = mekkGyldigSøknad();
+
+        const barn: IBarnMedISøknad = søknadpostnummer.barnInkludertISøknaden[0];
+
+        const endretBarn = {
+            ...barn,
+
+            institusjonspostnummer: {
+                id: barnDataKeySpørsmål.institusjonspostnummer,
+                svar: '12345678900',
+            },
             oppholderSegIInstitusjon: {
+                id: barnDataKeySpørsmål.oppholderSegIInstitusjon,
                 svar: ESvar.JA,
             },
-            institusjonspostnummer: { svar: '1234' },
-        });
-
-        const { erStegUtfyltFrafør } = spyOnUseApp({
-            barnInkludertISøknaden: [fakeBarn],
-        });
+        };
+        const oppdatertSøknad = { ...søknadpostnummer, barnInkludertISøknaden: [endretBarn] };
+        const { erStegUtfyltFrafør } = spyOnUseApp(oppdatertSøknad);
         erStegUtfyltFrafør.mockReturnValue(false);
 
-        const { queryByText, getByLabelText } = render(
+        const { queryByText, container, debug } = render(
             <TestProvidere>
-                <OmBarnet barnetsId={'random-id'} />
+                <OmBarnet barnetsId={endretBarn.id} />
             </TestProvidere>
         );
 
-        expect(queryByText(/ombarnet.institusjon.postnummer.feilmelding/)).toBeInTheDocument();
-        const gåVidereKnapper = getByLabelText(/felles.navigasjon.gå-videre/);
-        act(() => gåVidereKnapper.click());
-
+        const gåVidereKnapper = queryByText(/felles.navigasjon.gå-videre/);
+        expect(queryByText(/ombarnet.institusjon.postnummer.feilmelding/)).not.toBeInTheDocument();
+        act(() => {
+            gåVidereKnapper && gåVidereKnapper.click();
+        });
+        debug(container, 1000000);
         expect(queryByText(/ombarnet.institusjon.postnummer.feilmelding/)).toBeInTheDocument();
     });
 });
