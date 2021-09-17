@@ -137,7 +137,7 @@ export const useOmBarnet = (
         verdi: barn[barnDataKeySpørsmål.institusjonspostnummer].svar,
         feltId: barn[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
-            felt.verdi.match(/^[0-9]{4}$/)
+            felt.verdi.match(/^[0-9]{1,10}$/)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'ombarnet.institusjon.postnummer.feilmelding'} />),
         skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),

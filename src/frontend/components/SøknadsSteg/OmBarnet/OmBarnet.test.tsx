@@ -336,4 +336,32 @@ describe('OmBarnet', () => {
 
         expect(queryByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
     });
+
+    test('Får opp feilmelding ved feil postnummer', () => {
+        mockHistory(['/om-barnet/barn-1']);
+        const fakeBarn = mockDeep<IBarnMedISøknad>({
+            id: 'random-id',
+            oppholderSegIInstitusjon: {
+                svar: ESvar.JA,
+            },
+            institusjonspostnummer: { svar: '1234' },
+        });
+
+        const { erStegUtfyltFrafør } = spyOnUseApp({
+            barnInkludertISøknaden: [fakeBarn],
+        });
+        erStegUtfyltFrafør.mockReturnValue(false);
+
+        const { queryByText, getByLabelText } = render(
+            <TestProvidere>
+                <OmBarnet barnetsId={'random-id'} />
+            </TestProvidere>
+        );
+
+        expect(queryByText(/ombarnet.institusjon.postnummer.feilmelding/)).toBeInTheDocument();
+        const gåVidereKnapper = getByLabelText(/felles.navigasjon.gå-videre/);
+        act(() => gåVidereKnapper.click());
+
+        expect(queryByText(/ombarnet.institusjon.postnummer.feilmelding/)).toBeInTheDocument();
+    });
 });
