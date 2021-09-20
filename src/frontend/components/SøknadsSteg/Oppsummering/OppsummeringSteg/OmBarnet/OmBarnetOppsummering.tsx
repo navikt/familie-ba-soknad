@@ -328,20 +328,22 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar
                             )}
                         />
-                        <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerForTidsromSluttdato
-                                        ]
-                                    }
-                                />
-                            }
-                            søknadsvar={formaterDato(
-                                barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar
-                            )}
-                        />
+                        {barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar !== '' && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.søkerForTidsromSluttdato
+                                            ]
+                                        }
+                                    />
+                                }
+                                søknadsvar={formaterDato(
+                                    barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar
+                                )}
+                            />
+                        )}
                     </>
                 )}
             </StyledOppsummeringsFeltGruppe>

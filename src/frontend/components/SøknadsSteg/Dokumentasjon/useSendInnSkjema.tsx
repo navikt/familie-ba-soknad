@@ -110,9 +110,6 @@ export const useSendInnSkjema = (): {
         } = barn;
         const typetBarnSpørsmål = (barnSpørsmål as unknown) as SpørsmålMap;
 
-        const søkerFraTilDatoVerdi = (svar: ISODateString | AlternativtSvarForInput) =>
-            svar === AlternativtSvarForInput.UKJENT ? 'Ikke oppgitt' : svar;
-
         const søkerFlyttetFraAndreForelderDatoVerdi = (
             svar: ISODateString | AlternativtSvarForInput
         ) => (svar === AlternativtSvarForInput.UKJENT ? 'Vi bor sammen nå' : svar);
@@ -128,14 +125,6 @@ export const useSendInnSkjema = (): {
             alder: søknadsfelt('Alder', alder ?? AlternativtSvarForInput.UKJENT),
             spørsmål: {
                 ...spørmålISøknadsFormat(typetBarnSpørsmål),
-                [barnDataKeySpørsmål.søkerForTidsromStartdato]: søknadsfelt(
-                    språktekstFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromStartdato),
-                    søkerFraTilDatoVerdi(barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar)
-                ),
-                [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfelt(
-                    språktekstFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),
-                    søkerFraTilDatoVerdi(barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar)
-                ),
             },
             utvidet: utvidet
                 ? {
