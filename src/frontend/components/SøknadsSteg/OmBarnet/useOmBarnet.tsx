@@ -492,7 +492,10 @@ export const useOmBarnet = (
     const søkerForTidsrom = useJaNeiSpmFelt(
         barn.søkerForTidsrom,
         'ombarnet.søker-for-periode.feilmelding',
-        { skriftligAvtaleOmDeltBosted: { hovedSpørsmål: skriftligAvtaleOmDeltBosted } },
+        {
+            borFastMedSøker: { hovedSpørsmål: borFastMedSøker },
+            // skriftligAvtaleOmDeltBosted: { hovedSpørsmål: skriftligAvtaleOmDeltBosted },
+        },
         false,
         !tidsromSkalVises({ borFastMedSøker, skriftligAvtaleOmDeltBosted }),
         { navn: barnetsNavnValue(barn, intl) }

@@ -73,7 +73,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
                 />
             )}
-
             {skjema.felter.borFastMedSøker.erSynlig && (
                 <SkjemaFieldset tittelId={'hvilkebarn.barn.bosted'} dynamisk>
                     <div>
@@ -119,7 +118,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     )}
                 </SkjemaFieldset>
             )}
-
             {skjema.felter.søkerForTidsrom.erSynlig && (
                 <KomponentGruppe inline dynamisk>
                     <JaNeiSpm

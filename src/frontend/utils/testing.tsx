@@ -230,6 +230,10 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
                     svar: ESvar.NEI,
                 },
+                [barnDataKeySpørsmål.søkerForTidsrom]: {
+                    id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
+                    svar: ESvar.NEI,
+                },
                 [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
                     id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
                     svar: AlternativtSvarForInput.UKJENT,

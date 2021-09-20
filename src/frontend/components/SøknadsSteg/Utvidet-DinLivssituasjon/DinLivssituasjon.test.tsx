@@ -87,7 +87,7 @@ describe('DinLivssituasjon', () => {
         const alerts: HTMLElement = getByRole('alert');
         const result: HTMLElement | null = queryByText(
             alerts,
-            'Hvorfor søker du om utvidet barnetrygd?'
+            'Hva er årsaken til at du søker om utvidet barnetrygd?'
         );
         expect(result).not.toBeNull();
     });
