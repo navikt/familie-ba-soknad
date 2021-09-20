@@ -61,13 +61,14 @@ const jens = {
     [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: { id: '23', svar: '' },
     [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
     [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: { id: '25', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.søkerForTidsrom]: { id: '255', svar: ESvar.JA },
     [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
         id: '26',
-        svar: AlternativtSvarForInput.UKJENT,
+        svar: '2021-09-02',
     },
     [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
         id: '27',
-        svar: AlternativtSvarForInput.UKJENT,
+        svar: '2021-09-03',
     },
     utvidet: {
         [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: { id: 26, svar: ESvar.NEI },
@@ -109,13 +110,14 @@ const line = {
     [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: { id: '23', svar: '' },
     [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
     [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: { id: '25', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.søkerForTidsrom]: { id: '255', svar: ESvar.JA },
     [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
         id: '26',
-        svar: AlternativtSvarForInput.UKJENT,
+        svar: '2021-09-03',
     },
     [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
         id: '27',
-        svar: AlternativtSvarForInput.UKJENT,
+        svar: '',
     },
     utvidet: {
         [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: { id: 26, svar: ESvar.NEI },
@@ -258,6 +260,9 @@ describe('OmBarnet', () => {
             },
             borFastMedSøker: {
                 svar: null,
+            },
+            søkerForTidsrom: {
+                svar: ESvar.JA,
             },
             søkerForTidsromStartdato: {
                 svar: '',

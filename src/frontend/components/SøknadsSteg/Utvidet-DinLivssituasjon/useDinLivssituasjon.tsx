@@ -15,6 +15,7 @@ import {
     ISamboer,
     ITidligereSamboer,
 } from '../../../typer/person';
+import { validerDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -170,7 +171,7 @@ export const useDinLivssituasjon = (): {
         },
         ESvar.JA,
         harSamboerNå,
-        true
+        felt => validerDato(felt, true)
     );
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<

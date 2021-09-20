@@ -31,6 +31,7 @@ import {
     DatoMedUkjent,
     IBarnMedISøknad,
 } from '../../../typer/person';
+import { validerDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { barnetsNavnValue } from '../../../utils/visning';
@@ -505,14 +506,24 @@ export const useOmBarnet = (
         barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
         ESvar.JA,
         søkerForTidsrom,
-        true
+        felt => validerDato(felt, true)
     );
     const søkerForTidsromSluttdato = useDatovelgerFeltMedJaNeiAvhengighet(
         barn[barnDataKeySpørsmål.søkerForTidsromSluttdato],
         ESvar.JA,
         søkerForTidsrom,
-        true
+        felt => {
+            // Feltet er valgfritt. Tom streng betyr ikke besvart
+            if (felt.verdi === '') return ok(felt);
+            return validerDato(felt, true);
+        }
     );
+
+    useEffect(() => {
+        if (søkerForTidsromSluttdato.erSynlig && søkerForTidsromSluttdato.verdi === '') {
+            søkerForTidsromSluttdato.validerOgSettFelt('');
+        }
+    }, [søkerForTidsromSluttdato]);
 
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
 
