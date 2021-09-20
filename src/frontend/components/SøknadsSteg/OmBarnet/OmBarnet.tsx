@@ -30,6 +30,10 @@ const EksternLenkeContainer = styled.div`
     margin-bottom: 4rem;
 `;
 
+const SpørsmålTilleggsinfoWrapper = styled.div`
+    margin-top: 1.5rem;
+`;
+
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     const { erUtvidet, søknad } = useApp();
     const {
@@ -116,50 +120,56 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 </SkjemaFieldset>
             )}
 
-            {skjema.felter.søkerForTidsromCheckbox.erSynlig &&
-                skjema.felter.søkerForTidsromStartdato.erSynlig &&
-                skjema.felter.søkerForTidsromSluttdato.erSynlig && (
-                    <SkjemaFieldset
-                        tittelId={'ombarnet.søker-for-periode.spm'}
+            {skjema.felter.søkerForTidsrom.erSynlig && (
+                <KomponentGruppe inline dynamisk>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.søkerForTidsrom}
+                        spørsmålTekstId={'ombarnet.søker-for-periode.spm'}
                         språkValues={{ navn: barnetsNavnValue(barn, intl) }}
-                        dynamisk
-                    >
-                        <AlertStripe>
-                            <SpråkTekst id={'ombarnet.søker-for-periode.alert'} />
-                        </AlertStripe>
-                        <Datovelger
-                            felt={skjema.felter.søkerForTidsromStartdato}
-                            skjema={skjema}
-                            labelTekstId={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.søkerForTidsromStartdato
-                                ]
-                            }
-                            disabled={skjema.felter.søkerForTidsromCheckbox.verdi === ESvar.JA}
-                        />
-                        {erUtvidet && søknad.søker.sivilstand.type === ESivilstand.SKILT && (
-                            <VedleggNotis språkTekstId={'ombarnet.barnetrygdtilbakeitid.info'} />
-                        )}
-                        <Datovelger
-                            felt={skjema.felter.søkerForTidsromSluttdato}
-                            fraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
-                            skjema={skjema}
-                            labelTekstId={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.søkerForTidsromSluttdato
-                                ]
-                            }
-                            disabled={skjema.felter.søkerForTidsromCheckbox.verdi === ESvar.JA}
-                        />
-                        <SkjemaCheckbox
-                            felt={skjema.felter.søkerForTidsromCheckbox}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={
-                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerIkkeForTidsrom]
-                            }
-                        />
-                    </SkjemaFieldset>
-                )}
+                        tilleggsinfo={
+                            <SpørsmålTilleggsinfoWrapper>
+                                <AlertStripe>
+                                    <SpråkTekst id={'ombarnet.søker-for-periode.alert'} />
+                                </AlertStripe>
+                            </SpørsmålTilleggsinfoWrapper>
+                        }
+                    />
+                    {skjema.felter.søkerForTidsrom.verdi === ESvar.JA && (
+                        <KomponentGruppe dynamisk>
+                            <Datovelger
+                                felt={skjema.felter.søkerForTidsromStartdato}
+                                skjema={skjema}
+                                labelTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.søkerForTidsromStartdato
+                                    ]
+                                }
+                            />
+                            {erUtvidet && søknad.søker.sivilstand.type === ESivilstand.SKILT && (
+                                <VedleggNotis
+                                    språkTekstId={'ombarnet.barnetrygdtilbakeitid.info'}
+                                />
+                            )}
+                            <Datovelger
+                                felt={skjema.felter.søkerForTidsromSluttdato}
+                                fraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
+                                skjema={skjema}
+                                labelTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.søkerForTidsromSluttdato
+                                    ]
+                                }
+                            />
+                            <SpørsmålTilleggsinfoWrapper>
+                                <AlertStripe type={'advarsel'}>
+                                    <SpråkTekst id={'ombarnet.søker-for-periode.sluttdato.info'} />
+                                </AlertStripe>
+                            </SpørsmålTilleggsinfoWrapper>
+                        </KomponentGruppe>
+                    )}
+                </KomponentGruppe>
+            )}
             {skjema.felter.søkerHarBoddMedAndreForelder.erSynlig && (
                 <KomponentGruppe dynamisk>
                     <JaNeiSpm

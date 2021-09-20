@@ -189,6 +189,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
             svar: null,
         },
+        [barnDataKeySpørsmål.søkerForTidsrom]: {
+            id: OmBarnetSpørsmålsId.søkerForTidsrom,
+            svar: null,
+        },
         [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
             id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
             svar: '',
