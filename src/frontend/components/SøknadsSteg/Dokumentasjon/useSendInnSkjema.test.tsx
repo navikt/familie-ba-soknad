@@ -1,6 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 
+import { ESivilstand } from '../../../typer/person';
 import { ISøknadKontrakt } from '../../../typer/søknad';
+import { hentSivilstatus } from '../../../utils/person';
 import {
     mekkGyldigUtvidetSøknad,
     spyOnUseApp,
@@ -18,5 +20,15 @@ describe('useSendInnSkjema', () => {
         });
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontraktUtvidet(formatert)).toBeTruthy();
+    });
+
+    it('Kan mappe sivilstandenum til språktekster', () => {
+        const språktekster = Object.values(ESivilstand).map(hentSivilstatus);
+        let sivilstandCount = 0;
+        for (const sivilstand in ESivilstand) {
+            expect(språktekster).toContain(`felles.sivilstatus.kode.${sivilstand}`);
+            sivilstandCount++;
+        }
+        expect(språktekster.length).toEqual(sivilstandCount);
     });
 });
