@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { RessursStatus } from '@navikt/familie-typer';
@@ -43,9 +42,6 @@ const Dokumentasjon: React.FC = () => {
                     />
                 ))}
             {innsendingStatus.status === RessursStatus.FEILET && <Feilside />}
-            <Knapp htmlType={'button'} onClick={sendInnSkjema}>
-                Send inn
-            </Knapp>
         </Steg>
     );
 };
