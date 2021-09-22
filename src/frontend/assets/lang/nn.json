@@ -349,6 +349,7 @@
   "pdf.barn.ikke-oppgitt": "Ikke oppgitt",
   "pdf.barn.navn.label": "Navn",
   "pdf.bosted.seksjonstittel": "Bosted",
+  "pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel": "Tidligere samboer {x}",
   "pdf.hvilkebarn.ikke-registrert-på-adresse": "Ikke registrert på søkers adresse",
   "pdf.hvilkebarn.registrert-på-adresse": "Registrert på søkers adresse",
   "pdf.hvilkebarn.seksjonstittel": "Hvilke barn søker du for?",

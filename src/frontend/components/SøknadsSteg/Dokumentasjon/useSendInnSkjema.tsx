@@ -1,4 +1,4 @@
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType, useSprakContext } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -41,8 +41,9 @@ import { erTidligereSamboer, hentSivilstatus } from '../../../utils/person';
 import { jaNeiSvarTilSpråkId, språkIndexListe } from '../../../utils/spørsmål';
 import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../OmBarnet/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import {
+    samboerSpråkIder,
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
 } from '../Utvidet-DinLivssituasjon/spørsmål';
@@ -85,6 +86,14 @@ export const useSendInnSkjema = (): {
 
     const sammeVerdiAlleSpråk = <T extends any>(verdi: T): Record<LocaleType, T> =>
         verdiCallbackAlleSpråk(() => verdi);
+
+    const sammeVerdiAlleSpråkEllerUkjentSpråktekst = (
+        svar: string | AlternativtSvarForInput,
+        ukjentTekstid: string
+    ) =>
+        svar === AlternativtSvarForInput.UKJENT
+            ? hentTekster(ukjentTekstid)
+            : sammeVerdiAlleSpråk(svar);
 
     const spørmålISøknadsFormat = (
         spørsmålMap: SpørsmålMap,
@@ -135,22 +144,19 @@ export const useSendInnSkjema = (): {
             borMedSøker,
             alder,
             adressebeskyttelse,
+            andreForelderNavn,
+            andreForelderFnr,
+            andreForelderFødselsdato,
+            søkerForTidsromStartdato,
+            søkerForTidsromSluttdato,
+            institusjonOppholdSluttdato,
+            nårKomBarnTilNorgeDato,
+            oppholdslandSluttdato,
             utvidet,
             ...barnSpørsmål
         } = barn;
         const typetBarnSpørsmål = (barnSpørsmål as unknown) as SpørsmålMap;
-
-        const søkerFraTilDatoVerdi = (svar: ISODateString | AlternativtSvarForInput) =>
-            svar === AlternativtSvarForInput.UKJENT
-                ? hentTekster('pdf.barn.ikke-oppgitt')
-                : sammeVerdiAlleSpråk(svar);
-
-        const søkerFlyttetFraAndreForelderDatoVerdi = (
-            svar: ISODateString | AlternativtSvarForInput
-        ) =>
-            svar === AlternativtSvarForInput.UKJENT
-                ? hentTekster('pdf.andreforelder.borsammennaa')
-                : sammeVerdiAlleSpråk(svar);
+        const { søkerFlyttetFraAndreForelderDato } = utvidet;
 
         return {
             navn: søknadsfelt(
@@ -179,17 +185,67 @@ export const useSendInnSkjema = (): {
                 ...spørmålISøknadsFormat(utvidet, { navn }),
                 [barnDataKeySpørsmål.søkerForTidsromStartdato]: søknadsfelt(
                     språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromStartdato),
-                    søkerFraTilDatoVerdi(barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar)
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        søkerForTidsromStartdato.svar,
+                        'pdf.barn.ikke-oppgitt'
+                    )
                 ),
                 [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfelt(
                     språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),
-                    søkerFraTilDatoVerdi(barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar)
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        søkerForTidsromSluttdato.svar,
+                        'pdf.barn.ikke-oppgitt'
+                    )
                 ),
                 [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: søknadsfelt(
                     språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato),
-                    søkerFlyttetFraAndreForelderDatoVerdi(
-                        barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]
-                            .svar
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        søkerFlyttetFraAndreForelderDato.svar,
+                        'pdf.andreforelder.borsammennaa'
+                    )
+                ),
+                [barnDataKeySpørsmål.andreForelderNavn]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        andreForelderNavn.svar,
+                        omBarnetSpørsmålSpråkId['andre-forelder-navn-ukjent']
+                    )
+                ),
+                [barnDataKeySpørsmål.andreForelderFnr]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        andreForelderFnr.svar,
+                        omBarnetSpørsmålSpråkId['andre-forelder-fødsels-/dnummer-ukjent']
+                    )
+                ),
+                [barnDataKeySpørsmål.andreForelderFødselsdato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        andreForelderFødselsdato.svar,
+                        omBarnetSpørsmålSpråkId['andre-forelder-fødselsdato-ukjent']
+                    )
+                ),
+                [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        institusjonOppholdSluttdato.svar,
+                        omBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
+                    )
+                ),
+                [barnDataKeySpørsmål.oppholdslandSluttdato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.oppholdslandSluttdato),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        oppholdslandSluttdato.svar,
+                        omBarnetSpørsmålSpråkId['barn-utenlandsopphold-ukjent-sluttdato']
+                    )
+                ),
+                [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.nårKomBarnetTilNorge),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        nårKomBarnTilNorgeDato.svar,
+                        omBarnetSpørsmålSpråkId[
+                            'ombarnet.sammenhengende-opphold.dato.ikkekommetenda'
+                        ]
                     )
                 ),
             },
@@ -250,10 +306,16 @@ export const useSendInnSkjema = (): {
             'pdf.samboer.label',
             sammeVerdiAlleSpråk({
                 navn: søknadsfelt(språktekstIds.navn, sammeVerdiAlleSpråk(navn.svar)),
-                ident: søknadsfelt(språktekstIds.ident, sammeVerdiAlleSpråk(ident.svar)),
+                ident: søknadsfelt(
+                    språktekstIds.ident,
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(ident.svar, samboerSpråkIder.fnrUkjent)
+                ),
                 fødselsdato: søknadsfelt(
                     språktekstIds.fødselsdato,
-                    sammeVerdiAlleSpråk(fødselsdato.svar)
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        fødselsdato.svar,
+                        samboerSpråkIder.fødselsdatoUkjent
+                    )
                 ),
                 samboerFraDato: søknadsfelt(
                     språktekstIds.samboerFraDato,
@@ -398,6 +460,7 @@ export const useSendInnSkjema = (): {
                 'pdf.vedlegg.nummerering',
                 'dokumentasjon.har-sendt-inn.spm',
                 'dinlivssituasjon.sidetittel',
+                'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
                 ...Object.values(ESivilstand).map(hentSivilstatus),
                 ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
             ].reduce(

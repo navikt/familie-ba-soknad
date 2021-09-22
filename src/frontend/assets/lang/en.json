@@ -349,6 +349,7 @@
   "pdf.barn.ikke-oppgitt": "Not provided",
   "pdf.barn.navn.label": "Name",
   "pdf.bosted.seksjonstittel": "Place of residence",
+  "pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel": "Former cohabitant {x}",
   "pdf.hvilkebarn.ikke-registrert-på-adresse": "Not registered on applicant's address",
   "pdf.hvilkebarn.registrert-på-adresse": "Registered on applicant's address",
   "pdf.hvilkebarn.seksjonstittel": "Which children are you applying for?",
