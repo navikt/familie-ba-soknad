@@ -35,9 +35,27 @@ export const GlobalStyle = createGlobalStyle`
     pointer-events: none;
   }
 
+  #familie-ba-soknad-page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+  #familie-ba-soknad-content-wrapper {
+    padding-bottom: 5.5rem;
+  }
+  @media screen and (max-width: 950px) {
+    #familie-ba-soknad-content-wrapper {
+      padding-bottom: 6.875rem;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    #familie-ba-soknad-content-wrapper {
+      padding-bottom: 12.75rem;
+    }
+  }
+
   footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    z-index: 1;
   }
 `;
