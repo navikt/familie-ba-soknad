@@ -27,6 +27,7 @@ interface DatoVelgerProps {
     labelTekstId: string;
     disabled?: boolean;
     dynamisk?: boolean;
+    calendarPosition?: '' | 'fullscreen' | 'responsive';
 }
 
 const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
@@ -62,6 +63,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     labelTekstId,
     disabled = false,
     dynamisk = false,
+    calendarPosition = '',
 }) => {
     const { formatMessage } = useIntl();
     const [valgtLocale] = useSprakContext();
@@ -121,6 +123,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 disabled={disabled}
                 locale={valgtLocale}
                 allowNavigationToDisabledMonths={true}
+                calendarSettings={{ position: calendarPosition }}
             />
             {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
         </span>
