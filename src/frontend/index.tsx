@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill';
 import * as Sentry from '@sentry/react';
 import { registerLocale } from 'i18n-iso-countries';
 import ReactDOM from 'react-dom';
@@ -19,46 +20,61 @@ import { logError } from './utils/amplitude';
 
 const environment = window.location.hostname;
 
-Sentry.init({
-    dsn: 'https://75e165345c514862b5829a724a4e8e45@sentry.gc.nav.no/71',
-    environment,
-    autoSessionTracking: false,
-    enabled: process.env.NODE_ENV !== 'development',
-});
+const polyfill = async () => {
+    // https://github.com/formatjs/formatjs/issues/3066
+    await import('@formatjs/intl-numberformat/polyfill-force');
+    await import('@formatjs/intl-datetimeformat/polyfill-force');
 
-if (process.env.NODE_ENV !== 'production') {
-    import('@axe-core/react').then(({ default: axe }) => {
-        axe(React, ReactDOM, 1000);
+    for (const locale in LocaleType) {
+        // Last ned land-navn for statsborgeskap
+        await import(`i18n-iso-countries/langs/${locale}.json`).then(result =>
+            registerLocale(result)
+        );
+
+        if (shouldPolyfill(locale)) {
+            await import(`@formatjs/intl-numberformat/locale-data/${locale}`);
+            await import(`@formatjs/intl-datetimeformat/locale-data/${locale}`);
+        }
+    }
+};
+
+polyfill().then(() => {
+    Sentry.init({
+        dsn: 'https://75e165345c514862b5829a724a4e8e45@sentry.gc.nav.no/71',
+        environment,
+        autoSessionTracking: false,
+        enabled: process.env.NODE_ENV !== 'development',
     });
-}
 
-// Last ned land-navn for statsborgeskap
-import(`i18n-iso-countries/langs/nb.json`).then(result => registerLocale(result));
-import(`i18n-iso-countries/langs/nn.json`).then(result => registerLocale(result));
-import(`i18n-iso-countries/langs/en.json`).then(result => registerLocale(result));
+    if (process.env.NODE_ENV !== 'production') {
+        import('@axe-core/react').then(({ default: axe }) => {
+            axe(React, ReactDOM, 1000);
+        });
+    }
 
-ReactDOM.render(
-    <React.StrictMode>
-        <SprakProvider
-            tekster={{
-                nb: bokmål,
-                nn: nynorsk,
-                en: engelsk,
-            }}
-            defaultLocale={LocaleType.nb}
-        >
-            <HttpProvider>
-                <Sentry.ErrorBoundary
-                    fallback={Feilside}
-                    beforeCapture={scope => scope.setTag('scope', 'familie-ba-soknad')}
-                    onError={logError}
-                >
-                    <App />
-                </Sentry.ErrorBoundary>
-            </HttpProvider>
-        </SprakProvider>
-    </React.StrictMode>,
-    document.getElementById('root')
-);
+    ReactDOM.render(
+        <React.StrictMode>
+            <SprakProvider
+                tekster={{
+                    nb: bokmål,
+                    nn: nynorsk,
+                    en: engelsk,
+                }}
+                defaultLocale={LocaleType.nb}
+            >
+                <HttpProvider>
+                    <Sentry.ErrorBoundary
+                        fallback={Feilside}
+                        beforeCapture={scope => scope.setTag('scope', 'familie-ba-soknad')}
+                        onError={logError}
+                    >
+                        <App />
+                    </Sentry.ErrorBoundary>
+                </HttpProvider>
+            </SprakProvider>
+        </React.StrictMode>,
+        document.getElementById('root')
+    );
 
-Modal.setAppElement('#root');
+    Modal.setAppElement('#root');
+});
