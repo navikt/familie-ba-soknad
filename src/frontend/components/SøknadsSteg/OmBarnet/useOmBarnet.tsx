@@ -31,7 +31,7 @@ import {
     DatoMedUkjent,
     IBarnMedISøknad,
 } from '../../../typer/person';
-import { validerDato } from '../../../utils/dato';
+import { validerDatoAvgrensetFremITid } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { barnetsNavnValue } from '../../../utils/visning';
@@ -506,7 +506,7 @@ export const useOmBarnet = (
         barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
         ESvar.JA,
         søkerForTidsrom,
-        felt => validerDato(felt, true)
+        validerDatoAvgrensetFremITid
     );
     const søkerForTidsromSluttdato = useDatovelgerFeltMedJaNeiAvhengighet(
         barn[barnDataKeySpørsmål.søkerForTidsromSluttdato],
@@ -515,7 +515,7 @@ export const useOmBarnet = (
         felt => {
             // Feltet er valgfritt. Tom streng betyr ikke besvart
             if (felt.verdi === '') return ok(felt);
-            return validerDato(felt, true);
+            return validerDatoAvgrensetFremITid(felt);
         }
     );
 
