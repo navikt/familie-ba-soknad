@@ -205,7 +205,7 @@
   "ombarnet.barnetrygd-eøs.land.spm": "Hvilket land får eller har du søkt om barnetrygd fra?",
   "ombarnet.barnetrygdtilbakeitid.info": "Hvis du er skilt og søker om utvidet barnetrygd for tiden før skilsmissen, må du legge ved dokumentasjon på separasjonsdato senere i søknaden.",
   "ombarnet.boddsammenmedandreforelder.feilmelding": "Du må oppgi om du har bodd sammen med den andre forelderen for å gå videre",
-  "ombarnet.boddsammenmedandreforelder.spm": "Har du bodd sammen med {barn} sin andre forelder?",
+  "ombarnet.boddsammenmedandreforelder.spm": "Har du bodd sammen med {navn} sin andre forelder?",
   "ombarnet.bor-fast.feilmelding": "Du må oppgi om {navn} bor fast sammen med deg for å gå videre",
   "ombarnet.bor-fast.spm": "Bor {navn} fast sammen med deg?",
   "ombarnet.bosted": "Bosted",

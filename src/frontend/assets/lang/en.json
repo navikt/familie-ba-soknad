@@ -205,7 +205,7 @@
   "ombarnet.barnetrygd-eøs.land.spm": "From which country are you receiving or have you applied for child benefit?",
   "ombarnet.barnetrygdtilbakeitid.info": "If you are divorced and are applying for extended child benefit further back in time than your divorce date, you must provide documentation of the separation date later on in the application.",
   "ombarnet.boddsammenmedandreforelder.feilmelding": "You must state if you have ever lived with the other parent in order to be able to proceed",
-  "ombarnet.boddsammenmedandreforelder.spm": "Have you ever lived with {barn}'s other parent?",
+  "ombarnet.boddsammenmedandreforelder.spm": "Have you ever lived with {navn}'s other parent?",
   "ombarnet.bor-fast.feilmelding": "You must state if {navn} lives with you on a permanent basis in order to be able to proceed",
   "ombarnet.bor-fast.spm": "Does {navn} live with you on a permanent basis?",
   "ombarnet.bosted": "Place of residence",

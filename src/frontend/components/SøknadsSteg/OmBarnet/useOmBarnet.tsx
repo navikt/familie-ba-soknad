@@ -540,7 +540,8 @@ export const useOmBarnet = (
                   },
               },
         false,
-        !erUtvidet
+        !erUtvidet,
+        { navn: barn.navn }
     );
 
     const borMedAndreForelderCheckbox = useFelt<ESvar>({
