@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Søknad om barnetrygd" />
   <!-- Intl polyfill -->
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.nb,Intl.~locale.en"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.nb,Intl.~locale.en,Intl.~locale.nn"></script>
 
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
@@ -20,9 +20,13 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  {{{NAV_HEADING}}}
-  <div id="root"></div>
-  {{{NAV_FOOTER}}}
+  <div id="familie-ba-soknad-page-container">
+    <div id="familie-ba-soknad-content-wrapper">
+      {{{NAV_HEADING}}}
+      <div id="root"></div>
+    </div>
+      {{{NAV_FOOTER}}}
+  </div>
 
 </body>
 

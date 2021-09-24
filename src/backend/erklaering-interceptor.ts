@@ -30,7 +30,7 @@ export const erklaeringInterceptor: RequestHandler = (request, response, next) =
 
     const svar = søknad.spørsmål[spmKey];
 
-    if (aksepterteSvar.includes(svar.verdi)) {
+    if (aksepterteSvar.includes(svar.verdi[søknad.originalSpråk])) {
         next();
     } else {
         return response

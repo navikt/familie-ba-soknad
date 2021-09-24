@@ -1,9 +1,7 @@
-import { useIntl } from 'react-intl';
-
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
+import { LocaleType, useSprakContext } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
-import * as bokmålSpråktekster from '../../../assets/lang/nb.json';
 import { useApp } from '../../../context/AppContext';
 import Miljø from '../../../Miljø';
 import {
@@ -18,12 +16,12 @@ import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
     barnDataKeySpørsmålUtvidet,
+    ESivilstand,
     IBarnMedISøknad,
     ISamboer,
     ITidligereSamboer,
 } from '../../../typer/person';
 import {
-    ESøknadstype,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
     ISøknad,
@@ -32,15 +30,20 @@ import {
     ISøknadsfelt,
     ISøknadSpørsmål,
     SpørsmålId,
+    SpørsmålMap as KontraktpørsmålMap,
 } from '../../../typer/søknad';
-import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
-import { isAlpha3Code } from '../../../utils/hjelpefunksjoner';
-import { erTidligereSamboer } from '../../../utils/person';
-import { språkIndexListe } from '../../../utils/spørsmål';
+import {
+    dokumentasjonsbehovTilSpråkId,
+    erDokumentasjonRelevant,
+} from '../../../utils/dokumentasjon';
+import { hentTekster, hentUformaterteTekster, isAlpha3Code } from '../../../utils/hjelpefunksjoner';
+import { erTidligereSamboer, hentSivilstatus } from '../../../utils/person';
+import { jaNeiSvarTilSpråkId, språkIndexListe } from '../../../utils/spørsmål';
 import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../OmBarnet/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
 import {
+    samboerSpråkIder,
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
 } from '../Utvidet-DinLivssituasjon/spørsmål';
@@ -53,94 +56,199 @@ export const useSendInnSkjema = (): {
     sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;
 } => {
     const { axiosRequest, søknad, settInnsendingStatus } = useApp();
-    const intl = useIntl();
     const { soknadApi } = Miljø();
+    const [valgtSpråk] = useSprakContext();
 
-    const språktekstFraSpørsmålId = (spørsmålId: SpørsmålId): string => {
+    const språktekstIdFraSpørsmålId = (spørsmålId: SpørsmålId): string => {
         for (const språkIndex of språkIndexListe) {
             if (spørsmålId in språkIndex) {
-                return intl.formatMessage({ id: språkIndex[spørsmålId] });
+                return språkIndex[spørsmålId];
             }
         }
         return 'ukjent-spørsmål';
     };
 
-    const søknadsfelt = <T extends any>(label: string, value: T): ISøknadsfelt<T> => {
-        return { label: label, verdi: value };
+    const søknadsfelt = <T extends any>(
+        labelTekstId: string,
+        value: Record<LocaleType, T>,
+        labelMessageValues: object = {}
+    ): ISøknadsfelt<T> => {
+        return { label: hentTekster(labelTekstId, labelMessageValues), verdi: value };
     };
 
-    const spørmålISøknadsFormat = (spørsmålMap: SpørsmålMap) => {
+    const verdiCallbackAlleSpråk = <T extends any>(
+        cb: (locale: LocaleType) => T
+    ): Record<LocaleType, T> => ({
+        [LocaleType.nb]: cb(LocaleType.nb),
+        [LocaleType.nn]: cb(LocaleType.nn),
+        [LocaleType.en]: cb(LocaleType.en),
+    });
+
+    const sammeVerdiAlleSpråk = <T extends any>(verdi: T): Record<LocaleType, T> =>
+        verdiCallbackAlleSpråk(() => verdi);
+
+    const sammeVerdiAlleSpråkEllerUkjentSpråktekst = (
+        svar: string | AlternativtSvarForInput,
+        ukjentTekstid: string
+    ) =>
+        svar === AlternativtSvarForInput.UKJENT
+            ? hentTekster(ukjentTekstid)
+            : sammeVerdiAlleSpråk(svar);
+
+    const spørmålISøknadsFormat = (
+        spørsmålMap: SpørsmålMap,
+        formatMessageValues: object = {}
+    ): KontraktpørsmålMap => {
         return Object.fromEntries(
             Object.entries(spørsmålMap)
                 .map((entry: [string, ISøknadSpørsmål<any>]): [
                     string,
-                    { label: string; verdi: any }
+                    { label: Record<LocaleType, string>; verdi: Record<LocaleType, any> }
                 ] => {
                     const verdi = entry[1].svar;
-                    let formatertVerdi: string;
+                    let formatertVerdi: Record<LocaleType, string>;
 
                     if (isAlpha3Code(verdi)) {
-                        formatertVerdi = landkodeTilSpråk(verdi, 'nb');
-                    } else if (verdi === ESvar.VET_IKKE) {
-                        formatertVerdi = ESvar.VET_IKKE.replace('_', ' ');
+                        formatertVerdi = verdiCallbackAlleSpråk(locale =>
+                            landkodeTilSpråk(verdi, locale)
+                        );
+                    } else if (verdi in ESvar) {
+                        // Slår opp språktekst i språkteksterUtenomSpørsmål i dokgen
+                        formatertVerdi = sammeVerdiAlleSpråk(verdi);
                     } else if (verdi in Årsak) {
-                        formatertVerdi = intl.formatMessage({ id: toÅrsakSpråkId(verdi) });
+                        formatertVerdi = hentTekster(toÅrsakSpråkId(verdi));
                     } else {
-                        formatertVerdi = verdi;
+                        formatertVerdi = sammeVerdiAlleSpråk(verdi);
                     }
 
                     return [
                         entry[0],
-                        søknadsfelt(språktekstFraSpørsmålId(entry[1].id), formatertVerdi),
+                        søknadsfelt(
+                            språktekstIdFraSpørsmålId(entry[1].id),
+                            formatertVerdi,
+                            formatMessageValues
+                        ),
                     ];
                 })
-                .filter(entry => entry[1].verdi)
+                .filter(entry => entry[1].verdi[LocaleType.nb])
         );
     };
 
     const barnISøknadsFormat = (barn: IBarnMedISøknad): ISøknadKontraktBarn => {
+        /* eslint-disable @typescript-eslint/no-unused-vars */
         const {
+            id,
+            barnErFyltUt,
             ident,
             navn,
             borMedSøker,
             alder,
             adressebeskyttelse,
+            andreForelderNavn,
+            andreForelderFnr,
+            andreForelderFødselsdato,
+            søkerForTidsromStartdato,
+            søkerForTidsromSluttdato,
+            institusjonOppholdSluttdato,
+            nårKomBarnTilNorgeDato,
+            oppholdslandSluttdato,
             utvidet,
             ...barnSpørsmål
         } = barn;
         const typetBarnSpørsmål = (barnSpørsmål as unknown) as SpørsmålMap;
-
-        const søkerFlyttetFraAndreForelderDatoVerdi = (
-            svar: ISODateString | AlternativtSvarForInput
-        ) => (svar === AlternativtSvarForInput.UKJENT ? 'Vi bor sammen nå' : svar);
+        const { søkerFlyttetFraAndreForelderDato } = utvidet;
 
         return {
-            navn: søknadsfelt('Navn', adressebeskyttelse ? `Barn ${formaterFnr(ident)}` : navn),
-            ident: søknadsfelt('Ident', ident ?? 'Ikke oppgitt'),
-            borMedSøker: søknadsfelt(
-                'Bor med søker',
-                borMedSøker ??
-                    typetBarnSpørsmål[barnDataKeySpørsmål.borFastMedSøker].svar === ESvar.JA
+            navn: søknadsfelt(
+                'pdf.barn.navn.label',
+                sammeVerdiAlleSpråk(adressebeskyttelse ? `Barn ${formaterFnr(ident)}` : navn)
             ),
-            alder: søknadsfelt('Alder', alder ?? AlternativtSvarForInput.UKJENT),
+            ident: søknadsfelt(
+                'pdf.barn.ident.label',
+                ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt')
+            ),
+            borMedSøker: søknadsfelt(
+                'pdf.barn.bormedsoker.label',
+                sammeVerdiAlleSpråk(
+                    borMedSøker ??
+                        typetBarnSpørsmål[barnDataKeySpørsmål.borFastMedSøker].svar === ESvar.JA
+                )
+            ),
+            alder: søknadsfelt(
+                'pdf.barn.alder.label',
+                alder
+                    ? hentTekster('felles.år', { alder })
+                    : sammeVerdiAlleSpråk(AlternativtSvarForInput.UKJENT)
+            ),
             spørsmål: {
-                ...spørmålISøknadsFormat(typetBarnSpørsmål),
+                ...spørmålISøknadsFormat(typetBarnSpørsmål, { navn }),
+                ...spørmålISøknadsFormat(utvidet, { navn }),
+                [barnDataKeySpørsmål.søkerForTidsromStartdato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromStartdato),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        søkerForTidsromStartdato.svar,
+                        'pdf.barn.ikke-oppgitt'
+                    )
+                ),
+                [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        søkerForTidsromSluttdato.svar,
+                        'pdf.barn.ikke-oppgitt'
+                    )
+                ),
+                [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        søkerFlyttetFraAndreForelderDato.svar,
+                        'pdf.andreforelder.borsammennaa'
+                    )
+                ),
+                [barnDataKeySpørsmål.andreForelderNavn]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        andreForelderNavn.svar,
+                        omBarnetSpørsmålSpråkId['andre-forelder-navn-ukjent']
+                    )
+                ),
+                [barnDataKeySpørsmål.andreForelderFnr]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        andreForelderFnr.svar,
+                        omBarnetSpørsmålSpråkId['andre-forelder-fødsels-/dnummer-ukjent']
+                    )
+                ),
+                [barnDataKeySpørsmål.andreForelderFødselsdato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        andreForelderFødselsdato.svar,
+                        omBarnetSpørsmålSpråkId['andre-forelder-fødselsdato-ukjent']
+                    )
+                ),
+                [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        institusjonOppholdSluttdato.svar,
+                        omBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
+                    )
+                ),
+                [barnDataKeySpørsmål.oppholdslandSluttdato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.oppholdslandSluttdato),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        oppholdslandSluttdato.svar,
+                        omBarnetSpørsmålSpråkId['barn-utenlandsopphold-ukjent-sluttdato']
+                    )
+                ),
+                [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.nårKomBarnetTilNorge),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        nårKomBarnTilNorgeDato.svar,
+                        omBarnetSpørsmålSpråkId[
+                            'ombarnet.sammenhengende-opphold.dato.ikkekommetenda'
+                        ]
+                    )
+                ),
             },
-            utvidet: utvidet
-                ? {
-                      ...spørmålISøknadsFormat(utvidet),
-                      [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: søknadsfelt(
-                          språktekstFraSpørsmålId(
-                              OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                          ),
-                          søkerFlyttetFraAndreForelderDatoVerdi(
-                              barn.utvidet[
-                                  barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato
-                              ].svar
-                          )
-                      ),
-                  }
-                : undefined,
         };
     };
 
@@ -152,6 +260,10 @@ export const useSendInnSkjema = (): {
         opplastedeVedlegg: dokumentasjon.opplastedeVedlegg.map(vedlegg =>
             vedleggISøknadFormat(vedlegg, dokumentasjon.dokumentasjonsbehov)
         ),
+        dokumentasjonSpråkTittel:
+            dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.BOR_FAST_MED_SØKER
+                ? hentTekster('pdf.vedlegg.bekreftelse-barn-bor-med-deg.tittel')
+                : hentTekster(dokumentasjonsbehovTilSpråkId(dokumentasjon.dokumentasjonsbehov)),
     });
 
     const vedleggISøknadFormat = (
@@ -168,34 +280,49 @@ export const useSendInnSkjema = (): {
     ): ISøknadsfelt<IKontraktNåværendeSamboer> => {
         const { ident, samboerFraDato, navn, fødselsdato } = samboer;
         const erTidligere = erTidligereSamboer(samboer);
-        const språktekster = {
-            navn: språktekstFraSpørsmålId(
+        const språktekstIds = {
+            navn: språktekstIdFraSpørsmålId(
                 erTidligere
                     ? TidligereSamboerSpørsmålId.tidligereSamboerNavn
                     : SamboerSpørsmålId.nåværendeSamboerNavn
             ),
-            ident: språktekstFraSpørsmålId(
+            ident: språktekstIdFraSpørsmålId(
                 erTidligere
                     ? TidligereSamboerSpørsmålId.tidligereSamboerFnr
                     : SamboerSpørsmålId.nåværendeSamboerFnr
             ),
-            fødselsdato: språktekstFraSpørsmålId(
+            fødselsdato: språktekstIdFraSpørsmålId(
                 erTidligere
                     ? TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato
                     : SamboerSpørsmålId.nåværendeSamboerFødselsdato
             ),
-            samboerFraDato: språktekstFraSpørsmålId(
+            samboerFraDato: språktekstIdFraSpørsmålId(
                 erTidligere
                     ? TidligereSamboerSpørsmålId.tidligereSamboerFraDato
                     : SamboerSpørsmålId.nåværendeSamboerFraDato
             ),
         };
-        return søknadsfelt('Samboer', {
-            navn: søknadsfelt(språktekster.navn, navn.svar),
-            ident: søknadsfelt(språktekster.ident, ident.svar),
-            fødselsdato: søknadsfelt(språktekster.fødselsdato, fødselsdato.svar),
-            samboerFraDato: søknadsfelt(språktekster.samboerFraDato, samboerFraDato.svar),
-        });
+        return søknadsfelt(
+            'pdf.samboer.label',
+            sammeVerdiAlleSpråk({
+                navn: søknadsfelt(språktekstIds.navn, sammeVerdiAlleSpråk(navn.svar)),
+                ident: søknadsfelt(
+                    språktekstIds.ident,
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(ident.svar, samboerSpråkIder.fnrUkjent)
+                ),
+                fødselsdato: søknadsfelt(
+                    språktekstIds.fødselsdato,
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        fødselsdato.svar,
+                        samboerSpråkIder.fødselsdatoUkjent
+                    )
+                ),
+                samboerFraDato: søknadsfelt(
+                    språktekstIds.samboerFraDato,
+                    sammeVerdiAlleSpråk(samboerFraDato.svar)
+                ),
+            })
+        );
     };
 
     const tidligereSamboerISøknadKontraktFormat = (
@@ -204,13 +331,17 @@ export const useSendInnSkjema = (): {
         const { samboerTilDato, navn } = samboer;
         const { verdi: samboerIKontraktFormat } = samboerISøknadKontraktFormat(samboer);
 
-        return søknadsfelt(`Tidligere samboer: ${navn.svar}`, {
-            ...samboerIKontraktFormat,
-            samboerTilDato: søknadsfelt(
-                språktekstFraSpørsmålId(TidligereSamboerSpørsmålId.tidligereSamboerTilDato),
-                samboerTilDato.svar
-            ),
-        });
+        return søknadsfelt(
+            'pdf.tidligeresamboer.label',
+            sammeVerdiAlleSpråk({
+                ...samboerIKontraktFormat[LocaleType.nb],
+                samboerTilDato: søknadsfelt(
+                    språktekstIdFraSpørsmålId(TidligereSamboerSpørsmålId.tidligereSamboerTilDato),
+                    sammeVerdiAlleSpråk(samboerTilDato.svar)
+                ),
+            }),
+            { navn: navn.svar }
+        );
     };
 
     const dataISøknadKontraktFormat = (søknad: ISøknad): ISøknadKontrakt => {
@@ -225,6 +356,7 @@ export const useSendInnSkjema = (): {
             adresse,
             barn,
             utvidet,
+            adressebeskyttelse,
             ...søkerSpørsmål
         } = søker;
         const { spørsmål: utvidaSpørsmål, nåværendeSamboer, tidligereSamboere } = utvidet;
@@ -235,89 +367,107 @@ export const useSendInnSkjema = (): {
         return {
             søknadstype: søknad.søknadstype,
             søker: {
-                navn: søknadsfelt('Navn', søker.navn),
-                ident: søknadsfelt('Ident', søknad.søker.ident),
-                sivilstand: søknadsfelt('Sivilstand', søker.sivilstand.type),
-                statsborgerskap: søknadsfelt(
-                    'Statsborgerskap',
-                    søker.statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, 'nb'))
+                navn: søknadsfelt('pdf.søker.navn.label', sammeVerdiAlleSpråk(søker.navn)),
+                ident: søknadsfelt('pdf.søker.ident.label', sammeVerdiAlleSpråk(søker.ident)),
+                sivilstand: søknadsfelt(
+                    'pdf.søker.sivilstand.label',
+                    sammeVerdiAlleSpråk(søker.sivilstand.type)
                 ),
-                adresse: søker.adresse
-                    ? søknadsfelt('Adresse', søker.adresse)
-                    : søknadsfelt('Adresse', {}),
-                spørsmål: spørmålISøknadsFormat(typetSøkerSpørsmål),
-                utvidet:
-                    søknad.søknadstype === ESøknadstype.UTVIDET
-                        ? søknadsfelt('Utvidet', {
-                              spørsmål: spørmålISøknadsFormat(typetUtvidaSpørsmål),
-                              tidligereSamboere: tidligereSamboere.map(
-                                  tidligereSamboerISøknadKontraktFormat
-                              ),
-                              nåværendeSamboer: nåværendeSamboer
-                                  ? samboerISøknadKontraktFormat(nåværendeSamboer)
-                                  : null,
-                          })
-                        : undefined,
+                statsborgerskap: søknadsfelt(
+                    'pdf.søker.statsborgerskap.label',
+                    verdiCallbackAlleSpråk(locale =>
+                        søker.statsborgerskap.map(objekt =>
+                            landkodeTilSpråk(objekt.landkode, locale)
+                        )
+                    )
+                ),
+                adresse: søknadsfelt(
+                    'pdf.søker.adresse.label',
+                    sammeVerdiAlleSpråk(søker.adresse ?? {})
+                ),
+                spørsmål: {
+                    ...spørmålISøknadsFormat(typetSøkerSpørsmål),
+                    ...spørmålISøknadsFormat(typetUtvidaSpørsmål),
+                },
+                tidligereSamboere: tidligereSamboere.map(tidligereSamboerISøknadKontraktFormat),
+                nåværendeSamboer: nåværendeSamboer
+                    ? samboerISøknadKontraktFormat(nåværendeSamboer)
+                    : null,
             },
             barn: barnInkludertISøknaden.map(barn => barnISøknadsFormat(barn)),
             spørsmål: {
                 erNoenAvBarnaFosterbarn: søknadsfelt(
-                    språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),
-                    søknad.erNoenAvBarnaFosterbarn.svar
+                    språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),
+                    sammeVerdiAlleSpråk(søknad.erNoenAvBarnaFosterbarn.svar)
                 ),
                 søktAsylForBarn: søknadsfelt(
-                    språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.søktAsylForBarn),
-                    søknad.søktAsylForBarn.svar
+                    språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.søktAsylForBarn),
+                    sammeVerdiAlleSpråk(søknad.søktAsylForBarn.svar)
                 ),
                 oppholderBarnSegIInstitusjon: søknadsfelt(
-                    språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon),
-                    søknad.oppholderBarnSegIInstitusjon.svar
+                    språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon),
+                    sammeVerdiAlleSpråk(søknad.oppholderBarnSegIInstitusjon.svar)
                 ),
                 barnOppholdtSegTolvMndSammenhengendeINorge: søknadsfelt(
-                    språktekstFraSpørsmålId(
+                    språktekstIdFraSpørsmålId(
                         OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
                     ),
-                    søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar
+                    sammeVerdiAlleSpråk(søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar)
                 ),
                 erBarnAdoptertFraUtland: søknadsfelt(
-                    språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland),
-                    søknad.erBarnAdoptertFraUtland.svar
+                    språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland),
+                    sammeVerdiAlleSpråk(søknad.erBarnAdoptertFraUtland.svar)
                 ),
                 mottarBarnetrygdForBarnFraAnnetEøsland: søknadsfelt(
-                    språktekstFraSpørsmålId(
+                    språktekstIdFraSpørsmålId(
                         OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland
                     ),
-                    søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar
+                    sammeVerdiAlleSpråk(søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar)
                 ),
                 oppholderBarnSegIUtland: søknadsfelt(
-                    språktekstFraSpørsmålId(OmBarnaDineSpørsmålId.oppholderBarnSegIUtland),
-                    søknad.oppholderBarnSegIUtland.svar
+                    språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.oppholderBarnSegIUtland),
+                    sammeVerdiAlleSpråk(søknad.oppholderBarnSegIUtland.svar)
                 ),
                 lestOgForståttBekreftelse: søknadsfelt(
-                    intl.formatMessage({ id: 'forside.bekreftelsesboks.brødtekst' }),
+                    'forside.bekreftelsesboks.brødtekst',
                     søknad.lestOgForståttBekreftelse
-                        ? intl.formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })
-                        : ESvar.NEI
+                        ? hentTekster('forside.bekreftelsesboks.erklæring.spm')
+                        : sammeVerdiAlleSpråk(ESvar.NEI)
                 ),
-                oppfølgingsspørsmåltekster: {
-                    label:
-                        'Tekster som ellers trengs til pdf-gen, typ "Du har opplyst at {navn} oppholder seg i institusjon"',
-                    verdi: {
-                        ...Object.fromEntries(
-                            [
-                                'ombarnet.fosterbarn',
-                                'ombarnet.institusjon',
-                                'ombarnet.oppholdutland',
-                                'ombarnet.sammenhengende-opphold',
-                                'ombarnet.barnetrygd-eøs',
-                            ].map(tekstId => [tekstId, bokmålSpråktekster[tekstId]])
-                        ),
-                    },
-                },
             },
             dokumentasjon: søknad.dokumentasjon
                 .filter(dok => erDokumentasjonRelevant(dok))
                 .map(dok => dokumentasjonISøknadFormat(dok)),
+            teksterUtenomSpørsmål: [
+                'ombarnet.fosterbarn',
+                'ombarnet.institusjon',
+                'ombarnet.oppholdutland',
+                'ombarnet.sammenhengende-opphold',
+                'ombarnet.barnetrygd-eøs',
+                'omdeg.annensamboer.spm',
+                'pdf.andreforelder.seksjonstittel',
+                'pdf.hvilkebarn.seksjonstittel',
+                'pdf.hvilkebarn.registrert-på-adresse',
+                'pdf.hvilkebarn.ikke-registrert-på-adresse',
+                'pdf.ombarnet.seksjonstittel',
+                'pdf.omdeg.seksjonstittel',
+                'pdf.bosted.seksjonstittel',
+                'pdf.ombarna.seksjonstittel',
+                'pdf.søker-for-tidsrom.seksjonstittel',
+                'pdf.søker.seksjonstittel',
+                'pdf.vedlegg.seksjonstittel',
+                'pdf.vedlegg.lastet-opp-antall',
+                'pdf.vedlegg.nummerering',
+                'dokumentasjon.har-sendt-inn.spm',
+                'dinlivssituasjon.sidetittel',
+                'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
+                ...Object.values(ESivilstand).map(hentSivilstatus),
+                ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
+            ].reduce(
+                (map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }),
+                {}
+            ),
+            originalSpråk: valgtSpråk,
         };
     };
 
@@ -326,7 +476,7 @@ export const useSendInnSkjema = (): {
         const formatert = dataISøknadKontraktFormat(søknad);
 
         return await axiosRequest<IKvittering, ISøknadKontrakt>({
-            url: `${soknadApi}/soknad/v3`,
+            url: `${soknadApi}/soknad/v4`,
             method: 'POST',
             withCredentials: true,
             data: formatert,
