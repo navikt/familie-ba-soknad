@@ -362,18 +362,21 @@ describe('OmBarnet', () => {
         const { erStegUtfyltFrafør } = spyOnUseApp(oppdatertSøknad);
         erStegUtfyltFrafør.mockReturnValue(false);
 
-        const { queryByText, container, debug } = render(
+        const { queryByText } = render(
             <TestProvidere>
                 <OmBarnet barnetsId={endretBarn.id} />
             </TestProvidere>
         );
 
         const gåVidereKnapper = queryByText(/felles.navigasjon.gå-videre/);
-        expect(queryByText(/ombarnet.institusjon.postnummer.feilmelding/)).not.toBeInTheDocument();
+        expect(
+            queryByText(/ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding/)
+        ).not.toBeInTheDocument();
         act(() => {
             gåVidereKnapper && gåVidereKnapper.click();
         });
-        debug(container, 1000000);
-        expect(queryByText(/ombarnet.institusjon.postnummer.feilmelding/)).toBeInTheDocument();
+        expect(
+            queryByText(/ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding/)
+        ).toBeInTheDocument();
     });
 });
