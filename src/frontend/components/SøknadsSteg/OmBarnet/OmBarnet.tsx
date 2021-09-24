@@ -178,6 +178,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
                             ]
                         }
+                        språkValues={{ navn: barn.navn }}
                     />
                     {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
                         <KomponentGruppe inline dynamisk>
