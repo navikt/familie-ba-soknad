@@ -368,7 +368,7 @@
   "pdf.søker.seksjonstittel": "Applicant",
   "pdf.søker.sivilstand.label": "Marital status",
   "pdf.søker.statsborgerskap.label": "Citizenship",
-  "pdf.tidligeresamboer.label": "Former cohabitant",
+  "pdf.tidligeresamboer.label": "Former cohabitant: {navn}",
   "pdf.vedlegg.bekreftelse-barn-bor-med-deg.tittel": "Confirmation that child lives with you",
   "pdf.vedlegg.lastet-opp-antall": "Uploaded {antall} attachments",
   "pdf.vedlegg.nummerering": "Attachment {x} of {total}",
