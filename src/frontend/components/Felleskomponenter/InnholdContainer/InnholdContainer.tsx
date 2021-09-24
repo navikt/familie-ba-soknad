@@ -9,11 +9,11 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin: 2rem auto 20rem auto;
+    margin: 2rem auto 4rem auto;
 
     @media all and ${device.tablet} {
         max-width: 100%;
-        margin: 2rem 2rem 20rem 2rem;
+        margin: 2rem 2rem 4rem 2rem;
     }
 `;
 
