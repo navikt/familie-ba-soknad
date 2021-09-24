@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styled from 'styled-components/macro';
+
 import { ITidligereSamboer } from '../../../typer/person';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -7,6 +9,14 @@ import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
 import SamboerSkjema from './SamboerSkjema';
 import { TidligereSamboerSpørsmålId } from './spørsmål';
 import { useTidligereSamboer } from './useTidligereSamboer';
+
+const ModalContentWrapper = styled.div`
+    min-height: 100vh;
+    .div.nav-datovelger__kalenderPortal.nav-datovelger__kalenderPortal-- {
+        display: flex !important;
+        border: 1px dotted red;
+    }
+`;
 
 interface Props {
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
@@ -68,19 +78,20 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <SamboerSkjema
-                skjema={skjema}
-                samboerFelter={{
-                    navn: skjema.felter.tidligereSamboerNavn,
-                    fnr: skjema.felter.tidligereSamboerFnr,
-                    fnrUkjent: skjema.felter.tidligereSamboerFnrUkjent,
-                    fødselsdato: skjema.felter.tidligereSamboerFødselsdato,
-                    fødselsdatoUkjent: skjema.felter.tidligereSamboerFødselsdatoUkjent,
-                    samboerFraDato: skjema.felter.tidligereSamboerFraDato,
-                    samboerTilDato: skjema.felter.tidligereSamboerTilDato,
-                }}
-                erIModal
-            />
+            <ModalContentWrapper>
+                <SamboerSkjema
+                    skjema={skjema}
+                    samboerFelter={{
+                        navn: skjema.felter.tidligereSamboerNavn,
+                        fnr: skjema.felter.tidligereSamboerFnr,
+                        fnrUkjent: skjema.felter.tidligereSamboerFnrUkjent,
+                        fødselsdato: skjema.felter.tidligereSamboerFødselsdato,
+                        fødselsdatoUkjent: skjema.felter.tidligereSamboerFødselsdatoUkjent,
+                        samboerFraDato: skjema.felter.tidligereSamboerFraDato,
+                        samboerTilDato: skjema.felter.tidligereSamboerTilDato,
+                    }}
+                />
+            </ModalContentWrapper>
         </SkjemaModal>
     );
 };
