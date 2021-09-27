@@ -6,6 +6,7 @@ import { ISODateString } from '@navikt/familie-form-elements';
 import { feil, FeltState, ok, ValiderFelt } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/person';
 
 export const erDatoFormatGodkjent = (verdi: string) => {
     /*FamilieDatoVelger har allerede sin egen validering.
@@ -41,3 +42,6 @@ export const formaterDato = (isoDateString: ISODateString) =>
 export const validerDatoAvgrensetFremITid: ValiderFelt<ISODateString> = (
     felt: FeltState<ISODateString>
 ) => validerDato(felt, true);
+
+export const validerDatoMedUkjentAvgrensetFremITid: ValiderFelt<DatoMedUkjent> = felt =>
+    felt.verdi === AlternativtSvarForInput.UKJENT ? ok(felt) : validerDatoAvgrensetFremITid(felt);
