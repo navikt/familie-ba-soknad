@@ -33,12 +33,20 @@ export const visFeiloppsummering = (skjema: ISkjema<SkjemaFeltTyper, string>): b
     return skjema.visFeilmeldinger && !!feil;
 };
 
-const cache = createIntlCache();
-const texts: Record<LocaleType, Record<string, string>> = {
-    [LocaleType.nb]: bokmål,
-    [LocaleType.nn]: nynorsk,
-    [LocaleType.en]: engelsk,
+const stripSpråkfil = (språkfilInnhold: Record<string, string>): Record<string, string> => {
+    const språkEntries = Object.entries(språkfilInnhold);
+    // Vi får med en default import her som vi må fjerne før vi kan mappe over entryene
+    språkEntries.pop();
+    return Object.fromEntries(språkEntries.map(([key, value]) => [key, value.trim()]));
 };
+
+const texts: Record<LocaleType, Record<string, string>> = {
+    [LocaleType.nb]: stripSpråkfil(bokmål),
+    [LocaleType.nn]: stripSpråkfil(nynorsk),
+    [LocaleType.en]: stripSpråkfil(engelsk),
+};
+
+const cache = createIntlCache();
 
 export const hentTekster = (
     tekstId: string,
