@@ -21,6 +21,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 interface DatoVelgerProps {
     avgrensDatoFremITid?: boolean;
     felt: Felt<ISODateString>;
+    feilmeldingSpråkId: string;
     fraOgMedFelt?: Felt<ISODateString>;
     tilOgMedFelt?: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
@@ -56,6 +57,7 @@ const min = (a: ISODateString, b: ISODateString): ISODateString => {
 const Datovelger: React.FC<DatoVelgerProps> = ({
     avgrensDatoFremITid = false,
     felt,
+    feilmeldingSpråkId,
     fraOgMedFelt,
     tilOgMedFelt,
     skjema,
@@ -65,6 +67,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
 }) => {
     const { formatMessage } = useIntl();
     const [valgtLocale] = useSprakContext();
+    const feilmeldingstekst = <SpråkTekst id={feilmeldingSpråkId} />;
 
     const hentBegrensninger = () => {
         const limitations: DatepickerLimitations = {};
@@ -122,7 +125,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 locale={valgtLocale}
                 allowNavigationToDisabledMonths={true}
             />
-            {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
+            {felt.feilmelding && <Feilmelding>{feilmeldingstekst}</Feilmelding>}
         </span>
     ) : null;
 };

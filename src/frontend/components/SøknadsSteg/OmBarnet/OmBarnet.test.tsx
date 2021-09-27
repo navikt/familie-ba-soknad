@@ -16,6 +16,7 @@ import {
     IBarnMedISøknad,
 } from '../../../typer/person';
 import {
+    mekkGyldigSøknad,
     mockHistory,
     silenceConsoleErrors,
     spyOnUseApp,
@@ -335,5 +336,47 @@ describe('OmBarnet', () => {
         act(() => neiKnapper.forEach(knapp => knapp.click()));
 
         expect(queryByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
+    });
+
+    test('Får opp feilmelding ved feil postnummer', async () => {
+        mockHistory(['/om-barnet/barn-1']);
+
+        //henter ut en gyldig søknad
+        const søknadpostnummer = mekkGyldigSøknad();
+
+        const barn: IBarnMedISøknad = søknadpostnummer.barnInkludertISøknaden[0];
+
+        const endretBarn = {
+            ...barn,
+
+            institusjonspostnummer: {
+                id: barnDataKeySpørsmål.institusjonspostnummer,
+                svar: '12345678900',
+            },
+            oppholderSegIInstitusjon: {
+                id: barnDataKeySpørsmål.oppholderSegIInstitusjon,
+                svar: ESvar.JA,
+            },
+        };
+        const oppdatertSøknad = { ...søknadpostnummer, barnInkludertISøknaden: [endretBarn] };
+        const { erStegUtfyltFrafør } = spyOnUseApp(oppdatertSøknad);
+        erStegUtfyltFrafør.mockReturnValue(false);
+
+        const { queryByText } = render(
+            <TestProvidere>
+                <OmBarnet barnetsId={endretBarn.id} />
+            </TestProvidere>
+        );
+
+        const gåVidereKnapper = queryByText(/felles.navigasjon.gå-videre/);
+        expect(
+            queryByText(/ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding/)
+        ).not.toBeInTheDocument();
+        act(() => {
+            gåVidereKnapper && gåVidereKnapper.click();
+        });
+        expect(
+            queryByText(/ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding/)
+        ).toBeInTheDocument();
     });
 });

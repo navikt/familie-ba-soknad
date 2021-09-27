@@ -39,7 +39,11 @@ import { OmBarnetSpørsmålsId } from './spørsmål';
 import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
 import useLanddropdownFelt from './useLanddropdownFelt';
-import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from './utils';
+import {
+    formaterInitVerdiForInputMedUkjent,
+    formaterVerdiForCheckbox,
+    regexNorskEllerUtenlandskPostnummer,
+} from './utils';
 
 export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;
@@ -137,9 +141,18 @@ export const useOmBarnet = (
         verdi: barn[barnDataKeySpørsmål.institusjonspostnummer].svar,
         feltId: barn[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
-            felt.verdi.match(/^[0-9]{4}$/)
+            regexNorskEllerUtenlandskPostnummer(felt.verdi)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarnet.institusjon.postnummer.feilmelding'} />),
+                : feil(
+                      felt,
+                      <SpråkTekst
+                          id={
+                              felt.verdi.length > 10
+                                  ? 'ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding'
+                                  : 'ombarnet.institusjon.postnummer.under-tre-tegn.feilmelding'
+                          }
+                      />
+                  ),
         skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
     });
 
@@ -171,6 +184,7 @@ export const useOmBarnet = (
 
     const oppholdsland = useLanddropdownFelt(
         barn[barnDataKeySpørsmål.oppholdsland],
+        'ombarnet.oppholdutland.land.feilmelding',
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
     );
 
@@ -235,6 +249,7 @@ export const useOmBarnet = (
 
     const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt(
         barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
+        'ombarnet.barnetrygd-eøs.land.feilmelding',
         skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland)
     );
 
@@ -344,6 +359,7 @@ export const useOmBarnet = (
 
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
         barn.andreForelderArbeidUtlandetHvilketLand,
+        'ombarnet.andre-forelder.arbeid-utland.land.feilmelding',
         ESvar.JA,
         andreForelderArbeidUtlandet,
         sammeForelderSomAnnetBarn.verdi === null ||
@@ -372,6 +388,7 @@ export const useOmBarnet = (
 
     const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
         barn.andreForelderPensjonHvilketLand,
+        'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
         ESvar.JA,
         andreForelderPensjonUtland,
         sammeForelderSomAnnetBarn.verdi === null ||
@@ -536,7 +553,8 @@ export const useOmBarnet = (
                   },
               },
         false,
-        !erUtvidet
+        !erUtvidet,
+        { navn: barn.navn }
     );
 
     const borMedAndreForelderCheckbox = useFelt<ESvar>({

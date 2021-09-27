@@ -79,6 +79,7 @@ export const useOmdeg = (): {
 
     const oppholdsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.oppholdsland,
+        'omdeg.opphold-i-norge.land.feilmelding',
         ESvar.NEI,
         oppholderSegINorge
     );
@@ -166,6 +167,7 @@ export const useOmdeg = (): {
 
     const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.arbeidsland,
+        'omdeg.arbeid-utland.land.feilmelding',
         ESvar.JA,
         jobberPåBåt
     );
@@ -191,6 +193,7 @@ export const useOmdeg = (): {
 
     const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.pensjonsland,
+        'omdeg.utenlandspensjon.land.feilmelding',
         ESvar.JA,
         mottarUtenlandspensjon
     );

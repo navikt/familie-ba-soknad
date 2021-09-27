@@ -41,6 +41,7 @@ export const useOmBarnaDine = (): {
 
     const hvemErFosterbarn = useBarnCheckboxFelt(
         barnDataKeySpørsmål.erFosterbarn,
+        'ombarna.fosterbarn.hvem.feilmelding',
         erNoenAvBarnaFosterbarn
     );
 
@@ -51,6 +52,7 @@ export const useOmBarnaDine = (): {
 
     const hvemOppholderSegIInstitusjon = useBarnCheckboxFelt(
         barnDataKeySpørsmål.oppholderSegIInstitusjon,
+        'ombarna.institusjon.hvem.feilmelding',
         oppholderBarnSegIInstitusjon
     );
 
@@ -71,6 +73,7 @@ export const useOmBarnaDine = (): {
 
     const hvemErAdoptertFraUtland = useBarnCheckboxFelt(
         barnDataKeySpørsmål.erAdoptertFraUtland,
+        'ombarna.adoptert.hvem.feilmelding',
         erBarnAdoptertFraUtland
     );
 
@@ -91,6 +94,7 @@ export const useOmBarnaDine = (): {
 
     const hvemOppholderSegIUtland = useBarnCheckboxFelt(
         barnDataKeySpørsmål.oppholderSegIUtland,
+        'ombarna.opphold-utland.hvem.feilmelding',
         oppholderBarnSegIUtland
     );
 
@@ -105,7 +109,11 @@ export const useOmBarnaDine = (): {
         },
     });
 
-    const hvemErSøktAsylFor = useBarnCheckboxFelt(barnDataKeySpørsmål.erAsylsøker, søktAsylForBarn);
+    const hvemErSøktAsylFor = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.erAsylsøker,
+        'ombarna.asyl.hvem.feilmelding',
+        søktAsylForBarn
+    );
 
     const barnOppholdtSegTolvMndSammenhengendeINorge = useJaNeiSpmFelt(
         søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
@@ -124,6 +132,7 @@ export const useOmBarnaDine = (): {
 
     const hvemTolvMndSammenhengendeINorge = useBarnCheckboxFelt(
         barnDataKeySpørsmål.boddMindreEnn12MndINorge,
+        'ombarna.sammenhengende-opphold.hvem.feilmelding',
         barnOppholdtSegTolvMndSammenhengendeINorge,
         ESvar.NEI
     );
@@ -145,6 +154,7 @@ export const useOmBarnaDine = (): {
 
     const hvemBarnetrygdFraAnnetEøsland = useBarnCheckboxFelt(
         barnDataKeySpørsmål.barnetrygdFraAnnetEøsland,
+        'ombarna.barnetrygd-eøs.hvem.feilmelding',
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
 
