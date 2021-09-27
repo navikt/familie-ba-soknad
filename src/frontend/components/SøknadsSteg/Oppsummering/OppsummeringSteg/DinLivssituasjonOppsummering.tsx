@@ -183,8 +183,8 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                 />
                 {tidligereSamboere && tidligereSamboere.length > 0 ? (
-                    tidligereSamboere.map(tidligereSamboer => (
-                        <StyledOppsummeringsFeltGruppe>
+                    tidligereSamboere.map((tidligereSamboer, index) => (
+                        <StyledOppsummeringsFeltGruppe key={index}>
                             <SamboerOppsummering samboer={tidligereSamboer} />
                         </StyledOppsummeringsFeltGruppe>
                     ))

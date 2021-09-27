@@ -357,6 +357,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                         OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
                                     ]
                                 }
+                                values={{ navn: barn.navn }}
                             />
                         }
                         søknadsvar={

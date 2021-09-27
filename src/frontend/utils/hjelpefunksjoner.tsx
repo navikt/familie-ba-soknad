@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { Alpha3Code, getAlpha3Codes } from 'i18n-iso-countries';
-import { renderToStaticMarkup } from 'react-dom/server';
+import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createIntl, createIntlCache } from 'react-intl';
 
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
@@ -53,7 +53,7 @@ export const hentTekster = (
             { ...formatValues, ...innebygdeFormatterere }
         );
 
-        map[locale] = renderToStaticMarkup(message as ReactElement);
+        map[locale] = reactElementToJSXString(message as ReactElement);
     }
 
     // Typescript er ikke smart nok til å se at alle locales er satt
