@@ -8,5 +8,5 @@ export const formaterInitVerdiForInputMedUkjent = (verdi: string) =>
 export const formaterVerdiForCheckbox = (svar: string | AlternativtSvarForInput) =>
     svar === AlternativtSvarForInput.UKJENT ? ESvar.JA : ESvar.NEI;
 
-export const regexUtenlandskPostnummer = (verdi: string) =>
+export const regexNorskEllerUtenlandskPostnummer = (verdi: string) =>
     verdi.match(/^[A-Za-z0-9-æøåÆØÅ-]{3,10}$/);

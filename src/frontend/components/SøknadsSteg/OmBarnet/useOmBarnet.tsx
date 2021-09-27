@@ -42,7 +42,7 @@ import useLanddropdownFelt from './useLanddropdownFelt';
 import {
     formaterInitVerdiForInputMedUkjent,
     formaterVerdiForCheckbox,
-    regexUtenlandskPostnummer,
+    regexNorskEllerUtenlandskPostnummer,
 } from './utils';
 
 export interface IOmBarnetUtvidetFeltTyper {
@@ -141,7 +141,7 @@ export const useOmBarnet = (
         verdi: barn[barnDataKeySpørsmål.institusjonspostnummer].svar,
         feltId: barn[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
-            regexUtenlandskPostnummer(felt.verdi)
+            regexNorskEllerUtenlandskPostnummer(felt.verdi)
                 ? ok(felt)
                 : feil(
                       felt,
