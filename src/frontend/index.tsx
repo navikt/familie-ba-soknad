@@ -17,8 +17,7 @@ import * as bokmål from './assets/lang/nb.json';
 import * as nynorsk from './assets/lang/nn.json';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import { logError } from './utils/amplitude';
-
-const environment = window.location.hostname;
+import { initSentry } from './utils/sentry';
 
 const polyfill = async () => {
     // https://github.com/formatjs/formatjs/issues/3066
@@ -39,12 +38,7 @@ const polyfill = async () => {
 };
 
 polyfill().then(() => {
-    Sentry.init({
-        dsn: 'https://75e165345c514862b5829a724a4e8e45@sentry.gc.nav.no/71',
-        environment,
-        autoSessionTracking: false,
-        enabled: process.env.NODE_ENV !== 'development',
-    });
+    initSentry();
 
     if (process.env.NODE_ENV !== 'production') {
         import('@axe-core/react').then(({ default: axe }) => {
