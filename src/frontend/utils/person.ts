@@ -1,6 +1,7 @@
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
+    AlternativtSvarForInput,
     barnDataKeySpørsmål,
     barnDataKeySpørsmålUtvidet,
     ESivilstand,
@@ -195,11 +196,11 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
             id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
-            svar: '',
+            svar: AlternativtSvarForInput.UKJENT,
         },
         [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
             id: OmBarnetSpørsmålsId.søkerForTidsromSluttdato,
-            svar: '',
+            svar: AlternativtSvarForInput.UKJENT,
         },
     };
 };

@@ -31,7 +31,7 @@ import {
     DatoMedUkjent,
     IBarnMedISøknad,
 } from '../../../typer/person';
-import { validerDatoAvgrensetFremITid } from '../../../utils/dato';
+import { validerDatoMedUkjentAvgrensetFremITid } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { barnetsNavnValue } from '../../../utils/visning';
@@ -506,7 +506,7 @@ export const useOmBarnet = (
         barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
         ESvar.JA,
         søkerForTidsrom,
-        validerDatoAvgrensetFremITid
+        validerDatoMedUkjentAvgrensetFremITid
     );
     const søkerForTidsromSluttdato = useDatovelgerFeltMedJaNeiAvhengighet(
         barn[barnDataKeySpørsmål.søkerForTidsromSluttdato],
@@ -515,7 +515,7 @@ export const useOmBarnet = (
         felt => {
             // Feltet er valgfritt. Tom streng betyr ikke besvart
             if (felt.verdi === '') return ok(felt);
-            return validerDatoAvgrensetFremITid(felt);
+            return validerDatoMedUkjentAvgrensetFremITid(felt);
         }
     );
 
@@ -759,14 +759,15 @@ export const useOmBarnet = (
                               svar:
                                   søkerForTidsrom.verdi === ESvar.JA
                                       ? søkerForTidsromStartdato.verdi
-                                      : '',
+                                      : AlternativtSvarForInput.UKJENT,
                           },
                           søkerForTidsromSluttdato: {
                               ...barn.søkerForTidsromSluttdato,
                               svar:
-                                  søkerForTidsrom.verdi === ESvar.JA
+                                  søkerForTidsrom.verdi === ESvar.JA &&
+                                  søkerForTidsromSluttdato.verdi !== ''
                                       ? søkerForTidsromSluttdato.verdi
-                                      : '',
+                                      : AlternativtSvarForInput.UKJENT,
                           },
                           utvidet: {
                               søkerHarBoddMedAndreForelder: {
