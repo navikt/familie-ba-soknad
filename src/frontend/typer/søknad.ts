@@ -1,4 +1,5 @@
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
@@ -31,8 +32,8 @@ export const søknadstyper: INøkkelPar = {
 };
 
 export interface ISøknadsfelt<T> {
-    label: string;
-    verdi: T;
+    label: Record<LocaleType, string>;
+    verdi: Record<LocaleType, T>;
 }
 
 export interface ISøknad {
@@ -74,6 +75,8 @@ export interface ISøknadKontrakt {
     barn: ISøknadKontraktBarn[];
     spørsmål: SpørsmålMap;
     dokumentasjon: ISøknadKontraktDokumentasjon[];
+    teksterUtenomSpørsmål: Record<string, Record<LocaleType, string>>;
+    originalSpråk: LocaleType;
 }
 
 export interface IKontraktNåværendeSamboer {
@@ -94,11 +97,8 @@ export interface ISøknadKontraktSøker {
     adresse: ISøknadsfelt<IAdresse>;
     sivilstand: ISøknadsfelt<ESivilstand>;
     spørsmål: SpørsmålMap;
-    utvidet?: ISøknadsfelt<{
-        tidligereSamboere: ISøknadsfelt<IKontraktTidligereSamboer>[];
-        nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null;
-        spørsmål: SpørsmålMap;
-    }>;
+    tidligereSamboere: ISøknadsfelt<IKontraktTidligereSamboer>[];
+    nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null;
 }
 
 export interface ISøknadKontraktBarn {
@@ -107,7 +107,6 @@ export interface ISøknadKontraktBarn {
     borMedSøker: ISøknadsfelt<boolean>;
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
-    utvidet?: SpørsmålMap;
 }
 
 export const hentSøknadstype = () => {
