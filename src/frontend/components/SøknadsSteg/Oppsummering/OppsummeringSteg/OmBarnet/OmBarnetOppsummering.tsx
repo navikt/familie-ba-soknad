@@ -328,7 +328,8 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar
                             )}
                         />
-                        {barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar !== '' && (
+                        {barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar !==
+                            AlternativtSvarForInput.UKJENT && (
                             <OppsummeringFelt
                                 tittel={
                                     <SpråkTekst
