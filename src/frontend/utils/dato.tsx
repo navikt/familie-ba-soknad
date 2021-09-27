@@ -21,10 +21,11 @@ export const erDatoFremITid = (verdi: ISODateString) => {
 
 export const validerDato = (
     feltState: FeltState<string>,
-    avgrensDatoFremITid: boolean
+    avgrensDatoFremITid: boolean,
+    feilmeldingSpråkId: string
 ): FeltState<string> => {
     if (feltState.verdi === '') {
-        return feil(feltState, <SpråkTekst id={'felles.velg-dato.feilmelding'} />);
+        return feil(feltState, <SpråkTekst id={feilmeldingSpråkId} />);
     }
     if (!erDatoFormatGodkjent(feltState.verdi)) {
         return feil(feltState, <SpråkTekst id={'felles.dato-format.feilmelding'} />);

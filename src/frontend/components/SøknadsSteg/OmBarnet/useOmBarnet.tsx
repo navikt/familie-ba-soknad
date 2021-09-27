@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
+import { useIntl } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
@@ -32,6 +33,7 @@ import {
 } from '../../../typer/person';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
+import { barnetsNavnValue } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../OmDeg/useLanddropdownFeltMedJaNeiAvhengighet';
 import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
@@ -95,6 +97,7 @@ export const useOmBarnet = (
 } => {
     const { søknad, settSøknad, erStegUtfyltFrafør, erUtvidet } = useApp();
     const { hentRouteIndex } = useRoutes();
+    const intl = useIntl();
     const location = useLocation<ILokasjon>();
 
     const [barn] = useState<IBarnMedISøknad | undefined>(
@@ -158,7 +161,8 @@ export const useOmBarnet = (
 
     const institusjonOppholdStartdato = useDatovelgerFelt(
         barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+        'ombarnet.institusjon.startdato.feilmelding'
     );
 
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
@@ -177,6 +181,7 @@ export const useOmBarnet = (
             ? barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
             : '',
         institusjonOppholdSluttVetIkke,
+        'ombarnet.institusjon.sluttdato.feilmelding',
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
     );
 
@@ -190,7 +195,8 @@ export const useOmBarnet = (
 
     const oppholdslandStartdato = useDatovelgerFelt(
         barn[barnDataKeySpørsmål.oppholdslandStartdato],
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland),
+        'ombarnet.oppholdutland.startdato.feilmelding'
     );
 
     const oppholdslandSluttDatoVetIkke = useFelt<ESvar>({
@@ -207,6 +213,7 @@ export const useOmBarnet = (
             ? barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar
             : '',
         oppholdslandSluttDatoVetIkke,
+        'ombarnet.oppholdutland.sluttdato.feilmelding',
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
     );
 
@@ -225,6 +232,7 @@ export const useOmBarnet = (
             ? barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar
             : '',
         nårKomBarnTilNorgeDatoIkkeAnkommet,
+        'ombarnet.sammenhengende-opphold.dato.feilmelding',
         skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
     );
 
@@ -323,6 +331,7 @@ export const useOmBarnet = (
         barn[barnDataKeySpørsmål.andreForelderFødselsdato].id,
         formaterInitVerdiForInputMedUkjent(barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar),
         andreForelderFødselsdatoUkjent,
+        'ombarnet.andre-forelder.fødselsdato.feilmelding',
         andreForelderFnrUkjent.verdi === ESvar.JA && andreForelderNavnUkjent.verdi === ESvar.NEI,
         sammeForelderSomAnnetBarn.verdi === null ||
             sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER
@@ -354,7 +363,7 @@ export const useOmBarnet = (
         },
         false,
         false,
-        { navn: barn.navn }
+        { navn: barnetsNavnValue(barn, intl) }
     );
 
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
@@ -383,7 +392,7 @@ export const useOmBarnet = (
         },
         false,
         false,
-        { navn: barn.navn }
+        { navn: barnetsNavnValue(barn, intl) }
     );
 
     const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
@@ -469,7 +478,7 @@ export const useOmBarnet = (
         avhengigheterForBosted(),
         false,
         false,
-        { navn: barn.navn }
+        { navn: barnetsNavnValue(barn, intl) }
     );
 
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(
@@ -478,7 +487,7 @@ export const useOmBarnet = (
         avhengigheterForBosted(),
         false,
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
-        { navn: barn.navn }
+        { navn: barnetsNavnValue(barn, intl) }
     );
 
     /*--- SØKER FOR PERIODE ---*/
@@ -522,6 +531,7 @@ export const useOmBarnet = (
             ? ''
             : barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar,
         søkerForTidsromCheckbox,
+        'ombarnet.søker-for-periode.startdato.feilmelding',
         tidsromSkalVises({ borFastMedSøker, skriftligAvtaleOmDeltBosted })
     );
     const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent(
@@ -530,6 +540,7 @@ export const useOmBarnet = (
             ? ''
             : barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
         søkerForTidsromCheckbox,
+        'ombarnet.søker-for-periode.sluttdato.feilmelding',
         tidsromSkalVises({ borFastMedSøker, skriftligAvtaleOmDeltBosted })
     );
 
@@ -554,7 +565,7 @@ export const useOmBarnet = (
               },
         false,
         !erUtvidet,
-        { navn: barn.navn }
+        { navn: barnetsNavnValue(barn, intl) }
     );
 
     const borMedAndreForelderCheckbox = useFelt<ESvar>({
@@ -582,6 +593,7 @@ export const useOmBarnet = (
             ? ''
             : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar,
         borMedAndreForelderCheckbox,
+        'ombarnet.nårflyttetfra.feilmelding',
         søkerHarBoddMedAndreForelder.verdi === ESvar.JA
     );
 

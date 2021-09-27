@@ -9,7 +9,11 @@ import { ISODateString } from '@navikt/familie-form-elements';
 import { Felt, ISkjema, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { silenceConsoleErrors, TestProvidere } from '../../../utils/testing';
+import {
+    silenceConsoleErrors,
+    TestProvidere,
+    TestProvidereMedEkteTekster,
+} from '../../../utils/testing';
 import Datovelger from './Datovelger';
 
 describe(`Datovelger`, () => {
@@ -43,13 +47,11 @@ describe(`Datovelger`, () => {
             <TestProvidere>
                 <Datovelger
                     felt={current.fraOgMed}
-                    feilmeldingSpråkId={'feilmelding'}
                     skjema={skjemaMock}
                     labelTekstId={'test-fra-og-med'}
                 />
                 <Datovelger
                     felt={current.tilOgMed}
-                    feilmeldingSpråkId={'feilmelding'}
                     fraOgMedFelt={current.fraOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-til-og-med'}
@@ -71,13 +73,11 @@ describe(`Datovelger`, () => {
             <TestProvidere>
                 <Datovelger
                     felt={current.tilOgMed}
-                    feilmeldingSpråkId={'feilmelding'}
                     skjema={skjemaMock}
                     labelTekstId={'test-til-og-med'}
                 />
                 <Datovelger
                     felt={current.fraOgMed}
-                    feilmeldingSpråkId={'feilmelding'}
                     tilOgMedFelt={current.tilOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-fra-og-med'}
@@ -101,14 +101,13 @@ describe(`Datovelger`, () => {
         });
 
         const { queryByText } = render(
-            <TestProvidere>
+            <TestProvidereMedEkteTekster>
                 <Datovelger
                     felt={oppholdslandDatoFeltMock}
-                    feilmeldingSpråkId={'omdeg.opphold-i-norge.dato.feilmelding'}
                     skjema={skjemaMock}
                     labelTekstId={'test-fra-og-med'}
                 />
-            </TestProvidere>
+            </TestProvidereMedEkteTekster>
         );
         expect(queryByText(/omdeg.opphold-i-norge.dato.feilmelding/)).toBeInTheDocument();
     });

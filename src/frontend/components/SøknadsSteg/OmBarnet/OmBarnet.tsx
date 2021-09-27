@@ -129,7 +129,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         </AlertStripe>
                         <Datovelger
                             felt={skjema.felter.søkerForTidsromStartdato}
-                            feilmeldingSpråkId={'ombarnet.søker-for-periode.startdato.feilmelding'}
                             skjema={skjema}
                             labelTekstId={
                                 omBarnetSpørsmålSpråkId[
@@ -143,7 +142,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         )}
                         <Datovelger
                             felt={skjema.felter.søkerForTidsromSluttdato}
-                            feilmeldingSpråkId={'ombarnet.søker-for-periode.sluttdato.feilmelding'}
                             fraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
                             skjema={skjema}
                             labelTekstId={
@@ -178,7 +176,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         <KomponentGruppe inline dynamisk>
                             <Datovelger
                                 felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
-                                feilmeldingSpråkId={'ombarnet.nårflyttetfra.feilmelding'}
                                 skjema={skjema}
                                 labelTekstId={
                                     omBarnetSpørsmålSpråkId[

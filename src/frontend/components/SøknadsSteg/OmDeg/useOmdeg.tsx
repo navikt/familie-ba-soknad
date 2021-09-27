@@ -88,6 +88,7 @@ export const useOmdeg = (): {
         søker.oppholdslandDato,
         ESvar.NEI,
         oppholderSegINorge,
+        'omdeg.opphold-i-norge.dato.feilmelding',
         true
     );
 
@@ -106,6 +107,7 @@ export const useOmdeg = (): {
         søker.komTilNorgeDato,
         ESvar.NEI,
         værtINorgeITolvMåneder,
+        'omdeg.opphold-sammenhengende.dato.feilmelding',
         true
     );
 

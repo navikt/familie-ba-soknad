@@ -95,7 +95,8 @@ export const useDinLivssituasjon = (): {
     const separertEnkeSkiltDato = useDatovelgerFeltMedJaNeiAvhengighet(
         søker.utvidet.spørsmål.separertEnkeSkiltDato,
         ESvar.JA,
-        separertEnkeSkilt
+        separertEnkeSkilt,
+        'omdeg.frahvilkendatoseparertskilt.feilmelding'
     );
 
     const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt(
@@ -160,6 +161,7 @@ export const useDinLivssituasjon = (): {
         SamboerSpørsmålId.nåværendeSamboerFødselsdato,
         getInitialFødselsdato(søker.utvidet.nåværendeSamboer),
         nåværendeSamboerFødselsdatoUkjent,
+        'omdeg.nåværendesamboer.fødselsdato.ukjent',
         nåværendeSamboerFnrUkjent.verdi === ESvar.JA
     );
 
@@ -170,6 +172,7 @@ export const useDinLivssituasjon = (): {
         },
         ESvar.JA,
         harSamboerNå,
+        'omdeg.nårstartetsamboerforhold.feilmelding',
         true
     );
 

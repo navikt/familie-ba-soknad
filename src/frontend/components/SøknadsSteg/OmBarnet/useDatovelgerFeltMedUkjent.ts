@@ -9,6 +9,7 @@ const useDatovelgerFeltMedUkjent = (
     feltId,
     initiellVerdi,
     vetIkkeCheckbox: Felt<ESvar>,
+    feilmeldingSpråkId: string,
     skalFeltetVises: boolean,
     nullstillVedAvhengighetEndring = true
 ) => {
@@ -23,7 +24,7 @@ const useDatovelgerFeltMedUkjent = (
             ) {
                 return ok(felt);
             }
-            return validerDato(felt, false);
+            return validerDato(felt, false, feilmeldingSpråkId);
         },
         avhengigheter: { vetIkkeCheckbox, skalFeltetVises },
         nullstillVedAvhengighetEndring,

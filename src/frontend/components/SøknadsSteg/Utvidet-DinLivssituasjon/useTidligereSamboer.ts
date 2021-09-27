@@ -60,6 +60,7 @@ export const useTidligereSamboer = (): {
         TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato,
         '',
         tidligereSamboerFødselsdatoUkjent,
+        'omdeg.nåværendesamboer.fødselsdato.ukjent',
         tidligereSamboerFnrUkjent.verdi === ESvar.JA
     );
 
@@ -68,7 +69,8 @@ export const useTidligereSamboer = (): {
             id: TidligereSamboerSpørsmålId.tidligereSamboerFraDato,
             svar: '',
         },
-        true
+        true,
+        'omdeg.nårstartetsamboerforhold.feilmelding'
     );
 
     const tidligereSamboerTilDato = useDatovelgerFelt(
@@ -76,7 +78,8 @@ export const useTidligereSamboer = (): {
             id: TidligereSamboerSpørsmålId.tidligereSamboerTilDato,
             svar: '',
         },
-        true
+        true,
+        'omdeg.nårsamboerforholdavsluttet.feilmelding'
     );
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<

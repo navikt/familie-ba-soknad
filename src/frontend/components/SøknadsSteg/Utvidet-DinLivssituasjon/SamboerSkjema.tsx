@@ -46,7 +46,6 @@ const SamboerSkjema: React.FC<{
                 <KomponentGruppe inline dynamisk>
                     <Datovelger
                         skjema={skjema}
-                        feilmeldingSpråkId={'omdeg.nåværendesamboer.fødselsdato.ukjent'}
                         felt={samboerFelter.fødselsdato}
                         labelTekstId={samboerSpråkIder.fødselsdato}
                         disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
@@ -59,7 +58,6 @@ const SamboerSkjema: React.FC<{
             )}
             <Datovelger
                 skjema={skjema}
-                feilmeldingSpråkId={'omdeg.nårstartetsamboerforhold.feilmelding'}
                 felt={samboerFelter.samboerFraDato}
                 labelTekstId={samboerSpråkIder.samboerFraDato}
                 avgrensDatoFremITid={
@@ -70,7 +68,6 @@ const SamboerSkjema: React.FC<{
             {samboerFelter.samboerTilDato && (
                 <Datovelger
                     skjema={skjema}
-                    feilmeldingSpråkId={'omdeg.nårsamboerforholdavsluttet.feilmelding'}
                     felt={samboerFelter.samboerTilDato}
                     labelTekstId={samboerSpråkIder.samboerTilDato}
                     fraOgMedFelt={samboerFelter.samboerFraDato}

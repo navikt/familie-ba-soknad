@@ -7,13 +7,14 @@ import { validerDato } from '../../../utils/dato';
 const useDatovelgerFelt = (
     søknadsfelt: ISøknadSpørsmål<ISODateString>,
     skalFeltetVises: boolean,
+    feilmeldingSpråkId: string,
     avgrensDatoFremITid = false
 ) => {
     return useFelt<ISODateString>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
         valideringsfunksjon: felt => {
-            return validerDato(felt, avgrensDatoFremITid);
+            return validerDato(felt, avgrensDatoFremITid, feilmeldingSpråkId);
         },
         skalFeltetVises: () => skalFeltetVises,
     });
