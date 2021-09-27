@@ -39,7 +39,11 @@ import { OmBarnetSpørsmålsId } from './spørsmål';
 import useDatovelgerFelt from './useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
 import useLanddropdownFelt from './useLanddropdownFelt';
-import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from './utils';
+import {
+    formaterInitVerdiForInputMedUkjent,
+    formaterVerdiForCheckbox,
+    regexNorskEllerUtenlandskPostnummer,
+} from './utils';
 
 export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;
@@ -137,9 +141,18 @@ export const useOmBarnet = (
         verdi: barn[barnDataKeySpørsmål.institusjonspostnummer].svar,
         feltId: barn[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
-            felt.verdi.match(/^[0-9]{4}$/)
+            regexNorskEllerUtenlandskPostnummer(felt.verdi)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarnet.institusjon.postnummer.feilmelding'} />),
+                : feil(
+                      felt,
+                      <SpråkTekst
+                          id={
+                              felt.verdi.length > 10
+                                  ? 'ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding'
+                                  : 'ombarnet.institusjon.postnummer.under-tre-tegn.feilmelding'
+                          }
+                      />
+                  ),
         skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
     });
 
