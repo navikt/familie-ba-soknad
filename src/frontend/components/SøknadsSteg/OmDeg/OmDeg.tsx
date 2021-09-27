@@ -90,6 +90,7 @@ const OmDeg: React.FC = () => {
                             <Datovelger
                                 avgrensDatoFremITid={true}
                                 felt={skjema.felter.oppholdslandDato}
+                                feilmeldingSpråkId={'omdeg.opphold-i-norge.dato.feilmelding'}
                                 skjema={skjema}
                                 labelTekstId={
                                     omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdslandDato]
@@ -107,6 +108,7 @@ const OmDeg: React.FC = () => {
                     <Datovelger
                         avgrensDatoFremITid={true}
                         felt={skjema.felter.komTilNorgeDato}
+                        feilmeldingSpråkId={'omdeg.opphold-sammenhengende.dato.feilmelding'}
                         skjema={skjema}
                         labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
                         dynamisk
