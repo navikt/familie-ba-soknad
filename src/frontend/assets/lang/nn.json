@@ -247,7 +247,7 @@
   "ombarnet.planlagt-sammenhengende-opphold.feilmelding": "Du må oppgje om det er planlagd at barnet skal bu i Noreg samanhengande i meir enn tolv månadar for å gå vidare",
   "ombarnet.planlagt-sammenhengende-opphold.spm": "Er det planlagd at barnet skal bu i Noreg samanhengande i meir enn tolv månadar?",
   "ombarnet.sammeforelder.feilmelding": "Du må oppgje kven som er {barn} sin andre forelder for å gå vidare",
-  "ombarnet.sammenhengende-opphold": "Du har opplyst at {navn} ikkje har budd\nsamanhengande i Noreg dei siste tolv månadene.",
+  "ombarnet.sammenhengende-opphold": "Du har opplyst at {navn} ikkje har budd samanhengande i Noreg dei siste tolv månadene.",
   "ombarnet.sammenhengende-opphold.dato.feilmelding": "Du må oppgje når barnet kom til Noreg for å gå vidare",
   "ombarnet.sammenhengende-opphold.dato.ikkekommetenda": "Barnet har ikkje komme til Noreg endå",
   "ombarnet.sammenhengende-opphold.dato.spm": "Når kom barnet til Noreg?",

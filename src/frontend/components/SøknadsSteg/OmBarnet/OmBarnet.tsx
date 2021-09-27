@@ -73,6 +73,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
                 />
             )}
+
             {skjema.felter.borFastMedSøker.erSynlig && (
                 <SkjemaFieldset tittelId={'hvilkebarn.barn.bosted'} dynamisk>
                     <div>
@@ -137,6 +138,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         <KomponentGruppe dynamisk>
                             <Datovelger
                                 felt={skjema.felter.søkerForTidsromStartdato}
+                                feilmeldingSpråkId={
+                                    'ombarnet.søker-for-periode.startdato.feilmelding'
+                                }
                                 skjema={skjema}
                                 labelTekstId={
                                     omBarnetSpørsmålSpråkId[
@@ -151,6 +155,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             )}
                             <Datovelger
                                 felt={skjema.felter.søkerForTidsromSluttdato}
+                                feilmeldingSpråkId={
+                                    'ombarnet.søker-for-periode.startdato.feilmelding'
+                                }
                                 fraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
                                 skjema={skjema}
                                 labelTekstId={
@@ -178,12 +185,13 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
                             ]
                         }
-                        språkValues={{ navn: barn.navn }}
+                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                     />
                     {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
                         <KomponentGruppe inline dynamisk>
                             <Datovelger
                                 felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
+                                feilmeldingSpråkId={'ombarnet.nårflyttetfra.feilmelding'}
                                 skjema={skjema}
                                 labelTekstId={
                                     omBarnetSpørsmålSpråkId[

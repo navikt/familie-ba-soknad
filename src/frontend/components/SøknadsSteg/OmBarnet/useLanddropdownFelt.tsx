@@ -9,6 +9,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const useLanddropdownFelt = (
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,
+    feilmeldingSpråkId: string,
     skalFeltetVises: boolean
 ) => {
     return useFelt<Alpha3Code | ''>({
@@ -20,7 +21,7 @@ const useLanddropdownFelt = (
         valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>) => {
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.velg-land.feilmelding'} />);
+                : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
         },
         nullstillVedAvhengighetEndring: false,
         avhengigheter: { skalFeltetVises },

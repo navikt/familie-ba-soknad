@@ -125,7 +125,7 @@
   "hvilkebarn.leggtilbarn.ikke-fått-fnr.alert": "Du kan ikke bruke den digitale søknaden hvis barnet ikke har fødselsnummer ennå. Du kan bruke PDF/papir-skjema.",
   "hvilkebarn.leggtilbarn.ikke-fått-fnr.feilmelding": "Du kan ikke legge til et barn som ikke har fått fødselsnummer ennå",
   "hvilkebarn.leggtilbarn.ikke-fått-fnr.spm": "Barnet har ikke fått fødselsnummer ennå",
-  "hvilkebarn.leggtilbarn.kort": "Ønsker du å søke om barnetrygd for andre barn som \nbor fast sammen med deg?",
+  "hvilkebarn.leggtilbarn.kort": "Ønsker du å søke om barnetrygd for andre barn som bor fast sammen med deg?",
   "hvilkebarn.leggtilbarn.kort.knapp": "LEGG TIL BARN",
   "hvilkebarn.leggtilbarn.modal.tittel": "Legg til barn",
   "hvilkebarn.leggtilbarn.navn-ikke-bestemt.spm": "Navnet er ikke bestemt",

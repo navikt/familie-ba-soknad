@@ -247,7 +247,7 @@
   "ombarnet.planlagt-sammenhengende-opphold.feilmelding": "You must state if it is planned that the child will live in Norway continuously for more than 12 months in order to be able to proceed",
   "ombarnet.planlagt-sammenhengende-opphold.spm": "Is it planned that the child will live in Norway continuously for more than 12 months?",
   "ombarnet.sammeforelder.feilmelding": "You must state who is {barn}'s other parent in order to be able to proceed",
-  "ombarnet.sammenhengende-opphold": "You have stated that {navn} has not lived\n in Norway continuously for the past 12 months",
+  "ombarnet.sammenhengende-opphold": "You have stated that {navn} has not lived in Norway continuously for the past 12 months",
   "ombarnet.sammenhengende-opphold.dato.feilmelding": "You must state when the child came to Norway in order to be able to proceed",
   "ombarnet.sammenhengende-opphold.dato.ikkekommetenda": "The child has not come to Norway yet",
   "ombarnet.sammenhengende-opphold.dato.spm": "When did the child come to Norway?",
