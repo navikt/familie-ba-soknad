@@ -13,12 +13,10 @@ import {
     barnDataKeySpørsmålUtvidet,
     IBarnMedISøknad,
 } from '../../../../../typer/person';
+import { barnetsNavnValue } from '../../../../../utils/barn';
 import { formaterDato } from '../../../../../utils/dato';
-import {
-    barnetsNavnValue,
-    formaterDatoMedUkjent,
-    landkodeTilSpråk,
-} from '../../../../../utils/visning';
+import { landkodeTilSpråk } from '../../../../../utils/språk';
+import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
 import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';

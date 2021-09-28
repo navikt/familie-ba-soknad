@@ -25,7 +25,7 @@ import { RoutesProvider } from '../context/RoutesContext';
 import { IKvittering } from '../typer/kvittering';
 import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad, Årsak } from '../typer/søknad';
-import { genererInitialBarnMedISøknad } from './person';
+import { genererInitialBarnMedISøknad } from './barn';
 
 export const spyOnUseApp = søknad => {
     const settSøknad = jest.fn();

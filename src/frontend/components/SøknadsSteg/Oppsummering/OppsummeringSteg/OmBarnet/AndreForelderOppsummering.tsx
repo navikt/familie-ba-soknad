@@ -9,11 +9,9 @@ import {
     barnDataKeySpørsmål,
     IBarnMedISøknad,
 } from '../../../../../typer/person';
-import {
-    landkodeTilSpråk,
-    barnetsNavnValue,
-    formaterDatoMedUkjent,
-} from '../../../../../utils/visning';
+import { barnetsNavnValue } from '../../../../../utils/barn';
+import { landkodeTilSpråk } from '../../../../../utils/språk';
+import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
 import { StyledOppsummeringsFeltGruppe } from '../../Oppsummering';

@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 
 import { ESivilstand } from '../typer/person';
 import { ISøknadKontrakt } from '../typer/søknad';
-import { hentSivilstatus } from '../utils/person';
+import { hentSivilstatusSpråkId } from '../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,
     spyOnUseApp,
@@ -23,7 +23,7 @@ describe('useSendInnSkjema', () => {
     });
 
     it('Kan mappe sivilstandenum til språktekster', () => {
-        const språktekster = Object.values(ESivilstand).map(hentSivilstatus);
+        const språktekster = Object.values(ESivilstand).map(hentSivilstatusSpråkId);
         let sivilstandCount = 0;
         for (const sivilstand in ESivilstand) {
             expect(språktekster).toContain(`felles.sivilstatus.kode.${sivilstand}`);

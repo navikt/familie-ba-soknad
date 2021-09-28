@@ -43,12 +43,18 @@ import {
     SpørsmålMap as KontraktpørsmålMap,
     Årsak,
 } from '../typer/søknad';
-import { dokumentasjonsbehovTilSpråkId, erDokumentasjonRelevant } from '../utils/dokumentasjon';
-import { hentTekster, hentUformaterteTekster, isAlpha3Code } from '../utils/hjelpefunksjoner';
-import { erTidligereSamboer, hentSivilstatus } from '../utils/person';
-import { toÅrsakSpråkId } from '../utils/språk';
+import { erDokumentasjonRelevant } from '../utils/dokumentasjon';
+import {
+    dokumentasjonsbehovTilSpråkId,
+    hentSivilstatusSpråkId,
+    hentTekster,
+    hentUformaterteTekster,
+    landkodeTilSpråk,
+    toÅrsakSpråkId,
+} from '../utils/språk';
 import { jaNeiSvarTilSpråkId, språkIndexListe } from '../utils/spørsmål';
-import { formaterFnr, landkodeTilSpråk } from '../utils/visning';
+import { erTidligereSamboer, isAlpha3Code } from '../utils/typeguards';
+import { formaterFnr } from '../utils/visning';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
@@ -462,7 +468,7 @@ export const useSendInnSkjema = (): {
                 'dokumentasjon.har-sendt-inn.spm',
                 'dinlivssituasjon.sidetittel',
                 'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
-                ...Object.values(ESivilstand).map(hentSivilstatus),
+                ...Object.values(ESivilstand).map(hentSivilstatusSpråkId),
                 ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
             ].reduce(
                 (map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }),
