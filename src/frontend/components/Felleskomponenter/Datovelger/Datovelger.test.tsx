@@ -5,16 +5,32 @@ import { renderHook } from '@testing-library/react-hooks';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { IntlProvider } from 'react-intl';
 
-import { ISODateString } from '@navikt/familie-form-elements';
+import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, ISkjema, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
 
+import { ISøker } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     silenceConsoleErrors,
+    spyOnUseApp,
     TestProvidere,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
+import OmDeg from '../../SøknadsSteg/OmDeg/OmDeg';
+import { OmDegSpørsmålId } from '../../SøknadsSteg/OmDeg/spørsmål';
 import Datovelger from './Datovelger';
+import {ISøknad} from "../../../typer/søknad";
+
+jest.mock('react-router-dom', () => ({
+    ...(jest.requireActual('react-router-dom') as object),
+    useLocation: () => ({
+        pathname: '/om-deg',
+    }),
+    useHistory: () => ({
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        push: () => {},
+    }),
+}));
 
 describe(`Datovelger`, () => {
     silenceConsoleErrors();
@@ -90,29 +106,38 @@ describe(`Datovelger`, () => {
         const nesteDag = container.querySelector('[aria-selected="true"]')?.nextElementSibling;
         expect(nesteDag?.getAttribute('aria-disabled')).toEqual('true');
     });
+});
 
-    test('Datovelger viser feilmelding', () => {
-        const skjemaMock = mockDeep<ISkjema<SkjemaFeltTyper, string>>({
-            visFeilmeldinger: true,
-        });
-        const oppholdslandDatoFeltMock = mock<Felt<ISODateString>>({
-            valideringsstatus: Valideringsstatus.FEIL,
-            erSynlig: true,
-            verdi: '',
-            feilmelding: 'Du må oppgi når utenlandsoppholdet begynte for å gå videre',
+describe('Test ulike caser for feilmelding hos datovelger', () => {
+    const søknad = mockDeep<ISøknad>({
+        søker: mockDeep<ISøker>({
+            adressebeskyttelse: true,
+            statsborgerskap: [{ landkode: 'NOR' }],
+            oppholderSegINorge: {
+                id: OmDegSpørsmålId.oppholderSegINorge,
+                svar: ESvar.NEI,
+            },
+        }),
+    });
+    it('Datovelger viser spesifikk feilmelding for felt dersom verdien er tom', () => {
+        spyOnUseApp({
+            ...søknad,
+            søker: {
+                ...søknad.søker,
+                oppholdslandDato: { id: OmDegSpørsmålId.oppholdslandDato, svar: '' },
+            },
         });
 
-        const { getByText } = render(
+        const { getAllByText, getByText } = render(
             <TestProvidereMedEkteTekster>
-                <Datovelger
-                    felt={oppholdslandDatoFeltMock}
-                    skjema={skjemaMock}
-                    labelTekstId={'test-fra-og-med'}
-                />
+                <OmDeg />
             </TestProvidereMedEkteTekster>
         );
-        expect(
-            getByText('Du må oppgi når utenlandsoppholdet begynte for å gå videre')
-        ).toBeInTheDocument();
+        const gåVidere = getByText('GÅ VIDERE');
+        act(() => gåVidere.click());
+        const feilmelding = getAllByText(
+            'Du må oppgi når utenlandsoppholdet begynte for å gå videre'
+        );
+        expect(feilmelding).toHaveLength(2);
     });
 });
