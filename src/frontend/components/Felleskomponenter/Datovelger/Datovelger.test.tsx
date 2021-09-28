@@ -98,9 +98,11 @@ describe(`Datovelger`, () => {
         const oppholdslandDatoFeltMock = mock<Felt<ISODateString>>({
             valideringsstatus: Valideringsstatus.FEIL,
             erSynlig: true,
+            verdi: '',
+            feilmelding: 'Du må oppgi når utenlandsoppholdet begynte for å gå videre',
         });
 
-        const { queryByText } = render(
+        const { getByText } = render(
             <TestProvidereMedEkteTekster>
                 <Datovelger
                     felt={oppholdslandDatoFeltMock}
@@ -109,6 +111,8 @@ describe(`Datovelger`, () => {
                 />
             </TestProvidereMedEkteTekster>
         );
-        expect(queryByText(/omdeg.opphold-i-norge.dato.feilmelding/)).toBeInTheDocument();
+        expect(
+            getByText('Du må oppgi når utenlandsoppholdet begynte for å gå videre')
+        ).toBeInTheDocument();
     });
 });

@@ -29,12 +29,12 @@ export interface ILeggTilBarnTyper
         IBarn,
         'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | 'id' | barnDataKeySpørsmål
     > {
-    ident: string;
     erFødt: ESvarMedUbesvart;
-    navnetErUbestemt: ESvar;
-    ikkeFåttIdentChecked: ESvar;
     fornavn: string;
     etternavn: string;
+    navnetErUbestemt: ESvar;
+    ident: string;
+    ikkeFåttIdentChecked: ESvar;
 }
 
 export const useLeggTilBarn = (): {
@@ -129,10 +129,10 @@ export const useLeggTilBarn = (): {
     >({
         felter: {
             erFødt,
-            ident,
             fornavn,
             etternavn,
             navnetErUbestemt,
+            ident,
             ikkeFåttIdentChecked,
         },
         skjemanavn: 'velgbarn',
