@@ -8,6 +8,7 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
+import { validerDatoAvgrensetFremITid } from '../../../utils/dato';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useDatovelgerFeltMedJaNeiAvhengighet from './useDatovelgerFeltMedJaNeiAvhengighet';
 import useLanddropdownFeltMedJaNeiAvhengighet from './useLanddropdownFeltMedJaNeiAvhengighet';
@@ -88,7 +89,7 @@ export const useOmdeg = (): {
         søker.oppholdslandDato,
         ESvar.NEI,
         oppholderSegINorge,
-        true
+        validerDatoAvgrensetFremITid
     );
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
@@ -106,7 +107,7 @@ export const useOmdeg = (): {
         søker.komTilNorgeDato,
         ESvar.NEI,
         værtINorgeITolvMåneder,
-        true
+        validerDatoAvgrensetFremITid
     );
 
     const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({
