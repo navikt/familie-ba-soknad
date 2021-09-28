@@ -1,9 +1,9 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
-import { ISøknad } from '../../../typer/søknad';
-import { IOmBarnaDineFeltTyper } from './useOmBarnaDine';
+import { IOmBarnaDineFeltTyper } from '../components/SøknadsSteg/OmBarnaDine/useOmBarnaDine';
+import { barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/person';
+import { ISøknad } from '../typer/søknad';
 
 export const genererSvarForSpørsmålBarn = (barn: IBarnMedISøknad, felt: Felt<string[]>): ESvar =>
     felt.verdi.includes(barn.id) ? ESvar.JA : ESvar.NEI;

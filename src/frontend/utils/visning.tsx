@@ -6,7 +6,8 @@ import { IntlShape } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { AlternativtSvarForInput, IBarn, ISøker } from '../typer/person';
+import { AlternativtSvarForInput, DatoMedUkjent, IBarn, ISøker } from '../typer/person';
+import { formaterDato } from './dato';
 import { hentAdressefelterSortert } from './person';
 
 export const formaterFnr = (fødselsnummer: string) => {
@@ -44,4 +45,9 @@ export const barnetsNavnValue = (barn: IBarn, intl: IntlShape): string => {
 
 export const landkodeTilSpråk = (landkode: Alpha3Code | '', locale: string): string => {
     return landkode ? getName(alpha3ToAlpha2(landkode), locale) : AlternativtSvarForInput.UKJENT;
+};
+export const formaterDatoMedUkjent = (datoMedUkjent: DatoMedUkjent, tekstForUkjent): string => {
+    return datoMedUkjent === AlternativtSvarForInput.UKJENT
+        ? tekstForUkjent
+        : formaterDato(datoMedUkjent);
 };

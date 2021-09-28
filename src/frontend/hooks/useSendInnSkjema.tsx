@@ -2,16 +2,26 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType, useSprakContext } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
-import { useApp } from '../../../context/AppContext';
-import Miljø from '../../../Miljø';
+import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import {
+    OmBarnetSpørsmålsId,
+    omBarnetSpørsmålSpråkId,
+} from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import {
+    samboerSpråkIder,
+    SamboerSpørsmålId,
+    TidligereSamboerSpørsmålId,
+} from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
+import { useApp } from '../context/AppContext';
+import Miljø from '../Miljø';
 import {
     Dokumentasjonsbehov,
     IDokumentasjon,
     ISøknadKontraktDokumentasjon,
     ISøknadKontraktVedlegg,
     IVedlegg,
-} from '../../../typer/dokumentasjon';
-import { IKvittering } from '../../../typer/kvittering';
+} from '../typer/dokumentasjon';
+import { IKvittering } from '../typer/kvittering';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
@@ -20,7 +30,7 @@ import {
     IBarnMedISøknad,
     ISamboer,
     ITidligereSamboer,
-} from '../../../typer/person';
+} from '../typer/person';
 import {
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
@@ -31,23 +41,14 @@ import {
     ISøknadSpørsmål,
     SpørsmålId,
     SpørsmålMap as KontraktpørsmålMap,
-} from '../../../typer/søknad';
-import {
-    dokumentasjonsbehovTilSpråkId,
-    erDokumentasjonRelevant,
-} from '../../../utils/dokumentasjon';
-import { hentTekster, hentUformaterteTekster, isAlpha3Code } from '../../../utils/hjelpefunksjoner';
-import { erTidligereSamboer, hentSivilstatus } from '../../../utils/person';
-import { jaNeiSvarTilSpråkId, språkIndexListe } from '../../../utils/spørsmål';
-import { formaterFnr, landkodeTilSpråk } from '../../../utils/visning';
-import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../OmBarnet/spørsmål';
-import {
-    samboerSpråkIder,
-    SamboerSpørsmålId,
-    TidligereSamboerSpørsmålId,
-} from '../Utvidet-DinLivssituasjon/spørsmål';
-import { toÅrsakSpråkId, Årsak } from '../Utvidet-DinLivssituasjon/types-and-utilities';
+    Årsak,
+} from '../typer/søknad';
+import { dokumentasjonsbehovTilSpråkId, erDokumentasjonRelevant } from '../utils/dokumentasjon';
+import { hentTekster, hentUformaterteTekster, isAlpha3Code } from '../utils/hjelpefunksjoner';
+import { erTidligereSamboer, hentSivilstatus } from '../utils/person';
+import { toÅrsakSpråkId } from '../utils/språk';
+import { jaNeiSvarTilSpråkId, språkIndexListe } from '../utils/spørsmål';
+import { formaterFnr, landkodeTilSpråk } from '../utils/visning';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;

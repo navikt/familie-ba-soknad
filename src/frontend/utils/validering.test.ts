@@ -1,4 +1,4 @@
-import { regexNorskEllerUtenlandskPostnummer } from './utils';
+import { regexNorskEllerUtenlandskPostnummer } from './validering';
 
 describe('hjelpefunksjoner', () => {
     test('Skal returnere true for gyldige postnummer', () => {

@@ -17,10 +17,15 @@ import {
 
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
+import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
+import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
+import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
+import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
 import { ILokasjon } from '../../../typer/lokasjon';
 import {
@@ -33,21 +38,13 @@ import {
 } from '../../../typer/person';
 import { validerDatoMedUkjentAvgrensetFremITid } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
+import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
+import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/validering';
 import { barnetsNavnValue } from '../../../utils/visning';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import useDatovelgerFeltMedJaNeiAvhengighet from '../OmDeg/useDatovelgerFeltMedJaNeiAvhengighet';
-import useLanddropdownFeltMedJaNeiAvhengighet from '../OmDeg/useLanddropdownFeltMedJaNeiAvhengighet';
 import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';
-import useDatovelgerFelt from './useDatovelgerFelt';
-import useDatovelgerFeltMedUkjent from './useDatovelgerFeltMedUkjent';
-import useLanddropdownFelt from './useLanddropdownFelt';
-import {
-    formaterInitVerdiForInputMedUkjent,
-    formaterVerdiForCheckbox,
-    regexNorskEllerUtenlandskPostnummer,
-} from './utils';
 
 export interface IOmBarnetUtvidetFeltTyper {
     institusjonsnavn: string;

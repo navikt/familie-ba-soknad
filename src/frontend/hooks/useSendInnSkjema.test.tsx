@@ -1,14 +1,14 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { ESivilstand } from '../../../typer/person';
-import { ISøknadKontrakt } from '../../../typer/søknad';
-import { hentSivilstatus } from '../../../utils/person';
+import { ESivilstand } from '../typer/person';
+import { ISøknadKontrakt } from '../typer/søknad';
+import { hentSivilstatus } from '../utils/person';
 import {
     mekkGyldigUtvidetSøknad,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
-} from '../../../utils/testing';
-import { erGyldigISøknadKontraktUtvidet } from '../../../utils/typeguards';
+} from '../utils/testing';
+import { erGyldigISøknadKontraktUtvidet } from '../utils/typeguards';
 import { useSendInnSkjema } from './useSendInnSkjema';
 
 describe('useSendInnSkjema', () => {

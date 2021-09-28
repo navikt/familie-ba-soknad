@@ -18,14 +18,13 @@ import {
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
 } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
-import { Årsak } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/types-and-utilities';
 import * as appContext from '../context/AppContext';
 import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
 import { RoutesProvider } from '../context/RoutesContext';
 import { IKvittering } from '../typer/kvittering';
 import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../typer/person';
-import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
+import { ESøknadstype, initialStateSøknad, ISøknad, Årsak } from '../typer/søknad';
 import { genererInitialBarnMedISøknad } from './person';
 
 export const spyOnUseApp = søknad => {
