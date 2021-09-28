@@ -2,19 +2,19 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import { mockDeep } from 'jest-mock-extended';
+import { mock, mockDeep } from 'jest-mock-extended';
 import { IntlProvider } from 'react-intl';
 
 import { ISODateString } from '@navikt/familie-form-elements';
-import { ISkjema, useFelt } from '@navikt/familie-skjema';
+import { Felt, ISkjema, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { silenceConsoleErrors, TestProvidere } from '../../../utils/testing';
 import Datovelger from './Datovelger';
 
 describe(`Datovelger`, () => {
+    silenceConsoleErrors();
     test(`Datovelger kan begrenses av annen datovelger`, () => {
-        silenceConsoleErrors();
         const {
             result: { current },
         } = renderHook(
@@ -43,11 +43,13 @@ describe(`Datovelger`, () => {
             <TestProvidere>
                 <Datovelger
                     felt={current.fraOgMed}
+                    feilmeldingSpråkId={'feilmelding'}
                     skjema={skjemaMock}
                     labelTekstId={'test-fra-og-med'}
                 />
                 <Datovelger
                     felt={current.tilOgMed}
+                    feilmeldingSpråkId={'feilmelding'}
                     fraOgMedFelt={current.fraOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-til-og-med'}
@@ -69,11 +71,13 @@ describe(`Datovelger`, () => {
             <TestProvidere>
                 <Datovelger
                     felt={current.tilOgMed}
+                    feilmeldingSpråkId={'feilmelding'}
                     skjema={skjemaMock}
                     labelTekstId={'test-til-og-med'}
                 />
                 <Datovelger
                     felt={current.fraOgMed}
+                    feilmeldingSpråkId={'feilmelding'}
                     tilOgMedFelt={current.tilOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-fra-og-med'}
@@ -85,5 +89,27 @@ describe(`Datovelger`, () => {
         act(() => fraOgMedÅpneknapp.click());
         const nesteDag = container.querySelector('[aria-selected="true"]')?.nextElementSibling;
         expect(nesteDag?.getAttribute('aria-disabled')).toEqual('true');
+    });
+
+    test('Datovelger viser feilmelding', () => {
+        const skjemaMock = mockDeep<ISkjema<SkjemaFeltTyper, string>>({
+            visFeilmeldinger: true,
+        });
+        const oppholdslandDatoFeltMock = mock<Felt<ISODateString>>({
+            valideringsstatus: Valideringsstatus.FEIL,
+            erSynlig: true,
+        });
+
+        const { queryByText } = render(
+            <TestProvidere>
+                <Datovelger
+                    felt={oppholdslandDatoFeltMock}
+                    feilmeldingSpråkId={'omdeg.opphold-i-norge.dato.feilmelding'}
+                    skjema={skjemaMock}
+                    labelTekstId={'test-fra-og-med'}
+                />
+            </TestProvidere>
+        );
+        expect(queryByText(/omdeg.opphold-i-norge.dato.feilmelding/)).toBeInTheDocument();
     });
 });

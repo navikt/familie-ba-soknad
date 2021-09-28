@@ -8,6 +8,7 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
+import { validerDatoAvgrensetFremITid } from '../../../utils/dato';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import useDatovelgerFeltMedJaNeiAvhengighet from './useDatovelgerFeltMedJaNeiAvhengighet';
 import useLanddropdownFeltMedJaNeiAvhengighet from './useLanddropdownFeltMedJaNeiAvhengighet';
@@ -79,6 +80,7 @@ export const useOmdeg = (): {
 
     const oppholdsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.oppholdsland,
+        'omdeg.opphold-i-norge.land.feilmelding',
         ESvar.NEI,
         oppholderSegINorge
     );
@@ -87,7 +89,7 @@ export const useOmdeg = (): {
         søker.oppholdslandDato,
         ESvar.NEI,
         oppholderSegINorge,
-        true
+        validerDatoAvgrensetFremITid
     );
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
@@ -105,7 +107,7 @@ export const useOmdeg = (): {
         søker.komTilNorgeDato,
         ESvar.NEI,
         værtINorgeITolvMåneder,
-        true
+        validerDatoAvgrensetFremITid
     );
 
     const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({
@@ -166,6 +168,7 @@ export const useOmdeg = (): {
 
     const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.arbeidsland,
+        'omdeg.arbeid-utland.land.feilmelding',
         ESvar.JA,
         jobberPåBåt
     );
@@ -191,6 +194,7 @@ export const useOmdeg = (): {
 
     const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.pensjonsland,
+        'omdeg.utenlandspensjon.land.feilmelding',
         ESvar.JA,
         mottarUtenlandspensjon
     );
