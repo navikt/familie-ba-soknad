@@ -536,6 +536,7 @@ export const useOmBarnet = (
         }
     );
 
+    // Trenger denne for å validere valgfri dato felt
     useEffect(() => {
         if (søkerForTidsromSluttdato.erSynlig && søkerForTidsromSluttdato.verdi === '') {
             søkerForTidsromSluttdato.validerOgSettFelt('');
