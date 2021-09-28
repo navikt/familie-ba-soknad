@@ -1,13 +1,17 @@
 import React from 'react';
 
-import {act, queryByText, render} from '@testing-library/react';
-import {mockDeep} from 'jest-mock-extended';
+import { act, render } from '@testing-library/react';
+import { mockDeep } from 'jest-mock-extended';
 
-import {ISøker} from '../../../typer/person';
-import {silenceConsoleErrors, spyOnUseApp, TestProvidere, TestProvidereMedEkteTekster,} from '../../../utils/testing';
+import { ISøker } from '../../../typer/person';
+import {
+    silenceConsoleErrors,
+    spyOnUseApp,
+    TestProvidere,
+    TestProvidereMedEkteTekster,
+} from '../../../utils/testing';
 import OmDeg from './OmDeg';
-import {OmDegSpørsmålId, omDegSpørsmålSpråkId} from './spørsmål';
-import {ESvar} from "@navikt/familie-form-elements";
+import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 
 jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),

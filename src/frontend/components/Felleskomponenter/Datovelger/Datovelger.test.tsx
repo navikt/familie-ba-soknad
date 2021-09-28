@@ -2,15 +2,16 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import { mock, mockDeep } from 'jest-mock-extended';
+import dayjs from 'dayjs';
+import { mockDeep } from 'jest-mock-extended';
 import { IntlProvider } from 'react-intl';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
-import { Felt, ISkjema, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
+import { ISkjema, useFelt } from '@navikt/familie-skjema';
 
-import { ISøker } from '../../../typer/person';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
+    mekkGyldigSøknad,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
@@ -19,7 +20,6 @@ import {
 import OmDeg from '../../SøknadsSteg/OmDeg/OmDeg';
 import { OmDegSpørsmålId } from '../../SøknadsSteg/OmDeg/spørsmål';
 import Datovelger from './Datovelger';
-import {ISøknad} from "../../../typer/søknad";
 
 jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),
@@ -109,21 +109,25 @@ describe(`Datovelger`, () => {
 });
 
 describe('Test ulike caser for feilmelding hos datovelger', () => {
-    const søknad = mockDeep<ISøknad>({
-        søker: mockDeep<ISøker>({
+    const søknad = mekkGyldigSøknad();
+    const søknadMock = {
+        ...søknad,
+        søker: {
+            ...søknad.søker,
             adressebeskyttelse: true,
             statsborgerskap: [{ landkode: 'NOR' }],
             oppholderSegINorge: {
                 id: OmDegSpørsmålId.oppholderSegINorge,
                 svar: ESvar.NEI,
             },
-        }),
-    });
+        },
+    };
+
     it('Datovelger viser spesifikk feilmelding for felt dersom verdien er tom', () => {
         spyOnUseApp({
-            ...søknad,
+            ...søknadMock,
             søker: {
-                ...søknad.søker,
+                ...søknadMock.søker,
                 oppholdslandDato: { id: OmDegSpørsmålId.oppholdslandDato, svar: '' },
             },
         });
@@ -138,6 +142,52 @@ describe('Test ulike caser for feilmelding hos datovelger', () => {
         const feilmelding = getAllByText(
             'Du må oppgi når utenlandsoppholdet begynte for å gå videre'
         );
+        expect(feilmelding).toHaveLength(2);
+    });
+
+    it('Datovelger viser feilmelding for ugyldig valg av dato frem i tid', () => {
+        spyOnUseApp({
+            ...søknadMock,
+            søker: {
+                ...søknadMock.søker,
+                oppholdslandDato: {
+                    id: OmDegSpørsmålId.oppholdslandDato,
+                    svar: dayjs().add(1, 'day').format('YYYY-MM-DD'),
+                },
+            },
+        });
+
+        const { getAllByText, getByText } = render(
+            <TestProvidereMedEkteTekster>
+                <OmDeg />
+            </TestProvidereMedEkteTekster>
+        );
+        const gåVidere = getByText('GÅ VIDERE');
+        act(() => gåVidere.click());
+        const feilmelding = getAllByText('Dato kan ikke være frem i tid');
+        expect(feilmelding).toHaveLength(2);
+    });
+
+    it('Datovelger viser feilmelding for ugyldig format', () => {
+        spyOnUseApp({
+            ...søknadMock,
+            søker: {
+                ...søknadMock.søker,
+                oppholdslandDato: {
+                    id: OmDegSpørsmålId.oppholdslandDato,
+                    svar: 'abc',
+                },
+            },
+        });
+
+        const { getAllByText, getByText } = render(
+            <TestProvidereMedEkteTekster>
+                <OmDeg />
+            </TestProvidereMedEkteTekster>
+        );
+        const gåVidere = getByText('GÅ VIDERE');
+        act(() => gåVidere.click());
+        const feilmelding = getAllByText('Dato må være en gyldig dato i formatet dd.mm.åååå');
         expect(feilmelding).toHaveLength(2);
     });
 });
