@@ -125,7 +125,9 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 locale={valgtLocale}
                 allowNavigationToDisabledMonths={true}
             />
-            {felt.feilmelding && <Feilmelding>{feilmeldingstekst}</Feilmelding>}
+            {!!(felt.feilmelding && skjema.visFeilmeldinger) && (
+                <Feilmelding>{feilmeldingstekst}</Feilmelding>
+            )}
         </span>
     ) : null;
 };
