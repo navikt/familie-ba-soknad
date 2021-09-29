@@ -526,18 +526,18 @@ export const useOmBarnet = (
         barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
         ESvar.JA,
         søkerForTidsrom,
-        'ombarnet.søker-for-periode.startdato.feilmelding',
-        validerDatoMedUkjentAvgrensetFremITid
+        validerDatoMedUkjentAvgrensetFremITid('ombarnet.søker-for-periode.startdato.feilmelding')
     );
     const søkerForTidsromSluttdato = useDatovelgerFeltMedJaNeiAvhengighet(
         barn[barnDataKeySpørsmål.søkerForTidsromSluttdato],
         ESvar.JA,
         søkerForTidsrom,
-        'ombarnet.søker-for-periode.sluttdato.feilmelding',
         felt => {
             // Feltet er valgfritt. Tom streng betyr ikke besvart
             if (felt.verdi === '') return ok(felt);
-            return validerDatoMedUkjentAvgrensetFremITid(felt);
+            return validerDatoMedUkjentAvgrensetFremITid(
+                'ombarnet.søker-for-periode.sluttdato.feilmelding'
+            )(felt);
         }
     );
 

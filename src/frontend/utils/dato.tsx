@@ -40,9 +40,15 @@ export const validerDato = (
 export const formaterDato = (isoDateString: ISODateString) =>
     dayjs(isoDateString).format('DD.MM.YYYY');
 
-export const validerDatoAvgrensetFremITid: ValiderFelt<ISODateString> = (
-    felt: FeltState<ISODateString>
-) => validerDato(felt, true);
+export const validerDatoAvgrensetFremITid: (
+    feilmeldingSpråkId: string
+) => ValiderFelt<ISODateString> = (feilmeldingSpråkId: string) => {
+    return (felt: FeltState<ISODateString>) => validerDato(felt, true, feilmeldingSpråkId);
+};
 
-export const validerDatoMedUkjentAvgrensetFremITid: ValiderFelt<DatoMedUkjent> = felt =>
-    felt.verdi === AlternativtSvarForInput.UKJENT ? ok(felt) : validerDatoAvgrensetFremITid(felt);
+export const validerDatoMedUkjentAvgrensetFremITid: (
+    feilmeldingSpråkId: string
+) => ValiderFelt<DatoMedUkjent> = feilmeldingSpråkId => felt =>
+    felt.verdi === AlternativtSvarForInput.UKJENT
+        ? ok(felt)
+        : validerDatoAvgrensetFremITid(feilmeldingSpråkId)(felt);

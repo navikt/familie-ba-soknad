@@ -89,9 +89,7 @@ export const useOmdeg = (): {
         søker.oppholdslandDato,
         ESvar.NEI,
         oppholderSegINorge,
-        'omdeg.opphold-i-norge.dato.feilmelding',
-        validerDatoAvgrensetFremITid,
-        true
+        validerDatoAvgrensetFremITid('omdeg.opphold-i-norge.dato.feilmelding')
     );
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
@@ -109,8 +107,7 @@ export const useOmdeg = (): {
         søker.komTilNorgeDato,
         ESvar.NEI,
         værtINorgeITolvMåneder,
-        'omdeg.opphold-sammenhengende.dato.feilmelding',
-        validerDatoAvgrensetFremITid
+        validerDatoAvgrensetFremITid('omdeg.opphold-sammenhengende.dato.feilmelding')
     );
 
     const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({

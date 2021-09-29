@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, useFelt, ValiderFelt } from '@navikt/familie-skjema';
 
-import { validerDato } from '../../../utils/validering';
 import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/person';
 import { ISøknadSpørsmål } from '../typer/søknad';
 
@@ -11,9 +10,7 @@ const useDatovelgerFeltMedJaNeiAvhengighet = (
     søknadsfelt: ISøknadSpørsmål<ISODateString> | ISøknadSpørsmål<DatoMedUkjent>,
     avhengigSvarCondition: ESvar,
     avhengighet: Felt<ESvar | null>,
-    feilmeldingSpråkId: string,
-    valideringsfunksjon?: ValiderFelt<ISODateString | DatoMedUkjent>,
-    avgrensDatoFremITid = false
+    valideringsfunksjon?: ValiderFelt<ISODateString | DatoMedUkjent>
 ) => {
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
 
@@ -21,10 +18,6 @@ const useDatovelgerFeltMedJaNeiAvhengighet = (
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar === AlternativtSvarForInput.UKJENT ? '' : søknadsfelt.svar,
         valideringsfunksjon,
-        verdi: søknadsfelt.svar,
-        valideringsfunksjon: felt => {
-            return validerDato(felt, avgrensDatoFremITid, feilmeldingSpråkId);
-        },
         skalFeltetVises: avhengigheter => {
             return avhengigheter && (avhengigheter.jaNeiSpm as Felt<ESvar | null>)
                 ? skalFeltetVises(avhengigheter.jaNeiSpm.verdi)
