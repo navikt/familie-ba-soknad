@@ -541,13 +541,6 @@ export const useOmBarnet = (
         }
     );
 
-    // Trenger denne for å validere valgfri dato felt
-    useEffect(() => {
-        if (søkerForTidsromSluttdato.erSynlig && søkerForTidsromSluttdato.verdi === '') {
-            søkerForTidsromSluttdato.validerOgSettFelt('');
-        }
-    }, [søkerForTidsromSluttdato]);
-
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
 
     const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt(
@@ -781,18 +774,11 @@ export const useOmBarnet = (
                           },
                           søkerForTidsromStartdato: {
                               ...barn.søkerForTidsromStartdato,
-                              svar:
-                                  søkerForTidsrom.verdi === ESvar.JA
-                                      ? søkerForTidsromStartdato.verdi
-                                      : AlternativtSvarForInput.UKJENT,
+                              svar: søkerForTidsromStartdato.verdi,
                           },
                           søkerForTidsromSluttdato: {
                               ...barn.søkerForTidsromSluttdato,
-                              svar:
-                                  søkerForTidsrom.verdi === ESvar.JA &&
-                                  søkerForTidsromSluttdato.verdi !== ''
-                                      ? søkerForTidsromSluttdato.verdi
-                                      : AlternativtSvarForInput.UKJENT,
+                              svar: søkerForTidsromSluttdato.verdi,
                           },
                           utvidet: {
                               søkerHarBoddMedAndreForelder: {

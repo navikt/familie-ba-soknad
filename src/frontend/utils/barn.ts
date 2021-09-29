@@ -7,7 +7,6 @@ import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/
 import { IOmBarnaDineFeltTyper } from '../components/SøknadsSteg/OmBarnaDine/useOmBarnaDine';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
-    AlternativtSvarForInput,
     barnDataKeySpørsmål,
     barnDataKeySpørsmålUtvidet,
     IBarn,
@@ -319,11 +318,11 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
             id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
-            svar: AlternativtSvarForInput.UKJENT,
+            svar: '',
         },
         [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
             id: OmBarnetSpørsmålsId.søkerForTidsromSluttdato,
-            svar: AlternativtSvarForInput.UKJENT,
+            svar: '',
         },
     };
 };
