@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, useFelt, ValiderFelt } from '@navikt/familie-skjema';
 
-import { AlternativtSvarForInput, DatoMedUkjent } from '../../../typer/person';
-import { ISøknadSpørsmål } from '../../../typer/søknad';
+import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/person';
+import { ISøknadSpørsmål } from '../typer/søknad';
 
 const useDatovelgerFeltMedJaNeiAvhengighet = (
     søknadsfelt: ISøknadSpørsmål<ISODateString> | ISøknadSpørsmål<DatoMedUkjent>,

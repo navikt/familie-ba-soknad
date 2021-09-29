@@ -2,8 +2,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
-import { Årsak } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/types-and-utilities';
-import { ISøknadSpørsmål } from './søknad';
+import { ISøknadSpørsmål, Årsak } from './søknad';
 
 export type BarnetsId = string;
 

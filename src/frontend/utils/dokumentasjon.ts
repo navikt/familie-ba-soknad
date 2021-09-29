@@ -30,26 +30,3 @@ export const erDokumentasjonRelevant = (dokumentasjon: IDokumentasjon) =>
     dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON ||
     dokumentasjon.gjelderForSøker ||
     dokumentasjon.gjelderForBarnId.length;
-
-export const dokumentasjonsbehovTilSpråkId = (dokumentasjonsbehov: Dokumentasjonsbehov): string => {
-    switch (dokumentasjonsbehov) {
-        case Dokumentasjonsbehov.ADOPSJON_DATO:
-            return 'dokumentasjon.adopsjon.vedleggtittel';
-        case Dokumentasjonsbehov.ANNEN_DOKUMENTASJON:
-            return 'dokumentasjon.annendokumentasjon.vedleggtittel';
-        case Dokumentasjonsbehov.AVTALE_DELT_BOSTED:
-            return 'dokumentasjon.deltbosted.vedleggtittel';
-        case Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN:
-            return 'dokumentasjon.bekreftelsebarnevernet.vedleggtittel';
-        case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
-            return 'dokumentasjon.bekreftelseborsammen.vedleggtittel';
-        case Dokumentasjonsbehov.EØS_SKJEMA:
-            return 'dokumentasjon.eøsskjema.vedleggtittel';
-        case Dokumentasjonsbehov.MEKLINGSATTEST:
-            return 'dokumentasjon.meklingsattest.vedleggtittel';
-        case Dokumentasjonsbehov.SEPARERT_SKILT_ENKE:
-            return 'dokumentasjon.bekreftelseborsammen.vedleggtittel';
-        case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:
-            return 'dokumentasjon.oppholdstillatelse.vedleggtittel';
-    }
-};

@@ -283,3 +283,23 @@ export const initialStateSøknad: ISøknad = {
         svar: null,
     },
 };
+
+export enum Årsak {
+    SEPARERT = 'SEPARERT',
+    SKILT = 'SKILT',
+    BRUDD_SAMBOER = 'BRUDD_SAMBOER',
+    BODD_ALENE = 'BODD_ALENE',
+    ENKE_ENKEMANN = 'ENKE_ENKEMANN',
+    FENGSEL_VARETEKT = 'FENGSEL_VARETEKT',
+    BRUDD_GIFT = 'BRUDD_GIFT',
+}
+
+export const muligeÅrsaker: Årsak[] = [
+    Årsak.SEPARERT,
+    Årsak.SKILT,
+    Årsak.BRUDD_SAMBOER,
+    Årsak.BODD_ALENE,
+    Årsak.ENKE_ENKEMANN,
+    Årsak.FENGSEL_VARETEKT,
+    Årsak.BRUDD_GIFT,
+];

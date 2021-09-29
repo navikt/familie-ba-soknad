@@ -15,6 +15,7 @@ import {
     ITidligereSamboer,
 } from '../../../../typer/person';
 import { formaterDato } from '../../../../utils/dato';
+import { toÅrsakSpråkId } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
@@ -22,7 +23,6 @@ import {
     dinLivssituasjonSpørsmålSpråkId,
     samboerSpråkIder,
 } from '../../Utvidet-DinLivssituasjon/spørsmål';
-import { toÅrsakSpråkId } from '../../Utvidet-DinLivssituasjon/types-and-utilities';
 import { useDinLivssituasjon } from '../../Utvidet-DinLivssituasjon/useDinLivssituasjon';
 import { StyledOppsummeringsFeltGruppe } from '../Oppsummering';
 import { OppsummeringFelt } from '../OppsummeringFelt';

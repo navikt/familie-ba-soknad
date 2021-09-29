@@ -7,10 +7,10 @@ import { feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { formaterInitVerdiForInputMedUkjent } from '../components/SøknadsSteg/OmBarnet/utils';
 import { DatoMedUkjent } from '../typer/person';
 import { ISøknadSpørsmål } from '../typer/søknad';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
+import { formaterInitVerdiForInputMedUkjent } from '../utils/input';
 
 const useInputFeltMedUkjent = (
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | null,

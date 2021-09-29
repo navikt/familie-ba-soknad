@@ -1,14 +1,14 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { ESivilstand } from '../../../typer/person';
-import { ISøknadKontrakt } from '../../../typer/søknad';
-import { hentSivilstatus } from '../../../utils/person';
+import { ESivilstand } from '../typer/person';
+import { ISøknadKontrakt } from '../typer/søknad';
+import { hentSivilstatusSpråkId } from '../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
-} from '../../../utils/testing';
-import { erGyldigISøknadKontraktUtvidet } from '../../../utils/typeguards';
+} from '../utils/testing';
+import { erGyldigISøknadKontraktUtvidet } from '../utils/typeguards';
 import { useSendInnSkjema } from './useSendInnSkjema';
 
 describe('useSendInnSkjema', () => {
@@ -23,7 +23,7 @@ describe('useSendInnSkjema', () => {
     });
 
     it('Kan mappe sivilstandenum til språktekster', () => {
-        const språktekster = Object.values(ESivilstand).map(hentSivilstatus);
+        const språktekster = Object.values(ESivilstand).map(hentSivilstatusSpråkId);
         let sivilstandCount = 0;
         for (const sivilstand in ESivilstand) {
             expect(språktekster).toContain(`felles.sivilstatus.kode.${sivilstand}`);

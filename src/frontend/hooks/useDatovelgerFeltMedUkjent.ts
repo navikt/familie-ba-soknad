@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
-import { validerDato } from '../../../utils/dato';
+import { validerDato } from '../utils/dato';
 
 const useDatovelgerFeltMedUkjent = (
     feltId,
