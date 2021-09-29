@@ -51,6 +51,7 @@ const SamboerSkjema: React.FC<{
                         felt={samboerFelter.fødselsdato}
                         labelTekstId={samboerSpråkIder.fødselsdato}
                         disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
+                        calendarPosition={erIModal ? 'fullscreen' : ''}
                     />
                     <SkjemaCheckbox
                         labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
