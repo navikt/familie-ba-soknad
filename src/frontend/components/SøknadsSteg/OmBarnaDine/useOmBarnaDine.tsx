@@ -5,8 +5,8 @@ import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import { barnDataKeySpørsmål, BarnetsId } from '../../../typer/person';
+import { genererOppdaterteBarn } from '../../../utils/barn';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
-import { genererOppdaterteBarn } from './utils';
 
 export interface IOmBarnaDineFeltTyper {
     erNoenAvBarnaFosterbarn: ESvar | null;

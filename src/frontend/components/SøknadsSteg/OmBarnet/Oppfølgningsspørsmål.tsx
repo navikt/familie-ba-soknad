@@ -6,7 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
-import { barnetsNavnValue } from '../../../utils/visning';
+import { barnetsNavnValue } from '../../../utils/barn';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';

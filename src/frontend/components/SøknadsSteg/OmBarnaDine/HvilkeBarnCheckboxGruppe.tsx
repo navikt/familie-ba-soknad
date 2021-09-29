@@ -9,7 +9,7 @@ import { Felt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål, BarnetsId } from '../../../typer/person';
-import { barnetsNavnValue } from '../../../utils/visning';
+import { barnetsNavnValue } from '../../../utils/barn';
 
 interface Props {
     legend: ReactNode;

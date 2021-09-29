@@ -16,9 +16,8 @@ import {
 import { useApp } from '../../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
 import { barnDataKeySpørsmål, IBarn } from '../../../../typer/person';
+import { erBarnRegistrertFraFør, hentUid } from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
-import { erBarnRegistrertFraFør } from '../../../../utils/person';
-import { hentUid } from '../../../../utils/uuid';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
 import { VelgBarnSpørsmålId } from '../spørsmål';

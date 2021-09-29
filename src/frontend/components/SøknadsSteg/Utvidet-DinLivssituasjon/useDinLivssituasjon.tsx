@@ -4,6 +4,8 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
+import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
@@ -15,13 +17,12 @@ import {
     ISamboer,
     ITidligereSamboer,
 } from '../../../typer/person';
+import { Årsak } from '../../../typer/søknad';
+import { validerDatoAvgrensetFremITid } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import useDatovelgerFeltMedUkjent from '../OmBarnet/useDatovelgerFeltMedUkjent';
-import useDatovelgerFeltMedJaNeiAvhengighet from '../OmDeg/useDatovelgerFeltMedJaNeiAvhengighet';
 import { SamboerSpørsmålId } from './spørsmål';
-import { Årsak } from './types-and-utilities';
 
 export interface IDinLivssituasjonFeltTyper {
     årsak: Årsak | '';
@@ -173,7 +174,7 @@ export const useDinLivssituasjon = (): {
         ESvar.JA,
         harSamboerNå,
         'omdeg.nårstartetsamboerforhold.feilmelding',
-        true
+        validerDatoAvgrensetFremITid
     );
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
