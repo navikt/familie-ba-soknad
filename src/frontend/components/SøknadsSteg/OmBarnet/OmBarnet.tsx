@@ -167,7 +167,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 }
                             />
                             <SpørsmålTilleggsinfoWrapper>
-                                <AlertStripe type={'advarsel'}>
+                                <AlertStripe>
                                     <SpråkTekst id={'ombarnet.søker-for-periode.sluttdato.info'} />
                                 </AlertStripe>
                             </SpørsmålTilleggsinfoWrapper>
