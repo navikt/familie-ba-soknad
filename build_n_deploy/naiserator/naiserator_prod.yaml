@@ -39,6 +39,7 @@ spec:
       memory: 512Mi
   envFrom:
     - secret: ba-soknad
+    - configmap: loginservice-idporten
   env:
     - name: BASE_PATH
       value: {{base_path}}

@@ -8,7 +8,7 @@ import webpackModule from 'webpack';
 import webpack from 'webpack';
 
 import { unslash } from '../shared-utils/unslash';
-const { DefinePlugin } = webpackModule;
+const { DefinePlugin, ProvidePlugin } = webpackModule;
 
 export const publicUrl = '/public';
 
@@ -47,9 +47,17 @@ const commonConfig: webpack.Configuration = {
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             'process.env.BASE_PATH': JSON.stringify(process.env.BASE_PATH ?? '/'),
         }),
+        new ProvidePlugin({
+            Buffer: ['buffer', 'Buffer'],
+        }),
     ],
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.less'],
+        fallback: {
+            crypto: require.resolve('crypto-browserify'),
+            stream: require.resolve('stream-browserify'),
+            buffer: require.resolve('buffer'),
+        },
     },
     output: {
         filename: '[name].[contenthash].js',

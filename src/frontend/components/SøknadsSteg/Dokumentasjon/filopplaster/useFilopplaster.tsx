@@ -1,11 +1,13 @@
 import React, { ReactNode, useCallback, useState } from 'react';
 
 import axios from 'axios';
+import { fromBlob } from 'file-type/browser';
 
 import Miljø from '../../../../Miljø';
 import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { konverter } from './konverteringService';
 
 interface OpplastetVedlegg {
     dokumentId: string;
@@ -34,7 +36,19 @@ export const useFilopplaster = (
         filer => {
             const feilmeldingsliste: ReactNode[] = [];
             const nyeVedlegg: IVedlegg[] = [];
-            filer.forEach((fil: File) => {
+            filer.forEach(async (fil: File) => {
+                const mimeType = await fromBlob(fil);
+                if (
+                    !tillatteFiltyper.includes(mimeType?.mime ?? '') &&
+                    mimeType?.mime.match(/^image\//)
+                ) {
+                    try {
+                        fil = await konverter(fil);
+                    } catch (e) {
+                        fil = new File([fil], fil.name, { type: mimeType.mime });
+                    }
+                }
+
                 if (maxFilstørrelse && fil.size > maxFilstørrelse) {
                     const maks = formaterFilstørrelse(maxFilstørrelse);
                     feilmeldingsliste.push(

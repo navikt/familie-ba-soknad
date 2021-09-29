@@ -20,25 +20,33 @@ import { logError } from './utils/amplitude';
 
 const environment = window.location.hostname;
 
-const polyfill = async () => {
+const polyfillLocaledata = async () => {
     // https://github.com/formatjs/formatjs/issues/3066
     await import('@formatjs/intl-numberformat/polyfill-force');
     await import('@formatjs/intl-datetimeformat/polyfill-force');
 
     for (const locale in LocaleType) {
         // Last ned land-navn for statsborgeskap
-        await import(`i18n-iso-countries/langs/${locale}.json`).then(result =>
-            registerLocale(result)
-        );
+
+        await import(
+            /* webpackInclude: /(nb|nn|en)/ */
+            `i18n-iso-countries/langs/${locale}.json`
+        ).then(result => registerLocale(result));
 
         if (shouldPolyfill(locale)) {
-            await import(`@formatjs/intl-numberformat/locale-data/${locale}`);
-            await import(`@formatjs/intl-datetimeformat/locale-data/${locale}`);
+            await import(
+                /* webpackInclude: /(nb|nn|en)/ */
+                `@formatjs/intl-numberformat/locale-data/${locale}`
+            );
+            await import(
+                /* webpackInclude: /(nb|nn|en)/ */
+                `@formatjs/intl-datetimeformat/locale-data/${locale}`
+            );
         }
     }
 };
 
-polyfill().then(() => {
+polyfillLocaledata().then(() => {
     Sentry.init({
         dsn: 'https://75e165345c514862b5829a724a4e8e45@sentry.gc.nav.no/71',
         environment,

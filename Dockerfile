@@ -1,6 +1,6 @@
 FROM navikt/node-express:14-alpine as prod-builder
 USER root
-RUN apk --no-cache add curl
+RUN apk --no-cache add curl binutils make gcc g++ vips-dev
 USER apprunner
 
 COPY --chown=apprunner:apprunner ./yarn.lock ./package.json /var/server/
@@ -27,6 +27,9 @@ RUN rm -rf .cache
 
 FROM navikt/node-express:14-alpine as prod-runner
 COPY --from=prod-builder /var/server/ /var/server
+USER root
+RUN apk add vips-dev
+USER apprunner
 
 EXPOSE 9000
 CMD ["yarn", "start"]

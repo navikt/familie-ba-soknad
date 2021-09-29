@@ -22,6 +22,7 @@ services:
       context: ./
       dockerfile: Dockerfile.local
     environment:
+      <<: *common-token-environment
       BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
       ENV: docker-compose
     volumes:
@@ -37,7 +38,7 @@ services:
       context: dockerstuff/soknad-api
       args:
         <<: *common-build-variables
-        git_commit: 878b807ec5868208d6873e8b5193102c5a15f544
+        git_commit: 561599222c559bdb9a411d18628431a8ba99c941
     depends_on:
       - key_generator
       - oauthmock
@@ -56,7 +57,7 @@ services:
       context: dockerstuff/mottak
       args:
         <<: *common-build-variables
-        git_commit: 816281fd7e40c94087b5010b2bbe6bbea9e68f10
+        git_commit: e6fc2fe557cc131e7a4a5ae39c654d74e3b1bf4f
     depends_on:
       - key_generator
       - postgres
@@ -98,7 +99,7 @@ services:
   dokgen:
     container_name: dokgen
     build:
-      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#072ecc7ccc37fc7d9485f89ef95a6d3a24790c05"
+      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#b5368318ab7c34fd5e049389d86b57d4ea29196c"
     environment:
       RUNTIME_OPTS: "--write.access=true"
     ports:

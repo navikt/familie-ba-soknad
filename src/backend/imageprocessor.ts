@@ -1,0 +1,46 @@
+import bodyParser from 'body-parser';
+import { Express, RequestHandler } from 'express';
+import sharp from 'sharp';
+
+import { logError, logWarn } from '@navikt/familie-logging';
+
+import { jwtValidationInterceptor } from './jwt-interceptor';
+
+async function prosesser(bilde: Buffer): Promise<Buffer> {
+    return sharp(bilde)
+        .rotate()
+        .resize(600, 1200, {
+            fit: sharp.fit.inside,
+        })
+        .toFormat('jpeg', { quality: 80 })
+        .toBuffer();
+}
+
+const bildeProsesseringHandler: RequestHandler = async (req, res) => {
+    if (req.body === undefined) {
+        logWarn('Mottok ingen data i bildeProsesseringHandler');
+        res.sendStatus(400);
+        return;
+    }
+
+    try {
+        const jpeg = await prosesser(req.body);
+        res.set('Content-Type', 'image/jpg');
+        res.send(jpeg);
+    } catch (reason) {
+        logError(reason.message);
+        res.sendStatus(500);
+    }
+};
+
+export const konfigurerBildeProsessering = (app: Express, path: string) => {
+    const uploadOptions = {
+        inflate: true,
+        limit: '20Mb',
+        type: '*/*',
+    };
+
+    app.use(path, bodyParser.raw(uploadOptions));
+    app.use(path, jwtValidationInterceptor);
+    app.post(path, bildeProsesseringHandler);
+};
