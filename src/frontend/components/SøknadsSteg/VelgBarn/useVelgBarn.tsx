@@ -6,7 +6,7 @@ import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
 import { BarnetsId, IBarn, IBarnMedISøknad } from '../../../typer/person';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
-import { genererInitialBarnMedISøknad } from '../../../utils/person';
+import { genererInitialBarnMedISøknad } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VelgBarnSpørsmålId } from './spørsmål';
 

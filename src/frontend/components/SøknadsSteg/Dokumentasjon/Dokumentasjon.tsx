@@ -5,6 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
+import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -12,7 +13,6 @@ import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/P
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import LastOppVedlegg from './LastOppVedlegg';
-import { useSendInnSkjema } from './useSendInnSkjema';
 
 const Dokumentasjon: React.FC = () => {
     const { søknad, innsendingStatus } = useApp();

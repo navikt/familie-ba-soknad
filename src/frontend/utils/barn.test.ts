@@ -4,10 +4,10 @@ import { DeepPartial } from 'ts-essentials';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { AlternativtSvarForInput, IBarnMedISøknad } from '../../../typer/person';
-import { ISøknad } from '../../../typer/søknad';
-import { IOmBarnaDineFeltTyper } from './useOmBarnaDine';
-import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from './utils';
+import { IOmBarnaDineFeltTyper } from '../components/SøknadsSteg/OmBarnaDine/useOmBarnaDine';
+import { AlternativtSvarForInput, IBarnMedISøknad } from '../typer/person';
+import { ISøknad } from '../typer/søknad';
+import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from './barn';
 
 describe('genererSvarForSpørsmålBarn', () => {
     const mockBarn = mockDeep<IBarnMedISøknad>({ id: 'random-id' });

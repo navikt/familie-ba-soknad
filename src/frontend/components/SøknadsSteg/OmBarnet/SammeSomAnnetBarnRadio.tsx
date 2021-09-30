@@ -9,7 +9,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/person';
-import { barnetsNavnValue } from '../../../utils/visning';
+import { barnetsNavnValue } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
 

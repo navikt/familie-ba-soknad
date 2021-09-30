@@ -15,7 +15,7 @@ import {
 } from '../../../typer/dokumentasjon';
 import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype } from '../../../typer/søknad';
-import { barnetsNavnValue } from '../../../utils/visning';
+import { barnetsNavnValue } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Filopplaster from './filopplaster/Filopplaster';
 

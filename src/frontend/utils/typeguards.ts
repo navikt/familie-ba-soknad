@@ -1,4 +1,7 @@
+import { Alpha3Code, getAlpha3Codes } from 'i18n-iso-countries';
+
 import { ISøknadKontraktDokumentasjon } from '../typer/dokumentasjon';
+import { ISamboer, ITidligereSamboer } from '../typer/person';
 import {
     ESøknadstype,
     IKontraktNåværendeSamboer,
@@ -28,6 +31,12 @@ export const erGyldigNåværendeSamboer = (
         return true;
     }
     return false;
+};
+
+export const erTidligereSamboer = (
+    samboer: ISamboer | ITidligereSamboer
+): samboer is ITidligereSamboer => {
+    return 'samboerTilDato' in samboer;
 };
 
 export const erGyldigIKontraktTidligereSamboer = (input): input is IKontraktTidligereSamboer =>
@@ -81,3 +90,7 @@ export const erGyldigISøknadKontraktUtvidet = (input): input is ISøknadKontrak
         erGyldigeBarnUtvidet(input.barn) &&
         erGyldigDokumentasjonUtvidet(input.dokumentasjon)
     );
+
+export const isAlpha3Code = (code: string): code is Alpha3Code => {
+    return code in getAlpha3Codes();
+};

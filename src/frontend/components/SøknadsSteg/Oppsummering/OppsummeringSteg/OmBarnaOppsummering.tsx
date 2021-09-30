@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { useApp } from '../../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
 import { barnDataKeySpørsmål } from '../../../../typer/person';
-import { barnetsNavnValue } from '../../../../utils/visning';
+import { barnetsNavnValue } from '../../../../utils/barn';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from '../../OmBarnaDine/spørsmål';
 import { useOmBarnaDine } from '../../OmBarnaDine/useOmBarnaDine';

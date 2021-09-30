@@ -8,7 +8,7 @@ import {
     IBarn,
     IBarnMedISøknad,
 } from '../../../typer/person';
-import { genererInitialBarnMedISøknad } from '../../../utils/person';
+import { genererInitialBarnMedISøknad } from '../../../utils/barn';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';

@@ -9,7 +9,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { BarnetsId, ESivilstand } from '../../../typer/person';
-import { barnetsNavnValue } from '../../../utils/visning';
+import { barnetsNavnValue } from '../../../utils/barn';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -167,7 +167,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 }
                             />
                             <SpørsmålTilleggsinfoWrapper>
-                                <AlertStripe type={'advarsel'}>
+                                <AlertStripe>
                                     <SpråkTekst id={'ombarnet.søker-for-periode.sluttdato.info'} />
                                 </AlertStripe>
                             </SpørsmålTilleggsinfoWrapper>

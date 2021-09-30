@@ -8,9 +8,10 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
+import { genererAdresseVisning } from '../../../../utils/adresse';
 import { formaterDato } from '../../../../utils/dato';
+import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
-import { genererAdresseVisning, landkodeTilSpråk } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
     omDegPersonopplysningerSpråkId,

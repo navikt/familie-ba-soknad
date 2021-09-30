@@ -18,8 +18,7 @@ import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
-import { mapBarnResponsTilBarn } from '../utils/person';
-import { hentUid } from '../utils/uuid';
+import { hentUid, mapBarnResponsTilBarn } from '../utils/barn';
 import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
 import { RouteEnum } from './RoutesContext';
 
