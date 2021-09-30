@@ -329,23 +329,30 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar
                             )}
                         />
-                        {barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar !==
-                            AlternativtSvarForInput.UKJENT && (
-                            <OppsummeringFelt
-                                tittel={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.søkerForTidsromSluttdato
-                                            ]
-                                        }
-                                    />
-                                }
-                                søknadsvar={formaterDato(
-                                    barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar
-                                )}
-                            />
-                        )}
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.søkerForTidsromSluttdato
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={(() => {
+                                const svar =
+                                    barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar;
+                                return svar === AlternativtSvarForInput.UKJENT
+                                    ? formatMessage({
+                                          id:
+                                              omBarnetSpørsmålSpråkId[
+                                                  OmBarnetSpørsmålsId
+                                                      .søkerForTidsromSluttdatoVetIkke
+                                              ],
+                                      })
+                                    : formaterDato(svar);
+                            })()}
+                        />
                     </>
                 )}
             </StyledOppsummeringsFeltGruppe>
@@ -359,7 +366,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                         OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
                                     ]
                                 }
-                                values={{ navn: barn.navn }}
+                                values={{ navn: barnetsNavnValue(barn, intl) }}
                             />
                         }
                         søknadsvar={
