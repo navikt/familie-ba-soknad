@@ -1,4 +1,4 @@
-FROM navikt/node-express:14-alpine as prod-builder
+FROM navikt/node-express:16 as prod-builder
 USER root
 RUN apk --no-cache add curl binutils make gcc g++ vips-dev
 USER apprunner
@@ -25,7 +25,7 @@ RUN yarn install --prod
 RUN rm -rf .cache
 
 
-FROM navikt/node-express:14-alpine as prod-runner
+FROM navikt/node-express:16 as prod-runner
 COPY --from=prod-builder /var/server/ /var/server
 USER root
 RUN apk add vips-dev
