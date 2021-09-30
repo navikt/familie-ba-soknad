@@ -3,10 +3,9 @@ import React from 'react';
 import dayjs from 'dayjs';
 
 import { ISODateString } from '@navikt/familie-form-elements';
-import { feil, FeltState, ok, ValiderFelt } from '@navikt/familie-skjema';
+import { feil, FeltState, ok } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/person';
 
 export const erDatoFormatGodkjent = (verdi: string) => {
     /*FamilieDatoVelger har allerede sin egen validering.
@@ -39,16 +38,3 @@ export const validerDato = (
 
 export const formaterDato = (isoDateString: ISODateString) =>
     dayjs(isoDateString).format('DD.MM.YYYY');
-
-export const validerDatoAvgrensetFremITid: (
-    feilmeldingSpråkId: string
-) => ValiderFelt<ISODateString> = (feilmeldingSpråkId: string) => {
-    return (felt: FeltState<ISODateString>) => validerDato(felt, true, feilmeldingSpråkId);
-};
-
-export const validerDatoMedUkjentAvgrensetFremITid: (
-    feilmeldingSpråkId: string
-) => ValiderFelt<DatoMedUkjent> = feilmeldingSpråkId => felt =>
-    felt.verdi === AlternativtSvarForInput.UKJENT
-        ? ok(felt)
-        : validerDatoAvgrensetFremITid(feilmeldingSpråkId)(felt);

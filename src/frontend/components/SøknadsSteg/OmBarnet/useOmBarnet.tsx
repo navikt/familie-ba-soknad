@@ -38,7 +38,6 @@ import {
 } from '../../../typer/person';
 import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { validerDatoMedUkjentAvgrensetFremITid } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -527,7 +526,8 @@ export const useOmBarnet = (
         barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
         ESvar.JA,
         søkerForTidsrom,
-        validerDatoMedUkjentAvgrensetFremITid('ombarnet.søker-for-periode.startdato.feilmelding')
+        'ombarnet.søker-for-periode.startdato.feilmelding',
+        true
     );
 
     const søkerForTidsromSluttdatoVetIkke = useFelt<ESvar>({

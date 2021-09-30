@@ -10,7 +10,6 @@ import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFe
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
-import { validerDatoAvgrensetFremITid } from '../../../utils/dato';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export type ESvarMedUbesvart = ESvar | null;
@@ -89,7 +88,8 @@ export const useOmdeg = (): {
         søker.oppholdslandDato,
         ESvar.NEI,
         oppholderSegINorge,
-        validerDatoAvgrensetFremITid('omdeg.opphold-i-norge.dato.feilmelding')
+        'omdeg.opphold-i-norge.dato.feilmelding',
+        true
     );
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
@@ -107,7 +107,8 @@ export const useOmdeg = (): {
         søker.komTilNorgeDato,
         ESvar.NEI,
         værtINorgeITolvMåneder,
-        validerDatoAvgrensetFremITid('omdeg.opphold-sammenhengende.dato.feilmelding')
+        'omdeg.opphold-sammenhengende.dato.feilmelding',
+        true
     );
 
     const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({
