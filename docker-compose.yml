@@ -11,12 +11,17 @@ x-common-token-environment: &common-token-environment
   LOGINSERVICE_IDPORTEN_AUDIENCE: "notfound"
   TOKEN_X_WELL_KNOWN_URL: http://oauthmock:8080/tokenx/.well-known/openid-configuration
 
+x-common-log-config: &common-log-config
+  options:
+    max-size: 50k
+
 volumes:
   keys:
   secure-logs:
 
 services:
   frontend:
+    logging: *common-log-config
     container_name: "frontend"
     build:
       context: ./
@@ -33,6 +38,7 @@ services:
       - "55554:55554"
 
   api:
+    logging: *common-log-config
     container_name: "soknad-api"
     build:
       context: dockerstuff/soknad-api
@@ -52,6 +58,7 @@ services:
       FAMILIE_BA_MOTTAK_URL: 'http://mottak:8090'
 
   mottak:
+    logging: *common-log-config
     container_name: "mottak"
     build:
       context: dockerstuff/mottak
@@ -77,6 +84,7 @@ services:
       FAMILIE_INTEGRASJONER_API_URL: http://journalforing
 
   dokument:
+    logging: *common-log-config
     container_name: "familie-dokument"
     build:
       context: dockerstuff/dokument
@@ -97,6 +105,7 @@ services:
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-dokument'
 
   dokgen:
+    logging: *common-log-config
     container_name: dokgen
     build:
       context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#b5368318ab7c34fd5e049389d86b57d4ea29196c"
@@ -109,12 +118,14 @@ services:
       # - ../familie-ba-dokgen/content:/app/content
 
   oauthmock:
+    logging: *common-log-config
     container_name: "idporten-ish"
     image: "ghcr.io/navikt/fakedings/fakedings:b1244f187badb294b47e0e3c3042abec91e04658"
     ports:
       - "8083:8080"
 
   loginservice:
+    logging: *common-log-config
     depends_on:
       - oauthmock
     build:
@@ -126,6 +137,7 @@ services:
       TOKEN_COOKIE_NAME: "selvbetjening-idtoken"
 
   journalforing:
+    logging: *common-log-config
     build:
       context: dockerstuff/journalføring
     volumes:
@@ -134,6 +146,7 @@ services:
       STORAGE_DIRECTORY: /var/mottatte_soknader
 
   key_generator:
+    logging: *common-log-config
     container_name: "jwk-generator"
     # Will generate tokenx keys and then shut down
     build:
@@ -147,6 +160,7 @@ services:
       - keys:/keys
 
   configurator:
+    logging: *common-log-config
     container_name: "cluster-configurator"
     build:
       context: dockerstuff/configurator
@@ -158,6 +172,7 @@ services:
       KAFKA_ADMIN_ADDRESS: "kafkadminrest:8080"
 
   testentry:
+    logging: *common-log-config
     container_name: "test-entry"
     # Denne er bare hvis du trenger å logge inn i en docker-service for å se om de andre kan nås på det interne nettverket
     image: alpine
@@ -167,6 +182,7 @@ services:
       - secure-logs:/secure-logs
 
   openldap:
+    logging: *common-log-config
     build:
       context: https://github.com/navikt/navkafka-docker-compose.git#:ldap
     container_name: ldap
@@ -177,6 +193,7 @@ services:
       - "LDAP_TLS_VERIFY_CLIENT=try"
 
   zookeeper:
+    logging: *common-log-config
     build:
       context: https://github.com/navikt/navkafka-docker-compose.git#:zookeeper
     container_name: zookeeper
@@ -187,6 +204,7 @@ services:
       - "2181:2181"
 
   kafka:
+    logging: *common-log-config
     build:
       context: https://github.com/navikt/navkafka-docker-compose.git#:kafka
     container_name: kafka
@@ -214,6 +232,7 @@ services:
       - openldap
 
   kafkadminrest:
+    logging: *common-log-config
     image: "navikt/kafka-adminrest"
     ports:
       - "8840:8080"
@@ -240,6 +259,7 @@ services:
       - "KAFKA_PASSWORD=itest"
 
   schema-registry:
+    logging: *common-log-config
     image: "confluentinc/cp-schema-registry:5.0.1"
     depends_on:
       - zookeeper
@@ -255,6 +275,7 @@ services:
       - "SCHEMA_REGISTRY_LISTENERS=http://0.0.0.0:8081"
 
   postgres:
+    logging: *common-log-config
     image: "postgres"
     container_name: "postgres"
     ports:

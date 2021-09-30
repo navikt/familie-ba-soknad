@@ -3,6 +3,7 @@ import React, { ReactNode, useCallback, useState } from 'react';
 import axios from 'axios';
 import { fromBlob } from 'file-type/browser';
 
+import { useApp } from '../../../../context/AppContext';
 import Miljø from '../../../../Miljø';
 import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
@@ -24,6 +25,7 @@ export const useFilopplaster = (
         harSendtInn: boolean
     ) => void
 ) => {
+    const { wrapMedSystemetLaster } = useApp();
     const [feilmeldinger, settFeilmeldinger] = useState<ReactNode[]>([]);
     const [åpenModal, settÅpenModal] = useState<boolean>(false);
 
@@ -36,83 +38,85 @@ export const useFilopplaster = (
         filer => {
             const feilmeldingsliste: ReactNode[] = [];
             const nyeVedlegg: IVedlegg[] = [];
-            filer.forEach(async (fil: File) => {
-                const mimeType = await fromBlob(fil);
-                if (
-                    !tillatteFiltyper.includes(mimeType?.mime ?? '') &&
-                    mimeType?.mime.match(/^image\//)
-                ) {
-                    try {
-                        fil = await konverter(fil);
-                    } catch (e) {
-                        fil = new File([fil], fil.name, { type: mimeType.mime });
+            filer.forEach((fil: File) =>
+                wrapMedSystemetLaster(async () => {
+                    const mimeType = await fromBlob(fil);
+                    if (
+                        !tillatteFiltyper.includes(mimeType?.mime ?? '') &&
+                        mimeType?.mime.match(/^image\//)
+                    ) {
+                        try {
+                            fil = await konverter(fil);
+                        } catch (e) {
+                            fil = new File([fil], fil.name, { type: mimeType.mime });
+                        }
                     }
-                }
 
-                if (maxFilstørrelse && fil.size > maxFilstørrelse) {
-                    const maks = formaterFilstørrelse(maxFilstørrelse);
-                    feilmeldingsliste.push(
-                        <SpråkTekst
-                            id={'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor'}
-                            values={{ maks, filnavn: fil.name }}
-                        />
-                    );
-
-                    settFeilmeldinger(feilmeldingsliste);
-                    settÅpenModal(true);
-                    return;
-                }
-
-                if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-                    feilmeldingsliste.push(
-                        <SpråkTekst
-                            id={'dokumentasjon.last-opp-dokumentasjon.feilmeldingtype'}
-                            values={{ filnavn: fil.name }}
-                        />
-                    );
-                    settFeilmeldinger(feilmeldingsliste);
-                    settÅpenModal(true);
-                    return;
-                }
-
-                const requestData = new FormData();
-                requestData.append('file', fil);
-
-                axios
-                    .post<OpplastetVedlegg>(`${Miljø().dokumentUrl}`, requestData, {
-                        withCredentials: true,
-                        headers: {
-                            'content-type': 'multipart/form-data',
-                            accept: 'application/json',
-                        },
-                    })
-                    .then((response: { data: OpplastetVedlegg }) => {
-                        const { data } = response;
-                        nyeVedlegg.push({
-                            dokumentId: data.dokumentId,
-                            navn: fil.name,
-                            størrelse: fil.size,
-                            tidspunkt: dagensDatoStreng,
-                        });
-
-                        oppdaterDokumentasjon(
-                            dokumentasjon.dokumentasjonsbehov,
-                            [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
-                            dokumentasjon.harSendtInn
-                        );
-                    })
-                    .catch(_error => {
+                    if (maxFilstørrelse && fil.size > maxFilstørrelse) {
+                        const maks = formaterFilstørrelse(maxFilstørrelse);
                         feilmeldingsliste.push(
                             <SpråkTekst
-                                id={'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk'}
-                                values={{ filnavn: fil.name }}
+                                id={'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor'}
+                                values={{ maks, filnavn: fil.name }}
                             />
                         );
 
                         settFeilmeldinger(feilmeldingsliste);
                         settÅpenModal(true);
-                    });
-            });
+                        return;
+                    }
+
+                    if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
+                        feilmeldingsliste.push(
+                            <SpråkTekst
+                                id={'dokumentasjon.last-opp-dokumentasjon.feilmeldingtype'}
+                                values={{ filnavn: fil.name }}
+                            />
+                        );
+                        settFeilmeldinger(feilmeldingsliste);
+                        settÅpenModal(true);
+                        return;
+                    }
+
+                    const requestData = new FormData();
+                    requestData.append('file', fil);
+
+                    axios
+                        .post<OpplastetVedlegg>(`${Miljø().dokumentUrl}`, requestData, {
+                            withCredentials: true,
+                            headers: {
+                                'content-type': 'multipart/form-data',
+                                accept: 'application/json',
+                            },
+                        })
+                        .then((response: { data: OpplastetVedlegg }) => {
+                            const { data } = response;
+                            nyeVedlegg.push({
+                                dokumentId: data.dokumentId,
+                                navn: fil.name,
+                                størrelse: fil.size,
+                                tidspunkt: dagensDatoStreng,
+                            });
+
+                            oppdaterDokumentasjon(
+                                dokumentasjon.dokumentasjonsbehov,
+                                [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
+                                dokumentasjon.harSendtInn
+                            );
+                        })
+                        .catch(_error => {
+                            feilmeldingsliste.push(
+                                <SpråkTekst
+                                    id={'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk'}
+                                    values={{ filnavn: fil.name }}
+                                />
+                            );
+
+                            settFeilmeldinger(feilmeldingsliste);
+                            settÅpenModal(true);
+                        });
+                })
+            );
         },
         [dokumentasjon.opplastedeVedlegg]
     );
