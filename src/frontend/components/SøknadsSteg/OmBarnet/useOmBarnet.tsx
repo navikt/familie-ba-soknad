@@ -75,7 +75,8 @@ export interface IOmBarnetUtvidetFeltTyper {
     skriftligAvtaleOmDeltBosted: ESvar | null;
     søkerForTidsrom: ESvar | null;
     søkerForTidsromStartdato: ISODateString;
-    søkerForTidsromSluttdato: ISODateString;
+    søkerForTidsromSluttdato: DatoMedUkjent;
+    søkerForTidsromSluttdatoVetIkke: ESvar;
     sammeForelderSomAnnetBarn: string | null;
     søkerHarBoddMedAndreForelder: ESvar | null;
     borMedAndreForelderCheckbox: ESvar;
@@ -528,17 +529,24 @@ export const useOmBarnet = (
         søkerForTidsrom,
         validerDatoMedUkjentAvgrensetFremITid('ombarnet.søker-for-periode.startdato.feilmelding')
     );
-    const søkerForTidsromSluttdato = useDatovelgerFeltMedJaNeiAvhengighet(
-        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato],
-        ESvar.JA,
-        søkerForTidsrom,
-        felt => {
-            // Feltet er valgfritt. Tom streng betyr ikke besvart
-            if (felt.verdi === '') return ok(felt);
-            return validerDatoMedUkjentAvgrensetFremITid(
-                'ombarnet.søker-for-periode.sluttdato.feilmelding'
-            )(felt);
-        }
+
+    const søkerForTidsromSluttdatoVetIkke = useFelt<ESvar>({
+        verdi:
+            barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar ===
+            AlternativtSvarForInput.UKJENT
+                ? ESvar.JA
+                : ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
+    });
+
+    const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent(
+        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].id,
+        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar !== AlternativtSvarForInput.UKJENT
+            ? barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar
+            : '',
+        søkerForTidsromSluttdatoVetIkke,
+        'ombarnet.søker-for-periode.sluttdato.feilmelding',
+        søkerForTidsrom.verdi === ESvar.JA
     );
 
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
@@ -628,6 +636,7 @@ export const useOmBarnet = (
             søkerForTidsrom,
             søkerForTidsromStartdato,
             søkerForTidsromSluttdato,
+            søkerForTidsromSluttdatoVetIkke,
             sammeForelderSomAnnetBarn,
             søkerHarBoddMedAndreForelder,
             borMedAndreForelderCheckbox,
@@ -778,7 +787,10 @@ export const useOmBarnet = (
                           },
                           søkerForTidsromSluttdato: {
                               ...barn.søkerForTidsromSluttdato,
-                              svar: søkerForTidsromSluttdato.verdi,
+                              svar: svarForSpørsmålMedUkjent(
+                                  søkerForTidsromSluttdatoVetIkke,
+                                  søkerForTidsromSluttdato
+                              ),
                           },
                           utvidet: {
                               søkerHarBoddMedAndreForelder: {

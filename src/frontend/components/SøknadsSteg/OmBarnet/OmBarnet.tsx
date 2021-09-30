@@ -159,9 +159,20 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         OmBarnetSpørsmålsId.søkerForTidsromSluttdato
                                     ]
                                 }
+                                disabled={
+                                    skjema.felter.søkerForTidsromSluttdatoVetIkke.verdi === ESvar.JA
+                                }
+                            />
+                            <SkjemaCheckbox
+                                labelSpråkTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke
+                                    ]
+                                }
+                                felt={skjema.felter.søkerForTidsromSluttdatoVetIkke}
                             />
                             <SpørsmålTilleggsinfoWrapper>
-                                <AlertStripe type={'advarsel'}>
+                                <AlertStripe>
                                     <SpråkTekst id={'ombarnet.søker-for-periode.sluttdato.info'} />
                                 </AlertStripe>
                             </SpørsmålTilleggsinfoWrapper>

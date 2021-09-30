@@ -28,6 +28,7 @@ export enum OmBarnetSpørsmålsId {
     søkerForTidsrom = 'søker-for-tidsrom',
     søkerForTidsromStartdato = 'søker-for-tidsrom-startdato',
     søkerForTidsromSluttdato = 'søker-for-tidsrom-sluttdato',
+    søkerForTidsromSluttdatoVetIkke = 'søker-for-tidsrom-sluttdato-vetikke',
     søkerHarBoddMedAndreForelder = 'søker-har-bodd-med-andre-forelder',
     søkerFlyttetFraAndreForelderDato = 'søker-flyttet-fra-andre-forelder-dato',
     søkerBorMedAndreForelder = 'søker-bor-med-andre-forelder',
@@ -68,6 +69,8 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.søkerForTidsrom]: 'ombarnet.søker-for-periode.spm',
     [OmBarnetSpørsmålsId.søkerForTidsromStartdato]: 'ombarnet.søker-for-periode.startdato.spm',
     [OmBarnetSpørsmålsId.søkerForTidsromSluttdato]: 'ombarnet.søker-for-periode.sluttdato.spm',
+    [OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke]:
+        'ombarnet.søker-for-periode.sluttdato.sjekkboks',
     [OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder]: 'ombarnet.boddsammenmedandreforelder.spm',
     [OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato]: 'ombarnet.nårflyttetfra.spm',
     [OmBarnetSpørsmålsId.søkerBorMedAndreForelder]: 'ombarnet.nårflyttetfra.borsammencheck',
