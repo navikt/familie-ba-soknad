@@ -27,19 +27,24 @@ const polyfillLocaledata = async () => {
 
     for (const locale in LocaleType) {
         // Last ned land-navn for statsborgeskap
-
         await import(
-            /* webpackInclude: /(nb|nn|en)/ */
+            /* webpackInclude: /(nb|nn|en)\.json/ */
+            /* webpackChunkName: "localedata" */
+            /* webpackMode: "lazy-once" */
             `i18n-iso-countries/langs/${locale}.json`
         ).then(result => registerLocale(result));
 
         if (shouldPolyfill(locale)) {
             await import(
-                /* webpackInclude: /(nb|nn|en)/ */
+                /* webpackInclude: /(nb|nn|en)\.js/ */
+                /* webpackChunkName: "localedata" */
+                /* webpackMode: "lazy-once" */
                 `@formatjs/intl-numberformat/locale-data/${locale}`
             );
             await import(
-                /* webpackInclude: /(nb|nn|en)/ */
+                /* webpackInclude: /(nb|nn|en)\.js/ */
+                /* webpackChunkName: "localedata" */
+                /* webpackMode: "lazy-once" */
                 `@formatjs/intl-datetimeformat/locale-data/${locale}`
             );
         }
