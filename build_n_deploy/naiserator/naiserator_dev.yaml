@@ -5,6 +5,8 @@ metadata:
   namespace: teamfamilie
   labels:
     team: teamfamilie
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "25M"
 spec:
   image: {{ image }}
   team: teamfamilie
