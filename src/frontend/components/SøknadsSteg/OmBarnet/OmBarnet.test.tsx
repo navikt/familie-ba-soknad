@@ -367,7 +367,7 @@ describe('OmBarnet', () => {
         const { erStegUtfyltFrafør } = spyOnUseApp(oppdatertSøknad);
         erStegUtfyltFrafør.mockReturnValue(false);
 
-        const { queryByText } = render(
+        const { queryByText, getAllByText } = render(
             <TestProvidere>
                 <OmBarnet barnetsId={endretBarn.id} />
             </TestProvidere>
@@ -377,11 +377,13 @@ describe('OmBarnet', () => {
         expect(
             queryByText(/ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding/)
         ).not.toBeInTheDocument();
+
         act(() => {
             gåVidereKnapper && gåVidereKnapper.click();
         });
-        expect(
-            queryByText(/ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding/)
-        ).toBeInTheDocument();
+        const feilmelding = getAllByText(
+            /ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding/
+        );
+        expect(feilmelding).toHaveLength(2);
     });
 });
