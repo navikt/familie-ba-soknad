@@ -536,7 +536,7 @@ export const useOmBarnet = (
             AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
-        feltId: OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
+        feltId: OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke,
     });
 
     const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent(
