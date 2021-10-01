@@ -537,16 +537,26 @@ export const useOmBarnet = (
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke,
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter &&
+                avhengigheter.søkerForTidsrom &&
+                avhengigheter.søkerForTidsrom.verdi === ESvar.JA
+            );
+        },
+        avhengigheter: { søkerForTidsrom },
     });
 
     const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent(
         barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].id,
-        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar !== AlternativtSvarForInput.UKJENT
-            ? barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar
-            : '',
+        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar === AlternativtSvarForInput.UKJENT
+            ? ''
+            : barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
         søkerForTidsromSluttdatoVetIkke,
         'ombarnet.søker-for-periode.sluttdato.feilmelding',
-        søkerForTidsrom.verdi === ESvar.JA
+        søkerForTidsrom.verdi === ESvar.JA,
+        true,
+        true
     );
 
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
@@ -588,7 +598,6 @@ export const useOmBarnet = (
             );
         },
         avhengigheter: { søkerHarBoddMedAndreForelder },
-        nullstillVedAvhengighetEndring: false,
     });
 
     const søkerFlyttetFraAndreForelderDato = useDatovelgerFeltMedUkjent(

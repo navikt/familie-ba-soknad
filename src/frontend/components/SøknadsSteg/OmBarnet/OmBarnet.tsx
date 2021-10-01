@@ -120,7 +120,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 </SkjemaFieldset>
             )}
             {skjema.felter.søkerForTidsrom.erSynlig && (
-                <KomponentGruppe inline dynamisk>
+                <KomponentGruppe dynamisk>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.søkerForTidsrom}
@@ -134,7 +134,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             </SpørsmålTilleggsinfoWrapper>
                         }
                     />
-                    {skjema.felter.søkerForTidsrom.verdi === ESvar.JA && (
+                    {skjema.felter.søkerForTidsromStartdato.erSynlig && (
                         <KomponentGruppe dynamisk>
                             <Datovelger
                                 felt={skjema.felter.søkerForTidsromStartdato}
@@ -144,6 +144,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         OmBarnetSpørsmålsId.søkerForTidsromStartdato
                                     ]
                                 }
+                                avgrensDatoFremITid
                             />
                             {erUtvidet && søknad.søker.sivilstand.type === ESivilstand.SKILT && (
                                 <VedleggNotis
@@ -162,6 +163,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 disabled={
                                     skjema.felter.søkerForTidsromSluttdatoVetIkke.verdi === ESvar.JA
                                 }
+                                avgrensDatoFremITid
                             />
                             <SkjemaCheckbox
                                 labelSpråkTekstId={
