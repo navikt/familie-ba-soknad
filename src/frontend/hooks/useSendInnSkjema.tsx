@@ -190,18 +190,11 @@ export const useSendInnSkjema = (): {
             spørsmål: {
                 ...spørmålISøknadsFormat(typetBarnSpørsmål, { navn }),
                 ...spørmålISøknadsFormat(utvidet, { navn }),
-                [barnDataKeySpørsmål.søkerForTidsromStartdato]: søknadsfelt(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromStartdato),
-                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                        søkerForTidsromStartdato.svar,
-                        'pdf.barn.ikke-oppgitt'
-                    )
-                ),
                 [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfelt(
                     språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),
                     sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                         søkerForTidsromSluttdato.svar,
-                        'pdf.barn.ikke-oppgitt'
+                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke]
                     )
                 ),
                 [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: søknadsfelt(
