@@ -12,6 +12,7 @@ import { ISkjema, useFelt } from '@navikt/familie-skjema';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     mekkGyldigSøknad,
+    mockHistory,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
@@ -20,17 +21,6 @@ import {
 import OmDeg from '../../SøknadsSteg/OmDeg/OmDeg';
 import { OmDegSpørsmålId } from '../../SøknadsSteg/OmDeg/spørsmål';
 import Datovelger from './Datovelger';
-
-jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => ({
-        pathname: '/om-deg',
-    }),
-    useHistory: () => ({
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        push: () => {},
-    }),
-}));
 
 describe(`Datovelger`, () => {
     silenceConsoleErrors();
@@ -109,6 +99,7 @@ describe(`Datovelger`, () => {
 });
 
 describe('Test ulike caser for feilmelding hos datovelger', () => {
+    mockHistory(['/om-deg']);
     const søknad = mekkGyldigSøknad();
     const søknadMock = {
         ...søknad,
