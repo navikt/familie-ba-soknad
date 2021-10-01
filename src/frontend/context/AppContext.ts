@@ -18,7 +18,7 @@ import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
-import { mapBarnResponsTilBarn } from '../utils/barn';
+import { hentUid, mapBarnResponsTilBarn } from '../utils/barn';
 import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
 import { RouteEnum } from './RoutesContext';
 
@@ -161,6 +161,16 @@ const [AppProvider, useApp] = createUseContext(() => {
         }, 300);
     };
 
+    const wrapMedSystemetLaster = async <T>(callback: () => T | Promise<T>): Promise<T> => {
+        const nyGeneriskRessurs = hentUid();
+        settRessurserSomLaster(prevState => [...prevState, nyGeneriskRessurs]);
+        try {
+            return await callback();
+        } finally {
+            fjernRessursSomLaster(nyGeneriskRessurs);
+        }
+    };
+
     const systemetLaster = () => {
         return ressurserSomLaster.length > 0 || innloggetStatus === InnloggetStatus.IKKE_VERIFISERT;
     };
@@ -254,6 +264,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         settFåttGyldigKvittering,
         erUtvidet,
         settNåværendeRoute,
+        wrapMedSystemetLaster,
     };
 });
 

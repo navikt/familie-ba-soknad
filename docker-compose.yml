@@ -11,17 +11,23 @@ x-common-token-environment: &common-token-environment
   LOGINSERVICE_IDPORTEN_AUDIENCE: "notfound"
   TOKEN_X_WELL_KNOWN_URL: http://oauthmock:8080/tokenx/.well-known/openid-configuration
 
+x-common-log-config: &common-log-config
+  options:
+    max-size: 50k
+
 volumes:
   keys:
   secure-logs:
 
 services:
   frontend:
+    logging: *common-log-config
     container_name: "frontend"
     build:
       context: ./
       dockerfile: Dockerfile.local
     environment:
+      <<: *common-token-environment
       BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
       ENV: docker-compose
     volumes:
@@ -32,12 +38,13 @@ services:
       - "55554:55554"
 
   api:
+    logging: *common-log-config
     container_name: "soknad-api"
     build:
       context: dockerstuff/soknad-api
       args:
         <<: *common-build-variables
-        git_commit: 878b807ec5868208d6873e8b5193102c5a15f544
+        git_commit: 561599222c559bdb9a411d18628431a8ba99c941
     depends_on:
       - key_generator
       - oauthmock
@@ -51,12 +58,13 @@ services:
       FAMILIE_BA_MOTTAK_URL: 'http://mottak:8090'
 
   mottak:
+    logging: *common-log-config
     container_name: "mottak"
     build:
       context: dockerstuff/mottak
       args:
         <<: *common-build-variables
-        git_commit: 816281fd7e40c94087b5010b2bbe6bbea9e68f10
+        git_commit: e6fc2fe557cc131e7a4a5ae39c654d74e3b1bf4f
     depends_on:
       - key_generator
       - postgres
@@ -76,6 +84,7 @@ services:
       FAMILIE_INTEGRASJONER_API_URL: http://journalforing
 
   dokument:
+    logging: *common-log-config
     container_name: "familie-dokument"
     build:
       context: dockerstuff/dokument
@@ -96,9 +105,10 @@ services:
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-dokument'
 
   dokgen:
+    logging: *common-log-config
     container_name: dokgen
     build:
-      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#072ecc7ccc37fc7d9485f89ef95a6d3a24790c05"
+      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#b5368318ab7c34fd5e049389d86b57d4ea29196c"
     environment:
       RUNTIME_OPTS: "--write.access=true"
     ports:
@@ -108,12 +118,14 @@ services:
       # - ../familie-ba-dokgen/content:/app/content
 
   oauthmock:
+    logging: *common-log-config
     container_name: "idporten-ish"
     image: "ghcr.io/navikt/fakedings/fakedings:b1244f187badb294b47e0e3c3042abec91e04658"
     ports:
       - "8083:8080"
 
   loginservice:
+    logging: *common-log-config
     depends_on:
       - oauthmock
     build:
@@ -125,6 +137,7 @@ services:
       TOKEN_COOKIE_NAME: "selvbetjening-idtoken"
 
   journalforing:
+    logging: *common-log-config
     build:
       context: dockerstuff/journalføring
     volumes:
@@ -133,6 +146,7 @@ services:
       STORAGE_DIRECTORY: /var/mottatte_soknader
 
   key_generator:
+    logging: *common-log-config
     container_name: "jwk-generator"
     # Will generate tokenx keys and then shut down
     build:
@@ -146,6 +160,7 @@ services:
       - keys:/keys
 
   configurator:
+    logging: *common-log-config
     container_name: "cluster-configurator"
     build:
       context: dockerstuff/configurator
@@ -157,6 +172,7 @@ services:
       KAFKA_ADMIN_ADDRESS: "kafkadminrest:8080"
 
   testentry:
+    logging: *common-log-config
     container_name: "test-entry"
     # Denne er bare hvis du trenger å logge inn i en docker-service for å se om de andre kan nås på det interne nettverket
     image: alpine
@@ -166,6 +182,7 @@ services:
       - secure-logs:/secure-logs
 
   openldap:
+    logging: *common-log-config
     build:
       context: https://github.com/navikt/navkafka-docker-compose.git#:ldap
     container_name: ldap
@@ -176,6 +193,7 @@ services:
       - "LDAP_TLS_VERIFY_CLIENT=try"
 
   zookeeper:
+    logging: *common-log-config
     build:
       context: https://github.com/navikt/navkafka-docker-compose.git#:zookeeper
     container_name: zookeeper
@@ -186,6 +204,7 @@ services:
       - "2181:2181"
 
   kafka:
+    logging: *common-log-config
     build:
       context: https://github.com/navikt/navkafka-docker-compose.git#:kafka
     container_name: kafka
@@ -213,6 +232,7 @@ services:
       - openldap
 
   kafkadminrest:
+    logging: *common-log-config
     image: "navikt/kafka-adminrest"
     ports:
       - "8840:8080"
@@ -239,6 +259,7 @@ services:
       - "KAFKA_PASSWORD=itest"
 
   schema-registry:
+    logging: *common-log-config
     image: "confluentinc/cp-schema-registry:5.0.1"
     depends_on:
       - zookeeper
@@ -254,6 +275,7 @@ services:
       - "SCHEMA_REGISTRY_LISTENERS=http://0.0.0.0:8081"
 
   postgres:
+    logging: *common-log-config
     image: "postgres"
     container_name: "postgres"
     ports:

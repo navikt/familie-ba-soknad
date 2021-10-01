@@ -13,6 +13,7 @@ import environment from './environment';
 import { erklaeringInterceptor } from './erklaering-interceptor';
 import { escapeBody } from './escape';
 import { expressToggleInterceptor } from './feature-toggles';
+import { konfigurerBildeProsessering } from './imageprocessor';
 import { createApiForwardingFunction } from './proxy';
 
 dotenv.config();
@@ -52,6 +53,9 @@ app.get('/', indexHandler);
 
 // Nais functions
 app.get(/^\/(internal\/)?(isAlive|isReady)\/?$/, (_req, res) => res.sendStatus(200));
+
+// Bildeprosessering
+konfigurerBildeProsessering(app, `${basePath}konverter`);
 
 // Fallback, alt vi ikke treffer med andre handlere returnerer index.html
 app.get('*', indexHandler);
