@@ -2,11 +2,8 @@ import React, { ReactNode } from 'react';
 
 import { useIntl } from 'react-intl';
 
-import {
-    muligeÅrsaker,
-    toÅrsakSpråkId,
-    Årsak,
-} from '../../SøknadsSteg/Utvidet-DinLivssituasjon/types-and-utilities';
+import { muligeÅrsaker, Årsak } from '../../../typer/søknad';
+import { toÅrsakSpråkId } from '../../../utils/språk';
 import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 
 const ÅrsakDropdown: React.FC<StyledDropdownProps<Årsak | ''>> = props => {

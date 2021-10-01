@@ -7,8 +7,8 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
-import { hentSivilstatus } from '../../../utils/person';
-import { genererAdresseVisning, landkodeTilSpråk } from '../../../utils/visning';
+import { genererAdresseVisning } from '../../../utils/adresse';
+import { hentSivilstatusSpråkId, landkodeTilSpråk } from '../../../utils/språk';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -57,7 +57,7 @@ export const Personopplysninger: React.FC = () => {
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />
                 </Element>
                 <Normaltekst>
-                    <SpråkTekst id={hentSivilstatus(søker.sivilstand.type)} />
+                    <SpråkTekst id={hentSivilstatusSpråkId(søker.sivilstand.type)} />
                 </Normaltekst>
             </Informasjonsbolk>
 

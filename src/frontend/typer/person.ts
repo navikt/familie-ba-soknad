@@ -2,8 +2,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
-import { Årsak } from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/types-and-utilities';
-import { ISøknadSpørsmål } from './søknad';
+import { ISøknadSpørsmål, Årsak } from './søknad';
 
 export type BarnetsId = string;
 
@@ -108,6 +107,7 @@ export enum barnDataKeySpørsmål {
     andreForelderPensjonHvilketLand = 'andreForelderPensjonHvilketLand',
     borFastMedSøker = 'borFastMedSøker',
     skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
+    søkerForTidsrom = 'søkerForTidsrom',
     søkerForTidsromStartdato = 'søkerForTidsromStartdato',
     søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
 }
@@ -169,6 +169,7 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
     [barnDataKeySpørsmål.borFastMedSøker]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.søkerForTidsrom]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.søkerForTidsromStartdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.søkerForTidsromSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
     utvidet: {

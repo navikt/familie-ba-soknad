@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { useApp } from '../../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
-import { hentBostedSpråkId } from '../../../../utils/person';
+import { hentBostedSpråkId } from '../../../../utils/språk';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../../VelgBarn/spørsmål';
 import { useVelgBarn } from '../../VelgBarn/useVelgBarn';

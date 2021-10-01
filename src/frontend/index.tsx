@@ -19,25 +19,38 @@ import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import { logError } from './utils/amplitude';
 import { initSentry } from './utils/sentry';
 
-const polyfill = async () => {
+const polyfillLocaledata = async () => {
     // https://github.com/formatjs/formatjs/issues/3066
     await import('@formatjs/intl-numberformat/polyfill-force');
     await import('@formatjs/intl-datetimeformat/polyfill-force');
 
     for (const locale in LocaleType) {
         // Last ned land-navn for statsborgeskap
-        await import(`i18n-iso-countries/langs/${locale}.json`).then(result =>
-            registerLocale(result)
-        );
+        await import(
+            /* webpackInclude: /(nb|nn|en)\.json/ */
+            /* webpackChunkName: "localedata" */
+            /* webpackMode: "lazy-once" */
+            `i18n-iso-countries/langs/${locale}.json`
+        ).then(result => registerLocale(result));
 
         if (shouldPolyfill(locale)) {
-            await import(`@formatjs/intl-numberformat/locale-data/${locale}`);
-            await import(`@formatjs/intl-datetimeformat/locale-data/${locale}`);
+            await import(
+                /* webpackInclude: /(nb|nn|en)\.js/ */
+                /* webpackChunkName: "localedata" */
+                /* webpackMode: "lazy-once" */
+                `@formatjs/intl-numberformat/locale-data/${locale}`
+            );
+            await import(
+                /* webpackInclude: /(nb|nn|en)\.js/ */
+                /* webpackChunkName: "localedata" */
+                /* webpackMode: "lazy-once" */
+                `@formatjs/intl-datetimeformat/locale-data/${locale}`
+            );
         }
     }
 };
 
-polyfill().then(() => {
+polyfillLocaledata().then(() => {
     initSentry();
 
     if (process.env.NODE_ENV !== 'production') {

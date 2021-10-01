@@ -13,15 +13,16 @@ import {
     barnDataKeySpørsmålUtvidet,
     IBarnMedISøknad,
 } from '../../../../../typer/person';
+import { barnetsNavnValue } from '../../../../../utils/barn';
 import { formaterDato } from '../../../../../utils/dato';
-import { barnetsNavnValue, landkodeTilSpråk } from '../../../../../utils/visning';
+import { landkodeTilSpråk } from '../../../../../utils/språk';
+import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
 import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';
 import { StyledOppsummeringsFeltGruppe } from '../../Oppsummering';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
-import { formaterDatoMedUkjent } from '../../utils';
 import AndreForelderOppsummering from './AndreForelderOppsummering';
 
 interface Props {
@@ -305,16 +306,14 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
-                            id={
-                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerForSpesieltTidsrom]
-                            }
+                            id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerForTidsrom]}
                             values={{ navn: barnetsNavnValue(barn, intl) }}
                         />
                     }
+                    søknadsvar={barn[barnDataKeySpørsmål.søkerForTidsrom].svar}
                 />
 
-                {barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar !==
-                AlternativtSvarForInput.UKJENT ? (
+                {barn[barnDataKeySpørsmål.søkerForTidsrom].svar === ESvar.JA && (
                     <>
                         <OppsummeringFelt
                             tittel={
@@ -330,27 +329,24 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar
                             )}
                         />
-                        <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerForTidsromSluttdato
-                                        ]
-                                    }
-                                />
-                            }
-                            søknadsvar={formaterDato(
-                                barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar
-                            )}
-                        />
+                        {barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar !==
+                            AlternativtSvarForInput.UKJENT && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.søkerForTidsromSluttdato
+                                            ]
+                                        }
+                                    />
+                                }
+                                søknadsvar={formaterDato(
+                                    barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar
+                                )}
+                            />
+                        )}
                     </>
-                ) : (
-                    <OppsummeringFelt
-                        søknadsvar={formatMessage({
-                            id: omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerIkkeForTidsrom],
-                        })}
-                    />
                 )}
             </StyledOppsummeringsFeltGruppe>
             {erUtvidet && (
@@ -363,6 +359,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                         OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
                                     ]
                                 }
+                                values={{ navn: barn.navn }}
                             />
                         }
                         søknadsvar={

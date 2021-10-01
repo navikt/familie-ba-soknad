@@ -23,7 +23,8 @@ const SamboerSkjema: React.FC<{
         samboerFraDato: Felt<ISODateString>;
         samboerTilDato?: Felt<ISODateString>;
     };
-}> = ({ skjema, samboerFelter }) => {
+    erIModal?: boolean;
+}> = ({ skjema, samboerFelter, erIModal = false }) => {
     return (
         <KomponentGruppe inline>
             <SkjemaFeltInput
@@ -50,6 +51,7 @@ const SamboerSkjema: React.FC<{
                         felt={samboerFelter.fødselsdato}
                         labelTekstId={samboerSpråkIder.fødselsdato}
                         disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
+                        calendarPosition={erIModal ? 'fullscreen' : ''}
                     />
                     <SkjemaCheckbox
                         labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
@@ -66,6 +68,7 @@ const SamboerSkjema: React.FC<{
                     /* Tidligere samboereforhold kan ikke starte i fremtiden, nåværende kan */
                     !!samboerFelter.samboerTilDato
                 }
+                calendarPosition={erIModal ? 'fullscreen' : ''}
             />
             {samboerFelter.samboerTilDato && (
                 <Datovelger
@@ -75,6 +78,7 @@ const SamboerSkjema: React.FC<{
                     labelTekstId={samboerSpråkIder.samboerTilDato}
                     fraOgMedFelt={samboerFelter.samboerFraDato}
                     avgrensDatoFremITid={true}
+                    calendarPosition={erIModal ? 'fullscreen' : ''}
                 />
             )}
         </KomponentGruppe>
