@@ -154,7 +154,6 @@ export const useSendInnSkjema = (): {
             andreForelderNavn,
             andreForelderFnr,
             andreForelderFødselsdato,
-            søkerForTidsromStartdato,
             søkerForTidsromSluttdato,
             institusjonOppholdSluttdato,
             nårKomBarnTilNorgeDato,
