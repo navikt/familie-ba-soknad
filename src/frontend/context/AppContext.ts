@@ -36,6 +36,8 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
     const [nåværendeRoute, settNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
     const { soknadApi } = Miljø();
+    const [alleLand, settAlleLand] = useState<Ressurs<Map<string, string>>>(byggTomRessurs());
+    const [eosLand, settEosLand] = useState<Ressurs<Map<string, string>>>(byggTomRessurs());
 
     autentiseringsInterceptor();
 
@@ -46,30 +48,48 @@ const [AppProvider, useApp] = createUseContext(() => {
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 
-            axiosRequest<ISøkerRespons, void>({
-                url: `${soknadApi}/personopplysning`,
-                method: 'POST',
-                withCredentials: true,
-                påvirkerSystemLaster: true,
-            }).then(ressurs => {
-                settSluttbruker(ressurs);
+            Promise.all([
+                axiosRequest<ISøkerRespons, void>({
+                    url: `${soknadApi}/personopplysning`,
+                    method: 'POST',
+                    withCredentials: true,
+                    påvirkerSystemLaster: true,
+                }).then(ressurs => {
+                    settSluttbruker(ressurs);
 
-                hentOgSettMellomlagretData();
-                ressurs.status === RessursStatus.SUKSESS &&
-                    settSøknad({
-                        ...søknad,
-                        søker: {
-                            ...søknad.søker,
-                            navn: ressurs.data.navn,
-                            statsborgerskap: ressurs.data.statsborgerskap,
-                            barn: mapBarnResponsTilBarn(ressurs.data.barn),
-                            ident: ressurs.data.ident,
-                            adresse: ressurs.data.adresse,
-                            sivilstand: ressurs.data.sivilstand,
-                            adressebeskyttelse: ressurs.data.adressebeskyttelse,
-                        },
-                    });
-            });
+                    hentOgSettMellomlagretData();
+                    ressurs.status === RessursStatus.SUKSESS &&
+                        settSøknad({
+                            ...søknad,
+                            søker: {
+                                ...søknad.søker,
+                                navn: ressurs.data.navn,
+                                statsborgerskap: ressurs.data.statsborgerskap,
+                                barn: mapBarnResponsTilBarn(ressurs.data.barn),
+                                ident: ressurs.data.ident,
+                                adresse: ressurs.data.adresse,
+                                sivilstand: ressurs.data.sivilstand,
+                                adressebeskyttelse: ressurs.data.adressebeskyttelse,
+                            },
+                        });
+                }),
+                axiosRequest<Map<string, string>, void>({
+                    url: `${soknadApi}/kodeverk/alle-land`,
+                    method: 'GET',
+                    withCredentials: true,
+                    påvirkerSystemLaster: true,
+                }).then(ressurs => {
+                    settAlleLand(ressurs);
+                }),
+                axiosRequest<Map<string, string>, void>({
+                    url: `${soknadApi}/kodeverk/eos-land`,
+                    method: 'GET',
+                    withCredentials: true,
+                    påvirkerSystemLaster: true,
+                }).then(ressurs => {
+                    settEosLand(ressurs);
+                }),
+            ]);
         }
     }, [innloggetStatus]);
 
@@ -265,6 +285,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         erUtvidet,
         settNåværendeRoute,
         wrapMedSystemetLaster,
+        alleLand,
+        eosLand,
     };
 });
 
