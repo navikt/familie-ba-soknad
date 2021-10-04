@@ -78,17 +78,13 @@ const [AppProvider, useApp] = createUseContext(() => {
                     method: 'GET',
                     withCredentials: true,
                     påvirkerSystemLaster: true,
-                }).then(ressurs => {
-                    settAlleLand(ressurs);
-                }),
+                }).then(settAlleLand),
                 axiosRequest<Map<string, string>, void>({
                     url: `${soknadApi}/kodeverk/eos-land`,
                     method: 'GET',
                     withCredentials: true,
                     påvirkerSystemLaster: true,
-                }).then(ressurs => {
-                    settEosLand(ressurs);
-                }),
+                }).then(settEosLand),
             ]);
         }
     }, [innloggetStatus]);
