@@ -12,9 +12,11 @@ import Søknad from './Søknad';
 
 const AppContainer = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
+
+    const systemetLaster1 = systemetLaster();
     return (
         <main>
-            {systemetLaster() && <SystemetLaster />}
+            {systemetLaster1 && <SystemetLaster />}
             {sluttbruker.status === RessursStatus.IKKE_TILGANG && (
                 <div>
                     <Alertstripe type="advarsel">
@@ -30,7 +32,7 @@ const AppContainer = () => {
                     <Søknad />
                 </RoutesProvider>
             )}
-            {systemetFeiler() && !systemetLaster() && <Feilside />}
+            {systemetFeiler() && !systemetLaster1 && <Feilside />}
         </main>
     );
 };

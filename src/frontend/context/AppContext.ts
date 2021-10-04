@@ -1,91 +1,64 @@
 import { useEffect, useState } from 'react';
 
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import createUseContext from 'constate';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
-import {
-    ApiRessurs,
-    byggHenterRessurs,
-    byggTomRessurs,
-    Ressurs,
-    RessursStatus,
-} from '@navikt/familie-typer';
+import { byggHenterRessurs, byggTomRessurs, RessursStatus } from '@navikt/familie-typer';
 
 import Miljø from '../Miljø';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
-import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
-import { hentUid, mapBarnResponsTilBarn } from '../utils/barn';
-import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
+import { InnloggetStatus } from '../utils/autentisering';
+import { mapBarnResponsTilBarn } from '../utils/barn';
+import { preferredAxios } from './axios';
+import { useInnloggetContext } from './InnloggetContext';
+import { useLastRessurserContext } from './LastRessurserContext';
 import { RouteEnum } from './RoutesContext';
 
 const [AppProvider, useApp] = createUseContext(() => {
+    const [valgtLocale] = useSprakContext();
+    const { axiosRequest, lasterRessurser } = useLastRessurserContext();
+    const { innloggetStatus } = useInnloggetContext();
+
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>()); // legacy
-    const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
-    const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
-        InnloggetStatus.IKKE_VERIFISERT
-    );
     const [søknad, settSøknad] = useState<ISøknad>(initialStateSøknad);
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
-    const [valgtLocale] = useSprakContext();
     const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
     const [nåværendeRoute, settNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
     const { soknadApi } = Miljø();
-    const [alleLand, settAlleLand] = useState<Ressurs<Map<string, string>>>(byggTomRessurs());
-    const [eosLand, settEosLand] = useState<Ressurs<Map<string, string>>>(byggTomRessurs());
-
-    autentiseringsInterceptor();
 
     useEffect(() => {
-        if (innloggetStatus === InnloggetStatus.IKKE_VERIFISERT) {
-            verifiserAtBrukerErAutentisert(settInnloggetStatus);
-        }
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 
-            Promise.all([
-                axiosRequest<ISøkerRespons, void>({
-                    url: `${soknadApi}/personopplysning`,
-                    method: 'POST',
-                    withCredentials: true,
-                    påvirkerSystemLaster: true,
-                }).then(ressurs => {
-                    settSluttbruker(ressurs);
+            axiosRequest<ISøkerRespons, void>({
+                url: `${soknadApi}/personopplysning`,
+                method: 'POST',
+                withCredentials: true,
+                påvirkerSystemLaster: true,
+            }).then(ressurs => {
+                settSluttbruker(ressurs);
 
-                    hentOgSettMellomlagretData();
-                    ressurs.status === RessursStatus.SUKSESS &&
-                        settSøknad({
-                            ...søknad,
-                            søker: {
-                                ...søknad.søker,
-                                navn: ressurs.data.navn,
-                                statsborgerskap: ressurs.data.statsborgerskap,
-                                barn: mapBarnResponsTilBarn(ressurs.data.barn),
-                                ident: ressurs.data.ident,
-                                adresse: ressurs.data.adresse,
-                                sivilstand: ressurs.data.sivilstand,
-                                adressebeskyttelse: ressurs.data.adressebeskyttelse,
-                            },
-                        });
-                }),
-                axiosRequest<Map<string, string>, void>({
-                    url: `${soknadApi}/kodeverk/alle-land`,
-                    method: 'GET',
-                    withCredentials: true,
-                    påvirkerSystemLaster: true,
-                }).then(settAlleLand),
-                axiosRequest<Map<string, string>, void>({
-                    url: `${soknadApi}/kodeverk/eos-land`,
-                    method: 'GET',
-                    withCredentials: true,
-                    påvirkerSystemLaster: true,
-                }).then(settEosLand),
-            ]);
+                hentOgSettMellomlagretData();
+                ressurs.status === RessursStatus.SUKSESS &&
+                    settSøknad({
+                        ...søknad,
+                        søker: {
+                            ...søknad.søker,
+                            navn: ressurs.data.navn,
+                            statsborgerskap: ressurs.data.statsborgerskap,
+                            barn: mapBarnResponsTilBarn(ressurs.data.barn),
+                            ident: ressurs.data.ident,
+                            adresse: ressurs.data.adresse,
+                            sivilstand: ressurs.data.sivilstand,
+                            adressebeskyttelse: ressurs.data.adressebeskyttelse,
+                        },
+                    });
+            });
         }
     }, [innloggetStatus]);
 
@@ -146,84 +119,6 @@ const [AppProvider, useApp] = createUseContext(() => {
         settMellomlagretVerdi(undefined);
     };
 
-    const axiosRequest = async <T, D>(
-        config: AxiosRequestConfig & { data?: D; påvirkerSystemLaster?: boolean }
-    ): Promise<Ressurs<T>> => {
-        const ressursId = `${config.method}_${config.url}`;
-        config.påvirkerSystemLaster && settRessurserSomLaster([...ressurserSomLaster, ressursId]);
-
-        return preferredAxios
-            .request(config)
-            .then((response: AxiosResponse<ApiRessurs<T>>) => {
-                const responsRessurs: ApiRessurs<T> = response.data;
-                config.påvirkerSystemLaster && fjernRessursSomLaster(ressursId);
-
-                return håndterApiRessurs(responsRessurs);
-            })
-            .catch((error: AxiosError) => {
-                config.påvirkerSystemLaster && fjernRessursSomLaster(ressursId);
-                loggFeil(error);
-
-                const responsRessurs: ApiRessurs<T> = error.response?.data;
-                return håndterApiRessurs(responsRessurs ?? { status: RessursStatus.FEILET });
-            });
-    };
-
-    const fjernRessursSomLaster = (ressursId: string) => {
-        setTimeout(() => {
-            settRessurserSomLaster((prevState: string[]) => {
-                return prevState.filter((ressurs: string) => ressurs !== ressursId);
-            });
-        }, 300);
-    };
-
-    const wrapMedSystemetLaster = async <T>(callback: () => T | Promise<T>): Promise<T> => {
-        const nyGeneriskRessurs = hentUid();
-        settRessurserSomLaster(prevState => [...prevState, nyGeneriskRessurs]);
-        try {
-            return await callback();
-        } finally {
-            fjernRessursSomLaster(nyGeneriskRessurs);
-        }
-    };
-
-    const systemetLaster = () => {
-        return ressurserSomLaster.length > 0 || innloggetStatus === InnloggetStatus.IKKE_VERIFISERT;
-    };
-
-    const systemetFeiler = () => {
-        return sluttbruker.status === RessursStatus.FEILET;
-    };
-
-    const systemetOK = () => {
-        return (
-            innloggetStatus === InnloggetStatus.AUTENTISERT &&
-            sluttbruker.status === RessursStatus.SUKSESS
-        );
-    };
-
-    const verifiserAtBrukerErAutentisert = (
-        settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
-    ) => {
-        return axiosRequest({
-            url: `${soknadApi}/innlogget`,
-            method: 'GET',
-            params: { søknadstype: søknad.søknadstype },
-            withCredentials: true,
-            påvirkerSystemLaster: true,
-        })
-            .then(ressurs => {
-                if (ressurs.status === RessursStatus.SUKSESS) {
-                    settInnloggetStatus(InnloggetStatus.AUTENTISERT);
-                } else {
-                    settInnloggetStatus(InnloggetStatus.FEILET);
-                }
-            })
-            .catch(_ => {
-                settInnloggetStatus(InnloggetStatus.FEILET);
-            });
-    };
-
     const nullstillSøknadsobjekt = () => {
         settSøknad({
             ...initialStateSøknad,
@@ -255,17 +150,28 @@ const [AppProvider, useApp] = createUseContext(() => {
         settSisteUtfylteStegIndex(-1);
     };
 
+    const systemetFeiler = () => {
+        return sluttbruker.status === RessursStatus.FEILET;
+    };
+
+    const systemetOK = () => {
+        return (
+            innloggetStatus === InnloggetStatus.AUTENTISERT &&
+            sluttbruker.status === RessursStatus.SUKSESS
+        );
+    };
+
     const erUtvidet = søknad.søknadstype === ESøknadstype.UTVIDET;
+
+    const systemetLaster = (): boolean => {
+        return lasterRessurser() || innloggetStatus === InnloggetStatus.IKKE_VERIFISERT;
+    };
 
     return {
         axiosRequest,
         sluttbruker,
         søknad,
         settSøknad,
-        systemetLaster,
-        innloggetStatus,
-        systemetFeiler,
-        systemetOK,
         nullstillSøknadsobjekt,
         innsendingStatus,
         settInnsendingStatus,
@@ -280,9 +186,9 @@ const [AppProvider, useApp] = createUseContext(() => {
         settFåttGyldigKvittering,
         erUtvidet,
         settNåværendeRoute,
-        wrapMedSystemetLaster,
-        alleLand,
-        eosLand,
+        systemetFeiler,
+        systemetOK,
+        systemetLaster,
     };
 });
 
