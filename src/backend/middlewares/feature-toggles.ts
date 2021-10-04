@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 
+import { EFeatureToggle } from '../../frontend/typer/feature-toggles';
 import { getDecorator } from '../routes';
 import { isEnabled } from '../utils/unleash';
 
@@ -20,9 +21,9 @@ export const expressToggleInterceptor: RequestHandler = (req, res, next) => {
     if (process.env.FORCE_DISABLED) {
         skalRendreDisabledApp = true;
     } else if (erUtvidet) {
-        skalRendreDisabledApp = isEnabled('familie-ba-soknad.disable-soknad-utvidet');
+        skalRendreDisabledApp = isEnabled(EFeatureToggle.UTVIDET);
     } else {
-        skalRendreDisabledApp = isEnabled('familie-ba-soknad.disable-soknad-ordinaer');
+        skalRendreDisabledApp = isEnabled(EFeatureToggle.ORDINAER);
     }
     skalRendreDisabledApp ? renderDisabled() : next();
 };

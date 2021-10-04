@@ -2,7 +2,7 @@ import bodyParser from 'body-parser';
 import { Express, RequestHandler } from 'express';
 import sharp from 'sharp';
 
-import { logError, logInfo, logWarn } from '@navikt/familie-logging';
+import { logError, logWarn } from '@navikt/familie-logging';
 
 import { basePath } from '../environment';
 import { jwtValidationInterceptor } from '../middlewares/jwt-interceptor';
@@ -36,7 +36,6 @@ const bildeProsesseringHandler: RequestHandler = async (req, res) => {
 
 export const konfigurerBildeProsessering = (app: Express): Express => {
     const path = `${basePath}konverter`;
-    logInfo(path);
     const uploadOptions = {
         inflate: true,
         limit: '20Mb',

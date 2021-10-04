@@ -2,6 +2,7 @@ import { Express, RequestHandler } from 'express';
 
 import { byggFeiletRessurs, byggSuksessRessurs } from '@navikt/familie-typer';
 
+import { EFeatureToggle } from '../../frontend/typer/feature-toggles';
 import { basePath } from '../environment';
 import { isEnabled } from '../utils/unleash';
 
@@ -12,7 +13,7 @@ const toggleFetchHandler: RequestHandler = (req, res) => {
         return;
     }
 
-    res.send(byggSuksessRessurs(isEnabled(toggleId)));
+    res.send(byggSuksessRessurs(isEnabled(toggleId as EFeatureToggle)));
 };
 
 export const konfigurerFeatureTogglesEndpoint = (app: Express): Express => {
