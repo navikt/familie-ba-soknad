@@ -68,7 +68,6 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <Datovelger
                         avgrensDatoFremITid={true}
-                        feilmeldingSpråkId={'ombarnet.institusjon.startdato.feilmelding'}
                         felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
                         labelTekstId={
@@ -77,7 +76,6 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdSluttdato}
-                        feilmeldingSpråkId={'ombarnet.institusjon.sluttdato.feilmelding'}
                         fraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
                         labelTekstId={
@@ -109,7 +107,6 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <Datovelger
                         avgrensDatoFremITid={true}
-                        feilmeldingSpråkId={'ombarnet.oppholdutland.startdato.feilmelding'}
                         felt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
                         labelTekstId={
@@ -118,7 +115,6 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <Datovelger
                         felt={skjema.felter.oppholdslandSluttdato}
-                        feilmeldingSpråkId={'ombarnet.oppholdutland.sluttdato.feilmelding'}
                         fraOgMedFelt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
                         labelTekstId={
@@ -143,7 +139,6 @@ const Oppfølgningsspørsmål: React.FC<{
                 >
                     <Datovelger
                         avgrensDatoFremITid={true}
-                        feilmeldingSpråkId={'ombarnet.sammenhengende-opphold.dato.feilmelding'}
                         felt={skjema.felter.nårKomBarnTilNorgeDato}
                         skjema={skjema}
                         labelTekstId={

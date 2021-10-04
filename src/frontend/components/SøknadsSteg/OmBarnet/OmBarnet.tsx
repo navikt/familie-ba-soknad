@@ -120,7 +120,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 </SkjemaFieldset>
             )}
             {skjema.felter.søkerForTidsrom.erSynlig && (
-                <KomponentGruppe inline dynamisk>
+                <KomponentGruppe dynamisk>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.søkerForTidsrom}
@@ -134,19 +134,17 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             </SpørsmålTilleggsinfoWrapper>
                         }
                     />
-                    {skjema.felter.søkerForTidsrom.verdi === ESvar.JA && (
+                    {skjema.felter.søkerForTidsromStartdato.erSynlig && (
                         <KomponentGruppe dynamisk>
                             <Datovelger
                                 felt={skjema.felter.søkerForTidsromStartdato}
-                                feilmeldingSpråkId={
-                                    'ombarnet.søker-for-periode.startdato.feilmelding'
-                                }
                                 skjema={skjema}
                                 labelTekstId={
                                     omBarnetSpørsmålSpråkId[
                                         OmBarnetSpørsmålsId.søkerForTidsromStartdato
                                     ]
                                 }
+                                avgrensDatoFremITid
                             />
                             {erUtvidet && søknad.søker.sivilstand.type === ESivilstand.SKILT && (
                                 <VedleggNotis
@@ -155,9 +153,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             )}
                             <Datovelger
                                 felt={skjema.felter.søkerForTidsromSluttdato}
-                                feilmeldingSpråkId={
-                                    'ombarnet.søker-for-periode.startdato.feilmelding'
-                                }
                                 fraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
                                 skjema={skjema}
                                 labelTekstId={
@@ -165,6 +160,18 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         OmBarnetSpørsmålsId.søkerForTidsromSluttdato
                                     ]
                                 }
+                                disabled={
+                                    skjema.felter.søkerForTidsromSluttdatoVetIkke.verdi === ESvar.JA
+                                }
+                                avgrensDatoFremITid
+                            />
+                            <SkjemaCheckbox
+                                labelSpråkTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke
+                                    ]
+                                }
+                                felt={skjema.felter.søkerForTidsromSluttdatoVetIkke}
                             />
                             <SpørsmålTilleggsinfoWrapper>
                                 <AlertStripe>
@@ -191,7 +198,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         <KomponentGruppe inline dynamisk>
                             <Datovelger
                                 felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
-                                feilmeldingSpråkId={'ombarnet.nårflyttetfra.feilmelding'}
                                 skjema={skjema}
                                 labelTekstId={
                                     omBarnetSpørsmålSpråkId[
