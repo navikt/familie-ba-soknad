@@ -38,6 +38,7 @@ import {
 } from '../../../typer/person';
 import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
+import { dagensDato, gårdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -527,7 +528,7 @@ export const useOmBarnet = (
         ESvar.JA,
         søkerForTidsrom,
         'ombarnet.søker-for-periode.startdato.feilmelding',
-        true
+        gårdagensDato()
     );
 
     const søkerForTidsromSluttdatoVetIkke = useFelt<ESvar>({
@@ -556,7 +557,8 @@ export const useOmBarnet = (
         'ombarnet.søker-for-periode.sluttdato.feilmelding',
         søkerForTidsrom.verdi === ESvar.JA,
         true,
-        true
+        dagensDato(),
+        søkerForTidsromStartdato.verdi
     );
 
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/

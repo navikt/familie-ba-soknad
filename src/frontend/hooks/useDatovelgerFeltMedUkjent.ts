@@ -12,7 +12,8 @@ const useDatovelgerFeltMedUkjent = (
     feilmeldingSpråkId: string,
     skalFeltetVises: boolean,
     nullstillVedAvhengighetEndring = true,
-    avgrensFremITid = false
+    sluttdatoAvgrensning = '',
+    startdatoAvgrensning = ''
 ) => {
     const datoFelt = useFelt<ISODateString>({
         feltId: feltId,
@@ -25,7 +26,12 @@ const useDatovelgerFeltMedUkjent = (
             ) {
                 return ok(felt);
             }
-            return validerDato(felt, avgrensFremITid, feilmeldingSpråkId);
+            return validerDato(
+                felt,
+                feilmeldingSpråkId,
+                startdatoAvgrensning,
+                sluttdatoAvgrensning
+            );
         },
         avhengigheter: { vetIkkeCheckbox, skalFeltetVises },
         nullstillVedAvhengighetEndring,
