@@ -76,9 +76,6 @@ const AndreForelder: React.FC<{
                         <KomponentGruppe inline dynamisk>
                             <Datovelger
                                 felt={skjema.felter.andreForelderFødselsdato}
-                                feilmeldingSpråkId={
-                                    'ombarnet.andre-forelder.fødselsdato.feilmelding'
-                                }
                                 skjema={skjema}
                                 labelTekstId={
                                     omBarnetSpørsmålSpråkId[

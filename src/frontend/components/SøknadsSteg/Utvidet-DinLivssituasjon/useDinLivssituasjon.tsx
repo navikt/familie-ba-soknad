@@ -18,7 +18,6 @@ import {
     ITidligereSamboer,
 } from '../../../typer/person';
 import { Årsak } from '../../../typer/søknad';
-import { validerDatoAvgrensetFremITid } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -96,7 +95,8 @@ export const useDinLivssituasjon = (): {
     const separertEnkeSkiltDato = useDatovelgerFeltMedJaNeiAvhengighet(
         søker.utvidet.spørsmål.separertEnkeSkiltDato,
         ESvar.JA,
-        separertEnkeSkilt
+        separertEnkeSkilt,
+        'omdeg.frahvilkendatoseparertskilt.feilmelding'
     );
 
     const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt(
@@ -161,6 +161,7 @@ export const useDinLivssituasjon = (): {
         SamboerSpørsmålId.nåværendeSamboerFødselsdato,
         getInitialFødselsdato(søker.utvidet.nåværendeSamboer),
         nåværendeSamboerFødselsdatoUkjent,
+        'omdeg.nåværendesamboer.fødselsdato.ukjent',
         nåværendeSamboerFnrUkjent.verdi === ESvar.JA
     );
 
@@ -171,7 +172,8 @@ export const useDinLivssituasjon = (): {
         },
         ESvar.JA,
         harSamboerNå,
-        validerDatoAvgrensetFremITid
+        'omdeg.nårstartetsamboerforhold.feilmelding',
+        true
     );
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
