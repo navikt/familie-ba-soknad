@@ -3,10 +3,10 @@ import { RequestHandler } from 'express';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 import { byggFeiletRessurs } from '@navikt/familie-typer';
 
-import engelsk from '../frontend/assets/lang/en.json';
-import bokmål from '../frontend/assets/lang/nb.json';
-import nynorsk from '../frontend/assets/lang/nn.json';
-import { ISøknadKontrakt } from '../frontend/typer/søknad';
+import engelsk from '../../frontend/assets/lang/en.json';
+import bokmål from '../../frontend/assets/lang/nb.json';
+import nynorsk from '../../frontend/assets/lang/nn.json';
+import { ISøknadKontrakt } from '../../frontend/typer/søknad';
 
 export const hentSpråkteksterAlleSpråk = (språknøkkel: string): Record<LocaleType, string> => {
     return {

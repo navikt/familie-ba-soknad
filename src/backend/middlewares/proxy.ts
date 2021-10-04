@@ -5,7 +5,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 
 import { logError, logSecure } from '@navikt/familie-logging';
 
-import environment from './environment';
+import environment from '../environment';
 
 const restream = (proxyReq: ClientRequest, req: Request, _res: Response) => {
     if (req.body) {
