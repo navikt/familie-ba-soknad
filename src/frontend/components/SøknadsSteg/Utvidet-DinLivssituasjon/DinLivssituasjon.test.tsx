@@ -87,7 +87,7 @@ describe('DinLivssituasjon', () => {
         const alerts: HTMLElement = getByRole('alert');
         const result: HTMLElement | null = queryByText(
             alerts,
-            'Hva er årsaken til at du søker om utvidet barnetrygd?'
+            'Du må velge årsak til at du søker om utvidet barnetrygd for å gå videre'
         );
         expect(result).not.toBeNull();
     });
@@ -129,7 +129,10 @@ describe('DinLivssituasjon', () => {
         const gåVidere = getByText('GÅ VIDERE');
         act(() => gåVidere.click());
         const alerts: HTMLElement = getByRole('alert');
-        const result: HTMLElement | null = queryByText(alerts, 'Har du samboer nå?');
+        const result: HTMLElement | null = queryByText(
+            alerts,
+            'Du må oppgi om du har samboer nå for å gå videre'
+        );
         expect(result).not.toBeNull();
     });
 
@@ -152,14 +155,16 @@ describe('DinLivssituasjon', () => {
 
         const feiloppsummering = getByRole('alert');
 
-        const navnFeilmelding = within(feiloppsummering).getByText('Samboerens navn');
+        const navnFeilmelding = within(feiloppsummering).getByText(
+            'Du må oppgi samboerens navn for å gå videre'
+        );
         expect(navnFeilmelding).toBeInTheDocument();
         const fødselsnummerFeilmelding = within(feiloppsummering).getByText(
-            'Fødselsnummer eller d-nummer'
+            'Du må oppgi samboerens fødselsnummer for å gå videre'
         );
         expect(fødselsnummerFeilmelding).toBeInTheDocument();
         const forholdStartFeilmelding = within(feiloppsummering).getByText(
-            'Når startet samboerforholdet?'
+            'Du må oppgi når samboerforholdet startet for å gå videre'
         );
         expect(forholdStartFeilmelding).toBeInTheDocument();
     });
