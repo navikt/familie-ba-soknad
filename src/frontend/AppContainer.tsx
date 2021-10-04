@@ -12,7 +12,6 @@ import Søknad from './Søknad';
 
 const AppContainer = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
-
     return (
         <main>
             {systemetLaster() && <SystemetLaster />}
