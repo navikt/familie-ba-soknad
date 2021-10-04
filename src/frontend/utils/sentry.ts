@@ -69,7 +69,6 @@ export const initSentry = () => {
             /psplugin/,
             /dekoratoren\/client/,
         ],
-        // enabled: process.env.NODE_ENV !== 'development',
         beforeSend: fjernPersonopplysninger,
         enabled: process.env.NODE_ENV !== 'development',
     });
