@@ -74,7 +74,7 @@
   "felles.svaralternativ.ja": "Ja",
   "felles.svaralternativ.nei": "Nei",
   "felles.svaralternativ.vetikke": "Eg veit ikkje   ",
-  "felles.tilogmedfeilformat.feilmelding": "Til og med dato kan ikkje vere før frå og med dato",
+  "felles.tilogmedfeilformat.feilmelding": "Til og med dato kan ikkje vere før eller samme som frå og med dato",
   "felles.veilederillustrasjon.tittel": "Rettleiarillustrasjon",
   "felles.velg-dato.feilmelding": "Du må velje dato for å gå vidare",
   "felles.velg-dato.hjelpetekst": "Format dd.mm.åååå",
