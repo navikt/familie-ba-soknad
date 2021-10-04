@@ -19,7 +19,7 @@ export default function () {
         };
     } else {
         return {
-            apiUrl: 'http://localhost:8070',
+            apiUrl: 'http://localhost:8080',
             dekoratørUrl: 'https://www.nav.no/dekoratoren/',
             port: 3000,
         };
