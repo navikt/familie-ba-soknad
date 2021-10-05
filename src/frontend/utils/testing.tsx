@@ -21,6 +21,9 @@ import {
 import * as appContext from '../context/AppContext';
 import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
+import { EøsProvider } from '../context/EøsContext';
+import { InnloggetProvider } from '../context/InnloggetContext';
+import { LastRessurserProvider } from '../context/LastRessurserContext';
 import { RoutesProvider } from '../context/RoutesContext';
 import { IKvittering } from '../typer/kvittering';
 import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../typer/person';
@@ -106,7 +109,16 @@ export const wrapMedProvidere = (
 
 const wrapMedDefaultProvidere = (children: ReactNode, språkTekster: Record<string, string>) =>
     wrapMedProvidere(
-        [SprakProvider, HttpProvider, AppProvider, RoutesProvider, AppNavigationProvider],
+        [
+            SprakProvider,
+            HttpProvider,
+            LastRessurserProvider,
+            InnloggetProvider,
+            AppProvider,
+            EøsProvider,
+            RoutesProvider,
+            AppNavigationProvider,
+        ],
         children,
         språkTekster
     );
