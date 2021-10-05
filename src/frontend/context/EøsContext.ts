@@ -64,14 +64,10 @@ const [EøsProvider, useEøs] = createUseContext(() => {
             ]
         );
 
-        const ettLandTriggerEøs = !!landFelterSomKanTriggeEøs.find(land => erEøsLand(land));
+        const landSvarTriggerEøs = !!landFelterSomKanTriggeEøs.find(land => erEøsLand(land));
 
-        if (ettLandTriggerEøs && !søknad.erEøs) {
-            settSøknad({ ...søknad, erEøs: true });
-        } else if (!ettLandTriggerEøs && søknad.erEøs) {
-            settSøknad({ ...søknad, erEøs: false });
-        }
-    }, [søknad]);
+        settSøknad({ ...søknad, erEøs: landSvarTriggerEøs });
+    }, [søknad.søker, søknad.barnInkludertISøknaden]);
 
     return {
         eøsSkruddAv,
