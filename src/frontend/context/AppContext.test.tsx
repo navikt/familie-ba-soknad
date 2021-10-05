@@ -9,6 +9,8 @@ import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/
 import { ESivilstand } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { AppProvider, useApp } from './AppContext';
+import { InnloggetProvider } from './InnloggetContext';
+import { LastRessurserProvider } from './LastRessurserContext';
 
 const søknadEtterRespons: ISøknad = {
     ...initialStateSøknad,
@@ -28,7 +30,13 @@ describe('erStegUtfyltFraFør', () => {
     let hookResult;
 
     beforeEach(() => {
-        const wrapper = ({ children }) => <AppProvider>{children}</AppProvider>;
+        const wrapper = ({ children }) => (
+            <LastRessurserProvider>
+                <InnloggetProvider>
+                    <AppProvider>{children}</AppProvider>
+                </InnloggetProvider>
+            </LastRessurserProvider>
+        );
         const { result } = renderHook(() => useApp(), { wrapper });
         hookResult = result;
     });
@@ -89,7 +97,13 @@ describe('nullstillSøknadsObject', () => {
 
 describe('avbrytOgSlettSøknad', () => {
     test('Ved avbryt skal sisteUtfylteStegIndex settes til -1', () => {
-        const wrapper = ({ children }) => <AppProvider>{children}</AppProvider>;
+        const wrapper = ({ children }) => (
+            <LastRessurserProvider>
+                <InnloggetProvider>
+                    <AppProvider>{children}</AppProvider>
+                </InnloggetProvider>
+            </LastRessurserProvider>
+        );
         const { result } = renderHook(() => useApp(), { wrapper });
         result.current.sisteUtfylteStegIndex = 3;
         act(() => result.current.avbrytOgSlettSøknad());
