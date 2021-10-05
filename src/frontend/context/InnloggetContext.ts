@@ -10,7 +10,7 @@ import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentiseri
 import { useLastRessurserContext } from './LastRessurserContext';
 
 const [InnloggetProvider, useInnloggetContext] = createUseContext(() => {
-    const { axiosRequest, ressurserSomLaster } = useLastRessurserContext();
+    const { axiosRequest } = useLastRessurserContext();
 
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(
         InnloggetStatus.IKKE_VERIFISERT
@@ -48,13 +48,8 @@ const [InnloggetProvider, useInnloggetContext] = createUseContext(() => {
             });
     };
 
-    const systemetLaster = () => {
-        return ressurserSomLaster.length > 0 || innloggetStatus === InnloggetStatus.IKKE_VERIFISERT;
-    };
-
     return {
         innloggetStatus,
-        systemetLaster,
     };
 });
 
