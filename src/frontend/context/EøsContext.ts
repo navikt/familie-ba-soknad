@@ -39,7 +39,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
                     eøsLandResponse.status === RessursStatus.SUKSESS
                 ) {
                     settEosLand(Object.keys(eøsLandResponse.data) as Alpha3Code[]);
-                    settEøsSkruddAv(false);
+                    settEøsSkruddAv(toggleRespons.data);
                 } else {
                     settEøsSkruddAv(true);
                 }
