@@ -7,7 +7,9 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø, { basePath } from '../Miljø';
 import { EFeatureToggle } from '../typer/feature-toggles';
+import { IBarnMedISøknad } from '../typer/person';
 import { autentiseringsInterceptor } from '../utils/autentisering';
+import { useApp } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 
 const [EøsProvider, useEøs] = createUseContext(() => {
@@ -18,6 +20,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
 
     const [eøsLand, settEøsLand] = useState<Alpha3Code[]>();
 
+    const { søknad, settSøknad } = useApp();
     const { soknadApi } = Miljø();
 
     autentiseringsInterceptor();
@@ -50,6 +53,25 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     }, []);
 
     const erEøsLand = (land: Alpha3Code | '') => !!land && eøsLand?.includes(land);
+
+    useEffect(() => {
+        const { barnInkludertISøknaden } = søknad;
+
+        const landFelterSomKanTriggeEøs = barnInkludertISøknaden.flatMap(
+            (barn: IBarnMedISøknad) => [
+                barn.oppholdsland.svar,
+                barn.barnetrygdFraEøslandHvilketLand.svar,
+            ]
+        );
+
+        const ettLandTriggerEøs = !!landFelterSomKanTriggeEøs.find(land => erEøsLand(land));
+
+        if (ettLandTriggerEøs && !søknad.erEøs) {
+            settSøknad({ ...søknad, erEøs: true });
+        } else if (!ettLandTriggerEøs && søknad.erEøs) {
+            settSøknad({ ...søknad, erEøs: false });
+        }
+    }, [søknad]);
 
     return {
         eøsSkruddAv,
