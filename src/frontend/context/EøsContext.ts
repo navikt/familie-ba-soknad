@@ -7,8 +7,8 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø, { basePath } from '../Miljø';
 import { EFeatureToggle } from '../typer/feature-toggles';
-import { IBarnMedISøknad } from '../typer/person';
 import { autentiseringsInterceptor } from '../utils/autentisering';
+import { landSvarSomKanTriggeEøs } from '../utils/eøs';
 import { useApp } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 
@@ -55,16 +55,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     const erEøsLand = (land: Alpha3Code | '') => !!land && eøsLand?.includes(land);
 
     useEffect(() => {
-        const { barnInkludertISøknaden } = søknad;
-
-        const landFelterSomKanTriggeEøs = barnInkludertISøknaden.flatMap(
-            (barn: IBarnMedISøknad) => [
-                barn.oppholdsland.svar,
-                barn.barnetrygdFraEøslandHvilketLand.svar,
-            ]
-        );
-
-        const landSvarTriggerEøs = !!landFelterSomKanTriggeEøs.find(land => erEøsLand(land));
+        const landSvarTriggerEøs = !!landSvarSomKanTriggeEøs(søknad).find(land => erEøsLand(land));
 
         settSøknad({ ...søknad, erEøs: landSvarTriggerEøs });
     }, [søknad.søker, søknad.barnInkludertISøknaden]);
