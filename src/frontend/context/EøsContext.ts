@@ -16,7 +16,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     const skruddAvByDefault = true; //TODO denne må endres når EØS går live
     const [eøsSkruddAv, settEøsSkruddAv] = useState(skruddAvByDefault);
 
-    const [eosLand, settEosLand] = useState<Alpha3Code[]>();
+    const [eøsLand, settEøsLand] = useState<Alpha3Code[]>();
 
     const { soknadApi } = Miljø();
 
@@ -38,7 +38,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
                     toggleRespons.status === RessursStatus.SUKSESS &&
                     eøsLandResponse.status === RessursStatus.SUKSESS
                 ) {
-                    settEosLand(Object.keys(eøsLandResponse.data) as Alpha3Code[]);
+                    settEøsLand(Object.keys(eøsLandResponse.data) as Alpha3Code[]);
                     settEøsSkruddAv(toggleRespons.data);
                 } else {
                     settEøsSkruddAv(true);
@@ -49,9 +49,11 @@ const [EøsProvider, useEøs] = createUseContext(() => {
         })();
     }, []);
 
+    const erEøsLand = (land: Alpha3Code | '') => !!land && eøsLand?.includes(land);
+
     return {
-        eosLand,
         eøsSkruddAv,
+        erEøsLand,
     };
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import styled from 'styled-components/macro';
 
@@ -29,15 +29,16 @@ const NotisInnhold = styled.div`
     }
 `;
 
-export const VedleggNotis: React.FC<{ språkTekstId: string; dynamisk?: boolean }> = ({
-    språkTekstId,
-    dynamisk = false,
-}) => {
+export const VedleggNotis: React.FC<{
+    språkTekstId: string;
+    dynamisk?: boolean;
+    språkValues?: Record<string, ReactNode>;
+}> = ({ språkTekstId, dynamisk = false, språkValues = {} }) => {
     return (
         <NotisWrapper aria-live={dynamisk ? 'polite' : 'off'}>
             <StyledFileContent role={'img'} focusable={false} aria-label={'vedleggsikon'} />
             <NotisInnhold>
-                <SpråkTekst id={språkTekstId} />
+                <SpråkTekst id={språkTekstId} values={språkValues} />
             </NotisInnhold>
         </NotisWrapper>
     );
