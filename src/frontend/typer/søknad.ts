@@ -38,6 +38,7 @@ export interface ISøknadsfelt<T> {
 
 export interface ISøknad {
     søknadstype: ESøknadstype;
+    erEøs: boolean;
     søker: ISøker;
     lestOgForståttBekreftelse: boolean;
     barnInkludertISøknaden: IBarnMedISøknad[];
@@ -117,6 +118,7 @@ export const hentSøknadstype = () => {
 
 export const initialStateSøknad: ISøknad = {
     søknadstype: hentSøknadstype(),
+    erEøs: false,
     barnInkludertISøknaden: [],
     lestOgForståttBekreftelse: false,
     barnRegistrertManuelt: [],

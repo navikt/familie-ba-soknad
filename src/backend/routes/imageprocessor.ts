@@ -4,7 +4,8 @@ import sharp from 'sharp';
 
 import { logError, logWarn } from '@navikt/familie-logging';
 
-import { jwtValidationInterceptor } from './jwt-interceptor';
+import { basePath } from '../environment';
+import { jwtValidationInterceptor } from '../middlewares/jwt-interceptor';
 
 async function prosesser(bilde: Buffer): Promise<Buffer> {
     return sharp(bilde)
@@ -33,7 +34,8 @@ const bildeProsesseringHandler: RequestHandler = async (req, res) => {
     }
 };
 
-export const konfigurerBildeProsessering = (app: Express, path: string) => {
+export const konfigurerBildeProsessering = (app: Express): Express => {
+    const path = `${basePath}konverter`;
     const uploadOptions = {
         inflate: true,
         limit: '20Mb',
@@ -43,4 +45,6 @@ export const konfigurerBildeProsessering = (app: Express, path: string) => {
     app.use(path, bodyParser.raw(uploadOptions));
     app.use(path, jwtValidationInterceptor);
     app.post(path, bildeProsesseringHandler);
+
+    return app;
 };

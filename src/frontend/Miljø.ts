@@ -6,7 +6,7 @@ interface MiljøProps {
     modellVersjon: number;
     dokumentUrl: string;
 }
-const modellVersjon = 13;
+const modellVersjon = 14;
 
 export const basePath = process.env.BASE_PATH ?? '/';
 
@@ -42,12 +42,12 @@ const Miljø = (): MiljøProps => {
         };
     } else {
         return {
-            soknadApi: `http://localhost:3000${basePath}api`,
-            loginService: `http://localhost:8080/local/cookie?subject=12345678901`,
+            soknadApi: `http://${window.location.hostname}:3000${basePath}api`,
+            loginService: `http://${window.location.hostname}:8080/local/cookie?subject=12345678901`,
             visInnsendingsknapp: true,
-            mellomlagerUrl: 'http://localhost:8082/api/soknad/barnetrygd',
+            mellomlagerUrl: `http://${window.location.hostname}:8082/api/soknad/barnetrygd`,
             modellVersjon: modellVersjon,
-            dokumentUrl: `http://localhost:8082/api/mapper/ANYTTHING`,
+            dokumentUrl: `http://${window.location.hostname}:8082/api/mapper/ANYTTHING`,
         };
     }
 };
