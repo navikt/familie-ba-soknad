@@ -3,7 +3,7 @@ import React, { ReactNode, useCallback, useState } from 'react';
 import axios from 'axios';
 import { fromBlob } from 'file-type/browser';
 
-import { useApp } from '../../../../context/AppContext';
+import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
 import Miljø from '../../../../Miljø';
 import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
@@ -25,7 +25,7 @@ export const useFilopplaster = (
         harSendtInn: boolean
     ) => void
 ) => {
-    const { wrapMedSystemetLaster } = useApp();
+    const { wrapMedSystemetLaster } = useLastRessurserContext();
     const [feilmeldinger, settFeilmeldinger] = useState<ReactNode[]>([]);
     const [åpenModal, settÅpenModal] = useState<boolean>(false);
 

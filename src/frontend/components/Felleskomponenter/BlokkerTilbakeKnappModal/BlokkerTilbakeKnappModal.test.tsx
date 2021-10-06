@@ -5,6 +5,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import { IBarn, IBarnRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
+import * as eøsUtils from '../../../utils/eøs';
 import {
     mockHistory,
     silenceConsoleErrors,
@@ -24,6 +25,7 @@ const fraPdl: Partial<IBarnRespons> = {
 
 describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
     test(`Render BlokkerTilbakeKnappModal og sjekk at den virker`, async () => {
+        jest.spyOn(eøsUtils, 'landSvarSomKanTriggeEøs').mockReturnValue([]);
         const { mockedHistory } = mockHistory(['dokumentasjon', 'kvittering']);
         silenceConsoleErrors();
         const søknad = {
