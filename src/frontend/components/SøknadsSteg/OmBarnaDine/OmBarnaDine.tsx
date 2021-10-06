@@ -6,6 +6,7 @@ import styled from 'styled-components/macro';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -13,7 +14,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
@@ -37,6 +38,7 @@ const OmBarnaDine: React.FC = () => {
     const history = useHistory();
     const { søknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
+    const { eøsSkruddAv } = useEøs();
 
     if (!barnInkludertISøknaden.length) {
         history.push('/velg-barn');
@@ -257,9 +259,14 @@ const OmBarnaDine: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-                    {skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.JA && (
-                        <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
-                    )}
+                    {skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.JA &&
+                        (eøsSkruddAv ? (
+                            <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
+                        ) : (
+                            <VedleggNotisTilleggsskjema
+                                språkTekstId={'ombarna.barnetrygd-eøs.eøs-info'}
+                            />
+                        ))}
                 </KomponentGruppe>
             )}
         </Steg>
