@@ -26,6 +26,10 @@ const useDatovelgerFeltMedUkjent = (
             ) {
                 return ok(felt);
             }
+
+            const startdatoAvgrensning = avhengigheter && avhengigheter.startdatoAvgrensning;
+            const sluttdatoAvgrensning = avhengigheter && avhengigheter.sluttdatoAvgrensning;
+
             return validerDato(
                 felt,
                 feilmeldingSpråkId,
@@ -33,7 +37,12 @@ const useDatovelgerFeltMedUkjent = (
                 sluttdatoAvgrensning
             );
         },
-        avhengigheter: { vetIkkeCheckbox, skalFeltetVises },
+        avhengigheter: {
+            vetIkkeCheckbox,
+            skalFeltetVises,
+            startdatoAvgrensning,
+            sluttdatoAvgrensning,
+        },
         nullstillVedAvhengighetEndring,
         skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalFeltetVises,
     });

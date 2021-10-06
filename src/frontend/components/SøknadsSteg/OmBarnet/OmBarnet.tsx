@@ -10,6 +10,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { BarnetsId, ESivilstand } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
+import { gårsdagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -144,7 +145,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         OmBarnetSpørsmålsId.søkerForTidsromStartdato
                                     ]
                                 }
-                                avgrensDatoFremITid
+                                avgrensDato={gårsdagensDato()}
                             />
                             {erUtvidet && søknad.søker.sivilstand.type === ESivilstand.SKILT && (
                                 <VedleggNotis
@@ -153,7 +154,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             )}
                             <Datovelger
                                 felt={skjema.felter.søkerForTidsromSluttdato}
-                                fraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
+                                tilhørendeFraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
                                 skjema={skjema}
                                 labelTekstId={
                                     omBarnetSpørsmålSpråkId[

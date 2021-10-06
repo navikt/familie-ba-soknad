@@ -8,6 +8,7 @@ import { ISkjema } from '@navikt/familie-skjema';
 import { useEøs } from '../../../context/EøsContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
+import { gårsdagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -69,7 +70,6 @@ const Oppfølgningsspørsmål: React.FC<{
                         bredde={'S'}
                     />
                     <Datovelger
-                        avgrensDatoFremITid={true}
                         felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
                         labelTekstId={
@@ -78,7 +78,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdSluttdato}
-                        fraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
+                        tilhørendeFraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
                         labelTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdSluttdato]
@@ -114,7 +114,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         />
                     )}
                     <Datovelger
-                        avgrensDatoFremITid={true}
+                        avgrensDato={gårsdagensDato()}
                         felt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
                         labelTekstId={
@@ -123,7 +123,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <Datovelger
                         felt={skjema.felter.oppholdslandSluttdato}
-                        fraOgMedFelt={skjema.felter.oppholdslandStartdato}
+                        tilhørendeFraOgMedFelt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
                         labelTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdslandSluttdato]

@@ -30,7 +30,7 @@ export const erDatoFørEllerSammeSomStartDatoAvgrensning = (
     return dayjs(dato).isBefore(dayjs(startdato)) || dayjs(dato).isSame(dayjs(startdato));
 };
 
-export const gårdagensDato = () => dayjs().subtract(1, 'day').format('YYYY-MM-DD');
+export const gårsdagensDato = () => dayjs().subtract(1, 'day').format('YYYY-MM-DD');
 
 export const dagensDato = () => dayjs().format('YYYY-MM-DD');
 

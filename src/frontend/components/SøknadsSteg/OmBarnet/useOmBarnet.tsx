@@ -38,7 +38,7 @@ import {
 } from '../../../typer/person';
 import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { dagensDato, gårdagensDato } from '../../../utils/dato';
+import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -182,7 +182,10 @@ export const useOmBarnet = (
             : '',
         institusjonOppholdSluttVetIkke,
         'ombarnet.institusjon.sluttdato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+        false,
+        undefined,
+        institusjonOppholdStartdato.verdi
     );
 
     /*---UTENLANDSOPPHOLD---*/
@@ -196,7 +199,8 @@ export const useOmBarnet = (
     const oppholdslandStartdato = useDatovelgerFelt(
         barn[barnDataKeySpørsmål.oppholdslandStartdato],
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland),
-        'ombarnet.oppholdutland.startdato.feilmelding'
+        'ombarnet.oppholdutland.startdato.feilmelding',
+        gårsdagensDato()
     );
 
     const oppholdslandSluttDatoVetIkke = useFelt<ESvar>({
@@ -214,7 +218,10 @@ export const useOmBarnet = (
             : '',
         oppholdslandSluttDatoVetIkke,
         'ombarnet.oppholdutland.sluttdato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland),
+        false,
+        undefined,
+        oppholdslandStartdato.verdi
     );
 
     /*---BODD SAMMENHENGENDE I NORGE---*/
@@ -528,7 +535,7 @@ export const useOmBarnet = (
         ESvar.JA,
         søkerForTidsrom,
         'ombarnet.søker-for-periode.startdato.feilmelding',
-        gårdagensDato()
+        gårsdagensDato()
     );
 
     const søkerForTidsromSluttdatoVetIkke = useFelt<ESvar>({
@@ -556,7 +563,7 @@ export const useOmBarnet = (
         søkerForTidsromSluttdatoVetIkke,
         'ombarnet.søker-for-periode.sluttdato.feilmelding',
         søkerForTidsrom.verdi === ESvar.JA,
-        true,
+        false,
         dagensDato(),
         søkerForTidsromStartdato.verdi
     );

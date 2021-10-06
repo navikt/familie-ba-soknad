@@ -58,7 +58,7 @@ describe(`Datovelger`, () => {
                 />
                 <Datovelger
                     felt={current.tilOgMed}
-                    fraOgMedFelt={current.fraOgMed}
+                    tilhørendeFraOgMedFelt={current.fraOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-til-og-med'}
                 />
@@ -84,7 +84,6 @@ describe(`Datovelger`, () => {
                 />
                 <Datovelger
                     felt={current.fraOgMed}
-                    tilOgMedFelt={current.tilOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-fra-og-med'}
                 />

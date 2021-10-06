@@ -4,6 +4,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { DatoMedUkjent } from '../../../typer/person';
+import { gårsdagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
@@ -62,10 +63,9 @@ const SamboerSkjema: React.FC<{
                 skjema={skjema}
                 felt={samboerFelter.samboerFraDato}
                 labelTekstId={samboerSpråkIder.samboerFraDato}
-                avgrensDatoFremITid={
-                    /* Tidligere samboereforhold kan ikke starte i fremtiden, nåværende kan */
-                    !!samboerFelter.samboerTilDato
-                }
+                {...(samboerFelter.samboerTilDato && {
+                    avgrensDato: gårsdagensDato(),
+                })}
                 calendarPosition={erIModal ? 'fullscreen' : ''}
             />
             {samboerFelter.samboerTilDato && (
@@ -73,7 +73,7 @@ const SamboerSkjema: React.FC<{
                     skjema={skjema}
                     felt={samboerFelter.samboerTilDato}
                     labelTekstId={samboerSpråkIder.samboerTilDato}
-                    fraOgMedFelt={samboerFelter.samboerFraDato}
+                    tilhørendeFraOgMedFelt={samboerFelter.samboerFraDato}
                     avgrensDatoFremITid={true}
                     calendarPosition={erIModal ? 'fullscreen' : ''}
                 />
