@@ -8,6 +8,8 @@ import { RessursStatus } from '@navikt/familie-typer';
 import Miljø, { basePath } from '../Miljø';
 import { EFeatureToggle } from '../typer/feature-toggles';
 import { autentiseringsInterceptor } from '../utils/autentisering';
+import { landSvarSomKanTriggeEøs } from '../utils/eøs';
+import { useApp } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 
 const [EøsProvider, useEøs] = createUseContext(() => {
@@ -16,8 +18,9 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     const skruddAvByDefault = true; //TODO denne må endres når EØS går live
     const [eøsSkruddAv, settEøsSkruddAv] = useState(skruddAvByDefault);
 
-    const [eosLand, settEosLand] = useState<Alpha3Code[]>();
+    const [eøsLand, settEøsLand] = useState<Alpha3Code[]>();
 
+    const { søknad, settSøknad } = useApp();
     const { soknadApi } = Miljø();
 
     autentiseringsInterceptor();
@@ -38,7 +41,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
                     toggleRespons.status === RessursStatus.SUKSESS &&
                     eøsLandResponse.status === RessursStatus.SUKSESS
                 ) {
-                    settEosLand(Object.keys(eøsLandResponse.data) as Alpha3Code[]);
+                    settEøsLand(Object.keys(eøsLandResponse.data) as Alpha3Code[]);
                     settEøsSkruddAv(toggleRespons.data);
                 } else {
                     settEøsSkruddAv(true);
@@ -49,9 +52,17 @@ const [EøsProvider, useEøs] = createUseContext(() => {
         })();
     }, []);
 
+    const erEøsLand = (land: Alpha3Code | '') => !!land && eøsLand?.includes(land);
+
+    useEffect(() => {
+        const landSvarTriggerEøs = !!landSvarSomKanTriggeEøs(søknad).find(land => erEøsLand(land));
+
+        settSøknad({ ...søknad, erEøs: landSvarTriggerEøs });
+    }, [søknad.søker, søknad.barnInkludertISøknaden]);
+
     return {
-        eosLand,
         eøsSkruddAv,
+        erEøsLand,
     };
 });
 

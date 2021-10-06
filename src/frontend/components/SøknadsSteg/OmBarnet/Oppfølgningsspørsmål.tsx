@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
+import { useEøs } from '../../../context/EøsContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
@@ -26,6 +27,7 @@ const Oppfølgningsspørsmål: React.FC<{
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
 }> = ({ barn, skjema }) => {
     const intl = useIntl();
+    const { erEøsLand } = useEøs();
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
@@ -105,6 +107,12 @@ const Oppfølgningsspørsmål: React.FC<{
                             />
                         }
                     />
+                    {erEøsLand(skjema.felter.oppholdsland.verdi) && (
+                        <VedleggNotis
+                            språkTekstId={'ombarnet.oppholdutland.eøs-info'}
+                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                        />
+                    )}
                     <Datovelger
                         avgrensDatoFremITid={true}
                         felt={skjema.felter.oppholdslandStartdato}

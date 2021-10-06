@@ -3,21 +3,17 @@ import React from 'react';
 import { act, render } from '@testing-library/react';
 
 import { IBarn } from '../../../../typer/person';
-import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../../utils/testing';
+import {
+    mockHistory,
+    silenceConsoleErrors,
+    spyOnUseApp,
+    TestProvidere,
+} from '../../../../utils/testing';
 import VelgBarn from '../VelgBarn';
 
-jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => ({
-        pathname: '/velg-barn',
-    }),
-    useHistory: () => ({
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        push: () => {},
-    }),
-}));
-
 describe('FjernBarnKnapp', () => {
+    mockHistory(['/velg-barn']);
+
     test(`Kan fjern-knapp dukker kun opp på manuelt registrerte barn`, () => {
         silenceConsoleErrors();
 
@@ -86,10 +82,11 @@ describe('FjernBarnKnapp', () => {
         const fjernKnapp = getByText(/hvilkebarn.fjern-barn.knapp/);
         act(() => fjernKnapp.click());
 
-        expect(settSøknad).toHaveBeenCalledTimes(1);
+        expect(settSøknad).toHaveBeenCalledTimes(2); // Kjører to ganger fordi det er en useEffect i eøsContext som lytter på barnInkludertISøknaden som også kjører settSøknad.
         expect(settSøknad).toHaveBeenCalledWith({
             barnInkludertISøknaden: [],
             barnRegistrertManuelt: [],
+            erEøs: false,
             søker: {
                 barn: [],
             },
