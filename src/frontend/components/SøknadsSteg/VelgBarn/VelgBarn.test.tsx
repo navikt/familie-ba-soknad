@@ -7,23 +7,19 @@ import { DeepPartial } from 'ts-essentials';
 import { byggSuksessRessurs } from '@navikt/familie-typer';
 import fnrvalidator from '@navikt/fnrvalidator';
 
+import * as eøsContext from '../../../context/EøsContext';
 import { IBarn, IBarnRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
-import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import * as eøsUtils from '../../../utils/eøs';
+import {
+    mockHistory,
+    silenceConsoleErrors,
+    spyOnUseApp,
+    TestProvidere,
+} from '../../../utils/testing';
 import VelgBarn from './VelgBarn';
 
 jest.mock('@navikt/fnrvalidator');
-
-jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => ({
-        pathname: '/velg-barn',
-    }),
-    useHistory: () => ({
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        push: () => {},
-    }),
-}));
 
 const manueltRegistrert: Partial<IBarn> = {
     id: 'random-id-1',
@@ -41,6 +37,12 @@ const fraPdlSomIBarn: Partial<IBarn> = {
 };
 
 describe('VelgBarn', () => {
+    beforeEach(() => {
+        mockHistory(['/velg-barn']);
+        jest.spyOn(eøsUtils, 'landSvarSomKanTriggeEøs').mockReturnValue([]);
+        jest.spyOn(eøsContext, 'useEøs').mockImplementation(jest.fn());
+    });
+
     test('Kan fjerne manuelt registrerte barn', () => {
         silenceConsoleErrors();
         const søknad = {
@@ -69,19 +71,23 @@ describe('VelgBarn', () => {
         act(() => gåVidere.click());
 
         // Først blir barnet fjernet fra manuelt registrerte barn
-        expect(settSøknad).toHaveBeenNthCalledWith(1, {
+        expect(settSøknad).toHaveBeenNthCalledWith(2, {
+            // Kjører 2 ganger fordi det er en useEffect i eøsContext som lytter på barnInkludertISøknaden som også kjører settSøknad.
             barnRegistrertManuelt: [],
             barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarn],
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
+            erEøs: false,
         });
 
         // Når man trykker på gå videre blir det manuelt registrerte barnet fjernet fra søknaden
-        expect(settSøknad).toHaveBeenNthCalledWith(2, {
+        expect(settSøknad).toHaveBeenNthCalledWith(3, {
+            // Kjører 3 ganger fordi det er en useEffect i eøsContext som lytter på barnInkludertISøknaden som også kjører settSøknad.
             barnRegistrertManuelt: [],
             barnInkludertISøknaden: [fraPdlSomIBarn],
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
+            erEøs: false,
         });
     });
 
@@ -169,7 +175,7 @@ describe('VelgBarn', () => {
 
         expect(søknad.barnRegistrertManuelt.length).toBe(1);
         // Først fjernet vi barnet, så la vi det til igjen
-        expect(settSøknad).toHaveBeenCalledTimes(2);
+        expect(settSøknad).toHaveBeenCalledTimes(3); // Kjører 3 ganger fordi det er en useEffect i eøsContext som lytter på barnInkludertISøknaden som også kjører settSøknad.
     });
 
     test('Kan huke av for barn', () => {

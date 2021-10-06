@@ -49,6 +49,7 @@ export const spyOnUseApp = søknad => {
     const settNåværendeRoute = jest.fn();
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
+    søknad.erEøs = søknad.erEøs ?? false;
 
     const useAppMock = jest.fn().mockReturnValue({
         søknad,
