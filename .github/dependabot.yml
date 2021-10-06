@@ -10,6 +10,7 @@ updates:
     schedule:
       interval: daily
       time: "13:30"
+      timezone: "Europe/Oslo"
     open-pull-requests-limit: 3
     ignore:
     - dependency-name: "*"
