@@ -13,6 +13,7 @@ import {
 } from '../../../typer/person';
 import {
     mekkGyldigSøknad,
+    mockEøs,
     mockHistory,
     silenceConsoleErrors,
     spyOnUseApp,
@@ -123,6 +124,10 @@ const line = {
 };
 
 describe('OmBarnet', () => {
+    beforeEach(() => {
+        mockEøs();
+    });
+
     test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, () => {
         mockHistory(['/om-barnet/barn-1']);
         spyOnUseApp({
