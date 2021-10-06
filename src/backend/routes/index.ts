@@ -1,11 +1,11 @@
-import { RequestHandler } from 'express';
+import { Express, RequestHandler } from 'express';
 import jsdom from 'jsdom';
 import NodeCache from 'node-cache';
 import request from 'request';
 
 import { logError } from '@navikt/familie-logging';
 
-import environment from './environment';
+import environment from '../environment';
 
 const { JSDOM } = jsdom;
 
@@ -70,4 +70,16 @@ export const indexHandler: RequestHandler = (req, res) => {
             res.status(500).send(error);
         });
 };
+
+export const konfigurerIndex = (app: Express): Express => {
+    app.get('/', indexHandler);
+    return app;
+};
+
+export const konfigurerIndexFallback = (app: Express): Express => {
+    // Fallback, alt vi ikke treffer med andre handlere returnerer index.html
+    app.get('*', indexHandler);
+    return app;
+};
+
 export default indexHandler;

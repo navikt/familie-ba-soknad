@@ -4,11 +4,7 @@ import { act, render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { HttpProvider } from '@navikt/familie-http';
-import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
-import { AppNavigationProvider } from '../../../context/AppNavigationContext';
-import { RoutesProvider } from '../../../context/RoutesContext';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
@@ -151,18 +147,9 @@ describe('OmBarnet', () => {
             dokumentasjon: [],
         });
         const { getByText } = render(
-            <SprakProvider
-                tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
-                defaultLocale={LocaleType.nb}
-            >
-                <HttpProvider>
-                    <AppNavigationProvider>
-                        <RoutesProvider>
-                            <OmBarnet barnetsId={'random-id-jens'} />
-                        </RoutesProvider>
-                    </AppNavigationProvider>
-                </HttpProvider>
-            </SprakProvider>
+            <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
+                <OmBarnet barnetsId={'random-id-jens'} />
+            </TestProvidere>
         );
 
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
@@ -187,18 +174,9 @@ describe('OmBarnet', () => {
         });
 
         const { getByText } = render(
-            <SprakProvider
-                tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
-                defaultLocale={LocaleType.nb}
-            >
-                <HttpProvider>
-                    <AppNavigationProvider>
-                        <RoutesProvider>
-                            <OmBarnet barnetsId={'random-id-jens'} />
-                        </RoutesProvider>
-                    </AppNavigationProvider>
-                </HttpProvider>
-            </SprakProvider>
+            <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
+                <OmBarnet barnetsId={'random-id-jens'} />
+            </TestProvidere>
         );
 
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
@@ -228,18 +206,9 @@ describe('OmBarnet', () => {
         });
 
         const { getByLabelText, getByText, queryByText } = render(
-            <SprakProvider
-                tekster={{ nb: { 'ombarnet.sidetittel': 'Om {navn}' } }}
-                defaultLocale={LocaleType.nb}
-            >
-                <HttpProvider>
-                    <AppNavigationProvider>
-                        <RoutesProvider>
-                            <OmBarnet barnetsId={'random-id-jens'} />
-                        </RoutesProvider>
-                    </AppNavigationProvider>
-                </HttpProvider>
-            </SprakProvider>
+            <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
+                <OmBarnet barnetsId={'random-id-jens'} />
+            </TestProvidere>
         );
 
         const ikkeOppgiOpplysninger = getByLabelText(/ombarnet.andre-forelder.navn-ukjent.spm/);

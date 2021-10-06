@@ -39,7 +39,7 @@ class LoginMock implements RequestHandlerInterface
 
         $tokenCookieName = getenv("TOKEN_COOKIE_NAME");
         $cookie = SetCookie::create($tokenCookieName, $token)
-            ->withDomain("localhost")
+            ->withDomain($request->getUri()->getHost())
             ->withExpires(0)
             ->withPath("/")
             ->withSecure(false)
