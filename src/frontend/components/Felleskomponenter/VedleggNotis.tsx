@@ -2,6 +2,8 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components/macro';
 
+import { Normaltekst } from 'nav-frontend-typografi';
+
 import { FileContent } from '@navikt/ds-icons';
 
 import EksternLenke from './EksternLenke/EksternLenke';
@@ -17,6 +19,7 @@ const StyledFileContent = styled(FileContent)`
     min-width: 1.125rem;
     max-height: fit-content;
     margin-right: 1rem;
+    margin-top: 0.2rem;
 `;
 
 const NotisInnhold = styled.div`
@@ -30,13 +33,8 @@ const NotisInnhold = styled.div`
     }
 `;
 
-const StyledEksternLenkeWrapper = styled.div`
+const StyledEksternLenkeWrapper = styled(EksternLenke)`
     margin: 0.5rem 0 0 2rem;
-    a {
-        span {
-            font-size: 16px;
-        }
-    }
 `;
 
 export const VedleggNotis: React.FC<{
@@ -48,7 +46,9 @@ export const VedleggNotis: React.FC<{
         <NotisWrapper aria-live={dynamisk ? 'polite' : 'off'}>
             <StyledFileContent role={'img'} focusable={false} aria-label={'vedleggsikon'} />
             <NotisInnhold>
-                <SpråkTekst id={språkTekstId} values={språkValues} />
+                <Normaltekst>
+                    <SpråkTekst id={språkTekstId} values={språkValues} />
+                </Normaltekst>
             </NotisInnhold>
         </NotisWrapper>
     );
@@ -61,13 +61,11 @@ export const VedleggNotisTilleggsskjema: React.FC<{ språkTekstId: string; dynam
     return (
         <>
             <VedleggNotis språkTekstId={språkTekstId} dynamisk={dynamisk} />
-            <StyledEksternLenkeWrapper>
-                <EksternLenke
-                    lenkeSpråkId={'eøs.tilleggsskjema.lenke'}
-                    lenkeTekstSpråkId={'eøs.tilleggsskjema.lenketekst'}
-                    target="_blank"
-                />
-            </StyledEksternLenkeWrapper>
+            <StyledEksternLenkeWrapper
+                lenkeSpråkId={'eøs.tilleggsskjema.lenke'}
+                lenkeTekstSpråkId={'eøs.tilleggsskjema.lenketekst'}
+                target="_blank"
+            />
         </>
     );
 };

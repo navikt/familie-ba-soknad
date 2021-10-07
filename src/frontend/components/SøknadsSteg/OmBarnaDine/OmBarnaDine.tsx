@@ -63,10 +63,8 @@ const OmBarnaDine: React.FC = () => {
                     }
                 />
                 <HvilkeBarnCheckboxGruppe
-                    legend={
-                        <SpråkTekst
-                            id={omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErFosterbarn]}
-                        />
+                    legendSpråkId={
+                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErFosterbarn]
                     }
                     skjemafelt={skjema.felter.hvemErFosterbarn}
                     søknadsdatafelt={barnDataKeySpørsmål.erFosterbarn}
@@ -85,14 +83,10 @@ const OmBarnaDine: React.FC = () => {
                 />
 
                 <HvilkeBarnCheckboxGruppe
-                    legend={
-                        <SpråkTekst
-                            id={
-                                omBarnaDineSpørsmålSpråkId[
-                                    OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon
-                                ]
-                            }
-                        />
+                    legendSpråkId={
+                        omBarnaDineSpørsmålSpråkId[
+                            OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon
+                        ]
                     }
                     skjemafelt={skjema.felter.hvemOppholderSegIInstitusjon}
                     søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIInstitusjon}
@@ -122,14 +116,10 @@ const OmBarnaDine: React.FC = () => {
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
-                        legend={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland
-                                    ]
-                                }
-                            />
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland
+                            ]
                         }
                         skjemafelt={skjema.felter.hvemErAdoptertFraUtland}
                         søknadsdatafelt={barnDataKeySpørsmål.erAdoptertFraUtland}
@@ -153,14 +143,10 @@ const OmBarnaDine: React.FC = () => {
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
-                        legend={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemOppholderSegIUtland
-                                    ]
-                                }
-                            />
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.hvemOppholderSegIUtland
+                            ]
                         }
                         skjemafelt={skjema.felter.hvemOppholderSegIUtland}
                         søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIUtland}
@@ -182,14 +168,8 @@ const OmBarnaDine: React.FC = () => {
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
-                        legend={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemErSøktAsylFor
-                                    ]
-                                }
-                            />
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErSøktAsylFor]
                         }
                         skjemafelt={skjema.felter.hvemErSøktAsylFor}
                         søknadsdatafelt={barnDataKeySpørsmål.erAsylsøker}
@@ -211,14 +191,10 @@ const OmBarnaDine: React.FC = () => {
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
-                        legend={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge
-                                    ]
-                                }
-                            />
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge
+                            ]
                         }
                         skjemafelt={skjema.felter.hvemTolvMndSammenhengendeINorge}
                         søknadsdatafelt={barnDataKeySpørsmål.boddMindreEnn12MndINorge}
@@ -242,15 +218,12 @@ const OmBarnaDine: React.FC = () => {
                             ]
                         }
                     />
+
                     <HvilkeBarnCheckboxGruppe
-                        legend={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland
-                                    ]
-                                }
-                            />
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland
+                            ]
                         }
                         skjemafelt={skjema.felter.hvemBarnetrygdFraAnnetEøsland}
                         søknadsdatafelt={barnDataKeySpørsmål.barnetrygdFraAnnetEøsland}
@@ -258,15 +231,16 @@ const OmBarnaDine: React.FC = () => {
                             skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.NEI
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
-                    />
-                    {skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.JA &&
-                        (eøsSkruddAv ? (
-                            <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
-                        ) : (
-                            <VedleggNotisTilleggsskjema
-                                språkTekstId={'ombarna.barnetrygd-eøs.eøs-info'}
-                            />
-                        ))}
+                    >
+                        {skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.JA &&
+                            (eøsSkruddAv ? (
+                                <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
+                            ) : (
+                                <VedleggNotisTilleggsskjema
+                                    språkTekstId={'ombarna.barnetrygd-eøs.eøs-info'}
+                                />
+                            ))}
+                    </HvilkeBarnCheckboxGruppe>
                 </KomponentGruppe>
             )}
         </Steg>
