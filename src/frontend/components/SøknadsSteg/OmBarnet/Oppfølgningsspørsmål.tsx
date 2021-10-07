@@ -186,6 +186,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     <LandDropdown
                         felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
                         skjema={skjema}
+                        kunEøs={true}
                         label={
                             <SpråkTekst
                                 id={

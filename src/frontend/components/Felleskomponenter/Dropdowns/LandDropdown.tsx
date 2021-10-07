@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { useEøs } from '../../../context/EøsContext';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import StyledDropdown from './StyledDropdown';
 
@@ -14,15 +15,18 @@ interface LandDropdownProps {
     skjema: ISkjema<SkjemaFeltTyper, string>;
     label?: ReactNode;
     dynamisk?: boolean;
+    kunEøs?: boolean;
 }
 
 export const LandDropdown: React.FC<LandDropdownProps> = props => {
     const intl = useIntl();
     const [valgtLocale] = useSprakContext();
+    const { erEøsLand, eøsSkruddAv } = useEøs();
+    const kunEøs = !eøsSkruddAv && (props.kunEøs ?? false);
 
-    const landkoderSortertPåNavn = Object.keys(getAlpha3Codes()).sort((a, b) => {
-        return getName(a, valgtLocale) >= getName(b, valgtLocale) ? 1 : -1;
-    });
+    const landkoderSortertPåNavn = Object.keys(getAlpha3Codes())
+        .sort((a, b) => (getName(a, valgtLocale) >= getName(b, valgtLocale) ? 1 : -1))
+        .filter(landKode => (kunEøs ? erEøsLand(landKode as Alpha3Code) : true));
 
     return (
         <StyledDropdown<Alpha3Code | ''>
