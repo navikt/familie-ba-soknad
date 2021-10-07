@@ -46,16 +46,16 @@ const Forside: React.FC = () => {
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
 
+    useEffect(() => {
+        settNåværendeRoute(nåværendeRoute);
+    }, []);
+
     const kanFortsettePåSøknad =
         mellomlagretVerdi &&
         mellomlagretVerdi.modellVersjon === Miljø().modellVersjon &&
         mellomlagretVerdi.søknad.søknadstype === søknad.søknadstype;
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
-
-    useEffect(() => {
-        settNåværendeRoute(nåværendeRoute);
-    }, []);
 
     return (
         <InnholdContainer>

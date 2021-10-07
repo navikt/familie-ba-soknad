@@ -49,6 +49,8 @@ export const spyOnUseApp = søknad => {
         );
     const erUtvidet = søknad.søknadstype === 'UTVIDET';
     const settNåværendeRoute = jest.fn();
+    const mellomlagre = jest.fn();
+    const sluttbruker = { status: RessursStatus.SUKSESS, data: { navn: '' } };
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
     søknad.erEøs = søknad.erEøs ?? false;
@@ -65,6 +67,8 @@ export const spyOnUseApp = søknad => {
         axiosRequest: axiosRequestMock,
         erUtvidet,
         settNåværendeRoute,
+        mellomlagre,
+        sluttbruker,
     });
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
 

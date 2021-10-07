@@ -1,54 +1,39 @@
 import React from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import navFarger from 'nav-frontend-core';
 
-import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
-
-import norskeTekster from '../../../assets/lang/nb.json';
-import { AppProvider } from '../../../context/AppContext';
-import { RoutesProvider } from '../../../context/RoutesContext';
-import { TestProvidereMedEkteTekster } from '../../../utils/testing';
+import {
+    mockEøs,
+    mockHistory,
+    spyOnUseApp,
+    TestProvidereMedEkteTekster,
+} from '../../../utils/testing';
 import { bekreftelseBoksBorderFarge } from './BekreftelseOgStartSoknad';
 import Forside from './Forside';
 import { BekreftelseStatus } from './useBekreftelseOgStartSoknad';
 
-beforeEach(() => {
-    jest.spyOn(global.console, 'error');
-});
+describe('Forside', () => {
+    beforeEach(() => {
+        jest.spyOn(global.console, 'error');
+        mockHistory(['/']);
+        spyOnUseApp({});
+        mockEøs();
+    });
 
-jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => ({
-        pathname: 'localhost:3000/example/path',
-    }),
-}));
+    test('Alle tekster finnes i språkfil', () => {
+        render(
+            <TestProvidereMedEkteTekster>
+                <Forside />
+            </TestProvidereMedEkteTekster>
+        );
+        expect(console.error).toHaveBeenCalledTimes(0);
+    });
 
-test('Kan rendre Forside', () => {
-    render(
-        <SprakProvider tekster={{ nb: norskeTekster }} defaultLocale={LocaleType.nb}>
-            <AppProvider>
-                <RoutesProvider>
-                    <Forside />
-                </RoutesProvider>
-            </AppProvider>
-        </SprakProvider>
-    );
-    expect(screen.getByText('Vi stoler på deg')).toBeInTheDocument();
-});
-
-test('Alle tekster finnes i språkfil', () => {
-    render(
-        <TestProvidereMedEkteTekster>
-            <Forside />
-        </TestProvidereMedEkteTekster>
-    );
-    expect(console.error).toHaveBeenCalledTimes(0);
-});
-
-test('Return riktig borderfarge basert på status', () => {
-    expect(bekreftelseBoksBorderFarge(BekreftelseStatus.FEIL)).toEqual(navFarger.navRod);
-    expect(bekreftelseBoksBorderFarge(BekreftelseStatus.BEKREFTET)).toEqual(navFarger.navGronn);
-    expect(bekreftelseBoksBorderFarge(BekreftelseStatus.NORMAL)).toEqual(navFarger.navOransje);
+    test('Return riktig borderfarge basert på status', () => {
+        expect(bekreftelseBoksBorderFarge(BekreftelseStatus.FEIL)).toEqual(navFarger.navRod);
+        expect(bekreftelseBoksBorderFarge(BekreftelseStatus.BEKREFTET)).toEqual(navFarger.navGronn);
+        expect(bekreftelseBoksBorderFarge(BekreftelseStatus.NORMAL)).toEqual(navFarger.navOransje);
+    });
 });
