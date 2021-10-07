@@ -2,10 +2,9 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 
-import * as eøsContext from '../../../../context/EøsContext';
 import { IBarn } from '../../../../typer/person';
-import * as eøsUtils from '../../../../utils/eøs';
 import {
+    mockEøs,
     mockHistory,
     silenceConsoleErrors,
     spyOnUseApp,
@@ -14,10 +13,10 @@ import {
 import VelgBarn from '../VelgBarn';
 
 describe('FjernBarnKnapp', () => {
-    mockHistory(['/velg-barn']);
-    jest.spyOn(eøsUtils, 'landSvarSomKanTriggeEøs').mockReturnValue([]);
-    jest.spyOn(eøsUtils, 'jaNeiSvarTriggerEøs').mockReturnValue(false);
-    jest.spyOn(eøsContext, 'useEøs').mockImplementation(jest.fn());
+    beforeEach(() => {
+        mockHistory(['/velg-barn']);
+        mockEøs();
+    });
 
     test(`Kan fjern-knapp dukker kun opp på manuelt registrerte barn`, () => {
         silenceConsoleErrors();
@@ -77,7 +76,6 @@ describe('FjernBarnKnapp', () => {
                 barn: [],
             },
             barnRegistrertManuelt: [registrertBarn],
-            erEøs: false,
         });
         const { getByText } = render(
             <TestProvidere>
