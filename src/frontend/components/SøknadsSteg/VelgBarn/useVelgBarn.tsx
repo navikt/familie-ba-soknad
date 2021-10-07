@@ -24,7 +24,7 @@ export const useVelgBarn = (): {
     fjernBarn: (ident: string) => void;
     validerAlleSynligeFelter: () => void;
 } => {
-    const { søknad, settSøknad } = useApp();
+    const { søknad, settSøknad, mellomlagre } = useApp();
     const { barnInkludertISøknaden } = søknad;
     const { settBarnForRoutes } = useRoutes();
     const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] = useState<IBarnMedISøknad[]>(
@@ -41,6 +41,7 @@ export const useVelgBarn = (): {
             barnRegistrertManuelt: søknad.barnRegistrertManuelt.filter(barn => id !== barn.id),
         });
         settBarnSomSkalVæreMed(barnSomSkalVæreMed.filter(barn => id !== barn.id));
+        mellomlagre();
     };
 
     const barnMedISøknad = useFelt<IBarn[]>({
