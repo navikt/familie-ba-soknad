@@ -6,7 +6,7 @@ import { IntlProvider } from 'react-intl';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { ESivilstand, ISøker } from '../../../typer/person';
-import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { Personopplysninger } from './Personopplysninger';
 
 const mockedSivilstand = ESivilstand.GIFT;
@@ -14,6 +14,7 @@ const mockedSivilstand = ESivilstand.GIFT;
 silenceConsoleErrors();
 
 describe('Personopplysninger', () => {
+    beforeEach(() => mockEøs());
     test('Rendrer adresse i personopplysninger', async () => {
         const søker: Partial<ISøker> = {
             adresse: {

@@ -6,7 +6,7 @@ import { mockDeep } from 'jest-mock-extended';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
 import { ESivilstand, ISøker } from '../../../typer/person';
 import { ESøknadstype } from '../../../typer/søknad';
-import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import LastOppVedlegg from './LastOppVedlegg';
 
 const hentAnnenDokumentasjon = (): IDokumentasjon => {
@@ -31,6 +31,7 @@ describe('LastOppVedlegg', () => {
     beforeEach(() => {
         silenceConsoleErrors();
         jest.resetModules();
+        mockEøs();
     });
 
     it('Viser ikke info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON', () => {

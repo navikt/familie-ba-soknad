@@ -9,12 +9,13 @@ import {
     IBarnMedISøknad,
 } from '../../../typer/person';
 import { genererInitialBarnMedISøknad } from '../../../utils/barn';
-import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import { useOmBarnet } from './useOmBarnet';
 
 describe('useOmBarnet', () => {
+    beforeEach(() => mockEøs());
     const barnFraPdl: IBarn = {
         id: 'random-id-1',
         navn: 'Barn Barnessen',

@@ -4,6 +4,7 @@ import { act, render } from '@testing-library/react';
 
 import { IBarn } from '../../../../typer/person';
 import {
+    mockEøs,
     mockHistory,
     silenceConsoleErrors,
     spyOnUseApp,
@@ -12,7 +13,10 @@ import {
 import VelgBarn from '../VelgBarn';
 
 describe('FjernBarnKnapp', () => {
-    mockHistory(['/velg-barn']);
+    beforeEach(() => {
+        mockHistory(['/velg-barn']);
+        mockEøs();
+    });
 
     test(`Kan fjern-knapp dukker kun opp på manuelt registrerte barn`, () => {
         silenceConsoleErrors();

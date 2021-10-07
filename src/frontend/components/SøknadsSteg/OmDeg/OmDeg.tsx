@@ -3,6 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -20,6 +21,7 @@ const OmDeg: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmdeg();
     const { søknad } = useApp();
     const { søker } = søknad;
+    const { erEøsLand } = useEøs();
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
@@ -87,6 +89,9 @@ const OmDeg: React.FC = () => {
                                     />
                                 }
                             />
+                            {erEøsLand(skjema.felter.oppholdsland.verdi) && (
+                                <VedleggNotis språkTekstId={'omdeg.opphold-i-norge.eøs-info'} />
+                            )}
                             <Datovelger
                                 avgrensDatoFremITid={true}
                                 felt={skjema.felter.oppholdslandDato}
@@ -151,6 +156,9 @@ const OmDeg: React.FC = () => {
                         }
                         dynamisk
                     />
+                    {erEøsLand(skjema.felter.arbeidsland.verdi) && (
+                        <VedleggNotis språkTekstId={'omdeg.arbeid-utland.eøs-info'} />
+                    )}
 
                     <JaNeiSpm
                         skjema={skjema}
@@ -167,6 +175,9 @@ const OmDeg: React.FC = () => {
                         }
                         dynamisk
                     />
+                    {erEøsLand(skjema.felter.pensjonsland.verdi) && (
+                        <VedleggNotis språkTekstId={'omdeg.utenlandspensjon.eøs-info'} />
+                    )}
                 </KomponentGruppe>
             )}
         </Steg>
