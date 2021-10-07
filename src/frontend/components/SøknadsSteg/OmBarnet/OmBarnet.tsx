@@ -145,7 +145,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         OmBarnetSpørsmålsId.søkerForTidsromStartdato
                                     ]
                                 }
-                                avgrensDato={gårsdagensDato()}
+                                avgrensMaxDato={gårsdagensDato()}
                             />
                             {erUtvidet && søknad.søker.sivilstand.type === ESivilstand.SKILT && (
                                 <VedleggNotis

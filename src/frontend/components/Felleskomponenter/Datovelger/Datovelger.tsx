@@ -23,7 +23,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 interface DatoVelgerProps {
     felt: Felt<ISODateString>;
     avgrensDatoFremITid?: boolean;
-    avgrensDato?: ISODateString;
+    avgrensMaxDato?: ISODateString;
     tilhørendeFraOgMedFelt?: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
     labelTekstId: string;
@@ -51,7 +51,7 @@ const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
 const Datovelger: React.FC<DatoVelgerProps> = ({
     felt,
     avgrensDatoFremITid = false,
-    avgrensDato,
+    avgrensMaxDato,
     tilhørendeFraOgMedFelt,
     skjema,
     labelTekstId,
@@ -71,8 +71,8 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 .format('YYYY-MM-DD');
         }
 
-        if (avgrensDatoFremITid || avgrensDato) {
-            limitations.maxDate = avgrensDato ? avgrensDato : dagensDato();
+        if (avgrensDatoFremITid || avgrensMaxDato) {
+            limitations.maxDate = avgrensMaxDato ? avgrensMaxDato : dagensDato();
         }
 
         return limitations;
@@ -80,7 +80,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
 
     useEffect(() => {
         felt.validerOgSettFelt(felt.verdi);
-    }, [tilhørendeFraOgMedFelt?.verdi, avgrensDato]);
+    }, [tilhørendeFraOgMedFelt?.verdi, avgrensMaxDato]);
 
     return felt.erSynlig ? (
         <span aria-live={dynamisk ? 'polite' : 'off'}>

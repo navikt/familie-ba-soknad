@@ -114,7 +114,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         />
                     )}
                     <Datovelger
-                        avgrensDato={gårsdagensDato()}
+                        avgrensMaxDato={gårsdagensDato()}
                         felt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
                         labelTekstId={
