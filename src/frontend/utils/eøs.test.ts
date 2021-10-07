@@ -1,6 +1,7 @@
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import { ISøknad } from '../typer/søknad';
 import { landSvarSomKanTriggeEøs } from './eøs';
 import { mekkGyldigSøknad } from './testing';
 
@@ -8,8 +9,14 @@ describe('eøs', () => {
     describe('landSvarSomKanTriggeEøs', () => {
         it('should ', () => {
             const søknad = mekkGyldigSøknad();
-            const mockSøknad = {
+            const mockSøknad: ISøknad = {
                 ...søknad,
+                søker: {
+                    ...søknad.søker,
+                    oppholdsland: { ...søknad.søker.oppholdsland, svar: 'ALA' },
+                    arbeidsland: { ...søknad.søker.arbeidsland, svar: 'ALA' },
+                    pensjonsland: { ...søknad.søker.pensjonsland, svar: 'ALA' },
+                },
                 barnInkludertISøknaden: [
                     {
                         ...søknad.barnInkludertISøknaden[0],
@@ -36,7 +43,15 @@ describe('eøs', () => {
                 ],
             };
 
-            expect(landSvarSomKanTriggeEøs(mockSøknad)).toEqual(['BEL', 'BEL', 'BEL', 'BEL']);
+            expect(landSvarSomKanTriggeEøs(mockSøknad)).toEqual([
+                'ALA',
+                'ALA',
+                'ALA',
+                'BEL',
+                'BEL',
+                'BEL',
+                'BEL',
+            ]);
         });
     });
 });
