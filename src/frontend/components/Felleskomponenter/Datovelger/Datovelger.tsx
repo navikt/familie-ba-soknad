@@ -102,7 +102,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 feil={!!(felt.feilmelding && skjema.visFeilmeldinger)}
                 disabled={disabled}
                 locale={valgtLocale}
-                allowNavigationToDisabledMonths={true}
+                allowNavigationToDisabledMonths={false}
                 calendarSettings={{ position: calendarPosition }}
             />
             {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}

@@ -240,7 +240,9 @@ export const useOmBarnet = (
             : '',
         nårKomBarnTilNorgeDatoIkkeAnkommet,
         'ombarnet.sammenhengende-opphold.dato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
+        skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge),
+        false,
+        dagensDato()
     );
 
     const planleggerÅBoINorge12Mnd = useFelt<ESvar | null>({
