@@ -24,7 +24,7 @@ import Datovelger from './Datovelger';
 
 describe(`Datovelger`, () => {
     silenceConsoleErrors();
-    test(`Datovelger kan begrenses av annen datovelger`, () => {
+    test(`Datovelger kan begrenses av annen fra om med datovelger, og avgrensning frem i tid`, () => {
         const {
             result: { current },
         } = renderHook(
@@ -61,6 +61,7 @@ describe(`Datovelger`, () => {
                     tilhørendeFraOgMedFelt={current.fraOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-til-og-med'}
+                    avgrensDatoFremITid={true}
                 />
             </TestProvidere>
         );
@@ -74,7 +75,7 @@ describe(`Datovelger`, () => {
         // Lukk denne datovelgeren for å resette før neste del av testen
         act(() => tilOgMedÅpneknapp.click());
 
-        // Samme oppsett men tester avgrensning fremover
+        // Samme oppsett men tester avgrensning dato frem i tid
         rerender(
             <TestProvidere>
                 <Datovelger
