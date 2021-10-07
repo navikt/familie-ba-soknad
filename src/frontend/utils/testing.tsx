@@ -21,6 +21,7 @@ import {
 import * as appContext from '../context/AppContext';
 import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
+import * as eøsContext from '../context/EøsContext';
 import { EøsProvider } from '../context/EøsContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
@@ -29,6 +30,7 @@ import { IKvittering } from '../typer/kvittering';
 import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad, Årsak } from '../typer/søknad';
 import { genererInitialBarnMedISøknad } from './barn';
+import * as eøsUtils from './eøs';
 
 export const spyOnUseApp = søknad => {
     const settSøknad = jest.fn();
@@ -74,6 +76,19 @@ export const spyOnUseApp = søknad => {
         erPåKvitteringsside,
         axiosRequestMock,
     };
+};
+
+export const mockEøs = (eøsSkruddAv = false) => {
+    // Prøvde å gjøre dette med __mocks__ uten hell, mocken ble ikke brukt av jest. Gjerne prøv igjen.
+    const landSvarSomKanTriggeEøs = jest
+        .spyOn(eøsUtils, 'landSvarSomKanTriggeEøs')
+        .mockReturnValue([]);
+    const erEøsLand = jest.fn();
+    const useEøs = jest.spyOn(eøsContext, 'useEøs').mockReturnValue({
+        erEøsLand,
+        eøsSkruddAv,
+    });
+    return { landSvarSomKanTriggeEøs, useEøs, erEøsLand };
 };
 
 export const brukUseAppMedTomSøknadForRouting = () => spyOnUseApp({ barnInkludertISøknaden: [] });
