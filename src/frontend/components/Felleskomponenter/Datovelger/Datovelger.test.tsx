@@ -10,6 +10,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { ISkjema, useFelt } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { dagensDato } from '../../../utils/dato';
 import {
     mekkGyldigSøknad,
     mockHistory,
@@ -30,11 +31,11 @@ describe(`Datovelger`, () => {
         } = renderHook(
             () => {
                 const fraOgMed = useFelt<ISODateString>({
-                    verdi: '2020-02-04',
+                    verdi: dagensDato(),
                     feltId: 'fra-og-med',
                 });
                 const tilOgMed = useFelt<ISODateString>({
-                    verdi: '2020-02-04',
+                    verdi: dagensDato(),
                     feltId: 'til-og-med',
                 });
                 return {
@@ -49,7 +50,7 @@ describe(`Datovelger`, () => {
             visFeilmeldinger: true,
         });
 
-        const { getAllByRole, container, rerender } = render(
+        const { getAllByRole, container } = render(
             <TestProvidere>
                 <Datovelger
                     felt={current.fraOgMed}
@@ -75,24 +76,7 @@ describe(`Datovelger`, () => {
         // Lukk denne datovelgeren for å resette før neste del av testen
         act(() => tilOgMedÅpneknapp.click());
 
-        // Samme oppsett men tester avgrensning dato frem i tid
-        rerender(
-            <TestProvidere>
-                <Datovelger
-                    felt={current.tilOgMed}
-                    skjema={skjemaMock}
-                    labelTekstId={'test-til-og-med'}
-                />
-                <Datovelger
-                    felt={current.fraOgMed}
-                    skjema={skjemaMock}
-                    labelTekstId={'test-fra-og-med'}
-                />
-            </TestProvidere>
-        );
-
-        const fraOgMedÅpneknapp = getAllByRole('button')[1];
-        act(() => fraOgMedÅpneknapp.click());
+        act(() => tilOgMedÅpneknapp.click());
         const nesteDag = container.querySelector('[aria-selected="true"]')?.nextElementSibling;
         expect(nesteDag?.getAttribute('aria-disabled')).toEqual('true');
     });
