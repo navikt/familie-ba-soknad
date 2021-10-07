@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { render } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 
 import navFarger from 'nav-frontend-core';
 
@@ -22,12 +23,14 @@ describe('Forside', () => {
         mockEøs();
     });
 
-    test('Alle tekster finnes i språkfil', () => {
-        render(
-            <TestProvidereMedEkteTekster>
-                <Forside />
-            </TestProvidereMedEkteTekster>
-        );
+    test('Alle tekster finnes i språkfil', async () => {
+        await act(async () => {
+            render(
+                <TestProvidereMedEkteTekster>
+                    <Forside />
+                </TestProvidereMedEkteTekster>
+            );
+        });
         expect(console.error).toHaveBeenCalledTimes(0);
     });
 
