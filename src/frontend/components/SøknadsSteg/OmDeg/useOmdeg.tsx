@@ -10,6 +10,7 @@ import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFe
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
+import { dagensDato } from '../../../utils/dato';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export type ESvarMedUbesvart = ESvar | null;
@@ -89,7 +90,7 @@ export const useOmdeg = (): {
         ESvar.NEI,
         oppholderSegINorge,
         'omdeg.opphold-i-norge.dato.feilmelding',
-        true
+        dagensDato()
     );
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
@@ -108,7 +109,7 @@ export const useOmdeg = (): {
         ESvar.NEI,
         værtINorgeITolvMåneder,
         'omdeg.opphold-sammenhengende.dato.feilmelding',
-        true
+        dagensDato()
     );
 
     const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({

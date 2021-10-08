@@ -18,6 +18,7 @@ import {
     ITidligereSamboer,
 } from '../../../typer/person';
 import { Årsak } from '../../../typer/søknad';
+import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -173,7 +174,7 @@ export const useDinLivssituasjon = (): {
         ESvar.JA,
         harSamboerNå,
         'omdeg.nårstartetsamboerforhold.feilmelding',
-        true
+        dagensDato()
     );
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<

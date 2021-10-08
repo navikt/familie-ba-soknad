@@ -11,22 +11,31 @@ const useDatovelgerFeltMedJaNeiAvhengighet = (
     avhengigSvarCondition: ESvar,
     avhengighet: Felt<ESvar | null>,
     feilmeldingSpråkId: string,
-    avgrensDatoFremITid = false
+    sluttdatoAvgrensning = '',
+    startdatoAvgrensning = ''
 ) => {
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
 
     const dato = useFelt<ISODateString>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
-        valideringsfunksjon: felt => {
-            return validerDato(felt, avgrensDatoFremITid, feilmeldingSpråkId);
+        valideringsfunksjon: (felt, avhengigheter) => {
+            const startdatoAvgrensning = avhengigheter && avhengigheter.startdatoAvgrensning;
+            const sluttdatoAvgrensning = avhengigheter && avhengigheter.sluttdatoAvgrensning;
+
+            return validerDato(
+                felt,
+                feilmeldingSpråkId,
+                startdatoAvgrensning,
+                sluttdatoAvgrensning
+            );
         },
         skalFeltetVises: avhengigheter => {
             return avhengigheter && (avhengigheter.jaNeiSpm as Felt<ESvar | null>)
                 ? skalFeltetVises(avhengigheter.jaNeiSpm.verdi)
                 : true;
         },
-        avhengigheter: { jaNeiSpm: avhengighet },
+        avhengigheter: { jaNeiSpm: avhengighet, sluttdatoAvgrensning, startdatoAvgrensning },
     });
 
     useEffect(() => {
