@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import dayjs from 'dayjs';
 import { useIntl } from 'react-intl';
 import { css } from 'styled-components';
 import styled from 'styled-components/macro';
@@ -12,17 +13,18 @@ import {
     FamilieDatovelger,
     ISODateString,
 } from '@navikt/familie-form-elements';
-import { Felt, ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { dagensDato } from '../../../utils/dato';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface DatoVelgerProps {
-    avgrensDatoFremITid?: boolean;
     felt: Felt<ISODateString>;
-    fraOgMedFelt?: Felt<ISODateString>;
-    tilOgMedFelt?: Felt<ISODateString>;
+    avgrensDatoFremITid?: boolean;
+    avgrensMaxDato?: ISODateString;
+    tilhørendeFraOgMedFelt?: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
     labelTekstId: string;
     disabled?: boolean;
@@ -46,19 +48,11 @@ const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
         `}
 `;
 
-const max = (a: ISODateString, b: ISODateString): ISODateString => {
-    return a > b ? a : b;
-};
-
-const min = (a: ISODateString, b: ISODateString): ISODateString => {
-    return a > b ? b : a;
-};
-
 const Datovelger: React.FC<DatoVelgerProps> = ({
-    avgrensDatoFremITid = false,
     felt,
-    fraOgMedFelt,
-    tilOgMedFelt,
+    avgrensDatoFremITid = false,
+    avgrensMaxDato,
+    tilhørendeFraOgMedFelt,
     skjema,
     labelTekstId,
     disabled = false,
@@ -71,36 +65,22 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     const hentBegrensninger = () => {
         const limitations: DatepickerLimitations = {};
 
-        const fraOgMed =
-            fraOgMedFelt?.valideringsstatus === Valideringsstatus.OK ? fraOgMedFelt.verdi : null;
-
-        const tilOgMed =
-            tilOgMedFelt?.valideringsstatus === Valideringsstatus.OK ? tilOgMedFelt.verdi : null;
-
-        if (avgrensDatoFremITid || tilOgMed) {
-            limitations.maxDate = tilOgMed ?? new Date().toISOString();
+        if (tilhørendeFraOgMedFelt) {
+            limitations.minDate = dayjs(tilhørendeFraOgMedFelt.verdi)
+                .add(1, 'day')
+                .format('YYYY-MM-DD');
         }
 
-        if (fraOgMed) {
-            limitations.minDate = fraOgMed;
+        if (avgrensDatoFremITid || avgrensMaxDato) {
+            limitations.maxDate = avgrensMaxDato ? avgrensMaxDato : dagensDato();
         }
 
         return limitations;
     };
 
     useEffect(() => {
-        /**
-         * Hvis dette feltet settes før avhengighetsfeltet settes bør vi opdatere dette feltet
-         * slik at vi holder oss innenfor de satte begresningene.
-         */
-        fraOgMedFelt?.valideringsstatus === Valideringsstatus.OK &&
-            felt.verdi &&
-            felt.hentNavInputProps(false).onChange(max(felt.verdi, fraOgMedFelt.verdi));
-
-        tilOgMedFelt?.valideringsstatus === Valideringsstatus.OK &&
-            felt.verdi &&
-            felt.hentNavInputProps(false).onChange(min(felt.verdi, tilOgMedFelt.verdi));
-    }, [fraOgMedFelt?.verdi, tilOgMedFelt?.verdi]);
+        felt.validerOgSettFelt(felt.verdi);
+    }, [tilhørendeFraOgMedFelt?.verdi, avgrensMaxDato]);
 
     return felt.erSynlig ? (
         <span aria-live={dynamisk ? 'polite' : 'off'}>
@@ -122,7 +102,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 feil={!!(felt.feilmelding && skjema.visFeilmeldinger)}
                 disabled={disabled}
                 locale={valgtLocale}
-                allowNavigationToDisabledMonths={true}
+                allowNavigationToDisabledMonths={false}
                 calendarSettings={{ position: calendarPosition }}
             />
             {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
