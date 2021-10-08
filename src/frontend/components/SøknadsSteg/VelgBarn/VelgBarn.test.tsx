@@ -40,6 +40,7 @@ describe('VelgBarn', () => {
     beforeEach(() => {
         mockHistory(['/velg-barn']);
         jest.spyOn(eøsUtils, 'landSvarSomKanTriggeEøs').mockReturnValue([]);
+        jest.spyOn(eøsUtils, 'jaNeiSvarTriggerEøs').mockReturnValue(false);
         jest.spyOn(eøsContext, 'useEøs').mockImplementation(jest.fn());
     });
 
