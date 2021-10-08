@@ -19,7 +19,7 @@ import LastOppVedlegg from './LastOppVedlegg';
 
 // Vedlegg er lagret 48 timer
 export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => {
-    const grenseTidForVedlegg = dayjs(vedleggTidspunkt).add(48, 'hours');
+    const grenseTidForVedlegg = dayjs(vedleggTidspunkt).add(46, 'hours');
     return dayjs().isBefore(grenseTidForVedlegg);
 };
 
