@@ -1,3 +1,5 @@
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { IBarnMedISøknad } from '../typer/person';
 import { ISøknad } from '../typer/søknad';
 
@@ -11,6 +13,8 @@ export const landSvarSomKanTriggeEøs = (søknad: ISøknad) => {
         barn.oppholdsland.svar,
         barn.barnetrygdFraEøslandHvilketLand.svar,
     ]);
-
     return fraOmDeg.concat(fraOmBarnet);
 };
+
+export const jaNeiSvarTriggerEøs = (søknad: ISøknad) =>
+    søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar === ESvar.JA;

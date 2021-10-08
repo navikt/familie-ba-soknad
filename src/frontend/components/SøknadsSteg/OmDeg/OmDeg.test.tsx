@@ -5,6 +5,7 @@ import { mockDeep } from 'jest-mock-extended';
 
 import { ISøker } from '../../../typer/person';
 import {
+    mockEøs,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
@@ -30,6 +31,9 @@ jest.mock('nav-frontend-alertstriper', () => ({ children }) => (
 
 describe('OmDeg', () => {
     silenceConsoleErrors();
+    beforeEach(() => {
+        mockEøs();
+    });
     test('Alle tekster finnes i språkfil', () => {
         render(
             <TestProvidereMedEkteTekster>

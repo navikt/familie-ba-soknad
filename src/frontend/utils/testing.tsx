@@ -83,12 +83,13 @@ export const mockEøs = (eøsSkruddAv = false) => {
     const landSvarSomKanTriggeEøs = jest
         .spyOn(eøsUtils, 'landSvarSomKanTriggeEøs')
         .mockReturnValue([]);
+    const jaNeiSvarTriggerEøs = jest.spyOn(eøsUtils, 'jaNeiSvarTriggerEøs').mockReturnValue(false);
     const erEøsLand = jest.fn();
     const useEøs = jest.spyOn(eøsContext, 'useEøs').mockReturnValue({
         erEøsLand,
         eøsSkruddAv,
     });
-    return { landSvarSomKanTriggeEøs, useEøs, erEøsLand };
+    return { landSvarSomKanTriggeEøs, jaNeiSvarTriggerEøs, useEøs, erEøsLand };
 };
 
 export const brukUseAppMedTomSøknadForRouting = () => spyOnUseApp({ barnInkludertISøknaden: [] });
