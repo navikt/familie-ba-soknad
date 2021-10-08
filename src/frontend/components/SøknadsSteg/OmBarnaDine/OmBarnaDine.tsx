@@ -6,6 +6,7 @@ import styled from 'styled-components/macro';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -13,7 +14,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
@@ -37,6 +38,7 @@ const OmBarnaDine: React.FC = () => {
     const history = useHistory();
     const { søknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
+    const { eøsSkruddAv } = useEøs();
 
     if (!barnInkludertISøknaden.length) {
         history.push('/velg-barn');
@@ -61,10 +63,8 @@ const OmBarnaDine: React.FC = () => {
                     }
                 />
                 <HvilkeBarnCheckboxGruppe
-                    legend={
-                        <SpråkTekst
-                            id={omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErFosterbarn]}
-                        />
+                    legendSpråkId={
+                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErFosterbarn]
                     }
                     skjemafelt={skjema.felter.hvemErFosterbarn}
                     søknadsdatafelt={barnDataKeySpørsmål.erFosterbarn}
@@ -83,14 +83,10 @@ const OmBarnaDine: React.FC = () => {
                 />
 
                 <HvilkeBarnCheckboxGruppe
-                    legend={
-                        <SpråkTekst
-                            id={
-                                omBarnaDineSpørsmålSpråkId[
-                                    OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon
-                                ]
-                            }
-                        />
+                    legendSpråkId={
+                        omBarnaDineSpørsmålSpråkId[
+                            OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon
+                        ]
                     }
                     skjemafelt={skjema.felter.hvemOppholderSegIInstitusjon}
                     søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIInstitusjon}
@@ -120,14 +116,10 @@ const OmBarnaDine: React.FC = () => {
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
-                        legend={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland
-                                    ]
-                                }
-                            />
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland
+                            ]
                         }
                         skjemafelt={skjema.felter.hvemErAdoptertFraUtland}
                         søknadsdatafelt={barnDataKeySpørsmål.erAdoptertFraUtland}
@@ -151,14 +143,10 @@ const OmBarnaDine: React.FC = () => {
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
-                        legend={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemOppholderSegIUtland
-                                    ]
-                                }
-                            />
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.hvemOppholderSegIUtland
+                            ]
                         }
                         skjemafelt={skjema.felter.hvemOppholderSegIUtland}
                         søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIUtland}
@@ -180,14 +168,8 @@ const OmBarnaDine: React.FC = () => {
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
-                        legend={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemErSøktAsylFor
-                                    ]
-                                }
-                            />
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErSøktAsylFor]
                         }
                         skjemafelt={skjema.felter.hvemErSøktAsylFor}
                         søknadsdatafelt={barnDataKeySpørsmål.erAsylsøker}
@@ -209,14 +191,10 @@ const OmBarnaDine: React.FC = () => {
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
-                        legend={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge
-                                    ]
-                                }
-                            />
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge
+                            ]
                         }
                         skjemafelt={skjema.felter.hvemTolvMndSammenhengendeINorge}
                         søknadsdatafelt={barnDataKeySpørsmål.boddMindreEnn12MndINorge}
@@ -240,15 +218,12 @@ const OmBarnaDine: React.FC = () => {
                             ]
                         }
                     />
+
                     <HvilkeBarnCheckboxGruppe
-                        legend={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland
-                                    ]
-                                }
-                            />
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[
+                                OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland
+                            ]
                         }
                         skjemafelt={skjema.felter.hvemBarnetrygdFraAnnetEøsland}
                         søknadsdatafelt={barnDataKeySpørsmål.barnetrygdFraAnnetEøsland}
@@ -256,10 +231,16 @@ const OmBarnaDine: React.FC = () => {
                             skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.NEI
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
-                    />
-                    {skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.JA && (
-                        <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
-                    )}
+                    >
+                        {skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.JA &&
+                            (eøsSkruddAv ? (
+                                <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
+                            ) : (
+                                <VedleggNotisTilleggsskjema
+                                    språkTekstId={'ombarna.barnetrygd-eøs.eøs-info'}
+                                />
+                            ))}
+                    </HvilkeBarnCheckboxGruppe>
                 </KomponentGruppe>
             )}
         </Steg>

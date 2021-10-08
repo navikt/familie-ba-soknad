@@ -8,7 +8,7 @@ import { RessursStatus } from '@navikt/familie-typer';
 import Miljø, { basePath } from '../Miljø';
 import { EFeatureToggle } from '../typer/feature-toggles';
 import { autentiseringsInterceptor } from '../utils/autentisering';
-import { landSvarSomKanTriggeEøs } from '../utils/eøs';
+import { jaNeiSvarTriggerEøs, landSvarSomKanTriggeEøs } from '../utils/eøs';
 import { useApp } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 
@@ -56,8 +56,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
 
     useEffect(() => {
         const landSvarTriggerEøs = !!landSvarSomKanTriggeEøs(søknad).find(land => erEøsLand(land));
-
-        settSøknad({ ...søknad, erEøs: landSvarTriggerEøs });
+        settSøknad({ ...søknad, erEøs: landSvarTriggerEøs || jaNeiSvarTriggerEøs(søknad) });
     }, [søknad.søker, søknad.barnInkludertISøknaden]);
 
     return {
