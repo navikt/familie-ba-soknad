@@ -16,6 +16,7 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { KontonummerInfo } from './KontonummerInfo';
 
 const Kvittering: React.FC = () => {
     const {
@@ -79,6 +80,10 @@ const Kvittering: React.FC = () => {
                         }}
                     />
                 </Normaltekst>
+            </KomponentGruppe>
+
+            <KomponentGruppe>
+                <KontonummerInfo />
             </KomponentGruppe>
 
             <Informasjonsbolk tittelId={'kvittering.ikke-lastet-opp'}>
