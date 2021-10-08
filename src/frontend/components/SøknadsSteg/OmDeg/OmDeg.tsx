@@ -12,7 +12,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
@@ -90,7 +90,10 @@ const OmDeg: React.FC = () => {
                                 }
                             />
                             {erEøsLand(skjema.felter.oppholdsland.verdi) && (
-                                <VedleggNotis språkTekstId={'omdeg.opphold-i-norge.eøs-info'} />
+                                <VedleggNotisTilleggsskjema
+                                    språkTekstId={'omdeg.opphold-i-norge.eøs-info'}
+                                    dynamisk
+                                />
                             )}
                             <Datovelger
                                 avgrensDatoFremITid={true}
@@ -157,7 +160,10 @@ const OmDeg: React.FC = () => {
                         dynamisk
                     />
                     {erEøsLand(skjema.felter.arbeidsland.verdi) && (
-                        <VedleggNotis språkTekstId={'omdeg.arbeid-utland.eøs-info'} />
+                        <VedleggNotisTilleggsskjema
+                            språkTekstId={'omdeg.arbeid-utland.eøs-info'}
+                            dynamisk
+                        />
                     )}
 
                     <JaNeiSpm
@@ -176,7 +182,10 @@ const OmDeg: React.FC = () => {
                         dynamisk
                     />
                     {erEøsLand(skjema.felter.pensjonsland.verdi) && (
-                        <VedleggNotis språkTekstId={'omdeg.utenlandspensjon.eøs-info'} />
+                        <VedleggNotisTilleggsskjema
+                            språkTekstId={'omdeg.utenlandspensjon.eøs-info'}
+                            dynamisk
+                        />
                     )}
                 </KomponentGruppe>
             )}
