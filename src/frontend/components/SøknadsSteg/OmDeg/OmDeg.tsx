@@ -89,10 +89,12 @@ const OmDeg: React.FC = () => {
                                     />
                                 }
                             />
-                            <VedleggNotisTilleggsskjema
-                                språkTekstId={'omdeg.opphold-i-norge.eøs-info'}
-                                dynamisk
-                            />
+                            {erEøsLand(skjema.felter.oppholdsland.verdi) && (
+                                <VedleggNotisTilleggsskjema
+                                    språkTekstId={'omdeg.opphold-i-norge.eøs-info'}
+                                    dynamisk
+                                />
+                            )}
                             <Datovelger
                                 avgrensDatoFremITid={true}
                                 felt={skjema.felter.oppholdslandDato}

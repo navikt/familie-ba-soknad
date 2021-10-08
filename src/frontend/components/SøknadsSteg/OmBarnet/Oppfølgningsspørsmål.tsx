@@ -18,7 +18,7 @@ import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaChe
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
 
@@ -108,7 +108,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         }
                     />
                     {erEøsLand(skjema.felter.oppholdsland.verdi) && (
-                        <VedleggNotis
+                        <VedleggNotisTilleggsskjema
                             språkTekstId={'ombarnet.oppholdutland.eøs-info'}
                             språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                         />
