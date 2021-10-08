@@ -37,10 +37,15 @@ describe('LastOppVedlegg', () => {
     it('Viser ikke info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON', () => {
         spyOnUseApp({});
         const dokumentasjon = hentAnnenDokumentasjon();
+        const oppdaterDokumentasjon = jest.fn();
 
         const { getByText, queryByText } = render(
             <TestProvidere>
-                <LastOppVedlegg dokumentasjon={dokumentasjon} vedleggNr={1} />
+                <LastOppVedlegg
+                    dokumentasjon={dokumentasjon}
+                    vedleggNr={1}
+                    oppdaterDokumentasjon={oppdaterDokumentasjon}
+                />
             </TestProvidere>
         );
 
@@ -67,10 +72,15 @@ describe('LastOppVedlegg', () => {
 
         return import('../../../typer/søknad').then(() => {
             const dokumentasjon = hentAnnenDokumentasjon();
+            const oppdaterDokumentasjon = jest.fn();
 
             const { getByText, queryByText } = render(
                 <TestProvidere>
-                    <LastOppVedlegg dokumentasjon={dokumentasjon} vedleggNr={1} />
+                    <LastOppVedlegg
+                        dokumentasjon={dokumentasjon}
+                        vedleggNr={1}
+                        oppdaterDokumentasjon={oppdaterDokumentasjon}
+                    />
                 </TestProvidere>
             );
 

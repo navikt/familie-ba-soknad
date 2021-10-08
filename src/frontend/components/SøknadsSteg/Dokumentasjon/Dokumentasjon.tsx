@@ -1,5 +1,7 @@
 import React from 'react';
 
+import dayjs from 'dayjs';
+
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { RessursStatus } from '@navikt/familie-typer';
@@ -8,7 +10,7 @@ import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
-import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
+import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -17,10 +19,31 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import LastOppVedlegg from './LastOppVedlegg';
 
+// Vedlegg er lagret 48 timer
+export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => {
+    const grenseTidForVedlegg = dayjs(vedleggTidspunkt).add(46, 'hours');
+    return dayjs().isBefore(grenseTidForVedlegg);
+};
+
 const Dokumentasjon: React.FC = () => {
-    const { søknad, settSøknad, innsendingStatus } = useApp();
+    const { søknad, settSøknad, innsendingStatus, mellomlagre } = useApp();
     const { eøsSkruddAv } = useEøs();
     const { sendInnSkjema } = useSendInnSkjema();
+
+    const oppdaterDokumentasjon = (
+        dokumentasjonsbehov: Dokumentasjonsbehov,
+        opplastedeVedlegg: IVedlegg[],
+        harSendtInn: boolean
+    ) => {
+        settSøknad(prevState => ({
+            ...prevState,
+            dokumentasjon: prevState.dokumentasjon.map(dok =>
+                dok.dokumentasjonsbehov === dokumentasjonsbehov
+                    ? { ...dok, opplastedeVedlegg, harSendtInn }
+                    : dok
+            ),
+        }));
+    };
 
     useFørsteRender(() => {
         if (!eøsSkruddAv && søknad.erEøs) {
@@ -33,6 +56,19 @@ const Dokumentasjon: React.FC = () => {
                 ),
             });
         }
+
+        // Fjern vedlegg som evt. har blitt slettet i familie-dokument
+        søknad.dokumentasjon.forEach((dok: IDokumentasjon) => {
+            if (dok.opplastedeVedlegg) {
+                const gyldigeVedlegg = dok.opplastedeVedlegg.filter(vedlegg =>
+                    erVedleggstidspunktGyldig(vedlegg.tidspunkt)
+                );
+                if (gyldigeVedlegg.length !== dok.opplastedeVedlegg.length) {
+                    oppdaterDokumentasjon(dok.dokumentasjonsbehov, gyldigeVedlegg, dok.harSendtInn);
+                    mellomlagre();
+                }
+            }
+        });
     });
 
     return (
@@ -56,6 +92,7 @@ const Dokumentasjon: React.FC = () => {
                         key={index}
                         vedleggNr={index + 1}
                         dokumentasjon={dokumentasjon}
+                        oppdaterDokumentasjon={oppdaterDokumentasjon}
                     />
                 ))}
             {innsendingStatus.status === RessursStatus.FEILET && <Feilside />}

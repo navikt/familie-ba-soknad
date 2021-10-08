@@ -8,6 +8,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { DeleteFilled } from '@navikt/ds-icons';
 
 import { AlternativtSvarForInput, ITidligereSamboer } from '../../../typer/person';
+import { formaterDato } from '../../../utils/dato';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { samboerSpråkIder } from './spørsmål';
@@ -63,11 +64,11 @@ const SamboerOpplysninger: React.FC<{
             )}
             <Informasjonsbolk>
                 <Spørsmål språkId={samboerSpråkIder.samboerFraDato} />
-                <Normaltekst>{samboer.samboerFraDato.svar}</Normaltekst>
+                <Normaltekst>{formaterDato(samboer.samboerFraDato.svar)}</Normaltekst>
             </Informasjonsbolk>
             <Informasjonsbolk>
                 <Spørsmål språkId={samboerSpråkIder.samboerTilDato} />
-                <Normaltekst>{samboer.samboerTilDato.svar}</Normaltekst>
+                <Normaltekst>{formaterDato(samboer.samboerTilDato.svar)}</Normaltekst>
             </Informasjonsbolk>
             <SlettKnapp htmlType={'button'} kompakt onClick={() => fjernTidligereSamboer(samboer)}>
                 <DeleteFilled />

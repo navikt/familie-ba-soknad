@@ -82,10 +82,10 @@ const [AppProvider, useApp] = createUseContext(() => {
     };
 
     useEffect(() => {
-        if (sisteUtfylteStegIndex > 0 && nåværendeRoute !== RouteEnum.Dokumentasjon) {
+        if (sisteUtfylteStegIndex > 0) {
             mellomlagre();
         }
-    }, [søknad, sisteUtfylteStegIndex, nåværendeRoute]);
+    }, [nåværendeRoute]);
 
     const hentOgSettMellomlagretData = () => {
         preferredAxios
@@ -189,6 +189,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetFeiler,
         systemetOK,
         systemetLaster,
+        mellomlagre,
     };
 });
 
