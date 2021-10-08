@@ -12,6 +12,8 @@ export const landSvarSomKanTriggeEøs = (søknad: ISøknad) => {
     const fraOmBarnet = søknad.barnInkludertISøknaden.flatMap((barn: IBarnMedISøknad) => [
         barn.oppholdsland.svar,
         barn.barnetrygdFraEøslandHvilketLand.svar,
+        barn.andreForelderArbeidUtlandetHvilketLand.svar,
+        barn.andreForelderPensjonHvilketLand.svar,
     ]);
     return fraOmDeg.concat(fraOmBarnet);
 };

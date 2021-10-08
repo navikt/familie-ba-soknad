@@ -54,13 +54,18 @@ export const VedleggNotis: React.FC<{
     );
 };
 
-export const VedleggNotisTilleggsskjema: React.FC<{ språkTekstId: string; dynamisk?: boolean }> = ({
-    språkTekstId,
-    dynamisk = false,
-}) => {
+export const VedleggNotisTilleggsskjema: React.FC<{
+    språkTekstId: string;
+    dynamisk?: boolean;
+    språkValues?: Record<string, ReactNode>;
+}> = ({ språkTekstId, dynamisk = false, språkValues = {} }) => {
     return (
         <>
-            <VedleggNotis språkTekstId={språkTekstId} dynamisk={dynamisk} />
+            <VedleggNotis
+                språkTekstId={språkTekstId}
+                dynamisk={dynamisk}
+                språkValues={språkValues}
+            />
             <StyledEksternLenkeWrapper
                 lenkeSpråkId={'eøs.tilleggsskjema.lenke'}
                 lenkeTekstSpråkId={'eøs.tilleggsskjema.lenketekst'}
