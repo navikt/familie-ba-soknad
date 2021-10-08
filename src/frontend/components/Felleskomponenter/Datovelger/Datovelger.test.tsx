@@ -10,6 +10,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { ISkjema, useFelt } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { dagensDato } from '../../../utils/dato';
 import {
     mekkGyldigSøknad,
     mockHistory,
@@ -24,17 +25,17 @@ import Datovelger from './Datovelger';
 
 describe(`Datovelger`, () => {
     silenceConsoleErrors();
-    test(`Datovelger kan begrenses av annen datovelger`, () => {
+    test(`Datovelger kan begrenses av annen fra om med datovelger, og avgrensning frem i tid`, () => {
         const {
             result: { current },
         } = renderHook(
             () => {
                 const fraOgMed = useFelt<ISODateString>({
-                    verdi: '2020-02-04',
+                    verdi: dagensDato(),
                     feltId: 'fra-og-med',
                 });
                 const tilOgMed = useFelt<ISODateString>({
-                    verdi: '2020-02-04',
+                    verdi: dagensDato(),
                     feltId: 'til-og-med',
                 });
                 return {
@@ -49,7 +50,7 @@ describe(`Datovelger`, () => {
             visFeilmeldinger: true,
         });
 
-        const { getAllByRole, container, rerender } = render(
+        const { getAllByRole, container } = render(
             <TestProvidere>
                 <Datovelger
                     felt={current.fraOgMed}
@@ -58,9 +59,10 @@ describe(`Datovelger`, () => {
                 />
                 <Datovelger
                     felt={current.tilOgMed}
-                    fraOgMedFelt={current.fraOgMed}
+                    tilhørendeFraOgMedFelt={current.fraOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-til-og-med'}
+                    avgrensDatoFremITid={true}
                 />
             </TestProvidere>
         );
@@ -74,25 +76,7 @@ describe(`Datovelger`, () => {
         // Lukk denne datovelgeren for å resette før neste del av testen
         act(() => tilOgMedÅpneknapp.click());
 
-        // Samme oppsett men tester avgrensning fremover
-        rerender(
-            <TestProvidere>
-                <Datovelger
-                    felt={current.tilOgMed}
-                    skjema={skjemaMock}
-                    labelTekstId={'test-til-og-med'}
-                />
-                <Datovelger
-                    felt={current.fraOgMed}
-                    tilOgMedFelt={current.tilOgMed}
-                    skjema={skjemaMock}
-                    labelTekstId={'test-fra-og-med'}
-                />
-            </TestProvidere>
-        );
-
-        const fraOgMedÅpneknapp = getAllByRole('button')[1];
-        act(() => fraOgMedÅpneknapp.click());
+        act(() => tilOgMedÅpneknapp.click());
         const nesteDag = container.querySelector('[aria-selected="true"]')?.nextElementSibling;
         expect(nesteDag?.getAttribute('aria-disabled')).toEqual('true');
     });

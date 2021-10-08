@@ -6,6 +6,7 @@ import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjen
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import { DatoMedUkjent } from '../../../typer/person';
+import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { TidligereSamboerSpørsmålId } from './spørsmål';
 
 export interface ITidligereSamboerFeltTyper {
@@ -70,7 +71,8 @@ export const useTidligereSamboer = (): {
             svar: '',
         },
         true,
-        'omdeg.nårstartetsamboerforhold.feilmelding'
+        'omdeg.nårstartetsamboerforhold.feilmelding',
+        gårsdagensDato()
     );
 
     const tidligereSamboerTilDato = useDatovelgerFelt(
@@ -79,7 +81,9 @@ export const useTidligereSamboer = (): {
             svar: '',
         },
         true,
-        'omdeg.nårsamboerforholdavsluttet.feilmelding'
+        'omdeg.nårsamboerforholdavsluttet.feilmelding',
+        dagensDato(),
+        tidligereSamboerFraDato.verdi
     );
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<

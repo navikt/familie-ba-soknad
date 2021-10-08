@@ -38,6 +38,7 @@ import {
 } from '../../../typer/person';
 import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
+import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -181,7 +182,10 @@ export const useOmBarnet = (
             : '',
         institusjonOppholdSluttVetIkke,
         'ombarnet.institusjon.sluttdato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+        false,
+        undefined,
+        institusjonOppholdStartdato.verdi
     );
 
     /*---UTENLANDSOPPHOLD---*/
@@ -195,7 +199,8 @@ export const useOmBarnet = (
     const oppholdslandStartdato = useDatovelgerFelt(
         barn[barnDataKeySpørsmål.oppholdslandStartdato],
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland),
-        'ombarnet.oppholdutland.startdato.feilmelding'
+        'ombarnet.oppholdutland.startdato.feilmelding',
+        dagensDato()
     );
 
     const oppholdslandSluttDatoVetIkke = useFelt<ESvar>({
@@ -213,7 +218,10 @@ export const useOmBarnet = (
             : '',
         oppholdslandSluttDatoVetIkke,
         'ombarnet.oppholdutland.sluttdato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland),
+        false,
+        undefined,
+        oppholdslandStartdato.verdi
     );
 
     /*---BODD SAMMENHENGENDE I NORGE---*/
@@ -232,7 +240,9 @@ export const useOmBarnet = (
             : '',
         nårKomBarnTilNorgeDatoIkkeAnkommet,
         'ombarnet.sammenhengende-opphold.dato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
+        skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge),
+        false,
+        dagensDato()
     );
 
     const planleggerÅBoINorge12Mnd = useFelt<ESvar | null>({
@@ -527,7 +537,7 @@ export const useOmBarnet = (
         ESvar.JA,
         søkerForTidsrom,
         'ombarnet.søker-for-periode.startdato.feilmelding',
-        true
+        dagensDato()
     );
 
     const søkerForTidsromSluttdatoVetIkke = useFelt<ESvar>({
@@ -555,8 +565,9 @@ export const useOmBarnet = (
         søkerForTidsromSluttdatoVetIkke,
         'ombarnet.søker-for-periode.sluttdato.feilmelding',
         søkerForTidsrom.verdi === ESvar.JA,
-        true,
-        true
+        false,
+        dagensDato(),
+        søkerForTidsromStartdato.verdi
     );
 
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
@@ -608,7 +619,9 @@ export const useOmBarnet = (
             : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar,
         borMedAndreForelderCheckbox,
         'ombarnet.nårflyttetfra.feilmelding',
-        søkerHarBoddMedAndreForelder.verdi === ESvar.JA
+        søkerHarBoddMedAndreForelder.verdi === ESvar.JA,
+        true,
+        dagensDato()
     );
 
     const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
