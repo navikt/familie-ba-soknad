@@ -38,7 +38,7 @@ import {
 } from '../../../typer/person';
 import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -200,7 +200,7 @@ export const useOmBarnet = (
         barn[barnDataKeySpørsmål.oppholdslandStartdato],
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland),
         'ombarnet.oppholdutland.startdato.feilmelding',
-        gårsdagensDato()
+        dagensDato()
     );
 
     const oppholdslandSluttDatoVetIkke = useFelt<ESvar>({
@@ -537,7 +537,7 @@ export const useOmBarnet = (
         ESvar.JA,
         søkerForTidsrom,
         'ombarnet.søker-for-periode.startdato.feilmelding',
-        gårsdagensDato()
+        dagensDato()
     );
 
     const søkerForTidsromSluttdatoVetIkke = useFelt<ESvar>({
@@ -619,7 +619,9 @@ export const useOmBarnet = (
             : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar,
         borMedAndreForelderCheckbox,
         'ombarnet.nårflyttetfra.feilmelding',
-        søkerHarBoddMedAndreForelder.verdi === ESvar.JA
+        søkerHarBoddMedAndreForelder.verdi === ESvar.JA,
+        true,
+        dagensDato()
     );
 
     const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<

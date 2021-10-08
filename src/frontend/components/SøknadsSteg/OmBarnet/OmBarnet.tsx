@@ -10,7 +10,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { BarnetsId, ESivilstand } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { gårsdagensDato } from '../../../utils/dato';
+import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -145,7 +145,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         OmBarnetSpørsmålsId.søkerForTidsromStartdato
                                     ]
                                 }
-                                avgrensMaxDato={gårsdagensDato()}
+                                avgrensMaxDato={dagensDato()}
                             />
                             {erUtvidet && søknad.søker.sivilstand.type === ESivilstand.SKILT && (
                                 <VedleggNotis
@@ -208,6 +208,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 disabled={
                                     skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
                                 }
+                                avgrensDatoFremITid={true}
                             />
                             {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
                                 <div>

@@ -8,7 +8,7 @@ import { ISkjema } from '@navikt/familie-skjema';
 import { useEøs } from '../../../context/EøsContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { gårsdagensDato } from '../../../utils/dato';
+import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -114,7 +114,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         />
                     )}
                     <Datovelger
-                        avgrensMaxDato={gårsdagensDato()}
+                        avgrensMaxDato={dagensDato()}
                         felt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
                         labelTekstId={
