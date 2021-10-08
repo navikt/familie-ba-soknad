@@ -64,7 +64,7 @@ const SamboerSkjema: React.FC<{
                 felt={samboerFelter.samboerFraDato}
                 labelTekstId={samboerSpråkIder.samboerFraDato}
                 {...(samboerFelter.samboerTilDato && {
-                    avgrensDato: gårsdagensDato(),
+                    avgrensMaxDato: gårsdagensDato(),
                 })}
                 calendarPosition={erIModal ? 'fullscreen' : ''}
             />
