@@ -7,7 +7,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
@@ -27,7 +26,6 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 
 const Dokumentasjon: React.FC = () => {
     const { søknad, settSøknad, innsendingStatus, mellomlagre } = useApp();
-    const { eøsSkruddAv } = useEøs();
     const { sendInnSkjema } = useSendInnSkjema();
 
     const oppdaterDokumentasjon = (
@@ -45,19 +43,8 @@ const Dokumentasjon: React.FC = () => {
         }));
     };
 
+    // Fjern vedlegg som evt. har blitt slettet i familie-dokument
     useFørsteRender(() => {
-        if (!eøsSkruddAv && søknad.erEøs) {
-            settSøknad({
-                ...søknad,
-                dokumentasjon: søknad.dokumentasjon.map((dok: IDokumentasjon) =>
-                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA
-                        ? { ...dok, gjelderForSøker: true }
-                        : dok
-                ),
-            });
-        }
-
-        // Fjern vedlegg som evt. har blitt slettet i familie-dokument
         søknad.dokumentasjon.forEach((dok: IDokumentasjon) => {
             if (dok.opplastedeVedlegg) {
                 const gyldigeVedlegg = dok.opplastedeVedlegg.filter(vedlegg =>
