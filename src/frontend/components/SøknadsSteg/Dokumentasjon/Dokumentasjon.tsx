@@ -17,7 +17,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import LastOppVedlegg from './LastOppVedlegg';
 
-// Vedlegg er lagret ut neste døgn
+// Vedlegg er lagret 48 timer
 export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => {
     const grenseTidForVedlegg = dayjs(vedleggTidspunkt).add(48, 'hours');
     return dayjs().isBefore(grenseTidForVedlegg);
