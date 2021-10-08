@@ -22,34 +22,24 @@ import Filopplaster from './filopplaster/Filopplaster';
 interface Props {
     dokumentasjon: IDokumentasjon;
     vedleggNr: number;
+    oppdaterDokumentasjon: (
+        dokumentasjonsbehov: Dokumentasjonsbehov,
+        opplastedeVedlegg: IVedlegg[],
+        harSendtInn: boolean
+    ) => void;
 }
 
 const Container = styled.div`
     margin-bottom: 4rem;
 `;
 
-const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
-    const { søknad, settSøknad } = useApp();
+const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDokumentasjon }) => {
+    const { søknad } = useApp();
     const intl = useIntl();
     const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
         const huketAv = event.target.checked;
         const vedlegg = huketAv ? [] : dokumentasjon.opplastedeVedlegg;
         oppdaterDokumentasjon(dokumentasjon.dokumentasjonsbehov, vedlegg, huketAv);
-    };
-
-    const oppdaterDokumentasjon = (
-        dokumentasjonsbehov: Dokumentasjonsbehov,
-        opplastedeVedlegg: IVedlegg[],
-        harSendtInn: boolean
-    ) => {
-        settSøknad(prevState => ({
-            ...prevState,
-            dokumentasjon: prevState.dokumentasjon.map(dok =>
-                dok.dokumentasjonsbehov === dokumentasjonsbehov
-                    ? { ...dok, opplastedeVedlegg, harSendtInn }
-                    : dok
-            ),
-        }));
     };
 
     const formatertListeMedBarn = () => {
