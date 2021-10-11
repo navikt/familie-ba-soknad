@@ -50,7 +50,7 @@ describe('Datovelger', () => {
             visFeilmeldinger: true,
         });
 
-        const { getAllByRole, container, debug } = render(
+        const { getAllByRole, container } = render(
             <TestProvidere>
                 <Datovelger
                     felt={current.fraOgMed}
@@ -71,7 +71,6 @@ describe('Datovelger', () => {
         const forrigeDag = container.querySelector('[aria-selected="true"]')
             ?.previousElementSibling;
 
-        debug(container, 10000);
         expect(forrigeDag?.getAttribute('aria-disabled')).toEqual('true');
     });
 
