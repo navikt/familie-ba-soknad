@@ -86,7 +86,7 @@ describe('FjernBarnKnapp', () => {
         const fjernKnapp = getByText(/hvilkebarn.fjern-barn.knapp/);
         act(() => fjernKnapp.click());
 
-        expect(settSøknad).toHaveBeenCalledTimes(2); // Kjører to ganger fordi det er en useEffect i eøsContext som lytter på barnInkludertISøknaden som også kjører settSøknad.
+        expect(settSøknad).toHaveBeenCalledTimes(1);
         expect(settSøknad).toHaveBeenCalledWith({
             barnInkludertISøknaden: [],
             barnRegistrertManuelt: [],
