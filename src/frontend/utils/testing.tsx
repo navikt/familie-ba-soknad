@@ -171,6 +171,22 @@ export const mekkGyldigSøknad = (): ISøknad => {
         lestOgForståttBekreftelse: true,
         søker: {
             ...initialStateSøknad.søker,
+            harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
+            nåværendeSamboer: {
+                navn: { id: SamboerSpørsmålId.nåværendeSamboerNavn, svar: 'Gunnar' },
+                ident: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFnr,
+                    svar: AlternativtSvarForInput.UKJENT,
+                },
+                fødselsdato: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
+                    svar: AlternativtSvarForInput.UKJENT,
+                },
+                samboerFraDato: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFraDato,
+                    svar: '2021-08-11',
+                },
+            },
             borPåRegistrertAdresse: {
                 id: OmDegSpørsmålId.borPåRegistrertAdresse,
                 svar: ESvar.JA,
@@ -300,22 +316,6 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                     separertEnkeSkiltDato: {
                         id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
                         svar: '2021-09-09',
-                    },
-                    harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
-                },
-                nåværendeSamboer: {
-                    navn: { id: SamboerSpørsmålId.nåværendeSamboerNavn, svar: 'Gunnar' },
-                    ident: {
-                        id: SamboerSpørsmålId.nåværendeSamboerFnr,
-                        svar: AlternativtSvarForInput.UKJENT,
-                    },
-                    fødselsdato: {
-                        id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-                        svar: AlternativtSvarForInput.UKJENT,
-                    },
-                    samboerFraDato: {
-                        id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-                        svar: '2021-08-11',
                     },
                 },
                 tidligereSamboere: [

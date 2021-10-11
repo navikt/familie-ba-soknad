@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../context/AppContext';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -27,6 +28,9 @@ const DinLivssituasjon: React.FC = () => {
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
     } = useDinLivssituasjon();
+
+    const { erUtvidet } = useApp();
+
     return (
         <Steg
             tittel={<SpråkTekst id={'dinlivssituasjon.sidetittel'} />}
@@ -37,55 +41,64 @@ const DinLivssituasjon: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <KomponentGruppe>
-                <ÅrsakDropdown
-                    felt={skjema.felter.årsak}
-                    skjema={skjema}
-                    placeholder={intl.formatMessage({ id: 'omdeg.velgårsak.placeholder' })}
-                    label={
-                        <SpråkTekst
-                            id={dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.årsak]}
-                        />
-                    }
-                    dynamisk
-                />
-            </KomponentGruppe>
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.separertEnkeSkilt}
-                    spørsmålTekstId={
-                        dinLivssituasjonSpørsmålSpråkId[
-                            DinLivssituasjonSpørsmålId.separertEnkeSkilt
-                        ]
-                    }
-                />
-                {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
-                    <VedleggNotis språkTekstId={'omdeg.separertellerskilt.info'} dynamisk />
-                )}
-                {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
-                    <KomponentGruppe inline dynamisk>
-                        <JaNeiSpm
+            {erUtvidet && (
+                <>
+                    <KomponentGruppe>
+                        <ÅrsakDropdown
+                            felt={skjema.felter.årsak}
                             skjema={skjema}
-                            felt={skjema.felter.separertEnkeSkiltUtland}
-                            spørsmålTekstId={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland
-                                ]
+                            placeholder={intl.formatMessage({ id: 'omdeg.velgårsak.placeholder' })}
+                            label={
+                                <SpråkTekst
+                                    id={
+                                        dinLivssituasjonSpørsmålSpråkId[
+                                            DinLivssituasjonSpørsmålId.årsak
+                                        ]
+                                    }
+                                />
                             }
-                        />
-                        <Datovelger
-                            felt={skjema.felter.separertEnkeSkiltDato}
-                            skjema={skjema}
-                            labelTekstId={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.separertEnkeSkiltDato
-                                ]
-                            }
+                            dynamisk
                         />
                     </KomponentGruppe>
-                )}
-            </KomponentGruppe>
+                    <KomponentGruppe>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.separertEnkeSkilt}
+                            spørsmålTekstId={
+                                dinLivssituasjonSpørsmålSpråkId[
+                                    DinLivssituasjonSpørsmålId.separertEnkeSkilt
+                                ]
+                            }
+                        />
+                        {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
+                            <VedleggNotis språkTekstId={'omdeg.separertellerskilt.info'} dynamisk />
+                        )}
+                        {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
+                            <KomponentGruppe inline dynamisk>
+                                <JaNeiSpm
+                                    skjema={skjema}
+                                    felt={skjema.felter.separertEnkeSkiltUtland}
+                                    spørsmålTekstId={
+                                        dinLivssituasjonSpørsmålSpråkId[
+                                            DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland
+                                        ]
+                                    }
+                                />
+                                <Datovelger
+                                    felt={skjema.felter.separertEnkeSkiltDato}
+                                    skjema={skjema}
+                                    labelTekstId={
+                                        dinLivssituasjonSpørsmålSpråkId[
+                                            DinLivssituasjonSpørsmålId.separertEnkeSkiltDato
+                                        ]
+                                    }
+                                />
+                            </KomponentGruppe>
+                        )}
+                    </KomponentGruppe>
+                </>
+            )}
+
             <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
@@ -110,11 +123,13 @@ const DinLivssituasjon: React.FC = () => {
                     />
                 </KomponentGruppe>
             )}
-            <TidligereSamboere
-                tidligereSamboere={tidligereSamboere}
-                leggTilTidligereSamboer={leggTilTidligereSamboer}
-                fjernTidligereSamboer={fjernTidligereSamboer}
-            />
+            {erUtvidet && (
+                <TidligereSamboere
+                    tidligereSamboere={tidligereSamboere}
+                    leggTilTidligereSamboer={leggTilTidligereSamboer}
+                    fjernTidligereSamboer={fjernTidligereSamboer}
+                />
+            )}
         </Steg>
     );
 };

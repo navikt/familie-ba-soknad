@@ -234,6 +234,11 @@ export const initialStateSøknad: ISøknad = {
             id: OmDegSpørsmålId.pensjonsland,
             svar: '',
         },
+        harSamboerNå: {
+            id: DinLivssituasjonSpørsmålId.harSamboerNå,
+            svar: null,
+        },
+        nåværendeSamboer: null,
         utvidet: {
             spørsmål: {
                 årsak: {
@@ -252,12 +257,7 @@ export const initialStateSøknad: ISøknad = {
                     id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
                     svar: '',
                 },
-                harSamboerNå: {
-                    id: DinLivssituasjonSpørsmålId.harSamboerNå,
-                    svar: null,
-                },
             },
-            nåværendeSamboer: null,
             tidligereSamboere: [],
         },
     },

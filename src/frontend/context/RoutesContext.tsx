@@ -42,7 +42,6 @@ export const omBarnetBasePath = 'om-barnet';
 const [RoutesProvider, useRoutes] = createUseContext(() => {
     const {
         søknad: { barnInkludertISøknaden },
-        erUtvidet,
     } = useApp();
 
     const [barnForRoutes, settBarnForRoutes] = useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
@@ -76,16 +75,12 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
     const routes: IRoute[] = [
         { path: '/', label: 'Forside', route: RouteEnum.Forside, komponent: Forside },
         { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg, komponent: OmDeg },
-        ...(erUtvidet
-            ? [
-                  {
-                      path: '/din-livssituasjon',
-                      label: 'Din Livssituasjon',
-                      route: RouteEnum.DinLivssituasjon,
-                      komponent: DinLivssituasjon,
-                  },
-              ]
-            : []),
+        {
+            path: '/din-livssituasjon',
+            label: 'Din Livssituasjon',
+            route: RouteEnum.DinLivssituasjon,
+            komponent: DinLivssituasjon,
+        },
 
         { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn, komponent: VelgBarn },
         { path: '/om-barna', label: 'Om barna', route: RouteEnum.OmBarna, komponent: OmBarnaDine },

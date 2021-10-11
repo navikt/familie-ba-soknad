@@ -79,7 +79,7 @@ const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> =
 
 const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentStegObjektForRoute } = useRoutes();
-    const { søknad } = useApp();
+    const { søknad, erUtvidet } = useApp();
     const { formatMessage } = useIntl();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
@@ -91,67 +91,78 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             skjemaHook={useDinLivssituasjon}
             settFeilAnchors={settFeilAnchors}
         >
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.årsak]}
+            {erUtvidet && (
+                <>
+                    <StyledOppsummeringsFeltGruppe>
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        dinLivssituasjonSpørsmålSpråkId[
+                                            DinLivssituasjonSpørsmålId.årsak
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={formatMessage({
+                                id:
+                                    søknad.søker.utvidet.spørsmål.årsak.svar &&
+                                    toÅrsakSpråkId(søknad.søker.utvidet.spørsmål.årsak.svar),
+                            })}
                         />
-                    }
-                    søknadsvar={formatMessage({
-                        id:
-                            søknad.søker.utvidet.spørsmål.årsak.svar &&
-                            toÅrsakSpråkId(søknad.søker.utvidet.spørsmål.årsak.svar),
-                    })}
-                />
-            </StyledOppsummeringsFeltGruppe>
-            {søknad.søker.sivilstand.type === ESivilstand.GIFT && (
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.separertEnkeSkilt
-                                    ]
-                                }
-                            />
-                        }
-                        søknadsvar={søknad.søker.utvidet.spørsmål.separertEnkeSkilt.svar}
-                    />
-                    {søknad.søker.utvidet.spørsmål.separertEnkeSkilt.svar === ESvar.JA && (
-                        <>
+                    </StyledOppsummeringsFeltGruppe>
+                    {søknad.søker.sivilstand.type === ESivilstand.GIFT && (
+                        <StyledOppsummeringsFeltGruppe>
                             <OppsummeringFelt
                                 tittel={
                                     <SpråkTekst
                                         id={
                                             dinLivssituasjonSpørsmålSpråkId[
-                                                DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland
+                                                DinLivssituasjonSpørsmålId.separertEnkeSkilt
                                             ]
                                         }
                                     />
                                 }
-                                søknadsvar={
-                                    søknad.søker.utvidet.spørsmål.separertEnkeSkiltUtland.svar
-                                }
+                                søknadsvar={søknad.søker.utvidet.spørsmål.separertEnkeSkilt.svar}
                             />
-                            <OppsummeringFelt
-                                tittel={
-                                    <SpråkTekst
-                                        id={
-                                            dinLivssituasjonSpørsmålSpråkId[
-                                                DinLivssituasjonSpørsmålId.separertEnkeSkiltDato
-                                            ]
+                            {søknad.søker.utvidet.spørsmål.separertEnkeSkilt.svar === ESvar.JA && (
+                                <>
+                                    <OppsummeringFelt
+                                        tittel={
+                                            <SpråkTekst
+                                                id={
+                                                    dinLivssituasjonSpørsmålSpråkId[
+                                                        DinLivssituasjonSpørsmålId
+                                                            .separertEnkeSkiltUtland
+                                                    ]
+                                                }
+                                            />
+                                        }
+                                        søknadsvar={
+                                            søknad.søker.utvidet.spørsmål.separertEnkeSkiltUtland
+                                                .svar
                                         }
                                     />
-                                }
-                                søknadsvar={formaterDato(
-                                    søknad.søker.utvidet.spørsmål.separertEnkeSkiltDato.svar
-                                )}
-                            />
-                        </>
+                                    <OppsummeringFelt
+                                        tittel={
+                                            <SpråkTekst
+                                                id={
+                                                    dinLivssituasjonSpørsmålSpråkId[
+                                                        DinLivssituasjonSpørsmålId
+                                                            .separertEnkeSkiltDato
+                                                    ]
+                                                }
+                                            />
+                                        }
+                                        søknadsvar={formaterDato(
+                                            søknad.søker.utvidet.spørsmål.separertEnkeSkiltDato.svar
+                                        )}
+                                    />
+                                </>
+                            )}
+                        </StyledOppsummeringsFeltGruppe>
                     )}
-                </StyledOppsummeringsFeltGruppe>
+                </>
             )}
             <StyledOppsummeringsFeltGruppe>
                 <OppsummeringFelt
@@ -164,36 +175,41 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                             }
                         />
                     }
-                    søknadsvar={søknad.søker.utvidet.spørsmål.harSamboerNå.svar}
+                    søknadsvar={søknad.søker.harSamboerNå.svar}
                 />
-                {søknad.søker.utvidet.nåværendeSamboer && (
-                    <SamboerOppsummering samboer={søknad.søker.utvidet.nåværendeSamboer} />
+                {søknad.søker.nåværendeSamboer && (
+                    <SamboerOppsummering samboer={søknad.søker.nåværendeSamboer} />
                 )}
             </StyledOppsummeringsFeltGruppe>
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
-                                ]
+            {erUtvidet && (
+                <>
+                    <StyledOppsummeringsFeltGruppe>
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        dinLivssituasjonSpørsmålSpråkId[
+                                            DinLivssituasjonSpørsmålId
+                                                .hattAnnenSamboerForSøktPeriode
+                                        ]
+                                    }
+                                />
                             }
                         />
-                    }
-                />
-                {tidligereSamboere && tidligereSamboere.length > 0 ? (
-                    tidligereSamboere.map((tidligereSamboer, index) => (
-                        <StyledOppsummeringsFeltGruppe key={index}>
-                            <SamboerOppsummering samboer={tidligereSamboer} />
-                        </StyledOppsummeringsFeltGruppe>
-                    ))
-                ) : (
-                    <Normaltekst>
-                        <SpråkTekst id={jaNeiSvarTilSpråkId(ESvar.NEI)} />
-                    </Normaltekst>
-                )}
-            </StyledOppsummeringsFeltGruppe>
+                        {tidligereSamboere && tidligereSamboere.length > 0 ? (
+                            tidligereSamboere.map((tidligereSamboer, index) => (
+                                <StyledOppsummeringsFeltGruppe key={index}>
+                                    <SamboerOppsummering samboer={tidligereSamboer} />
+                                </StyledOppsummeringsFeltGruppe>
+                            ))
+                        ) : (
+                            <Normaltekst>
+                                <SpråkTekst id={jaNeiSvarTilSpråkId(ESvar.NEI)} />
+                            </Normaltekst>
+                        )}
+                    </StyledOppsummeringsFeltGruppe>
+                </>
+            )}
         </Oppsummeringsbolk>
     );
 };

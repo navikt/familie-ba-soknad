@@ -356,9 +356,10 @@ export const useSendInnSkjema = (): {
             barn,
             utvidet,
             adressebeskyttelse,
+            nåværendeSamboer,
             ...søkerSpørsmål
         } = søker;
-        const { spørsmål: utvidaSpørsmål, nåværendeSamboer, tidligereSamboere } = utvidet;
+        const { spørsmål: utvidaSpørsmål, tidligereSamboere } = utvidet;
         const { barnInkludertISøknaden } = søknad;
         const typetSøkerSpørsmål: SpørsmålMap = (søkerSpørsmål as unknown) as SpørsmålMap;
         const typetUtvidaSpørsmål: SpørsmålMap = (utvidaSpørsmål as unknown) as SpørsmålMap;
