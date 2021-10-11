@@ -4,6 +4,7 @@ import createUseContext from 'constate';
 import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg';
 import { matchPath } from 'react-router';
 
+import DinLivssituasjon from '../components/SøknadsSteg/DinLivssituasjon/DinLivssituasjon';
 import Dokumentasjon from '../components/SøknadsSteg/Dokumentasjon/Dokumentasjon';
 import Forside from '../components/SøknadsSteg/Forside/Forside';
 import Kvittering from '../components/SøknadsSteg/Kvittering/Kvittering';
@@ -11,7 +12,6 @@ import OmBarnaDine from '../components/SøknadsSteg/OmBarnaDine/OmBarnaDine';
 import OmBarnet from '../components/SøknadsSteg/OmBarnet/OmBarnet';
 import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from '../components/SøknadsSteg/Oppsummering/Oppsummering';
-import DinLivssituasjon from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/DinLivssituasjon';
 import VelgBarn from '../components/SøknadsSteg/VelgBarn/VelgBarn';
 import { IBarnMedISøknad } from '../typer/person';
 import { useApp } from './AppContext';

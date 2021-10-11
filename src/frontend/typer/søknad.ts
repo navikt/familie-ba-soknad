@@ -1,14 +1,14 @@
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
-import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
-} from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
+} from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { VelgBarnSpørsmålId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { INøkkelPar } from './common';

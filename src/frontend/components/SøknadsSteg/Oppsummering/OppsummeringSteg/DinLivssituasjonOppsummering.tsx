@@ -22,8 +22,8 @@ import {
     DinLivssituasjonSpørsmålId,
     dinLivssituasjonSpørsmålSpråkId,
     samboerSpråkIder,
-} from '../../Utvidet-DinLivssituasjon/spørsmål';
-import { useDinLivssituasjon } from '../../Utvidet-DinLivssituasjon/useDinLivssituasjon';
+} from '../../DinLivssituasjon/spørsmål';
+import { useDinLivssituasjon } from '../../DinLivssituasjon/useDinLivssituasjon';
 import { StyledOppsummeringsFeltGruppe } from '../Oppsummering';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';

@@ -2,16 +2,16 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType, useSprakContext } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
+import {
+    samboerSpråkIder,
+    SamboerSpørsmålId,
+    TidligereSamboerSpørsmålId,
+} from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import {
     OmBarnetSpørsmålsId,
     omBarnetSpørsmålSpråkId,
 } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import {
-    samboerSpråkIder,
-    SamboerSpørsmålId,
-    TidligereSamboerSpørsmålId,
-} from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
 import { useApp } from '../context/AppContext';
 import Miljø from '../Miljø';
 import {

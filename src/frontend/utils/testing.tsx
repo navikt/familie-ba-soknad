@@ -10,14 +10,14 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import norskeTekster from '../assets/lang/nb.json';
-import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
-} from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
+} from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import * as appContext from '../context/AppContext';
 import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
