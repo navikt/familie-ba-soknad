@@ -72,8 +72,7 @@ describe('VelgBarn', () => {
         act(() => gåVidere.click());
 
         // Først blir barnet fjernet fra manuelt registrerte barn
-        expect(settSøknad).toHaveBeenNthCalledWith(2, {
-            // Kjører 2 ganger fordi det er en useEffect i eøsContext som lytter på barnInkludertISøknaden som også kjører settSøknad.
+        expect(settSøknad).toHaveBeenNthCalledWith(1, {
             barnRegistrertManuelt: [],
             barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarn],
             søker: { barn: [fraPdl] },
@@ -82,8 +81,7 @@ describe('VelgBarn', () => {
         });
 
         // Når man trykker på gå videre blir det manuelt registrerte barnet fjernet fra søknaden
-        expect(settSøknad).toHaveBeenNthCalledWith(3, {
-            // Kjører 3 ganger fordi det er en useEffect i eøsContext som lytter på barnInkludertISøknaden som også kjører settSøknad.
+        expect(settSøknad).toHaveBeenNthCalledWith(2, {
             barnRegistrertManuelt: [],
             barnInkludertISøknaden: [fraPdlSomIBarn],
             søker: { barn: [fraPdl] },
@@ -176,7 +174,7 @@ describe('VelgBarn', () => {
 
         expect(søknad.barnRegistrertManuelt.length).toBe(1);
         // Først fjernet vi barnet, så la vi det til igjen
-        expect(settSøknad).toHaveBeenCalledTimes(3); // Kjører 3 ganger fordi det er en useEffect i eøsContext som lytter på barnInkludertISøknaden som også kjører settSøknad.
+        expect(settSøknad).toHaveBeenCalledTimes(2);
     });
 
     test('Kan huke av for barn', () => {

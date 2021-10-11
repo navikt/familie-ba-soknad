@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import dayjs from 'dayjs';
 
@@ -7,6 +7,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
+import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
@@ -43,7 +44,7 @@ const Dokumentasjon: React.FC = () => {
     };
 
     // Fjern vedlegg som evt. har blitt slettet i familie-dokument
-    useEffect(() => {
+    useFørsteRender(() => {
         søknad.dokumentasjon.forEach((dok: IDokumentasjon) => {
             if (dok.opplastedeVedlegg) {
                 const gyldigeVedlegg = dok.opplastedeVedlegg.filter(vedlegg =>
@@ -55,7 +56,7 @@ const Dokumentasjon: React.FC = () => {
                 }
             }
         });
-    }, []);
+    });
 
     return (
         <Steg
