@@ -8,6 +8,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
@@ -26,6 +27,7 @@ const Kvittering: React.FC = () => {
         søknad,
     } = useApp();
     const { hentStegNummer } = useRoutes();
+    const { eøsSkruddAv } = useEøs();
 
     const { innsendingStatus } = useApp();
     const innsendtDato: Dayjs =
@@ -82,9 +84,11 @@ const Kvittering: React.FC = () => {
                 </Normaltekst>
             </KomponentGruppe>
 
-            <KomponentGruppe>
-                <KontonummerInfo />
-            </KomponentGruppe>
+            {!eøsSkruddAv && (
+                <KomponentGruppe>
+                    <KontonummerInfo />
+                </KomponentGruppe>
+            )}
 
             <Informasjonsbolk tittelId={'kvittering.ikke-lastet-opp'}>
                 <Normaltekst>
