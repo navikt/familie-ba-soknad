@@ -26,8 +26,9 @@ const Kvittering: React.FC = () => {
         settFåttGyldigKvittering,
         søknad,
     } = useApp();
-    const { hentStegNummer } = useRoutes();
     const { eøsSkruddAv } = useEøs();
+    const { barnInkludertISøknaden, erEøs } = søknad;
+    const { hentStegNummer } = useRoutes();
 
     const { innsendingStatus } = useApp();
     const innsendtDato: Dayjs =
@@ -43,7 +44,7 @@ const Kvittering: React.FC = () => {
             settFåttGyldigKvittering(true);
 
             // I tilfelle vi kommer via mellomlagring og ikke har satt denne fra før, sett den her før vi nullstiller søknaden
-            setUserProperty(UserProperty.ANTALL_VALGTE_BARN, søknad.barnInkludertISøknaden.length);
+            setUserProperty(UserProperty.ANTALL_VALGTE_BARN, barnInkludertISøknaden.length);
 
             avbrytOgSlettSøknad();
         }
@@ -84,7 +85,7 @@ const Kvittering: React.FC = () => {
                 </Normaltekst>
             </KomponentGruppe>
 
-            {!eøsSkruddAv && (
+            {!eøsSkruddAv && erEøs && (
                 <KomponentGruppe>
                     <KontonummerInfo />
                 </KomponentGruppe>
