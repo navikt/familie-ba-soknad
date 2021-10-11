@@ -23,19 +23,19 @@ import OmDeg from '../../SøknadsSteg/OmDeg/OmDeg';
 import { OmDegSpørsmålId } from '../../SøknadsSteg/OmDeg/spørsmål';
 import Datovelger from './Datovelger';
 
-describe(`Datovelger`, () => {
+describe('Datovelger', () => {
     silenceConsoleErrors();
-    test(`Datovelger kan begrenses av annen fra om med datovelger, og avgrensning frem i tid`, () => {
+    test('Datovelger kan begrenses av annen fra om med datovelger', () => {
         const {
             result: { current },
         } = renderHook(
             () => {
                 const fraOgMed = useFelt<ISODateString>({
-                    verdi: dagensDato(),
+                    verdi: '2021-09-10',
                     feltId: 'fra-og-med',
                 });
                 const tilOgMed = useFelt<ISODateString>({
-                    verdi: dagensDato(),
+                    verdi: '2021-09-10',
                     feltId: 'til-og-med',
                 });
                 return {
@@ -50,7 +50,7 @@ describe(`Datovelger`, () => {
             visFeilmeldinger: true,
         });
 
-        const { getAllByRole, container } = render(
+        const { getAllByRole, container, debug } = render(
             <TestProvidere>
                 <Datovelger
                     felt={current.fraOgMed}
@@ -62,7 +62,6 @@ describe(`Datovelger`, () => {
                     tilhørendeFraOgMedFelt={current.fraOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-til-og-med'}
-                    avgrensDatoFremITid={true}
                 />
             </TestProvidere>
         );
@@ -71,12 +70,45 @@ describe(`Datovelger`, () => {
         act(() => tilOgMedÅpneknapp.click());
         const forrigeDag = container.querySelector('[aria-selected="true"]')
             ?.previousElementSibling;
+
+        debug(container, 10000);
         expect(forrigeDag?.getAttribute('aria-disabled')).toEqual('true');
+    });
 
-        // Lukk denne datovelgeren for å resette før neste del av testen
-        act(() => tilOgMedÅpneknapp.click());
+    it('kan avgrenses frem i tid', () => {
+        const {
+            result: { current },
+        } = renderHook(
+            () => {
+                const tilOgMed = useFelt<ISODateString>({
+                    verdi: dagensDato(),
+                    feltId: 'til-og-med',
+                });
+                return {
+                    tilOgMed,
+                };
+            },
+            { wrapper: IntlProvider, initialProps: { locale: 'nb' } }
+        );
 
-        act(() => tilOgMedÅpneknapp.click());
+        const skjemaMock = mockDeep<ISkjema<SkjemaFeltTyper, string>>({
+            visFeilmeldinger: true,
+        });
+
+        const { getByRole, container } = render(
+            <TestProvidere>
+                <Datovelger
+                    felt={current.tilOgMed}
+                    skjema={skjemaMock}
+                    labelTekstId={'test-til-og-med'}
+                    avgrensDatoFremITid={true}
+                />
+            </TestProvidere>
+        );
+
+        const datovelgerÅpneKnapp = getByRole('button');
+
+        act(() => datovelgerÅpneKnapp.click());
         const nesteDag = container.querySelector('[aria-selected="true"]')?.nextElementSibling;
         expect(nesteDag?.getAttribute('aria-disabled')).toEqual('true');
     });
