@@ -200,15 +200,15 @@ export const mekkGyldigSøknad = (): ISøknad => {
                 svar: ESvar.JA,
             },
             erAsylsøker: {
-                id: OmDegSpørsmålId.erAsylsøker,
+                id: DinLivssituasjonSpørsmålId.erAsylsøker,
                 svar: ESvar.NEI,
             },
             jobberPåBåt: {
-                id: OmDegSpørsmålId.jobberPåBåt,
+                id: DinLivssituasjonSpørsmålId.jobberPåBåt,
                 svar: ESvar.NEI,
             },
             mottarUtenlandspensjon: {
-                id: OmDegSpørsmålId.mottarUtenlandspensjon,
+                id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
                 svar: ESvar.NEI,
             },
         },

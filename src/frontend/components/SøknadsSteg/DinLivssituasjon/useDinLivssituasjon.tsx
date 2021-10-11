@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Alpha3Code } from 'i18n-iso-countries';
+
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
@@ -9,6 +11,7 @@ import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjen
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import {
     AlternativtSvarForInput,
@@ -36,6 +39,11 @@ export interface IDinLivssituasjonFeltTyper {
     nåværendeSamboerFødselsdato: DatoMedUkjent;
     nåværendeSamboerFødselsdatoUkjent: ESvar;
     nåværendeSamboerFraDato: ISODateString;
+    erAsylsøker: ESvar | null;
+    jobberPåBåt: ESvar | null;
+    arbeidsland: Alpha3Code | '';
+    mottarUtenlandspensjon: ESvar | null;
+    pensjonsland: Alpha3Code | '';
 }
 
 export const useDinLivssituasjon = (): {
@@ -180,6 +188,31 @@ export const useDinLivssituasjon = (): {
         dagensDato()
     );
 
+    /*--- ASYL ARBEID OG PENSJON ----*/
+
+    const erAsylsøker = useJaNeiSpmFelt(søker.erAsylsøker, 'omdeg.asylsøker.feilmelding');
+
+    const jobberPåBåt = useJaNeiSpmFelt(søker.jobberPåBåt, 'omdeg.arbeid-utland.feilmelding');
+
+    const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet(
+        søker.arbeidsland,
+        'omdeg.arbeid-utland.land.feilmelding',
+        ESvar.JA,
+        jobberPåBåt
+    );
+
+    const mottarUtenlandspensjon = useJaNeiSpmFelt(
+        søker.mottarUtenlandspensjon,
+        'omdeg.utenlandspensjon.feilmelding'
+    );
+
+    const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet(
+        søker.pensjonsland,
+        'omdeg.utenlandspensjon.land.feilmelding',
+        ESvar.JA,
+        mottarUtenlandspensjon
+    );
+
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,
         string
@@ -196,6 +229,11 @@ export const useDinLivssituasjon = (): {
             nåværendeSamboerFødselsdato,
             nåværendeSamboerFødselsdatoUkjent,
             nåværendeSamboerFraDato,
+            erAsylsøker,
+            jobberPåBåt,
+            arbeidsland,
+            mottarUtenlandspensjon,
+            pensjonsland,
         },
         skjemanavn: 'dinlivssituasjon',
     });
@@ -213,11 +251,13 @@ export const useDinLivssituasjon = (): {
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
-            dokumentasjon: søknad.dokumentasjon.map(dok =>
-                dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE
-                    ? { ...dok, gjelderForSøker: separertEnkeSkilt.verdi === ESvar.JA }
-                    : dok
-            ),
+            dokumentasjon: søknad.dokumentasjon.map(dok => {
+                if (dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE)
+                    return { ...dok, gjelderForSøker: separertEnkeSkilt.verdi === ESvar.JA };
+                else if (dok.dokumentasjonsbehov === Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE)
+                    return { ...dok, gjelderForSøker: erAsylsøker.verdi === ESvar.JA };
+                else return dok;
+            }),
             søker: {
                 ...søknad.søker,
                 harSamboerNå: {
@@ -252,6 +292,26 @@ export const useDinLivssituasjon = (): {
                               },
                           }
                         : null,
+                erAsylsøker: {
+                    ...søker.erAsylsøker,
+                    svar: skjema.felter.erAsylsøker.verdi,
+                },
+                jobberPåBåt: {
+                    ...søker.jobberPåBåt,
+                    svar: skjema.felter.jobberPåBåt.verdi,
+                },
+                arbeidsland: {
+                    ...søker.arbeidsland,
+                    svar: skjema.felter.arbeidsland.verdi,
+                },
+                mottarUtenlandspensjon: {
+                    ...søker.mottarUtenlandspensjon,
+                    svar: skjema.felter.mottarUtenlandspensjon.verdi,
+                },
+                pensjonsland: {
+                    ...søker.pensjonsland,
+                    svar: skjema.felter.pensjonsland.verdi,
+                },
                 utvidet: {
                     ...søknad.søker.utvidet,
                     tidligereSamboere,

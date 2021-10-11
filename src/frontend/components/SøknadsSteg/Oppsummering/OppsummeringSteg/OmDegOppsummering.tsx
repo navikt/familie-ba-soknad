@@ -132,38 +132,6 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
                     />
                 )}
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.erAsylsøker]} />}
-                    søknadsvar={søknad.søker.erAsylsøker.svar}
-                />
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.jobberPåBåt]} />}
-                    søknadsvar={søknad.søker.jobberPåBåt.svar}
-                />
-                {søknad.søker.arbeidsland.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.arbeidsland]} />
-                        }
-                        søknadsvar={landkodeTilSpråk(søknad.søker.arbeidsland.svar, valgtLocale)}
-                    />
-                )}
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.mottarUtenlandspensjon]}
-                        />
-                    }
-                    søknadsvar={søknad.søker.mottarUtenlandspensjon.svar}
-                />
-                {søknad.søker.pensjonsland.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.pensjonsland]} />
-                        }
-                        søknadsvar={landkodeTilSpråk(søknad.søker.pensjonsland.svar, valgtLocale)}
-                    />
-                )}
             </StyledOppsummeringsFeltGruppe>
         </Oppsummeringsbolk>
     );

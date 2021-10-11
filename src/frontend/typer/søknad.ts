@@ -215,23 +215,23 @@ export const initialStateSøknad: ISøknad = {
             svar: null,
         },
         erAsylsøker: {
-            id: OmDegSpørsmålId.erAsylsøker,
+            id: DinLivssituasjonSpørsmålId.erAsylsøker,
             svar: null,
         },
         jobberPåBåt: {
-            id: OmDegSpørsmålId.jobberPåBåt,
+            id: DinLivssituasjonSpørsmålId.jobberPåBåt,
             svar: null,
         },
         arbeidsland: {
-            id: OmDegSpørsmålId.arbeidsland,
+            id: DinLivssituasjonSpørsmålId.arbeidsland,
             svar: '',
         },
         mottarUtenlandspensjon: {
-            id: OmDegSpørsmålId.mottarUtenlandspensjon,
+            id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
             svar: null,
         },
         pensjonsland: {
-            id: OmDegSpørsmålId.pensjonsland,
+            id: DinLivssituasjonSpørsmålId.pensjonsland,
             svar: '',
         },
         harSamboerNå: {

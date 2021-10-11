@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
+import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
@@ -15,7 +16,7 @@ import {
     ITidligereSamboer,
 } from '../../../../typer/person';
 import { formaterDato } from '../../../../utils/dato';
-import { toÅrsakSpråkId } from '../../../../utils/språk';
+import { landkodeTilSpråk, toÅrsakSpråkId } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
@@ -81,6 +82,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentStegObjektForRoute } = useRoutes();
     const { søknad, erUtvidet } = useApp();
     const { formatMessage } = useIntl();
+    const [valgtLocale] = useSprakContext();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
 
@@ -210,6 +212,72 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     </StyledOppsummeringsFeltGruppe>
                 </>
             )}
+            <StyledOppsummeringsFeltGruppe>
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={
+                                dinLivssituasjonSpørsmålSpråkId[
+                                    DinLivssituasjonSpørsmålId.erAsylsøker
+                                ]
+                            }
+                        />
+                    }
+                    søknadsvar={søknad.søker.erAsylsøker.svar}
+                />
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={
+                                dinLivssituasjonSpørsmålSpråkId[
+                                    DinLivssituasjonSpørsmålId.jobberPåBåt
+                                ]
+                            }
+                        />
+                    }
+                    søknadsvar={søknad.søker.jobberPåBåt.svar}
+                />
+                {søknad.søker.arbeidsland.svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    dinLivssituasjonSpørsmålSpråkId[
+                                        DinLivssituasjonSpørsmålId.arbeidsland
+                                    ]
+                                }
+                            />
+                        }
+                        søknadsvar={landkodeTilSpråk(søknad.søker.arbeidsland.svar, valgtLocale)}
+                    />
+                )}
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={
+                                dinLivssituasjonSpørsmålSpråkId[
+                                    DinLivssituasjonSpørsmålId.mottarUtenlandspensjon
+                                ]
+                            }
+                        />
+                    }
+                    søknadsvar={søknad.søker.mottarUtenlandspensjon.svar}
+                />
+                {søknad.søker.pensjonsland.svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    dinLivssituasjonSpørsmålSpråkId[
+                                        DinLivssituasjonSpørsmålId.pensjonsland
+                                    ]
+                                }
+                            />
+                        }
+                        søknadsvar={landkodeTilSpråk(søknad.søker.pensjonsland.svar, valgtLocale)}
+                    />
+                )}
+            </StyledOppsummeringsFeltGruppe>
         </Oppsummeringsbolk>
     );
 };
