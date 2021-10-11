@@ -28,16 +28,13 @@ describe('eøs', () => {
                             id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
                             svar: 'BEL' as Alpha3Code,
                         },
-                    },
-                    {
-                        ...søknad.barnInkludertISøknaden[0],
-                        oppholdsland: {
-                            id: OmBarnetSpørsmålsId.oppholdsland,
-                            svar: 'BEL' as Alpha3Code,
+                        andreForelderArbeidUtlandetHvilketLand: {
+                            id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
+                            svar: 'DEU' as Alpha3Code,
                         },
-                        barnetrygdFraEøslandHvilketLand: {
-                            id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
-                            svar: 'BEL' as Alpha3Code,
+                        andreForelderPensjonHvilketLand: {
+                            id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
+                            svar: 'DEU' as Alpha3Code,
                         },
                     },
                 ],
@@ -49,8 +46,8 @@ describe('eøs', () => {
                 'ALA',
                 'BEL',
                 'BEL',
-                'BEL',
-                'BEL',
+                'DEU',
+                'DEU',
             ]);
         });
     });

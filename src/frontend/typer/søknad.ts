@@ -159,6 +159,11 @@ export const initialStateSøknad: ISøknad = {
             'dokumentasjon.meklingsattest.informasjon'
         ),
         genererInitiellDokumentasjon(
+            Dokumentasjonsbehov.EØS_SKJEMA,
+            'dokumentasjon.tilleggsskjema.vedleggtittel',
+            'dokumentasjon.tilleggsskjema.informasjon'
+        ),
+        genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
             'dokumentasjon.annendokumentasjon.vedleggtittel',
             hentSøknadstype() === ESøknadstype.UTVIDET

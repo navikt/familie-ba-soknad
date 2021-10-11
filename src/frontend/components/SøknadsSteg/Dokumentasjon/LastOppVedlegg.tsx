@@ -16,6 +16,7 @@ import {
 import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
+import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Filopplaster from './filopplaster/Filopplaster';
 
@@ -73,15 +74,17 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
         if (erOppholdtillatelseKravForSøkerMenIkkeBarn) {
             antallVedlegg++;
         }
-        if (
-            søknad.dokumentasjon.find(
-                dok =>
-                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE &&
-                    dok.gjelderForSøker
-            )
-        ) {
-            antallVedlegg++;
-        }
+
+        søknad.dokumentasjon.forEach(dok => {
+            if (
+                dok.gjelderForSøker &&
+                (dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE ||
+                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA)
+            ) {
+                antallVedlegg++;
+            }
+        });
+
         return antallVedlegg;
     };
 
@@ -116,12 +119,21 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
                 {dokTittel}
             </Undertittel>
             {dokumentasjon.beskrivelseSpråkId && skalViseAnnenDokumentasjonsBeskrivelse() && (
-                <SpråkTekst
-                    id={dokumentasjon.beskrivelseSpråkId}
-                    values={{
-                        barn: formatertListeMedBarn(),
-                    }}
-                />
+                <>
+                    <SpråkTekst
+                        id={dokumentasjon.beskrivelseSpråkId}
+                        values={{
+                            barn: formatertListeMedBarn(),
+                        }}
+                    />
+                    {dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA && (
+                        <EksternLenke
+                            lenkeSpråkId={'eøs.tilleggsskjema.lenke'}
+                            lenkeTekstSpråkId={'eøs.tilleggsskjema.lenketekst'}
+                            target="_blank"
+                        />
+                    )}
+                </>
             )}
             {!dokumentasjon.harSendtInn && (
                 <Filopplaster

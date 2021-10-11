@@ -115,13 +115,14 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
     };
 
     const hentRouteIndex = (currentPath: string): number => {
-        return routes.findIndex(route => {
+        const index = routes.findIndex(route => {
             const match = matchPath(currentPath, {
                 path: route.path,
                 exact: true,
             });
             return match !== null;
         });
+        return Math.max(index, 0);
     };
 
     const erPåKvitteringsside = (currentPath: string): boolean =>

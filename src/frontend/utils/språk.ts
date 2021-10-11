@@ -48,7 +48,7 @@ export const dokumentasjonsbehovTilSpråkId = (dokumentasjonsbehov: Dokumentasjo
         case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
             return 'dokumentasjon.bekreftelseborsammen.vedleggtittel';
         case Dokumentasjonsbehov.EØS_SKJEMA:
-            return 'dokumentasjon.eøsskjema.vedleggtittel';
+            return 'dokumentasjon.tilleggsskjema.vedleggtittel';
         case Dokumentasjonsbehov.MEKLINGSATTEST:
             return 'dokumentasjon.meklingsattest.vedleggtittel';
         case Dokumentasjonsbehov.SEPARERT_SKILT_ENKE:
