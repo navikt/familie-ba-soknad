@@ -72,6 +72,16 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
                     children={genererAdresseVisning(søknad.søker)}
                 />
+                {søknad.søker.borPåRegistrertAdresse.svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
+                            />
+                        }
+                        søknadsvar={søknad.søker.borPåRegistrertAdresse.svar}
+                    />
+                )}
             </StyledOppsummeringsFeltGruppe>
 
             <StyledOppsummeringsFeltGruppe>
