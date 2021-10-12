@@ -34,7 +34,7 @@
   "eøs.informasjon": "You have stated that you, the child you are applying for, or the other parent is currently living abroad, working in or receiving a pension from an EEA country. Because of this your application may be assessed based on EEA regulations.",
   "eøs.sidetittel": "Child benefit EEA-country",
   "eøs.tilleggsskjema.innhold": "<p>You have to download and fill out the supplementary form. The form has to be attached based on export rules under the EEA agreement. {linjeskift}{linjeskift} You can upload the form in the next step.</p>",
-  "eøs.tilleggsskjema.lenke": "https://www.nav.no/soknader/nb/person/familie/barnetrygd#NAV340015",
+  "eøs.tilleggsskjema.lenke": "https://www.nav.no/soknader/en/person/familie/barnetrygd#NAV340015",
   "eøs.tilleggsskjema.lenketekst": "Download supplementary form",
   "eøs.tilleggsskjema.undertittel": "You have to fill out the supplementary form",
   "felles.anonym.barn.fnr": "CHILD {fødselsnummer}",
