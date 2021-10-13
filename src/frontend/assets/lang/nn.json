@@ -227,6 +227,7 @@
   "ombarnet.boddsammenmedandreforelder.spm": "Har du budd saman med {navn} sin andre forelder?",
   "ombarnet.bor-fast.feilmelding": "Du må oppgje om {navn} bur fast saman med deg for å gå vidare",
   "ombarnet.bor-fast.spm": "Bur {navn} fast saman med deg?",
+  "ombarnet.bor-fast.vedleggsinfo": "Du må legge ved dokumentasjon som viser at barnet bur fast saman med deg seinare i søknaden, sidan barnet ikkje er folkeregistrert busett saman med deg.",
   "ombarnet.bosted": "Bustad",
   "ombarnet.bosted-info": "Fast bustad betyr at barnet bur fast saman med ein av foreldra, og har samvære med den andre forelderen. {linjeskift} {linjeskift} Delt bustad betyr at barnet bur fast hos begge foreldra. {linjeskift} {linjeskift} For at det skal reknast som delt bustad må de ha ein skriftleg avtale om delt bustad for barnet. {linjeskift} {linjeskift}  Når de har ein avtale om delt bustad, kan barnetrygda delast mellom foreldra, dersom begge foreldra søker om det. ",
   "ombarnet.delt-bosted.feilmelding": "Du må oppgje om du og den andre forelderen har skriftleg avtale om delt bustad for {navn} for å gå vidare",
