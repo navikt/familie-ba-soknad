@@ -9,6 +9,7 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
@@ -117,7 +118,14 @@ const OmDeg: React.FC = () => {
                         felt={skjema.felter.komTilNorgeDato}
                         skjema={skjema}
                         labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
+                        disabled={skjema.felter.komTilNorgeDatoVetIkke.verdi === ESvar.JA}
                         dynamisk
+                    />
+                    <SkjemaCheckbox
+                        felt={skjema.felter.komTilNorgeDatoVetIkke}
+                        labelSpråkTekstId={
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDatoVetIkke]
+                        }
                     />
 
                     <JaNeiSpm
