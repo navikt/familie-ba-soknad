@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import dayjs from 'dayjs';
 
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { RessursStatus } from '@navikt/familie-typer';
@@ -25,8 +26,9 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 };
 
 const Dokumentasjon: React.FC = () => {
-    const { søknad, settSøknad, innsendingStatus, mellomlagre } = useApp();
+    const { søknad, settSøknad, innsendingStatus } = useApp();
     const { sendInnSkjema } = useSendInnSkjema();
+    const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
     const oppdaterDokumentasjon = (
         dokumentasjonsbehov: Dokumentasjonsbehov,
@@ -50,9 +52,13 @@ const Dokumentasjon: React.FC = () => {
                 const gyldigeVedlegg = dok.opplastedeVedlegg.filter(vedlegg =>
                     erVedleggstidspunktGyldig(vedlegg.tidspunkt)
                 );
+                const ugyldigeVedlegg = dok.opplastedeVedlegg.filter(
+                    vedlegg => !gyldigeVedlegg.includes(vedlegg)
+                );
+
                 if (gyldigeVedlegg.length !== dok.opplastedeVedlegg.length) {
+                    settSlettaVedlegg(prevState => [prevState, ugyldigeVedlegg].flat());
                     oppdaterDokumentasjon(dok.dokumentasjonsbehov, gyldigeVedlegg, dok.harSendtInn);
-                    mellomlagre();
                 }
             }
         });
@@ -66,6 +72,22 @@ const Dokumentasjon: React.FC = () => {
                 return success;
             }}
         >
+            {slettaVedlegg.length > 0 && (
+                <KomponentGruppe>
+                    <AlertStripeAdvarsel>
+                        <Normaltekst>
+                            <SpråkTekst id={'dokumentasjon.forlangtid.info'} />
+                        </Normaltekst>
+                        <ul>
+                            {slettaVedlegg.map(vedlegg => (
+                                <li key={vedlegg.dokumentId}>
+                                    <Normaltekst>{vedlegg.navn}</Normaltekst>
+                                </li>
+                            ))}
+                        </ul>
+                    </AlertStripeAdvarsel>
+                </KomponentGruppe>
+            )}
             <KomponentGruppe>
                 <Normaltekst>
                     <SpråkTekst id={'dokumentasjon.info'} />
