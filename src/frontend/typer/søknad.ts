@@ -1,14 +1,14 @@
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
-import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
-} from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
+} from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { VelgBarnSpørsmålId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { INøkkelPar } from './common';
@@ -219,25 +219,30 @@ export const initialStateSøknad: ISøknad = {
             svar: null,
         },
         erAsylsøker: {
-            id: OmDegSpørsmålId.erAsylsøker,
+            id: DinLivssituasjonSpørsmålId.erAsylsøker,
             svar: null,
         },
         jobberPåBåt: {
-            id: OmDegSpørsmålId.jobberPåBåt,
+            id: DinLivssituasjonSpørsmålId.jobberPåBåt,
             svar: null,
         },
         arbeidsland: {
-            id: OmDegSpørsmålId.arbeidsland,
+            id: DinLivssituasjonSpørsmålId.arbeidsland,
             svar: '',
         },
         mottarUtenlandspensjon: {
-            id: OmDegSpørsmålId.mottarUtenlandspensjon,
+            id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
             svar: null,
         },
         pensjonsland: {
-            id: OmDegSpørsmålId.pensjonsland,
+            id: DinLivssituasjonSpørsmålId.pensjonsland,
             svar: '',
         },
+        harSamboerNå: {
+            id: DinLivssituasjonSpørsmålId.harSamboerNå,
+            svar: null,
+        },
+        nåværendeSamboer: null,
         utvidet: {
             spørsmål: {
                 årsak: {
@@ -256,12 +261,7 @@ export const initialStateSøknad: ISøknad = {
                     id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
                     svar: '',
                 },
-                harSamboerNå: {
-                    id: DinLivssituasjonSpørsmålId.harSamboerNå,
-                    svar: null,
-                },
             },
-            nåværendeSamboer: null,
             tidligereSamboere: [],
         },
     },

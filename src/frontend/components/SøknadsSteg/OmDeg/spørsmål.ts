@@ -15,11 +15,6 @@ export enum OmDegSpørsmålId {
     reistFraNorgeDato = 'søker-reiste-fra-norge-dato',
     reistFraNorgeDatoVetIkke = 'søker-ikke-reist-fra-norge-dato',
     planleggerÅBoINorgeTolvMnd = 'søker-planlegger-å-bo-i-norge-sammenhengende-tolv-måneder',
-    erAsylsøker = 'er-asylsøker',
-    jobberPåBåt = 'jobber-på-båt',
-    arbeidsland = 'arbeidsland',
-    mottarUtenlandspensjon = 'mottar-utenlandspensjon',
-    pensjonsland = 'pensjonsland',
 }
 
 export const omDegSpørsmålSpråkId: Record<OmDegSpørsmålId, string> = {
@@ -33,9 +28,4 @@ export const omDegSpørsmålSpråkId: Record<OmDegSpørsmålId, string> = {
     [OmDegSpørsmålId.reistFraNorgeDato]: 'omdeg.opphold-sammenhengende.datoreist.spm',
     [OmDegSpørsmålId.reistFraNorgeDatoVetIkke]: 'omdeg.opphold-sammenhengende.datoreist.sjekkboks',
     [OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]: 'omdeg.planlagt-opphold-sammenhengende.spm',
-    [OmDegSpørsmålId.erAsylsøker]: 'omdeg.asylsøker.spm',
-    [OmDegSpørsmålId.jobberPåBåt]: 'omdeg.arbeid-utland.spm',
-    [OmDegSpørsmålId.arbeidsland]: 'omdeg.arbeid-utland.land.spm',
-    [OmDegSpørsmålId.mottarUtenlandspensjon]: 'omdeg.utenlandspensjon.spm',
-    [OmDegSpørsmålId.pensjonsland]: 'omdeg.utenlandspensjon.land.spm',
 };

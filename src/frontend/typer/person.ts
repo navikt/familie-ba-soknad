@@ -47,15 +47,15 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     arbeidsland: ISøknadSpørsmål<Alpha3Code | ''>;
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | null>;
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    harSamboerNå: ISøknadSpørsmål<ESvar | null>;
+    nåværendeSamboer: ISamboer | null;
     utvidet: {
         spørsmål: {
             årsak: ISøknadSpørsmål<Årsak | ''>;
             separertEnkeSkilt: ISøknadSpørsmål<ESvar | null>;
             separertEnkeSkiltUtland: ISøknadSpørsmål<ESvar | null>;
             separertEnkeSkiltDato: ISøknadSpørsmål<ISODateString>;
-            harSamboerNå: ISøknadSpørsmål<ESvar | null>;
         };
-        nåværendeSamboer: ISamboer | null;
         tidligereSamboere: ITidligereSamboer[];
     };
 }
