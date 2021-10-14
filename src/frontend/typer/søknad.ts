@@ -210,6 +210,10 @@ export const initialStateSøknad: ISøknad = {
             id: OmDegSpørsmålId.komTilNorgeDato,
             svar: '',
         },
+        reistFraNorgeDato: {
+            id: OmDegSpørsmålId.reistFraNorgeDato,
+            svar: '',
+        },
         planleggerÅBoINorgeTolvMnd: {
             id: OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd,
             svar: null,

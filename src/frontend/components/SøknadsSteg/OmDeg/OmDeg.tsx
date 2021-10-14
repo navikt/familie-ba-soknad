@@ -127,7 +127,20 @@ const OmDeg: React.FC = () => {
                             omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDatoVetIkke]
                         }
                     />
-
+                    <Datovelger
+                        avgrensDatoFremITid={true}
+                        felt={skjema.felter.reistFraNorgeDato}
+                        skjema={skjema}
+                        labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeDato]}
+                        disabled={skjema.felter.reistFraNorgeDatoVetIkke.verdi === ESvar.JA}
+                        dynamisk
+                    />
+                    <SkjemaCheckbox
+                        felt={skjema.felter.reistFraNorgeDatoVetIkke}
+                        labelSpråkTekstId={
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeDatoVetIkke]
+                        }
+                    />
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.planleggerÅBoINorgeTolvMnd}

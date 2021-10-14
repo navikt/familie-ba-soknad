@@ -7,10 +7,11 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 
 import { useApp } from '../../../context/AppContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
+import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
-import { AlternativtSvarForInput } from '../../../typer/person';
+import { AlternativtSvarForInput, DatoMedUkjent } from '../../../typer/person';
 import { dagensDato } from '../../../utils/dato';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -24,8 +25,10 @@ export interface IOmDegFeltTyper {
     oppholdsland: Alpha3Code | '';
     oppholdslandDato: ISODateString;
     værtINorgeITolvMåneder: ESvar | null;
-    komTilNorgeDato: ISODateString;
+    komTilNorgeDato: DatoMedUkjent;
     komTilNorgeDatoVetIkke: ESvar;
+    reistFraNorgeDato: DatoMedUkjent;
+    reistFraNorgeDatoVetIkke: ESvar;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
     erAsylsøker: ESvar | null;
     jobberPåBåt: ESvar | null;
@@ -121,11 +124,41 @@ export const useOmdeg = (): {
         avhengigheter: { værtINorgeITolvMåneder },
     });
 
-    const komTilNorgeDato = useDatovelgerFeltMedJaNeiAvhengighet(
+    const komTilNorgeDato = useDatovelgerFeltMedUkjent(
         søker.komTilNorgeDato,
-        ESvar.NEI,
-        værtINorgeITolvMåneder,
+        søker.komTilNorgeDato.svar === AlternativtSvarForInput.UKJENT
+            ? ''
+            : søker.komTilNorgeDato.svar,
+        komTilNorgeDatoVetIkke,
         'omdeg.opphold-sammenhengende.dato.feilmelding',
+        værtINorgeITolvMåneder.verdi === ESvar.NEI,
+        false,
+        dagensDato()
+    );
+
+    const reistFraNorgeDatoVetIkke = useFelt<ESvar>({
+        verdi:
+            søker.reistFraNorgeDato.svar === AlternativtSvarForInput.UKJENT ? ESvar.JA : ESvar.NEI,
+        feltId: OmDegSpørsmålId.reistFraNorgeDatoVetIkke,
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter &&
+                avhengigheter.værtINorgeITolvMåneder &&
+                avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI
+            );
+        },
+        avhengigheter: { værtINorgeITolvMåneder },
+    });
+
+    const reistFraNorgeDato = useDatovelgerFeltMedUkjent(
+        søker.reistFraNorgeDato,
+        søker.reistFraNorgeDato.svar === AlternativtSvarForInput.UKJENT
+            ? ''
+            : søker.reistFraNorgeDato.svar,
+        reistFraNorgeDatoVetIkke,
+        'TODO',
+        værtINorgeITolvMåneder.verdi === ESvar.NEI,
+        false,
         dagensDato()
     );
 
@@ -251,6 +284,13 @@ export const useOmdeg = (): {
                         skjema.felter.komTilNorgeDato
                     ),
                 },
+                reistFraNorgeDato: {
+                    ...søker.reistFraNorgeDato,
+                    svar: svarForSpørsmålMedUkjent(
+                        skjema.felter.reistFraNorgeDatoVetIkke,
+                        skjema.felter.reistFraNorgeDato
+                    ),
+                },
                 planleggerÅBoINorgeTolvMnd: {
                     ...søker.planleggerÅBoINorgeTolvMnd,
                     svar: skjema.felter.planleggerÅBoINorgeTolvMnd.verdi,
@@ -296,6 +336,8 @@ export const useOmdeg = (): {
             værtINorgeITolvMåneder,
             komTilNorgeDato,
             komTilNorgeDatoVetIkke,
+            reistFraNorgeDato,
+            reistFraNorgeDatoVetIkke,
             planleggerÅBoINorgeTolvMnd,
             erAsylsøker,
             jobberPåBåt,

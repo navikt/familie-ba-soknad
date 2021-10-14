@@ -40,6 +40,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     oppholdslandDato: ISøknadSpørsmål<ISODateString>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | null>;
     komTilNorgeDato: ISøknadSpørsmål<DatoMedUkjent>;
+    reistFraNorgeDato: ISøknadSpørsmål<DatoMedUkjent>;
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | null>;
     erAsylsøker: ISøknadSpørsmål<ESvar | null>;
     jobberPåBåt: ISøknadSpørsmål<ESvar | null>;
