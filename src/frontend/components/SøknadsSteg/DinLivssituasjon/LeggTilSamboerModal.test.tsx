@@ -21,9 +21,7 @@ const søknad = mockDeep<ISøknad>({
         },
     ],
     søker: {
-        utvidet: {
-            nåværendeSamboer: null,
-        },
+        nåværendeSamboer: null,
     },
 });
 

@@ -2,6 +2,13 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
 import {
+    DinLivssituasjonSpørsmålId,
+    dinLivssituasjonSpørsmålSpråkId,
+    SamboerSpørsmålId,
+    samboerSpørsmålSpråkId,
+    tidligereSamboerSpørsmålSpråkId,
+} from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import {
     OmBarnaDineSpørsmålId,
     omBarnaDineSpørsmålSpråkId,
 } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
@@ -10,13 +17,6 @@ import {
     omBarnetSpørsmålSpråkId,
 } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../components/SøknadsSteg/OmDeg/spørsmål';
-import {
-    DinLivssituasjonSpørsmålId,
-    dinLivssituasjonSpørsmålSpråkId,
-    SamboerSpørsmålId,
-    samboerSpørsmålSpråkId,
-    tidligereSamboerSpørsmålSpråkId,
-} from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
 import {
     VelgBarnSpørsmålId,
     velgBarnSpørsmålSpråkId,

@@ -32,9 +32,11 @@ export const toÅrsakSpråkId = (årsak: Årsak): string => {
             return 'omdeg.velgårsak.bruddgift';
     }
 };
+
 export const landkodeTilSpråk = (landkode: Alpha3Code | '', locale: string): string => {
     return landkode ? getName(alpha3ToAlpha2(landkode), locale) : AlternativtSvarForInput.UKJENT;
 };
+
 export const dokumentasjonsbehovTilSpråkId = (dokumentasjonsbehov: Dokumentasjonsbehov): string => {
     switch (dokumentasjonsbehov) {
         case Dokumentasjonsbehov.ADOPSJON_DATO:
@@ -57,18 +59,22 @@ export const dokumentasjonsbehovTilSpråkId = (dokumentasjonsbehov: Dokumentasjo
             return 'dokumentasjon.oppholdstillatelse.vedleggtittel';
     }
 };
+
 const stripSpråkfil = (språkfilInnhold: Record<string, string>): Record<string, string> => {
     const språkEntries = Object.entries(språkfilInnhold);
     // Vi får med en default import her som vi må fjerne før vi kan mappe over entryene
     språkEntries.pop();
     return Object.fromEntries(språkEntries.map(([key, value]) => [key, value.trim()]));
 };
+
 const texts: Record<LocaleType, Record<string, string>> = {
     [LocaleType.nb]: stripSpråkfil(bokmål),
     [LocaleType.nn]: stripSpråkfil(nynorsk),
     [LocaleType.en]: stripSpråkfil(engelsk),
 };
+
 const cache = createIntlCache();
+
 export const hentTekster = (
     tekstId: string,
     formatValues: object = {}
@@ -79,7 +85,8 @@ export const hentTekster = (
         const { formatMessage } = createIntl({ locale, messages: texts[locale] }, cache);
         const message = formatMessage(
             { id: tekstId },
-            { ...formatValues, ...innebygdeFormatterere }
+            // Fjerner bokmål-tagen, skapte problemer og trenger ikke være med til pdf-gen
+            { ...formatValues, ...innebygdeFormatterere, bokmål: msg => msg }
         );
 
         map[locale] = reactElementToJSXString(message as ReactElement);
@@ -88,6 +95,7 @@ export const hentTekster = (
     // Typescript er ikke smart nok til å se at alle locales er satt
     return map as Record<LocaleType, string>;
 };
+
 export const hentUformaterteTekster = (tekstId: string): Record<LocaleType, string> => {
     const map = {};
 
@@ -97,6 +105,7 @@ export const hentUformaterteTekster = (tekstId: string): Record<LocaleType, stri
 
     return map as Record<LocaleType, string>;
 };
+
 export const hentSivilstatusSpråkId = (statuskode?: ESivilstand) => {
     switch (statuskode) {
         case ESivilstand.UGIFT:
@@ -114,6 +123,7 @@ export const hentSivilstatusSpråkId = (statuskode?: ESivilstand) => {
             return `felles.sivilstatus.kode.${ESivilstand.UOPPGITT}`;
     }
 };
+
 export const hentBostedSpråkId = (barn: IBarn) => {
     if (barn.adressebeskyttelse) {
         return 'hvilkebarn.barn.bosted.adressesperre';
