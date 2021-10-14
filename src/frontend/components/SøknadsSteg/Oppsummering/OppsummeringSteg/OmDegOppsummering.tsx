@@ -12,6 +12,7 @@ import { genererAdresseVisning } from '../../../../utils/adresse';
 import { formaterDato } from '../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
+import { formaterDatoMedUkjent } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
     omDegPersonopplysningerSpråkId,
@@ -127,7 +128,27 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                 id={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
                             />
                         }
-                        søknadsvar={formaterDato(søknad.søker.komTilNorgeDato.svar)}
+                        søknadsvar={formaterDatoMedUkjent(
+                            søknad.søker.komTilNorgeDato.svar,
+                            formatMessage({
+                                id: omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDatoVetIkke],
+                            })
+                        )}
+                    />
+                )}
+                {søknad.søker.reistFraNorgeDato.svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeDato]}
+                            />
+                        }
+                        søknadsvar={formaterDatoMedUkjent(
+                            søknad.søker.reistFraNorgeDato.svar,
+                            formatMessage({
+                                id: omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeDatoVetIkke],
+                            })
+                        )}
                     />
                 )}
                 {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
