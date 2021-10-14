@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { ITidligereSamboer } from '../../../typer/person';
-import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
+import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
+import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
 import SamboerSkjema from './SamboerSkjema';
 import { TidligereSamboerSpørsmålId } from './spørsmål';
@@ -81,6 +82,7 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
                 }}
                 erIModal
             />
+            {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );
 };
