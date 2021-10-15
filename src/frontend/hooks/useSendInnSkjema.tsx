@@ -428,6 +428,10 @@ export const useSendInnSkjema = (): {
                     språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.oppholderBarnSegIUtland),
                     sammeVerdiAlleSpråk(søknad.oppholderBarnSegIUtland.svar)
                 ),
+                erAvdødPartnerForelder: søknadsfelt(
+                    språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erAvdødPartnerForelder),
+                    sammeVerdiAlleSpråk(søknad.erAvdødPartnerForelder.svar)
+                ),
                 lestOgForståttBekreftelse: søknadsfelt(
                     'forside.bekreftelsesboks.brødtekst',
                     søknad.lestOgForståttBekreftelse

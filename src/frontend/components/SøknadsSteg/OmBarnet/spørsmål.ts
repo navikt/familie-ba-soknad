@@ -23,6 +23,7 @@ export enum OmBarnetSpørsmålsId {
     andreForelderArbeidUtlandetHvilketLand = 'andre-forelder-arbeid-hvilket-land',
     andreForelderPensjonUtland = 'andre-forelder-pensjon-utland',
     andreForelderPensjonHvilketLand = 'andre-forelder-pensjon-hvilket-land',
+    andreForelderErDød = 'todo',
     borFastMedSøker = 'bor-barnet-fast-med-deg',
     skriftligAvtaleOmDeltBosted = 'skriftlig-avtale-om-delt-bosted',
     søkerForTidsrom = 'søker-for-tidsrom',
@@ -64,6 +65,7 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
         'ombarnet.andre-forelder.utenlandspensjon.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand]:
         'ombarnet.andre-forelder.utenlandspensjon.land.spm',
+    [OmBarnetSpørsmålsId.andreForelderErDød]: 'todo',
     [OmBarnetSpørsmålsId.borFastMedSøker]: 'ombarnet.bor-fast.spm',
     [OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted]: 'ombarnet.delt-bosted.spm',
     [OmBarnetSpørsmålsId.søkerForTidsrom]: 'ombarnet.søker-for-periode.spm',

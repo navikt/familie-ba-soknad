@@ -81,6 +81,10 @@ export const genererOppdaterteBarn = (
                 ...barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland],
                 svar: mottarBarnetrygdFraAnnetEøsland,
             },
+            [barnDataKeySpørsmål.andreForelderErDød]: {
+                ...barn[barnDataKeySpørsmål.andreForelderErDød],
+                svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner),
+            },
             [barnDataKeySpørsmål.institusjonsnavn]: {
                 ...barn[barnDataKeySpørsmål.institusjonsnavn],
                 svar: genererSvarForOppfølgningspørsmålBarn(
@@ -303,6 +307,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
             svar: '',
+        },
+        [barnDataKeySpørsmål.andreForelderErDød]: {
+            id: OmBarnetSpørsmålsId.andreForelderErDød,
+            svar: null,
         },
         [barnDataKeySpørsmål.borFastMedSøker]: {
             id: OmBarnetSpørsmålsId.borFastMedSøker,

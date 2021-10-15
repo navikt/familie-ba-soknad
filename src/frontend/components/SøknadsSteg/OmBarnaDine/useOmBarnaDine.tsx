@@ -16,6 +16,7 @@ export interface IOmBarnaDineFeltTyper {
     søktAsylForBarn: ESvar | null;
     barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | null;
     mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | null;
+    erAvdødPartnerForelder: ESvar | null;
     hvemErFosterbarn: BarnetsId[];
     hvemOppholderSegIInstitusjon: BarnetsId[];
     hvemErAdoptertFraUtland: BarnetsId[];
@@ -23,6 +24,7 @@ export interface IOmBarnaDineFeltTyper {
     hvemBarnetrygdFraAnnetEøsland: BarnetsId[];
     hvemTolvMndSammenhengendeINorge: BarnetsId[];
     hvemErSøktAsylFor: BarnetsId[];
+    hvemAvdødPartner: BarnetsId[];
 }
 
 export const useOmBarnaDine = (): {
@@ -158,6 +160,23 @@ export const useOmBarnaDine = (): {
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
 
+    const erAvdødPartnerForelder = useJaNeiSpmFelt(søknad.erAvdødPartnerForelder, 'todo', {
+        søktAsylForBarn: {
+            hovedSpørsmål: søktAsylForBarn,
+            tilhørendeFelter: [hvemErSøktAsylFor],
+        },
+        barnOppholdtSegTolvMndSammenhengendeINorge: {
+            hovedSpørsmål: barnOppholdtSegTolvMndSammenhengendeINorge,
+            tilhørendeFelter: [hvemTolvMndSammenhengendeINorge],
+        },
+    });
+
+    const hvemAvdødPartner = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.andreForelderErDød,
+        'todo',
+        erAvdødPartnerForelder
+    );
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
@@ -188,6 +207,10 @@ export const useOmBarnaDine = (): {
             mottarBarnetrygdForBarnFraAnnetEøsland: {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
                 svar: mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
+            },
+            erAvdødPartnerForelder: {
+                ...søknad.erAvdødPartnerForelder,
+                svar: erAvdødPartnerForelder.verdi,
             },
             barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema),
             dokumentasjon: søknad.dokumentasjon.map(dok => {
@@ -226,6 +249,7 @@ export const useOmBarnaDine = (): {
             søktAsylForBarn,
             barnOppholdtSegTolvMndSammenhengendeINorge,
             mottarBarnetrygdForBarnFraAnnetEøsland,
+            erAvdødPartnerForelder,
             hvemErFosterbarn,
             hvemErAdoptertFraUtland,
             hvemOppholderSegIInstitusjon,
@@ -233,6 +257,7 @@ export const useOmBarnaDine = (): {
             hvemBarnetrygdFraAnnetEøsland,
             hvemTolvMndSammenhengendeINorge,
             hvemErSøktAsylFor,
+            hvemAvdødPartner,
         },
         skjemanavn: 'ombarnadine',
     });

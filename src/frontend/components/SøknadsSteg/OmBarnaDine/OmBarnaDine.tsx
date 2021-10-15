@@ -241,6 +241,25 @@ const OmBarnaDine: React.FC = () => {
                                 />
                             ))}
                     </HvilkeBarnCheckboxGruppe>
+
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.erAvdødPartnerForelder}
+                        spørsmålTekstId={
+                            omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.erAvdødPartnerForelder]
+                        }
+                    />
+                    <HvilkeBarnCheckboxGruppe
+                        legendSpråkId={
+                            omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemAvdødPartner]
+                        }
+                        skjemafelt={skjema.felter.hvemAvdødPartner}
+                        søknadsdatafelt={barnDataKeySpørsmål.andreForelderErDød}
+                        nullstillValgteBarn={
+                            skjema.felter.erAvdødPartnerForelder.verdi === ESvar.NEI
+                        }
+                        visFeilmelding={skjema.visFeilmeldinger}
+                    />
                 </KomponentGruppe>
             )}
         </Steg>

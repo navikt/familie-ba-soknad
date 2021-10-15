@@ -13,6 +13,8 @@ export enum OmBarnaDineSpørsmålId {
     hvemTolvMndSammenhengendeINorge = 'hvem-tolv-mnd-sammenhengende-i-norge',
     mottarBarnetrygdForBarnFraAnnetEøsland = 'barnetrygd-fra-annet-eøsland',
     hvemBarnetrygdFraAnnetEøsland = 'hvem-mottar-barnetrygd-eøsland',
+    erAvdødPartnerForelder = 'todo',
+    hvemAvdødPartner = 'todo',
 }
 
 export const omBarnaDineSpørsmålSpråkId: Record<OmBarnaDineSpørsmålId, string> = {
@@ -32,4 +34,6 @@ export const omBarnaDineSpørsmålSpråkId: Record<OmBarnaDineSpørsmålId, stri
         'ombarna.sammenhengende-opphold.hvem.spm',
     [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]: 'ombarna.barnetrygd-eøs.spm',
     [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]: 'ombarna.barnetrygd-eøs.hvem.spm',
+    [OmBarnaDineSpørsmålId.erAvdødPartnerForelder]: 'todo',
+    [OmBarnaDineSpørsmålId.hvemAvdødPartner]: 'todo',
 };
