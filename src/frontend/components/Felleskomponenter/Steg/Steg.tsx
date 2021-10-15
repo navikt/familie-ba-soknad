@@ -90,7 +90,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         settNåværendeRoute(nyesteNåværendeRoute);
         if (skjema && erStegUtfyltFrafør(nåværendeStegIndex)) {
             Object.values(skjema.skjema.felter).forEach(felt => {
-                felt.validerOgSettFelt();
+                felt.validerOgSettFelt(felt.verdi);
             });
         }
     }, []);

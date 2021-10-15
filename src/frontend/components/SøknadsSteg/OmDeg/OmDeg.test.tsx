@@ -12,7 +12,7 @@ import {
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import OmDeg from './OmDeg';
-import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
+import { omDegSpørsmålSpråkId } from './spørsmål';
 
 jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),
@@ -136,33 +136,5 @@ describe('OmDeg', () => {
         expect(
             queryByText(omDegSpørsmålSpråkId['søker-vært-i-norge-sammenhengende-tolv-måneder'])
         ).toBeInTheDocument();
-    });
-
-    test('Søker med adressesperre kommer seg videre til er asylsøker', () => {
-        spyOnUseApp({
-            søker: mockDeep<ISøker>({
-                adressebeskyttelse: true,
-                statsborgerskap: [{ landkode: 'NOR' }],
-                oppholderSegINorge: {
-                    id: OmDegSpørsmålId.oppholderSegINorge,
-                    svar: null,
-                },
-            }),
-        });
-        const { queryByText, getByText, getAllByLabelText } = render(
-            <TestProvidere>
-                <OmDeg />
-            </TestProvidere>
-        );
-
-        expect(getByText(/omdeg.opphold-i-norge.spm/)).toBeInTheDocument();
-
-        expect(getByText(/omdeg.opphold-sammenhengende.spm/)).toBeInTheDocument();
-
-        expect(queryByText(/omdeg.asylsøker.spm/)).not.toBeInTheDocument();
-
-        const jaKnapper = getAllByLabelText(/felles.svaralternativ.ja/);
-        act(() => jaKnapper.forEach(knapp => knapp.click()));
-        expect(getByText(/omdeg.asylsøker.spm/)).toBeInTheDocument();
     });
 });

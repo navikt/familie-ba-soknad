@@ -19,6 +19,8 @@ Alle disse tjenestene bygges og kjøres via docker-compose, kjør `docker-compos
 i intellij og start alle servicene for å komme i gang. For å bygge containerene trenger vi github credentials
 og å sette en docker-config. Kjør `yarn setup:docker:env` for å gjøre dette enkelt.
 
+OBS! Dersom man ikke får oppdatert versjon i frontend kan det være pga. utdatert docker images, så da kan man kjøre `docker-compose up -d --build`
+
 Når `docker-compose` sier at alle tjenestene er oppe betyr det bare at containerene har startet og at init-programmet
 kjører. Følg med på loggen til frontend-containeren for å se når webpack er ferdig, og følg med på loggen til mottak
 for å se når den er klar til å ta imot søknader fra frontend.
