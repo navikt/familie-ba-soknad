@@ -85,7 +85,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         if (sisteUtfylteStegIndex > 0) {
             mellomlagre();
         }
-    }, [nåværendeRoute]);
+    }, [nåværendeRoute, søknad.dokumentasjon]);
 
     const hentOgSettMellomlagretData = () => {
         preferredAxios
