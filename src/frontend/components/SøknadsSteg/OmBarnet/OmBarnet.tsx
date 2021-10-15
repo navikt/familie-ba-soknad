@@ -97,6 +97,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         }
                         språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                     />
+                    {skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker && (
+                        <VedleggNotis språkTekstId={'ombarnet.bor-fast.vedleggsinfo'} dynamisk />
+                    )}
 
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
                         <>

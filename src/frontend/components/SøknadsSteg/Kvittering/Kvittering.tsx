@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -38,6 +38,7 @@ const Kvittering: React.FC = () => {
 
     const klokkeslett = innsendtDato.format('HH:mm');
     const dato = innsendtDato.format('DD.MM.YY');
+    const [varEøsSøknad] = useState(erEøs);
 
     useEffect(() => {
         if (sisteUtfylteStegIndex === hentStegNummer(RouteEnum.Dokumentasjon)) {
@@ -85,7 +86,7 @@ const Kvittering: React.FC = () => {
                 </Normaltekst>
             </KomponentGruppe>
 
-            {!eøsSkruddAv && erEøs && (
+            {!eøsSkruddAv && varEøsSøknad && (
                 <KomponentGruppe>
                     <KontonummerInfo />
                 </KomponentGruppe>

@@ -14,7 +14,7 @@ describe('Routes', () => {
         });
         const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
         const { result } = renderHook(() => useRoutes(), { wrapper });
-        expect(result.current.routes.length).toEqual(8);
+        expect(result.current.routes.length).toEqual(9);
     });
 
     test(`hentStegObjekterForStegIndikator skal returnere en liste uten forside`, () => {
@@ -23,7 +23,7 @@ describe('Routes', () => {
         });
         const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
         const { result } = renderHook(() => useRoutes(), { wrapper });
-        expect(result.current.hentStegObjekterForStegIndikator().length).toEqual(7);
+        expect(result.current.hentStegObjekterForStegIndikator().length).toEqual(8);
     });
 
     test(`Kan hente neste route fra forsiden`, () => {
@@ -83,7 +83,7 @@ describe('Routes', () => {
         const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
         const { result } = renderHook(() => useRoutes(), { wrapper });
 
-        const route = result.current.routes[4];
+        const route = result.current.routes[5];
         const label = route.label;
         expect(label).toEqual('Om Jens');
     });

@@ -227,6 +227,7 @@
   "ombarnet.boddsammenmedandreforelder.spm": "Har du bodd sammen med {navn} sin andre forelder?",
   "ombarnet.bor-fast.feilmelding": "Du må oppgi om {navn} bor fast sammen med deg for å gå videre",
   "ombarnet.bor-fast.spm": "Bor {navn} fast sammen med deg?",
+  "ombarnet.bor-fast.vedleggsinfo": "Du må legge ved dokumentasjon som viser at barnet bor fast sammen med deg senere i søknaden, siden barnet ikke er folkeregistrert bosatt sammen med deg.",
   "ombarnet.bosted": "Bosted",
   "ombarnet.bosted-info": "Fast bosted betyr at barnet bor fast sammen med en av foreldrene, og har samvær med den andre forelderen. {linjeskift} {linjeskift} Delt bosted betyr at barnet bor fast hos begge foreldrene.{linjeskift} {linjeskift} For at det skal regnes som delt bosted må dere ha en skriftlig avtale om delt bosted for barnet. {linjeskift} {linjeskift}  Når dere har en avtale om delt bosted, kan barnetrygden deles mellom foreldrene, dersom begge foreldrene søker om det. ",
   "ombarnet.delt-bosted.feilmelding": "Du må oppgi om du og den andre forelderen har skriftlig avtale om delt \nbosted for {navn} for å gå videre",
