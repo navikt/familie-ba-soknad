@@ -30,7 +30,6 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
     const [nåværendeRoute, settNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
     const { soknadApi } = Miljø();
-    const [mellomlagerTrigger, oppdaterMellomlagerTrigger] = useState(0);
 
     useEffect(() => {
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
@@ -63,11 +62,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         }
     }, [innloggetStatus]);
 
-    useEffect(() => {
-        if (mellomlagerTrigger === 0) {
-            return;
-        }
-
+    const mellomlagre = () => {
         const barnetrygd: IMellomlagretBarnetrygd = {
             søknad: søknad,
             modellVersjon: Miljø().modellVersjon,
@@ -84,20 +79,13 @@ const [AppProvider, useApp] = createUseContext(() => {
             // do nothing
         });
         settMellomlagretVerdi(barnetrygd);
-    }, [mellomlagerTrigger]);
-
-    // Ofte vil vi gjøre en endring på søknadsobjektet først, og så mellomlagre etterpå. Hvis dette skjer i samme steg i
-    // react event-loopen får man den gamle søknad-staten. Her jobber vi oss rundt det ved å be react om å kalle effekten
-    // over i neste steg i loopen, slik at vi får tak i nyeste state.
-    const mellomlagre = () => {
-        oppdaterMellomlagerTrigger(prevState => prevState + 1);
     };
 
     useEffect(() => {
         if (sisteUtfylteStegIndex > 0) {
             mellomlagre();
         }
-    }, [nåværendeRoute]);
+    }, [nåværendeRoute, søknad.dokumentasjon]);
 
     const hentOgSettMellomlagretData = () => {
         preferredAxios

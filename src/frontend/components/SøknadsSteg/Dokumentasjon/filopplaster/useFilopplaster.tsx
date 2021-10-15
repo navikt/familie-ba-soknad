@@ -3,7 +3,6 @@ import React, { ReactNode, useCallback, useState } from 'react';
 import axios from 'axios';
 import { fromBlob } from 'file-type/browser';
 
-import { useApp } from '../../../../context/AppContext';
 import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
 import Miljø from '../../../../Miljø';
 import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
@@ -29,7 +28,6 @@ export const useFilopplaster = (
     const { wrapMedSystemetLaster } = useLastRessurserContext();
     const [feilmeldinger, settFeilmeldinger] = useState<ReactNode[]>([]);
     const [åpenModal, settÅpenModal] = useState<boolean>(false);
-    const { mellomlagre } = useApp();
 
     const datoTilStreng = (date: Date): string => {
         return date.toISOString();
@@ -100,12 +98,6 @@ export const useFilopplaster = (
                                     størrelse: fil.size,
                                     tidspunkt: dagensDatoStreng,
                                 });
-
-                                oppdaterDokumentasjon(
-                                    dokumentasjon.dokumentasjonsbehov,
-                                    [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
-                                    dokumentasjon.harSendtInn
-                                );
                             })
                             .catch(_error => {
                                 feilmeldingsliste.push(
@@ -124,7 +116,11 @@ export const useFilopplaster = (
                 )
             );
 
-            mellomlagre();
+            oppdaterDokumentasjon(
+                dokumentasjon.dokumentasjonsbehov,
+                [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
+                dokumentasjon.harSendtInn
+            );
         },
         [dokumentasjon.opplastedeVedlegg]
     );
@@ -138,7 +134,6 @@ export const useFilopplaster = (
             nyVedleggsliste,
             dokumentasjon.harSendtInn
         );
-        mellomlagre();
     };
 
     const lukkModal = () => {
