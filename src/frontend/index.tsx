@@ -71,7 +71,7 @@ polyfillLocaledata().then(() => {
             >
                 <HttpProvider>
                     <Sentry.ErrorBoundary
-                        fallback={Feilside}
+                        fallback={() => <Feilside />}
                         beforeCapture={scope => scope.setTag('scope', 'familie-ba-soknad')}
                         onError={logError}
                     >
