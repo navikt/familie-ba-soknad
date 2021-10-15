@@ -6,9 +6,10 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø, { basePath } from '../Miljø';
+import { Dokumentasjonsbehov, IDokumentasjon } from '../typer/dokumentasjon';
 import { EFeatureToggle } from '../typer/feature-toggles';
 import { autentiseringsInterceptor } from '../utils/autentisering';
-import { landSvarSomKanTriggeEøs } from '../utils/eøs';
+import { jaNeiSvarTriggerEøs, landSvarSomKanTriggeEøs } from '../utils/eøs';
 import { useApp } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 
@@ -20,10 +21,29 @@ const [EøsProvider, useEøs] = createUseContext(() => {
 
     const [eøsLand, settEøsLand] = useState<Alpha3Code[]>();
 
-    const { søknad, settSøknad } = useApp();
+    const { søknad, settSøknad, mellomlagre } = useApp();
     const { soknadApi } = Miljø();
 
     autentiseringsInterceptor();
+
+    useEffect(() => {
+        if (!eøsSkruddAv) {
+            const erEøs = søknad.erEøs;
+            settSøknad({
+                ...søknad,
+                dokumentasjon: søknad.dokumentasjon.map((dok: IDokumentasjon) =>
+                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA
+                        ? {
+                              ...dok,
+                              gjelderForSøker: erEøs,
+                              opplastedeVedlegg: erEøs ? dok.opplastedeVedlegg : [],
+                              harSendtInn: erEøs ? dok.harSendtInn : false,
+                          }
+                        : dok
+                ),
+            });
+        }
+    }, [søknad.erEøs]);
 
     useEffect(() => {
         (async () => {
@@ -56,8 +76,12 @@ const [EøsProvider, useEøs] = createUseContext(() => {
 
     useEffect(() => {
         const landSvarTriggerEøs = !!landSvarSomKanTriggeEøs(søknad).find(land => erEøsLand(land));
+        const erEøs = landSvarTriggerEøs || jaNeiSvarTriggerEøs(søknad);
 
-        settSøknad({ ...søknad, erEøs: landSvarTriggerEøs });
+        if (erEøs !== søknad.erEøs) {
+            settSøknad({ ...søknad, erEøs });
+            mellomlagre();
+        }
     }, [søknad.søker, søknad.barnInkludertISøknaden]);
 
     return {

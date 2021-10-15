@@ -25,18 +25,18 @@ const søknad = mockDeep<ISøknad>({
     ],
     søker: {
         sivilstand: { type: ESivilstand.UGIFT },
+        nåværendeSamboer: null,
+        harSamboerNå: {
+            id: DinLivssituasjonSpørsmålId.harSamboerNå,
+            svar: null,
+        },
         utvidet: {
             spørsmål: {
                 årsak: {
                     id: DinLivssituasjonSpørsmålId.årsak,
                     svar: '',
                 },
-                harSamboerNå: {
-                    id: DinLivssituasjonSpørsmålId.harSamboerNå,
-                    svar: null,
-                },
             },
-            nåværendeSamboer: null,
         },
     },
 });

@@ -10,6 +10,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { ISkjema, useFelt } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { dagensDato } from '../../../utils/dato';
 import {
     mekkGyldigSøknad,
     mockHistory,
@@ -22,19 +23,19 @@ import OmDeg from '../../SøknadsSteg/OmDeg/OmDeg';
 import { OmDegSpørsmålId } from '../../SøknadsSteg/OmDeg/spørsmål';
 import Datovelger from './Datovelger';
 
-describe(`Datovelger`, () => {
+describe('Datovelger', () => {
     silenceConsoleErrors();
-    test(`Datovelger kan begrenses av annen datovelger`, () => {
+    test('Datovelger kan begrenses av annen fra om med datovelger', () => {
         const {
             result: { current },
         } = renderHook(
             () => {
                 const fraOgMed = useFelt<ISODateString>({
-                    verdi: '2020-02-04',
+                    verdi: '2021-09-10',
                     feltId: 'fra-og-med',
                 });
                 const tilOgMed = useFelt<ISODateString>({
-                    verdi: '2020-02-04',
+                    verdi: '2021-09-10',
                     feltId: 'til-og-med',
                 });
                 return {
@@ -49,7 +50,7 @@ describe(`Datovelger`, () => {
             visFeilmeldinger: true,
         });
 
-        const { getAllByRole, container, rerender } = render(
+        const { getAllByRole, container } = render(
             <TestProvidere>
                 <Datovelger
                     felt={current.fraOgMed}
@@ -58,7 +59,7 @@ describe(`Datovelger`, () => {
                 />
                 <Datovelger
                     felt={current.tilOgMed}
-                    fraOgMedFelt={current.fraOgMed}
+                    tilhørendeFraOgMedFelt={current.fraOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-til-og-med'}
                 />
@@ -69,30 +70,44 @@ describe(`Datovelger`, () => {
         act(() => tilOgMedÅpneknapp.click());
         const forrigeDag = container.querySelector('[aria-selected="true"]')
             ?.previousElementSibling;
+
         expect(forrigeDag?.getAttribute('aria-disabled')).toEqual('true');
+    });
 
-        // Lukk denne datovelgeren for å resette før neste del av testen
-        act(() => tilOgMedÅpneknapp.click());
+    it('kan avgrenses frem i tid', () => {
+        const {
+            result: { current },
+        } = renderHook(
+            () => {
+                const tilOgMed = useFelt<ISODateString>({
+                    verdi: dagensDato(),
+                    feltId: 'til-og-med',
+                });
+                return {
+                    tilOgMed,
+                };
+            },
+            { wrapper: IntlProvider, initialProps: { locale: 'nb' } }
+        );
 
-        // Samme oppsett men tester avgrensning fremover
-        rerender(
+        const skjemaMock = mockDeep<ISkjema<SkjemaFeltTyper, string>>({
+            visFeilmeldinger: true,
+        });
+
+        const { getByRole, container } = render(
             <TestProvidere>
                 <Datovelger
                     felt={current.tilOgMed}
                     skjema={skjemaMock}
                     labelTekstId={'test-til-og-med'}
-                />
-                <Datovelger
-                    felt={current.fraOgMed}
-                    tilOgMedFelt={current.tilOgMed}
-                    skjema={skjemaMock}
-                    labelTekstId={'test-fra-og-med'}
+                    avgrensDatoFremITid={true}
                 />
             </TestProvidere>
         );
 
-        const fraOgMedÅpneknapp = getAllByRole('button')[1];
-        act(() => fraOgMedÅpneknapp.click());
+        const datovelgerÅpneKnapp = getByRole('button');
+
+        act(() => datovelgerÅpneKnapp.click());
         const nesteDag = container.querySelector('[aria-selected="true"]')?.nextElementSibling;
         expect(nesteDag?.getAttribute('aria-disabled')).toEqual('true');
     });

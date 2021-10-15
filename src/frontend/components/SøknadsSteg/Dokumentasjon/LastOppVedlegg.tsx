@@ -16,40 +16,31 @@ import {
 import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
+import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Filopplaster from './filopplaster/Filopplaster';
 
 interface Props {
     dokumentasjon: IDokumentasjon;
     vedleggNr: number;
+    oppdaterDokumentasjon: (
+        dokumentasjonsbehov: Dokumentasjonsbehov,
+        opplastedeVedlegg: IVedlegg[],
+        harSendtInn: boolean
+    ) => void;
 }
 
 const Container = styled.div`
     margin-bottom: 4rem;
 `;
 
-const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
-    const { søknad, settSøknad } = useApp();
+const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDokumentasjon }) => {
+    const { søknad } = useApp();
     const intl = useIntl();
     const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
         const huketAv = event.target.checked;
         const vedlegg = huketAv ? [] : dokumentasjon.opplastedeVedlegg;
         oppdaterDokumentasjon(dokumentasjon.dokumentasjonsbehov, vedlegg, huketAv);
-    };
-
-    const oppdaterDokumentasjon = (
-        dokumentasjonsbehov: Dokumentasjonsbehov,
-        opplastedeVedlegg: IVedlegg[],
-        harSendtInn: boolean
-    ) => {
-        settSøknad(prevState => ({
-            ...prevState,
-            dokumentasjon: prevState.dokumentasjon.map(dok =>
-                dok.dokumentasjonsbehov === dokumentasjonsbehov
-                    ? { ...dok, opplastedeVedlegg, harSendtInn }
-                    : dok
-            ),
-        }));
     };
 
     const formatertListeMedBarn = () => {
@@ -83,15 +74,17 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
         if (erOppholdtillatelseKravForSøkerMenIkkeBarn) {
             antallVedlegg++;
         }
-        if (
-            søknad.dokumentasjon.find(
-                dok =>
-                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE &&
-                    dok.gjelderForSøker
-            )
-        ) {
-            antallVedlegg++;
-        }
+
+        søknad.dokumentasjon.forEach(dok => {
+            if (
+                dok.gjelderForSøker &&
+                (dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE ||
+                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA)
+            ) {
+                antallVedlegg++;
+            }
+        });
+
         return antallVedlegg;
     };
 
@@ -126,12 +119,21 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr }) => {
                 {dokTittel}
             </Undertittel>
             {dokumentasjon.beskrivelseSpråkId && skalViseAnnenDokumentasjonsBeskrivelse() && (
-                <SpråkTekst
-                    id={dokumentasjon.beskrivelseSpråkId}
-                    values={{
-                        barn: formatertListeMedBarn(),
-                    }}
-                />
+                <>
+                    <SpråkTekst
+                        id={dokumentasjon.beskrivelseSpråkId}
+                        values={{
+                            barn: formatertListeMedBarn(),
+                        }}
+                    />
+                    {dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA && (
+                        <EksternLenke
+                            lenkeSpråkId={'eøs.tilleggsskjema.lenke'}
+                            lenkeTekstSpråkId={'eøs.tilleggsskjema.lenketekst'}
+                            target="_blank"
+                        />
+                    )}
+                </>
             )}
             {!dokumentasjon.harSendtInn && (
                 <Filopplaster

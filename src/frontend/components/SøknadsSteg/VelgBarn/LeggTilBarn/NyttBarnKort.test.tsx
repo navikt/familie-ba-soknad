@@ -31,6 +31,7 @@ test(`Kan legge til barn`, async () => {
             søknad: { barnRegistrertManuelt: [], søker: { barn: [] } },
             settSøknad: submitMock,
             axiosRequest: jest.fn().mockResolvedValue(byggDataRessurs(false)),
+            mellomlagre: jest.fn(),
         })
     );
     jest.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });

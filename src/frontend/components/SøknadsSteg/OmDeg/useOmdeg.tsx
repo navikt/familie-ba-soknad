@@ -9,7 +9,7 @@ import { useApp } from '../../../context/AppContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
-import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
+import { dagensDato } from '../../../utils/dato';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export type ESvarMedUbesvart = ESvar | null;
@@ -22,11 +22,6 @@ export interface IOmDegFeltTyper {
     værtINorgeITolvMåneder: ESvar | null;
     komTilNorgeDato: ISODateString;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
-    erAsylsøker: ESvar | null;
-    jobberPåBåt: ESvar | null;
-    arbeidsland: Alpha3Code | '';
-    mottarUtenlandspensjon: ESvar | null;
-    pensjonsland: Alpha3Code | '';
 }
 
 export const useOmdeg = (): {
@@ -89,7 +84,7 @@ export const useOmdeg = (): {
         ESvar.NEI,
         oppholderSegINorge,
         'omdeg.opphold-i-norge.dato.feilmelding',
-        true
+        dagensDato()
     );
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
@@ -108,7 +103,7 @@ export const useOmdeg = (): {
         ESvar.NEI,
         værtINorgeITolvMåneder,
         'omdeg.opphold-sammenhengende.dato.feilmelding',
-        true
+        dagensDato()
     );
 
     const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({
@@ -130,75 +125,6 @@ export const useOmdeg = (): {
         },
         avhengigheter: { værtINorgeITolvMåneder },
     });
-
-    const erAsylsøker = useJaNeiSpmFelt(
-        søker.erAsylsøker,
-        'omdeg.asylsøker.feilmelding',
-        {
-            ...(!søker.adressebeskyttelse && {
-                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
-            }),
-            værtINorgeITolvMåneder: {
-                hovedSpørsmål: værtINorgeITolvMåneder,
-            },
-            oppholderSegINorge: {
-                hovedSpørsmål: oppholderSegINorge,
-                tilhørendeFelter: [oppholdsland, oppholdslandDato],
-            },
-        },
-        borPåRegistrertAdresse.verdi === ESvar.NEI
-    );
-
-    const jobberPåBåt = useJaNeiSpmFelt(
-        søker.jobberPåBåt,
-        'omdeg.arbeid-utland.feilmelding',
-        {
-            ...(!søker.adressebeskyttelse && {
-                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
-            }),
-            værtINorgeITolvMåneder: {
-                hovedSpørsmål: værtINorgeITolvMåneder,
-            },
-            oppholderSegINorge: {
-                hovedSpørsmål: oppholderSegINorge,
-                tilhørendeFelter: [oppholdsland, oppholdslandDato],
-            },
-        },
-        borPåRegistrertAdresse.verdi === ESvar.NEI
-    );
-
-    const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet(
-        søker.arbeidsland,
-        'omdeg.arbeid-utland.land.feilmelding',
-        ESvar.JA,
-        jobberPåBåt
-    );
-
-    const mottarUtenlandspensjon = useJaNeiSpmFelt(
-        søker.mottarUtenlandspensjon,
-        'omdeg.utenlandspensjon.feilmelding',
-        {
-            ...(!søker.adressebeskyttelse && {
-                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
-            }),
-
-            værtINorgeITolvMåneder: {
-                hovedSpørsmål: værtINorgeITolvMåneder,
-            },
-            oppholderSegINorge: {
-                hovedSpørsmål: oppholderSegINorge,
-                tilhørendeFelter: [oppholdsland, oppholdslandDato],
-            },
-        },
-        borPåRegistrertAdresse.verdi === ESvar.NEI
-    );
-
-    const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet(
-        søker.pensjonsland,
-        'omdeg.utenlandspensjon.land.feilmelding',
-        ESvar.JA,
-        mottarUtenlandspensjon
-    );
 
     const oppdaterSøknad = () => {
         settSøknad({
@@ -234,32 +160,7 @@ export const useOmdeg = (): {
                     ...søker.planleggerÅBoINorgeTolvMnd,
                     svar: skjema.felter.planleggerÅBoINorgeTolvMnd.verdi,
                 },
-                erAsylsøker: {
-                    ...søker.erAsylsøker,
-                    svar: skjema.felter.erAsylsøker.verdi,
-                },
-                jobberPåBåt: {
-                    ...søker.jobberPåBåt,
-                    svar: skjema.felter.jobberPåBåt.verdi,
-                },
-                arbeidsland: {
-                    ...søker.arbeidsland,
-                    svar: skjema.felter.arbeidsland.verdi,
-                },
-                mottarUtenlandspensjon: {
-                    ...søker.mottarUtenlandspensjon,
-                    svar: skjema.felter.mottarUtenlandspensjon.verdi,
-                },
-                pensjonsland: {
-                    ...søker.pensjonsland,
-                    svar: skjema.felter.pensjonsland.verdi,
-                },
             },
-            dokumentasjon: søknad.dokumentasjon.map(dok =>
-                dok.dokumentasjonsbehov === Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE
-                    ? { ...dok, gjelderForSøker: erAsylsøker.verdi === ESvar.JA }
-                    : dok
-            ),
         });
     };
 
@@ -275,11 +176,6 @@ export const useOmdeg = (): {
             værtINorgeITolvMåneder,
             komTilNorgeDato,
             planleggerÅBoINorgeTolvMnd,
-            erAsylsøker,
-            jobberPåBåt,
-            arbeidsland,
-            mottarUtenlandspensjon,
-            pensjonsland,
         },
         skjemanavn: 'omdeg',
     });

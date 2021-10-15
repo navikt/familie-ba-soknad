@@ -13,7 +13,9 @@ export const expressToggleInterceptor: RequestHandler = (req, res, next) => {
 
     const renderDisabled = () =>
         getDecorator(språk)
-            .then(fragments => res.render('disabled.html', fragments))
+            .then(fragments =>
+                res.render('disabled.html', { ...fragments, LOCALE_CODE: språk ?? 'nb' })
+            )
             // Selv om dekoratøren feiler vil vi rendre siden, vil bare få noen ekle hbs-tags i sidevisningen og mangle no styling
             .catch(() => res.render('disabled.html'));
 

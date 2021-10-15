@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -8,6 +8,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
 import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
@@ -16,6 +17,7 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { KontonummerInfo } from './KontonummerInfo';
 
 const Kvittering: React.FC = () => {
     const {
@@ -24,6 +26,8 @@ const Kvittering: React.FC = () => {
         settFåttGyldigKvittering,
         søknad,
     } = useApp();
+    const { eøsSkruddAv } = useEøs();
+    const { barnInkludertISøknaden, erEøs } = søknad;
     const { hentStegNummer } = useRoutes();
 
     const { innsendingStatus } = useApp();
@@ -34,13 +38,14 @@ const Kvittering: React.FC = () => {
 
     const klokkeslett = innsendtDato.format('HH:mm');
     const dato = innsendtDato.format('DD.MM.YY');
+    const [varEøsSøknad] = useState(erEøs);
 
     useEffect(() => {
         if (sisteUtfylteStegIndex === hentStegNummer(RouteEnum.Dokumentasjon)) {
             settFåttGyldigKvittering(true);
 
             // I tilfelle vi kommer via mellomlagring og ikke har satt denne fra før, sett den her før vi nullstiller søknaden
-            setUserProperty(UserProperty.ANTALL_VALGTE_BARN, søknad.barnInkludertISøknaden.length);
+            setUserProperty(UserProperty.ANTALL_VALGTE_BARN, barnInkludertISøknaden.length);
 
             avbrytOgSlettSøknad();
         }
@@ -80,6 +85,12 @@ const Kvittering: React.FC = () => {
                     />
                 </Normaltekst>
             </KomponentGruppe>
+
+            {!eøsSkruddAv && varEøsSøknad && (
+                <KomponentGruppe>
+                    <KontonummerInfo />
+                </KomponentGruppe>
+            )}
 
             <Informasjonsbolk tittelId={'kvittering.ikke-lastet-opp'}>
                 <Normaltekst>

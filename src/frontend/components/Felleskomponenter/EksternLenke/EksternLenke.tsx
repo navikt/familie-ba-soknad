@@ -20,13 +20,15 @@ const EksternLenke: React.FC<{
     lenkeTekstSpråkId: string;
     lenkeSpråkId: string;
     target?: string;
-}> = ({ lenkeTekstSpråkId, lenkeSpråkId, target }) => {
+    className?: string;
+}> = ({ lenkeTekstSpråkId, lenkeSpråkId, target, className }) => {
     const intl = useIntl();
     return (
         <StyledLenke
             href={intl.formatMessage({ id: lenkeSpråkId })}
             target={target}
             rel="noopener noreferrer"
+            className={className}
         >
             <StyledLenkeTekst>
                 <SpråkTekst id={lenkeTekstSpråkId} />

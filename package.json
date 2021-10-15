@@ -108,7 +108,7 @@
     "request": "^2.88.2",
     "sharp": "0.27.1",
     "tslib": "^2.3.1",
-    "unleash-client": "^3.8.1",
+    "unleash-client": "^3.10.1",
     "xss": "^1.0.9"
   },
   "devDependencies": {
@@ -121,9 +121,9 @@
     "@navikt/fnrvalidator": "^1.1.4",
     "@navikt/nav-dekoratoren-moduler": "^1.6.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
-    "@sentry/browser": "^6.2.0",
-    "@sentry/react": "^6.2.0",
-    "@sentry/webpack-plugin": "^1.17.1",
+    "@sentry/browser": "^6.13.3",
+    "@sentry/react": "^6.13.3",
+    "@sentry/webpack-plugin": "^1.17.3",
     "@testing-library/dom": "^8.7.1",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.2.3",

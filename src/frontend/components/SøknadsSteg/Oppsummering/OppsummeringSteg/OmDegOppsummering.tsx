@@ -72,6 +72,16 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
                     children={genererAdresseVisning(søknad.søker)}
                 />
+                {søknad.søker.borPåRegistrertAdresse.svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
+                            />
+                        }
+                        søknadsvar={søknad.søker.borPåRegistrertAdresse.svar}
+                    />
+                )}
             </StyledOppsummeringsFeltGruppe>
 
             <StyledOppsummeringsFeltGruppe>
@@ -130,38 +140,6 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                             />
                         }
                         søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
-                    />
-                )}
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.erAsylsøker]} />}
-                    søknadsvar={søknad.søker.erAsylsøker.svar}
-                />
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.jobberPåBåt]} />}
-                    søknadsvar={søknad.søker.jobberPåBåt.svar}
-                />
-                {søknad.søker.arbeidsland.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.arbeidsland]} />
-                        }
-                        søknadsvar={landkodeTilSpråk(søknad.søker.arbeidsland.svar, valgtLocale)}
-                    />
-                )}
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.mottarUtenlandspensjon]}
-                        />
-                    }
-                    søknadsvar={søknad.søker.mottarUtenlandspensjon.svar}
-                />
-                {søknad.søker.pensjonsland.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.pensjonsland]} />
-                        }
-                        søknadsvar={landkodeTilSpråk(søknad.søker.pensjonsland.svar, valgtLocale)}
                     />
                 )}
             </StyledOppsummeringsFeltGruppe>

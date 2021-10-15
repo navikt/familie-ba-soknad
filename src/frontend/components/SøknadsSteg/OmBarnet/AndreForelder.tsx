@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
+import { useEøs } from '../../../context/EøsContext';
 import { IBarnMedISøknad } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
@@ -15,6 +16,7 @@ import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaChe
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import SammeSomAnnetBarnRadio from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
@@ -26,6 +28,7 @@ const AndreForelder: React.FC<{
     settSammeForelder: (radioVerdi: string) => void;
 }> = ({ barn, skjema, andreBarnSomErFyltUt, settSammeForelder }) => {
     const intl = useIntl();
+    const { erEøsLand } = useEøs();
     return (
         <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
             <KomponentGruppe>
@@ -124,6 +127,13 @@ const AndreForelder: React.FC<{
                             />
                         }
                     />
+                    {erEøsLand(skjema.felter.andreForelderArbeidUtlandetHvilketLand.verdi) && (
+                        <VedleggNotisTilleggsskjema
+                            språkTekstId={'ombarnet.andre-forelder.arbeid-utland.eøs-info'}
+                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                            dynamisk
+                        />
+                    )}
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.andreForelderPensjonUtland}
@@ -147,6 +157,13 @@ const AndreForelder: React.FC<{
                             />
                         }
                     />
+                    {erEøsLand(skjema.felter.andreForelderPensjonHvilketLand.verdi) && (
+                        <VedleggNotisTilleggsskjema
+                            språkTekstId={'ombarnet.andre-forelder.utenlandspensjon.eøs-info'}
+                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                            dynamisk
+                        />
+                    )}
                 </KomponentGruppe>
             )}
         </SkjemaFieldset>

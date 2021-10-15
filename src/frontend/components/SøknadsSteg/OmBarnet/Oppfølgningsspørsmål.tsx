@@ -8,6 +8,7 @@ import { ISkjema } from '@navikt/familie-skjema';
 import { useEøs } from '../../../context/EøsContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
+import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -18,7 +19,7 @@ import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaChe
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
 
@@ -69,7 +70,6 @@ const Oppfølgningsspørsmål: React.FC<{
                         bredde={'S'}
                     />
                     <Datovelger
-                        avgrensDatoFremITid={true}
                         felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
                         labelTekstId={
@@ -78,7 +78,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdSluttdato}
-                        fraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
+                        tilhørendeFraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
                         labelTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdSluttdato]
@@ -108,13 +108,13 @@ const Oppfølgningsspørsmål: React.FC<{
                         }
                     />
                     {erEøsLand(skjema.felter.oppholdsland.verdi) && (
-                        <VedleggNotis
+                        <VedleggNotisTilleggsskjema
                             språkTekstId={'ombarnet.oppholdutland.eøs-info'}
                             språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                         />
                     )}
                     <Datovelger
-                        avgrensDatoFremITid={true}
+                        avgrensMaxDato={dagensDato()}
                         felt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
                         labelTekstId={
@@ -123,7 +123,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <Datovelger
                         felt={skjema.felter.oppholdslandSluttdato}
-                        fraOgMedFelt={skjema.felter.oppholdslandStartdato}
+                        tilhørendeFraOgMedFelt={skjema.felter.oppholdslandStartdato}
                         skjema={skjema}
                         labelTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdslandSluttdato]
@@ -186,6 +186,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     <LandDropdown
                         felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
                         skjema={skjema}
+                        kunEøs={true}
                         label={
                             <SpråkTekst
                                 id={

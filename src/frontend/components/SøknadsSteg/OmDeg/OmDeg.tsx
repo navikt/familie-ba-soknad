@@ -12,7 +12,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
@@ -90,7 +90,10 @@ const OmDeg: React.FC = () => {
                                 }
                             />
                             {erEøsLand(skjema.felter.oppholdsland.verdi) && (
-                                <VedleggNotis språkTekstId={'omdeg.opphold-i-norge.eøs-info'} />
+                                <VedleggNotisTilleggsskjema
+                                    språkTekstId={'omdeg.opphold-i-norge.eøs-info'}
+                                    dynamisk
+                                />
                             )}
                             <Datovelger
                                 avgrensDatoFremITid={true}
@@ -128,55 +131,6 @@ const OmDeg: React.FC = () => {
                         <AlertStripe type={'advarsel'} dynamisk>
                             <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
                         </AlertStripe>
-                    )}
-                </KomponentGruppe>
-            )}
-
-            {skjema.felter.erAsylsøker.erSynlig && (
-                <KomponentGruppe dynamisk>
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.erAsylsøker}
-                        spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.erAsylsøker]}
-                    />
-                    {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
-                        <VedleggNotis dynamisk språkTekstId={'omdeg.asylsøker.alert'} />
-                    )}
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.jobberPåBåt}
-                        spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.jobberPåBåt]}
-                    />
-
-                    <LandDropdown
-                        felt={skjema.felter.arbeidsland}
-                        skjema={skjema}
-                        label={
-                            <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.arbeidsland]} />
-                        }
-                        dynamisk
-                    />
-                    {erEøsLand(skjema.felter.arbeidsland.verdi) && (
-                        <VedleggNotis språkTekstId={'omdeg.arbeid-utland.eøs-info'} />
-                    )}
-
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.mottarUtenlandspensjon}
-                        spørsmålTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.mottarUtenlandspensjon]
-                        }
-                    />
-                    <LandDropdown
-                        felt={skjema.felter.pensjonsland}
-                        skjema={skjema}
-                        label={
-                            <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.pensjonsland]} />
-                        }
-                        dynamisk
-                    />
-                    {erEøsLand(skjema.felter.pensjonsland.verdi) && (
-                        <VedleggNotis språkTekstId={'omdeg.utenlandspensjon.eøs-info'} />
                     )}
                 </KomponentGruppe>
             )}

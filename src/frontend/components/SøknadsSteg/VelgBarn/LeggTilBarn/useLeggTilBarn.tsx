@@ -43,7 +43,7 @@ export const useLeggTilBarn = (): {
     nullstillSkjema: () => void;
     leggTilBarn: () => void;
 } => {
-    const { søknad, settSøknad } = useApp();
+    const { søknad, settSøknad, mellomlagre } = useApp();
     const intl = useIntl();
 
     const erFødt = useFelt<ESvarMedUbesvart>({
@@ -160,6 +160,7 @@ export const useLeggTilBarn = (): {
             ]),
         });
         nullstillSkjema();
+        mellomlagre();
     };
 
     return {

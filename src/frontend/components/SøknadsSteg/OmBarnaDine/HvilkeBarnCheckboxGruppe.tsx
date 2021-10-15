@@ -1,8 +1,9 @@
-import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { useIntl } from 'react-intl';
 
 import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
@@ -10,9 +11,10 @@ import { Felt } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål, BarnetsId } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface Props {
-    legend: ReactNode;
+    legendSpråkId: string;
     skjemafelt: Felt<BarnetsId[]>;
     visFeilmelding: boolean;
     søknadsdatafelt: barnDataKeySpørsmål;
@@ -20,11 +22,12 @@ interface Props {
 }
 
 const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
-    legend,
+    legendSpråkId,
     skjemafelt,
     søknadsdatafelt,
     nullstillValgteBarn,
     visFeilmelding,
+    children,
 }) => {
     const { søknad } = useApp();
     const [valgteBarn, settValgteBarn] = useState<BarnetsId[]>(
@@ -58,24 +61,31 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
     };
 
     return skjemafelt.erSynlig ? (
-        <CheckboxGruppe
-            aria-live={'polite'}
-            legend={legend}
-            {...skjemafelt.hentNavBaseSkjemaProps(visFeilmelding)}
-            utenFeilPropagering
-        >
-            {søknad.barnInkludertISøknaden.map((barnISøknad, index) => {
-                return (
-                    <Checkbox
-                        key={index}
-                        label={barnetsNavnValue(barnISøknad, intl)}
-                        defaultChecked={!!valgteBarn.find(barnId => barnId === barnISøknad.id)}
-                        id={`${skjemafelt.id}${barnISøknad.id}`}
-                        onChange={event => oppdaterListeMedBarn(event, barnISøknad.id)}
-                    />
-                );
-            })}
-        </CheckboxGruppe>
+        <>
+            <CheckboxGruppe
+                aria-live={'polite'}
+                legend={
+                    <Element>
+                        <SpråkTekst id={legendSpråkId} />
+                    </Element>
+                }
+                {...skjemafelt.hentNavBaseSkjemaProps(visFeilmelding)}
+                utenFeilPropagering
+            >
+                {søknad.barnInkludertISøknaden.map((barnISøknad, index) => {
+                    return (
+                        <Checkbox
+                            key={index}
+                            label={barnetsNavnValue(barnISøknad, intl)}
+                            defaultChecked={!!valgteBarn.find(barnId => barnId === barnISøknad.id)}
+                            id={`${skjemafelt.id}${barnISøknad.id}`}
+                            onChange={event => oppdaterListeMedBarn(event, barnISøknad.id)}
+                        />
+                    );
+                })}
+            </CheckboxGruppe>
+            {children}
+        </>
     ) : null;
 };
 

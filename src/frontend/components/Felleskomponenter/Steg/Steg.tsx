@@ -81,15 +81,16 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     const nesteRoute = hentNesteRoute(location.pathname);
     const forrigeRoute = hentForrigeRoute(location.pathname);
     const nåværendeStegIndex = hentRouteIndex(location.pathname);
-    const nåværendeRoute: RouteEnum = hentNåværendeRoute(location.pathname).route;
 
-    useFørsteRender(() => logSidevisningBarnetrygd(nåværendeRoute));
+    const nyesteNåværendeRoute: RouteEnum = hentNåværendeRoute(location.pathname).route;
+    useFørsteRender(() => logSidevisningBarnetrygd(nyesteNåværendeRoute));
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        settNåværendeRoute(nyesteNåværendeRoute);
         if (skjema && erStegUtfyltFrafør(nåværendeStegIndex)) {
             Object.values(skjema.skjema.felter).forEach(felt => {
-                felt.validerOgSettFelt();
+                felt.validerOgSettFelt(felt.verdi);
             });
         }
     }, []);
@@ -100,7 +101,6 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     };
 
     const gåVidere = () => {
-        settNåværendeRoute(nåværendeRoute);
         if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
             settSisteUtfylteStegIndex(nåværendeStegIndex);
         }

@@ -15,14 +15,30 @@ export const erDatoFormatGodkjent = (verdi: string) => {
     return dayjs(verdi, 'YYYY-MM-DD').format('YYYY-MM-DD') === verdi;
 };
 
-export const erDatoFremITid = (verdi: ISODateString) => {
-    return dayjs(verdi).isAfter(dayjs());
+export const erDatoFremITid = (dato: ISODateString) => {
+    return dayjs(dato).isAfter(dayjs());
 };
+
+export const erDatoEtterSluttdatoAvgresning = (dato: ISODateString, sluttdato: ISODateString) => {
+    return dayjs(dato).isAfter(dayjs(sluttdato));
+};
+
+export const erDatoFørEllerSammeSomStartDatoAvgrensning = (
+    dato: ISODateString,
+    startdato: ISODateString
+) => {
+    return dayjs(dato).isBefore(dayjs(startdato)) || dayjs(dato).isSame(dayjs(startdato));
+};
+
+export const gårsdagensDato = () => dayjs().subtract(1, 'day').format('YYYY-MM-DD');
+
+export const dagensDato = () => dayjs().format('YYYY-MM-DD');
 
 export const validerDato = (
     feltState: FeltState<string>,
-    avgrensDatoFremITid: boolean,
-    feilmeldingSpråkId: string
+    feilmeldingSpråkId: string,
+    startdatoAvgrensning = '',
+    sluttdatoAvgrensning = ''
 ): FeltState<string> => {
     if (feltState.verdi === '') {
         return feil(feltState, <SpråkTekst id={feilmeldingSpråkId} />);
@@ -30,8 +46,17 @@ export const validerDato = (
     if (!erDatoFormatGodkjent(feltState.verdi)) {
         return feil(feltState, <SpråkTekst id={'felles.dato-format.feilmelding'} />);
     }
-    if (avgrensDatoFremITid && erDatoFremITid(feltState.verdi)) {
+    if (
+        !!sluttdatoAvgrensning &&
+        erDatoEtterSluttdatoAvgresning(feltState.verdi, sluttdatoAvgrensning)
+    ) {
         return feil(feltState, <SpråkTekst id={'felles.dato-frem-i-tid.feilmelding'} />);
+    }
+    if (
+        !!startdatoAvgrensning &&
+        erDatoFørEllerSammeSomStartDatoAvgrensning(feltState.verdi, startdatoAvgrensning)
+    ) {
+        return feil(feltState, <SpråkTekst id={'felles.tilogmedfeilformat.feilmelding'} />);
     }
     return ok(feltState);
 };
