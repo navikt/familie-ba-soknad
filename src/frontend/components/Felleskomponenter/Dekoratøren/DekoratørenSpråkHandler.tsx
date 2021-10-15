@@ -18,6 +18,7 @@ export const DekoratørenSpråkHandler: React.FC = () => {
         // Bryr oss egenlig ikke om hva som skjer etterpå men intellij klager på ignorert promise
         setParams({ language: valgtLocale }).then();
         setCookie(dekoratorLanguageCookieName, valgtLocale);
+        document.documentElement.lang = valgtLocale;
     }, [valgtLocale]);
 
     useEffect(() => {

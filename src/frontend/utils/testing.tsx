@@ -10,14 +10,14 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import norskeTekster from '../assets/lang/nb.json';
-import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
-} from '../components/SøknadsSteg/Utvidet-DinLivssituasjon/spørsmål';
+} from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import * as appContext from '../context/AppContext';
 import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
@@ -171,6 +171,22 @@ export const mekkGyldigSøknad = (): ISøknad => {
         lestOgForståttBekreftelse: true,
         søker: {
             ...initialStateSøknad.søker,
+            harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
+            nåværendeSamboer: {
+                navn: { id: SamboerSpørsmålId.nåværendeSamboerNavn, svar: 'Gunnar' },
+                ident: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFnr,
+                    svar: AlternativtSvarForInput.UKJENT,
+                },
+                fødselsdato: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
+                    svar: AlternativtSvarForInput.UKJENT,
+                },
+                samboerFraDato: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFraDato,
+                    svar: '2021-08-11',
+                },
+            },
             borPåRegistrertAdresse: {
                 id: OmDegSpørsmålId.borPåRegistrertAdresse,
                 svar: ESvar.JA,
@@ -184,15 +200,15 @@ export const mekkGyldigSøknad = (): ISøknad => {
                 svar: ESvar.JA,
             },
             erAsylsøker: {
-                id: OmDegSpørsmålId.erAsylsøker,
+                id: DinLivssituasjonSpørsmålId.erAsylsøker,
                 svar: ESvar.NEI,
             },
             jobberPåBåt: {
-                id: OmDegSpørsmålId.jobberPåBåt,
+                id: DinLivssituasjonSpørsmålId.jobberPåBåt,
                 svar: ESvar.NEI,
             },
             mottarUtenlandspensjon: {
-                id: OmDegSpørsmålId.mottarUtenlandspensjon,
+                id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
                 svar: ESvar.NEI,
             },
         },
@@ -300,22 +316,6 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                     separertEnkeSkiltDato: {
                         id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
                         svar: '2021-09-09',
-                    },
-                    harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
-                },
-                nåværendeSamboer: {
-                    navn: { id: SamboerSpørsmålId.nåværendeSamboerNavn, svar: 'Gunnar' },
-                    ident: {
-                        id: SamboerSpørsmålId.nåværendeSamboerFnr,
-                        svar: AlternativtSvarForInput.UKJENT,
-                    },
-                    fødselsdato: {
-                        id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-                        svar: AlternativtSvarForInput.UKJENT,
-                    },
-                    samboerFraDato: {
-                        id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-                        svar: '2021-08-11',
                     },
                 },
                 tidligereSamboere: [

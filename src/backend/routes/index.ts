@@ -57,18 +57,21 @@ export const getDecorator = (språk?: string): Promise<DekoratørRespons> =>
         }
     });
 
-export const indexHandler: RequestHandler = (req, res) => {
+export const indexHandler: RequestHandler = async (req, res) => {
     const språk = req.cookies['decorator-language'];
 
-    getDecorator(språk)
-        .then(fragments => {
-            res.render('index.html', fragments);
-        })
-        .catch((e: Error) => {
-            logError('Feilmelding når vi henter dekoratøren: ', e);
-            const error = `En feil oppstod. Klikk <a href="https://www.nav.no">her</a> for å gå tilbake til nav.no. Kontakt kundestøtte hvis problemet vedvarer.`;
-            res.status(500).send(error);
-        });
+    try {
+        const dekoratørenVariabler = await getDecorator(språk);
+        const hbsVariabler = {
+            ...dekoratørenVariabler,
+            LOCALE_CODE: språk ?? 'nb',
+        };
+        res.render('index.html', hbsVariabler);
+    } catch (e) {
+        logError('Feilmelding når vi henter dekoratøren: ', e as Error);
+        const error = `En feil oppstod. Klikk <a href="https://www.nav.no">her</a> for å gå tilbake til nav.no. Kontakt kundestøtte hvis problemet vedvarer.`;
+        res.status(500).send(error);
+    }
 };
 
 export const konfigurerIndex = (app: Express): Express => {

@@ -9,6 +9,7 @@ export const innebygdeFormatterere = {
     punktliste: msg => <ul>{msg}</ul>,
     punkt: msg => <li>{msg}</li>,
     p: msg => <p>{msg}</p>,
+    bokmål: msg => <span lang="nb">{msg}</span>,
 };
 
 const SpråkTekst: React.FC<MessageProps> = props => {
