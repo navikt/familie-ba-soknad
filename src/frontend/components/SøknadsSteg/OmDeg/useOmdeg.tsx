@@ -150,7 +150,7 @@ export const useOmdeg = (): {
             ? ''
             : søker.reistFraNorgeDato.svar,
         reistFraNorgeDatoVetIkke,
-        'TODO',
+        'omdeg.opphold-sammenhengende.datoreist.feilmelding',
         værtINorgeITolvMåneder.verdi === ESvar.NEI,
         false,
         dagensDato()

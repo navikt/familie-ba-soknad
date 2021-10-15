@@ -327,6 +327,7 @@
   "omdeg.opphold-sammenhengende.dato.feilmelding": "You must state when you came to Norway in order to be able to proceed",
   "omdeg.opphold-sammenhengende.dato.sjekkboks": "I did not come to Norway during the last 12 months",
   "omdeg.opphold-sammenhengende.dato.spm": "When did you come to Norway?",
+  "omdeg.opphold-sammenhengende.datoreist.feilmelding": "You must state when you left Norway in order to be able to proceed",
   "omdeg.opphold-sammenhengende.datoreist.sjekkboks": "I have not left Norway during the last 12 months",
   "omdeg.opphold-sammenhengende.datoreist.spm": "When did you leave Norway?",
   "omdeg.opphold-sammenhengende.feilmelding": "You must state whether you have lived in Norway continuously for the past 12 months in order to be able to proceed",

@@ -24,7 +24,7 @@ export const omDegSpørsmålSpråkId: Record<OmDegSpørsmålId, string> = {
     [OmDegSpørsmålId.oppholdslandDato]: 'omdeg.opphold-i-norge.dato.spm',
     [OmDegSpørsmålId.værtINorgeITolvMåneder]: 'omdeg.opphold-sammenhengende.spm',
     [OmDegSpørsmålId.komTilNorgeDato]: 'omdeg.opphold-sammenhengende.dato.spm',
-    [OmDegSpørsmålId.komTilNorgeDatoVetIkke]: 'omdeg.opphold-sammenhengende.datoreist.sjekkboks',
+    [OmDegSpørsmålId.komTilNorgeDatoVetIkke]: 'omdeg.opphold-sammenhengende.dato.sjekkboks',
     [OmDegSpørsmålId.reistFraNorgeDato]: 'omdeg.opphold-sammenhengende.datoreist.spm',
     [OmDegSpørsmålId.reistFraNorgeDatoVetIkke]: 'omdeg.opphold-sammenhengende.datoreist.sjekkboks',
     [OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]: 'omdeg.planlagt-opphold-sammenhengende.spm',

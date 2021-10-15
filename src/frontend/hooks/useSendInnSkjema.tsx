@@ -12,6 +12,7 @@ import {
     OmBarnetSpørsmålsId,
     omBarnetSpørsmålSpråkId,
 } from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { useApp } from '../context/AppContext';
 import Miljø from '../Miljø';
 import {
@@ -357,6 +358,8 @@ export const useSendInnSkjema = (): {
             utvidet,
             adressebeskyttelse,
             nåværendeSamboer,
+            komTilNorgeDato,
+            reistFraNorgeDato,
             ...søkerSpørsmål
         } = søker;
         const { spørsmål: utvidaSpørsmål, tidligereSamboere } = utvidet;
@@ -388,6 +391,20 @@ export const useSendInnSkjema = (): {
                 spørsmål: {
                     ...spørmålISøknadsFormat(typetSøkerSpørsmål),
                     ...spørmålISøknadsFormat(typetUtvidaSpørsmål),
+                    komTilNorgeDato: søknadsfelt(
+                        språktekstIdFraSpørsmålId(OmDegSpørsmålId.komTilNorgeDato),
+                        sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                            komTilNorgeDato.svar,
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDatoVetIkke]
+                        )
+                    ),
+                    reistFraNorgeDato: søknadsfelt(
+                        språktekstIdFraSpørsmålId(OmDegSpørsmålId.reistFraNorgeDato),
+                        sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                            reistFraNorgeDato.svar,
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeDatoVetIkke]
+                        )
+                    ),
                 },
                 tidligereSamboere: tidligereSamboere.map(tidligereSamboerISøknadKontraktFormat),
                 nåværendeSamboer: nåværendeSamboer
