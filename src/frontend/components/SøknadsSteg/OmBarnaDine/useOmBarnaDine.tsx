@@ -4,7 +4,8 @@ import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
-import { barnDataKeySpørsmål, BarnetsId } from '../../../typer/person';
+import { barnDataKeySpørsmål, BarnetsId, ESivilstand } from '../../../typer/person';
+import { Årsak } from '../../../typer/søknad';
 import { genererOppdaterteBarn } from '../../../utils/barn';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 
@@ -160,16 +161,26 @@ export const useOmBarnaDine = (): {
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
 
-    const erAvdødPartnerForelder = useJaNeiSpmFelt(søknad.erAvdødPartnerForelder, 'todo', {
-        søktAsylForBarn: {
-            hovedSpørsmål: søktAsylForBarn,
-            tilhørendeFelter: [hvemErSøktAsylFor],
+    const erAvdødPartnerForelder = useJaNeiSpmFelt(
+        søknad.erAvdødPartnerForelder,
+        'todo',
+        {
+            søktAsylForBarn: {
+                hovedSpørsmål: søktAsylForBarn,
+                tilhørendeFelter: [hvemErSøktAsylFor],
+            },
+            barnOppholdtSegTolvMndSammenhengendeINorge: {
+                hovedSpørsmål: barnOppholdtSegTolvMndSammenhengendeINorge,
+                tilhørendeFelter: [hvemTolvMndSammenhengendeINorge],
+            },
         },
-        barnOppholdtSegTolvMndSammenhengendeINorge: {
-            hovedSpørsmål: barnOppholdtSegTolvMndSammenhengendeINorge,
-            tilhørendeFelter: [hvemTolvMndSammenhengendeINorge],
-        },
-    });
+        false,
+        !(
+            søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN &&
+            søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.ENKE_ENKEMANN
+        )
+        // TODO: Gjenlevende part
+    );
 
     const hvemAvdødPartner = useBarnCheckboxFelt(
         barnDataKeySpørsmål.andreForelderErDød,
