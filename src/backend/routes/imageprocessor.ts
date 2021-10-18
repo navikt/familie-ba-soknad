@@ -1,5 +1,4 @@
-import bodyParser from 'body-parser';
-import { Express, RequestHandler } from 'express';
+import { Express, RequestHandler, raw } from 'express';
 import sharp from 'sharp';
 
 import { logError, logWarn } from '@navikt/familie-logging';
@@ -29,7 +28,7 @@ const bildeProsesseringHandler: RequestHandler = async (req, res) => {
         res.set('Content-Type', 'image/jpg');
         res.send(jpeg);
     } catch (reason) {
-        logError(reason.message);
+        logError('Feil under konvertering til jpeg', reason as Error);
         res.sendStatus(500);
     }
 };
@@ -42,7 +41,7 @@ export const konfigurerBildeProsessering = (app: Express): Express => {
         type: '*/*',
     };
 
-    app.use(path, bodyParser.raw(uploadOptions));
+    app.use(path, raw(uploadOptions) as RequestHandler);
     app.use(path, jwtValidationInterceptor);
     app.post(path, bildeProsesseringHandler);
 

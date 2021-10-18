@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, Request, Response } from 'express';
 
 import { LocaleType } from '@navikt/familie-sprakvelger';
 import { byggFeiletRessurs } from '@navikt/familie-typer';
@@ -16,7 +16,11 @@ export const hentSpråkteksterAlleSpråk = (språknøkkel: string): Record<Local
     };
 };
 
-export const erklaeringInterceptor: RequestHandler = (request, response, next) => {
+export const erklaeringInterceptor: RequestHandler = (
+    request: Request,
+    response: Response,
+    next
+) => {
     const søknad: ISøknadKontrakt = request.body;
     const spmKey = 'lestOgForståttBekreftelse';
     const aksepterteSvarSpråkNøkkel = 'forside.bekreftelsesboks.erklæring.spm';
