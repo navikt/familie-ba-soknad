@@ -54,8 +54,7 @@
       "\\.pnp\\.[^\\/]+$"
     ],
     "transform": {
-      "\\.[jt]sx?$": "babel-jest",
-      "\\.svg$": "jest-svg-transformer"
+      "\\.[jt]sx?$": "babel-jest"
     },
     "resetMocks": true
   },
@@ -198,7 +197,6 @@
     "jest-circus": "^27.3.0",
     "jest-mock-extended": "^2.0.4",
     "jest-resolve": "27.2.4",
-    "jest-svg-transformer": "^1.0.0",
     "jest-watch-typeahead": "0.6.1",
     "less": "^4.1.1",
     "less-loader": "^7.3.0",
@@ -260,8 +258,8 @@
     "terser": "^5.6.0-beta",
     "terser-webpack-plugin": "^5.2.4",
     "ts-essentials": "^7.0.2",
-    "ts-jest": "^26.5.6",
-    "ts-loader": "^8.0.16",
+    "ts-jest": "^27.0.7",
+    "ts-loader": "^9.2.6",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.11.0",
     "typescript": "^4.1.3",
