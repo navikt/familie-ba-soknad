@@ -395,7 +395,7 @@ export const useSendInnSkjema = (): {
                         språktekstIdFraSpørsmålId(OmDegSpørsmålId.komTilNorgeDato),
                         sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                             komTilNorgeDato.svar,
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDatoVetIkke]
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeVetIkke]
                         )
                     ),
                     reistFraNorgeDato: søknadsfelt(

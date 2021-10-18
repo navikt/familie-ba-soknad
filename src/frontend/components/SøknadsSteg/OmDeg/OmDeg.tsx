@@ -118,14 +118,12 @@ const OmDeg: React.FC = () => {
                         felt={skjema.felter.komTilNorgeDato}
                         skjema={skjema}
                         labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
-                        disabled={skjema.felter.komTilNorgeDatoVetIkke.verdi === ESvar.JA}
+                        disabled={skjema.felter.komTilNorgeVetIkke.verdi === ESvar.JA}
                         dynamisk
                     />
                     <SkjemaCheckbox
-                        felt={skjema.felter.komTilNorgeDatoVetIkke}
-                        labelSpråkTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDatoVetIkke]
-                        }
+                        felt={skjema.felter.komTilNorgeVetIkke}
+                        labelSpråkTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeVetIkke]}
                     />
                     <Datovelger
                         avgrensDatoFremITid={true}

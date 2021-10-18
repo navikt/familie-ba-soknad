@@ -25,7 +25,7 @@ export interface IOmDegFeltTyper {
     oppholdslandDato: ISODateString;
     værtINorgeITolvMåneder: ESvar | null;
     komTilNorgeDato: DatoMedUkjent;
-    komTilNorgeDatoVetIkke: ESvar;
+    komTilNorgeVetIkke: ESvar;
     reistFraNorgeDato: DatoMedUkjent;
     reistFraNorgeVetIkke: ESvar;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
@@ -105,9 +105,9 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
-    const komTilNorgeDatoVetIkke = useFelt<ESvar>({
+    const komTilNorgeVetIkke = useFelt<ESvar>({
         verdi: søker.komTilNorgeDato.svar === AlternativtSvarForInput.UKJENT ? ESvar.JA : ESvar.NEI,
-        feltId: OmDegSpørsmålId.komTilNorgeDatoVetIkke,
+        feltId: OmDegSpørsmålId.komTilNorgeVetIkke,
         skalFeltetVises: avhengigheter => {
             return (
                 avhengigheter &&
@@ -123,7 +123,7 @@ export const useOmdeg = (): {
         søker.komTilNorgeDato.svar === AlternativtSvarForInput.UKJENT
             ? ''
             : søker.komTilNorgeDato.svar,
-        komTilNorgeDatoVetIkke,
+        komTilNorgeVetIkke,
         'omdeg.opphold-sammenhengende.dato.feilmelding',
         værtINorgeITolvMåneder.verdi === ESvar.NEI,
         false,
@@ -205,7 +205,7 @@ export const useOmdeg = (): {
                 komTilNorgeDato: {
                     ...søker.komTilNorgeDato,
                     svar: svarForSpørsmålMedUkjent(
-                        skjema.felter.komTilNorgeDatoVetIkke,
+                        skjema.felter.komTilNorgeVetIkke,
                         skjema.felter.komTilNorgeDato
                     ),
                 },
@@ -235,7 +235,7 @@ export const useOmdeg = (): {
             oppholdslandDato,
             værtINorgeITolvMåneder,
             komTilNorgeDato,
-            komTilNorgeDatoVetIkke,
+            komTilNorgeVetIkke: komTilNorgeVetIkke,
             reistFraNorgeDato,
             reistFraNorgeVetIkke: reistFraNorgeVetIkke,
             planleggerÅBoINorgeTolvMnd,
