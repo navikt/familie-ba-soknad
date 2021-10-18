@@ -1,4 +1,4 @@
-import { Request, Response } from 'express-serve-static-core';
+import { Request, Response } from 'express';
 import { mockDeep } from 'jest-mock-extended';
 import { DeepPartial } from 'ts-essentials';
 
