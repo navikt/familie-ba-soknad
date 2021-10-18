@@ -84,6 +84,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
     const { formatMessage } = useIntl();
     const {
         søknad: { barnRegistrertManuelt },
+        erUtvidet,
     } = useApp();
 
     const erMedISøknad = !!barnSomSkalVæreMed.find(barnMedISøknad => barnMedISøknad.id === barn.id);
@@ -125,9 +126,21 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 )}
                 <StyledCheckbox
                     checked={erMedISøknad}
-                    label={<SpråkTekst id={'hvilkebarn.barn.søk-om.spm'} />}
+                    label={
+                        <SpråkTekst
+                            id={
+                                erUtvidet
+                                    ? 'hvilkebarn-utvidet.barn.søk-om.spm'
+                                    : 'hvilkebarn.barn.søk-om.spm'
+                            }
+                        />
+                    }
                     aria-label={
-                        formatMessage({ id: 'hvilkebarn.barn.søk-om.spm' }) + ` (${barn.navn})`
+                        formatMessage({
+                            id: erUtvidet
+                                ? 'hvilkebarn-utvidet.barn.søk-om.spm'
+                                : 'hvilkebarn.barn.søk-om.spm',
+                        }) + ` (${barn.navn})`
                     }
                     onChange={() => velgBarnCallback(barn, erMedISøknad)}
                 />

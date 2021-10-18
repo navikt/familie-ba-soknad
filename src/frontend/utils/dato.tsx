@@ -50,7 +50,16 @@ export const validerDato = (
         !!sluttdatoAvgrensning &&
         erDatoEtterSluttdatoAvgresning(feltState.verdi, sluttdatoAvgrensning)
     ) {
-        return feil(feltState, <SpråkTekst id={'felles.dato-frem-i-tid.feilmelding'} />);
+        return feil(
+            feltState,
+            <SpråkTekst
+                id={
+                    sluttdatoAvgrensning === dagensDato()
+                        ? 'felles.dato-frem-i-tid.feilmelding'
+                        : 'felles.dato-frem-i-tid-eller-i-idag.feilmelding'
+                }
+            />
+        );
     }
     if (
         !!startdatoAvgrensning &&
