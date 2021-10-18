@@ -1,13 +1,12 @@
 import { Event } from '@sentry/react';
 import { mockDeep, mockFn } from 'jest-mock-extended';
-import { DeepPartial } from 'ts-essentials';
 
 import { fjernPersonopplysninger } from './sentry';
 
 describe('sentry', () => {
     it('filtrerer fødselsnummer', () => {
         const breadcrumbData = { fnr: '123456 78901' };
-        const partialEvent: DeepPartial<Event> = {
+        const event = mockDeep<Event>({
             message: '12345678901',
             breadcrumbs: [
                 {
@@ -15,9 +14,7 @@ describe('sentry', () => {
                     message: '12345678901',
                 },
             ],
-        };
-
-        const event = mockDeep<Event>(partialEvent);
+        });
         const stringifiedBreadcrumbData = JSON.stringify(breadcrumbData);
 
         const stringify = mockFn();
