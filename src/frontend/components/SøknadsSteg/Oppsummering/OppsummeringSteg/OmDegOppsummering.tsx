@@ -146,7 +146,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         søknadsvar={formaterDatoMedUkjent(
                             søknad.søker.reistFraNorgeDato.svar,
                             formatMessage({
-                                id: omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeDatoVetIkke],
+                                id: omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeVetIkke],
                             })
                         )}
                     />

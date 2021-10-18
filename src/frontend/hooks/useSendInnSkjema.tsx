@@ -402,7 +402,7 @@ export const useSendInnSkjema = (): {
                         språktekstIdFraSpørsmålId(OmDegSpørsmålId.reistFraNorgeDato),
                         sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                             reistFraNorgeDato.svar,
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeDatoVetIkke]
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeVetIkke]
                         )
                     ),
                 },

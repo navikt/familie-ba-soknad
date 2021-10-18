@@ -27,7 +27,7 @@ export interface IOmDegFeltTyper {
     komTilNorgeDato: DatoMedUkjent;
     komTilNorgeDatoVetIkke: ESvar;
     reistFraNorgeDato: DatoMedUkjent;
-    reistFraNorgeDatoVetIkke: ESvar;
+    reistFraNorgeVetIkke: ESvar;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
 }
 
@@ -130,10 +130,10 @@ export const useOmdeg = (): {
         dagensDato()
     );
 
-    const reistFraNorgeDatoVetIkke = useFelt<ESvar>({
+    const reistFraNorgeVetIkke = useFelt<ESvar>({
         verdi:
             søker.reistFraNorgeDato.svar === AlternativtSvarForInput.UKJENT ? ESvar.JA : ESvar.NEI,
-        feltId: OmDegSpørsmålId.reistFraNorgeDatoVetIkke,
+        feltId: OmDegSpørsmålId.reistFraNorgeVetIkke,
         skalFeltetVises: avhengigheter => {
             return (
                 avhengigheter &&
@@ -149,7 +149,7 @@ export const useOmdeg = (): {
         søker.reistFraNorgeDato.svar === AlternativtSvarForInput.UKJENT
             ? ''
             : søker.reistFraNorgeDato.svar,
-        reistFraNorgeDatoVetIkke,
+        reistFraNorgeVetIkke,
         'omdeg.opphold-sammenhengende.datoreist.feilmelding',
         værtINorgeITolvMåneder.verdi === ESvar.NEI,
         false,
@@ -212,7 +212,7 @@ export const useOmdeg = (): {
                 reistFraNorgeDato: {
                     ...søker.reistFraNorgeDato,
                     svar: svarForSpørsmålMedUkjent(
-                        skjema.felter.reistFraNorgeDatoVetIkke,
+                        skjema.felter.reistFraNorgeVetIkke,
                         skjema.felter.reistFraNorgeDato
                     ),
                 },
@@ -237,7 +237,7 @@ export const useOmdeg = (): {
             komTilNorgeDato,
             komTilNorgeDatoVetIkke,
             reistFraNorgeDato,
-            reistFraNorgeDatoVetIkke,
+            reistFraNorgeVetIkke: reistFraNorgeVetIkke,
             planleggerÅBoINorgeTolvMnd,
         },
         skjemanavn: 'omdeg',

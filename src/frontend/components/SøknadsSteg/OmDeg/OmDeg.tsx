@@ -132,13 +132,13 @@ const OmDeg: React.FC = () => {
                         felt={skjema.felter.reistFraNorgeDato}
                         skjema={skjema}
                         labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeDato]}
-                        disabled={skjema.felter.reistFraNorgeDatoVetIkke.verdi === ESvar.JA}
+                        disabled={skjema.felter.reistFraNorgeVetIkke.verdi === ESvar.JA}
                         dynamisk
                     />
                     <SkjemaCheckbox
-                        felt={skjema.felter.reistFraNorgeDatoVetIkke}
+                        felt={skjema.felter.reistFraNorgeVetIkke}
                         labelSpråkTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeDatoVetIkke]
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.reistFraNorgeVetIkke]
                         }
                     />
                     <JaNeiSpm

@@ -13,7 +13,7 @@ export enum OmDegSpørsmålId {
     komTilNorgeDato = 'søker-kom-til-norge-dato',
     komTilNorgeDatoVetIkke = 'søker-ikke-ankommet-norge',
     reistFraNorgeDato = 'søker-reiste-fra-norge-dato',
-    reistFraNorgeDatoVetIkke = 'søker-ikke-reist-fra-norge-dato',
+    reistFraNorgeVetIkke = 'søker-ikke-reist-fra-norge-dato',
     planleggerÅBoINorgeTolvMnd = 'søker-planlegger-å-bo-i-norge-sammenhengende-tolv-måneder',
 }
 
@@ -26,6 +26,6 @@ export const omDegSpørsmålSpråkId: Record<OmDegSpørsmålId, string> = {
     [OmDegSpørsmålId.komTilNorgeDato]: 'omdeg.opphold-sammenhengende.dato.spm',
     [OmDegSpørsmålId.komTilNorgeDatoVetIkke]: 'omdeg.opphold-sammenhengende.dato.sjekkboks',
     [OmDegSpørsmålId.reistFraNorgeDato]: 'omdeg.opphold-sammenhengende.datoreist.spm',
-    [OmDegSpørsmålId.reistFraNorgeDatoVetIkke]: 'omdeg.opphold-sammenhengende.datoreist.sjekkboks',
+    [OmDegSpørsmålId.reistFraNorgeVetIkke]: 'omdeg.opphold-sammenhengende.datoreist.sjekkboks',
     [OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]: 'omdeg.planlagt-opphold-sammenhengende.spm',
 };
