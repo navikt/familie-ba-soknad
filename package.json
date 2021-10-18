@@ -235,7 +235,7 @@
     "nav-frontend-veileder-style": "^3.0.1",
     "node-fetch": "^3.0.0",
     "nodemon": "^2.0.12",
-    "prettier": "^2.0.5",
+    "prettier": "^2.4.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
