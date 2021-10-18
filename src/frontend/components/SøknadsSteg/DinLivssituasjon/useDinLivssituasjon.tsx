@@ -25,6 +25,7 @@ import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
 
 export interface IDinLivssituasjonFeltTyper {
@@ -248,9 +249,20 @@ export const useDinLivssituasjon = (): {
         );
     };
 
+    const erEnkeEnkemann = () =>
+        skjema.felter.årsak.verdi === Årsak.ENKE_ENKEMANN ||
+        søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN;
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
+            erAvdødPartnerForelder: {
+                id:
+                    skjema.felter.årsak.verdi === Årsak.ENKE_ENKEMANN
+                        ? OmBarnaDineSpørsmålId.erAvdødPartnerForelder
+                        : OmBarnaDineSpørsmålId.erFolkeregistrertAvdødPartnerForelder,
+                svar: !erEnkeEnkemann() ? null : søknad.erAvdødPartnerForelder.svar,
+            },
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 if (dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE)
                     return { ...dok, gjelderForSøker: separertEnkeSkilt.verdi === ESvar.JA };

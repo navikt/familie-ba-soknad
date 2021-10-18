@@ -246,7 +246,7 @@ const OmBarnaDine: React.FC = () => {
                         skjema={skjema}
                         felt={skjema.felter.erAvdødPartnerForelder}
                         spørsmålTekstId={
-                            omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.erAvdødPartnerForelder]
+                            omBarnaDineSpørsmålSpråkId[søknad.erAvdødPartnerForelder.id]
                         }
                     />
                     <HvilkeBarnCheckboxGruppe

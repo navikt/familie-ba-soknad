@@ -163,7 +163,7 @@ export const useOmBarnaDine = (): {
 
     const erAvdødPartnerForelder = useJaNeiSpmFelt(
         søknad.erAvdødPartnerForelder,
-        'todo',
+        'ombarna.enkeenkemann.feilmelding',
         {
             søktAsylForBarn: {
                 hovedSpørsmål: søktAsylForBarn,
@@ -176,15 +176,14 @@ export const useOmBarnaDine = (): {
         },
         false,
         !(
-            søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN &&
+            søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
             søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.ENKE_ENKEMANN
         )
-        // TODO: Gjenlevende part
     );
 
     const hvemAvdødPartner = useBarnCheckboxFelt(
         barnDataKeySpørsmål.andreForelderErDød,
-        'todo',
+        'ombarna.enkeenkemann.hvem.feilmelding',
         erAvdødPartnerForelder
     );
 
