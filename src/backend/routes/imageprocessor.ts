@@ -1,12 +1,10 @@
-import bodyParser from 'body-parser';
-import { Express, RequestHandler } from 'express';
+import { Express, RequestHandler, raw } from 'express';
 import sharp from 'sharp';
 
 import { logError, logWarn } from '@navikt/familie-logging';
 
 import { basePath } from '../environment';
 import { jwtValidationInterceptor } from '../middlewares/jwt-interceptor';
-const { raw } = bodyParser;
 
 async function prosesser(bilde: Buffer): Promise<Buffer> {
     return sharp(bilde)
