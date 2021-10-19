@@ -7,6 +7,7 @@ import { act } from 'react-dom/test-utils';
 import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype, ISøknad } from '../../../typer/søknad';
 import {
+    mockEøs,
     mockHistory,
     silenceConsoleErrors,
     spyOnUseApp,
@@ -41,18 +42,16 @@ const søknad = mockDeep<ISøknad>({
     },
 });
 
-jest.mock('nav-frontend-alertstriper', () => ({ children }) => (
-    <div data-testid="alertstripe">{children}</div>
-));
-
 describe('DinLivssituasjon', () => {
     mockHistory(['/din-livssituasjon']);
 
     beforeEach(() => {
         silenceConsoleErrors();
+        mockEøs(false);
+        jest.useFakeTimers('modern');
     });
 
-    it('Alle tekster finnes i språkfil', () => {
+    it('Alle tekster finnes i språkfil', async () => {
         spyOnUseApp(søknad);
 
         render(
@@ -61,37 +60,42 @@ describe('DinLivssituasjon', () => {
             </TestProvidereMedEkteTekster>
         );
         expect(console.error).toHaveBeenCalledTimes(0);
+
+        await act(async () => {
+            jest.advanceTimersByTime(500);
+        });
     });
 
-    it('rendrer DinLivssituasjon steg og inneholder sidetittel', () => {
+    it('rendrer DinLivssituasjon steg og inneholder sidetittel', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText } = render(
+        const { findByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        expect(getByText('Livssituasjonen din')).toBeInTheDocument();
+        expect(await findByText('Livssituasjonen din')).toBeInTheDocument();
     });
 
-    it('Stopper fra å gå videre hvis årsak ikke er valgt', () => {
+    it('Stopper fra å gå videre hvis årsak ikke er valgt', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText, getByRole } = render(
+        const { findByText, findByRole } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const gåVidere = getByText('GÅ VIDERE');
+        const gåVidere = await findByText('GÅ VIDERE');
         act(() => gåVidere.click());
-        const alerts: HTMLElement = getByRole('alert');
+        const alerts: HTMLElement = await findByRole('alert');
         const result: HTMLElement | null = queryByText(
             alerts,
             'Du må velge årsak til at du søker om utvidet barnetrygd for å gå videre'
         );
         expect(result).not.toBeNull();
     });
-    it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', () => {
+
+    it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', async () => {
         spyOnUseApp(søknad);
 
         const { queryByText } = render(
@@ -106,29 +110,29 @@ describe('DinLivssituasjon', () => {
         expect(spørsmål).not.toBeInTheDocument();
     });
 
-    it('Viser spørsmål harSamboerNå', () => {
+    it('Viser spørsmål harSamboerNå', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText } = render(
+        const { findByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const result = getByText('Har du samboer nå?');
+        const result = await findByText('Har du samboer nå?');
         expect(result).toBeDefined();
     });
 
-    it('Viser feilmelding med spørsmål tittel når ikke utfylt', () => {
+    it('Viser feilmelding med spørsmål tittel når ikke utfylt', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText, getByRole } = render(
+        const { findByText, findByRole } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const gåVidere = getByText('GÅ VIDERE');
+        const gåVidere = await findByText('GÅ VIDERE');
         act(() => gåVidere.click());
-        const alerts: HTMLElement = getByRole('alert');
+        const alerts: HTMLElement = await findByRole('alert');
         const result: HTMLElement | null = queryByText(
             alerts,
             'Du må oppgi om du har samboer nå for å gå videre'
@@ -136,24 +140,24 @@ describe('DinLivssituasjon', () => {
         expect(result).not.toBeNull();
     });
 
-    it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', () => {
+    it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText, getByRole } = render(
+        const { findByText, findByRole } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const harSamboerNåSpmFieldset: HTMLElement = getByRole('group', {
+        const harSamboerNåSpmFieldset: HTMLElement = await findByRole('group', {
             name: /Har du samboer nå?/i,
         });
         const jaKnapp: HTMLElement = within(harSamboerNåSpmFieldset).getByText('Ja');
         act(() => jaKnapp.click());
 
-        const gåVidereKnapp = getByText('GÅ VIDERE');
+        const gåVidereKnapp = await findByText('GÅ VIDERE');
         act(() => gåVidereKnapp.click());
 
-        const feiloppsummering = getByRole('alert');
+        const feiloppsummering = await findByRole('alert');
 
         const navnFeilmelding = within(feiloppsummering).getByText(
             'Du må oppgi samboerens navn for å gå videre'
@@ -169,7 +173,7 @@ describe('DinLivssituasjon', () => {
         expect(forholdStartFeilmelding).toBeInTheDocument();
     });
 
-    it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand annet enn GIFT', () => {
+    it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand annet enn GIFT', async () => {
         spyOnUseApp(søknad);
 
         const { queryByText } = render(
@@ -184,7 +188,7 @@ describe('DinLivssituasjon', () => {
         expect(spørsmål).not.toBeInTheDocument();
     });
 
-    it('Viser spørsmål om er du separert, enke eller skilt om sivilstand GIFT', () => {
+    it('Viser spørsmål om er du separert, enke eller skilt om sivilstand GIFT', async () => {
         spyOnUseApp({
             ...søknad,
             søker: {
@@ -193,13 +197,13 @@ describe('DinLivssituasjon', () => {
             },
         });
 
-        const { queryByText } = render(
+        const { findByText } = render(
             <TestProvidere>
                 <DinLivssituasjon />
             </TestProvidere>
         );
 
-        const spørsmål = queryByText(
+        const spørsmål = await findByText(
             dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
         );
         expect(spørsmål).toBeInTheDocument();
