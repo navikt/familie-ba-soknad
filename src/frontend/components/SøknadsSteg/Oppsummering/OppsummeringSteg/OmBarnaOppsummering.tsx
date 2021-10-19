@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { useApp } from '../../../../context/AppContext';
 import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
 import { barnDataKeySpørsmål } from '../../../../typer/person';
@@ -24,7 +26,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
 
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden
-            .filter(barn => barn[søknadDatafelt].svar === 'JA')
+            .filter(barn => barn[søknadDatafelt].svar === ESvar.JA)
             .map(filtrertBarn => barnetsNavnValue(filtrertBarn, intl))
             .join(', ');
 
@@ -48,7 +50,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.erNoenAvBarnaFosterbarn.svar}
                 />
-                {søknad.erNoenAvBarnaFosterbarn.svar === 'JA' && (
+                {søknad.erNoenAvBarnaFosterbarn.svar === ESvar.JA && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -77,7 +79,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.oppholderBarnSegIInstitusjon.svar}
                 />
 
-                {søknad.oppholderBarnSegIInstitusjon.svar === 'JA' && (
+                {søknad.oppholderBarnSegIInstitusjon.svar === ESvar.JA && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -107,7 +109,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.erBarnAdoptertFraUtland.svar}
                 />
-                {søknad.erBarnAdoptertFraUtland.svar === 'JA' && (
+                {søknad.erBarnAdoptertFraUtland.svar === ESvar.JA && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -135,7 +137,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.oppholderBarnSegIUtland.svar}
                 />
-                {søknad.oppholderBarnSegIUtland.svar === 'JA' && (
+                {søknad.oppholderBarnSegIUtland.svar === ESvar.JA && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -159,7 +161,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.søktAsylForBarn.svar}
                 />
-                {søknad.søktAsylForBarn.svar === 'JA' && (
+                {søknad.søktAsylForBarn.svar === ESvar.JA && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -188,7 +190,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar}
                 />
 
-                {søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar === 'NEI' && (
+                {søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar === ESvar.NEI && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -219,7 +221,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar}
                 />
 
-                {søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar === 'JA' && (
+                {søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar === ESvar.JA && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -236,6 +238,37 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     />
                 )}
             </StyledOppsummeringsFeltGruppe>
+            {søknad.erAvdødPartnerForelder.svar && (
+                <StyledOppsummeringsFeltGruppe>
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    omBarnaDineSpørsmålSpråkId[
+                                        OmBarnaDineSpørsmålId.erAvdødPartnerForelder
+                                    ]
+                                }
+                            />
+                        }
+                        søknadsvar={søknad.erAvdødPartnerForelder.svar}
+                    />
+
+                    {søknad.erAvdødPartnerForelder.svar === ESvar.JA && (
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        omBarnaDineSpørsmålSpråkId[
+                                            OmBarnaDineSpørsmålId.hvemAvdødPartner
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={genererListeMedBarn(barnDataKeySpørsmål.andreForelderErDød)}
+                        />
+                    )}
+                </StyledOppsummeringsFeltGruppe>
+            )}
         </Oppsummeringsbolk>
     );
 };

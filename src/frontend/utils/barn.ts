@@ -224,6 +224,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland,
             svar: null,
         },
+        [barnDataKeySpørsmål.andreForelderErDød]: {
+            id: OmBarnaDineSpørsmålId.hvemAvdødPartner,
+            svar: null,
+        },
         [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
             id: OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon,
             svar: null,
@@ -307,10 +311,6 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
             svar: '',
-        },
-        [barnDataKeySpørsmål.andreForelderErDød]: {
-            id: OmBarnetSpørsmålsId.andreForelderErDød,
-            svar: null,
         },
         [barnDataKeySpørsmål.borFastMedSøker]: {
             id: OmBarnetSpørsmålsId.borFastMedSøker,
