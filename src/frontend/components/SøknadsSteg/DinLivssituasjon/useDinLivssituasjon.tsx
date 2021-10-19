@@ -261,7 +261,7 @@ export const useDinLivssituasjon = (): {
                     skjema.felter.årsak.verdi === Årsak.ENKE_ENKEMANN
                         ? OmBarnaDineSpørsmålId.erAvdødPartnerForelder
                         : OmBarnaDineSpørsmålId.erFolkeregistrertAvdødPartnerForelder,
-                svar: !erEnkeEnkemann() ? null : søknad.erAvdødPartnerForelder.svar,
+                svar: erEnkeEnkemann() ? søknad.erAvdødPartnerForelder.svar : null,
             },
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 if (dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE)
