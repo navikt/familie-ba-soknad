@@ -15,6 +15,7 @@ import {
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import { SamboerSpørsmålId } from '../DinLivssituasjon/spørsmål';
+import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmDegSpørsmålId } from '../OmDeg/spørsmål';
 import Oppsummering from './Oppsummering';
 
@@ -35,6 +36,10 @@ describe('Oppsummering', () => {
 
     it('stopper fra å gå videre hvis søknaden har mangler', () => {
         const søknad = mockDeep<ISøknad>({
+            erAvdødPartnerForelder: {
+                id: OmBarnaDineSpørsmålId.erAvdødPartnerForelder,
+                svar: null,
+            },
             søker: {
                 statsborgerskap: [{ landkode: 'NOR' }],
                 oppholderSegINorge: { id: OmDegSpørsmålId.oppholderSegINorge, svar: null },
