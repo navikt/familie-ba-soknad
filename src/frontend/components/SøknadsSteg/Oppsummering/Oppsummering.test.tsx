@@ -21,19 +21,21 @@ import Oppsummering from './Oppsummering';
 describe('Oppsummering', () => {
     beforeEach(silenceConsoleErrors);
 
-    it('Alle tekster finnes i språkfil', () => {
+    it('Alle tekster finnes i språkfil', async () => {
         mockHistory(['/oppsummering']);
         spyOnUseApp(mekkGyldigSøknad());
 
-        render(
+        const { findAllByRole } = render(
             <TestProvidereMedEkteTekster>
                 <Oppsummering />
             </TestProvidereMedEkteTekster>
         );
+        await findAllByRole('button');
+
         expect(console.error).toHaveBeenCalledTimes(0);
     });
 
-    it('stopper fra å gå videre hvis søknaden har mangler', () => {
+    it('stopper fra å gå videre hvis søknaden har mangler', async () => {
         const søknad = mockDeep<ISøknad>({
             søker: {
                 statsborgerskap: [{ landkode: 'NOR' }],
@@ -70,12 +72,12 @@ describe('Oppsummering', () => {
         spyOnUseApp(søknad);
         const { mockedHistoryArray } = mockHistory(['/oppsummering']);
 
-        const { getByText, getAllByRole } = render(
+        const { findByText, getAllByRole } = render(
             <TestProvidere>
                 <Oppsummering />
             </TestProvidere>
         );
-        const gåVidere = getByText('felles.navigasjon.gå-videre');
+        const gåVidere = await findByText('felles.navigasjon.gå-videre');
 
         act(() => gåVidere.click());
 
@@ -84,19 +86,19 @@ describe('Oppsummering', () => {
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({ hash: 'omdeg-feil' });
         expect(omDegFeil).toBeInTheDocument();
         expect(omDegFeil).toBeVisible();
-    });
+    }, 10000);
 
-    it('går til dokumentasjon med gyldig søknad', () => {
+    it('går til dokumentasjon med gyldig søknad', async () => {
         const søknad = mekkGyldigSøknad();
         spyOnUseApp(søknad);
         const { mockedHistoryArray } = mockHistory(['/oppsummering']);
 
-        const { getByText, queryAllByRole } = render(
+        const { findByText, queryAllByRole } = render(
             <TestProvidere>
                 <Oppsummering />
             </TestProvidere>
         );
-        const gåVidere = getByText('felles.navigasjon.gå-videre');
+        const gåVidere = await findByText('felles.navigasjon.gå-videre');
 
         act(() => gåVidere.click());
 
