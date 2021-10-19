@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useIntl } from 'react-intl';
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { Sidetittel } from 'nav-frontend-typografi';
 

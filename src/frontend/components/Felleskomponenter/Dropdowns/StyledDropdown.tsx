@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
 
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { Select } from 'nav-frontend-skjema';
 
