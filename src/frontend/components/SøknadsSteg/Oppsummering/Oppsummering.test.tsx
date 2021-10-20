@@ -37,7 +37,7 @@ describe('Oppsummering', () => {
     it('stopper fra å gå videre hvis søknaden har mangler', () => {
         const søknad = mockDeep<ISøknad>({
             erAvdødPartnerForelder: {
-                id: OmBarnaDineSpørsmålId.erAvdødPartnerForelder,
+                id: OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder,
                 svar: null,
             },
             søker: {

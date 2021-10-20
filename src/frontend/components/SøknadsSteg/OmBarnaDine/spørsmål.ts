@@ -13,8 +13,9 @@ export enum OmBarnaDineSpørsmålId {
     hvemTolvMndSammenhengendeINorge = 'hvem-tolv-mnd-sammenhengende-i-norge',
     mottarBarnetrygdForBarnFraAnnetEøsland = 'barnetrygd-fra-annet-eøsland',
     hvemBarnetrygdFraAnnetEøsland = 'hvem-mottar-barnetrygd-eøsland',
-    erAvdødPartnerForelder = 'er-avdød-partner-forelder',
-    erFolkeregistrertAvdødPartnerForelder = 'er-folkeregistrert-avdød-partner-forelder',
+    erOppgittAvdødPartnerForelder = 'er-oppgitt-avdød-partner-forelder',
+    erFolkeregAvdødEktefelleForelder = 'er-folkeregistrert-avdød-ektefelle-forelder',
+    erFolkeregAvdødPartnerForelder = 'er-folkeregistrert-avdød-partner-forelder',
     hvemAvdødPartner = 'hvem-er-avdød-partner-forelder-til',
 }
 
@@ -35,8 +36,10 @@ export const omBarnaDineSpørsmålSpråkId: Record<OmBarnaDineSpørsmålId, stri
         'ombarna.sammenhengende-opphold.hvem.spm',
     [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]: 'ombarna.barnetrygd-eøs.spm',
     [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]: 'ombarna.barnetrygd-eøs.hvem.spm',
-    [OmBarnaDineSpørsmålId.erAvdødPartnerForelder]: 'ombarna.enkeenkemann.oppgitt.spm',
-    [OmBarnaDineSpørsmålId.erFolkeregistrertAvdødPartnerForelder]:
-        'ombarna.enkeenkemann.folkeregisteret.spm',
+    [OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder]: 'ombarna.enkeenkemann.oppgitt.spm',
+    [OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder]:
+        'ombarna.enkeenkemann.folkeregisteret-enke.spm',
+    [OmBarnaDineSpørsmålId.erFolkeregAvdødPartnerForelder]:
+        'ombarna.enkeenkemann.folkeregisteret-gjenlevende.spm',
     [OmBarnaDineSpørsmålId.hvemAvdødPartner]: 'ombarna.enkeenkemann.hvem.spm',
 };
