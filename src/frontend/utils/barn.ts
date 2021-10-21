@@ -176,7 +176,10 @@ export const genererOppdaterteBarn = (
             },
             [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
                 ...barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
-                svar: andreForelderErDød === ESvar.JA ? null : skriftligAvtaleOmDeltBosted.svar,
+                svar:
+                    andreForelderErDød === ESvar.JA
+                        ? null
+                        : barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar,
             },
         };
     });

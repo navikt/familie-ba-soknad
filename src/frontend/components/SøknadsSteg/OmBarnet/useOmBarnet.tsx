@@ -2,21 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
-import { useLocation } from 'react-router-dom';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
-import {
-    feil,
-    FeltState,
-    ISkjema,
-    ok,
-    useFelt,
-    useSkjema,
-    Valideringsstatus,
-} from '@navikt/familie-skjema';
+import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../context/RoutesContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
@@ -27,7 +17,6 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
-import { ILokasjon } from '../../../typer/lokasjon';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
@@ -95,10 +84,8 @@ export const useOmBarnet = (
     settSammeForelder: (radioVerdi: string) => void;
     validerAlleSynligeFelter: () => void;
 } => {
-    const { søknad, settSøknad, erStegUtfyltFrafør, erUtvidet } = useApp();
-    const { hentRouteIndex } = useRoutes();
+    const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
-    const location = useLocation<ILokasjon>();
 
     const [barn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
