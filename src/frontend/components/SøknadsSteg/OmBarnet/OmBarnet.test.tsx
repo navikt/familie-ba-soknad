@@ -128,30 +128,32 @@ describe('OmBarnet', () => {
         mockEøs();
     });
 
-    test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, () => {
+    test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, async () => {
         mockHistory(['/om-barnet/barn-1']);
         spyOnUseApp({
             barnInkludertISøknaden: [jens],
             sisteUtfylteStegIndex: 4,
         });
 
-        render(
-            <TestProvidereMedEkteTekster>
-                <OmBarnet barnetsId={'random-id-jens'} />
-            </TestProvidereMedEkteTekster>
-        );
+        await act(async () => {
+            render(
+                <TestProvidereMedEkteTekster>
+                    <OmBarnet barnetsId={'random-id-jens'} />
+                </TestProvidereMedEkteTekster>
+            );
+        });
 
         expect(console.error).toHaveBeenCalledTimes(0);
     });
 
-    test(`Kan navigere mellom to barn`, () => {
+    test(`Kan navigere mellom to barn`, async () => {
         const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
         spyOnUseApp({
             barnInkludertISøknaden: [jens, line],
             sisteUtfylteStegIndex: 4,
             dokumentasjon: [],
         });
-        const { getByText } = render(
+        const { findByText } = render(
             <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
                 <OmBarnet barnetsId={'random-id-jens'} />
             </TestProvidere>
@@ -159,16 +161,16 @@ describe('OmBarnet', () => {
 
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
 
-        const jensTittel = getByText('Om JENS');
+        const jensTittel = await findByText('Om JENS');
         expect(jensTittel).toBeInTheDocument();
 
-        const gåVidere = getByText(/felles.navigasjon.gå-videre/);
+        const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
         act(() => gåVidere.click());
 
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-2');
     });
 
-    test(`Kan navigere fra barn til oppsummering`, () => {
+    test(`Kan navigere fra barn til oppsummering`, async () => {
         const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
         mockHistory(['/om-barnet/barn-1']);
 
@@ -178,7 +180,7 @@ describe('OmBarnet', () => {
             dokumentasjon: [],
         });
 
-        const { getByText } = render(
+        const { findByText } = render(
             <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
                 <OmBarnet barnetsId={'random-id-jens'} />
             </TestProvidere>
@@ -186,16 +188,16 @@ describe('OmBarnet', () => {
 
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
 
-        const jensTittel = getByText('Om JENS');
+        const jensTittel = await findByText('Om JENS');
         expect(jensTittel).toBeInTheDocument();
 
-        const gåVidere = getByText(/felles.navigasjon.gå-videre/);
+        const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
         act(() => gåVidere.click());
 
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/oppsummering');
     });
 
-    test('Fødselnummer til andre forelder blir fjernet om man huker av ikke oppgi opplysninger om den', () => {
+    test('Fødselnummer til andre forelder blir fjernet om man huker av ikke oppgi opplysninger om den', async () => {
         mockHistory(['/om-barnet/barn-1']);
 
         spyOnUseApp({
@@ -210,14 +212,16 @@ describe('OmBarnet', () => {
             dokumentasjon: [],
         });
 
-        const { getByLabelText, getByText, queryByText } = render(
+        const { findByLabelText, findByText, queryByText } = render(
             <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
                 <OmBarnet barnetsId={'random-id-jens'} />
             </TestProvidere>
         );
 
-        const ikkeOppgiOpplysninger = getByLabelText(/ombarnet.andre-forelder.navn-ukjent.spm/);
-        const andreForelderFnrLabel = getByText(/felles.fødsels-eller-dnummer.label/);
+        const ikkeOppgiOpplysninger = await findByLabelText(
+            /ombarnet.andre-forelder.navn-ukjent.spm/
+        );
+        const andreForelderFnrLabel = await findByText(/felles.fødsels-eller-dnummer.label/);
 
         expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
         expect(andreForelderFnrLabel).toBeInTheDocument();
@@ -256,7 +260,7 @@ describe('OmBarnet', () => {
         });
         erStegUtfyltFrafør.mockReturnValue(false);
 
-        const { getByLabelText, getByText, queryByText } = render(
+        const { findByLabelText, findByText, queryByText } = render(
             <TestProvidere>
                 <OmBarnet barnetsId={'random-id'} />
             </TestProvidere>
@@ -264,10 +268,10 @@ describe('OmBarnet', () => {
 
         expect(queryByText(/ombarnet.søker-for-periode.spm/)).not.toBeInTheDocument();
 
-        const jaKnapp = getByLabelText('felles.svaralternativ.ja');
+        const jaKnapp = await findByLabelText('felles.svaralternativ.ja');
         act(() => jaKnapp.click());
 
-        expect(getByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
+        expect(await findByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
     });
 
     test('Rendrer tidsrom hvis ikke fosterbarn og både bor fast med søker og avtale om delt bosted er satt', async () => {
@@ -296,7 +300,7 @@ describe('OmBarnet', () => {
         });
         erStegUtfyltFrafør.mockReturnValue(false);
 
-        const { queryByText, getAllByLabelText } = render(
+        const { queryByText, findAllByLabelText } = render(
             <TestProvidere>
                 <OmBarnet barnetsId={'random-id'} />
             </TestProvidere>
@@ -307,10 +311,10 @@ describe('OmBarnet', () => {
          * dukker ikke opp, vi er nødt til å trykke oss igjennom spørsmålene med act for at vi skal komme frem.
          */
 
-        const vetIkkeKnapper = getAllByLabelText(/felles.svaralternativ.vetikke/);
+        const vetIkkeKnapper = await findAllByLabelText(/felles.svaralternativ.vetikke/);
         act(() => vetIkkeKnapper.forEach(knapp => knapp.click()));
 
-        const neiKnapper = getAllByLabelText(/felles.svaralternativ.nei/);
+        const neiKnapper = await findAllByLabelText(/felles.svaralternativ.nei/);
         // Dette endrer svarene vi hadde satt til vet_ikke, men utfallet er det samme så lenge vi ikke endrer til ja
         act(() => neiKnapper.forEach(knapp => knapp.click()));
 
@@ -341,7 +345,7 @@ describe('OmBarnet', () => {
         const { erStegUtfyltFrafør } = spyOnUseApp(oppdatertSøknad);
         erStegUtfyltFrafør.mockReturnValue(false);
 
-        const { queryByText, getAllByText } = render(
+        const { queryByText, findAllByText } = render(
             <TestProvidere>
                 <OmBarnet barnetsId={endretBarn.id} />
             </TestProvidere>
@@ -355,7 +359,7 @@ describe('OmBarnet', () => {
         act(() => {
             gåVidereKnapper && gåVidereKnapper.click();
         });
-        const feilmelding = getAllByText(
+        const feilmelding = await findAllByText(
             /ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding/
         );
         expect(feilmelding).toHaveLength(2);

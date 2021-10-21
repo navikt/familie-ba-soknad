@@ -69,6 +69,9 @@ export const spyOnUseApp = søknad => {
         settNåværendeRoute,
         mellomlagre,
         sluttbruker,
+        systemetLaster: jest.fn().mockReturnValue(false),
+        systemetOK: () => jest.fn().mockReturnValue(true),
+        systemetFeiler: jest.fn().mockReturnValue(false),
     });
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
 
