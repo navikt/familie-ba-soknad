@@ -291,7 +291,7 @@ export const initialStateSøknad: ISøknad = {
         svar: null,
     },
     erAvdødPartnerForelder: {
-        id: OmBarnaDineSpørsmålId.erFolkeregistrertAvdødPartnerForelder,
+        id: OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder,
         svar: null,
     },
 };
