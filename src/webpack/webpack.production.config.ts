@@ -22,16 +22,18 @@ const prodConfig: webpack.Configuration = mergeWithRules({
             filename: '[name].css',
         }),
         new CssMinimizerWebpackPlugin(),
-        new SentryCliPlugin({
-            include: 'dist',
-            org: 'nav',
-            project: 'familie-ba-soknad',
-            authToken: process.env.SENTRY_AUTH_TOKEN,
-            url: 'https://sentry.gc.nav.no/',
-            release: process.env.SENTRY_RELEASE,
-            urlPrefix: `~${process.env.BASE_PATH}`,
-        }),
-    ],
+        process.env.SENTRY_AUTH_TOKEN
+            ? new SentryCliPlugin({
+                  include: 'dist',
+                  org: 'nav',
+                  project: 'familie-ba-soknad',
+                  authToken: process.env.SENTRY_AUTH_TOKEN,
+                  url: 'https://sentry.gc.nav.no/',
+                  release: process.env.SENTRY_RELEASE,
+                  urlPrefix: `~${process.env.BASE_PATH}`,
+              })
+            : undefined,
+    ].filter(val => !!val),
     output: {
         filename: '[name].[contenthash].js',
     },

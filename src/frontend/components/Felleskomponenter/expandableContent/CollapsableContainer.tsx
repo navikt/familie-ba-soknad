@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Collapse } from 'react-collapse';
 import { css } from 'styled-components';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export interface Props {
     children: React.ReactNode;

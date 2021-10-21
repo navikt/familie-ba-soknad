@@ -19,6 +19,8 @@ COPY --chown=apprunner:apprunner ./ /var/server/
 
 RUN yarn build
 
+
+FROM prod-builder as prod-builder-cleanup
 # Fjern alle pakker som vi kun trengte for webpack
 RUN rm -rf node_modules
 RUN yarn install --prod
@@ -26,7 +28,7 @@ RUN rm -rf .cache
 
 
 FROM navikt/node-express:16 as prod-runner
-COPY --from=prod-builder /var/server/ /var/server
+COPY --from=prod-builder-cleanup /var/server/ /var/server
 USER root
 RUN apk add vips-dev
 USER apprunner

@@ -251,16 +251,24 @@ export const useDinLivssituasjon = (): {
 
     const erEnkeEnkemann = () =>
         skjema.felter.årsak.verdi === Årsak.ENKE_ENKEMANN ||
-        søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN;
+        søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
+        søknad.søker.sivilstand.type === ESivilstand.GJENLEVENDE_PARTNER;
+
+    const enkeSpørsmålId = () => {
+        if (skjema.felter.årsak.verdi === Årsak.ENKE_ENKEMANN) {
+            return OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder;
+        } else if (søknad.søker.sivilstand.type === ESivilstand.GJENLEVENDE_PARTNER) {
+            return OmBarnaDineSpørsmålId.erFolkeregAvdødPartnerForelder;
+        } else {
+            return OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder;
+        }
+    };
 
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
             erAvdødPartnerForelder: {
-                id:
-                    skjema.felter.årsak.verdi === Årsak.ENKE_ENKEMANN
-                        ? OmBarnaDineSpørsmålId.erAvdødPartnerForelder
-                        : OmBarnaDineSpørsmålId.erFolkeregistrertAvdødPartnerForelder,
+                id: enkeSpørsmålId(),
                 svar: erEnkeEnkemann() ? søknad.erAvdødPartnerForelder.svar : null,
             },
             dokumentasjon: søknad.dokumentasjon.map(dok => {

@@ -68,8 +68,8 @@ describe('Datovelger', () => {
 
         const tilOgMedÅpneknapp = getAllByRole('button')[1];
         act(() => tilOgMedÅpneknapp.click());
-        const forrigeDag = container.querySelector('[aria-selected="true"]')
-            ?.previousElementSibling;
+        const forrigeDag =
+            container.querySelector('[aria-selected="true"]')?.previousElementSibling;
 
         expect(forrigeDag?.getAttribute('aria-disabled')).toEqual('true');
     });
@@ -146,7 +146,7 @@ describe('Test ulike caser for feilmelding hos datovelger', () => {
         const gåVidere = getByText('GÅ VIDERE');
         act(() => gåVidere.click());
         const feilmelding = getAllByText(
-            'Du må oppgi når utenlandsoppholdet begynte for å gå videre'
+            'Du må oppgi når utenlandsoppholdet startet for å gå videre'
         );
         expect(feilmelding).toHaveLength(2);
     });

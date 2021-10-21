@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
 import { useIntl } from 'react-intl';
 import { css } from 'styled-components';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
 import { Feilmelding, Normaltekst } from 'nav-frontend-typografi';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
@@ -42,14 +42,12 @@ export const SkjemaFeiloppsummering: React.FC<Props> = ({ skjema, routeForFeilme
                     .filter(felt => {
                         return felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL;
                     })
-                    .map(
-                        (felt): FeiloppsummeringFeil => {
-                            return {
-                                skjemaelementId: felt.id,
-                                feilmelding: felt.feilmelding,
-                            };
-                        }
-                    )}
+                    .map((felt): FeiloppsummeringFeil => {
+                        return {
+                            skjemaelementId: felt.id,
+                            feilmelding: felt.feilmelding,
+                        };
+                    })}
             />
         </Container>
     );

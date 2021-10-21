@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
+import { act } from 'react-dom/test-utils';
 
 import { ESivilstand } from '../typer/person';
 import { ISøknadKontrakt } from '../typer/søknad';
@@ -12,6 +13,10 @@ import { erGyldigISøknadKontraktUtvidet } from '../utils/typeguards';
 import { useSendInnSkjema } from './useSendInnSkjema';
 
 describe('useSendInnSkjema', () => {
+    beforeEach(() => {
+        jest.useFakeTimers('modern');
+    });
+
     it('mapper til gyldig utvidet kontrakt', async () => {
         const iSøknad = mekkGyldigUtvidetSøknad();
         spyOnUseApp(iSøknad);
@@ -20,6 +25,9 @@ describe('useSendInnSkjema', () => {
         });
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontraktUtvidet(formatert)).toBeTruthy();
+        await act(async () => {
+            jest.advanceTimersByTime(500);
+        });
     });
 
     it('Kan mappe sivilstandenum til språktekster', () => {

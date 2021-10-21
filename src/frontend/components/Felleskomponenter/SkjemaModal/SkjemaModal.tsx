@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
