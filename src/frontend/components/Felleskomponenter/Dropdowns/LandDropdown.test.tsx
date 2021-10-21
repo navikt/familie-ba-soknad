@@ -11,20 +11,25 @@ import { mockEøs, TestProvidereMedEkteTekster } from '../../../utils/testing';
 import { LandDropdown } from './LandDropdown';
 
 describe('LandDropdown', () => {
-    it('Rendrer alle land i alle dropdowns når eøs er skrudd av', () => {
+    beforeEach(() => {
+        jest.useFakeTimers('modern');
+    });
+
+    it('Rendrer alle land i alle dropdowns når eøs er skrudd av', async () => {
         mockEøs(true);
         const felt = mockDeep<Felt<'' | Alpha3Code>>({
             erSynlig: true,
+            id: 'test-id',
         });
         const skjema = mockDeep<ISkjema<SkjemaFeltTyper, string>>();
 
-        const { getAllByRole, unmount } = render(
+        const { findAllByRole, unmount } = render(
             <TestProvidereMedEkteTekster>
                 <LandDropdown felt={felt} skjema={skjema} />
             </TestProvidereMedEkteTekster>
         );
 
-        let options = getAllByRole('option');
+        let options = await findAllByRole('option');
 
         expect(options).toHaveLength(251);
         unmount();
@@ -35,27 +40,28 @@ describe('LandDropdown', () => {
             </TestProvidereMedEkteTekster>
         );
 
-        options = getAllByRole('option');
+        options = await findAllByRole('option');
 
         expect(options).toHaveLength(251);
-    });
+    }, /* Denne testen trenger litt ekstra tid pga unmount, vanligvis rundt 6s */ 12000);
 
-    it('Rendrer kun EØS-land når EØS er på og kunEøs-prop er true', () => {
+    it('Rendrer kun EØS-land når EØS er på og kunEøs-prop er true', async () => {
         const { erEøsLand } = mockEøs();
         erEøsLand.mockImplementation(landKode => ['BEL', 'AFG'].includes(landKode));
 
         const felt = mockDeep<Felt<'' | Alpha3Code>>({
             erSynlig: true,
+            id: 'test-id',
         });
         const skjema = mockDeep<ISkjema<SkjemaFeltTyper, string>>();
 
-        const { getAllByRole } = render(
+        const { findAllByRole } = render(
             <TestProvidereMedEkteTekster>
                 <LandDropdown felt={felt} skjema={skjema} kunEøs />
             </TestProvidereMedEkteTekster>
         );
 
-        const options = getAllByRole('option');
+        const options = await findAllByRole('option');
 
         expect(options).toHaveLength(3);
     });

@@ -26,7 +26,7 @@ axiosMock.onPost(/\/api\/personopplysning/).reply(200, {
     data: { barn: [] },
 });
 
-// Mellomlagring, lat som at det går igjennom
-axiosMock.onAny(/:8082/).reply(200, { status: RessursStatus.SUKSESS, data: {} });
+// Mellomlagring, lat som at det går igjennom, men ikke returner data slik at vi skipper en callback
+axiosMock.onAny(/:8082/).reply(200);
 
 axiosMock.onPost();
