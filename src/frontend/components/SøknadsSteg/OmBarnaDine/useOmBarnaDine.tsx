@@ -7,6 +7,7 @@ import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import { barnDataKeySpørsmål, BarnetsId, ESivilstand } from '../../../typer/person';
 import { Årsak } from '../../../typer/søknad';
 import { genererOppdaterteBarn } from '../../../utils/barn';
+import { OmBarnaDineSpørsmålId } from './spørsmål';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 
 export interface IOmBarnaDineFeltTyper {
@@ -161,9 +162,20 @@ export const useOmBarnaDine = (): {
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
 
+    const avdødPartnerForelderFeilmelding = () => {
+        switch (søknad.erAvdødPartnerForelder.id) {
+            case OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder:
+                return 'ombarna.enkeenkemann.feilmelding';
+            case OmBarnaDineSpørsmålId.erFolkeregAvdødPartnerForelder:
+                return 'ombarna.enkeenkemann.folkeregisteret-gjenlevende.feilmelding';
+            default:
+                return 'ombarna.enkeenkemann.folkeregisteret-enke.feilmelding';
+        }
+    };
+
     const erAvdødPartnerForelder = useJaNeiSpmFelt(
         søknad.erAvdødPartnerForelder,
-        'ombarna.enkeenkemann.feilmelding',
+        avdødPartnerForelderFeilmelding(),
         {
             søktAsylForBarn: {
                 hovedSpørsmål: søktAsylForBarn,

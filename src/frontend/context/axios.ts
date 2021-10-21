@@ -42,15 +42,15 @@ export const håndterApiRessurs = <T>(ressurs: ApiRessurs<T>): Ressurs<T> => {
 };
 
 export const loggFeil = (error?: AxiosError, feilmelding?: string): void => {
-    if (!['development', 'test'].find(env => env === process.env.NODE_ENV)) {
-        apiLoggFeil(
-            `${error ? `${error}${feilmelding ? ' - ' : ''}` : ''}${
-                feilmelding ? `Feilmelding: ${feilmelding}` : ''
-            }`
-        );
-    }
+    apiLoggFeil(
+        `${error ? `${error}${feilmelding ? ' - ' : ''}` : ''}${
+            feilmelding ? `Feilmelding: ${feilmelding}` : ''
+        }`
+    );
 };
 
 export const apiLoggFeil = (melding: string) => {
-    console.log(melding);
+    if (!['development', 'test'].find(env => env === process.env.NODE_ENV)) {
+        console.log(melding);
+    }
 };
