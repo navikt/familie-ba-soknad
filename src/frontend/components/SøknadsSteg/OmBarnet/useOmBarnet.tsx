@@ -547,7 +547,7 @@ export const useOmBarnet = (
     const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt(
         barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder],
         'ombarnet.boddsammenmedandreforelder.feilmelding',
-        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
+        skriftligAvtaleOmDeltBosted.erSynlig
             ? {
                   borFastMedSøker: {
                       hovedSpørsmål: borFastMedSøker,
