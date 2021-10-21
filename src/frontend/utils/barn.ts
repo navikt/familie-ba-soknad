@@ -52,11 +52,13 @@ export const genererOppdaterteBarn = (
         );
         const andreForelderErDød = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner);
 
+        const erFosterbarn = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn);
+
         return {
             ...barn,
             [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
-                svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn),
+                svar: erFosterbarn,
             },
             [barnDataKeySpørsmål.erAsylsøker]: {
                 ...barn[barnDataKeySpørsmål.erAsylsøker],
@@ -177,7 +179,7 @@ export const genererOppdaterteBarn = (
             [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
                 ...barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
                 svar:
-                    andreForelderErDød === ESvar.JA
+                    andreForelderErDød === ESvar.JA || erFosterbarn === ESvar.JA
                         ? null
                         : barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar,
             },
