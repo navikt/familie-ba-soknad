@@ -177,6 +177,7 @@ export const useOmBarnaDine = (): {
         false,
         !(
             søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
+            søknad.søker.sivilstand.type === ESivilstand.GJENLEVENDE_PARTNER ||
             søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.ENKE_ENKEMANN
         )
     );
