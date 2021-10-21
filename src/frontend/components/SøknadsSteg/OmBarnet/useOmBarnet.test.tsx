@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
+import { act } from 'react-dom/test-utils';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -27,9 +28,10 @@ describe('useOmBarnet', () => {
 
     beforeEach(() => {
         silenceConsoleErrors();
+        jest.useFakeTimers('modern');
     });
 
-    it('Setter institusjonsfelter til tomme strenger hvis barnet ikke bor på institusjon', () => {
+    it('Setter institusjonsfelter til tomme strenger hvis barnet ikke bor på institusjon', async () => {
         const barn: Partial<IBarnMedISøknad> = {
             ...genererInitialBarnMedISøknad(barnFraPdl),
             [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
@@ -71,9 +73,13 @@ describe('useOmBarnet', () => {
         expect(institusjonspostnummer.erSynlig).toEqual(false);
         expect(institusjonOppholdStartdato.erSynlig).toEqual(false);
         expect(institusjonOppholdSluttdato.erSynlig).toEqual(false);
+
+        await act(async () => {
+            jest.advanceTimersByTime(500);
+        });
     });
 
-    it('Setter oppholdslandfelter til tomme dersom barnet ikke oppholder seg i utlandet', () => {
+    it('Setter oppholdslandfelter til tomme dersom barnet ikke oppholder seg i utlandet', async () => {
         const barn: Partial<IBarnMedISøknad> = {
             ...genererInitialBarnMedISøknad(barnFraPdl),
             [barnDataKeySpørsmål.oppholderSegIUtland]: {
@@ -105,9 +111,13 @@ describe('useOmBarnet', () => {
         expect(oppholdsland.erSynlig).toEqual(false);
         expect(oppholdslandStartdato.erSynlig).toEqual(false);
         expect(oppholdslandSluttdato.erSynlig).toEqual(false);
+
+        await act(async () => {
+            jest.advanceTimersByTime(500);
+        });
     });
 
-    it('Setter opphold i Norge-felter til tomme dersom barnet har oppholdt seg i Norge siste 12 mnd', () => {
+    it('Setter opphold i Norge-felter til tomme dersom barnet har oppholdt seg i Norge siste 12 mnd', async () => {
         const barn: Partial<IBarnMedISøknad> = {
             ...genererInitialBarnMedISøknad(barnFraPdl),
             [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: {
@@ -137,9 +147,13 @@ describe('useOmBarnet', () => {
         expect(nårKomBarnTilNorgeDato.erSynlig).toEqual(false);
         expect(planleggerÅBoINorge12Mnd.verdi).toEqual(null);
         expect(planleggerÅBoINorge12Mnd.erSynlig).toEqual(false);
+
+        await act(async () => {
+            jest.advanceTimersByTime(500);
+        });
     });
 
-    it('Fjerner at man skal oppgi andre foreldrens fødselsnummer når man ikke vil oppgi personopplysninger', () => {
+    it('Fjerner at man skal oppgi andre foreldrens fødselsnummer når man ikke vil oppgi personopplysninger', async () => {
         const barn: Partial<IBarnMedISøknad> = {
             ...genererInitialBarnMedISøknad(barnFraPdl),
             [barnDataKeySpørsmål.andreForelderNavn]: {
@@ -174,5 +188,9 @@ describe('useOmBarnet', () => {
         expect(andreForelderNavnUkjent.erSynlig).toEqual(true);
         expect(andreForelderNavnUkjent.verdi).toEqual(ESvar.JA);
         expect(andreForelderFnr.erSynlig).toEqual(false);
+
+        await act(async () => {
+            jest.advanceTimersByTime(500);
+        });
     });
 });

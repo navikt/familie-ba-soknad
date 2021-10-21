@@ -283,7 +283,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     }
                     søknadsvar={barn[barnDataKeySpørsmål.borFastMedSøker].svar}
                 />
-                {barn[barnDataKeySpørsmål.erFosterbarn].svar !== ESvar.JA && (
+                {barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst

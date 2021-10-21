@@ -7,7 +7,7 @@ import { mekkGyldigSøknad } from './testing';
 
 describe('eøs', () => {
     describe('landSvarSomKanTriggeEøs', () => {
-        it('should ', () => {
+        it('returnerer riktig mengde landsvar', () => {
             const søknad = mekkGyldigSøknad();
             const mockSøknad: ISøknad = {
                 ...søknad,
