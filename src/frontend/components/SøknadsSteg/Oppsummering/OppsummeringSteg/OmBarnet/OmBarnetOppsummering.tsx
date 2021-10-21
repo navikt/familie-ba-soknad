@@ -353,52 +353,48 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
             </StyledOppsummeringsFeltGruppe>
             {erUtvidet && (
                 <StyledOppsummeringsFeltGruppe>
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
+                                    ]
+                                }
+                                values={{ navn: barnetsNavnValue(barn, intl) }}
+                            />
+                        }
+                        søknadsvar={
+                            barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]
+                                .svar
+                        }
+                    />
                     {barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder].svar ===
                         ESvar.JA && (
-                        <>
-                            <OppsummeringFelt
-                                tittel={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
-                                            ]
-                                        }
-                                        values={{ navn: barnetsNavnValue(barn, intl) }}
-                                    />
-                                }
-                                søknadsvar={
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={(() => {
+                                const svar =
                                     barn.utvidet[
-                                        barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder
-                                    ].svar
-                                }
-                            />
-                            <OppsummeringFelt
-                                tittel={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                                            ]
-                                        }
-                                    />
-                                }
-                                søknadsvar={(() => {
-                                    const svar =
-                                        barn.utvidet[
-                                            barnDataKeySpørsmålUtvidet
-                                                .søkerFlyttetFraAndreForelderDato
-                                        ].svar;
-                                    return svar === AlternativtSvarForInput.UKJENT
-                                        ? formatMessage({
-                                              id: omBarnetSpørsmålSpråkId[
-                                                  OmBarnetSpørsmålsId.søkerBorMedAndreForelder
-                                              ],
-                                          })
-                                        : formaterDato(svar);
-                                })()}
-                            />
-                        </>
+                                        barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato
+                                    ].svar;
+                                return svar === AlternativtSvarForInput.UKJENT
+                                    ? formatMessage({
+                                          id: omBarnetSpørsmålSpråkId[
+                                              OmBarnetSpørsmålsId.søkerBorMedAndreForelder
+                                          ],
+                                      })
+                                    : formaterDato(svar);
+                            })()}
+                        />
                     )}
                 </StyledOppsummeringsFeltGruppe>
             )}
