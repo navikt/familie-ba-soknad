@@ -547,20 +547,16 @@ export const useOmBarnet = (
     const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt(
         barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder],
         'ombarnet.boddsammenmedandreforelder.feilmelding',
-        skriftligAvtaleOmDeltBosted.erSynlig
-            ? {
-                  borFastMedSøker: {
-                      hovedSpørsmål: borFastMedSøker,
-                  },
-                  skriftligAvtaleOmDeltBosted: {
+        {
+            borFastMedSøker: {
+                hovedSpørsmål: borFastMedSøker,
+            },
+            skriftligAvtaleOmDeltBosted: skriftligAvtaleOmDeltBosted.erSynlig
+                ? {
                       hovedSpørsmål: skriftligAvtaleOmDeltBosted,
-                  },
-              }
-            : {
-                  borFastMedSøker: {
-                      hovedSpørsmål: borFastMedSøker,
-                  },
-              },
+                  }
+                : undefined,
+        },
         false,
         !erUtvidet,
         { navn: barnetsNavnValue(barn, intl) }
