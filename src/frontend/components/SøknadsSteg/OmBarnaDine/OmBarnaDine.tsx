@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -28,12 +28,8 @@ const TilleggsinfoWrapper = styled.div`
 `;
 
 const OmBarnaDine: React.FC = () => {
-    const {
-        skjema,
-        validerFelterOgVisFeilmelding,
-        valideringErOk,
-        oppdaterSøknad,
-    } = useOmBarnaDine();
+    const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
+        useOmBarnaDine();
 
     const history = useHistory();
     const { søknad } = useApp();

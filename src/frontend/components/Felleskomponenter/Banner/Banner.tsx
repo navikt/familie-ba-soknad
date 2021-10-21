@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
 import { Innholdstittel } from 'nav-frontend-typografi';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
 import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
