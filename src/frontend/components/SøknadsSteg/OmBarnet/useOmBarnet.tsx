@@ -34,8 +34,10 @@ import {
     barnDataKeySpørsmålUtvidet,
     BarnetsId,
     DatoMedUkjent,
+    ESivilstand,
     IBarnMedISøknad,
 } from '../../../typer/person';
+import { Årsak } from '../../../typer/søknad';
 import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
@@ -490,12 +492,16 @@ export const useOmBarnet = (
         { navn: barnetsNavnValue(barn, intl) }
     );
 
+    const erEnkeEnkemann = () =>
+        søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
+        søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.ENKE_ENKEMANN;
+
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
         'ombarnet.delt-bosted.feilmelding',
         avhengigheterForBosted(),
         false,
-        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
+        erEnkeEnkemann() || barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
         { navn: barnetsNavnValue(barn, intl) }
     );
 
@@ -507,6 +513,8 @@ export const useOmBarnet = (
             avhengigheter &&
             avhengigheter.skriftligAvtaleOmDeltBosted &&
             avhengigheter.borFastMedSøker;
+        const skriftligAvtaleSkjult =
+            barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA || erEnkeEnkemann();
         const skriftligAvtaleValidert =
             avhengigheterEksisterer &&
             avhengigheter.skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK;
@@ -515,9 +523,7 @@ export const useOmBarnet = (
             avhengigheter.borFastMedSøker.valideringsstatus === Valideringsstatus.OK;
         return (
             stegErFyltUt ||
-            (borFastMedSøkerValidert &&
-                (barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA ||
-                    skriftligAvtaleValidert))
+            (borFastMedSøkerValidert && (skriftligAvtaleSkjult || skriftligAvtaleValidert))
         );
     };
     const søkerForTidsrom = useJaNeiSpmFelt(
@@ -693,8 +699,8 @@ export const useOmBarnet = (
     };
 
     const oppdaterSøknad = () => {
-        const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] = søknad.barnInkludertISøknaden.map(
-            barn =>
+        const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] =
+            søknad.barnInkludertISøknaden.map(barn =>
                 barn.id === barnetsUuid
                     ? {
                           ...barn,
@@ -829,7 +835,7 @@ export const useOmBarnet = (
                           },
                       }
                     : barn
-        );
+            );
 
         settSøknad({
             ...søknad,

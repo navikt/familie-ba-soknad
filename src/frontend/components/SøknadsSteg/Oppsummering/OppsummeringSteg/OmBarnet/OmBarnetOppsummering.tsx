@@ -131,10 +131,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar,
                             formatMessage({
-                                id:
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.institusjonOppholdVetIkke
-                                    ],
+                                id: omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.institusjonOppholdVetIkke
+                                ],
                             })
                         )}
                     />
@@ -191,10 +190,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar,
                             formatMessage({
-                                id:
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
-                                    ],
+                                id: omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
+                                ],
                             })
                         )}
                     />
@@ -223,10 +221,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar,
                             formatMessage({
-                                id:
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
-                                    ],
+                                id: omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
+                                ],
                             })
                         )}
                     />
@@ -286,7 +283,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     }
                     søknadsvar={barn[barnDataKeySpørsmål.borFastMedSøker].svar}
                 />
-                {barn[barnDataKeySpørsmål.erFosterbarn].svar !== ESvar.JA && (
+                {barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -344,11 +341,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                     barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar;
                                 return svar === AlternativtSvarForInput.UKJENT
                                     ? formatMessage({
-                                          id:
-                                              omBarnetSpørsmålSpråkId[
-                                                  OmBarnetSpørsmålsId
-                                                      .søkerForTidsromSluttdatoVetIkke
-                                              ],
+                                          id: omBarnetSpørsmålSpråkId[
+                                              OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke
+                                          ],
                                       })
                                     : formaterDato(svar);
                             })()}
@@ -358,49 +353,52 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
             </StyledOppsummeringsFeltGruppe>
             {erUtvidet && (
                 <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
-                                    ]
-                                }
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
-                            />
-                        }
-                        søknadsvar={
-                            barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]
-                                .svar
-                        }
-                    />
                     {barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder].svar ===
                         ESvar.JA && (
-                        <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                                        ]
-                                    }
-                                />
-                            }
-                            søknadsvar={(() => {
-                                const svar =
+                        <>
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
+                                            ]
+                                        }
+                                        values={{ navn: barnetsNavnValue(barn, intl) }}
+                                    />
+                                }
+                                søknadsvar={
                                     barn.utvidet[
-                                        barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato
-                                    ].svar;
-                                return svar === AlternativtSvarForInput.UKJENT
-                                    ? formatMessage({
-                                          id:
-                                              omBarnetSpørsmålSpråkId[
+                                        barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder
+                                    ].svar
+                                }
+                            />
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                                            ]
+                                        }
+                                    />
+                                }
+                                søknadsvar={(() => {
+                                    const svar =
+                                        barn.utvidet[
+                                            barnDataKeySpørsmålUtvidet
+                                                .søkerFlyttetFraAndreForelderDato
+                                        ].svar;
+                                    return svar === AlternativtSvarForInput.UKJENT
+                                        ? formatMessage({
+                                              id: omBarnetSpørsmålSpråkId[
                                                   OmBarnetSpørsmålsId.søkerBorMedAndreForelder
                                               ],
-                                      })
-                                    : formaterDato(svar);
-                            })()}
-                        />
+                                          })
+                                        : formaterDato(svar);
+                                })()}
+                            />
+                        </>
                     )}
                 </StyledOppsummeringsFeltGruppe>
             )}
