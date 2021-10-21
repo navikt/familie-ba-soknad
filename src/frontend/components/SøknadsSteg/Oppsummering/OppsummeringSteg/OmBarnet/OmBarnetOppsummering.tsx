@@ -131,10 +131,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar,
                             formatMessage({
-                                id:
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.institusjonOppholdVetIkke
-                                    ],
+                                id: omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.institusjonOppholdVetIkke
+                                ],
                             })
                         )}
                     />
@@ -191,10 +190,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar,
                             formatMessage({
-                                id:
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
-                                    ],
+                                id: omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
+                                ],
                             })
                         )}
                     />
@@ -223,10 +221,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar,
                             formatMessage({
-                                id:
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
-                                    ],
+                                id: omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
+                                ],
                             })
                         )}
                     />
@@ -344,11 +341,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                     barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar;
                                 return svar === AlternativtSvarForInput.UKJENT
                                     ? formatMessage({
-                                          id:
-                                              omBarnetSpørsmålSpråkId[
-                                                  OmBarnetSpørsmålsId
-                                                      .søkerForTidsromSluttdatoVetIkke
-                                              ],
+                                          id: omBarnetSpørsmålSpråkId[
+                                              OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke
+                                          ],
                                       })
                                     : formaterDato(svar);
                             })()}
@@ -374,8 +369,8 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 .svar
                         }
                     />
-                    {barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder].svar ===
-                        ESvar.JA && (
+                    {barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]
+                        .svar && (
                         <OppsummeringFelt
                             tittel={
                                 <SpråkTekst
@@ -393,10 +388,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                     ].svar;
                                 return svar === AlternativtSvarForInput.UKJENT
                                     ? formatMessage({
-                                          id:
-                                              omBarnetSpørsmålSpråkId[
-                                                  OmBarnetSpørsmålsId.søkerBorMedAndreForelder
-                                              ],
+                                          id: omBarnetSpørsmålSpråkId[
+                                              OmBarnetSpørsmålsId.søkerBorMedAndreForelder
+                                          ],
                                       })
                                     : formaterDato(svar);
                             })()}
