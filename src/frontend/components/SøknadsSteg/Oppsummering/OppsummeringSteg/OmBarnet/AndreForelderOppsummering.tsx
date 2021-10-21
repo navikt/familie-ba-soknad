@@ -33,9 +33,10 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                             AlternativtSvarForInput.UKJENT
                                 ? barn[barnDataKeySpørsmål.andreForelderNavn].svar
                                 : formatMessage({
-                                      id: omBarnetSpørsmålSpråkId[
-                                          OmBarnetSpørsmålsId.andreForelderNavnUkjent
-                                      ],
+                                      id:
+                                          omBarnetSpørsmålSpråkId[
+                                              OmBarnetSpørsmålsId.andreForelderNavnUkjent
+                                          ],
                                   })
                         }
                     />
@@ -52,9 +53,10 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                             AlternativtSvarForInput.UKJENT
                                 ? barn[barnDataKeySpørsmål.andreForelderFnr].svar
                                 : formatMessage({
-                                      id: omBarnetSpørsmålSpråkId[
-                                          OmBarnetSpørsmålsId.andreForelderFnrUkjent
-                                      ],
+                                      id:
+                                          omBarnetSpørsmålSpråkId[
+                                              OmBarnetSpørsmålsId.andreForelderFnrUkjent
+                                          ],
                                   })
                         }
                     />
@@ -73,9 +75,10 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar,
                             formatMessage({
-                                id: omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
-                                ],
+                                id:
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
+                                    ],
                             })
                         )}
                     />

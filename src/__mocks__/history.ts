@@ -2,8 +2,9 @@ import { History, Module as HistoryModule } from 'history';
 import { mock } from 'jest-mock-extended';
 
 const history = jest.createMockFromModule<HistoryModule>('history');
-const { createBrowserHistory: realCreateBrowserHistory } =
-    jest.requireActual<HistoryModule>('history');
+const { createBrowserHistory: realCreateBrowserHistory } = jest.requireActual<HistoryModule>(
+    'history'
+);
 
 const mockedHistoryArray: string[] = [];
 

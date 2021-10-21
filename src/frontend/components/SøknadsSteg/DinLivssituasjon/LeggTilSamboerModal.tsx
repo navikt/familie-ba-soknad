@@ -16,8 +16,12 @@ interface Props {
 }
 
 const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleModal, erÅpen }) => {
-    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useTidligereSamboer();
+    const {
+        skjema,
+        valideringErOk,
+        nullstillSkjema,
+        validerFelterOgVisFeilmelding,
+    } = useTidligereSamboer();
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
