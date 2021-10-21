@@ -50,6 +50,7 @@ export const genererOppdaterteBarn = (
             barn,
             skjema.felter.hvemBarnetrygdFraAnnetEøsland
         );
+        const andreForelderErDød = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner);
 
         return {
             ...barn,
@@ -83,7 +84,7 @@ export const genererOppdaterteBarn = (
             },
             [barnDataKeySpørsmål.andreForelderErDød]: {
                 ...barn[barnDataKeySpørsmål.andreForelderErDød],
-                svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner),
+                svar: andreForelderErDød,
             },
             [barnDataKeySpørsmål.institusjonsnavn]: {
                 ...barn[barnDataKeySpørsmål.institusjonsnavn],
@@ -172,6 +173,10 @@ export const genererOppdaterteBarn = (
                     barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
                     ''
                 ),
+            },
+            [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
+                ...barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
+                svar: andreForelderErDød === ESvar.JA ? null : skriftligAvtaleOmDeltBosted.svar,
             },
         };
     });

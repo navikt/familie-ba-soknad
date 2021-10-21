@@ -34,10 +34,8 @@ import {
     barnDataKeySpørsmålUtvidet,
     BarnetsId,
     DatoMedUkjent,
-    ESivilstand,
     IBarnMedISøknad,
 } from '../../../typer/person';
-import { Årsak } from '../../../typer/søknad';
 import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
@@ -492,49 +490,30 @@ export const useOmBarnet = (
         { navn: barnetsNavnValue(barn, intl) }
     );
 
-    const erEnkeEnkemann = () =>
-        søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
-        søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.ENKE_ENKEMANN;
-
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
         'ombarnet.delt-bosted.feilmelding',
         avhengigheterForBosted(),
         false,
-        erEnkeEnkemann() || barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
+        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA ||
+            barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
         { navn: barnetsNavnValue(barn, intl) }
     );
 
     /*--- SØKER FOR PERIODE ---*/
-
-    const stegErFyltUt = erStegUtfyltFrafør(hentRouteIndex(location.pathname));
-    const tidsromSkalVises = (avhengigheter): boolean => {
-        const avhengigheterEksisterer =
-            avhengigheter &&
-            avhengigheter.skriftligAvtaleOmDeltBosted &&
-            avhengigheter.borFastMedSøker;
-        const skriftligAvtaleSkjult =
-            barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA || erEnkeEnkemann();
-        const skriftligAvtaleValidert =
-            avhengigheterEksisterer &&
-            avhengigheter.skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK;
-        const borFastMedSøkerValidert =
-            avhengigheterEksisterer &&
-            avhengigheter.borFastMedSøker.valideringsstatus === Valideringsstatus.OK;
-        return (
-            stegErFyltUt ||
-            (borFastMedSøkerValidert && (skriftligAvtaleSkjult || skriftligAvtaleValidert))
-        );
-    };
     const søkerForTidsrom = useJaNeiSpmFelt(
         barn.søkerForTidsrom,
         'ombarnet.søker-for-periode.feilmelding',
         {
             borFastMedSøker: { hovedSpørsmål: borFastMedSøker },
-            // skriftligAvtaleOmDeltBosted: { hovedSpørsmål: skriftligAvtaleOmDeltBosted },
+            skriftligAvtaleOmDeltBosted: skriftligAvtaleOmDeltBosted.erSynlig
+                ? {
+                      hovedSpørsmål: skriftligAvtaleOmDeltBosted,
+                  }
+                : undefined,
         },
         false,
-        !tidsromSkalVises({ borFastMedSøker, skriftligAvtaleOmDeltBosted }),
+        false,
         { navn: barnetsNavnValue(barn, intl) }
     );
 
