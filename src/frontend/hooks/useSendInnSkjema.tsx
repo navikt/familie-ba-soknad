@@ -108,35 +108,39 @@ export const useSendInnSkjema = (): {
     ): KontraktpørsmålMap => {
         return Object.fromEntries(
             Object.entries(spørsmålMap)
-                .map((entry: [string, ISøknadSpørsmål<any>]): [
-                    string,
-                    { label: Record<LocaleType, string>; verdi: Record<LocaleType, any> }
-                ] => {
-                    const verdi = entry[1].svar;
-                    let formatertVerdi: Record<LocaleType, string>;
+                .map(
+                    (
+                        entry: [string, ISøknadSpørsmål<any>]
+                    ): [
+                        string,
+                        { label: Record<LocaleType, string>; verdi: Record<LocaleType, any> }
+                    ] => {
+                        const verdi = entry[1].svar;
+                        let formatertVerdi: Record<LocaleType, string>;
 
-                    if (isAlpha3Code(verdi)) {
-                        formatertVerdi = verdiCallbackAlleSpråk(locale =>
-                            landkodeTilSpråk(verdi, locale)
-                        );
-                    } else if (verdi in ESvar) {
-                        // Slår opp språktekst i språkteksterUtenomSpørsmål i dokgen
-                        formatertVerdi = sammeVerdiAlleSpråk(verdi);
-                    } else if (verdi in Årsak) {
-                        formatertVerdi = hentTekster(toÅrsakSpråkId(verdi));
-                    } else {
-                        formatertVerdi = sammeVerdiAlleSpråk(verdi);
+                        if (isAlpha3Code(verdi)) {
+                            formatertVerdi = verdiCallbackAlleSpråk(locale =>
+                                landkodeTilSpråk(verdi, locale)
+                            );
+                        } else if (verdi in ESvar) {
+                            // Slår opp språktekst i språkteksterUtenomSpørsmål i dokgen
+                            formatertVerdi = sammeVerdiAlleSpråk(verdi);
+                        } else if (verdi in Årsak) {
+                            formatertVerdi = hentTekster(toÅrsakSpråkId(verdi));
+                        } else {
+                            formatertVerdi = sammeVerdiAlleSpråk(verdi);
+                        }
+
+                        return [
+                            entry[0],
+                            søknadsfelt(
+                                språktekstIdFraSpørsmålId(entry[1].id),
+                                formatertVerdi,
+                                formatMessageValues
+                            ),
+                        ];
                     }
-
-                    return [
-                        entry[0],
-                        søknadsfelt(
-                            språktekstIdFraSpørsmålId(entry[1].id),
-                            formatertVerdi,
-                            formatMessageValues
-                        ),
-                    ];
-                })
+                )
                 .filter(entry => entry[1].verdi[LocaleType.nb])
         );
     };
@@ -161,7 +165,7 @@ export const useSendInnSkjema = (): {
             utvidet,
             ...barnSpørsmål
         } = barn;
-        const typetBarnSpørsmål = (barnSpørsmål as unknown) as SpørsmålMap;
+        const typetBarnSpørsmål = barnSpørsmål as unknown as SpørsmålMap;
         const { søkerFlyttetFraAndreForelderDato } = utvidet;
 
         return {
@@ -361,8 +365,8 @@ export const useSendInnSkjema = (): {
         } = søker;
         const { spørsmål: utvidaSpørsmål, tidligereSamboere } = utvidet;
         const { barnInkludertISøknaden } = søknad;
-        const typetSøkerSpørsmål: SpørsmålMap = (søkerSpørsmål as unknown) as SpørsmålMap;
-        const typetUtvidaSpørsmål: SpørsmålMap = (utvidaSpørsmål as unknown) as SpørsmålMap;
+        const typetSøkerSpørsmål: SpørsmålMap = søkerSpørsmål as unknown as SpørsmålMap;
+        const typetUtvidaSpørsmål: SpørsmålMap = utvidaSpørsmål as unknown as SpørsmålMap;
 
         return {
             søknadstype: søknad.søknadstype,

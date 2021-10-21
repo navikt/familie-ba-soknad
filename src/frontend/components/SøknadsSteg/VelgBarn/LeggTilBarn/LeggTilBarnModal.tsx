@@ -23,13 +23,8 @@ const LeggTilBarnModal: React.FC<{
     erÅpen: boolean;
     toggleModal: () => void;
 }> = ({ erÅpen, toggleModal }) => {
-    const {
-        skjema,
-        nullstillSkjema,
-        valideringErOk,
-        leggTilBarn,
-        validerFelterOgVisFeilmelding,
-    } = useLeggTilBarn();
+    const { skjema, nullstillSkjema, valideringErOk, leggTilBarn, validerFelterOgVisFeilmelding } =
+        useLeggTilBarn();
 
     const submitOgLukk = () => {
         if (!validerFelterOgVisFeilmelding()) {
