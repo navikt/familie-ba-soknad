@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useDropzone } from 'react-dropzone';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
 import Modal from 'nav-frontend-modal';

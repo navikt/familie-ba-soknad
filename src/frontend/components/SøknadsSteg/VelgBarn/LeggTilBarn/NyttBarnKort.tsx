@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { Knapp } from 'nav-frontend-knapper';
 import { Ingress } from 'nav-frontend-typografi';
