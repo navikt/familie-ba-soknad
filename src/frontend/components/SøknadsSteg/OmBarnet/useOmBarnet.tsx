@@ -357,7 +357,9 @@ export const useOmBarnet = (
 
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet],
-        'ombarnet.andre-forelder.arbeid-utland.feilmelding',
+        barn.andreForelderErDød.svar === ESvar.JA
+            ? 'enkeenkemann.andreforelder-arbeidutland.feilmelding'
+            : 'ombarnet.andre-forelder.arbeid-utland.feilmelding',
         {
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
@@ -377,7 +379,9 @@ export const useOmBarnet = (
 
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
         barn.andreForelderArbeidUtlandetHvilketLand,
-        'ombarnet.andre-forelder.arbeid-utland.land.feilmelding',
+        barn.andreForelderErDød.svar === ESvar.JA
+            ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
+            : 'ombarnet.andre-forelder.arbeid-utland.land.feilmelding',
         ESvar.JA,
         andreForelderArbeidUtlandet,
         sammeForelderSomAnnetBarn.verdi === null ||
@@ -386,7 +390,9 @@ export const useOmBarnet = (
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.andreForelderPensjonUtland],
-        'ombarnet.andre-forelder.utenlandspensjon.feilmelding',
+        barn.andreForelderErDød.svar === ESvar.JA
+            ? 'enkeenkemann.andre-forelder.utenlandspensjon.feilmelding'
+            : 'ombarnet.andre-forelder.utenlandspensjon.feilmelding',
         {
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
@@ -406,7 +412,9 @@ export const useOmBarnet = (
 
     const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
         barn.andreForelderPensjonHvilketLand,
-        'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
+        barn.andreForelderErDød.svar === ESvar.JA
+            ? 'enkeenkemann.andre-forelder.utenlandspensjon.land.feilmelding'
+            : 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
         ESvar.JA,
         andreForelderPensjonUtland,
         sammeForelderSomAnnetBarn.verdi === null ||
@@ -693,8 +701,8 @@ export const useOmBarnet = (
     };
 
     const oppdaterSøknad = () => {
-        const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] = søknad.barnInkludertISøknaden.map(
-            barn =>
+        const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] =
+            søknad.barnInkludertISøknaden.map(barn =>
                 barn.id === barnetsUuid
                     ? {
                           ...barn,
@@ -829,7 +837,7 @@ export const useOmBarnet = (
                           },
                       }
                     : barn
-        );
+            );
 
         settSøknad({
             ...søknad,

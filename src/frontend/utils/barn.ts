@@ -51,6 +51,9 @@ export const genererOppdaterteBarn = (
             skjema.felter.hvemBarnetrygdFraAnnetEøsland
         );
 
+        const andreForelderErDød =
+            genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner) === ESvar.JA;
+
         return {
             ...barn,
             [barnDataKeySpørsmål.erFosterbarn]: {
@@ -172,6 +175,30 @@ export const genererOppdaterteBarn = (
                     barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
                     ''
                 ),
+            },
+            [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: {
+                ...barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet],
+                id: andreForelderErDød
+                    ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke
+                    : OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
+            },
+            [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: {
+                ...barn[barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand],
+                id: andreForelderErDød
+                    ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke
+                    : OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
+            },
+            [barnDataKeySpørsmål.andreForelderPensjonUtland]: {
+                ...barn[barnDataKeySpørsmål.andreForelderPensjonUtland],
+                id: andreForelderErDød
+                    ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
+                    : OmBarnetSpørsmålsId.andreForelderPensjonUtland,
+            },
+            [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
+                ...barn[barnDataKeySpørsmål.andreForelderPensjonHvilketLand],
+                id: andreForelderErDød
+                    ? OmBarnetSpørsmålsId.andreForelderPensjonHvilketLandEnke
+                    : OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
             },
         };
     });

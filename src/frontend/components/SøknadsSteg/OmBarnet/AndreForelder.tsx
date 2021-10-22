@@ -109,13 +109,7 @@ const AndreForelder: React.FC<{
                         skjema={skjema}
                         felt={skjema.felter.andreForelderArbeidUtlandet}
                         spørsmålTekstId={
-                            barn.andreForelderErDød.svar === ESvar.JA
-                                ? omBarnetSpørsmålSpråkId[
-                                      OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke
-                                  ]
-                                : omBarnetSpørsmålSpråkId[
-                                      OmBarnetSpørsmålsId.andreForelderArbeidUtlandet
-                                  ]
+                            omBarnetSpørsmålSpråkId[barn.andreForelderArbeidUtlandet.id]
                         }
                         inkluderVetIkke={true}
                         språkValues={{ navn: barnetsNavnValue(barn, intl) }}
@@ -127,15 +121,9 @@ const AndreForelder: React.FC<{
                         label={
                             <SpråkTekst
                                 id={
-                                    barn.andreForelderErDød.svar === ESvar.JA
-                                        ? omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId
-                                                  .andreForelderArbeidUtlandetHvilketLandEnke
-                                          ]
-                                        : omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId
-                                                  .andreForelderArbeidUtlandetHvilketLand
-                                          ]
+                                    omBarnetSpørsmålSpråkId[
+                                        barn.andreForelderArbeidUtlandetHvilketLand.id
+                                    ]
                                 }
                             />
                         }
@@ -155,13 +143,7 @@ const AndreForelder: React.FC<{
                         skjema={skjema}
                         felt={skjema.felter.andreForelderPensjonUtland}
                         spørsmålTekstId={
-                            barn.andreForelderErDød.svar === ESvar.JA
-                                ? omBarnetSpørsmålSpråkId[
-                                      OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
-                                  ]
-                                : omBarnetSpørsmålSpråkId[
-                                      OmBarnetSpørsmålsId.andreForelderPensjonUtland
-                                  ]
+                            omBarnetSpørsmålSpråkId[barn.andreForelderPensjonUtland.id]
                         }
                         inkluderVetIkke={true}
                         språkValues={{ navn: barnetsNavnValue(barn, intl) }}
@@ -173,15 +155,9 @@ const AndreForelder: React.FC<{
                         label={
                             <SpråkTekst
                                 id={
-                                    barn.andreForelderErDød.svar === ESvar.JA
-                                        ? omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId
-                                                  .andreForelderPensjonHvilketLandEnke
-                                          ]
-                                        : omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand
-                                          ]
+                                    omBarnetSpørsmålSpråkId[barn.andreForelderPensjonHvilketLand.id]
                                 }
+                                values={{ barn: barnetsNavnValue(barn, intl) }}
                             />
                         }
                     />
