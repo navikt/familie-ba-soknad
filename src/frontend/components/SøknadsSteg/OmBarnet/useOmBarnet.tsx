@@ -555,20 +555,16 @@ export const useOmBarnet = (
     const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt(
         barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder],
         'ombarnet.boddsammenmedandreforelder.feilmelding',
-        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
-            ? {
-                  borFastMedSøker: {
-                      hovedSpørsmål: borFastMedSøker,
-                  },
-                  skriftligAvtaleOmDeltBosted: {
+        {
+            borFastMedSøker: {
+                hovedSpørsmål: borFastMedSøker,
+            },
+            skriftligAvtaleOmDeltBosted: skriftligAvtaleOmDeltBosted.erSynlig
+                ? {
                       hovedSpørsmål: skriftligAvtaleOmDeltBosted,
-                  },
-              }
-            : {
-                  borFastMedSøker: {
-                      hovedSpørsmål: borFastMedSøker,
-                  },
-              },
+                  }
+                : undefined,
+        },
         false,
         !erUtvidet,
         { navn: barnetsNavnValue(barn, intl) }
@@ -583,6 +579,7 @@ export const useOmBarnet = (
         feltId: OmBarnetSpørsmålsId.søkerBorMedAndreForelder,
         skalFeltetVises: avhengigheter => {
             return (
+                barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI &&
                 avhengigheter &&
                 avhengigheter.søkerHarBoddMedAndreForelder &&
                 avhengigheter.søkerHarBoddMedAndreForelder.verdi === ESvar.JA
@@ -599,7 +596,8 @@ export const useOmBarnet = (
             : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar,
         borMedAndreForelderCheckbox,
         'ombarnet.nårflyttetfra.feilmelding',
-        søkerHarBoddMedAndreForelder.verdi === ESvar.JA,
+        søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
+            barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI,
         true,
         dagensDato()
     );

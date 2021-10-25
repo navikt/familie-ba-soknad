@@ -369,8 +369,8 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 .svar
                         }
                     />
-                    {barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder].svar ===
-                        ESvar.JA && (
+                    {barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]
+                        .svar && (
                         <OppsummeringFelt
                             tittel={
                                 <SpråkTekst

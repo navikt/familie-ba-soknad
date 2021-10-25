@@ -208,6 +208,16 @@ export const genererOppdaterteBarn = (
                         ? null
                         : barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar,
             },
+            utvidet: {
+                ...barn.utvidet,
+                [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: {
+                    ...barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato],
+                    svar: andreForelderErDød
+                        ? ''
+                        : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]
+                              .svar,
+                },
+            },
         };
     });
 };

@@ -81,7 +81,7 @@ const jens = {
         id: '27',
         svar: '2021-09-03',
     },
-    [barnDataKeySpørsmål.andreForelderErDød]: { id: '30', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
     utvidet: {
         [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: { id: 26, svar: ESvar.NEI },
         [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: { id: 27, svar: ESvar.JA },
@@ -143,7 +143,7 @@ const line = {
         id: '27',
         svar: '',
     },
-    [barnDataKeySpørsmål.andreForelderErDød]: { id: '30', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
     utvidet: {
         [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: { id: 26, svar: ESvar.NEI },
         [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: { id: 27, svar: ESvar.JA },
