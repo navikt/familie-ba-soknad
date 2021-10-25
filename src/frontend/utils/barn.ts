@@ -50,7 +50,8 @@ export const genererOppdaterteBarn = (
             barn,
             skjema.felter.hvemBarnetrygdFraAnnetEøsland
         );
-        const andreForelderErDød = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner);
+        const andreForelderErDød =
+            genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner) === ESvar.JA;
 
         const erFosterbarn = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn);
 
@@ -86,7 +87,7 @@ export const genererOppdaterteBarn = (
             },
             [barnDataKeySpørsmål.andreForelderErDød]: {
                 ...barn[barnDataKeySpørsmål.andreForelderErDød],
-                svar: andreForelderErDød,
+                svar: andreForelderErDød ? ESvar.JA : ESvar.NEI,
             },
             [barnDataKeySpørsmål.institusjonsnavn]: {
                 ...barn[barnDataKeySpørsmål.institusjonsnavn],
@@ -176,10 +177,34 @@ export const genererOppdaterteBarn = (
                     ''
                 ),
             },
+            [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: {
+                ...barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet],
+                id: andreForelderErDød
+                    ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke
+                    : OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
+            },
+            [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: {
+                ...barn[barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand],
+                id: andreForelderErDød
+                    ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke
+                    : OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
+            },
+            [barnDataKeySpørsmål.andreForelderPensjonUtland]: {
+                ...barn[barnDataKeySpørsmål.andreForelderPensjonUtland],
+                id: andreForelderErDød
+                    ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
+                    : OmBarnetSpørsmålsId.andreForelderPensjonUtland,
+            },
+            [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
+                ...barn[barnDataKeySpørsmål.andreForelderPensjonHvilketLand],
+                id: andreForelderErDød
+                    ? OmBarnetSpørsmålsId.andreForelderPensjonHvilketLandEnke
+                    : OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
+            },
             [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
                 ...barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
                 svar:
-                    andreForelderErDød === ESvar.JA || erFosterbarn === ESvar.JA
+                    andreForelderErDød || erFosterbarn === ESvar.JA
                         ? null
                         : barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar,
             },
@@ -187,12 +212,10 @@ export const genererOppdaterteBarn = (
                 ...barn.utvidet,
                 [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: {
                     ...barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato],
-                    svar:
-                        andreForelderErDød === ESvar.JA
-                            ? ''
-                            : barn.utvidet[
-                                  barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato
-                              ].svar,
+                    svar: andreForelderErDød
+                        ? ''
+                        : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]
+                              .svar,
                 },
             },
         };

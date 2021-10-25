@@ -20,9 +20,13 @@ export enum OmBarnetSpørsmålsId {
     andreForelderFødselsdato = 'andre-forelder-fødselsdato',
     andreForelderFødselsdatoUkjent = 'andre-forelder-fødselsdato-ukjent',
     andreForelderArbeidUtlandet = 'andre-forelder-arbeid',
+    andreForelderArbeidUtlandetEnke = 'andre-forelder-arbeid-enke',
     andreForelderArbeidUtlandetHvilketLand = 'andre-forelder-arbeid-hvilket-land',
+    andreForelderArbeidUtlandetHvilketLandEnke = 'andre-forelder-arbeid-hvilket-land-enke',
     andreForelderPensjonUtland = 'andre-forelder-pensjon-utland',
+    andreForelderPensjonUtlandEnke = 'andre-forelder-pensjon-utland-enke',
     andreForelderPensjonHvilketLand = 'andre-forelder-pensjon-hvilket-land',
+    andreForelderPensjonHvilketLandEnke = 'andre-forelder-pensjon-hvilket-land-enke',
     borFastMedSøker = 'bor-barnet-fast-med-deg',
     skriftligAvtaleOmDeltBosted = 'skriftlig-avtale-om-delt-bosted',
     søkerForTidsrom = 'søker-for-tidsrom',
@@ -58,12 +62,20 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.andreForelderFødselsdato]: 'felles.fødselsdato.label',
     [OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]: 'felles.fødselsdato-ukjent',
     [OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]: 'ombarnet.andre-forelder.arbeid-utland.spm',
+    [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke]:
+        'enkeenkemann.andreforelder-arbeidutland.spm',
     [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand]:
         'ombarnet.andre-forelder.arbeid-utland.land.spm',
+    [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke]:
+        'enkeenkemann.andreforelder-arbeidutland.land.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonUtland]:
         'ombarnet.andre-forelder.utenlandspensjon.spm',
+    [OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke]:
+        'enkeenkemann.andre-forelder.utenlandspensjon.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand]:
         'ombarnet.andre-forelder.utenlandspensjon.land.spm',
+    [OmBarnetSpørsmålsId.andreForelderPensjonHvilketLandEnke]:
+        'enkeenkemann.andre-forelder.utenlandspensjon.land.spm',
     [OmBarnetSpørsmålsId.borFastMedSøker]: 'ombarnet.bor-fast.spm',
     [OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted]: 'ombarnet.delt-bosted.spm',
     [OmBarnetSpørsmålsId.søkerForTidsrom]: 'ombarnet.søker-for-periode.spm',
