@@ -19,10 +19,11 @@
     "setup:docker:env": "node dockerstuff/dcp-configurator.js",
     "texts:find-unused": "python3 src/scripts/finn-ubrukte-språktekster.py",
     "texts:remove-newlines": "cd src/frontend/assets/lang && find . -type f -exec sed -i 's_\\\\n_ _g' {} \\;",
+    "texts:standard-apostrophe": "cd src/frontend/assets/lang && find . -type f -exec sed -i \"s_’_'_g\" {} \\;",
     "texts:remove-double-spaces": "cd src/frontend/assets/lang && find . -type f -exec sed -i -e 's_  \\+_ _g' {} \\;",
     "texts:trim": "cd src/frontend/assets/lang && find . -type f -exec sed -i 's_ \\+\",_\",_g' {} \\;",
     "texts:reindent": "cd src/frontend/assets/lang && find . -type f -exec bash -c 'python3 -m json.tool --indent 2 --no-ensure-ascii $1 tmpfile && mv tmpfile $1' find-sh {} \\;",
-    "texts:cleanup": "yarn texts:remove-newlines; yarn texts:remove-double-spaces; yarn texts:trim; yarn texts:reindent"
+    "texts:cleanup": "yarn texts:remove-newlines; yarn texts:remove-double-spaces; yarn texts:trim; yarn texts:standard-apostrophe; yarn texts:reindent"
   },
   "jest": {
     "roots": [
