@@ -44,6 +44,9 @@ const StyledDropdown = <ConstrainedString extends string>({
                     {placeholder}
                 </option>
                 {children}
+                <optgroup
+                    label="" /* En tom optgroup hindrer teksten i dropdown på ios å bli truncated */
+                />
             </StyledSelect>
         </div>
     ) : null;
