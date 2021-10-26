@@ -62,7 +62,7 @@ const StegindikatorContainer = styled.div`
 const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
-    const { erÅpen, toggleModal } = useModal();
+    const { erÅpen: erModellVersjonModalÅpen, toggleModal: toggleModellVersjonModal } = useModal();
     const {
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
@@ -100,7 +100,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
     }, []);
 
     useEffect(() => {
-        modellVersjonOppdatert && !erÅpen && toggleModal();
+        modellVersjonOppdatert && !erModellVersjonModalÅpen && toggleModellVersjonModal();
     }, [modellVersjonOppdatert]);
 
     const håndterAvbryt = () => {
@@ -166,7 +166,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                         />
                     )}
                 </Form>
-                <ModellVersjonModal erÅpen={erÅpen} />
+                <ModellVersjonModal erÅpen={erModellVersjonModalÅpen} />
             </InnholdContainer>
         </>
     );
