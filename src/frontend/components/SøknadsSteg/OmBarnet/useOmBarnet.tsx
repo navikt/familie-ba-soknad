@@ -830,7 +830,8 @@ export const useOmBarnet = (
                     case Dokumentasjonsbehov.MEKLINGSATTEST:
                         return genererOppdatertDokumentasjon(
                             dok,
-                            søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
+                            barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI &&
+                                søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
                                 borMedAndreForelderCheckbox.verdi === ESvar.NEI,
                             barn.id
                         );

@@ -15,6 +15,7 @@ import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdo
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import {
     AlternativtSvarForInput,
+    barnDataKeySpørsmål,
     DatoMedUkjent,
     ESivilstand,
     ISamboer,
@@ -271,6 +272,15 @@ export const useDinLivssituasjon = (): {
                 id: enkeSpørsmålId(),
                 svar: erEnkeEnkemann() ? søknad.erAvdødPartnerForelder.svar : null,
             },
+            barnInkludertISøknaden: søknad.barnInkludertISøknaden.map(barn => ({
+                ...barn,
+                andreForelderErDød: {
+                    ...barn[barnDataKeySpørsmål.andreForelderErDød],
+                    svar: erEnkeEnkemann()
+                        ? barn[barnDataKeySpørsmål.andreForelderErDød].svar
+                        : ESvar.NEI,
+                },
+            })),
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 if (dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE)
                     return { ...dok, gjelderForSøker: separertEnkeSkilt.verdi === ESvar.JA };
