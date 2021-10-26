@@ -24,6 +24,8 @@ import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
+import useModal from '../SkjemaModal/useModal';
+import ModellVersjonModal from './ModellVersjonModal';
 import Navigeringspanel from './Navigeringspanel';
 import { ScrollHandler } from './ScrollHandler';
 
@@ -60,6 +62,7 @@ const StegindikatorContainer = styled.div`
 const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, children }) => {
     const history = useHistory();
     const location = useLocation<ILokasjon>();
+    const { erÅpen, toggleModal } = useModal();
     const {
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
@@ -158,6 +161,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                         />
                     )}
                 </Form>
+                <ModellVersjonModal erÅpen={erÅpen} toggleModal={toggleModal} />
             </InnholdContainer>
         </>
     );
