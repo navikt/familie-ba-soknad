@@ -210,12 +210,21 @@ export const genererOppdaterteBarn = (
             },
             utvidet: {
                 ...barn.utvidet,
+                [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: {
+                    ...barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder],
+                    svar: erFosterbarn
+                        ? null
+                        : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]
+                              .svar,
+                },
                 [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: {
                     ...barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato],
-                    svar: andreForelderErDød
-                        ? ''
-                        : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]
-                              .svar,
+                    svar:
+                        andreForelderErDød || erFosterbarn
+                            ? ''
+                            : barn.utvidet[
+                                  barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato
+                              ].svar,
                 },
             },
         };
