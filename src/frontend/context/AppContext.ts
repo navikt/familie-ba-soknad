@@ -210,6 +210,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetLaster,
         mellomlagre,
         modellVersjonOppdatert,
+        settSisteModellVersjon,
     };
 });
 

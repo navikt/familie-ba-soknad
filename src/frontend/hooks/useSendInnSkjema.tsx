@@ -2,7 +2,11 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType, useSprakContext } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
-import { modellVersjon, modellVersjonHeaderName } from '../../shared-utils/modellversjon';
+import {
+    erModellMismatchResponsRessurs,
+    modellVersjon,
+    modellVersjonHeaderName,
+} from '../../shared-utils/modellversjon';
 import {
     samboerSpråkIder,
     SamboerSpørsmålId,
@@ -63,7 +67,7 @@ export type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
 export const useSendInnSkjema = (): {
     sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;
 } => {
-    const { axiosRequest, søknad, settInnsendingStatus } = useApp();
+    const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
     const { soknadApi } = Miljø();
     const [valgtSpråk] = useSprakContext();
 
@@ -480,7 +484,7 @@ export const useSendInnSkjema = (): {
         settInnsendingStatus({ status: RessursStatus.HENTER });
         const formatert = dataISøknadKontraktFormat(søknad);
 
-        return await axiosRequest<IKvittering, ISøknadKontrakt>({
+        const res = await axiosRequest<IKvittering, ISøknadKontrakt>({
             url: `${soknadApi}/soknad/v4`,
             method: 'POST',
             withCredentials: true,
@@ -488,19 +492,16 @@ export const useSendInnSkjema = (): {
             headers: {
                 [modellVersjonHeaderName]: modellVersjon,
             },
-        }).then(
-            res => {
-                settInnsendingStatus(res);
-                return [res.status === RessursStatus.SUKSESS, formatert];
+            rejectCallback: res => {
+                const responseData = res.response?.data;
+                if (responseData && erModellMismatchResponsRessurs(responseData)) {
+                    settSisteModellVersjon(responseData.data.modellVersjon);
+                }
             },
-            () => {
-                settInnsendingStatus({
-                    status: RessursStatus.FEILET,
-                    frontendFeilmelding: 'Kunne ikke sende inn søknaden',
-                });
-                return [false, formatert];
-            }
-        );
+        });
+        settInnsendingStatus(res);
+
+        return [res.status === RessursStatus.SUKSESS, formatert];
     };
 
     return {

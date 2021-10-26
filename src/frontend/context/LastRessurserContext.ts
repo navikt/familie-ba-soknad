@@ -12,7 +12,11 @@ const [LastRessurserProvider, useLastRessurserContext] = createUseContext(() => 
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
 
     const axiosRequest = async <T, D>(
-        config: AxiosRequestConfig & { data?: D; påvirkerSystemLaster?: boolean }
+        config: AxiosRequestConfig & {
+            data?: D;
+            påvirkerSystemLaster?: boolean;
+            rejectCallback?: (res: AxiosError) => void;
+        }
     ): Promise<Ressurs<T>> => {
         const ressursId = `${config.method}_${config.url}`;
         config.påvirkerSystemLaster && settRessurserSomLaster([...ressurserSomLaster, ressursId]);
@@ -27,6 +31,7 @@ const [LastRessurserProvider, useLastRessurserContext] = createUseContext(() => 
             })
             .catch((error: AxiosError) => {
                 config.påvirkerSystemLaster && fjernRessursSomLaster(ressursId);
+                config.rejectCallback && config.rejectCallback(error);
                 loggFeil(error);
 
                 const responsRessurs: ApiRessurs<T> = error.response?.data;
