@@ -77,18 +77,22 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
 
             {skjema.felter.borFastMedSøker.erSynlig && (
                 <SkjemaFieldset tittelId={'hvilkebarn.barn.bosted'} dynamisk>
-                    <div>
-                        <Normaltekst>
-                            <SpråkTekst id={'ombarnet.bosted-info'} />
-                        </Normaltekst>
-                    </div>
-                    <EksternLenkeContainer>
-                        <EksternLenke
-                            lenkeSpråkId={'ombarnet.les-mer-om-bosted.lenke'}
-                            lenkeTekstSpråkId={'ombarnet.les-mer-om-bosted.lenketekst'}
-                            target="_blank"
-                        />
-                    </EksternLenkeContainer>
+                    {barn.andreForelderErDød.svar === ESvar.NEI && (
+                        <>
+                            <div>
+                                <Normaltekst>
+                                    <SpråkTekst id={'ombarnet.bosted-info'} />
+                                </Normaltekst>
+                            </div>
+                            <EksternLenkeContainer>
+                                <EksternLenke
+                                    lenkeSpråkId={'ombarnet.les-mer-om-bosted.lenke'}
+                                    lenkeTekstSpråkId={'ombarnet.les-mer-om-bosted.lenketekst'}
+                                    target="_blank"
+                                />
+                            </EksternLenkeContainer>
+                        </>
+                    )}
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.borFastMedSøker}
