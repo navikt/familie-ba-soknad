@@ -566,7 +566,7 @@ export const useOmBarnet = (
                 : undefined,
         },
         false,
-        !erUtvidet,
+        !erUtvidet || barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
         { navn: barnetsNavnValue(barn, intl) }
     );
 

@@ -5,7 +5,6 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { useApp } from '../../../../../context/AppContext';
 import { useRoutes } from '../../../../../context/RoutesContext';
 import {
     AlternativtSvarForInput,
@@ -37,7 +36,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
     const { formatMessage } = intl;
     const { hentStegObjektForBarn } = useRoutes();
     const [valgtLocale] = useSprakContext();
-    const { erUtvidet } = useApp();
 
     return (
         <Oppsummeringsbolk
@@ -351,7 +349,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     </>
                 )}
             </StyledOppsummeringsFeltGruppe>
-            {erUtvidet && (
+            {barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder].svar && (
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={
