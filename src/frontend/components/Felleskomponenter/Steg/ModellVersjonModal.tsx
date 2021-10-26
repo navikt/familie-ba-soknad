@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
@@ -7,7 +7,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 
-import { useApp } from '../../../context/AppContext';
 import AlertStripe from '../AlertStripe/AlertStripe';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -35,22 +34,16 @@ const ModalInnholdContainer = styled.div`
     max-width: 35rem;
 `;
 
-const ModellVersjonModal: React.FC<{ erÅpen: boolean; toggleModal: () => void }> = ({
-    erÅpen,
-    toggleModal,
-}) => {
-    const { modellVersjonOppdatert } = useApp();
+const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
     const { formatMessage } = useIntl();
 
-    useEffect(() => {
-        modellVersjonOppdatert && !erÅpen && toggleModal();
-    }, [modellVersjonOppdatert]);
+    const refresh = () => window.location.reload();
 
     return (
         <Modal
             isOpen={erÅpen}
             contentLabel={formatMessage({ id: 'felles.modal.deployfeil.tittel' })}
-            onRequestClose={toggleModal}
+            onRequestClose={refresh}
         >
             <ModalInnholdContainer>
                 <StyledSideTittel>
@@ -66,7 +59,7 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean; toggleModal: () => void }
                     <SpråkTekst id={'felles.modal.deployfeil.info'} />
                 </StyledNormalTekst>
 
-                <StyledHovedknapp onClick={() => alert('todo')}>
+                <StyledHovedknapp onClick={refresh}>
                     <SpråkTekst id={'felles.modal.deployfeil.knapp'} />
                 </StyledHovedknapp>
             </ModalInnholdContainer>

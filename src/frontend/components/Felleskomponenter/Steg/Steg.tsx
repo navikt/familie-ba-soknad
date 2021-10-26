@@ -69,6 +69,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         gåTilbakeTilStart,
         erUtvidet,
         settNåværendeRoute,
+        modellVersjonOppdatert,
     } = useApp();
     const {
         hentNesteRoute,
@@ -97,6 +98,10 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
             });
         }
     }, []);
+
+    useEffect(() => {
+        modellVersjonOppdatert && !erÅpen && toggleModal();
+    }, [modellVersjonOppdatert]);
 
     const håndterAvbryt = () => {
         gåTilbakeTilStart();
@@ -161,7 +166,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                         />
                     )}
                 </Form>
-                <ModellVersjonModal erÅpen={erÅpen} toggleModal={toggleModal} />
+                <ModellVersjonModal erÅpen={erÅpen} />
             </InnholdContainer>
         </>
     );
