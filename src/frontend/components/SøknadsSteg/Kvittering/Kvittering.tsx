@@ -20,12 +20,8 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import { KontonummerInfo } from './KontonummerInfo';
 
 const Kvittering: React.FC = () => {
-    const {
-        avbrytOgSlettSøknad,
-        sisteUtfylteStegIndex,
-        settFåttGyldigKvittering,
-        søknad,
-    } = useApp();
+    const { avbrytOgSlettSøknad, sisteUtfylteStegIndex, settFåttGyldigKvittering, søknad } =
+        useApp();
     const { eøsSkruddAv } = useEøs();
     const { barnInkludertISøknaden, erEøs } = søknad;
     const { hentStegNummer } = useRoutes();
