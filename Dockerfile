@@ -7,6 +7,7 @@ COPY --chown=apprunner:apprunner ./yarn.lock ./package.json /var/server/
 
 
 FROM builder-base as webpack-express-builder
+RUN yarn
 # Trenger å vite BASE_PATH før vi kjører webpack, siden webpack bruker DefinePlugin for å videresende basepath til frontend
 ARG base_path
 ENV BASE_PATH=$base_path
@@ -16,8 +17,6 @@ ARG sentry_release
 ENV SENTRY_RELEASE=$sentry_release
 
 COPY --chown=apprunner:apprunner ./ /var/server/
-
-RUN yarn
 RUN yarn build
 
 
