@@ -1,3 +1,5 @@
+import { modellVersjon } from '../shared-utils/modellversjon';
+
 interface MiljøProps {
     soknadApi: string;
     loginService: string;
@@ -6,7 +8,6 @@ interface MiljøProps {
     modellVersjon: number;
     dokumentUrl: string;
 }
-const modellVersjon = 16;
 
 export const basePath = process.env.BASE_PATH ?? '/';
 

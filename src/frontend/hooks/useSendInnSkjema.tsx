@@ -5,6 +5,11 @@ import { LocaleType, useSprakContext } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import {
+    erModellMismatchResponsRessurs,
+    modellVersjon,
+    modellVersjonHeaderName,
+} from '../../shared-utils/modellversjon';
+import {
     samboerSpråkIder,
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
@@ -65,7 +70,7 @@ export type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
 export const useSendInnSkjema = (): {
     sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;
 } => {
-    const { axiosRequest, søknad, settInnsendingStatus } = useApp();
+    const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
     const { soknadApi } = Miljø();
     const [valgtSpråk] = useSprakContext();
     const intl = useIntl();
@@ -504,24 +509,24 @@ export const useSendInnSkjema = (): {
         settInnsendingStatus({ status: RessursStatus.HENTER });
         const formatert = dataISøknadKontraktFormat(søknad);
 
-        return await axiosRequest<IKvittering, ISøknadKontrakt>({
+        const res = await axiosRequest<IKvittering, ISøknadKontrakt>({
             url: `${soknadApi}/soknad/v4`,
             method: 'POST',
             withCredentials: true,
             data: formatert,
-        }).then(
-            res => {
-                settInnsendingStatus(res);
-                return [res.status === RessursStatus.SUKSESS, formatert];
+            headers: {
+                [modellVersjonHeaderName]: modellVersjon,
             },
-            () => {
-                settInnsendingStatus({
-                    status: RessursStatus.FEILET,
-                    frontendFeilmelding: 'Kunne ikke sende inn søknaden',
-                });
-                return [false, formatert];
-            }
-        );
+            rejectCallback: res => {
+                const responseData = res.response?.data;
+                if (responseData && erModellMismatchResponsRessurs(responseData)) {
+                    settSisteModellVersjon(responseData.data.modellVersjon);
+                }
+            },
+        });
+        settInnsendingStatus(res);
+
+        return [res.status === RessursStatus.SUKSESS, formatert];
     };
 
     return {
