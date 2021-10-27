@@ -105,7 +105,7 @@ describe('Test av nåværende samboer skjema', () => {
 
         const [navn, fnr, fnrUkjent, fødselsdato, fødselsdatoUkjent, samboerFraDato] =
             getAllNåværendeSamboerFields(container);
-        const gåVidere = getByText(container, 'GÅ VIDERE');
+        const gåVidere = getByText(container, 'Gå videre');
 
         expect(navn.value).toBe('Initial verdi for samboer sitt navn');
         expect(fnr.value).toBe('');

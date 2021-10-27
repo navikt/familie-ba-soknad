@@ -85,7 +85,7 @@ describe('DinLivssituasjon', () => {
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const gåVidere = await findByText('GÅ VIDERE');
+        const gåVidere = await findByText('Gå videre');
         act(() => gåVidere.click());
         const alerts: HTMLElement = await findByRole('alert');
         const result: HTMLElement | null = queryByText(
@@ -130,7 +130,7 @@ describe('DinLivssituasjon', () => {
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const gåVidere = await findByText('GÅ VIDERE');
+        const gåVidere = await findByText('Gå videre');
         act(() => gåVidere.click());
         const alerts: HTMLElement = await findByRole('alert');
         const result: HTMLElement | null = queryByText(
@@ -154,7 +154,7 @@ describe('DinLivssituasjon', () => {
         const jaKnapp: HTMLElement = within(harSamboerNåSpmFieldset).getByText('Ja');
         act(() => jaKnapp.click());
 
-        const gåVidereKnapp = await findByText('GÅ VIDERE');
+        const gåVidereKnapp = await findByText('Gå videre');
         act(() => gåVidereKnapp.click());
 
         const feiloppsummering = await findByRole('alert');
