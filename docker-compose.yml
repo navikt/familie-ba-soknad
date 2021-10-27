@@ -52,6 +52,8 @@ services:
     volumes:
       - secure-logs:/secure-logs
       - keys:/keys
+    ports:
+      - "8070:8080"
     environment:
       <<: *common-token-environment
       TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-soknad-api.json'
