@@ -27,9 +27,8 @@ export const useVelgBarn = (): {
     const { søknad, settSøknad, mellomlagre } = useApp();
     const { barnInkludertISøknaden } = søknad;
     const { settBarnForRoutes } = useRoutes();
-    const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] = useState<IBarnMedISøknad[]>(
-        barnInkludertISøknaden
-    );
+    const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] =
+        useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
 
     useEffect(() => {
         settBarnForRoutes(barnSomSkalVæreMed);
