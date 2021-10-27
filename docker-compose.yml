@@ -25,7 +25,8 @@ services:
     container_name: "frontend"
     build:
       context: ./
-      dockerfile: Dockerfile.local
+      target: prod-builder # Før vi sletter dev-dependencies
+    command: ["yarn", "start:dev:ts-server"]
     environment:
       <<: *common-token-environment
       BASE_PATH: /familie/barnetrygd/soknad/ordinaer/

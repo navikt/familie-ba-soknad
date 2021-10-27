@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';

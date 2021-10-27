@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Systemtittel } from 'nav-frontend-typografi';

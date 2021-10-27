@@ -4,8 +4,10 @@ import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
-import { barnDataKeySpørsmål, BarnetsId } from '../../../typer/person';
+import { barnDataKeySpørsmål, BarnetsId, ESivilstand } from '../../../typer/person';
+import { Årsak } from '../../../typer/søknad';
 import { genererOppdaterteBarn } from '../../../utils/barn';
+import { OmBarnaDineSpørsmålId } from './spørsmål';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 
 export interface IOmBarnaDineFeltTyper {
@@ -16,6 +18,7 @@ export interface IOmBarnaDineFeltTyper {
     søktAsylForBarn: ESvar | null;
     barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | null;
     mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | null;
+    erAvdødPartnerForelder: ESvar | null;
     hvemErFosterbarn: BarnetsId[];
     hvemOppholderSegIInstitusjon: BarnetsId[];
     hvemErAdoptertFraUtland: BarnetsId[];
@@ -23,6 +26,7 @@ export interface IOmBarnaDineFeltTyper {
     hvemBarnetrygdFraAnnetEøsland: BarnetsId[];
     hvemTolvMndSammenhengendeINorge: BarnetsId[];
     hvemErSøktAsylFor: BarnetsId[];
+    hvemAvdødPartner: BarnetsId[];
 }
 
 export const useOmBarnaDine = (): {
@@ -158,6 +162,44 @@ export const useOmBarnaDine = (): {
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
 
+    const avdødPartnerForelderFeilmelding = () => {
+        switch (søknad.erAvdødPartnerForelder.id) {
+            case OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder:
+                return 'ombarna.enkeenkemann.feilmelding';
+            case OmBarnaDineSpørsmålId.erFolkeregAvdødPartnerForelder:
+                return 'ombarna.enkeenkemann.folkeregisteret-gjenlevende.feilmelding';
+            default:
+                return 'ombarna.enkeenkemann.folkeregisteret-enke.feilmelding';
+        }
+    };
+
+    const erAvdødPartnerForelder = useJaNeiSpmFelt(
+        søknad.erAvdødPartnerForelder,
+        avdødPartnerForelderFeilmelding(),
+        {
+            søktAsylForBarn: {
+                hovedSpørsmål: søktAsylForBarn,
+                tilhørendeFelter: [hvemErSøktAsylFor],
+            },
+            barnOppholdtSegTolvMndSammenhengendeINorge: {
+                hovedSpørsmål: barnOppholdtSegTolvMndSammenhengendeINorge,
+                tilhørendeFelter: [hvemTolvMndSammenhengendeINorge],
+            },
+        },
+        false,
+        !(
+            søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
+            søknad.søker.sivilstand.type === ESivilstand.GJENLEVENDE_PARTNER ||
+            søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.ENKE_ENKEMANN
+        )
+    );
+
+    const hvemAvdødPartner = useBarnCheckboxFelt(
+        barnDataKeySpørsmål.andreForelderErDød,
+        'ombarna.enkeenkemann.hvem.feilmelding',
+        erAvdødPartnerForelder
+    );
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
@@ -188,6 +230,10 @@ export const useOmBarnaDine = (): {
             mottarBarnetrygdForBarnFraAnnetEøsland: {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
                 svar: mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
+            },
+            erAvdødPartnerForelder: {
+                ...søknad.erAvdødPartnerForelder,
+                svar: erAvdødPartnerForelder.verdi,
             },
             barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema),
             dokumentasjon: søknad.dokumentasjon.map(dok => {
@@ -226,6 +272,7 @@ export const useOmBarnaDine = (): {
             søktAsylForBarn,
             barnOppholdtSegTolvMndSammenhengendeINorge,
             mottarBarnetrygdForBarnFraAnnetEøsland,
+            erAvdødPartnerForelder,
             hvemErFosterbarn,
             hvemErAdoptertFraUtland,
             hvemOppholderSegIInstitusjon,
@@ -233,6 +280,7 @@ export const useOmBarnaDine = (): {
             hvemBarnetrygdFraAnnetEøsland,
             hvemTolvMndSammenhengendeINorge,
             hvemErSøktAsylFor,
+            hvemAvdødPartner,
         },
         skjemanavn: 'ombarnadine',
     });

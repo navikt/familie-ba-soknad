@@ -33,10 +33,9 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                             AlternativtSvarForInput.UKJENT
                                 ? barn[barnDataKeySpørsmål.andreForelderNavn].svar
                                 : formatMessage({
-                                      id:
-                                          omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId.andreForelderNavnUkjent
-                                          ],
+                                      id: omBarnetSpørsmålSpråkId[
+                                          OmBarnetSpørsmålsId.andreForelderNavnUkjent
+                                      ],
                                   })
                         }
                     />
@@ -53,10 +52,9 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                             AlternativtSvarForInput.UKJENT
                                 ? barn[barnDataKeySpørsmål.andreForelderFnr].svar
                                 : formatMessage({
-                                      id:
-                                          omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId.andreForelderFnrUkjent
-                                          ],
+                                      id: omBarnetSpørsmålSpråkId[
+                                          OmBarnetSpørsmålsId.andreForelderFnrUkjent
+                                      ],
                                   })
                         }
                     />
@@ -75,10 +73,9 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar,
                             formatMessage({
-                                id:
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
-                                    ],
+                                id: omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
+                                ],
                             })
                         )}
                     />
@@ -88,11 +85,7 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
-                            id={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.andreForelderArbeidUtlandet
-                                ]
-                            }
+                            id={omBarnetSpørsmålSpråkId[barn.andreForelderArbeidUtlandet.id]}
                             values={{ navn: barnetsNavnValue(barn, intl) }}
                         />
                     }
@@ -104,7 +97,7 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                             <SpråkTekst
                                 id={
                                     omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
+                                        barn.andreForelderArbeidUtlandetHvilketLand.id
                                     ]
                                 }
                             />
@@ -120,11 +113,7 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
-                            id={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.andreForelderPensjonUtland
-                                ]
-                            }
+                            id={omBarnetSpørsmålSpråkId[barn.andreForelderPensjonUtland.id]}
                             values={{ navn: barnetsNavnValue(barn, intl) }}
                         />
                     }
@@ -135,11 +124,12 @@ const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn 
                         tittel={
                             <SpråkTekst
                                 id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand
-                                    ]
+                                    omBarnetSpørsmålSpråkId[barn.andreForelderPensjonHvilketLand.id]
                                 }
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
+                                values={{
+                                    navn: barnetsNavnValue(barn, intl),
+                                    barn: barnetsNavnValue(barn, intl),
+                                }}
                             />
                         }
                         søknadsvar={landkodeTilSpråk(

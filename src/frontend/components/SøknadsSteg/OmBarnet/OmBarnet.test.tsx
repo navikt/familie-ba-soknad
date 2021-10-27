@@ -21,6 +21,7 @@ import {
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import OmBarnet from './OmBarnet';
+import { OmBarnetSpørsmålsId } from './spørsmål';
 
 silenceConsoleErrors();
 
@@ -53,10 +54,22 @@ const jens = {
         id: '19',
         svar: AlternativtSvarForInput.UKJENT,
     },
-    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: { id: '20', svar: ESvar.JA },
-    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: { id: '21', svar: 'AUS' },
-    [barnDataKeySpørsmål.andreForelderPensjonUtland]: { id: '22', svar: ESvar.VET_IKKE },
-    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: { id: '23', svar: '' },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: {
+        id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
+        svar: ESvar.JA,
+    },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: {
+        id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
+        svar: 'AUS',
+    },
+    [barnDataKeySpørsmål.andreForelderPensjonUtland]: {
+        id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
+        svar: ESvar.VET_IKKE,
+    },
+    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
+        id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
+        svar: '',
+    },
     [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
     [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: { id: '25', svar: ESvar.NEI },
     [barnDataKeySpørsmål.søkerForTidsrom]: { id: '255', svar: ESvar.JA },
@@ -68,6 +81,7 @@ const jens = {
         id: '27',
         svar: '2021-09-03',
     },
+    [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
     utvidet: {
         [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: { id: 26, svar: ESvar.NEI },
         [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: { id: 27, svar: ESvar.JA },
@@ -102,10 +116,22 @@ const line = {
         id: '19',
         svar: AlternativtSvarForInput.UKJENT,
     },
-    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: { id: '20', svar: ESvar.JA },
-    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: { id: '21', svar: 'AUS' },
-    [barnDataKeySpørsmål.andreForelderPensjonUtland]: { id: '22', svar: ESvar.VET_IKKE },
-    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: { id: '23', svar: '' },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: {
+        id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
+        svar: ESvar.JA,
+    },
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: {
+        id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
+        svar: 'AUS',
+    },
+    [barnDataKeySpørsmål.andreForelderPensjonUtland]: {
+        id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
+        svar: ESvar.VET_IKKE,
+    },
+    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
+        id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
+        svar: '',
+    },
     [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
     [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: { id: '25', svar: ESvar.NEI },
     [barnDataKeySpørsmål.søkerForTidsrom]: { id: '255', svar: ESvar.JA },
@@ -117,6 +143,7 @@ const line = {
         id: '27',
         svar: '',
     },
+    [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
     utvidet: {
         [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: { id: 26, svar: ESvar.NEI },
         [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: { id: 27, svar: ESvar.JA },
@@ -293,6 +320,22 @@ describe('OmBarnet', () => {
             institusjonsnavn: { svar: '' },
             institusjonsadresse: { svar: '' },
             andreForelderFnr: { svar: '' },
+            andreForelderArbeidUtlandet: {
+                id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
+                svar: ESvar.JA,
+            },
+            andreForelderArbeidUtlandetHvilketLand: {
+                id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
+                svar: 'BEL',
+            },
+            andreForelderPensjonUtland: {
+                id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
+                svar: ESvar.JA,
+            },
+            andreForelderPensjonHvilketLand: {
+                id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
+                svar: 'BEL',
+            },
         });
 
         const { erStegUtfyltFrafør } = spyOnUseApp({

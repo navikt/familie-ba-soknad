@@ -15,6 +15,7 @@ import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdo
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import {
     AlternativtSvarForInput,
+    barnDataKeySpørsmål,
     DatoMedUkjent,
     ESivilstand,
     ISamboer,
@@ -25,6 +26,7 @@ import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
 
 export interface IDinLivssituasjonFeltTyper {
@@ -248,9 +250,37 @@ export const useDinLivssituasjon = (): {
         );
     };
 
+    const erEnkeEnkemann = () =>
+        skjema.felter.årsak.verdi === Årsak.ENKE_ENKEMANN ||
+        søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
+        søknad.søker.sivilstand.type === ESivilstand.GJENLEVENDE_PARTNER;
+
+    const enkeSpørsmålId = () => {
+        if (skjema.felter.årsak.verdi === Årsak.ENKE_ENKEMANN) {
+            return OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder;
+        } else if (søknad.søker.sivilstand.type === ESivilstand.GJENLEVENDE_PARTNER) {
+            return OmBarnaDineSpørsmålId.erFolkeregAvdødPartnerForelder;
+        } else {
+            return OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder;
+        }
+    };
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
+            erAvdødPartnerForelder: {
+                id: enkeSpørsmålId(),
+                svar: erEnkeEnkemann() ? søknad.erAvdødPartnerForelder.svar : null,
+            },
+            barnInkludertISøknaden: søknad.barnInkludertISøknaden.map(barn => ({
+                ...barn,
+                andreForelderErDød: {
+                    ...barn[barnDataKeySpørsmål.andreForelderErDød],
+                    svar: erEnkeEnkemann()
+                        ? barn[barnDataKeySpørsmål.andreForelderErDød].svar
+                        : ESvar.NEI,
+                },
+            })),
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 if (dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE)
                     return { ...dok, gjelderForSøker: separertEnkeSkilt.verdi === ESvar.JA };

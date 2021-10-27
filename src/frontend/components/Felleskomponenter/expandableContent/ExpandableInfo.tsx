@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { css } from 'styled-components';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { guid } from 'nav-frontend-js-utils';

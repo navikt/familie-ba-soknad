@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Masonry from 'react-masonry-css';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { useApp } from '../../../context/AppContext';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';

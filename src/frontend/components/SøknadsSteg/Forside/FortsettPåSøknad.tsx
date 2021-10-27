@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { useIntl } from 'react-intl';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import KnappBase, { Flatknapp, Knapp } from 'nav-frontend-knapper';
@@ -55,12 +55,8 @@ const StyledSideTittel = styled(Sidetittel)`
 `;
 
 const FortsettPåSøknad: FC = () => {
-    const {
-        fortsettPåSøknaden,
-        startPåNytt,
-        visStartPåNyttModal,
-        settVisStartPåNyttModal,
-    } = useBekreftelseOgStartSoknad();
+    const { fortsettPåSøknaden, startPåNytt, visStartPåNyttModal, settVisStartPåNyttModal } =
+        useBekreftelseOgStartSoknad();
     const { formatMessage } = useIntl();
     return (
         <StyledFortsettPåSøknad role={'navigation'}>

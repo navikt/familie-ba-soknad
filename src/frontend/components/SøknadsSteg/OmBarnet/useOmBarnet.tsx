@@ -2,21 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
-import { useLocation } from 'react-router-dom';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
-import {
-    feil,
-    FeltState,
-    ISkjema,
-    ok,
-    useFelt,
-    useSkjema,
-    Valideringsstatus,
-} from '@navikt/familie-skjema';
+import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../context/RoutesContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
@@ -27,7 +17,6 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
-import { ILokasjon } from '../../../typer/lokasjon';
 import {
     AlternativtSvarForInput,
     barnDataKeySpørsmål,
@@ -95,10 +84,8 @@ export const useOmBarnet = (
     settSammeForelder: (radioVerdi: string) => void;
     validerAlleSynligeFelter: () => void;
 } => {
-    const { søknad, settSøknad, erStegUtfyltFrafør, erUtvidet } = useApp();
-    const { hentRouteIndex } = useRoutes();
+    const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
-    const location = useLocation<ILokasjon>();
 
     const [barn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
@@ -357,7 +344,9 @@ export const useOmBarnet = (
 
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.andreForelderArbeidUtlandet],
-        'ombarnet.andre-forelder.arbeid-utland.feilmelding',
+        barn.andreForelderErDød.svar === ESvar.JA
+            ? 'enkeenkemann.andreforelder-arbeidutland.feilmelding'
+            : 'ombarnet.andre-forelder.arbeid-utland.feilmelding',
         {
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
@@ -377,7 +366,9 @@ export const useOmBarnet = (
 
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
         barn.andreForelderArbeidUtlandetHvilketLand,
-        'ombarnet.andre-forelder.arbeid-utland.land.feilmelding',
+        barn.andreForelderErDød.svar === ESvar.JA
+            ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
+            : 'ombarnet.andre-forelder.arbeid-utland.land.feilmelding',
         ESvar.JA,
         andreForelderArbeidUtlandet,
         sammeForelderSomAnnetBarn.verdi === null ||
@@ -386,7 +377,9 @@ export const useOmBarnet = (
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.andreForelderPensjonUtland],
-        'ombarnet.andre-forelder.utenlandspensjon.feilmelding',
+        barn.andreForelderErDød.svar === ESvar.JA
+            ? 'enkeenkemann.andre-forelder.utenlandspensjon.feilmelding'
+            : 'ombarnet.andre-forelder.utenlandspensjon.feilmelding',
         {
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
@@ -406,7 +399,9 @@ export const useOmBarnet = (
 
     const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
         barn.andreForelderPensjonHvilketLand,
-        'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
+        barn.andreForelderErDød.svar === ESvar.JA
+            ? 'enkeenkemann.andre-forelder.utenlandspensjon.land.feilmelding'
+            : 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
         ESvar.JA,
         andreForelderPensjonUtland,
         sammeForelderSomAnnetBarn.verdi === null ||
@@ -495,40 +490,25 @@ export const useOmBarnet = (
         'ombarnet.delt-bosted.feilmelding',
         avhengigheterForBosted(),
         false,
-        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
+        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA ||
+            barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
         { navn: barnetsNavnValue(barn, intl) }
     );
 
     /*--- SØKER FOR PERIODE ---*/
-
-    const stegErFyltUt = erStegUtfyltFrafør(hentRouteIndex(location.pathname));
-    const tidsromSkalVises = (avhengigheter): boolean => {
-        const avhengigheterEksisterer =
-            avhengigheter &&
-            avhengigheter.skriftligAvtaleOmDeltBosted &&
-            avhengigheter.borFastMedSøker;
-        const skriftligAvtaleValidert =
-            avhengigheterEksisterer &&
-            avhengigheter.skriftligAvtaleOmDeltBosted.valideringsstatus === Valideringsstatus.OK;
-        const borFastMedSøkerValidert =
-            avhengigheterEksisterer &&
-            avhengigheter.borFastMedSøker.valideringsstatus === Valideringsstatus.OK;
-        return (
-            stegErFyltUt ||
-            (borFastMedSøkerValidert &&
-                (barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA ||
-                    skriftligAvtaleValidert))
-        );
-    };
     const søkerForTidsrom = useJaNeiSpmFelt(
         barn.søkerForTidsrom,
         'ombarnet.søker-for-periode.feilmelding',
         {
             borFastMedSøker: { hovedSpørsmål: borFastMedSøker },
-            // skriftligAvtaleOmDeltBosted: { hovedSpørsmål: skriftligAvtaleOmDeltBosted },
+            skriftligAvtaleOmDeltBosted: skriftligAvtaleOmDeltBosted.erSynlig
+                ? {
+                      hovedSpørsmål: skriftligAvtaleOmDeltBosted,
+                  }
+                : undefined,
         },
         false,
-        !tidsromSkalVises({ borFastMedSøker, skriftligAvtaleOmDeltBosted }),
+        false,
         { navn: barnetsNavnValue(barn, intl) }
     );
 
@@ -575,22 +555,18 @@ export const useOmBarnet = (
     const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt(
         barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder],
         'ombarnet.boddsammenmedandreforelder.feilmelding',
-        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
-            ? {
-                  borFastMedSøker: {
-                      hovedSpørsmål: borFastMedSøker,
-                  },
-                  skriftligAvtaleOmDeltBosted: {
+        {
+            borFastMedSøker: {
+                hovedSpørsmål: borFastMedSøker,
+            },
+            skriftligAvtaleOmDeltBosted: skriftligAvtaleOmDeltBosted.erSynlig
+                ? {
                       hovedSpørsmål: skriftligAvtaleOmDeltBosted,
-                  },
-              }
-            : {
-                  borFastMedSøker: {
-                      hovedSpørsmål: borFastMedSøker,
-                  },
-              },
+                  }
+                : undefined,
+        },
         false,
-        !erUtvidet,
+        !erUtvidet || barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
         { navn: barnetsNavnValue(barn, intl) }
     );
 
@@ -603,6 +579,7 @@ export const useOmBarnet = (
         feltId: OmBarnetSpørsmålsId.søkerBorMedAndreForelder,
         skalFeltetVises: avhengigheter => {
             return (
+                barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI &&
                 avhengigheter &&
                 avhengigheter.søkerHarBoddMedAndreForelder &&
                 avhengigheter.søkerHarBoddMedAndreForelder.verdi === ESvar.JA
@@ -619,7 +596,8 @@ export const useOmBarnet = (
             : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar,
         borMedAndreForelderCheckbox,
         'ombarnet.nårflyttetfra.feilmelding',
-        søkerHarBoddMedAndreForelder.verdi === ESvar.JA,
+        søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
+            barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI,
         true,
         dagensDato()
     );
@@ -693,8 +671,8 @@ export const useOmBarnet = (
     };
 
     const oppdaterSøknad = () => {
-        const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] = søknad.barnInkludertISøknaden.map(
-            barn =>
+        const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] =
+            søknad.barnInkludertISøknaden.map(barn =>
                 barn.id === barnetsUuid
                     ? {
                           ...barn,
@@ -829,7 +807,7 @@ export const useOmBarnet = (
                           },
                       }
                     : barn
-        );
+            );
 
         settSøknad({
             ...søknad,
@@ -852,7 +830,8 @@ export const useOmBarnet = (
                     case Dokumentasjonsbehov.MEKLINGSATTEST:
                         return genererOppdatertDokumentasjon(
                             dok,
-                            søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
+                            barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI &&
+                                søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
                                 borMedAndreForelderCheckbox.verdi === ESvar.NEI,
                             barn.id
                         );

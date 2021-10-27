@@ -58,6 +58,9 @@ const commonConfig: webpack.Configuration = {
             stream: require.resolve('stream-browserify'),
             buffer: require.resolve('buffer'),
         },
+        alias: {
+            'styled-components': path.resolve(process.cwd(), 'node_modules', 'styled-components'),
+        },
     },
     output: {
         filename: '[name].[contenthash].js',

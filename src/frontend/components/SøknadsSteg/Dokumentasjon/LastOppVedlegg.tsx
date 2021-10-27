@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { Checkbox } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
