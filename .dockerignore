@@ -7,3 +7,5 @@ docker-compose.yml
 .idea/
 var/
 *.log
+Dockerfile
+.dockerignore

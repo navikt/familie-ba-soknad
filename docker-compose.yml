@@ -25,7 +25,7 @@ services:
     container_name: "frontend"
     build:
       context: ./
-      target: prod-builder # Før vi sletter dev-dependencies
+      target: webpack-express-builder # Før vi sletter dev-dependencies
     command: ["yarn", "start:dev:ts-server"]
     environment:
       <<: *common-token-environment
