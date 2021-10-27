@@ -85,14 +85,8 @@ describe('Test av nåværende samboer skjema', () => {
 
     it('nåværende samboer null initiell verdi', () => {
         const { container } = renderDinLivssituasjon(søknad);
-        const [
-            navn,
-            fnr,
-            fnrUkjent,
-            fødselsdato,
-            fødselsdatoUkjent,
-            samboerFraDato,
-        ] = getAllNåværendeSamboerFields(container);
+        const [navn, fnr, fnrUkjent, fødselsdato, fødselsdatoUkjent, samboerFraDato] =
+            getAllNåværendeSamboerFields(container);
 
         expect(navn.value).toBe('');
         expect(fnr.value).toBe('');
@@ -109,14 +103,8 @@ describe('Test av nåværende samboer skjema', () => {
 
         const container: HTMLElement = document.body;
 
-        const [
-            navn,
-            fnr,
-            fnrUkjent,
-            fødselsdato,
-            fødselsdatoUkjent,
-            samboerFraDato,
-        ] = getAllNåværendeSamboerFields(container);
+        const [navn, fnr, fnrUkjent, fødselsdato, fødselsdatoUkjent, samboerFraDato] =
+            getAllNåværendeSamboerFields(container);
         const gåVidere = getByText(container, 'GÅ VIDERE');
 
         expect(navn.value).toBe('Initial verdi for samboer sitt navn');
