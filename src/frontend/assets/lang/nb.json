@@ -153,7 +153,7 @@
   "felles.mangler-svar.feilmelding": "Du må svare på dette spørsmålet for å gå videre",
   "felles.modal.avbrytogslett.tittel": "Avbryt og slett søknaden",
   "felles.modal.deployfeil.error": "Vi har mistet informasjonen din",
-  "felles.modal.deployfeil.info": "Vi har oppdatert søknadsskjemaet, og dessverre mistet informasjonen du har oppgitt.{linjeskift}{linjeskift}Du må derfor starte søknaden på nytt. Vi beklager ulempen.",
+  "felles.modal.deployfeil.info": "Vi har oppdatert søknadsskjemaet, og dessverre mistet informasjonen du har oppgitt. Du må derfor starte søknaden på nytt.{linjeskift}{linjeskift}Når du lukker denne boksen vil skjemaet gå tilbake til forsiden. Vi beklager ulempen.",
   "felles.modal.deployfeil.knapp": "Start søknad på nytt",
   "felles.modal.deployfeil.tittel": "Vi har mistet informasjonen din",
   "felles.navigasjon.avbryt": "Avbryt søknad",
