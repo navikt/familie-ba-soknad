@@ -143,7 +143,7 @@ describe('Test ulike caser for feilmelding hos datovelger', () => {
                 <OmDeg />
             </TestProvidereMedEkteTekster>
         );
-        const gåVidere = getByText('GÅ VIDERE');
+        const gåVidere = getByText('Gå videre');
         act(() => gåVidere.click());
         const feilmelding = getAllByText(
             'Du må oppgi når utenlandsoppholdet startet for å gå videre'
@@ -168,7 +168,7 @@ describe('Test ulike caser for feilmelding hos datovelger', () => {
                 <OmDeg />
             </TestProvidereMedEkteTekster>
         );
-        const gåVidere = getByText('GÅ VIDERE');
+        const gåVidere = getByText('Gå videre');
         act(() => gåVidere.click());
         const feilmelding = getAllByText('Dato kan ikke være frem i tid');
         expect(feilmelding).toHaveLength(2);
@@ -191,7 +191,7 @@ describe('Test ulike caser for feilmelding hos datovelger', () => {
                 <OmDeg />
             </TestProvidereMedEkteTekster>
         );
-        const gåVidere = getByText('GÅ VIDERE');
+        const gåVidere = getByText('Gå videre');
         act(() => gåVidere.click());
         const feilmelding = getAllByText('Dato må være en gyldig dato i formatet dd.mm.åååå');
         expect(feilmelding).toHaveLength(2);
