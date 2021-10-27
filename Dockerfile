@@ -16,7 +16,8 @@ ENV SENTRY_AUTH_TOKEN=$sentry_auth_token
 ARG sentry_release
 ENV SENTRY_RELEASE=$sentry_release
 
-COPY --chown=apprunner:apprunner ./ /var/server/
+COPY --chown=apprunner:apprunner ./src /var/server/src
+COPY --chown=apprunner:apprunner ./tsconfig* babel.config.cjs /var/server/
 
 
 # Gjør faktisk bygg i eget steg slik at vi slipper å kjøre det i lokal stack
