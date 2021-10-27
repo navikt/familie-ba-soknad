@@ -170,11 +170,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
-                            id={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.harSamboerNå
-                                ]
-                            }
+                            id={dinLivssituasjonSpørsmålSpråkId[søknad.søker.harSamboerNå.id]}
                         />
                     }
                     søknadsvar={søknad.søker.harSamboerNå.svar}

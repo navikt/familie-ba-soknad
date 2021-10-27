@@ -10,10 +10,11 @@ import {
     RessursStatus,
 } from '@navikt/familie-typer';
 
+import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import Miljø, { basePath } from '../Miljø';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
-import { ISøkerRespons } from '../typer/person';
+import { ESivilstand, ISøkerRespons } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/barn';
@@ -75,6 +76,13 @@ const [AppProvider, useApp] = createUseContext(() => {
                             adresse: ressurs.data.adresse,
                             sivilstand: ressurs.data.sivilstand,
                             adressebeskyttelse: ressurs.data.adressebeskyttelse,
+                            harSamboerNå: {
+                                ...søknad.søker.harSamboerNå,
+                                id:
+                                    ressurs.data.sivilstand.type === ESivilstand.GIFT
+                                        ? DinLivssituasjonSpørsmålId.harSamboerNåGift
+                                        : DinLivssituasjonSpørsmålId.harSamboerNå,
+                            },
                         },
                     });
             });
@@ -139,18 +147,26 @@ const [AppProvider, useApp] = createUseContext(() => {
     };
 
     const nullstillSøknadsobjekt = () => {
+        const søker = søknad.søker;
         settSøknad({
             ...initialStateSøknad,
             søknadstype: søknad.søknadstype,
             søker: {
                 ...initialStateSøknad.søker,
-                ident: søknad.søker.ident,
-                navn: søknad.søker.navn,
-                barn: søknad.søker.barn,
-                statsborgerskap: søknad.søker.statsborgerskap,
-                adresse: søknad.søker.adresse,
-                sivilstand: søknad.søker.sivilstand,
-                adressebeskyttelse: søknad.søker.adressebeskyttelse,
+                ident: søker.ident,
+                navn: søker.navn,
+                barn: søker.barn,
+                statsborgerskap: søker.statsborgerskap,
+                adresse: søker.adresse,
+                sivilstand: søker.sivilstand,
+                adressebeskyttelse: søker.adressebeskyttelse,
+                harSamboerNå: {
+                    ...søker.harSamboerNå,
+                    id:
+                        søker.sivilstand.type === ESivilstand.GIFT
+                            ? DinLivssituasjonSpørsmålId.harSamboerNåGift
+                            : DinLivssituasjonSpørsmålId.harSamboerNå,
+                },
             },
         });
     };

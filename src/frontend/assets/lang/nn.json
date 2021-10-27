@@ -489,6 +489,8 @@
   "omdeg.samboer.ident.ikkebesvart.feilmelding": "Du må oppgje sambuarens fødselsnummer for å gå vidare",
   "omdeg.samboerNavn.feilmelding": "Du må oppgje sambuarens namn for å gå vidare",
   "omdeg.samboernå.feilmelding": "Du må oppgje om du har sambuar no for å gå vidare",
+  "omdeg.samboernå.gift.feilmelding": "Du må oppgje om du har ein anna sambuar enn din ektefelle for å gå vidare",
+  "omdeg.samboernå.gift.spm": "Har du ein anna sambuar enn din ektefelle no?",
   "omdeg.samboernå.spm": "Har du sambuar no?",
   "omdeg.separertellerskilt.feilmelding": "Du må oppgje om du er separert, skilt eller enke/enkemann utan at dette er registrert i folkeregisteret i Noreg for å gå vidare",
   "omdeg.separertellerskilt.info": "Du må legge ved dokumentasjon som stadfestar at du er separert, skilt eller eller enke/enkemann seinare i søknaden.",
