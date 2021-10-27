@@ -11,6 +11,7 @@ import { konfigurerIndex, konfigurerIndexFallback } from './routes';
 import { konfigurerApi } from './routes/api';
 import { konfigurerFeatureTogglesEndpoint } from './routes/feature-toggles';
 import { konfigurerBildeProsessering } from './routes/imageprocessor';
+import { konfigurerModellVersjonEndpoint } from './routes/modellversjon';
 import { konfigurerNais } from './routes/nais';
 import { konfigurerStatic } from './routes/static';
 
@@ -32,6 +33,7 @@ konfigurerNais(app);
 konfigurerApi(app);
 konfigurerBildeProsessering(app);
 konfigurerFeatureTogglesEndpoint(app);
+konfigurerModellVersjonEndpoint(app);
 
 konfigurerIndexFallback(app);
 

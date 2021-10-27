@@ -3,9 +3,14 @@ import { useEffect, useState } from 'react';
 import createUseContext from 'constate';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
-import { byggHenterRessurs, byggTomRessurs, RessursStatus } from '@navikt/familie-typer';
+import {
+    byggHenterRessurs,
+    byggTomRessurs,
+    hentDataFraRessurs,
+    RessursStatus,
+} from '@navikt/familie-typer';
 
-import Miljø from '../Miljø';
+import Miljø, { basePath } from '../Miljø';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
@@ -29,7 +34,21 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
     const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
     const [nåværendeRoute, settNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
-    const { soknadApi } = Miljø();
+    const { soknadApi, modellVersjon } = Miljø();
+    const [sisteModellVersjon, settSisteModellVersjon] = useState(modellVersjon);
+    const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
+
+    useEffect(() => {
+        if (nåværendeRoute === RouteEnum.Kvittering) {
+            return;
+        } else {
+            axiosRequest<number, void>({
+                url: `${basePath}modellversjon`,
+            }).then(data =>
+                settSisteModellVersjon(prevState => hentDataFraRessurs(data) ?? prevState)
+            );
+        }
+    }, [nåværendeRoute]);
 
     useEffect(() => {
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
@@ -190,6 +209,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetOK,
         systemetLaster,
         mellomlagre,
+        modellVersjonOppdatert,
+        settSisteModellVersjon,
     };
 });
 
