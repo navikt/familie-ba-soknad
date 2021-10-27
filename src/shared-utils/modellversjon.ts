@@ -1,6 +1,6 @@
 import { ApiRessurs, Ressurs, RessursStatus } from '@navikt/familie-typer';
 
-export const modellVersjon = 16;
+export const modellVersjon = 15;
 
 export const modellVersjonHeaderName = 'Soknad-Modell-Versjon';
 
@@ -18,9 +18,5 @@ export const erModellMismatchResponsRessurs = (
         return false;
     }
 
-    return (
-        !!ressurs.melding &&
-        ressurs.melding === modellMismatchMelding &&
-        ressurs.status === RessursStatus.FEILET
-    );
+    return ressurs.melding === modellMismatchMelding && ressurs.status === RessursStatus.FEILET;
 };
