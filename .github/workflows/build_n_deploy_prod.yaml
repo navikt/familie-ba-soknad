@@ -6,8 +6,8 @@ on:
       - 'master'
 
 env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-soknad:${{ github.sha }}
-  IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}/familie-ba-soknad:latest
+  IMAGE: ghcr.io/${{ github.repository }}/familie-ba-soknad:${{ github.sha }}
+  IMAGE_LATEST: ghcr.io/${{ github.repository }}/familie-ba-soknad:latest
   BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
 
 jobs:
