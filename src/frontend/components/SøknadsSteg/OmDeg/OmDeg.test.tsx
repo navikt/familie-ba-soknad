@@ -16,7 +16,7 @@ import {
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import OmDeg from './OmDeg';
-import { omDegSpørsmålSpråkId } from './spørsmål';
+import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 
 jest.mock('nav-frontend-alertstriper', () => ({ children }) => (
     <div data-testid="alertstripe">{children}</div>
@@ -68,8 +68,7 @@ describe('OmDeg', () => {
     test('Skal rendre alertstripe i OmDeg', async () => {
         spyOnUseApp({ søker: mockDeep<ISøker>({ statsborgerskap: [] }) });
         const { findAllByTestId } = render(<TestKomponentMedEkteTekster />);
-        // Den første er en "under-utvikling"-stripe
-        expect(await findAllByTestId(/alertstripe/)).toHaveLength(2);
+        expect(await findAllByTestId(/alertstripe/)).toHaveLength(1);
     });
 
     test('Viser adressesperre-melding', async () => {
@@ -110,6 +109,9 @@ describe('OmDeg', () => {
             søker: mockDeep<ISøker>({
                 adressebeskyttelse: false,
                 statsborgerskap: [{ landkode: 'NOR' }],
+                borPåRegistrertAdresse: { id: OmDegSpørsmålId.borPåRegistrertAdresse, svar: null },
+                oppholderSegINorge: { id: OmDegSpørsmålId.oppholderSegINorge, svar: null },
+                værtINorgeITolvMåneder: { id: OmDegSpørsmålId.værtINorgeITolvMåneder, svar: null },
             }),
         });
         const { queryByText, findByText } = render(<TestKomponent />);

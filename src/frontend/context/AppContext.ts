@@ -21,6 +21,7 @@ import { mapBarnResponsTilBarn } from '../utils/barn';
 import { preferredAxios } from './axios';
 import { useInnloggetContext } from './InnloggetContext';
 import { useLastRessurserContext } from './LastRessurserContext';
+import { hentSluttbrukerFraPdl } from './pdl';
 import { RouteEnum } from './RoutesContext';
 
 const [AppProvider, useApp] = createUseContext(() => {
@@ -28,14 +29,14 @@ const [AppProvider, useApp] = createUseContext(() => {
     const { axiosRequest, lasterRessurser } = useLastRessurserContext();
     const { innloggetStatus } = useInnloggetContext();
 
-    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>()); // legacy
+    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>()); // TODO: legacy
     const [søknad, settSøknad] = useState<ISøknad>(initialStateSøknad);
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
     const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
     const [nåværendeRoute, settNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
-    const { soknadApi, modellVersjon } = Miljø();
+    const { modellVersjon } = Miljø();
     const [sisteModellVersjon, settSisteModellVersjon] = useState(modellVersjon);
     const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
 
@@ -55,12 +56,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 
-            axiosRequest<ISøkerRespons, void>({
-                url: `${soknadApi}/personopplysning`,
-                method: 'POST',
-                withCredentials: true,
-                påvirkerSystemLaster: true,
-            }).then(ressurs => {
+            hentSluttbrukerFraPdl(axiosRequest).then(ressurs => {
                 settSluttbruker(ressurs);
 
                 hentOgSettMellomlagretData();
