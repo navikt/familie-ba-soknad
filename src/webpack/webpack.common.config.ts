@@ -54,9 +54,9 @@ const commonConfig: webpack.Configuration = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.less'],
         fallback: {
-            crypto: require.resolve('crypto-browserify'),
-            stream: require.resolve('stream-browserify'),
-            buffer: require.resolve('buffer'),
+            crypto: path.resolve(process.cwd(), 'node_modules', 'crypto-browserify'),
+            stream: path.resolve(process.cwd(), 'node_modules', 'stream-browserify'),
+            buffer: path.resolve(process.cwd(), 'node_modules', 'buffer'),
         },
         alias: {
             'styled-components': path.resolve(process.cwd(), 'node_modules', 'styled-components'),
