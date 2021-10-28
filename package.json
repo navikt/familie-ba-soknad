@@ -132,7 +132,7 @@
     "@sentry/react": "^6.13.3",
     "@sentry/webpack-plugin": "^1.17.3",
     "@testing-library/dom": "^8.7.1",
-    "@testing-library/jest-dom": "^5.11.1",
+    "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.3",
     "@testing-library/react-hooks": "^5.1.1",
     "@testing-library/user-event": "^12.0.11",
