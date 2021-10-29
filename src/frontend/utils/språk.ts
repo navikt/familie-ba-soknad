@@ -54,7 +54,7 @@ export const dokumentasjonsbehovTilSpråkId = (dokumentasjonsbehov: Dokumentasjo
         case Dokumentasjonsbehov.MEKLINGSATTEST:
             return 'dokumentasjon.meklingsattest.vedleggtittel';
         case Dokumentasjonsbehov.SEPARERT_SKILT_ENKE:
-            return 'dokumentasjon.bekreftelseborsammen.vedleggtittel';
+            return 'dokumentasjon.separasjonskilsmissedødsfall.vedleggtittel';
         case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:
             return 'dokumentasjon.oppholdstillatelse.vedleggtittel';
     }
