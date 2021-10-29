@@ -12,6 +12,7 @@ import {
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import DinLivssituasjon from './DinLivssituasjon';
+import { DinLivssituasjonSpørsmålId } from './spørsmål';
 
 const søknad = mockDeep<ISøknad>({
     søknadstype: ESøknadstype.UTVIDET,
@@ -22,6 +23,7 @@ const søknad = mockDeep<ISøknad>({
     ],
     søker: {
         nåværendeSamboer: null,
+        harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: null },
     },
 });
 

@@ -115,7 +115,9 @@ export const useDinLivssituasjon = (): {
     /*---- NÅVÆRENDE SAMBOER ----*/
     const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt(
         søker.harSamboerNå,
-        'omdeg.samboernå.feilmelding'
+        søker.sivilstand.type === ESivilstand.GIFT
+            ? 'omdeg.samboernå.gift.feilmelding'
+            : 'omdeg.samboernå.feilmelding'
     );
 
     const nåværendeSamboerNavn = useInputFelt(

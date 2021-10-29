@@ -489,6 +489,8 @@
   "omdeg.samboer.ident.ikkebesvart.feilmelding": "You must provide your cohabitating partners Norwegian national identity number in order to be able to proceed",
   "omdeg.samboerNavn.feilmelding": "You must provide your cohabiting partners name in order to be able to proceed",
   "omdeg.samboernå.feilmelding": "You must state whether you are currently living with a partner in order to be able to proceed",
+  "omdeg.samboernå.gift.feilmelding": "You must state whether you are currently living with a cohabiting partner that is not your spouse in order to be able to proceed",
+  "omdeg.samboernå.gift.spm": "Are you currently living with a cohabiting partner that is not your spouse?",
   "omdeg.samboernå.spm": "Are you currently living with a partner?",
   "omdeg.separertellerskilt.feilmelding": "You must state whether you are separated or divorced without this having been registered in the Norwegian National Registry (<bokmål>folkeregisteret</bokmål>) in order to be able to proceed",
   "omdeg.separertellerskilt.info": "You must submit documentation that confirms that you are separated, divorced or a widow(er) later on in the application.",
