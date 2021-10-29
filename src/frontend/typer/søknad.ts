@@ -11,9 +11,13 @@ import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spør
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { VelgBarnSpørsmålId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
-import { dokumentasjonsbehovTilSpråkId } from '../utils/språk';
 import { INøkkelPar } from './common';
-import { Dokumentasjonsbehov, IDokumentasjon, ISøknadKontraktDokumentasjon } from './dokumentasjon';
+import {
+    Dokumentasjonsbehov,
+    IDokumentasjon,
+    ISøknadKontraktDokumentasjon,
+    dokumentasjonsbehovTilSpråkId,
+} from './dokumentasjon';
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, ISøker } from './person';
 
 export enum ESøknadstype {
