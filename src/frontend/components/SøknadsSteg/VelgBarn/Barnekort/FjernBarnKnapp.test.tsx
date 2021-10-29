@@ -2,8 +2,9 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 
-import { IBarn } from '../../../../typer/person';
+import { ESivilstand, IBarn } from '../../../../typer/person';
 import {
+    mekkGyldigSøker,
     mockEøs,
     mockHistory,
     silenceConsoleErrors,
@@ -92,7 +93,9 @@ describe('FjernBarnKnapp', () => {
             barnRegistrertManuelt: [],
             erEøs: false,
             søker: {
+                ...mekkGyldigSøker(),
                 barn: [],
+                sivilstand: { type: ESivilstand.UGIFT },
             },
         });
     });

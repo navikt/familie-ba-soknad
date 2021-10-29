@@ -31,7 +31,7 @@ const DinLivssituasjon: React.FC = () => {
         fjernTidligereSamboer,
     } = useDinLivssituasjon();
 
-    const { erUtvidet } = useApp();
+    const { erUtvidet, søknad } = useApp();
     const { erEøsLand } = useEøs();
 
     return (
@@ -106,9 +106,7 @@ const DinLivssituasjon: React.FC = () => {
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.harSamboerNå}
-                    spørsmålTekstId={
-                        dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.harSamboerNå]
-                    }
+                    spørsmålTekstId={dinLivssituasjonSpørsmålSpråkId[søknad.søker.harSamboerNå.id]}
                 />
 
                 {skjema.felter.harSamboerNå.verdi === ESvar.JA && (

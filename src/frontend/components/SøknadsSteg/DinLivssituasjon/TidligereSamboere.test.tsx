@@ -3,11 +3,17 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype, ISøknad } from '../../../typer/søknad';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import DinLivssituasjon from './DinLivssituasjon';
-import { samboerSpråkIder, TidligereSamboerSpørsmålId } from './spørsmål';
+import {
+    DinLivssituasjonSpørsmålId,
+    samboerSpråkIder,
+    TidligereSamboerSpørsmålId,
+} from './spørsmål';
 
 jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),
@@ -34,6 +40,10 @@ const søknad = mockDeep<ISøknad>({
             ident: { svar: '' },
             fødselsdato: { svar: '' },
             samboerFraDato: { svar: '' },
+        },
+        harSamboerNå: {
+            id: DinLivssituasjonSpørsmålId.harSamboerNå,
+            svar: ESvar.JA,
         },
         utvidet: {
             spørsmål: {

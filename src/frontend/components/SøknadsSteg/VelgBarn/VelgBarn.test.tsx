@@ -4,14 +4,16 @@ import { act, fireEvent, render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { DeepPartial } from 'ts-essentials';
 
-import { byggSuksessRessurs } from '@navikt/familie-typer';
+import { byggSuksessRessurs, RessursStatus } from '@navikt/familie-typer';
 import fnrvalidator from '@navikt/fnrvalidator';
 
 import * as eøsContext from '../../../context/EøsContext';
-import { IBarn, IBarnRespons } from '../../../typer/person';
+import * as pdlRequest from '../../../context/pdl';
+import { ESivilstand, IBarn, IBarnRespons, ISøkerRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import * as eøsUtils from '../../../utils/eøs';
 import {
+    mekkGyldigSøker,
     mockHistory,
     silenceConsoleErrors,
     spyOnUseApp,
@@ -42,6 +44,12 @@ describe('VelgBarn', () => {
         jest.spyOn(eøsUtils, 'landSvarSomKanTriggeEøs').mockReturnValue([]);
         jest.spyOn(eøsUtils, 'jaNeiSvarTriggerEøs').mockReturnValue(false);
         jest.spyOn(eøsContext, 'useEøs').mockImplementation(jest.fn());
+        jest.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
+            status: RessursStatus.SUKSESS,
+            data: mockDeep<ISøkerRespons>({
+                sivilstand: { type: ESivilstand.UGIFT },
+            }),
+        }));
     });
 
     test('Kan fjerne manuelt registrerte barn', () => {
@@ -75,7 +83,10 @@ describe('VelgBarn', () => {
         expect(settSøknad).toHaveBeenNthCalledWith(1, {
             barnRegistrertManuelt: [],
             barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarn],
-            søker: { barn: [fraPdl] },
+            søker: {
+                ...mekkGyldigSøker(),
+                barn: [fraPdl],
+            },
             dokumentasjon: [],
             erEøs: false,
         });
@@ -84,7 +95,10 @@ describe('VelgBarn', () => {
         expect(settSøknad).toHaveBeenNthCalledWith(2, {
             barnRegistrertManuelt: [],
             barnInkludertISøknaden: [fraPdlSomIBarn],
-            søker: { barn: [fraPdl] },
+            søker: {
+                ...mekkGyldigSøker(),
+                barn: [fraPdl],
+            },
             dokumentasjon: [],
             erEøs: false,
         });

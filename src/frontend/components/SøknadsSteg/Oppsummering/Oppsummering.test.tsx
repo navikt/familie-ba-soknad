@@ -4,7 +4,6 @@ import { render, waitFor } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
-import { AlternativtSvarForInput } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import {
     mekkGyldigSøknad,
@@ -14,7 +13,6 @@ import {
     TestProvidere,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
-import { SamboerSpørsmålId } from '../DinLivssituasjon/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmDegSpørsmålId } from '../OmDeg/spørsmål';
 import Oppsummering from './Oppsummering';
@@ -45,24 +43,6 @@ describe('Oppsummering', () => {
             søker: {
                 statsborgerskap: [{ landkode: 'NOR' }],
                 oppholderSegINorge: { id: OmDegSpørsmålId.oppholderSegINorge, svar: null },
-                nåværendeSamboer: {
-                    navn: {
-                        id: SamboerSpørsmålId.nåværendeSamboerNavn,
-                        svar: 'Initial verdi for samboer sitt navn',
-                    },
-                    ident: {
-                        id: SamboerSpørsmålId.nåværendeSamboerFnr,
-                        svar: AlternativtSvarForInput.UKJENT,
-                    },
-                    fødselsdato: {
-                        id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-                        svar: AlternativtSvarForInput.UKJENT,
-                    },
-                    samboerFraDato: {
-                        id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-                        svar: '01.01.2000',
-                    },
-                },
             },
             barnInkludertISøknaden: [
                 {
