@@ -157,11 +157,11 @@ const [AppProvider, useApp] = createUseContext(() => {
                 sivilstand: søker.sivilstand,
                 adressebeskyttelse: søker.adressebeskyttelse,
                 harSamboerNå: {
-                    ...søker.harSamboerNå,
                     id:
                         søker.sivilstand.type === ESivilstand.GIFT
                             ? DinLivssituasjonSpørsmålId.harSamboerNåGift
                             : DinLivssituasjonSpørsmålId.harSamboerNå,
+                    svar: null,
                 },
             },
         });
