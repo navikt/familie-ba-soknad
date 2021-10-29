@@ -56,7 +56,7 @@ const SamboerOpplysninger: React.FC<{
                     <Spørsmål språkId={samboerSpråkIder.fødselsdato} />
                     <Normaltekst>
                         {svarSomKanVæreUkjent(
-                            samboer.fødselsdato.svar,
+                            formaterDato(samboer.fødselsdato.svar),
                             samboerSpråkIder.fødselsdatoUkjent
                         )}
                     </Normaltekst>
