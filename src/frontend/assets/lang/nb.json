@@ -489,6 +489,8 @@
   "omdeg.samboer.ident.ikkebesvart.feilmelding": "Du må oppgi samboerens fødselsnummer for å gå videre",
   "omdeg.samboerNavn.feilmelding": "Du må oppgi samboerens navn for å gå videre",
   "omdeg.samboernå.feilmelding": "Du må oppgi om du har samboer nå for å gå videre",
+  "omdeg.samboernå.gift.feilmelding": "Du må oppgi om du har en annen samboer enn din ektefelle for å gå videre",
+  "omdeg.samboernå.gift.spm": "Har du en annen samboer enn din ektefelle nå?",
   "omdeg.samboernå.spm": "Har du samboer nå?",
   "omdeg.separertellerskilt.feilmelding": "Du må oppgi om du er separert, skilt eller enke/enkemann uten at dette er registrert i folkeregisteret i Norge for å gå videre",
   "omdeg.separertellerskilt.info": "Du må legge ved dokumentasjon som bekrefter at du er separert, skilt eller enke/enkemann senere i søknaden.",

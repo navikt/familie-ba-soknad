@@ -25,14 +25,26 @@ import * as eøsContext from '../context/EøsContext';
 import { EøsProvider } from '../context/EøsContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
+import * as pdlRequest from '../context/pdl';
 import { RoutesProvider } from '../context/RoutesContext';
 import { IKvittering } from '../typer/kvittering';
-import { AlternativtSvarForInput, barnDataKeySpørsmål } from '../typer/person';
+import {
+    AlternativtSvarForInput,
+    barnDataKeySpørsmål,
+    ESivilstand,
+    ISøkerRespons,
+} from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad, Årsak } from '../typer/søknad';
 import { genererInitialBarnMedISøknad } from './barn';
 import * as eøsUtils from './eøs';
 
+jest.mock('../context/pdl');
+
 export const spyOnUseApp = søknad => {
+    jest.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
+        status: RessursStatus.SUKSESS,
+        data: mockDeep<ISøkerRespons>({ sivilstand: { type: ESivilstand.UGIFT }, ...søknad.søker }),
+    }));
     const settSøknad = jest.fn();
     const erPåKvitteringsside = jest.fn().mockImplementation(() => false);
     const erStegUtfyltFrafør = jest.fn().mockImplementation(() => true);
@@ -54,6 +66,10 @@ export const spyOnUseApp = søknad => {
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
     søknad.erEøs = søknad.erEøs ?? false;
+    søknad.søker = {
+        ...mekkGyldigSøker(),
+        ...søknad.søker,
+    };
 
     const useAppMock = jest.fn().mockReturnValue({
         søknad,
@@ -167,54 +183,59 @@ export const mockHistory = (
     return history.__setHistory(newHistory);
 };
 
+export const mekkGyldigSøker = () => {
+    return {
+        ...initialStateSøknad.søker,
+        sivilstand: { type: ESivilstand.UGIFT },
+        harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
+        nåværendeSamboer: {
+            navn: { id: SamboerSpørsmålId.nåværendeSamboerNavn, svar: 'Gunnar' },
+            ident: {
+                id: SamboerSpørsmålId.nåværendeSamboerFnr,
+                svar: AlternativtSvarForInput.UKJENT,
+            },
+            fødselsdato: {
+                id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
+                svar: AlternativtSvarForInput.UKJENT,
+            },
+            samboerFraDato: {
+                id: SamboerSpørsmålId.nåværendeSamboerFraDato,
+                svar: '2021-08-11',
+            },
+        },
+        borPåRegistrertAdresse: {
+            id: OmDegSpørsmålId.borPåRegistrertAdresse,
+            svar: ESvar.JA,
+        },
+        oppholderSegINorge: {
+            id: OmDegSpørsmålId.oppholderSegINorge,
+            svar: ESvar.JA,
+        },
+        værtINorgeITolvMåneder: {
+            id: OmDegSpørsmålId.værtINorgeITolvMåneder,
+            svar: ESvar.JA,
+        },
+        erAsylsøker: {
+            id: DinLivssituasjonSpørsmålId.erAsylsøker,
+            svar: ESvar.NEI,
+        },
+        jobberPåBåt: {
+            id: DinLivssituasjonSpørsmålId.jobberPåBåt,
+            svar: ESvar.NEI,
+        },
+        mottarUtenlandspensjon: {
+            id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
+            svar: ESvar.NEI,
+        },
+    };
+};
+
 export const mekkGyldigSøknad = (): ISøknad => {
     return {
         ...initialStateSøknad,
         søknadstype: ESøknadstype.ORDINÆR,
         lestOgForståttBekreftelse: true,
-        søker: {
-            ...initialStateSøknad.søker,
-            harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
-            nåværendeSamboer: {
-                navn: { id: SamboerSpørsmålId.nåværendeSamboerNavn, svar: 'Gunnar' },
-                ident: {
-                    id: SamboerSpørsmålId.nåværendeSamboerFnr,
-                    svar: AlternativtSvarForInput.UKJENT,
-                },
-                fødselsdato: {
-                    id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-                    svar: AlternativtSvarForInput.UKJENT,
-                },
-                samboerFraDato: {
-                    id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-                    svar: '2021-08-11',
-                },
-            },
-            borPåRegistrertAdresse: {
-                id: OmDegSpørsmålId.borPåRegistrertAdresse,
-                svar: ESvar.JA,
-            },
-            oppholderSegINorge: {
-                id: OmDegSpørsmålId.oppholderSegINorge,
-                svar: ESvar.JA,
-            },
-            værtINorgeITolvMåneder: {
-                id: OmDegSpørsmålId.værtINorgeITolvMåneder,
-                svar: ESvar.JA,
-            },
-            erAsylsøker: {
-                id: DinLivssituasjonSpørsmålId.erAsylsøker,
-                svar: ESvar.NEI,
-            },
-            jobberPåBåt: {
-                id: DinLivssituasjonSpørsmålId.jobberPåBåt,
-                svar: ESvar.NEI,
-            },
-            mottarUtenlandspensjon: {
-                id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
-                svar: ESvar.NEI,
-            },
-        },
+        søker: mekkGyldigSøker(),
         erNoenAvBarnaFosterbarn: {
             id: OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
             svar: ESvar.NEI,

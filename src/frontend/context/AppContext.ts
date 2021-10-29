@@ -10,16 +10,18 @@ import {
     RessursStatus,
 } from '@navikt/familie-typer';
 
+import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import Miljø, { basePath } from '../Miljø';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
-import { ISøkerRespons } from '../typer/person';
+import { ESivilstand, ISøkerRespons } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/barn';
 import { preferredAxios } from './axios';
 import { useInnloggetContext } from './InnloggetContext';
 import { useLastRessurserContext } from './LastRessurserContext';
+import { hentSluttbrukerFraPdl } from './pdl';
 import { RouteEnum } from './RoutesContext';
 
 const [AppProvider, useApp] = createUseContext(() => {
@@ -27,14 +29,14 @@ const [AppProvider, useApp] = createUseContext(() => {
     const { axiosRequest, lasterRessurser } = useLastRessurserContext();
     const { innloggetStatus } = useInnloggetContext();
 
-    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>()); // legacy
+    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>()); // TODO: legacy
     const [søknad, settSøknad] = useState<ISøknad>(initialStateSøknad);
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
     const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
     const [nåværendeRoute, settNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
-    const { soknadApi, modellVersjon } = Miljø();
+    const { modellVersjon } = Miljø();
     const [sisteModellVersjon, settSisteModellVersjon] = useState(modellVersjon);
     const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
 
@@ -54,12 +56,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 
-            axiosRequest<ISøkerRespons, void>({
-                url: `${soknadApi}/personopplysning`,
-                method: 'POST',
-                withCredentials: true,
-                påvirkerSystemLaster: true,
-            }).then(ressurs => {
+            hentSluttbrukerFraPdl(axiosRequest).then(ressurs => {
                 settSluttbruker(ressurs);
 
                 hentOgSettMellomlagretData();
@@ -75,6 +72,13 @@ const [AppProvider, useApp] = createUseContext(() => {
                             adresse: ressurs.data.adresse,
                             sivilstand: ressurs.data.sivilstand,
                             adressebeskyttelse: ressurs.data.adressebeskyttelse,
+                            harSamboerNå: {
+                                ...søknad.søker.harSamboerNå,
+                                id:
+                                    ressurs.data.sivilstand.type === ESivilstand.GIFT
+                                        ? DinLivssituasjonSpørsmålId.harSamboerNåGift
+                                        : DinLivssituasjonSpørsmålId.harSamboerNå,
+                            },
                         },
                     });
             });
@@ -139,18 +143,26 @@ const [AppProvider, useApp] = createUseContext(() => {
     };
 
     const nullstillSøknadsobjekt = () => {
+        const søker = søknad.søker;
         settSøknad({
             ...initialStateSøknad,
             søknadstype: søknad.søknadstype,
             søker: {
                 ...initialStateSøknad.søker,
-                ident: søknad.søker.ident,
-                navn: søknad.søker.navn,
-                barn: søknad.søker.barn,
-                statsborgerskap: søknad.søker.statsborgerskap,
-                adresse: søknad.søker.adresse,
-                sivilstand: søknad.søker.sivilstand,
-                adressebeskyttelse: søknad.søker.adressebeskyttelse,
+                ident: søker.ident,
+                navn: søker.navn,
+                barn: søker.barn,
+                statsborgerskap: søker.statsborgerskap,
+                adresse: søker.adresse,
+                sivilstand: søker.sivilstand,
+                adressebeskyttelse: søker.adressebeskyttelse,
+                harSamboerNå: {
+                    ...søker.harSamboerNå,
+                    id:
+                        søker.sivilstand.type === ESivilstand.GIFT
+                            ? DinLivssituasjonSpørsmålId.harSamboerNåGift
+                            : DinLivssituasjonSpørsmålId.harSamboerNå,
+                },
             },
         });
     };
