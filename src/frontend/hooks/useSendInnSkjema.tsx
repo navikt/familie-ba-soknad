@@ -189,7 +189,7 @@ export const useSendInnSkjema = (): {
                 barn: barnetsNavnValue(barn, intl),
             });
 
-        const registertAdresseVerdi = (): ERegistrertBostedType => {
+        const registertBostedVerdi = (): ERegistrertBostedType => {
             /**
              * 4 caser:
              *
@@ -223,9 +223,9 @@ export const useSendInnSkjema = (): {
                 'pdf.barn.ident.label',
                 ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt')
             ),
-            borMedSøker: søknadsfeltBarn(
+            registrertBostedType: søknadsfeltBarn(
                 'hvilkebarn.barn.bosted',
-                sammeVerdiAlleSpråk(registertAdresseVerdi())
+                sammeVerdiAlleSpråk(registertBostedVerdi())
             ),
             alder: søknadsfeltBarn(
                 'pdf.barn.alder.label',

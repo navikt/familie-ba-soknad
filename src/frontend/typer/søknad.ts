@@ -118,7 +118,7 @@ export enum ERegistrertBostedType {
 export interface ISøknadKontraktBarn {
     ident: ISøknadsfelt<string>;
     navn: ISøknadsfelt<string>;
-    borMedSøker: ISøknadsfelt<ERegistrertBostedType>;
+    registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
 }
