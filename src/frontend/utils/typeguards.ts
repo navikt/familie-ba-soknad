@@ -64,7 +64,14 @@ export const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontrakt
     );
 
 export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadKontraktBarn =>
-    !!(input && input.ident && input.navn && input.borMedSøker && input.alder && input.spørsmål);
+    !!(
+        input &&
+        input.ident &&
+        input.navn &&
+        input.registrertBostedType &&
+        input.alder &&
+        input.spørsmål
+    );
 
 export const erGyldigeBarnUtvidet = (input): input is ISøknadKontraktBarn[] =>
     input &&
