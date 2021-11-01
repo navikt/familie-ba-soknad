@@ -12,7 +12,12 @@ import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { VelgBarnSpørsmålId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { INøkkelPar } from './common';
-import { Dokumentasjonsbehov, IDokumentasjon, ISøknadKontraktDokumentasjon } from './dokumentasjon';
+import {
+    Dokumentasjonsbehov,
+    IDokumentasjon,
+    ISøknadKontraktDokumentasjon,
+    dokumentasjonsbehovTilSpråkId,
+} from './dokumentasjon';
 import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, ISøker } from './person';
 
 export enum ESøknadstype {
@@ -126,47 +131,47 @@ export const initialStateSøknad: ISøknad = {
     dokumentasjon: [
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
-            'dokumentasjon.deltbosted.vedleggtittel',
+            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.AVTALE_DELT_BOSTED),
             'dokumentasjon.deltbosted.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
-            'dokumentasjon.oppholdstillatelse.vedleggtittel',
+            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE),
             'dokumentasjon.oppholdstillatelse.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ADOPSJON_DATO,
-            'dokumentasjon.adopsjon.vedleggtittel',
+            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.ADOPSJON_DATO),
             'dokumentasjon.adopsjon.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
-            'dokumentasjon.bekreftelsebarnevernet.vedleggtittel',
+            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN),
             'dokumentasjon.bekreftelsebarnevernet.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
-            'dokumentasjon.bekreftelseborsammen.vedleggtittel',
+            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.BOR_FAST_MED_SØKER),
             'dokumentasjon.bekreftelseborsammen.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
-            'dokumentasjon.separasjonskilsmissedødsfall.vedleggtittel',
+            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.SEPARERT_SKILT_ENKE),
             'dokumentasjon.separasjonskilsmissedødsfall.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.MEKLINGSATTEST,
-            'dokumentasjon.meklingsattest.vedleggtittel',
+            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.MEKLINGSATTEST),
             'dokumentasjon.meklingsattest.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.EØS_SKJEMA,
-            'dokumentasjon.tilleggsskjema.vedleggtittel',
+            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.EØS_SKJEMA),
             'dokumentasjon.tilleggsskjema.informasjon'
         ),
         genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
-            'dokumentasjon.annendokumentasjon.vedleggtittel',
+            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.ANNEN_DOKUMENTASJON),
             hentSøknadstype() === ESøknadstype.UTVIDET
                 ? 'dokumentasjon.annendokumentasjon.utvidet.informasjon'
                 : null

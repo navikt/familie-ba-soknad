@@ -27,6 +27,7 @@ import {
     ISøknadKontraktDokumentasjon,
     ISøknadKontraktVedlegg,
     IVedlegg,
+    dokumentasjonsbehovTilSpråkId,
 } from '../typer/dokumentasjon';
 import { IKvittering } from '../typer/kvittering';
 import {
@@ -53,7 +54,6 @@ import {
 import { barnetsNavnValue } from '../utils/barn';
 import { erDokumentasjonRelevant } from '../utils/dokumentasjon';
 import {
-    dokumentasjonsbehovTilSpråkId,
     hentSivilstatusSpråkId,
     hentTekster,
     hentUformaterteTekster,
