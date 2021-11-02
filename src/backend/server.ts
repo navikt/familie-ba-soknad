@@ -24,10 +24,11 @@ app.use(compression());
 // Parse cookies for bruk i dekoratør-fetch
 app.use(cookieParser());
 
+konfigurerStatic(app);
+
 // Middleware for unleash kill-switch
 app.use(expressToggleInterceptor);
 
-konfigurerStatic(app);
 konfigurerIndex(app);
 konfigurerNais(app);
 konfigurerApi(app);
