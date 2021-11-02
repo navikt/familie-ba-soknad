@@ -108,10 +108,17 @@ export interface ISøknadKontraktSøker {
     nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null;
 }
 
+export enum ERegistrertBostedType {
+    REGISTRERT_SOKERS_ADRESSE = 'REGISTRERT_SOKERS_ADRESSE',
+    REGISTRERT_ANNEN_ADRESSE = 'REGISTRERT_ANNEN_ADRESSE',
+    IKKE_FYLT_INN = 'IKKE_FYLT_INN',
+    ADRESSESPERRE = 'ADRESSESPERRE',
+}
+
 export interface ISøknadKontraktBarn {
     ident: ISøknadsfelt<string>;
     navn: ISøknadsfelt<string>;
-    borMedSøker: ISøknadsfelt<boolean>;
+    registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
 }

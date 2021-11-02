@@ -40,6 +40,7 @@ import {
     ITidligereSamboer,
 } from '../typer/person';
 import {
+    ERegistrertBostedType,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
     ISøknad,
@@ -188,6 +189,31 @@ export const useSendInnSkjema = (): {
                 barn: barnetsNavnValue(barn, intl),
             });
 
+        const registertBostedVerdi = (): ERegistrertBostedType => {
+            /**
+             * 4 caser:
+             *
+             * 1. Adressesperre
+             * 2. Manuelt registrert, "Ikke fylt inn"
+             * 3. Bor med søker "registrert på søkers adresse"
+             * 4. Bor ikke med søker "registrert på annen adresse"
+             */
+            if (barn.adressebeskyttelse) {
+                return ERegistrertBostedType.ADRESSESPERRE;
+            }
+
+            switch (barn.borMedSøker) {
+                case undefined:
+                    return ERegistrertBostedType.IKKE_FYLT_INN;
+                case true:
+                    return ERegistrertBostedType.REGISTRERT_SOKERS_ADRESSE;
+                case false:
+                    return ERegistrertBostedType.REGISTRERT_ANNEN_ADRESSE;
+                default:
+                    return ERegistrertBostedType.IKKE_FYLT_INN;
+            }
+        };
+
         return {
             navn: søknadsfeltBarn(
                 'pdf.barn.navn.label',
@@ -197,12 +223,9 @@ export const useSendInnSkjema = (): {
                 'pdf.barn.ident.label',
                 ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt')
             ),
-            borMedSøker: søknadsfeltBarn(
-                'pdf.barn.bormedsoker.label',
-                sammeVerdiAlleSpråk(
-                    borMedSøker ??
-                        typetBarnSpørsmål[barnDataKeySpørsmål.borFastMedSøker].svar === ESvar.JA
-                )
+            registrertBostedType: søknadsfeltBarn(
+                'hvilkebarn.barn.bosted',
+                sammeVerdiAlleSpråk(registertBostedVerdi())
             ),
             alder: søknadsfeltBarn(
                 'pdf.barn.alder.label',
@@ -473,6 +496,7 @@ export const useSendInnSkjema = (): {
                 .filter(dok => erDokumentasjonRelevant(dok))
                 .map(dok => dokumentasjonISøknadFormat(dok)),
             teksterUtenomSpørsmål: [
+                'hvilkebarn.barn.bosted.adressesperre',
                 'ombarnet.fosterbarn',
                 'ombarnet.institusjon',
                 'ombarnet.oppholdutland',
@@ -510,7 +534,7 @@ export const useSendInnSkjema = (): {
         const formatert = dataISøknadKontraktFormat(søknad);
 
         const res = await axiosRequest<IKvittering, ISøknadKontrakt>({
-            url: `${soknadApi}/soknad/v4`,
+            url: `${soknadApi}/soknad/v5`,
             method: 'POST',
             withCredentials: true,
             data: formatert,
