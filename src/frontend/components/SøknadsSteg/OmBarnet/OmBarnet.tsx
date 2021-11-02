@@ -76,7 +76,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             )}
 
             {skjema.felter.borFastMedSøker.erSynlig && (
-                <SkjemaFieldset tittelId={'hvilkebarn.barn.bosted'} dynamisk>
+                <SkjemaFieldset tittelId={'ombarnet.bosted'} dynamisk>
                     {barn.andreForelderErDød.svar === ESvar.NEI && (
                         <>
                             <div>
