@@ -19,7 +19,7 @@ const prodConfig: webpack.Configuration = mergeWithRules({
     devtool: 'source-map',
     plugins: [
         new MiniCssExtractPlugin({
-            filename: '[name].css',
+            filename: '[name].[contenthash].css',
         }),
         new CssMinimizerWebpackPlugin(),
         process.env.SENTRY_AUTH_TOKEN
