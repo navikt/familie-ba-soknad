@@ -3,16 +3,13 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
-import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
@@ -21,7 +18,6 @@ const OmDeg: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmdeg();
     const { søknad } = useApp();
     const { søker } = søknad;
-    const { erEøsLand } = useEøs();
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
@@ -70,41 +66,8 @@ const OmDeg: React.FC = () => {
                     </>
                 )}
             </KomponentGruppe>
-            {skjema.felter.oppholderSegINorge.erSynlig && (
+            {skjema.felter.værtINorgeITolvMåneder.erSynlig && (
                 <KomponentGruppe dynamisk>
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.oppholderSegINorge}
-                        spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholderSegINorge]}
-                    />
-
-                    {skjema.felter.oppholdsland.erSynlig && (
-                        <KomponentGruppe inline dynamisk>
-                            <LandDropdown
-                                felt={skjema.felter.oppholdsland}
-                                skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerOppholdsland]}
-                                    />
-                                }
-                            />
-                            {erEøsLand(skjema.felter.oppholdsland.verdi) && (
-                                <VedleggNotisTilleggsskjema
-                                    språkTekstId={'omdeg.opphold-i-norge.eøs-info'}
-                                    dynamisk
-                                />
-                            )}
-                            <Datovelger
-                                avgrensDatoFremITid={true}
-                                felt={skjema.felter.oppholdslandDato}
-                                skjema={skjema}
-                                labelTekstId={
-                                    omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdslandDato]
-                                }
-                            />
-                        </KomponentGruppe>
-                    )}
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.værtINorgeITolvMåneder}

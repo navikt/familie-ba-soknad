@@ -6,7 +6,6 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 import { useApp } from '../../../context/AppContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { dagensDato } from '../../../utils/dato';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -36,7 +35,7 @@ export const useOmdeg = (): {
                 return ok(felt);
             }
 
-            let feilmeldingId;
+            let feilmeldingId: string;
 
             if (felt.verdi === ESvar.NEI) feilmeldingId = 'omdeg.du-kan-ikke-søke.feilmelding';
             else if (!søker.adressebeskyttelse && !søker.adresse)
@@ -47,32 +46,6 @@ export const useOmdeg = (): {
         },
         skalFeltetVises: () => søker.adressebeskyttelse === false,
     });
-
-    const oppholderSegINorge = useJaNeiSpmFelt(
-        søker.oppholderSegINorge,
-        'omdeg.opphold-i-norge.feilmelding',
-        {
-            ...(!søker.adressebeskyttelse && {
-                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
-            }),
-        },
-        borPåRegistrertAdresse.verdi === ESvar.NEI
-    );
-
-    const oppholdsland = useLanddropdownFeltMedJaNeiAvhengighet(
-        søker.oppholdsland,
-        'omdeg.opphold-i-norge.land.feilmelding',
-        ESvar.NEI,
-        oppholderSegINorge
-    );
-
-    const oppholdslandDato = useDatovelgerFeltMedJaNeiAvhengighet(
-        søker.oppholdslandDato,
-        ESvar.NEI,
-        oppholderSegINorge,
-        'omdeg.opphold-i-norge.dato.feilmelding',
-        dagensDato()
-    );
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
         søker.værtINorgeITolvMåneder,
@@ -122,19 +95,6 @@ export const useOmdeg = (): {
                     ...søker.borPåRegistrertAdresse,
                     svar: skjema.felter.borPåRegistrertAdresse.verdi,
                 },
-
-                oppholderSegINorge: {
-                    ...søker.oppholderSegINorge,
-                    svar: skjema.felter.oppholderSegINorge.verdi,
-                },
-                oppholdsland: {
-                    ...søker.oppholdsland,
-                    svar: skjema.felter.oppholdsland.verdi,
-                },
-                oppholdslandDato: {
-                    ...søker.oppholdslandDato,
-                    svar: skjema.felter.oppholdslandDato.verdi,
-                },
                 værtINorgeITolvMåneder: {
                     ...søker.værtINorgeITolvMåneder,
                     svar: skjema.felter.værtINorgeITolvMåneder.verdi,
@@ -157,9 +117,6 @@ export const useOmdeg = (): {
     >({
         felter: {
             borPåRegistrertAdresse,
-            oppholderSegINorge,
-            oppholdsland,
-            oppholdslandDato,
             værtINorgeITolvMåneder,
             komTilNorgeDato,
             planleggerÅBoINorgeTolvMnd,

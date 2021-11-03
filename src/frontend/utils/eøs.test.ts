@@ -13,7 +13,6 @@ describe('eøs', () => {
                 ...søknad,
                 søker: {
                     ...søknad.søker,
-                    oppholdsland: { ...søknad.søker.oppholdsland, svar: 'ALA' },
                     arbeidsland: { ...søknad.søker.arbeidsland, svar: 'ALA' },
                     pensjonsland: { ...søknad.søker.pensjonsland, svar: 'ALA' },
                 },
@@ -41,7 +40,6 @@ describe('eøs', () => {
             };
 
             expect(landSvarSomKanTriggeEøs(mockSøknad)).toEqual([
-                'ALA',
                 'ALA',
                 'ALA',
                 'BEL',

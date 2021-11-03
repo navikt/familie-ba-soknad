@@ -237,18 +237,6 @@ export const initialStateSøknad: ISøknad = {
             id: OmDegSpørsmålId.borPåRegistrertAdresse,
             svar: null,
         },
-        oppholderSegINorge: {
-            id: OmDegSpørsmålId.oppholderSegINorge,
-            svar: null,
-        },
-        oppholdsland: {
-            id: OmDegSpørsmålId.søkerOppholdsland,
-            svar: '',
-        },
-        oppholdslandDato: {
-            id: OmDegSpørsmålId.oppholdslandDato,
-            svar: '',
-        },
         værtINorgeITolvMåneder: {
             id: OmDegSpørsmålId.værtINorgeITolvMåneder,
             svar: null,

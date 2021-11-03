@@ -29,7 +29,7 @@ import * as pdlRequest from '../context/pdl';
 import { RoutesProvider } from '../context/RoutesContext';
 import { AlternativtSvarForInput } from '../typer/common';
 import { IKvittering } from '../typer/kvittering';
-import { barnDataKeySpørsmål, ESivilstand, ISøkerRespons } from '../typer/person';
+import { barnDataKeySpørsmål, ESivilstand, ISøker, ISøkerRespons } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
 import { genererInitialBarnMedISøknad } from './barn';
@@ -180,7 +180,7 @@ export const mockHistory = (
     return history.__setHistory(newHistory);
 };
 
-export const mekkGyldigSøker = () => {
+export const mekkGyldigSøker = (): ISøker => {
     return {
         ...initialStateSøknad.søker,
         sivilstand: { type: ESivilstand.UGIFT },
@@ -202,10 +202,6 @@ export const mekkGyldigSøker = () => {
         },
         borPåRegistrertAdresse: {
             id: OmDegSpørsmålId.borPåRegistrertAdresse,
-            svar: ESvar.JA,
-        },
-        oppholderSegINorge: {
-            id: OmDegSpørsmålId.oppholderSegINorge,
             svar: ESvar.JA,
         },
         værtINorgeITolvMåneder: {

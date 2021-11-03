@@ -93,9 +93,6 @@ export interface IOmBarnetUtvidetFeltTyper {
 
 export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | null;
-    oppholderSegINorge: ESvar | null;
-    oppholdsland: Alpha3Code | '';
-    oppholdslandDato: ISODateString;
     værtINorgeITolvMåneder: ESvar | null;
     komTilNorgeDato: ISODateString;
     planleggerÅBoINorgeTolvMnd: ESvar | null;

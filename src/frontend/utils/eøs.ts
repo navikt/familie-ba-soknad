@@ -3,11 +3,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { IBarnMedISøknad, ISøknad } from '../typer/søknad';
 
 export const landSvarSomKanTriggeEøs = (søknad: ISøknad) => {
-    const fraOmDeg = [
-        søknad.søker.oppholdsland.svar,
-        søknad.søker.arbeidsland.svar,
-        søknad.søker.pensjonsland.svar,
-    ];
+    const fraOmDeg = [søknad.søker.arbeidsland.svar, søknad.søker.pensjonsland.svar];
     const fraOmBarnet = søknad.barnInkludertISøknaden.flatMap((barn: IBarnMedISøknad) => [
         barn.oppholdsland.svar,
         barn.barnetrygdFraEøslandHvilketLand.svar,

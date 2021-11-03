@@ -48,9 +48,6 @@ export interface IBarn extends Omit<IPerson, 'ident'> {
 export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     barn: IBarn[];
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
-    oppholderSegINorge: ISøknadSpørsmål<ESvar | null>;
-    oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;
-    oppholdslandDato: ISøknadSpørsmål<ISODateString>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | null>;
     komTilNorgeDato: ISøknadSpørsmål<ISODateString>;
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | null>;

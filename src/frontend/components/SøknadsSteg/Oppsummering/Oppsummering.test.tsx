@@ -42,7 +42,7 @@ describe('Oppsummering', () => {
             },
             søker: {
                 statsborgerskap: [{ landkode: 'NOR' }],
-                oppholderSegINorge: { id: OmDegSpørsmålId.oppholderSegINorge, svar: null },
+                værtINorgeITolvMåneder: { id: OmDegSpørsmålId.værtINorgeITolvMåneder, svar: null },
             },
             barnInkludertISøknaden: [
                 {

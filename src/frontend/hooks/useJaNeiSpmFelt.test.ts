@@ -124,25 +124,27 @@ describe('erRelevanteAvhengigheterValidert', () => {
 });
 
 describe('useJaNeiSpmFelt', () => {
-    const oppholderSegINorge: ISøknadSpørsmål<ESvar | null> = {
-        id: OmDegSpørsmålId.oppholderSegINorge,
-        svar: null,
-    };
+    it('skjules når avhengighet ikke er validert', () => {
+        const værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | null> = {
+            id: OmDegSpørsmålId.værtINorgeITolvMåneder,
+            svar: null,
+        };
 
-    const borPåRegistrertAdresseFeltMock = mock<Felt<ESvar | null>>({
-        valideringsstatus: Valideringsstatus.IKKE_VALIDERT,
+        const borPåRegistrertAdresseFeltMock = mock<Felt<ESvar | null>>({
+            valideringsstatus: Valideringsstatus.IKKE_VALIDERT,
+        });
+
+        const { result } = renderHook(() =>
+            useJaNeiSpmFelt(
+                værtINorgeITolvMåneder,
+                'test',
+                { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresseFeltMock } },
+                true
+            )
+        );
+
+        expect(result.current.erSynlig).toEqual(false);
+        expect(result.current.valideringsstatus).toEqual(Valideringsstatus.IKKE_VALIDERT);
+        expect(result.current.verdi).toEqual(null);
     });
-
-    const { result } = renderHook(() =>
-        useJaNeiSpmFelt(
-            oppholderSegINorge,
-            'test',
-            { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresseFeltMock } },
-            true
-        )
-    );
-
-    expect(result.current.erSynlig).toEqual(false);
-    expect(result.current.valideringsstatus).toEqual(Valideringsstatus.IKKE_VALIDERT);
-    expect(result.current.verdi).toEqual(null);
 });

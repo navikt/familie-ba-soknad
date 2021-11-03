@@ -88,33 +88,6 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             <StyledOppsummeringsFeltGruppe>
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholderSegINorge]} />
-                    }
-                    søknadsvar={søknad.søker.oppholderSegINorge.svar}
-                />
-                {søknad.søker.oppholdsland.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerOppholdsland]}
-                            />
-                        }
-                        søknadsvar={landkodeTilSpråk(søknad.søker.oppholdsland.svar, valgtLocale)}
-                    />
-                )}
-                {søknad.søker.oppholdslandDato.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdslandDato]}
-                            />
-                        }
-                        søknadsvar={formaterDato(søknad.søker.oppholdslandDato.svar)}
-                    />
-                )}
-
-                <OppsummeringFelt
-                    tittel={
                         <SpråkTekst
                             id={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
                         />
