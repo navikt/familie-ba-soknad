@@ -15,26 +15,12 @@ import {
 
 import { useApp } from '../../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
-import { barnDataKeySpørsmål, IBarn } from '../../../../typer/person';
+import { ESvarMedUbesvart } from '../../../../typer/common';
+import { ILeggTilBarnTyper } from '../../../../typer/skjema';
 import { erBarnRegistrertFraFør, hentUid } from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { ESvarMedUbesvart } from '../../OmDeg/useOmdeg';
 import { VelgBarnSpørsmålId } from '../spørsmål';
-
-// Jeg har ikke funnet dokumentasjon på at man kan passe en enum til Omit, men det funker
-export interface ILeggTilBarnTyper
-    extends Omit<
-        IBarn,
-        'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | 'id' | barnDataKeySpørsmål
-    > {
-    erFødt: ESvarMedUbesvart;
-    fornavn: string;
-    etternavn: string;
-    navnetErUbestemt: ESvar;
-    ident: string;
-    ikkeFåttIdentChecked: ESvar;
-}
 
 export const useLeggTilBarn = (): {
     skjema: ISkjema<ILeggTilBarnTyper, string>;

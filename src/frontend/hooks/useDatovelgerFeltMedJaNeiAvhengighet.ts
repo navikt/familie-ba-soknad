@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, useFelt } from '@navikt/familie-skjema';
 
-import { ISøknadSpørsmål } from '../typer/søknad';
+import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { validerDato } from '../utils/dato';
 
 const useDatovelgerFeltMedJaNeiAvhengighet = (

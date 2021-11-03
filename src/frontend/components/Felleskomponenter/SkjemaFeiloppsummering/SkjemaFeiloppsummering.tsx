@@ -7,8 +7,8 @@ import { Element } from 'nav-frontend-typografi';
 
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
-import { IRoute } from '../../../context/RoutesContext';
 import { IBarn } from '../../../typer/person';
+import { IRoute } from '../../../typer/routes';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { lagRouteFeilRenderer } from './lagRouteFeilRenderer';

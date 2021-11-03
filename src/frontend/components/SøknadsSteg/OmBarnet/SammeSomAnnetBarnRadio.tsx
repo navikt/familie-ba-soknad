@@ -8,10 +8,10 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
-import { IBarnMedISøknad } from '../../../typer/person';
+import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
 
 const StyledRadioPanelGruppe = styled(RadioPanelGruppe)`
     && label:not(:last-child) {

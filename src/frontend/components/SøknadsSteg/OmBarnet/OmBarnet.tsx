@@ -8,7 +8,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { BarnetsId, ESivilstand } from '../../../typer/person';
+import { BarnetsId } from '../../../typer/common';
+import { ESivilstand } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';

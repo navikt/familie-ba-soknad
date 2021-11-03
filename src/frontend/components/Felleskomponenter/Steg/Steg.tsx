@@ -10,11 +10,12 @@ import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
-import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
+import { useRoutes } from '../../../context/RoutesContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { ILokasjon } from '../../../typer/lokasjon';
-import { IBarnMedISøknad } from '../../../typer/person';
+import { RouteEnum } from '../../../typer/routes';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import {
     logKlikkGåVidere,
     logSidevisningBarnetrygd,

@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
-import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
+import { useRoutes } from '../../../context/RoutesContext';
+import { RouteEnum } from '../../../typer/routes';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import DinLivssituasjonOppsummering from './OppsummeringSteg/DinLivssituasjonOppsummering';
@@ -17,10 +18,6 @@ import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
 const StyledNormaltekst = styled(Normaltekst)`
     padding-bottom: 4rem;
-`;
-
-export const StyledOppsummeringsFeltGruppe = styled.div`
-    margin-bottom: 2.5rem;
 `;
 
 const Oppsummering: React.FC = () => {

@@ -4,18 +4,16 @@ import { useIntl } from 'react-intl';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import {
-    AlternativtSvarForInput,
-    barnDataKeySpørsmål,
-    IBarnMedISøknad,
-} from '../../../../../typer/person';
+import { AlternativtSvarForInput } from '../../../../../typer/common';
+import { barnDataKeySpørsmål } from '../../../../../typer/person';
+import { IBarnMedISøknad } from '../../../../../typer/søknad';
 import { barnetsNavnValue } from '../../../../../utils/barn';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
-import { StyledOppsummeringsFeltGruppe } from '../../Oppsummering';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
+import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
 const AndreForelderOppsummering: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
     const intl = useIntl();

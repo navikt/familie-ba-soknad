@@ -3,15 +3,14 @@ import React from 'react';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { DatoMedUkjent } from '../../../typer/person';
+import { DatoMedUkjent } from '../../../typer/common';
+import { IDinLivssituasjonFeltTyper, ITidligereSamboerFeltTyper } from '../../../typer/skjema';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import { samboerSpråkIder } from './spørsmål';
-import { IDinLivssituasjonFeltTyper } from './useDinLivssituasjon';
-import { ITidligereSamboerFeltTyper } from './useTidligereSamboer';
 
 const SamboerSkjema: React.FC<{
     skjema: ISkjema<IDinLivssituasjonFeltTyper | ITidligereSamboerFeltTyper, string>;

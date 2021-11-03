@@ -21,6 +21,7 @@ import {
 } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { useApp } from '../context/AppContext';
 import Miljø from '../Miljø';
+import { AlternativtSvarForInput } from '../typer/common';
 import {
     Dokumentasjonsbehov,
     IDokumentasjon,
@@ -31,27 +32,25 @@ import {
 } from '../typer/dokumentasjon';
 import { IKvittering } from '../typer/kvittering';
 import {
-    AlternativtSvarForInput,
     barnDataKeySpørsmål,
     barnDataKeySpørsmålUtvidet,
     ESivilstand,
-    IBarnMedISøknad,
     ISamboer,
     ITidligereSamboer,
 } from '../typer/person';
+import { ISøknadSpørsmål, SpørsmålId } from '../typer/spørsmål';
 import {
     ERegistrertBostedType,
+    IBarnMedISøknad,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
     ISøknad,
     ISøknadKontrakt,
     ISøknadKontraktBarn,
     ISøknadsfelt,
-    ISøknadSpørsmål,
-    SpørsmålId,
     SpørsmålMap as KontraktpørsmålMap,
-    Årsak,
 } from '../typer/søknad';
+import { Årsak } from '../typer/utvidet';
 import { barnetsNavnValue } from '../utils/barn';
 import { erDokumentasjonRelevant } from '../utils/dokumentasjon';
 import {
@@ -85,7 +84,7 @@ export const useSendInnSkjema = (): {
         return 'ukjent-spørsmål';
     };
 
-    const søknadsfelt = <T extends any>(
+    const søknadsfelt = <T,>(
         labelTekstId: string,
         value: Record<LocaleType, T>,
         labelMessageValues: object = {}
@@ -93,15 +92,13 @@ export const useSendInnSkjema = (): {
         return { label: hentTekster(labelTekstId, labelMessageValues), verdi: value };
     };
 
-    const verdiCallbackAlleSpråk = <T extends any>(
-        cb: (locale: LocaleType) => T
-    ): Record<LocaleType, T> => ({
+    const verdiCallbackAlleSpråk = <T,>(cb: (locale: LocaleType) => T): Record<LocaleType, T> => ({
         [LocaleType.nb]: cb(LocaleType.nb),
         [LocaleType.nn]: cb(LocaleType.nn),
         [LocaleType.en]: cb(LocaleType.en),
     });
 
-    const sammeVerdiAlleSpråk = <T extends any>(verdi: T): Record<LocaleType, T> =>
+    const sammeVerdiAlleSpråk = <T,>(verdi: T): Record<LocaleType, T> =>
         verdiCallbackAlleSpråk(() => verdi);
 
     const sammeVerdiAlleSpråkEllerUkjentSpråktekst = (

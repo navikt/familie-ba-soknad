@@ -5,7 +5,8 @@ import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { AlternativtSvarForInput, ESivilstand } from '../../../typer/person';
+import { AlternativtSvarForInput } from '../../../typer/common';
+import { ESivilstand } from '../../../typer/person';
 import { ESøknadstype, ISøknad } from '../../../typer/søknad';
 import {
     silenceConsoleErrors,

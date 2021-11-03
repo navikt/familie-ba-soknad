@@ -4,8 +4,9 @@ import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
 
 import { useApp } from '../../../context/AppContext';
-import { IRoute, useRoutes } from '../../../context/RoutesContext';
+import { useRoutes } from '../../../context/RoutesContext';
 import { ILokasjon } from '../../../typer/lokasjon';
+import { IRoute } from '../../../typer/routes';
 import { logForsettPåSøknad, logSkjemaStartet } from '../../../utils/amplitude';
 
 export enum BekreftelseStatus {

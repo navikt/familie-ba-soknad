@@ -2,8 +2,9 @@ import React from 'react';
 
 import { renderHook } from '@testing-library/react-hooks';
 
+import { RouteEnum } from '../typer/routes';
 import { mockHistory, spyOnUseApp } from '../utils/testing';
-import { useRoutes, RouteEnum, RoutesProvider } from './RoutesContext';
+import { useRoutes, RoutesProvider } from './RoutesContext';
 
 mockHistory(['/om-barnet/barn-1']);
 

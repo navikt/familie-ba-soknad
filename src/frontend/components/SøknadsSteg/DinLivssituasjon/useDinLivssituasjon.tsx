@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-import { Alpha3Code } from 'i18n-iso-countries';
-
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
@@ -12,41 +10,22 @@ import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
+import { AlternativtSvarForInput } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import {
-    AlternativtSvarForInput,
     barnDataKeySpørsmål,
-    DatoMedUkjent,
     ESivilstand,
     ISamboer,
     ITidligereSamboer,
 } from '../../../typer/person';
-import { Årsak } from '../../../typer/søknad';
+import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
+import { Årsak } from '../../../typer/utvidet';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
-
-export interface IDinLivssituasjonFeltTyper {
-    årsak: Årsak | '';
-    separertEnkeSkilt: ESvar | null;
-    separertEnkeSkiltUtland: ESvar | null;
-    separertEnkeSkiltDato: ISODateString;
-    harSamboerNå: ESvar | null;
-    nåværendeSamboerNavn: string;
-    nåværendeSamboerFnr: string;
-    nåværendeSamboerFnrUkjent: ESvar;
-    nåværendeSamboerFødselsdato: DatoMedUkjent;
-    nåværendeSamboerFødselsdatoUkjent: ESvar;
-    nåværendeSamboerFraDato: ISODateString;
-    erAsylsøker: ESvar | null;
-    jobberPåBåt: ESvar | null;
-    arbeidsland: Alpha3Code | '';
-    mottarUtenlandspensjon: ESvar | null;
-    pensjonsland: Alpha3Code | '';
-}
 
 export const useDinLivssituasjon = (): {
     skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;

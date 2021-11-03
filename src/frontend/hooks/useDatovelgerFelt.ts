@@ -1,7 +1,7 @@
 import { ISODateString } from '@navikt/familie-form-elements';
 import { useFelt } from '@navikt/familie-skjema';
 
-import { ISøknadSpørsmål } from '../typer/søknad';
+import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { validerDato } from '../utils/dato';
 
 const useDatovelgerFelt = (

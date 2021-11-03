@@ -27,14 +27,11 @@ import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import * as pdlRequest from '../context/pdl';
 import { RoutesProvider } from '../context/RoutesContext';
+import { AlternativtSvarForInput } from '../typer/common';
 import { IKvittering } from '../typer/kvittering';
-import {
-    AlternativtSvarForInput,
-    barnDataKeySpørsmål,
-    ESivilstand,
-    ISøkerRespons,
-} from '../typer/person';
-import { ESøknadstype, initialStateSøknad, ISøknad, Årsak } from '../typer/søknad';
+import { barnDataKeySpørsmål, ESivilstand, ISøkerRespons } from '../typer/person';
+import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
+import { Årsak } from '../typer/utvidet';
 import { genererInitialBarnMedISøknad } from './barn';
 import * as eøsUtils from './eøs';
 

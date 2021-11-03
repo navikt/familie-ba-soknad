@@ -6,7 +6,7 @@ import { Flatknapp } from 'nav-frontend-knapper';
 
 import { DeleteFilled } from '@navikt/ds-icons';
 
-import { BarnetsId } from '../../../../typer/person';
+import { BarnetsId } from '../../../../typer/common';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 const StyledFlatknapp = styled(Flatknapp)`

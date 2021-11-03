@@ -9,7 +9,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { barnDataKeySpørsmål, BarnetsId } from '../../../typer/person';
+import { BarnetsId } from '../../../typer/common';
+import { barnDataKeySpørsmål } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
