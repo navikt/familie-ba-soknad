@@ -352,5 +352,5 @@ export const muligeÅrsaker: Årsak[] = [
     Årsak.BRUDD_GIFT,
     Årsak.FORVARING,
     Årsak.FORSVUNNET,
-    Årsak.HELSEVERN,
+    Årsak.PSYKISKHELSEVERN,
 ];

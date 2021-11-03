@@ -511,7 +511,7 @@
   "omdeg.velgårsak.fengselvaretekt": "My spouse/cohabiting partner is in custody or prison",
   "omdeg.velgårsak.forsvunnet": "My spouse/cohabiting partner has disappeared",
   "omdeg.velgårsak.forvaring": "My spouse/cohabiting partner is in preventive custody",
-  "omdeg.velgårsak.helsevern": "My spouse/cohabiting partner is in compulsory psychiatric care",
+  "omdeg.velgårsak.psykiskhelsevern": "My spouse/cohabiting partner is in compulsory psychiatric care",
   "omdeg.velgårsak.placeholder": "Reason",
   "omdeg.velgårsak.separert": "I am separated",
   "omdeg.velgårsak.skilt": "I am divorced",

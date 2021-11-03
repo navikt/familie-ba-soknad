@@ -34,8 +34,8 @@ export const toÅrsakSpråkId = (årsak: Årsak): string => {
             return 'omdeg.velgårsak.forsvunnet';
         case Årsak.FORVARING:
             return 'omdeg.velgårsak.forvaring';
-        case Årsak.HELSEVERN:
-            return 'omdeg.velgårsak.helsevern';
+        case Årsak.PSYKISKHELSEVERN:
+            return 'omdeg.velgårsak.psykiskhelsevern';
     }
 };
 
