@@ -4,15 +4,14 @@ import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useRoutes } from '../../../context/RoutesContext';
-import { BarnetsId, IBarn, IBarnMedISøknad } from '../../../typer/person';
+import { BarnetsId } from '../../../typer/common';
+import { IBarn } from '../../../typer/person';
+import { IVelgBarnFeltTyper } from '../../../typer/skjema';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import { genererInitialBarnMedISøknad } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VelgBarnSpørsmålId } from './spørsmål';
-
-export interface IVelgBarnFeltTyper {
-    barnMedISøknad: IBarn[];
-}
 
 export const useVelgBarn = (): {
     skjema: ISkjema<IVelgBarnFeltTyper, string>;

@@ -1,24 +1,29 @@
+import { Alpha3Code } from 'i18n-iso-countries';
+
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
-import {
-    DinLivssituasjonSpørsmålId,
-    SamboerSpørsmålId,
-    TidligereSamboerSpørsmålId,
-} from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
-import { VelgBarnSpørsmålId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
-import { INøkkelPar } from './common';
+import { AlternativtSvarForInput, DatoMedUkjent, INøkkelPar } from './common';
 import {
     Dokumentasjonsbehov,
+    dokumentasjonsbehovTilSpråkId,
     IDokumentasjon,
     ISøknadKontraktDokumentasjon,
-    dokumentasjonsbehovTilSpråkId,
 } from './dokumentasjon';
-import { ESivilstand, IAdresse, IBarn, IBarnMedISøknad, ISøker } from './person';
+import {
+    barnDataKeySpørsmål,
+    barnDataKeySpørsmålUtvidet,
+    ESivilstand,
+    IAdresse,
+    IBarn,
+    ISøker,
+} from './person';
+import { ISøknadSpørsmål } from './spørsmål';
+import { Årsak } from './utvidet';
 
 export enum ESøknadstype {
     ORDINÆR = 'ORDINÆR',
@@ -41,6 +46,49 @@ export interface ISøknadsfelt<T> {
     verdi: Record<LocaleType, T>;
 }
 
+export interface IBarnMedISøknad extends IBarn {
+    barnErFyltUt: boolean;
+    [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.erAsylsøker]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.andreForelderErDød]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.oppholderSegIUtland]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.oppholdsland]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [barnDataKeySpørsmål.oppholdslandStartdato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.oppholdslandSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
+    [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.institusjonsnavn]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.institusjonsadresse]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.institusjonspostnummer]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.institusjonOppholdStartdato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.institusjonOppholdSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
+    [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: ISøknadSpørsmål<DatoMedUkjent>;
+    [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [barnDataKeySpørsmål.andreForelderNavn]: ISøknadSpørsmål<
+        string | AlternativtSvarForInput.UKJENT
+    >;
+    [barnDataKeySpørsmål.andreForelderFnr]: ISøknadSpørsmål<
+        string | AlternativtSvarForInput.UKJENT
+    >;
+    [barnDataKeySpørsmål.andreForelderFødselsdato]: ISøknadSpørsmål<DatoMedUkjent>;
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [barnDataKeySpørsmål.andreForelderPensjonUtland]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [barnDataKeySpørsmål.borFastMedSøker]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.søkerForTidsrom]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.søkerForTidsromStartdato]: ISøknadSpørsmål<ISODateString>;
+    [barnDataKeySpørsmål.søkerForTidsromSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
+    utvidet: {
+        [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
+        [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: ISøknadSpørsmål<DatoMedUkjent>;
+    };
+}
+
 export interface ISøknad {
     søknadstype: ESøknadstype;
     erEøs: boolean;
@@ -57,20 +105,6 @@ export interface ISøknad {
     barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | null>;
     mottarBarnetrygdForBarnFraAnnetEøsland: ISøknadSpørsmål<ESvar | null>;
     dokumentasjon: IDokumentasjon[];
-}
-
-export type SpørsmålId =
-    | OmDegSpørsmålId
-    | VelgBarnSpørsmålId
-    | OmBarnaDineSpørsmålId
-    | OmBarnetSpørsmålsId
-    | DinLivssituasjonSpørsmålId
-    | SamboerSpørsmålId
-    | TidligereSamboerSpørsmålId;
-
-export interface ISøknadSpørsmål<T> {
-    id: SpørsmålId;
-    svar: T;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -307,16 +341,6 @@ export const initialStateSøknad: ISøknad = {
         svar: null,
     },
 };
-
-export enum Årsak {
-    SEPARERT = 'SEPARERT',
-    SKILT = 'SKILT',
-    BRUDD_SAMBOER = 'BRUDD_SAMBOER',
-    BODD_ALENE = 'BODD_ALENE',
-    ENKE_ENKEMANN = 'ENKE_ENKEMANN',
-    FENGSEL_VARETEKT = 'FENGSEL_VARETEKT',
-    BRUDD_GIFT = 'BRUDD_GIFT',
-}
 
 export const muligeÅrsaker: Årsak[] = [
     Årsak.SEPARERT,

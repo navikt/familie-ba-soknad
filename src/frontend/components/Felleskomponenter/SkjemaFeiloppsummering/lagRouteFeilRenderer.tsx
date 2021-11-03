@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
 
-import { IRoute } from '../../../context/RoutesContext';
+import { IRoute } from '../../../typer/routes';
 import { AppLenke } from '../AppLenke/AppLenke';
 
 export const lagRouteFeilRenderer = (route: IRoute) => {

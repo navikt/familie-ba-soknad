@@ -1,28 +1,15 @@
 import React from 'react';
 
-import { Alpha3Code } from 'i18n-iso-countries';
-
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
+import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { dagensDato } from '../../../utils/dato';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-
-export type ESvarMedUbesvart = ESvar | null;
-
-export interface IOmDegFeltTyper {
-    borPåRegistrertAdresse: ESvar | null;
-    oppholderSegINorge: ESvar | null;
-    oppholdsland: Alpha3Code | '';
-    oppholdslandDato: ISODateString;
-    værtINorgeITolvMåneder: ESvar | null;
-    komTilNorgeDato: ISODateString;
-    planleggerÅBoINorgeTolvMnd: ESvar | null;
-}
 
 export const useOmdeg = (): {
     skjema: ISkjema<IOmDegFeltTyper, string>;

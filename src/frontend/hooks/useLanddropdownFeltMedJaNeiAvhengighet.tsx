@@ -6,7 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Avhengigheter, feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { ISøknadSpørsmål } from '../typer/søknad';
+import { ISøknadSpørsmål } from '../typer/spørsmål';
 
 const useLanddropdownFeltMedJaNeiAvhengighet = (
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,

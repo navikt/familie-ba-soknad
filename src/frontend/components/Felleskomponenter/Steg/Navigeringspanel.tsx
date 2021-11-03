@@ -9,8 +9,9 @@ import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
-import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
+import { useRoutes } from '../../../context/RoutesContext';
 import { device } from '../../../Theme';
+import { RouteEnum } from '../../../typer/routes';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const Container = styled.nav`

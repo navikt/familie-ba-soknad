@@ -1,4 +1,4 @@
-import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/person';
+import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/common';
 import { formaterDato } from './dato';
 
 export const formaterFnr = (fødselsnummer: string) => {

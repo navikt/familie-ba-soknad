@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
@@ -16,15 +15,11 @@ import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
+import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
-import {
-    AlternativtSvarForInput,
-    barnDataKeySpørsmål,
-    barnDataKeySpørsmålUtvidet,
-    BarnetsId,
-    DatoMedUkjent,
-    IBarnMedISøknad,
-} from '../../../typer/person';
+import { barnDataKeySpørsmål, barnDataKeySpørsmålUtvidet } from '../../../typer/person';
+import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
@@ -34,43 +29,6 @@ import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';
-
-export interface IOmBarnetUtvidetFeltTyper {
-    institusjonsnavn: string;
-    institusjonsadresse: string;
-    institusjonspostnummer: string;
-    institusjonOppholdStartdato: ISODateString;
-    institusjonOppholdSluttdato: DatoMedUkjent;
-    institusjonOppholdSluttVetIkke: ESvar;
-    oppholdsland: Alpha3Code | '';
-    oppholdslandStartdato: ISODateString;
-    oppholdslandSluttdato: DatoMedUkjent;
-    oppholdslandSluttDatoVetIkke: ESvar;
-    nårKomBarnTilNorgeDato: ISODateString;
-    nårKomBarnTilNorgeDatoIkkeAnkommet: ESvar;
-    planleggerÅBoINorge12Mnd: ESvar | null;
-    barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
-    andreForelderNavn: string;
-    andreForelderNavnUkjent: ESvar;
-    andreForelderFnr: string;
-    andreForelderFnrUkjent: ESvar;
-    andreForelderFødselsdatoUkjent: ESvar;
-    andreForelderFødselsdato: DatoMedUkjent;
-    andreForelderArbeidUtlandet: ESvar | null;
-    andreForelderArbeidUtlandetHvilketLand: Alpha3Code | '';
-    andreForelderPensjonUtland: ESvar | null;
-    andreForelderPensjonHvilketLand: Alpha3Code | '';
-    borFastMedSøker: ESvar | null;
-    skriftligAvtaleOmDeltBosted: ESvar | null;
-    søkerForTidsrom: ESvar | null;
-    søkerForTidsromStartdato: ISODateString;
-    søkerForTidsromSluttdato: DatoMedUkjent;
-    søkerForTidsromSluttdatoVetIkke: ESvar;
-    sammeForelderSomAnnetBarn: string | null;
-    søkerHarBoddMedAndreForelder: ESvar | null;
-    borMedAndreForelderCheckbox: ESvar;
-    søkerFlyttetFraAndreForelderDato: ISODateString;
-}
 
 export const useOmBarnet = (
     barnetsUuid: BarnetsId

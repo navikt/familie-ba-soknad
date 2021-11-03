@@ -2,7 +2,7 @@ import { mockDeep } from 'jest-mock-extended';
 
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
-import { IOmBarnaDineFeltTyper } from '../components/SøknadsSteg/OmBarnaDine/useOmBarnaDine';
+import { IOmBarnaDineFeltTyper } from '../typer/skjema';
 import { trimWhiteSpace, visFeiloppsummering } from './hjelpefunksjoner';
 
 describe('hjelpefunksjoner', () => {

@@ -4,16 +4,15 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { IOmBarnaDineFeltTyper } from '../components/SøknadsSteg/OmBarnaDine/useOmBarnaDine';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
     barnDataKeySpørsmål,
     barnDataKeySpørsmålUtvidet,
     IBarn,
-    IBarnMedISøknad,
     IBarnRespons,
 } from '../typer/person';
-import { ISøknad } from '../typer/søknad';
+import { IOmBarnaDineFeltTyper } from '../typer/skjema';
+import { IBarnMedISøknad, ISøknad } from '../typer/søknad';
 import { formaterFnr } from './visning';
 
 export const genererSvarForSpørsmålBarn = (barn: IBarnMedISøknad, felt: Felt<string[]>): ESvar =>

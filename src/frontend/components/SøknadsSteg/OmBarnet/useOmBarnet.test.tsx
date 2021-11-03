@@ -3,12 +3,9 @@ import { act } from 'react-dom/test-utils';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import {
-    AlternativtSvarForInput,
-    barnDataKeySpørsmål,
-    IBarn,
-    IBarnMedISøknad,
-} from '../../../typer/person';
+import { AlternativtSvarForInput } from '../../../typer/common';
+import { barnDataKeySpørsmål, IBarn } from '../../../typer/person';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import { genererInitialBarnMedISøknad } from '../../../utils/barn';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';

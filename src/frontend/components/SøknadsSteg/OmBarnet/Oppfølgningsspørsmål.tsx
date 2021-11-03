@@ -6,7 +6,9 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
-import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/person';
+import { barnDataKeySpørsmål } from '../../../typer/person';
+import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
@@ -21,7 +23,6 @@ import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
-import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
 
 const Oppfølgningsspørsmål: React.FC<{
     barn: IBarnMedISøknad;

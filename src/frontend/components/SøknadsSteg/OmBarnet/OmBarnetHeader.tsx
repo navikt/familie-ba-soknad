@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Systemtittel } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
-import { IBarnMedISøknad } from '../../../typer/person';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { TilfeldigBarnIkon } from '../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
 

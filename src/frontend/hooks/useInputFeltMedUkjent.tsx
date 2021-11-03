@@ -7,8 +7,8 @@ import { feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { DatoMedUkjent } from '../typer/person';
-import { ISøknadSpørsmål } from '../typer/søknad';
+import { DatoMedUkjent } from '../typer/common';
+import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent } from '../utils/input';
 

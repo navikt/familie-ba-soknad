@@ -9,7 +9,8 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { RouteEnum, useRoutes } from '../../../context/RoutesContext';
+import { useRoutes } from '../../../context/RoutesContext';
+import { RouteEnum } from '../../../typer/routes';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';

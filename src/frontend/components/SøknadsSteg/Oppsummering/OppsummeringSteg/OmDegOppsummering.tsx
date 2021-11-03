@@ -7,7 +7,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
-import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
+import { useRoutes } from '../../../../context/RoutesContext';
+import { RouteEnum } from '../../../../typer/routes';
 import { genererAdresseVisning } from '../../../../utils/adresse';
 import { formaterDato } from '../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../utils/språk';
@@ -19,9 +20,9 @@ import {
     omDegSpørsmålSpråkId,
 } from '../../OmDeg/spørsmål';
 import { useOmdeg } from '../../OmDeg/useOmdeg';
-import { StyledOppsummeringsFeltGruppe } from '../Oppsummering';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
+import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;

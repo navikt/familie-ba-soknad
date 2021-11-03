@@ -5,15 +5,16 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
-import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
+import { useRoutes } from '../../../../context/RoutesContext';
 import { barnDataKeySpørsmål } from '../../../../typer/person';
+import { RouteEnum } from '../../../../typer/routes';
 import { barnetsNavnValue } from '../../../../utils/barn';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from '../../OmBarnaDine/spørsmål';
 import { useOmBarnaDine } from '../../OmBarnaDine/useOmBarnaDine';
-import { StyledOppsummeringsFeltGruppe } from '../Oppsummering';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
+import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;

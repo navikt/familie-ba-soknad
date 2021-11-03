@@ -3,14 +3,15 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { useApp } from '../../../../context/AppContext';
-import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
+import { useRoutes } from '../../../../context/RoutesContext';
+import { RouteEnum } from '../../../../typer/routes';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../../VelgBarn/spørsmål';
 import { useVelgBarn } from '../../VelgBarn/useVelgBarn';
-import { StyledOppsummeringsFeltGruppe } from '../Oppsummering';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
+import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;

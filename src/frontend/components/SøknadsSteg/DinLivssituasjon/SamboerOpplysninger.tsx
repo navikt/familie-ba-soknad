@@ -7,7 +7,8 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { DeleteFilled } from '@navikt/ds-icons';
 
-import { AlternativtSvarForInput, ITidligereSamboer } from '../../../typer/person';
+import { AlternativtSvarForInput } from '../../../typer/common';
+import { ITidligereSamboer } from '../../../typer/person';
 import { formaterDato } from '../../../utils/dato';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';

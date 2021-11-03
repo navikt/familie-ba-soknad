@@ -4,30 +4,12 @@ import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
-import { barnDataKeySpørsmål, BarnetsId, ESivilstand } from '../../../typer/person';
-import { Årsak } from '../../../typer/søknad';
+import { barnDataKeySpørsmål, ESivilstand } from '../../../typer/person';
+import { IOmBarnaDineFeltTyper } from '../../../typer/skjema';
+import { Årsak } from '../../../typer/utvidet';
 import { genererOppdaterteBarn } from '../../../utils/barn';
 import { OmBarnaDineSpørsmålId } from './spørsmål';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
-
-export interface IOmBarnaDineFeltTyper {
-    erNoenAvBarnaFosterbarn: ESvar | null;
-    oppholderBarnSegIInstitusjon: ESvar | null;
-    erBarnAdoptertFraUtland: ESvar | null;
-    oppholderBarnSegIUtland: ESvar | null;
-    søktAsylForBarn: ESvar | null;
-    barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | null;
-    mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | null;
-    erAvdødPartnerForelder: ESvar | null;
-    hvemErFosterbarn: BarnetsId[];
-    hvemOppholderSegIInstitusjon: BarnetsId[];
-    hvemErAdoptertFraUtland: BarnetsId[];
-    hvemOppholderSegIUtland: BarnetsId[];
-    hvemBarnetrygdFraAnnetEøsland: BarnetsId[];
-    hvemTolvMndSammenhengendeINorge: BarnetsId[];
-    hvemErSøktAsylFor: BarnetsId[];
-    hvemAvdødPartner: BarnetsId[];
-}
 
 export const useOmBarnaDine = (): {
     skjema: ISkjema<IOmBarnaDineFeltTyper, string>;

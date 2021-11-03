@@ -4,7 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ok, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { ISøknadSpørsmål } from '../typer/søknad';
+import { ISøknadSpørsmål } from '../typer/spørsmål';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface FeltGruppe {

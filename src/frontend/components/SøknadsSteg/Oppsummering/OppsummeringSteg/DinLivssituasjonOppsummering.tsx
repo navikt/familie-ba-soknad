@@ -8,13 +8,10 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
-import { RouteEnum, useRoutes } from '../../../../context/RoutesContext';
-import {
-    AlternativtSvarForInput,
-    ESivilstand,
-    ISamboer,
-    ITidligereSamboer,
-} from '../../../../typer/person';
+import { useRoutes } from '../../../../context/RoutesContext';
+import { AlternativtSvarForInput } from '../../../../typer/common';
+import { ESivilstand, ISamboer, ITidligereSamboer } from '../../../../typer/person';
+import { RouteEnum } from '../../../../typer/routes';
 import { formaterDato } from '../../../../utils/dato';
 import { landkodeTilSpråk, toÅrsakSpråkId } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
@@ -25,9 +22,9 @@ import {
     samboerSpråkIder,
 } from '../../DinLivssituasjon/spørsmål';
 import { useDinLivssituasjon } from '../../DinLivssituasjon/useDinLivssituasjon';
-import { StyledOppsummeringsFeltGruppe } from '../Oppsummering';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
+import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;

@@ -6,7 +6,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
-import { IBarnMedISøknad } from '../../../typer/person';
+import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -19,7 +20,6 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import SammeSomAnnetBarnRadio from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
-import { IOmBarnetUtvidetFeltTyper } from './useOmBarnet';
 
 const AndreForelder: React.FC<{
     barn: IBarnMedISøknad;

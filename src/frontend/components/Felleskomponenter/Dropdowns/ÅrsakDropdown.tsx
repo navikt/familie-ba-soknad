@@ -2,7 +2,8 @@ import React, { ReactNode } from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { muligeÅrsaker, Årsak } from '../../../typer/søknad';
+import { muligeÅrsaker } from '../../../typer/søknad';
+import { Årsak } from '../../../typer/utvidet';
 import { toÅrsakSpråkId } from '../../../utils/språk';
 import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 

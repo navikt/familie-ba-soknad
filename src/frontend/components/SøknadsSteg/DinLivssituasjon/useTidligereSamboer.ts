@@ -1,23 +1,13 @@
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
-import { DatoMedUkjent } from '../../../typer/person';
+import { ITidligereSamboerFeltTyper } from '../../../typer/skjema';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { TidligereSamboerSpørsmålId } from './spørsmål';
-
-export interface ITidligereSamboerFeltTyper {
-    tidligereSamboerNavn: string;
-    tidligereSamboerFnr: string;
-    tidligereSamboerFnrUkjent: ESvar;
-    tidligereSamboerFødselsdato: DatoMedUkjent;
-    tidligereSamboerFødselsdatoUkjent: ESvar;
-    tidligereSamboerFraDato: ISODateString;
-    tidligereSamboerTilDato: ISODateString;
-}
 
 export const useTidligereSamboer = (): {
     skjema: ISkjema<ITidligereSamboerFeltTyper, string>;

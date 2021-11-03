@@ -21,8 +21,8 @@ import {
     VelgBarnSpørsmålId,
     velgBarnSpørsmålSpråkId,
 } from '../components/SøknadsSteg/VelgBarn/spørsmål';
-import { AlternativtSvarForInput } from '../typer/person';
-import { SpørsmålId } from '../typer/søknad';
+import { AlternativtSvarForInput } from '../typer/common';
+import { SpørsmålId } from '../typer/spørsmål';
 
 export const samletSpørsmålId: { [key: string]: SpørsmålId } = {
     ...OmDegSpørsmålId,

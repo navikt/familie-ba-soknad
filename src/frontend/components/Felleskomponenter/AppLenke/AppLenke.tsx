@@ -6,8 +6,8 @@ import Lenke from 'nav-frontend-lenker';
 
 import { unslash } from '../../../../shared-utils/unslash';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
-import { IRoute } from '../../../context/RoutesContext';
 import { basePath } from '../../../Miljø';
+import { IRoute } from '../../../typer/routes';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface Props {

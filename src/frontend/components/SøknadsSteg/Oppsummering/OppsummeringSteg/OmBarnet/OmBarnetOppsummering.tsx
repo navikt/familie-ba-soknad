@@ -6,12 +6,9 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useRoutes } from '../../../../../context/RoutesContext';
-import {
-    AlternativtSvarForInput,
-    barnDataKeySpørsmål,
-    barnDataKeySpørsmålUtvidet,
-    IBarnMedISøknad,
-} from '../../../../../typer/person';
+import { AlternativtSvarForInput } from '../../../../../typer/common';
+import { barnDataKeySpørsmål, barnDataKeySpørsmålUtvidet } from '../../../../../typer/person';
+import { IBarnMedISøknad } from '../../../../../typer/søknad';
 import { barnetsNavnValue } from '../../../../../utils/barn';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
@@ -19,9 +16,9 @@ import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
 import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';
-import { StyledOppsummeringsFeltGruppe } from '../../Oppsummering';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
+import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 import AndreForelderOppsummering from './AndreForelderOppsummering';
 
 interface Props {

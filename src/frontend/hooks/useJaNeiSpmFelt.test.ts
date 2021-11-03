@@ -6,7 +6,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { Felt, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
-import { ISøknadSpørsmål } from '../typer/søknad';
+import { ISøknadSpørsmål } from '../typer/spørsmål';
 import useJaNeiSpmFelt, { erRelevanteAvhengigheterValidert } from './useJaNeiSpmFelt';
 
 describe('erRelevanteAvhengigheterValidert', () => {

@@ -7,7 +7,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { AlternativtSvarForInput } from '../../../typer/person';
+import { AlternativtSvarForInput } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { logSpørsmålBesvart } from '../../../utils/amplitude';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
