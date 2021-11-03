@@ -46,7 +46,7 @@ services:
       context: dockerstuff/soknad-api
       args:
         <<: *common-build-variables
-        git_commit: 09c726bd5cf037f6a51a96ddbcda76befdd9eec0
+        git_commit: 19e2908f99d6c271bfed7af76dc603a1209af64c
     depends_on:
       - key_generator
       - oauthmock
@@ -66,7 +66,7 @@ services:
       context: dockerstuff/mottak
       args:
         <<: *common-build-variables
-        git_commit: e6fc2fe557cc131e7a4a5ae39c654d74e3b1bf4f
+        git_commit: ca87df416c59bc5dec844c8392149db530cebcf1
     depends_on:
       - key_generator
       - postgres
@@ -110,7 +110,7 @@ services:
     logging: *common-log-config
     container_name: dokgen
     build:
-      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#b5368318ab7c34fd5e049389d86b57d4ea29196c"
+      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#f7ee973be5e808490192813d85e7564c547d49bc"
     environment:
       RUNTIME_OPTS: "--write.access=true"
     ports:
