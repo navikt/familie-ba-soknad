@@ -350,4 +350,7 @@ export const muligeÅrsaker: Årsak[] = [
     Årsak.ENKE_ENKEMANN,
     Årsak.FENGSEL_VARETEKT,
     Årsak.BRUDD_GIFT,
+    Årsak.FORVARING,
+    Årsak.FORSVUNNET,
+    Årsak.PSYKISK_HELSEVERN,
 ];
