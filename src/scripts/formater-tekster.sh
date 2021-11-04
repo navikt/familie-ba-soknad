@@ -13,7 +13,7 @@ langdir=$1
 if [[ "$(uname)" = "Darwin" ]]; then
     sedi=(-i '' -E)
 else
-    sedi=(-i)
+    sedi=(-i -E)
 fi
 
 cd $langdir
