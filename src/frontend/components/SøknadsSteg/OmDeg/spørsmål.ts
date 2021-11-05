@@ -13,7 +13,7 @@ export enum OmDegSpørsmålId {
 
 export const omDegSpørsmålSpråkId: Record<OmDegSpørsmålId, string> = {
     [OmDegSpørsmålId.borPåRegistrertAdresse]: 'omdeg.borpådenneadressen.spm',
-    [OmDegSpørsmålId.værtINorgeITolvMåneder]: 'omdeg.opphold-sammenhengende.spm',
+    [OmDegSpørsmålId.værtINorgeITolvMåneder]: 'omdeg.oppholdtsammenhengende.spm',
     [OmDegSpørsmålId.komTilNorgeDato]: 'omdeg.opphold-sammenhengende.dato.spm',
     [OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]: 'omdeg.planlagt-opphold-sammenhengende.spm',
 };

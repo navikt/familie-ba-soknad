@@ -4,10 +4,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
-import { dagensDato } from '../../../utils/dato';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export const useOmdeg = (): {
@@ -58,14 +56,6 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
-    const komTilNorgeDato = useDatovelgerFeltMedJaNeiAvhengighet(
-        søker.komTilNorgeDato,
-        ESvar.NEI,
-        værtINorgeITolvMåneder,
-        'omdeg.opphold-sammenhengende.dato.feilmelding',
-        dagensDato()
-    );
-
     const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({
         feltId: søker.planleggerÅBoINorgeTolvMnd.id,
         verdi: søker.planleggerÅBoINorgeTolvMnd.svar,
@@ -99,10 +89,6 @@ export const useOmdeg = (): {
                     ...søker.værtINorgeITolvMåneder,
                     svar: skjema.felter.værtINorgeITolvMåneder.verdi,
                 },
-                komTilNorgeDato: {
-                    ...søker.komTilNorgeDato,
-                    svar: skjema.felter.komTilNorgeDato.verdi,
-                },
                 planleggerÅBoINorgeTolvMnd: {
                     ...søker.planleggerÅBoINorgeTolvMnd,
                     svar: skjema.felter.planleggerÅBoINorgeTolvMnd.verdi,
@@ -118,7 +104,6 @@ export const useOmdeg = (): {
         felter: {
             borPåRegistrertAdresse,
             værtINorgeITolvMåneder,
-            komTilNorgeDato,
             planleggerÅBoINorgeTolvMnd,
         },
         skjemanavn: 'omdeg',

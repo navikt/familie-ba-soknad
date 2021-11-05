@@ -241,10 +241,6 @@ export const initialStateSøknad: ISøknad = {
             id: OmDegSpørsmålId.værtINorgeITolvMåneder,
             svar: null,
         },
-        komTilNorgeDato: {
-            id: OmDegSpørsmålId.komTilNorgeDato,
-            svar: '',
-        },
         planleggerÅBoINorgeTolvMnd: {
             id: OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd,
             svar: null,

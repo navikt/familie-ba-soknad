@@ -10,7 +10,6 @@ import { useApp } from '../../../../context/AppContext';
 import { useRoutes } from '../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../typer/routes';
 import { genererAdresseVisning } from '../../../../utils/adresse';
-import { formaterDato } from '../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -94,16 +93,6 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
                 />
-                {søknad.søker.komTilNorgeDato.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
-                            />
-                        }
-                        søknadsvar={formaterDato(søknad.søker.komTilNorgeDato.svar)}
-                    />
-                )}
                 {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
                     <OppsummeringFelt
                         tittel={
