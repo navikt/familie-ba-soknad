@@ -4,9 +4,9 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
-import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
@@ -68,21 +68,23 @@ const OmDeg: React.FC = () => {
             </KomponentGruppe>
             {skjema.felter.værtINorgeITolvMåneder.erSynlig && (
                 <KomponentGruppe dynamisk>
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.værtINorgeITolvMåneder}
-                        spørsmålTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
-                        }
-                    />
-                    <Datovelger
-                        avgrensDatoFremITid={true}
-                        felt={skjema.felter.komTilNorgeDato}
-                        skjema={skjema}
-                        labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
-                        dynamisk
-                    />
-
+                    <>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.værtINorgeITolvMåneder}
+                            spørsmålTekstId={
+                                omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
+                            }
+                        />
+                        {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
+                            <LeggTilKnapp
+                                språkTekst="eøs.leggtilendaflereutenlandsopphold.knapp"
+                                onClick={() => {
+                                    console.log('TODO');
+                                }}
+                            />
+                        )}
+                    </>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.planleggerÅBoINorgeTolvMnd}

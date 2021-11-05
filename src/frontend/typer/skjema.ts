@@ -94,7 +94,6 @@ export interface IOmBarnetUtvidetFeltTyper {
 export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | null;
     værtINorgeITolvMåneder: ESvar | null;
-    komTilNorgeDato: ISODateString;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
 }
 

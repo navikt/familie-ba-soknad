@@ -4,10 +4,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
-import { dagensDato } from '../../../utils/dato';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export const useOmdeg = (): {
@@ -58,33 +56,16 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
-    const komTilNorgeDato = useDatovelgerFeltMedJaNeiAvhengighet(
-        søker.komTilNorgeDato,
-        ESvar.NEI,
-        værtINorgeITolvMåneder,
-        'omdeg.opphold-sammenhengende.dato.feilmelding',
-        dagensDato()
+    const planleggerÅBoINorgeTolvMnd = useJaNeiSpmFelt(
+        søker.planleggerÅBoINorgeTolvMnd,
+        'omdeg.planlagt-opphold-sammenhengende.feilmelding',
+        {
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+        },
+        borPåRegistrertAdresse.verdi === ESvar.NEI
     );
-
-    const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({
-        feltId: søker.planleggerÅBoINorgeTolvMnd.id,
-        verdi: søker.planleggerÅBoINorgeTolvMnd.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
-            return felt.verdi
-                ? ok(felt)
-                : feil(
-                      felt,
-                      <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.feilmelding'} />
-                  );
-        },
-        skalFeltetVises: avhengigheter => {
-            return (
-                avhengigheter.værtINorgeITolvMåneder &&
-                avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI
-            );
-        },
-        avhengigheter: { værtINorgeITolvMåneder },
-    });
 
     const oppdaterSøknad = () => {
         settSøknad({
@@ -98,10 +79,6 @@ export const useOmdeg = (): {
                 værtINorgeITolvMåneder: {
                     ...søker.værtINorgeITolvMåneder,
                     svar: skjema.felter.værtINorgeITolvMåneder.verdi,
-                },
-                komTilNorgeDato: {
-                    ...søker.komTilNorgeDato,
-                    svar: skjema.felter.komTilNorgeDato.verdi,
                 },
                 planleggerÅBoINorgeTolvMnd: {
                     ...søker.planleggerÅBoINorgeTolvMnd,
@@ -118,7 +95,6 @@ export const useOmdeg = (): {
         felter: {
             borPåRegistrertAdresse,
             værtINorgeITolvMåneder,
-            komTilNorgeDato,
             planleggerÅBoINorgeTolvMnd,
         },
         skjemanavn: 'omdeg',
