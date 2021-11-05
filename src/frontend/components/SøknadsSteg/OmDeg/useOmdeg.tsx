@@ -56,25 +56,16 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
-    const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({
-        feltId: søker.planleggerÅBoINorgeTolvMnd.id,
-        verdi: søker.planleggerÅBoINorgeTolvMnd.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
-            return felt.verdi
-                ? ok(felt)
-                : feil(
-                      felt,
-                      <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.feilmelding'} />
-                  );
+    const planleggerÅBoINorgeTolvMnd = useJaNeiSpmFelt(
+        søker.planleggerÅBoINorgeTolvMnd,
+        'omdeg.planlagt-opphold-sammenhengende.feilmelding',
+        {
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
         },
-        skalFeltetVises: avhengigheter => {
-            return (
-                avhengigheter.værtINorgeITolvMåneder &&
-                avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI
-            );
-        },
-        avhengigheter: { værtINorgeITolvMåneder },
-    });
+        borPåRegistrertAdresse.verdi === ESvar.NEI
+    );
 
     const oppdaterSøknad = () => {
         settSøknad({
