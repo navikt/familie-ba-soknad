@@ -208,6 +208,10 @@ export const mekkGyldigSøker = (): ISøker => {
             id: OmDegSpørsmålId.værtINorgeITolvMåneder,
             svar: ESvar.JA,
         },
+        planleggerÅBoINorgeTolvMnd: {
+            id: OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd,
+            svar: ESvar.JA,
+        },
         erAsylsøker: {
             id: DinLivssituasjonSpørsmålId.erAsylsøker,
             svar: ESvar.NEI,
