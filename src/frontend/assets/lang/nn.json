@@ -596,7 +596,7 @@
   "omdeg.planlagt-opphold-sammenhengende.alert": "Fordi du planlegg å bu i Noreg i mindre enn tolv månader samanhengande, har du som hovudregel ikkje rett til barnetrygd. Du kan likevel ha rett til barnetrygd dersom du har flytta til Noreg frå eit nordisk land eller frå eit EØS land.",
   "omdeg.planlagt-opphold-sammenhengende.feilmelding": "Du må oppgje om du planlegg du å bu samanhengande i Noreg i meir enn tolv månader for å gå vidare",
   "omdeg.planlagt-opphold-sammenhengende.spm": "Planlegg du å bu samanhengande i Noreg i meir enn tolv månader?",
-  "omdeg.samboer.ident.ikkebesvart.feilmelding": "Du må oppgje sambuarens fødselsnummer eller d nummer for å gå vidare",
+  "omdeg.samboer.ident.ikkebesvart.feilmelding": "Du må oppgje sambuarens fødselsnummer eller d-nummer for å gå vidare",
   "omdeg.samboerNavn.feilmelding": "Du må oppgje sambuarens namn for å gå vidare",
   "omdeg.samboernå.feilmelding": "Du må oppgje om du har sambuar no for å gå vidare",
   "omdeg.samboernå.gift.feilmelding": "Du må oppgje om du har ein anna sambuar enn din ektefelle for å gå vidare",
