@@ -36,7 +36,7 @@ export interface OppholderSegIUtlandPeriode extends UtenlandsPeriode {
     oppholdslandTilDato: DatoMedUkjent;
 }
 
-export type Periode =
+export type Utenlandsperiode =
     | FlyttetFraNorgePeriode
     | FlyttetTilNorgePeriode
     | HarOppholdtSegIUtlandPeriode

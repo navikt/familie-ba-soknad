@@ -43,7 +43,7 @@ export const validerDato = (
     if (feltState.verdi === '') {
         return feil(
             feltState,
-            feilmeldingSpråkId !== '' ? <SpråkTekst id={feilmeldingSpråkId} /> : 'feil'
+            feilmeldingSpråkId !== '' ? <SpråkTekst id={feilmeldingSpråkId} /> : ''
         );
     }
     if (!erDatoFormatGodkjent(feltState.verdi)) {

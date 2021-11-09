@@ -25,7 +25,9 @@ const useLanddropdownFelt = (
                       felt,
                       avhengigheter?.feilmeldingSpråkId !== '' ? (
                           <SpråkTekst id={avhengigheter?.feilmeldingSpråkId} />
-                      ) : null
+                      ) : (
+                          ''
+                      )
                   );
         },
         nullstillVedAvhengighetEndring: false,
