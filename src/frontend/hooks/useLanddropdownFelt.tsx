@@ -23,8 +23,8 @@ const useLanddropdownFelt = (
                 ? ok(felt)
                 : feil(
                       felt,
-                      avhengigheter?.feilmeldingSpråkId !== '' ? (
-                          <SpråkTekst id={avhengigheter?.feilmeldingSpråkId} />
+                      avhengigheter?.feilmeldingSpråkId ? (
+                          <SpråkTekst id={avhengigheter.feilmeldingSpråkId} />
                       ) : (
                           ''
                       )
