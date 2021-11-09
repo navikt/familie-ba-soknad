@@ -18,13 +18,20 @@ const useLanddropdownFelt = (
         skalFeltetVises: avhengigheter => {
             return avhengigheter && avhengigheter.skalFeltetVises;
         },
-        valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>) => {
+        valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>, avhengigheter) => {
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
+                : feil(
+                      felt,
+                      avhengigheter?.feilmeldingSpråkId !== '' ? (
+                          <SpråkTekst id={avhengigheter?.feilmeldingSpråkId} />
+                      ) : (
+                          ''
+                      )
+                  );
         },
         nullstillVedAvhengighetEndring: false,
-        avhengigheter: { skalFeltetVises },
+        avhengigheter: { skalFeltetVises, feilmeldingSpråkId },
     });
 };
 

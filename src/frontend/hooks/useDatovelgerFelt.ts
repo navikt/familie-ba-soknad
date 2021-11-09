@@ -25,8 +25,8 @@ const useDatovelgerFelt = (
                 sluttdatoAvgrensning
             );
         },
-        skalFeltetVises: () => skalFeltetVises,
-        avhengigheter: { sluttdatoAvgrensning, startdatoAvgrensning },
+        skalFeltetVises: avhengigheter => avhengigheter?.skalFeltetVises,
+        avhengigheter: { sluttdatoAvgrensning, startdatoAvgrensning, skalFeltetVises },
         nullstillVedAvhengighetEndring: false,
     });
 };

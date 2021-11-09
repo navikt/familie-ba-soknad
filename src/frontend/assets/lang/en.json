@@ -243,6 +243,7 @@
   "felles.velg-dato.placeholder": "DD.MM.YYYY",
   "felles.velg-land.feilmelding": "You must select a country in order to be able to proceed",
   "felles.velg-land.placeholder": "Country",
+  "felles.velg-årsak.placeholder": "Choose",
   "felles.velgslektsforhold.annenfamilie": "Other family relationship",
   "felles.velgslektsforhold.annenrelasjon": "Other relationship",
   "felles.velgslektsforhold.besteforelder": "Grandparent",
