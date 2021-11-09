@@ -4,6 +4,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
 import { barnDataKeySpørsmål, IBarn } from './person';
+import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 
 export interface IDinLivssituasjonFeltTyper {
@@ -114,6 +115,13 @@ export interface ILeggTilBarnTyper
     ikkeFåttIdentChecked: ESvar;
 }
 
+export interface IUtenlandsoppholdFeltTyper {
+    årsak: EUtenlandsoppholdÅrsak | '';
+    land: Alpha3Code | '';
+    fraDato: ISODateString;
+    tilDato: ISODateString;
+    tilDatoUkjent: ESvar;
+}
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
@@ -121,4 +129,5 @@ export type SkjemaFeltTyper =
     | IOmBarnetUtvidetFeltTyper
     | IOmBarnaDineFeltTyper
     | IDinLivssituasjonFeltTyper
+    | IUtenlandsoppholdFeltTyper
     | ITidligereSamboerFeltTyper;

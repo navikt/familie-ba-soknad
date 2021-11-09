@@ -7,17 +7,20 @@ import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
+import { UtenlandsoppholdModalForSøker } from './UtenlandsoppholdModalForSøker';
 
 const OmDeg: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmdeg();
     const { søknad } = useApp();
     const { søker } = søknad;
+    const { erÅpen: erLeggTilOppholdÅpen, toggleModal: toggleLeggTilOppholdModal } = useModal();
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
@@ -79,9 +82,7 @@ const OmDeg: React.FC = () => {
                         {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                             <LeggTilKnapp
                                 språkTekst="eøs.leggtilendaflereutenlandsopphold.knapp"
-                                onClick={() => {
-                                    console.log('TODO');
-                                }}
+                                onClick={toggleLeggTilOppholdModal}
                             />
                         )}
                     </>
@@ -99,6 +100,10 @@ const OmDeg: React.FC = () => {
                     )}
                 </KomponentGruppe>
             )}
+            <UtenlandsoppholdModalForSøker
+                erÅpen={erLeggTilOppholdÅpen}
+                toggleModal={toggleLeggTilOppholdModal}
+            />
         </Steg>
     );
 };
