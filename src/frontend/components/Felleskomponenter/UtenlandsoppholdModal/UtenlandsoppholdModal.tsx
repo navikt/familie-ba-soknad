@@ -73,7 +73,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 felt={årsak}
                 label={<SpråkTekst id={årsakLabelSpråkId} />}
                 skjema={skjema}
-                placeholder={intl.formatMessage({ id: 'MANGLER' })}
+                placeholder={intl.formatMessage({ id: 'felles.velg-årsak.placeholder' })}
             >
                 {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
                     <option key={number} value={årsak}>
