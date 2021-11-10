@@ -53,7 +53,11 @@ export const useUtenlandsoppholdSkjema = ({
         },
         !!utenlandsoppholdÅrsak.verdi &&
             utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE,
-        fraDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi]
+        fraDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
+        undefined,
+        undefined,
+        { utenlandsoppholdÅrsak },
+        true
     );
 
     // TODO: Datovaldiering
@@ -75,7 +79,11 @@ export const useUtenlandsoppholdSkjema = ({
         oppholdslandTilDatoUkjent,
         tilDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
         !!utenlandsoppholdÅrsak.verdi &&
-            utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE
+            utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE,
+        true,
+        undefined,
+        undefined,
+        { utenlandsoppholdÅrsak }
     );
 
     const skjema = useSkjema<IUtenlandsoppholdFeltTyper, 'string'>({

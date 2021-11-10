@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
-import { Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
+import { Avhengigheter, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import { validerDato } from '../utils/dato';
 
@@ -13,7 +13,8 @@ const useDatovelgerFeltMedUkjent = (
     skalFeltetVises: boolean,
     nullstillVedAvhengighetEndring = true,
     sluttdatoAvgrensning = '',
-    startdatoAvgrensning = ''
+    startdatoAvgrensning = '',
+    avhengigheter?: Avhengigheter
 ) => {
     const datoFelt = useFelt<ISODateString>({
         feltId: feltId,
@@ -42,6 +43,7 @@ const useDatovelgerFeltMedUkjent = (
             skalFeltetVises,
             startdatoAvgrensning,
             sluttdatoAvgrensning,
+            ...avhengigheter,
         },
         nullstillVedAvhengighetEndring,
         skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalFeltetVises,
