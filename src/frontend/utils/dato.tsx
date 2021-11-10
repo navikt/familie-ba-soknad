@@ -41,10 +41,7 @@ export const validerDato = (
     sluttdatoAvgrensning = ''
 ): FeltState<string> => {
     if (feltState.verdi === '') {
-        return feil(
-            feltState,
-            feilmeldingSpråkId !== '' ? <SpråkTekst id={feilmeldingSpråkId} /> : ''
-        );
+        return feil(feltState, feilmeldingSpråkId ? <SpråkTekst id={feilmeldingSpråkId} /> : '');
     }
     if (!erDatoFormatGodkjent(feltState.verdi)) {
         return feil(feltState, <SpråkTekst id={'felles.dato-format.feilmelding'} />);

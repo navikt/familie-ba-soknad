@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { IUtenlandsperiode } from '../../../typer/person';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -10,9 +11,10 @@ import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 import {
-    useUtenlandsoppholdSkjema,
     IUseUtenlandsoppholdSkjemaParams,
+    useUtenlandsoppholdSkjema,
 } from './useUtenlandsoppholdSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaParams {
@@ -22,6 +24,7 @@ interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaP
     fraDatoLabelSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
     tilDatoLabelSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
     tilDatoUkjentLabelSpråkId: string;
+    onLeggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
 }
 
 export const UtenlandsoppholdModal: React.FC<Props> = ({
@@ -37,6 +40,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     fraDatoLabelSpråkIds,
     tilDatoLabelSpråkIds,
     tilDatoUkjentLabelSpråkId,
+    onLeggTilUtenlandsperiode,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtenlandsoppholdSkjema({
@@ -46,13 +50,41 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             tilDatoFeilmeldingSpråkIds,
         });
 
-    const { land, årsak, fraDato, tilDato, tilDatoUkjent } = skjema.felter;
+    const {
+        oppholdsland,
+        utenlandsoppholdÅrsak,
+        oppholdslandFraDato,
+        oppholdslandTilDato,
+        oppholdslandTilDatoUkjent,
+    } = skjema.felter;
     const intl = useIntl();
 
-    const onSubmit = () => {
+    const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
+        onLeggTilUtenlandsperiode({
+            utenlandsoppholdÅrsak: {
+                id: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
+                svar: skjema.felter.utenlandsoppholdÅrsak.verdi as EUtenlandsoppholdÅrsak,
+            },
+            oppholdsland: {
+                id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold,
+                svar: skjema.felter.oppholdsland.verdi,
+            },
+            ...(skjema.felter.oppholdslandFraDato.erSynlig && {
+                oppholdslandFraDato: {
+                    id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
+                    svar: skjema.felter.oppholdslandFraDato.verdi,
+                },
+            }),
+            ...(skjema.felter.oppholdslandTilDato.erSynlig && {
+                oppholdslandTilDato: {
+                    id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
+                    svar: skjema.felter.oppholdslandTilDato.verdi,
+                },
+            }),
+        });
 
         toggleModal();
         nullstillSkjema();
@@ -62,15 +94,15 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
         <SkjemaModal
             erÅpen={erÅpen}
             modalTittelSpråkId={'modal.endaflereutenlandsopphold.tittel'}
-            onSubmitCallback={onSubmit}
+            onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilutenlands.knapp'}
             toggleModal={toggleModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
             <StyledDropdown<EUtenlandsoppholdÅrsak | ''>
-                {...årsak.hentNavInputProps(skjema.visFeilmeldinger)}
-                felt={årsak}
+                {...utenlandsoppholdÅrsak.hentNavInputProps(skjema.visFeilmeldinger)}
+                felt={utenlandsoppholdÅrsak}
                 label={<SpråkTekst id={årsakLabelSpråkId} />}
                 skjema={skjema}
                 placeholder={intl.formatMessage({ id: 'felles.velg-årsak.placeholder' })}
@@ -84,30 +116,30 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 ))}
             </StyledDropdown>
             <LandDropdown
-                felt={land}
+                felt={oppholdsland}
                 skjema={skjema}
                 label={
-                    landLabelSpråkIds[årsak.verdi] && (
-                        <SpråkTekst id={landLabelSpråkIds[årsak.verdi]} />
+                    landLabelSpråkIds[utenlandsoppholdÅrsak.verdi] && (
+                        <SpråkTekst id={landLabelSpråkIds[utenlandsoppholdÅrsak.verdi]} />
                     )
                 }
                 dynamisk
             />
             <Datovelger
-                felt={fraDato}
-                labelTekstId={fraDatoLabelSpråkIds[årsak.verdi]}
+                felt={oppholdslandFraDato}
+                labelTekstId={fraDatoLabelSpråkIds[utenlandsoppholdÅrsak.verdi]}
                 skjema={skjema}
             />
-            {tilDato.erSynlig && (
+            {oppholdslandTilDato.erSynlig && (
                 <Datovelger
-                    felt={tilDato}
-                    labelTekstId={tilDatoLabelSpråkIds[årsak.verdi]}
+                    felt={oppholdslandTilDato}
+                    labelTekstId={tilDatoLabelSpråkIds[utenlandsoppholdÅrsak.verdi]}
                     skjema={skjema}
                 />
             )}
-            {tilDatoUkjent.erSynlig && (
+            {oppholdslandTilDatoUkjent.erSynlig && (
                 <SkjemaCheckbox
-                    felt={tilDatoUkjent}
+                    felt={oppholdslandTilDatoUkjent}
                     labelSpråkTekstId={tilDatoUkjentLabelSpråkId}
                     visFeilmeldinger={skjema.visFeilmeldinger}
                 />

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
@@ -24,51 +24,57 @@ export const useUtenlandsoppholdSkjema = ({
     fraDatoFeilmeldingSpråkIds,
     tilDatoFeilmeldingSpråkIds,
 }: IUseUtenlandsoppholdSkjemaParams) => {
-    const årsak = useFelt<EUtenlandsoppholdÅrsak | ''>({
+    const utenlandsoppholdÅrsak = useFelt<EUtenlandsoppholdÅrsak | ''>({
         feltId: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
         verdi: '',
-        valideringsfunksjon: felt =>
+        valideringsfunksjon: (felt: FeltState<EUtenlandsoppholdÅrsak | ''>) =>
             felt.verdi !== '' ? ok(felt) : feil(felt, <SpråkTekst id={årsakFeilmeldingSpråkId} />),
     });
 
-    const land = useLanddropdownFelt(
+    const oppholdsland = useLanddropdownFelt(
         { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
-        landFeilmeldingSpråkIds[årsak.verdi],
-        årsak.verdi !== ''
+        landFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
+        utenlandsoppholdÅrsak.verdi !== ''
     );
 
     // TODO: Datovaldiering
     // TODO: Feilmeldinger basert på datovalidering
-    const fraDato = useDatovelgerFelt(
+    const oppholdslandFraDato = useDatovelgerFelt(
         {
             id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
             svar: '',
         },
-        årsak.verdi !== '',
-        fraDatoFeilmeldingSpråkIds[årsak.verdi]
+        utenlandsoppholdÅrsak.verdi !== '',
+        fraDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi]
     );
 
     // TODO: Datovaldiering
     // TODO: Feilmeldinger basert på datovalidering
-    const tilDatoUkjent = useFelt<ESvar>({
+    const oppholdslandTilDatoUkjent = useFelt<ESvar>({
         skalFeltetVises: avhengigheter =>
             avhengigheter.årsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
-        avhengigheter: { årsak },
+        avhengigheter: { årsak: utenlandsoppholdÅrsak },
         verdi: ESvar.NEI,
     });
 
     // TODO: Datovaldiering
     // TODO: Feilmeldinger basert på datovalidering
-    const tilDato = useDatovelgerFeltMedUkjent(
+    const oppholdslandTilDato = useDatovelgerFeltMedUkjent(
         UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
         '',
-        tilDatoUkjent,
-        tilDatoFeilmeldingSpråkIds[årsak.verdi],
-        årsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
+        oppholdslandTilDatoUkjent,
+        tilDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
+        utenlandsoppholdÅrsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
     );
 
     const skjema = useSkjema<IUtenlandsoppholdFeltTyper, 'string'>({
-        felter: { årsak, land, fraDato, tilDato, tilDatoUkjent },
+        felter: {
+            utenlandsoppholdÅrsak,
+            oppholdsland,
+            oppholdslandFraDato,
+            oppholdslandTilDato,
+            oppholdslandTilDatoUkjent,
+        },
         skjemanavn: 'utenlandsopphold',
     });
 

@@ -17,7 +17,14 @@ import { useOmdeg } from './useOmdeg';
 import { UtenlandsoppholdModalForSøker } from './UtenlandsoppholdModalForSøker';
 
 const OmDeg: React.FC = () => {
-    const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmdeg();
+    const {
+        skjema,
+        validerFelterOgVisFeilmelding,
+        valideringErOk,
+        oppdaterSøknad,
+        leggTilUtenlandsperiode,
+        fjernUtenlandsperiode, // TODO: skal brukes i fjern periode knapp
+    } = useOmdeg();
     const { søknad } = useApp();
     const { søker } = søknad;
     const { erÅpen: erLeggTilOppholdÅpen, toggleModal: toggleLeggTilOppholdModal } = useModal();
@@ -103,6 +110,7 @@ const OmDeg: React.FC = () => {
             <UtenlandsoppholdModalForSøker
                 erÅpen={erLeggTilOppholdÅpen}
                 toggleModal={toggleLeggTilOppholdModal}
+                leggTilUtenlandsperiode={leggTilUtenlandsperiode}
             />
         </Steg>
     );
