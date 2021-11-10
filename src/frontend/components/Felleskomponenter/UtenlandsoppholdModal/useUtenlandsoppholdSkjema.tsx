@@ -34,7 +34,8 @@ export const useUtenlandsoppholdSkjema = ({
     const oppholdsland = useLanddropdownFelt(
         { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
         landFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
-        utenlandsoppholdÅrsak.verdi !== ''
+        utenlandsoppholdÅrsak.verdi !== '',
+        true
     );
 
     // TODO: Datovaldiering
