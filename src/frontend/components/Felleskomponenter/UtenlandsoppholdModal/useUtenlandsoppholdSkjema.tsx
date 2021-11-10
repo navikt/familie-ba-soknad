@@ -1,11 +1,16 @@
 import React from 'react';
 
-import { ESvar } from '@navikt/familie-form-elements';
-import { feil, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { useLocation } from 'react-router-dom';
 
+import { ESvar } from '@navikt/familie-form-elements';
+import { feil, FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+
+import { useRoutes } from '../../../context/RoutesContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
+import { ILokasjon } from '../../../typer/lokasjon';
+import { RouteEnum } from '../../../typer/routes';
 import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -24,17 +29,21 @@ export const useUtenlandsoppholdSkjema = ({
     fraDatoFeilmeldingSpråkIds,
     tilDatoFeilmeldingSpråkIds,
 }: IUseUtenlandsoppholdSkjemaParams) => {
-    const årsak = useFelt<EUtenlandsoppholdÅrsak | ''>({
+    const location = useLocation<ILokasjon>();
+    const { hentNåværendeRoute } = useRoutes();
+    const erSøker = hentNåværendeRoute(location.pathname).route === RouteEnum.OmDeg;
+
+    const utenlandsoppholdÅrsak = useFelt<EUtenlandsoppholdÅrsak | ''>({
         feltId: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
         verdi: '',
-        valideringsfunksjon: felt =>
+        valideringsfunksjon: (felt: FeltState<EUtenlandsoppholdÅrsak | ''>) =>
             felt.verdi !== '' ? ok(felt) : feil(felt, <SpråkTekst id={årsakFeilmeldingSpråkId} />),
     });
 
     const land = useLanddropdownFelt(
         { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
-        landFeilmeldingSpråkIds[årsak.verdi],
-        årsak.verdi !== ''
+        landFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
+        utenlandsoppholdÅrsak.verdi !== ''
     );
 
     // TODO: Datovaldiering
@@ -44,8 +53,8 @@ export const useUtenlandsoppholdSkjema = ({
             id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
             svar: '',
         },
-        årsak.verdi !== '',
-        fraDatoFeilmeldingSpråkIds[årsak.verdi]
+        utenlandsoppholdÅrsak.verdi !== '',
+        fraDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi]
     );
 
     // TODO: Datovaldiering
@@ -53,7 +62,7 @@ export const useUtenlandsoppholdSkjema = ({
     const tilDatoUkjent = useFelt<ESvar>({
         skalFeltetVises: avhengigheter =>
             avhengigheter.årsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
-        avhengigheter: { årsak },
+        avhengigheter: { årsak: utenlandsoppholdÅrsak },
         verdi: ESvar.NEI,
     });
 
@@ -63,12 +72,12 @@ export const useUtenlandsoppholdSkjema = ({
         UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
         '',
         tilDatoUkjent,
-        tilDatoFeilmeldingSpråkIds[årsak.verdi],
-        årsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
+        tilDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
+        utenlandsoppholdÅrsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
     );
 
     const skjema = useSkjema<IUtenlandsoppholdFeltTyper, 'string'>({
-        felter: { årsak, land, fraDato, tilDato, tilDatoUkjent },
+        felter: { årsak: utenlandsoppholdÅrsak, land, fraDato, tilDato, tilDatoUkjent },
         skjemanavn: 'utenlandsopphold',
     });
 

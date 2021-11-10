@@ -4,6 +4,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
 import { ISøknadSpørsmål } from './spørsmål';
+import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 
 export enum ESivilstand {
@@ -57,6 +58,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
     harSamboerNå: ISøknadSpørsmål<ESvar | null>;
     nåværendeSamboer: ISamboer | null;
+    utenlandsperiode: IUtenlandsperiode[];
     utvidet: {
         spørsmål: {
             årsak: ISøknadSpørsmål<Årsak | ''>;
@@ -66,6 +68,13 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
         };
         tidligereSamboere: ITidligereSamboer[];
     };
+}
+
+export interface IUtenlandsperiode {
+    utenlandsoppholdÅrsak: ISøknadSpørsmål<EUtenlandsoppholdÅrsak>;
+    oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    oppholdslandFraDato?: ISøknadSpørsmål<ISODateString>;
+    oppholdslandTilDato?: ISøknadSpørsmål<DatoMedUkjent>;
 }
 
 export interface ISamboer {

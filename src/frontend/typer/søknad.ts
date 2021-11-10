@@ -233,6 +233,7 @@ export const initialStateSøknad: ISøknad = {
             postnummer: '',
             poststed: '',
         },
+        utenlandsperiode: [],
         borPåRegistrertAdresse: {
             id: OmDegSpørsmålId.borPåRegistrertAdresse,
             svar: null,
