@@ -50,7 +50,13 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             tilDatoFeilmeldingSpråkIds,
         });
 
-    const { land, årsak, fraDato, tilDato, tilDatoUkjent } = skjema.felter;
+    const {
+        oppholdsland,
+        utenlandsoppholdÅrsak,
+        oppholdslandFraDato,
+        oppholdslandTilDato,
+        oppholdslandTilDatoUkjent,
+    } = skjema.felter;
     const intl = useIntl();
 
     const onLeggTil = () => {
@@ -60,22 +66,22 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
         onLeggTilUtenlandsperiode({
             utenlandsoppholdÅrsak: {
                 id: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
-                svar: skjema.felter.årsak.verdi as EUtenlandsoppholdÅrsak,
+                svar: skjema.felter.utenlandsoppholdÅrsak.verdi as EUtenlandsoppholdÅrsak,
             },
             oppholdsland: {
                 id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold,
-                svar: skjema.felter.land.verdi,
+                svar: skjema.felter.oppholdsland.verdi,
             },
-            ...(skjema.felter.fraDato.erSynlig && {
+            ...(skjema.felter.oppholdslandFraDato.erSynlig && {
                 oppholdslandFraDato: {
                     id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
-                    svar: skjema.felter.fraDato.verdi,
+                    svar: skjema.felter.oppholdslandFraDato.verdi,
                 },
             }),
-            ...(skjema.felter.tilDato.erSynlig && {
+            ...(skjema.felter.oppholdslandTilDato.erSynlig && {
                 oppholdslandTilDato: {
                     id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
-                    svar: skjema.felter.tilDato.verdi,
+                    svar: skjema.felter.oppholdslandTilDato.verdi,
                 },
             }),
         });
@@ -95,8 +101,8 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             onAvbrytCallback={nullstillSkjema}
         >
             <StyledDropdown<EUtenlandsoppholdÅrsak | ''>
-                {...årsak.hentNavInputProps(skjema.visFeilmeldinger)}
-                felt={årsak}
+                {...utenlandsoppholdÅrsak.hentNavInputProps(skjema.visFeilmeldinger)}
+                felt={utenlandsoppholdÅrsak}
                 label={<SpråkTekst id={årsakLabelSpråkId} />}
                 skjema={skjema}
                 placeholder={intl.formatMessage({ id: 'felles.velg-årsak.placeholder' })}
@@ -110,30 +116,30 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 ))}
             </StyledDropdown>
             <LandDropdown
-                felt={land}
+                felt={oppholdsland}
                 skjema={skjema}
                 label={
-                    landLabelSpråkIds[årsak.verdi] && (
-                        <SpråkTekst id={landLabelSpråkIds[årsak.verdi]} />
+                    landLabelSpråkIds[utenlandsoppholdÅrsak.verdi] && (
+                        <SpråkTekst id={landLabelSpråkIds[utenlandsoppholdÅrsak.verdi]} />
                     )
                 }
                 dynamisk
             />
             <Datovelger
-                felt={fraDato}
-                labelTekstId={fraDatoLabelSpråkIds[årsak.verdi]}
+                felt={oppholdslandFraDato}
+                labelTekstId={fraDatoLabelSpråkIds[utenlandsoppholdÅrsak.verdi]}
                 skjema={skjema}
             />
-            {tilDato.erSynlig && (
+            {oppholdslandTilDato.erSynlig && (
                 <Datovelger
-                    felt={tilDato}
-                    labelTekstId={tilDatoLabelSpråkIds[årsak.verdi]}
+                    felt={oppholdslandTilDato}
+                    labelTekstId={tilDatoLabelSpråkIds[utenlandsoppholdÅrsak.verdi]}
                     skjema={skjema}
                 />
             )}
-            {tilDatoUkjent.erSynlig && (
+            {oppholdslandTilDatoUkjent.erSynlig && (
                 <SkjemaCheckbox
-                    felt={tilDatoUkjent}
+                    felt={oppholdslandTilDatoUkjent}
                     labelSpråkTekstId={tilDatoUkjentLabelSpråkId}
                     visFeilmeldinger={skjema.visFeilmeldinger}
                 />

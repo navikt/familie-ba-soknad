@@ -116,11 +116,11 @@ export interface ILeggTilBarnTyper
 }
 
 export interface IUtenlandsoppholdFeltTyper {
-    årsak: EUtenlandsoppholdÅrsak | '';
-    land: Alpha3Code | '';
-    fraDato: ISODateString;
-    tilDato: ISODateString;
-    tilDatoUkjent: ESvar;
+    utenlandsoppholdÅrsak: EUtenlandsoppholdÅrsak | '';
+    oppholdsland: Alpha3Code | '';
+    oppholdslandFraDato: ISODateString;
+    oppholdslandTilDato: ISODateString;
+    oppholdslandTilDatoUkjent: ESvar;
 }
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper

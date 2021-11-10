@@ -31,7 +31,7 @@ export const useUtenlandsoppholdSkjema = ({
             felt.verdi !== '' ? ok(felt) : feil(felt, <SpråkTekst id={årsakFeilmeldingSpråkId} />),
     });
 
-    const land = useLanddropdownFelt(
+    const oppholdsland = useLanddropdownFelt(
         { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
         landFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
         utenlandsoppholdÅrsak.verdi !== ''
@@ -39,7 +39,7 @@ export const useUtenlandsoppholdSkjema = ({
 
     // TODO: Datovaldiering
     // TODO: Feilmeldinger basert på datovalidering
-    const fraDato = useDatovelgerFelt(
+    const oppholdslandFraDato = useDatovelgerFelt(
         {
             id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
             svar: '',
@@ -50,7 +50,7 @@ export const useUtenlandsoppholdSkjema = ({
 
     // TODO: Datovaldiering
     // TODO: Feilmeldinger basert på datovalidering
-    const tilDatoUkjent = useFelt<ESvar>({
+    const oppholdslandTilDatoUkjent = useFelt<ESvar>({
         skalFeltetVises: avhengigheter =>
             avhengigheter.årsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
         avhengigheter: { årsak: utenlandsoppholdÅrsak },
@@ -59,16 +59,22 @@ export const useUtenlandsoppholdSkjema = ({
 
     // TODO: Datovaldiering
     // TODO: Feilmeldinger basert på datovalidering
-    const tilDato = useDatovelgerFeltMedUkjent(
+    const oppholdslandTilDato = useDatovelgerFeltMedUkjent(
         UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
         '',
-        tilDatoUkjent,
+        oppholdslandTilDatoUkjent,
         tilDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
         utenlandsoppholdÅrsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
     );
 
     const skjema = useSkjema<IUtenlandsoppholdFeltTyper, 'string'>({
-        felter: { årsak: utenlandsoppholdÅrsak, land, fraDato, tilDato, tilDatoUkjent },
+        felter: {
+            utenlandsoppholdÅrsak,
+            oppholdsland,
+            oppholdslandFraDato,
+            oppholdslandTilDato,
+            oppholdslandTilDatoUkjent,
+        },
         skjemanavn: 'utenlandsopphold',
     });
 
