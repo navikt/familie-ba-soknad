@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { IUtenlandsperiode } from '../../../typer/person';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -10,9 +11,10 @@ import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 import {
-    useUtenlandsoppholdSkjema,
     IUseUtenlandsoppholdSkjemaParams,
+    useUtenlandsoppholdSkjema,
 } from './useUtenlandsoppholdSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaParams {
@@ -22,6 +24,7 @@ interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaP
     fraDatoLabelSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
     tilDatoLabelSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
     tilDatoUkjentLabelSpråkId: string;
+    onLeggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
 }
 
 export const UtenlandsoppholdModal: React.FC<Props> = ({
@@ -37,6 +40,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     fraDatoLabelSpråkIds,
     tilDatoLabelSpråkIds,
     tilDatoUkjentLabelSpråkId,
+    onLeggTilUtenlandsperiode,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtenlandsoppholdSkjema({
@@ -49,10 +53,32 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     const { land, årsak, fraDato, tilDato, tilDatoUkjent } = skjema.felter;
     const intl = useIntl();
 
-    const onSubmit = () => {
+    const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
+        onLeggTilUtenlandsperiode({
+            utenlandsoppholdÅrsak: {
+                id: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
+                svar: skjema.felter.årsak.verdi as EUtenlandsoppholdÅrsak,
+            },
+            oppholdsland: {
+                id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold,
+                svar: skjema.felter.land.verdi,
+            },
+            ...(skjema.felter.fraDato.erSynlig && {
+                oppholdslandFraDato: {
+                    id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
+                    svar: skjema.felter.fraDato.verdi,
+                },
+            }),
+            ...(skjema.felter.tilDato.erSynlig && {
+                oppholdslandTilDato: {
+                    id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
+                    svar: skjema.felter.tilDato.verdi,
+                },
+            }),
+        });
 
         toggleModal();
         nullstillSkjema();
@@ -62,7 +88,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
         <SkjemaModal
             erÅpen={erÅpen}
             modalTittelSpråkId={'modal.endaflereutenlandsopphold.tittel'}
-            onSubmitCallback={onSubmit}
+            onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilutenlands.knapp'}
             toggleModal={toggleModal}
             valideringErOk={valideringErOk}

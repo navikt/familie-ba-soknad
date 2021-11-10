@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { IUtenlandsperiode } from '../../../typer/person';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -14,9 +15,14 @@ export const useOmdeg = (): {
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
+    leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
+    const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
+        søker.utenlandsperioder
+    );
 
     const borPåRegistrertAdresse = useFelt<ESvar | null>({
         feltId: søker.borPåRegistrertAdresse.id,
@@ -67,11 +73,22 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
+    const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
+        settUtenlandsperioder(prevState => prevState.concat(periode));
+    };
+
+    const fjernUtenlandsperiode = (periodeSomSkalFjernes: IUtenlandsperiode) => {
+        settUtenlandsperioder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
             søker: {
                 ...søknad.søker,
+                utenlandsperioder,
                 borPåRegistrertAdresse: {
                     ...søker.borPåRegistrertAdresse,
                     svar: skjema.felter.borPåRegistrertAdresse.verdi,
@@ -106,5 +123,7 @@ export const useOmdeg = (): {
         validerAlleSynligeFelter,
         valideringErOk,
         oppdaterSøknad,
+        leggTilUtenlandsperiode,
+        fjernUtenlandsperiode,
     };
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { IUtenlandsperiode } from '../../../typer/person';
 import {
     fraDatoFeilmeldingSpråkIdsSøker,
     fraDatoLabelSpråkIdsSøker,
@@ -16,11 +17,13 @@ import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdM
 interface UtenlandsoppholdModalForSøkerProps {
     erÅpen: boolean;
     toggleModal: () => void;
+    leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
 }
 
 export const UtenlandsoppholdModalForSøker: React.FC<UtenlandsoppholdModalForSøkerProps> = ({
     erÅpen,
     toggleModal,
+    leggTilUtenlandsperiode,
 }) => (
     <UtenlandsoppholdModal
         erÅpen={erÅpen}
@@ -35,5 +38,6 @@ export const UtenlandsoppholdModalForSøker: React.FC<UtenlandsoppholdModalForS�
         tilDatoLabelSpråkIds={tilDatoLabelSpråkIdsSøker}
         tilDatoFeilmeldingSpråkIds={tilDatoFeilmeldingSpråkIdsSøker}
         tilDatoUkjentLabelSpråkId={tilDatoUkjentLabelSpråkIdSøker}
+        onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
     />
 );

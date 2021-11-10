@@ -1,16 +1,11 @@
 import React from 'react';
 
-import { useLocation } from 'react-router-dom';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
-import { useRoutes } from '../../../context/RoutesContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
-import { ILokasjon } from '../../../typer/lokasjon';
-import { RouteEnum } from '../../../typer/routes';
 import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -29,10 +24,6 @@ export const useUtenlandsoppholdSkjema = ({
     fraDatoFeilmeldingSpråkIds,
     tilDatoFeilmeldingSpråkIds,
 }: IUseUtenlandsoppholdSkjemaParams) => {
-    const location = useLocation<ILokasjon>();
-    const { hentNåværendeRoute } = useRoutes();
-    const erSøker = hentNåværendeRoute(location.pathname).route === RouteEnum.OmDeg;
-
     const utenlandsoppholdÅrsak = useFelt<EUtenlandsoppholdÅrsak | ''>({
         feltId: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
         verdi: '',

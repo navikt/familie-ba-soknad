@@ -58,7 +58,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
     harSamboerNå: ISøknadSpørsmål<ESvar | null>;
     nåværendeSamboer: ISamboer | null;
-    utenlandsperiode: IUtenlandsperiode[];
+    utenlandsperioder: IUtenlandsperiode[];
     utvidet: {
         spørsmål: {
             årsak: ISøknadSpørsmål<Årsak | ''>;
