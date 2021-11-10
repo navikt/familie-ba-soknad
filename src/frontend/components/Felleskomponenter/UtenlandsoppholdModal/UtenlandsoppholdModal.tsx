@@ -2,8 +2,11 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { IUtenlandsperiode } from '../../../typer/person';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
+import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import StyledDropdown from '../Dropdowns/StyledDropdown';
@@ -56,13 +59,6 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             tilDatoFeilmeldingSpråkIds,
         });
 
-    const {
-        oppholdsland,
-        utenlandsoppholdÅrsak,
-        oppholdslandFraDato,
-        oppholdslandTilDato,
-        oppholdslandTilDatoUkjent,
-    } = skjema.felter;
     const intl = useIntl();
 
     const onLeggTil = () => {
@@ -87,7 +83,10 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             ...(skjema.felter.oppholdslandTilDato.erSynlig && {
                 oppholdslandTilDato: {
                     id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
-                    svar: skjema.felter.oppholdslandTilDato.verdi,
+                    svar: svarForSpørsmålMedUkjent(
+                        skjema.felter.oppholdslandTilDatoUkjent,
+                        skjema.felter.oppholdslandTilDato
+                    ),
                 },
             }),
         });
@@ -107,8 +106,8 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             onAvbrytCallback={nullstillSkjema}
         >
             <StyledDropdown<EUtenlandsoppholdÅrsak | ''>
-                {...utenlandsoppholdÅrsak.hentNavInputProps(skjema.visFeilmeldinger)}
-                felt={utenlandsoppholdÅrsak}
+                {...skjema.felter.utenlandsoppholdÅrsak.hentNavInputProps(skjema.visFeilmeldinger)}
+                felt={skjema.felter.utenlandsoppholdÅrsak}
                 label={<SpråkTekst id={årsakLabelSpråkId} />}
                 skjema={skjema}
                 placeholder={intl.formatMessage({ id: 'felles.velg-årsak.placeholder' })}
@@ -122,35 +121,37 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 ))}
             </StyledDropdown>
             <LandDropdown
-                felt={oppholdsland}
+                felt={skjema.felter.oppholdsland}
                 skjema={skjema}
                 label={
-                    landLabelSpråkIds[utenlandsoppholdÅrsak.verdi] && (
-                        <SpråkTekst id={landLabelSpråkIds[utenlandsoppholdÅrsak.verdi]} />
+                    landLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi] && (
+                        <SpråkTekst
+                            id={landLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
+                        />
                     )
                 }
                 dynamisk
             />
 
-            {oppholdslandFraDato.erSynlig && (
+            {skjema.felter.oppholdslandFraDato.erSynlig && (
                 <Datovelger
-                    felt={oppholdslandFraDato}
-                    labelTekstId={fraDatoLabelSpråkIds[utenlandsoppholdÅrsak.verdi]}
+                    felt={skjema.felter.oppholdslandFraDato}
+                    labelTekstId={fraDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
                     skjema={skjema}
                 />
             )}
-            {oppholdslandTilDato.erSynlig && (
+            {skjema.felter.oppholdslandTilDato.erSynlig && (
                 <Datovelger
-                    felt={oppholdslandTilDato}
-                    labelTekstId={tilDatoLabelSpråkIds[utenlandsoppholdÅrsak.verdi]}
+                    felt={skjema.felter.oppholdslandTilDato}
+                    labelTekstId={tilDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
                     skjema={skjema}
+                    disabled={skjema.felter.oppholdslandTilDatoUkjent.verdi === ESvar.JA}
                 />
             )}
-            {oppholdslandTilDatoUkjent.erSynlig && (
+            {skjema.felter.oppholdslandTilDatoUkjent.erSynlig && (
                 <SkjemaCheckbox
-                    felt={oppholdslandTilDatoUkjent}
+                    felt={skjema.felter.oppholdslandTilDatoUkjent}
                     labelSpråkTekstId={tilDatoUkjentLabelSpråkId}
-                    visFeilmeldinger={skjema.visFeilmeldinger}
                 />
             )}
         </SkjemaModal>

@@ -63,12 +63,13 @@ export const useUtenlandsoppholdSkjema = ({
     // TODO: Datovaldiering
     // TODO: Feilmeldinger basert på datovalidering
     const oppholdslandTilDatoUkjent = useFelt<ESvar>({
+        verdi: ESvar.NEI,
+        feltId: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsoppholdVetIkke,
         skalFeltetVises: avhengigheter =>
             !!avhengigheter.utenlandsoppholdÅrsak.verdi &&
             avhengigheter.utenlandsoppholdÅrsak.verdi ===
                 EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
         avhengigheter: { utenlandsoppholdÅrsak },
-        verdi: ESvar.NEI,
     });
 
     // TODO: Datovaldiering

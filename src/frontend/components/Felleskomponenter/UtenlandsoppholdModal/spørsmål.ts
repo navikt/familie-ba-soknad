@@ -5,6 +5,7 @@ export enum UtenlandsoppholdSpørsmålId {
     landUtenlandsopphold = 'land-utenlandsopphold',
     fraDatoUtenlandsopphold = 'fra-dato-utenlandsopphold',
     tilDatoUtenlandsopphold = 'til-dato-utenlandsopphold',
+    tilDatoUtenlandsoppholdVetIkke = 'til-dato-utenlandsopphold-vet-ikke',
 }
 
 export const årsakSpråkIdsSøker: Record<EUtenlandsoppholdÅrsak, string> = {
