@@ -14,8 +14,14 @@ import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 export interface IUseUtenlandsoppholdSkjemaParams {
     årsakFeilmeldingSpråkId: string;
     landFeilmeldingSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
-    fraDatoFeilmeldingSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
-    tilDatoFeilmeldingSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
+    fraDatoFeilmeldingSpråkIds: Record<
+        Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE>,
+        string
+    >;
+    tilDatoFeilmeldingSpråkIds: Record<
+        Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE>,
+        string
+    >;
 }
 
 export const useUtenlandsoppholdSkjema = ({
@@ -34,7 +40,7 @@ export const useUtenlandsoppholdSkjema = ({
     const oppholdsland = useLanddropdownFelt(
         { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
         landFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
-        utenlandsoppholdÅrsak.verdi !== '',
+        !!utenlandsoppholdÅrsak.verdi,
         true
     );
 
@@ -45,7 +51,8 @@ export const useUtenlandsoppholdSkjema = ({
             id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
             svar: '',
         },
-        utenlandsoppholdÅrsak.verdi !== '',
+        !!utenlandsoppholdÅrsak.verdi &&
+            utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE,
         fraDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi]
     );
 
@@ -53,8 +60,10 @@ export const useUtenlandsoppholdSkjema = ({
     // TODO: Feilmeldinger basert på datovalidering
     const oppholdslandTilDatoUkjent = useFelt<ESvar>({
         skalFeltetVises: avhengigheter =>
-            avhengigheter.årsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
-        avhengigheter: { årsak: utenlandsoppholdÅrsak },
+            !!avhengigheter.utenlandsoppholdÅrsak.verdi &&
+            avhengigheter.utenlandsoppholdÅrsak.verdi ===
+                EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
+        avhengigheter: { utenlandsoppholdÅrsak },
         verdi: ESvar.NEI,
     });
 
@@ -65,7 +74,8 @@ export const useUtenlandsoppholdSkjema = ({
         '',
         oppholdslandTilDatoUkjent,
         tilDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
-        utenlandsoppholdÅrsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
+        !!utenlandsoppholdÅrsak.verdi &&
+            utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE
     );
 
     const skjema = useSkjema<IUtenlandsoppholdFeltTyper, 'string'>({

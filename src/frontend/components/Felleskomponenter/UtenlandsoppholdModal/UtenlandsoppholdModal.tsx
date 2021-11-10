@@ -21,8 +21,14 @@ interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaP
     årsakLabelSpråkId: string;
     årsakSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
     landLabelSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
-    fraDatoLabelSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
-    tilDatoLabelSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
+    fraDatoLabelSpråkIds: Record<
+        Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE>,
+        string
+    >;
+    tilDatoLabelSpråkIds: Record<
+        Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE>,
+        string
+    >;
     tilDatoUkjentLabelSpråkId: string;
     onLeggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
 }
@@ -125,11 +131,14 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 }
                 dynamisk
             />
-            <Datovelger
-                felt={oppholdslandFraDato}
-                labelTekstId={fraDatoLabelSpråkIds[utenlandsoppholdÅrsak.verdi]}
-                skjema={skjema}
-            />
+
+            {oppholdslandFraDato.erSynlig && (
+                <Datovelger
+                    felt={oppholdslandFraDato}
+                    labelTekstId={fraDatoLabelSpråkIds[utenlandsoppholdÅrsak.verdi]}
+                    skjema={skjema}
+                />
+            )}
             {oppholdslandTilDato.erSynlig && (
                 <Datovelger
                     felt={oppholdslandTilDato}
