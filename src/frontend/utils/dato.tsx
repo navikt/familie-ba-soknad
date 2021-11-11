@@ -68,11 +68,14 @@ export const validerDato = (
         !!startdatoAvgrensning &&
         erDatoFørEllerSammeSomStartDatoAvgrensning(feltState.verdi, startdatoAvgrensning)
     ) {
-        console.log('validerdato' + customStartdatoFeilmelding);
         return feil(
             feltState,
             <SpråkTekst
-                id={customStartdatoFeilmelding ?? 'felles.tilogmedfeilformat.feilmelding'}
+                id={
+                    customStartdatoFeilmelding
+                        ? customStartdatoFeilmelding
+                        : 'felles.tilogmedfeilformat.feilmelding'
+                }
             />
         );
     }

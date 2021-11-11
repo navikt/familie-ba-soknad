@@ -33,7 +33,6 @@ const useDatovelgerFeltMedUkjent = (
             const sluttdatoAvgrensning = avhengigheter && avhengigheter.sluttdatoAvgrensning;
             const customStartdatoFeilmelding =
                 avhengigheter && avhengigheter.customStartdatoFeilmelding;
-            console.log('usedatovelge' + customStartdatoFeilmelding);
             return validerDato(
                 felt,
                 feilmeldingSpråkId,

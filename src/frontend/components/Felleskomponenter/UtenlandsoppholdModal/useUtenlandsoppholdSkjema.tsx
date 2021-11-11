@@ -8,14 +8,14 @@ import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjen
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 import {
     harTilhørendeFomFelt,
     hentFomAvgrensningPåTilDato,
     hentTomAvgrensningPåFraDato,
     hentTomAvgrensningPåTilDato,
-} from './UtenlandsoppholdModal';
+} from '../../../utils/utenlandsopphold';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 
 export interface IUseUtenlandsoppholdSkjemaParams {
     årsakFeilmeldingSpråkId: string;
