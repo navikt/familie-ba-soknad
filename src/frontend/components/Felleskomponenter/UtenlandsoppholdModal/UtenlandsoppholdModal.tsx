@@ -13,6 +13,7 @@ import {
     hentTomAvgrensningPåFraDato,
     hentTomAvgrensningPåTilDato,
 } from '../../../utils/utenlandsopphold';
+import AlertStripe from '../AlertStripe/AlertStripe';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import StyledDropdown from '../Dropdowns/StyledDropdown';
@@ -126,6 +127,14 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                     </option>
                 ))}
             </StyledDropdown>
+            {(skjema.felter.utenlandsoppholdÅrsak.verdi ===
+                EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE ||
+                skjema.felter.utenlandsoppholdÅrsak.verdi ===
+                    EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE) && (
+                <AlertStripe>
+                    <SpråkTekst id={'felles.korteopphold.info'} />
+                </AlertStripe>
+            )}
             <LandDropdown
                 felt={skjema.felter.oppholdsland}
                 skjema={skjema}
