@@ -24,6 +24,7 @@ interface DatoVelgerProps {
     felt: Felt<ISODateString>;
     avgrensDatoFremITid?: boolean;
     avgrensMaxDato?: ISODateString;
+    avgrensMinDato?: ISODateString;
     tilhørendeFraOgMedFelt?: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
     labelTekstId: string;
@@ -52,6 +53,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     felt,
     avgrensDatoFremITid = false,
     avgrensMaxDato,
+    avgrensMinDato,
     tilhørendeFraOgMedFelt,
     skjema,
     labelTekstId,
@@ -65,7 +67,9 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     const hentBegrensninger = () => {
         const limitations: DatepickerLimitations = {};
 
-        if (tilhørendeFraOgMedFelt) {
+        if (avgrensMinDato) {
+            limitations.minDate = avgrensMinDato;
+        } else if (tilhørendeFraOgMedFelt) {
             limitations.minDate = dayjs(tilhørendeFraOgMedFelt.verdi)
                 .add(1, 'day')
                 .format('YYYY-MM-DD');

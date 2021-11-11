@@ -2,10 +2,11 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { ESvar } from '@navikt/familie-form-elements';
+import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { IUtenlandsperiode } from '../../../typer/person';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
+import { dagensDato, ettÅrTilbakeDato, gårsdagensDato } from '../../../utils/dato';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -95,6 +96,60 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
         nullstillSkjema();
     };
 
+    const hentFomAvgrensningPåTilDato = (): ISODateString | undefined => {
+        switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
+            case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
+                return ettÅrTilbakeDato();
+            case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+                return undefined;
+            case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+            default:
+                return undefined;
+        }
+    };
+
+    const hentTomAvgrensningPåTilDato = (): ISODateString | undefined => {
+        switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
+            case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
+                return dagensDato();
+            case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+                return dagensDato();
+            case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+            default:
+                return undefined;
+        }
+    };
+
+    const hentFomAvgrensningPåFraDato = (): ISODateString | undefined => {
+        switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
+            case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
+            case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+                return undefined;
+            case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+            default:
+                return undefined;
+        }
+    };
+
+    const hentTomAvgrensningPåFraDato = (): ISODateString | undefined => {
+        switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
+            case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
+            case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+                return gårsdagensDato();
+            case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+            default:
+                return undefined;
+        }
+    };
+
+    const harTilhørendeFomFelt = () => {
+        const årsak = skjema.felter.utenlandsoppholdÅrsak.verdi;
+        return (
+            årsak === EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE ||
+            årsak === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
+        );
+    };
+
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -138,6 +193,8 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                     felt={skjema.felter.oppholdslandFraDato}
                     labelTekstId={fraDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
                     skjema={skjema}
+                    avgrensMinDato={hentFomAvgrensningPåFraDato()}
+                    avgrensMaxDato={hentTomAvgrensningPåFraDato()}
                 />
             )}
             {skjema.felter.oppholdslandTilDato.erSynlig && (
@@ -145,6 +202,11 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                     felt={skjema.felter.oppholdslandTilDato}
                     labelTekstId={tilDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
                     skjema={skjema}
+                    avgrensMinDato={hentFomAvgrensningPåTilDato()}
+                    avgrensMaxDato={hentTomAvgrensningPåTilDato()}
+                    tilhørendeFraOgMedFelt={
+                        harTilhørendeFomFelt() ? skjema.felter.oppholdslandFraDato : undefined
+                    }
                     disabled={skjema.felter.oppholdslandTilDatoUkjent.verdi === ESvar.JA}
                 />
             )}

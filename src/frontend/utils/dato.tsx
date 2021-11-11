@@ -32,6 +32,8 @@ export const erDatoFørEllerSammeSomStartDatoAvgrensning = (
 
 export const gårsdagensDato = () => dayjs().subtract(1, 'day').format('YYYY-MM-DD');
 
+export const ettÅrTilbakeDato = () => dayjs().subtract(1, 'year').format('YYYY-MM-DD');
+
 export const dagensDato = () => dayjs().format('YYYY-MM-DD');
 
 export const validerDato = (
