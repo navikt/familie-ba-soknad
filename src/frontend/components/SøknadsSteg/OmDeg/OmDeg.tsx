@@ -11,10 +11,21 @@ import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
+import {
+    fraDatoFeilmeldingSpråkIdsSøker,
+    fraDatoLabelSpråkIdsSøker,
+    landFeilmeldingSpråkIdsSøker,
+    landLabelSpråkIdsSøker,
+    tilDatoFeilmeldingSpråkIdsSøker,
+    tilDatoLabelSpråkIdsSøker,
+    tilDatoUkjentLabelSpråkIdSøker,
+    årsakFeilmeldingSpråkIdSøker,
+    årsakSpråkIdsSøker,
+} from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
-import { UtenlandsoppholdModalForSøker } from './UtenlandsoppholdModalForSøker';
 
 const OmDeg: React.FC = () => {
     const {
@@ -107,10 +118,20 @@ const OmDeg: React.FC = () => {
                     )}
                 </KomponentGruppe>
             )}
-            <UtenlandsoppholdModalForSøker
+            <UtenlandsoppholdModal
                 erÅpen={erLeggTilOppholdÅpen}
                 toggleModal={toggleLeggTilOppholdModal}
-                leggTilUtenlandsperiode={leggTilUtenlandsperiode}
+                årsakLabelSpråkId={'modal.beskriveopphold.spm'}
+                årsakFeilmeldingSpråkId={årsakFeilmeldingSpråkIdSøker}
+                årsakSpråkIds={årsakSpråkIdsSøker}
+                landLabelSpråkIds={landLabelSpråkIdsSøker}
+                landFeilmeldingSpråkIds={landFeilmeldingSpråkIdsSøker}
+                fraDatoLabelSpråkIds={fraDatoLabelSpråkIdsSøker}
+                fraDatoFeilmeldingSpråkIds={fraDatoFeilmeldingSpråkIdsSøker}
+                tilDatoLabelSpråkIds={tilDatoLabelSpråkIdsSøker}
+                tilDatoFeilmeldingSpråkIds={tilDatoFeilmeldingSpråkIdsSøker}
+                tilDatoUkjentLabelSpråkId={tilDatoUkjentLabelSpråkIdSøker}
+                onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
             />
         </Steg>
     );
