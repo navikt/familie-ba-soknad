@@ -100,9 +100,6 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
         switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
             case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
                 return ettÅrTilbakeDato();
-            case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
-                return undefined;
-            case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
             default:
                 return undefined;
         }
@@ -111,21 +108,8 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     const hentTomAvgrensningPåTilDato = (): ISODateString | undefined => {
         switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
             case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
-                return dagensDato();
             case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
                 return dagensDato();
-            case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
-            default:
-                return undefined;
-        }
-    };
-
-    const hentFomAvgrensningPåFraDato = (): ISODateString | undefined => {
-        switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
-            case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
-            case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
-                return undefined;
-            case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
             default:
                 return undefined;
         }
@@ -134,9 +118,10 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     const hentTomAvgrensningPåFraDato = (): ISODateString | undefined => {
         switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
             case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
+            case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+                return dagensDato();
             case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
                 return gårsdagensDato();
-            case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
             default:
                 return undefined;
         }
@@ -193,7 +178,6 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                     felt={skjema.felter.oppholdslandFraDato}
                     labelTekstId={fraDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
                     skjema={skjema}
-                    avgrensMinDato={hentFomAvgrensningPåFraDato()}
                     avgrensMaxDato={hentTomAvgrensningPåFraDato()}
                 />
             )}
