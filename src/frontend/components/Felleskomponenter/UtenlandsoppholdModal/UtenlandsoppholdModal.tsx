@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { IUtenlandsperiode } from '../../../typer/person';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
+import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import {
     harTilhørendeFomFelt,
@@ -17,7 +18,9 @@ import AlertStripe from '../AlertStripe/AlertStripe';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import StyledDropdown from '../Dropdowns/StyledDropdown';
+import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -112,77 +115,88 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <StyledDropdown<EUtenlandsoppholdÅrsak | ''>
-                {...skjema.felter.utenlandsoppholdÅrsak.hentNavInputProps(skjema.visFeilmeldinger)}
-                felt={skjema.felter.utenlandsoppholdÅrsak}
-                label={<SpråkTekst id={årsakLabelSpråkId} />}
-                skjema={skjema}
-                placeholder={intl.formatMessage({ id: 'felles.velg-årsak.placeholder' })}
-            >
-                {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
-                    <option key={number} value={årsak}>
-                        {intl.formatMessage({
-                            id: årsakSpråkIds[årsak],
-                        })}
-                    </option>
-                ))}
-            </StyledDropdown>
-            {(skjema.felter.utenlandsoppholdÅrsak.verdi ===
-                EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE ||
-                skjema.felter.utenlandsoppholdÅrsak.verdi ===
-                    EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE) && (
-                <AlertStripe>
-                    <SpråkTekst id={'felles.korteopphold.info'} />
-                </AlertStripe>
-            )}
-            <LandDropdown
-                felt={skjema.felter.oppholdsland}
-                skjema={skjema}
-                label={
-                    landLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi] && (
-                        <SpråkTekst
-                            id={landLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
-                        />
-                    )
-                }
-                dynamisk
-            />
-
-            {skjema.felter.oppholdslandFraDato.erSynlig && (
-                <Datovelger
-                    felt={skjema.felter.oppholdslandFraDato}
-                    labelTekstId={fraDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
+            <KomponentGruppe inline>
+                <StyledDropdown<EUtenlandsoppholdÅrsak | ''>
+                    {...skjema.felter.utenlandsoppholdÅrsak.hentNavInputProps(
+                        skjema.visFeilmeldinger
+                    )}
+                    felt={skjema.felter.utenlandsoppholdÅrsak}
+                    label={<SpråkTekst id={årsakLabelSpråkId} />}
                     skjema={skjema}
-                    avgrensMaxDato={hentTomAvgrensningPåFraDato(
-                        skjema.felter.utenlandsoppholdÅrsak.verdi
-                    )}
-                />
-            )}
-            {skjema.felter.oppholdslandTilDato.erSynlig && (
-                <Datovelger
-                    felt={skjema.felter.oppholdslandTilDato}
-                    labelTekstId={tilDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
+                    placeholder={intl.formatMessage({ id: 'felles.velg-årsak.placeholder' })}
+                >
+                    {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
+                        <option key={number} value={årsak}>
+                            {intl.formatMessage({
+                                id: årsakSpråkIds[årsak],
+                            })}
+                        </option>
+                    ))}
+                </StyledDropdown>
+                {(skjema.felter.utenlandsoppholdÅrsak.verdi ===
+                    EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE ||
+                    skjema.felter.utenlandsoppholdÅrsak.verdi ===
+                        EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE) && (
+                    <AlertStripe>
+                        <SpråkTekst id={'felles.korteopphold.info'} />
+                    </AlertStripe>
+                )}
+            </KomponentGruppe>
+            <KomponentGruppe inline>
+                <LandDropdown
+                    felt={skjema.felter.oppholdsland}
                     skjema={skjema}
-                    avgrensMinDato={hentFomAvgrensningPåTilDato(
-                        skjema.felter.utenlandsoppholdÅrsak.verdi
-                    )}
-                    avgrensMaxDato={hentTomAvgrensningPåTilDato(
-                        skjema.felter.utenlandsoppholdÅrsak.verdi
-                    )}
-                    tilhørendeFraOgMedFelt={
-                        harTilhørendeFomFelt(skjema.felter.utenlandsoppholdÅrsak.verdi)
-                            ? skjema.felter.oppholdslandFraDato
-                            : undefined
+                    label={
+                        landLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi] && (
+                            <SpråkTekst
+                                id={landLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
+                            />
+                        )
                     }
-                    disabled={skjema.felter.oppholdslandTilDatoUkjent.verdi === ESvar.JA}
+                    dynamisk
                 />
-            )}
-            {skjema.felter.oppholdslandTilDatoUkjent.erSynlig && (
-                <SkjemaCheckbox
-                    felt={skjema.felter.oppholdslandTilDatoUkjent}
-                    labelSpråkTekstId={tilDatoUkjentLabelSpråkId}
-                />
-            )}
+
+                {skjema.felter.oppholdslandFraDato.erSynlig && (
+                    <Datovelger
+                        felt={skjema.felter.oppholdslandFraDato}
+                        labelTekstId={
+                            fraDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]
+                        }
+                        skjema={skjema}
+                        avgrensMaxDato={hentTomAvgrensningPåFraDato(
+                            skjema.felter.utenlandsoppholdÅrsak.verdi
+                        )}
+                    />
+                )}
+                {skjema.felter.oppholdslandTilDato.erSynlig && (
+                    <Datovelger
+                        felt={skjema.felter.oppholdslandTilDato}
+                        labelTekstId={
+                            tilDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]
+                        }
+                        skjema={skjema}
+                        avgrensMinDato={hentFomAvgrensningPåTilDato(
+                            skjema.felter.utenlandsoppholdÅrsak.verdi
+                        )}
+                        avgrensMaxDato={hentTomAvgrensningPåTilDato(
+                            skjema.felter.utenlandsoppholdÅrsak.verdi
+                        )}
+                        tilhørendeFraOgMedFelt={
+                            harTilhørendeFomFelt(skjema.felter.utenlandsoppholdÅrsak.verdi)
+                                ? skjema.felter.oppholdslandFraDato
+                                : undefined
+                        }
+                        disabled={skjema.felter.oppholdslandTilDatoUkjent.verdi === ESvar.JA}
+                    />
+                )}
+                {skjema.felter.oppholdslandTilDatoUkjent.erSynlig && (
+                    <SkjemaCheckbox
+                        felt={skjema.felter.oppholdslandTilDatoUkjent}
+                        labelSpråkTekstId={tilDatoUkjentLabelSpråkId}
+                    />
+                )}
+            </KomponentGruppe>
+            {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );
 };

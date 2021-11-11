@@ -41,8 +41,9 @@ export const fraDatoFeilmeldingSpråkIdsSøker: Record<
     string
 > = {
     [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: 'modal.nårflyttetfra.feilmelding',
-    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]: 'modal.nårflyttetfra.feilmelding',
-    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'modal.nårflyttetfra.feilmelding',
+    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]:
+        'felles.nårstartetoppholdet.feilmelding',
+    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'felles.nårstartetoppholdet.feilmelding',
 };
 export const tilDatoLabelSpråkIdsSøker: Record<
     Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE>,

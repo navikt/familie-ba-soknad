@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -43,6 +43,10 @@ export const useUtenlandsoppholdSkjema = ({
             felt.verdi !== '' ? ok(felt) : feil(felt, <SpråkTekst id={årsakFeilmeldingSpråkId} />),
     });
 
+    useEffect(() => {
+        skjema.settVisfeilmeldinger(false);
+    }, [utenlandsoppholdÅrsak.verdi]);
+
     const oppholdsland = useLanddropdownFelt(
         { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
         landFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
@@ -50,8 +54,6 @@ export const useUtenlandsoppholdSkjema = ({
         true
     );
 
-    // TODO: Datovaldiering
-    // TODO: Feilmeldinger basert på datovalidering
     const oppholdslandFraDato = useDatovelgerFelt(
         {
             id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
@@ -66,8 +68,6 @@ export const useUtenlandsoppholdSkjema = ({
         true
     );
 
-    // TODO: Datovaldiering
-    // TODO: Feilmeldinger basert på datovalidering
     const oppholdslandTilDatoUkjent = useFelt<ESvar>({
         verdi: ESvar.NEI,
         feltId: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsoppholdVetIkke,
@@ -78,8 +78,6 @@ export const useUtenlandsoppholdSkjema = ({
         avhengigheter: { utenlandsoppholdÅrsak },
     });
 
-    // TODO: Datovaldiering
-    // TODO: Feilmeldinger basert på datovalidering
     const oppholdslandTilDato = useDatovelgerFeltMedUkjent(
         UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
         '',
@@ -94,7 +92,7 @@ export const useUtenlandsoppholdSkjema = ({
             : hentFomAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
         !harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
             ? 'modal.nårflyttettilnorge.mer-enn-ett-år.feilmelding'
-            : '',
+            : undefined,
         { utenlandsoppholdÅrsak }
     );
 
