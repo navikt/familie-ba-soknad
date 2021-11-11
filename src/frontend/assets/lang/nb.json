@@ -338,6 +338,7 @@
   "modal.nårflyttetfra.feilmelding": "Du må oppgi når du flyttet fra Norge for å gå videre",
   "modal.nårflyttetfra.spm": "Når flyttet du fra Norge?",
   "modal.nårflyttettilnorge.feilmelding": "Du må oppgi når du flyttet til Norge for å gå videre",
+  "modal.nårflyttettilnorge.mer-enn-ett-år.feilmelding": "Du kan ikke velge en dato som er mer enn tolv måneder siden",
   "modal.nårflyttettilnorge.spm": "Når flyttet du til Norge?",
   "modal.oppholdalternativ.flyttetfranorge": "Jeg har flyttet permanent fra Norge",
   "modal.oppholdalternativ.flyttettilnorge": "Jeg har flyttet permanent til Norge de siste tolv månedene",

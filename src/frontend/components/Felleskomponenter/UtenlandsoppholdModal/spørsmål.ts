@@ -56,7 +56,7 @@ export const tilDatoFeilmeldingSpråkIdsSøker: Record<
     Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE>,
     string
 > = {
-    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: '',
+    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: 'modal.nårflyttettilnorge.feilmelding',
     [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]:
         'felles.nåravsluttetoppholdet.feilmelding',
     [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]:

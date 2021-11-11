@@ -14,6 +14,7 @@ const useDatovelgerFeltMedUkjent = (
     nullstillVedAvhengighetEndring = true,
     sluttdatoAvgrensning = '',
     startdatoAvgrensning = '',
+    customStartdatoFeilmelding = '',
     avhengigheter?: Avhengigheter
 ) => {
     const datoFelt = useFelt<ISODateString>({
@@ -30,12 +31,15 @@ const useDatovelgerFeltMedUkjent = (
 
             const startdatoAvgrensning = avhengigheter && avhengigheter.startdatoAvgrensning;
             const sluttdatoAvgrensning = avhengigheter && avhengigheter.sluttdatoAvgrensning;
-
+            const customStartdatoFeilmelding =
+                avhengigheter && avhengigheter.customStartdatoFeilmelding;
+            console.log('usedatovelge' + customStartdatoFeilmelding);
             return validerDato(
                 felt,
                 feilmeldingSpråkId,
                 startdatoAvgrensning,
-                sluttdatoAvgrensning
+                sluttdatoAvgrensning,
+                customStartdatoFeilmelding
             );
         },
         avhengigheter: {
@@ -43,6 +47,7 @@ const useDatovelgerFeltMedUkjent = (
             skalFeltetVises,
             startdatoAvgrensning,
             sluttdatoAvgrensning,
+            customStartdatoFeilmelding,
             ...avhengigheter,
         },
         nullstillVedAvhengighetEndring,

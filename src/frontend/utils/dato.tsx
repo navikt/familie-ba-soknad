@@ -40,7 +40,8 @@ export const validerDato = (
     feltState: FeltState<string>,
     feilmeldingSpråkId: string,
     startdatoAvgrensning = '',
-    sluttdatoAvgrensning = ''
+    sluttdatoAvgrensning = '',
+    customStartdatoFeilmelding = ''
 ): FeltState<string> => {
     if (feltState.verdi === '') {
         return feil(feltState, feilmeldingSpråkId ? <SpråkTekst id={feilmeldingSpråkId} /> : '');
@@ -67,7 +68,13 @@ export const validerDato = (
         !!startdatoAvgrensning &&
         erDatoFørEllerSammeSomStartDatoAvgrensning(feltState.verdi, startdatoAvgrensning)
     ) {
-        return feil(feltState, <SpråkTekst id={'felles.tilogmedfeilformat.feilmelding'} />);
+        console.log('validerdato' + customStartdatoFeilmelding);
+        return feil(
+            feltState,
+            <SpråkTekst
+                id={customStartdatoFeilmelding ?? 'felles.tilogmedfeilformat.feilmelding'}
+            />
+        );
     }
     return ok(feltState);
 };

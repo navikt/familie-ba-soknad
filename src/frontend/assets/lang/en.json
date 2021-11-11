@@ -338,6 +338,7 @@
   "modal.nårflyttetfra.feilmelding": "You must state when you moved from Norway in order to be able to proceed",
   "modal.nårflyttetfra.spm": "When did you move from Norway?",
   "modal.nårflyttettilnorge.feilmelding": "You must state when you moved to Norway in order to be able to proceed",
+  "modal.nårflyttettilnorge.mer-enn-ett-år.feilmelding": "You cannot enter a date that is more than twelve months ago",
   "modal.nårflyttettilnorge.spm": "When did you move to Norway?",
   "modal.oppholdalternativ.flyttetfranorge": "I have moved permanently from Norway",
   "modal.oppholdalternativ.flyttettilnorge": "I have permanently moved to Norway during the last twelve months",

@@ -37,6 +37,51 @@ interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaP
     onLeggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
 }
 
+export const hentTomAvgrensningPåFraDato = (
+    utenlandsoppÅrsak: EUtenlandsoppholdÅrsak | ''
+): ISODateString | undefined => {
+    switch (utenlandsoppÅrsak) {
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
+        case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+            return dagensDato();
+        case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+            return gårsdagensDato();
+        default:
+            return undefined;
+    }
+};
+export const hentFomAvgrensningPåTilDato = (
+    utenlandsoppÅrsak: EUtenlandsoppholdÅrsak | ''
+): ISODateString | undefined => {
+    switch (utenlandsoppÅrsak) {
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
+            return ettÅrTilbakeDato();
+        default:
+            return undefined;
+    }
+};
+
+export const hentTomAvgrensningPåTilDato = (
+    utenlandsoppÅrsak: EUtenlandsoppholdÅrsak | ''
+): ISODateString | undefined => {
+    switch (utenlandsoppÅrsak) {
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
+        case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+            return dagensDato();
+        default:
+            return undefined;
+    }
+};
+
+export const harTilhørendeFomFelt = (
+    utenlandsoppholdÅrsak: EUtenlandsoppholdÅrsak | ''
+): boolean => {
+    return (
+        utenlandsoppholdÅrsak === EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE ||
+        utenlandsoppholdÅrsak === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
+    );
+};
+
 export const UtenlandsoppholdModal: React.FC<Props> = ({
     landFeilmeldingSpråkIds,
     årsakFeilmeldingSpråkId,
@@ -96,45 +141,6 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
         nullstillSkjema();
     };
 
-    const hentFomAvgrensningPåTilDato = (): ISODateString | undefined => {
-        switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
-            case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
-                return ettÅrTilbakeDato();
-            default:
-                return undefined;
-        }
-    };
-
-    const hentTomAvgrensningPåTilDato = (): ISODateString | undefined => {
-        switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
-            case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
-            case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
-                return dagensDato();
-            default:
-                return undefined;
-        }
-    };
-
-    const hentTomAvgrensningPåFraDato = (): ISODateString | undefined => {
-        switch (skjema.felter.utenlandsoppholdÅrsak.verdi) {
-            case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
-            case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
-                return dagensDato();
-            case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
-                return gårsdagensDato();
-            default:
-                return undefined;
-        }
-    };
-
-    const harTilhørendeFomFelt = () => {
-        const årsak = skjema.felter.utenlandsoppholdÅrsak.verdi;
-        return (
-            årsak === EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE ||
-            årsak === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
-        );
-    };
-
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -178,7 +184,9 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                     felt={skjema.felter.oppholdslandFraDato}
                     labelTekstId={fraDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
                     skjema={skjema}
-                    avgrensMaxDato={hentTomAvgrensningPåFraDato()}
+                    avgrensMaxDato={hentTomAvgrensningPåFraDato(
+                        skjema.felter.utenlandsoppholdÅrsak.verdi
+                    )}
                 />
             )}
             {skjema.felter.oppholdslandTilDato.erSynlig && (
@@ -186,10 +194,16 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                     felt={skjema.felter.oppholdslandTilDato}
                     labelTekstId={tilDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
                     skjema={skjema}
-                    avgrensMinDato={hentFomAvgrensningPåTilDato()}
-                    avgrensMaxDato={hentTomAvgrensningPåTilDato()}
+                    avgrensMinDato={hentFomAvgrensningPåTilDato(
+                        skjema.felter.utenlandsoppholdÅrsak.verdi
+                    )}
+                    avgrensMaxDato={hentTomAvgrensningPåTilDato(
+                        skjema.felter.utenlandsoppholdÅrsak.verdi
+                    )}
                     tilhørendeFraOgMedFelt={
-                        harTilhørendeFomFelt() ? skjema.felter.oppholdslandFraDato : undefined
+                        harTilhørendeFomFelt(skjema.felter.utenlandsoppholdÅrsak.verdi)
+                            ? skjema.felter.oppholdslandFraDato
+                            : undefined
                     }
                     disabled={skjema.felter.oppholdslandTilDatoUkjent.verdi === ESvar.JA}
                 />
