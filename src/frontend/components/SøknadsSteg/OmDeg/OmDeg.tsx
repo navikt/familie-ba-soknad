@@ -28,6 +28,10 @@ import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
+    const { søknad } = useApp();
+    const { søker } = søknad;
+    const { erÅpen, toggleModal } = useModal();
+
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -36,9 +40,7 @@ const OmDeg: React.FC = () => {
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode, // TODO: skal brukes i fjern periode knapp
     } = useOmdeg();
-    const { søknad } = useApp();
-    const { søker } = søknad;
-    const { erÅpen: erLeggTilOppholdÅpen, toggleModal: toggleLeggTilOppholdModal } = useModal();
+
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
@@ -100,7 +102,7 @@ const OmDeg: React.FC = () => {
                         {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                             <LeggTilKnapp
                                 språkTekst="eøs.leggtilendaflereutenlandsopphold.knapp"
-                                onClick={toggleLeggTilOppholdModal}
+                                onClick={toggleModal}
                             />
                         )}
                     </>
@@ -119,8 +121,8 @@ const OmDeg: React.FC = () => {
                 </KomponentGruppe>
             )}
             <UtenlandsoppholdModal
-                erÅpen={erLeggTilOppholdÅpen}
-                toggleModal={toggleLeggTilOppholdModal}
+                erÅpen={erÅpen}
+                toggleModal={toggleModal}
                 årsakLabelSpråkId={'modal.beskriveopphold.spm'}
                 årsakFeilmeldingSpråkId={årsakFeilmeldingSpråkIdSøker}
                 årsakSpråkIds={årsakSpråkIdsSøker}
