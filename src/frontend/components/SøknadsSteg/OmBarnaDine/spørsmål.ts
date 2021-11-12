@@ -27,9 +27,8 @@ export const omBarnaDineSpørsmålSpråkId: Record<OmBarnaDineSpørsmålId, stri
     [OmBarnaDineSpørsmålId.søktAsylForBarn]: 'ombarna.asyl.spm',
     [OmBarnaDineSpørsmålId.hvemErSøktAsylFor]: 'ombarna.asyl.hvem.spm',
     [OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge]:
-        'ombarna.sammenhengende-opphold.spm',
-    [OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge]:
-        'ombarna.sammenhengende-opphold.hvem.spm',
+        'ombarna.oppholdtsammenhengende.spm',
+    [OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge]: 'ombarna.hvemavbarnaoppholdt.spm',
     [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]: 'ombarna.barnetrygd-eøs.spm',
     [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]: 'ombarna.barnetrygd-eøs.hvem.spm',
     [OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder]: 'ombarna.enkeenkemann.oppgitt.spm',

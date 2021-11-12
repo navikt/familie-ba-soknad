@@ -164,6 +164,12 @@ const OmBarnaDine: React.FC = () => {
                             ]
                         }
                     />
+                    {skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi ===
+                        ESvar.NEI && (
+                        <AlertStripe>
+                            <SpråkTekst id={'felles.korteopphold.info'} />
+                        </AlertStripe>
+                    )}
                     <HvilkeBarnCheckboxGruppe
                         legendSpråkId={
                             omBarnaDineSpørsmålSpråkId[
