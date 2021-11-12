@@ -118,19 +118,25 @@ const OmDeg: React.FC = () => {
                             </>
                         )}
                     </>
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
-                        spørsmålTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
-                        }
-                    />
-                    {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig &&
-                        skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                            <AlertStripe type={'advarsel'} dynamisk>
-                                <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
-                            </AlertStripe>
-                        )}
+                    {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
+                        <KomponentGruppe inline dynamisk>
+                            <JaNeiSpm
+                                skjema={skjema}
+                                felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
+                                spørsmålTekstId={
+                                    omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
+                                }
+                            />
+                            {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig &&
+                                skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
+                                    <AlertStripe type={'advarsel'} dynamisk>
+                                        <SpråkTekst
+                                            id={'omdeg.planlagt-opphold-sammenhengende.alert'}
+                                        />
+                                    </AlertStripe>
+                                )}
+                        </KomponentGruppe>
+                    )}
                 </KomponentGruppe>
             )}
             <UtenlandsoppholdModal

@@ -78,9 +78,11 @@ export const useOmdeg = (): {
             ...(!søker.adressebeskyttelse && {
                 borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
             }),
+            værtINorgeITolvMåneder: { hovedSpørsmål: værtINorgeITolvMåneder },
         },
         borPåRegistrertAdresse.verdi === ESvar.NEI,
-        søkerFlyttetPermanentFraNorge()
+        søkerFlyttetPermanentFraNorge() ||
+            (værtINorgeITolvMåneder.verdi === ESvar.NEI && !utenlandsperioder.length)
     );
 
     const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
