@@ -242,15 +242,11 @@ export const mekkGyldigSøknad = (): ISøknad => {
             svar: ESvar.NEI,
         },
         erBarnAdoptertFraUtland: {
-            id: OmBarnaDineSpørsmålId.oppholderBarnSegIUtland,
+            id: OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland,
             svar: ESvar.NEI,
         },
         søktAsylForBarn: {
             id: OmBarnaDineSpørsmålId.søktAsylForBarn,
-            svar: ESvar.NEI,
-        },
-        oppholderBarnSegIUtland: {
-            id: OmBarnaDineSpørsmålId.oppholderBarnSegIUtland,
             svar: ESvar.NEI,
         },
         mottarBarnetrygdForBarnFraAnnetEøsland: {
