@@ -134,26 +134,6 @@ export const useOmBarnet = (
     );
 
     /*---BODD SAMMENHENGENDE I NORGE---*/
-    const nårKomBarnTilNorgeDatoIkkeAnkommet = useFelt<ESvar>({
-        verdi:
-            barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar === AlternativtSvarForInput.UKJENT
-                ? ESvar.JA
-                : ESvar.NEI,
-        feltId: OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet,
-    });
-
-    const nårKomBarnTilNorgeDato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].id,
-        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar !== AlternativtSvarForInput.UKJENT
-            ? barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar
-            : '',
-        nårKomBarnTilNorgeDatoIkkeAnkommet,
-        'ombarnet.sammenhengende-opphold.dato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge),
-        false,
-        dagensDato()
-    );
-
     const planleggerÅBoINorge12Mnd = useFelt<ESvar | null>({
         feltId: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].id,
         verdi: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar,
@@ -535,8 +515,6 @@ export const useOmBarnet = (
             institusjonOppholdStartdato,
             institusjonOppholdSluttdato,
             institusjonOppholdSluttVetIkke,
-            nårKomBarnTilNorgeDato,
-            nårKomBarnTilNorgeDatoIkkeAnkommet,
             planleggerÅBoINorge12Mnd,
             barnetrygdFraEøslandHvilketLand,
             andreForelderNavn,
@@ -616,13 +594,6 @@ export const useOmBarnet = (
                               svar: svarForSpørsmålMedUkjent(
                                   institusjonOppholdSluttVetIkke,
                                   institusjonOppholdSluttdato
-                              ),
-                          },
-                          nårKomBarnTilNorgeDato: {
-                              ...barn.nårKomBarnTilNorgeDato,
-                              svar: svarForSpørsmålMedUkjent(
-                                  nårKomBarnTilNorgeDatoIkkeAnkommet,
-                                  nårKomBarnTilNorgeDato
                               ),
                           },
                           planleggerÅBoINorge12Mnd: {

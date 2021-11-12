@@ -111,7 +111,6 @@ export enum barnDataKeySpørsmål {
     institusjonOppholdStartdato = 'institusjonOppholdStartdato',
     institusjonOppholdSluttdato = 'institusjonOppholdSluttdato',
     boddMindreEnn12MndINorge = 'boddMindreEnn12MndINorge',
-    nårKomBarnTilNorgeDato = 'nårKomBarnTilNorgeDato',
     planleggerÅBoINorge12Mnd = 'planleggerÅBoINorge12Mnd',
     andreForelderNavn = 'andreForelderNavn',
     andreForelderFnr = 'andreForelderFnr',

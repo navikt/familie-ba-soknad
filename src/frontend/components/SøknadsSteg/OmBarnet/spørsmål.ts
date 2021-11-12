@@ -5,8 +5,6 @@ export enum OmBarnetSpørsmålsId {
     institusjonOppholdStartdato = 'institusjon-opphold-startdato',
     institusjonOppholdSluttdato = 'institusjon-opphold-sluttdato',
     institusjonOppholdVetIkke = 'institusjon-opphold-ukjent-sluttdato',
-    nårKomBarnetTilNorge = 'når-kom-barnet-til-norge',
-    nårKomBarnetTilNorgeIkkeAnkommet = 'ombarnet.sammenhengende-opphold.dato.ikkekommetenda',
     planleggerÅBoINorge12Mnd = 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
     barnetrygdFraEøslandHvilketLand = 'barnetrygd-hvilket-eøsland',
     andreForelderNavn = 'andre-forelder-navn',
@@ -41,9 +39,6 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.institusjonOppholdStartdato]: 'ombarnet.institusjon.startdato.spm',
     [OmBarnetSpørsmålsId.institusjonOppholdSluttdato]: 'ombarnet.institusjon.sluttdato.spm',
     [OmBarnetSpørsmålsId.institusjonOppholdVetIkke]: 'ombarnet.institusjon.ukjent-sluttdato.spm',
-    [OmBarnetSpørsmålsId.nårKomBarnetTilNorge]: 'ombarnet.sammenhengende-opphold.dato.spm',
-    [OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet]:
-        'ombarnet.sammenhengende-opphold.dato.ikkekommetenda',
     [OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]: 'ombarnet.planlagt-sammenhengende-opphold.spm',
     [OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand]: 'ombarnet.barnetrygd-eøs.land.spm',
     [OmBarnetSpørsmålsId.andreForelderNavn]: 'ombarnet.andre-forelder.navn.spm',

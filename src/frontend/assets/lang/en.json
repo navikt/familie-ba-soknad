@@ -506,7 +506,7 @@
   "ombarnet.oppholdutland.startdato.feilmelding": "You must state when the stay abroad started in order to be able to proceed",
   "ombarnet.oppholdutland.startdato.spm": "When did the stay abroad start?",
   "ombarnet.oppholdutland.ukjent-sluttdato.spm": "I don't know when the stay abroad is ending",
-  "ombarnet.opplystatbarnutlandopphold.info": "You have stated that {barn} has stayed outside of Norway during the last twelve months.",
+  "ombarnet.opplystatbarnutlandopphold.info": "You have stated that {navn} has stayed outside of Norway during the last twelve months.",
   "ombarnet.planlagt-sammenhengende-opphold.alert": "Because you plan that the child will live in Norway for less than 12 consecutive months, you are not entitled to child benefit, as a general rule. You may nevertheless be entitled to child benefit if you have moved to Norway from a Nordic country or from an EEA country.",
   "ombarnet.planlagt-sammenhengende-opphold.feilmelding": "You must state if it is planned that the child will live in Norway continuously for more than 12 months in order to be able to proceed",
   "ombarnet.planlagt-sammenhengende-opphold.spm": "Is it planned that the child will live in Norway continuously for more than 12 months?",

@@ -506,7 +506,7 @@
   "ombarnet.oppholdutland.startdato.feilmelding": "Du må oppgje når utenlandsopphaldet starta for å gå vidare",
   "ombarnet.oppholdutland.startdato.spm": "Når starta utenlandsopphaldet?",
   "ombarnet.oppholdutland.ukjent-sluttdato.spm": "Eg veit ikkje når utenlandsopphaldet avsluttast",
-  "ombarnet.opplystatbarnutlandopphold.info": "Du har opplyst at {barn} har oppheldt seg utanfor Noreg i løpet av dei siste tolv månadene.",
+  "ombarnet.opplystatbarnutlandopphold.info": "Du har opplyst at {navn} har oppheldt seg utanfor Noreg i løpet av dei siste tolv månadene.",
   "ombarnet.planlagt-sammenhengende-opphold.alert": "Fordi du planlegg at barnet skal vere i Noreg i mindre enn tolv månadar samanhengande, har du som hovudregel ikkje rett til barnetrygd. Du kan likevel ha rett til barnetrygd dersom du har flytta til Noreg frå eit nordisk land eller frå eit EØS land.",
   "ombarnet.planlagt-sammenhengende-opphold.feilmelding": "Du må oppgje om det er planlagd at barnet skal bu i Noreg samanhengande i meir enn tolv månadar for å gå vidare",
   "ombarnet.planlagt-sammenhengende-opphold.spm": "Er det planlagd at barnet skal bu i Noreg samanhengande i meir enn tolv månadar?",

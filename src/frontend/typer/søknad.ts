@@ -60,7 +60,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.institusjonOppholdStartdato]: ISøknadSpørsmål<ISODateString>;
     [barnDataKeySpørsmål.institusjonOppholdSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
     [barnDataKeySpørsmål.andreForelderNavn]: ISøknadSpørsmål<

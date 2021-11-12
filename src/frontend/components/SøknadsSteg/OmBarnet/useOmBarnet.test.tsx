@@ -97,13 +97,11 @@ describe('useOmBarnet', () => {
         const {
             current: {
                 skjema: {
-                    felter: { nårKomBarnTilNorgeDato, planleggerÅBoINorge12Mnd },
+                    felter: { planleggerÅBoINorge12Mnd },
                 },
             },
         } = result;
 
-        expect(nårKomBarnTilNorgeDato.verdi).toEqual('');
-        expect(nårKomBarnTilNorgeDato.erSynlig).toEqual(false);
         expect(planleggerÅBoINorge12Mnd.verdi).toEqual(null);
         expect(planleggerÅBoINorge12Mnd.erSynlig).toEqual(false);
 
