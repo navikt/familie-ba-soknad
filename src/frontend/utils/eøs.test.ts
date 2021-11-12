@@ -39,7 +39,6 @@ describe('eøs', () => {
                 'ALA',
                 'ALA',
                 'BEL',
-                'BEL',
                 'DEU',
                 'DEU',
             ]);
