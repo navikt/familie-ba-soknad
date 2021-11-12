@@ -39,7 +39,8 @@ const OmDeg: React.FC = () => {
         valideringErOk,
         oppdaterSøknad,
         leggTilUtenlandsperiode,
-        fjernUtenlandsperiode, // TODO: skal brukes i fjern periode knapp
+        fjernUtenlandsperiode,
+        utenlandsperioder,
     } = useOmdeg();
 
     return (
@@ -101,19 +102,21 @@ const OmDeg: React.FC = () => {
                             }
                         />
                         {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
-                            <LeggTilKnapp
-                                språkTekst="eøs.leggtilendaflereutenlandsopphold.knapp"
-                                onClick={toggleModal}
-                            />
+                            <>
+                                <LeggTilKnapp
+                                    språkTekst="eøs.leggtilendaflereutenlandsopphold.knapp"
+                                    onClick={toggleModal}
+                                />
+                                {utenlandsperioder.map((periode, index) => (
+                                    <UtenlandsperiodeSøkerOppsummering
+                                        key={index}
+                                        periode={periode}
+                                        nummer={index + 1}
+                                        fjernPeriodeCallback={fjernUtenlandsperiode}
+                                    />
+                                ))}
+                            </>
                         )}
-                        {søknad.søker.utenlandsperioder.map((periode, index) => (
-                            <UtenlandsperiodeSøkerOppsummering
-                                key={index}
-                                periode={periode}
-                                nummer={index + 1}
-                                fjernPeriodeCallback={fjernUtenlandsperiode}
-                            />
-                        ))}
                     </>
                     <JaNeiSpm
                         skjema={skjema}

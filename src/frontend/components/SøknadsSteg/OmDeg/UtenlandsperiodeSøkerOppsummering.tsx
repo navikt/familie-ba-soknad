@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { Flatknapp } from 'nav-frontend-knapper';
@@ -11,6 +12,7 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 import { IUtenlandsperiode } from '../../../typer/person';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
+import { formaterDatoMedUkjent } from '../../../utils/visning';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
@@ -18,6 +20,7 @@ import {
     årsakSpråkIdsSøker,
     fraDatoLabelSpråkIdsSøker,
     tilDatoLabelSpråkIdsSøker,
+    tilDatoUkjentLabelSpråkIdSøker,
 } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 
 const StyledElement = styled(Element)`
@@ -48,6 +51,7 @@ export const UtenlandsperiodeSøkerOppsummering: React.FC<{
     fjernPeriodeCallback: (periode: IUtenlandsperiode) => void;
 }> = ({ periode, nummer, fjernPeriodeCallback }) => {
     const [valgtLocale] = useSprakContext();
+    const { formatMessage } = useIntl();
     const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
         periode;
     const årsak = utenlandsoppholdÅrsak.svar;
@@ -75,7 +79,12 @@ export const UtenlandsperiodeSøkerOppsummering: React.FC<{
             {oppholdslandTilDato && (
                 <Informasjonsbolk>
                     <Spørsmål språkId={tilDatoLabelSpråkIdsSøker[årsak]} />
-                    <Normaltekst>{formaterDato(oppholdslandTilDato.svar)}</Normaltekst>
+                    <Normaltekst>
+                        {formaterDatoMedUkjent(
+                            oppholdslandTilDato.svar,
+                            formatMessage({ id: tilDatoUkjentLabelSpråkIdSøker })
+                        )}
+                    </Normaltekst>
                 </Informasjonsbolk>
             )}{' '}
             <SlettKnapp htmlType={'button'} kompakt onClick={() => fjernPeriodeCallback(periode)}>
