@@ -1,7 +1,8 @@
+import path from 'path';
+
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpack from 'webpack';
 import { CustomizeRule, mergeWithRules } from 'webpack-merge';
-import { WebpackPluginServe } from 'webpack-plugin-serve';
 
 import baseConfig from './webpack.common.config';
 
@@ -15,13 +16,37 @@ const devConfig: webpack.Configuration = mergeWithRules({
 })(baseConfig, {
     mode: 'development',
     entry: {
-        main: ['webpack-plugin-serve/client', './src/frontend/index.tsx'],
-        disabled: ['webpack-plugin-serve/client', './src/frontend/disabled.tsx'],
+        main: ['./src/frontend/index.tsx'],
+        disabled: ['./src/frontend/disabled.tsx'],
     },
-    devtool: 'inline-source-map',
-    plugins: [new ReactRefreshWebpackPlugin(), new WebpackPluginServe({ port: 55554 })],
+    output: {
+        filename: '[name].js',
+        path: path.resolve(process.cwd(), 'dist/'),
+        pathinfo: false,
+    },
+    devtool: 'eval-source-map',
+    devServer: {
+        hot: true,
+        port: 55554,
+        client: {
+            progress: true,
+            overlay: true,
+        },
+        open: true,
+        historyApiFallback: true,
+        proxy: {
+            '/modellversjon': 'http://localhost:3000',
+            '/api': 'http://localhost:3000',
+            '/toggles': 'http://localhost:3000',
+            '/konverter': 'http://localhost:3000',
+        },
+    },
+    plugins: [new ReactRefreshWebpackPlugin()],
     optimization: {
-        runtimeChunk: 'single',
+        runtimeChunk: true,
+        removeAvailableModules: false,
+        removeEmptyChunks: false,
+        splitChunks: false,
     },
     module: {
         rules: [
@@ -36,9 +61,8 @@ const devConfig: webpack.Configuration = mergeWithRules({
             },
         ],
     },
-    watch: true,
     watchOptions: {
-        ignored: ['/node_modules/**', 'src/backend/**'],
+        ignored: ['/node_modules/**', 'src/backend/**', 'dist/**', 'build/**'],
     },
 });
 
