@@ -11,9 +11,9 @@ import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import {
     harTilhørendeFomFelt,
-    hentFomAvgrensningPåTilDato,
-    hentTomAvgrensningPåFraDato,
-    hentTomAvgrensningPåTilDato,
+    hentMinAvgrensningPåTilDato,
+    hentMaxAvgrensningPåFraDato,
+    hentMaxAvgrensningPåTilDato,
 } from '../../../utils/utenlandsopphold';
 import AlertStripe from '../AlertStripe/AlertStripe';
 import Datovelger from '../Datovelger/Datovelger';
@@ -170,7 +170,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                             fraDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]
                         }
                         skjema={skjema}
-                        avgrensMaxDato={hentTomAvgrensningPåFraDato(
+                        avgrensMaxDato={hentMaxAvgrensningPåFraDato(
                             skjema.felter.utenlandsoppholdÅrsak.verdi
                         )}
                         calendarPosition={'fullscreen'}
@@ -184,10 +184,10 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                 tilDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]
                             }
                             skjema={skjema}
-                            avgrensMinDato={hentFomAvgrensningPåTilDato(
+                            avgrensMinDato={hentMinAvgrensningPåTilDato(
                                 skjema.felter.utenlandsoppholdÅrsak.verdi
                             )}
-                            avgrensMaxDato={hentTomAvgrensningPåTilDato(
+                            avgrensMaxDato={hentMaxAvgrensningPåTilDato(
                                 skjema.felter.utenlandsoppholdÅrsak.verdi
                             )}
                             tilhørendeFraOgMedFelt={

@@ -10,9 +10,9 @@ import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import {
     harTilhørendeFomFelt,
-    hentFomAvgrensningPåTilDato,
-    hentTomAvgrensningPåFraDato,
-    hentTomAvgrensningPåTilDato,
+    hentMinAvgrensningPåTilDato,
+    hentMaxAvgrensningPåFraDato,
+    hentMaxAvgrensningPåTilDato,
 } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from './spørsmål';
@@ -62,7 +62,7 @@ export const useUtenlandsoppholdSkjema = ({
         !!utenlandsoppholdÅrsak.verdi &&
             utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE,
         fraDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
-        hentTomAvgrensningPåFraDato(utenlandsoppholdÅrsak.verdi),
+        hentMaxAvgrensningPåFraDato(utenlandsoppholdÅrsak.verdi),
         undefined,
         { utenlandsoppholdÅrsak },
         true
@@ -86,10 +86,10 @@ export const useUtenlandsoppholdSkjema = ({
         !!utenlandsoppholdÅrsak.verdi &&
             utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE,
         true,
-        hentTomAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
+        hentMaxAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
         harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
             ? oppholdslandFraDato.verdi
-            : hentFomAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
+            : hentMinAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
         !harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
             ? 'modal.nårflyttettilnorge.mer-enn-ett-år.feilmelding'
             : undefined,

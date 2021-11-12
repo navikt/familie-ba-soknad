@@ -3,7 +3,7 @@ import { ISODateString } from '@navikt/familie-form-elements';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { dagensDato, ettÅrTilbakeDato, gårsdagensDato } from './dato';
 
-export const hentTomAvgrensningPåFraDato = (
+export const hentMaxAvgrensningPåFraDato = (
     utenlandsoppÅrsak: EUtenlandsoppholdÅrsak | ''
 ): ISODateString | undefined => {
     switch (utenlandsoppÅrsak) {
@@ -16,7 +16,7 @@ export const hentTomAvgrensningPåFraDato = (
             return undefined;
     }
 };
-export const hentFomAvgrensningPåTilDato = (
+export const hentMinAvgrensningPåTilDato = (
     utenlandsoppÅrsak: EUtenlandsoppholdÅrsak | ''
 ): ISODateString | undefined => {
     switch (utenlandsoppÅrsak) {
@@ -27,7 +27,7 @@ export const hentFomAvgrensningPåTilDato = (
     }
 };
 
-export const hentTomAvgrensningPåTilDato = (
+export const hentMaxAvgrensningPåTilDato = (
     utenlandsoppÅrsak: EUtenlandsoppholdÅrsak | ''
 ): ISODateString | undefined => {
     switch (utenlandsoppÅrsak) {
