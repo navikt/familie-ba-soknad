@@ -8,6 +8,7 @@ interface AlertStripeProps {
     type?: AlertStripeType;
     form?: 'default' | 'inline' | undefined;
     dynamisk?: boolean;
+    className?: '';
 }
 
 const StyledAlertStripe = styled(NavAlertStripe)`
@@ -20,10 +21,16 @@ const AlertStripe: React.FC<AlertStripeProps> = ({
     type = 'info',
     form = 'inline',
     dynamisk = false,
+    className,
     children,
 }) => {
     return (
-        <StyledAlertStripe type={type} form={form} aria-live={dynamisk ? 'polite' : 'off'}>
+        <StyledAlertStripe
+            className={className}
+            type={type}
+            form={form}
+            aria-live={dynamisk ? 'polite' : 'off'}
+        >
             <p>{children}</p>
         </StyledAlertStripe>
     );
