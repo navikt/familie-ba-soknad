@@ -10,7 +10,8 @@ import { ISøknadSpørsmål } from '../typer/spørsmål';
 const useLanddropdownFelt = (
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,
     feilmeldingSpråkId: string,
-    skalFeltetVises: boolean
+    skalFeltetVises: boolean,
+    nullstillVedAvhengighetEndring = false
 ) => {
     return useFelt<Alpha3Code | ''>({
         feltId: søknadsfelt.id,
@@ -30,7 +31,7 @@ const useLanddropdownFelt = (
                       )
                   );
         },
-        nullstillVedAvhengighetEndring: false,
+        nullstillVedAvhengighetEndring,
         avhengigheter: { skalFeltetVises, feilmeldingSpråkId },
     });
 };
