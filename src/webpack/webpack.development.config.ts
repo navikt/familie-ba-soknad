@@ -6,6 +6,7 @@ import { CustomizeRule, mergeWithRules } from 'webpack-merge';
 
 import baseConfig from './webpack.common.config';
 
+const basePath = process.env.BASE_PATH ?? '/';
 const devConfig: webpack.Configuration = mergeWithRules({
     module: {
         rules: {
@@ -22,6 +23,7 @@ const devConfig: webpack.Configuration = mergeWithRules({
     output: {
         filename: '[name].js',
         path: path.resolve(process.cwd(), 'dist/'),
+        publicPath: basePath,
         pathinfo: false,
     },
     devtool: 'eval-source-map',
@@ -32,13 +34,24 @@ const devConfig: webpack.Configuration = mergeWithRules({
             progress: true,
             overlay: true,
         },
-        open: true,
-        historyApiFallback: true,
+        open: [basePath],
         proxy: {
-            '/modellversjon': 'http://localhost:3000',
-            '/api': 'http://localhost:3000',
-            '/toggles': 'http://localhost:3000',
-            '/konverter': 'http://localhost:3000',
+            [`${basePath}modellversjon`]: `http://localhost:3000`,
+            [`${basePath}api`]: `http://localhost:3000`,
+            [`${basePath}toggles`]: `http://localhost:3000`,
+            [`${basePath}konverter`]: `http://localhost:3000`,
+            [basePath.replace('ordinaer', 'utvidet')]: {
+                target: 'http://localhost:55554',
+                pathRewrite: path => path.replace('utvidet', 'ordinaer'),
+            },
+            // Essentially en workaround for https://github.com/nrwl/nx/issues/3859
+            '*': {
+                target: 'http://localhost:55554',
+                pathRewrite: () => basePath,
+            },
+        },
+        static: {
+            publicPath: basePath,
         },
     },
     plugins: [new ReactRefreshWebpackPlugin()],
