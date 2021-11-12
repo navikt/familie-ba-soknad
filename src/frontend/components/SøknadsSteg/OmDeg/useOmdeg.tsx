@@ -18,6 +18,7 @@ export const useOmdeg = (): {
     validerAlleSynligeFelter: () => void;
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    utenlandsperioder: IUtenlandsperiode[];
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
@@ -97,7 +98,8 @@ export const useOmdeg = (): {
             ...søknad,
             søker: {
                 ...søknad.søker,
-                utenlandsperioder,
+                utenlandsperioder:
+                    værtINorgeITolvMåneder.verdi === ESvar.NEI ? utenlandsperioder : [],
                 borPåRegistrertAdresse: {
                     ...søker.borPåRegistrertAdresse,
                     svar: skjema.felter.borPåRegistrertAdresse.verdi,
@@ -136,5 +138,6 @@ export const useOmdeg = (): {
         oppdaterSøknad,
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
+        utenlandsperioder,
     };
 };

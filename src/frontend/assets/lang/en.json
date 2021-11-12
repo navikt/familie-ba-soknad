@@ -164,6 +164,7 @@
   "felles.leggtilpensjon.knapp": "Add period of receiving a pension",
   "felles.leggtilutenlands.feilmelding": "You must add at least one stay abroad in order to be able to proceed",
   "felles.leggtilutenlands.knapp": "Add stay abroad",
+  "felles.leggtilutenlands.opphold": "Stay abroad {x}",
   "felles.leggtilytelse.knapp": "Add benefits",
   "felles.mangler-svar.feilmelding": "You must answer this question in order to be able to proceed",
   "felles.modal.avbrytogslett.tittel": "Cancel and delete the application",
