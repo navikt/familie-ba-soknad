@@ -113,11 +113,12 @@ const OmDeg: React.FC = () => {
                             omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
                         }
                     />
-                    {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                        <AlertStripe type={'advarsel'} dynamisk>
-                            <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
-                        </AlertStripe>
-                    )}
+                    {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig &&
+                        skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
+                            <AlertStripe type={'advarsel'} dynamisk>
+                                <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
+                            </AlertStripe>
+                        )}
                 </KomponentGruppe>
             )}
             <UtenlandsoppholdModal
