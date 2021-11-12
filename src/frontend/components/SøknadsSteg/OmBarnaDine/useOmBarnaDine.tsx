@@ -64,9 +64,13 @@ export const useOmBarnaDine = (): {
     );
 
     const søktAsylForBarn = useJaNeiSpmFelt(søknad.søktAsylForBarn, 'ombarna.asyl.feilmelding', {
-        erBarnAdoptertFraUtland: {
-            hovedSpørsmål: erBarnAdoptertFraUtland,
-            tilhørendeFelter: [hvemErAdoptertFraUtland],
+        erNoenAvBarnaFosterbarn: {
+            hovedSpørsmål: erNoenAvBarnaFosterbarn,
+            tilhørendeFelter: [hvemErFosterbarn],
+        },
+        oppholderBarnSegIInstitusjon: {
+            hovedSpørsmål: oppholderBarnSegIInstitusjon,
+            tilhørendeFelter: [hvemOppholderSegIInstitusjon],
         },
     });
 
@@ -84,6 +88,10 @@ export const useOmBarnaDine = (): {
                 hovedSpørsmål: erBarnAdoptertFraUtland,
                 tilhørendeFelter: [hvemErAdoptertFraUtland],
             },
+            søktAsylForBarn: {
+                hovedSpørsmål: søktAsylForBarn,
+                tilhørendeFelter: [hvemErSøktAsylFor],
+            },
         }
     );
 
@@ -98,13 +106,13 @@ export const useOmBarnaDine = (): {
         søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
         'ombarna.barnetrygd-eøs.feilmelding',
         {
+            erBarnAdoptertFraUtland: {
+                hovedSpørsmål: erBarnAdoptertFraUtland,
+                tilhørendeFelter: [hvemErAdoptertFraUtland],
+            },
             søktAsylForBarn: {
                 hovedSpørsmål: søktAsylForBarn,
                 tilhørendeFelter: [hvemErSøktAsylFor],
-            },
-            barnOppholdtSegTolvMndSammenhengendeINorge: {
-                hovedSpørsmål: barnOppholdtSegTolvMndSammenhengendeINorge,
-                tilhørendeFelter: [hvemTolvMndSammenhengendeINorge],
             },
         }
     );
@@ -130,13 +138,13 @@ export const useOmBarnaDine = (): {
         søknad.erAvdødPartnerForelder,
         avdødPartnerForelderFeilmelding(),
         {
+            erBarnAdoptertFraUtland: {
+                hovedSpørsmål: erBarnAdoptertFraUtland,
+                tilhørendeFelter: [hvemErAdoptertFraUtland],
+            },
             søktAsylForBarn: {
                 hovedSpørsmål: søktAsylForBarn,
                 tilhørendeFelter: [hvemErSøktAsylFor],
-            },
-            barnOppholdtSegTolvMndSammenhengendeINorge: {
-                hovedSpørsmål: barnOppholdtSegTolvMndSammenhengendeINorge,
-                tilhørendeFelter: [hvemTolvMndSammenhengendeINorge],
             },
         },
         false,
