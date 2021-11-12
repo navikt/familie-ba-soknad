@@ -31,8 +31,10 @@ const useDatovelgerFeltMedUkjent = (
 
             const startdatoAvgrensning = avhengigheter && avhengigheter.startdatoAvgrensning;
             const sluttdatoAvgrensning = avhengigheter && avhengigheter.sluttdatoAvgrensning;
+            const feilmeldingSpråkId = avhengigheter && avhengigheter.feilmeldingSpråkId;
             const customStartdatoFeilmelding =
                 avhengigheter && avhengigheter.customStartdatoFeilmelding;
+
             return validerDato(
                 felt,
                 feilmeldingSpråkId,
@@ -47,6 +49,7 @@ const useDatovelgerFeltMedUkjent = (
             startdatoAvgrensning,
             sluttdatoAvgrensning,
             customStartdatoFeilmelding,
+            feilmeldingSpråkId,
             ...avhengigheter,
         },
         nullstillVedAvhengighetEndring,

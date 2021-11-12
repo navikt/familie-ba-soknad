@@ -19,6 +19,7 @@ const useDatovelgerFelt = (
         valideringsfunksjon: (felt, avhengigheter) => {
             const startdatoAvgrensning = avhengigheter && avhengigheter.startdatoAvgrensning;
             const sluttdatoAvgrensning = avhengigheter && avhengigheter.sluttdatoAvgrensning;
+            const feilmeldingSpråkId = avhengigheter && avhengigheter.feilmeldingSpråkId;
 
             return validerDato(
                 felt,
@@ -32,6 +33,7 @@ const useDatovelgerFelt = (
             sluttdatoAvgrensning,
             startdatoAvgrensning,
             skalFeltetVises,
+            feilmeldingSpråkId,
             ...avhengigheter,
         },
         nullstillVedAvhengighetEndring,
