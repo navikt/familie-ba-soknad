@@ -164,6 +164,7 @@
   "felles.leggtilpensjon.knapp": "Legg til periode med pensjon",
   "felles.leggtilutenlands.feilmelding": "Du må legge til minst et utenlandsopphold for å gå videre",
   "felles.leggtilutenlands.knapp": "Legg til utenlandsopphold",
+  "felles.leggtilutenlands.opphold": "Utenlandsopphold {x}",
   "felles.leggtilytelse.knapp": "Legg til utbetalinger",
   "felles.mangler-svar.feilmelding": "Du må svare på dette spørsmålet for å gå videre",
   "felles.modal.avbrytogslett.tittel": "Avbryt og slett søknaden",

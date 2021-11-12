@@ -15,6 +15,7 @@ import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 import { UtenlandsoppholdModalForSøker } from './UtenlandsoppholdModalForSøker';
+import { UtenlandsperiodeSøkerOppsummering } from './UtenlandsperiodeSøkerOppsummering';
 
 const OmDeg: React.FC = () => {
     const {
@@ -92,6 +93,14 @@ const OmDeg: React.FC = () => {
                                 onClick={toggleLeggTilOppholdModal}
                             />
                         )}
+                        {søknad.søker.utenlandsperioder.map((periode, index) => (
+                            <UtenlandsperiodeSøkerOppsummering
+                                key={index}
+                                periode={periode}
+                                nummer={index + 1}
+                                fjernPeriodeCallback={fjernUtenlandsperiode}
+                            />
+                        ))}
                     </>
                     <JaNeiSpm
                         skjema={skjema}
