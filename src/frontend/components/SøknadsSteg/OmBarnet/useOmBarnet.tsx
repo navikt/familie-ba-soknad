@@ -133,42 +133,6 @@ export const useOmBarnet = (
         institusjonOppholdStartdato.verdi
     );
 
-    /*---UTENLANDSOPPHOLD---*/
-
-    const oppholdsland = useLanddropdownFelt(
-        barn[barnDataKeySpørsmål.oppholdsland],
-        'ombarnet.oppholdutland.land.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
-    );
-
-    const oppholdslandStartdato = useDatovelgerFelt(
-        barn[barnDataKeySpørsmål.oppholdslandStartdato],
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland),
-        'ombarnet.oppholdutland.startdato.feilmelding',
-        dagensDato()
-    );
-
-    const oppholdslandSluttDatoVetIkke = useFelt<ESvar>({
-        verdi:
-            barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar === AlternativtSvarForInput.UKJENT
-                ? ESvar.JA
-                : ESvar.NEI,
-        feltId: OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke,
-    });
-
-    const oppholdslandSluttdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.oppholdslandSluttdato].id,
-        barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar !== AlternativtSvarForInput.UKJENT
-            ? barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar
-            : '',
-        oppholdslandSluttDatoVetIkke,
-        'ombarnet.oppholdutland.sluttdato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland),
-        false,
-        undefined,
-        oppholdslandStartdato.verdi
-    );
-
     /*---BODD SAMMENHENGENDE I NORGE---*/
     const nårKomBarnTilNorgeDatoIkkeAnkommet = useFelt<ESvar>({
         verdi:
@@ -571,10 +535,6 @@ export const useOmBarnet = (
             institusjonOppholdStartdato,
             institusjonOppholdSluttdato,
             institusjonOppholdSluttVetIkke,
-            oppholdsland,
-            oppholdslandStartdato,
-            oppholdslandSluttdato,
-            oppholdslandSluttDatoVetIkke,
             nårKomBarnTilNorgeDato,
             nårKomBarnTilNorgeDatoIkkeAnkommet,
             planleggerÅBoINorge12Mnd,
@@ -656,21 +616,6 @@ export const useOmBarnet = (
                               svar: svarForSpørsmålMedUkjent(
                                   institusjonOppholdSluttVetIkke,
                                   institusjonOppholdSluttdato
-                              ),
-                          },
-                          oppholdsland: {
-                              ...barn.oppholdsland,
-                              svar: oppholdsland.verdi,
-                          },
-                          oppholdslandStartdato: {
-                              ...barn.oppholdslandStartdato,
-                              svar: oppholdslandStartdato.verdi,
-                          },
-                          oppholdslandSluttdato: {
-                              ...barn.oppholdslandSluttdato,
-                              svar: svarForSpørsmålMedUkjent(
-                                  oppholdslandSluttDatoVetIkke,
-                                  oppholdslandSluttdato
                               ),
                           },
                           nårKomBarnTilNorgeDato: {

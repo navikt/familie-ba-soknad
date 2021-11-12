@@ -5,8 +5,6 @@ export enum OmBarnaDineSpørsmålId {
     hvemOppholderSegIInstitusjon = 'hvem-oppholder-seg-i-institusjon',
     erBarnAdoptertFraUtland = 'er-barn-adoptert-fra-utland',
     hvemErAdoptertFraUtland = 'hvem-er-adoptert-fra-utland',
-    oppholderBarnSegIUtland = 'oppholder-barn-seg-i-utland',
-    hvemOppholderSegIUtland = 'hvem-oppholder-seg-i-utland',
     søktAsylForBarn = 'søkt-asyl-for-barn',
     hvemErSøktAsylFor = 'hvem-er-søkt-asyl-for',
     barnOppholdtSegTolvMndSammenhengendeINorge = 'tolv-mnd-sammenhengende-i-norge',
@@ -26,8 +24,6 @@ export const omBarnaDineSpørsmålSpråkId: Record<OmBarnaDineSpørsmålId, stri
     [OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon]: 'ombarna.institusjon.hvem.spm',
     [OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland]: 'ombarna.adoptert.spm',
     [OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland]: 'ombarna.adoptert.hvem.spm',
-    [OmBarnaDineSpørsmålId.oppholderBarnSegIUtland]: 'ombarna.opphold-utland.spm',
-    [OmBarnaDineSpørsmålId.hvemOppholderSegIUtland]: 'ombarna.opphold-utland.hvem.spm',
     [OmBarnaDineSpørsmålId.søktAsylForBarn]: 'ombarna.asyl.spm',
     [OmBarnaDineSpørsmålId.hvemErSøktAsylFor]: 'ombarna.asyl.hvem.spm',
     [OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge]:

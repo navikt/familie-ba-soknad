@@ -53,10 +53,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAsylsøker]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.andreForelderErDød]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.oppholderSegIUtland]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.oppholdsland]: ISøknadSpørsmål<Alpha3Code | ''>;
-    [barnDataKeySpørsmål.oppholdslandStartdato]: ISøknadSpørsmål<ISODateString>;
-    [barnDataKeySpørsmål.oppholdslandSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.institusjonsnavn]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonsadresse]: ISøknadSpørsmål<string>;
@@ -99,7 +95,6 @@ export interface ISøknad {
     erNoenAvBarnaFosterbarn: ISøknadSpørsmål<ESvar | null>;
     oppholderBarnSegIInstitusjon: ISøknadSpørsmål<ESvar | null>;
     erBarnAdoptertFraUtland: ISøknadSpørsmål<ESvar | null>;
-    oppholderBarnSegIUtland: ISøknadSpørsmål<ESvar | null>;
     søktAsylForBarn: ISøknadSpørsmål<ESvar | null>;
     erAvdødPartnerForelder: ISøknadSpørsmål<ESvar | null>;
     barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | null>;
@@ -303,10 +298,6 @@ export const initialStateSøknad: ISøknad = {
     },
     erBarnAdoptertFraUtland: {
         id: OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland,
-        svar: null,
-    },
-    oppholderBarnSegIUtland: {
-        id: OmBarnaDineSpørsmålId.oppholderBarnSegIUtland,
         svar: null,
     },
     søktAsylForBarn: {
