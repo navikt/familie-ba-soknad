@@ -32,13 +32,16 @@ export const erDatoFørEllerSammeSomStartDatoAvgrensning = (
 
 export const gårsdagensDato = () => dayjs().subtract(1, 'day').format('YYYY-MM-DD');
 
+export const ettÅrTilbakeDato = () => dayjs().subtract(1, 'year').format('YYYY-MM-DD');
+
 export const dagensDato = () => dayjs().format('YYYY-MM-DD');
 
 export const validerDato = (
     feltState: FeltState<string>,
     feilmeldingSpråkId: string,
     startdatoAvgrensning = '',
-    sluttdatoAvgrensning = ''
+    sluttdatoAvgrensning = '',
+    customStartdatoFeilmelding = ''
 ): FeltState<string> => {
     if (feltState.verdi === '') {
         return feil(feltState, feilmeldingSpråkId ? <SpråkTekst id={feilmeldingSpråkId} /> : '');
@@ -65,7 +68,16 @@ export const validerDato = (
         !!startdatoAvgrensning &&
         erDatoFørEllerSammeSomStartDatoAvgrensning(feltState.verdi, startdatoAvgrensning)
     ) {
-        return feil(feltState, <SpråkTekst id={'felles.tilogmedfeilformat.feilmelding'} />);
+        return feil(
+            feltState,
+            <SpråkTekst
+                id={
+                    customStartdatoFeilmelding
+                        ? customStartdatoFeilmelding
+                        : 'felles.tilogmedfeilformat.feilmelding'
+                }
+            />
+        );
     }
     return ok(feltState);
 };

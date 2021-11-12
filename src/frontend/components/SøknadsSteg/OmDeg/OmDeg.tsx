@@ -11,13 +11,28 @@ import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
+import {
+    fraDatoFeilmeldingSpråkIdsSøker,
+    fraDatoLabelSpråkIdsSøker,
+    landFeilmeldingSpråkIdsSøker,
+    landLabelSpråkIdsSøker,
+    tilDatoFeilmeldingSpråkIdsSøker,
+    tilDatoLabelSpråkIdsSøker,
+    tilDatoUkjentLabelSpråkIdSøker,
+    årsakFeilmeldingSpråkIdSøker,
+    årsakSpråkIdsSøker,
+} from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
-import { UtenlandsoppholdModalForSøker } from './UtenlandsoppholdModalForSøker';
 import { UtenlandsperiodeSøkerOppsummering } from './UtenlandsperiodeSøkerOppsummering';
 
 const OmDeg: React.FC = () => {
+    const { søknad } = useApp();
+    const { søker } = søknad;
+    const { erÅpen, toggleModal } = useModal();
+
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -26,9 +41,7 @@ const OmDeg: React.FC = () => {
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode, // TODO: skal brukes i fjern periode knapp
     } = useOmdeg();
-    const { søknad } = useApp();
-    const { søker } = søknad;
-    const { erÅpen: erLeggTilOppholdÅpen, toggleModal: toggleLeggTilOppholdModal } = useModal();
+
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
@@ -90,7 +103,7 @@ const OmDeg: React.FC = () => {
                         {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                             <LeggTilKnapp
                                 språkTekst="eøs.leggtilendaflereutenlandsopphold.knapp"
-                                onClick={toggleLeggTilOppholdModal}
+                                onClick={toggleModal}
                             />
                         )}
                         {søknad.søker.utenlandsperioder.map((periode, index) => (
@@ -109,17 +122,28 @@ const OmDeg: React.FC = () => {
                             omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
                         }
                     />
-                    {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                        <AlertStripe type={'advarsel'} dynamisk>
-                            <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
-                        </AlertStripe>
-                    )}
+                    {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig &&
+                        skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
+                            <AlertStripe type={'advarsel'} dynamisk>
+                                <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
+                            </AlertStripe>
+                        )}
                 </KomponentGruppe>
             )}
-            <UtenlandsoppholdModalForSøker
-                erÅpen={erLeggTilOppholdÅpen}
-                toggleModal={toggleLeggTilOppholdModal}
-                leggTilUtenlandsperiode={leggTilUtenlandsperiode}
+            <UtenlandsoppholdModal
+                erÅpen={erÅpen}
+                toggleModal={toggleModal}
+                årsakLabelSpråkId={'modal.beskriveopphold.spm'}
+                årsakFeilmeldingSpråkId={årsakFeilmeldingSpråkIdSøker}
+                årsakSpråkIds={årsakSpråkIdsSøker}
+                landLabelSpråkIds={landLabelSpråkIdsSøker}
+                landFeilmeldingSpråkIds={landFeilmeldingSpråkIdsSøker}
+                fraDatoLabelSpråkIds={fraDatoLabelSpråkIdsSøker}
+                fraDatoFeilmeldingSpråkIds={fraDatoFeilmeldingSpråkIdsSøker}
+                tilDatoLabelSpråkIds={tilDatoLabelSpråkIdsSøker}
+                tilDatoFeilmeldingSpråkIds={tilDatoFeilmeldingSpråkIdsSøker}
+                tilDatoUkjentLabelSpråkId={tilDatoUkjentLabelSpråkIdSøker}
+                onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
             />
         </Steg>
     );
