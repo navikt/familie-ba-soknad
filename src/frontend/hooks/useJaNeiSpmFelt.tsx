@@ -64,7 +64,7 @@ const useJaNeiSpmFelt = (
                   );
         },
         skalFeltetVises: (avhengigheter: { [key: string]: FeltGruppe }) => {
-            if (skalSkjules) return false;
+            if (avhengigheter && avhengigheter.skalSkjules) return false;
             if (!avhengigheter) return harBlittVist;
 
             // borPåRegistrertAdresse er et spesialtilfelle for avhengighet, fordi hvis svaret på den er Nei må man søke på papir.
@@ -84,7 +84,7 @@ const useJaNeiSpmFelt = (
 
             return skalVises;
         },
-        avhengigheter: avhengigheter,
+        avhengigheter: { ...avhengigheter, skalSkjules },
     });
 };
 
