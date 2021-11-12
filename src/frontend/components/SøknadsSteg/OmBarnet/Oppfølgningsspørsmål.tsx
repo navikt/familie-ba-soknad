@@ -5,12 +5,10 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
-import { useEøs } from '../../../context/EøsContext';
 import { barnDataKeySpørsmål } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -21,7 +19,7 @@ import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaChe
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const Oppfølgningsspørsmål: React.FC<{
@@ -29,7 +27,6 @@ const Oppfølgningsspørsmål: React.FC<{
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
 }> = ({ barn, skjema }) => {
     const intl = useIntl();
-    const { erEøsLand } = useEøs();
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
@@ -91,53 +88,6 @@ const Oppfølgningsspørsmål: React.FC<{
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdVetIkke]
                         }
                         felt={skjema.felter.institusjonOppholdSluttVetIkke}
-                    />
-                </SkjemaFieldset>
-            )}
-            {barn[barnDataKeySpørsmål.oppholderSegIUtland].svar === ESvar.JA && (
-                <SkjemaFieldset
-                    tittelId={'ombarnet.oppholdutland'}
-                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
-                >
-                    <LandDropdown
-                        felt={skjema.felter.oppholdsland}
-                        skjema={skjema}
-                        label={
-                            <SpråkTekst
-                                id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdsland]}
-                            />
-                        }
-                    />
-                    {erEøsLand(skjema.felter.oppholdsland.verdi) && (
-                        <VedleggNotisTilleggsskjema
-                            språkTekstId={'ombarnet.oppholdutland.eøs-info'}
-                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
-                        />
-                    )}
-                    <Datovelger
-                        avgrensMaxDato={dagensDato()}
-                        felt={skjema.felter.oppholdslandStartdato}
-                        skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdslandStartdato]
-                        }
-                    />
-                    <Datovelger
-                        felt={skjema.felter.oppholdslandSluttdato}
-                        tilhørendeFraOgMedFelt={skjema.felter.oppholdslandStartdato}
-                        skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdslandSluttdato]
-                        }
-                        disabled={skjema.felter.oppholdslandSluttDatoVetIkke.verdi === ESvar.JA}
-                    />
-                    <SkjemaCheckbox
-                        labelSpråkTekstId={
-                            omBarnetSpørsmålSpråkId[
-                                OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
-                            ]
-                        }
-                        felt={skjema.felter.oppholdslandSluttDatoVetIkke}
                     />
                 </SkjemaFieldset>
             )}

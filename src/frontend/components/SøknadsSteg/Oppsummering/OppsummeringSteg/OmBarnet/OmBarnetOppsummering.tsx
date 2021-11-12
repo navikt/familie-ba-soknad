@@ -134,65 +134,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                 </StyledOppsummeringsFeltGruppe>
             )}
-            {barn[barnDataKeySpørsmål.oppholderSegIUtland].svar === ESvar.JA && (
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={'ombarnet.oppholdutland'}
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
-                            />
-                        }
-                    />
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdsland]}
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
-                            />
-                        }
-                        søknadsvar={landkodeTilSpråk(
-                            barn[barnDataKeySpørsmål.oppholdsland].svar,
-                            valgtLocale
-                        )}
-                    />
-
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.oppholdslandStartdato
-                                    ]
-                                }
-                            />
-                        }
-                        søknadsvar={formaterDato(
-                            barn[barnDataKeySpørsmål.oppholdslandStartdato].svar
-                        )}
-                    />
-
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.oppholdslandSluttdato
-                                    ]
-                                }
-                            />
-                        }
-                        søknadsvar={formaterDatoMedUkjent(
-                            barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar,
-                            formatMessage({
-                                id: omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
-                                ],
-                            })
-                        )}
-                    />
-                </StyledOppsummeringsFeltGruppe>
-            )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt

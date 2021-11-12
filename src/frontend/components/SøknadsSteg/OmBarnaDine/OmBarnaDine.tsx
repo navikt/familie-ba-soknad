@@ -129,28 +129,6 @@ const OmBarnaDine: React.FC = () => {
                             <VedleggNotis dynamisk språkTekstId={'ombarna.adoptert.alert'} />
                         </VedleggNotisWrapper>
                     )}
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.oppholderBarnSegIUtland}
-                        spørsmålTekstId={
-                            omBarnaDineSpørsmålSpråkId[
-                                OmBarnaDineSpørsmålId.oppholderBarnSegIUtland
-                            ]
-                        }
-                    />
-                    <HvilkeBarnCheckboxGruppe
-                        legendSpråkId={
-                            omBarnaDineSpørsmålSpråkId[
-                                OmBarnaDineSpørsmålId.hvemOppholderSegIUtland
-                            ]
-                        }
-                        skjemafelt={skjema.felter.hvemOppholderSegIUtland}
-                        søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIUtland}
-                        nullstillValgteBarn={
-                            skjema.felter.oppholderBarnSegIUtland.verdi === ESvar.NEI
-                        }
-                        visFeilmelding={skjema.visFeilmeldinger}
-                    />
                 </KomponentGruppe>
             )}
 

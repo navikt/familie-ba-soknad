@@ -19,10 +19,6 @@ describe('eøs', () => {
                 barnInkludertISøknaden: [
                     {
                         ...søknad.barnInkludertISøknaden[0],
-                        oppholdsland: {
-                            id: OmBarnetSpørsmålsId.oppholdsland,
-                            svar: 'BEL' as Alpha3Code,
-                        },
                         barnetrygdFraEøslandHvilketLand: {
                             id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
                             svar: 'BEL' as Alpha3Code,

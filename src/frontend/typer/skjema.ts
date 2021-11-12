@@ -40,7 +40,6 @@ export interface IOmBarnaDineFeltTyper {
     erNoenAvBarnaFosterbarn: ESvar | null;
     oppholderBarnSegIInstitusjon: ESvar | null;
     erBarnAdoptertFraUtland: ESvar | null;
-    oppholderBarnSegIUtland: ESvar | null;
     søktAsylForBarn: ESvar | null;
     barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | null;
     mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | null;
@@ -48,7 +47,6 @@ export interface IOmBarnaDineFeltTyper {
     hvemErFosterbarn: BarnetsId[];
     hvemOppholderSegIInstitusjon: BarnetsId[];
     hvemErAdoptertFraUtland: BarnetsId[];
-    hvemOppholderSegIUtland: BarnetsId[];
     hvemBarnetrygdFraAnnetEøsland: BarnetsId[];
     hvemTolvMndSammenhengendeINorge: BarnetsId[];
     hvemErSøktAsylFor: BarnetsId[];
@@ -62,10 +60,6 @@ export interface IOmBarnetUtvidetFeltTyper {
     institusjonOppholdStartdato: ISODateString;
     institusjonOppholdSluttdato: DatoMedUkjent;
     institusjonOppholdSluttVetIkke: ESvar;
-    oppholdsland: Alpha3Code | '';
-    oppholdslandStartdato: ISODateString;
-    oppholdslandSluttdato: DatoMedUkjent;
-    oppholdslandSluttDatoVetIkke: ESvar;
     nårKomBarnTilNorgeDato: ISODateString;
     nårKomBarnTilNorgeDatoIkkeAnkommet: ESvar;
     planleggerÅBoINorge12Mnd: ESvar | null;

@@ -5,10 +5,6 @@ export enum OmBarnetSpørsmålsId {
     institusjonOppholdStartdato = 'institusjon-opphold-startdato',
     institusjonOppholdSluttdato = 'institusjon-opphold-sluttdato',
     institusjonOppholdVetIkke = 'institusjon-opphold-ukjent-sluttdato',
-    oppholdsland = 'barn-oppholdsland',
-    oppholdslandStartdato = 'barn-utenlandsopphold-startdato',
-    oppholdslandSluttdato = 'barn-utenlandsopphold-sluttdato',
-    oppholdslandSluttDatoVetIkke = 'barn-utenlandsopphold-ukjent-sluttdato',
     nårKomBarnetTilNorge = 'når-kom-barnet-til-norge',
     nårKomBarnetTilNorgeIkkeAnkommet = 'ombarnet.sammenhengende-opphold.dato.ikkekommetenda',
     planleggerÅBoINorge12Mnd = 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
@@ -45,11 +41,6 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.institusjonOppholdStartdato]: 'ombarnet.institusjon.startdato.spm',
     [OmBarnetSpørsmålsId.institusjonOppholdSluttdato]: 'ombarnet.institusjon.sluttdato.spm',
     [OmBarnetSpørsmålsId.institusjonOppholdVetIkke]: 'ombarnet.institusjon.ukjent-sluttdato.spm',
-    [OmBarnetSpørsmålsId.oppholdsland]: 'ombarnet.oppholdutland.land.spm',
-    [OmBarnetSpørsmålsId.oppholdslandStartdato]: 'ombarnet.oppholdutland.startdato.spm',
-    [OmBarnetSpørsmålsId.oppholdslandSluttdato]: 'ombarnet.oppholdutland.sluttdato.spm',
-    [OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke]:
-        'ombarnet.oppholdutland.ukjent-sluttdato.spm',
     [OmBarnetSpørsmålsId.nårKomBarnetTilNorge]: 'ombarnet.sammenhengende-opphold.dato.spm',
     [OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet]:
         'ombarnet.sammenhengende-opphold.dato.ikkekommetenda',

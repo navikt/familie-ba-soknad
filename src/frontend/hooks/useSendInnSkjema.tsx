@@ -168,7 +168,6 @@ export const useSendInnSkjema = (): {
             søkerForTidsromSluttdato,
             institusjonOppholdSluttdato,
             nårKomBarnTilNorgeDato,
-            oppholdslandSluttdato,
             utvidet,
             ...barnSpørsmål
         } = barn;
@@ -279,13 +278,6 @@ export const useSendInnSkjema = (): {
                     sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                         institusjonOppholdSluttdato.svar,
                         omBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
-                    )
-                ),
-                [barnDataKeySpørsmål.oppholdslandSluttdato]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.oppholdslandSluttdato),
-                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                        oppholdslandSluttdato.svar,
-                        omBarnetSpørsmålSpråkId['barn-utenlandsopphold-ukjent-sluttdato']
                     )
                 ),
                 [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: søknadsfeltBarn(
@@ -473,10 +465,6 @@ export const useSendInnSkjema = (): {
                         OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland
                     ),
                     sammeVerdiAlleSpråk(søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar)
-                ),
-                oppholderBarnSegIUtland: søknadsfelt(
-                    språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.oppholderBarnSegIUtland),
-                    sammeVerdiAlleSpråk(søknad.oppholderBarnSegIUtland.svar)
                 ),
                 erAvdødPartnerForelder: søknadsfelt(
                     språktekstIdFraSpørsmålId(søknad.erAvdødPartnerForelder.id),
