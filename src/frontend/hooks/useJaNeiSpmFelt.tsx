@@ -26,13 +26,10 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
         if (!(feltGruppe && feltGruppe.tilhørendeFelter)) {
             return false;
         } else {
-            return !!(
-                feltGruppe &&
-                feltGruppe.tilhørendeFelter.find(
-                    tilhørendeFelt =>
-                        tilhørendeFelt.erSynlig &&
-                        tilhørendeFelt.valideringsstatus !== Valideringsstatus.OK
-                )
+            return !!feltGruppe.tilhørendeFelter.find(
+                tilhørendeFelt =>
+                    tilhørendeFelt.erSynlig &&
+                    tilhørendeFelt.valideringsstatus !== Valideringsstatus.OK
             );
         }
     });
