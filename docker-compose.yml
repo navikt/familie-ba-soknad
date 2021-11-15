@@ -52,7 +52,7 @@ services:
     environment:
       <<: *common-token-environment
       BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
-      ENV: docker-compose
+      ENV: docker-compose-prod
       # FORCE_DISABLED: 1 # Uncomment for å utvikle disabled-appen
     volumes:
       - secure-logs:/secure-logs
