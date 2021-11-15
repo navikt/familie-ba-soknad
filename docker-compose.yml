@@ -39,7 +39,7 @@ services:
       - "3000:3000"
       - "55554:55554"
 
-  frontent-prod:
+  frontend-prod:
     profiles:
       - test-prod-build
     logging: *common-log-config
