@@ -18,9 +18,9 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
     landLabelSpråkIdsSøker,
     årsakSpråkIdsSøker,
-    fraDatoLabelSpråkIdsSøker,
-    tilDatoLabelSpråkIdsSøker,
     tilDatoUkjentLabelSpråkId,
+    fraDatoLabelSpråkId,
+    tilDatoLabelSpråkId,
 } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 
 const StyledElement = styled(Element)`
@@ -72,13 +72,13 @@ export const UtenlandsperiodeSøkerOppsummering: React.FC<{
             </Informasjonsbolk>
             {oppholdslandFraDato && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={fraDatoLabelSpråkIdsSøker[årsak]} />
+                    <Spørsmål språkId={fraDatoLabelSpråkId(årsak)} />
                     <Normaltekst>{formaterDato(oppholdslandFraDato.svar)}</Normaltekst>
                 </Informasjonsbolk>
             )}
             {oppholdslandTilDato && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={tilDatoLabelSpråkIdsSøker[årsak]} />
+                    <Spørsmål språkId={tilDatoLabelSpråkId(årsak)} />
                     <Normaltekst>
                         {formaterDatoMedUkjent(
                             oppholdslandTilDato.svar,

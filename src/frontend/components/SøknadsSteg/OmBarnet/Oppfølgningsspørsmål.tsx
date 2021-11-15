@@ -21,16 +21,6 @@ import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaF
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import {
-    fraDatoFeilmeldingSpråkIdsBarn,
-    fraDatoLabelSpråkIdsBarn,
-    landFeilmeldingSpråkIdsBarn,
-    landLabelSpråkIdsBarn,
-    tilDatoFeilmeldingSpråkIdsBarn,
-    tilDatoLabelSpråkIdsBarn,
-    årsakFeilmeldingSpråkIdBarn,
-    årsakSpråkIdsBarn,
-} from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
@@ -154,16 +144,8 @@ const Oppfølgningsspørsmål: React.FC<{
             <UtenlandsoppholdModal
                 erÅpen={erÅpen}
                 toggleModal={toggleModal}
-                årsakLabelSpråkId={'ombarnet.beskriveopphold.spm'}
-                årsakFeilmeldingSpråkId={årsakFeilmeldingSpråkIdBarn}
-                årsakSpråkIds={årsakSpråkIdsBarn}
-                landLabelSpråkIds={landLabelSpråkIdsBarn}
-                landFeilmeldingSpråkIds={landFeilmeldingSpråkIdsBarn}
-                fraDatoLabelSpråkIds={fraDatoLabelSpråkIdsBarn}
-                fraDatoFeilmeldingSpråkIds={fraDatoFeilmeldingSpråkIdsBarn}
-                tilDatoLabelSpråkIds={tilDatoLabelSpråkIdsBarn}
-                tilDatoFeilmeldingSpråkIds={tilDatoFeilmeldingSpråkIdsBarn}
                 onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
+                barn={barn}
             />
         </>
     );

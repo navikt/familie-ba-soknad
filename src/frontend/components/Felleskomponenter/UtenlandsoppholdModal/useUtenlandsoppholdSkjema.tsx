@@ -7,6 +7,7 @@ import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import {
     harTilhørendeFomFelt,
@@ -15,32 +16,26 @@ import {
     hentMaxAvgrensningPåTilDato,
 } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { UtenlandsoppholdSpørsmålId } from './spørsmål';
+import {
+    fraDatoFeilmeldingSpråkId,
+    landFeilmeldingSpråkId,
+    tilDatoFeilmeldingSpråkId,
+    UtenlandsoppholdSpørsmålId,
+    årsakFeilmeldingSpråkId,
+} from './spørsmål';
 
 export interface IUseUtenlandsoppholdSkjemaParams {
-    årsakFeilmeldingSpråkId: string;
-    landFeilmeldingSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
-    fraDatoFeilmeldingSpråkIds: Record<
-        Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE>,
-        string
-    >;
-    tilDatoFeilmeldingSpråkIds: Record<
-        Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE>,
-        string
-    >;
+    barn?: IBarnMedISøknad;
 }
 
-export const useUtenlandsoppholdSkjema = ({
-    landFeilmeldingSpråkIds,
-    årsakFeilmeldingSpråkId,
-    fraDatoFeilmeldingSpråkIds,
-    tilDatoFeilmeldingSpråkIds,
-}: IUseUtenlandsoppholdSkjemaParams) => {
+export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaParams) => {
     const utenlandsoppholdÅrsak = useFelt<EUtenlandsoppholdÅrsak | ''>({
         feltId: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
         verdi: '',
         valideringsfunksjon: (felt: FeltState<EUtenlandsoppholdÅrsak | ''>) =>
-            felt.verdi !== '' ? ok(felt) : feil(felt, <SpråkTekst id={årsakFeilmeldingSpråkId} />),
+            felt.verdi !== ''
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={årsakFeilmeldingSpråkId(barn)} />),
     });
 
     useEffect(() => {
@@ -49,7 +44,7 @@ export const useUtenlandsoppholdSkjema = ({
 
     const oppholdsland = useLanddropdownFelt(
         { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
-        landFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
+        landFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
         !!utenlandsoppholdÅrsak.verdi,
         true
     );
@@ -61,7 +56,7 @@ export const useUtenlandsoppholdSkjema = ({
         },
         !!utenlandsoppholdÅrsak.verdi &&
             utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE,
-        fraDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
+        fraDatoFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
         hentMaxAvgrensningPåFraDato(utenlandsoppholdÅrsak.verdi),
         undefined,
         { utenlandsoppholdÅrsak },
@@ -82,7 +77,7 @@ export const useUtenlandsoppholdSkjema = ({
         UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
         '',
         oppholdslandTilDatoUkjent,
-        tilDatoFeilmeldingSpråkIds[utenlandsoppholdÅrsak.verdi],
+        tilDatoFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
         !!utenlandsoppholdÅrsak.verdi &&
             utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE,
         true,

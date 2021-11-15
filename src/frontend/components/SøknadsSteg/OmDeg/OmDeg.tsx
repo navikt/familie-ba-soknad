@@ -11,17 +11,6 @@ import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
-import {
-    fraDatoFeilmeldingSpråkIdsSøker,
-    fraDatoLabelSpråkIdsSøker,
-    landFeilmeldingSpråkIdsSøker,
-    landLabelSpråkIdsSøker,
-    tilDatoFeilmeldingSpråkIdsSøker,
-    tilDatoLabelSpråkIdsSøker,
-    tilDatoUkjentLabelSpråkId,
-    årsakFeilmeldingSpråkIdSøker,
-    årsakSpråkIdsSøker,
-} from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
@@ -142,15 +131,6 @@ const OmDeg: React.FC = () => {
             <UtenlandsoppholdModal
                 erÅpen={erÅpen}
                 toggleModal={toggleModal}
-                årsakLabelSpråkId={'modal.beskriveopphold.spm'}
-                årsakFeilmeldingSpråkId={årsakFeilmeldingSpråkIdSøker}
-                årsakSpråkIds={årsakSpråkIdsSøker}
-                landLabelSpråkIds={landLabelSpråkIdsSøker}
-                landFeilmeldingSpråkIds={landFeilmeldingSpråkIdsSøker}
-                fraDatoLabelSpråkIds={fraDatoLabelSpråkIdsSøker}
-                fraDatoFeilmeldingSpråkIds={fraDatoFeilmeldingSpråkIdsSøker}
-                tilDatoLabelSpråkIds={tilDatoLabelSpråkIdsSøker}
-                tilDatoFeilmeldingSpråkIds={tilDatoFeilmeldingSpråkIdsSøker}
                 onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
             />
         </Steg>
