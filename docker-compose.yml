@@ -43,7 +43,7 @@ services:
     profiles:
       - test-prod-build
     logging: *common-log-config
-    container_name: "frontend"
+    container_name: "frontend-prod"
     build:
       context: ./
       target: prod-runner # Før vi bygger og sletter dev-dependencies
