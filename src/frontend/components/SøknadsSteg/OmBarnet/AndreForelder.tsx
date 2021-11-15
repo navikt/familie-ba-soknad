@@ -81,10 +81,14 @@ const AndreForelder: React.FC<{
                             <Datovelger
                                 felt={skjema.felter.andreForelderFødselsdato}
                                 skjema={skjema}
-                                labelTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.andreForelderFødselsdato
-                                    ]
+                                label={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.andreForelderFødselsdato
+                                            ]
+                                        }
+                                    />
                                 }
                                 disabled={
                                     skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA

@@ -42,16 +42,12 @@ describe('Datovelger', () => {
 
         const { getAllByRole, container } = render(
             <TestProvidere>
-                <Datovelger
-                    felt={current.fraOgMed}
-                    skjema={skjemaMock}
-                    labelTekstId={'test-fra-og-med'}
-                />
+                <Datovelger felt={current.fraOgMed} skjema={skjemaMock} label={'test-fra-og-med'} />
                 <Datovelger
                     felt={current.tilOgMed}
                     tilhørendeFraOgMedFelt={current.fraOgMed}
                     skjema={skjemaMock}
-                    labelTekstId={'test-til-og-med'}
+                    label={'test-til-og-med'}
                 />
             </TestProvidere>
         );
@@ -89,7 +85,7 @@ describe('Datovelger', () => {
                 <Datovelger
                     felt={current.tilOgMed}
                     skjema={skjemaMock}
-                    labelTekstId={'test-til-og-med'}
+                    label={'test-til-og-med'}
                     avgrensDatoFremITid={true}
                 />
             </TestProvidere>

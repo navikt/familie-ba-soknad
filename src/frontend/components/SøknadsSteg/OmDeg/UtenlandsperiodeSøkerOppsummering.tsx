@@ -86,7 +86,7 @@ export const UtenlandsperiodeSøkerOppsummering: React.FC<{
                         )}
                     </Normaltekst>
                 </Informasjonsbolk>
-            )}{' '}
+            )}
             <SlettKnapp htmlType={'button'} kompakt onClick={() => fjernPeriodeCallback(periode)}>
                 <DeleteFilled />
                 <span>

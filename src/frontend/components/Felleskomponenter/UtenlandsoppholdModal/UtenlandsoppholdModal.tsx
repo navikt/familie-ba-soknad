@@ -118,7 +118,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         label={
                             <SpråkTekst
                                 id={årsakLabelSpråkId(barn)}
-                                values={{ ...(barn && { navn: barn.navn }) }}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
                         skjema={skjema}
@@ -130,7 +130,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                     {
                                         id: årsakSpråkId(årsak as EUtenlandsoppholdÅrsak, barn),
                                     },
-                                    { ...(barn && { navn: barn.navn }) }
+                                    { ...(barn && { barn: barn.navn }) }
                                 )}
                             </option>
                         ))}
@@ -154,7 +154,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                     skjema.felter.utenlandsoppholdÅrsak.verdi,
                                     barn
                                 )}
-                                values={{ ...(barn && { navn: barn.navn }) }}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         )
                     }
@@ -164,10 +164,15 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 {skjema.felter.oppholdslandFraDato.erSynlig && (
                     <Datovelger
                         felt={skjema.felter.oppholdslandFraDato}
-                        labelTekstId={fraDatoLabelSpråkId(
-                            skjema.felter.utenlandsoppholdÅrsak.verdi,
-                            barn
-                        )}
+                        label={
+                            <SpråkTekst
+                                id={fraDatoLabelSpråkId(
+                                    skjema.felter.utenlandsoppholdÅrsak.verdi,
+                                    barn
+                                )}
+                                values={{ ...(barn && { barn: barn.navn }) }}
+                            />
+                        }
                         skjema={skjema}
                         avgrensMaxDato={hentMaxAvgrensningPåFraDato(
                             skjema.felter.utenlandsoppholdÅrsak.verdi
@@ -179,10 +184,15 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                     {skjema.felter.oppholdslandTilDato.erSynlig && (
                         <Datovelger
                             felt={skjema.felter.oppholdslandTilDato}
-                            labelTekstId={tilDatoLabelSpråkId(
-                                skjema.felter.utenlandsoppholdÅrsak.verdi,
-                                barn
-                            )}
+                            label={
+                                <SpråkTekst
+                                    id={tilDatoLabelSpråkId(
+                                        skjema.felter.utenlandsoppholdÅrsak.verdi,
+                                        barn
+                                    )}
+                                    values={{ ...(barn && { barn: barn.navn }) }}
+                                />
+                            }
                             skjema={skjema}
                             avgrensMinDato={hentMinAvgrensningPåTilDato(
                                 skjema.felter.utenlandsoppholdÅrsak.verdi

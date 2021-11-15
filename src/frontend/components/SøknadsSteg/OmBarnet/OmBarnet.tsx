@@ -153,10 +153,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             <Datovelger
                                 felt={skjema.felter.søkerForTidsromStartdato}
                                 skjema={skjema}
-                                labelTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.søkerForTidsromStartdato
-                                    ]
+                                label={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.søkerForTidsromStartdato
+                                            ]
+                                        }
+                                    />
                                 }
                                 avgrensMaxDato={dagensDato()}
                             />
@@ -169,10 +173,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 felt={skjema.felter.søkerForTidsromSluttdato}
                                 tilhørendeFraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
                                 skjema={skjema}
-                                labelTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.søkerForTidsromSluttdato
-                                    ]
+                                label={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.søkerForTidsromSluttdato
+                                            ]
+                                        }
+                                    />
                                 }
                                 disabled={
                                     skjema.felter.søkerForTidsromSluttdatoVetIkke.verdi === ESvar.JA
@@ -213,10 +221,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             <Datovelger
                                 felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
                                 skjema={skjema}
-                                labelTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                                    ]
+                                label={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                                            ]
+                                        }
+                                    />
                                 }
                                 disabled={
                                     skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA

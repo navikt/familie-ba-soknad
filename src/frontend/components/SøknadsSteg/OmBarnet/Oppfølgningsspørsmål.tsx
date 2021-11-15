@@ -76,16 +76,28 @@ const Oppfølgningsspørsmål: React.FC<{
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdStartdato]
+                        label={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.institusjonOppholdStartdato
+                                    ]
+                                }
+                            />
                         }
                     />
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdSluttdato}
                         tilhørendeFraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdSluttdato]
+                        label={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.institusjonOppholdSluttdato
+                                    ]
+                                }
+                            />
                         }
                         disabled={skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
                     />
