@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
@@ -29,6 +31,8 @@ export interface IUseUtenlandsoppholdSkjemaParams {
 }
 
 export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaParams) => {
+    const intl = useIntl();
+
     const utenlandsoppholdÅrsak = useFelt<EUtenlandsoppholdÅrsak | ''>({
         feltId: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
         verdi: '',
@@ -44,7 +48,12 @@ export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaPa
 
     const oppholdsland = useLanddropdownFelt(
         { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
-        landFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
+        landFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn)
+            ? intl.formatMessage(
+                  { id: landFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn) },
+                  { ...(barn && { barn: barn.navn }) }
+              )
+            : '',
         !!utenlandsoppholdÅrsak.verdi,
         true
     );
