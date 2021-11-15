@@ -46,7 +46,7 @@ services:
     container_name: "frontend-prod"
     build:
       context: ./
-      target: prod-runner # Før vi bygger og sletter dev-dependencies
+      target: prod-runner # Samme docker image som kjører i preprod og prod
       args:
         base_path: /familie/barnetrygd/soknad/ordinaer/
     environment:
