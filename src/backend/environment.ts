@@ -15,13 +15,13 @@ export default function () {
         return {
             apiUrl: 'http://api:8080',
             dekoratørUrl: 'https://www.nav.no/dekoratoren/',
-            port: 3000,
+            port: 55554,
         };
     } else {
         return {
             apiUrl: 'http://localhost:8080',
             dekoratørUrl: 'https://www.nav.no/dekoratoren/',
-            port: 3000,
+            port: 55554,
         };
     }
 }
