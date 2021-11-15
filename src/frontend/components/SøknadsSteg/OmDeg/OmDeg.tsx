@@ -18,7 +18,7 @@ import {
     landLabelSpråkIdsSøker,
     tilDatoFeilmeldingSpråkIdsSøker,
     tilDatoLabelSpråkIdsSøker,
-    tilDatoUkjentLabelSpråkIdSøker,
+    tilDatoUkjentLabelSpråkId,
     årsakFeilmeldingSpråkIdSøker,
     årsakSpråkIdsSøker,
 } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
@@ -104,7 +104,7 @@ const OmDeg: React.FC = () => {
                         {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                             <>
                                 <LeggTilKnapp
-                                    språkTekst="eøs.leggtilendaflereutenlandsopphold.knapp"
+                                    språkTekst={'eøs.leggtilendaflereutenlandsopphold.knapp'}
                                     onClick={toggleModal}
                                 />
                                 {utenlandsperioder.map((periode, index) => (
@@ -151,7 +151,6 @@ const OmDeg: React.FC = () => {
                 fraDatoFeilmeldingSpråkIds={fraDatoFeilmeldingSpråkIdsSøker}
                 tilDatoLabelSpråkIds={tilDatoLabelSpråkIdsSøker}
                 tilDatoFeilmeldingSpråkIds={tilDatoFeilmeldingSpråkIdsSøker}
-                tilDatoUkjentLabelSpråkId={tilDatoUkjentLabelSpråkIdSøker}
                 onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
             />
         </Steg>

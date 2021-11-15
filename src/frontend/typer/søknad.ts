@@ -21,6 +21,7 @@ import {
     IAdresse,
     IBarn,
     ISøker,
+    IUtenlandsperiode,
 } from './person';
 import { ISøknadSpørsmål } from './spørsmål';
 import { Årsak } from './utvidet';
@@ -48,6 +49,7 @@ export interface ISøknadsfelt<T> {
 
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
+    utenlandsperioder: IUtenlandsperiode[];
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | null>;

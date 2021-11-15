@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
-import { barnDataKeySpørsmål } from '../../../typer/person';
+import { barnDataKeySpørsmål, IUtenlandsperiode } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
@@ -15,18 +15,34 @@ import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import {
+    fraDatoFeilmeldingSpråkIdsBarn,
+    fraDatoLabelSpråkIdsBarn,
+    landFeilmeldingSpråkIdsBarn,
+    landLabelSpråkIdsBarn,
+    tilDatoFeilmeldingSpråkIdsBarn,
+    tilDatoLabelSpråkIdsBarn,
+    årsakFeilmeldingSpråkIdBarn,
+    årsakSpråkIdsBarn,
+} from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const Oppfølgningsspørsmål: React.FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
-}> = ({ barn, skjema }) => {
+    leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+}> = ({ barn, skjema, leggTilUtenlandsperiode }) => {
     const intl = useIntl();
+    const { erÅpen, toggleModal } = useModal();
+
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
@@ -96,6 +112,10 @@ const Oppfølgningsspørsmål: React.FC<{
                     tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
+                    <LeggTilKnapp
+                        språkTekst={'eøs.leggtilendaflereutenlandsopphold.knapp'}
+                        onClick={toggleModal}
+                    />
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.planleggerÅBoINorge12Mnd}
@@ -131,6 +151,20 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                 </SkjemaFieldset>
             )}
+            <UtenlandsoppholdModal
+                erÅpen={erÅpen}
+                toggleModal={toggleModal}
+                årsakLabelSpråkId={'ombarnet.beskriveopphold.spm'}
+                årsakFeilmeldingSpråkId={årsakFeilmeldingSpråkIdBarn}
+                årsakSpråkIds={årsakSpråkIdsBarn}
+                landLabelSpråkIds={landLabelSpråkIdsBarn}
+                landFeilmeldingSpråkIds={landFeilmeldingSpråkIdsBarn}
+                fraDatoLabelSpråkIds={fraDatoLabelSpråkIdsBarn}
+                fraDatoFeilmeldingSpråkIds={fraDatoFeilmeldingSpråkIdsBarn}
+                tilDatoLabelSpråkIds={tilDatoLabelSpråkIdsBarn}
+                tilDatoFeilmeldingSpråkIds={tilDatoFeilmeldingSpråkIdsBarn}
+                onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
+            />
         </>
     );
 };

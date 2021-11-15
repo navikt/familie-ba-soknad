@@ -25,7 +25,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { UtenlandsoppholdSpørsmålId } from './spørsmål';
+import { tilDatoUkjentLabelSpråkId, UtenlandsoppholdSpørsmålId } from './spørsmål';
 import {
     IUseUtenlandsoppholdSkjemaParams,
     useUtenlandsoppholdSkjema,
@@ -43,7 +43,6 @@ interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaP
         Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE>,
         string
     >;
-    tilDatoUkjentLabelSpråkId: string;
     onLeggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
 }
 
@@ -65,7 +64,6 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     tilDatoFeilmeldingSpråkIds,
     fraDatoLabelSpråkIds,
     tilDatoLabelSpråkIds,
-    tilDatoUkjentLabelSpråkId,
     onLeggTilUtenlandsperiode,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =

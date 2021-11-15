@@ -483,7 +483,7 @@
   "ombarnet.les-mer-om-bosted.lenke": "https://www.nav.no/familie/alene-med-barn/hva-naa",
   "ombarnet.les-mer-om-bosted.lenketekst": "Les mer om delt og fast bosted (åpnes i nytt vindu)",
   "ombarnet.nårflyttetfra.borsammencheck": "Vi bor sammen nå",
-  "ombarnet.nårflyttetfra.feilmelding": "Du må oppgi når {barn} flyttet fra Norge for å gå videre",
+  "ombarnet.nårflyttetfranorge.feilmelding": "Du må oppgi når {barn} flyttet fra Norge for å gå videre",
   "ombarnet.nårflyttetfra.info": "Du må legge ved meklingsattest senere i søknaden hvis dere ikke bor sammen nå",
   "ombarnet.nårflyttetfra.spm": "Når flyttet dere fra hverandre?",
   "ombarnet.nårflyttetfranorge.spm": "Når flyttet {barn} fra Norge?",

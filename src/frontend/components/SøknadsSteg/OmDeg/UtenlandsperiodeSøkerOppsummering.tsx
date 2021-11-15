@@ -20,7 +20,7 @@ import {
     årsakSpråkIdsSøker,
     fraDatoLabelSpråkIdsSøker,
     tilDatoLabelSpråkIdsSøker,
-    tilDatoUkjentLabelSpråkIdSøker,
+    tilDatoUkjentLabelSpråkId,
 } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 
 const StyledElement = styled(Element)`
@@ -82,7 +82,7 @@ export const UtenlandsperiodeSøkerOppsummering: React.FC<{
                     <Normaltekst>
                         {formaterDatoMedUkjent(
                             oppholdslandTilDato.svar,
-                            formatMessage({ id: tilDatoUkjentLabelSpråkIdSøker })
+                            formatMessage({ id: tilDatoUkjentLabelSpråkId })
                         )}
                     </Normaltekst>
                 </Informasjonsbolk>
