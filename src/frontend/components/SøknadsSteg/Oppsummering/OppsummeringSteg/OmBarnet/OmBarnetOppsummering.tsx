@@ -139,29 +139,10 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
-                                id={'ombarnet.sammenhengende-opphold'}
+                                id={'ombarnet.opplystatbarnutlandopphold.info'}
                                 values={{ navn: barnetsNavnValue(barn, intl) }}
                             />
                         }
-                    />
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.nårKomBarnetTilNorge
-                                    ]
-                                }
-                            />
-                        }
-                        søknadsvar={formaterDatoMedUkjent(
-                            barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar,
-                            formatMessage({
-                                id: omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
-                                ],
-                            })
-                        )}
                     />
                     <OppsummeringFelt
                         tittel={

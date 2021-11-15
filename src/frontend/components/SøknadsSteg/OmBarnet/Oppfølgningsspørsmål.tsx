@@ -93,28 +93,9 @@ const Oppfølgningsspørsmål: React.FC<{
             )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
-                    tittelId={'ombarnet.sammenhengende-opphold'}
+                    tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
-                    <Datovelger
-                        avgrensDatoFremITid={true}
-                        felt={skjema.felter.nårKomBarnTilNorgeDato}
-                        skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.nårKomBarnetTilNorge]
-                        }
-                        disabled={
-                            skjema.felter.nårKomBarnTilNorgeDatoIkkeAnkommet.verdi === ESvar.JA
-                        }
-                    />
-                    <SkjemaCheckbox
-                        labelSpråkTekstId={
-                            omBarnetSpørsmålSpråkId[
-                                OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
-                            ]
-                        }
-                        felt={skjema.felter.nårKomBarnTilNorgeDatoIkkeAnkommet}
-                    />
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.planleggerÅBoINorge12Mnd}

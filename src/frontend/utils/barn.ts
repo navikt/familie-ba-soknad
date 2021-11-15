@@ -120,14 +120,6 @@ export const genererOppdaterteBarn = (
                     ''
                 ),
             },
-            [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: {
-                ...barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    boddMindreEnn12MndINorge,
-                    barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
-                    ''
-                ),
-            },
             [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: {
                 ...barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
                 svar: genererSvarForOppfølgningspørsmålBarn(
@@ -276,10 +268,6 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: {
             id: OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge,
             svar: null,
-        },
-        [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: {
-            id: OmBarnetSpørsmålsId.nårKomBarnetTilNorge,
-            svar: '',
         },
         [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: {
             id: OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd,

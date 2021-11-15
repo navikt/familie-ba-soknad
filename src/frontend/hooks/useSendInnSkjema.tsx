@@ -167,7 +167,6 @@ export const useSendInnSkjema = (): {
             andreForelderFødselsdato,
             søkerForTidsromSluttdato,
             institusjonOppholdSluttdato,
-            nårKomBarnTilNorgeDato,
             utvidet,
             ...barnSpørsmål
         } = barn;
@@ -278,15 +277,6 @@ export const useSendInnSkjema = (): {
                     sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                         institusjonOppholdSluttdato.svar,
                         omBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
-                    )
-                ),
-                [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.nårKomBarnetTilNorge),
-                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                        nårKomBarnTilNorgeDato.svar,
-                        omBarnetSpørsmålSpråkId[
-                            'ombarnet.sammenhengende-opphold.dato.ikkekommetenda'
-                        ]
                     )
                 ),
             },
@@ -485,7 +475,7 @@ export const useSendInnSkjema = (): {
                 'ombarnet.fosterbarn',
                 'ombarnet.institusjon',
                 'ombarnet.oppholdutland',
-                'ombarnet.sammenhengende-opphold',
+                'ombarnet.opplystatbarnutlandopphold.info',
                 'ombarnet.barnetrygd-eøs',
                 'omdeg.annensamboer.spm',
                 'pdf.andreforelder.seksjonstittel',
