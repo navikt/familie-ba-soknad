@@ -29,24 +29,26 @@ const devConfig: webpack.Configuration = mergeWithRules({
     devtool: 'eval-source-map',
     devServer: {
         hot: true,
-        port: 55554,
+        port: 3000,
         client: {
-            progress: true,
             overlay: true,
         },
         open: [basePath],
         proxy: {
-            [`${basePath}modellversjon`]: `http://localhost:3000`,
-            [`${basePath}api`]: `http://localhost:3000`,
-            [`${basePath}toggles`]: `http://localhost:3000`,
-            [`${basePath}konverter`]: `http://localhost:3000`,
-            [basePath.replace('ordinaer', 'utvidet')]: {
-                target: 'http://localhost:55554',
-                pathRewrite: path => path.replace('utvidet', 'ordinaer'),
-            },
+            [`${basePath}modellversjon`]: `http://localhost:55554`,
+            [`${basePath}api`]: `http://localhost:55554`,
+            [`${basePath}toggles`]: `http://localhost:55554`,
+            [`${basePath}konverter`]: `http://localhost:55554`,
+            // Hvis vi kjører uten en basepath som inneholder ordinaer vil denne og neste regel loope
+            ...(basePath.includes('ordinaer') && {
+                [basePath.replace('ordinaer', 'utvidet')]: {
+                    target: 'http://localhost:3000',
+                    pathRewrite: path => path.replace('utvidet', 'ordinaer'),
+                },
+            }),
             // Essentially en workaround for https://github.com/nrwl/nx/issues/3859
             '*': {
-                target: 'http://localhost:55554',
+                target: 'http://localhost:3000',
                 pathRewrite: () => basePath,
             },
         },
