@@ -31,7 +31,7 @@ process.env.NODE_ENV === 'development' &&
 // Alltid bruk gzip-compression på alt vi server med express
 app.use(compression());
 
-// Parse cookies for bruk i dekoratør-fetch
+// Parse cookies, bl.a. for rendring av lang-attribute
 app.use(cookieParser());
 
 konfigurerStatic(app);

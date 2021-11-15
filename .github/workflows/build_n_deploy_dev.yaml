@@ -40,6 +40,8 @@ jobs:
 
       - name: Bygg Docker image
         uses: docker/build-push-action@v2
+        env:
+          DEKORATOREN_URL: "https://dekoratoren.dev.nav.no"
         with:
           tags: ${{ env.IMAGE }}
           build-args: |

@@ -18,6 +18,7 @@ const commonConfig: webpack.Configuration = {
     plugins: [
         new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
             PUBLIC_URL: (process.env.BASE_PATH ?? '/') + publicUrl.substr(1),
+            DEKORATOREN_URL: process.env.DEKORATOREN_URL ?? 'https://www.nav.no/dekoratoren',
         }),
         new HtmlWebpackPlugin({
             template: path.join(process.cwd(), 'src/frontend/public/index.html'),
