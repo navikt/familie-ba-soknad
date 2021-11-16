@@ -3,7 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
-import { barnDataKeySpørsmål, IBarn } from './person';
+import { barnDataKeySpørsmål, IBarn, IUtenlandsperiode } from './person';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 
@@ -88,6 +88,7 @@ export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | null;
     værtINorgeITolvMåneder: ESvar | null;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
+    registrertMedUtenlandsperiode: IUtenlandsperiode[];
 }
 
 export interface IVelgBarnFeltTyper {
