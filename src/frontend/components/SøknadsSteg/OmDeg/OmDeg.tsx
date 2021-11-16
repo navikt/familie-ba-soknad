@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Feilmelding } from 'nav-frontend-typografi';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -107,6 +109,15 @@ const OmDeg: React.FC = () => {
                                     språkTekst="eøs.leggtilendaflereutenlandsopphold.knapp"
                                     onClick={toggleModal}
                                 />
+                                {skjema.felter.registrertMedUtenlandsperiode.erSynlig &&
+                                    skjema.felter.registrertMedUtenlandsperiode.feilmelding &&
+                                    skjema.visFeilmeldinger && (
+                                        <Feilmelding>
+                                            <SpråkTekst
+                                                id={'felles.leggtilutenlands.feilmelding'}
+                                            />
+                                        </Feilmelding>
+                                    )}
                                 {utenlandsperioder.map((periode, index) => (
                                     <UtenlandsperiodeSøkerOppsummering
                                         key={index}
