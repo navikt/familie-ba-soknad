@@ -63,7 +63,7 @@ export const UtenlandsperiodeSøkerOppsummering: React.FC<{
         periode;
     const årsak = utenlandsoppholdÅrsak.svar;
 
-    const årsakSpråkIds: Record<EUtenlandsoppholdÅrsak, string> = {
+    const årsakTilEøsInfoSpråkIds: Record<EUtenlandsoppholdÅrsak, string> = {
         [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: 'omdeg.flyttetfranorge.eøs-info',
         [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: 'omdeg.flyttettilnorge.eøs-info',
         [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'omdeg.oppholderi.eøs-info',
@@ -111,7 +111,7 @@ export const UtenlandsperiodeSøkerOppsummering: React.FC<{
             {erFørsteEøsPeriode && (
                 <EøsNotisWrapper>
                     <VedleggNotisTilleggsskjema
-                        språkTekstId={årsakSpråkIds[periode.utenlandsoppholdÅrsak.svar]}
+                        språkTekstId={årsakTilEøsInfoSpråkIds[periode.utenlandsoppholdÅrsak.svar]}
                     />
                 </EøsNotisWrapper>
             )}
