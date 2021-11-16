@@ -172,7 +172,7 @@ export const useOmBarnet = (
         );
     };
 
-    /*--- MOTTAR BARNETRYFD FRA ANNET EØSLAND ---*/
+    /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
 
     const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt(
         barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
