@@ -39,6 +39,26 @@ services:
       - "3000:3000"
       - "55554:55554"
 
+  frontend-prod:
+    profiles:
+      - test-prod-build
+    logging: *common-log-config
+    container_name: "frontend-prod"
+    build:
+      context: ./
+      target: prod-runner # Samme docker image som kjører i preprod og prod
+      args:
+        base_path: /familie/barnetrygd/soknad/ordinaer/
+    environment:
+      <<: *common-token-environment
+      BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
+      ENV: docker-compose-prod
+      # FORCE_DISABLED: 1 # Uncomment for å utvikle disabled-appen
+    volumes:
+      - secure-logs:/secure-logs
+    ports:
+      - "3000:3000"
+
   api:
     logging: *common-log-config
     container_name: "soknad-api"
