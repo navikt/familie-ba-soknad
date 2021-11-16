@@ -122,6 +122,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         }
                         skjema={skjema}
                         placeholder={intl.formatMessage({ id: 'felles.velg-årsak.placeholder' })}
+                        bredde={'fullbredde'}
                     >
                         {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
                             <option key={number} value={årsak}>
