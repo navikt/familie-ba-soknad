@@ -4,11 +4,12 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { feil, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
+import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
 const useLanddropdownFelt = (
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,
-    feilmelding: string,
+    feilmeldingSpråkId: string,
     skalFeltetVises: boolean,
     nullstillVedAvhengighetEndring = false
 ) => {
@@ -19,10 +20,19 @@ const useLanddropdownFelt = (
             return avhengigheter && avhengigheter.skalFeltetVises;
         },
         valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>, avhengigheter) => {
-            return felt.verdi !== '' ? ok(felt) : feil(felt, avhengigheter?.feilmelding);
+            return felt.verdi !== ''
+                ? ok(felt)
+                : feil(
+                      felt,
+                      avhengigheter?.feilmeldingSpråkId ? (
+                          <SpråkTekst id={avhengigheter.feilmeldingSpråkId} />
+                      ) : (
+                          ''
+                      )
+                  );
         },
         nullstillVedAvhengighetEndring,
-        avhengigheter: { skalFeltetVises, feilmelding },
+        avhengigheter: { skalFeltetVises, feilmeldingSpråkId },
     });
 };
 

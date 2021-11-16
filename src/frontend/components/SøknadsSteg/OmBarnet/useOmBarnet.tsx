@@ -176,7 +176,7 @@ export const useOmBarnet = (
 
     const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt(
         barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
-        intl.formatMessage({ id: 'ombarnet.barnetrygd-eøs.land.feilmelding' }),
+        'ombarnet.barnetrygd-eøs.land.feilmelding',
         skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland)
     );
 
