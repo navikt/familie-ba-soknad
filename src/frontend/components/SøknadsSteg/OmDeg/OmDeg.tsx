@@ -3,6 +3,8 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
+import { IUtenlandsperiode } from '../../../typer/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -42,6 +44,11 @@ const OmDeg: React.FC = () => {
         fjernUtenlandsperiode,
         utenlandsperioder,
     } = useOmdeg();
+    const { erEøsLand } = useEøs();
+
+    const erFørsteEøsPeriode = (periode: IUtenlandsperiode) => {
+        return periode === utenlandsperioder.find(p => erEøsLand(p.oppholdsland.svar));
+    };
 
     return (
         <Steg
@@ -113,6 +120,7 @@ const OmDeg: React.FC = () => {
                                         periode={periode}
                                         nummer={index + 1}
                                         fjernPeriodeCallback={fjernUtenlandsperiode}
+                                        erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
                                     />
                                 ))}
                             </>
