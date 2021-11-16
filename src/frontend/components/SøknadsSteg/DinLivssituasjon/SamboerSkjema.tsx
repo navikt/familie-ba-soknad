@@ -10,6 +10,7 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { samboerSpråkIder } from './spørsmål';
 
 const SamboerSkjema: React.FC<{
@@ -48,7 +49,7 @@ const SamboerSkjema: React.FC<{
                     <Datovelger
                         skjema={skjema}
                         felt={samboerFelter.fødselsdato}
-                        labelTekstId={samboerSpråkIder.fødselsdato}
+                        label={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}
                         disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
                         calendarPosition={erIModal ? 'fullscreen' : ''}
                     />
@@ -61,7 +62,7 @@ const SamboerSkjema: React.FC<{
             <Datovelger
                 skjema={skjema}
                 felt={samboerFelter.samboerFraDato}
-                labelTekstId={samboerSpråkIder.samboerFraDato}
+                label={<SpråkTekst id={samboerSpråkIder.samboerFraDato} />}
                 avgrensMaxDato={samboerFelter.samboerTilDato ? gårsdagensDato() : dagensDato()}
                 calendarPosition={erIModal ? 'fullscreen' : ''}
             />
@@ -69,7 +70,7 @@ const SamboerSkjema: React.FC<{
                 <Datovelger
                     skjema={skjema}
                     felt={samboerFelter.samboerTilDato}
-                    labelTekstId={samboerSpråkIder.samboerTilDato}
+                    label={<SpråkTekst id={samboerSpråkIder.samboerTilDato} />}
                     tilhørendeFraOgMedFelt={samboerFelter.samboerFraDato}
                     avgrensDatoFremITid={true}
                     calendarPosition={erIModal ? 'fullscreen' : ''}

@@ -19,10 +19,12 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
     landLabelSpråkIdsSøker,
     årsakSpråkIdsSøker,
-    fraDatoLabelSpråkIdsSøker,
-    tilDatoLabelSpråkIdsSøker,
-    tilDatoUkjentLabelSpråkIdSøker,
+    tilDatoUkjentLabelSpråkId,
 } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import {
+    fraDatoLabelSpråkId,
+    tilDatoLabelSpråkId,
+} from '../../Felleskomponenter/UtenlandsoppholdModal/utenlandsoppholdSpråkUtils';
 import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 
 const StyledElement = styled(Element)`
@@ -87,21 +89,21 @@ export const UtenlandsperiodeSøkerOppsummering: React.FC<{
             </Informasjonsbolk>
             {oppholdslandFraDato && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={fraDatoLabelSpråkIdsSøker[årsak]} />
+                    <Spørsmål språkId={fraDatoLabelSpråkId(årsak)} />
                     <Normaltekst>{formaterDato(oppholdslandFraDato.svar)}</Normaltekst>
                 </Informasjonsbolk>
             )}
             {oppholdslandTilDato && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={tilDatoLabelSpråkIdsSøker[årsak]} />
+                    <Spørsmål språkId={tilDatoLabelSpråkId(årsak)} />
                     <Normaltekst>
                         {formaterDatoMedUkjent(
                             oppholdslandTilDato.svar,
-                            formatMessage({ id: tilDatoUkjentLabelSpråkIdSøker })
+                            formatMessage({ id: tilDatoUkjentLabelSpråkId })
                         )}
                     </Normaltekst>
                 </Informasjonsbolk>
-            )}{' '}
+            )}
             <SlettKnapp htmlType={'button'} kompakt onClick={() => fjernPeriodeCallback(periode)}>
                 <DeleteFilled />
                 <span>

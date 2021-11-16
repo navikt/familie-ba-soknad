@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IUtenlandsperiode } from '../../../typer/person';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -25,26 +26,22 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { UtenlandsoppholdSpørsmålId } from './spørsmål';
+import { tilDatoUkjentLabelSpråkId, UtenlandsoppholdSpørsmålId } from './spørsmål';
 import {
     IUseUtenlandsoppholdSkjemaParams,
     useUtenlandsoppholdSkjema,
 } from './useUtenlandsoppholdSkjema';
+import {
+    fraDatoLabelSpråkId,
+    landLabelSpråkId,
+    tilDatoLabelSpråkId,
+    årsakLabelSpråkId,
+    årsakSpråkId,
+} from './utenlandsoppholdSpråkUtils';
 
 interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaParams {
-    årsakLabelSpråkId: string;
-    årsakSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
-    landLabelSpråkIds: Record<EUtenlandsoppholdÅrsak, string>;
-    fraDatoLabelSpråkIds: Record<
-        Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE>,
-        string
-    >;
-    tilDatoLabelSpråkIds: Record<
-        Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE>,
-        string
-    >;
-    tilDatoUkjentLabelSpråkId: string;
     onLeggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    barn?: IBarnMedISøknad;
 }
 
 const StyledAlertStripe = styled(AlertStripe)`
@@ -54,26 +51,14 @@ const StyledAlertStripe = styled(AlertStripe)`
 `;
 
 export const UtenlandsoppholdModal: React.FC<Props> = ({
-    landFeilmeldingSpråkIds,
-    årsakFeilmeldingSpråkId,
     erÅpen,
     toggleModal,
-    årsakLabelSpråkId,
-    årsakSpråkIds,
-    landLabelSpråkIds,
-    fraDatoFeilmeldingSpråkIds,
-    tilDatoFeilmeldingSpråkIds,
-    fraDatoLabelSpråkIds,
-    tilDatoLabelSpråkIds,
-    tilDatoUkjentLabelSpråkId,
     onLeggTilUtenlandsperiode,
+    barn,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtenlandsoppholdSkjema({
-            landFeilmeldingSpråkIds,
-            årsakFeilmeldingSpråkId,
-            fraDatoFeilmeldingSpråkIds,
-            tilDatoFeilmeldingSpråkIds,
+            barn,
         });
 
     const intl = useIntl();
@@ -115,7 +100,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            modalTittelSpråkId={'modal.endaflereutenlandsopphold.tittel'}
+            modalTittelSpråkId={'modal.utenlandsopphold.tittel'}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilutenlands.knapp'}
             toggleModal={toggleModal}
@@ -129,15 +114,24 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                             skjema.visFeilmeldinger
                         )}
                         felt={skjema.felter.utenlandsoppholdÅrsak}
-                        label={<SpråkTekst id={årsakLabelSpråkId} />}
+                        label={
+                            <SpråkTekst
+                                id={årsakLabelSpråkId(barn)}
+                                values={{ ...(barn && { barn: barn.navn }) }}
+                            />
+                        }
                         skjema={skjema}
                         placeholder={intl.formatMessage({ id: 'felles.velg-årsak.placeholder' })}
+                        bredde={'fullbredde'}
                     >
                         {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
                             <option key={number} value={årsak}>
-                                {intl.formatMessage({
-                                    id: årsakSpråkIds[årsak],
-                                })}
+                                {intl.formatMessage(
+                                    {
+                                        id: årsakSpråkId(årsak as EUtenlandsoppholdÅrsak, barn),
+                                    },
+                                    { ...(barn && { barn: barn.navn }) }
+                                )}
                             </option>
                         ))}
                     </StyledDropdown>
@@ -154,9 +148,13 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                     felt={skjema.felter.oppholdsland}
                     skjema={skjema}
                     label={
-                        landLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi] && (
+                        landLabelSpråkId(skjema.felter.utenlandsoppholdÅrsak.verdi, barn) && (
                             <SpråkTekst
-                                id={landLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]}
+                                id={landLabelSpråkId(
+                                    skjema.felter.utenlandsoppholdÅrsak.verdi,
+                                    barn
+                                )}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         )
                     }
@@ -166,8 +164,14 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 {skjema.felter.oppholdslandFraDato.erSynlig && (
                     <Datovelger
                         felt={skjema.felter.oppholdslandFraDato}
-                        labelTekstId={
-                            fraDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]
+                        label={
+                            <SpråkTekst
+                                id={fraDatoLabelSpråkId(
+                                    skjema.felter.utenlandsoppholdÅrsak.verdi,
+                                    barn
+                                )}
+                                values={{ ...(barn && { barn: barn.navn }) }}
+                            />
                         }
                         skjema={skjema}
                         avgrensMaxDato={hentMaxAvgrensningPåFraDato(
@@ -180,8 +184,14 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                     {skjema.felter.oppholdslandTilDato.erSynlig && (
                         <Datovelger
                             felt={skjema.felter.oppholdslandTilDato}
-                            labelTekstId={
-                                tilDatoLabelSpråkIds[skjema.felter.utenlandsoppholdÅrsak.verdi]
+                            label={
+                                <SpråkTekst
+                                    id={tilDatoLabelSpråkId(
+                                        skjema.felter.utenlandsoppholdÅrsak.verdi,
+                                        barn
+                                    )}
+                                    values={{ ...(barn && { barn: barn.navn }) }}
+                                />
                             }
                             skjema={skjema}
                             avgrensMinDato={hentMinAvgrensningPåTilDato(

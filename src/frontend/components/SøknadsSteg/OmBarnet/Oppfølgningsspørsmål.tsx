@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
-import { barnDataKeySpørsmål } from '../../../typer/person';
+import { barnDataKeySpørsmål, IUtenlandsperiode } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
@@ -15,18 +15,24 @@ import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const Oppfølgningsspørsmål: React.FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
-}> = ({ barn, skjema }) => {
+    leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+}> = ({ barn, skjema, leggTilUtenlandsperiode }) => {
     const intl = useIntl();
+    const { erÅpen, toggleModal } = useModal();
+
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
@@ -70,16 +76,28 @@ const Oppfølgningsspørsmål: React.FC<{
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdStartdato]
+                        label={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.institusjonOppholdStartdato
+                                    ]
+                                }
+                            />
                         }
                     />
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdSluttdato}
                         tilhørendeFraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdSluttdato]
+                        label={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.institusjonOppholdSluttdato
+                                    ]
+                                }
+                            />
                         }
                         disabled={skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
                     />
@@ -96,6 +114,10 @@ const Oppfølgningsspørsmål: React.FC<{
                     tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
+                    <LeggTilKnapp
+                        språkTekst={'felles.leggtilutenlands.knapp'}
+                        onClick={toggleModal}
+                    />
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.planleggerÅBoINorge12Mnd}
@@ -131,6 +153,12 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                 </SkjemaFieldset>
             )}
+            <UtenlandsoppholdModal
+                erÅpen={erÅpen}
+                toggleModal={toggleModal}
+                onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
+                barn={barn}
+            />
         </>
     );
 };

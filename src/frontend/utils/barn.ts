@@ -48,10 +48,14 @@ export const genererOppdaterteBarn = (
         const andreForelderErDød =
             genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner) === ESvar.JA;
 
+        const oppholdtSegIUtlandSiste12Mnd =
+            skjema.felter.hvemTolvMndSammenhengendeINorge.verdi.includes(barn.id);
+
         const erFosterbarn = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn);
 
         return {
             ...barn,
+            utenlandsperioder: oppholdtSegIUtlandSiste12Mnd ? barn.utenlandsperioder : [],
             [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
                 svar: erFosterbarn,
@@ -211,6 +215,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
     return {
         ...barn,
         barnErFyltUt: false,
+        utenlandsperioder: [],
         utvidet: {
             [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: {
                 id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,

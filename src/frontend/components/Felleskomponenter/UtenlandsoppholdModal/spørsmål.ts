@@ -8,6 +8,8 @@ export enum UtenlandsoppholdSpørsmålId {
     tilDatoUtenlandsoppholdVetIkke = 'til-dato-utenlandsopphold-vet-ikke',
 }
 
+export const tilDatoUkjentLabelSpråkId = 'felles.vetikkenåravsluttes.spm';
+
 export const årsakSpråkIdsSøker: Record<EUtenlandsoppholdÅrsak, string> = {
     [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: 'modal.oppholdalternativ.flyttettilnorge',
     [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: 'modal.oppholdalternativ.flyttetfranorge',
@@ -15,12 +17,31 @@ export const årsakSpråkIdsSøker: Record<EUtenlandsoppholdÅrsak, string> = {
         'modal.oppholdalternativ.oppholdtidligere',
     [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'modal.oppholdalternativ.utenfornå',
 };
+
+export const årsakSpråkIdsBarn: Record<EUtenlandsoppholdÅrsak, string> = {
+    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]:
+        'ombarnet.oppholdalternativ.flyttettilnorge',
+    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]:
+        'ombarnet.oppholdalternativ.flyttetfranorge',
+    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]:
+        'ombarnet.oppholdalternativ.oppholdtidligere',
+    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'ombarnet.oppholdalternativ.utenfornå',
+};
+
+export const landLabelSpråkIdsBarn: Record<EUtenlandsoppholdÅrsak, string> = {
+    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: 'ombarnet.hvilketlandflyttetfra.spm',
+    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: 'ombarnet.hvilketlandflyttettil.spm',
+    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]: 'ombarnet.hvilketlandoppholdti.spm',
+    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'ombarnet.hvilketlandoppholderi.spm',
+};
+
 export const landLabelSpråkIdsSøker: Record<EUtenlandsoppholdÅrsak, string> = {
     [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: 'modal.hvilketlandflyttetfra.spm',
     [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: 'modal.hvilketlandflyttettil.spm',
     [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]: 'modal.hvilketlandoppholdti.spm',
     [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'modal.hvilketlandoppholderi.spm',
 };
+
 export const landFeilmeldingSpråkIdsSøker: Record<EUtenlandsoppholdÅrsak, string> = {
     [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: 'modal.hvilketlandflyttetfra.feilmelding',
     [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: 'modal.hvilketlandflyttettil.feilmelding',
@@ -28,41 +49,3 @@ export const landFeilmeldingSpråkIdsSøker: Record<EUtenlandsoppholdÅrsak, str
         'modal.hvilketlandoppholdti.feilmelding',
     [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'modal.hvilketlandoppholderi.feilmelding',
 };
-export const fraDatoLabelSpråkIdsSøker: Record<
-    Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE>,
-    string
-> = {
-    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: 'modal.nårflyttetfra.spm',
-    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]: 'felles.nårstartetoppholdet.spm',
-    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'felles.nårstartetoppholdet.spm',
-};
-export const fraDatoFeilmeldingSpråkIdsSøker: Record<
-    Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE>,
-    string
-> = {
-    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: 'modal.nårflyttetfra.feilmelding',
-    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]:
-        'felles.nårstartetoppholdet.feilmelding',
-    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'felles.nårstartetoppholdet.feilmelding',
-};
-export const tilDatoLabelSpråkIdsSøker: Record<
-    Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE>,
-    string
-> = {
-    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: 'modal.nårflyttettilnorge.spm',
-    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]: 'felles.nåravsluttetoppholdet.spm',
-    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'felles.nåravsluttesoppholdet.spm',
-};
-export const tilDatoFeilmeldingSpråkIdsSøker: Record<
-    Exclude<EUtenlandsoppholdÅrsak, EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE>,
-    string
-> = {
-    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: 'modal.nårflyttettilnorge.feilmelding',
-    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]:
-        'felles.nåravsluttetoppholdet.feilmelding',
-    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]:
-        'felles.nåravsluttesoppholdet.feilmelding',
-};
-
-export const tilDatoUkjentLabelSpråkIdSøker = 'felles.vetikkenåravsluttes.spm';
-export const årsakFeilmeldingSpråkIdSøker = 'modal.beskriveopphold.feilmelding';

@@ -17,7 +17,11 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
-import { barnDataKeySpørsmål, barnDataKeySpørsmålUtvidet } from '../../../typer/person';
+import {
+    barnDataKeySpørsmål,
+    barnDataKeySpørsmålUtvidet,
+    IUtenlandsperiode,
+} from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
@@ -41,6 +45,9 @@ export const useOmBarnet = (
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     settSammeForelder: (radioVerdi: string) => void;
     validerAlleSynligeFelter: () => void;
+    leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    utenlandsperioder: IUtenlandsperiode[];
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
@@ -52,6 +59,10 @@ export const useOmBarnet = (
     if (!barn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
     }
+
+    const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
+        barn.utenlandsperioder
+    );
 
     const skalFeltetVises = (søknadsdataFelt: barnDataKeySpørsmål) => {
         return barn[søknadsdataFelt].svar === ESvar.JA;
@@ -133,7 +144,7 @@ export const useOmBarnet = (
         institusjonOppholdStartdato.verdi
     );
 
-    /*---BODD SAMMENHENGENDE I NORGE---*/
+    /*---UTENLANDSOPPHOLD---*/
     const planleggerÅBoINorge12Mnd = useFelt<ESvar | null>({
         feltId: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].id,
         verdi: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar,
@@ -151,7 +162,17 @@ export const useOmBarnet = (
         nullstillVedAvhengighetEndring: false,
     });
 
-    /*--- MOTTAR BARNETRYFD FRA ANNET EØSLAND ---*/
+    const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
+        settUtenlandsperioder(prevState => prevState.concat(periode));
+    };
+
+    const fjernUtenlandsperiode = (periodeSomSkalFjernes: IUtenlandsperiode) => {
+        settUtenlandsperioder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
+
+    /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
 
     const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt(
         barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
@@ -573,6 +594,11 @@ export const useOmBarnet = (
                     ? {
                           ...barn,
                           barnErFyltUt: true,
+                          utenlandsperioder: skalFeltetVises(
+                              barnDataKeySpørsmål.boddMindreEnn12MndINorge
+                          )
+                              ? utenlandsperioder
+                              : [],
                           institusjonsnavn: {
                               ...barn.institusjonsnavn,
                               svar: trimWhiteSpace(institusjonsnavn.verdi),
@@ -725,5 +751,8 @@ export const useOmBarnet = (
         andreBarnSomErFyltUt,
         settSammeForelder,
         validerAlleSynligeFelter,
+        leggTilUtenlandsperiode,
+        fjernUtenlandsperiode,
+        utenlandsperioder,
     };
 };

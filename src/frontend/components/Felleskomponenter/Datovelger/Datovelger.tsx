@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 
 import dayjs from 'dayjs';
 import { useIntl } from 'react-intl';
@@ -27,7 +27,7 @@ interface DatoVelgerProps {
     avgrensMinDato?: ISODateString;
     tilhørendeFraOgMedFelt?: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
-    labelTekstId: string;
+    label: ReactNode;
     disabled?: boolean;
     dynamisk?: boolean;
     calendarPosition?: '' | 'fullscreen' | 'responsive';
@@ -56,7 +56,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     avgrensMinDato,
     tilhørendeFraOgMedFelt,
     skjema,
-    labelTekstId,
+    label,
     disabled = false,
     dynamisk = false,
     calendarPosition = '',
@@ -98,7 +98,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 limitations={hentBegrensninger()}
                 placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}
                 valgtDato={disabled ? '' : felt.verdi}
-                label={labelTekstId ? <SpråkTekst id={labelTekstId} /> : ''}
+                label={label}
                 {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}
                 onChange={dato => {
                     felt.hentNavInputProps(false).onChange(dato);
