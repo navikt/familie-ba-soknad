@@ -19,9 +19,11 @@ import {
     landLabelSpråkIdsSøker,
     årsakSpråkIdsSøker,
     tilDatoUkjentLabelSpråkId,
+} from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import {
     fraDatoLabelSpråkId,
     tilDatoLabelSpråkId,
-} from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+} from '../../Felleskomponenter/UtenlandsoppholdModal/utenlandsoppholdSpråkUtils';
 
 const StyledElement = styled(Element)`
     && {

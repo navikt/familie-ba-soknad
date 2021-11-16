@@ -16,13 +16,13 @@ import {
     hentMaxAvgrensningPåTilDato,
 } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 import {
     fraDatoFeilmeldingSpråkId,
     landFeilmeldingSpråkId,
     tilDatoFeilmeldingSpråkId,
-    UtenlandsoppholdSpørsmålId,
     årsakFeilmeldingSpråkId,
-} from './spørsmål';
+} from './utenlandsoppholdSpråkUtils';
 
 export interface IUseUtenlandsoppholdSkjemaParams {
     barn?: IBarnMedISøknad;

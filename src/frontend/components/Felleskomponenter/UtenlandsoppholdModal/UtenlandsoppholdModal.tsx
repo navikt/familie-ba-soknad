@@ -26,19 +26,18 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import {
-    fraDatoLabelSpråkId,
-    landLabelSpråkId,
-    tilDatoLabelSpråkId,
-    tilDatoUkjentLabelSpråkId,
-    UtenlandsoppholdSpørsmålId,
-    årsakLabelSpråkId,
-    årsakSpråkId,
-} from './spørsmål';
+import { tilDatoUkjentLabelSpråkId, UtenlandsoppholdSpørsmålId } from './spørsmål';
 import {
     IUseUtenlandsoppholdSkjemaParams,
     useUtenlandsoppholdSkjema,
 } from './useUtenlandsoppholdSkjema';
+import {
+    fraDatoLabelSpråkId,
+    landLabelSpråkId,
+    tilDatoLabelSpråkId,
+    årsakLabelSpråkId,
+    årsakSpråkId,
+} from './utenlandsoppholdSpråkUtils';
 
 interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaParams {
     onLeggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
