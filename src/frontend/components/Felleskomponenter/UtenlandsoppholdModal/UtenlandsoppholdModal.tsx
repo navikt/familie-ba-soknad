@@ -100,7 +100,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            modalTittelSpråkId={'modal.endaflereutenlandsopphold.tittel'}
+            modalTittelSpråkId={'modal.utenlandsopphold.tittel'}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilutenlands.knapp'}
             toggleModal={toggleModal}

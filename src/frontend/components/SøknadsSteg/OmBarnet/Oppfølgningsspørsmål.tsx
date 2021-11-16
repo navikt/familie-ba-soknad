@@ -115,7 +115,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     <LeggTilKnapp
-                        språkTekst={'eøs.leggtilendaflereutenlandsopphold.knapp'}
+                        språkTekst={'felles.leggtilutenlands.knapp'}
                         onClick={toggleModal}
                     />
                     <JaNeiSpm

@@ -331,7 +331,7 @@
   "modal.andreforelderytselselandfortid.spm": "Which country did {barn}'s other parent is receive benefits from?",
   "modal.beskriveopphold.feilmelding": "You must state what best describes the period you stayed outside of Norway in order to be able to proceed",
   "modal.beskriveopphold.spm": "What best describes the period you stayed outside of Norway?",
-  "modal.endaflereutenlandsopphold.tittel": "Add stay abroad",
+  "modal.utenlandsopphold.tittel": "Add stay abroad",
   "modal.hvilketlandflyttetfra.feilmelding": "You must state which country you moved from in order to be able to proceed",
   "modal.hvilketlandflyttetfra.spm": "Which country did you move from?",
   "modal.hvilketlandflyttettil.feilmelding": "You must state which country you have moved to in order to be able to proceed",

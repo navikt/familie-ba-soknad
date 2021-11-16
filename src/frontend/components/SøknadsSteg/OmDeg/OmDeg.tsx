@@ -93,7 +93,7 @@ const OmDeg: React.FC = () => {
                         {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                             <>
                                 <LeggTilKnapp
-                                    språkTekst={'eøs.leggtilendaflereutenlandsopphold.knapp'}
+                                    språkTekst={'felles.leggtilutenlands.knapp'}
                                     onClick={toggleModal}
                                 />
                                 {utenlandsperioder.map((periode, index) => (

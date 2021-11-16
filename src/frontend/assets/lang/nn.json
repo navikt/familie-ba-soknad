@@ -331,7 +331,7 @@
   "modal.andreforelderytselselandfortid.spm": "Kva land fekk {barn} sin andre forelder utbetalingar frå?",
   "modal.beskriveopphold.feilmelding": "Du må oppgje kva som best beskriv perioden du oppheldt deg utanfor Noreg for å gå vidare",
   "modal.beskriveopphold.spm": "Kva beskriv perioden du oppheldt deg utanfor Noreg best",
-  "modal.endaflereutenlandsopphold.tittel": "Legg til utanlandsopphald",
+  "modal.utenlandsopphold.tittel": "Legg til utanlandsopphald",
   "modal.hvilketlandflyttetfra.feilmelding": "Du må oppgje kva land du flytta frå for å gå vidare",
   "modal.hvilketlandflyttetfra.spm": "Kva land flytta du frå?",
   "modal.hvilketlandflyttettil.feilmelding": "Du må oppgje kva land du har flytta til for å gå vidare",
