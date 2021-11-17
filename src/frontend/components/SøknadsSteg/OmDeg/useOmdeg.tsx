@@ -153,7 +153,7 @@ export const useOmdeg = (): {
             borPåRegistrertAdresse,
             værtINorgeITolvMåneder,
             planleggerÅBoINorgeTolvMnd,
-            registrerteUtenlandsperioder: registrerteUtenlandsperioder,
+            registrerteUtenlandsperioder,
         },
         skjemanavn: 'omdeg',
     });
