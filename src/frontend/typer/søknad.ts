@@ -240,10 +240,6 @@ export const initialStateSøknad: ISøknad = {
             id: OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd,
             svar: null,
         },
-        registrertMedUtenlandsperiode: {
-            id: OmDegSpørsmålId.registrertMedUtenlandsperiode,
-            svar: null,
-        },
         erAsylsøker: {
             id: DinLivssituasjonSpørsmålId.erAsylsøker,
             svar: null,

@@ -88,7 +88,7 @@ export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | null;
     værtINorgeITolvMåneder: ESvar | null;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
-    registrertMedUtenlandsperiode: IUtenlandsperiode[];
+    registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
 export interface IVelgBarnFeltTyper {

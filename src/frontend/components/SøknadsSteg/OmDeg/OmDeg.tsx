@@ -109,8 +109,8 @@ const OmDeg: React.FC = () => {
                                     språkTekst="eøs.leggtilendaflereutenlandsopphold.knapp"
                                     onClick={toggleModal}
                                 />
-                                {skjema.felter.registrertMedUtenlandsperiode.erSynlig &&
-                                    skjema.felter.registrertMedUtenlandsperiode.feilmelding &&
+                                {skjema.felter.registrerteUtenlandsperioder.erSynlig &&
+                                    skjema.felter.registrerteUtenlandsperioder.feilmelding &&
                                     skjema.visFeilmeldinger && (
                                         <Feilmelding>
                                             <SpråkTekst

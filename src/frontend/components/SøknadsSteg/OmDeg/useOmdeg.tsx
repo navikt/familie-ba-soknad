@@ -86,7 +86,7 @@ export const useOmdeg = (): {
             (værtINorgeITolvMåneder.verdi === ESvar.NEI && !utenlandsperioder.length)
     );
 
-    const registrertMedUtenlandsperiode = useFelt<IUtenlandsperiode[]>({
+    const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
         feltId: OmDegSpørsmålId.registrertMedUtenlandsperiode,
         verdi: utenlandsperioder,
         avhengigheter: {
@@ -108,7 +108,7 @@ export const useOmdeg = (): {
     });
 
     useEffect(() => {
-        registrertMedUtenlandsperiode.validerOgSettFelt(utenlandsperioder);
+        registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
     }, [utenlandsperioder]);
 
     const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
@@ -154,7 +154,7 @@ export const useOmdeg = (): {
             borPåRegistrertAdresse,
             værtINorgeITolvMåneder,
             planleggerÅBoINorgeTolvMnd,
-            registrertMedUtenlandsperiode,
+            registrerteUtenlandsperioder: registrerteUtenlandsperioder,
         },
         skjemanavn: 'omdeg',
     });
