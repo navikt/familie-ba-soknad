@@ -87,7 +87,7 @@ export const useOmdeg = (): {
     );
 
     const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
-        feltId: OmDegSpørsmålId.utenlandsPerioder,
+        feltId: OmDegSpørsmålId.utenlandsperioder,
         verdi: utenlandsperioder,
         avhengigheter: {
             ...(!søker.adressebeskyttelse && {
