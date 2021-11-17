@@ -31,11 +31,11 @@ import Miljø from '../Miljø';
 import { AlternativtSvarForInput } from '../typer/common';
 import {
     Dokumentasjonsbehov,
+    dokumentasjonsbehovTilSpråkId,
     IDokumentasjon,
     ISøknadKontraktDokumentasjon,
     ISøknadKontraktVedlegg,
     IVedlegg,
-    dokumentasjonsbehovTilSpråkId,
 } from '../typer/dokumentasjon';
 import { IKvittering } from '../typer/kvittering';
 import {
@@ -56,6 +56,7 @@ import {
     ISøknadKontrakt,
     ISøknadKontraktBarn,
     ISøknadsfelt,
+    IUtenlandsperiodeIKontraktFormat,
     SpørsmålMap as KontraktpørsmålMap,
 } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
@@ -237,15 +238,10 @@ export const useSendInnSkjema = (): {
                     ? hentTekster('felles.år', { alder })
                     : sammeVerdiAlleSpråk(AlternativtSvarForInput.UKJENT)
             ),
+            utenlandsperioder: utenlandsperioder.map((periode, index) =>
+                utenlandsperiodeTilISøknadsfelt(periode, index + 1, barn)
+            ),
             spørsmål: {
-                utenlandsperioder: søknadsfelt(
-                    'utenlandsperioder',
-                    sammeVerdiAlleSpråk(
-                        utenlandsperioder.map((periode, index) =>
-                            utenlandsperiodeTilISøknadsfelt(periode, index + 1, barn)
-                        )
-                    )
-                ),
                 ...spørmålISøknadsFormat(typetBarnSpørsmål, {
                     navn: barnetsNavnValue(barn, intl),
                     barn: barnetsNavnValue(barn, intl),
@@ -396,43 +392,43 @@ export const useSendInnSkjema = (): {
         utenlandperiode: IUtenlandsperiode,
         periodeNummer: number,
         barn?: IBarnMedISøknad
-    ) => {
+    ): ISøknadsfelt<IUtenlandsperiodeIKontraktFormat> => {
         return {
             label: hentTekster('felles.leggtilutenlands.opphold', { x: periodeNummer }),
-            verdi: [
-                {
-                    utenlandsoppholdÅrsak: {
-                        label: hentTekster(årsakLabelSpråkId(barn)),
-                        verdi: hentTekster(
-                            årsakSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                            { ...(barn && { barn: barn.navn }) }
-                        ),
-                    },
-                    oppholdsland: {
-                        label: hentTekster(
-                            landLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                            { ...(barn && { barn: barn.navn }) }
-                        ),
-                        verdi: verdiCallbackAlleSpråk(locale =>
-                            landkodeTilSpråk(utenlandperiode.oppholdsland.svar, locale)
-                        ),
-                    },
-                    oppholdslandFraDato: {
-                        label: hentTekster(
-                            fraDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                            { ...(barn && { barn: barn.navn }) }
-                        ),
-                        verdi: sammeVerdiAlleSpråk(utenlandperiode.oppholdslandFraDato),
-                    },
-                    oppholdslandTilDato: {
-                        label: hentTekster(
-                            tilDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                            { ...(barn && { barn: barn.navn }) }
-                        ),
-                        verdi: sammeVerdiAlleSpråk(utenlandperiode.oppholdslandTilDato),
-                    },
+            verdi: sammeVerdiAlleSpråk({
+                utenlandsoppholdÅrsak: {
+                    label: hentTekster(årsakLabelSpråkId(barn)),
+                    verdi: hentTekster(
+                        årsakSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
+                        {
+                            ...(barn && { barn: barn.navn }),
+                        }
+                    ),
                 },
-            ],
+                oppholdsland: {
+                    label: hentTekster(
+                        landLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
+                        { ...(barn && { barn: barn.navn }) }
+                    ),
+                    verdi: verdiCallbackAlleSpråk(locale =>
+                        landkodeTilSpråk(utenlandperiode.oppholdsland.svar, locale)
+                    ),
+                },
+                oppholdslandFraDato: {
+                    label: hentTekster(
+                        fraDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
+                        { ...(barn && { barn: barn.navn }) }
+                    ),
+                    verdi: sammeVerdiAlleSpråk(utenlandperiode.oppholdslandFraDato?.svar),
+                },
+                oppholdslandTilDato: {
+                    label: hentTekster(
+                        tilDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
+                        { ...(barn && { barn: barn.navn }) }
+                    ),
+                    verdi: sammeVerdiAlleSpråk(utenlandperiode.oppholdslandTilDato?.svar),
+                },
+            }),
         };
     };
 
@@ -479,16 +475,10 @@ export const useSendInnSkjema = (): {
                     'pdf.søker.adresse.label',
                     sammeVerdiAlleSpråk(søker.adresse ?? {})
                 ),
+                utenlandsperioder: utenlandsperioder.map((periode, index) =>
+                    utenlandsperiodeTilISøknadsfelt(periode, index + 1)
+                ),
                 spørsmål: {
-                    // TODO: bytte til spørsmålID
-                    utenlandsperioder: søknadsfelt(
-                        'utenlandsperioder',
-                        sammeVerdiAlleSpråk(
-                            utenlandsperioder.map((periode, index) =>
-                                utenlandsperiodeTilISøknadsfelt(periode, index + 1)
-                            )
-                        )
-                    ),
                     ...spørmålISøknadsFormat(typetSøkerSpørsmål),
                     ...spørmålISøknadsFormat(typetUtvidaSpørsmål),
                 },
