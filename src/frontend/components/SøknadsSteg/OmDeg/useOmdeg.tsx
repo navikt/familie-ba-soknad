@@ -96,7 +96,6 @@ export const useOmdeg = (): {
             værtINorgeITolvMåneder,
         },
         valideringsfunksjon: felt => {
-            console.log(felt);
             return felt.verdi.length
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />);
