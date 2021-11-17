@@ -7,7 +7,7 @@ import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { IUtenlandsperiode } from '../../../typer/person';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
-import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
+import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export const useOmdeg = (): {
@@ -25,13 +25,6 @@ export const useOmdeg = (): {
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
         søker.utenlandsperioder
     );
-
-    const søkerFlyttetPermanentFraNorge = () =>
-        !!utenlandsperioder.find(
-            periode =>
-                periode.utenlandsoppholdÅrsak.svar ===
-                EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE
-        );
 
     const borPåRegistrertAdresse = useFelt<ESvar | null>({
         feltId: søker.borPåRegistrertAdresse.id,
@@ -81,7 +74,7 @@ export const useOmdeg = (): {
             værtINorgeITolvMåneder: { hovedSpørsmål: værtINorgeITolvMåneder },
         },
         borPåRegistrertAdresse.verdi === ESvar.NEI,
-        søkerFlyttetPermanentFraNorge() ||
+        flyttetPermanentFraNorge(utenlandsperioder) ||
             (værtINorgeITolvMåneder.verdi === ESvar.NEI && !utenlandsperioder.length)
     );
 
@@ -112,7 +105,7 @@ export const useOmdeg = (): {
                 },
                 planleggerÅBoINorgeTolvMnd: {
                     ...søker.planleggerÅBoINorgeTolvMnd,
-                    svar: !søkerFlyttetPermanentFraNorge()
+                    svar: !flyttetPermanentFraNorge(utenlandsperioder)
                         ? skjema.felter.planleggerÅBoINorgeTolvMnd.verdi
                         : null,
                 },
