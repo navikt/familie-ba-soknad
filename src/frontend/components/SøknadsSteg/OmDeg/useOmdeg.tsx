@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -9,6 +9,7 @@ import { IUtenlandsperiode } from '../../../typer/person';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { OmDegSpørsmålId } from './spørsmål';
 
 export const useOmdeg = (): {
     skjema: ISkjema<IOmDegFeltTyper, string>;
@@ -85,6 +86,30 @@ export const useOmdeg = (): {
             (værtINorgeITolvMåneder.verdi === ESvar.NEI && !utenlandsperioder.length)
     );
 
+    const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
+        feltId: OmDegSpørsmålId.utenlandsperioder,
+        verdi: utenlandsperioder,
+        avhengigheter: {
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+            værtINorgeITolvMåneder,
+        },
+        valideringsfunksjon: felt => {
+            return felt.verdi.length
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />);
+        },
+        nullstillVedAvhengighetEndring: borPåRegistrertAdresse.verdi === ESvar.NEI,
+        skalFeltetVises: avhengigheter => {
+            return avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI;
+        },
+    });
+
+    useEffect(() => {
+        registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
+    }, [utenlandsperioder]);
+
     const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
         settUtenlandsperioder(prevState => prevState.concat(periode));
     };
@@ -128,6 +153,7 @@ export const useOmdeg = (): {
             borPåRegistrertAdresse,
             værtINorgeITolvMåneder,
             planleggerÅBoINorgeTolvMnd,
+            registrerteUtenlandsperioder,
         },
         skjemanavn: 'omdeg',
     });
