@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
@@ -13,6 +14,7 @@ import { genererAdresseVisning } from '../../../../utils/adresse';
 import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsperiodeOppsummering } from '../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import {
     omDegPersonopplysningerSpråkId,
     OmDegSpørsmålId,
@@ -22,6 +24,10 @@ import { useOmdeg } from '../../OmDeg/useOmdeg';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
 import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
+
+const StyledUtenlandsperiodeOppsummering = styled(UtenlandsperiodeOppsummering)`
+    border-bottom: none;
+`;
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -93,6 +99,14 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
                 />
+                {søknad.søker.utenlandsperioder.map((periode, index) => (
+                    <StyledUtenlandsperiodeOppsummering
+                        periode={periode}
+                        nummer={index + 1}
+                        fjernPeriodeCallback={() => null}
+                        visFjernKnapp={false}
+                    />
+                ))}
                 {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
                     <OppsummeringFelt
                         tittel={
