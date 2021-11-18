@@ -126,6 +126,12 @@ export interface IKontraktNåværendeSamboer {
 export interface IKontraktTidligereSamboer extends IKontraktNåværendeSamboer {
     samboerTilDato: ISøknadsfelt<ISODateString>;
 }
+export interface IUtenlandsperiodeIKontraktFormat {
+    utenlandsoppholdÅrsak: ISøknadsfelt<string>;
+    oppholdsland: ISøknadsfelt<string>;
+    oppholdslandTilDato: ISøknadsfelt<string | undefined>;
+    oppholdslandFraDato: ISøknadsfelt<string | undefined>;
+}
 
 export interface ISøknadKontraktSøker {
     ident: ISøknadsfelt<string>;
@@ -136,6 +142,7 @@ export interface ISøknadKontraktSøker {
     spørsmål: SpørsmålMap;
     tidligereSamboere: ISøknadsfelt<IKontraktTidligereSamboer>[];
     nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null;
+    utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
 }
 
 export enum ERegistrertBostedType {
@@ -151,6 +158,7 @@ export interface ISøknadKontraktBarn {
     registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
+    utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
 }
 
 export const hentSøknadstype = () => {
