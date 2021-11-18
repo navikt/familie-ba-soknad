@@ -397,12 +397,11 @@ export const useSendInnSkjema = (): {
             label: hentTekster('felles.leggtilutenlands.opphold', { x: periodeNummer }),
             verdi: sammeVerdiAlleSpråk({
                 utenlandsoppholdÅrsak: {
-                    label: hentTekster(årsakLabelSpråkId(barn)),
+                    label: hentTekster(årsakLabelSpråkId(barn), {
+                        ...(barn && { barn: barn?.navn }),
+                    }),
                     verdi: hentTekster(
-                        årsakSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                        {
-                            ...(barn && { barn: barn.navn }),
-                        }
+                        årsakSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn)
                     ),
                 },
                 oppholdsland: {
@@ -426,7 +425,12 @@ export const useSendInnSkjema = (): {
                         tilDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
                         { ...(barn && { barn: barn.navn }) }
                     ),
-                    verdi: sammeVerdiAlleSpråk(utenlandperiode.oppholdslandTilDato?.svar),
+                    verdi: utenlandperiode.oppholdslandTilDato?.svar
+                        ? sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                              utenlandperiode.oppholdslandTilDato?.svar,
+                              'felles.vetikkenåravsluttes.spm'
+                          )
+                        : sammeVerdiAlleSpråk(undefined),
                 },
             }),
         };
