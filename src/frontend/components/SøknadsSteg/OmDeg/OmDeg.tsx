@@ -16,10 +16,10 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
+import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
-import { UtenlandsperiodeSøkerOppsummering } from './UtenlandsperiodeSøkerOppsummering';
 
 const OmDeg: React.FC = () => {
     const { søknad } = useApp();
@@ -101,10 +101,6 @@ const OmDeg: React.FC = () => {
                         />
                         {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                             <>
-                                <LeggTilKnapp
-                                    språkTekst={'felles.leggtilutenlands.knapp'}
-                                    onClick={toggleModal}
-                                />
                                 {skjema.felter.registrerteUtenlandsperioder.erSynlig &&
                                     skjema.felter.registrerteUtenlandsperioder.feilmelding &&
                                     skjema.visFeilmeldinger && (
@@ -115,7 +111,7 @@ const OmDeg: React.FC = () => {
                                         </Feilmelding>
                                     )}
                                 {utenlandsperioder.map((periode, index) => (
-                                    <UtenlandsperiodeSøkerOppsummering
+                                    <UtenlandsperiodeOppsummering
                                         key={index}
                                         periode={periode}
                                         nummer={index + 1}
@@ -123,6 +119,10 @@ const OmDeg: React.FC = () => {
                                         erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
                                     />
                                 ))}
+                                <LeggTilKnapp
+                                    språkTekst={'felles.leggtilutenlands.knapp'}
+                                    onClick={toggleModal}
+                                />
                             </>
                         )}
                     </>

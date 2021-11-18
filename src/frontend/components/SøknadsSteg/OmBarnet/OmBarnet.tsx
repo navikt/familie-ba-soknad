@@ -47,6 +47,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         andreBarnSomErFyltUt,
         settSammeForelder,
         leggTilUtenlandsperiode,
+        utenlandsperioder,
     } = useOmBarnet(barnetsId);
     const intl = useIntl();
 
@@ -71,6 +72,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 barn={barn}
                 skjema={skjema}
                 leggTilUtenlandsperiode={leggTilUtenlandsperiode}
+                utenlandsperioder={utenlandsperioder}
             />
             {skjema.felter.andreForelderNavn.erSynlig && (
                 <AndreForelder

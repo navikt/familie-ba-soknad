@@ -22,6 +22,7 @@ import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
+import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
@@ -29,7 +30,8 @@ const Oppfølgningsspørsmål: React.FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
-}> = ({ barn, skjema, leggTilUtenlandsperiode }) => {
+    utenlandsperioder: IUtenlandsperiode[];
+}> = ({ barn, skjema, leggTilUtenlandsperiode, utenlandsperioder }) => {
     const intl = useIntl();
     const { erÅpen, toggleModal } = useModal();
 
@@ -114,6 +116,14 @@ const Oppfølgningsspørsmål: React.FC<{
                     tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
+                    {utenlandsperioder.map((periode, index) => (
+                        <UtenlandsperiodeOppsummering
+                            periode={periode}
+                            nummer={index + 1}
+                            fjernPeriodeCallback={() => null}
+                            barn={barn}
+                        />
+                    ))}
                     <LeggTilKnapp
                         språkTekst={'felles.leggtilutenlands.knapp'}
                         onClick={toggleModal}

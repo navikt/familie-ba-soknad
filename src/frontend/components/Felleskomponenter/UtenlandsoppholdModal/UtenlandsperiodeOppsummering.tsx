@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
@@ -10,22 +10,22 @@ import { DeleteFilled } from '@navikt/ds-icons';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IUtenlandsperiode } from '../../../typer/person';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
-import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import {
-    landLabelSpråkIdsSøker,
-    årsakSpråkIdsSøker,
-    tilDatoUkjentLabelSpråkId,
-} from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import Informasjonsbolk from '../Informasjonsbolk/Informasjonsbolk';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { VedleggNotisTilleggsskjema } from '../VedleggNotis';
+import { tilDatoUkjentLabelSpråkId } from './spørsmål';
 import {
     fraDatoLabelSpråkId,
+    landLabelSpråkId,
     tilDatoLabelSpråkId,
-} from '../../Felleskomponenter/UtenlandsoppholdModal/utenlandsoppholdSpråkUtils';
-import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
+    årsakLabelSpråkId,
+    årsakSpråkId,
+} from './utenlandsoppholdSpråkUtils';
 
 const StyledElement = styled(Element)`
     && {
@@ -33,9 +33,12 @@ const StyledElement = styled(Element)`
     }
 `;
 
-const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
+const Spørsmål: React.FC<{ språkId: string; språkValues?: Record<string, ReactNode> }> = ({
+    språkId,
+    språkValues = {},
+}) => (
     <StyledElement>
-        <SpråkTekst id={språkId} />
+        <SpråkTekst id={språkId} values={språkValues} />
     </StyledElement>
 );
 
@@ -53,23 +56,26 @@ const EøsNotisWrapper = styled.div`
     margin-bottom: 2rem;
 `;
 
-export const UtenlandsperiodeSøkerOppsummering: React.FC<{
+export const UtenlandsperiodeOppsummering: React.FC<{
     periode: IUtenlandsperiode;
     nummer: number;
     fjernPeriodeCallback: (periode: IUtenlandsperiode) => void;
     erFørsteEøsPeriode?: boolean;
-}> = ({ periode, nummer, fjernPeriodeCallback, erFørsteEøsPeriode = false }) => {
+    barn?: IBarnMedISøknad;
+}> = ({ periode, nummer, fjernPeriodeCallback, erFørsteEøsPeriode = false, barn }) => {
     const [valgtLocale] = useSprakContext();
     const { formatMessage } = useIntl();
     const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
         periode;
     const årsak = utenlandsoppholdÅrsak.svar;
 
+    const språkPrefix = barn ? 'ombarnet' : 'omdeg';
+
     const årsakTilEøsInfoSpråkIds: Record<EUtenlandsoppholdÅrsak, string> = {
-        [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: 'omdeg.flyttetfranorge.eøs-info',
-        [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: 'omdeg.flyttettilnorge.eøs-info',
-        [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'omdeg.oppholderi.eøs-info',
-        [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]: 'omdeg.oppholdti.eøs-info',
+        [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: `${språkPrefix}.flyttetfranorge.eøs-info`,
+        [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: `${språkPrefix}.flyttettilnorge.eøs-info`,
+        [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: `${språkPrefix}.oppholderi.eøs-info`,
+        [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]: `${språkPrefix}.oppholdti.eøs-info`,
     };
 
     return (
@@ -78,24 +84,33 @@ export const UtenlandsperiodeSøkerOppsummering: React.FC<{
                 <SpråkTekst id={'felles.leggtilutenlands.opphold'} values={{ x: nummer }} />
             </Element>
             <Informasjonsbolk>
-                <Spørsmål språkId={'modal.beskriveopphold.spm'} />
+                <Spørsmål språkId={årsakLabelSpråkId(barn)} språkValues={{ barn: barn?.navn }} />
                 <Normaltekst>
-                    <SpråkTekst id={årsakSpråkIdsSøker[årsak]} />
+                    <SpråkTekst id={årsakSpråkId(årsak, barn)} values={{ barn: barn?.navn }} />
                 </Normaltekst>
             </Informasjonsbolk>
             <Informasjonsbolk>
-                <Spørsmål språkId={landLabelSpråkIdsSøker[årsak]} />
+                <Spørsmål
+                    språkId={landLabelSpråkId(årsak, barn)}
+                    språkValues={{ barn: barn?.navn }}
+                />
                 <Normaltekst>{landkodeTilSpråk(oppholdsland.svar, valgtLocale)}</Normaltekst>
             </Informasjonsbolk>
             {oppholdslandFraDato && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={fraDatoLabelSpråkId(årsak)} />
+                    <Spørsmål
+                        språkId={fraDatoLabelSpråkId(årsak, barn)}
+                        språkValues={{ barn: barn?.navn }}
+                    />
                     <Normaltekst>{formaterDato(oppholdslandFraDato.svar)}</Normaltekst>
                 </Informasjonsbolk>
             )}
             {oppholdslandTilDato && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={tilDatoLabelSpråkId(årsak)} />
+                    <Spørsmål
+                        språkId={tilDatoLabelSpråkId(årsak, barn)}
+                        språkValues={{ barn: barn?.navn }}
+                    />
                     <Normaltekst>
                         {formaterDatoMedUkjent(
                             oppholdslandTilDato.svar,
