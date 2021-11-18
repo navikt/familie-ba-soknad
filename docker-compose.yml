@@ -66,7 +66,7 @@ services:
       context: dockerstuff/soknad-api
       args:
         <<: *common-build-variables
-        git_commit: 19e2908f99d6c271bfed7af76dc603a1209af64c
+        git_commit: 2ea30669f5ec763a7a506328738d7825fd13c1a5
     depends_on:
       - key_generator
       - oauthmock
@@ -86,7 +86,7 @@ services:
       context: dockerstuff/mottak
       args:
         <<: *common-build-variables
-        git_commit: ca87df416c59bc5dec844c8392149db530cebcf1
+        git_commit: 3636989ac7f348bac1daef3c92d825ebee631d74
     depends_on:
       - key_generator
       - postgres
