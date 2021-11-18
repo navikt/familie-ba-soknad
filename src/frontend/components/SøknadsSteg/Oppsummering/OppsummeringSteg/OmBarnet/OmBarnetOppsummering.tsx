@@ -144,18 +144,20 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             />
                         }
                     />
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
-                                    ]
-                                }
-                            />
-                        }
-                        søknadsvar={barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar}
-                    />
+                    {barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar && (
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar}
+                        />
+                    )}
                 </StyledOppsummeringsFeltGruppe>
             )}
             {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
