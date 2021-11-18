@@ -2,5 +2,5 @@
 
 mvn spring-boot:run \
     -Dspring-boot.run.useTestClasspath=true \
-    -Dspring-boot.run.folders=target/test-classes \
+    -Dspring-boot.run.directories=target/test-classes \
     '-Dstart-class=no.nav.familie.ba.soknad.api.LokalLauncherKt'
