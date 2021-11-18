@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { Feilmelding } from 'nav-frontend-typografi';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
@@ -21,6 +23,7 @@ import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaF
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
@@ -112,12 +115,20 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
+                    id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     <LeggTilKnapp
                         språkTekst={'felles.leggtilutenlands.knapp'}
                         onClick={toggleModal}
                     />
+                    {skjema.felter.registrerteUtenlandsperioder.erSynlig &&
+                        skjema.felter.registrerteUtenlandsperioder.feilmelding &&
+                        skjema.visFeilmeldinger && (
+                            <Feilmelding>
+                                <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
+                            </Feilmelding>
+                        )}
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.planleggerÅBoINorge12Mnd}

@@ -9,7 +9,7 @@ import { IUtenlandsperiode } from '../../../typer/person';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { OmDegSpørsmålId } from './spørsmål';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 
 export const useOmdeg = (): {
     skjema: ISkjema<IOmDegFeltTyper, string>;
@@ -87,7 +87,7 @@ export const useOmdeg = (): {
     );
 
     const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
-        feltId: OmDegSpørsmålId.utenlandsperioder,
+        feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
         verdi: utenlandsperioder,
         avhengigheter: {
             ...(!søker.adressebeskyttelse && {

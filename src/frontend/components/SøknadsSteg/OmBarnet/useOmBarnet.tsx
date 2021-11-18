@@ -31,6 +31,7 @@ import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 
@@ -171,6 +172,19 @@ export const useOmBarnet = (
             prevState.filter(periode => periode !== periodeSomSkalFjernes)
         );
     };
+
+    const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
+        feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
+        verdi: barn.utenlandsperioder,
+        valideringsfunksjon: felt => {
+            return felt.verdi.length
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />);
+        },
+    });
+    useEffect(() => {
+        registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
+    }, [utenlandsperioder]);
 
     /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
 
@@ -536,6 +550,7 @@ export const useOmBarnet = (
             institusjonOppholdStartdato,
             institusjonOppholdSluttdato,
             institusjonOppholdSluttVetIkke,
+            registrerteUtenlandsperioder,
             planleggerÅBoINorge12Mnd,
             barnetrygdFraEøslandHvilketLand,
             andreForelderNavn,
