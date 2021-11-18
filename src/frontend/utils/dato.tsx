@@ -6,6 +6,7 @@ import { ISODateString } from '@navikt/familie-form-elements';
 import { feil, FeltState, ok } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { AlternativtSvarForInput } from '../typer/common';
 
 export const erDatoFormatGodkjent = (verdi: string) => {
     /*FamilieDatoVelger har allerede sin egen validering.
@@ -83,4 +84,6 @@ export const validerDato = (
 };
 
 export const formaterDato = (isoDateString: ISODateString) =>
-    dayjs(isoDateString).format('DD.MM.YYYY');
+    isoDateString === AlternativtSvarForInput.UKJENT
+        ? isoDateString
+        : dayjs(isoDateString).format('DD.MM.YYYY');
