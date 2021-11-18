@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
+import { useEøs } from '../../../context/EøsContext';
 import { barnDataKeySpørsmål, IUtenlandsperiode } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
@@ -22,6 +23,7 @@ import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
+import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
@@ -29,9 +31,16 @@ const Oppfølgningsspørsmål: React.FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
-}> = ({ barn, skjema, leggTilUtenlandsperiode }) => {
+    fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    utenlandsperioder: IUtenlandsperiode[];
+}> = ({ barn, skjema, leggTilUtenlandsperiode, fjernUtenlandsperiode, utenlandsperioder }) => {
     const intl = useIntl();
     const { erÅpen, toggleModal } = useModal();
+    const { erEøsLand } = useEøs();
+
+    const erFørsteEøsPeriode = (periode: IUtenlandsperiode) => {
+        return periode === utenlandsperioder.find(p => erEøsLand(p.oppholdsland.svar));
+    };
 
     return (
         <>
@@ -114,6 +123,15 @@ const Oppfølgningsspørsmål: React.FC<{
                     tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
+                    {utenlandsperioder.map((periode, index) => (
+                        <UtenlandsperiodeOppsummering
+                            periode={periode}
+                            nummer={index + 1}
+                            fjernPeriodeCallback={fjernUtenlandsperiode}
+                            barn={barn}
+                            erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
+                        />
+                    ))}
                     <LeggTilKnapp
                         språkTekst={'felles.leggtilutenlands.knapp'}
                         onClick={toggleModal}
