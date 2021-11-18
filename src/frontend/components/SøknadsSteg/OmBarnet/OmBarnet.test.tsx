@@ -74,6 +74,7 @@ const jens = {
         svar: '2021-09-03',
     },
     [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
+    utenlandsperioder: [],
     utvidet: {
         [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: { id: 26, svar: ESvar.NEI },
         [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: { id: 27, svar: ESvar.JA },

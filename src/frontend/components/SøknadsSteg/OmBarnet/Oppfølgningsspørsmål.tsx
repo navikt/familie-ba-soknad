@@ -118,17 +118,25 @@ const Oppfølgningsspørsmål: React.FC<{
                         språkTekst={'felles.leggtilutenlands.knapp'}
                         onClick={toggleModal}
                     />
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.planleggerÅBoINorge12Mnd}
-                        spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]
-                        }
-                    />
-                    {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
-                        <AlertStripe type={'advarsel'} dynamisk>
-                            <SpråkTekst id={'ombarnet.planlagt-sammenhengende-opphold.alert'} />
-                        </AlertStripe>
+                    {skjema.felter.planleggerÅBoINorge12Mnd.erSynlig && (
+                        <KomponentGruppe inline dynamisk>
+                            <JaNeiSpm
+                                skjema={skjema}
+                                felt={skjema.felter.planleggerÅBoINorge12Mnd}
+                                spørsmålTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
+                                    ]
+                                }
+                            />
+                            {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
+                                <AlertStripe type={'advarsel'} dynamisk>
+                                    <SpråkTekst
+                                        id={'ombarnet.planlagt-sammenhengende-opphold.alert'}
+                                    />
+                                </AlertStripe>
+                            )}
+                        </KomponentGruppe>
                     )}
                 </SkjemaFieldset>
             )}

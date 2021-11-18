@@ -30,6 +30,7 @@ import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
+import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -145,22 +146,14 @@ export const useOmBarnet = (
     );
 
     /*---UTENLANDSOPPHOLD---*/
-    const planleggerÅBoINorge12Mnd = useFelt<ESvar | null>({
-        feltId: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].id,
-        verdi: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
-            return felt.verdi !== null
-                ? ok(felt)
-                : feil(
-                      felt,
-                      <SpråkTekst id={'ombarnet.planlagt-sammenhengende-opphold.feilmelding'} />
-                  );
-        },
-        skalFeltetVises: () => {
-            return skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge);
-        },
-        nullstillVedAvhengighetEndring: false,
-    });
+    const planleggerÅBoINorge12Mnd = useJaNeiSpmFelt(
+        barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
+        'ombarnet.planlagt-sammenhengende-opphold.feilmelding',
+        undefined,
+        false,
+        !skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge) ||
+            flyttetPermanentFraNorge(utenlandsperioder)
+    );
 
     const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
         settUtenlandsperioder(prevState => prevState.concat(periode));
@@ -624,7 +617,9 @@ export const useOmBarnet = (
                           },
                           planleggerÅBoINorge12Mnd: {
                               ...barn.planleggerÅBoINorge12Mnd,
-                              svar: planleggerÅBoINorge12Mnd.verdi,
+                              svar: !flyttetPermanentFraNorge(utenlandsperioder)
+                                  ? skjema.felter.planleggerÅBoINorge12Mnd.verdi
+                                  : null,
                           },
                           barnetrygdFraEøslandHvilketLand: {
                               ...barn.barnetrygdFraEøslandHvilketLand,
