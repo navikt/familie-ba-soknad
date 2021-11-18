@@ -129,6 +129,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                 <EøsNotisWrapper>
                     <VedleggNotisTilleggsskjema
                         språkTekstId={årsakTilEøsInfoSpråkIds[periode.utenlandsoppholdÅrsak.svar]}
+                        språkValues={{ barn: barn?.navn }}
                     />
                 </EøsNotisWrapper>
             )}
