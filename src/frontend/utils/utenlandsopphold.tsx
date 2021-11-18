@@ -1,5 +1,6 @@
 import { ISODateString } from '@navikt/familie-form-elements';
 
+import { IUtenlandsperiode } from '../typer/person';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { dagensDato, ettÅrTilbakeDato, gårsdagensDato } from './dato';
 
@@ -47,3 +48,10 @@ export const harTilhørendeFomFelt = (
         utenlandsoppholdÅrsak === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
     );
 };
+
+export const flyttetPermanentFraNorge = (utenlandsperioder: IUtenlandsperiode[]) =>
+    !!utenlandsperioder.find(
+        periode =>
+            periode.utenlandsoppholdÅrsak.svar ===
+            EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE
+    );
