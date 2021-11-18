@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
+import { useEøs } from '../../../context/EøsContext';
 import { barnDataKeySpørsmål, IUtenlandsperiode } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
@@ -30,10 +31,16 @@ const Oppfølgningsspørsmål: React.FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     utenlandsperioder: IUtenlandsperiode[];
-}> = ({ barn, skjema, leggTilUtenlandsperiode, utenlandsperioder }) => {
+}> = ({ barn, skjema, leggTilUtenlandsperiode, fjernUtenlandsperiode, utenlandsperioder }) => {
     const intl = useIntl();
     const { erÅpen, toggleModal } = useModal();
+    const { erEøsLand } = useEøs();
+
+    const erFørsteEøsPeriode = (periode: IUtenlandsperiode) => {
+        return periode === utenlandsperioder.find(p => erEøsLand(p.oppholdsland.svar));
+    };
 
     return (
         <>
@@ -120,8 +127,9 @@ const Oppfølgningsspørsmål: React.FC<{
                         <UtenlandsperiodeOppsummering
                             periode={periode}
                             nummer={index + 1}
-                            fjernPeriodeCallback={() => null}
+                            fjernPeriodeCallback={fjernUtenlandsperiode}
                             barn={barn}
+                            erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
                         />
                     ))}
                     <LeggTilKnapp

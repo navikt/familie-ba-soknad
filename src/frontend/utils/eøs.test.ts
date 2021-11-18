@@ -1,6 +1,7 @@
 import { Alpha3Code } from 'i18n-iso-countries';
 import { mockDeep } from 'jest-mock-extended';
 
+import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { IUtenlandsperiode } from '../typer/person';
 import { ISøknad } from '../typer/søknad';
@@ -36,6 +37,14 @@ describe('eøs', () => {
                             id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
                             svar: 'DEU' as Alpha3Code,
                         },
+                        utenlandsperioder: [
+                            mockDeep<IUtenlandsperiode>({
+                                oppholdsland: {
+                                    id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold,
+                                    svar: 'DNK',
+                                },
+                            }),
+                        ],
                     },
                 ],
             };
@@ -47,6 +56,7 @@ describe('eøs', () => {
                 'BEL',
                 'DEU',
                 'DEU',
+                'DNK',
             ]);
         });
     });
