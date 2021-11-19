@@ -24,16 +24,11 @@ const StyledFlatKnapp = styled(Flatknapp)<{ feilmelding }>`
     }
 `;
 
-export const LeggTilKnapp: React.FC<Props> = ({
-    onClick,
-    språkTekst,
-    feilmelding = '',
-    id = '',
-}) => (
+export const LeggTilKnapp: React.FC<Props> = ({ onClick, språkTekst, feilmelding, id }) => (
     <>
         <StyledFlatKnapp
             id={id}
-            feilmelding={feilmelding}
+            feilmelding={feilmelding ? feilmelding : undefined}
             htmlType={'button'}
             kompakt
             onClick={onClick}
@@ -43,6 +38,6 @@ export const LeggTilKnapp: React.FC<Props> = ({
                 <SpråkTekst id={språkTekst} />
             </span>
         </StyledFlatKnapp>
-        {feilmelding && <Feilmelding>{feilmelding}</Feilmelding>}
+        {!!feilmelding && <Feilmelding>{feilmelding}</Feilmelding>}
     </>
 );
