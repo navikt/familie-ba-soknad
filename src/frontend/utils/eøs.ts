@@ -9,11 +9,14 @@ export const landSvarSomKanTriggeEøs = (søknad: ISøknad) => {
         søknad.søker.utenlandsperioder.map(periode => periode.oppholdsland.svar),
     ].flat();
 
-    const fraOmBarnet = søknad.barnInkludertISøknaden.flatMap((barn: IBarnMedISøknad) => [
-        barn.barnetrygdFraEøslandHvilketLand.svar,
-        barn.andreForelderArbeidUtlandetHvilketLand.svar,
-        barn.andreForelderPensjonHvilketLand.svar,
-    ]);
+    const fraOmBarnet = søknad.barnInkludertISøknaden
+        .flatMap((barn: IBarnMedISøknad) => [
+            barn.barnetrygdFraEøslandHvilketLand.svar,
+            barn.andreForelderArbeidUtlandetHvilketLand.svar,
+            barn.andreForelderPensjonHvilketLand.svar,
+            barn.utenlandsperioder.map(periode => periode.oppholdsland.svar),
+        ])
+        .flat();
     return fraOmDeg.concat(fraOmBarnet);
 };
 
