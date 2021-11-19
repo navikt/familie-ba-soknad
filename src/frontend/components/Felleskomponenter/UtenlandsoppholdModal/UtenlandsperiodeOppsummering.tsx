@@ -118,7 +118,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                 <Informasjonsbolk>
                     <Spørsmål
                         språkId={fraDatoLabelSpråkId(årsak, barn)}
-                        språkValues={{ barn: barn?.navn }}
+                        språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
                     />
                     <Normaltekst>{formaterDato(oppholdslandFraDato.svar)}</Normaltekst>
                 </Informasjonsbolk>
