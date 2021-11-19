@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { Feilmelding, Element } from 'nav-frontend-typografi';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
@@ -22,6 +24,7 @@ import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaF
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
@@ -121,10 +124,12 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
+                    id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     {utenlandsperioder.map((periode, index) => (
                         <UtenlandsperiodeOppsummering
+                            key={index}
                             periode={periode}
                             nummer={index + 1}
                             fjernPeriodeCallback={fjernUtenlandsperiode}
@@ -132,9 +137,31 @@ const Oppfølgningsspørsmål: React.FC<{
                             erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
                         />
                     ))}
+                    {utenlandsperioder.length > 0 && (
+                        <Element>
+                            <SpråkTekst
+                                id={'ombarnet.flereopphold.spm'}
+                                values={{ barn: barn.navn }}
+                            />
+                        </Element>
+                    )}
                     <LeggTilKnapp
                         språkTekst={'felles.leggtilutenlands.knapp'}
                         onClick={toggleModal}
+                    />
+                    {skjema.felter.registrerteUtenlandsperioder.erSynlig &&
+                        skjema.felter.registrerteUtenlandsperioder.feilmelding &&
+                        skjema.visFeilmeldinger && (
+                            <Feilmelding>
+                                <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
+                            </Feilmelding>
+                        )}
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.planleggerÅBoINorge12Mnd}
+                        spørsmålTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]
+                        }
                     />
                     {skjema.felter.planleggerÅBoINorge12Mnd.erSynlig && (
                         <KomponentGruppe inline dynamisk>

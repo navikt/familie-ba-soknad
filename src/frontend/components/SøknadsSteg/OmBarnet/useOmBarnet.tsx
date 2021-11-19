@@ -32,6 +32,7 @@ import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '..
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 
@@ -146,13 +147,30 @@ export const useOmBarnet = (
     );
 
     /*---UTENLANDSOPPHOLD---*/
+
+    const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
+        feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
+        verdi: barn.utenlandsperioder,
+        valideringsfunksjon: felt => {
+            return felt.verdi.length
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />);
+        },
+        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge),
+    });
+
+    useEffect(() => {
+        registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
+    }, [utenlandsperioder]);
+
     const planleggerÅBoINorge12Mnd = useJaNeiSpmFelt(
         barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
         'ombarnet.planlagt-sammenhengende-opphold.feilmelding',
         undefined,
         false,
         !skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge) ||
-            flyttetPermanentFraNorge(utenlandsperioder)
+            flyttetPermanentFraNorge(utenlandsperioder) ||
+            !utenlandsperioder.length
     );
 
     const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
@@ -529,6 +547,7 @@ export const useOmBarnet = (
             institusjonOppholdStartdato,
             institusjonOppholdSluttdato,
             institusjonOppholdSluttVetIkke,
+            registrerteUtenlandsperioder,
             planleggerÅBoINorge12Mnd,
             barnetrygdFraEøslandHvilketLand,
             andreForelderNavn,

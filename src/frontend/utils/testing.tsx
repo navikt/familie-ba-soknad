@@ -185,6 +185,7 @@ export const mekkGyldigSøker = (): ISøker => {
         ...initialStateSøknad.søker,
         sivilstand: { type: ESivilstand.UGIFT },
         harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
+        utenlandsperioder: [],
         nåværendeSamboer: {
             navn: { id: SamboerSpørsmålId.nåværendeSamboerNavn, svar: 'Gunnar' },
             ident: {
@@ -210,7 +211,7 @@ export const mekkGyldigSøker = (): ISøker => {
         },
         planleggerÅBoINorgeTolvMnd: {
             id: OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd,
-            svar: ESvar.JA,
+            svar: null,
         },
         erAsylsøker: {
             id: DinLivssituasjonSpørsmålId.erAsylsøker,

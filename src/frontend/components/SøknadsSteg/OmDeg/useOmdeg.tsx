@@ -9,7 +9,7 @@ import { IUtenlandsperiode } from '../../../typer/person';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { OmDegSpørsmålId } from './spørsmål';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 
 export const useOmdeg = (): {
     skjema: ISkjema<IOmDegFeltTyper, string>;
@@ -65,22 +65,8 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
-    const planleggerÅBoINorgeTolvMnd = useJaNeiSpmFelt(
-        søker.planleggerÅBoINorgeTolvMnd,
-        'omdeg.planlagt-opphold-sammenhengende.feilmelding',
-        {
-            ...(!søker.adressebeskyttelse && {
-                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
-            }),
-            værtINorgeITolvMåneder: { hovedSpørsmål: værtINorgeITolvMåneder },
-        },
-        borPåRegistrertAdresse.verdi === ESvar.NEI,
-        flyttetPermanentFraNorge(utenlandsperioder) ||
-            (værtINorgeITolvMåneder.verdi === ESvar.NEI && !utenlandsperioder.length)
-    );
-
     const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
-        feltId: OmDegSpørsmålId.utenlandsperioder,
+        feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
         verdi: utenlandsperioder,
         avhengigheter: {
             ...(!søker.adressebeskyttelse && {
@@ -98,6 +84,21 @@ export const useOmdeg = (): {
             return avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI;
         },
     });
+
+    const planleggerÅBoINorgeTolvMnd = useJaNeiSpmFelt(
+        søker.planleggerÅBoINorgeTolvMnd,
+        'omdeg.planlagt-opphold-sammenhengende.feilmelding',
+        {
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+            værtINorgeITolvMåneder: { hovedSpørsmål: værtINorgeITolvMåneder },
+        },
+        borPåRegistrertAdresse.verdi === ESvar.NEI,
+        flyttetPermanentFraNorge(utenlandsperioder) ||
+            værtINorgeITolvMåneder.verdi === ESvar.JA ||
+            (værtINorgeITolvMåneder.verdi === ESvar.NEI && !utenlandsperioder.length)
+    );
 
     useEffect(() => {
         registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
@@ -130,9 +131,11 @@ export const useOmdeg = (): {
                 },
                 planleggerÅBoINorgeTolvMnd: {
                     ...søker.planleggerÅBoINorgeTolvMnd,
-                    svar: !flyttetPermanentFraNorge(utenlandsperioder)
-                        ? skjema.felter.planleggerÅBoINorgeTolvMnd.verdi
-                        : null,
+                    svar:
+                        !flyttetPermanentFraNorge(utenlandsperioder) &&
+                        værtINorgeITolvMåneder.verdi === ESvar.NEI
+                            ? skjema.felter.planleggerÅBoINorgeTolvMnd.verdi
+                            : null,
                 },
             },
         });

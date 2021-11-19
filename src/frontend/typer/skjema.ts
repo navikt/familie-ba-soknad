@@ -82,6 +82,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     søkerHarBoddMedAndreForelder: ESvar | null;
     borMedAndreForelderCheckbox: ESvar;
     søkerFlyttetFraAndreForelderDato: ISODateString;
+    registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
 export interface IOmDegFeltTyper {
