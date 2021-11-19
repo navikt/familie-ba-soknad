@@ -398,7 +398,7 @@ export const useSendInnSkjema = (): {
             verdi: sammeVerdiAlleSpråk({
                 utenlandsoppholdÅrsak: {
                     label: hentTekster(årsakLabelSpråkId(barn), {
-                        ...(barn && { barn: barn?.navn }),
+                        ...(barn && { barn: barnetsNavnValue(barn, intl) }),
                     }),
                     verdi: hentTekster(
                         årsakSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn)
