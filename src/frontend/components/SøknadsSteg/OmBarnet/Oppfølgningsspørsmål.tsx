@@ -129,6 +129,7 @@ const Oppfølgningsspørsmål: React.FC<{
                 >
                     {utenlandsperioder.map((periode, index) => (
                         <UtenlandsperiodeOppsummering
+                            key={index}
                             periode={periode}
                             nummer={index + 1}
                             fjernPeriodeCallback={fjernUtenlandsperiode}
