@@ -157,6 +157,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             nummer={index + 1}
                             fjernPeriodeCallback={() => null}
                             visFjernKnapp={false}
+                            barn={barn}
                         />
                     ))}
                     {barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar && (
