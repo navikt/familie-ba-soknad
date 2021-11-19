@@ -147,24 +147,6 @@ export const useOmBarnet = (
     );
 
     /*---UTENLANDSOPPHOLD---*/
-    const planleggerÅBoINorge12Mnd = useJaNeiSpmFelt(
-        barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
-        'ombarnet.planlagt-sammenhengende-opphold.feilmelding',
-        undefined,
-        false,
-        !skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge) ||
-            flyttetPermanentFraNorge(utenlandsperioder)
-    );
-
-    const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
-        settUtenlandsperioder(prevState => prevState.concat(periode));
-    };
-
-    const fjernUtenlandsperiode = (periodeSomSkalFjernes: IUtenlandsperiode) => {
-        settUtenlandsperioder(prevState =>
-            prevState.filter(periode => periode !== periodeSomSkalFjernes)
-        );
-    };
 
     const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
         feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
@@ -178,6 +160,26 @@ export const useOmBarnet = (
     useEffect(() => {
         registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
     }, [utenlandsperioder]);
+
+    const planleggerÅBoINorge12Mnd = useJaNeiSpmFelt(
+        barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
+        'ombarnet.planlagt-sammenhengende-opphold.feilmelding',
+        undefined,
+        false,
+        !skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge) ||
+            flyttetPermanentFraNorge(utenlandsperioder) ||
+            !utenlandsperioder.length
+    );
+
+    const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
+        settUtenlandsperioder(prevState => prevState.concat(periode));
+    };
+
+    const fjernUtenlandsperiode = (periodeSomSkalFjernes: IUtenlandsperiode) => {
+        settUtenlandsperioder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
 
     /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
 
