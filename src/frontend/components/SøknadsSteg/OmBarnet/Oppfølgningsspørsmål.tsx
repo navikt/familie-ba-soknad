@@ -141,7 +141,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         <Element>
                             <SpråkTekst
                                 id={'ombarnet.flereopphold.spm'}
-                                values={{ barn: barn.navn }}
+                                values={{ barn: barnetsNavnValue(barn, intl) }}
                             />
                         </Element>
                     )}
@@ -156,13 +156,6 @@ const Oppfølgningsspørsmål: React.FC<{
                                 <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
                             </Feilmelding>
                         )}
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.planleggerÅBoINorge12Mnd}
-                        spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]
-                        }
-                    />
                     {skjema.felter.planleggerÅBoINorge12Mnd.erSynlig && (
                         <KomponentGruppe inline dynamisk>
                             <JaNeiSpm
