@@ -12,6 +12,7 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 import { IUtenlandsperiode } from '../../../typer/person';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
+import { barnetsNavnValue } from '../../../utils/barn';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
@@ -74,7 +75,8 @@ export const UtenlandsperiodeOppsummering: React.FC<{
     className,
 }) => {
     const [valgtLocale] = useSprakContext();
-    const { formatMessage } = useIntl();
+    const intl = useIntl();
+    const { formatMessage } = intl;
     const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
         periode;
     const årsak = utenlandsoppholdÅrsak.svar;
@@ -94,9 +96,15 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                 <SpråkTekst id={'felles.leggtilutenlands.opphold'} values={{ x: nummer }} />
             </Element>
             <Informasjonsbolk>
-                <Spørsmål språkId={årsakLabelSpråkId(barn)} språkValues={{ barn: barn?.navn }} />
+                <Spørsmål
+                    språkId={årsakLabelSpråkId(barn)}
+                    språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                />
                 <Normaltekst>
-                    <SpråkTekst id={årsakSpråkId(årsak, barn)} values={{ barn: barn?.navn }} />
+                    <SpråkTekst
+                        id={årsakSpråkId(årsak, barn)}
+                        values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                    />
                 </Normaltekst>
             </Informasjonsbolk>
             <Informasjonsbolk>
@@ -119,7 +127,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                 <Informasjonsbolk>
                     <Spørsmål
                         språkId={tilDatoLabelSpråkId(årsak, barn)}
-                        språkValues={{ barn: barn?.navn }}
+                        språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
                     />
                     <Normaltekst>
                         {formaterDatoMedUkjent(
@@ -145,7 +153,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                 <EøsNotisWrapper>
                     <VedleggNotisTilleggsskjema
                         språkTekstId={årsakTilEøsInfoSpråkIds[periode.utenlandsoppholdÅrsak.svar]}
-                        språkValues={{ barn: barn?.navn }}
+                        språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
                     />
                 </EøsNotisWrapper>
             )}
