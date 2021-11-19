@@ -156,7 +156,9 @@ export const useOmBarnet = (
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />);
         },
+        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge),
     });
+
     useEffect(() => {
         registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
     }, [utenlandsperioder]);
