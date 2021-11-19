@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Feilmelding, Element } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -15,6 +15,7 @@ import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { Personopplysninger } from './Personopplysninger';
@@ -101,15 +102,6 @@ const OmDeg: React.FC = () => {
                         />
                         {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                             <>
-                                {skjema.felter.registrerteUtenlandsperioder.erSynlig &&
-                                    skjema.felter.registrerteUtenlandsperioder.feilmelding &&
-                                    skjema.visFeilmeldinger && (
-                                        <Feilmelding>
-                                            <SpråkTekst
-                                                id={'felles.leggtilutenlands.feilmelding'}
-                                            />
-                                        </Feilmelding>
-                                    )}
                                 {utenlandsperioder.map((periode, index) => (
                                     <UtenlandsperiodeOppsummering
                                         key={index}
@@ -127,6 +119,16 @@ const OmDeg: React.FC = () => {
                                 <LeggTilKnapp
                                     språkTekst={'felles.leggtilutenlands.knapp'}
                                     onClick={toggleModal}
+                                    id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
+                                    feilmelding={
+                                        skjema.felter.registrerteUtenlandsperioder.erSynlig &&
+                                        skjema.felter.registrerteUtenlandsperioder.feilmelding &&
+                                        skjema.visFeilmeldinger && (
+                                            <SpråkTekst
+                                                id={'felles.leggtilutenlands.feilmelding'}
+                                            />
+                                        )
+                                    }
                                 />
                             </>
                         )}

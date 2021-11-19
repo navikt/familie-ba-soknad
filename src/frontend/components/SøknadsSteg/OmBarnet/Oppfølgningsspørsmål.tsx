@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { Feilmelding, Element } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
@@ -124,7 +124,6 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
-                    id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     {utenlandsperioder.map((periode, index) => (
@@ -146,16 +145,17 @@ const Oppfølgningsspørsmål: React.FC<{
                         </Element>
                     )}
                     <LeggTilKnapp
+                        id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                         språkTekst={'felles.leggtilutenlands.knapp'}
                         onClick={toggleModal}
-                    />
-                    {skjema.felter.registrerteUtenlandsperioder.erSynlig &&
-                        skjema.felter.registrerteUtenlandsperioder.feilmelding &&
-                        skjema.visFeilmeldinger && (
-                            <Feilmelding>
+                        feilmelding={
+                            skjema.felter.registrerteUtenlandsperioder.erSynlig &&
+                            skjema.felter.registrerteUtenlandsperioder.feilmelding &&
+                            skjema.visFeilmeldinger && (
                                 <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
-                            </Feilmelding>
-                        )}
+                            )
+                        }
+                    />
                     {skjema.felter.planleggerÅBoINorge12Mnd.erSynlig && (
                         <KomponentGruppe inline dynamisk>
                             <JaNeiSpm
