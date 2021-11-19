@@ -62,7 +62,17 @@ export const UtenlandsperiodeOppsummering: React.FC<{
     fjernPeriodeCallback: (periode: IUtenlandsperiode) => void;
     erFørsteEøsPeriode?: boolean;
     barn?: IBarnMedISøknad;
-}> = ({ periode, nummer, fjernPeriodeCallback, erFørsteEøsPeriode = false, barn }) => {
+    visFjernKnapp?: boolean;
+    className?: string;
+}> = ({
+    periode,
+    nummer,
+    fjernPeriodeCallback,
+    erFørsteEøsPeriode = false,
+    barn,
+    visFjernKnapp = true,
+    className,
+}) => {
     const [valgtLocale] = useSprakContext();
     const { formatMessage } = useIntl();
     const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
@@ -79,7 +89,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
     };
 
     return (
-        <PeriodeContainer>
+        <PeriodeContainer className={className}>
             <Element>
                 <SpråkTekst id={'felles.leggtilutenlands.opphold'} values={{ x: nummer }} />
             </Element>
@@ -119,12 +129,18 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                     </Normaltekst>
                 </Informasjonsbolk>
             )}
-            <SlettKnapp htmlType={'button'} kompakt onClick={() => fjernPeriodeCallback(periode)}>
-                <DeleteFilled />
-                <span>
-                    <SpråkTekst id={'felles.fjernutenlandsopphold.knapp'} />
-                </span>
-            </SlettKnapp>
+            {visFjernKnapp && (
+                <SlettKnapp
+                    htmlType={'button'}
+                    kompakt
+                    onClick={() => fjernPeriodeCallback(periode)}
+                >
+                    <DeleteFilled />
+                    <span>
+                        <SpråkTekst id={'felles.fjernutenlandsopphold.knapp'} />
+                    </span>
+                </SlettKnapp>
+            )}
             {erFørsteEøsPeriode && (
                 <EøsNotisWrapper>
                     <VedleggNotisTilleggsskjema

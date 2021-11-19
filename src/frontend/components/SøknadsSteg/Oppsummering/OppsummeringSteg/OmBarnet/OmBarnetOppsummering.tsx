@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
@@ -14,12 +15,17 @@ import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsperiodeOppsummering } from '../../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
 import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
 import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 import AndreForelderOppsummering from './AndreForelderOppsummering';
+
+const StyledUtenlandsperiodeOppsummering = styled(UtenlandsperiodeOppsummering)`
+    border-bottom: none;
+`;
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -144,6 +150,15 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             />
                         }
                     />
+                    {barn.utenlandsperioder.map((periode, index) => (
+                        <StyledUtenlandsperiodeOppsummering
+                            key={index}
+                            periode={periode}
+                            nummer={index + 1}
+                            fjernPeriodeCallback={() => null}
+                            visFjernKnapp={false}
+                        />
+                    ))}
                     {barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar && (
                         <OppsummeringFelt
                             tittel={
