@@ -8,6 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { IUtenlandsperiode } from '../../../typer/person';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
+import { barnetsNavnValue } from '../../../utils/barn';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import {
@@ -117,7 +118,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         label={
                             <SpråkTekst
                                 id={årsakLabelSpråkId(barn)}
-                                values={{ ...(barn && { barn: barn.navn }) }}
+                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                             />
                         }
                         skjema={skjema}
@@ -130,7 +131,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                     {
                                         id: årsakSpråkId(årsak as EUtenlandsoppholdÅrsak, barn),
                                     },
-                                    { ...(barn && { barn: barn.navn }) }
+                                    { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
                                 )}
                             </option>
                         ))}
@@ -154,7 +155,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                     skjema.felter.utenlandsoppholdÅrsak.verdi,
                                     barn
                                 )}
-                                values={{ ...(barn && { barn: barn.navn }) }}
+                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                             />
                         )
                     }
@@ -170,7 +171,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                     skjema.felter.utenlandsoppholdÅrsak.verdi,
                                     barn
                                 )}
-                                values={{ ...(barn && { barn: barn.navn }) }}
+                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                             />
                         }
                         skjema={skjema}
@@ -190,7 +191,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                         skjema.felter.utenlandsoppholdÅrsak.verdi,
                                         barn
                                     )}
-                                    values={{ ...(barn && { barn: barn.navn }) }}
+                                    values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                                 />
                             }
                             skjema={skjema}

@@ -407,7 +407,7 @@ export const useSendInnSkjema = (): {
                 oppholdsland: {
                     label: hentTekster(
                         landLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                        { ...(barn && { barn: barn.navn }) }
+                        { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
                     ),
                     verdi: verdiCallbackAlleSpråk(locale =>
                         landkodeTilSpråk(utenlandperiode.oppholdsland.svar, locale)
@@ -416,14 +416,14 @@ export const useSendInnSkjema = (): {
                 oppholdslandFraDato: {
                     label: hentTekster(
                         fraDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                        { ...(barn && { barn: barn.navn }) }
+                        { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
                     ),
                     verdi: sammeVerdiAlleSpråk(utenlandperiode.oppholdslandFraDato?.svar),
                 },
                 oppholdslandTilDato: {
                     label: hentTekster(
                         tilDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                        { ...(barn && { barn: barn.navn }) }
+                        { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
                     ),
                     verdi: utenlandperiode.oppholdslandTilDato?.svar
                         ? sammeVerdiAlleSpråkEllerUkjentSpråktekst(
