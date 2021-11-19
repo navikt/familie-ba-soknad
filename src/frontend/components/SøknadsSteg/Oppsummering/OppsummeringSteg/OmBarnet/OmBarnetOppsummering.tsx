@@ -152,6 +152,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                     {barn.utenlandsperioder.map((periode, index) => (
                         <StyledUtenlandsperiodeOppsummering
+                            key={index}
                             periode={periode}
                             nummer={index + 1}
                             fjernPeriodeCallback={() => null}
