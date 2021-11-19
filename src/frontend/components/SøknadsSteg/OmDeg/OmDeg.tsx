@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Feilmelding } from 'nav-frontend-typografi';
+import { Feilmelding, Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -119,6 +119,11 @@ const OmDeg: React.FC = () => {
                                         erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
                                     />
                                 ))}
+                                {utenlandsperioder.length > 0 && (
+                                    <Element>
+                                        <SpråkTekst id={'eøs.flereutenlandsopphold.spm'} />
+                                    </Element>
+                                )}
                                 <LeggTilKnapp
                                     språkTekst={'felles.leggtilutenlands.knapp'}
                                     onClick={toggleModal}

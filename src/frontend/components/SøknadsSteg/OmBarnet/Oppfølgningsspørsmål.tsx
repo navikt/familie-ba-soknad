@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { Feilmelding } from 'nav-frontend-typografi';
+import { Feilmelding, Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
@@ -137,6 +137,14 @@ const Oppfølgningsspørsmål: React.FC<{
                             erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
                         />
                     ))}
+                    {utenlandsperioder.length > 0 && (
+                        <Element>
+                            <SpråkTekst
+                                id={'ombarnet.flereopphold.spm'}
+                                values={{ barn: barn.navn }}
+                            />
+                        </Element>
+                    )}
                     <LeggTilKnapp
                         språkTekst={'felles.leggtilutenlands.knapp'}
                         onClick={toggleModal}
