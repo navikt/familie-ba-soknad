@@ -101,6 +101,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 />
                 {søknad.søker.utenlandsperioder.map((periode, index) => (
                     <StyledUtenlandsperiodeOppsummering
+                        key={index}
                         periode={periode}
                         nummer={index + 1}
                         fjernPeriodeCallback={() => null}
