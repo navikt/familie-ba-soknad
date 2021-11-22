@@ -99,6 +99,11 @@ const OmDeg: React.FC = () => {
                             spørsmålTekstId={
                                 omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
                             }
+                            tilleggsinfo={
+                                <AlertStripe>
+                                    <SpråkTekst id={'felles.korteopphold.info'} />
+                                </AlertStripe>
+                            }
                         />
                         {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                             <>
