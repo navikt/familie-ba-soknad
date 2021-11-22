@@ -167,32 +167,35 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                     språkTekstId={'ombarnet.barnetrygdtilbakeitid.info'}
                                 />
                             )}
-                            <Datovelger
-                                felt={skjema.felter.søkerForTidsromSluttdato}
-                                tilhørendeFraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
-                                skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.søkerForTidsromSluttdato
-                                            ]
-                                        }
-                                    />
-                                }
-                                disabled={
-                                    skjema.felter.søkerForTidsromSluttdatoVetIkke.verdi === ESvar.JA
-                                }
-                                avgrensDatoFremITid
-                            />
-                            <SkjemaCheckbox
-                                labelSpråkTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke
-                                    ]
-                                }
-                                felt={skjema.felter.søkerForTidsromSluttdatoVetIkke}
-                            />
+                            <>
+                                <Datovelger
+                                    felt={skjema.felter.søkerForTidsromSluttdato}
+                                    tilhørendeFraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
+                                    skjema={skjema}
+                                    label={
+                                        <SpråkTekst
+                                            id={
+                                                omBarnetSpørsmålSpråkId[
+                                                    OmBarnetSpørsmålsId.søkerForTidsromSluttdato
+                                                ]
+                                            }
+                                        />
+                                    }
+                                    disabled={
+                                        skjema.felter.søkerForTidsromSluttdatoVetIkke.verdi ===
+                                        ESvar.JA
+                                    }
+                                    avgrensDatoFremITid
+                                />
+                                <SkjemaCheckbox
+                                    labelSpråkTekstId={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke
+                                        ]
+                                    }
+                                    felt={skjema.felter.søkerForTidsromSluttdatoVetIkke}
+                                />
+                            </>
                             <AlertStripe>
                                 <SpråkTekst id={'ombarnet.søker-for-periode.sluttdato.info'} />
                             </AlertStripe>
@@ -214,40 +217,43 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     />
                     {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
                         <KomponentGruppe inline dynamisk>
-                            <Datovelger
-                                felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
-                                skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                                            ]
-                                        }
-                                    />
-                                }
-                                disabled={
-                                    skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
-                                }
-                                avgrensDatoFremITid={true}
-                            />
-                            {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
-                                <div>
-                                    <SkjemaCheckbox
-                                        felt={skjema.felter.borMedAndreForelderCheckbox}
-                                        visFeilmeldinger={skjema.visFeilmeldinger}
-                                        labelSpråkTekstId={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.søkerBorMedAndreForelder
-                                            ]
-                                        }
-                                    />
-                                    <VedleggNotis
-                                        språkTekstId={'ombarnet.nårflyttetfra.info'}
-                                        dynamisk
-                                    />
-                                </div>
-                            )}
+                            <>
+                                <Datovelger
+                                    felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
+                                    skjema={skjema}
+                                    label={
+                                        <SpråkTekst
+                                            id={
+                                                omBarnetSpørsmålSpråkId[
+                                                    OmBarnetSpørsmålsId
+                                                        .søkerFlyttetFraAndreForelderDato
+                                                ]
+                                            }
+                                        />
+                                    }
+                                    disabled={
+                                        skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
+                                    }
+                                    avgrensDatoFremITid={true}
+                                />
+                                {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
+                                    <div>
+                                        <SkjemaCheckbox
+                                            felt={skjema.felter.borMedAndreForelderCheckbox}
+                                            visFeilmeldinger={skjema.visFeilmeldinger}
+                                            labelSpråkTekstId={
+                                                omBarnetSpørsmålSpråkId[
+                                                    OmBarnetSpørsmålsId.søkerBorMedAndreForelder
+                                                ]
+                                            }
+                                        />
+                                        <VedleggNotis
+                                            språkTekstId={'ombarnet.nårflyttetfra.info'}
+                                            dynamisk
+                                        />
+                                    </div>
+                                )}
+                            </>
                         </KomponentGruppe>
                     )}
                 </KomponentGruppe>
