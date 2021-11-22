@@ -9,7 +9,7 @@ import { useEøs } from '../../../context/EøsContext';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { gårsdagensDato } from '../../../utils/dato';
+import { dagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -91,7 +91,7 @@ const AndreForelder: React.FC<{
                                         }
                                     />
                                 }
-                                avgrensMaxDato={gårsdagensDato()}
+                                avgrensMaxDato={dagensDato()}
                                 disabled={
                                     skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA
                                 }

@@ -50,7 +50,7 @@ const SamboerSkjema: React.FC<{
                         skjema={skjema}
                         felt={samboerFelter.fødselsdato}
                         label={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}
-                        avgrensMaxDato={gårsdagensDato()}
+                        avgrensMaxDato={dagensDato()}
                         disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
                         calendarPosition={erIModal ? 'fullscreen' : ''}
                     />

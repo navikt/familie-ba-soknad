@@ -20,7 +20,7 @@ import {
 } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -159,7 +159,7 @@ export const useDinLivssituasjon = (): {
         'omdeg.nåværendesamboer.fødselsdato.ukjent',
         nåværendeSamboerFnrUkjent.verdi === ESvar.JA,
         true,
-        gårsdagensDato()
+        dagensDato()
     );
 
     const nåværendeSamboerFraDato = useDatovelgerFeltMedJaNeiAvhengighet(
