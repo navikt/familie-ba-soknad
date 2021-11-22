@@ -12,6 +12,7 @@ import { barnDataKeySpørsmål, IUtenlandsperiode } from '../../../typer/person'
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
+import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -88,6 +89,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
+                        avgrensMaxDato={dagensDato()}
                         label={
                             <SpråkTekst
                                 id={
@@ -98,27 +100,33 @@ const Oppfølgningsspørsmål: React.FC<{
                             />
                         }
                     />
-                    <Datovelger
-                        felt={skjema.felter.institusjonOppholdSluttdato}
-                        tilhørendeFraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
-                        skjema={skjema}
-                        label={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.institusjonOppholdSluttdato
-                                    ]
-                                }
-                            />
-                        }
-                        disabled={skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
-                    />
-                    <SkjemaCheckbox
-                        labelSpråkTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdVetIkke]
-                        }
-                        felt={skjema.felter.institusjonOppholdSluttVetIkke}
-                    />
+                    <>
+                        <Datovelger
+                            felt={skjema.felter.institusjonOppholdSluttdato}
+                            tilhørendeFraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
+                            skjema={skjema}
+                            label={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.institusjonOppholdSluttdato
+                                        ]
+                                    }
+                                />
+                            }
+                            disabled={
+                                skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA
+                            }
+                        />
+                        <SkjemaCheckbox
+                            labelSpråkTekstId={
+                                omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.institusjonOppholdVetIkke
+                                ]
+                            }
+                            felt={skjema.felter.institusjonOppholdSluttVetIkke}
+                        />
+                    </>
                 </SkjemaFieldset>
             )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
