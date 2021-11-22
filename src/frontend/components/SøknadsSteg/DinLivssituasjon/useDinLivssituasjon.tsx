@@ -20,7 +20,7 @@ import {
 } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
-import { dagensDato } from '../../../utils/dato';
+import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -157,7 +157,9 @@ export const useDinLivssituasjon = (): {
         getInitialFødselsdato(søker.nåværendeSamboer),
         nåværendeSamboerFødselsdatoUkjent,
         'omdeg.nåværendesamboer.fødselsdato.ukjent',
-        nåværendeSamboerFnrUkjent.verdi === ESvar.JA
+        nåværendeSamboerFnrUkjent.verdi === ESvar.JA,
+        true,
+        gårsdagensDato()
     );
 
     const nåværendeSamboerFraDato = useDatovelgerFeltMedJaNeiAvhengighet(
