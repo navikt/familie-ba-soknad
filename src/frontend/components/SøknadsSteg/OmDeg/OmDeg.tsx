@@ -1,27 +1,47 @@
 import React from 'react';
 
+import { Element } from 'nav-frontend-typografi';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { IUtenlandsperiode } from '../../../typer/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
-import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
-import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
+import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
-    const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmdeg();
     const { søknad } = useApp();
     const { søker } = søknad;
+    const { erÅpen, toggleModal } = useModal();
+
+    const {
+        skjema,
+        validerFelterOgVisFeilmelding,
+        valideringErOk,
+        oppdaterSøknad,
+        leggTilUtenlandsperiode,
+        fjernUtenlandsperiode,
+        utenlandsperioder,
+    } = useOmdeg();
     const { erEøsLand } = useEøs();
+
+    const erFørsteEøsPeriode = (periode: IUtenlandsperiode) => {
+        return periode === utenlandsperioder.find(p => erEøsLand(p.oppholdsland.svar));
+    };
+
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
@@ -70,70 +90,75 @@ const OmDeg: React.FC = () => {
                     </>
                 )}
             </KomponentGruppe>
-            {skjema.felter.oppholderSegINorge.erSynlig && (
+            {skjema.felter.værtINorgeITolvMåneder.erSynlig && (
                 <KomponentGruppe dynamisk>
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.oppholderSegINorge}
-                        spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholderSegINorge]}
-                    />
-
-                    {skjema.felter.oppholdsland.erSynlig && (
-                        <KomponentGruppe inline dynamisk>
-                            <LandDropdown
-                                felt={skjema.felter.oppholdsland}
-                                skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerOppholdsland]}
+                    <>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.værtINorgeITolvMåneder}
+                            spørsmålTekstId={
+                                omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
+                            }
+                        />
+                        {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
+                            <>
+                                {utenlandsperioder.map((periode, index) => (
+                                    <UtenlandsperiodeOppsummering
+                                        key={index}
+                                        periode={periode}
+                                        nummer={index + 1}
+                                        fjernPeriodeCallback={fjernUtenlandsperiode}
+                                        erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
                                     />
-                                }
-                            />
-                            {erEøsLand(skjema.felter.oppholdsland.verdi) && (
-                                <VedleggNotisTilleggsskjema
-                                    språkTekstId={'omdeg.opphold-i-norge.eøs-info'}
-                                    dynamisk
+                                ))}
+                                {utenlandsperioder.length > 0 && (
+                                    <Element>
+                                        <SpråkTekst id={'eøs.flereutenlandsopphold.spm'} />
+                                    </Element>
+                                )}
+                                <LeggTilKnapp
+                                    språkTekst={'felles.leggtilutenlands.knapp'}
+                                    onClick={toggleModal}
+                                    id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
+                                    feilmelding={
+                                        skjema.felter.registrerteUtenlandsperioder.erSynlig &&
+                                        skjema.felter.registrerteUtenlandsperioder.feilmelding &&
+                                        skjema.visFeilmeldinger && (
+                                            <SpråkTekst
+                                                id={'felles.leggtilutenlands.feilmelding'}
+                                            />
+                                        )
+                                    }
                                 />
-                            )}
-                            <Datovelger
-                                avgrensDatoFremITid={true}
-                                felt={skjema.felter.oppholdslandDato}
+                            </>
+                        )}
+                    </>
+                    {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
+                        <KomponentGruppe inline dynamisk>
+                            <JaNeiSpm
                                 skjema={skjema}
-                                labelTekstId={
-                                    omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdslandDato]
+                                felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
+                                spørsmålTekstId={
+                                    omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
                                 }
                             />
+                            {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig &&
+                                skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
+                                    <AlertStripe type={'advarsel'} dynamisk>
+                                        <SpråkTekst
+                                            id={'omdeg.planlagt-opphold-sammenhengende.alert'}
+                                        />
+                                    </AlertStripe>
+                                )}
                         </KomponentGruppe>
-                    )}
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.værtINorgeITolvMåneder}
-                        spørsmålTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
-                        }
-                    />
-                    <Datovelger
-                        avgrensDatoFremITid={true}
-                        felt={skjema.felter.komTilNorgeDato}
-                        skjema={skjema}
-                        labelTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
-                        dynamisk
-                    />
-
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
-                        spørsmålTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
-                        }
-                    />
-                    {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                        <AlertStripe type={'advarsel'} dynamisk>
-                            <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.alert'} />
-                        </AlertStripe>
                     )}
                 </KomponentGruppe>
             )}
+            <UtenlandsoppholdModal
+                erÅpen={erÅpen}
+                toggleModal={toggleModal}
+                onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
+            />
         </Steg>
     );
 };

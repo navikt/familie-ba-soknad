@@ -164,7 +164,7 @@ describe('DinLivssituasjon', () => {
         );
         expect(navnFeilmelding).toBeInTheDocument();
         const fødselsnummerFeilmelding = within(feiloppsummering).getByText(
-            'Du må oppgi samboerens fødselsnummer for å gå videre'
+            'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
         );
         expect(fødselsnummerFeilmelding).toBeInTheDocument();
         const forholdStartFeilmelding = within(feiloppsummering).getByText(

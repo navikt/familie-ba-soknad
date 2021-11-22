@@ -4,6 +4,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
 import { ISøknadSpørsmål } from './spørsmål';
+import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 
 export enum ESivilstand {
@@ -48,11 +49,7 @@ export interface IBarn extends Omit<IPerson, 'ident'> {
 export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     barn: IBarn[];
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
-    oppholderSegINorge: ISøknadSpørsmål<ESvar | null>;
-    oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;
-    oppholdslandDato: ISøknadSpørsmål<ISODateString>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | null>;
-    komTilNorgeDato: ISøknadSpørsmål<ISODateString>;
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | null>;
     erAsylsøker: ISøknadSpørsmål<ESvar | null>;
     jobberPåBåt: ISøknadSpørsmål<ESvar | null>;
@@ -61,6 +58,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
     harSamboerNå: ISøknadSpørsmål<ESvar | null>;
     nåværendeSamboer: ISamboer | null;
+    utenlandsperioder: IUtenlandsperiode[];
     utvidet: {
         spørsmål: {
             årsak: ISøknadSpørsmål<Årsak | ''>;
@@ -70,6 +68,13 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
         };
         tidligereSamboere: ITidligereSamboer[];
     };
+}
+
+export interface IUtenlandsperiode {
+    utenlandsoppholdÅrsak: ISøknadSpørsmål<EUtenlandsoppholdÅrsak>;
+    oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    oppholdslandFraDato?: ISøknadSpørsmål<ISODateString>;
+    oppholdslandTilDato?: ISøknadSpørsmål<DatoMedUkjent>;
 }
 
 export interface ISamboer {
@@ -105,12 +110,7 @@ export enum barnDataKeySpørsmål {
     institusjonspostnummer = 'institusjonspostnummer',
     institusjonOppholdStartdato = 'institusjonOppholdStartdato',
     institusjonOppholdSluttdato = 'institusjonOppholdSluttdato',
-    oppholderSegIUtland = 'oppholderSegIUtland',
-    oppholdsland = 'oppholdsland',
-    oppholdslandStartdato = 'oppholdslandStartdato',
-    oppholdslandSluttdato = 'oppholdslandSluttdato',
     boddMindreEnn12MndINorge = 'boddMindreEnn12MndINorge',
-    nårKomBarnTilNorgeDato = 'nårKomBarnTilNorgeDato',
     planleggerÅBoINorge12Mnd = 'planleggerÅBoINorge12Mnd',
     andreForelderNavn = 'andreForelderNavn',
     andreForelderFnr = 'andreForelderFnr',

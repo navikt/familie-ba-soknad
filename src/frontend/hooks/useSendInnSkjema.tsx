@@ -10,6 +10,13 @@ import {
     modellVersjonHeaderName,
 } from '../../shared-utils/modellversjon';
 import {
+    fraDatoLabelSpråkId,
+    landLabelSpråkId,
+    tilDatoLabelSpråkId,
+    årsakLabelSpråkId,
+    årsakSpråkId,
+} from '../components/Felleskomponenter/UtenlandsoppholdModal/utenlandsoppholdSpråkUtils';
+import {
     samboerSpråkIder,
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
@@ -24,11 +31,11 @@ import Miljø from '../Miljø';
 import { AlternativtSvarForInput } from '../typer/common';
 import {
     Dokumentasjonsbehov,
+    dokumentasjonsbehovTilSpråkId,
     IDokumentasjon,
     ISøknadKontraktDokumentasjon,
     ISøknadKontraktVedlegg,
     IVedlegg,
-    dokumentasjonsbehovTilSpråkId,
 } from '../typer/dokumentasjon';
 import { IKvittering } from '../typer/kvittering';
 import {
@@ -37,6 +44,7 @@ import {
     ESivilstand,
     ISamboer,
     ITidligereSamboer,
+    IUtenlandsperiode,
 } from '../typer/person';
 import { ISøknadSpørsmål, SpørsmålId } from '../typer/spørsmål';
 import {
@@ -48,6 +56,7 @@ import {
     ISøknadKontrakt,
     ISøknadKontraktBarn,
     ISøknadsfelt,
+    IUtenlandsperiodeIKontraktFormat,
     SpørsmålMap as KontraktpørsmålMap,
 } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
@@ -167,8 +176,7 @@ export const useSendInnSkjema = (): {
             andreForelderFødselsdato,
             søkerForTidsromSluttdato,
             institusjonOppholdSluttdato,
-            nårKomBarnTilNorgeDato,
-            oppholdslandSluttdato,
+            utenlandsperioder,
             utvidet,
             ...barnSpørsmål
         } = barn;
@@ -230,6 +238,9 @@ export const useSendInnSkjema = (): {
                     ? hentTekster('felles.år', { alder })
                     : sammeVerdiAlleSpråk(AlternativtSvarForInput.UKJENT)
             ),
+            utenlandsperioder: utenlandsperioder.map((periode, index) =>
+                utenlandsperiodeTilISøknadsfelt(periode, index + 1, barn)
+            ),
             spørsmål: {
                 ...spørmålISøknadsFormat(typetBarnSpørsmål, {
                     navn: barnetsNavnValue(barn, intl),
@@ -279,22 +290,6 @@ export const useSendInnSkjema = (): {
                     sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                         institusjonOppholdSluttdato.svar,
                         omBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
-                    )
-                ),
-                [barnDataKeySpørsmål.oppholdslandSluttdato]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.oppholdslandSluttdato),
-                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                        oppholdslandSluttdato.svar,
-                        omBarnetSpørsmålSpråkId['barn-utenlandsopphold-ukjent-sluttdato']
-                    )
-                ),
-                [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.nårKomBarnetTilNorge),
-                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                        nårKomBarnTilNorgeDato.svar,
-                        omBarnetSpørsmålSpråkId[
-                            'ombarnet.sammenhengende-opphold.dato.ikkekommetenda'
-                        ]
                     )
                 ),
             },
@@ -393,6 +388,54 @@ export const useSendInnSkjema = (): {
         );
     };
 
+    const utenlandsperiodeTilISøknadsfelt = (
+        utenlandperiode: IUtenlandsperiode,
+        periodeNummer: number,
+        barn?: IBarnMedISøknad
+    ): ISøknadsfelt<IUtenlandsperiodeIKontraktFormat> => {
+        return {
+            label: hentTekster('felles.leggtilutenlands.opphold', { x: periodeNummer }),
+            verdi: sammeVerdiAlleSpråk({
+                utenlandsoppholdÅrsak: {
+                    label: hentTekster(årsakLabelSpråkId(barn), {
+                        ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                    }),
+                    verdi: hentTekster(
+                        årsakSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn)
+                    ),
+                },
+                oppholdsland: {
+                    label: hentTekster(
+                        landLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
+                        { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
+                    ),
+                    verdi: verdiCallbackAlleSpråk(locale =>
+                        landkodeTilSpråk(utenlandperiode.oppholdsland.svar, locale)
+                    ),
+                },
+                oppholdslandFraDato: {
+                    label: hentTekster(
+                        fraDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
+                        { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
+                    ),
+                    verdi: sammeVerdiAlleSpråk(utenlandperiode.oppholdslandFraDato?.svar),
+                },
+                oppholdslandTilDato: {
+                    label: hentTekster(
+                        tilDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
+                        { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
+                    ),
+                    verdi: utenlandperiode.oppholdslandTilDato?.svar
+                        ? sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                              utenlandperiode.oppholdslandTilDato?.svar,
+                              'felles.vetikkenåravsluttes.spm'
+                          )
+                        : sammeVerdiAlleSpråk(undefined),
+                },
+            }),
+        };
+    };
+
     const dataISøknadKontraktFormat = (søknad: ISøknad): ISøknadKontrakt => {
         const { søker } = søknad;
         // Raskeste måte å få tak i alle spørsmål minus de andre feltene på søker
@@ -407,6 +450,7 @@ export const useSendInnSkjema = (): {
             utvidet,
             adressebeskyttelse,
             nåværendeSamboer,
+            utenlandsperioder,
             ...søkerSpørsmål
         } = søker;
         const { spørsmål: utvidaSpørsmål, tidligereSamboere } = utvidet;
@@ -434,6 +478,9 @@ export const useSendInnSkjema = (): {
                 adresse: søknadsfelt(
                     'pdf.søker.adresse.label',
                     sammeVerdiAlleSpråk(søker.adresse ?? {})
+                ),
+                utenlandsperioder: utenlandsperioder.map((periode, index) =>
+                    utenlandsperiodeTilISøknadsfelt(periode, index + 1)
                 ),
                 spørsmål: {
                     ...spørmålISøknadsFormat(typetSøkerSpørsmål),
@@ -474,10 +521,6 @@ export const useSendInnSkjema = (): {
                     ),
                     sammeVerdiAlleSpråk(søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar)
                 ),
-                oppholderBarnSegIUtland: søknadsfelt(
-                    språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.oppholderBarnSegIUtland),
-                    sammeVerdiAlleSpråk(søknad.oppholderBarnSegIUtland.svar)
-                ),
                 erAvdødPartnerForelder: søknadsfelt(
                     språktekstIdFraSpørsmålId(søknad.erAvdødPartnerForelder.id),
                     sammeVerdiAlleSpråk(søknad.erAvdødPartnerForelder.svar)
@@ -497,7 +540,7 @@ export const useSendInnSkjema = (): {
                 'ombarnet.fosterbarn',
                 'ombarnet.institusjon',
                 'ombarnet.oppholdutland',
-                'ombarnet.sammenhengende-opphold',
+                'ombarnet.opplystatbarnutlandopphold.info',
                 'ombarnet.barnetrygd-eøs',
                 'omdeg.annensamboer.spm',
                 'pdf.andreforelder.seksjonstittel',

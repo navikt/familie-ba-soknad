@@ -6,6 +6,7 @@ import { ISODateString } from '@navikt/familie-form-elements';
 import { feil, FeltState, ok } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { AlternativtSvarForInput } from '../typer/common';
 
 export const erDatoFormatGodkjent = (verdi: string) => {
     /*FamilieDatoVelger har allerede sin egen validering.
@@ -32,16 +33,19 @@ export const erDatoFørEllerSammeSomStartDatoAvgrensning = (
 
 export const gårsdagensDato = () => dayjs().subtract(1, 'day').format('YYYY-MM-DD');
 
+export const ettÅrTilbakeDato = () => dayjs().subtract(1, 'year').format('YYYY-MM-DD');
+
 export const dagensDato = () => dayjs().format('YYYY-MM-DD');
 
 export const validerDato = (
     feltState: FeltState<string>,
     feilmeldingSpråkId: string,
     startdatoAvgrensning = '',
-    sluttdatoAvgrensning = ''
+    sluttdatoAvgrensning = '',
+    customStartdatoFeilmelding = ''
 ): FeltState<string> => {
     if (feltState.verdi === '') {
-        return feil(feltState, <SpråkTekst id={feilmeldingSpråkId} />);
+        return feil(feltState, feilmeldingSpråkId ? <SpråkTekst id={feilmeldingSpråkId} /> : '');
     }
     if (!erDatoFormatGodkjent(feltState.verdi)) {
         return feil(feltState, <SpråkTekst id={'felles.dato-format.feilmelding'} />);
@@ -65,10 +69,21 @@ export const validerDato = (
         !!startdatoAvgrensning &&
         erDatoFørEllerSammeSomStartDatoAvgrensning(feltState.verdi, startdatoAvgrensning)
     ) {
-        return feil(feltState, <SpråkTekst id={'felles.tilogmedfeilformat.feilmelding'} />);
+        return feil(
+            feltState,
+            <SpråkTekst
+                id={
+                    customStartdatoFeilmelding
+                        ? customStartdatoFeilmelding
+                        : 'felles.tilogmedfeilformat.feilmelding'
+                }
+            />
+        );
     }
     return ok(feltState);
 };
 
 export const formaterDato = (isoDateString: ISODateString) =>
-    dayjs(isoDateString).format('DD.MM.YYYY');
+    isoDateString === AlternativtSvarForInput.UKJENT
+        ? isoDateString
+        : dayjs(isoDateString).format('DD.MM.YYYY');

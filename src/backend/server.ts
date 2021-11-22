@@ -1,5 +1,6 @@
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 
@@ -18,10 +19,19 @@ import { konfigurerStatic } from './routes/static';
 dotenv.config();
 const app = express();
 
+// webpack serve kjører på en annen port enn oss, må tillate det som origin
+process.env.NODE_ENV === 'development' &&
+    app.use(
+        cors({
+            origin: 'http://localhost:3000',
+            credentials: true,
+        })
+    );
+
 // Alltid bruk gzip-compression på alt vi server med express
 app.use(compression());
 
-// Parse cookies for bruk i dekoratør-fetch
+// Parse cookies, bl.a. for rendring av lang-attribute
 app.use(cookieParser());
 
 konfigurerStatic(app);

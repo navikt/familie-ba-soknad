@@ -90,10 +90,14 @@ const DinLivssituasjon: React.FC = () => {
                                 <Datovelger
                                     felt={skjema.felter.separertEnkeSkiltDato}
                                     skjema={skjema}
-                                    labelTekstId={
-                                        dinLivssituasjonSpørsmålSpråkId[
-                                            DinLivssituasjonSpørsmålId.separertEnkeSkiltDato
-                                        ]
+                                    label={
+                                        <SpråkTekst
+                                            id={
+                                                dinLivssituasjonSpørsmålSpråkId[
+                                                    DinLivssituasjonSpørsmålId.separertEnkeSkiltDato
+                                                ]
+                                            }
+                                        />
                                     }
                                 />
                             </KomponentGruppe>

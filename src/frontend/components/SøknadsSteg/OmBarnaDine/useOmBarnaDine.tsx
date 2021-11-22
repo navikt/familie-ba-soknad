@@ -63,35 +63,14 @@ export const useOmBarnaDine = (): {
         erBarnAdoptertFraUtland
     );
 
-    const oppholderBarnSegIUtland = useJaNeiSpmFelt(
-        søknad.oppholderBarnSegIUtland,
-        'ombarna.opphold-utland.feilmelding',
-        {
-            erNoenAvBarnaFosterbarn: {
-                hovedSpørsmål: erNoenAvBarnaFosterbarn,
-                tilhørendeFelter: [hvemErFosterbarn],
-            },
-            oppholderBarnSegIInstitusjon: {
-                hovedSpørsmål: oppholderBarnSegIInstitusjon,
-                tilhørendeFelter: [hvemOppholderSegIInstitusjon],
-            },
-        }
-    );
-
-    const hvemOppholderSegIUtland = useBarnCheckboxFelt(
-        barnDataKeySpørsmål.oppholderSegIUtland,
-        'ombarna.opphold-utland.hvem.feilmelding',
-        oppholderBarnSegIUtland
-    );
-
     const søktAsylForBarn = useJaNeiSpmFelt(søknad.søktAsylForBarn, 'ombarna.asyl.feilmelding', {
-        erBarnAdoptertFraUtland: {
-            hovedSpørsmål: erBarnAdoptertFraUtland,
-            tilhørendeFelter: [hvemErAdoptertFraUtland],
+        erNoenAvBarnaFosterbarn: {
+            hovedSpørsmål: erNoenAvBarnaFosterbarn,
+            tilhørendeFelter: [hvemErFosterbarn],
         },
-        oppholderBarnSegIUtland: {
-            hovedSpørsmål: oppholderBarnSegIUtland,
-            tilhørendeFelter: [hvemOppholderSegIUtland],
+        oppholderBarnSegIInstitusjon: {
+            hovedSpørsmål: oppholderBarnSegIInstitusjon,
+            tilhørendeFelter: [hvemOppholderSegIInstitusjon],
         },
     });
 
@@ -109,9 +88,9 @@ export const useOmBarnaDine = (): {
                 hovedSpørsmål: erBarnAdoptertFraUtland,
                 tilhørendeFelter: [hvemErAdoptertFraUtland],
             },
-            oppholderBarnSegIUtland: {
-                hovedSpørsmål: oppholderBarnSegIUtland,
-                tilhørendeFelter: [hvemOppholderSegIUtland],
+            søktAsylForBarn: {
+                hovedSpørsmål: søktAsylForBarn,
+                tilhørendeFelter: [hvemErSøktAsylFor],
             },
         }
     );
@@ -127,13 +106,13 @@ export const useOmBarnaDine = (): {
         søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
         'ombarna.barnetrygd-eøs.feilmelding',
         {
+            erBarnAdoptertFraUtland: {
+                hovedSpørsmål: erBarnAdoptertFraUtland,
+                tilhørendeFelter: [hvemErAdoptertFraUtland],
+            },
             søktAsylForBarn: {
                 hovedSpørsmål: søktAsylForBarn,
                 tilhørendeFelter: [hvemErSøktAsylFor],
-            },
-            barnOppholdtSegTolvMndSammenhengendeINorge: {
-                hovedSpørsmål: barnOppholdtSegTolvMndSammenhengendeINorge,
-                tilhørendeFelter: [hvemTolvMndSammenhengendeINorge],
             },
         }
     );
@@ -159,13 +138,13 @@ export const useOmBarnaDine = (): {
         søknad.erAvdødPartnerForelder,
         avdødPartnerForelderFeilmelding(),
         {
+            erBarnAdoptertFraUtland: {
+                hovedSpørsmål: erBarnAdoptertFraUtland,
+                tilhørendeFelter: [hvemErAdoptertFraUtland],
+            },
             søktAsylForBarn: {
                 hovedSpørsmål: søktAsylForBarn,
                 tilhørendeFelter: [hvemErSøktAsylFor],
-            },
-            barnOppholdtSegTolvMndSammenhengendeINorge: {
-                hovedSpørsmål: barnOppholdtSegTolvMndSammenhengendeINorge,
-                tilhørendeFelter: [hvemTolvMndSammenhengendeINorge],
             },
         },
         false,
@@ -196,10 +175,6 @@ export const useOmBarnaDine = (): {
             erBarnAdoptertFraUtland: {
                 ...søknad.erBarnAdoptertFraUtland,
                 svar: erBarnAdoptertFraUtland.verdi,
-            },
-            oppholderBarnSegIUtland: {
-                ...søknad.oppholderBarnSegIUtland,
-                svar: oppholderBarnSegIUtland.verdi,
             },
             søktAsylForBarn: {
                 ...søknad.søktAsylForBarn,
@@ -250,7 +225,6 @@ export const useOmBarnaDine = (): {
             erNoenAvBarnaFosterbarn,
             oppholderBarnSegIInstitusjon,
             erBarnAdoptertFraUtland,
-            oppholderBarnSegIUtland,
             søktAsylForBarn,
             barnOppholdtSegTolvMndSammenhengendeINorge,
             mottarBarnetrygdForBarnFraAnnetEøsland,
@@ -258,7 +232,6 @@ export const useOmBarnaDine = (): {
             hvemErFosterbarn,
             hvemErAdoptertFraUtland,
             hvemOppholderSegIInstitusjon,
-            hvemOppholderSegIUtland,
             hvemBarnetrygdFraAnnetEøsland,
             hvemTolvMndSammenhengendeINorge,
             hvemErSøktAsylFor,

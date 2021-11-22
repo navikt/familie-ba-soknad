@@ -3,7 +3,8 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
-import { barnDataKeySpørsmål, IBarn } from './person';
+import { barnDataKeySpørsmål, IBarn, IUtenlandsperiode } from './person';
+import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 
 export interface IDinLivssituasjonFeltTyper {
@@ -39,7 +40,6 @@ export interface IOmBarnaDineFeltTyper {
     erNoenAvBarnaFosterbarn: ESvar | null;
     oppholderBarnSegIInstitusjon: ESvar | null;
     erBarnAdoptertFraUtland: ESvar | null;
-    oppholderBarnSegIUtland: ESvar | null;
     søktAsylForBarn: ESvar | null;
     barnOppholdtSegTolvMndSammenhengendeINorge: ESvar | null;
     mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | null;
@@ -47,7 +47,6 @@ export interface IOmBarnaDineFeltTyper {
     hvemErFosterbarn: BarnetsId[];
     hvemOppholderSegIInstitusjon: BarnetsId[];
     hvemErAdoptertFraUtland: BarnetsId[];
-    hvemOppholderSegIUtland: BarnetsId[];
     hvemBarnetrygdFraAnnetEøsland: BarnetsId[];
     hvemTolvMndSammenhengendeINorge: BarnetsId[];
     hvemErSøktAsylFor: BarnetsId[];
@@ -61,12 +60,6 @@ export interface IOmBarnetUtvidetFeltTyper {
     institusjonOppholdStartdato: ISODateString;
     institusjonOppholdSluttdato: DatoMedUkjent;
     institusjonOppholdSluttVetIkke: ESvar;
-    oppholdsland: Alpha3Code | '';
-    oppholdslandStartdato: ISODateString;
-    oppholdslandSluttdato: DatoMedUkjent;
-    oppholdslandSluttDatoVetIkke: ESvar;
-    nårKomBarnTilNorgeDato: ISODateString;
-    nårKomBarnTilNorgeDatoIkkeAnkommet: ESvar;
     planleggerÅBoINorge12Mnd: ESvar | null;
     barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
     andreForelderNavn: string;
@@ -89,16 +82,14 @@ export interface IOmBarnetUtvidetFeltTyper {
     søkerHarBoddMedAndreForelder: ESvar | null;
     borMedAndreForelderCheckbox: ESvar;
     søkerFlyttetFraAndreForelderDato: ISODateString;
+    registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
 export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | null;
-    oppholderSegINorge: ESvar | null;
-    oppholdsland: Alpha3Code | '';
-    oppholdslandDato: ISODateString;
     værtINorgeITolvMåneder: ESvar | null;
-    komTilNorgeDato: ISODateString;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
+    registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
 export interface IVelgBarnFeltTyper {
@@ -118,6 +109,13 @@ export interface ILeggTilBarnTyper
     ikkeFåttIdentChecked: ESvar;
 }
 
+export interface IUtenlandsoppholdFeltTyper {
+    utenlandsoppholdÅrsak: EUtenlandsoppholdÅrsak | '';
+    oppholdsland: Alpha3Code | '';
+    oppholdslandFraDato: ISODateString;
+    oppholdslandTilDato: ISODateString;
+    oppholdslandTilDatoUkjent: ESvar;
+}
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
@@ -125,4 +123,5 @@ export type SkjemaFeltTyper =
     | IOmBarnetUtvidetFeltTyper
     | IOmBarnaDineFeltTyper
     | IDinLivssituasjonFeltTyper
+    | IUtenlandsoppholdFeltTyper
     | ITidligereSamboerFeltTyper;

@@ -35,10 +35,6 @@ export const genererOppdaterteBarn = (
             barn,
             skjema.felter.hvemOppholderSegIInstitusjon
         );
-        const oppholderSegIUtlandet = genererSvarForSpørsmålBarn(
-            barn,
-            skjema.felter.hvemOppholderSegIUtland
-        );
 
         const boddMindreEnn12MndINorge = genererSvarForSpørsmålBarn(
             barn,
@@ -52,10 +48,14 @@ export const genererOppdaterteBarn = (
         const andreForelderErDød =
             genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner) === ESvar.JA;
 
+        const oppholdtSegIUtlandSiste12Mnd =
+            skjema.felter.hvemTolvMndSammenhengendeINorge.verdi.includes(barn.id);
+
         const erFosterbarn = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn);
 
         return {
             ...barn,
+            utenlandsperioder: oppholdtSegIUtlandSiste12Mnd ? barn.utenlandsperioder : [],
             [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
                 svar: erFosterbarn,
@@ -75,10 +75,6 @@ export const genererOppdaterteBarn = (
             [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: {
                 ...barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge],
                 svar: boddMindreEnn12MndINorge,
-            },
-            [barnDataKeySpørsmål.oppholderSegIUtland]: {
-                ...barn[barnDataKeySpørsmål.oppholderSegIUtland],
-                svar: oppholderSegIUtlandet,
             },
             [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
                 ...barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland],
@@ -125,38 +121,6 @@ export const genererOppdaterteBarn = (
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     oppholderSegIInstitusjon,
                     barn[barnDataKeySpørsmål.institusjonOppholdSluttdato],
-                    ''
-                ),
-            },
-            [barnDataKeySpørsmål.oppholdsland]: {
-                ...barn[barnDataKeySpørsmål.oppholdsland],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    oppholderSegIUtlandet,
-                    barn[barnDataKeySpørsmål.oppholdsland],
-                    ''
-                ),
-            },
-            [barnDataKeySpørsmål.oppholdslandStartdato]: {
-                ...barn[barnDataKeySpørsmål.oppholdslandStartdato],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    oppholderSegIUtlandet,
-                    barn[barnDataKeySpørsmål.oppholdslandStartdato],
-                    ''
-                ),
-            },
-            [barnDataKeySpørsmål.oppholdslandSluttdato]: {
-                ...barn[barnDataKeySpørsmål.oppholdslandSluttdato],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    oppholderSegIUtlandet,
-                    barn[barnDataKeySpørsmål.oppholdslandSluttdato],
-                    ''
-                ),
-            },
-            [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: {
-                ...barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    boddMindreEnn12MndINorge,
-                    barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato],
                     ''
                 ),
             },
@@ -251,6 +215,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
     return {
         ...barn,
         barnErFyltUt: false,
+        utenlandsperioder: [],
         utvidet: {
             [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: {
                 id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,
@@ -305,29 +270,9 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnetSpørsmålsId.institusjonOppholdSluttdato,
             svar: '',
         },
-        [barnDataKeySpørsmål.oppholderSegIUtland]: {
-            id: OmBarnaDineSpørsmålId.hvemOppholderSegIUtland,
-            svar: null,
-        },
-        [barnDataKeySpørsmål.oppholdsland]: {
-            id: OmBarnetSpørsmålsId.oppholdsland,
-            svar: '',
-        },
-        [barnDataKeySpørsmål.oppholdslandSluttdato]: {
-            id: OmBarnetSpørsmålsId.oppholdslandSluttdato,
-            svar: '',
-        },
-        [barnDataKeySpørsmål.oppholdslandStartdato]: {
-            id: OmBarnetSpørsmålsId.oppholdslandStartdato,
-            svar: '',
-        },
         [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: {
             id: OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge,
             svar: null,
-        },
-        [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: {
-            id: OmBarnetSpørsmålsId.nårKomBarnetTilNorge,
-            svar: '',
         },
         [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: {
             id: OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd,

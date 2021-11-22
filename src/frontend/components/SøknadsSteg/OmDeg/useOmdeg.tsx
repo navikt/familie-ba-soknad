@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
+import { IUtenlandsperiode } from '../../../typer/person';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
-import { dagensDato } from '../../../utils/dato';
+import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 
 export const useOmdeg = (): {
     skjema: ISkjema<IOmDegFeltTyper, string>;
@@ -17,9 +17,15 @@ export const useOmdeg = (): {
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
+    leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    utenlandsperioder: IUtenlandsperiode[];
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
+    const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
+        søker.utenlandsperioder
+    );
 
     const borPåRegistrertAdresse = useFelt<ESvar | null>({
         feltId: søker.borPåRegistrertAdresse.id,
@@ -36,7 +42,7 @@ export const useOmdeg = (): {
                 return ok(felt);
             }
 
-            let feilmeldingId;
+            let feilmeldingId: string;
 
             if (felt.verdi === ESvar.NEI) feilmeldingId = 'omdeg.du-kan-ikke-søke.feilmelding';
             else if (!søker.adressebeskyttelse && !søker.adresse)
@@ -47,32 +53,6 @@ export const useOmdeg = (): {
         },
         skalFeltetVises: () => søker.adressebeskyttelse === false,
     });
-
-    const oppholderSegINorge = useJaNeiSpmFelt(
-        søker.oppholderSegINorge,
-        'omdeg.opphold-i-norge.feilmelding',
-        {
-            ...(!søker.adressebeskyttelse && {
-                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
-            }),
-        },
-        borPåRegistrertAdresse.verdi === ESvar.NEI
-    );
-
-    const oppholdsland = useLanddropdownFeltMedJaNeiAvhengighet(
-        søker.oppholdsland,
-        'omdeg.opphold-i-norge.land.feilmelding',
-        ESvar.NEI,
-        oppholderSegINorge
-    );
-
-    const oppholdslandDato = useDatovelgerFeltMedJaNeiAvhengighet(
-        søker.oppholdslandDato,
-        ESvar.NEI,
-        oppholderSegINorge,
-        'omdeg.opphold-i-norge.dato.feilmelding',
-        dagensDato()
-    );
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt(
         søker.værtINorgeITolvMåneder,
@@ -85,67 +65,77 @@ export const useOmdeg = (): {
         borPåRegistrertAdresse.verdi === ESvar.NEI
     );
 
-    const komTilNorgeDato = useDatovelgerFeltMedJaNeiAvhengighet(
-        søker.komTilNorgeDato,
-        ESvar.NEI,
-        værtINorgeITolvMåneder,
-        'omdeg.opphold-sammenhengende.dato.feilmelding',
-        dagensDato()
+    const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
+        feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
+        verdi: utenlandsperioder,
+        avhengigheter: {
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+            værtINorgeITolvMåneder,
+        },
+        valideringsfunksjon: felt => {
+            return felt.verdi.length
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />);
+        },
+        nullstillVedAvhengighetEndring: borPåRegistrertAdresse.verdi === ESvar.NEI,
+        skalFeltetVises: avhengigheter => {
+            return avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI;
+        },
+    });
+
+    const planleggerÅBoINorgeTolvMnd = useJaNeiSpmFelt(
+        søker.planleggerÅBoINorgeTolvMnd,
+        'omdeg.planlagt-opphold-sammenhengende.feilmelding',
+        {
+            ...(!søker.adressebeskyttelse && {
+                borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
+            }),
+            værtINorgeITolvMåneder: { hovedSpørsmål: værtINorgeITolvMåneder },
+        },
+        borPåRegistrertAdresse.verdi === ESvar.NEI,
+        flyttetPermanentFraNorge(utenlandsperioder) ||
+            værtINorgeITolvMåneder.verdi === ESvar.JA ||
+            (værtINorgeITolvMåneder.verdi === ESvar.NEI && !utenlandsperioder.length)
     );
 
-    const planleggerÅBoINorgeTolvMnd = useFelt<ESvar | null>({
-        feltId: søker.planleggerÅBoINorgeTolvMnd.id,
-        verdi: søker.planleggerÅBoINorgeTolvMnd.svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
-            return felt.verdi
-                ? ok(felt)
-                : feil(
-                      felt,
-                      <SpråkTekst id={'omdeg.planlagt-opphold-sammenhengende.feilmelding'} />
-                  );
-        },
-        skalFeltetVises: avhengigheter => {
-            return (
-                avhengigheter.værtINorgeITolvMåneder &&
-                avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI
-            );
-        },
-        avhengigheter: { værtINorgeITolvMåneder },
-    });
+    useEffect(() => {
+        registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
+    }, [utenlandsperioder]);
+
+    const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
+        settUtenlandsperioder(prevState => prevState.concat(periode));
+    };
+
+    const fjernUtenlandsperiode = (periodeSomSkalFjernes: IUtenlandsperiode) => {
+        settUtenlandsperioder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
 
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
             søker: {
                 ...søknad.søker,
+                utenlandsperioder:
+                    værtINorgeITolvMåneder.verdi === ESvar.NEI ? utenlandsperioder : [],
                 borPåRegistrertAdresse: {
                     ...søker.borPåRegistrertAdresse,
                     svar: skjema.felter.borPåRegistrertAdresse.verdi,
-                },
-
-                oppholderSegINorge: {
-                    ...søker.oppholderSegINorge,
-                    svar: skjema.felter.oppholderSegINorge.verdi,
-                },
-                oppholdsland: {
-                    ...søker.oppholdsland,
-                    svar: skjema.felter.oppholdsland.verdi,
-                },
-                oppholdslandDato: {
-                    ...søker.oppholdslandDato,
-                    svar: skjema.felter.oppholdslandDato.verdi,
                 },
                 værtINorgeITolvMåneder: {
                     ...søker.værtINorgeITolvMåneder,
                     svar: skjema.felter.værtINorgeITolvMåneder.verdi,
                 },
-                komTilNorgeDato: {
-                    ...søker.komTilNorgeDato,
-                    svar: skjema.felter.komTilNorgeDato.verdi,
-                },
                 planleggerÅBoINorgeTolvMnd: {
                     ...søker.planleggerÅBoINorgeTolvMnd,
-                    svar: skjema.felter.planleggerÅBoINorgeTolvMnd.verdi,
+                    svar:
+                        !flyttetPermanentFraNorge(utenlandsperioder) &&
+                        værtINorgeITolvMåneder.verdi === ESvar.NEI
+                            ? skjema.felter.planleggerÅBoINorgeTolvMnd.verdi
+                            : null,
                 },
             },
         });
@@ -157,12 +147,9 @@ export const useOmdeg = (): {
     >({
         felter: {
             borPåRegistrertAdresse,
-            oppholderSegINorge,
-            oppholdsland,
-            oppholdslandDato,
             værtINorgeITolvMåneder,
-            komTilNorgeDato,
             planleggerÅBoINorgeTolvMnd,
+            registrerteUtenlandsperioder,
         },
         skjemanavn: 'omdeg',
     });
@@ -173,5 +160,8 @@ export const useOmdeg = (): {
         validerAlleSynligeFelter,
         valideringErOk,
         oppdaterSøknad,
+        leggTilUtenlandsperiode,
+        fjernUtenlandsperiode,
+        utenlandsperioder,
     };
 };

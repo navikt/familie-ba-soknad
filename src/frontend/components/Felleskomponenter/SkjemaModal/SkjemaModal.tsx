@@ -18,15 +18,19 @@ const StyledModal = styled(Modal)`
     width: 45rem;
     @media all and ${device.mobile} {
         width: 95%;
+        && {
+            padding: 2rem -100% 2rem -100%;
+        }
     }
 `;
 
 const StyledKnappIModal = styled(Knapp)`
     margin-top: 4rem;
+    white-space: normal;
 `;
 const StyledInnholdstittel = styled(Innholdstittel)`
     text-align: center;
-    padding: 2rem;
+    padding: 2rem 0;
 `;
 
 const SkjemaModal: React.FC<{

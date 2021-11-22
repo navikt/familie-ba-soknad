@@ -76,44 +76,6 @@ describe('useOmBarnet', () => {
         });
     });
 
-    it('Setter oppholdslandfelter til tomme dersom barnet ikke oppholder seg i utlandet', async () => {
-        const barn: Partial<IBarnMedISøknad> = {
-            ...genererInitialBarnMedISøknad(barnFraPdl),
-            [barnDataKeySpørsmål.oppholderSegIUtland]: {
-                svar: ESvar.NEI,
-                id: OmBarnaDineSpørsmålId.oppholderBarnSegIUtland,
-            },
-        };
-
-        spyOnUseApp({ barnInkludertISøknaden: [barn] });
-
-        const { result } = renderHook(
-            () => {
-                return useOmBarnet('random-id-1');
-            },
-            { wrapper: TestProvidere }
-        );
-
-        const {
-            current: {
-                skjema: {
-                    felter: { oppholdsland, oppholdslandStartdato, oppholdslandSluttdato },
-                },
-            },
-        } = result;
-
-        expect(oppholdsland.verdi).toEqual('');
-        expect(oppholdslandStartdato.verdi).toEqual('');
-        expect(oppholdslandSluttdato.verdi).toEqual('');
-        expect(oppholdsland.erSynlig).toEqual(false);
-        expect(oppholdslandStartdato.erSynlig).toEqual(false);
-        expect(oppholdslandSluttdato.erSynlig).toEqual(false);
-
-        await act(async () => {
-            jest.advanceTimersByTime(500);
-        });
-    });
-
     it('Setter opphold i Norge-felter til tomme dersom barnet har oppholdt seg i Norge siste 12 mnd', async () => {
         const barn: Partial<IBarnMedISøknad> = {
             ...genererInitialBarnMedISøknad(barnFraPdl),
@@ -135,13 +97,11 @@ describe('useOmBarnet', () => {
         const {
             current: {
                 skjema: {
-                    felter: { nårKomBarnTilNorgeDato, planleggerÅBoINorge12Mnd },
+                    felter: { planleggerÅBoINorge12Mnd },
                 },
             },
         } = result;
 
-        expect(nårKomBarnTilNorgeDato.verdi).toEqual('');
-        expect(nårKomBarnTilNorgeDato.erSynlig).toEqual(false);
         expect(planleggerÅBoINorge12Mnd.verdi).toEqual(null);
         expect(planleggerÅBoINorge12Mnd.erSynlig).toEqual(false);
 

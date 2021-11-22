@@ -27,10 +27,11 @@ const SkjemaFieldset: React.FC<{
     tittelId: string;
     språkValues?: { [key: string]: ReactNode };
     dynamisk?: boolean;
-}> = ({ tittelId, språkValues, dynamisk = false, children }) => {
+    id?: string;
+}> = ({ tittelId, språkValues, dynamisk = false, id, children }) => {
     return (
         <Container aria-live={dynamisk ? 'polite' : 'off'}>
-            <StyledLegend>
+            <StyledLegend id={id}>
                 <Undertittel>
                     <SpråkTekst id={tittelId} values={språkValues} />
                 </Undertittel>

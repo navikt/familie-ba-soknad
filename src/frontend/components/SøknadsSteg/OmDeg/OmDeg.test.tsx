@@ -45,8 +45,7 @@ describe('OmDeg', () => {
         const { søker } = mekkGyldigSøknad();
         const søkerMedSvarSomViserAlleTekster: ISøker = {
             ...søker,
-            oppholderSegINorge: { ...søker.oppholderSegINorge, svar: ESvar.NEI },
-            værtINorgeITolvMåneder: { ...søker.oppholderSegINorge, svar: ESvar.NEI },
+            værtINorgeITolvMåneder: { ...søker.værtINorgeITolvMåneder, svar: ESvar.NEI },
             planleggerÅBoINorgeTolvMnd: { ...søker.planleggerÅBoINorgeTolvMnd, svar: ESvar.NEI },
         };
         spyOnUseApp({ søker: søkerMedSvarSomViserAlleTekster });
@@ -110,7 +109,6 @@ describe('OmDeg', () => {
                 adressebeskyttelse: false,
                 statsborgerskap: [{ landkode: 'NOR' }],
                 borPåRegistrertAdresse: { id: OmDegSpørsmålId.borPåRegistrertAdresse, svar: null },
-                oppholderSegINorge: { id: OmDegSpørsmålId.oppholderSegINorge, svar: null },
                 værtINorgeITolvMåneder: { id: OmDegSpørsmålId.værtINorgeITolvMåneder, svar: null },
             }),
         });
@@ -122,7 +120,7 @@ describe('OmDeg', () => {
         act(() => jaKnapp.click());
 
         expect(
-            queryByText(omDegSpørsmålSpråkId['søker-oppholder-seg-i-norge'])
+            queryByText(omDegSpørsmålSpråkId['søker-vært-i-norge-sammenhengende-tolv-måneder'])
         ).toBeInTheDocument();
     });
 
@@ -140,10 +138,6 @@ describe('OmDeg', () => {
         expect(
             queryByText(omDegSpørsmålSpråkId['bor-på-registrert-adresse'])
         ).not.toBeInTheDocument();
-
-        expect(
-            queryByText(omDegSpørsmålSpråkId['søker-oppholder-seg-i-norge'])
-        ).toBeInTheDocument();
 
         expect(
             queryByText(omDegSpørsmålSpråkId['søker-vært-i-norge-sammenhengende-tolv-måneder'])

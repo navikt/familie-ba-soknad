@@ -129,34 +129,6 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
-                            id={
-                                omBarnaDineSpørsmålSpråkId[
-                                    OmBarnaDineSpørsmålId.oppholderBarnSegIUtland
-                                ]
-                            }
-                        />
-                    }
-                    søknadsvar={søknad.oppholderBarnSegIUtland.svar}
-                />
-                {søknad.oppholderBarnSegIUtland.svar === ESvar.JA && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnaDineSpørsmålSpråkId[
-                                        OmBarnaDineSpørsmålId.hvemOppholderSegIUtland
-                                    ]
-                                }
-                            />
-                        }
-                        søknadsvar={genererListeMedBarn(barnDataKeySpørsmål.oppholderSegIUtland)}
-                    />
-                )}
-            </StyledOppsummeringsFeltGruppe>
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
                             id={omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.søktAsylForBarn]}
                         />
                     }

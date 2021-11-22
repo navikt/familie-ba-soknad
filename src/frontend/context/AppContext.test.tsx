@@ -134,10 +134,6 @@ describe('AppContext', () => {
                     id: OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland,
                     svar: ESvar.JA,
                 },
-                oppholderBarnSegIUtland: {
-                    id: OmBarnaDineSpørsmålId.oppholderBarnSegIUtland,
-                    svar: ESvar.JA,
-                },
             };
 
             act(() => hookResult.current.settSøknad(søknadHalvveisUtfylt));

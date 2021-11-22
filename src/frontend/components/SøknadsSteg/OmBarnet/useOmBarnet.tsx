@@ -17,7 +17,11 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
-import { barnDataKeySpørsmål, barnDataKeySpørsmålUtvidet } from '../../../typer/person';
+import {
+    barnDataKeySpørsmål,
+    barnDataKeySpørsmålUtvidet,
+    IUtenlandsperiode,
+} from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
@@ -26,7 +30,9 @@ import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
+import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 
@@ -41,6 +47,9 @@ export const useOmBarnet = (
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     settSammeForelder: (radioVerdi: string) => void;
     validerAlleSynligeFelter: () => void;
+    leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    utenlandsperioder: IUtenlandsperiode[];
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
@@ -52,6 +61,10 @@ export const useOmBarnet = (
     if (!barn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
     }
+
+    const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
+        barn.utenlandsperioder
+    );
 
     const skalFeltetVises = (søknadsdataFelt: barnDataKeySpørsmål) => {
         return barn[søknadsdataFelt].svar === ESvar.JA;
@@ -135,79 +148,42 @@ export const useOmBarnet = (
 
     /*---UTENLANDSOPPHOLD---*/
 
-    const oppholdsland = useLanddropdownFelt(
-        barn[barnDataKeySpørsmål.oppholdsland],
-        'ombarnet.oppholdutland.land.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland)
-    );
-
-    const oppholdslandStartdato = useDatovelgerFelt(
-        barn[barnDataKeySpørsmål.oppholdslandStartdato],
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland),
-        'ombarnet.oppholdutland.startdato.feilmelding',
-        dagensDato()
-    );
-
-    const oppholdslandSluttDatoVetIkke = useFelt<ESvar>({
-        verdi:
-            barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar === AlternativtSvarForInput.UKJENT
-                ? ESvar.JA
-                : ESvar.NEI,
-        feltId: OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke,
-    });
-
-    const oppholdslandSluttdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.oppholdslandSluttdato].id,
-        barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar !== AlternativtSvarForInput.UKJENT
-            ? barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar
-            : '',
-        oppholdslandSluttDatoVetIkke,
-        'ombarnet.oppholdutland.sluttdato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIUtland),
-        false,
-        undefined,
-        oppholdslandStartdato.verdi
-    );
-
-    /*---BODD SAMMENHENGENDE I NORGE---*/
-    const nårKomBarnTilNorgeDatoIkkeAnkommet = useFelt<ESvar>({
-        verdi:
-            barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar === AlternativtSvarForInput.UKJENT
-                ? ESvar.JA
-                : ESvar.NEI,
-        feltId: OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet,
-    });
-
-    const nårKomBarnTilNorgeDato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].id,
-        barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar !== AlternativtSvarForInput.UKJENT
-            ? barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar
-            : '',
-        nårKomBarnTilNorgeDatoIkkeAnkommet,
-        'ombarnet.sammenhengende-opphold.dato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge),
-        false,
-        dagensDato()
-    );
-
-    const planleggerÅBoINorge12Mnd = useFelt<ESvar | null>({
-        feltId: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].id,
-        verdi: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar,
-        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
-            return felt.verdi !== null
+    const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
+        feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
+        verdi: barn.utenlandsperioder,
+        valideringsfunksjon: felt => {
+            return felt.verdi.length
                 ? ok(felt)
-                : feil(
-                      felt,
-                      <SpråkTekst id={'ombarnet.planlagt-sammenhengende-opphold.feilmelding'} />
-                  );
+                : feil(felt, <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />);
         },
-        skalFeltetVises: () => {
-            return skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge);
-        },
-        nullstillVedAvhengighetEndring: false,
+        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge),
     });
 
-    /*--- MOTTAR BARNETRYFD FRA ANNET EØSLAND ---*/
+    useEffect(() => {
+        registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
+    }, [utenlandsperioder]);
+
+    const planleggerÅBoINorge12Mnd = useJaNeiSpmFelt(
+        barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
+        'ombarnet.planlagt-sammenhengende-opphold.feilmelding',
+        undefined,
+        false,
+        !skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge) ||
+            flyttetPermanentFraNorge(utenlandsperioder) ||
+            !utenlandsperioder.length
+    );
+
+    const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
+        settUtenlandsperioder(prevState => prevState.concat(periode));
+    };
+
+    const fjernUtenlandsperiode = (periodeSomSkalFjernes: IUtenlandsperiode) => {
+        settUtenlandsperioder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
+
+    /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
 
     const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt(
         barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
@@ -571,12 +547,7 @@ export const useOmBarnet = (
             institusjonOppholdStartdato,
             institusjonOppholdSluttdato,
             institusjonOppholdSluttVetIkke,
-            oppholdsland,
-            oppholdslandStartdato,
-            oppholdslandSluttdato,
-            oppholdslandSluttDatoVetIkke,
-            nårKomBarnTilNorgeDato,
-            nårKomBarnTilNorgeDatoIkkeAnkommet,
+            registrerteUtenlandsperioder,
             planleggerÅBoINorge12Mnd,
             barnetrygdFraEøslandHvilketLand,
             andreForelderNavn,
@@ -635,6 +606,11 @@ export const useOmBarnet = (
                     ? {
                           ...barn,
                           barnErFyltUt: true,
+                          utenlandsperioder: skalFeltetVises(
+                              barnDataKeySpørsmål.boddMindreEnn12MndINorge
+                          )
+                              ? utenlandsperioder
+                              : [],
                           institusjonsnavn: {
                               ...barn.institusjonsnavn,
                               svar: trimWhiteSpace(institusjonsnavn.verdi),
@@ -658,31 +634,11 @@ export const useOmBarnet = (
                                   institusjonOppholdSluttdato
                               ),
                           },
-                          oppholdsland: {
-                              ...barn.oppholdsland,
-                              svar: oppholdsland.verdi,
-                          },
-                          oppholdslandStartdato: {
-                              ...barn.oppholdslandStartdato,
-                              svar: oppholdslandStartdato.verdi,
-                          },
-                          oppholdslandSluttdato: {
-                              ...barn.oppholdslandSluttdato,
-                              svar: svarForSpørsmålMedUkjent(
-                                  oppholdslandSluttDatoVetIkke,
-                                  oppholdslandSluttdato
-                              ),
-                          },
-                          nårKomBarnTilNorgeDato: {
-                              ...barn.nårKomBarnTilNorgeDato,
-                              svar: svarForSpørsmålMedUkjent(
-                                  nårKomBarnTilNorgeDatoIkkeAnkommet,
-                                  nårKomBarnTilNorgeDato
-                              ),
-                          },
                           planleggerÅBoINorge12Mnd: {
                               ...barn.planleggerÅBoINorge12Mnd,
-                              svar: planleggerÅBoINorge12Mnd.verdi,
+                              svar: !flyttetPermanentFraNorge(utenlandsperioder)
+                                  ? skjema.felter.planleggerÅBoINorge12Mnd.verdi
+                                  : null,
                           },
                           barnetrygdFraEøslandHvilketLand: {
                               ...barn.barnetrygdFraEøslandHvilketLand,
@@ -809,5 +765,8 @@ export const useOmBarnet = (
         andreBarnSomErFyltUt,
         settSammeForelder,
         validerAlleSynligeFelter,
+        leggTilUtenlandsperiode,
+        fjernUtenlandsperiode,
+        utenlandsperioder,
     };
 };

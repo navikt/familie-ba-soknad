@@ -2,21 +2,15 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Flatknapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 
-import { AddCircle } from '@navikt/ds-icons';
-
 import { ITidligereSamboer } from '../../../typer/person';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import LeggTilSamboerModal from './LeggTilSamboerModal';
 import SamboerOpplysninger from './SamboerOpplysninger';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
-
-const StyledFlatKnapp = styled(Flatknapp)`
-    margin-top: 0.5rem;
-`;
 
 interface Props {
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
@@ -59,18 +53,7 @@ const TidligereSamboere: React.FC<Props> = ({
                     fjernTidligereSamboer={fjernTidligereSamboer}
                 />
             ))}
-            <StyledFlatKnapp
-                htmlType={'button'}
-                kompakt
-                onClick={() => {
-                    toggleModal();
-                }}
-            >
-                <AddCircle />
-                <span>
-                    <SpråkTekst id={'omdeg.leggtilfleresamboere.leggtil'} />
-                </span>
-            </StyledFlatKnapp>
+            <LeggTilKnapp språkTekst="omdeg.leggtilfleresamboere.leggtil" onClick={toggleModal} />
             <LeggTilSamboerModal
                 leggTilTidligereSamboer={leggTilTidligereSamboer}
                 toggleModal={toggleModal}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 
 import dayjs from 'dayjs';
 import { useIntl } from 'react-intl';
@@ -24,9 +24,10 @@ interface DatoVelgerProps {
     felt: Felt<ISODateString>;
     avgrensDatoFremITid?: boolean;
     avgrensMaxDato?: ISODateString;
+    avgrensMinDato?: ISODateString;
     tilhørendeFraOgMedFelt?: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
-    labelTekstId: string;
+    label: ReactNode;
     disabled?: boolean;
     dynamisk?: boolean;
     calendarPosition?: '' | 'fullscreen' | 'responsive';
@@ -52,9 +53,10 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     felt,
     avgrensDatoFremITid = false,
     avgrensMaxDato,
+    avgrensMinDato,
     tilhørendeFraOgMedFelt,
     skjema,
-    labelTekstId,
+    label,
     disabled = false,
     dynamisk = false,
     calendarPosition = '',
@@ -65,7 +67,9 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     const hentBegrensninger = () => {
         const limitations: DatepickerLimitations = {};
 
-        if (tilhørendeFraOgMedFelt) {
+        if (avgrensMinDato) {
+            limitations.minDate = avgrensMinDato;
+        } else if (tilhørendeFraOgMedFelt) {
             limitations.minDate = dayjs(tilhørendeFraOgMedFelt.verdi)
                 .add(1, 'day')
                 .format('YYYY-MM-DD');
@@ -94,7 +98,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 limitations={hentBegrensninger()}
                 placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}
                 valgtDato={disabled ? '' : felt.verdi}
-                label={<SpråkTekst id={labelTekstId} />}
+                label={label}
                 {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}
                 onChange={dato => {
                     felt.hentNavInputProps(false).onChange(dato);

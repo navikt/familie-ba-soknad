@@ -39,6 +39,26 @@ services:
       - "3000:3000"
       - "55554:55554"
 
+  frontend-prod:
+    profiles:
+      - test-prod-build
+    logging: *common-log-config
+    container_name: "frontend-prod"
+    build:
+      context: ./
+      target: prod-runner # Samme docker image som kjører i preprod og prod
+      args:
+        base_path: /familie/barnetrygd/soknad/ordinaer/
+    environment:
+      <<: *common-token-environment
+      BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
+      ENV: docker-compose-prod
+      # FORCE_DISABLED: 1 # Uncomment for å utvikle disabled-appen
+    volumes:
+      - secure-logs:/secure-logs
+    ports:
+      - "3000:3000"
+
   api:
     logging: *common-log-config
     container_name: "soknad-api"
@@ -46,7 +66,7 @@ services:
       context: dockerstuff/soknad-api
       args:
         <<: *common-build-variables
-        git_commit: 19e2908f99d6c271bfed7af76dc603a1209af64c
+        git_commit: 2ea30669f5ec763a7a506328738d7825fd13c1a5
     depends_on:
       - key_generator
       - oauthmock
@@ -66,7 +86,7 @@ services:
       context: dockerstuff/mottak
       args:
         <<: *common-build-variables
-        git_commit: ca87df416c59bc5dec844c8392149db530cebcf1
+        git_commit: 3636989ac7f348bac1daef3c92d825ebee631d74
     depends_on:
       - key_generator
       - postgres
@@ -118,6 +138,7 @@ services:
     volumes:
       - secure-logs:/secure-logs
       # - ../familie-ba-dokgen/content:/app/content
+    user: root # ellers klager den så fælt på permissions til /secure-logs
 
   oauthmock:
     logging: *common-log-config

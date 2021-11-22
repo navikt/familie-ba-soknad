@@ -8,7 +8,6 @@ import { RessursStatus } from '@navikt/familie-typer';
 import Miljø, { basePath } from '../Miljø';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../typer/dokumentasjon';
 import { EFeatureToggle } from '../typer/feature-toggles';
-import { autentiseringsInterceptor } from '../utils/autentisering';
 import { jaNeiSvarTriggerEøs, landSvarSomKanTriggeEøs } from '../utils/eøs';
 import { useApp } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
@@ -23,8 +22,6 @@ const [EøsProvider, useEøs] = createUseContext(() => {
 
     const { søknad, settSøknad, mellomlagre } = useApp();
     const { soknadApi } = Miljø();
-
-    autentiseringsInterceptor();
 
     useEffect(() => {
         if (!eøsSkruddAv) {

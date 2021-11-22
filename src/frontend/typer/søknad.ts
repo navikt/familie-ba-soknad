@@ -21,6 +21,7 @@ import {
     IAdresse,
     IBarn,
     ISøker,
+    IUtenlandsperiode,
 } from './person';
 import { ISøknadSpørsmål } from './spørsmål';
 import { Årsak } from './utvidet';
@@ -48,15 +49,12 @@ export interface ISøknadsfelt<T> {
 
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
+    utenlandsperioder: IUtenlandsperiode[];
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAsylsøker]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.andreForelderErDød]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.oppholderSegIUtland]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.oppholdsland]: ISøknadSpørsmål<Alpha3Code | ''>;
-    [barnDataKeySpørsmål.oppholdslandStartdato]: ISøknadSpørsmål<ISODateString>;
-    [barnDataKeySpørsmål.oppholdslandSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.institusjonsnavn]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonsadresse]: ISøknadSpørsmål<string>;
@@ -64,7 +62,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.institusjonOppholdStartdato]: ISøknadSpørsmål<ISODateString>;
     [barnDataKeySpørsmål.institusjonOppholdSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.nårKomBarnTilNorgeDato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
     [barnDataKeySpørsmål.andreForelderNavn]: ISøknadSpørsmål<
@@ -99,7 +96,6 @@ export interface ISøknad {
     erNoenAvBarnaFosterbarn: ISøknadSpørsmål<ESvar | null>;
     oppholderBarnSegIInstitusjon: ISøknadSpørsmål<ESvar | null>;
     erBarnAdoptertFraUtland: ISøknadSpørsmål<ESvar | null>;
-    oppholderBarnSegIUtland: ISøknadSpørsmål<ESvar | null>;
     søktAsylForBarn: ISøknadSpørsmål<ESvar | null>;
     erAvdødPartnerForelder: ISøknadSpørsmål<ESvar | null>;
     barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | null>;
@@ -130,6 +126,12 @@ export interface IKontraktNåværendeSamboer {
 export interface IKontraktTidligereSamboer extends IKontraktNåværendeSamboer {
     samboerTilDato: ISøknadsfelt<ISODateString>;
 }
+export interface IUtenlandsperiodeIKontraktFormat {
+    utenlandsoppholdÅrsak: ISøknadsfelt<string>;
+    oppholdsland: ISøknadsfelt<string>;
+    oppholdslandTilDato: ISøknadsfelt<string | undefined>;
+    oppholdslandFraDato: ISøknadsfelt<string | undefined>;
+}
 
 export interface ISøknadKontraktSøker {
     ident: ISøknadsfelt<string>;
@@ -140,6 +142,7 @@ export interface ISøknadKontraktSøker {
     spørsmål: SpørsmålMap;
     tidligereSamboere: ISøknadsfelt<IKontraktTidligereSamboer>[];
     nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null;
+    utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
 }
 
 export enum ERegistrertBostedType {
@@ -155,6 +158,7 @@ export interface ISøknadKontraktBarn {
     registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
+    utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
 }
 
 export const hentSøknadstype = () => {
@@ -233,29 +237,14 @@ export const initialStateSøknad: ISøknad = {
             postnummer: '',
             poststed: '',
         },
+        utenlandsperioder: [],
         borPåRegistrertAdresse: {
             id: OmDegSpørsmålId.borPåRegistrertAdresse,
             svar: null,
         },
-        oppholderSegINorge: {
-            id: OmDegSpørsmålId.oppholderSegINorge,
-            svar: null,
-        },
-        oppholdsland: {
-            id: OmDegSpørsmålId.søkerOppholdsland,
-            svar: '',
-        },
-        oppholdslandDato: {
-            id: OmDegSpørsmålId.oppholdslandDato,
-            svar: '',
-        },
         værtINorgeITolvMåneder: {
             id: OmDegSpørsmålId.værtINorgeITolvMåneder,
             svar: null,
-        },
-        komTilNorgeDato: {
-            id: OmDegSpørsmålId.komTilNorgeDato,
-            svar: '',
         },
         planleggerÅBoINorgeTolvMnd: {
             id: OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd,
@@ -318,10 +307,6 @@ export const initialStateSøknad: ISøknad = {
     },
     erBarnAdoptertFraUtland: {
         id: OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland,
-        svar: null,
-    },
-    oppholderBarnSegIUtland: {
-        id: OmBarnaDineSpørsmålId.oppholderBarnSegIUtland,
         svar: null,
     },
     søktAsylForBarn: {

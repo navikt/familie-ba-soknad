@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
@@ -10,10 +11,10 @@ import { useApp } from '../../../../context/AppContext';
 import { useRoutes } from '../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../typer/routes';
 import { genererAdresseVisning } from '../../../../utils/adresse';
-import { formaterDato } from '../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsperiodeOppsummering } from '../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import {
     omDegPersonopplysningerSpråkId,
     OmDegSpørsmålId,
@@ -23,6 +24,10 @@ import { useOmdeg } from '../../OmDeg/useOmdeg';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
 import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
+
+const StyledUtenlandsperiodeOppsummering = styled(UtenlandsperiodeOppsummering)`
+    border-bottom: none;
+`;
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -88,49 +93,21 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             <StyledOppsummeringsFeltGruppe>
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholderSegINorge]} />
-                    }
-                    søknadsvar={søknad.søker.oppholderSegINorge.svar}
-                />
-                {søknad.søker.oppholdsland.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.søkerOppholdsland]}
-                            />
-                        }
-                        søknadsvar={landkodeTilSpråk(søknad.søker.oppholdsland.svar, valgtLocale)}
-                    />
-                )}
-                {søknad.søker.oppholdslandDato.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.oppholdslandDato]}
-                            />
-                        }
-                        søknadsvar={formaterDato(søknad.søker.oppholdslandDato.svar)}
-                    />
-                )}
-
-                <OppsummeringFelt
-                    tittel={
                         <SpråkTekst
                             id={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
                         />
                     }
                     søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
                 />
-                {søknad.søker.komTilNorgeDato.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.komTilNorgeDato]}
-                            />
-                        }
-                        søknadsvar={formaterDato(søknad.søker.komTilNorgeDato.svar)}
+                {søknad.søker.utenlandsperioder.map((periode, index) => (
+                    <StyledUtenlandsperiodeOppsummering
+                        key={index}
+                        periode={periode}
+                        nummer={index + 1}
+                        fjernPeriodeCallback={() => null}
+                        visFjernKnapp={false}
                     />
-                )}
+                ))}
                 {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
                     <OppsummeringFelt
                         tittel={

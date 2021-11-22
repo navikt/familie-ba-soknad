@@ -2,34 +2,49 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { Element } from 'nav-frontend-typografi';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
-import { barnDataKeySpørsmål } from '../../../typer/person';
+import { barnDataKeySpørsmål, IUtenlandsperiode } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
+import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
+import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
+import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const Oppfølgningsspørsmål: React.FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
-}> = ({ barn, skjema }) => {
+    leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    utenlandsperioder: IUtenlandsperiode[];
+}> = ({ barn, skjema, leggTilUtenlandsperiode, fjernUtenlandsperiode, utenlandsperioder }) => {
     const intl = useIntl();
+    const { erÅpen, toggleModal } = useModal();
     const { erEøsLand } = useEøs();
+
+    const erFørsteEøsPeriode = (periode: IUtenlandsperiode) => {
+        return periode === utenlandsperioder.find(p => erEøsLand(p.oppholdsland.svar));
+    };
+
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
@@ -73,16 +88,28 @@ const Oppfølgningsspørsmål: React.FC<{
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdStartdato]
+                        label={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.institusjonOppholdStartdato
+                                    ]
+                                }
+                            />
                         }
                     />
                     <Datovelger
                         felt={skjema.felter.institusjonOppholdSluttdato}
                         tilhørendeFraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
                         skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonOppholdSluttdato]
+                        label={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.institusjonOppholdSluttdato
+                                    ]
+                                }
+                            />
                         }
                         disabled={skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
                     />
@@ -94,88 +121,60 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                 </SkjemaFieldset>
             )}
-            {barn[barnDataKeySpørsmål.oppholderSegIUtland].svar === ESvar.JA && (
-                <SkjemaFieldset
-                    tittelId={'ombarnet.oppholdutland'}
-                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
-                >
-                    <LandDropdown
-                        felt={skjema.felter.oppholdsland}
-                        skjema={skjema}
-                        label={
-                            <SpråkTekst
-                                id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdsland]}
-                            />
-                        }
-                    />
-                    {erEøsLand(skjema.felter.oppholdsland.verdi) && (
-                        <VedleggNotisTilleggsskjema
-                            språkTekstId={'ombarnet.oppholdutland.eøs-info'}
-                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
-                        />
-                    )}
-                    <Datovelger
-                        avgrensMaxDato={dagensDato()}
-                        felt={skjema.felter.oppholdslandStartdato}
-                        skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdslandStartdato]
-                        }
-                    />
-                    <Datovelger
-                        felt={skjema.felter.oppholdslandSluttdato}
-                        tilhørendeFraOgMedFelt={skjema.felter.oppholdslandStartdato}
-                        skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdslandSluttdato]
-                        }
-                        disabled={skjema.felter.oppholdslandSluttDatoVetIkke.verdi === ESvar.JA}
-                    />
-                    <SkjemaCheckbox
-                        labelSpråkTekstId={
-                            omBarnetSpørsmålSpråkId[
-                                OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
-                            ]
-                        }
-                        felt={skjema.felter.oppholdslandSluttDatoVetIkke}
-                    />
-                </SkjemaFieldset>
-            )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
-                    tittelId={'ombarnet.sammenhengende-opphold'}
+                    tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
-                    <Datovelger
-                        avgrensDatoFremITid={true}
-                        felt={skjema.felter.nårKomBarnTilNorgeDato}
-                        skjema={skjema}
-                        labelTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.nårKomBarnetTilNorge]
-                        }
-                        disabled={
-                            skjema.felter.nårKomBarnTilNorgeDatoIkkeAnkommet.verdi === ESvar.JA
+                    {utenlandsperioder.map((periode, index) => (
+                        <UtenlandsperiodeOppsummering
+                            key={index}
+                            periode={periode}
+                            nummer={index + 1}
+                            fjernPeriodeCallback={fjernUtenlandsperiode}
+                            barn={barn}
+                            erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
+                        />
+                    ))}
+                    {utenlandsperioder.length > 0 && (
+                        <Element>
+                            <SpråkTekst
+                                id={'ombarnet.flereopphold.spm'}
+                                values={{ barn: barnetsNavnValue(barn, intl) }}
+                            />
+                        </Element>
+                    )}
+                    <LeggTilKnapp
+                        id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
+                        språkTekst={'felles.leggtilutenlands.knapp'}
+                        onClick={toggleModal}
+                        feilmelding={
+                            skjema.felter.registrerteUtenlandsperioder.erSynlig &&
+                            skjema.felter.registrerteUtenlandsperioder.feilmelding &&
+                            skjema.visFeilmeldinger && (
+                                <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
+                            )
                         }
                     />
-                    <SkjemaCheckbox
-                        labelSpråkTekstId={
-                            omBarnetSpørsmålSpråkId[
-                                OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
-                            ]
-                        }
-                        felt={skjema.felter.nårKomBarnTilNorgeDatoIkkeAnkommet}
-                    />
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.planleggerÅBoINorge12Mnd}
-                        spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]
-                        }
-                    />
-                    {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
-                        <AlertStripe type={'advarsel'} dynamisk>
-                            <SpråkTekst id={'ombarnet.planlagt-sammenhengende-opphold.alert'} />
-                        </AlertStripe>
+                    {skjema.felter.planleggerÅBoINorge12Mnd.erSynlig && (
+                        <KomponentGruppe inline dynamisk>
+                            <JaNeiSpm
+                                skjema={skjema}
+                                felt={skjema.felter.planleggerÅBoINorge12Mnd}
+                                spørsmålTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
+                                    ]
+                                }
+                            />
+                            {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
+                                <AlertStripe type={'advarsel'} dynamisk>
+                                    <SpråkTekst
+                                        id={'ombarnet.planlagt-sammenhengende-opphold.alert'}
+                                    />
+                                </AlertStripe>
+                            )}
+                        </KomponentGruppe>
                     )}
                 </SkjemaFieldset>
             )}
@@ -200,6 +199,12 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                 </SkjemaFieldset>
             )}
+            <UtenlandsoppholdModal
+                erÅpen={erÅpen}
+                toggleModal={toggleModal}
+                onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
+                barn={barn}
+            />
         </>
     );
 };

@@ -10,7 +10,8 @@ import { ISøknadSpørsmål } from '../typer/spørsmål';
 const useLanddropdownFelt = (
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,
     feilmeldingSpråkId: string,
-    skalFeltetVises: boolean
+    skalFeltetVises: boolean,
+    nullstillVedAvhengighetEndring = false
 ) => {
     return useFelt<Alpha3Code | ''>({
         feltId: søknadsfelt.id,
@@ -18,13 +19,20 @@ const useLanddropdownFelt = (
         skalFeltetVises: avhengigheter => {
             return avhengigheter && avhengigheter.skalFeltetVises;
         },
-        valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>) => {
+        valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>, avhengigheter) => {
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
+                : feil(
+                      felt,
+                      avhengigheter?.feilmeldingSpråkId ? (
+                          <SpråkTekst id={avhengigheter.feilmeldingSpråkId} />
+                      ) : (
+                          ''
+                      )
+                  );
         },
-        nullstillVedAvhengighetEndring: false,
-        avhengigheter: { skalFeltetVises },
+        nullstillVedAvhengighetEndring,
+        avhengigheter: { skalFeltetVises, feilmeldingSpråkId },
     });
 };
 

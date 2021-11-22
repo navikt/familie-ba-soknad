@@ -130,7 +130,7 @@ describe('Test av nåværende samboer skjema', () => {
         const feilOppsummering: HTMLElement = getByRole(container, 'alert');
         const fnrFeil: HTMLElement | null = queryByText(
             feilOppsummering,
-            'Du må oppgi samboerens fødselsnummer for å gå videre'
+            'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
         );
 
         expect(fnrFeil).toBeInTheDocument();

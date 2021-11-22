@@ -26,13 +26,10 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
         if (!(feltGruppe && feltGruppe.tilhørendeFelter)) {
             return false;
         } else {
-            return !!(
-                feltGruppe &&
-                feltGruppe.tilhørendeFelter.find(
-                    tilhørendeFelt =>
-                        tilhørendeFelt.erSynlig &&
-                        tilhørendeFelt.valideringsstatus !== Valideringsstatus.OK
-                )
+            return !!feltGruppe.tilhørendeFelter.find(
+                tilhørendeFelt =>
+                    tilhørendeFelt.erSynlig &&
+                    tilhørendeFelt.valideringsstatus !== Valideringsstatus.OK
             );
         }
     });
@@ -64,7 +61,7 @@ const useJaNeiSpmFelt = (
                   );
         },
         skalFeltetVises: (avhengigheter: { [key: string]: FeltGruppe }) => {
-            if (skalSkjules) return false;
+            if (avhengigheter && avhengigheter.skalSkjules) return false;
             if (!avhengigheter) return harBlittVist;
 
             // borPåRegistrertAdresse er et spesialtilfelle for avhengighet, fordi hvis svaret på den er Nei må man søke på papir.
@@ -84,7 +81,7 @@ const useJaNeiSpmFelt = (
 
             return skalVises;
         },
-        avhengigheter: avhengigheter,
+        avhengigheter: { ...avhengigheter, skalSkjules },
     });
 };
 

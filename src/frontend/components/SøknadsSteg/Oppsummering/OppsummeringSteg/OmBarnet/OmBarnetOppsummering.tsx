@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
@@ -14,12 +15,17 @@ import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtenlandsperiodeOppsummering } from '../../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
 import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
 import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 import AndreForelderOppsummering from './AndreForelderOppsummering';
+
+const StyledUtenlandsperiodeOppsummering = styled(UtenlandsperiodeOppsummering)`
+    border-bottom: none;
+`;
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -134,106 +140,40 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                 </StyledOppsummeringsFeltGruppe>
             )}
-            {barn[barnDataKeySpørsmål.oppholderSegIUtland].svar === ESvar.JA && (
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={'ombarnet.oppholdutland'}
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
-                            />
-                        }
-                    />
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.oppholdsland]}
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
-                            />
-                        }
-                        søknadsvar={landkodeTilSpråk(
-                            barn[barnDataKeySpørsmål.oppholdsland].svar,
-                            valgtLocale
-                        )}
-                    />
-
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.oppholdslandStartdato
-                                    ]
-                                }
-                            />
-                        }
-                        søknadsvar={formaterDato(
-                            barn[barnDataKeySpørsmål.oppholdslandStartdato].svar
-                        )}
-                    />
-
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.oppholdslandSluttdato
-                                    ]
-                                }
-                            />
-                        }
-                        søknadsvar={formaterDatoMedUkjent(
-                            barn[barnDataKeySpørsmål.oppholdslandSluttdato].svar,
-                            formatMessage({
-                                id: omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.oppholdslandSluttDatoVetIkke
-                                ],
-                            })
-                        )}
-                    />
-                </StyledOppsummeringsFeltGruppe>
-            )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
-                                id={'ombarnet.sammenhengende-opphold'}
+                                id={'ombarnet.opplystatbarnutlandopphold.info'}
                                 values={{ navn: barnetsNavnValue(barn, intl) }}
                             />
                         }
                     />
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.nårKomBarnetTilNorge
-                                    ]
-                                }
-                            />
-                        }
-                        søknadsvar={formaterDatoMedUkjent(
-                            barn[barnDataKeySpørsmål.nårKomBarnTilNorgeDato].svar,
-                            formatMessage({
-                                id: omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.nårKomBarnetTilNorgeIkkeAnkommet
-                                ],
-                            })
-                        )}
-                    />
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
-                                    ]
-                                }
-                            />
-                        }
-                        søknadsvar={barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar}
-                    />
+                    {barn.utenlandsperioder.map((periode, index) => (
+                        <StyledUtenlandsperiodeOppsummering
+                            key={index}
+                            periode={periode}
+                            nummer={index + 1}
+                            fjernPeriodeCallback={() => null}
+                            visFjernKnapp={false}
+                            barn={barn}
+                        />
+                    ))}
+                    {barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar && (
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar}
+                        />
+                    )}
                 </StyledOppsummeringsFeltGruppe>
             )}
             {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
