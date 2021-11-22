@@ -264,7 +264,8 @@ export const useOmBarnet = (
         'ombarnet.andre-forelder.fødselsdato.feilmelding',
         andreForelderFnrUkjent.verdi === ESvar.JA && andreForelderNavnUkjent.verdi === ESvar.NEI,
         sammeForelderSomAnnetBarn.verdi === null ||
-            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER
+            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER,
+        dagensDato()
     );
 
     useEffect(() => {

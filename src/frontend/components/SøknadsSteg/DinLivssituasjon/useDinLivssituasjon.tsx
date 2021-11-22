@@ -157,7 +157,9 @@ export const useDinLivssituasjon = (): {
         getInitialFødselsdato(søker.nåværendeSamboer),
         nåværendeSamboerFødselsdatoUkjent,
         'omdeg.nåværendesamboer.fødselsdato.ukjent',
-        nåværendeSamboerFnrUkjent.verdi === ESvar.JA
+        nåværendeSamboerFnrUkjent.verdi === ESvar.JA,
+        true,
+        dagensDato()
     );
 
     const nåværendeSamboerFraDato = useDatovelgerFeltMedJaNeiAvhengighet(
