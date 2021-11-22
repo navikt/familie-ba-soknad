@@ -32,10 +32,6 @@ const EksternLenkeContainer = styled.div`
     margin-bottom: 4rem;
 `;
 
-const SpørsmålTilleggsinfoWrapper = styled.div`
-    margin-top: 1.5rem;
-`;
-
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     const { erUtvidet, søknad } = useApp();
     const {
@@ -145,11 +141,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         spørsmålTekstId={'ombarnet.søker-for-periode.spm'}
                         språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                         tilleggsinfo={
-                            <SpørsmålTilleggsinfoWrapper>
-                                <AlertStripe>
-                                    <SpråkTekst id={'ombarnet.søker-for-periode.alert'} />
-                                </AlertStripe>
-                            </SpørsmålTilleggsinfoWrapper>
+                            <AlertStripe>
+                                <SpråkTekst id={'ombarnet.søker-for-periode.alert'} />
+                            </AlertStripe>
                         }
                     />
                     {skjema.felter.søkerForTidsromStartdato.erSynlig && (
@@ -199,11 +193,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 }
                                 felt={skjema.felter.søkerForTidsromSluttdatoVetIkke}
                             />
-                            <SpørsmålTilleggsinfoWrapper>
-                                <AlertStripe>
-                                    <SpråkTekst id={'ombarnet.søker-for-periode.sluttdato.info'} />
-                                </AlertStripe>
-                            </SpørsmålTilleggsinfoWrapper>
+                            <AlertStripe>
+                                <SpråkTekst id={'ombarnet.søker-for-periode.sluttdato.info'} />
+                            </AlertStripe>
                         </KomponentGruppe>
                     )}
                 </KomponentGruppe>

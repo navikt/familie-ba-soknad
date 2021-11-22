@@ -23,10 +23,6 @@ const VedleggNotisWrapper = styled.div`
     margin: -1.5rem 0 4.5rem 0;
 `;
 
-const TilleggsinfoWrapper = styled.div`
-    margin-top: 0.5rem;
-`;
-
 const OmBarnaDine: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
         useOmBarnaDine();
@@ -104,11 +100,9 @@ const OmBarnaDine: React.FC = () => {
                             ]
                         }
                         tilleggsinfo={
-                            <TilleggsinfoWrapper>
-                                <AlertStripe dynamisk>
-                                    <SpråkTekst id={'ombarna.adoptert.info'} />
-                                </AlertStripe>
-                            </TilleggsinfoWrapper>
+                            <AlertStripe dynamisk>
+                                <SpråkTekst id={'ombarna.adoptert.info'} />
+                            </AlertStripe>
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
