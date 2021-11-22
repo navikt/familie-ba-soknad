@@ -102,14 +102,14 @@ export const useOmBarnet = (
         verdi: barn[barnDataKeySpørsmål.institusjonspostnummer].svar,
         feltId: barn[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
-            regexNorskEllerUtenlandskPostnummer(felt.verdi)
+            regexNorskEllerUtenlandskPostnummer(trimWhiteSpace(felt.verdi))
                 ? ok(felt)
                 : feil(
                       felt,
                       <SpråkTekst
                           id={
-                              felt.verdi.length > 10
-                                  ? 'ombarnet.institusjon.postnummer.over-ti-tegn.feilmelding'
+                              trimWhiteSpace(felt.verdi) === ''
+                                  ? 'ombarnet.institusjon.postnummer.feilmelding'
                                   : 'ombarnet.institusjon.postnummer.under-tre-tegn.feilmelding'
                           }
                       />
@@ -622,7 +622,7 @@ export const useOmBarnet = (
                           },
                           institusjonspostnummer: {
                               ...barn.institusjonspostnummer,
-                              svar: institusjonspostnummer.verdi,
+                              svar: trimWhiteSpace(institusjonspostnummer.verdi),
                           },
                           institusjonOppholdStartdato: {
                               ...barn.institusjonOppholdStartdato,
