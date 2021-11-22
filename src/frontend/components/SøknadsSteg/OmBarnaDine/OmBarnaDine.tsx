@@ -100,7 +100,7 @@ const OmBarnaDine: React.FC = () => {
                             ]
                         }
                         tilleggsinfo={
-                            <AlertStripe dynamisk>
+                            <AlertStripe>
                                 <SpråkTekst id={'ombarna.adoptert.info'} />
                             </AlertStripe>
                         }
@@ -123,11 +123,6 @@ const OmBarnaDine: React.FC = () => {
                             <VedleggNotis dynamisk språkTekstId={'ombarna.adoptert.alert'} />
                         </VedleggNotisWrapper>
                     )}
-                </KomponentGruppe>
-            )}
-
-            {skjema.felter.søktAsylForBarn.erSynlig && (
-                <KomponentGruppe dynamisk>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.søktAsylForBarn}
@@ -149,6 +144,10 @@ const OmBarnaDine: React.FC = () => {
                             <VedleggNotis dynamisk språkTekstId={'ombarna.asyl.alert'} />
                         </VedleggNotisWrapper>
                     )}
+                </KomponentGruppe>
+            )}
+            {skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.erSynlig && (
+                <KomponentGruppe dynamisk>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge}
@@ -157,13 +156,12 @@ const OmBarnaDine: React.FC = () => {
                                 OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
                             ]
                         }
+                        tilleggsinfo={
+                            <AlertStripe>
+                                <SpråkTekst id={'felles.korteopphold.info'} />
+                            </AlertStripe>
+                        }
                     />
-                    {skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi ===
-                        ESvar.NEI && (
-                        <AlertStripe>
-                            <SpråkTekst id={'felles.korteopphold.info'} />
-                        </AlertStripe>
-                    )}
                     <HvilkeBarnCheckboxGruppe
                         legendSpråkId={
                             omBarnaDineSpørsmålSpråkId[
@@ -178,11 +176,7 @@ const OmBarnaDine: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-                </KomponentGruppe>
-            )}
 
-            {skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.erSynlig && (
-                <KomponentGruppe dynamisk>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland}
