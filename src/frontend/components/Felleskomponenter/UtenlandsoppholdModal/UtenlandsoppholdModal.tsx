@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
-import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -17,7 +16,6 @@ import {
     hentMaxAvgrensningPåFraDato,
     hentMaxAvgrensningPåTilDato,
 } from '../../../utils/utenlandsopphold';
-import AlertStripe from '../AlertStripe/AlertStripe';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import StyledDropdown from '../Dropdowns/StyledDropdown';
@@ -44,12 +42,6 @@ interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaP
     onLeggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     barn?: IBarnMedISøknad;
 }
-
-const StyledAlertStripe = styled(AlertStripe)`
-    && {
-        margin-top: 1rem;
-    }
-`;
 
 export const UtenlandsoppholdModal: React.FC<Props> = ({
     erÅpen,
@@ -136,14 +128,6 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                             </option>
                         ))}
                     </StyledDropdown>
-                    {(skjema.felter.utenlandsoppholdÅrsak.verdi ===
-                        EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE ||
-                        skjema.felter.utenlandsoppholdÅrsak.verdi ===
-                            EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE) && (
-                        <StyledAlertStripe>
-                            <SpråkTekst id={'felles.korteopphold.info'} />
-                        </StyledAlertStripe>
-                    )}
                 </div>
                 <LandDropdown
                     felt={skjema.felter.oppholdsland}

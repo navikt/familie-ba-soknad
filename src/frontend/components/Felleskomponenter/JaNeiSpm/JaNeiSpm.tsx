@@ -1,5 +1,7 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
+import styled from 'styled-components';
+
 import { guid } from 'nav-frontend-js-utils';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -21,6 +23,10 @@ interface IJaNeiSpmProps {
     inkluderVetIkke?: boolean;
     språkValues?: Record<string, ReactNode> | undefined;
 }
+
+const TilleggsinfoWrapper = styled.div`
+    margin-top: 0.5rem;
+`;
 
 const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     skjema,
@@ -62,7 +68,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
                                 <SpråkTekst id={tilleggsinfoTekstId} />
                             </Normaltekst>
                         )}
-                        {tilleggsinfo}
+                        <TilleggsinfoWrapper>{tilleggsinfo}</TilleggsinfoWrapper>
                     </>
                 }
                 labelTekstForRadios={{
