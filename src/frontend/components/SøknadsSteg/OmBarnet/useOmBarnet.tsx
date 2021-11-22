@@ -621,7 +621,7 @@ export const useOmBarnet = (
                           },
                           institusjonspostnummer: {
                               ...barn.institusjonspostnummer,
-                              svar: institusjonspostnummer.verdi,
+                              svar: trimWhiteSpace(institusjonspostnummer.verdi),
                           },
                           institusjonOppholdStartdato: {
                               ...barn.institusjonOppholdStartdato,
