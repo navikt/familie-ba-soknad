@@ -120,7 +120,8 @@ export const useOmBarnet = (
     const institusjonOppholdStartdato = useDatovelgerFelt(
         barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
         skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
-        'ombarnet.institusjon.startdato.feilmelding'
+        'ombarnet.institusjon.startdato.feilmelding',
+        dagensDato()
     );
 
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
