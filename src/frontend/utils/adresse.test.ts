@@ -3,16 +3,13 @@ import { hentAdressefelterSortert, erNorskPostnummer } from './adresse';
 
 describe('postnummer', () => {
     test('Skal returnere true for gyldige postnummer', () => {
-        expect(erNorskPostnummer('1234')).toEqual(expect.arrayContaining(['1234']));
-        expect(erNorskPostnummer('ABc')).toEqual(expect.arrayContaining(['ABc']));
-        expect(erNorskPostnummer('XXX-XXX')).toEqual(expect.arrayContaining(['XXX-XXX']));
-        expect(erNorskPostnummer('12-Æøå')).toEqual(expect.arrayContaining(['12-Æøå']));
+        expect(erNorskPostnummer('1234')).toEqual(true);
     });
 
     test('Skal returnere false for ugyldige postnummer', () => {
-        expect(erNorskPostnummer('12')).toEqual(null);
-        expect(erNorskPostnummer('AB12345678919')).toEqual(null);
-        expect(erNorskPostnummer('XXX/()>')).toEqual(null);
+        expect(erNorskPostnummer('12')).toEqual(false);
+        expect(erNorskPostnummer('AB12345678919')).toEqual(false);
+        expect(erNorskPostnummer('XXX/()>')).toEqual(false);
     });
 });
 

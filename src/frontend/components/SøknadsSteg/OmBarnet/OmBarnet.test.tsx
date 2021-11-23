@@ -29,6 +29,7 @@ const jens = {
     utenlandsperioder: [],
     [barnDataKeySpørsmål.erFosterbarn]: { id: '1', svar: ESvar.NEI },
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: { id: '2', svar: ESvar.JA },
+    [barnDataKeySpørsmål.institusjonIUtland]: { id: '21', svar: ESvar.NEI },
     [barnDataKeySpørsmål.institusjonsnavn]: { id: '3', svar: 'narvesen' },
     [barnDataKeySpørsmål.institusjonsadresse]: { id: '4', svar: 'narvesen' },
     [barnDataKeySpørsmål.institusjonspostnummer]: { id: '5', svar: '2030' },
