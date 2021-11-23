@@ -24,7 +24,7 @@ import {
 } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
-import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
+import { erNorskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
@@ -110,7 +110,7 @@ export const useOmBarnet = (
         verdi: barn[barnDataKeySpørsmål.institusjonspostnummer].svar,
         feltId: barn[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
-            regexNorskEllerUtenlandskPostnummer(trimWhiteSpace(felt.verdi))
+            erNorskPostnummer(trimWhiteSpace(felt.verdi))
                 ? ok(felt)
                 : feil(
                       felt,

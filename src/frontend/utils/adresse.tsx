@@ -6,8 +6,7 @@ import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst
 import { IAdresse, ISøker } from '../typer/person';
 import { uppercaseFørsteBokstav } from './visning';
 
-export const regexNorskEllerUtenlandskPostnummer = (verdi: string) =>
-    verdi.match(/^[A-Za-z0-9-æøåÆØÅ-]{3,10}$/);
+export const erNorskPostnummer = (verdi: string) => verdi?.length === 4 && Number.parseInt(verdi);
 
 export const hentAdressefelterSortert = (adresse: IAdresse): string[] => {
     return [
