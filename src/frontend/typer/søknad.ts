@@ -56,6 +56,7 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.erAsylsøker]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.andreForelderErDød]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.institusjonIUtland]: ISøknadSpørsmål<ESvar>;
     [barnDataKeySpørsmål.institusjonsnavn]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonsadresse]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.institusjonspostnummer]: ISøknadSpørsmål<string>;

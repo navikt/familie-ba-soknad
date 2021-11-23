@@ -473,6 +473,7 @@
   "ombarnet.institusjon": "Du har opplyst at {navn} er i institusjon.",
   "ombarnet.institusjon.adresse.feilmelding": "Du må oppgi adressen til institusjonen for å gå videre",
   "ombarnet.institusjon.adresse.spm": "Adressen til institusjonen",
+  "ombarnet.institusjon.i-utlandet": "Institusjonen er i utlandet",
   "ombarnet.institusjon.navn.feilmelding": "Du må oppgi navnet på institusjonen for å gå videre",
   "ombarnet.institusjon.navn.spm": "Navnet på institusjonen",
   "ombarnet.institusjon.postnummer.feilmelding": "Du må oppgi postnummeret til institusjonen for å gå videre",

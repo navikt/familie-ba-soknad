@@ -64,6 +64,12 @@ const Oppfølgningsspørsmål: React.FC<{
                     tittelId={'ombarnet.institusjon'}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
+                    <SkjemaCheckbox
+                        labelSpråkTekstId={
+                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonIUtland]
+                        }
+                        felt={skjema.felter.institusjonIUtlandCheckbox}
+                    />
                     <SkjemaFeltInput
                         felt={skjema.felter.institusjonsnavn}
                         visFeilmeldinger={skjema.visFeilmeldinger}

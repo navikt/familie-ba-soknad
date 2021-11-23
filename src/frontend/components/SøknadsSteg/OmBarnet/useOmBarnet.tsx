@@ -86,16 +86,24 @@ export const useOmBarnet = (
 
     /*---INSTITUSJON---*/
 
+    const institusjonIUtlandCheckbox = useFelt<ESvar>({
+        verdi: barn[barnDataKeySpørsmål.institusjonIUtland].svar,
+        feltId: OmBarnetSpørsmålsId.institusjonIUtland,
+        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+    });
+
     const institusjonsnavn = useInputFelt(
         barn[barnDataKeySpørsmål.institusjonsnavn],
         'ombarnet.institusjon.navn.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
+            institusjonIUtlandCheckbox.verdi === ESvar.NEI
     );
 
     const institusjonsadresse = useInputFelt(
         barn[barnDataKeySpørsmål.institusjonsadresse],
         'ombarnet.institusjon.adresse.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon)
+        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
+            institusjonIUtlandCheckbox.verdi === ESvar.NEI
     );
 
     const institusjonspostnummer = useFelt<string>({
@@ -114,7 +122,10 @@ export const useOmBarnet = (
                           }
                       />
                   ),
-        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+        skalFeltetVises: avhengigheter =>
+            skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
+            avhengigheter.institusjonIUtlandCheckbox.verdi === ESvar.NEI,
+        avhengigheter: { institusjonIUtlandCheckbox },
     });
 
     const institusjonOppholdStartdato = useDatovelgerFelt(
@@ -543,6 +554,7 @@ export const useOmBarnet = (
         string
     >({
         felter: {
+            institusjonIUtlandCheckbox,
             institusjonsnavn,
             institusjonsadresse,
             institusjonspostnummer,
@@ -613,17 +625,27 @@ export const useOmBarnet = (
                           )
                               ? utenlandsperioder
                               : [],
+                          institusjonIUtland: {
+                              ...barn.institusjonIUtland,
+                              svar: institusjonIUtlandCheckbox.verdi,
+                          },
                           institusjonsnavn: {
                               ...barn.institusjonsnavn,
-                              svar: trimWhiteSpace(institusjonsnavn.verdi),
+                              svar: institusjonsnavn.erSynlig
+                                  ? trimWhiteSpace(institusjonsnavn.verdi)
+                                  : '',
                           },
                           institusjonsadresse: {
                               ...barn.institusjonsadresse,
-                              svar: trimWhiteSpace(institusjonsadresse.verdi),
+                              svar: institusjonsadresse.erSynlig
+                                  ? trimWhiteSpace(institusjonsadresse.verdi)
+                                  : '',
                           },
                           institusjonspostnummer: {
                               ...barn.institusjonspostnummer,
-                              svar: trimWhiteSpace(institusjonspostnummer.verdi),
+                              svar: institusjonspostnummer.erSynlig
+                                  ? trimWhiteSpace(institusjonspostnummer.verdi)
+                                  : '',
                           },
                           institusjonOppholdStartdato: {
                               ...barn.institusjonOppholdStartdato,

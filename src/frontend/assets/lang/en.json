@@ -473,6 +473,7 @@
   "ombarnet.institusjon": "You have stated that {navn} is in an institution.",
   "ombarnet.institusjon.adresse.feilmelding": "You must enter the address of the institution in order to be able to proceed",
   "ombarnet.institusjon.adresse.spm": "Address of the institution",
+  "ombarnet.institusjon.i-utlandet": "The institution is outside of Norway",
   "ombarnet.institusjon.navn.feilmelding": "You must enter the name of the institution in order to be able to proceed",
   "ombarnet.institusjon.navn.spm": "Name of the institution",
   "ombarnet.institusjon.postnummer.feilmelding": "You must enter the postcode for the institution in order to be able to proceed",

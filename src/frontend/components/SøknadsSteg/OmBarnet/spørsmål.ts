@@ -1,4 +1,5 @@
 export enum OmBarnetSpørsmålsId {
+    institusjonIUtland = 'institusjonIUtland',
     institusjonsnavn = 'institusjonsnavn',
     institusjonsadresse = 'institusjonsadresse',
     institusjonspostnummer = 'institusjonspostnummer',
@@ -33,6 +34,7 @@ export enum OmBarnetSpørsmålsId {
 }
 
 export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
+    [OmBarnetSpørsmålsId.institusjonIUtland]: 'ombarnet.institusjon.i-utlandet',
     [OmBarnetSpørsmålsId.institusjonsnavn]: 'ombarnet.institusjon.navn.spm',
     [OmBarnetSpørsmålsId.institusjonsadresse]: 'ombarnet.institusjon.adresse.spm',
     [OmBarnetSpørsmålsId.institusjonspostnummer]: 'ombarnet.institusjon.postnummer.spm',
