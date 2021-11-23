@@ -385,14 +385,14 @@ describe('OmBarnet', () => {
 
         const gåVidereKnapper = queryByText(/felles.navigasjon.gå-videre/);
         expect(
-            queryByText(/ombarnet.institusjon.postnummer.under-tre-tegn.feilmelding/)
+            queryByText(/ombarnet.institusjon.postnummer.format.feilmelding/)
         ).not.toBeInTheDocument();
 
         act(() => {
             gåVidereKnapper && gåVidereKnapper.click();
         });
         const feilmelding = await findAllByText(
-            /ombarnet.institusjon.postnummer.under-tre-tegn.feilmelding/
+            /ombarnet.institusjon.postnummer.format.feilmelding/
         );
         expect(feilmelding).toHaveLength(2);
     });

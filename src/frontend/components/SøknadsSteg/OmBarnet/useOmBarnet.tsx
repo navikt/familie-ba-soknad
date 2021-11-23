@@ -118,7 +118,7 @@ export const useOmBarnet = (
                           id={
                               trimWhiteSpace(felt.verdi) === ''
                                   ? 'ombarnet.institusjon.postnummer.feilmelding'
-                                  : 'ombarnet.institusjon.postnummer.under-tre-tegn.feilmelding'
+                                  : 'ombarnet.institusjon.postnummer.format.feilmelding'
                           }
                       />
                   ),
