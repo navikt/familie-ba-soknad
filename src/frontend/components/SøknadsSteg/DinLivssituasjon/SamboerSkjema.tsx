@@ -33,31 +33,35 @@ const SamboerSkjema: React.FC<{
                 visFeilmeldinger={skjema.visFeilmeldinger}
                 labelSpråkTekstId={samboerSpråkIder.navn}
             />
-            <SkjemaFeltInput
-                felt={samboerFelter.fnr}
-                visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={samboerSpråkIder.fnr}
-                disabled={samboerFelter.fnrUkjent.verdi === ESvar.JA}
-                bredde={'XL'}
-            />
-            <SkjemaCheckbox
-                labelSpråkTekstId={samboerSpråkIder.fnrUkjent}
-                felt={samboerFelter.fnrUkjent}
-            />
+            <>
+                <SkjemaFeltInput
+                    felt={samboerFelter.fnr}
+                    visFeilmeldinger={skjema.visFeilmeldinger}
+                    labelSpråkTekstId={samboerSpråkIder.fnr}
+                    disabled={samboerFelter.fnrUkjent.verdi === ESvar.JA}
+                    bredde={'XL'}
+                />
+                <SkjemaCheckbox
+                    labelSpråkTekstId={samboerSpråkIder.fnrUkjent}
+                    felt={samboerFelter.fnrUkjent}
+                />
+            </>
             {samboerFelter.fødselsdato.erSynlig && (
                 <KomponentGruppe inline dynamisk>
-                    <Datovelger
-                        skjema={skjema}
-                        felt={samboerFelter.fødselsdato}
-                        label={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}
-                        avgrensMaxDato={dagensDato()}
-                        disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
-                        calendarPosition={erIModal ? 'fullscreen' : ''}
-                    />
-                    <SkjemaCheckbox
-                        labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
-                        felt={samboerFelter.fødselsdatoUkjent}
-                    />
+                    <>
+                        <Datovelger
+                            skjema={skjema}
+                            felt={samboerFelter.fødselsdato}
+                            label={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}
+                            avgrensMaxDato={dagensDato()}
+                            disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
+                            calendarPosition={erIModal ? 'fullscreen' : ''}
+                        />
+                        <SkjemaCheckbox
+                            labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
+                            felt={samboerFelter.fødselsdatoUkjent}
+                        />
+                    </>
                 </KomponentGruppe>
             )}
             <Datovelger

@@ -165,7 +165,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         calendarPosition={'fullscreen'}
                     />
                 )}
-                <div>
+                <>
                     {skjema.felter.oppholdslandTilDato.erSynlig && (
                         <Datovelger
                             felt={skjema.felter.oppholdslandTilDato}
@@ -200,7 +200,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                             labelSpråkTekstId={tilDatoUkjentLabelSpråkId}
                         />
                     )}
-                </div>
+                </>
             </KomponentGruppe>
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>

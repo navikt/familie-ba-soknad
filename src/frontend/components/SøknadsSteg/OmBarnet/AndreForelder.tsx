@@ -43,67 +43,78 @@ const AndreForelder: React.FC<{
                 )}
 
                 <KomponentGruppe>
-                    <SkjemaFeltInput
-                        felt={skjema.felter.andreForelderNavn}
-                        visFeilmeldinger={skjema.visFeilmeldinger}
-                        labelSpråkTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavn]
-                        }
-                        disabled={skjema.felter.andreForelderNavnUkjent.verdi === ESvar.JA}
-                    />
-                    <SkjemaCheckbox
-                        labelSpråkTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavnUkjent]
-                        }
-                        felt={skjema.felter.andreForelderNavnUkjent}
-                    />
+                    <>
+                        <SkjemaFeltInput
+                            felt={skjema.felter.andreForelderNavn}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            labelSpråkTekstId={
+                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavn]
+                            }
+                            disabled={skjema.felter.andreForelderNavnUkjent.verdi === ESvar.JA}
+                        />
+                        <SkjemaCheckbox
+                            labelSpråkTekstId={
+                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavnUkjent]
+                            }
+                            felt={skjema.felter.andreForelderNavnUkjent}
+                        />
+                    </>
                     {skjema.felter.andreForelderFnr.erSynlig && (
                         <KomponentGruppe inline dynamisk>
-                            <SkjemaFeltInput
-                                felt={skjema.felter.andreForelderFnr}
-                                visFeilmeldinger={skjema.visFeilmeldinger}
-                                labelSpråkTekstId={
-                                    omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnr]
-                                }
-                                disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
-                            />
-                            <SkjemaCheckbox
-                                labelSpråkTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.andreForelderFnrUkjent
-                                    ]
-                                }
-                                felt={skjema.felter.andreForelderFnrUkjent}
-                            />
+                            <>
+                                <SkjemaFeltInput
+                                    felt={skjema.felter.andreForelderFnr}
+                                    visFeilmeldinger={skjema.visFeilmeldinger}
+                                    labelSpråkTekstId={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.andreForelderFnr
+                                        ]
+                                    }
+                                    disabled={
+                                        skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA
+                                    }
+                                />
+                                <SkjemaCheckbox
+                                    labelSpråkTekstId={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.andreForelderFnrUkjent
+                                        ]
+                                    }
+                                    felt={skjema.felter.andreForelderFnrUkjent}
+                                />
+                            </>
                         </KomponentGruppe>
                     )}
                     {skjema.felter.andreForelderFødselsdato.erSynlig && (
                         <KomponentGruppe inline dynamisk>
-                            <Datovelger
-                                felt={skjema.felter.andreForelderFødselsdato}
-                                skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.andreForelderFødselsdato
-                                            ]
-                                        }
-                                    />
-                                }
-                                avgrensMaxDato={dagensDato()}
-                                disabled={
-                                    skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA
-                                }
-                            />
-                            <SkjemaCheckbox
-                                labelSpråkTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
-                                    ]
-                                }
-                                felt={skjema.felter.andreForelderFødselsdatoUkjent}
-                            />
+                            <>
+                                <Datovelger
+                                    felt={skjema.felter.andreForelderFødselsdato}
+                                    skjema={skjema}
+                                    label={
+                                        <SpråkTekst
+                                            id={
+                                                omBarnetSpørsmålSpråkId[
+                                                    OmBarnetSpørsmålsId.andreForelderFødselsdato
+                                                ]
+                                            }
+                                        />
+                                    }
+                                    avgrensMaxDato={dagensDato()}
+                                    disabled={
+                                        skjema.felter.andreForelderFødselsdatoUkjent.verdi ===
+                                        ESvar.JA
+                                    }
+                                />
+                                <SkjemaCheckbox
+                                    labelSpråkTekstId={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
+                                        ]
+                                    }
+                                    felt={skjema.felter.andreForelderFødselsdatoUkjent}
+                                />
+                            </>
                         </KomponentGruppe>
                     )}
                 </KomponentGruppe>

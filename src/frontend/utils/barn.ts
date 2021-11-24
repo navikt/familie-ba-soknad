@@ -31,34 +31,35 @@ export const genererOppdaterteBarn = (
     skjema: ISkjema<IOmBarnaDineFeltTyper, string>
 ): IBarnMedISøknad[] => {
     return søknad.barnInkludertISøknaden.map(barn => {
-        const oppholderSegIInstitusjon = genererSvarForSpørsmålBarn(
+        const oppholderSegIInstitusjon: ESvar = genererSvarForSpørsmålBarn(
             barn,
             skjema.felter.hvemOppholderSegIInstitusjon
         );
 
-        const boddMindreEnn12MndINorge = genererSvarForSpørsmålBarn(
+        const boddMindreEnn12MndINorge: ESvar = genererSvarForSpørsmålBarn(
             barn,
             skjema.felter.hvemTolvMndSammenhengendeINorge
         );
 
-        const mottarBarnetrygdFraAnnetEøsland = genererSvarForSpørsmålBarn(
+        const mottarBarnetrygdFraAnnetEøsland: ESvar = genererSvarForSpørsmålBarn(
             barn,
             skjema.felter.hvemBarnetrygdFraAnnetEøsland
         );
-        const andreForelderErDød =
+        const andreForelderErDød: boolean =
             genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner) === ESvar.JA;
 
-        const oppholdtSegIUtlandSiste12Mnd =
-            skjema.felter.hvemTolvMndSammenhengendeINorge.verdi.includes(barn.id);
+        const erFosterbarn: boolean =
+            genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn) === ESvar.JA;
 
-        const erFosterbarn = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn);
+        const oppholdtSegIUtlandSiste12Mnd: boolean =
+            skjema.felter.hvemTolvMndSammenhengendeINorge.verdi.includes(barn.id);
 
         return {
             ...barn,
             utenlandsperioder: oppholdtSegIUtlandSiste12Mnd ? barn.utenlandsperioder : [],
             [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
-                svar: erFosterbarn,
+                svar: erFosterbarn ? ESvar.JA : ESvar.NEI,
             },
             [barnDataKeySpørsmål.erAsylsøker]: {
                 ...barn[barnDataKeySpørsmål.erAsylsøker],
@@ -167,7 +168,7 @@ export const genererOppdaterteBarn = (
             [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
                 ...barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
                 svar:
-                    andreForelderErDød || erFosterbarn === ESvar.JA
+                    andreForelderErDød || erFosterbarn
                         ? null
                         : barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar,
             },
