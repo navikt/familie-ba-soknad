@@ -185,11 +185,11 @@ export const useOmBarnet = (
 
     /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
 
-    const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt(
-        barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
-        'ombarnet.barnetrygd-eøs.land.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland)
-    );
+    const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt({
+        søknadsfelt: barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
+        feilmeldingSpråkId: 'ombarnet.barnetrygd-eøs.land.feilmelding',
+        skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
+    });
 
     /*--- ANDRE FORELDER ---*/
     const sammeForelderSomAnnetBarn = useFelt<string | null>({
@@ -303,16 +303,18 @@ export const useOmBarnet = (
         feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
     });
 
-    const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
-        barn.andreForelderArbeidUtlandetHvilketLand,
-        barn.andreForelderErDød.svar === ESvar.JA
-            ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
-            : 'ombarnet.andre-forelder.arbeid-utland.land.feilmelding',
-        ESvar.JA,
-        andreForelderArbeidUtlandet,
-        sammeForelderSomAnnetBarn.verdi === null ||
-            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER
-    );
+    const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
+        søknadsfelt: barn.andreForelderArbeidUtlandetHvilketLand,
+        feilmeldingSpråkId:
+            barn.andreForelderErDød.svar === ESvar.JA
+                ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
+                : 'ombarnet.andre-forelder.arbeid-utland.land.feilmelding',
+        avhengigSvarCondition: ESvar.JA,
+        avhengighet: andreForelderArbeidUtlandet,
+        nullstillVedAvhengighetEndring:
+            sammeForelderSomAnnetBarn.verdi === null ||
+            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER,
+    });
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt({
         søknadsfelt: barn[barnDataKeySpørsmål.andreForelderPensjonUtland],
@@ -335,16 +337,18 @@ export const useOmBarnet = (
         feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
     });
 
-    const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet(
-        barn.andreForelderPensjonHvilketLand,
-        barn.andreForelderErDød.svar === ESvar.JA
-            ? 'enkeenkemann.andre-forelder.utenlandspensjon.land.feilmelding'
-            : 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
-        ESvar.JA,
-        andreForelderPensjonUtland,
-        sammeForelderSomAnnetBarn.verdi === null ||
-            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER
-    );
+    const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
+        søknadsfelt: barn.andreForelderPensjonHvilketLand,
+        feilmeldingSpråkId:
+            barn.andreForelderErDød.svar === ESvar.JA
+                ? 'enkeenkemann.andre-forelder.utenlandspensjon.land.feilmelding'
+                : 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
+        avhengigSvarCondition: ESvar.JA,
+        avhengighet: andreForelderPensjonUtland,
+        nullstillVedAvhengighetEndring:
+            sammeForelderSomAnnetBarn.verdi === null ||
+            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER,
+    });
 
     const settSammeForelder = (radioVerdi: string) => {
         const annetBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === radioVerdi);

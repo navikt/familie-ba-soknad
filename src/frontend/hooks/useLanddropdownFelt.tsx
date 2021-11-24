@@ -7,12 +7,17 @@ import { feil, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
-const useLanddropdownFelt = (
-    søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,
-    feilmeldingSpråkId: string,
-    skalFeltetVises: boolean,
-    nullstillVedAvhengighetEndring = false
-) => {
+const useLanddropdownFelt = ({
+    søknadsfelt,
+    feilmeldingSpråkId,
+    skalFeltetVises,
+    nullstillVedAvhengighetEndring = false,
+}: {
+    søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>;
+    feilmeldingSpråkId: string;
+    skalFeltetVises: boolean;
+    nullstillVedAvhengighetEndring?: boolean;
+}) => {
     return useFelt<Alpha3Code | ''>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,

@@ -42,12 +42,12 @@ export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaPa
         skjema.settVisfeilmeldinger(false);
     }, [utenlandsoppholdÅrsak.verdi]);
 
-    const oppholdsland = useLanddropdownFelt(
-        { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
-        landFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
-        !!utenlandsoppholdÅrsak.verdi,
-        true
-    );
+    const oppholdsland = useLanddropdownFelt({
+        søknadsfelt: { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
+        feilmeldingSpråkId: landFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
+        skalFeltetVises: !!utenlandsoppholdÅrsak.verdi,
+        nullstillVedAvhengighetEndring: true,
+    });
 
     const oppholdslandFraDato = useDatovelgerFelt({
         søknadsfelt: {

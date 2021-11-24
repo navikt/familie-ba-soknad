@@ -183,24 +183,24 @@ export const useDinLivssituasjon = (): {
         feilmeldingSpråkId: 'omdeg.arbeid-utland.feilmelding',
     });
 
-    const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet(
-        søker.arbeidsland,
-        'omdeg.arbeid-utland.land.feilmelding',
-        ESvar.JA,
-        jobberPåBåt
-    );
+    const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet({
+        søknadsfelt: søker.arbeidsland,
+        feilmeldingSpråkId: 'omdeg.arbeid-utland.land.feilmelding',
+        avhengigSvarCondition: ESvar.JA,
+        avhengighet: jobberPåBåt,
+    });
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
         feilmeldingSpråkId: 'omdeg.utenlandspensjon.feilmelding',
     });
 
-    const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet(
-        søker.pensjonsland,
-        'omdeg.utenlandspensjon.land.feilmelding',
-        ESvar.JA,
-        mottarUtenlandspensjon
-    );
+    const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet({
+        søknadsfelt: søker.pensjonsland,
+        feilmeldingSpråkId: 'omdeg.utenlandspensjon.land.feilmelding',
+        avhengigSvarCondition: ESvar.JA,
+        avhengighet: mottarUtenlandspensjon,
+    });
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,
