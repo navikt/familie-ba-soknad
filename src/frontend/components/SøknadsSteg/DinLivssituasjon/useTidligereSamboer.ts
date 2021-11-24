@@ -47,34 +47,34 @@ export const useTidligereSamboer = (): {
         nullstillVedAvhengighetEndring: false,
     });
 
-    const tidligereSamboerFødselsdato = useDatovelgerFeltMedUkjent(
-        TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato,
-        '',
-        tidligereSamboerFødselsdatoUkjent,
-        'omdeg.nåværendesamboer.fødselsdato.ukjent',
-        tidligereSamboerFnrUkjent.verdi === ESvar.JA
-    );
+    const tidligereSamboerFødselsdato = useDatovelgerFeltMedUkjent({
+        feltId: TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato,
+        initiellVerdi: '',
+        vetIkkeCheckbox: tidligereSamboerFødselsdatoUkjent,
+        feilmeldingSpråkId: 'omdeg.nåværendesamboer.fødselsdato.ukjent',
+        skalFeltetVises: tidligereSamboerFnrUkjent.verdi === ESvar.JA,
+    });
 
-    const tidligereSamboerFraDato = useDatovelgerFelt(
-        {
+    const tidligereSamboerFraDato = useDatovelgerFelt({
+        søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerFraDato,
             svar: '',
         },
-        true,
-        'omdeg.nårstartetsamboerforhold.feilmelding',
-        gårsdagensDato()
-    );
+        skalFeltetVises: true,
+        feilmeldingSpråkId: 'omdeg.nårstartetsamboerforhold.feilmelding',
+        sluttdatoAvgrensning: gårsdagensDato(),
+    });
 
-    const tidligereSamboerTilDato = useDatovelgerFelt(
-        {
+    const tidligereSamboerTilDato = useDatovelgerFelt({
+        søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerTilDato,
             svar: '',
         },
-        true,
-        'omdeg.nårsamboerforholdavsluttet.feilmelding',
-        dagensDato(),
-        tidligereSamboerFraDato.verdi
-    );
+        skalFeltetVises: true,
+        feilmeldingSpråkId: 'omdeg.nårsamboerforholdavsluttet.feilmelding',
+        sluttdatoAvgrensning: dagensDato(),
+        startdatoAvgrensning: tidligereSamboerFraDato.verdi,
+    });
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
         ITidligereSamboerFeltTyper,

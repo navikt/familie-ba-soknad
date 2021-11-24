@@ -84,12 +84,12 @@ export const useDinLivssituasjon = (): {
         avhengigheter: { separertEnkeSkilt },
     });
 
-    const separertEnkeSkiltDato = useDatovelgerFeltMedJaNeiAvhengighet(
-        søker.utvidet.spørsmål.separertEnkeSkiltDato,
-        ESvar.JA,
-        separertEnkeSkilt,
-        'omdeg.frahvilkendatoseparertskilt.feilmelding'
-    );
+    const separertEnkeSkiltDato = useDatovelgerFeltMedJaNeiAvhengighet({
+        søknadsfelt: søker.utvidet.spørsmål.separertEnkeSkiltDato,
+        avhengigSvarCondition: ESvar.JA,
+        avhengighet: separertEnkeSkilt,
+        feilmeldingSpråkId: 'omdeg.frahvilkendatoseparertskilt.feilmelding',
+    });
 
     /*---- NÅVÆRENDE SAMBOER ----*/
     const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt(
@@ -152,26 +152,25 @@ export const useDinLivssituasjon = (): {
         return nåværendeSamboer.fødselsdato.svar;
     };
 
-    const nåværendeSamboerFødselsdato = useDatovelgerFeltMedUkjent(
-        SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-        getInitialFødselsdato(søker.nåværendeSamboer),
-        nåværendeSamboerFødselsdatoUkjent,
-        'omdeg.nåværendesamboer.fødselsdato.ukjent',
-        nåværendeSamboerFnrUkjent.verdi === ESvar.JA,
-        true,
-        dagensDato()
-    );
+    const nåværendeSamboerFødselsdato = useDatovelgerFeltMedUkjent({
+        feltId: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
+        initiellVerdi: getInitialFødselsdato(søker.nåværendeSamboer),
+        vetIkkeCheckbox: nåværendeSamboerFødselsdatoUkjent,
+        feilmeldingSpråkId: 'omdeg.nåværendesamboer.fødselsdato.ukjent',
+        skalFeltetVises: nåværendeSamboerFnrUkjent.verdi === ESvar.JA,
+        sluttdatoAvgrensning: dagensDato(),
+    });
 
-    const nåværendeSamboerFraDato = useDatovelgerFeltMedJaNeiAvhengighet(
-        {
+    const nåværendeSamboerFraDato = useDatovelgerFeltMedJaNeiAvhengighet({
+        søknadsfelt: {
             id: SamboerSpørsmålId.nåværendeSamboerFraDato,
             svar: søker.nåværendeSamboer?.samboerFraDato.svar || '',
         },
-        ESvar.JA,
-        harSamboerNå,
-        'omdeg.nårstartetsamboerforhold.feilmelding',
-        dagensDato()
-    );
+        avhengigSvarCondition: ESvar.JA,
+        avhengighet: harSamboerNå,
+        feilmeldingSpråkId: 'omdeg.nårstartetsamboerforhold.feilmelding',
+        sluttdatoAvgrensning: dagensDato(),
+    });
 
     /*--- ASYL ARBEID OG PENSJON ----*/
 

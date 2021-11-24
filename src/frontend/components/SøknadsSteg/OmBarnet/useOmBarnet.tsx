@@ -117,12 +117,12 @@ export const useOmBarnet = (
         skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
     });
 
-    const institusjonOppholdStartdato = useDatovelgerFelt(
-        barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
-        'ombarnet.institusjon.startdato.feilmelding',
-        dagensDato()
-    );
+    const institusjonOppholdStartdato = useDatovelgerFelt({
+        søknadsfelt: barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
+        skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+        feilmeldingSpråkId: 'ombarnet.institusjon.startdato.feilmelding',
+        sluttdatoAvgrensning: dagensDato(),
+    });
 
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
         verdi:
@@ -133,19 +133,19 @@ export const useOmBarnet = (
         feltId: OmBarnetSpørsmålsId.institusjonOppholdVetIkke,
     });
 
-    const institusjonOppholdSluttdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].id,
-        barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar !==
+    const institusjonOppholdSluttdato = useDatovelgerFeltMedUkjent({
+        feltId: barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].id,
+        initiellVerdi:
+            barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar !==
             AlternativtSvarForInput.UKJENT
-            ? barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
-            : '',
-        institusjonOppholdSluttVetIkke,
-        'ombarnet.institusjon.sluttdato.feilmelding',
-        skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
-        false,
-        undefined,
-        institusjonOppholdStartdato.verdi
-    );
+                ? barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
+                : '',
+        vetIkkeCheckbox: institusjonOppholdSluttVetIkke,
+        feilmeldingSpråkId: 'ombarnet.institusjon.sluttdato.feilmelding',
+        skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+        nullstillVedAvhengighetEndring: false,
+        startdatoAvgrensning: institusjonOppholdStartdato.verdi,
+    });
 
     /*---UTENLANDSOPPHOLD---*/
 
@@ -258,16 +258,21 @@ export const useOmBarnet = (
         avhengigheter: { andreForelderFnrUkjent, andreForelderNavnUkjent },
         nullstillVedAvhengighetEndring: false,
     });
-    const andreForelderFødselsdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.andreForelderFødselsdato].id,
-        formaterInitVerdiForInputMedUkjent(barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar),
-        andreForelderFødselsdatoUkjent,
-        'ombarnet.andre-forelder.fødselsdato.feilmelding',
-        andreForelderFnrUkjent.verdi === ESvar.JA && andreForelderNavnUkjent.verdi === ESvar.NEI,
-        sammeForelderSomAnnetBarn.verdi === null ||
+    const andreForelderFødselsdato = useDatovelgerFeltMedUkjent({
+        feltId: barn[barnDataKeySpørsmål.andreForelderFødselsdato].id,
+        initiellVerdi: formaterInitVerdiForInputMedUkjent(
+            barn[barnDataKeySpørsmål.andreForelderFødselsdato].svar
+        ),
+        vetIkkeCheckbox: andreForelderFødselsdatoUkjent,
+        feilmeldingSpråkId: 'ombarnet.andre-forelder.fødselsdato.feilmelding',
+        skalFeltetVises:
+            andreForelderFnrUkjent.verdi === ESvar.JA &&
+            andreForelderNavnUkjent.verdi === ESvar.NEI,
+        nullstillVedAvhengighetEndring:
+            sammeForelderSomAnnetBarn.verdi === null ||
             sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER,
-        dagensDato()
-    );
+        sluttdatoAvgrensning: dagensDato(),
+    });
 
     useEffect(() => {
         if (andreForelderNavnUkjent.verdi === ESvar.JA) {
@@ -448,13 +453,13 @@ export const useOmBarnet = (
         { navn: barnetsNavnValue(barn, intl) }
     );
 
-    const søkerForTidsromStartdato = useDatovelgerFeltMedJaNeiAvhengighet(
-        barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
-        ESvar.JA,
-        søkerForTidsrom,
-        'ombarnet.søker-for-periode.startdato.feilmelding',
-        dagensDato()
-    );
+    const søkerForTidsromStartdato = useDatovelgerFeltMedJaNeiAvhengighet({
+        søknadsfelt: barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
+        avhengigSvarCondition: ESvar.JA,
+        avhengighet: søkerForTidsrom,
+        feilmeldingSpråkId: 'ombarnet.søker-for-periode.startdato.feilmelding',
+        sluttdatoAvgrensning: dagensDato(),
+    });
 
     const søkerForTidsromSluttdatoVetIkke = useFelt<ESvar>({
         verdi:
@@ -473,18 +478,20 @@ export const useOmBarnet = (
         avhengigheter: { søkerForTidsrom },
     });
 
-    const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent(
-        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].id,
-        barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar === AlternativtSvarForInput.UKJENT
-            ? ''
-            : barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
-        søkerForTidsromSluttdatoVetIkke,
-        'ombarnet.søker-for-periode.sluttdato.feilmelding',
-        søkerForTidsrom.verdi === ESvar.JA,
-        false,
-        dagensDato(),
-        søkerForTidsromStartdato.verdi
-    );
+    const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent({
+        feltId: barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].id,
+        initiellVerdi:
+            barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar ===
+            AlternativtSvarForInput.UKJENT
+                ? ''
+                : barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
+        vetIkkeCheckbox: søkerForTidsromSluttdatoVetIkke,
+        feilmeldingSpråkId: 'ombarnet.søker-for-periode.sluttdato.feilmelding',
+        skalFeltetVises: søkerForTidsrom.verdi === ESvar.JA,
+        nullstillVedAvhengighetEndring: false,
+        sluttdatoAvgrensning: dagensDato(),
+        startdatoAvgrensning: søkerForTidsromStartdato.verdi,
+    });
 
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
 
@@ -524,19 +531,21 @@ export const useOmBarnet = (
         avhengigheter: { søkerHarBoddMedAndreForelder },
     });
 
-    const søkerFlyttetFraAndreForelderDato = useDatovelgerFeltMedUkjent(
-        barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].id,
-        barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar ===
+    const søkerFlyttetFraAndreForelderDato = useDatovelgerFeltMedUkjent({
+        feltId: barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].id,
+        initiellVerdi:
+            barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar ===
             AlternativtSvarForInput.UKJENT
-            ? ''
-            : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar,
-        borMedAndreForelderCheckbox,
-        'ombarnet.nårflyttetfra.feilmelding',
-        søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
+                ? ''
+                : barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato].svar,
+        vetIkkeCheckbox: borMedAndreForelderCheckbox,
+        feilmeldingSpråkId: 'ombarnet.nårflyttetfra.feilmelding',
+        skalFeltetVises:
+            søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
             barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI,
-        true,
-        dagensDato()
-    );
+        nullstillVedAvhengighetEndring: true,
+        sluttdatoAvgrensning: dagensDato(),
+    });
 
     const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IOmBarnetUtvidetFeltTyper,

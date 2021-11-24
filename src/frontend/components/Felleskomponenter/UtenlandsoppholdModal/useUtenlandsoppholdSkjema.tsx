@@ -49,19 +49,19 @@ export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaPa
         true
     );
 
-    const oppholdslandFraDato = useDatovelgerFelt(
-        {
+    const oppholdslandFraDato = useDatovelgerFelt({
+        søknadsfelt: {
             id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
             svar: '',
         },
-        !!utenlandsoppholdÅrsak.verdi &&
+        skalFeltetVises:
+            !!utenlandsoppholdÅrsak.verdi &&
             utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE,
-        fraDatoFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
-        hentMaxAvgrensningPåFraDato(utenlandsoppholdÅrsak.verdi),
-        undefined,
-        { utenlandsoppholdÅrsak },
-        true
-    );
+        feilmeldingSpråkId: fraDatoFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
+        sluttdatoAvgrensning: hentMaxAvgrensningPåFraDato(utenlandsoppholdÅrsak.verdi),
+        avhengigheter: { utenlandsoppholdÅrsak },
+        nullstillVedAvhengighetEndring: true,
+    });
 
     const oppholdslandTilDatoUkjent = useFelt<ESvar>({
         verdi: ESvar.NEI,
@@ -73,23 +73,23 @@ export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaPa
         avhengigheter: { utenlandsoppholdÅrsak },
     });
 
-    const oppholdslandTilDato = useDatovelgerFeltMedUkjent(
-        UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
-        '',
-        oppholdslandTilDatoUkjent,
-        tilDatoFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
-        !!utenlandsoppholdÅrsak.verdi &&
+    const oppholdslandTilDato = useDatovelgerFeltMedUkjent({
+        feltId: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
+        initiellVerdi: '',
+        vetIkkeCheckbox: oppholdslandTilDatoUkjent,
+        feilmeldingSpråkId: tilDatoFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
+        skalFeltetVises:
+            !!utenlandsoppholdÅrsak.verdi &&
             utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE,
-        true,
-        hentMaxAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
-        harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
+        sluttdatoAvgrensning: hentMaxAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
+        startdatoAvgrensning: harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
             ? oppholdslandFraDato.verdi
             : hentMinAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
-        !harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
+        customStartdatoFeilmelding: !harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
             ? 'modal.nårflyttettilnorge.mer-enn-ett-år.feilmelding'
             : undefined,
-        { utenlandsoppholdÅrsak }
-    );
+        avhengigheter: { utenlandsoppholdÅrsak },
+    });
 
     const skjema = useSkjema<IUtenlandsoppholdFeltTyper, 'string'>({
         felter: {
