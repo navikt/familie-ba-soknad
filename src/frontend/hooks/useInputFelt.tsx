@@ -6,11 +6,15 @@ import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 
-const useInputFelt = (
-    søknadsfelt: ISøknadSpørsmål<string>,
-    feilmeldingSpråkId: string,
-    skalVises = true
-) =>
+const useInputFelt = ({
+    søknadsfelt,
+    feilmeldingSpråkId,
+    skalVises = true,
+}: {
+    søknadsfelt: ISøknadSpørsmål<string>;
+    feilmeldingSpråkId: string;
+    skalVises?: boolean;
+}) =>
     useFelt<string>({
         feltId: søknadsfelt.id,
         verdi: trimWhiteSpace(søknadsfelt.svar),

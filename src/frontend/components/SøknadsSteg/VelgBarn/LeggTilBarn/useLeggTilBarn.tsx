@@ -60,21 +60,25 @@ export const useLeggTilBarn = (): {
         avhengigheter: { erFødt },
     });
 
-    const fornavn = useInputFeltMedUkjent(
-        { id: VelgBarnSpørsmålId.leggTilBarnFornavn, svar: '' },
-        navnetErUbestemt,
-        'hvilkebarn.leggtilbarn.fornavn.feilmelding',
-        false,
-        erFødt.valideringsstatus === Valideringsstatus.OK
-    );
+    const fornavn = useInputFeltMedUkjent({
+        søknadsfelt: {
+            id: VelgBarnSpørsmålId.leggTilBarnFornavn,
+            svar: '',
+        },
+        avhengighet: navnetErUbestemt,
+        feilmeldingSpråkId: 'hvilkebarn.leggtilbarn.fornavn.feilmelding',
+        skalVises: erFødt.valideringsstatus === Valideringsstatus.OK,
+    });
 
-    const etternavn = useInputFeltMedUkjent(
-        { id: VelgBarnSpørsmålId.leggTilBarnEtternavn, svar: '' },
-        navnetErUbestemt,
-        'hvilkebarn.leggtilbarn.etternavn.feilmelding',
-        false,
-        erFødt.valideringsstatus === Valideringsstatus.OK
-    );
+    const etternavn = useInputFeltMedUkjent({
+        søknadsfelt: {
+            id: VelgBarnSpørsmålId.leggTilBarnEtternavn,
+            svar: '',
+        },
+        avhengighet: navnetErUbestemt,
+        feilmeldingSpråkId: 'hvilkebarn.leggtilbarn.etternavn.feilmelding',
+        skalVises: erFødt.valideringsstatus === Valideringsstatus.OK,
+    });
 
     const ikkeFåttIdentChecked = useFelt<ESvar>({
         verdi: ESvar.NEI,
@@ -89,24 +93,24 @@ export const useLeggTilBarn = (): {
         avhengigheter: { erFødt },
     });
 
-    const ident = useInputFeltMedUkjent(
-        {
+    const ident = useInputFeltMedUkjent({
+        søknadsfelt: {
             id: VelgBarnSpørsmålId.leggTilBarnFnr,
             svar: '',
         },
-        ikkeFåttIdentChecked,
-        'hvilkebarn.leggtilbarn.fnr.feilmelding',
-        true,
-        erFødt.valideringsstatus === Valideringsstatus.OK,
-        (felt: FeltState<string>) => {
+        avhengighet: ikkeFåttIdentChecked,
+        feilmeldingSpråkId: 'hvilkebarn.leggtilbarn.fnr.feilmelding',
+        erFnrInput: true,
+        skalVises: erFødt.valideringsstatus === Valideringsstatus.OK,
+        customValidering: (felt: FeltState<string>) => {
             return erBarnRegistrertFraFør(søknad, felt.verdi)
                 ? feil(
                       felt,
                       <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.duplikat-barn.feilmelding'} />
                   )
                 : ok(felt);
-        }
-    );
+        },
+    });
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
         ILeggTilBarnTyper,

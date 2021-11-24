@@ -55,13 +55,11 @@ export const useDinLivssituasjon = (): {
         skalFeltetVises: () => erUtvidet,
     });
 
-    const separertEnkeSkilt = useJaNeiSpmFelt(
-        søker.utvidet.spørsmål.separertEnkeSkilt,
-        'omdeg.separertellerskilt.feilmelding',
-        undefined,
-        false,
-        søker.sivilstand.type !== ESivilstand.GIFT || !erUtvidet
-    );
+    const separertEnkeSkilt = useJaNeiSpmFelt({
+        søknadsfelt: søker.utvidet.spørsmål.separertEnkeSkilt,
+        feilmeldingSpråkId: 'omdeg.separertellerskilt.feilmelding',
+        skalSkjules: søker.sivilstand.type !== ESivilstand.GIFT || !erUtvidet,
+    });
 
     const separertEnkeSkiltUtland = useFelt<ESvar | null>({
         feltId: søknad.søker.utvidet.spørsmål.separertEnkeSkiltUtland.id,
@@ -92,21 +90,22 @@ export const useDinLivssituasjon = (): {
     });
 
     /*---- NÅVÆRENDE SAMBOER ----*/
-    const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt(
-        søker.harSamboerNå,
-        søker.sivilstand.type === ESivilstand.GIFT
-            ? 'omdeg.samboernå.gift.feilmelding'
-            : 'omdeg.samboernå.feilmelding'
-    );
+    const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt({
+        søknadsfelt: søker.harSamboerNå,
+        feilmeldingSpråkId:
+            søker.sivilstand.type === ESivilstand.GIFT
+                ? 'omdeg.samboernå.gift.feilmelding'
+                : 'omdeg.samboernå.feilmelding',
+    });
 
-    const nåværendeSamboerNavn = useInputFelt(
-        {
+    const nåværendeSamboerNavn = useInputFelt({
+        søknadsfelt: {
             id: SamboerSpørsmålId.nåværendeSamboerNavn,
             svar: søknad.søker.nåværendeSamboer?.navn.svar || '',
         },
-        'omdeg.samboerNavn.feilmelding',
-        harSamboerNå.verdi === ESvar.JA
-    );
+        feilmeldingSpråkId: 'omdeg.samboerNavn.feilmelding',
+        skalVises: harSamboerNå.verdi === ESvar.JA,
+    });
 
     const fnrUkjentInitiellVerdi = (nåværendeSamboer: ISamboer | null): ESvar => {
         if (nåværendeSamboer === null) return ESvar.NEI;
@@ -124,16 +123,16 @@ export const useDinLivssituasjon = (): {
         if (nåværendeSamboer.ident.svar === AlternativtSvarForInput.UKJENT) return '';
         return nåværendeSamboer.ident.svar;
     };
-    const nåværendeSamboerFnr = useInputFeltMedUkjent(
-        {
+    const nåværendeSamboerFnr = useInputFeltMedUkjent({
+        søknadsfelt: {
             id: SamboerSpørsmålId.nåværendeSamboerFnr,
             svar: fnrInitiellVerdi(søker.nåværendeSamboer),
         },
-        nåværendeSamboerFnrUkjent,
-        'omdeg.samboer.ident.ikkebesvart.feilmelding',
-        true,
-        harSamboerNå.verdi === ESvar.JA
-    );
+        avhengighet: nåværendeSamboerFnrUkjent,
+        feilmeldingSpråkId: 'omdeg.samboer.ident.ikkebesvart.feilmelding',
+        erFnrInput: true,
+        skalVises: harSamboerNå.verdi === ESvar.JA,
+    });
     const settKjennerIkkeFødselsdatoInitialValue = (nåværendeSamboer: ISamboer | null): ESvar => {
         if (nåværendeSamboer === null) return ESvar.NEI;
         if (nåværendeSamboer.fødselsdato.svar === AlternativtSvarForInput.UKJENT) return ESvar.JA;
@@ -174,9 +173,15 @@ export const useDinLivssituasjon = (): {
 
     /*--- ASYL ARBEID OG PENSJON ----*/
 
-    const erAsylsøker = useJaNeiSpmFelt(søker.erAsylsøker, 'omdeg.asylsøker.feilmelding');
+    const erAsylsøker = useJaNeiSpmFelt({
+        søknadsfelt: søker.erAsylsøker,
+        feilmeldingSpråkId: 'omdeg.asylsøker.feilmelding',
+    });
 
-    const jobberPåBåt = useJaNeiSpmFelt(søker.jobberPåBåt, 'omdeg.arbeid-utland.feilmelding');
+    const jobberPåBåt = useJaNeiSpmFelt({
+        søknadsfelt: søker.jobberPåBåt,
+        feilmeldingSpråkId: 'omdeg.arbeid-utland.feilmelding',
+    });
 
     const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.arbeidsland,
@@ -185,10 +190,10 @@ export const useDinLivssituasjon = (): {
         jobberPåBåt
     );
 
-    const mottarUtenlandspensjon = useJaNeiSpmFelt(
-        søker.mottarUtenlandspensjon,
-        'omdeg.utenlandspensjon.feilmelding'
-    );
+    const mottarUtenlandspensjon = useJaNeiSpmFelt({
+        søknadsfelt: søker.mottarUtenlandspensjon,
+        feilmeldingSpråkId: 'omdeg.utenlandspensjon.feilmelding',
+    });
 
     const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet(
         søker.pensjonsland,

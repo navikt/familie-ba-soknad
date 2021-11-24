@@ -15,13 +15,13 @@ export const useTidligereSamboer = (): {
     valideringErOk: () => boolean;
     nullstillSkjema: () => void;
 } => {
-    const tidligereSamboerNavn = useInputFelt(
-        {
+    const tidligereSamboerNavn = useInputFelt({
+        søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerNavn,
             svar: '',
         },
-        'omdeg.samboerNavn.feilmelding'
-    );
+        feilmeldingSpråkId: 'omdeg.samboerNavn.feilmelding',
+    });
 
     const tidligereSamboerFnrUkjent = useFelt<ESvar>({
         feltId: TidligereSamboerSpørsmålId.tidligereSamboerFnrUkjent,
@@ -29,15 +29,15 @@ export const useTidligereSamboer = (): {
         nullstillVedAvhengighetEndring: false,
     });
 
-    const tidligereSamboerFnr = useInputFeltMedUkjent(
-        {
+    const tidligereSamboerFnr = useInputFeltMedUkjent({
+        søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerFnr,
             svar: '',
         },
-        tidligereSamboerFnrUkjent,
-        'omdeg.samboer.ident.ikkebesvart.feilmelding',
-        true
-    );
+        avhengighet: tidligereSamboerFnrUkjent,
+        feilmeldingSpråkId: 'omdeg.samboer.ident.ikkebesvart.feilmelding',
+        erFnrInput: true,
+    });
 
     const tidligereSamboerFødselsdatoUkjent = useFelt<ESvar>({
         feltId: TidligereSamboerSpørsmålId.tidligereSamboerFødselsdatoUkjent,
