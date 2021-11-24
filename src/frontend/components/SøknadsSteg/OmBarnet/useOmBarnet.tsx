@@ -20,10 +20,11 @@ import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjo
 import {
     barnDataKeySpørsmål,
     barnDataKeySpørsmålUtvidet,
+    ESivilstand,
     IUtenlandsperiode,
 } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { IBarnMedISøknad } from '../../../typer/søknad';
+import { ESøknadstype, IBarnMedISøknad } from '../../../typer/søknad';
 import { erNorskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
@@ -771,6 +772,14 @@ export const useOmBarnet = (
                             barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI &&
                                 søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
                                 borMedAndreForelderCheckbox.verdi === ESvar.NEI,
+                            barn.id
+                        );
+                    case Dokumentasjonsbehov.SEPARERT_SKILT_ENKE:
+                        return genererOppdatertDokumentasjon(
+                            dok,
+                            søkerForTidsrom.verdi === ESvar.JA &&
+                                søknad.søker.sivilstand.type === ESivilstand.SKILT &&
+                                søknad.søknadstype === ESøknadstype.UTVIDET,
                             barn.id
                         );
                     default:
