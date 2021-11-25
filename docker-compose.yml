@@ -39,6 +39,15 @@ services:
       - "3000:3000"
       - "55554:55554"
 
+  # Akkurat dette imaget krever buildkit
+  # For å uppe denne servicen må du kjøre docker-compose med følgende env variabler satt
+  # DOCKER_BUILDKIT=1
+  # COMPOSE_DOCKER_CLI_BUILD=1
+  #
+  # Altså `DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose up -d --build frontend-prod`
+  #
+  # Vi kan ikke bruke buildkit for hele stacken, siden buildkit ikke støtter git subdirectory contexts,
+  # som vi bruker for ldap, zookeper og kafka
   frontend-prod:
     profiles:
       - test-prod-build
