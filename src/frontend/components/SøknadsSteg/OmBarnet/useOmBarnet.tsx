@@ -25,7 +25,7 @@ import {
 } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { ESøknadstype, IBarnMedISøknad } from '../../../typer/søknad';
-import { regexNorskEllerUtenlandskPostnummer } from '../../../utils/adresse';
+import { erNorskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
@@ -87,23 +87,33 @@ export const useOmBarnet = (
 
     /*---INSTITUSJON---*/
 
+    const institusjonIUtlandCheckbox = useFelt<ESvar>({
+        verdi: barn[barnDataKeySpørsmål.institusjonIUtland].svar,
+        feltId: OmBarnetSpørsmålsId.institusjonIUtland,
+        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+    });
+
     const institusjonsnavn = useInputFelt({
         søknadsfelt: barn[barnDataKeySpørsmål.institusjonsnavn],
         feilmeldingSpråkId: 'ombarnet.institusjon.navn.feilmelding',
-        skalVises: skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+        skalVises:
+            skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
+            institusjonIUtlandCheckbox.verdi === ESvar.NEI,
     });
 
     const institusjonsadresse = useInputFelt({
         søknadsfelt: barn[barnDataKeySpørsmål.institusjonsadresse],
         feilmeldingSpråkId: 'ombarnet.institusjon.adresse.feilmelding',
-        skalVises: skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+        skalVises:
+            skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
+            institusjonIUtlandCheckbox.verdi === ESvar.NEI,
     });
 
     const institusjonspostnummer = useFelt<string>({
         verdi: barn[barnDataKeySpørsmål.institusjonspostnummer].svar,
         feltId: barn[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
-            regexNorskEllerUtenlandskPostnummer(trimWhiteSpace(felt.verdi))
+            erNorskPostnummer(trimWhiteSpace(felt.verdi))
                 ? ok(felt)
                 : feil(
                       felt,
@@ -111,11 +121,14 @@ export const useOmBarnet = (
                           id={
                               trimWhiteSpace(felt.verdi) === ''
                                   ? 'ombarnet.institusjon.postnummer.feilmelding'
-                                  : 'ombarnet.institusjon.postnummer.under-tre-tegn.feilmelding'
+                                  : 'ombarnet.institusjon.postnummer.format.feilmelding'
                           }
                       />
                   ),
-        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
+        skalFeltetVises: avhengigheter =>
+            skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
+            avhengigheter.institusjonIUtlandCheckbox.verdi === ESvar.NEI,
+        avhengigheter: { institusjonIUtlandCheckbox },
     });
 
     const institusjonOppholdStartdato = useDatovelgerFelt({
@@ -549,6 +562,7 @@ export const useOmBarnet = (
         string
     >({
         felter: {
+            institusjonIUtlandCheckbox,
             institusjonsnavn,
             institusjonsadresse,
             institusjonspostnummer,
@@ -619,17 +633,27 @@ export const useOmBarnet = (
                           )
                               ? utenlandsperioder
                               : [],
+                          institusjonIUtland: {
+                              ...barn.institusjonIUtland,
+                              svar: institusjonIUtlandCheckbox.verdi,
+                          },
                           institusjonsnavn: {
                               ...barn.institusjonsnavn,
-                              svar: trimWhiteSpace(institusjonsnavn.verdi),
+                              svar: institusjonsnavn.erSynlig
+                                  ? trimWhiteSpace(institusjonsnavn.verdi)
+                                  : '',
                           },
                           institusjonsadresse: {
                               ...barn.institusjonsadresse,
-                              svar: trimWhiteSpace(institusjonsadresse.verdi),
+                              svar: institusjonsadresse.erSynlig
+                                  ? trimWhiteSpace(institusjonsadresse.verdi)
+                                  : '',
                           },
                           institusjonspostnummer: {
                               ...barn.institusjonspostnummer,
-                              svar: trimWhiteSpace(institusjonspostnummer.verdi),
+                              svar: institusjonspostnummer.erSynlig
+                                  ? trimWhiteSpace(institusjonspostnummer.verdi)
+                                  : '',
                           },
                           institusjonOppholdStartdato: {
                               ...barn.institusjonOppholdStartdato,
