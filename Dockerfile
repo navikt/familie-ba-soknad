@@ -2,6 +2,7 @@
 
 FROM navikt/node-express:16 as builder-base
 USER root
+# Vi installerer compilere slik at node-pakken "sharp" kan bygge mot vips-dev image conversion biblioteket
 RUN apk --no-cache add curl binutils make gcc g++ vips-dev
 USER apprunner
 
