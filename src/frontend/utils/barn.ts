@@ -85,6 +85,14 @@ export const genererOppdaterteBarn = (
                 ...barn[barnDataKeySpørsmål.andreForelderErDød],
                 svar: andreForelderErDød ? ESvar.JA : ESvar.NEI,
             },
+            [barnDataKeySpørsmål.institusjonIUtland]: {
+                ...barn[barnDataKeySpørsmål.institusjonIUtland],
+                svar: genererSvarForOppfølgningspørsmålBarn(
+                    oppholderSegIInstitusjon,
+                    barn[barnDataKeySpørsmål.institusjonIUtland],
+                    ESvar.NEI
+                ),
+            },
             [barnDataKeySpørsmål.institusjonsnavn]: {
                 ...barn[barnDataKeySpørsmål.institusjonsnavn],
                 svar: genererSvarForOppfølgningspørsmålBarn(
@@ -250,6 +258,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
             id: OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon,
             svar: null,
+        },
+        [barnDataKeySpørsmål.institusjonIUtland]: {
+            id: OmBarnetSpørsmålsId.institusjonIUtland,
+            svar: ESvar.NEI,
         },
         [barnDataKeySpørsmål.institusjonsnavn]: {
             id: OmBarnetSpørsmålsId.institusjonsnavn,

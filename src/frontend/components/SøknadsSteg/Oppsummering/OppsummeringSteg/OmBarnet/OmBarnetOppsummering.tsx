@@ -71,38 +71,60 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         }
                     />
 
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonsnavn]}
-                            />
-                        }
-                        søknadsvar={barn[barnDataKeySpørsmål.institusjonsnavn].svar}
-                    />
-
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonsadresse]
+                    {barn[barnDataKeySpørsmål.institusjonIUtland].svar === ESvar.JA ? (
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.institusjonIUtland
+                                        ]
+                                    }
+                                />
+                            }
+                        />
+                    ) : (
+                        <>
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.institusjonsnavn
+                                            ]
+                                        }
+                                    />
                                 }
+                                søknadsvar={barn[barnDataKeySpørsmål.institusjonsnavn].svar}
                             />
-                        }
-                        søknadsvar={barn[barnDataKeySpørsmål.institusjonsadresse].svar}
-                    />
 
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.institusjonspostnummer
-                                    ]
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.institusjonsadresse
+                                            ]
+                                        }
+                                    />
                                 }
+                                søknadsvar={barn[barnDataKeySpørsmål.institusjonsadresse].svar}
                             />
-                        }
-                        søknadsvar={barn[barnDataKeySpørsmål.institusjonspostnummer].svar}
-                    />
+
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.institusjonspostnummer
+                                            ]
+                                        }
+                                    />
+                                }
+                                søknadsvar={barn[barnDataKeySpørsmål.institusjonspostnummer].svar}
+                            />
+                        </>
+                    )}
 
                     <OppsummeringFelt
                         tittel={

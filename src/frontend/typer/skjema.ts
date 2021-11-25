@@ -54,6 +54,7 @@ export interface IOmBarnaDineFeltTyper {
 }
 
 export interface IOmBarnetUtvidetFeltTyper {
+    institusjonIUtlandCheckbox: ESvar;
     institusjonsnavn: string;
     institusjonsadresse: string;
     institusjonspostnummer: string;

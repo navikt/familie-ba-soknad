@@ -29,6 +29,7 @@ const jens = {
     utenlandsperioder: [],
     [barnDataKeySpørsmål.erFosterbarn]: { id: '1', svar: ESvar.NEI },
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: { id: '2', svar: ESvar.JA },
+    [barnDataKeySpørsmål.institusjonIUtland]: { id: '21', svar: ESvar.NEI },
     [barnDataKeySpørsmål.institusjonsnavn]: { id: '3', svar: 'narvesen' },
     [barnDataKeySpørsmål.institusjonsadresse]: { id: '4', svar: 'narvesen' },
     [barnDataKeySpørsmål.institusjonspostnummer]: { id: '5', svar: '2030' },
@@ -385,14 +386,14 @@ describe('OmBarnet', () => {
 
         const gåVidereKnapper = queryByText(/felles.navigasjon.gå-videre/);
         expect(
-            queryByText(/ombarnet.institusjon.postnummer.under-tre-tegn.feilmelding/)
+            queryByText(/ombarnet.institusjon.postnummer.format.feilmelding/)
         ).not.toBeInTheDocument();
 
         act(() => {
             gåVidereKnapper && gåVidereKnapper.click();
         });
         const feilmelding = await findAllByText(
-            /ombarnet.institusjon.postnummer.under-tre-tegn.feilmelding/
+            /ombarnet.institusjon.postnummer.format.feilmelding/
         );
         expect(feilmelding).toHaveLength(2);
     });
