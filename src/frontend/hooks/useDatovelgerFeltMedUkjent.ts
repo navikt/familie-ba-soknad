@@ -5,18 +5,29 @@ import { Avhengigheter, Felt, FeltState, ok, useFelt } from '@navikt/familie-skj
 
 import { validerDato } from '../utils/dato';
 
-const useDatovelgerFeltMedUkjent = (
+const useDatovelgerFeltMedUkjent = ({
     feltId,
     initiellVerdi,
-    vetIkkeCheckbox: Felt<ESvar>,
-    feilmeldingSpråkId: string,
-    skalFeltetVises: boolean,
+    vetIkkeCheckbox,
+    feilmeldingSpråkId,
+    skalFeltetVises,
     nullstillVedAvhengighetEndring = true,
     sluttdatoAvgrensning = '',
     startdatoAvgrensning = '',
     customStartdatoFeilmelding = '',
-    avhengigheter?: Avhengigheter
-) => {
+    avhengigheter,
+}: {
+    feltId;
+    initiellVerdi;
+    vetIkkeCheckbox: Felt<ESvar>;
+    feilmeldingSpråkId: string;
+    skalFeltetVises: boolean;
+    nullstillVedAvhengighetEndring?: boolean;
+    sluttdatoAvgrensning?: ISODateString;
+    startdatoAvgrensning?: ISODateString;
+    customStartdatoFeilmelding?: string;
+    avhengigheter?: Avhengigheter;
+}) => {
     const datoFelt = useFelt<ISODateString>({
         feltId: feltId,
         verdi: initiellVerdi,

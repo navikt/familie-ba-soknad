@@ -4,15 +4,23 @@ import { Avhengigheter, useFelt } from '@navikt/familie-skjema';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { validerDato } from '../utils/dato';
 
-const useDatovelgerFelt = (
-    søknadsfelt: ISøknadSpørsmål<ISODateString>,
-    skalFeltetVises: boolean,
-    feilmeldingSpråkId: string,
+const useDatovelgerFelt = ({
+    søknadsfelt,
+    skalFeltetVises,
+    feilmeldingSpråkId,
     sluttdatoAvgrensning = '',
     startdatoAvgrensning = '',
-    avhengigheter?: Avhengigheter,
-    nullstillVedAvhengighetEndring = false
-) => {
+    avhengigheter,
+    nullstillVedAvhengighetEndring = false,
+}: {
+    søknadsfelt: ISøknadSpørsmål<ISODateString>;
+    skalFeltetVises: boolean;
+    feilmeldingSpråkId: string;
+    sluttdatoAvgrensning?: ISODateString;
+    startdatoAvgrensning?: ISODateString;
+    avhengigheter?: Avhengigheter;
+    nullstillVedAvhengighetEndring?: boolean;
+}) => {
     return useFelt<ISODateString>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,

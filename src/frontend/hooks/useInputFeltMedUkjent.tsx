@@ -12,14 +12,21 @@ import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent } from '../utils/input';
 
-const useInputFeltMedUkjent = (
-    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | null,
-    avhengighet: Felt<ESvar>,
-    feilmeldingSpråkId: string,
+const useInputFeltMedUkjent = ({
+    søknadsfelt,
+    avhengighet,
+    feilmeldingSpråkId,
     erFnrInput = false,
     skalVises = true,
-    customValidering: ((felt: FeltState<string>) => FeltState<string>) | undefined = undefined
-) => {
+    customValidering = undefined,
+}: {
+    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | null;
+    avhengighet: Felt<ESvar>;
+    feilmeldingSpråkId: string;
+    erFnrInput?: boolean;
+    skalVises?: boolean;
+    customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
+}) => {
     const inputFelt = useFelt<string>({
         feltId: søknadsfelt ? søknadsfelt.id : guid(),
         verdi: søknadsfelt

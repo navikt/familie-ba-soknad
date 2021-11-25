@@ -54,16 +54,16 @@ export const useOmdeg = (): {
         skalFeltetVises: () => søker.adressebeskyttelse === false,
     });
 
-    const værtINorgeITolvMåneder = useJaNeiSpmFelt(
-        søker.værtINorgeITolvMåneder,
-        'omdeg.opphold-sammenhengende.feilmelding',
-        {
+    const værtINorgeITolvMåneder = useJaNeiSpmFelt({
+        søknadsfelt: søker.værtINorgeITolvMåneder,
+        feilmeldingSpråkId: 'omdeg.opphold-sammenhengende.feilmelding',
+        avhengigheter: {
             ...(!søker.adressebeskyttelse && {
                 borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
             }),
         },
-        borPåRegistrertAdresse.verdi === ESvar.NEI
-    );
+        nullstillVedAvhengighetEndring: borPåRegistrertAdresse.verdi === ESvar.NEI,
+    });
 
     const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
         feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
@@ -85,20 +85,21 @@ export const useOmdeg = (): {
         },
     });
 
-    const planleggerÅBoINorgeTolvMnd = useJaNeiSpmFelt(
-        søker.planleggerÅBoINorgeTolvMnd,
-        'omdeg.planlagt-opphold-sammenhengende.feilmelding',
-        {
+    const planleggerÅBoINorgeTolvMnd = useJaNeiSpmFelt({
+        søknadsfelt: søker.planleggerÅBoINorgeTolvMnd,
+        feilmeldingSpråkId: 'omdeg.planlagt-opphold-sammenhengende.feilmelding',
+        avhengigheter: {
             ...(!søker.adressebeskyttelse && {
                 borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },
             }),
             værtINorgeITolvMåneder: { hovedSpørsmål: værtINorgeITolvMåneder },
         },
-        borPåRegistrertAdresse.verdi === ESvar.NEI,
-        flyttetPermanentFraNorge(utenlandsperioder) ||
+        nullstillVedAvhengighetEndring: borPåRegistrertAdresse.verdi === ESvar.NEI,
+        skalSkjules:
+            flyttetPermanentFraNorge(utenlandsperioder) ||
             værtINorgeITolvMåneder.verdi === ESvar.JA ||
-            (værtINorgeITolvMåneder.verdi === ESvar.NEI && !utenlandsperioder.length)
-    );
+            (værtINorgeITolvMåneder.verdi === ESvar.NEI && !utenlandsperioder.length),
+    });
 
     useEffect(() => {
         registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);

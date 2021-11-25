@@ -15,13 +15,13 @@ export const useTidligereSamboer = (): {
     valideringErOk: () => boolean;
     nullstillSkjema: () => void;
 } => {
-    const tidligereSamboerNavn = useInputFelt(
-        {
+    const tidligereSamboerNavn = useInputFelt({
+        søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerNavn,
             svar: '',
         },
-        'omdeg.samboerNavn.feilmelding'
-    );
+        feilmeldingSpråkId: 'omdeg.samboerNavn.feilmelding',
+    });
 
     const tidligereSamboerFnrUkjent = useFelt<ESvar>({
         feltId: TidligereSamboerSpørsmålId.tidligereSamboerFnrUkjent,
@@ -29,15 +29,15 @@ export const useTidligereSamboer = (): {
         nullstillVedAvhengighetEndring: false,
     });
 
-    const tidligereSamboerFnr = useInputFeltMedUkjent(
-        {
+    const tidligereSamboerFnr = useInputFeltMedUkjent({
+        søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerFnr,
             svar: '',
         },
-        tidligereSamboerFnrUkjent,
-        'omdeg.samboer.ident.ikkebesvart.feilmelding',
-        true
-    );
+        avhengighet: tidligereSamboerFnrUkjent,
+        feilmeldingSpråkId: 'omdeg.samboer.ident.ikkebesvart.feilmelding',
+        erFnrInput: true,
+    });
 
     const tidligereSamboerFødselsdatoUkjent = useFelt<ESvar>({
         feltId: TidligereSamboerSpørsmålId.tidligereSamboerFødselsdatoUkjent,
@@ -47,34 +47,34 @@ export const useTidligereSamboer = (): {
         nullstillVedAvhengighetEndring: false,
     });
 
-    const tidligereSamboerFødselsdato = useDatovelgerFeltMedUkjent(
-        TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato,
-        '',
-        tidligereSamboerFødselsdatoUkjent,
-        'omdeg.nåværendesamboer.fødselsdato.ukjent',
-        tidligereSamboerFnrUkjent.verdi === ESvar.JA
-    );
+    const tidligereSamboerFødselsdato = useDatovelgerFeltMedUkjent({
+        feltId: TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato,
+        initiellVerdi: '',
+        vetIkkeCheckbox: tidligereSamboerFødselsdatoUkjent,
+        feilmeldingSpråkId: 'omdeg.nåværendesamboer.fødselsdato.ukjent',
+        skalFeltetVises: tidligereSamboerFnrUkjent.verdi === ESvar.JA,
+    });
 
-    const tidligereSamboerFraDato = useDatovelgerFelt(
-        {
+    const tidligereSamboerFraDato = useDatovelgerFelt({
+        søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerFraDato,
             svar: '',
         },
-        true,
-        'omdeg.nårstartetsamboerforhold.feilmelding',
-        gårsdagensDato()
-    );
+        skalFeltetVises: true,
+        feilmeldingSpråkId: 'omdeg.nårstartetsamboerforhold.feilmelding',
+        sluttdatoAvgrensning: gårsdagensDato(),
+    });
 
-    const tidligereSamboerTilDato = useDatovelgerFelt(
-        {
+    const tidligereSamboerTilDato = useDatovelgerFelt({
+        søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerTilDato,
             svar: '',
         },
-        true,
-        'omdeg.nårsamboerforholdavsluttet.feilmelding',
-        dagensDato(),
-        tidligereSamboerFraDato.verdi
-    );
+        skalFeltetVises: true,
+        feilmeldingSpråkId: 'omdeg.nårsamboerforholdavsluttet.feilmelding',
+        sluttdatoAvgrensning: dagensDato(),
+        startdatoAvgrensning: tidligereSamboerFraDato.verdi,
+    });
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
         ITidligereSamboerFeltTyper,
