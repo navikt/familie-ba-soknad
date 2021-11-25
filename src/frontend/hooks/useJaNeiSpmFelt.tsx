@@ -36,16 +36,21 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
     return tilhørendeSomIkkeErValidert.length === 0;
 };
 
-const useJaNeiSpmFelt = (
-    søknadsfelt: ISøknadSpørsmål<ESvar | null>,
-    feilmeldingSpråkId: string,
-    avhengigheter?: {
-        [key: string]: FeltGruppe | undefined;
-    },
+const useJaNeiSpmFelt = ({
+    søknadsfelt,
+    feilmeldingSpråkId,
+    avhengigheter,
     nullstillVedAvhengighetEndring = false,
     skalSkjules = false,
-    feilmeldingSpråkVerdier?: { [key: string]: ReactNode }
-) => {
+    feilmeldingSpråkVerdier,
+}: {
+    søknadsfelt: ISøknadSpørsmål<ESvar | null>;
+    feilmeldingSpråkId: string;
+    avhengigheter?: { [key: string]: FeltGruppe | undefined };
+    nullstillVedAvhengighetEndring?: boolean;
+    skalSkjules?: boolean;
+    feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
+}) => {
     const [harBlittVist, settHarBlittVist] = useState<boolean>(!avhengigheter);
 
     return useFelt<ESvar | null>({

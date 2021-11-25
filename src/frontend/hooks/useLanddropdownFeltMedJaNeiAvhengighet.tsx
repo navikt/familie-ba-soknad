@@ -8,13 +8,19 @@ import { Avhengigheter, feil, Felt, FeltState, ok, useFelt } from '@navikt/famil
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
-const useLanddropdownFeltMedJaNeiAvhengighet = (
-    søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>,
-    feilmeldingSpråkId: string,
-    avhengigSvarCondition: ESvar,
-    avhengighet: Felt<ESvar | null>,
-    nullstillVedAvhengighetEndring = true
-) => {
+const useLanddropdownFeltMedJaNeiAvhengighet = ({
+    søknadsfelt,
+    feilmeldingSpråkId,
+    avhengigSvarCondition,
+    avhengighet,
+    nullstillVedAvhengighetEndring = true,
+}: {
+    søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>;
+    feilmeldingSpråkId: string;
+    avhengigSvarCondition: ESvar;
+    avhengighet: Felt<ESvar | null>;
+    nullstillVedAvhengighetEndring?: boolean;
+}) => {
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
 
     const landDropdown = useFelt<Alpha3Code | ''>({

@@ -135,12 +135,14 @@ describe('useJaNeiSpmFelt', () => {
         });
 
         const { result } = renderHook(() =>
-            useJaNeiSpmFelt(
-                værtINorgeITolvMåneder,
-                'test',
-                { borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresseFeltMock } },
-                true
-            )
+            useJaNeiSpmFelt({
+                søknadsfelt: værtINorgeITolvMåneder,
+                feilmeldingSpråkId: 'test',
+                avhengigheter: {
+                    borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresseFeltMock },
+                },
+                nullstillVedAvhengighetEndring: true,
+            })
         );
 
         expect(result.current.erSynlig).toEqual(false);

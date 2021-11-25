@@ -6,14 +6,21 @@ import { Felt, useFelt } from '@navikt/familie-skjema';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { validerDato } from '../utils/dato';
 
-const useDatovelgerFeltMedJaNeiAvhengighet = (
-    søknadsfelt: ISøknadSpørsmål<ISODateString>,
-    avhengigSvarCondition: ESvar,
-    avhengighet: Felt<ESvar | null>,
-    feilmeldingSpråkId: string,
+const useDatovelgerFeltMedJaNeiAvhengighet = ({
+    søknadsfelt,
+    avhengigSvarCondition,
+    avhengighet,
+    feilmeldingSpråkId,
     sluttdatoAvgrensning = '',
-    startdatoAvgrensning = ''
-) => {
+    startdatoAvgrensning = '',
+}: {
+    søknadsfelt: ISøknadSpørsmål<ISODateString>;
+    avhengigSvarCondition: ESvar;
+    avhengighet: Felt<ESvar | null>;
+    feilmeldingSpråkId: string;
+    sluttdatoAvgrensning?: ISODateString;
+    startdatoAvgrensning?: ISODateString;
+}) => {
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
 
     const dato = useFelt<ISODateString>({
