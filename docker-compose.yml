@@ -112,7 +112,6 @@ services:
     volumes:
       - keys:/keys
       - secure-logs:/secure-logs
-    entrypoint: "sleep 11111111111"
     environment:
       <<: *common-token-environment
       TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-mottak.json'
