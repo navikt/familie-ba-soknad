@@ -32,7 +32,6 @@ const OmBarnaDine: React.FC = () => {
     const { barnInkludertISøknaden } = søknad;
     const { eøsSkruddAv } = useEøs();
 
-    console.log(søknad);
     if (!barnInkludertISøknaden.length) {
         history.push('/velg-barn');
         return null;

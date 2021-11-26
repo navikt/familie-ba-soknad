@@ -297,10 +297,7 @@ describe('OmBarnet', () => {
             søkerForTidsromSluttdato: {
                 svar: '',
             },
-            andreForelder: {
-                andreForelderNavn: { svar: '' },
-                andreForelderFnr: { svar: '' },
-            },
+            andreForelder: null,
             institusjonsnavn: { svar: '' },
             institusjonsadresse: { svar: '' },
         });

@@ -4,6 +4,8 @@ import { render, waitFor } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { ISøknad } from '../../../typer/søknad';
 import {
     mekkGyldigSøknad,
@@ -50,22 +52,8 @@ describe('Oppsummering', () => {
                     ident: '1234',
                     institusjonsnavn: { id: OmBarnetSpørsmålsId.institusjonsnavn, svar: '' },
                     institusjonsadresse: { id: OmBarnetSpørsmålsId.institusjonsadresse, svar: '' },
-                    andreForelder: {
-                        andreForelderNavn: { id: OmBarnetSpørsmålsId.andreForelderNavn, svar: '' },
-                        andreForelderFnr: { id: OmBarnetSpørsmålsId.andreForelderFnr, svar: '' },
-                        andreForelderArbeidUtlandet: {
-                            id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
-                        },
-                        andreForelderArbeidUtlandetHvilketLand: {
-                            id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
-                        },
-                        andreForelderPensjonUtland: {
-                            id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
-                        },
-                        andreForelderPensjonHvilketLand: {
-                            id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
-                        },
-                    },
+                    erFosterbarn: { id: OmBarnaDineSpørsmålId.hvemErFosterbarn, svar: ESvar.JA },
+                    andreForelder: null,
                 },
             ],
         });

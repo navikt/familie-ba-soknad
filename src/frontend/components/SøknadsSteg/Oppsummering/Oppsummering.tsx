@@ -26,7 +26,6 @@ const Oppsummering: React.FC = () => {
     const { push: pushHistory } = useHistory();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
 
-    console.log(søknad.barnInkludertISøknaden[0]);
     const scrollTilFeil = (elementId: string) => {
         // Gjør dette for syns skyld, men push scroller ikke vinduet
         pushHistory({ hash: elementId });
