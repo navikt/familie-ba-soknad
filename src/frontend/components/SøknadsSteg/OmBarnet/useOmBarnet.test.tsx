@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 import { DeepPartial } from 'ts-essentials';
 
@@ -7,7 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarn } from '../../../typer/person';
-import { IAndreForelder, IBarnMedISøknad } from '../../../typer/søknad';
+import { IBarnMedISøknad } from '../../../typer/søknad';
 import { genererAndreForelder, genererInitialBarnMedISøknad } from '../../../utils/barn';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';

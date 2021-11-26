@@ -53,6 +53,18 @@ describe('Oppsummering', () => {
                     andreForelder: {
                         andreForelderNavn: { id: OmBarnetSpørsmålsId.andreForelderNavn, svar: '' },
                         andreForelderFnr: { id: OmBarnetSpørsmålsId.andreForelderFnr, svar: '' },
+                        andreForelderArbeidUtlandet: {
+                            id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
+                        },
+                        andreForelderArbeidUtlandetHvilketLand: {
+                            id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
+                        },
+                        andreForelderPensjonUtland: {
+                            id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
+                        },
+                        andreForelderPensjonHvilketLand: {
+                            id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
+                        },
                     },
                 },
             ],
@@ -60,25 +72,21 @@ describe('Oppsummering', () => {
         spyOnUseApp(søknad);
         const { mockedHistoryArray } = mockHistory(['/oppsummering']);
 
-        try {
-            const { findByText, getAllByRole } = render(
-                <TestProvidere>
-                    <Oppsummering />
-                </TestProvidere>
-            );
-            const gåVidere = await findByText('felles.navigasjon.gå-videre');
+        const { findByText, getAllByRole } = render(
+            <TestProvidere>
+                <Oppsummering />
+            </TestProvidere>
+        );
+        const gåVidere = await findByText('felles.navigasjon.gå-videre');
 
-            act(() => gåVidere.click());
+        act(() => gåVidere.click());
 
-            const omDegFeil = getAllByRole('alert')[0];
-            expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({
-                hash: 'omdeg-feil',
-            });
-            expect(omDegFeil).toBeInTheDocument();
-            expect(omDegFeil).toBeVisible();
-        } catch (e) {
-            console.log(e);
-        }
+        const omDegFeil = getAllByRole('alert')[0];
+        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({
+            hash: 'omdeg-feil',
+        });
+        expect(omDegFeil).toBeInTheDocument();
+        expect(omDegFeil).toBeVisible();
     }, 10000);
 
     it('går til dokumentasjon med gyldig søknad', async () => {
