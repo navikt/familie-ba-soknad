@@ -116,7 +116,7 @@ describe('useOmBarnet', () => {
             ...genererInitialBarnMedISøknad(barnFraPdl),
             andreForelder: {
                 ...genererAndreForelder(null, false),
-                [andreForelderDataKeySpørsmål.andreForelderNavn]: {
+                [andreForelderDataKeySpørsmål.navn]: {
                     svar: AlternativtSvarForInput.UKJENT,
                     id: OmBarnetSpørsmålsId.andreForelderNavn,
                 },

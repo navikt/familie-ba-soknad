@@ -220,23 +220,19 @@ export const useOmBarnet = (
     });
 
     const andreForelderNavnUkjent = useFelt<ESvar>({
-        verdi: formaterVerdiForCheckbox(
-            andreForelder?.[andreForelderDataKeySpørsmål.andreForelderNavn].svar
-        ),
+        verdi: formaterVerdiForCheckbox(andreForelder?.[andreForelderDataKeySpørsmål.navn].svar),
         feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
         skalFeltetVises: () => !!andreForelder,
     });
     const andreForelderNavn = useInputFeltMedUkjent({
-        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.andreForelderNavn] ?? null,
+        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.navn] ?? null,
         avhengighet: andreForelderNavnUkjent,
         feilmeldingSpråkId: 'ombarnet.andre-forelder.navn.feilmelding',
         skalVises: !!andreForelder,
     });
 
     const andreForelderFnrUkjent = useFelt<ESvar>({
-        verdi: formaterVerdiForCheckbox(
-            andreForelder?.[andreForelderDataKeySpørsmål.andreForelderFnr].svar
-        ),
+        verdi: formaterVerdiForCheckbox(andreForelder?.[andreForelderDataKeySpørsmål.fnr].svar),
         feltId: OmBarnetSpørsmålsId.andreForelderFnrUkjent,
         skalFeltetVises: avhengigheter => {
             return (
@@ -251,7 +247,7 @@ export const useOmBarnet = (
     });
 
     const andreForelderFnr = useInputFeltMedUkjent({
-        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.andreForelderFnr] ?? null,
+        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.fnr] ?? null,
         avhengighet: andreForelderFnrUkjent,
         feilmeldingSpråkId: 'ombarnet.andre-forelder.fnr.feilmelding',
         erFnrInput: true,
@@ -260,7 +256,7 @@ export const useOmBarnet = (
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(
-            andreForelder?.[andreForelderDataKeySpørsmål.andreForelderFødselsdato].svar
+            andreForelder?.[andreForelderDataKeySpørsmål.fødselsdato].svar
         ),
         feltId: OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent,
         skalFeltetVises: avhengigheter => {
@@ -275,9 +271,9 @@ export const useOmBarnet = (
         nullstillVedAvhengighetEndring: false,
     });
     const andreForelderFødselsdato = useDatovelgerFeltMedUkjent({
-        feltId: andreForelder?.[andreForelderDataKeySpørsmål.andreForelderFødselsdato].id,
+        feltId: andreForelder?.[andreForelderDataKeySpørsmål.fødselsdato].id,
         initiellVerdi: formaterInitVerdiForInputMedUkjent(
-            andreForelder?.[andreForelderDataKeySpørsmål.andreForelderFødselsdato].svar
+            andreForelder?.[andreForelderDataKeySpørsmål.fødselsdato].svar
         ),
         vetIkkeCheckbox: andreForelderFødselsdatoUkjent,
         feilmeldingSpråkId: 'ombarnet.andre-forelder.fødselsdato.feilmelding',
@@ -302,7 +298,7 @@ export const useOmBarnet = (
     }, [andreForelderNavnUkjent.verdi]);
 
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt({
-        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet],
+        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandet],
         feilmeldingSpråkId:
             barn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andreforelder-arbeidutland.feilmelding'
@@ -323,8 +319,7 @@ export const useOmBarnet = (
     });
 
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt:
-            andreForelder?.[andreForelderDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand],
+        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand],
         feilmeldingSpråkId:
             barn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
@@ -337,7 +332,7 @@ export const useOmBarnet = (
     });
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt({
-        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.andreForelderPensjonUtland],
+        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonUtland],
         feilmeldingSpråkId:
             barn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andre-forelder.utenlandspensjon.feilmelding'
@@ -358,7 +353,7 @@ export const useOmBarnet = (
     });
 
     const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand],
+        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand],
         feilmeldingSpråkId:
             barn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andre-forelder.utenlandspensjon.land.feilmelding'

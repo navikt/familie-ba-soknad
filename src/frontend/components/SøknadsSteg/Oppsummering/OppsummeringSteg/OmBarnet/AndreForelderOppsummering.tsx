@@ -25,13 +25,13 @@ const AndreForelderOppsummering: React.FC<{
     return (
         <>
             <StyledOppsummeringsFeltGruppe>
-                {andreForelder[andreForelderDataKeySpørsmål.andreForelderNavn].svar && (
+                {andreForelder[andreForelderDataKeySpørsmål.navn].svar && (
                     <OppsummeringFelt
                         tittel={<SpråkTekst id={'ombarnet.andre-forelder'} />}
                         søknadsvar={
-                            andreForelder[andreForelderDataKeySpørsmål.andreForelderNavn].svar !==
+                            andreForelder[andreForelderDataKeySpørsmål.navn].svar !==
                             AlternativtSvarForInput.UKJENT
-                                ? andreForelder[andreForelderDataKeySpørsmål.andreForelderNavn].svar
+                                ? andreForelder[andreForelderDataKeySpørsmål.navn].svar
                                 : formatMessage({
                                       id: omBarnetSpørsmålSpråkId[
                                           OmBarnetSpørsmålsId.andreForelderNavnUkjent
@@ -40,7 +40,7 @@ const AndreForelderOppsummering: React.FC<{
                         }
                     />
                 )}
-                {andreForelder[andreForelderDataKeySpørsmål.andreForelderFnr].svar && (
+                {andreForelder[andreForelderDataKeySpørsmål.fnr].svar && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -48,9 +48,9 @@ const AndreForelderOppsummering: React.FC<{
                             />
                         }
                         søknadsvar={
-                            andreForelder[andreForelderDataKeySpørsmål.andreForelderFnr].svar !==
+                            andreForelder[andreForelderDataKeySpørsmål.fnr].svar !==
                             AlternativtSvarForInput.UKJENT
-                                ? andreForelder[andreForelderDataKeySpørsmål.andreForelderFnr].svar
+                                ? andreForelder[andreForelderDataKeySpørsmål.fnr].svar
                                 : formatMessage({
                                       id: omBarnetSpørsmålSpråkId[
                                           OmBarnetSpørsmålsId.andreForelderFnrUkjent
@@ -59,7 +59,7 @@ const AndreForelderOppsummering: React.FC<{
                         }
                     />
                 )}
-                {andreForelder[andreForelderDataKeySpørsmål.andreForelderFødselsdato].svar && (
+                {andreForelder[andreForelderDataKeySpørsmål.fødselsdato].svar && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -71,8 +71,7 @@ const AndreForelderOppsummering: React.FC<{
                             />
                         }
                         søknadsvar={formaterDatoMedUkjent(
-                            andreForelder[andreForelderDataKeySpørsmål.andreForelderFødselsdato]
-                                .svar,
+                            andreForelder[andreForelderDataKeySpørsmål.fødselsdato].svar,
                             formatMessage({
                                 id: omBarnetSpørsmålSpråkId[
                                     OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
@@ -94,12 +93,9 @@ const AndreForelderOppsummering: React.FC<{
                             values={{ navn: barnetsNavn }}
                         />
                     }
-                    søknadsvar={
-                        andreForelder[andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet].svar
-                    }
+                    søknadsvar={andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar}
                 />
-                {andreForelder[andreForelderDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]
-                    .svar && (
+                {andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand].svar && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -111,9 +107,8 @@ const AndreForelderOppsummering: React.FC<{
                             />
                         }
                         søknadsvar={landkodeTilSpråk(
-                            andreForelder[
-                                andreForelderDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand
-                            ].svar,
+                            andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]
+                                .svar,
                             valgtLocale
                         )}
                     />
@@ -129,12 +124,9 @@ const AndreForelderOppsummering: React.FC<{
                             values={{ navn: barnetsNavn }}
                         />
                     }
-                    søknadsvar={
-                        andreForelder[andreForelderDataKeySpørsmål.andreForelderPensjonUtland].svar
-                    }
+                    søknadsvar={andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar}
                 />
-                {andreForelder[andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand]
-                    .svar && (
+                {andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -150,9 +142,7 @@ const AndreForelderOppsummering: React.FC<{
                             />
                         }
                         søknadsvar={landkodeTilSpråk(
-                            andreForelder[
-                                andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand
-                            ].svar,
+                            andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
                             valgtLocale
                         )}
                     />

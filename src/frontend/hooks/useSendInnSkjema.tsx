@@ -247,25 +247,24 @@ export const useSendInnSkjema = (): {
                         navn: barnetsNavnValue(barn, intl),
                         barn: barnetsNavnValue(barn, intl),
                     }),
-                    [andreForelderDataKeySpørsmål.andreForelderNavn]: søknadsfeltBarn(
+                    [andreForelderDataKeySpørsmål.navn]: søknadsfeltBarn(
                         språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
                         sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                            andreForelder[andreForelderDataKeySpørsmål.andreForelderNavn].svar,
+                            andreForelder[andreForelderDataKeySpørsmål.navn].svar,
                             omBarnetSpørsmålSpråkId['andre-forelder-navn-ukjent']
                         )
                     ),
-                    [andreForelderDataKeySpørsmål.andreForelderFnr]: søknadsfeltBarn(
+                    [andreForelderDataKeySpørsmål.fnr]: søknadsfeltBarn(
                         språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
                         sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                            andreForelder[andreForelderDataKeySpørsmål.andreForelderFnr].svar,
+                            andreForelder[andreForelderDataKeySpørsmål.fnr].svar,
                             omBarnetSpørsmålSpråkId['andre-forelder-fødsels-/dnummer-ukjent']
                         )
                     ),
-                    [andreForelderDataKeySpørsmål.andreForelderFødselsdato]: søknadsfeltBarn(
+                    [andreForelderDataKeySpørsmål.fødselsdato]: søknadsfeltBarn(
                         språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
                         sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                            andreForelder[andreForelderDataKeySpørsmål.andreForelderFødselsdato]
-                                .svar,
+                            andreForelder[andreForelderDataKeySpørsmål.fødselsdato].svar,
                             omBarnetSpørsmålSpråkId['andre-forelder-fødselsdato-ukjent']
                         )
                     ),
@@ -281,46 +280,40 @@ export const useSendInnSkjema = (): {
                                 'pdf.andreforelder.borsammennaa'
                             )
                         ),
-                    [andreForelderDataKeySpørsmål.andreForelderPensjonUtland]: søknadsfeltBarn(
+                    [andreForelderDataKeySpørsmål.pensjonUtland]: søknadsfeltBarn(
                         språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderPensjonUtland),
                         sammeVerdiAlleSpråk(
-                            andreForelder[andreForelderDataKeySpørsmål.andreForelderPensjonUtland]
-                                .svar
+                            andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar
                         )
                     ),
-                    [andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand]: søknadsfeltBarn(
+                    [andreForelderDataKeySpørsmål.pensjonHvilketLand]: søknadsfeltBarn(
                         språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderPensjonUtland),
                         verdiCallbackAlleSpråk(locale =>
                             landkodeTilSpråk(
+                                andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
+                                locale
+                            )
+                        )
+                    ),
+                    [andreForelderDataKeySpørsmål.arbeidUtlandet]: søknadsfeltBarn(
+                        språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderArbeidUtlandet),
+                        sammeVerdiAlleSpråk(
+                            andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar
+                        )
+                    ),
+                    [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: søknadsfeltBarn(
+                        språktekstIdFraSpørsmålId(
+                            OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
+                        ),
+                        verdiCallbackAlleSpråk(locale =>
+                            landkodeTilSpråk(
                                 andreForelder[
-                                    andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand
+                                    andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand
                                 ].svar,
                                 locale
                             )
                         )
                     ),
-                    [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet]: søknadsfeltBarn(
-                        språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderArbeidUtlandet),
-                        sammeVerdiAlleSpråk(
-                            andreForelder[andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet]
-                                .svar
-                        )
-                    ),
-                    [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]:
-                        søknadsfeltBarn(
-                            språktekstIdFraSpørsmålId(
-                                OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
-                            ),
-                            verdiCallbackAlleSpråk(locale =>
-                                landkodeTilSpråk(
-                                    andreForelder[
-                                        andreForelderDataKeySpørsmål
-                                            .andreForelderArbeidUtlandetHvilketLand
-                                    ].svar,
-                                    locale
-                                )
-                            )
-                        ),
                 }),
                 [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfeltBarn(
                     språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),

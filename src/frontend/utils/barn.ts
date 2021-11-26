@@ -31,46 +31,39 @@ export const genererAndreForelder = (
     andreForelderErDød: boolean
 ): IAndreForelder => {
     return {
-        [andreForelderDataKeySpørsmål.andreForelderNavn]: {
+        [andreForelderDataKeySpørsmål.navn]: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.andreForelderNavn].svar ?? '',
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.navn].svar ?? '',
         },
-        [andreForelderDataKeySpørsmål.andreForelderFnr]: {
+        [andreForelderDataKeySpørsmål.fnr]: {
             id: OmBarnetSpørsmålsId.andreForelderFnr,
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.andreForelderFnr].svar ?? '',
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.fnr].svar ?? '',
         },
-        [andreForelderDataKeySpørsmål.andreForelderFødselsdato]: {
+        [andreForelderDataKeySpørsmål.fødselsdato]: {
             id: OmBarnetSpørsmålsId.andreForelderFødselsdato,
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.andreForelderFødselsdato].svar ?? '',
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.fødselsdato].svar ?? '',
         },
-        [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet]: {
-            svar:
-                andreForelder?.[andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet].svar ??
-                null,
+        [andreForelderDataKeySpørsmål.arbeidUtlandet]: {
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandet].svar ?? null,
             id: andreForelderErDød
                 ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke
                 : OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
         },
-        [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: {
+        [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
             svar:
-                andreForelder?.[andreForelderDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]
-                    .svar ?? '',
+                andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand].svar ?? '',
             id: andreForelderErDød
                 ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke
                 : OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
         },
-        [andreForelderDataKeySpørsmål.andreForelderPensjonUtland]: {
-            svar:
-                andreForelder?.[andreForelderDataKeySpørsmål.andreForelderPensjonUtland].svar ??
-                null,
+        [andreForelderDataKeySpørsmål.pensjonUtland]: {
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonUtland].svar ?? null,
             id: andreForelderErDød
                 ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
                 : OmBarnetSpørsmålsId.andreForelderPensjonUtland,
         },
-        [andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
-            svar:
-                andreForelder?.[andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand]
-                    .svar ?? '',
+        [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar ?? '',
             id: andreForelderErDød
                 ? OmBarnetSpørsmålsId.andreForelderPensjonHvilketLandEnke
                 : OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,

@@ -275,31 +275,31 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     borMedSøker: true,
                 }),
                 andreForelder: {
-                    [andreForelderDataKeySpørsmål.andreForelderNavn]: {
+                    [andreForelderDataKeySpørsmål.navn]: {
                         id: OmBarnetSpørsmålsId.andreForelderNavn,
                         svar: AlternativtSvarForInput.UKJENT,
                     },
-                    [andreForelderDataKeySpørsmål.andreForelderFnr]: {
+                    [andreForelderDataKeySpørsmål.fnr]: {
                         id: OmBarnetSpørsmålsId.andreForelderFnr,
                         svar: AlternativtSvarForInput.UKJENT,
                     },
-                    [andreForelderDataKeySpørsmål.andreForelderFødselsdato]: {
+                    [andreForelderDataKeySpørsmål.fødselsdato]: {
                         id: OmBarnetSpørsmålsId.andreForelderFødselsdato,
                         svar: AlternativtSvarForInput.UKJENT,
                     },
-                    [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet]: {
+                    [andreForelderDataKeySpørsmål.arbeidUtlandet]: {
                         id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
                         svar: ESvar.NEI,
                     },
-                    [andreForelderDataKeySpørsmål.andreForelderPensjonUtland]: {
+                    [andreForelderDataKeySpørsmål.pensjonUtland]: {
                         id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
                         svar: ESvar.NEI,
                     },
-                    [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: {
+                    [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
                         id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
                         svar: '',
                     },
-                    [andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
+                    [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
                         id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
                         svar: '',
                     },

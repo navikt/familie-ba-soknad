@@ -54,31 +54,31 @@ const jens = {
     },
     [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
     andreForelder: {
-        [andreForelderDataKeySpørsmål.andreForelderNavn]: {
+        [andreForelderDataKeySpørsmål.navn]: {
             id: '17',
             svar: AlternativtSvarForInput.UKJENT,
         },
-        [andreForelderDataKeySpørsmål.andreForelderFnr]: {
+        [andreForelderDataKeySpørsmål.fnr]: {
             id: '18',
             svar: AlternativtSvarForInput.UKJENT,
         },
-        [andreForelderDataKeySpørsmål.andreForelderFødselsdato]: {
+        [andreForelderDataKeySpørsmål.fødselsdato]: {
             id: '19',
             svar: AlternativtSvarForInput.UKJENT,
         },
-        [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet]: {
+        [andreForelderDataKeySpørsmål.arbeidUtlandet]: {
             id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
             svar: ESvar.JA,
         },
-        [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: {
+        [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
             id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
             svar: 'AUS',
         },
-        [andreForelderDataKeySpørsmål.andreForelderPensjonUtland]: {
+        [andreForelderDataKeySpørsmål.pensjonUtland]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
             svar: ESvar.VET_IKKE,
         },
-        [andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
+        [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
             svar: '',
         },
@@ -126,31 +126,31 @@ const line = {
     },
     [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
     andreForelder: {
-        [andreForelderDataKeySpørsmål.andreForelderNavn]: {
+        [andreForelderDataKeySpørsmål.navn]: {
             id: '17',
             svar: AlternativtSvarForInput.UKJENT,
         },
-        [andreForelderDataKeySpørsmål.andreForelderFnr]: {
+        [andreForelderDataKeySpørsmål.fnr]: {
             id: '18',
             svar: AlternativtSvarForInput.UKJENT,
         },
-        [andreForelderDataKeySpørsmål.andreForelderFødselsdato]: {
+        [andreForelderDataKeySpørsmål.fødselsdato]: {
             id: '19',
             svar: AlternativtSvarForInput.UKJENT,
         },
-        [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet]: {
+        [andreForelderDataKeySpørsmål.arbeidUtlandet]: {
             id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
             svar: ESvar.JA,
         },
-        [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: {
+        [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
             id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
             svar: 'AUS',
         },
-        [andreForelderDataKeySpørsmål.andreForelderPensjonUtland]: {
+        [andreForelderDataKeySpørsmål.pensjonUtland]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
             svar: ESvar.VET_IKKE,
         },
-        [andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand]: {
+        [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
             svar: '',
         },
@@ -251,8 +251,8 @@ describe('OmBarnet', () => {
                     ...jens,
                     andreForelder: {
                         ...jens.andreForelder,
-                        [andreForelderDataKeySpørsmål.andreForelderNavn]: { id: '17', svar: '' },
-                        [andreForelderDataKeySpørsmål.andreForelderFnr]: { id: '18', svar: '' },
+                        [andreForelderDataKeySpørsmål.navn]: { id: '17', svar: '' },
+                        [andreForelderDataKeySpørsmål.fnr]: { id: '18', svar: '' },
                     },
                 },
             ],
