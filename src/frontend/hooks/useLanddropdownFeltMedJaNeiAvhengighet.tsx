@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
+import { guid } from 'nav-frontend-js-utils';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { Avhengigheter, feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
@@ -15,7 +17,7 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
     avhengighet,
     nullstillVedAvhengighetEndring = true,
 }: {
-    søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>;
+    søknadsfelt?: ISøknadSpørsmål<Alpha3Code | ''>;
     feilmeldingSpråkId: string;
     avhengigSvarCondition: ESvar;
     avhengighet: Felt<ESvar | null>;
@@ -24,8 +26,8 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
 
     const landDropdown = useFelt<Alpha3Code | ''>({
-        feltId: søknadsfelt.id,
-        verdi: søknadsfelt.svar,
+        feltId: søknadsfelt ? søknadsfelt.id : guid(),
+        verdi: søknadsfelt?.svar ?? '',
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter && (avhengigheter.jaNeiSpm as Felt<ESvar | null>)
                 ? skalFeltetVises(avhengigheter.jaNeiSpm.verdi)

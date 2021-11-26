@@ -1,14 +1,12 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { IBarnMedISøknad } from '../../../typer/søknad';
-import { barnetsNavnValue } from '../../../utils/barn';
+import { ISøknadSpørsmål } from '../../../typer/spørsmål';
+import { IAndreForelder, IBarnMedISøknad } from '../../../typer/søknad';
 import { dagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -23,12 +21,20 @@ import SammeSomAnnetBarnRadio from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const AndreForelder: React.FC<{
-    barn: IBarnMedISøknad;
+    barnetsNavn: string;
+    andreForelder: IAndreForelder;
+    andreForelderErDød: ISøknadSpørsmål<ESvar | null>;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     settSammeForelder: (radioVerdi: string) => void;
-}> = ({ barn, skjema, andreBarnSomErFyltUt, settSammeForelder }) => {
-    const intl = useIntl();
+}> = ({
+    barnetsNavn,
+    andreForelder,
+    andreForelderErDød,
+    skjema,
+    andreBarnSomErFyltUt,
+    settSammeForelder,
+}) => {
     const { erEøsLand } = useEøs();
 
     return (
@@ -126,10 +132,10 @@ const AndreForelder: React.FC<{
                         skjema={skjema}
                         felt={skjema.felter.andreForelderArbeidUtlandet}
                         spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[barn.andreForelderArbeidUtlandet.id]
+                            omBarnetSpørsmålSpråkId[andreForelder.andreForelderArbeidUtlandet.id]
                         }
                         inkluderVetIkke={true}
-                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                        språkValues={{ navn: barnetsNavn }}
                     />
                     <LandDropdown
                         felt={skjema.felter.andreForelderArbeidUtlandetHvilketLand}
@@ -139,7 +145,7 @@ const AndreForelder: React.FC<{
                             <SpråkTekst
                                 id={
                                     omBarnetSpørsmålSpråkId[
-                                        barn.andreForelderArbeidUtlandetHvilketLand.id
+                                        andreForelder.andreForelderArbeidUtlandetHvilketLand.id
                                     ]
                                 }
                             />
@@ -148,11 +154,11 @@ const AndreForelder: React.FC<{
                     {erEøsLand(skjema.felter.andreForelderArbeidUtlandetHvilketLand.verdi) && (
                         <VedleggNotisTilleggsskjema
                             språkTekstId={
-                                barn.andreForelderErDød.svar === ESvar.JA
+                                andreForelderErDød?.svar === ESvar.JA
                                     ? 'enkeenkemann.arbeid-utland.eøs-info'
                                     : 'ombarnet.andre-forelder.arbeid-utland.eøs-info'
                             }
-                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                            språkValues={{ navn: barnetsNavn }}
                             dynamisk
                         />
                     )}
@@ -160,10 +166,10 @@ const AndreForelder: React.FC<{
                         skjema={skjema}
                         felt={skjema.felter.andreForelderPensjonUtland}
                         spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[barn.andreForelderPensjonUtland.id]
+                            omBarnetSpørsmålSpråkId[andreForelder.andreForelderPensjonUtland.id]
                         }
                         inkluderVetIkke={true}
-                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                        språkValues={{ navn: barnetsNavn }}
                     />
                     <LandDropdown
                         felt={skjema.felter.andreForelderPensjonHvilketLand}
@@ -172,20 +178,22 @@ const AndreForelder: React.FC<{
                         label={
                             <SpråkTekst
                                 id={
-                                    omBarnetSpørsmålSpråkId[barn.andreForelderPensjonHvilketLand.id]
+                                    omBarnetSpørsmålSpråkId[
+                                        andreForelder.andreForelderPensjonHvilketLand.id
+                                    ]
                                 }
-                                values={{ barn: barnetsNavnValue(barn, intl) }}
+                                values={{ barn: barnetsNavn }}
                             />
                         }
                     />
                     {erEøsLand(skjema.felter.andreForelderPensjonHvilketLand.verdi) && (
                         <VedleggNotisTilleggsskjema
                             språkTekstId={
-                                barn.andreForelderErDød.svar === ESvar.JA
+                                andreForelderErDød?.svar === ESvar.JA
                                     ? 'enkeenkemann.utenlandspensjon.eøs-info'
                                     : 'ombarnet.andre-forelder.utenlandspensjon.eøs-info'
                             }
-                            språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                            språkValues={{ navn: barnetsNavn }}
                             dynamisk
                         />
                     )}

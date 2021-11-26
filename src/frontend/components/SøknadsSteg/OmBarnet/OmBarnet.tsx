@@ -9,7 +9,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { BarnetsId } from '../../../typer/common';
-import { ESivilstand } from '../../../typer/person';
+import { barnDataKeySpørsmål, ESivilstand } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
@@ -72,18 +72,20 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 fjernUtenlandsperiode={fjernUtenlandsperiode}
                 utenlandsperioder={utenlandsperioder}
             />
-            {skjema.felter.andreForelderNavn.erSynlig && (
+            {barn.andreForelder && (
                 <AndreForelder
                     settSammeForelder={settSammeForelder}
-                    barn={barn}
+                    barnetsNavn={barnetsNavnValue(barn, intl)}
                     skjema={skjema}
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
+                    andreForelder={barn.andreForelder}
+                    andreForelderErDød={barn[barnDataKeySpørsmål.andreForelderErDød]}
                 />
             )}
 
             {skjema.felter.borFastMedSøker.erSynlig && (
                 <SkjemaFieldset tittelId={'ombarnet.bosted'} dynamisk>
-                    {barn.andreForelderErDød.svar === ESvar.NEI && (
+                    {barn.andreForelderErDød?.svar !== ESvar.JA && (
                         <>
                             <div>
                                 <Normaltekst>

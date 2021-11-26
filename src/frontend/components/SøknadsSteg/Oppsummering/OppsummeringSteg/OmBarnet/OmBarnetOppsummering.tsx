@@ -8,7 +8,7 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useRoutes } from '../../../../../context/RoutesContext';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
-import { barnDataKeySpørsmål, barnDataKeySpørsmålUtvidet } from '../../../../../typer/person';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../../../../../typer/person';
 import { IBarnMedISøknad } from '../../../../../typer/søknad';
 import { barnetsNavnValue } from '../../../../../utils/barn';
 import { formaterDato } from '../../../../../utils/dato';
@@ -225,8 +225,11 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                 </StyledOppsummeringsFeltGruppe>
             )}
-            {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI && (
-                <AndreForelderOppsummering barn={barn} />
+            {barn.andreForelder && (
+                <AndreForelderOppsummering
+                    barnetsNavn={barnetsNavnValue(barn, intl)}
+                    andreForelder={barn.andreForelder}
+                />
             )}
             <StyledOppsummeringsFeltGruppe>
                 <OppsummeringFelt tittel={<SpråkTekst id={'ombarnet.bosted'} />} />
@@ -240,7 +243,8 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     }
                     søknadsvar={barn[barnDataKeySpørsmål.borFastMedSøker].svar}
                 />
-                {barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar && (
+                {barn.andreForelder?.[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]
+                    .svar && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -252,7 +256,11 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 values={{ navn: barnetsNavnValue(barn, intl) }}
                             />
                         }
-                        søknadsvar={barn[barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar}
+                        søknadsvar={
+                            barn.andreForelder[
+                                andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted
+                            ].svar
+                        }
                     />
                 )}
             </StyledOppsummeringsFeltGruppe>
@@ -308,7 +316,8 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     </>
                 )}
             </StyledOppsummeringsFeltGruppe>
-            {barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder].svar && (
+            {barn.andreForelder?.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]
+                .svar && (
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={
@@ -322,12 +331,14 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             />
                         }
                         søknadsvar={
-                            barn.utvidet[barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]
-                                .svar
+                            barn.andreForelder.utvidet[
+                                andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder
+                            ].svar
                         }
                     />
-                    {barn.utvidet[barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]
-                        .svar && (
+                    {barn.andreForelder.utvidet[
+                        andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
+                    ].svar && (
                         <OppsummeringFelt
                             tittel={
                                 <SpråkTekst
@@ -340,8 +351,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             }
                             søknadsvar={(() => {
                                 const svar =
-                                    barn.utvidet[
-                                        barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato
+                                    barn.andreForelder.utvidet[
+                                        andreForelderDataKeySpørsmål
+                                            .søkerFlyttetFraAndreForelderDato
                                     ].svar;
                                 return svar === AlternativtSvarForInput.UKJENT
                                     ? formatMessage({

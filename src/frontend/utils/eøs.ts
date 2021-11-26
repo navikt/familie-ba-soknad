@@ -11,9 +11,13 @@ export const landSvarSomKanTriggeEøs = (søknad: ISøknad) => {
 
     const fraOmBarnet = søknad.barnInkludertISøknaden
         .flatMap((barn: IBarnMedISøknad) => [
+            ...(barn.andreForelder
+                ? [
+                      barn.andreForelder.andreForelderArbeidUtlandetHvilketLand.svar,
+                      barn.andreForelder.andreForelderPensjonHvilketLand.svar,
+                  ]
+                : []),
             barn.barnetrygdFraEøslandHvilketLand.svar,
-            barn.andreForelderArbeidUtlandetHvilketLand.svar,
-            barn.andreForelderPensjonHvilketLand.svar,
             barn.utenlandsperioder.map(periode => periode.oppholdsland.svar),
         ])
         .flat();

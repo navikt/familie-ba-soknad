@@ -5,6 +5,7 @@ import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/Ut
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { IUtenlandsperiode } from '../typer/person';
 import { ISøknad } from '../typer/søknad';
+import { IAndreForelder } from '../typer/søknad';
 import { landSvarSomKanTriggeEøs } from './eøs';
 import { mekkGyldigSøknad } from './testing';
 
@@ -29,14 +30,16 @@ describe('eøs', () => {
                             id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
                             svar: 'BEL' as Alpha3Code,
                         },
-                        andreForelderArbeidUtlandetHvilketLand: {
-                            id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
-                            svar: 'DEU' as Alpha3Code,
-                        },
-                        andreForelderPensjonHvilketLand: {
-                            id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
-                            svar: 'DEU' as Alpha3Code,
-                        },
+                        andreForelder: mockDeep<IAndreForelder>({
+                            andreForelderArbeidUtlandetHvilketLand: {
+                                id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
+                                svar: 'DEU' as Alpha3Code,
+                            },
+                            andreForelderPensjonHvilketLand: {
+                                id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
+                                svar: 'DEU' as Alpha3Code,
+                            },
+                        }),
                         utenlandsperioder: [
                             mockDeep<IUtenlandsperiode>({
                                 oppholdsland: {
@@ -53,9 +56,9 @@ describe('eøs', () => {
                 'ALA',
                 'ALA',
                 'FIN',
+                'DEU',
+                'DEU',
                 'BEL',
-                'DEU',
-                'DEU',
                 'DNK',
             ]);
         });
