@@ -73,13 +73,13 @@ export const useOmBarnet = (
 
     const andreBarnSomErFyltUt = søknad.barnInkludertISøknaden.filter(
         barnISøknad =>
-            barnISøknad.barnErFyltUt &&
-            barnISøknad.id !== barn.id &&
-            barnISøknad[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
+            barnISøknad.barnErFyltUt && barnISøknad.id !== barn.id && !!barnISøknad.andreForelder
     );
 
+    const andreForelder = barn.andreForelder;
+
     useFørsteRender(() => {
-        if (barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA) {
+        if (!andreForelder) {
             nullstillAndreForelderFelter();
             skriftligAvtaleOmDeltBosted.validerOgSettFelt(null);
         }
@@ -206,7 +206,6 @@ export const useOmBarnet = (
     });
 
     /*--- ANDRE FORELDER ---*/
-    const andreForelder = barn.andreForelder;
 
     const sammeForelderSomAnnetBarn = useFelt<string | null>({
         feltId: 'sammeForelderSomAnnetBarn',
@@ -217,9 +216,7 @@ export const useOmBarnet = (
                 : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />);
         },
         skalFeltetVises: () =>
-            !barn.barnErFyltUt &&
-            barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI &&
-            andreBarnSomErFyltUt.length > 0,
+            !barn.barnErFyltUt && !!andreForelder && andreBarnSomErFyltUt.length > 0,
     });
 
     const andreForelderNavnUkjent = useFelt<ESvar>({
@@ -227,13 +224,13 @@ export const useOmBarnet = (
             andreForelder?.[andreForelderDataKeySpørsmål.andreForelderNavn].svar
         ),
         feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
-        skalFeltetVises: () => barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI,
+        skalFeltetVises: () => !!andreForelder,
     });
     const andreForelderNavn = useInputFeltMedUkjent({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.andreForelderNavn] ?? null,
         avhengighet: andreForelderNavnUkjent,
         feilmeldingSpråkId: 'ombarnet.andre-forelder.navn.feilmelding',
-        skalVises: barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI,
+        skalVises: !!andreForelder,
     });
 
     const andreForelderFnrUkjent = useFelt<ESvar>({
@@ -243,7 +240,7 @@ export const useOmBarnet = (
         feltId: OmBarnetSpørsmålsId.andreForelderFnrUkjent,
         skalFeltetVises: avhengigheter => {
             return (
-                barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI &&
+                !!andreForelder &&
                 avhengigheter &&
                 avhengigheter.andreForelderNavnUkjent &&
                 avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
@@ -258,9 +255,7 @@ export const useOmBarnet = (
         avhengighet: andreForelderFnrUkjent,
         feilmeldingSpråkId: 'ombarnet.andre-forelder.fnr.feilmelding',
         erFnrInput: true,
-        skalVises:
-            andreForelderNavnUkjent.verdi === ESvar.NEI &&
-            barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI,
+        skalVises: andreForelderNavnUkjent.verdi === ESvar.NEI && !!andreForelder,
     });
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
@@ -433,7 +428,7 @@ export const useOmBarnet = (
     /*--- BOSTED ---*/
 
     const avhengigheterForBosted = () => {
-        return barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI
+        return andreForelder
             ? {
                   andreForelderArbeidUtlandet: {
                       hovedSpørsmål: andreForelderArbeidUtlandet,
@@ -459,8 +454,7 @@ export const useOmBarnet = (
         feilmeldingSpråkId: 'ombarnet.delt-bosted.feilmelding',
         avhengigheter: avhengigheterForBosted(),
         skalSkjules:
-            barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA ||
-            barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
+            !andreForelder || barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
         feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
     });
 
@@ -535,7 +529,7 @@ export const useOmBarnet = (
                   }
                 : undefined,
         },
-        skalSkjules: !erUtvidet || barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
+        skalSkjules: !erUtvidet || !andreForelder,
         feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
     });
 
@@ -716,59 +710,63 @@ export const useOmBarnet = (
                               ),
                           },
                           ...(andreForelder && {
-                              andreForelderNavn: {
-                                  ...andreForelder.andreForelderNavn,
-                                  svar: trimWhiteSpace(
-                                      svarForSpørsmålMedUkjent(
-                                          andreForelderNavnUkjent,
-                                          andreForelderNavn
-                                      )
-                                  ),
-                              },
-                              andreForelderFnr: {
-                                  ...andreForelder.andreForelderFnr,
-                                  svar: svarForSpørsmålMedUkjent(
-                                      andreForelderFnrUkjent,
-                                      andreForelderFnr
-                                  ),
-                              },
-                              andreForelderFødselsdato: {
-                                  ...andreForelder.andreForelderFødselsdato,
-                                  svar: svarForSpørsmålMedUkjent(
-                                      andreForelderFødselsdatoUkjent,
-                                      andreForelderFødselsdato
-                                  ),
-                              },
-                              andreForelderArbeidUtlandet: {
-                                  ...andreForelder.andreForelderArbeidUtlandet,
-                                  svar: andreForelderArbeidUtlandet.verdi,
-                              },
-                              andreForelderArbeidUtlandetHvilketLand: {
-                                  ...andreForelder.andreForelderArbeidUtlandetHvilketLand,
-                                  svar: andreForelderArbeidUtlandetHvilketLand.verdi,
-                              },
-                              andreForelderPensjonUtland: {
-                                  ...andreForelder.andreForelderPensjonUtland,
-                                  svar: andreForelderPensjonUtland.verdi,
-                              },
-                              andreForelderPensjonHvilketLand: {
-                                  ...andreForelder.andreForelderPensjonHvilketLand,
-                                  svar: andreForelderPensjonHvilketLand.verdi,
-                              },
-                              skriftligAvtaleOmDeltBosted: {
-                                  ...andreForelder.skriftligAvtaleOmDeltBosted,
-                                  svar: skriftligAvtaleOmDeltBosted.verdi,
-                              },
-                              søkerHarBoddMedAndreForelder: {
-                                  ...andreForelder.utvidet.søkerHarBoddMedAndreForelder,
-                                  svar: søkerHarBoddMedAndreForelder.verdi,
-                              },
-                              søkerFlyttetFraAndreForelderDato: {
-                                  ...andreForelder.utvidet.søkerFlyttetFraAndreForelderDato,
-                                  svar: svarForSpørsmålMedUkjent(
-                                      borMedAndreForelderCheckbox,
-                                      søkerFlyttetFraAndreForelderDato
-                                  ),
+                              andreForelder: {
+                                  andreForelderNavn: {
+                                      ...andreForelder.andreForelderNavn,
+                                      svar: trimWhiteSpace(
+                                          svarForSpørsmålMedUkjent(
+                                              andreForelderNavnUkjent,
+                                              andreForelderNavn
+                                          )
+                                      ),
+                                  },
+                                  andreForelderFnr: {
+                                      ...andreForelder.andreForelderFnr,
+                                      svar: svarForSpørsmålMedUkjent(
+                                          andreForelderFnrUkjent,
+                                          andreForelderFnr
+                                      ),
+                                  },
+                                  andreForelderFødselsdato: {
+                                      ...andreForelder.andreForelderFødselsdato,
+                                      svar: svarForSpørsmålMedUkjent(
+                                          andreForelderFødselsdatoUkjent,
+                                          andreForelderFødselsdato
+                                      ),
+                                  },
+                                  andreForelderArbeidUtlandet: {
+                                      ...andreForelder.andreForelderArbeidUtlandet,
+                                      svar: andreForelderArbeidUtlandet.verdi,
+                                  },
+                                  andreForelderArbeidUtlandetHvilketLand: {
+                                      ...andreForelder.andreForelderArbeidUtlandetHvilketLand,
+                                      svar: andreForelderArbeidUtlandetHvilketLand.verdi,
+                                  },
+                                  andreForelderPensjonUtland: {
+                                      ...andreForelder.andreForelderPensjonUtland,
+                                      svar: andreForelderPensjonUtland.verdi,
+                                  },
+                                  andreForelderPensjonHvilketLand: {
+                                      ...andreForelder.andreForelderPensjonHvilketLand,
+                                      svar: andreForelderPensjonHvilketLand.verdi,
+                                  },
+                                  skriftligAvtaleOmDeltBosted: {
+                                      ...andreForelder.skriftligAvtaleOmDeltBosted,
+                                      svar: skriftligAvtaleOmDeltBosted.verdi,
+                                  },
+                                  utvidet: {
+                                      søkerHarBoddMedAndreForelder: {
+                                          ...andreForelder.utvidet.søkerHarBoddMedAndreForelder,
+                                          svar: søkerHarBoddMedAndreForelder.verdi,
+                                      },
+                                      søkerFlyttetFraAndreForelderDato: {
+                                          ...andreForelder.utvidet.søkerFlyttetFraAndreForelderDato,
+                                          svar: svarForSpørsmålMedUkjent(
+                                              borMedAndreForelderCheckbox,
+                                              søkerFlyttetFraAndreForelderDato
+                                          ),
+                                      },
+                                  },
                               },
                           }),
                       }
@@ -783,8 +781,7 @@ export const useOmBarnet = (
                     case Dokumentasjonsbehov.AVTALE_DELT_BOSTED:
                         return genererOppdatertDokumentasjon(
                             dok,
-                            skriftligAvtaleOmDeltBosted.verdi === ESvar.JA &&
-                                barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.NEI,
+                            skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && !!andreForelder,
                             barn.id
                         );
                     case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
