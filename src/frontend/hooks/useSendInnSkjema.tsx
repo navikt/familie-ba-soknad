@@ -281,6 +281,46 @@ export const useSendInnSkjema = (): {
                                 'pdf.andreforelder.borsammennaa'
                             )
                         ),
+                    [andreForelderDataKeySpørsmål.andreForelderPensjonUtland]: søknadsfeltBarn(
+                        språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderPensjonUtland),
+                        sammeVerdiAlleSpråk(
+                            andreForelder[andreForelderDataKeySpørsmål.andreForelderPensjonUtland]
+                                .svar
+                        )
+                    ),
+                    [andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand]: søknadsfeltBarn(
+                        språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderPensjonUtland),
+                        verdiCallbackAlleSpråk(locale =>
+                            landkodeTilSpråk(
+                                andreForelder[
+                                    andreForelderDataKeySpørsmål.andreForelderPensjonHvilketLand
+                                ].svar,
+                                locale
+                            )
+                        )
+                    ),
+                    [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet]: søknadsfeltBarn(
+                        språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderArbeidUtlandet),
+                        sammeVerdiAlleSpråk(
+                            andreForelder[andreForelderDataKeySpørsmål.andreForelderArbeidUtlandet]
+                                .svar
+                        )
+                    ),
+                    [andreForelderDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]:
+                        søknadsfeltBarn(
+                            språktekstIdFraSpørsmålId(
+                                OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
+                            ),
+                            verdiCallbackAlleSpråk(locale =>
+                                landkodeTilSpråk(
+                                    andreForelder[
+                                        andreForelderDataKeySpørsmål
+                                            .andreForelderArbeidUtlandetHvilketLand
+                                    ].svar,
+                                    locale
+                                )
+                            )
+                        ),
                 }),
                 [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfeltBarn(
                     språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),
