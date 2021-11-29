@@ -46,8 +46,9 @@ jobs:
           tags: ${{ env.IMAGE }}
           build-args: |
             base_path=${{ env.BASE_PATH }}
-            sentry_auth_token=${{ secrets.SENTRY_AUTH_TOKEN }}
             sentry_release=${{ github.sha }}
+          secrets: |
+            sentry_token=${{ secrets.SENTRY_AUTH_TOKEN }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
