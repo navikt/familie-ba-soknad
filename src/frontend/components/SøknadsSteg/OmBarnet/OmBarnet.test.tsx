@@ -329,23 +329,23 @@ describe('OmBarnet', () => {
                 svar: ESvar.NEI,
             },
             andreForelder: {
-                andreForelderNavn: {
+                navn: {
                     svar: AlternativtSvarForInput.UKJENT,
                 },
-                andreForelderFnr: { svar: '' },
-                andreForelderArbeidUtlandet: {
+                fnr: { svar: '' },
+                arbeidUtlandet: {
                     id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
                     svar: ESvar.JA,
                 },
-                andreForelderArbeidUtlandetHvilketLand: {
+                arbeidUtlandetHvilketLand: {
                     id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
                     svar: 'BEL',
                 },
-                andreForelderPensjonUtland: {
+                pensjonUtland: {
                     id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
                     svar: ESvar.JA,
                 },
-                andreForelderPensjonHvilketLand: {
+                pensjonHvilketLand: {
                     id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
                     svar: 'BEL',
                 },

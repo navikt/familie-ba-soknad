@@ -369,38 +369,50 @@ export const useOmBarnet = (
         const annetBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === radioVerdi);
         if (annetBarn) {
             andreForelderNavn.validerOgSettFelt(
-                formaterInitVerdiForInputMedUkjent(annetBarn.andreForelder?.andreForelderNavn.svar)
+                formaterInitVerdiForInputMedUkjent(
+                    annetBarn.andreForelder?.[andreForelderDataKeySpørsmål.navn].svar
+                )
             );
             andreForelderFnr.validerOgSettFelt(
-                formaterInitVerdiForInputMedUkjent(annetBarn.andreForelder?.andreForelderFnr.svar)
+                formaterInitVerdiForInputMedUkjent(
+                    annetBarn.andreForelder?.[andreForelderDataKeySpørsmål.fnr].svar
+                )
             );
             andreForelderNavnUkjent.validerOgSettFelt(
-                formaterVerdiForCheckbox(annetBarn.andreForelder?.andreForelderNavn.svar)
+                formaterVerdiForCheckbox(
+                    annetBarn.andreForelder?.[andreForelderDataKeySpørsmål.navn].svar
+                )
             );
             andreForelderFnrUkjent.validerOgSettFelt(
-                formaterVerdiForCheckbox(annetBarn.andreForelder?.andreForelderFnr.svar)
+                formaterVerdiForCheckbox(
+                    annetBarn.andreForelder?.[andreForelderDataKeySpørsmål.fnr].svar
+                )
             );
 
             andreForelderFødselsdato.validerOgSettFelt(
                 formaterInitVerdiForInputMedUkjent(
-                    annetBarn.andreForelder?.andreForelderFødselsdato.svar
+                    annetBarn.andreForelder?.[andreForelderDataKeySpørsmål.fødselsdato].svar
                 )
             );
             andreForelderFødselsdatoUkjent.validerOgSettFelt(
-                formaterVerdiForCheckbox(annetBarn.andreForelder?.andreForelderFødselsdato.svar)
+                formaterVerdiForCheckbox(
+                    annetBarn.andreForelder?.[andreForelderDataKeySpørsmål.fødselsdato].svar
+                )
             );
 
             andreForelderArbeidUtlandet.validerOgSettFelt(
-                annetBarn.andreForelder?.andreForelderArbeidUtlandet.svar ?? null
+                annetBarn.andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandet].svar ?? null
             );
             andreForelderArbeidUtlandetHvilketLand.validerOgSettFelt(
-                annetBarn.andreForelder?.andreForelderArbeidUtlandetHvilketLand.svar ?? ''
+                annetBarn.andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]
+                    .svar ?? ''
             );
             andreForelderPensjonUtland.validerOgSettFelt(
-                annetBarn.andreForelder?.andreForelderPensjonUtland.svar ?? null
+                annetBarn.andreForelder?.[andreForelderDataKeySpørsmål.pensjonUtland].svar ?? null
             );
             andreForelderPensjonHvilketLand.validerOgSettFelt(
-                annetBarn.andreForelder?.andreForelderPensjonHvilketLand.svar ?? ''
+                annetBarn.andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar ??
+                    ''
             );
         } else {
             nullstillAndreForelderFelter();
@@ -706,8 +718,8 @@ export const useOmBarnet = (
                           },
                           ...(andreForelder && {
                               andreForelder: {
-                                  andreForelderNavn: {
-                                      ...andreForelder.andreForelderNavn,
+                                  navn: {
+                                      ...andreForelder[andreForelderDataKeySpørsmål.navn],
                                       svar: trimWhiteSpace(
                                           svarForSpørsmålMedUkjent(
                                               andreForelderNavnUkjent,
@@ -715,34 +727,38 @@ export const useOmBarnet = (
                                           )
                                       ),
                                   },
-                                  andreForelderFnr: {
-                                      ...andreForelder.andreForelderFnr,
+                                  fnr: {
+                                      ...andreForelder[andreForelderDataKeySpørsmål.fnr],
                                       svar: svarForSpørsmålMedUkjent(
                                           andreForelderFnrUkjent,
                                           andreForelderFnr
                                       ),
                                   },
-                                  andreForelderFødselsdato: {
-                                      ...andreForelder.andreForelderFødselsdato,
+                                  fødselsdato: {
+                                      ...andreForelder[andreForelderDataKeySpørsmål.fødselsdato],
                                       svar: svarForSpørsmålMedUkjent(
                                           andreForelderFødselsdatoUkjent,
                                           andreForelderFødselsdato
                                       ),
                                   },
-                                  andreForelderArbeidUtlandet: {
-                                      ...andreForelder.andreForelderArbeidUtlandet,
+                                  arbeidUtlandet: {
+                                      ...andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet],
                                       svar: andreForelderArbeidUtlandet.verdi,
                                   },
-                                  andreForelderArbeidUtlandetHvilketLand: {
-                                      ...andreForelder.andreForelderArbeidUtlandetHvilketLand,
+                                  arbeidUtlandetHvilketLand: {
+                                      ...andreForelder[
+                                          andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand
+                                      ],
                                       svar: andreForelderArbeidUtlandetHvilketLand.verdi,
                                   },
-                                  andreForelderPensjonUtland: {
-                                      ...andreForelder.andreForelderPensjonUtland,
+                                  pensjonUtland: {
+                                      ...andreForelder[andreForelderDataKeySpørsmål.pensjonUtland],
                                       svar: andreForelderPensjonUtland.verdi,
                                   },
-                                  andreForelderPensjonHvilketLand: {
-                                      ...andreForelder.andreForelderPensjonHvilketLand,
+                                  pensjonHvilketLand: {
+                                      ...andreForelder[
+                                          andreForelderDataKeySpørsmål.pensjonHvilketLand
+                                      ],
                                       svar: andreForelderPensjonHvilketLand.verdi,
                                   },
                                   skriftligAvtaleOmDeltBosted: {

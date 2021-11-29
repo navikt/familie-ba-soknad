@@ -98,13 +98,13 @@ export interface IAdresse {
 }
 
 export enum andreForelderDataKeySpørsmål {
-    navn = 'andreForelderNavn',
-    fnr = 'andreForelderFnr',
-    fødselsdato = 'andreForelderFødselsdato',
-    arbeidUtlandet = 'andreForelderArbeidUtlandet',
-    arbeidUtlandetHvilketLand = 'andreForelderArbeidUtlandetHvilketLand',
-    pensjonUtland = 'andreForelderPensjonUtland',
-    pensjonHvilketLand = 'andreForelderPensjonHvilketLand',
+    navn = 'navn',
+    fnr = 'fnr',
+    fødselsdato = 'fødselsdato',
+    arbeidUtlandet = 'arbeidUtlandet',
+    arbeidUtlandetHvilketLand = 'arbeidUtlandetHvilketLand',
+    pensjonUtland = 'pensjonUtland',
+    pensjonHvilketLand = 'pensjonHvilketLand',
     skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
     søkerHarBoddMedAndreForelder = 'søkerHarBoddMedAndreForelder',
     søkerFlyttetFraAndreForelderDato = 'søkerFlyttetFraAndreForelderDato',

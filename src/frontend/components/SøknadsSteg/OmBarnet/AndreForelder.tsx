@@ -4,6 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
+import { andreForelderDataKeySpørsmål } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { ISøknadSpørsmål } from '../../../typer/spørsmål';
 import { IAndreForelder, IBarnMedISøknad } from '../../../typer/søknad';
@@ -132,7 +133,9 @@ const AndreForelder: React.FC<{
                         skjema={skjema}
                         felt={skjema.felter.andreForelderArbeidUtlandet}
                         spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[andreForelder.andreForelderArbeidUtlandet.id]
+                            omBarnetSpørsmålSpråkId[
+                                andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].id
+                            ]
                         }
                         inkluderVetIkke={true}
                         språkValues={{ navn: barnetsNavn }}
@@ -145,7 +148,9 @@ const AndreForelder: React.FC<{
                             <SpråkTekst
                                 id={
                                     omBarnetSpørsmålSpråkId[
-                                        andreForelder.andreForelderArbeidUtlandetHvilketLand.id
+                                        andreForelder[
+                                            andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand
+                                        ].id
                                     ]
                                 }
                             />
@@ -166,7 +171,9 @@ const AndreForelder: React.FC<{
                         skjema={skjema}
                         felt={skjema.felter.andreForelderPensjonUtland}
                         spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[andreForelder.andreForelderPensjonUtland.id]
+                            omBarnetSpørsmålSpråkId[
+                                andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].id
+                            ]
                         }
                         inkluderVetIkke={true}
                         språkValues={{ navn: barnetsNavn }}
@@ -179,7 +186,9 @@ const AndreForelder: React.FC<{
                             <SpråkTekst
                                 id={
                                     omBarnetSpørsmålSpråkId[
-                                        andreForelder.andreForelderPensjonHvilketLand.id
+                                        andreForelder[
+                                            andreForelderDataKeySpørsmål.pensjonHvilketLand
+                                        ].id
                                     ]
                                 }
                                 values={{ barn: barnetsNavn }}

@@ -87,7 +87,7 @@ const AndreForelderOppsummering: React.FC<{
                         <SpråkTekst
                             id={
                                 omBarnetSpørsmålSpråkId[
-                                    andreForelder.andreForelderArbeidUtlandet.id
+                                    andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].id
                                 ]
                             }
                             values={{ navn: barnetsNavn }}
@@ -101,7 +101,9 @@ const AndreForelderOppsummering: React.FC<{
                             <SpråkTekst
                                 id={
                                     omBarnetSpørsmålSpråkId[
-                                        andreForelder.andreForelderArbeidUtlandetHvilketLand.id
+                                        andreForelder[
+                                            andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand
+                                        ].id
                                     ]
                                 }
                             />
@@ -119,7 +121,9 @@ const AndreForelderOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={
-                                omBarnetSpørsmålSpråkId[andreForelder.andreForelderPensjonUtland.id]
+                                omBarnetSpørsmålSpråkId[
+                                    andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].id
+                                ]
                             }
                             values={{ navn: barnetsNavn }}
                         />
@@ -132,7 +136,9 @@ const AndreForelderOppsummering: React.FC<{
                             <SpråkTekst
                                 id={
                                     omBarnetSpørsmålSpråkId[
-                                        andreForelder.andreForelderPensjonHvilketLand.id
+                                        andreForelder[
+                                            andreForelderDataKeySpørsmål.pensjonHvilketLand
+                                        ].id
                                     ]
                                 }
                                 values={{

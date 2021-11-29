@@ -31,11 +31,11 @@ describe('eøs', () => {
                             svar: 'BEL' as Alpha3Code,
                         },
                         andreForelder: mockDeep<IAndreForelder>({
-                            andreForelderArbeidUtlandetHvilketLand: {
+                            arbeidUtlandetHvilketLand: {
                                 id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
                                 svar: 'DEU' as Alpha3Code,
                             },
-                            andreForelderPensjonHvilketLand: {
+                            pensjonHvilketLand: {
                                 id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
                                 svar: 'DEU' as Alpha3Code,
                             },

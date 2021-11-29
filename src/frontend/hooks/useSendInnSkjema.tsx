@@ -612,7 +612,7 @@ export const useSendInnSkjema = (): {
         const formatert = dataISøknadKontraktFormat(søknad);
 
         const res = await axiosRequest<IKvittering, ISøknadKontrakt>({
-            url: `${soknadApi}/soknad/v5`,
+            url: `${soknadApi}/soknad/v6`,
             method: 'POST',
             withCredentials: true,
             data: formatert,

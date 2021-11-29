@@ -1,5 +1,6 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { andreForelderDataKeySpørsmål } from '../typer/person';
 import { IBarnMedISøknad, ISøknad } from '../typer/søknad';
 
 export const landSvarSomKanTriggeEøs = (søknad: ISøknad) => {
@@ -13,8 +14,9 @@ export const landSvarSomKanTriggeEøs = (søknad: ISøknad) => {
         .flatMap((barn: IBarnMedISøknad) => [
             ...(barn.andreForelder
                 ? [
-                      barn.andreForelder.andreForelderArbeidUtlandetHvilketLand.svar,
-                      barn.andreForelder.andreForelderPensjonHvilketLand.svar,
+                      barn.andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]
+                          .svar,
+                      barn.andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
                   ]
                 : []),
             barn.barnetrygdFraEøslandHvilketLand.svar,
