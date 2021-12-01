@@ -673,8 +673,14 @@ export const useOmBarnet = (
                               svar: sammeForelderSomAnnetBarn.verdi,
                           },
                           ...(!!barn.andreForelder && {
-                              andreForelder: barnMedSammeForelder
-                                  ? barnMedSammeForelder.andreForelder
+                              andreForelder: barnMedSammeForelder?.andreForelder
+                                  ? {
+                                        ...barnMedSammeForelder.andreForelder,
+                                        skriftligAvtaleOmDeltBosted: {
+                                            ...barn.andreForelder.skriftligAvtaleOmDeltBosted,
+                                            svar: skriftligAvtaleOmDeltBosted.verdi,
+                                        },
+                                    }
                                   : {
                                         navn: {
                                             ...barn.andreForelder[

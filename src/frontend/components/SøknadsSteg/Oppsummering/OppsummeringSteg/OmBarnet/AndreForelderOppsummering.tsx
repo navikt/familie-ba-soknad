@@ -7,6 +7,7 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { andreForelderDataKeySpørsmål } from '../../../../../typer/person';
 import { IAndreForelder } from '../../../../../typer/søknad';
+import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -154,6 +155,57 @@ const AndreForelderOppsummering: React.FC<{
                     />
                 )}
             </StyledOppsummeringsFeltGruppe>
+            {andreForelder.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]
+                .svar && (
+                <StyledOppsummeringsFeltGruppe>
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
+                                    ]
+                                }
+                                values={{ navn: barnetsNavn }}
+                            />
+                        }
+                        søknadsvar={
+                            andreForelder.utvidet[
+                                andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder
+                            ].svar
+                        }
+                    />
+                    {andreForelder.utvidet[
+                        andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
+                    ].svar && (
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={(() => {
+                                const svar =
+                                    andreForelder.utvidet[
+                                        andreForelderDataKeySpørsmål
+                                            .søkerFlyttetFraAndreForelderDato
+                                    ].svar;
+                                return svar === AlternativtSvarForInput.UKJENT
+                                    ? formatMessage({
+                                          id: omBarnetSpørsmålSpråkId[
+                                              OmBarnetSpørsmålsId.søkerBorMedAndreForelder
+                                          ],
+                                      })
+                                    : formaterDato(svar);
+                            })()}
+                        />
+                    )}
+                </StyledOppsummeringsFeltGruppe>
+            )}
         </>
     );
 };

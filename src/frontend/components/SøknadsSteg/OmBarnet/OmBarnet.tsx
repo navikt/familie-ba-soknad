@@ -9,7 +9,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { BarnetsId } from '../../../typer/common';
-import { barnDataKeySpørsmål, ESivilstand } from '../../../typer/person';
+import { ESivilstand } from '../../../typer/person';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
@@ -73,11 +73,10 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             />
             {barn.andreForelder && (
                 <AndreForelder
-                    barnetsNavn={barnetsNavnValue(barn, intl)}
+                    barn={barn}
                     skjema={skjema}
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
                     andreForelder={barn.andreForelder}
-                    andreForelderErDød={barn[barnDataKeySpørsmål.andreForelderErDød]}
                 />
             )}
 
