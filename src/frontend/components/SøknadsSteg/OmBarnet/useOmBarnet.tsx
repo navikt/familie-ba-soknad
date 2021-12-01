@@ -274,6 +274,7 @@ export const useOmBarnet = (
             return (
                 avhengigheter &&
                 avhengigheter.andreForelderFnrUkjent &&
+                avhengigheter.andreForelderFnrUkjent.erSynlig &&
                 avhengigheter.andreForelderFnrUkjent.verdi === ESvar.JA &&
                 avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
             );
@@ -289,6 +290,7 @@ export const useOmBarnet = (
         vetIkkeCheckbox: andreForelderFødselsdatoUkjent,
         feilmeldingSpråkId: 'ombarnet.andre-forelder.fødselsdato.feilmelding',
         skalFeltetVises:
+            andreForelderFnrUkjent.erSynlig &&
             andreForelderFnrUkjent.verdi === ESvar.JA &&
             andreForelderNavnUkjent.verdi === ESvar.NEI,
         nullstillVedAvhengighetEndring:
