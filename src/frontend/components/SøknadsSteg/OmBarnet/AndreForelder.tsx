@@ -27,15 +27,7 @@ const AndreForelder: React.FC<{
     andreForelderErDød: ISøknadSpørsmål<ESvar | null>;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     andreBarnSomErFyltUt: IBarnMedISøknad[];
-    settSammeForelder: (radioVerdi: string) => void;
-}> = ({
-    barnetsNavn,
-    andreForelder,
-    andreForelderErDød,
-    skjema,
-    andreBarnSomErFyltUt,
-    settSammeForelder,
-}) => {
+}> = ({ barnetsNavn, andreForelder, andreForelderErDød, skjema, andreBarnSomErFyltUt }) => {
     const { erEøsLand } = useEøs();
 
     return (
@@ -43,7 +35,6 @@ const AndreForelder: React.FC<{
             <KomponentGruppe>
                 {skjema.felter.sammeForelderSomAnnetBarn.erSynlig && (
                     <SammeSomAnnetBarnRadio
-                        onChangeCallback={settSammeForelder}
                         andreBarnSomErFyltUt={andreBarnSomErFyltUt}
                         skjema={skjema}
                     />

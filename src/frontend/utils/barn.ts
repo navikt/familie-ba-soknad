@@ -250,6 +250,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         barnErFyltUt: false,
         utenlandsperioder: [],
         andreForelder: null,
+        [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: {
+            id: OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn,
+            svar: null,
+        },
         [barnDataKeySpørsmål.erFosterbarn]: {
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
             svar: null,

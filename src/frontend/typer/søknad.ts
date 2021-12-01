@@ -7,7 +7,7 @@ import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivs
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
-import { AlternativtSvarForInput, DatoMedUkjent, INøkkelPar } from './common';
+import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, INøkkelPar } from './common';
 import {
     Dokumentasjonsbehov,
     dokumentasjonsbehovTilSpråkId,
@@ -85,6 +85,9 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.søkerForTidsrom]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.søkerForTidsromStartdato]: ISøknadSpørsmål<ISODateString>;
     [barnDataKeySpørsmål.søkerForTidsromSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
+    [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: ISøknadSpørsmål<
+        BarnetsId | AlternativtSvarForInput.ANNEN_FORELDER | null
+    >;
 }
 
 export interface ISøknad {

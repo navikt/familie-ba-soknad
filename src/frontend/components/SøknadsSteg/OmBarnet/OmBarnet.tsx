@@ -41,7 +41,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         oppdaterSøknad,
         barn,
         andreBarnSomErFyltUt,
-        settSammeForelder,
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
@@ -74,7 +73,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             />
             {barn.andreForelder && (
                 <AndreForelder
-                    settSammeForelder={settSammeForelder}
                     barnetsNavn={barnetsNavnValue(barn, intl)}
                     skjema={skjema}
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}

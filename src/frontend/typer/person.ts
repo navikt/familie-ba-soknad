@@ -130,4 +130,5 @@ export enum barnDataKeySpørsmål {
     søkerForTidsrom = 'søkerForTidsrom',
     søkerForTidsromStartdato = 'søkerForTidsromStartdato',
     søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
+    sammeForelderSomAnnetBarnMedId = 'sammeForelderSomAnnetBarnMedId',
 }
