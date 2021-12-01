@@ -212,7 +212,10 @@ export const useOmBarnet = (
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />); //TODO oppdater feilmelding
         },
-        skalFeltetVises: () => !!andreForelder && andreBarnSomErFyltUt.length > 0,
+        skalFeltetVises: () =>
+            !!andreForelder &&
+            søknad.barnInkludertISøknaden[0].id !== barn.id &&
+            andreBarnSomErFyltUt.length > 0,
     });
 
     const andreForelderNavnUkjent = useFelt<ESvar>({
