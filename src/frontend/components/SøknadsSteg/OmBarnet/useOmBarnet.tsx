@@ -330,6 +330,7 @@ export const useOmBarnet = (
                       }
                     : undefined,
         },
+        skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
         feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
     });
 
@@ -364,6 +365,7 @@ export const useOmBarnet = (
                       }
                     : undefined,
         },
+        skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
         feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
     });
 
@@ -377,13 +379,16 @@ export const useOmBarnet = (
         avhengighet: andreForelderPensjonUtland,
         nullstillVedAvhengighetEndring:
             sammeForelderSomAnnetBarn.verdi === null ||
-            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER,
+            sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
     });
 
     /*--- BOSTED ---*/
 
     const avhengigheterForBosted = () => {
-        return andreForelder
+        return !!andreForelder &&
+            andreForelderNavnUkjent.verdi === ESvar.NEI &&
+            (sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER ||
+                sammeForelderSomAnnetBarn.verdi === null)
             ? {
                   andreForelderArbeidUtlandet: {
                       hovedSpørsmål: andreForelderArbeidUtlandet,
