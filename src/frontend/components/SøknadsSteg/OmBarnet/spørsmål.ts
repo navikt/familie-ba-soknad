@@ -75,5 +75,5 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder]: 'ombarnet.boddsammenmedandreforelder.spm',
     [OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato]: 'ombarnet.nårflyttetfra.spm',
     [OmBarnetSpørsmålsId.søkerBorMedAndreForelder]: 'ombarnet.nårflyttetfra.borsammencheck',
-    [OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn]: 'todo', //TODO
+    [OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn]: 'ombarnet.hvemerandreforelder.spm',
 };

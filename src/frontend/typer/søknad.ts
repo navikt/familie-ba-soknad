@@ -164,6 +164,7 @@ export interface ISøknadKontraktBarn {
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
+    andreForelder: ISøknadsfelt<IAndreForelder> | null;
 }
 
 export const hentSøknadstype = () => {

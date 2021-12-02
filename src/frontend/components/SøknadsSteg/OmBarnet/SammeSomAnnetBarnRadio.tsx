@@ -53,7 +53,7 @@ const SammeSomAnnetBarnRadio: React.FC<{
             legend={
                 <Element>
                     <SpråkTekst
-                        id={'ombarnet.hvemerandreforelder.spm'}
+                        id={OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn}
                         values={{ barn: barnetsNavn }}
                     />
                 </Element>

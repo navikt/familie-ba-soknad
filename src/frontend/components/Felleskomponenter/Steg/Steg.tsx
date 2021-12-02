@@ -116,7 +116,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         const målPath = komFra?.path ?? nesteRoute.path;
         komFra && settKomFra(undefined);
         logSkjemaStegFullført(hentAktivtStegIndexForStegindikator(location.pathname) + 1);
-        history.push(målPath);
+        nyesteNåværendeRoute !== RouteEnum.Dokumentasjon && history.push(målPath); //TODO: FJERN
     };
 
     const håndterGåVidere = event => {
