@@ -45,6 +45,7 @@ const AndreForelder: React.FC<{
                     <SammeSomAnnetBarnRadio
                         andreBarnSomErFyltUt={andreBarnSomErFyltUt}
                         skjema={skjema}
+                        barnetsNavn={barnetsNavn}
                     />
                 )}
                 {!skjema.felter.sammeForelderSomAnnetBarn.erSynlig ||

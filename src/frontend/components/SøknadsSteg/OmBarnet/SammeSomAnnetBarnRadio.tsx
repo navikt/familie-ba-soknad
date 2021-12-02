@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 
 import { ISkjema } from '@navikt/familie-skjema';
 
@@ -25,7 +26,8 @@ export const ANNEN_FORELDER = 'ANNEN_FORELDER';
 const SammeSomAnnetBarnRadio: React.FC<{
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
-}> = ({ andreBarnSomErFyltUt, skjema }) => {
+    barnetsNavn: string;
+}> = ({ andreBarnSomErFyltUt, skjema, barnetsNavn }) => {
     const felt = skjema.felter.sammeForelderSomAnnetBarn;
 
     const intl = useIntl();
@@ -48,7 +50,14 @@ const SammeSomAnnetBarnRadio: React.FC<{
     return (
         <StyledRadioPanelGruppe
             {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
-            legend={'todo'}
+            legend={
+                <Element>
+                    <SpråkTekst
+                        id={'ombarnet.hvemerandreforelder.spm'}
+                        values={{ barn: barnetsNavn }}
+                    />
+                </Element>
+            }
             checked={felt.verdi ?? undefined}
             name={OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn}
             radios={radios}

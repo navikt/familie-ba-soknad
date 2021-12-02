@@ -210,7 +210,13 @@ export const useOmBarnet = (
         valideringsfunksjon: (felt: FeltState<string | null>) => {
             return felt.verdi !== null
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.mangler-svar.feilmelding'} />); //TODO oppdater feilmelding
+                : feil(
+                      felt,
+                      <SpråkTekst
+                          id={'ombarnet.hvemerandreforelder.feilmelding'}
+                          values={{ barn: barnetsNavnValue(barn, intl) }}
+                      />
+                  );
         },
         skalFeltetVises: () =>
             !!andreForelder &&
@@ -383,36 +389,15 @@ export const useOmBarnet = (
     });
 
     /*--- BOSTED ---*/
-
-    const avhengigheterForBosted = () => {
-        return !!andreForelder &&
-            andreForelderNavnUkjent.verdi === ESvar.NEI &&
-            (sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER ||
-                sammeForelderSomAnnetBarn.verdi === null)
-            ? {
-                  andreForelderArbeidUtlandet: {
-                      hovedSpørsmål: andreForelderArbeidUtlandet,
-                      tilhørendeFelter: [andreForelderArbeidUtlandetHvilketLand],
-                  },
-                  andreForelderPensjonUtland: {
-                      hovedSpørsmål: andreForelderPensjonUtland,
-                      tilhørendeFelter: [andreForelderPensjonHvilketLand],
-                  },
-              }
-            : undefined;
-    };
-
     const borFastMedSøker = useJaNeiSpmFelt({
         søknadsfelt: barn[barnDataKeySpørsmål.borFastMedSøker],
         feilmeldingSpråkId: 'ombarnet.bor-fast.feilmelding',
-        avhengigheter: avhengigheterForBosted(),
         feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
     });
 
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
         feilmeldingSpråkId: 'ombarnet.delt-bosted.feilmelding',
-        avhengigheter: avhengigheterForBosted(),
         skalSkjules:
             !andreForelder || barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
         feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },

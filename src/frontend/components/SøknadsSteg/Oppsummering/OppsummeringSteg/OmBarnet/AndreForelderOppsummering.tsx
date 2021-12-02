@@ -81,21 +81,22 @@ const AndreForelderOppsummering: React.FC<{
                         )}
                     />
                 )}
-            </StyledOppsummeringsFeltGruppe>
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                omBarnetSpørsmålSpråkId[
-                                    andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].id
-                                ]
-                            }
-                            values={{ navn: barnetsNavn }}
-                        />
-                    }
-                    søknadsvar={andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar}
-                />
+                {andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet]
+                                            .id
+                                    ]
+                                }
+                                values={{ navn: barnetsNavn }}
+                            />
+                        }
+                        søknadsvar={andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar}
+                    />
+                )}
                 {andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand].svar && (
                     <OppsummeringFelt
                         tittel={
@@ -116,21 +117,21 @@ const AndreForelderOppsummering: React.FC<{
                         )}
                     />
                 )}
-            </StyledOppsummeringsFeltGruppe>
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                omBarnetSpørsmålSpråkId[
-                                    andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].id
-                                ]
-                            }
-                            values={{ navn: barnetsNavn }}
-                        />
-                    }
-                    søknadsvar={andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar}
-                />
+                {andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].id
+                                    ]
+                                }
+                                values={{ navn: barnetsNavn }}
+                            />
+                        }
+                        søknadsvar={andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar}
+                    />
+                )}
                 {andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar && (
                     <OppsummeringFelt
                         tittel={
@@ -154,10 +155,8 @@ const AndreForelderOppsummering: React.FC<{
                         )}
                     />
                 )}
-            </StyledOppsummeringsFeltGruppe>
-            {andreForelder.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]
-                .svar && (
-                <StyledOppsummeringsFeltGruppe>
+                {andreForelder.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]
+                    .svar && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -175,37 +174,36 @@ const AndreForelderOppsummering: React.FC<{
                             ].svar
                         }
                     />
-                    {andreForelder.utvidet[
-                        andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
-                    ].svar && (
-                        <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                                        ]
-                                    }
-                                />
-                            }
-                            søknadsvar={(() => {
-                                const svar =
-                                    andreForelder.utvidet[
-                                        andreForelderDataKeySpørsmål
-                                            .søkerFlyttetFraAndreForelderDato
-                                    ].svar;
-                                return svar === AlternativtSvarForInput.UKJENT
-                                    ? formatMessage({
-                                          id: omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId.søkerBorMedAndreForelder
-                                          ],
-                                      })
-                                    : formaterDato(svar);
-                            })()}
-                        />
-                    )}
-                </StyledOppsummeringsFeltGruppe>
-            )}
+                )}
+                {andreForelder.utvidet[
+                    andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
+                ].svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                                    ]
+                                }
+                            />
+                        }
+                        søknadsvar={(() => {
+                            const svar =
+                                andreForelder.utvidet[
+                                    andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
+                                ].svar;
+                            return svar === AlternativtSvarForInput.UKJENT
+                                ? formatMessage({
+                                      id: omBarnetSpørsmålSpråkId[
+                                          OmBarnetSpørsmålsId.søkerBorMedAndreForelder
+                                      ],
+                                  })
+                                : formaterDato(svar);
+                        })()}
+                    />
+                )}
+            </StyledOppsummeringsFeltGruppe>
         </>
     );
 };

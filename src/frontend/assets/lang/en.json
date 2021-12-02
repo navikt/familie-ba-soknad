@@ -458,6 +458,8 @@
   "ombarnet.fårellersøkttrygd.hvilketlandsøkt.spm": "What country have you applied for child benefit from?",
   "ombarnet.fårellersøkttrygd.spm": "Are you receiving or have you applied for child benefit?",
   "ombarnet.fårellersøkttrygd.søkt": "I have applied for child benefit",
+  "ombarnet.hvemerandreforelder.feilmelding": "You must state who {barn}'s other parent is in order to be able to continue",
+  "ombarnet.hvemerandreforelder.spm": "Who is {barn}'s other parent?",
   "ombarnet.hvilketlandbarnetrygd.feilmelding": "You must state which country you received child benefit from in order to be able to proceed",
   "ombarnet.hvilketlandbarnetrygd.spm": "Which country did you receive child benefit from?",
   "ombarnet.hvilketlandflyttetfra.feilmelding": "You must state which country the child moved from in order to be able to proceed",
