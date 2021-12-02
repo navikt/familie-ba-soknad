@@ -416,62 +416,76 @@ export const useSendInnSkjema = (): {
                         omBarnetSpørsmålSpråkId['andre-forelder-navn-ukjent']
                     ),
                 },
-                [andreForelderDataKeySpørsmål.fnr]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
-                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+
+                [andreForelderDataKeySpørsmål.fnr]: {
+                    label: språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
+                    verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                         andreForelder[andreForelderDataKeySpørsmål.fnr].svar,
                         omBarnetSpørsmålSpråkId['andre-forelder-fødsels-/dnummer-ukjent']
-                    )
-                ),
-                [andreForelderDataKeySpørsmål.fødselsdato]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
-                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                    ),
+                },
+
+                [andreForelderDataKeySpørsmål.fødselsdato]: {
+                    label: språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
+                    verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                         andreForelder[andreForelderDataKeySpørsmål.fødselsdato].svar,
                         omBarnetSpørsmålSpråkId['andre-forelder-fødselsdato-ukjent']
-                    )
-                ),
-                [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato),
-                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                        andreForelder.utvidet[
-                            andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
-                        ].svar,
-                        'pdf.andreforelder.borsammennaa'
-                    )
-                ),
-                [andreForelderDataKeySpørsmål.pensjonUtland]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderPensjonUtland),
-                    sammeVerdiAlleSpråk(
+                    ),
+                },
+
+                [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: {
+                    label: språktekstIdFraSpørsmålId(
+                        OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                    ),
+                    verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        andreForelder[andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]
+                            .svar,
+                        omBarnetSpørsmålSpråkId['andre-forelder-fødselsdato-ukjent']
+                    ),
+                },
+
+                [andreForelderDataKeySpørsmål.pensjonUtland]: {
+                    label: språktekstIdFraSpørsmålId(
+                        OmBarnetSpørsmålsId.andreForelderPensjonUtland
+                    ),
+                    verdi: sammeVerdiAlleSpråk(
                         andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar
-                    )
-                ),
-                [andreForelderDataKeySpørsmål.pensjonHvilketLand]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderPensjonUtland),
-                    verdiCallbackAlleSpråk(locale =>
+                    ),
+                },
+
+                [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
+                    label: språktekstIdFraSpørsmålId(
+                        OmBarnetSpørsmålsId.andreForelderPensjonUtland
+                    ),
+                    verdi: verdiCallbackAlleSpråk(locale =>
                         landkodeTilSpråk(
                             andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
                             locale
                         )
-                    )
-                ),
-                [andreForelderDataKeySpørsmål.arbeidUtlandet]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderArbeidUtlandet),
-                    sammeVerdiAlleSpråk(
+                    ),
+                },
+                [andreForelderDataKeySpørsmål.arbeidUtlandet]: {
+                    label: språktekstIdFraSpørsmålId(
+                        OmBarnetSpørsmålsId.andreForelderArbeidUtlandet
+                    ),
+                    verdi: sammeVerdiAlleSpråk(
                         andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar
-                    )
-                ),
-                [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: søknadsfeltBarn(
-                    språktekstIdFraSpørsmålId(
+                    ),
+                },
+
+                [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
+                    label: språktekstIdFraSpørsmålId(
                         OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
                     ),
-                    verdiCallbackAlleSpråk(locale =>
+                    verdi: verdiCallbackAlleSpråk(locale =>
                         landkodeTilSpråk(
                             andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]
                                 .svar,
                             locale
                         )
-                    )
-                ),
+                    ),
+                },
+
                 // TODO: HUSK Å TA MED UTVIDET
             }),
         };
