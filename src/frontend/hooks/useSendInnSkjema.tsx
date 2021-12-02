@@ -70,7 +70,7 @@ import {
     landkodeTilSpråk,
     toÅrsakSpråkId,
 } from '../utils/språk';
-import { jaNeiSvarTilSpråkId, språkIndexListe } from '../utils/spørsmål';
+import { jaNeiSvarTilSpråkId, språkIndexListe, svarForSpørsmålMedUkjent } from '../utils/spørsmål';
 import { erTidligereSamboer, isAlpha3Code } from '../utils/typeguards';
 import { formaterFnr } from '../utils/visning';
 
@@ -485,8 +485,29 @@ export const useSendInnSkjema = (): {
                         )
                     ),
                 },
-
-                // TODO: HUSK Å TA MED UTVIDET
+                utvidet: {
+                    [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: {
+                        label: språktekstIdFraSpørsmålId(
+                            OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
+                        ),
+                        verdi: sammeVerdiAlleSpråk(
+                            andreForelder.utvidet[
+                                andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder
+                            ]
+                        ),
+                    },
+                    [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: {
+                        label: språktekstIdFraSpørsmålId(
+                            OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                        ),
+                        verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                            andreForelder[
+                                andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
+                            ].svar,
+                            omBarnetSpørsmålSpråkId['søker-flyttet-fra-andre-forelder-dato']
+                        ),
+                    },
+                },
             }),
         };
     };
