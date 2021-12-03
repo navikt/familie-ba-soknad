@@ -138,6 +138,21 @@ export interface IUtenlandsperiodeIKontraktFormat {
     oppholdslandFraDato: ISøknadsfelt<string | undefined>;
 }
 
+export interface IAndreForelderIKontraktFormat {
+    navn: ISøknadsfelt<string>;
+    fnr: ISøknadsfelt<string>;
+    fødselsdato: ISøknadsfelt<string>;
+    pensjonUtland: ISøknadsfelt<ESvar | null>;
+    pensjonHvilketLand: ISøknadsfelt<string>;
+    arbeidUtlandet: ISøknadsfelt<ESvar | null>;
+    arbeidUtlandetHvilketLand: ISøknadsfelt<string>;
+    skriftligAvtaleOmDeltBosted: ISøknadsfelt<ESvar | null>;
+    utvidet: {
+        søkerHarBoddMedAndreForelder: ISøknadsfelt<ESvar | null>;
+        søkerFlyttetFraAndreForelderDato: ISøknadsfelt<string>;
+    };
+}
+
 export interface ISøknadKontraktSøker {
     ident: ISøknadsfelt<string>;
     navn: ISøknadsfelt<string>;
@@ -164,7 +179,7 @@ export interface ISøknadKontraktBarn {
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
-    andreForelder: ISøknadsfelt<IAndreForelder> | null;
+    andreForelder: IAndreForelderIKontraktFormat | null;
 }
 
 export const hentSøknadstype = () => {

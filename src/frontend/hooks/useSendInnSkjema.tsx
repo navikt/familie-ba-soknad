@@ -50,6 +50,7 @@ import { ISøknadSpørsmål, SpørsmålId } from '../typer/spørsmål';
 import {
     ERegistrertBostedType,
     IAndreForelder,
+    IAndreForelderIKontraktFormat,
     IBarnMedISøknad,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
@@ -70,7 +71,7 @@ import {
     landkodeTilSpråk,
     toÅrsakSpråkId,
 } from '../utils/språk';
-import { jaNeiSvarTilSpråkId, språkIndexListe, svarForSpørsmålMedUkjent } from '../utils/spørsmål';
+import { jaNeiSvarTilSpråkId, språkIndexListe } from '../utils/spørsmål';
 import { erTidligereSamboer, isAlpha3Code } from '../utils/typeguards';
 import { formaterFnr } from '../utils/visning';
 
@@ -162,6 +163,20 @@ export const useSendInnSkjema = (): {
         );
     };
 
+    const søknadsfeltBarn = <T,>(
+        labelTekstId: string,
+        value: Record<LocaleType, T>,
+        barn?: IBarnMedISøknad,
+        labelMessageValues: object = {}
+    ): ISøknadsfelt<T> =>
+        barn
+            ? søknadsfelt(labelTekstId, value, {
+                  ...labelMessageValues,
+                  navn: barnetsNavnValue(barn, intl),
+                  barn: barnetsNavnValue(barn, intl),
+              })
+            : søknadsfelt(labelTekstId, value);
+
     const barnISøknadsFormat = (barn: IBarnMedISøknad): ISøknadKontraktBarn => {
         /* eslint-disable @typescript-eslint/no-unused-vars */
         const {
@@ -179,17 +194,6 @@ export const useSendInnSkjema = (): {
             ...barnSpørsmål
         } = barn;
         const typetBarnSpørsmål = barnSpørsmål as unknown as SpørsmålMap;
-
-        const søknadsfeltBarn: typeof søknadsfelt = (
-            labelTekstId,
-            value,
-            labelMessageValues = {}
-        ) =>
-            søknadsfelt(labelTekstId, value, {
-                ...labelMessageValues,
-                navn: barnetsNavnValue(barn, intl),
-                barn: barnetsNavnValue(barn, intl),
-            });
 
         const registertBostedVerdi = (): ERegistrertBostedType => {
             /**
@@ -219,26 +223,30 @@ export const useSendInnSkjema = (): {
         return {
             navn: søknadsfeltBarn(
                 'pdf.barn.navn.label',
-                sammeVerdiAlleSpråk(adressebeskyttelse ? `Barn ${formaterFnr(ident)}` : navn)
+                sammeVerdiAlleSpråk(adressebeskyttelse ? `Barn ${formaterFnr(ident)}` : navn),
+                barn
             ),
             ident: søknadsfeltBarn(
                 'pdf.barn.ident.label',
-                ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt')
+                ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt'),
+                barn
             ),
             registrertBostedType: søknadsfeltBarn(
                 'hvilkebarn.barn.bosted',
-                sammeVerdiAlleSpråk(registertBostedVerdi())
+                sammeVerdiAlleSpråk(registertBostedVerdi()),
+                barn
             ),
             alder: søknadsfeltBarn(
                 'pdf.barn.alder.label',
                 alder
                     ? hentTekster('felles.år', { alder })
-                    : sammeVerdiAlleSpråk(AlternativtSvarForInput.UKJENT)
+                    : sammeVerdiAlleSpråk(AlternativtSvarForInput.UKJENT),
+                barn
             ),
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt(periode, index + 1, barn)
             ),
-            andreForelder: andreForelder ? andreForelderTilISøknadsfelt(andreForelder) : null,
+            andreForelder: andreForelder ? andreForelderTilISøknadsfelt(andreForelder, barn) : null,
             spørsmål: {
                 ...spørmålISøknadsFormat(typetBarnSpørsmål, {
                     navn: barnetsNavnValue(barn, intl),
@@ -249,7 +257,8 @@ export const useSendInnSkjema = (): {
                     sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                         søkerForTidsromSluttdato.svar,
                         omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke]
-                    )
+                    ),
+                    barn
                 ),
 
                 [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
@@ -257,7 +266,8 @@ export const useSendInnSkjema = (): {
                     sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                         institusjonOppholdSluttdato.svar,
                         omBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
-                    )
+                    ),
+                    barn
                 ),
             },
         };
@@ -404,111 +414,97 @@ export const useSendInnSkjema = (): {
     };
 
     const andreForelderTilISøknadsfelt = (
-        andreForelder: IAndreForelder
-    ): ISøknadsfelt<IAndreForelder> => {
+        andreForelder: IAndreForelder,
+        barn: IBarnMedISøknad
+    ): IAndreForelderIKontraktFormat => {
+        const { navn, fnr, fødselsdato } = andreForelder;
         return {
-            label: hentTekster('ombarnet.andre-forelder'),
-            verdi: sammeVerdiAlleSpråk({
-                [andreForelderDataKeySpørsmål.navn]: {
-                    label: språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
-                    verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                        andreForelder[andreForelderDataKeySpørsmål.navn].svar,
-                        omBarnetSpørsmålSpråkId['andre-forelder-navn-ukjent']
-                    ),
-                },
+            [andreForelderDataKeySpørsmål.navn]: søknadsfeltBarn(
+                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
+                sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                    navn.svar,
+                    omBarnetSpørsmålSpråkId['andre-forelder-navn-ukjent']
+                ),
+                barn
+            ),
+            [andreForelderDataKeySpørsmål.fnr]: søknadsfeltBarn(
+                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
+                sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                    fnr.svar,
+                    omBarnetSpørsmålSpråkId['andre-forelder-fødsels-/dnummer-ukjent']
+                ),
+                barn
+            ),
+            [andreForelderDataKeySpørsmål.fødselsdato]: søknadsfeltBarn(
+                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
+                sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                    fødselsdato.svar,
+                    omBarnetSpørsmålSpråkId['andre-forelder-fødselsdato-ukjent']
+                ),
+                barn
+            ),
+            [andreForelderDataKeySpørsmål.pensjonUtland]: søknadsfeltBarn(
+                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderPensjonUtland),
+                sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar),
+                barn
+            ),
 
-                [andreForelderDataKeySpørsmål.fnr]: {
-                    label: språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
-                    verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                        andreForelder[andreForelderDataKeySpørsmål.fnr].svar,
-                        omBarnetSpørsmålSpråkId['andre-forelder-fødsels-/dnummer-ukjent']
+            [andreForelderDataKeySpørsmål.pensjonHvilketLand]: søknadsfeltBarn(
+                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand),
+                verdiCallbackAlleSpråk(locale =>
+                    landkodeTilSpråk(
+                        andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
+                        locale
+                    )
+                ),
+                barn
+            ),
+            [andreForelderDataKeySpørsmål.arbeidUtlandet]: søknadsfeltBarn(
+                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderArbeidUtlandet),
+                sammeVerdiAlleSpråk(
+                    andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar
+                ),
+                barn
+            ),
+            [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: søknadsfeltBarn(
+                språktekstIdFraSpørsmålId(
+                    OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
+                ),
+                verdiCallbackAlleSpråk(locale =>
+                    landkodeTilSpråk(
+                        andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand].svar,
+                        locale
+                    )
+                ),
+                barn
+            ),
+            [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: søknadsfeltBarn(
+                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted),
+                sammeVerdiAlleSpråk(
+                    andreForelder[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
+                ),
+                barn
+            ),
+            utvidet: {
+                [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: søknadsfeltBarn(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder),
+                    sammeVerdiAlleSpråk(
+                        andreForelder.utvidet[
+                            andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder
+                        ].svar
                     ),
-                },
-
-                [andreForelderDataKeySpørsmål.fødselsdato]: {
-                    label: språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
-                    verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                        andreForelder[andreForelderDataKeySpørsmål.fødselsdato].svar,
-                        omBarnetSpørsmålSpråkId['andre-forelder-fødselsdato-ukjent']
-                    ),
-                },
-
-                [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: {
-                    label: språktekstIdFraSpørsmålId(
-                        OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                    ),
-                    verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                        andreForelder[andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]
-                            .svar,
-                        omBarnetSpørsmålSpråkId['andre-forelder-fødselsdato-ukjent']
-                    ),
-                },
-
-                [andreForelderDataKeySpørsmål.pensjonUtland]: {
-                    label: språktekstIdFraSpørsmålId(
-                        OmBarnetSpørsmålsId.andreForelderPensjonUtland
-                    ),
-                    verdi: sammeVerdiAlleSpråk(
-                        andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar
-                    ),
-                },
-
-                [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
-                    label: språktekstIdFraSpørsmålId(
-                        OmBarnetSpørsmålsId.andreForelderPensjonUtland
-                    ),
-                    verdi: verdiCallbackAlleSpråk(locale =>
-                        landkodeTilSpråk(
-                            andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
-                            locale
-                        )
-                    ),
-                },
-                [andreForelderDataKeySpørsmål.arbeidUtlandet]: {
-                    label: språktekstIdFraSpørsmålId(
-                        OmBarnetSpørsmålsId.andreForelderArbeidUtlandet
-                    ),
-                    verdi: sammeVerdiAlleSpråk(
-                        andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar
-                    ),
-                },
-
-                [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
-                    label: språktekstIdFraSpørsmålId(
-                        OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
-                    ),
-                    verdi: verdiCallbackAlleSpråk(locale =>
-                        landkodeTilSpråk(
-                            andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]
-                                .svar,
-                            locale
-                        )
-                    ),
-                },
-                utvidet: {
-                    [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: {
-                        label: språktekstIdFraSpørsmålId(
-                            OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
-                        ),
-                        verdi: sammeVerdiAlleSpråk(
-                            andreForelder.utvidet[
-                                andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder
-                            ]
-                        ),
-                    },
-                    [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: {
-                        label: språktekstIdFraSpørsmålId(
-                            OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                        ),
-                        verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                            andreForelder[
-                                andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
-                            ].svar,
-                            omBarnetSpørsmålSpråkId['søker-flyttet-fra-andre-forelder-dato']
-                        ),
-                    },
-                },
-            }),
+                    barn
+                ),
+                [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: søknadsfeltBarn(
+                    språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato),
+                    sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                        andreForelder.utvidet[
+                            andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
+                        ].svar,
+                        omBarnetSpørsmålSpråkId['søker-bor-med-andre-forelder']
+                    )
+                ),
+            },
         };
     };
 
@@ -648,7 +644,6 @@ export const useSendInnSkjema = (): {
     const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
         const formatert = dataISøknadKontraktFormat(søknad);
-        console.log(formatert); //TODO: FJERN
 
         const res = await axiosRequest<IKvittering, ISøknadKontrakt>({
             url: `${soknadApi}/soknad/v6`,
