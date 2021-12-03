@@ -13,7 +13,7 @@ import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { OmBarnetSpørsmålsId } from './spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const StyledRadioPanelGruppe = styled(RadioPanelGruppe)`
     && label:not(:last-child) {
@@ -53,7 +53,7 @@ const SammeSomAnnetBarnRadio: React.FC<{
             legend={
                 <Element>
                     <SpråkTekst
-                        id={OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn}
+                        id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn]}
                         values={{ barn: barnetsNavn }}
                     />
                 </Element>
