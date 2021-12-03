@@ -308,13 +308,17 @@ export const useOmBarnet = (
         sluttdatoAvgrensning: dagensDato(),
     });
 
-    //TODO: Vurder å gjør dette når vi setter søknaden.
+    //TODO: Vurder å gjør dette når vi setter søknaden i stedet for.
     useEffect(() => {
         if (andreForelderNavnUkjent.verdi === ESvar.JA) {
             andreForelderFnr.validerOgSettFelt('');
             andreForelderFnrUkjent.validerOgSettFelt(ESvar.NEI);
             andreForelderFødselsdato.validerOgSettFelt('');
             andreForelderFødselsdatoUkjent.validerOgSettFelt(ESvar.NEI);
+            andreForelderArbeidUtlandet.validerOgSettFelt(null);
+            andreForelderArbeidUtlandetHvilketLand.validerOgSettFelt('');
+            andreForelderPensjonUtland.validerOgSettFelt(null);
+            andreForelderPensjonHvilketLand.validerOgSettFelt('');
         }
     }, [andreForelderNavnUkjent.verdi]);
 
