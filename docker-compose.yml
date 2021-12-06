@@ -1,6 +1,7 @@
 version: "3.4"
 
 x-common-variables: &common-build-variables
+  # Brukes for å installere navikt-private maven-dependencies
   # Trenger auth for mvn clean install, kjør `yarn setup:docker:env` for å konfigurere
   github_username: ${GITHUB_USER}
   github_token: ${GITHUB_TOKEN}
@@ -39,6 +40,18 @@ services:
       - "3000:3000"
       - "55554:55554"
 
+  # Brukes ikke ved vanlig kjøring, kan uppes istedenfor frontend-servicen for å sjekke at
+  # prod-images kjører OK.
+  #
+  # Akkurat denne servicen krever buildkit for å bygges
+  # For å uppe denne servicen må du kjøre docker-compose med følgende env variabler satt
+  # DOCKER_BUILDKIT=1
+  # COMPOSE_DOCKER_CLI_BUILD=1
+  #
+  # Altså `DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose up -d --build frontend-prod`
+  #
+  # Vi kan ikke bruke buildkit for hele stacken, siden buildkit ikke støtter git subdirectory contexts,
+  # som vi bruker for ldap, zookeper og kafka
   frontend-prod:
     profiles:
       - test-prod-build
@@ -59,6 +72,7 @@ services:
     ports:
       - "3000:3000"
 
+  # familie-ba-soknad-api, henter bl.a. data fra PDL og forwarder søknader til mottak
   api:
     logging: *common-log-config
     container_name: "soknad-api"
@@ -79,6 +93,8 @@ services:
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-soknad-api'
       FAMILIE_BA_MOTTAK_URL: 'http://mottak:8090'
 
+  # familie-ba-mottak, tar imot søknader, lagrer dem, genererer PDFer via dokgen, sender til journalføring.
+  # henter også og lagrer vedlegg fra familie-dokument
   mottak:
     logging: *common-log-config
     container_name: "mottak"
@@ -105,6 +121,7 @@ services:
       FAMILIE_BA_DOKGEN_API_URL: http://dokgen:8080
       FAMILIE_INTEGRASJONER_API_URL: http://journalforing
 
+  # familie-dokument, mellomlagring og dokumentopplasting
   dokument:
     logging: *common-log-config
     container_name: "familie-dokument"
@@ -126,6 +143,7 @@ services:
       TOKEN_X_PRIVATE_JWK: '/keys/familie-dokument.json'
       TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-dokument'
 
+  # familie-ba-dokgen, genererer PDF/A-filer på request fra mottak
   dokgen:
     logging: *common-log-config
     container_name: dokgen
@@ -140,6 +158,11 @@ services:
       # - ../familie-ba-dokgen/content:/app/content
     user: root # ellers klager den så fælt på permissions til /secure-logs
 
+  # Fake tokenx, gir akkurat det den blir bedt om. Når loginservice ber om en
+  # selvbetjeningstoken gir den det, når api/mottak/dokument ber om on-behalf-of
+  # tokens for å snakke med hverandre gir den det, og når frontend/api/mottak/dokument
+  # spør om tokenet de får er gyldige svarer den ja på det og siden den selv har issuet
+  # tokenene.
   oauthmock:
     logging: *common-log-config
     container_name: "idporten-ish"
@@ -147,6 +170,7 @@ services:
     ports:
       - "8083:8080"
 
+  # Fake loginservice, henter idtokens fra oauthmock
   loginservice:
     logging: *common-log-config
     depends_on:
@@ -159,6 +183,7 @@ services:
       FAKEDINGS_ADDRESS: "http://oauthmock:8080"
       TOKEN_COOKIE_NAME: "selvbetjening-idtoken"
 
+  # Slutten på stacken, tar imot journalføringsrequests fra mottak og lagrer alt til disk
   journalforing:
     logging: *common-log-config
     build:
@@ -168,6 +193,9 @@ services:
     environment:
       STORAGE_DIRECTORY: /var/mottatte_soknader
 
+  # Genererer JWK-filer (json web keys, motpart til jwt) for api/mottak/dokument, slik at de kan
+  # signere requests de sender til hverandre med token exchange
+  # Det er meningen at denne skal starte, generere keys, og skru seg selv av
   key_generator:
     logging: *common-log-config
     container_name: "jwk-generator"
@@ -182,6 +210,34 @@ services:
     volumes:
       - keys:/keys
 
+  # Database der mottak lagrer søknader og vedlegg
+  postgres:
+    logging: *common-log-config
+    image: "postgres"
+    container_name: "postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "test"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "familie-ba-mottak"
+
+  # Denne er bare hvis du trenger å logge inn i en docker-service for å se om de andre kan nås på det interne nettverket
+  # For eks.
+  # $ docker-compose exec testentry sh
+  # / # apk add curl
+  # / # curl api:8080/internal
+  testentry:
+    logging: *common-log-config
+    container_name: "test-entry"
+    image: alpine
+    command: ["sleep", "10000000"]
+    volumes:
+      - keys:/keys
+      - secure-logs:/secure-logs
+
+  # Kjører curl-kommandoer definert i familie-ba-mottak README.md for å konfigurere kafka
+  # Det er meningen at denne skal starte, konfigurere kafka, og skru seg selv av.
   configurator:
     logging: *common-log-config
     container_name: "cluster-configurator"
@@ -194,15 +250,9 @@ services:
     environment:
       KAFKA_ADMIN_ADDRESS: "kafkadminrest:8080"
 
-  testentry:
-    logging: *common-log-config
-    container_name: "test-entry"
-    # Denne er bare hvis du trenger å logge inn i en docker-service for å se om de andre kan nås på det interne nettverket
-    image: alpine
-    command: ["sleep", "10000000"]
-    volumes:
-      - keys:/keys
-      - secure-logs:/secure-logs
+
+  # Herifra og ned er bare kafka-services definert i github.com/navikt/navkafka-docker-compose i docker-compose.yml
+  # Trengs for å kjøre mottak
 
   openldap:
     logging: *common-log-config
@@ -297,13 +347,3 @@ services:
       - "SCHEMA_REGISTRY_HOST_NAME=schema-registry"
       - "SCHEMA_REGISTRY_LISTENERS=http://0.0.0.0:8081"
 
-  postgres:
-    logging: *common-log-config
-    image: "postgres"
-    container_name: "postgres"
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_PASSWORD: "test"
-      POSTGRES_USER: "postgres"
-      POSTGRES_DB: "familie-ba-mottak"
