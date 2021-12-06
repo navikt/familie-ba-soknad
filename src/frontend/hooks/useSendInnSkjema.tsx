@@ -418,6 +418,7 @@ export const useSendInnSkjema = (): {
         barn: IBarnMedISøknad
     ): IAndreForelderIKontraktFormat => {
         const { navn, fnr, fødselsdato } = andreForelder;
+        const forelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
         return {
             [andreForelderDataKeySpørsmål.navn]: søknadsfeltBarn(
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
@@ -444,13 +445,21 @@ export const useSendInnSkjema = (): {
                 barn
             ),
             [andreForelderDataKeySpørsmål.pensjonUtland]: søknadsfeltBarn(
-                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderPensjonUtland),
+                språktekstIdFraSpørsmålId(
+                    forelderErDød
+                        ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
+                        : OmBarnetSpørsmålsId.andreForelderPensjonUtland
+                ),
                 sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar),
                 barn
             ),
 
             [andreForelderDataKeySpørsmål.pensjonHvilketLand]: søknadsfeltBarn(
-                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand),
+                språktekstIdFraSpørsmålId(
+                    forelderErDød
+                        ? OmBarnetSpørsmålsId.andreForelderPensjonHvilketLandEnke
+                        : OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand
+                ),
                 verdiCallbackAlleSpråk(locale =>
                     landkodeTilSpråk(
                         andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
@@ -460,7 +469,11 @@ export const useSendInnSkjema = (): {
                 barn
             ),
             [andreForelderDataKeySpørsmål.arbeidUtlandet]: søknadsfeltBarn(
-                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderArbeidUtlandet),
+                språktekstIdFraSpørsmålId(
+                    forelderErDød
+                        ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke
+                        : OmBarnetSpørsmålsId.andreForelderArbeidUtlandet
+                ),
                 sammeVerdiAlleSpråk(
                     andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar
                 ),
@@ -468,7 +481,9 @@ export const useSendInnSkjema = (): {
             ),
             [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: søknadsfeltBarn(
                 språktekstIdFraSpørsmålId(
-                    OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
+                    forelderErDød
+                        ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke
+                        : OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
                 ),
                 verdiCallbackAlleSpråk(locale =>
                     landkodeTilSpråk(
