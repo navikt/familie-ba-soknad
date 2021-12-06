@@ -415,7 +415,7 @@
   "ombarnet.andre-forelder.utenlandspensjon.eøs-info": "Since {navn}'s other parent is receiving a pension from an EEA country you must download and fill out a supplementary form and provide it later on in the application.",
   "ombarnet.andre-forelder.utenlandspensjon.feilmelding": "You must state whether {navn}'s other parent receives a pension from abroad in order to be able to proceed",
   "ombarnet.andre-forelder.utenlandspensjon.land.feilmelding": "You must state what country the other parent receives a pension from in order to be able to proceed",
-  "ombarnet.andre-forelder.utenlandspensjon.land.spm": "What country does barn}'s other parent receive a pension from?",
+  "ombarnet.andre-forelder.utenlandspensjon.land.spm": "What country does {barn}'s other parent receive a pension from?",
   "ombarnet.andre-forelder.utenlandspensjon.spm": "Does {navn}'s other parent receive a pension from abroad?",
   "ombarnet.annenperiodetrygdnåravsluttet.feilmelding": "You must state when the child benefit ended in order to be able to proceed",
   "ombarnet.annenperiodetrygdnåravsluttet.spm": "When did the child benefit end?",
