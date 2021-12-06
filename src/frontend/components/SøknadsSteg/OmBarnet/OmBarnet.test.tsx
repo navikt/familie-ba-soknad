@@ -52,6 +52,7 @@ const jens = {
         id: '27',
         svar: '2021-09-03',
     },
+    [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: { id: '281', svar: null },
     [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
     andreForelder: {
         [andreForelderDataKeySpørsmål.navn]: {
@@ -125,6 +126,10 @@ const line = {
         svar: '',
     },
     [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: {
+        id: '281',
+        svar: AlternativtSvarForInput.ANNEN_FORELDER,
+    },
     andreForelder: {
         [andreForelderDataKeySpørsmål.navn]: {
             id: '17',
@@ -278,13 +283,10 @@ describe('OmBarnet', () => {
         expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
     });
 
-    test('Rendrer tidsrom hvis fosterbarn og bor fast med søker er satt', async () => {
+    test('Rendrer tidsrom hvis bor fast med søker er satt', async () => {
         mockHistory(['/om-barnet/barn-1']);
         const fakeBarn = mockDeep<IBarnMedISøknad>({
             id: 'random-id',
-            erFosterbarn: {
-                svar: ESvar.JA,
-            },
             borFastMedSøker: {
                 svar: null,
             },
@@ -319,71 +321,6 @@ describe('OmBarnet', () => {
         act(() => jaKnapp.click());
 
         expect(await findByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
-    });
-
-    test('Rendrer tidsrom hvis ikke fosterbarn og både bor fast med søker og avtale om delt bosted er satt', async () => {
-        mockHistory(['/om-barnet/barn-1']);
-        const fakeBarn = mockDeep<IBarnMedISøknad>({
-            id: 'random-id',
-            erFosterbarn: {
-                svar: ESvar.NEI,
-            },
-            andreForelder: {
-                navn: {
-                    svar: AlternativtSvarForInput.UKJENT,
-                },
-                fnr: { svar: '' },
-                arbeidUtlandet: {
-                    id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
-                    svar: ESvar.JA,
-                },
-                arbeidUtlandetHvilketLand: {
-                    id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
-                    svar: 'BEL',
-                },
-                pensjonUtland: {
-                    id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
-                    svar: ESvar.JA,
-                },
-                pensjonHvilketLand: {
-                    id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
-                    svar: 'BEL',
-                },
-            },
-            søkerForTidsromStartdato: {
-                svar: '',
-            },
-            søkerForTidsromSluttdato: {
-                svar: '',
-            },
-            institusjonsnavn: { svar: '' },
-            institusjonsadresse: { svar: '' },
-        });
-
-        const { erStegUtfyltFrafør } = spyOnUseApp({
-            barnInkludertISøknaden: [fakeBarn],
-        });
-        erStegUtfyltFrafør.mockReturnValue(false);
-
-        const { queryByText, findAllByLabelText } = render(
-            <TestProvidere>
-                <OmBarnet barnetsId={'random-id'} />
-            </TestProvidere>
-        );
-
-        /**
-         * For en eller annen grunn hjelper det ikke å sette verdier på barnet her, seksjonen for om barnet bor fast med søker
-         * dukker ikke opp, vi er nødt til å trykke oss igjennom spørsmålene med act for at vi skal komme frem.
-         */
-
-        const vetIkkeKnapper = await findAllByLabelText(/felles.svaralternativ.vetikke/);
-        act(() => vetIkkeKnapper.forEach(knapp => knapp.click()));
-
-        const neiKnapper = await findAllByLabelText(/felles.svaralternativ.nei/);
-        // Dette endrer svarene vi hadde satt til vet_ikke, men utfallet er det samme så lenge vi ikke endrer til ja
-        act(() => neiKnapper.forEach(knapp => knapp.click()));
-
-        expect(queryByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
     });
 
     test('Får opp feilmelding ved feil postnummer', async () => {

@@ -21,8 +21,6 @@ const StyledRadioPanelGruppe = styled(RadioPanelGruppe)`
     }
 `;
 
-export const ANNEN_FORELDER = 'ANNEN_FORELDER';
-
 const SammeSomAnnetBarnRadio: React.FC<{
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;

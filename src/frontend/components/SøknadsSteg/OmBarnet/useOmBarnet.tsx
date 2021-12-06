@@ -33,7 +33,6 @@ import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
-import { ANNEN_FORELDER } from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 
 export const useOmBarnet = (
@@ -304,7 +303,7 @@ export const useOmBarnet = (
             andreForelderNavnUkjent.verdi === ESvar.NEI,
         nullstillVedAvhengighetEndring:
             sammeForelderSomAnnetBarn.verdi === null ||
-            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER,
+            sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
         sluttdatoAvgrensning: dagensDato(),
     });
 
@@ -354,7 +353,7 @@ export const useOmBarnet = (
         avhengighet: andreForelderArbeidUtlandet,
         nullstillVedAvhengighetEndring:
             sammeForelderSomAnnetBarn.verdi === null ||
-            sammeForelderSomAnnetBarn.verdi === ANNEN_FORELDER,
+            sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
     });
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt({
