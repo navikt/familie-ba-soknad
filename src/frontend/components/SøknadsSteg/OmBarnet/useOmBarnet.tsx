@@ -219,7 +219,7 @@ export const useOmBarnet = (
         },
         skalFeltetVises: () =>
             !!andreForelder &&
-            søknad.barnInkludertISøknaden[0].id !== barn.id &&
+            søknad.barnInkludertISøknaden.find(barn => barn.andreForelder)?.id !== barn.id &&
             andreBarnSomErFyltUt.length > 0,
     });
 
