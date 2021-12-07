@@ -29,7 +29,13 @@ import * as pdlRequest from '../context/pdl';
 import { RoutesProvider } from '../context/RoutesContext';
 import { AlternativtSvarForInput } from '../typer/common';
 import { IKvittering } from '../typer/kvittering';
-import { barnDataKeySpørsmål, ESivilstand, ISøker, ISøkerRespons } from '../typer/person';
+import {
+    andreForelderDataKeySpørsmål,
+    barnDataKeySpørsmål,
+    ESivilstand,
+    ISøker,
+    ISøkerRespons,
+} from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
 import { genererInitialBarnMedISøknad } from './barn';
@@ -268,33 +274,53 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     alder: undefined,
                     borMedSøker: true,
                 }),
-                [barnDataKeySpørsmål.andreForelderNavn]: {
-                    id: OmBarnetSpørsmålsId.andreForelderNavn,
-                    svar: AlternativtSvarForInput.UKJENT,
-                },
-                [barnDataKeySpørsmål.andreForelderFnr]: {
-                    id: OmBarnetSpørsmålsId.andreForelderFnr,
-                    svar: AlternativtSvarForInput.UKJENT,
-                },
-                [barnDataKeySpørsmål.andreForelderFødselsdato]: {
-                    id: OmBarnetSpørsmålsId.andreForelderFødselsdato,
-                    svar: AlternativtSvarForInput.UKJENT,
-                },
-                [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: {
-                    id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
-                    svar: ESvar.NEI,
-                },
-                [barnDataKeySpørsmål.andreForelderPensjonUtland]: {
-                    id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
-                    svar: ESvar.NEI,
+                andreForelder: {
+                    [andreForelderDataKeySpørsmål.navn]: {
+                        id: OmBarnetSpørsmålsId.andreForelderNavn,
+                        svar: AlternativtSvarForInput.UKJENT,
+                    },
+                    [andreForelderDataKeySpørsmål.fnr]: {
+                        id: OmBarnetSpørsmålsId.andreForelderFnr,
+                        svar: AlternativtSvarForInput.UKJENT,
+                    },
+                    [andreForelderDataKeySpørsmål.fødselsdato]: {
+                        id: OmBarnetSpørsmålsId.andreForelderFødselsdato,
+                        svar: AlternativtSvarForInput.UKJENT,
+                    },
+                    [andreForelderDataKeySpørsmål.arbeidUtlandet]: {
+                        id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
+                        svar: ESvar.NEI,
+                    },
+                    [andreForelderDataKeySpørsmål.pensjonUtland]: {
+                        id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
+                        svar: ESvar.NEI,
+                    },
+                    [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
+                        id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
+                        svar: '',
+                    },
+                    [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
+                        id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
+                        svar: '',
+                    },
+                    [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
+                        id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
+                        svar: ESvar.NEI,
+                    },
+                    utvidet: {
+                        [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: {
+                            id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,
+                            svar: ESvar.NEI,
+                        },
+                        [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: {
+                            id: OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato,
+                            svar: '',
+                        },
+                    },
                 },
                 [barnDataKeySpørsmål.borFastMedSøker]: {
                     id: OmBarnetSpørsmålsId.borFastMedSøker,
                     svar: ESvar.JA,
-                },
-                [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
-                    id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
-                    svar: ESvar.NEI,
                 },
                 [barnDataKeySpørsmål.søkerForTidsrom]: {
                     id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
@@ -364,17 +390,22 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
         },
         barnInkludertISøknaden: base.barnInkludertISøknaden.map(barn => ({
             ...barn,
-            utvidet: {
-                ...barn.utvidet,
-                søkerHarBoddMedAndreForelder: {
-                    id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,
-                    svar: ESvar.JA,
+            ...(barn.andreForelder && {
+                andreForelder: {
+                    ...barn.andreForelder,
+                    utvidet: {
+                        ...barn.andreForelder?.utvidet,
+                        søkerHarBoddMedAndreForelder: {
+                            id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,
+                            svar: ESvar.JA,
+                        },
+                        søkerFlyttetFraAndreForelderDato: {
+                            id: OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato,
+                            svar: AlternativtSvarForInput.UKJENT,
+                        },
+                    },
                 },
-                søkerFlyttetFraAndreForelderDato: {
-                    id: OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato,
-                    svar: AlternativtSvarForInput.UKJENT,
-                },
-            },
+            }),
         })),
     };
 };

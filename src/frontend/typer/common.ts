@@ -13,6 +13,7 @@ export type ESvarMedUbesvart = ESvar | null;
 
 export enum AlternativtSvarForInput {
     UKJENT = 'UKJENT',
+    ANNEN_FORELDER = 'ANNEN_FORELDER',
 }
 
 export type DatoMedUkjent = ISODateString | AlternativtSvarForInput.UKJENT;

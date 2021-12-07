@@ -462,6 +462,8 @@
   "ombarnet.fårellersøkttrygd.hvilketlandsøkt.spm": "Kva land har du søkt om barnetrygd frå?",
   "ombarnet.fårellersøkttrygd.spm": "Får du eller har du søkt om barnetrygd?",
   "ombarnet.fårellersøkttrygd.søkt": "Eg har søkt om barnetrygd",
+  "ombarnet.hvemerandreforelder.feilmelding": "Du må oppgje kven {barn} sin andre forelder er for å gå vidare?",
+  "ombarnet.hvemerandreforelder.spm": "Kven er {barn} sin andre forelder?",
   "ombarnet.hvilketlandbarnetrygd.feilmelding": "Du må oppgje kva land du fekk barnetrygd frå for å gå vidare",
   "ombarnet.hvilketlandbarnetrygd.spm": "Kva land fekk du barnetrygd frå?",
   "ombarnet.hvilketlandflyttetfra.feilmelding": "Du må oppgje kva land barnet flytta frå for å gå vidare",
