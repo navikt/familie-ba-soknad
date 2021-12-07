@@ -4,6 +4,8 @@ import { render, waitFor } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { ISøknad } from '../../../typer/søknad';
 import {
     mekkGyldigSøknad,
@@ -14,6 +16,7 @@ import {
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '../OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../OmDeg/spørsmål';
 import Oppsummering from './Oppsummering';
 
@@ -47,10 +50,10 @@ describe('Oppsummering', () => {
             barnInkludertISøknaden: [
                 {
                     ident: '1234',
-                    institusjonsnavn: { svar: '' },
-                    institusjonsadresse: { svar: '' },
-                    andreForelderNavn: { svar: '' },
-                    andreForelderFnr: { svar: '' },
+                    institusjonsnavn: { id: OmBarnetSpørsmålsId.institusjonsnavn, svar: '' },
+                    institusjonsadresse: { id: OmBarnetSpørsmålsId.institusjonsadresse, svar: '' },
+                    erFosterbarn: { id: OmBarnaDineSpørsmålId.hvemErFosterbarn, svar: ESvar.JA },
+                    andreForelder: null,
                 },
             ],
         });
@@ -67,8 +70,9 @@ describe('Oppsummering', () => {
         act(() => gåVidere.click());
 
         const omDegFeil = getAllByRole('alert')[0];
-
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({ hash: 'omdeg-feil' });
+        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({
+            hash: 'omdeg-feil',
+        });
         expect(omDegFeil).toBeInTheDocument();
         expect(omDegFeil).toBeVisible();
     }, 10000);

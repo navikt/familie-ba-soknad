@@ -7,7 +7,7 @@ import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivs
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
-import { AlternativtSvarForInput, DatoMedUkjent, INøkkelPar } from './common';
+import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, INøkkelPar } from './common';
 import {
     Dokumentasjonsbehov,
     dokumentasjonsbehovTilSpråkId,
@@ -15,8 +15,8 @@ import {
     ISøknadKontraktDokumentasjon,
 } from './dokumentasjon';
 import {
+    andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
-    barnDataKeySpørsmålUtvidet,
     ESivilstand,
     IAdresse,
     IBarn,
@@ -47,9 +47,25 @@ export interface ISøknadsfelt<T> {
     verdi: Record<LocaleType, T>;
 }
 
+export interface IAndreForelder {
+    [andreForelderDataKeySpørsmål.navn]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
+    [andreForelderDataKeySpørsmål.fnr]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
+    [andreForelderDataKeySpørsmål.fødselsdato]: ISøknadSpørsmål<DatoMedUkjent>;
+    [andreForelderDataKeySpørsmål.arbeidUtlandet]: ISøknadSpørsmål<ESvar | null>;
+    [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [andreForelderDataKeySpørsmål.pensjonUtland]: ISøknadSpørsmål<ESvar | null>;
+    [andreForelderDataKeySpørsmål.pensjonHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | null>;
+    utvidet: {
+        [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
+        [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: ISøknadSpørsmål<DatoMedUkjent>;
+    };
+}
+
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
     utenlandsperioder: IUtenlandsperiode[];
+    andreForelder: IAndreForelder | null;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | null>;
@@ -65,26 +81,13 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
-    [barnDataKeySpørsmål.andreForelderNavn]: ISøknadSpørsmål<
-        string | AlternativtSvarForInput.UKJENT
-    >;
-    [barnDataKeySpørsmål.andreForelderFnr]: ISøknadSpørsmål<
-        string | AlternativtSvarForInput.UKJENT
-    >;
-    [barnDataKeySpørsmål.andreForelderFødselsdato]: ISøknadSpørsmål<DatoMedUkjent>;
-    [barnDataKeySpørsmål.andreForelderArbeidUtlandet]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.andreForelderArbeidUtlandetHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
-    [barnDataKeySpørsmål.andreForelderPensjonUtland]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.andreForelderPensjonHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
     [barnDataKeySpørsmål.borFastMedSøker]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.søkerForTidsrom]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.søkerForTidsromStartdato]: ISøknadSpørsmål<ISODateString>;
     [barnDataKeySpørsmål.søkerForTidsromSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
-    utvidet: {
-        [barnDataKeySpørsmålUtvidet.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
-        [barnDataKeySpørsmålUtvidet.søkerFlyttetFraAndreForelderDato]: ISøknadSpørsmål<DatoMedUkjent>;
-    };
+    [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: ISøknadSpørsmål<
+        BarnetsId | AlternativtSvarForInput.ANNEN_FORELDER | null
+    >;
 }
 
 export interface ISøknad {
@@ -127,11 +130,27 @@ export interface IKontraktNåværendeSamboer {
 export interface IKontraktTidligereSamboer extends IKontraktNåværendeSamboer {
     samboerTilDato: ISøknadsfelt<ISODateString>;
 }
+
 export interface IUtenlandsperiodeIKontraktFormat {
     utenlandsoppholdÅrsak: ISøknadsfelt<string>;
     oppholdsland: ISøknadsfelt<string>;
     oppholdslandTilDato: ISøknadsfelt<string | undefined>;
     oppholdslandFraDato: ISøknadsfelt<string | undefined>;
+}
+
+export interface IAndreForelderIKontraktFormat {
+    navn: ISøknadsfelt<string>;
+    fnr: ISøknadsfelt<string>;
+    fødselsdato: ISøknadsfelt<string>;
+    pensjonUtland: ISøknadsfelt<ESvar | null>;
+    pensjonHvilketLand: ISøknadsfelt<string>;
+    arbeidUtlandet: ISøknadsfelt<ESvar | null>;
+    arbeidUtlandetHvilketLand: ISøknadsfelt<string>;
+    skriftligAvtaleOmDeltBosted: ISøknadsfelt<ESvar | null>;
+    utvidet: {
+        søkerHarBoddMedAndreForelder: ISøknadsfelt<ESvar | null>;
+        søkerFlyttetFraAndreForelderDato: ISøknadsfelt<string>;
+    };
 }
 
 export interface ISøknadKontraktSøker {
@@ -160,6 +179,7 @@ export interface ISøknadKontraktBarn {
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
+    andreForelder: IAndreForelderIKontraktFormat | null;
 }
 
 export const hentSøknadstype = () => {

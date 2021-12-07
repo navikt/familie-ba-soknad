@@ -31,6 +31,7 @@ export enum OmBarnetSpørsmålsId {
     søkerHarBoddMedAndreForelder = 'søker-har-bodd-med-andre-forelder',
     søkerFlyttetFraAndreForelderDato = 'søker-flyttet-fra-andre-forelder-dato',
     søkerBorMedAndreForelder = 'søker-bor-med-andre-forelder',
+    sammeForelderSomAnnetBarn = 'samme-forelder-som-annet-barn',
 }
 
 export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> = {
@@ -74,4 +75,5 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder]: 'ombarnet.boddsammenmedandreforelder.spm',
     [OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato]: 'ombarnet.nårflyttetfra.spm',
     [OmBarnetSpørsmålsId.søkerBorMedAndreForelder]: 'ombarnet.nårflyttetfra.borsammencheck',
+    [OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn]: 'ombarnet.hvemerandreforelder.spm',
 };

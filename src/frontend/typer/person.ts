@@ -97,6 +97,19 @@ export interface IAdresse {
     poststed?: string;
 }
 
+export enum andreForelderDataKeySpørsmål {
+    navn = 'navn',
+    fnr = 'fnr',
+    fødselsdato = 'fødselsdato',
+    arbeidUtlandet = 'arbeidUtlandet',
+    arbeidUtlandetHvilketLand = 'arbeidUtlandetHvilketLand',
+    pensjonUtland = 'pensjonUtland',
+    pensjonHvilketLand = 'pensjonHvilketLand',
+    skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
+    søkerHarBoddMedAndreForelder = 'søkerHarBoddMedAndreForelder',
+    søkerFlyttetFraAndreForelderDato = 'søkerFlyttetFraAndreForelderDato',
+}
+
 export enum barnDataKeySpørsmål {
     erFosterbarn = 'erFosterbarn',
     erAdoptertFraUtland = 'erAdoptertFraUtland',
@@ -113,21 +126,9 @@ export enum barnDataKeySpørsmål {
     institusjonOppholdSluttdato = 'institusjonOppholdSluttdato',
     boddMindreEnn12MndINorge = 'boddMindreEnn12MndINorge',
     planleggerÅBoINorge12Mnd = 'planleggerÅBoINorge12Mnd',
-    andreForelderNavn = 'andreForelderNavn',
-    andreForelderFnr = 'andreForelderFnr',
-    andreForelderFødselsdato = 'andreForelderFødselsdato',
-    andreForelderArbeidUtlandet = 'andreForelderArbeidUtlandet',
-    andreForelderArbeidUtlandetHvilketLand = 'andreForelderArbeidUtlandetHvilketLand',
-    andreForelderPensjonUtland = 'andreForelderPensjonUtland',
-    andreForelderPensjonHvilketLand = 'andreForelderPensjonHvilketLand',
     borFastMedSøker = 'borFastMedSøker',
-    skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
     søkerForTidsrom = 'søkerForTidsrom',
     søkerForTidsromStartdato = 'søkerForTidsromStartdato',
     søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
-}
-
-export enum barnDataKeySpørsmålUtvidet {
-    søkerHarBoddMedAndreForelder = 'søkerHarBoddMedAndreForelder',
-    søkerFlyttetFraAndreForelderDato = 'søkerFlyttetFraAndreForelderDato',
+    sammeForelderSomAnnetBarnMedId = 'sammeForelderSomAnnetBarnMedId',
 }

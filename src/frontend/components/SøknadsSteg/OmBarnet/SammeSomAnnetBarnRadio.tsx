@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 
-import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
+import { AlternativtSvarForInput } from '../../../typer/common';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const StyledRadioPanelGruppe = styled(RadioPanelGruppe)`
     && label:not(:last-child) {
@@ -19,17 +21,14 @@ const StyledRadioPanelGruppe = styled(RadioPanelGruppe)`
     }
 `;
 
-export const ANNEN_FORELDER = 'ANNEN_FORELDER';
-
 const SammeSomAnnetBarnRadio: React.FC<{
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
-    onChangeCallback: (radioVerdi: string) => void;
-}> = ({ andreBarnSomErFyltUt, skjema, onChangeCallback }) => {
-    const [checked, setChecked] = useState(ESvar.NEI);
-    const intl = useIntl();
-
+    barnetsNavn: string;
+}> = ({ andreBarnSomErFyltUt, skjema, barnetsNavn }) => {
     const felt = skjema.felter.sammeForelderSomAnnetBarn;
+
+    const intl = useIntl();
 
     const radios = andreBarnSomErFyltUt
         .map(barn => ({
@@ -43,19 +42,25 @@ const SammeSomAnnetBarnRadio: React.FC<{
         }))
         .concat({
             label: <SpråkTekst id={'ombarnet.svaralternativ.annen-forelder'} />,
-            value: ANNEN_FORELDER,
+            value: AlternativtSvarForInput.ANNEN_FORELDER,
         });
 
     return (
         <StyledRadioPanelGruppe
             {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
-            name={'sammeForelderSomAnnetBarn'}
+            legend={
+                <Element>
+                    <SpråkTekst
+                        id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn]}
+                        values={{ barn: barnetsNavn }}
+                    />
+                </Element>
+            }
+            checked={felt.verdi ?? undefined}
+            name={OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn}
             radios={radios}
-            checked={checked}
             onChange={(_event, value) => {
-                setChecked(value);
                 felt.onChange(value);
-                onChangeCallback(value);
             }}
             feil={felt.feilmelding}
         />

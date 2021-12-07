@@ -1,12 +1,13 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-dom/test-utils';
+import { DeepPartial } from 'ts-essentials';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { barnDataKeySpørsmål, IBarn } from '../../../typer/person';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarn } from '../../../typer/person';
 import { IBarnMedISøknad } from '../../../typer/søknad';
-import { genererInitialBarnMedISøknad } from '../../../utils/barn';
+import { genererAndreForelder, genererInitialBarnMedISøknad } from '../../../utils/barn';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -111,11 +112,14 @@ describe('useOmBarnet', () => {
     });
 
     it('Fjerner at man skal oppgi andre foreldrens fødselsnummer når man ikke vil oppgi personopplysninger', async () => {
-        const barn: Partial<IBarnMedISøknad> = {
+        const barn: DeepPartial<IBarnMedISøknad> = {
             ...genererInitialBarnMedISøknad(barnFraPdl),
-            [barnDataKeySpørsmål.andreForelderNavn]: {
-                svar: AlternativtSvarForInput.UKJENT,
-                id: OmBarnetSpørsmålsId.andreForelderNavn,
+            andreForelder: {
+                ...genererAndreForelder(null, false),
+                [andreForelderDataKeySpørsmål.navn]: {
+                    svar: AlternativtSvarForInput.UKJENT,
+                    id: OmBarnetSpørsmålsId.andreForelderNavn,
+                },
             },
             [barnDataKeySpørsmål.erFosterbarn]: {
                 svar: ESvar.NEI,

@@ -41,7 +41,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         oppdaterSøknad,
         barn,
         andreBarnSomErFyltUt,
-        settSammeForelder,
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
@@ -72,18 +71,18 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 fjernUtenlandsperiode={fjernUtenlandsperiode}
                 utenlandsperioder={utenlandsperioder}
             />
-            {skjema.felter.andreForelderNavn.erSynlig && (
+            {barn.andreForelder && (
                 <AndreForelder
-                    settSammeForelder={settSammeForelder}
                     barn={barn}
                     skjema={skjema}
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
+                    andreForelder={barn.andreForelder}
                 />
             )}
 
             {skjema.felter.borFastMedSøker.erSynlig && (
                 <SkjemaFieldset tittelId={'ombarnet.bosted'} dynamisk>
-                    {barn.andreForelderErDød.svar === ESvar.NEI && (
+                    {barn.andreForelderErDød?.svar !== ESvar.JA && (
                         <>
                             <div>
                                 <Normaltekst>
