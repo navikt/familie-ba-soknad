@@ -112,7 +112,15 @@ const [EøsProvider, useEøs] = createUseContext(() => {
         const erEøs = eøsTriggetForSøker || eøsTriggetForBarn;
 
         if (erEøs !== søknad.erEøs) {
-            settSøknad({ ...søknad, erEøs });
+            settSøknad({
+                ...søknad,
+                erEøs,
+                søker: { ...søknad.søker, eøs: eøsTriggetForSøker },
+                barnInkludertISøknaden: søknad.barnInkludertISøknaden.map(barn => ({
+                    ...barn,
+                    eøs: skalTriggeEøsForBarn(barn),
+                })),
+            });
             mellomlagre();
         }
     }, [søknad.søker, søknad.barnInkludertISøknaden]);

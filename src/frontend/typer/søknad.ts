@@ -66,6 +66,7 @@ export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
     utenlandsperioder: IUtenlandsperiode[];
     andreForelder: IAndreForelder | null;
+    eøs: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | null>;
@@ -246,6 +247,7 @@ export const initialStateSøknad: ISøknad = {
     søker: {
         navn: '',
         barn: [],
+        eøs: false,
         statsborgerskap: [],
         ident: '',
         sivilstand: { type: ESivilstand.UOPPGITT },
