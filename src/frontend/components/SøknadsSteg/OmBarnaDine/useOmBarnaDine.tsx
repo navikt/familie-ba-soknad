@@ -2,6 +2,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import { barnDataKeySpørsmål, ESivilstand } from '../../../typer/person';
@@ -19,6 +20,7 @@ export const useOmBarnaDine = (): {
     validerAlleSynligeFelter: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
+    const { skalTriggeEøsForBarn } = useEøs();
 
     const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt({
         søknadsfelt: søknad.erNoenAvBarnaFosterbarn,
@@ -195,7 +197,7 @@ export const useOmBarnaDine = (): {
                 ...søknad.erAvdødPartnerForelder,
                 svar: erAvdødPartnerForelder.verdi,
             },
-            barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema),
+            barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn),
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 switch (dok.dokumentasjonsbehov) {
                     case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:

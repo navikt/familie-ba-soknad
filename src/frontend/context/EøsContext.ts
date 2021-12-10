@@ -115,11 +115,6 @@ const [EøsProvider, useEøs] = createUseContext(() => {
             settSøknad({
                 ...søknad,
                 erEøs,
-                søker: { ...søknad.søker, eøs: eøsTriggetForSøker },
-                barnInkludertISøknaden: søknad.barnInkludertISøknaden.map(barn => ({
-                    ...barn,
-                    eøs: skalTriggeEøsForBarn(barn),
-                })),
             });
             mellomlagre();
         }
@@ -128,6 +123,8 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     return {
         eøsSkruddAv,
         erEøsLand,
+        skalTriggeEøsForSøker,
+        skalTriggeEøsForBarn,
     };
 });
 

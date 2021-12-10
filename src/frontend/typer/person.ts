@@ -48,7 +48,7 @@ export interface IBarn extends Omit<IPerson, 'ident'> {
 
 export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     barn: IBarn[];
-    eøs: boolean;
+    triggetEøs: boolean;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | null>;
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | null>;
