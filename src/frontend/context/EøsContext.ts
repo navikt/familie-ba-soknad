@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 import createUseContext from 'constate';
 import { Alpha3Code } from 'i18n-iso-countries';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø, { basePath } from '../Miljø';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../typer/dokumentasjon';
 import { EFeatureToggle } from '../typer/feature-toggles';
-import { jaNeiSvarTriggerEøs, landSvarSomKanTriggeEøs } from '../utils/eøs';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, ISøker } from '../typer/person';
+import { IBarnMedISøknad } from '../typer/søknad';
 import { useApp } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 
@@ -71,9 +73,43 @@ const [EøsProvider, useEøs] = createUseContext(() => {
 
     const erEøsLand = (land: Alpha3Code | '') => !eøsSkruddAv && !!land && eøsLand?.includes(land);
 
+    const skalTriggeEøsForSøker = (søker: ISøker) => {
+        const landSvarSomKanTrigge = [
+            søker.arbeidsland.svar,
+            søker.pensjonsland.svar,
+            søker.utenlandsperioder.map(periode => periode.oppholdsland.svar),
+        ].flat();
+
+        return !!landSvarSomKanTrigge.find(land => erEøsLand(land));
+    };
+
+    const skalTriggeEøsForBarn = (barn: IBarnMedISøknad) => {
+        const landSvarSomKanTriggeEøs = [
+            ...(barn.andreForelder
+                ? [
+                      barn.andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]
+                          .svar,
+                      barn.andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
+                  ]
+                : []),
+            barn.barnetrygdFraEøslandHvilketLand.svar,
+            barn.utenlandsperioder.map(periode => periode.oppholdsland.svar),
+        ].flat();
+
+        const jaNeiSvarSomKanTriggeEøs =
+            barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA;
+
+        return !!landSvarSomKanTriggeEøs.find(land => erEøsLand(land)) || jaNeiSvarSomKanTriggeEøs;
+    };
+
     useEffect(() => {
-        const landSvarTriggerEøs = !!landSvarSomKanTriggeEøs(søknad).find(land => erEøsLand(land));
-        const erEøs = landSvarTriggerEøs || jaNeiSvarTriggerEøs(søknad);
+        const eøsTriggetForSøker = skalTriggeEøsForSøker(søknad.søker);
+
+        const eøsTriggetForBarn = !!søknad.barnInkludertISøknaden.find(barn =>
+            skalTriggeEøsForBarn(barn)
+        );
+
+        const erEøs = eøsTriggetForSøker || eøsTriggetForBarn;
 
         if (erEøs !== søknad.erEøs) {
             settSøknad({ ...søknad, erEøs });
