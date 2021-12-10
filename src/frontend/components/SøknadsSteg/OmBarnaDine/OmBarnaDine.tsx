@@ -72,6 +72,11 @@ const OmBarnaDine: React.FC = () => {
                             OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon
                         ]
                     }
+                    tilleggsinfo={
+                        <AlertStripe>
+                            <SpråkTekst id={'ombarna.institusjon.info'} />
+                        </AlertStripe>
+                    }
                 />
 
                 <HvilkeBarnCheckboxGruppe

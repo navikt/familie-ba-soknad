@@ -124,6 +124,13 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
                         id={dokumentasjon.beskrivelseSpråkId}
                         values={{
                             barn: formatertListeMedBarn(),
+                            meklingsattestLenke: (
+                                <EksternLenke
+                                    lenkeSpråkId={'dokumentasjon.meklingsattest.lenke'}
+                                    lenkeTekstSpråkId={'dokumentasjon.meklingsattest.lenketekst'}
+                                    target="_blank"
+                                />
+                            ),
                         }}
                     />
                     {dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA && (
