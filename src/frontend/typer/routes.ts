@@ -16,4 +16,6 @@ export enum RouteEnum {
     Oppsummering = 'Oppsummering',
     Dokumentasjon = 'Dokumentasjon',
     Kvittering = 'Kvittering',
+    EøsForSøker = 'EøsForSøker',
+    EøsForBarn = 'EøsForBarn',
 }

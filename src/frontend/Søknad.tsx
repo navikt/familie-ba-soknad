@@ -8,6 +8,8 @@ import RedirectTilStart from './components/Felleskomponenter/RedirectTilStart/Re
 import Helse from './components/Helse/Helse';
 import DinLivssituasjon from './components/SøknadsSteg/DinLivssituasjon/DinLivssituasjon';
 import Dokumentasjon from './components/SøknadsSteg/Dokumentasjon/Dokumentasjon';
+import EøsForBarn from './components/SøknadsSteg/EøsSteg/Barn/EøsForBarn';
+import EøsForSøker from './components/SøknadsSteg/EøsSteg/Søker/EøsForSøker';
 import Forside from './components/SøknadsSteg/Forside/Forside';
 import Kvittering from './components/SøknadsSteg/Kvittering/Kvittering';
 import OmBarnaDine from './components/SøknadsSteg/OmBarnaDine/OmBarnaDine';
@@ -39,6 +41,10 @@ const Søknad = () => {
                 return OmBarnaDine;
             case RouteEnum.OmBarnet:
                 return () => <OmBarnet barnetsId={route.spesifisering as BarnetsId} />;
+            case RouteEnum.EøsForSøker:
+                return EøsForSøker;
+            case RouteEnum.EøsForBarn:
+                return () => <EøsForBarn barnetsId={route.spesifisering as BarnetsId} />;
             case RouteEnum.Oppsummering:
                 return Oppsummering;
             case RouteEnum.Dokumentasjon:
