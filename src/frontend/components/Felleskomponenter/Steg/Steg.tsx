@@ -157,7 +157,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                 <Form onSubmit={event => håndterGåVidere(event)} autoComplete="off">
                     <ChildrenContainer>{children}</ChildrenContainer>
                     {skjema && visFeiloppsummering(skjema.skjema) && (
-                        <SkjemaFeiloppsummering skjema={skjema.skjema} barn={barn ?? undefined} />
+                        <SkjemaFeiloppsummering skjema={skjema.skjema} />
                     )}
                     {!erPåKvitteringsside(location.pathname) && (
                         <Navigeringspanel

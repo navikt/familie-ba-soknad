@@ -7,7 +7,6 @@ import { Element } from 'nav-frontend-typografi';
 
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
-import { IBarn } from '../../../typer/person';
 import { IRoute } from '../../../typer/routes';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -15,7 +14,6 @@ import { lagRouteFeilRenderer } from './lagRouteFeilRenderer';
 
 interface Props {
     skjema: ISkjema<SkjemaFeltTyper, string>;
-    barn?: IBarn;
     routeForFeilmeldinger?: IRoute;
     id?: string;
 }

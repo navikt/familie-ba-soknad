@@ -25,11 +25,7 @@ const AppContainer = () => {
                     </Alertstripe>
                 </div>
             )}
-            {systemetOK() && (
-                <RoutesProvider>
-                    <Søknad />
-                </RoutesProvider>
-            )}
+            {systemetOK() && <Søknad />}
             {systemetFeiler() && !systemetLaster() && <Feilside />}
         </main>
     );
