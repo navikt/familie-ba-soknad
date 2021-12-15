@@ -9,11 +9,11 @@ import { IBarnMedISøknad } from '../typer/søknad';
 import { useApp } from './AppContext';
 
 export const omBarnetBasePath = 'om-barnet';
+export const eøsBarnBasePath = 'eøs-barn';
 
 const [RoutesProvider, useRoutes] = createUseContext(() => {
-    const {
-        søknad: { barnInkludertISøknaden },
-    } = useApp();
+    const { søknad } = useApp();
+    const { barnInkludertISøknaden, søker } = søknad;
 
     const [barnForRoutes, settBarnForRoutes] = useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
 
@@ -38,6 +38,41 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
               },
           ];
 
+    const eøsRoutesForBarn = () => {
+        console.log('eøsrouteforbarn');
+        const barnSomSkalHaEøsRoute = søker.triggetEøs
+            ? barnForRoutes
+            : barnForRoutes.filter(barn => barn.triggetEøs);
+        return barnSomSkalHaEøsRoute.map(
+            (barn, index): IRoute => ({
+                path: `/${eøsBarnBasePath}/barn-${index + 1}`,
+                label: `Om EØS ${barn.navn}`,
+                route: RouteEnum.EøsForBarn,
+                spesifisering: barn.id,
+            })
+        );
+    };
+
+    const eøsRoutes = () => {
+        //TODO: fjerne sjekk på environment når vi går live med eøs
+        if (process.env.NODE_ENV !== 'development') {
+            return [];
+        }
+
+        const routesForBarn = eøsRoutesForBarn();
+        const routeForSøker =
+            søker.triggetEøs || routesForBarn.length
+                ? [
+                      {
+                          path: `/søker-eos`,
+                          label: `Om deg EØS`,
+                          route: RouteEnum.EøsForSøker,
+                      },
+                  ]
+                : [];
+        return routeForSøker.concat(routesForBarn);
+    };
+
     // TODO: skrive om label til språktekst
     const routes: IRoute[] = [
         { path: '/', label: 'Forside', route: RouteEnum.Forside },
@@ -51,6 +86,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
         { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn },
         { path: '/om-barna', label: 'Om barna', route: RouteEnum.OmBarna },
         ...barnRoutes,
+        ...eøsRoutes(),
         {
             path: '/oppsummering',
             label: 'Oppsummering',

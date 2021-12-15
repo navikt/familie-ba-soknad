@@ -7,6 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø, { basePath } from '../Miljø';
+import { BarnetsId } from '../typer/common';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../typer/dokumentasjon';
 import { EFeatureToggle } from '../typer/feature-toggles';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, ISøker } from '../typer/person';
@@ -20,9 +21,13 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     const skruddAvByDefault = true; //TODO denne må endres når EØS går live
     const [eøsSkruddAv, settEøsSkruddAv] = useState(skruddAvByDefault);
 
+    const { søknad, settSøknad } = useApp();
     const [eøsLand, settEøsLand] = useState<Alpha3Code[]>();
+    const [søkerTriggerEøs, settSøkerTriggerEøs] = useState(søknad.søker.triggetEøs);
+    const [barnSomTriggerEøs, settBarnSomTriggerEøs] = useState<BarnetsId[]>(
+        søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs).map(barn => barn.id)
+    );
 
-    const { søknad, settSøknad, mellomlagre } = useApp();
     const { soknadApi } = Miljø();
 
     useEffect(() => {
@@ -73,7 +78,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
 
     const erEøsLand = (land: Alpha3Code | '') => !eøsSkruddAv && !!land && eøsLand?.includes(land);
 
-    const skalTriggeEøsForSøker = (søker: ISøker) => {
+    const skalTriggeEøsForSøker = (søker: ISøker): boolean => {
         const landSvarSomKanTrigge = [
             søker.arbeidsland.svar,
             søker.pensjonsland.svar,
@@ -83,7 +88,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
         return !!landSvarSomKanTrigge.find(land => erEøsLand(land));
     };
 
-    const skalTriggeEøsForBarn = (barn: IBarnMedISøknad) => {
+    const skalTriggeEøsForBarn = (barn: IBarnMedISøknad): boolean => {
         const landSvarSomKanTriggeEøs = [
             ...(barn.andreForelder
                 ? [
@@ -116,7 +121,6 @@ const [EøsProvider, useEøs] = createUseContext(() => {
                 ...søknad,
                 erEøs,
             });
-            mellomlagre();
         }
     }, [søknad.søker, søknad.barnInkludertISøknaden]);
 
@@ -125,6 +129,10 @@ const [EøsProvider, useEøs] = createUseContext(() => {
         erEøsLand,
         skalTriggeEøsForSøker,
         skalTriggeEøsForBarn,
+        settSøkerTriggerEøs,
+        settBarnSomTriggerEøs,
+        søkerTriggerEøs,
+        barnSomTriggerEøs,
     };
 });
 
