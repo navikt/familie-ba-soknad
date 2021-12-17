@@ -117,6 +117,10 @@ export interface IUtenlandsoppholdFeltTyper {
     oppholdslandTilDato: ISODateString;
     oppholdslandTilDatoUkjent: ESvar;
 }
+
+export interface IUtbetalingerFeltTyper {
+    fårUtbetalingNå: ESvar | null;
+}
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
@@ -125,4 +129,5 @@ export type SkjemaFeltTyper =
     | IOmBarnaDineFeltTyper
     | IDinLivssituasjonFeltTyper
     | IUtenlandsoppholdFeltTyper
-    | ITidligereSamboerFeltTyper;
+    | ITidligereSamboerFeltTyper
+    | IUtbetalingerFeltTyper;
