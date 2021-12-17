@@ -15,6 +15,7 @@ import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import {
     barnDataKeySpørsmål,
     ESivilstand,
+    IArbeidsperiode,
     ISamboer,
     ITidligereSamboer,
 } from '../../../typer/person';
@@ -36,11 +37,15 @@ export const useDinLivssituasjon = (): {
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
     tidligereSamboere: ITidligereSamboer[];
+    arbeidsperioder: IArbeidsperiode[];
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const søker = søknad.søker;
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
+    );
+    const [arbeidsperioder, settArbeidsperioder] = useState<IArbeidsperiode[]>(
+        søker.arbeidsperioder
     );
 
     /*---- UTVIDET BARNETRYGD ----*/
@@ -365,5 +370,6 @@ export const useDinLivssituasjon = (): {
         tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
+        arbeidsperioder,
     };
 };

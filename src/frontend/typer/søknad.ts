@@ -259,6 +259,7 @@ export const initialStateSøknad: ISøknad = {
             poststed: '',
         },
         utenlandsperioder: [],
+        arbeidsperioder: [],
         borPåRegistrertAdresse: {
             id: OmDegSpørsmålId.borPåRegistrertAdresse,
             svar: null,

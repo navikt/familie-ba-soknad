@@ -8,6 +8,8 @@ import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import { IUtenlandsperiode } from '../../../typer/person';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
+import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
+import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
@@ -26,6 +28,7 @@ const OmDeg: React.FC = () => {
     const { søknad } = useApp();
     const { søker } = søknad;
     const { erÅpen, toggleModal } = useModal();
+    const { erÅpen: erArbeidsperiodeÅpen, toggleModal: toggleArbeidsperiodeModal } = useModal();
 
     const {
         skjema,

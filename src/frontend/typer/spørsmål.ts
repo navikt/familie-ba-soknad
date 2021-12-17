@@ -1,3 +1,4 @@
+import { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arbeidsperiode/spørsmål';
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
@@ -17,7 +18,8 @@ export type SpørsmålId =
     | DinLivssituasjonSpørsmålId
     | SamboerSpørsmålId
     | TidligereSamboerSpørsmålId
-    | UtenlandsoppholdSpørsmålId;
+    | UtenlandsoppholdSpørsmålId
+    | ArbeidsperiodeSpørsmålsId;
 
 export interface ISøknadSpørsmål<T> {
     id: SpørsmålId;

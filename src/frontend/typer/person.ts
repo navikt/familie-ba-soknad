@@ -59,6 +59,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     harSamboerNå: ISøknadSpørsmål<ESvar | null>;
     nåværendeSamboer: ISamboer | null;
     utenlandsperioder: IUtenlandsperiode[];
+    arbeidsperioder: IArbeidsperiode[];
     utvidet: {
         spørsmål: {
             årsak: ISøknadSpørsmål<Årsak | ''>;
@@ -75,6 +76,10 @@ export interface IUtenlandsperiode {
     oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;
     oppholdslandFraDato?: ISøknadSpørsmål<ISODateString>;
     oppholdslandTilDato?: ISøknadSpørsmål<DatoMedUkjent>;
+}
+
+export interface IArbeidsperiode {
+    arbeidsperiodeAvsluttet: ISøknadSpørsmål<ESvar | null>;
 }
 
 export interface ISamboer {

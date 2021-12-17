@@ -6,11 +6,15 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
+import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
@@ -33,6 +37,7 @@ const DinLivssituasjon: React.FC = () => {
 
     const { erUtvidet, søknad } = useApp();
     const { erEøsLand } = useEøs();
+    const { erÅpen: erArbeidsperiodeÅpen, toggleModal: toggleArbeidsperiodeModal } = useModal();
 
     return (
         <Steg
@@ -153,6 +158,18 @@ const DinLivssituasjon: React.FC = () => {
                     spørsmålTekstId={
                         dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
                     }
+                />
+                <ArbeidsperiodeModal
+                    erÅpen={erArbeidsperiodeÅpen}
+                    toggleModal={toggleArbeidsperiodeModal}
+                    gjelderUtlandet={true}
+                    gjelderAndreForelder={true}
+                />
+                <LeggTilKnapp
+                    språkTekst={'felles.flerearbeidsperioderutland.tittel'}
+                    onClick={toggleArbeidsperiodeModal}
+                    id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
+                    feilmelding={''}
                 />
 
                 <LandDropdown
