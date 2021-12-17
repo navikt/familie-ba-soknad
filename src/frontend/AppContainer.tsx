@@ -7,7 +7,6 @@ import { RessursStatus } from '@navikt/familie-typer';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';
 import { useApp } from './context/AppContext';
-import { RoutesProvider } from './context/RoutesContext';
 import Søknad from './Søknad';
 
 const AppContainer = () => {

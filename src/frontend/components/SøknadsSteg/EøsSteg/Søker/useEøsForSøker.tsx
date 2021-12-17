@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';

@@ -4,27 +4,27 @@ import { renderHook } from '@testing-library/react-hooks';
 
 import { RouteEnum } from '../typer/routes';
 import { mockHistory, spyOnUseApp } from '../utils/testing';
-import { useRoutes, RoutesProvider } from './RoutesContext';
+import { StegProvider, useSteg } from './StegContext';
 
 mockHistory(['/om-barnet/barn-1']);
 
-describe('Routes', () => {
+describe('Steg', () => {
     test(`Kan hente routes før barn er valgt`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [],
         });
-        const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
-        const { result } = renderHook(() => useRoutes(), { wrapper });
-        expect(result.current.routes.length).toEqual(9);
+        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        const { result } = renderHook(() => useSteg(), { wrapper });
+        expect(result.current.steg.length).toEqual(9);
     });
 
     test(`hentStegObjekterForStegIndikator skal returnere en liste uten forside`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [],
         });
-        const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
-        const { result } = renderHook(() => useRoutes(), { wrapper });
-        expect(result.current.hentStegObjekterForStegIndikator().length).toEqual(8);
+        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        const { result } = renderHook(() => useSteg(), { wrapper });
+        expect(result.current.stegIndikatorObjekter.length).toEqual(8);
     });
 
     test(`Kan hente neste route fra forsiden`, () => {
@@ -35,11 +35,11 @@ describe('Routes', () => {
                 },
             ],
         });
-        const location = '/';
-        const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
-        const { result } = renderHook(() => useRoutes(), { wrapper });
-        const nesteRoute = result.current.hentNesteRoute(location);
-        expect(nesteRoute.route).toBe(RouteEnum.OmDeg);
+        mockHistory(['/']);
+        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        const { result } = renderHook(() => useSteg(), { wrapper });
+        const nesteSteg = result.current.hentNesteSteg();
+        expect(nesteSteg.route).toBe(RouteEnum.OmDeg);
     });
 
     test(`Kan hente neste route når inneværende route er eneste barn`, () => {
@@ -50,10 +50,10 @@ describe('Routes', () => {
                 },
             ],
         });
-        const location = '/om-barnet/barn-1';
-        const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
-        const { result } = renderHook(() => useRoutes(), { wrapper });
-        const nesteRoute = result.current.hentNesteRoute(location);
+        mockHistory(['/om-barnet/barn-1']);
+        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        const { result } = renderHook(() => useSteg(), { wrapper });
+        const nesteRoute = result.current.hentNesteSteg();
         expect(nesteRoute.route).toBe(RouteEnum.Oppsummering);
     });
 
@@ -65,10 +65,10 @@ describe('Routes', () => {
                 },
             ],
         });
-        const location = '/om-barnet/barn-1';
-        const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
-        const { result } = renderHook(() => useRoutes(), { wrapper });
-        const nesteRoute = result.current.hentForrigeRoute(location);
+        mockHistory(['/om-barnet/barn-1']);
+        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        const { result } = renderHook(() => useSteg(), { wrapper });
+        const nesteRoute = result.current.hentNesteSteg();
         expect(nesteRoute.route).toBe(RouteEnum.OmBarna);
     });
 
@@ -81,10 +81,10 @@ describe('Routes', () => {
             ],
         });
 
-        const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
-        const { result } = renderHook(() => useRoutes(), { wrapper });
+        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        const { result } = renderHook(() => useSteg(), { wrapper });
 
-        const route = result.current.routes[5];
+        const route = result.current.steg[5];
         const label = route.label;
         expect(label).toEqual('Om Jens');
     });
@@ -100,15 +100,19 @@ describe('Routes', () => {
                 },
             ],
         });
-        const wrapper = ({ children }) => <RoutesProvider>{children}</RoutesProvider>;
-        const { result } = renderHook(() => useRoutes(), { wrapper });
+        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        const { result } = renderHook(() => useSteg(), { wrapper });
         const {
-            current: { hentForrigeRoute, hentNesteRoute },
+            current: { hentForrigeSteg, hentNesteSteg },
         } = result;
-        const forrigeRouteFraJens = hentForrigeRoute('/om-barnet/barn-1');
-        const forrigeRouteFraLine = hentForrigeRoute('/om-barnet/barn-2');
-        const nesteRouteFraJens = hentNesteRoute('/om-barnet/barn-1');
-        const nesteRouteFraLine = hentNesteRoute('/om-barnet/barn-2');
+        mockHistory(['/om-barnet/barn-1']);
+        const forrigeRouteFraJens = hentForrigeSteg();
+        mockHistory(['/om-barnet/barn-2']);
+        const forrigeRouteFraLine = hentForrigeSteg();
+        mockHistory(['/om-barnet/barn-1']);
+        const nesteRouteFraJens = hentNesteSteg();
+        mockHistory(['/om-barnet/barn-2']);
+        const nesteRouteFraLine = hentNesteSteg();
 
         expect(forrigeRouteFraJens.route).toBe(RouteEnum.OmBarna);
         expect(nesteRouteFraJens.label).toBe('Om Line');

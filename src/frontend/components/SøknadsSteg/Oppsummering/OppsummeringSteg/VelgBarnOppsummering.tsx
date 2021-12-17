@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { useApp } from '../../../../context/AppContext';
-import { useRoutes } from '../../../../context/RoutesContext';
+import { hentRouteObjektForRouteEnum } from '../../../../context/Routes';
 import { RouteEnum } from '../../../../typer/routes';
 import { barnetsNavnValue } from '../../../../utils/barn';
 import { hentBostedSpråkId } from '../../../../utils/språk';
@@ -21,12 +21,11 @@ interface Props {
 const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { formatMessage } = useIntl();
     const { søknad } = useApp();
-    const { hentStegObjektForRoute } = useRoutes();
     const intl = useIntl();
 
     return (
         <Oppsummeringsbolk
-            route={hentStegObjektForRoute(RouteEnum.VelgBarn)}
+            steg={hentRouteObjektForRouteEnum(RouteEnum.VelgBarn)}
             tittel={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]}
             skjemaHook={useVelgBarn}
             settFeilAnchors={settFeilAnchors}

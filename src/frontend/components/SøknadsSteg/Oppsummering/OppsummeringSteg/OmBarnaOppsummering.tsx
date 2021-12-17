@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
-import { useRoutes } from '../../../../context/RoutesContext';
+import { hentRouteObjektForRouteEnum } from '../../../../context/Routes';
 import { barnDataKeySpørsmål } from '../../../../typer/person';
 import { RouteEnum } from '../../../../typer/routes';
 import { barnetsNavnValue } from '../../../../utils/barn';
@@ -23,7 +23,6 @@ interface Props {
 const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const intl = useIntl();
     const { søknad } = useApp();
-    const { hentStegObjektForRoute } = useRoutes();
 
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden
@@ -33,7 +32,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
 
     return (
         <Oppsummeringsbolk
-            route={hentStegObjektForRoute(RouteEnum.OmBarna)}
+            steg={hentRouteObjektForRouteEnum(RouteEnum.OmBarna)}
             tittel={'ombarna.sidetittel'}
             skjemaHook={useOmBarnaDine}
             settFeilAnchors={settFeilAnchors}

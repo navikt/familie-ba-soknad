@@ -7,6 +7,7 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { useSteg } from '../../../context/StegContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
@@ -53,10 +54,9 @@ export const useOmBarnet = (
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
     const { skalTriggeEøsForBarn } = useEøs();
+    const { barnForEøsSteg, settBarnForEøsSteg } = useSteg();
 
-    const [barn] = useState<IBarnMedISøknad | undefined>(
-        søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
-    );
+    const barn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
 
     if (!barn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
@@ -733,16 +733,19 @@ export const useOmBarnet = (
     };
 
     useEffect(() => {
-        console.log('hei jeg kjører');
         const oppdatertBarn = genererOppdatertBarn(barn);
         const skalTriggeEøs = skalTriggeEøsForBarn(oppdatertBarn);
-        if (skalTriggeEøs !== barn.triggetEøs) {
+        if (
+            (skalTriggeEøs && !barnForEøsSteg.includes(barn)) ||
+            (!skalTriggeEøs && barnForEøsSteg.includes(barn))
+        ) {
             console.log('endrer eøs state');
-            settSøknad({
-                ...søknad,
-                barnInkludertISøknaden: søknad.barnInkludertISøknaden.map(barn =>
-                    barn.id === barnetsUuid ? { ...barn, triggetEøs: skalTriggeEøs } : barn
-                ),
+            settBarnForEøsSteg(prevState => {
+                if (skalTriggeEøs) {
+                    return prevState.concat(barn);
+                } else {
+                    return prevState.filter(barnSomTriggetEøs => barnSomTriggetEøs.id !== barn.id);
+                }
             });
         }
     }, [skjema]);

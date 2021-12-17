@@ -8,7 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
-import { useRoutes } from '../../../../context/RoutesContext';
+import { hentRouteObjektForRouteEnum } from '../../../../context/Routes';
 import { AlternativtSvarForInput } from '../../../../typer/common';
 import { ESivilstand, ISamboer, ITidligereSamboer } from '../../../../typer/person';
 import { RouteEnum } from '../../../../typer/routes';
@@ -76,7 +76,6 @@ const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> =
 };
 
 const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
-    const { hentStegObjektForRoute } = useRoutes();
     const { søknad, erUtvidet } = useApp();
     const { formatMessage } = useIntl();
     const [valgtLocale] = useSprakContext();
@@ -85,7 +84,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
 
     return (
         <Oppsummeringsbolk
-            route={hentStegObjektForRoute(RouteEnum.DinLivssituasjon)}
+            steg={hentRouteObjektForRouteEnum(RouteEnum.DinLivssituasjon)}
             tittel={'dinlivssituasjon.sidetittel'}
             skjemaHook={useDinLivssituasjon}
             settFeilAnchors={settFeilAnchors}

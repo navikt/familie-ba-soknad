@@ -26,7 +26,7 @@ import { EøsProvider } from '../context/EøsContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import * as pdlRequest from '../context/pdl';
-import { RoutesProvider } from '../context/RoutesContext';
+import { StegProvider } from '../context/StegContext';
 import { AlternativtSvarForInput } from '../typer/common';
 import { IKvittering } from '../typer/kvittering';
 import {
@@ -104,7 +104,7 @@ export const spyOnUseApp = søknad => {
     };
 };
 
-export const mockEøs = (eøsSkruddAv = false) => {
+export const mockEøs = (eøsSkruddAv = false, barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
     // Prøvde å gjøre dette med __mocks__ uten hell, mocken ble ikke brukt av jest. Gjerne prøv igjen.
     const landSvarSomKanTriggeEøs = jest
         .spyOn(eøsUtils, 'landSvarSomKanTriggeEøs')
@@ -114,6 +114,12 @@ export const mockEøs = (eøsSkruddAv = false) => {
     const useEøs = jest.spyOn(eøsContext, 'useEøs').mockReturnValue({
         erEøsLand,
         eøsSkruddAv,
+        barnSomTriggerEøs,
+        settBarnSomTriggerEøs: jest.fn(),
+        settSøkerTriggerEøs: jest.fn(),
+        skalTriggeEøsForBarn: jest.fn(),
+        skalTriggeEøsForSøker: jest.fn(),
+        søkerTriggerEøs,
     });
     return { landSvarSomKanTriggeEøs, jaNeiSvarTriggerEøs, useEøs, erEøsLand };
 };
@@ -159,7 +165,7 @@ const wrapMedDefaultProvidere = (children: ReactNode, språkTekster: Record<stri
             InnloggetProvider,
             AppProvider,
             EøsProvider,
-            RoutesProvider,
+            StegProvider,
             AppNavigationProvider,
         ],
         children,

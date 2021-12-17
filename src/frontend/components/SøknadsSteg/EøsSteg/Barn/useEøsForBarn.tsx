@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 

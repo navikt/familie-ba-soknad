@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../context/RoutesContext';
+import { useSteg } from '../../../context/StegContext';
 import { BarnetsId } from '../../../typer/common';
 import { IBarn } from '../../../typer/person';
 import { IVelgBarnFeltTyper } from '../../../typer/skjema';
@@ -25,12 +25,12 @@ export const useVelgBarn = (): {
 } => {
     const { søknad, settSøknad, mellomlagre } = useApp();
     const { barnInkludertISøknaden } = søknad;
-    const { settBarnForRoutes } = useRoutes();
+    const { settBarnForSteg } = useSteg();
     const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] =
         useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
 
     useEffect(() => {
-        settBarnForRoutes(barnSomSkalVæreMed);
+        settBarnForSteg(barnSomSkalVæreMed);
     }, [barnSomSkalVæreMed]);
 
     const fjernBarn = (id: BarnetsId) => {

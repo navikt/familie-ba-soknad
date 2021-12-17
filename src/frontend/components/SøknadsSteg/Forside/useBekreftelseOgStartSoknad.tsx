@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router';
-import { useLocation } from 'react-router-dom';
 
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../context/RoutesContext';
-import { ILokasjon } from '../../../typer/lokasjon';
-import { IRoute } from '../../../typer/routes';
+import { useSteg } from '../../../context/StegContext';
+import { ISteg } from '../../../typer/routes';
 import { logForsettPåSøknad, logSkjemaStartet } from '../../../utils/amplitude';
 
 export enum BekreftelseStatus {
@@ -25,10 +23,9 @@ export const useBekreftelseOgStartSoknad = (): {
     settVisStartPåNyttModal: (synlig: boolean) => void;
 } => {
     const history = useHistory();
-    const location = useLocation<ILokasjon>();
     const [visStartPåNyttModal, settVisStartPåNyttModal] = useState(false);
 
-    const { hentNesteRoute, hentRouteIndex } = useRoutes();
+    const { steg, hentNesteSteg, hentNåværendeStegIndex } = useSteg();
     const {
         søknad,
         settSøknad,
@@ -38,34 +35,27 @@ export const useBekreftelseOgStartSoknad = (): {
         avbrytOgSlettSøknad,
         mellomlagretVerdi,
     } = useApp();
-    const {
-        settBarnForRoutes,
-        hentGjeldendeRoutePåStegindex,
-        oppdatertEtterMellomlagring,
-        settOppdatertEtterMellomlagring,
-    } = useRoutes();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
     );
 
-    const nesteRoute: IRoute = hentNesteRoute(location.pathname);
-    const nåværendeStegIndex = hentRouteIndex(location.pathname);
+    const [gjenopprettetFraMellomlagring, settGjenpprettetFraMellomlagring] = useState(false);
+
+    const nesteRoute: ISteg = hentNesteSteg();
+    const nåværendeStegIndex = hentNåværendeStegIndex();
 
     useEffect(() => {
-        if (oppdatertEtterMellomlagring && mellomlagretVerdi) {
-            history.push(
-                hentGjeldendeRoutePåStegindex(mellomlagretVerdi.sisteUtfylteStegIndex).path
-            );
-            settOppdatertEtterMellomlagring(false);
+        if (gjenopprettetFraMellomlagring && mellomlagretVerdi) {
+            history.push(steg[mellomlagretVerdi.sisteUtfylteStegIndex].path);
+            settGjenpprettetFraMellomlagring(false);
         }
-    }, [oppdatertEtterMellomlagring]);
+    }, [gjenopprettetFraMellomlagring]);
 
     const fortsettPåSøknaden = (): void => {
         if (mellomlagretVerdi) {
             brukMellomlagretVerdi();
-            settBarnForRoutes(mellomlagretVerdi.søknad.barnInkludertISøknaden);
-            settOppdatertEtterMellomlagring(true);
+            settGjenpprettetFraMellomlagring(true);
         } else {
             brukMellomlagretVerdi();
             history.push(nesteRoute.path);
