@@ -7,7 +7,6 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { useSteg } from '../../../context/StegContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
@@ -53,8 +52,7 @@ export const useOmBarnet = (
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
-    const { skalTriggeEøsForBarn } = useEøs();
-    const { barnForEøsSteg, settBarnForEøsSteg } = useSteg();
+    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs } = useEøs();
 
     const barn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
 
@@ -736,15 +734,15 @@ export const useOmBarnet = (
         const oppdatertBarn = genererOppdatertBarn(barn);
         const skalTriggeEøs = skalTriggeEøsForBarn(oppdatertBarn);
         if (
-            (skalTriggeEøs && !barnForEøsSteg.includes(barn)) ||
-            (!skalTriggeEøs && barnForEøsSteg.includes(barn))
+            (skalTriggeEøs && !barnSomTriggerEøs.includes(barn.id)) ||
+            (!skalTriggeEøs && barnSomTriggerEøs.includes(barn.id))
         ) {
             console.log('endrer eøs state');
-            settBarnForEøsSteg(prevState => {
+            settBarnSomTriggerEøs(prevState => {
                 if (skalTriggeEøs) {
-                    return prevState.concat(barn);
+                    return prevState.concat(barn.id);
                 } else {
-                    return prevState.filter(barnSomTriggetEøs => barnSomTriggetEøs.id !== barn.id);
+                    return prevState.filter(barnSomTriggetEøsId => barnSomTriggetEøsId !== barn.id);
                 }
             });
         }

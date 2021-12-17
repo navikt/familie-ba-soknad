@@ -20,7 +20,6 @@ import Oppsummering from './components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from './components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useApp } from './context/AppContext';
 import { routes } from './context/Routes';
-import { BarnetsId } from './typer/common';
 import { ISteg, RouteEnum } from './typer/routes';
 
 /**
@@ -32,6 +31,13 @@ const OmBarnetWrapper: React.FC = () => {
     const barnetsId = søknad.barnInkludertISøknaden[number ? Number.parseInt(number) - 1 : 0].id;
     // https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key
     return <OmBarnet barnetsId={barnetsId} key={barnetsId} />;
+};
+
+const EøsForBarnWrapper: React.FC = () => {
+    const { number } = useParams<{ number?: string }>();
+    const { søknad } = useApp();
+    const barnetsId = søknad.barnInkludertISøknaden[number ? Number.parseInt(number) - 1 : 0].id;
+    return <EøsForBarn barnetsId={barnetsId} key={barnetsId} />;
 };
 
 const Søknad = () => {
@@ -54,7 +60,7 @@ const Søknad = () => {
             case RouteEnum.EøsForSøker:
                 return EøsForSøker;
             case RouteEnum.EøsForBarn:
-                return () => <EøsForBarn barnetsId={route.spesifisering as BarnetsId} />;
+                return EøsForBarnWrapper;
             case RouteEnum.Oppsummering:
                 return Oppsummering;
             case RouteEnum.Dokumentasjon:

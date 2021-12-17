@@ -7,6 +7,7 @@ import { matchPath, useLocation } from 'react-router-dom';
 import { ISteg, RouteEnum } from '../typer/routes';
 import { IBarnMedISøknad } from '../typer/søknad';
 import { useApp } from './AppContext';
+import { useEøs } from './EøsContext';
 import { routes } from './Routes';
 
 const [StegProvider, useSteg] = createUseContext(() => {
@@ -15,7 +16,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
     const { pathname: currentLocation } = useLocation();
 
     const [barnForSteg, settBarnForSteg] = useState<IBarnMedISøknad[]>([]);
-    const [barnForEøsSteg, settBarnForEøsSteg] = useState<IBarnMedISøknad[]>([]);
+    const { barnSomTriggerEøs } = useEøs();
 
     useEffect(() => {
         settBarnForSteg(søknad.barnInkludertISøknaden);
@@ -36,7 +37,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
                         label: route.label,
                     }));
                 case RouteEnum.EøsForBarn:
-                    return barnForEøsSteg.map((_barn, index) => ({
+                    return barnSomTriggerEøs.map((_barnId, index) => ({
                         path:
                             barnEøsRoute?.path.replace(
                                 ':number',
@@ -65,10 +66,9 @@ const [StegProvider, useSteg] = createUseContext(() => {
     const hentStegNummer = (route: RouteEnum, barn?: IBarnMedISøknad): number => {
         switch (route) {
             case RouteEnum.OmBarnet:
+            case RouteEnum.EøsForBarn:
                 const index = barnInkludertISøknaden.findIndex(barnISøknad => barn === barnISøknad);
-                return (
-                    steg.findIndex(steg => steg.route === RouteEnum.OmBarnet) + Math.max(index, 0)
-                );
+                return steg.findIndex(steg => steg.route === route) + Math.max(index, 0);
             default:
                 return steg.findIndex(steg => steg.route === route);
         }
@@ -114,8 +114,6 @@ const [StegProvider, useSteg] = createUseContext(() => {
         hentNåværendeStegIndex,
         erPåKvitteringsside,
         settBarnForSteg,
-        barnForEøsSteg,
-        settBarnForEøsSteg,
     };
 });
 

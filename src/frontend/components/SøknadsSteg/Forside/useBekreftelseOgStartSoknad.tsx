@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
 import { useSteg } from '../../../context/StegContext';
 import { ISteg } from '../../../typer/routes';
 import { logForsettPåSøknad, logSkjemaStartet } from '../../../utils/amplitude';
@@ -35,6 +36,7 @@ export const useBekreftelseOgStartSoknad = (): {
         avbrytOgSlettSøknad,
         mellomlagretVerdi,
     } = useApp();
+    const { settBarnSomTriggerEøs, skalTriggeEøsForBarn } = useEøs();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
@@ -54,7 +56,16 @@ export const useBekreftelseOgStartSoknad = (): {
 
     const fortsettPåSøknaden = (): void => {
         if (mellomlagretVerdi) {
+            const {
+                søknad: { barnInkludertISøknaden },
+            } = mellomlagretVerdi;
+
             brukMellomlagretVerdi();
+            settBarnSomTriggerEøs(
+                barnInkludertISøknaden
+                    .filter(barn => skalTriggeEøsForBarn(barn))
+                    .map(barn => barn.id)
+            );
             settGjenpprettetFraMellomlagring(true);
         } else {
             brukMellomlagretVerdi();

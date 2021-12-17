@@ -19,7 +19,7 @@ const routes: ISteg[] = [
         route: RouteEnum.OmBarnet,
     },
     {
-        path: `/${eøsBarnBasePath}/barn-:index`,
+        path: `/${eøsBarnBasePath}/barn-:number`,
         label: `Om EØS barn`,
         route: RouteEnum.EøsForBarn,
     },
