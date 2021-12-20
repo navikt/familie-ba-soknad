@@ -69,7 +69,8 @@ const [EøsProvider, useEøs] = createUseContext(() => {
         })();
     }, []);
 
-    const erEøsLand = (land: Alpha3Code | '') => !eøsSkruddAv && !!land && eøsLand?.includes(land);
+    const erEøsLand = (land: Alpha3Code | '') =>
+        !!(!eøsSkruddAv && !!land && eøsLand?.includes(land));
 
     useEffect(() => {
         const landSvarTriggerEøs = !!landSvarSomKanTriggeEøs(søknad).find(land => erEøsLand(land));

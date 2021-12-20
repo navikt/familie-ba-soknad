@@ -1,59 +1,95 @@
 import { IBarnMedISøknad } from '../../../typer/søknad';
-import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
-import {} from './spørsmål';
 
-export const landFeilmeldingSpråkId = (
-    årsak: EUtenlandsoppholdÅrsak | '',
-    barn?: IBarnMedISøknad
-) => (barn ? landFeilmeldingSpråkIdsBarn[årsak] : landFeilmeldingSpråkIdsSøker[årsak]);
+enum SpråkIds {
+    MOTTAR_NÅ_SPM = 'MOTTAR_NÅ_SPM',
+    MOTTAR_NÅ_FEIL = 'MOTTAR_NÅ_FEIL',
+    LAND_SPM_FORTID = 'LAND_SPM_FORTID',
+    LAND_SPM_NÅTID = 'LAND_SPM_NÅTID',
+    LAND_FEIL_FORTID = 'LAND_FEIL_FORTID',
+    LAND_FEIL_NÅTID = 'LAND_FEIL_NÅTID',
+    FRA_DATO_SPM_FORTID = 'FRA_DATO_FEIL_FORTID',
+    FRA_DATO_SPM_NÅTID = 'FRA_DATO_FEIL_NÅTID',
+    FRA_DATO_FEIL_FORTID = 'FRA_DATO_FEIL_FORTID',
+    FRA_DATO_FEIL_NÅTID = 'FRA_DATO_FEIL_NÅTID',
+}
 
-export const landFeilmeldingSpråkIdsBarn: Record<EUtenlandsoppholdÅrsak, string> = {
-    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]:
-        'ombarnet.hvilketlandflyttetfra.feilmelding',
-    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]:
-        'ombarnet.hvilketlandflyttettil.feilmelding',
-    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]:
-        'ombarnet.hvilketlandoppholdti.feilmelding',
-    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]:
-        'ombarnet.hvilketlandoppholderi.feilmelding',
+const andreForelderSpråkIds: Record<SpråkIds, string> = {
+    [SpråkIds.MOTTAR_NÅ_SPM]: 'ombarnet.andre-forelder.pensjonnå.spm',
+    [SpråkIds.MOTTAR_NÅ_FEIL]: 'ombarnet.andre-forelder.pensjonnå.feilmelding',
+    [SpråkIds.LAND_SPM_FORTID]: 'felles.hvilketlandpensjonandreforelder.spm',
+    [SpråkIds.LAND_SPM_NÅTID]: 'ombarnet.andre-forelder.utenlandspensjon.land.spm',
+    [SpråkIds.LAND_FEIL_FORTID]: 'felles.hvilketlandpensjonandreforelder.feilmelding',
+    [SpråkIds.LAND_FEIL_NÅTID]: 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
+    [SpråkIds.FRA_DATO_SPM_FORTID]: 'felles.modal.franårfikkpensjonandreforelder.spm',
+    [SpråkIds.FRA_DATO_SPM_NÅTID]: 'ombarnet.franårandreforelderpensjon.spm',
+    [SpråkIds.FRA_DATO_FEIL_FORTID]: 'felles.modal.franårfikkpensjonandreforelder.feilmelding',
+    [SpråkIds.FRA_DATO_FEIL_NÅTID]: 'ombarnet.franårandreforelderpensjon.feilmelding',
 };
 
-export const fraDatoFeilmeldingSpråkId = (annenForelder = false, barn?: IBarnMedISøknad) => {
-    return 'TODO velg gyldig dato';
+const søkerSpråkIds: Record<SpråkIds, string> = {
+    [SpråkIds.MOTTAR_NÅ_SPM]: 'modal.fårdupensjonnå.spm',
+    [SpråkIds.MOTTAR_NÅ_FEIL]: 'modal.fårdupensjonnå.feilmelding',
+    [SpråkIds.LAND_SPM_FORTID]: 'felles.hvilketlandpensjon.spm',
+    [SpråkIds.LAND_SPM_NÅTID]: 'omdeg.utenlandspensjon.land.spm',
+    [SpråkIds.LAND_FEIL_FORTID]: 'felles.hvilketlandpensjon.feilmelding',
+    [SpråkIds.LAND_FEIL_NÅTID]: 'omdeg.utenlandspensjon.land.feilmelding',
+    [SpråkIds.FRA_DATO_SPM_FORTID]: 'felles.modal.franårfikkpensjonandreforelder.spm',
+    [SpråkIds.FRA_DATO_SPM_NÅTID]: 'ombarnet.franårandreforelderpensjon.spm',
+    [SpråkIds.FRA_DATO_FEIL_FORTID]: 'felles.modal.franårfikkpensjon.feilmelding',
+    [SpråkIds.FRA_DATO_FEIL_NÅTID]: 'omdeg.franårpensjon.feilmelding',
 };
 
-export const fraDatoLabelSpråkId = (årsak: EUtenlandsoppholdÅrsak | '', barn?: IBarnMedISøknad) => {
-    switch (årsak) {
-        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
-            return barn ? 'ombarnet.nårflyttetfranorge.spm' : 'modal.nårflyttetfra.spm';
-        default:
-            return 'felles.nårstartetoppholdet.spm';
+export const mottarNåSpmSpråkId = (barn?: IBarnMedISøknad) => {
+    if (barn) {
+        return andreForelderSpråkIds[SpråkIds.MOTTAR_NÅ_SPM];
     }
+    return søkerSpråkIds[SpråkIds.MOTTAR_NÅ_SPM];
 };
 
-export const tilDatoLabelSpråkId = (årsak: EUtenlandsoppholdÅrsak | '', barn?: IBarnMedISøknad) => {
-    switch (årsak) {
-        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
-            return barn ? 'ombarnet.nårflyttettilnorge.spm' : 'modal.nårflyttettilnorge.spm';
-        case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
-            return 'felles.nåravsluttetoppholdet.spm';
-        default:
-            return 'felles.nåravsluttesoppholdet.spm';
+export const mottarNåFeilmeldingSpråkId = (barn?: IBarnMedISøknad) => {
+    if (barn) {
+        return andreForelderSpråkIds[SpråkIds.MOTTAR_NÅ_FEIL];
     }
+    return søkerSpråkIds[SpråkIds.MOTTAR_NÅ_FEIL];
 };
 
-export const tilDatoFeilmeldingSpråkId = (
-    årsak: EUtenlandsoppholdÅrsak | '',
+const generiskOppslag = (
+    mottarNå: boolean,
+    nåtidId: SpråkIds,
+    fortidId: SpråkIds,
     barn?: IBarnMedISøknad
 ) => {
-    switch (årsak) {
-        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
-            return barn
-                ? 'ombarnet.nårflyttettilnorge.feilmelding'
-                : 'modal.nårflyttettilnorge.feilmelding';
-        case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
-            return 'felles.nåravsluttetoppholdet.feilmelding';
-        default:
-            return 'felles.nåravsluttesoppholdet.feilmelding';
+    if (barn) {
+        return andreForelderSpråkIds[mottarNå ? nåtidId : fortidId];
     }
+    return søkerSpråkIds[mottarNå ? nåtidId : fortidId];
 };
+
+export const pensjonslandSpmSpråkId = (mottarNå: boolean, barn?: IBarnMedISøknad) => {
+    return generiskOppslag(mottarNå, SpråkIds.LAND_SPM_NÅTID, SpråkIds.LAND_SPM_FORTID, barn);
+};
+
+export const pensjonslandFeilmeldingSpråkId = (mottarNå: boolean, barn?: IBarnMedISøknad) => {
+    return generiskOppslag(mottarNå, SpråkIds.LAND_FEIL_NÅTID, SpråkIds.LAND_FEIL_FORTID, barn);
+};
+
+export const fraDatoSpmSpråkId = (mottarNå: boolean, barn?: IBarnMedISøknad) => {
+    return generiskOppslag(
+        mottarNå,
+        SpråkIds.FRA_DATO_SPM_NÅTID,
+        SpråkIds.FRA_DATO_SPM_FORTID,
+        barn
+    );
+};
+
+export const fraDatoFeilmeldingSpråkId = (mottarNå: boolean, barn?: IBarnMedISøknad) => {
+    return generiskOppslag(
+        mottarNå,
+        SpråkIds.FRA_DATO_FEIL_NÅTID,
+        SpråkIds.FRA_DATO_FEIL_FORTID,
+        barn
+    );
+};
+
+export const tilDatoFeilmeldingSpråkId = 'felles.nåravsluttetpensjon.feilmelding';
+export const tilDatoSpørsmålSpråkId = 'felles.nåravsluttetpensjon.spm';

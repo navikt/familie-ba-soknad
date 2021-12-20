@@ -11,6 +11,9 @@ import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+// import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+// import { PensjonModal } from '../../Felleskomponenter/PensjonModal/PensjonModal';
+// import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
@@ -33,6 +36,7 @@ const DinLivssituasjon: React.FC = () => {
 
     const { erUtvidet, søknad } = useApp();
     const { erEøsLand } = useEøs();
+    // const { erÅpen: erPensjonsmodalÅpen, toggleModal: togglePensjonsmodal } = useModal();
 
     return (
         <Steg
@@ -199,6 +203,12 @@ const DinLivssituasjon: React.FC = () => {
                     }
                     dynamisk
                 />
+                {/*{skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (*/}
+                {/*    <LeggTilKnapp*/}
+                {/*        onClick={() => togglePensjonsmodal()}*/}
+                {/*        språkTekst={'felles.modal.leggtilpensjonutland.tittel'}*/}
+                {/*    />*/}
+                {/*)}*/}
                 {erEøsLand(skjema.felter.pensjonsland.verdi) && (
                     <VedleggNotisTilleggsskjema
                         språkTekstId={'omdeg.utenlandspensjon.eøs-info'}
@@ -206,6 +216,11 @@ const DinLivssituasjon: React.FC = () => {
                     />
                 )}
             </KomponentGruppe>
+            {/*<PensjonModal*/}
+            {/*    onLeggTilPensjonsPeriode={periode => console.log(periode)}*/}
+            {/*    erÅpen={erPensjonsmodalÅpen}*/}
+            {/*    toggleModal={togglePensjonsmodal}*/}
+            {/*/>*/}
         </Steg>
     );
 };

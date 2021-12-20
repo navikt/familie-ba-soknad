@@ -77,6 +77,14 @@ export interface IUtenlandsperiode {
     oppholdslandTilDato?: ISøknadSpørsmål<DatoMedUkjent>;
 }
 
+export interface IPensjonsperiode {
+    mottarPensjonNå: ISøknadSpørsmål<ESvar>;
+    pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    eøs: boolean;
+    pensjonFra?: ISøknadSpørsmål<ISODateString>;
+    pensjonTil?: ISøknadSpørsmål<ISODateString>;
+}
+
 export interface ISamboer {
     navn: ISøknadSpørsmål<string>;
     ident: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
