@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -10,6 +8,7 @@ import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IArbeidsperioderFeltTyper } from '../../../typer/skjema';
+import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import {
     arbeidslandFeilmelding,
     tilDatoArbeidsperiodeFeilmelding,
@@ -36,6 +35,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, gjelderAndreForelder) =
         ),
         skalFeltetVises:
             gjelderUtlandet && arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,
+        nullstillVedAvhengighetEndring: true,
     });
 
     const arbeidsgiver = useInputFelt({
@@ -52,6 +52,9 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, gjelderAndreForelder) =
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,
         feilmeldingSpråkId: 'dinlivssituasjon.arbeid-utland.land.feilmelding',
+        sluttdatoAvgrensning:
+            arbeidsperiodeAvsluttet.verdi === ESvar.JA ? gårsdagensDato() : dagensDato(),
+        nullstillVedAvhengighetEndring: true,
     });
 
     const tilDatoArbeidsperiodeUkjent = useFelt<ESvar>({
@@ -72,6 +75,8 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, gjelderAndreForelder) =
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,
+        sluttdatoAvgrensning: arbeidsperiodeAvsluttet.verdi === ESvar.JA ? dagensDato() : undefined,
+        startdatoAvgrensning: fraDatoArbeidsperiode.verdi,
     });
 
     const skjema = useSkjema<IArbeidsperioderFeltTyper, 'string'>({

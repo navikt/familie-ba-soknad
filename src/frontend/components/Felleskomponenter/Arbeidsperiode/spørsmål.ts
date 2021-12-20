@@ -13,7 +13,8 @@ export const arbeidsperiodeSpørsmålSpråkId: Record<ArbeidsperiodeSpørsmålsI
     [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: 'dinlivssituasjon.arbeid-utland.land.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsgiver]: 'felles.oppgiarbeidsgiver',
-    [ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]: '',
-    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]: '',
-    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]: '',
+    [ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]: 'felles.nårbegyntearbeidsperiode.spm',
+    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]: 'felles.nåravsluttesarbeidsperiode.spm',
+    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]:
+        'felles.nåravsluttesarbeidsperiode.sjekkboks',
 };

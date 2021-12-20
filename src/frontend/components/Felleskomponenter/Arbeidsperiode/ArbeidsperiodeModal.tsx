@@ -2,15 +2,8 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { dagensDato } from '../../../utils/dato';
+import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import {
-    harTilhørendeFomFelt,
-    hentMaxAvgrensningPåFraDato,
-    hentMaxAvgrensningPåTilDato,
-    hentMinAvgrensningPåTilDato,
-} from '../../../utils/utenlandsopphold';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
@@ -57,7 +50,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
             erÅpen={erÅpen}
             modalTittelSpråkId={arbeidsperiodeTittelSpråkId(gjelderUtlandet)}
             onSubmitCallback={onLeggTil}
-            submitKnappSpråkId={'felles.leggtilutenlands.knapp'}
+            submitKnappSpråkId={'felles.leggtilarbeidsperiode.knapp'}
             toggleModal={toggleModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
@@ -105,6 +98,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         skjema={skjema}
                         label={<SpråkTekst id={'felles.nårbegyntearbeidsperiode.spm'} />}
                         calendarPosition={'fullscreen'}
+                        avgrensMaxDato={
+                            skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
+                                ? gårsdagensDato()
+                                : dagensDato()
+                        }
                     />
                 )}
                 {skjema.felter.tilDatoArbeidsperiode.erSynlig && (
@@ -119,7 +117,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             />
                         }
                         avgrensMinDato={skjema.felter.fraDatoArbeidsperiode.verdi}
-                        avgrensMaxDato={dagensDato()}
+                        avgrensMaxDato={
+                            skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
+                                ? dagensDato()
+                                : undefined
+                        }
                         disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
                         calendarPosition={'fullscreen'}
                     />

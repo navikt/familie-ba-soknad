@@ -38,6 +38,16 @@ const DinLivssituasjon: React.FC = () => {
     const { erUtvidet, søknad } = useApp();
     const { erEøsLand } = useEøs();
     const { erÅpen: erArbeidsperiodeÅpen, toggleModal: toggleArbeidsperiodeModal } = useModal();
+    const { erÅpen: erArbeidsperiodeUtlandetÅpen, toggleModal: toggleArbeidsperiodeUtlandetModal } =
+        useModal();
+    const {
+        erÅpen: erArbeidsperiodeAndreForelderÅpen,
+        toggleModal: toggleArbeidsperiodeAndreForelderModal,
+    } = useModal();
+    const {
+        erÅpen: erArbeidsperiodeAndreForelderUtlandetÅpen,
+        toggleModal: toggleArbeidsperiodeAndreForelderUtlandetModal,
+    } = useModal();
 
     return (
         <Steg
@@ -159,15 +169,55 @@ const DinLivssituasjon: React.FC = () => {
                         dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
                     }
                 />
+                <div>Søker arbeidsopphold Norge</div>
                 <ArbeidsperiodeModal
                     erÅpen={erArbeidsperiodeÅpen}
                     toggleModal={toggleArbeidsperiodeModal}
+                    gjelderUtlandet={false}
+                    gjelderAndreForelder={false}
+                />
+                <LeggTilKnapp
+                    språkTekst={'felles.flerearbeidsperiodernorge.tittel'}
+                    onClick={toggleArbeidsperiodeModal}
+                    id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
+                    feilmelding={''}
+                />
+                <div>Søker arbeidsopphold utlandet</div>
+                <ArbeidsperiodeModal
+                    erÅpen={erArbeidsperiodeUtlandetÅpen}
+                    toggleModal={toggleArbeidsperiodeUtlandetModal}
+                    gjelderUtlandet={true}
+                    gjelderAndreForelder={false}
+                />
+                <LeggTilKnapp
+                    språkTekst={'felles.flerearbeidsperioderutland.tittel'}
+                    onClick={toggleArbeidsperiodeUtlandetModal}
+                    id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
+                    feilmelding={''}
+                />
+                <div>Andre forelder arbeidsopphold Norge</div>
+                <ArbeidsperiodeModal
+                    erÅpen={erArbeidsperiodeAndreForelderÅpen}
+                    toggleModal={toggleArbeidsperiodeAndreForelderModal}
+                    gjelderUtlandet={false}
+                    gjelderAndreForelder={true}
+                />
+                <LeggTilKnapp
+                    språkTekst={'felles.flerearbeidsperiodernorge.tittel'}
+                    onClick={toggleArbeidsperiodeAndreForelderModal}
+                    id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
+                    feilmelding={''}
+                />
+                <div>Andre forelder arbeidsopphold Norge</div>
+                <ArbeidsperiodeModal
+                    erÅpen={erArbeidsperiodeAndreForelderUtlandetÅpen}
+                    toggleModal={toggleArbeidsperiodeAndreForelderUtlandetModal}
                     gjelderUtlandet={true}
                     gjelderAndreForelder={true}
                 />
                 <LeggTilKnapp
                     språkTekst={'felles.flerearbeidsperioderutland.tittel'}
-                    onClick={toggleArbeidsperiodeModal}
+                    onClick={toggleArbeidsperiodeAndreForelderUtlandetModal}
                     id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
                     feilmelding={''}
                 />
