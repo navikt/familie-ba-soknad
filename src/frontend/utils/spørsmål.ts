@@ -1,6 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
+import { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arbeidsperiode/spørsmål';
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
@@ -35,7 +36,7 @@ export const samletSpørsmålId: { [key: string]: SpørsmålId } = {
 };
 
 export const samletSpørsmålSpråkTekstId: Record<
-    Exclude<SpørsmålId, UtenlandsoppholdSpørsmålId>, // UtenlandsoppholdSpørsmålId har ikke statiske spørsmålstekster
+    Exclude<SpørsmålId, UtenlandsoppholdSpørsmålId | ArbeidsperiodeSpørsmålsId>, // UtenlandsoppholdSpørsmålId har ikke statiske spørsmålstekster
     string
 > = {
     ...omDegSpørsmålSpråkId,
