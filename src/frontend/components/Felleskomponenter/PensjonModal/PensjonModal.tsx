@@ -88,14 +88,15 @@ export const PensjonModal: React.FC<Props> = ({
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.mottarPensjonNå}
-                    spørsmålTekstId={mottarNåSpmSpråkId()}
+                    spørsmålTekstId={mottarNåSpmSpråkId(barn)}
+                    språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                 />
                 <LandDropdown
                     felt={skjema.felter.pensjonsland}
                     skjema={skjema}
                     label={
                         <SpråkTekst
-                            id={pensjonslandSpmSpråkId(mottarPensjonNå.verdi === ESvar.JA)}
+                            id={pensjonslandSpmSpråkId(mottarPensjonNå.verdi === ESvar.JA, barn)}
                             values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                         />
                     }

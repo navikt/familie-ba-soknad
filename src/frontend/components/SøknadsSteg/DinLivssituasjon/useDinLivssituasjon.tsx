@@ -248,6 +248,7 @@ export const useDinLivssituasjon = (): {
             arbeidsland,
             mottarUtenlandspensjon,
             pensjonsland,
+            registrertePensjonsperioder,
         },
         skjemanavn: 'dinlivssituasjon',
     });

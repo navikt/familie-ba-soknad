@@ -2,12 +2,14 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { Element } from 'nav-frontend-typografi';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { andreForelderDataKeySpørsmål } from '../../../typer/person';
+import { andreForelderDataKeySpørsmål, IPensjonsperiode } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IAndreForelder, IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
@@ -16,9 +18,13 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import { PensjonModal } from '../../Felleskomponenter/PensjonModal/PensjonModal';
+import { PensjonOppsummering } from '../../Felleskomponenter/PensjonModal/PensjonOppsummering';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import AndreForelderOppsummering from '../Oppsummering/OppsummeringSteg/OmBarnet/AndreForelderOppsummering';
@@ -30,13 +36,28 @@ const AndreForelder: React.FC<{
     andreForelder: IAndreForelder;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     andreBarnSomErFyltUt: IBarnMedISøknad[];
-}> = ({ barn, andreForelder, skjema, andreBarnSomErFyltUt }) => {
+    leggTilPensjonsperiodeAndreForelder: (periode: IPensjonsperiode) => void;
+    fjernPensjonsperiodeAndreForelder: (periode: IPensjonsperiode) => void;
+    pensjonsperioderAndreForelder: IPensjonsperiode[];
+}> = ({
+    barn,
+    andreForelder,
+    skjema,
+    andreBarnSomErFyltUt,
+    leggTilPensjonsperiodeAndreForelder,
+    fjernPensjonsperiodeAndreForelder,
+    pensjonsperioderAndreForelder,
+}) => {
     const { erEøsLand } = useEøs();
     const intl = useIntl();
     const barnetsNavn = barnetsNavnValue(barn, intl);
     const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
         annetBarn => annetBarn.id === skjema.felter.sammeForelderSomAnnetBarn.verdi
     );
+    const {
+        erÅpen: erÅpenAndreForelderPensjonsmodal,
+        toggleModal: toggleAndreForelderPensjonsmodal,
+    } = useModal();
 
     return (
         <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
@@ -196,6 +217,38 @@ const AndreForelder: React.FC<{
                                     inkluderVetIkke={true}
                                     språkValues={{ navn: barnetsNavn }}
                                 />
+                                {process.env.NODE_ENV === 'development' &&
+                                    skjema.felter.andreForelderPensjonUtland.verdi === ESvar.JA && (
+                                        <>
+                                            {pensjonsperioderAndreForelder.map((periode, index) => (
+                                                <PensjonOppsummering
+                                                    periode={periode}
+                                                    nummer={index + 1}
+                                                    fjernPeriodeCallback={
+                                                        fjernPensjonsperiodeAndreForelder
+                                                    }
+                                                    visFjernKnapp={true}
+                                                    barn={barn}
+                                                />
+                                            ))}
+                                            {pensjonsperioderAndreForelder.length > 0 && (
+                                                <Element>
+                                                    <SpråkTekst
+                                                        id={'ombarnet.flerepensjonsperioder.spm'}
+                                                        values={{
+                                                            barn: barnetsNavnValue(barn, intl),
+                                                        }}
+                                                    />
+                                                </Element>
+                                            )}
+                                            <LeggTilKnapp
+                                                onClick={() => toggleAndreForelderPensjonsmodal()}
+                                                språkTekst={
+                                                    'felles.modal.leggtilpensjonutland.tittel'
+                                                }
+                                            />
+                                        </>
+                                    )}
                                 <LandDropdown
                                     felt={skjema.felter.andreForelderPensjonHvilketLand}
                                     skjema={skjema}
@@ -227,6 +280,12 @@ const AndreForelder: React.FC<{
                                 )}
                             </KomponentGruppe>
                         )}
+                        <PensjonModal
+                            onLeggTilPensjonsPeriode={leggTilPensjonsperiodeAndreForelder}
+                            erÅpen={erÅpenAndreForelderPensjonsmodal}
+                            toggleModal={toggleAndreForelderPensjonsmodal}
+                            barn={barn}
+                        />
                     </>
                 ) : (
                     barnMedSammeForelder?.andreForelder && (

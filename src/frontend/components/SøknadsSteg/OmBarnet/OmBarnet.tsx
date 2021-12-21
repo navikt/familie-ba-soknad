@@ -44,6 +44,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
+        leggTilPensjonsperiodeAndreForelder,
+        fjernPensjonsperiodeAndreForelder,
+        pensjonsperioderAndreForelder,
     } = useOmBarnet(barnetsId);
     const intl = useIntl();
 
@@ -77,6 +80,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     skjema={skjema}
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
                     andreForelder={barn.andreForelder}
+                    fjernPensjonsperiodeAndreForelder={fjernPensjonsperiodeAndreForelder}
+                    leggTilPensjonsperiodeAndreForelder={leggTilPensjonsperiodeAndreForelder}
+                    pensjonsperioderAndreForelder={pensjonsperioderAndreForelder}
                 />
             )}
 

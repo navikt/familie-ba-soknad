@@ -20,6 +20,7 @@ import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
     ESivilstand,
+    IPensjonsperiode,
     IUtenlandsperiode,
 } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
@@ -48,6 +49,9 @@ export const useOmBarnet = (
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     utenlandsperioder: IUtenlandsperiode[];
+    leggTilPensjonsperiodeAndreForelder: (periode: IPensjonsperiode) => void;
+    fjernPensjonsperiodeAndreForelder: (periode: IPensjonsperiode) => void;
+    pensjonsperioderAndreForelder: IPensjonsperiode[];
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
@@ -59,6 +63,20 @@ export const useOmBarnet = (
     if (!barn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
     }
+
+    const [pensjonsperioderAndreForelder, settPensjonsperioderAndreForelder] = useState<
+        IPensjonsperiode[]
+    >([]);
+
+    const leggTilPensjonsperiodeAndreForelder = (periode: IPensjonsperiode) => {
+        settPensjonsperioderAndreForelder(prevState => prevState.concat(periode));
+    };
+
+    const fjernPensjonsperiodeAndreForelder = (periodeSomSkalFjernes: IPensjonsperiode) => {
+        settPensjonsperioderAndreForelder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
 
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
         barn.utenlandsperioder
@@ -391,6 +409,17 @@ export const useOmBarnet = (
             sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
     });
 
+    const registrertePensjonsperioderAndreForelder = useFelt<IPensjonsperiode[]>({
+        verdi: pensjonsperioderAndreForelder,
+        avhengigheter: { andreForelderPensjonUtland },
+        skalFeltetVises: avhengigheter =>
+            avhengigheter.andreForelderPensjonUtland.verdi === ESvar.JA,
+    });
+
+    useEffect(() => {
+        registrertePensjonsperioderAndreForelder.validerOgSettFelt(pensjonsperioderAndreForelder);
+    }, [pensjonsperioderAndreForelder]);
+
     /*--- BOSTED ---*/
     const borFastMedSøker = useJaNeiSpmFelt({
         søknadsfelt: barn[barnDataKeySpørsmål.borFastMedSøker],
@@ -544,6 +573,7 @@ export const useOmBarnet = (
             andreForelderArbeidUtlandetHvilketLand,
             andreForelderPensjonUtland,
             andreForelderPensjonHvilketLand,
+            registrertePensjonsperioderAndreForelder,
             borFastMedSøker,
             skriftligAvtaleOmDeltBosted,
             søkerForTidsrom,
@@ -803,5 +833,8 @@ export const useOmBarnet = (
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
+        leggTilPensjonsperiodeAndreForelder,
+        fjernPensjonsperiodeAndreForelder,
+        pensjonsperioderAndreForelder,
     };
 };
