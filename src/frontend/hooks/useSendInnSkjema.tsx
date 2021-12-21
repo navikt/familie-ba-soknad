@@ -538,6 +538,7 @@ export const useSendInnSkjema = (): {
             adressebeskyttelse,
             nåværendeSamboer,
             utenlandsperioder,
+            pensjonsperioderUtland,
             ...søkerSpørsmål
         } = søker;
         const { spørsmål: utvidaSpørsmål, tidligereSamboere } = utvidet;
