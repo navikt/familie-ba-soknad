@@ -17,7 +17,8 @@ export const utbetalingerSøkerSpørsmålSpråkId = (
     [UtbetalingerSpørsmålId.utbetalingTilDato]: tilbakeITid
         ? 'felles.nårytelsenavsluttet.spm'
         : 'felles.nåravsluttesytelsen.spm',
-    [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]: 'felles.svaralternativ.vetikke',
+    [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]:
+        'felles.vetikkenårutbetalingerstopper.sjekkboks',
 });
 
 export const utbetalingerAndreForelderSpørsmålSpråkId = (
@@ -31,5 +32,6 @@ export const utbetalingerAndreForelderSpørsmålSpråkId = (
     [UtbetalingerSpørsmålId.utbetalingTilDato]: tilbakeITid
         ? 'felles.nårytelsenavsluttet.spm'
         : 'felles.nåravsluttesytelsen.spm',
-    [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]: 'felles.svaralternativ.vetikke',
+    [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]:
+        'felles.vetikkenårutbetalingerstopper.sjekkboks',
 });
