@@ -50,7 +50,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
                         label: route.label,
                     }));
                 case RouteEnum.EøsForSøker:
-                    return søkerTriggerEøs ? route : [];
+                    return søkerTriggerEøs || barnSomTriggerEøs.length ? route : [];
                 default:
                     return { path: route.path, route: route.route, label: route.label };
             }
