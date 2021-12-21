@@ -27,7 +27,7 @@ export const useOmdeg = (): {
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
         søker.utenlandsperioder
     );
-    const { skalTriggeEøsForSøker } = useEøs();
+    const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøs();
 
     const borPåRegistrertAdresse = useFelt<ESvar | null>({
         feltId: søker.borPåRegistrertAdresse.id,
@@ -105,7 +105,11 @@ export const useOmdeg = (): {
 
     useEffect(() => {
         registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
-    }, [utenlandsperioder]);
+
+        const oppdatertSøker = genererOppdatertSøker();
+        skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs &&
+            settSøkerTriggerEøs(prevState => !prevState);
+    }, [værtINorgeITolvMåneder, utenlandsperioder]);
 
     const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {
         settUtenlandsperioder(prevState => prevState.concat(periode));
@@ -117,27 +121,29 @@ export const useOmdeg = (): {
         );
     };
 
+    const genererOppdatertSøker = () => ({
+        ...søknad.søker,
+        utenlandsperioder: værtINorgeITolvMåneder.verdi === ESvar.NEI ? utenlandsperioder : [],
+        borPåRegistrertAdresse: {
+            ...søknad.søker.borPåRegistrertAdresse,
+            svar: skjema.felter.borPåRegistrertAdresse.verdi,
+        },
+        værtINorgeITolvMåneder: {
+            ...søknad.søker.værtINorgeITolvMåneder,
+            svar: skjema.felter.værtINorgeITolvMåneder.verdi,
+        },
+        planleggerÅBoINorgeTolvMnd: {
+            ...søknad.søker.planleggerÅBoINorgeTolvMnd,
+            svar:
+                !flyttetPermanentFraNorge(utenlandsperioder) &&
+                værtINorgeITolvMåneder.verdi === ESvar.NEI
+                    ? skjema.felter.planleggerÅBoINorgeTolvMnd.verdi
+                    : null,
+        },
+    });
+
     const oppdaterSøknad = () => {
-        const oppdatertSøker = {
-            ...søknad.søker,
-            utenlandsperioder: værtINorgeITolvMåneder.verdi === ESvar.NEI ? utenlandsperioder : [],
-            borPåRegistrertAdresse: {
-                ...søknad.søker.borPåRegistrertAdresse,
-                svar: skjema.felter.borPåRegistrertAdresse.verdi,
-            },
-            værtINorgeITolvMåneder: {
-                ...søknad.søker.værtINorgeITolvMåneder,
-                svar: skjema.felter.værtINorgeITolvMåneder.verdi,
-            },
-            planleggerÅBoINorgeTolvMnd: {
-                ...søknad.søker.planleggerÅBoINorgeTolvMnd,
-                svar:
-                    !flyttetPermanentFraNorge(utenlandsperioder) &&
-                    værtINorgeITolvMåneder.verdi === ESvar.NEI
-                        ? skjema.felter.planleggerÅBoINorgeTolvMnd.verdi
-                        : null,
-            },
-        };
+        const oppdatertSøker = genererOppdatertSøker();
 
         settSøknad({
             ...søknad,

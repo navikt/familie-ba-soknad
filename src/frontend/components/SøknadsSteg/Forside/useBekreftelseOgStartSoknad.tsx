@@ -36,7 +36,7 @@ export const useBekreftelseOgStartSoknad = (): {
         avbrytOgSlettSøknad,
         mellomlagretVerdi,
     } = useApp();
-    const { settBarnSomTriggerEøs, skalTriggeEøsForBarn } = useEøs();
+    const { settBarnSomTriggerEøs, skalTriggeEøsForBarn, settSøkerTriggerEøs } = useEøs();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
@@ -57,7 +57,7 @@ export const useBekreftelseOgStartSoknad = (): {
     const fortsettPåSøknaden = (): void => {
         if (mellomlagretVerdi) {
             const {
-                søknad: { barnInkludertISøknaden },
+                søknad: { barnInkludertISøknaden, søker },
             } = mellomlagretVerdi;
 
             brukMellomlagretVerdi();
@@ -66,6 +66,7 @@ export const useBekreftelseOgStartSoknad = (): {
                     .filter(barn => skalTriggeEøsForBarn(barn))
                     .map(barn => barn.id)
             );
+            settSøkerTriggerEøs(søker.triggetEøs);
             settGjenpprettetFraMellomlagring(true);
         } else {
             brukMellomlagretVerdi();

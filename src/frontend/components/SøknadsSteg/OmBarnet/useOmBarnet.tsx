@@ -737,7 +737,6 @@ export const useOmBarnet = (
             (skalTriggeEøs && !barnSomTriggerEøs.includes(barn.id)) ||
             (!skalTriggeEøs && barnSomTriggerEøs.includes(barn.id))
         ) {
-            console.log('endrer eøs state');
             settBarnSomTriggerEøs(prevState => {
                 if (skalTriggeEøs) {
                     return prevState.concat(barn.id);

@@ -16,7 +16,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
     const { pathname: currentLocation } = useLocation();
 
     const [barnForSteg, settBarnForSteg] = useState<IBarnMedISøknad[]>([]);
-    const { barnSomTriggerEøs } = useEøs();
+    const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();
 
     useEffect(() => {
         settBarnForSteg(søknad.barnInkludertISøknaden);
@@ -37,7 +37,10 @@ const [StegProvider, useSteg] = createUseContext(() => {
                         label: route.label,
                     }));
                 case RouteEnum.EøsForBarn:
-                    return barnSomTriggerEøs.map((_barnId, index) => ({
+                    const barnSomSkalHaEøsSteg = søkerTriggerEøs
+                        ? barnInkludertISøknaden
+                        : barnSomTriggerEøs;
+                    return barnSomSkalHaEøsSteg.map((_barnId, index) => ({
                         path:
                             barnEøsRoute?.path.replace(
                                 ':number',
@@ -46,6 +49,8 @@ const [StegProvider, useSteg] = createUseContext(() => {
                         route: RouteEnum.EøsForBarn,
                         label: route.label,
                     }));
+                case RouteEnum.EøsForSøker:
+                    return søkerTriggerEøs ? route : [];
                 default:
                     return { path: route.path, route: route.route, label: route.label };
             }
