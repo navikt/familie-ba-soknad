@@ -52,11 +52,9 @@ export const useOmBarnet = (
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
-    const { skalTriggeEøsForBarn } = useEøs();
+    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs } = useEøs();
 
-    const [barn] = useState<IBarnMedISøknad | undefined>(
-        søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
-    );
+    const barn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
 
     if (!barn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
@@ -733,16 +731,19 @@ export const useOmBarnet = (
     };
 
     useEffect(() => {
-        console.log('hei jeg kjører');
         const oppdatertBarn = genererOppdatertBarn(barn);
         const skalTriggeEøs = skalTriggeEøsForBarn(oppdatertBarn);
-        if (skalTriggeEøs !== barn.triggetEøs) {
+        if (
+            (skalTriggeEøs && !barnSomTriggerEøs.includes(barn.id)) ||
+            (!skalTriggeEøs && barnSomTriggerEøs.includes(barn.id))
+        ) {
             console.log('endrer eøs state');
-            settSøknad({
-                ...søknad,
-                barnInkludertISøknaden: søknad.barnInkludertISøknaden.map(barn =>
-                    barn.id === barnetsUuid ? { ...barn, triggetEøs: skalTriggeEøs } : barn
-                ),
+            settBarnSomTriggerEøs(prevState => {
+                if (skalTriggeEøs) {
+                    return prevState.concat(barn.id);
+                } else {
+                    return prevState.filter(barnSomTriggetEøsId => barnSomTriggetEøsId !== barn.id);
+                }
             });
         }
     }, [skjema]);

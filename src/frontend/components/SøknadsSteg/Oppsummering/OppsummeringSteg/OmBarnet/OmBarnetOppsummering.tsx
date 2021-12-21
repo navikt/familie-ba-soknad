@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { useRoutes } from '../../../../../context/RoutesContext';
+import { useSteg } from '../../../../../context/StegContext';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../../../../../typer/person';
 import { IBarnMedISøknad } from '../../../../../typer/søknad';
@@ -37,7 +37,7 @@ interface Props {
 const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, index }) => {
     const intl = useIntl();
     const { formatMessage } = intl;
-    const { hentStegObjektForBarn } = useRoutes();
+    const { hentStegObjektForBarn } = useSteg();
     const [valgtLocale] = useSprakContext();
 
     return (
@@ -45,7 +45,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
             tittel={'oppsummering.deltittel.ombarnet'}
             språkValues={{ nummer, navn: barnetsNavnValue(barn, intl) }}
             key={index}
-            route={hentStegObjektForBarn(barn)}
+            steg={hentStegObjektForBarn(barn)}
             skjemaHook={useOmBarnet}
             barnId={barn.id}
             settFeilAnchors={settFeilAnchors}

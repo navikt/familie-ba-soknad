@@ -71,7 +71,7 @@ describe('genererOppdaterteBarn', () => {
     });
 
     test('Returner objekt med barn, med forventede verdier', () => {
-        expect(genererOppdaterteBarn(mockSøknad, mockSkjema)).toEqual([
+        expect(genererOppdaterteBarn(mockSøknad, mockSkjema, _barn => false)).toEqual([
             objectContaining<DeepPartial<IBarnMedISøknad>>({
                 id: 'random-id',
                 erFosterbarn: objectContaining({ svar: 'JA' }),

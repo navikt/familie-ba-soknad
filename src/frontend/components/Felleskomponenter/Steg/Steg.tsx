@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect } from 'react';
 
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Stegindikator from 'nav-frontend-stegindikator';
@@ -10,12 +10,10 @@ import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
-import { useRoutes } from '../../../context/RoutesContext';
+import { useSteg } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
-import { ILokasjon } from '../../../typer/lokasjon';
 import { RouteEnum } from '../../../typer/routes';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { IBarnMedISøknad } from '../../../typer/søknad';
 import {
     logKlikkGåVidere,
     logSidevisningBarnetrygd,
@@ -38,7 +36,6 @@ interface ISteg {
         skjema: ISkjema<SkjemaFeltTyper, string>;
         settSøknadsdataCallback: () => void;
     };
-    barn?: IBarnMedISøknad;
     gåVidereCallback?: () => Promise<boolean>;
 }
 
@@ -60,9 +57,8 @@ const StegindikatorContainer = styled.div`
     margin: 0 1rem;
 `;
 
-const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, children }) => {
+const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) => {
     const history = useHistory();
-    const location = useLocation<ILokasjon>();
     const { erÅpen: erModellVersjonModalÅpen, toggleModal: toggleModellVersjonModal } = useModal();
     const {
         settSisteUtfylteStegIndex,
@@ -73,21 +69,20 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         modellVersjonOppdatert,
     } = useApp();
     const {
-        hentNesteRoute,
-        hentForrigeRoute,
-        hentAktivtStegIndexForStegindikator,
-        hentRouteIndex,
-        hentStegObjekterForStegIndikator,
+        hentNesteSteg,
+        hentForrigeSteg,
+        hentNåværendeSteg,
+        hentNåværendeStegIndex,
+        stegIndikatorObjekter,
         erPåKvitteringsside,
-        hentNåværendeRoute,
-    } = useRoutes();
+    } = useSteg();
     const { komFra, settKomFra } = useAppNavigation();
 
-    const nesteRoute = hentNesteRoute(location.pathname);
-    const forrigeRoute = hentForrigeRoute(location.pathname);
-    const nåværendeStegIndex = hentRouteIndex(location.pathname);
+    const nesteRoute = hentNesteSteg();
+    const forrigeRoute = hentForrigeSteg();
+    const nåværendeStegIndex = hentNåværendeStegIndex();
 
-    const nyesteNåværendeRoute: RouteEnum = hentNåværendeRoute(location.pathname).route;
+    const nyesteNåværendeRoute: RouteEnum = hentNåværendeSteg().route;
     useFørsteRender(() => logSidevisningBarnetrygd(nyesteNåværendeRoute));
 
     useEffect(() => {
@@ -115,13 +110,13 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
         }
         const målPath = komFra?.path ?? nesteRoute.path;
         komFra && settKomFra(undefined);
-        logSkjemaStegFullført(hentAktivtStegIndexForStegindikator(location.pathname) + 1);
+        logSkjemaStegFullført(hentNåværendeStegIndex() + 1);
         history.push(målPath);
     };
 
     const håndterGåVidere = event => {
         event.preventDefault();
-        logKlikkGåVidere(hentAktivtStegIndexForStegindikator(location.pathname) + 1);
+        logKlikkGåVidere(hentNåværendeStegIndex() + 1);
         if (skjema) {
             if (skjema.validerFelterOgVisFeilmelding()) {
                 skjema.settSøknadsdataCallback();
@@ -146,8 +141,8 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                 <StegindikatorContainer>
                     <Stegindikator
                         autoResponsiv={true}
-                        aktivtSteg={hentAktivtStegIndexForStegindikator(location.pathname)}
-                        steg={hentStegObjekterForStegIndikator()}
+                        aktivtSteg={hentNåværendeStegIndex()}
+                        steg={stegIndikatorObjekter}
                         visLabel={false}
                     />
                 </StegindikatorContainer>
@@ -159,7 +154,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, barn, gåVidereCallback, childr
                     {skjema && visFeiloppsummering(skjema.skjema) && (
                         <SkjemaFeiloppsummering skjema={skjema.skjema} />
                     )}
-                    {!erPåKvitteringsside(location.pathname) && (
+                    {!erPåKvitteringsside() && (
                         <Navigeringspanel
                             onTilbakeCallback={håndterTilbake}
                             onAvbrytCallback={håndterAvbryt}

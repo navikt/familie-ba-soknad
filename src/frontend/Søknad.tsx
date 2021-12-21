@@ -1,7 +1,8 @@
 import React from 'react';
 
 import classNames from 'classnames';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useParams } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 
 import { DekoratørenSpråkHandler } from './components/Felleskomponenter/Dekoratøren/DekoratørenSpråkHandler';
 import RedirectTilStart from './components/Felleskomponenter/RedirectTilStart/RedirectTilStart';
@@ -18,16 +19,31 @@ import OmDeg from './components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from './components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from './components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useApp } from './context/AppContext';
-import { useRoutes } from './context/RoutesContext';
-import { routerBasePath } from './Miljø';
-import { BarnetsId } from './typer/common';
-import { IRoute, RouteEnum } from './typer/routes';
+import { routes } from './context/Routes';
+import { ISteg, RouteEnum } from './typer/routes';
+
+/**
+ * useParams må kalles fra en Route-komponent, derfor kan ikke denne inlines i Søknad-komponenten
+ */
+const OmBarnetWrapper: React.FC = () => {
+    const { number } = useParams<{ number?: string }>();
+    const { søknad } = useApp();
+    const barnetsId = søknad.barnInkludertISøknaden[number ? Number.parseInt(number) - 1 : 0].id;
+    // https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key
+    return <OmBarnet barnetsId={barnetsId} key={barnetsId} />;
+};
+
+const EøsForBarnWrapper: React.FC = () => {
+    const { number } = useParams<{ number?: string }>();
+    const { søknad } = useApp();
+    const barnetsId = søknad.barnInkludertISøknaden[number ? Number.parseInt(number) - 1 : 0].id;
+    return <EøsForBarn barnetsId={barnetsId} key={barnetsId} />;
+};
 
 const Søknad = () => {
     const { systemetLaster } = useApp();
-    const { routes } = useRoutes();
 
-    const routeTilKomponent = (route: IRoute): React.FC => {
+    const routeTilKomponent = (route: ISteg): React.FC => {
         switch (route.route) {
             case RouteEnum.Forside:
                 return Forside;
@@ -40,11 +56,11 @@ const Søknad = () => {
             case RouteEnum.OmBarna:
                 return OmBarnaDine;
             case RouteEnum.OmBarnet:
-                return () => <OmBarnet barnetsId={route.spesifisering as BarnetsId} />;
+                return OmBarnetWrapper;
             case RouteEnum.EøsForSøker:
                 return EøsForSøker;
             case RouteEnum.EøsForBarn:
-                return () => <EøsForBarn barnetsId={route.spesifisering as BarnetsId} />;
+                return EøsForBarnWrapper;
             case RouteEnum.Oppsummering:
                 return Oppsummering;
             case RouteEnum.Dokumentasjon:
@@ -57,21 +73,19 @@ const Søknad = () => {
     return (
         <div className={classNames(systemetLaster() && 'blur')}>
             <DekoratørenSpråkHandler />
-            <Router basename={routerBasePath}>
-                <Switch>
-                    <Route exact={true} path={'/helse'} component={Helse} />
-                    <Route exact={true} path={'/'} component={Forside} />
-                    {routes.map((steg, index) => (
-                        <RedirectTilStart
-                            key={index}
-                            exact={true}
-                            path={steg.path}
-                            component={routeTilKomponent(steg)}
-                        />
-                    ))}
-                    <Route path={'*'} component={Forside} />
-                </Switch>
-            </Router>
+            <Switch>
+                <Route exact={true} path={'/helse'} component={Helse} />
+                <Route exact={true} path={'/'} component={Forside} />
+                {routes.map((steg, index) => (
+                    <RedirectTilStart
+                        key={index}
+                        exact={true}
+                        path={steg.path}
+                        component={routeTilKomponent(steg)}
+                    />
+                ))}
+                <Route path={'*'} component={Forside} />
+            </Switch>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-export interface IRoute {
+export interface ISteg {
     path: string;
     label: string;
     route: RouteEnum;
