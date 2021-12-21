@@ -7,8 +7,8 @@ enum SpråkIds {
     LAND_SPM_NÅTID = 'LAND_SPM_NÅTID',
     LAND_FEIL_FORTID = 'LAND_FEIL_FORTID',
     LAND_FEIL_NÅTID = 'LAND_FEIL_NÅTID',
-    FRA_DATO_SPM_FORTID = 'FRA_DATO_FEIL_FORTID',
-    FRA_DATO_SPM_NÅTID = 'FRA_DATO_FEIL_NÅTID',
+    FRA_DATO_SPM_FORTID = 'FRA_DATO_SPM_FORTID',
+    FRA_DATO_SPM_NÅTID = 'FRA_DATO_SPM_NÅTID',
     FRA_DATO_FEIL_FORTID = 'FRA_DATO_FEIL_FORTID',
     FRA_DATO_FEIL_NÅTID = 'FRA_DATO_FEIL_NÅTID',
 }
@@ -33,8 +33,8 @@ const søkerSpråkIds: Record<SpråkIds, string> = {
     [SpråkIds.LAND_SPM_NÅTID]: 'omdeg.utenlandspensjon.land.spm',
     [SpråkIds.LAND_FEIL_FORTID]: 'felles.hvilketlandpensjon.feilmelding',
     [SpråkIds.LAND_FEIL_NÅTID]: 'omdeg.utenlandspensjon.land.feilmelding',
-    [SpråkIds.FRA_DATO_SPM_FORTID]: 'felles.modal.franårfikkpensjonandreforelder.spm',
-    [SpråkIds.FRA_DATO_SPM_NÅTID]: 'ombarnet.franårandreforelderpensjon.spm',
+    [SpråkIds.FRA_DATO_SPM_FORTID]: 'felles.modal.franårfikkpensjon.spm',
+    [SpråkIds.FRA_DATO_SPM_NÅTID]: 'felles.franårpensjon.spm',
     [SpråkIds.FRA_DATO_FEIL_FORTID]: 'felles.modal.franårfikkpensjon.feilmelding',
     [SpråkIds.FRA_DATO_FEIL_NÅTID]: 'omdeg.franårpensjon.feilmelding',
 };

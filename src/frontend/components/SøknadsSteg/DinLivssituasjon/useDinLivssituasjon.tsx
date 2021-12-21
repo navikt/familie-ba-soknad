@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -15,6 +15,7 @@ import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import {
     barnDataKeySpørsmål,
     ESivilstand,
+    IPensjonsperiode,
     ISamboer,
     ITidligereSamboer,
 } from '../../../typer/person';
@@ -36,12 +37,26 @@ export const useDinLivssituasjon = (): {
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
     tidligereSamboere: ITidligereSamboer[];
+    pensjonsperioder: IPensjonsperiode[];
+    leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
+    fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const søker = søknad.søker;
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
     );
+    const [pensjonsperioder, settPensjonsperioder] = useState<IPensjonsperiode[]>([]);
+
+    const leggTilPensjonsperiode = (periode: IPensjonsperiode) => {
+        settPensjonsperioder(prevState => prevState.concat(periode));
+    };
+
+    const fjernPensjonsperiode = (periodeSomSkalFjernes: IPensjonsperiode) => {
+        settPensjonsperioder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
 
     /*---- UTVIDET BARNETRYGD ----*/
     const årsak = useFelt<Årsak | ''>({
@@ -201,6 +216,16 @@ export const useDinLivssituasjon = (): {
         avhengigSvarCondition: ESvar.JA,
         avhengighet: mottarUtenlandspensjon,
     });
+
+    const registrertePensjonsperioder = useFelt<IPensjonsperiode[]>({
+        verdi: pensjonsperioder,
+        avhengigheter: { mottarUtenlandspensjon },
+        skalFeltetVises: avhengigheter => avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA,
+    });
+
+    useEffect(() => {
+        registrertePensjonsperioder.validerOgSettFelt(pensjonsperioder);
+    }, [pensjonsperioder]);
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,
@@ -365,5 +390,8 @@ export const useDinLivssituasjon = (): {
         tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
+        leggTilPensjonsperiode,
+        fjernPensjonsperiode,
+        pensjonsperioder,
     };
 };

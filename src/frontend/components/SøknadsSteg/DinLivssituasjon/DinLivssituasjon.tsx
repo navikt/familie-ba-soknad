@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { Element } from 'nav-frontend-typografi';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -11,9 +13,10 @@ import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-// import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
-// import { PensjonModal } from '../../Felleskomponenter/PensjonModal/PensjonModal';
-// import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import { PensjonModal } from '../../Felleskomponenter/PensjonModal/PensjonModal';
+import { PensjonOppsummering } from '../../Felleskomponenter/PensjonModal/PensjonOppsummering';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
@@ -32,11 +35,14 @@ const DinLivssituasjon: React.FC = () => {
         tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
+        fjernPensjonsperiode,
+        leggTilPensjonsperiode,
+        pensjonsperioder,
     } = useDinLivssituasjon();
 
     const { erUtvidet, søknad } = useApp();
     const { erEøsLand } = useEøs();
-    // const { erÅpen: erPensjonsmodalÅpen, toggleModal: togglePensjonsmodal } = useModal();
+    const { erÅpen: erPensjonsmodalÅpen, toggleModal: togglePensjonsmodal } = useModal();
 
     return (
         <Steg
@@ -189,6 +195,28 @@ const DinLivssituasjon: React.FC = () => {
                         ]
                     }
                 />
+                {process.env.NODE_ENV === 'development' &&
+                    skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (
+                        <>
+                            {pensjonsperioder.map((periode, index) => (
+                                <PensjonOppsummering
+                                    periode={periode}
+                                    nummer={index + 1}
+                                    fjernPeriodeCallback={fjernPensjonsperiode}
+                                    visFjernKnapp={true}
+                                />
+                            ))}
+                            {pensjonsperioder.length > 0 && (
+                                <Element>
+                                    <SpråkTekst id={'omdeg.leggtilpensjonutland.spm'} />
+                                </Element>
+                            )}
+                            <LeggTilKnapp
+                                onClick={() => togglePensjonsmodal()}
+                                språkTekst={'felles.modal.leggtilpensjonutland.tittel'}
+                            />
+                        </>
+                    )}
                 <LandDropdown
                     felt={skjema.felter.pensjonsland}
                     skjema={skjema}
@@ -203,12 +231,6 @@ const DinLivssituasjon: React.FC = () => {
                     }
                     dynamisk
                 />
-                {/*{skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (*/}
-                {/*    <LeggTilKnapp*/}
-                {/*        onClick={() => togglePensjonsmodal()}*/}
-                {/*        språkTekst={'felles.modal.leggtilpensjonutland.tittel'}*/}
-                {/*    />*/}
-                {/*)}*/}
                 {erEøsLand(skjema.felter.pensjonsland.verdi) && (
                     <VedleggNotisTilleggsskjema
                         språkTekstId={'omdeg.utenlandspensjon.eøs-info'}
@@ -216,11 +238,11 @@ const DinLivssituasjon: React.FC = () => {
                     />
                 )}
             </KomponentGruppe>
-            {/*<PensjonModal*/}
-            {/*    onLeggTilPensjonsPeriode={periode => console.log(periode)}*/}
-            {/*    erÅpen={erPensjonsmodalÅpen}*/}
-            {/*    toggleModal={togglePensjonsmodal}*/}
-            {/*/>*/}
+            <PensjonModal
+                onLeggTilPensjonsPeriode={leggTilPensjonsperiode}
+                erÅpen={erPensjonsmodalÅpen}
+                toggleModal={togglePensjonsmodal}
+            />
         </Steg>
     );
 };

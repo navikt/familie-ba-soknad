@@ -7,26 +7,23 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { DeleteFilled } from '@navikt/ds-icons';
+import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { IUtenlandsperiode } from '../../../typer/person';
+import { IPensjonsperiode } from '../../../typer/person';
 import { IBarnMedISøknad } from '../../../typer/søknad';
-import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
-import { formaterDatoMedUkjent } from '../../../utils/visning';
+import { jaNeiSvarTilSpråkId } from '../../../utils/spørsmål';
 import Informasjonsbolk from '../Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { VedleggNotisTilleggsskjema } from '../VedleggNotis';
-import { tilDatoUkjentLabelSpråkId } from './spørsmål';
 import {
-    fraDatoLabelSpråkId,
-    landLabelSpråkId,
-    tilDatoLabelSpråkId,
-    årsakLabelSpråkId,
-    årsakSpråkId,
-} from './utenlandsoppholdSpråkUtils';
+    fraDatoSpmSpråkId,
+    mottarNåSpmSpråkId,
+    pensjonslandSpmSpråkId,
+    tilDatoSpørsmålSpråkId,
+} from './pensjonSpråkUtils';
 
 const StyledElement = styled(Element)`
     && {
@@ -53,42 +50,19 @@ const SlettKnapp = styled(Flatknapp)`
     margin-bottom: 1.5rem;
 `;
 
-const EøsNotisWrapper = styled.div`
-    margin-bottom: 2rem;
-`;
-
 export const PensjonOppsummering: React.FC<{
-    periode: IUtenlandsperiode;
+    periode: IPensjonsperiode;
     nummer: number;
-    fjernPeriodeCallback: (periode: IUtenlandsperiode) => void;
-    erFørsteEøsPeriode?: boolean;
+    fjernPeriodeCallback: (periode: IPensjonsperiode) => void;
     barn?: IBarnMedISøknad;
     visFjernKnapp?: boolean;
     className?: string;
-}> = ({
-    periode,
-    nummer,
-    fjernPeriodeCallback,
-    erFørsteEøsPeriode = false,
-    barn,
-    visFjernKnapp = true,
-    className,
-}) => {
+}> = ({ periode, nummer, fjernPeriodeCallback, barn, visFjernKnapp = true, className }) => {
     const [valgtLocale] = useSprakContext();
     const intl = useIntl();
-    const { formatMessage } = intl;
-    const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
-        periode;
-    const årsak = utenlandsoppholdÅrsak.svar;
+    const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
 
-    const språkPrefix = barn ? 'ombarnet' : 'omdeg';
-
-    const årsakTilEøsInfoSpråkIds: Record<EUtenlandsoppholdÅrsak, string> = {
-        [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: `${språkPrefix}.flyttetfranorge.eøs-info`,
-        [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: `${språkPrefix}.flyttettilnorge.eøs-info`,
-        [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: `${språkPrefix}.oppholderi.eøs-info`,
-        [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]: `${språkPrefix}.oppholdti.eøs-info`,
-    };
+    const mottarNå = mottarPensjonNå.svar === ESvar.JA;
 
     return (
         <PeriodeContainer className={className}>
@@ -97,44 +71,39 @@ export const PensjonOppsummering: React.FC<{
             </Element>
             <Informasjonsbolk>
                 <Spørsmål
-                    språkId={årsakLabelSpråkId(barn)}
+                    språkId={mottarNåSpmSpråkId(barn)}
                     språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
                 />
                 <Normaltekst>
                     <SpråkTekst
-                        id={årsakSpråkId(årsak, barn)}
+                        id={jaNeiSvarTilSpråkId(mottarPensjonNå.svar)}
                         values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
                     />
                 </Normaltekst>
             </Informasjonsbolk>
             <Informasjonsbolk>
                 <Spørsmål
-                    språkId={landLabelSpråkId(årsak, barn)}
+                    språkId={pensjonslandSpmSpråkId(mottarNå, barn)}
                     språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
                 />
-                <Normaltekst>{landkodeTilSpråk(oppholdsland.svar, valgtLocale)}</Normaltekst>
+                <Normaltekst>{landkodeTilSpråk(pensjonsland.svar, valgtLocale)}</Normaltekst>
             </Informasjonsbolk>
-            {oppholdslandFraDato && (
+            {pensjonFra?.svar && (
                 <Informasjonsbolk>
                     <Spørsmål
-                        språkId={fraDatoLabelSpråkId(årsak, barn)}
+                        språkId={fraDatoSpmSpråkId(mottarNå, barn)}
                         språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
                     />
-                    <Normaltekst>{formaterDato(oppholdslandFraDato.svar)}</Normaltekst>
+                    <Normaltekst>{formaterDato(pensjonFra.svar)}</Normaltekst>
                 </Informasjonsbolk>
             )}
-            {oppholdslandTilDato && (
+            {pensjonTil?.svar && (
                 <Informasjonsbolk>
                     <Spørsmål
-                        språkId={tilDatoLabelSpråkId(årsak, barn)}
+                        språkId={tilDatoSpørsmålSpråkId}
                         språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
                     />
-                    <Normaltekst>
-                        {formaterDatoMedUkjent(
-                            oppholdslandTilDato.svar,
-                            formatMessage({ id: tilDatoUkjentLabelSpråkId })
-                        )}
-                    </Normaltekst>
+                    <Normaltekst>{formaterDato(pensjonTil.svar)}</Normaltekst>
                 </Informasjonsbolk>
             )}
             {visFjernKnapp && (
@@ -148,14 +117,6 @@ export const PensjonOppsummering: React.FC<{
                         <SpråkTekst id={'felles.fjernutenlandsopphold.knapp'} />
                     </span>
                 </SlettKnapp>
-            )}
-            {erFørsteEøsPeriode && (
-                <EøsNotisWrapper>
-                    <VedleggNotisTilleggsskjema
-                        språkTekstId={årsakTilEøsInfoSpråkIds[periode.utenlandsoppholdÅrsak.svar]}
-                        språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
-                    />
-                </EøsNotisWrapper>
             )}
         </PeriodeContainer>
     );
