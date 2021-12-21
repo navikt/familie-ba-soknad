@@ -20,9 +20,10 @@ import { PensjonSpørsmålId } from './spørsmål';
 
 export interface IUsePensjonSkjemaParams {
     barn?: IBarnMedISøknad;
+    utland?: boolean;
 }
 
-export const usePensjonSkjema = ({ barn }: IUsePensjonSkjemaParams) => {
+export const usePensjonSkjema = ({ barn, utland = true }: IUsePensjonSkjemaParams) => {
     const { erEøsLand } = useEøs();
     const [eøsPensjon, settEøsPensjon] = useState(false);
 
@@ -36,13 +37,13 @@ export const usePensjonSkjema = ({ barn }: IUsePensjonSkjemaParams) => {
     }, [mottarPensjonNå.verdi]);
 
     const pensjonsland = useLanddropdownFelt({
-        søknadsfelt: { id: PensjonSpørsmålId.pensjonsland, svar: '' },
+        søknadsfelt: { id: PensjonSpørsmålId.pensjonsland, svar: utland ? '' : 'NOR' },
         feilmeldingSpråkId: pensjonslandFeilmeldingSpråkId(
             mottarPensjonNå.verdi === ESvar.JA,
             barn
         ),
-        skalFeltetVises: !!mottarPensjonNå.verdi,
-        nullstillVedAvhengighetEndring: true,
+        skalFeltetVises: !!mottarPensjonNå.verdi && utland,
+        nullstillVedAvhengighetEndring: utland, // ellers blir verdi umiddelbart satt til false istedenfor Norge
     });
 
     useEffect(() => settEøsPensjon(erEøsLand(pensjonsland.verdi)), [pensjonsland.verdi]);
@@ -52,7 +53,7 @@ export const usePensjonSkjema = ({ barn }: IUsePensjonSkjemaParams) => {
             id: PensjonSpørsmålId.fraDatoPensjon,
             svar: '',
         },
-        skalFeltetVises: eøsPensjon,
+        skalFeltetVises: eøsPensjon || (!utland && !!mottarPensjonNå.verdi),
         feilmeldingSpråkId: fraDatoFeilmeldingSpråkId(mottarPensjonNå.verdi === ESvar.JA, barn),
         sluttdatoAvgrensning: gårsdagensDato(),
         avhengigheter: { mottarPensjonNå },
@@ -64,7 +65,7 @@ export const usePensjonSkjema = ({ barn }: IUsePensjonSkjemaParams) => {
             id: PensjonSpørsmålId.tilDatoPensjon,
             svar: '',
         },
-        skalFeltetVises: eøsPensjon && mottarPensjonNå.verdi === ESvar.NEI,
+        skalFeltetVises: (eøsPensjon || !utland) && mottarPensjonNå.verdi === ESvar.NEI,
         feilmeldingSpråkId: tilDatoFeilmeldingSpråkId,
         sluttdatoAvgrensning: dagensDato(),
         startdatoAvgrensning: pensjonFraDato.verdi,

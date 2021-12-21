@@ -29,6 +29,7 @@ import { IUsePensjonSkjemaParams, usePensjonSkjema } from './usePensjonSkjema';
 interface Props extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
     onLeggTilPensjonsPeriode: (periode: IPensjonsperiode) => void;
     barn?: IBarnMedISøknad;
+    utland?: boolean;
 }
 
 export const PensjonModal: React.FC<Props> = ({
@@ -36,10 +37,12 @@ export const PensjonModal: React.FC<Props> = ({
     toggleModal,
     onLeggTilPensjonsPeriode,
     barn,
+    utland = true,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding, eøsPensjon } =
         usePensjonSkjema({
             barn,
+            utland,
         });
 
     const { mottarPensjonNå, pensjonTilDato, pensjonFraDato, pensjonsland } = skjema.felter;
@@ -91,17 +94,22 @@ export const PensjonModal: React.FC<Props> = ({
                     spørsmålTekstId={mottarNåSpmSpråkId(barn)}
                     språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                 />
-                <LandDropdown
-                    felt={skjema.felter.pensjonsland}
-                    skjema={skjema}
-                    label={
-                        <SpråkTekst
-                            id={pensjonslandSpmSpråkId(mottarPensjonNå.verdi === ESvar.JA, barn)}
-                            values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
-                        />
-                    }
-                    dynamisk
-                />
+                {pensjonsland.erSynlig && (
+                    <LandDropdown
+                        felt={skjema.felter.pensjonsland}
+                        skjema={skjema}
+                        label={
+                            <SpråkTekst
+                                id={pensjonslandSpmSpråkId(
+                                    mottarPensjonNå.verdi === ESvar.JA,
+                                    barn
+                                )}
+                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                            />
+                        }
+                        dynamisk
+                    />
+                )}
 
                 {pensjonFraDato.erSynlig && (
                     <Datovelger
