@@ -20,6 +20,7 @@ import {
     ESivilstand,
     IAdresse,
     IBarn,
+    IPensjonsperiode,
     ISøker,
     IUtenlandsperiode,
 } from './person';
@@ -55,6 +56,7 @@ export interface IAndreForelder {
     [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
     [andreForelderDataKeySpørsmål.pensjonUtland]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.pensjonHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
+    [andreForelderDataKeySpørsmål.pensjonsperioderUtland]: IPensjonsperiode[];
     [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | null>;
     utvidet: {
         [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
@@ -291,6 +293,7 @@ export const initialStateSøknad: ISøknad = {
             id: DinLivssituasjonSpørsmålId.pensjonsland,
             svar: '',
         },
+        pensjonsperioderUtland: [],
         harSamboerNå: {
             id: DinLivssituasjonSpørsmålId.harSamboerNå,
             svar: null,

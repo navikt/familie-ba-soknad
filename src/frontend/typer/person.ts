@@ -59,6 +59,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     harSamboerNå: ISøknadSpørsmål<ESvar | null>;
     nåværendeSamboer: ISamboer | null;
     utenlandsperioder: IUtenlandsperiode[];
+    pensjonsperioderUtland: IPensjonsperiode[];
     utvidet: {
         spørsmål: {
             årsak: ISøknadSpørsmål<Årsak | ''>;
@@ -113,6 +114,7 @@ export enum andreForelderDataKeySpørsmål {
     arbeidUtlandetHvilketLand = 'arbeidUtlandetHvilketLand',
     pensjonUtland = 'pensjonUtland',
     pensjonHvilketLand = 'pensjonHvilketLand',
+    pensjonsperioderUtland = 'pensjonsperioderUtland',
     skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
     søkerHarBoddMedAndreForelder = 'søkerHarBoddMedAndreForelder',
     søkerFlyttetFraAndreForelderDato = 'søkerFlyttetFraAndreForelderDato',

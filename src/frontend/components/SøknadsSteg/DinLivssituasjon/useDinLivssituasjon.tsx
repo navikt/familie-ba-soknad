@@ -46,7 +46,9 @@ export const useDinLivssituasjon = (): {
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
     );
-    const [pensjonsperioder, settPensjonsperioder] = useState<IPensjonsperiode[]>([]);
+    const [pensjonsperioder, settPensjonsperioder] = useState<IPensjonsperiode[]>(
+        søker.pensjonsperioderUtland
+    );
 
     const leggTilPensjonsperiode = (periode: IPensjonsperiode) => {
         settPensjonsperioder(prevState => prevState.concat(periode));
@@ -355,6 +357,9 @@ export const useDinLivssituasjon = (): {
                     ...søker.pensjonsland,
                     svar: skjema.felter.pensjonsland.verdi,
                 },
+                pensjonsperioderUtland: [
+                    ...(process.env.NODE_ENV === 'development' ? pensjonsperioder : []),
+                ],
                 utvidet: {
                     ...søknad.søker.utvidet,
                     tidligereSamboere,

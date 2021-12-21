@@ -66,7 +66,7 @@ export const useOmBarnet = (
 
     const [pensjonsperioderAndreForelder, settPensjonsperioderAndreForelder] = useState<
         IPensjonsperiode[]
-    >([]);
+    >(barn.andreForelder?.[andreForelderDataKeySpørsmål.pensjonsperioderUtland] ?? []);
 
     const leggTilPensjonsperiodeAndreForelder = (periode: IPensjonsperiode) => {
         settPensjonsperioderAndreForelder(prevState => prevState.concat(periode));
@@ -757,6 +757,11 @@ export const useOmBarnet = (
                                             ],
                                             svar: andreForelderPensjonHvilketLand.verdi,
                                         },
+                                        pensjonsperioderUtland: [
+                                            ...(process.env.NODE_ENV === 'development'
+                                                ? pensjonsperioderAndreForelder
+                                                : []),
+                                        ],
                                         skriftligAvtaleOmDeltBosted: {
                                             ...barn.andreForelder.skriftligAvtaleOmDeltBosted,
                                             svar: skriftligAvtaleOmDeltBosted.verdi,
