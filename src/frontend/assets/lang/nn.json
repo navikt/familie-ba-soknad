@@ -1,5 +1,5 @@
 {
-  "dinlivssituasjon.arbeid-utland.land.feilmelding": "Du må oppgje når arbeidsperioden starta for å gå vidare",
+  "dinlivssituasjon.arbeid-utland.land.feilmelding": "Du må oppgje kva land du arbeidde i for å gå vidare",
   "dinlivssituasjon.arbeid-utland.land.spm": "Kva land arbeidde du i?",
   "dinlivssituasjon.sidetittel": "Livssituasjonen din",
   "dokumentasjon.adopsjon.informasjon": "<p>Du må legge ved stadfesting som viser kva dato du overtok omsorga for {barn}, fordi du har opplyst at barnet/barna er adoptert frå utlandet. Dette gjeld kun første gong du søker om barnetrygd for barnet/barna.</p>",
@@ -216,6 +216,7 @@
   "felles.nåravsluttetoppholdet.spm": "Når blei opphaldet avslutta?",
   "felles.nåravsluttetpensjon.feilmelding": "Du må oppgje når pensjonen vart avlsutta for å gå vidare",
   "felles.nåravsluttetpensjon.spm": "Når vart pensjonen avslutta?",
+  "felles.nårbegyntearbeidsperiode.feilmelding": "Du må oppgje når arbeidsperioden starta for å gå vidare",
   "felles.nårbegyntearbeidsperiode.spm": "Når starta arbeidsperioden?",
   "felles.nårbegynteytelsen.feilmelding": "Du må oppgje når utbetalingane starta for å gå vidare",
   "felles.nårbegynteytelsen.spm": "Når starta utbetalingane?",

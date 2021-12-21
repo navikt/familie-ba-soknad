@@ -1,5 +1,5 @@
 {
-  "dinlivssituasjon.arbeid-utland.land.feilmelding": "You must state when the period of work started in order to be able to proceed",
+  "dinlivssituasjon.arbeid-utland.land.feilmelding": "You must state which country you worked in in order to be able to proceed",
   "dinlivssituasjon.arbeid-utland.land.spm": "Which country did you work in?",
   "dinlivssituasjon.sidetittel": "Your life situation",
   "dokumentasjon.adopsjon.informasjon": "<p>You must submit documentation confirming the date on which you took over the care of {barn}, because you have stated that the child(ren) has been adopted from abroad. This only applies to the first time you apply for child benefit for the child(ren).</p>",
@@ -216,6 +216,7 @@
   "felles.nåravsluttetoppholdet.spm": "When did the stay end?",
   "felles.nåravsluttetpensjon.feilmelding": "You must state when the period of receiving a pension ended in order to be able to proceed",
   "felles.nåravsluttetpensjon.spm": "When did the period of receiving a pension end?",
+  "felles.nårbegyntearbeidsperiode.feilmelding": "You must state when the period of work started in order to be able to proceed",
   "felles.nårbegyntearbeidsperiode.spm": "When did the period of work start?",
   "felles.nårbegynteytelsen.feilmelding": "You must state when you started receiving benefits in order to be able to proceed",
   "felles.nårbegynteytelsen.spm": "When did you start receiving benefits?",

@@ -116,7 +116,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                                 )}
                             />
                         }
-                        avgrensMinDato={skjema.felter.fraDatoArbeidsperiode.verdi}
+                        avgrensMinDato={
+                            skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
+                                ? skjema.felter.fraDatoArbeidsperiode.verdi
+                                : gårsdagensDato()
+                        }
                         avgrensMaxDato={
                             skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
                                 ? dagensDato()
