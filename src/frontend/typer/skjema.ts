@@ -120,6 +120,10 @@ export interface IUtenlandsoppholdFeltTyper {
 
 export interface IUtbetalingerFeltTyper {
     fårUtbetalingNå: ESvar | null;
+    ytelseFraHvilketLand: Alpha3Code | '';
+    utbetalingFraDato: ISODateString;
+    utbetalingTilDato: ISODateString;
+    utbetalingTilDatoUkjent: ESvar;
 }
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
