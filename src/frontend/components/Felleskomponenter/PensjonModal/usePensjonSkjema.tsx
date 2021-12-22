@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSkjema } from '@navikt/familie-skjema';
 
@@ -9,6 +11,7 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IPensjonslandFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
+import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import {
     fraDatoFeilmeldingSpråkId,
@@ -26,10 +29,12 @@ export interface IUsePensjonSkjemaParams {
 export const usePensjonSkjema = ({ barn, utland = true }: IUsePensjonSkjemaParams) => {
     const { erEøsLand } = useEøs();
     const [eøsPensjon, settEøsPensjon] = useState(false);
+    const intl = useIntl();
 
     const mottarPensjonNå = useJaNeiSpmFelt({
         søknadsfelt: { id: PensjonSpørsmålId.fårPensjonNå, svar: null },
         feilmeldingSpråkId: mottarNåFeilmeldingSpråkId(barn),
+        feilmeldingSpråkVerdier: barn ? { barn: barnetsNavnValue(barn, intl) } : undefined,
     });
 
     useEffect(() => {
