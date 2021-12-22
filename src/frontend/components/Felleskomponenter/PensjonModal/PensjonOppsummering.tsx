@@ -67,7 +67,7 @@ export const PensjonOppsummering: React.FC<{
     return (
         <PeriodeContainer className={className}>
             <Element>
-                <SpråkTekst id={'felles.leggtilutenlands.opphold'} values={{ x: nummer }} />
+                <SpråkTekst id={'felles.leggtilpensjon.periode'} values={{ x: nummer }} />
             </Element>
             <Informasjonsbolk>
                 <Spørsmål
@@ -114,7 +114,7 @@ export const PensjonOppsummering: React.FC<{
                 >
                     <DeleteFilled />
                     <span>
-                        <SpråkTekst id={'felles.fjernutenlandsopphold.knapp'} />
+                        <SpråkTekst id={'felles.fjernpensjon.knapp'} />
                     </span>
                 </SlettKnapp>
             )}

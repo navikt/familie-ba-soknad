@@ -36,7 +36,7 @@ const søkerSpråkIds: Record<SpråkIds, string> = {
     [SpråkIds.FRA_DATO_SPM_FORTID]: 'felles.modal.franårfikkpensjon.spm',
     [SpråkIds.FRA_DATO_SPM_NÅTID]: 'felles.franårpensjon.spm',
     [SpråkIds.FRA_DATO_FEIL_FORTID]: 'felles.modal.franårfikkpensjon.feilmelding',
-    [SpråkIds.FRA_DATO_FEIL_NÅTID]: 'omdeg.franårpensjon.feilmelding',
+    [SpråkIds.FRA_DATO_FEIL_NÅTID]: 'felles.franårpensjon.feilmelding',
 };
 
 export const mottarNåSpmSpråkId = (barn?: IBarnMedISøknad) => {
