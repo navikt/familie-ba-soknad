@@ -80,7 +80,7 @@ export const PensjonModal: React.FC<Props> = ({
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            modalTittelSpråkId={'felles.modal.leggtilpensjonutland.tittel'}
+            modalTittelSpråkId={'felles.leggtilpensjon.utland.modal.tittel'}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilpensjon.knapp'}
             toggleModal={toggleModal}

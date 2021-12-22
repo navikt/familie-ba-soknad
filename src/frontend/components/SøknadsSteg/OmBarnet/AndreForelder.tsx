@@ -243,9 +243,7 @@ const AndreForelder: React.FC<{
                                             )}
                                             <LeggTilKnapp
                                                 onClick={() => toggleAndreForelderPensjonsmodal()}
-                                                språkTekst={
-                                                    'felles.modal.leggtilpensjonutland.tittel'
-                                                }
+                                                språkTekst={'felles.leggtilpensjon.utland.knapp'}
                                             />
                                         </>
                                     )}

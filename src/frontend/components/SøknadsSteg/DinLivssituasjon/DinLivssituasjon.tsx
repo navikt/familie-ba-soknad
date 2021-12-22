@@ -213,7 +213,7 @@ const DinLivssituasjon: React.FC = () => {
                             )}
                             <LeggTilKnapp
                                 onClick={() => togglePensjonsmodal()}
-                                språkTekst={'felles.modal.leggtilpensjonutland.tittel'}
+                                språkTekst={'felles.leggtilpensjon.utland.knapp'}
                             />
                         </>
                     )}
