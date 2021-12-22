@@ -292,6 +292,7 @@ const AndreForelder: React.FC<{
                         <AndreForelderOppsummering
                             barnetsNavn={barnetsNavn}
                             andreForelder={barnMedSammeForelder.andreForelder}
+                            barn={barn}
                         />
                     )
                 )}

@@ -121,3 +121,7 @@ export const PensjonOppsummering: React.FC<{
         </PeriodeContainer>
     );
 };
+
+export const BorderlessPensjonOppsummering = styled(PensjonOppsummering)`
+    border: none;
+`;

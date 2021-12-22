@@ -229,6 +229,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                 <AndreForelderOppsummering
                     barnetsNavn={barnetsNavnValue(barn, intl)}
                     andreForelder={barn.andreForelder}
+                    barn={barn}
                 />
             )}
             <StyledOppsummeringsFeltGruppe>

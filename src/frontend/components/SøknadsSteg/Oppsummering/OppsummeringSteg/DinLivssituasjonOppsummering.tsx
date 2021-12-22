@@ -15,6 +15,7 @@ import { RouteEnum } from '../../../../typer/routes';
 import { formaterDato } from '../../../../utils/dato';
 import { landkodeTilSpråk, toÅrsakSpråkId } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
+import { BorderlessPensjonOppsummering } from '../../../Felleskomponenter/PensjonModal/PensjonOppsummering';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
     DinLivssituasjonSpørsmålId,
@@ -268,7 +269,17 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                             />
                         }
                         søknadsvar={landkodeTilSpråk(søknad.søker.pensjonsland.svar, valgtLocale)}
-                    />
+                    >
+                        {søknad.søker.pensjonsperioderUtland.length > 0 &&
+                            søknad.søker.pensjonsperioderUtland.map((periode, index) => (
+                                <BorderlessPensjonOppsummering
+                                    periode={periode}
+                                    nummer={index + 1}
+                                    visFjernKnapp={false}
+                                    fjernPeriodeCallback={() => null}
+                                />
+                            ))}
+                    </OppsummeringFelt>
                 )}
             </StyledOppsummeringsFeltGruppe>
         </Oppsummeringsbolk>

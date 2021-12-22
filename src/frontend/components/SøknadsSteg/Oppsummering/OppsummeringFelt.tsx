@@ -41,9 +41,12 @@ export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
         <StyledOppsummeringsFelt>
             {tittel && <StyledElement>{tittel}</StyledElement>}
             {søknadsvar ? (
-                <Normaltekst>
-                    {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
-                </Normaltekst>
+                <>
+                    <Normaltekst>
+                        {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
+                    </Normaltekst>
+                    {children}
+                </>
             ) : (
                 children
             )}
