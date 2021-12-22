@@ -134,11 +134,9 @@ const AndreForelderOppsummering: React.FC<{
                         søknadsvar={andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar}
                     >
                         {!!andreForelder[andreForelderDataKeySpørsmål.pensjonsperioderUtland]
-                            .length && (
-                            <OppsummeringFelt tittel={'Perioder med pensjon'}>
-                                {andreForelder[
-                                    andreForelderDataKeySpørsmål.pensjonsperioderUtland
-                                ].map((periode, index) => (
+                            .length &&
+                            andreForelder[andreForelderDataKeySpørsmål.pensjonsperioderUtland].map(
+                                (periode, index) => (
                                     <BorderlessPensjonOppsummering
                                         periode={periode}
                                         nummer={index + 1}
@@ -146,9 +144,8 @@ const AndreForelderOppsummering: React.FC<{
                                         fjernPeriodeCallback={() => null}
                                         barn={barn}
                                     />
-                                ))}
-                            </OppsummeringFelt>
-                        )}
+                                )
+                            )}
                     </OppsummeringFelt>
                 )}
                 {andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar && (
