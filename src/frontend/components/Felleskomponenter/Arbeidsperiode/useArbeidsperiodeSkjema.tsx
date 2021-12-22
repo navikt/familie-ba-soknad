@@ -18,13 +18,19 @@ import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 export interface IUseArbeidsperiodeSkjemaParams {
     gjelderUtlandet: boolean;
     gjelderAndreForelder: boolean;
+    erAndreForelderDød?: boolean;
 }
 
-export const useArbeidsperiodeSkjema = (gjelderUtlandet, gjelderAndreForelder) => {
+export const useArbeidsperiodeSkjema = (
+    gjelderUtlandet,
+    gjelderAndreForelder,
+    erAndreForelderDød
+) => {
     const { erEøsLand } = useEøs();
     const arbeidsperiodeAvsluttet = useJaNeiSpmFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet, svar: null },
         feilmeldingSpråkId: 'felles.erarbeidsperiodenavsluttet.feilmelding',
+        skalSkjules: erAndreForelderDød,
     });
 
     const arbeidsperiodeLand = useLanddropdownFelt({
@@ -34,7 +40,9 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, gjelderAndreForelder) =
             arbeidsperiodeAvsluttet.verdi
         ),
         skalFeltetVises:
-            gjelderUtlandet && arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,
+            (gjelderUtlandet &&
+                arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK) ||
+            !arbeidsperiodeAvsluttet.erSynlig,
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -51,7 +59,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, gjelderAndreForelder) =
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,
-        feilmeldingSpråkId: 'dinlivssituasjon.arbeid-utland.land.feilmelding',
+        feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
         sluttdatoAvgrensning:
             arbeidsperiodeAvsluttet.verdi === ESvar.JA ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,

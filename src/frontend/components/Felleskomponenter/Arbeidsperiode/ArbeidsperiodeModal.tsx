@@ -25,6 +25,7 @@ import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useAr
 interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaParams {
     gjelderUtlandet: boolean;
     gjelderAndreForelder: boolean;
+    erAndreForelderDød?: boolean;
 }
 
 export const ArbeidsperiodeModal: React.FC<Props> = ({
@@ -32,9 +33,10 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
     toggleModal,
     gjelderUtlandet = false,
     gjelderAndreForelder = false,
+    erAndreForelderDød,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useArbeidsperiodeSkjema(gjelderUtlandet, gjelderAndreForelder);
+        useArbeidsperiodeSkjema(gjelderUtlandet, gjelderAndreForelder, erAndreForelderDød);
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {

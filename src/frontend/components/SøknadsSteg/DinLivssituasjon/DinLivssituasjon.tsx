@@ -208,12 +208,13 @@ const DinLivssituasjon: React.FC = () => {
                     id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
                     feilmelding={''}
                 />
-                <div>Andre forelder arbeidsopphold Norge</div>
+                <div>Andre forelder arbeidsopphold utlandett</div>
                 <ArbeidsperiodeModal
                     erÅpen={erArbeidsperiodeAndreForelderUtlandetÅpen}
                     toggleModal={toggleArbeidsperiodeAndreForelderUtlandetModal}
                     gjelderUtlandet={true}
                     gjelderAndreForelder={true}
+                    erAndreForelderDød={true}
                 />
                 <LeggTilKnapp
                     språkTekst={'felles.flerearbeidsperioderutland.tittel'}

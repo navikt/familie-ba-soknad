@@ -6,12 +6,12 @@ export const arbeidsperiodeTittelSpråkId = gjelderUtlandet =>
         : 'felles.flerearbeidsperiodernorge.tittel';
 
 export const tilDatoSpørsmålstekst = erPeriodeAvsluttet =>
-    erPeriodeAvsluttet === ESvar.JA
+    erPeriodeAvsluttet === ESvar.JA || erPeriodeAvsluttet === null
         ? 'felles.nåravsluttetarbeidsperiode.spm'
         : 'felles.nåravsluttesarbeidsperiode.spm';
 
 export const arbeidslandLabelSpråkId = (gjelderAndreForelder, erPeriodenAvsluttet) => {
-    if (erPeriodenAvsluttet === ESvar.JA) {
+    if (erPeriodenAvsluttet === ESvar.JA || erPeriodenAvsluttet === null) {
         return gjelderAndreForelder
             ? 'enkeenkemann.andreforelder-arbeidutland.land.spm'
             : 'dinlivssituasjon.arbeid-utland.land.spm';
@@ -22,7 +22,7 @@ export const arbeidslandLabelSpråkId = (gjelderAndreForelder, erPeriodenAvslutt
 };
 
 export const arbeidslandFeilmelding = (gjelderAndreForelder, erPeriodenAvsluttet) => {
-    if (erPeriodenAvsluttet === ESvar.JA) {
+    if (erPeriodenAvsluttet === ESvar.JA || erPeriodenAvsluttet === null) {
         return gjelderAndreForelder
             ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
             : 'dinlivssituasjon.arbeid-utland.land.feilmelding';
@@ -33,6 +33,6 @@ export const arbeidslandFeilmelding = (gjelderAndreForelder, erPeriodenAvsluttet
 };
 
 export const tilDatoArbeidsperiodeFeilmelding = erPeriodeAvsluttet =>
-    erPeriodeAvsluttet === ESvar.JA
+    erPeriodeAvsluttet === ESvar.JA || erPeriodeAvsluttet === null
         ? 'felles.nåravsluttetarbeidsperiode.feilmelding'
         : 'felles.nåravsluttesarbeidsperiode.feilmelding';
