@@ -9,6 +9,7 @@ import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
 import { AlternativtSvarForInput } from '../../../typer/common';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { andreForelderDataKeySpørsmål, IPensjonsperiode } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IAndreForelder, IBarnMedISøknad } from '../../../typer/søknad';
@@ -16,6 +17,7 @@ import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
+import { FeatureToggle } from '../../Felleskomponenter/FeatureToggle/FeatureToggle';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
@@ -217,8 +219,9 @@ const AndreForelder: React.FC<{
                                     inkluderVetIkke={true}
                                     språkValues={{ navn: barnetsNavn }}
                                 />
-                                {process.env.NODE_ENV === 'development' &&
-                                    skjema.felter.andreForelderPensjonUtland.verdi === ESvar.JA && (
+                                <FeatureToggle toggle={EFeatureToggle.EØS_FULL}>
+                                    {skjema.felter.andreForelderPensjonUtland.verdi ===
+                                        ESvar.JA && (
                                         <>
                                             {pensjonsperioderAndreForelder.map((periode, index) => (
                                                 <PensjonOppsummering
@@ -247,24 +250,27 @@ const AndreForelder: React.FC<{
                                             />
                                         </>
                                     )}
-                                <LandDropdown
-                                    felt={skjema.felter.andreForelderPensjonHvilketLand}
-                                    skjema={skjema}
-                                    dynamisk
-                                    label={
-                                        <SpråkTekst
-                                            id={
-                                                omBarnetSpørsmålSpråkId[
-                                                    andreForelder[
-                                                        andreForelderDataKeySpørsmål
-                                                            .pensjonHvilketLand
-                                                    ].id
-                                                ]
-                                            }
-                                            values={{ barn: barnetsNavn }}
-                                        />
-                                    }
-                                />
+                                </FeatureToggle>
+                                {skjema.felter.andreForelderPensjonHvilketLand.erSynlig && (
+                                    <LandDropdown
+                                        felt={skjema.felter.andreForelderPensjonHvilketLand}
+                                        skjema={skjema}
+                                        dynamisk
+                                        label={
+                                            <SpråkTekst
+                                                id={
+                                                    omBarnetSpørsmålSpråkId[
+                                                        andreForelder[
+                                                            andreForelderDataKeySpørsmål
+                                                                .pensjonHvilketLand
+                                                        ].id
+                                                    ]
+                                                }
+                                                values={{ barn: barnetsNavn }}
+                                            />
+                                        }
+                                    />
+                                )}
                                 {erEøsLand(skjema.felter.andreForelderPensjonHvilketLand.verdi) && (
                                     <VedleggNotisTilleggsskjema
                                         språkTekstId={

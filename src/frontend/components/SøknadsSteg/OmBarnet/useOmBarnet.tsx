@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
@@ -16,6 +17,7 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
@@ -54,6 +56,8 @@ export const useOmBarnet = (
     pensjonsperioderAndreForelder: IPensjonsperiode[];
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
+    const { toggles } = useFeatureToggles();
+    const { [EFeatureToggle.EØS_FULL]: fullEøsToggle } = toggles;
     const intl = useIntl();
 
     const [barn] = useState<IBarnMedISøknad | undefined>(
@@ -407,6 +411,7 @@ export const useOmBarnet = (
         nullstillVedAvhengighetEndring:
             sammeForelderSomAnnetBarn.verdi === null ||
             sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
+        skalSkjules: fullEøsToggle,
     });
 
     const registrertePensjonsperioderAndreForelder = useFelt<IPensjonsperiode[]>({

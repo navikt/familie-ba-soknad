@@ -256,7 +256,15 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         />
                     }
                     søknadsvar={søknad.søker.mottarUtenlandspensjon.svar}
-                />
+                >
+                    {søknad.søker.pensjonsperioderUtland.map((periode, index) => (
+                        <BorderlessPensjonOppsummering
+                            periode={periode}
+                            nummer={index + 1}
+                            fjernPeriodeCallback={() => null}
+                        />
+                    ))}
+                </OppsummeringFelt>
                 {søknad.søker.pensjonsland.svar && (
                     <OppsummeringFelt
                         tittel={

@@ -8,9 +8,11 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
+import { FeatureToggle } from '../../Felleskomponenter/FeatureToggle/FeatureToggle';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
@@ -195,8 +197,8 @@ const DinLivssituasjon: React.FC = () => {
                         ]
                     }
                 />
-                {process.env.NODE_ENV === 'development' &&
-                    skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (
+                <FeatureToggle toggle={EFeatureToggle.EØS_FULL}>
+                    {skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (
                         <>
                             {pensjonsperioder.map((periode, index) => (
                                 <PensjonOppsummering
@@ -217,20 +219,23 @@ const DinLivssituasjon: React.FC = () => {
                             />
                         </>
                     )}
-                <LandDropdown
-                    felt={skjema.felter.pensjonsland}
-                    skjema={skjema}
-                    label={
-                        <SpråkTekst
-                            id={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.pensjonsland
-                                ]
-                            }
-                        />
-                    }
-                    dynamisk
-                />
+                </FeatureToggle>
+                {skjema.felter.pensjonsland.erSynlig && (
+                    <LandDropdown
+                        felt={skjema.felter.pensjonsland}
+                        skjema={skjema}
+                        label={
+                            <SpråkTekst
+                                id={
+                                    dinLivssituasjonSpørsmålSpråkId[
+                                        DinLivssituasjonSpørsmålId.pensjonsland
+                                    ]
+                                }
+                            />
+                        }
+                        dynamisk
+                    />
+                )}
                 {erEøsLand(skjema.felter.pensjonsland.verdi) && (
                     <VedleggNotisTilleggsskjema
                         språkTekstId={'omdeg.utenlandspensjon.eøs-info'}

@@ -10,7 +10,7 @@ import { useLastRessurserContext } from './LastRessurserContext';
 
 const [FeatureTogglesProvider, useFeatureToggles] = createUseContext(() => {
     const { axiosRequest } = useLastRessurserContext();
-    const [toggles, setToggles] = useState<Partial<Record<EFeatureToggle, string>>>({});
+    const [toggles, setToggles] = useState<Partial<Record<EFeatureToggle, boolean>>>({});
 
     const fetchFeatureToggle = async (toggle: EFeatureToggle, defaultVerdi) => {
         const toggleRespons = await axiosRequest<boolean, void>({

@@ -16,12 +16,14 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
     avhengigSvarCondition,
     avhengighet,
     nullstillVedAvhengighetEndring = true,
+    skalSkjules = false,
 }: {
     søknadsfelt?: ISøknadSpørsmål<Alpha3Code | ''>;
     feilmeldingSpråkId: string;
     avhengigSvarCondition: ESvar;
     avhengighet: Felt<ESvar | null>;
     nullstillVedAvhengighetEndring?: boolean;
+    skalSkjules?: boolean;
 }) => {
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
 
@@ -30,8 +32,8 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
         verdi: søknadsfelt?.svar ?? '',
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter && (avhengigheter.jaNeiSpm as Felt<ESvar | null>)
-                ? skalFeltetVises(avhengigheter.jaNeiSpm.verdi)
-                : true;
+                ? skalFeltetVises(avhengigheter.jaNeiSpm.verdi) && !avhengigheter.skalSkjules
+                : true && !avhengigheter.skalSkjules;
         },
         valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>) => {
             return felt.verdi !== ''
@@ -39,7 +41,7 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
                 : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
         },
         nullstillVedAvhengighetEndring,
-        avhengigheter: { jaNeiSpm: avhengighet },
+        avhengigheter: { jaNeiSpm: avhengighet, skalSkjules },
     });
 
     useEffect(() => {

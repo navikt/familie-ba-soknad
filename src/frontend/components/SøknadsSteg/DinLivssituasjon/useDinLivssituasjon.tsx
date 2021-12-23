@@ -4,14 +4,17 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
+import useFørsteRender from '../../../hooks/useFørsteRender';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import {
     barnDataKeySpørsmål,
     ESivilstand,
@@ -49,6 +52,14 @@ export const useDinLivssituasjon = (): {
     const [pensjonsperioder, settPensjonsperioder] = useState<IPensjonsperiode[]>(
         søker.pensjonsperioderUtland
     );
+    const {
+        brukFeatureToggle,
+        toggles: { [EFeatureToggle.EØS_FULL]: fullEøsToggle },
+    } = useFeatureToggles();
+
+    useFørsteRender(() => {
+        brukFeatureToggle(EFeatureToggle.EØS_FULL);
+    });
 
     const leggTilPensjonsperiode = (periode: IPensjonsperiode) => {
         settPensjonsperioder(prevState => prevState.concat(periode));
@@ -217,6 +228,7 @@ export const useDinLivssituasjon = (): {
         feilmeldingSpråkId: 'omdeg.utenlandspensjon.land.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: mottarUtenlandspensjon,
+        skalSkjules: !!fullEøsToggle,
     });
 
     const registrertePensjonsperioder = useFelt<IPensjonsperiode[]>({
