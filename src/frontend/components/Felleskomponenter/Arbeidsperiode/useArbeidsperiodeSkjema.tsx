@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -27,6 +29,7 @@ export const useArbeidsperiodeSkjema = (
     erAndreForelderDød
 ) => {
     const { erEøsLand } = useEøs();
+
     const arbeidsperiodeAvsluttet = useJaNeiSpmFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet, svar: null },
         feilmeldingSpråkId: 'felles.erarbeidsperiodenavsluttet.feilmelding',
@@ -84,10 +87,7 @@ export const useArbeidsperiodeSkjema = (
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,
         sluttdatoAvgrensning: arbeidsperiodeAvsluttet.verdi === ESvar.JA ? dagensDato() : undefined,
-        startdatoAvgrensning:
-            arbeidsperiodeAvsluttet.verdi === ESvar.JA
-                ? gårsdagensDato()
-                : fraDatoArbeidsperiode.verdi,
+        startdatoAvgrensning: fraDatoArbeidsperiode.verdi,
     });
 
     const skjema = useSkjema<IArbeidsperioderFeltTyper, 'string'>({

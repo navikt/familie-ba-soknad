@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -38,6 +38,8 @@ export const useDinLivssituasjon = (): {
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
     tidligereSamboere: ITidligereSamboer[];
     arbeidsperioder: IArbeidsperiode[];
+    leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
+    fjernArbeidsperiode: (oeriode: IArbeidsperiode) => void;
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const søker = søknad.søker;
@@ -47,6 +49,16 @@ export const useDinLivssituasjon = (): {
     const [arbeidsperioder, settArbeidsperioder] = useState<IArbeidsperiode[]>(
         søker.arbeidsperioder
     );
+
+    const leggTilArbeidsperiode = (periode: IArbeidsperiode) => {
+        settArbeidsperioder(prevState => prevState.concat(periode));
+    };
+
+    const fjernArbeidsperiode = (periodeSomSkalFjernes: IArbeidsperiode) => {
+        settArbeidsperioder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
 
     /*---- UTVIDET BARNETRYGD ----*/
     const årsak = useFelt<Årsak | ''>({
@@ -195,6 +207,16 @@ export const useDinLivssituasjon = (): {
         avhengighet: jobberPåBåt,
     });
 
+    const registrerteArbeidsperioder = useFelt<IArbeidsperiode[]>({
+        verdi: arbeidsperioder,
+        avhengigheter: { jobberPåBåt },
+        skalFeltetVises: avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA,
+    });
+
+    useEffect(() => {
+        registrerteArbeidsperioder.validerOgSettFelt(arbeidsperioder);
+    }, [arbeidsperioder]);
+
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
         feilmeldingSpråkId: 'omdeg.utenlandspensjon.feilmelding',
@@ -228,6 +250,7 @@ export const useDinLivssituasjon = (): {
             arbeidsland,
             mottarUtenlandspensjon,
             pensjonsland,
+            registrerteArbeidsperioder,
         },
         skjemanavn: 'dinlivssituasjon',
     });
@@ -371,5 +394,7 @@ export const useDinLivssituasjon = (): {
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
         arbeidsperioder,
+        leggTilArbeidsperiode,
+        fjernArbeidsperiode,
     };
 };

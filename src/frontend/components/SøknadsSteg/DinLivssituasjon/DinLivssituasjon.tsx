@@ -7,6 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
+import { ArbeidsperioderOppsummering } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -33,6 +34,9 @@ const DinLivssituasjon: React.FC = () => {
         tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
+        arbeidsperioder,
+        fjernArbeidsperiode,
+        leggTilArbeidsperiode,
     } = useDinLivssituasjon();
 
     const { erUtvidet, søknad } = useApp();
@@ -169,10 +173,25 @@ const DinLivssituasjon: React.FC = () => {
                         dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
                     }
                 />
+                <>
+                    {arbeidsperioder.map((periode, index) => (
+                        <ArbeidsperioderOppsummering
+                            periode={periode}
+                            nummer={index + 1}
+                            fjernPeriodeCallback={fjernArbeidsperiode}
+                            visFjernKnapp={true}
+                        />
+                    ))}
+                    {arbeidsperioder.length > 0 && (
+                        <SpråkTekst id={'felles.flerearbeidsperiodernorge.tittel'} />
+                    )}
+                </>
+
                 <div>Søker arbeidsopphold Norge</div>
                 <ArbeidsperiodeModal
                     erÅpen={erArbeidsperiodeÅpen}
                     toggleModal={toggleArbeidsperiodeModal}
+                    onLeggTilArbeidsperiode={leggTilArbeidsperiode}
                     gjelderUtlandet={false}
                     gjelderAndreForelder={false}
                 />
@@ -186,6 +205,7 @@ const DinLivssituasjon: React.FC = () => {
                 <ArbeidsperiodeModal
                     erÅpen={erArbeidsperiodeUtlandetÅpen}
                     toggleModal={toggleArbeidsperiodeUtlandetModal}
+                    onLeggTilArbeidsperiode={leggTilArbeidsperiode}
                     gjelderUtlandet={true}
                     gjelderAndreForelder={false}
                 />
@@ -199,6 +219,7 @@ const DinLivssituasjon: React.FC = () => {
                 <ArbeidsperiodeModal
                     erÅpen={erArbeidsperiodeAndreForelderÅpen}
                     toggleModal={toggleArbeidsperiodeAndreForelderModal}
+                    onLeggTilArbeidsperiode={leggTilArbeidsperiode}
                     gjelderUtlandet={false}
                     gjelderAndreForelder={true}
                 />
@@ -212,6 +233,7 @@ const DinLivssituasjon: React.FC = () => {
                 <ArbeidsperiodeModal
                     erÅpen={erArbeidsperiodeAndreForelderUtlandetÅpen}
                     toggleModal={toggleArbeidsperiodeAndreForelderUtlandetModal}
+                    onLeggTilArbeidsperiode={leggTilArbeidsperiode}
                     gjelderUtlandet={true}
                     gjelderAndreForelder={true}
                     erAndreForelderDød={true}

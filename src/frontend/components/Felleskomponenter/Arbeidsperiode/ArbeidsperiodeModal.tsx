@@ -1,7 +1,10 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { IArbeidsperiode } from '../../../typer/person';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
@@ -23,6 +26,7 @@ import { ArbeidsperiodeSpørsmålsId, arbeidsperiodeSpørsmålSpråkId } from '.
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaParams {
+    onLeggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet: boolean;
     gjelderAndreForelder: boolean;
     erAndreForelderDød?: boolean;
@@ -31,6 +35,7 @@ interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaPar
 export const ArbeidsperiodeModal: React.FC<Props> = ({
     erÅpen,
     toggleModal,
+    onLeggTilArbeidsperiode,
     gjelderUtlandet = false,
     gjelderAndreForelder = false,
     erAndreForelderDød,
@@ -38,10 +43,50 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useArbeidsperiodeSkjema(gjelderUtlandet, gjelderAndreForelder, erAndreForelderDød);
 
+    const {
+        arbeidsperiodeAvsluttet,
+        arbeidsperiodeLand,
+        arbeidsgiver,
+        fraDatoArbeidsperiode,
+        tilDatoArbeidsperiode,
+    } = skjema.felter;
+
+    const intl = useIntl();
+
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
+        onLeggTilArbeidsperiode({
+            ...(arbeidsperiodeAvsluttet.erSynlig && {
+                arbeidsperiodeAvsluttet: {
+                    id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
+                    svar: arbeidsperiodeAvsluttet.verdi as ESvar,
+                },
+            }),
+            arbeidsperiodeland: {
+                id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
+                svar: arbeidsperiodeLand.verdi,
+            },
+            ...(arbeidsgiver.erSynlig && {
+                arbeidsgiver: {
+                    id: ArbeidsperiodeSpørsmålsId.arbeidsgiver,
+                    svar: arbeidsgiver.verdi,
+                },
+            }),
+            ...(fraDatoArbeidsperiode.erSynlig && {
+                fraDatoArbeidsperiode: {
+                    id: ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode,
+                    svar: fraDatoArbeidsperiode.verdi,
+                },
+            }),
+            ...(tilDatoArbeidsperiode.erSynlig && {
+                tilDatoArbeidsperiode: {
+                    id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
+                    svar: tilDatoArbeidsperiode.verdi,
+                },
+            }),
+        });
 
         toggleModal();
         nullstillSkjema();
@@ -62,7 +107,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.arbeidsperiodeAvsluttet}
-                        spørsmålTekstId={'felles.erarbeidsperiodenavsluttet.spm'}
+                        spørsmålTekstId={
+                            arbeidsperiodeSpørsmålSpråkId[
+                                ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
+                            ]
+                        }
                     />
                 )}
                 {skjema.felter.arbeidsperiodeLand.erSynlig && (
