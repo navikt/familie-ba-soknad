@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import dayjs from 'dayjs';
 
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import AlertStripe, { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { RessursStatus } from '@navikt/familie-typer';
@@ -89,6 +89,10 @@ const Dokumentasjon: React.FC = () => {
                 </KomponentGruppe>
             )}
             <KomponentGruppe>
+                <AlertStripe type={'info'}>
+                    <SpråkTekst id={'dokumentasjon.nudge'} />
+                </AlertStripe>
+
                 <Normaltekst>
                     <SpråkTekst id={'dokumentasjon.info'} />
                 </Normaltekst>
