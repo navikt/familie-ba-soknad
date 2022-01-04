@@ -19,6 +19,7 @@ import OmDeg from './components/SøknadsSteg/OmDeg/OmDeg';
 import Oppsummering from './components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from './components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useApp } from './context/AppContext';
+import { useEøs } from './context/EøsContext';
 import { routes } from './context/Routes';
 import { ISteg, RouteEnum } from './typer/routes';
 
@@ -35,8 +36,8 @@ const OmBarnetWrapper: React.FC = () => {
 
 const EøsForBarnWrapper: React.FC = () => {
     const { number } = useParams<{ number?: string }>();
-    const { søknad } = useApp();
-    const barnetsId = søknad.barnInkludertISøknaden[number ? Number.parseInt(number) - 1 : 0].id;
+    const { barnSomTriggerEøs } = useEøs();
+    const barnetsId = barnSomTriggerEøs[number ? Number.parseInt(number) - 1 : 0];
     return <EøsForBarn barnetsId={barnetsId} key={barnetsId} />;
 };
 

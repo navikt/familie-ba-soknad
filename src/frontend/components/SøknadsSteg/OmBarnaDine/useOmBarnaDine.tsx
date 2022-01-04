@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 
@@ -20,7 +22,7 @@ export const useOmBarnaDine = (): {
     validerAlleSynligeFelter: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
-    const { skalTriggeEøsForBarn } = useEøs();
+    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs } = useEøs();
 
     const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt({
         søknadsfelt: søknad.erNoenAvBarnaFosterbarn,
@@ -165,6 +167,28 @@ export const useOmBarnaDine = (): {
         'ombarna.enkeenkemann.hvem.feilmelding',
         erAvdødPartnerForelder
     );
+
+    useEffect(() => {
+        const oppdaterteBarn = genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn);
+
+        oppdaterteBarn.forEach(oppdatertBarn => {
+            const skalTriggeEøs = skalTriggeEøsForBarn(oppdatertBarn);
+            if (
+                (skalTriggeEøs && !barnSomTriggerEøs.includes(oppdatertBarn.id)) ||
+                (!skalTriggeEøs && barnSomTriggerEøs.includes(oppdatertBarn.id))
+            ) {
+                settBarnSomTriggerEøs(prevState => {
+                    if (skalTriggeEøs) {
+                        return prevState.concat(oppdatertBarn.id);
+                    } else {
+                        return prevState.filter(
+                            barnSomTriggetEøsId => barnSomTriggetEøsId !== oppdatertBarn.id
+                        );
+                    }
+                });
+            }
+        });
+    }, [hvemBarnetrygdFraAnnetEøsland]);
 
     const oppdaterSøknad = () => {
         settSøknad({
