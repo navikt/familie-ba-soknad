@@ -26,7 +26,7 @@ export const useBekreftelseOgStartSoknad = (): {
     const history = useHistory();
     const [visStartPåNyttModal, settVisStartPåNyttModal] = useState(false);
 
-    const { steg, hentNesteSteg, hentNåværendeStegIndex } = useSteg();
+    const { steg, hentNesteSteg, hentNåværendeStegIndex, settBarnForSteg } = useSteg();
     const {
         søknad,
         settSøknad,
@@ -61,6 +61,7 @@ export const useBekreftelseOgStartSoknad = (): {
             } = mellomlagretVerdi;
 
             brukMellomlagretVerdi();
+            settBarnForSteg(barnInkludertISøknaden);
             settBarnSomTriggerEøs(
                 barnInkludertISøknaden
                     .filter(barn => skalTriggeEøsForBarn(barn))
@@ -69,7 +70,6 @@ export const useBekreftelseOgStartSoknad = (): {
             settSøkerTriggerEøs(søker.triggetEøs);
             settGjenpprettetFraMellomlagring(true);
         } else {
-            brukMellomlagretVerdi();
             history.push(nesteRoute.path);
         }
         logForsettPåSøknad();

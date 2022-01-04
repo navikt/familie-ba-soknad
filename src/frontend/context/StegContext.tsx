@@ -57,11 +57,13 @@ const [StegProvider, useSteg] = createUseContext(() => {
         })
         .flat();
 
-    const stegIndikatorObjekter: StegindikatorStegProps[] = steg.map((steg, index) => ({
-        label: steg.label,
-        index: index,
-        key: index,
-    }));
+    const stegIndikatorObjekter: StegindikatorStegProps[] = steg
+        .filter(steg => steg.route !== RouteEnum.Forside)
+        .map((steg, index) => ({
+            label: steg.label,
+            index: index,
+            key: index,
+        }));
 
     const hentSteg = (location: string): ISteg => {
         const index = steg.findIndex(steg => matchPath(location, { path: steg.path, exact: true }));
@@ -106,6 +108,10 @@ const [StegProvider, useSteg] = createUseContext(() => {
         );
     };
 
+    const hentNåværendeStegindikatorNummer = (): number => {
+        return Math.max(steg.findIndex(steg => steg === hentNåværendeSteg()) - 1, 0);
+    };
+
     const erPåKvitteringsside = () => hentNåværendeSteg().route === RouteEnum.Kvittering;
 
     return {
@@ -119,6 +125,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
         hentNåværendeStegIndex,
         erPåKvitteringsside,
         settBarnForSteg,
+        hentNåværendeStegindikatorNummer,
     };
 });
 

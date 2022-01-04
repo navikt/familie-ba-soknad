@@ -75,6 +75,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
         hentNåværendeStegIndex,
         stegIndikatorObjekter,
         erPåKvitteringsside,
+        hentNåværendeStegindikatorNummer,
     } = useSteg();
     const { komFra, settKomFra } = useAppNavigation();
 
@@ -141,7 +142,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
                 <StegindikatorContainer>
                     <Stegindikator
                         autoResponsiv={true}
-                        aktivtSteg={hentNåværendeStegIndex()}
+                        aktivtSteg={hentNåværendeStegindikatorNummer()}
                         steg={stegIndikatorObjekter}
                         visLabel={false}
                     />
