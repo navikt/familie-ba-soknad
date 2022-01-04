@@ -1,9 +1,9 @@
-import { ISteg, RouteEnum } from '../typer/routes';
+import { IRoute, RouteEnum } from '../typer/routes';
 
 export const omBarnetBasePath = 'om-barnet';
 export const eøsBarnBasePath = 'eøs-barn';
 
-const routes: ISteg[] = [
+const routes: IRoute[] = [
     { path: '/', label: 'Forside', route: RouteEnum.Forside },
     { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg },
     {

@@ -21,7 +21,7 @@ import VelgBarn from './components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useApp } from './context/AppContext';
 import { useEøs } from './context/EøsContext';
 import { routes } from './context/Routes';
-import { ISteg, RouteEnum } from './typer/routes';
+import { IRoute, RouteEnum } from './typer/routes';
 
 /**
  * useParams må kalles fra en Route-komponent, derfor kan ikke denne inlines i Søknad-komponenten
@@ -44,7 +44,7 @@ const EøsForBarnWrapper: React.FC = () => {
 const Søknad = () => {
     const { systemetLaster } = useApp();
 
-    const routeTilKomponent = (route: ISteg): React.FC => {
+    const routeTilKomponent = (route: IRoute): React.FC => {
         switch (route.route) {
             case RouteEnum.Forside:
                 return Forside;
@@ -77,12 +77,12 @@ const Søknad = () => {
             <Switch>
                 <Route exact={true} path={'/helse'} component={Helse} />
                 <Route exact={true} path={'/'} component={Forside} />
-                {routes.map((steg, index) => (
+                {routes.map((route, index) => (
                     <RedirectTilStart
                         key={index}
                         exact={true}
-                        path={steg.path}
-                        component={routeTilKomponent(steg)}
+                        path={route.path}
+                        component={routeTilKomponent(route)}
                     />
                 ))}
                 <Route path={'*'} component={Forside} />
