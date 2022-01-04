@@ -37,7 +37,11 @@ const OmBarnetWrapper: React.FC = () => {
 const EøsForBarnWrapper: React.FC = () => {
     const { number } = useParams<{ number?: string }>();
     const { barnSomTriggerEøs } = useEøs();
-    const barnetsId = barnSomTriggerEøs[number ? Number.parseInt(number) - 1 : 0];
+    const { søknad } = useApp();
+    const barnSomSkalHaEøsSteg = søknad.søker.triggetEøs
+        ? søknad.barnInkludertISøknaden.map(barn => barn.id)
+        : barnSomTriggerEøs;
+    const barnetsId = barnSomSkalHaEøsSteg[number ? Number.parseInt(number) - 1 : 0];
     return <EøsForBarn barnetsId={barnetsId} key={barnetsId} />;
 };
 
