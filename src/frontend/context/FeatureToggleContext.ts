@@ -6,10 +6,10 @@ import { hentDataFraRessurs } from '@navikt/familie-typer';
 
 import useFørsteRender from '../hooks/useFørsteRender';
 import { basePath } from '../Miljø';
-import { EToggle, ToggleKeys } from '../typer/feature-toggles';
+import { EFeatureToggle, EToggle, ToggleKeys } from '../typer/feature-toggles';
 import { useLastRessurserContext } from './LastRessurserContext';
 
-const [TogglesProvider, useToggles] = createUseContext(() => {
+const [FeatureTogglesProvider, useFeatureToggles] = createUseContext(() => {
     const { axiosRequest } = useLastRessurserContext();
     const [toggles, setToggles] = useState<Partial<Record<EToggle, boolean>>>({});
 
@@ -21,7 +21,7 @@ const [TogglesProvider, useToggles] = createUseContext(() => {
 
             setToggles(prevState => ({
                 ...prevState,
-                [EToggle[toggleKey]]: hentDataFraRessurs(toggleRespons) ?? false,
+                [EFeatureToggle[toggleKey]]: hentDataFraRessurs(toggleRespons) ?? false,
             }));
         });
     });
@@ -31,4 +31,4 @@ const [TogglesProvider, useToggles] = createUseContext(() => {
     };
 });
 
-export { TogglesProvider, useToggles };
+export { FeatureTogglesProvider, useFeatureToggles };

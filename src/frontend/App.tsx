@@ -6,7 +6,7 @@ import AppContainer from './AppContainer';
 import { AppProvider } from './context/AppContext';
 import { AppNavigationProvider } from './context/AppNavigationContext';
 import { EøsProvider } from './context/EøsContext';
-import { TogglesProvider } from './context/FeatureToggleContext';
+import { FeatureTogglesProvider } from './context/FeatureToggleContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 import { RoutesProvider } from './context/RoutesContext';
@@ -16,7 +16,7 @@ function App() {
     return (
         <LastRessurserProvider>
             <InnloggetProvider>
-                <TogglesProvider>
+                <FeatureTogglesProvider>
                     <AppProvider>
                         <EøsProvider>
                             <GlobalStyle />
@@ -35,7 +35,7 @@ function App() {
                             </RoutesProvider>
                         </EøsProvider>
                     </AppProvider>
-                </TogglesProvider>
+                </FeatureTogglesProvider>
             </InnloggetProvider>
         </LastRessurserProvider>
     );
