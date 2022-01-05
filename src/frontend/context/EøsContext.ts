@@ -6,10 +6,9 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 import { RessursStatus } from '@navikt/familie-typer';
 
-import Miljø, { basePath } from '../Miljø';
+import Miljø from '../Miljø';
 import { BarnetsId } from '../typer/common';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../typer/dokumentasjon';
-import { EFeatureToggle } from '../typer/feature-toggles';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, ISøker } from '../typer/person';
 import { IBarnMedISøknad } from '../typer/søknad';
 import { useApp } from './AppContext';
@@ -52,21 +51,15 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     useEffect(() => {
         (async () => {
             try {
-                const toggleRespons = await axiosRequest<boolean, void>({
-                    url: `${basePath}toggles/${EFeatureToggle.EØS}`,
-                });
                 const eøsLandResponse = await axiosRequest<Map<Alpha3Code, string>, void>({
                     url: `${soknadApi}/kodeverk/eos-land`,
                     method: 'GET',
                     påvirkerSystemLaster: true,
                 });
 
-                if (
-                    toggleRespons.status === RessursStatus.SUKSESS &&
-                    eøsLandResponse.status === RessursStatus.SUKSESS
-                ) {
+                if (eøsLandResponse.status === RessursStatus.SUKSESS) {
                     settEøsLand(Object.keys(eøsLandResponse.data) as Alpha3Code[]);
-                    settEøsSkruddAv(toggleRespons.data);
+                    settEøsSkruddAv(false);
                 } else {
                     settEøsSkruddAv(true);
                 }

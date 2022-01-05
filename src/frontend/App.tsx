@@ -8,6 +8,7 @@ import AppContainer from './AppContainer';
 import { AppProvider } from './context/AppContext';
 import { AppNavigationProvider } from './context/AppNavigationContext';
 import { EøsProvider } from './context/EøsContext';
+import { FeatureTogglesProvider } from './context/FeatureToggleContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 import { StegProvider } from './context/StegContext';
@@ -18,26 +19,28 @@ function App() {
     return (
         <LastRessurserProvider>
             <InnloggetProvider>
-                <AppProvider>
-                    <EøsProvider>
-                        <Router basename={routerBasePath}>
-                            <StegProvider>
-                                <GlobalStyle />
-                                {process.env.NODE_ENV !== 'production' && (
-                                    <AlertStripe type="advarsel">
-                                        {`Denne siden er under utvikling. `}
-                                        <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
-                                            Klikk her for å gå til våre sider for barnetrygd
-                                        </a>
-                                    </AlertStripe>
-                                )}
-                                <AppNavigationProvider>
-                                    <AppContainer />
-                                </AppNavigationProvider>
-                            </StegProvider>
-                        </Router>
-                    </EøsProvider>
-                </AppProvider>
+                <FeatureTogglesProvider>
+                    <AppProvider>
+                        <EøsProvider>
+                            <Router basename={routerBasePath}>
+                                <StegProvider>
+                                    <GlobalStyle />
+                                    {process.env.NODE_ENV !== 'production' && (
+                                        <AlertStripe type="advarsel">
+                                            {`Denne siden er under utvikling. `}
+                                            <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
+                                                Klikk her for å gå til våre sider for barnetrygd
+                                            </a>
+                                        </AlertStripe>
+                                    )}
+                                    <AppNavigationProvider>
+                                        <AppContainer />
+                                    </AppNavigationProvider>
+                                </StegProvider>
+                            </Router>
+                        </EøsProvider>
+                    </AppProvider>
+                </FeatureTogglesProvider>
             </InnloggetProvider>
         </LastRessurserProvider>
     );

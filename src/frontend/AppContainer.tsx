@@ -7,10 +7,14 @@ import { RessursStatus } from '@navikt/familie-typer';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';
 import { useApp } from './context/AppContext';
+import { useFeatureToggles } from './context/FeatureToggleContext';
 import Søknad from './Søknad';
+import { EFeatureToggle } from './typer/feature-toggles';
 
 const AppContainer = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
+    const { toggles } = useFeatureToggles();
+
     return (
         <main>
             {systemetLaster() && <SystemetLaster />}
@@ -26,6 +30,7 @@ const AppContainer = () => {
             )}
             {systemetOK() && <Søknad />}
             {systemetFeiler() && !systemetLaster() && <Feilside />}
+            {toggles[EFeatureToggle.EØS_KOMPLETT] && <div>EØS KOMPLETT skrudd på</div>}
         </main>
     );
 };
