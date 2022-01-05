@@ -4,38 +4,31 @@ import createUseContext from 'constate';
 
 import { hentDataFraRessurs } from '@navikt/familie-typer';
 
+import useFørsteRender from '../hooks/useFørsteRender';
 import { basePath } from '../Miljø';
-import { EFeatureToggle } from '../typer/feature-toggles';
+import { EToggle, ToggleKeys } from '../typer/feature-toggles';
 import { useLastRessurserContext } from './LastRessurserContext';
 
-const [FeatureTogglesProvider, useFeatureToggles] = createUseContext(() => {
+const [TogglesProvider, useToggles] = createUseContext(() => {
     const { axiosRequest } = useLastRessurserContext();
-    const [toggles, setToggles] = useState<Partial<Record<EFeatureToggle, string>>>({});
+    const [toggles, setToggles] = useState<Partial<Record<EToggle, boolean>>>({});
 
-    const fetchFeatureToggle = async (toggle: EFeatureToggle, defaultVerdi) => {
-        const toggleRespons = await axiosRequest<boolean, void>({
-            url: `${basePath}toggles/${toggle}`,
+    useFørsteRender(() => {
+        Object.entries(ToggleKeys).forEach(async ([toggleKey, toggleValue]) => {
+            const toggleRespons = await axiosRequest<boolean, void>({
+                url: `${basePath}toggles/${toggleValue}`,
+            });
+
+            setToggles(prevState => ({
+                ...prevState,
+                [EToggle[toggleKey]]: hentDataFraRessurs(toggleRespons) ?? false,
+            }));
         });
-        const toggleState = hentDataFraRessurs(toggleRespons) ?? defaultVerdi;
-        setToggles(prevState => ({
-            ...prevState,
-            [toggle]: toggleState,
-        }));
-
-        return toggleState;
-    };
-
-    const brukFeatureToggle = async (toggle: EFeatureToggle, defaultVerdi = false) => {
-        if (toggle in toggles) {
-            return toggles[toggle];
-        }
-        return await fetchFeatureToggle(toggle, defaultVerdi);
-    };
+    });
 
     return {
-        brukFeatureToggle,
         toggles,
     };
 });
 
-export { FeatureTogglesProvider, useFeatureToggles };
+export { TogglesProvider, useToggles };

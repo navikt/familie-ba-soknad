@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { EFeatureToggle } from '../../frontend/typer/feature-toggles';
+import { EToggle } from '../../frontend/typer/feature-toggles';
 import { isEnabled } from '../utils/unleash';
 
 /**
@@ -14,9 +14,9 @@ export const expressToggleInterceptor: RequestHandler = (req, res, next) => {
     if (process.env.FORCE_DISABLED) {
         skalRendreDisabledApp = true;
     } else if (erUtvidet) {
-        skalRendreDisabledApp = isEnabled(EFeatureToggle.UTVIDET);
+        skalRendreDisabledApp = isEnabled(EToggle.UTVIDET);
     } else {
-        skalRendreDisabledApp = isEnabled(EFeatureToggle.ORDINAER);
+        skalRendreDisabledApp = isEnabled(EToggle.ORDINAER);
     }
     skalRendreDisabledApp ? res.render('disabled.html', { LOCALE_CODE: språk ?? 'nb' }) : next();
 };

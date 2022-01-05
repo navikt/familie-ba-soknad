@@ -1,6 +1,6 @@
 import { initialize, Strategy } from 'unleash-client';
 
-import { EFeatureToggle } from '../../frontend/typer/feature-toggles';
+import { EToggle } from '../../frontend/typer/feature-toggles';
 
 class ByClusterStrategy extends Strategy {
     private cluster: string = process.env.NAIS_CLUSTER_NAME ?? 'lokalutvikling';
@@ -23,7 +23,7 @@ const unleash = initialize({
     strategies: [new ByClusterStrategy()],
 });
 
-export const isEnabled = (feature: EFeatureToggle): boolean => {
+export const isEnabled = (feature: EToggle): boolean => {
     // Hvis vi bare deconstructer og eksporterer isEnabled fra unleash crasher det fordi isEnabled ikke veit hva `this` er...
     return unleash.isEnabled(feature);
 };
