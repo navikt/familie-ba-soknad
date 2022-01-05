@@ -4,14 +4,17 @@ import Alertstripe from 'nav-frontend-alertstriper';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
+import { FeatureToggle } from './components/Felleskomponenter/FeatureToggle/FeatureToggle';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';
 import { useApp } from './context/AppContext';
 import { RoutesProvider } from './context/RoutesContext';
 import Søknad from './Søknad';
+import { EFeatureToggle } from './typer/feature-toggles';
 
 const AppContainer = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
+
     return (
         <main>
             {systemetLaster() && <SystemetLaster />}
@@ -31,6 +34,7 @@ const AppContainer = () => {
                 </RoutesProvider>
             )}
             {systemetFeiler() && !systemetLaster() && <Feilside />}
+            <FeatureToggle toggle={EFeatureToggle.EØS_FULL}>eøs on</FeatureToggle>
         </main>
     );
 };
