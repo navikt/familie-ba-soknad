@@ -8,7 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
-import { hentRouteObjektForRouteEnum } from '../../../../context/Routes';
+import { useRoutes } from '../../../../context/RoutesContext';
 import { AlternativtSvarForInput } from '../../../../typer/common';
 import { ESivilstand, ISamboer, ITidligereSamboer } from '../../../../typer/person';
 import { RouteEnum } from '../../../../typer/routes';
@@ -79,6 +79,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, erUtvidet } = useApp();
     const { formatMessage } = useIntl();
     const [valgtLocale] = useSprakContext();
+    const { hentRouteObjektForRouteEnum } = useRoutes();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
 

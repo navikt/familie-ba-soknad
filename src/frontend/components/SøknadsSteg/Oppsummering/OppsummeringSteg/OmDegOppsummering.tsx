@@ -8,7 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
-import { hentRouteObjektForRouteEnum } from '../../../../context/Routes';
+import { useRoutes } from '../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../typer/routes';
 import { genererAdresseVisning } from '../../../../utils/adresse';
 import { landkodeTilSpråk } from '../../../../utils/språk';
@@ -37,6 +37,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { søknad } = useApp();
     const [valgtLocale] = useSprakContext();
     const { formatMessage } = useIntl();
+    const { hentRouteObjektForRouteEnum } = useRoutes();
 
     return (
         <Oppsummeringsbolk

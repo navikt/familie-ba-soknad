@@ -8,12 +8,13 @@ import { ISteg, RouteEnum } from '../typer/routes';
 import { IBarnMedISøknad } from '../typer/søknad';
 import { useApp } from './AppContext';
 import { useEøs } from './EøsContext';
-import { routes } from './Routes';
+import { useRoutes } from './RoutesContext';
 
 const [StegProvider, useSteg] = createUseContext(() => {
     const { søknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
     const { pathname: currentLocation } = useLocation();
+    const { routes } = useRoutes();
 
     const [barnForSteg, settBarnForSteg] = useState<IBarnMedISøknad[]>([]);
     const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();

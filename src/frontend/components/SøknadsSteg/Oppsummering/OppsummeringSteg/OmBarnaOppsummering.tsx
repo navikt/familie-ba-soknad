@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
-import { hentRouteObjektForRouteEnum } from '../../../../context/Routes';
+import { useRoutes } from '../../../../context/RoutesContext';
 import { barnDataKeySpørsmål } from '../../../../typer/person';
 import { RouteEnum } from '../../../../typer/routes';
 import { barnetsNavnValue } from '../../../../utils/barn';
@@ -23,6 +23,7 @@ interface Props {
 const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const intl = useIntl();
     const { søknad } = useApp();
+    const { hentRouteObjektForRouteEnum } = useRoutes();
 
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden

@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { useApp } from '../../../../context/AppContext';
-import { hentRouteObjektForRouteEnum } from '../../../../context/Routes';
+import { useRoutes } from '../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../typer/routes';
 import { barnetsNavnValue } from '../../../../utils/barn';
 import { hentBostedSpråkId } from '../../../../utils/språk';
@@ -22,6 +22,7 @@ const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { formatMessage } = useIntl();
     const { søknad } = useApp();
     const intl = useIntl();
+    const { hentRouteObjektForRouteEnum } = useRoutes();
 
     return (
         <Oppsummeringsbolk

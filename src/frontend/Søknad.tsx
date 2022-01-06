@@ -20,7 +20,7 @@ import Oppsummering from './components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from './components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useApp } from './context/AppContext';
 import { useEøs } from './context/EøsContext';
-import { routes } from './context/Routes';
+import { useRoutes } from './context/RoutesContext';
 import { IRoute, RouteEnum } from './typer/routes';
 
 /**
@@ -47,6 +47,7 @@ const EøsForBarnWrapper: React.FC = () => {
 
 const Søknad = () => {
     const { systemetLaster } = useApp();
+    const { routes } = useRoutes();
 
     const routeTilKomponent = (route: IRoute): React.FC => {
         switch (route.route) {
