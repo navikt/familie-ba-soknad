@@ -56,7 +56,7 @@ describe('VelgBarn', () => {
     });
 
     test('Kan fjerne manuelt registrerte barn', () => {
-        //silenceConsoleErrors();
+        silenceConsoleErrors();
         mockEøs();
         mockRoutes();
         mockFeatureToggle();
@@ -64,8 +64,9 @@ describe('VelgBarn', () => {
         const søknad = {
             barnRegistrertManuelt: [manueltRegistrert],
             barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarn],
-            søker: { barn: [fraPdl] },
+            søker: { triggetEøs: false, barn: [fraPdl] },
             dokumentasjon: [],
+            erEøs: false,
         };
         const { settSøknad } = spyOnUseApp(søknad);
 
@@ -82,7 +83,7 @@ describe('VelgBarn', () => {
         debug(container, 1000000);
         const fjernBarnKnapp = getByText(/hvilkebarn.fjern-barn.knapp/);
 
-        /* act(() => fjernBarnKnapp.click());
+        act(() => fjernBarnKnapp.click());
 
         const gåVidere = getByText(/felles.navigasjon.gå-videre/);
         act(() => gåVidere.click());
@@ -110,7 +111,6 @@ describe('VelgBarn', () => {
             dokumentasjon: [],
             erEøs: false,
         });
-*/
     });
     test('Rendrer anonymt barnekort dersom det har adressebeskyttelse', () => {
         silenceConsoleErrors();

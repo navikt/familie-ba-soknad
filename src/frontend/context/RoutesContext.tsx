@@ -1,7 +1,7 @@
 import createUseContext from 'constate';
 
 import { EFeatureToggle } from '../typer/feature-toggles';
-import { IRoute, RouteEnum } from '../typer/routes';
+import { RouteEnum } from '../typer/routes';
 import { useFeatureToggles } from './FeatureToggleContext';
 
 export const omBarnetBasePath = 'om-barnet';

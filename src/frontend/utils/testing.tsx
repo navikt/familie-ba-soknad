@@ -116,31 +116,40 @@ export const mockEøs = (eøsSkruddAv = false, barnSomTriggerEøs = [], søkerTr
         .mockReturnValue([]);
     const jaNeiSvarTriggerEøs = jest.spyOn(eøsUtils, 'jaNeiSvarTriggerEøs').mockReturnValue(false);
     const erEøsLand = jest.fn();
-    const useEøs = jest.spyOn(eøsContext, 'useEøs').mockReturnValue({
-        erEøsLand,
-        eøsSkruddAv,
-        barnSomTriggerEøs,
-        settBarnSomTriggerEøs: jest.fn(),
-        settSøkerTriggerEøs: jest.fn(),
-        skalTriggeEøsForBarn: jest.fn(),
-        skalTriggeEøsForSøker: jest.fn(),
-        søkerTriggerEøs,
-    });
+
+    const useEøs = jest.spyOn(eøsContext, 'useEøs').mockImplementation(
+        jest.fn().mockReturnValue({
+            erEøsLand,
+            eøsSkruddAv,
+            barnSomTriggerEøs,
+            settBarnSomTriggerEøs: jest.fn(),
+            settSøkerTriggerEøs: jest.fn(),
+            skalTriggeEøsForBarn: jest.fn().mockReturnValue(false),
+            skalTriggeEøsForSøker: jest.fn().mockReturnValue(false),
+            søkerTriggerEøs,
+        })
+    );
     return { landSvarSomKanTriggeEøs, jaNeiSvarTriggerEøs, useEøs, erEøsLand };
 };
 
 export const mockRoutes = () => {
-    const useRoutes = jest.spyOn(routesContext, 'useRoutes').mockReturnValue({
-        routes: getRoutes(false),
-        hentRouteObjektForRouteEnum: jest.fn(),
-    });
+    const useRoutes = jest.spyOn(routesContext, 'useRoutes').mockImplementation(
+        jest.fn().mockReturnValue({
+            routes: getRoutes(false),
+            hentRouteObjektForRouteEnum: jest.fn(),
+        })
+    );
     return { useRoutes };
 };
 
 export const mockFeatureToggle = () => {
-    const useFeatureToggle = jest.spyOn(featureToggleContext, 'useFeatureToggles').mockReturnValue({
-        toggles: { [EFeatureToggle.EØS_KOMPLETT]: false },
-    });
+    const useFeatureToggle = jest
+        .spyOn(featureToggleContext, 'useFeatureToggles')
+        .mockImplementation(
+            jest.fn().mockReturnValue({
+                toggles: { [EFeatureToggle.EØS_KOMPLETT]: false },
+            })
+        );
     return { useFeatureToggle };
 };
 

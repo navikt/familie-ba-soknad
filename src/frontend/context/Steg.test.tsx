@@ -2,8 +2,9 @@ import React from 'react';
 
 import { renderHook } from '@testing-library/react-hooks';
 
+import { RoutesProvider } from '../context/RoutesContext';
 import { RouteEnum } from '../typer/routes';
-import { mockHistory, spyOnUseApp } from '../utils/testing';
+import { mockFeatureToggle, mockHistory, spyOnUseApp } from '../utils/testing';
 import { StegProvider, useSteg } from './StegContext';
 
 mockHistory(['/om-barnet/barn-1']);
@@ -13,7 +14,13 @@ describe('Steg', () => {
         spyOnUseApp({
             barnInkludertISøknaden: [],
         });
-        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        mockFeatureToggle();
+
+        const wrapper = ({ children }) => (
+            <RoutesProvider>
+                <StegProvider>{children}</StegProvider>
+            </RoutesProvider>
+        );
         const { result } = renderHook(() => useSteg(), { wrapper });
         expect(result.current.steg.length).toEqual(9);
     });
@@ -22,7 +29,12 @@ describe('Steg', () => {
         spyOnUseApp({
             barnInkludertISøknaden: [],
         });
-        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        mockFeatureToggle();
+        const wrapper = ({ children }) => (
+            <RoutesProvider>
+                <StegProvider>{children}</StegProvider>
+            </RoutesProvider>
+        );
         const { result } = renderHook(() => useSteg(), { wrapper });
         expect(result.current.stegIndikatorObjekter.length).toEqual(8);
     });
@@ -35,8 +47,13 @@ describe('Steg', () => {
                 },
             ],
         });
+        mockFeatureToggle();
         mockHistory(['/']);
-        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        const wrapper = ({ children }) => (
+            <RoutesProvider>
+                <StegProvider>{children}</StegProvider>
+            </RoutesProvider>
+        );
         const { result } = renderHook(() => useSteg(), { wrapper });
         const nesteSteg = result.current.hentNesteSteg();
         expect(nesteSteg.route).toBe(RouteEnum.OmDeg);
@@ -51,7 +68,12 @@ describe('Steg', () => {
             ],
         });
         mockHistory(['/om-barnet/barn-1']);
-        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        mockFeatureToggle();
+        const wrapper = ({ children }) => (
+            <RoutesProvider>
+                <StegProvider>{children}</StegProvider>
+            </RoutesProvider>
+        );
         const { result } = renderHook(() => useSteg(), { wrapper });
         const nesteRoute = result.current.hentNesteSteg();
         expect(nesteRoute.route).toBe(RouteEnum.Oppsummering);
@@ -66,7 +88,12 @@ describe('Steg', () => {
             ],
         });
         mockHistory(['/om-barnet/barn-1']);
-        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        mockFeatureToggle();
+        const wrapper = ({ children }) => (
+            <RoutesProvider>
+                <StegProvider>{children}</StegProvider>
+            </RoutesProvider>
+        );
         const { result } = renderHook(() => useSteg(), { wrapper });
         const nesteRoute = result.current.hentNesteSteg();
         expect(nesteRoute.route).toBe(RouteEnum.OmBarna);
@@ -80,8 +107,13 @@ describe('Steg', () => {
                 },
             ],
         });
+        mockFeatureToggle();
 
-        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        const wrapper = ({ children }) => (
+            <RoutesProvider>
+                <StegProvider>{children}</StegProvider>
+            </RoutesProvider>
+        );
         const { result } = renderHook(() => useSteg(), { wrapper });
 
         const route = result.current.steg[5];
@@ -100,7 +132,12 @@ describe('Steg', () => {
                 },
             ],
         });
-        const wrapper = ({ children }) => <StegProvider>{children}</StegProvider>;
+        mockFeatureToggle();
+        const wrapper = ({ children }) => (
+            <RoutesProvider>
+                <StegProvider>{children}</StegProvider>
+            </RoutesProvider>
+        );
         const { result } = renderHook(() => useSteg(), { wrapper });
         const {
             current: { hentForrigeSteg, hentNesteSteg },
