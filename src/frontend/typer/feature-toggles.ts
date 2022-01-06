@@ -14,3 +14,5 @@ export enum EFeatureToggle {
 export const ToggleKeys: Record<EFeatureToggle, string> = {
     [EFeatureToggle.EØS_KOMPLETT]: 'familie-ba-soknad.nytt-eos-skjema',
 };
+
+export type EAllFeatureToggles = Record<EFeatureToggle, boolean>;

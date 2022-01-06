@@ -23,7 +23,7 @@ const unleash = initialize({
     strategies: [new ByClusterStrategy()],
 });
 
-export const isEnabled = (feature: EToggle): boolean => {
+export const isEnabled = (feature: EToggle | string): boolean => {
     // Hvis vi bare deconstructer og eksporterer isEnabled fra unleash crasher det fordi isEnabled ikke veit hva `this` er...
     return unleash.isEnabled(feature);
 };
