@@ -6,12 +6,12 @@ import { hentDataFraRessurs } from '@navikt/familie-typer';
 
 import useFørsteRender from '../hooks/useFørsteRender';
 import { basePath } from '../Miljø';
-import { EFeatureToggle, EToggle, ToggleKeys } from '../typer/feature-toggles';
+import { EFeatureToggle, ToggleKeys } from '../typer/feature-toggles';
 import { useLastRessurserContext } from './LastRessurserContext';
 
 const [FeatureTogglesProvider, useFeatureToggles] = createUseContext(() => {
     const { axiosRequest } = useLastRessurserContext();
-    const [toggles, setToggles] = useState<Partial<Record<EToggle, boolean>>>({});
+    const [toggles, setToggles] = useState<Partial<Record<EFeatureToggle, boolean>>>({});
 
     useFørsteRender(() => {
         Object.entries(ToggleKeys).forEach(async ([toggleKey, toggleValue]) => {
