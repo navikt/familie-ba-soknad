@@ -23,9 +23,11 @@ import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
 import * as eøsContext from '../context/EøsContext';
 import { EøsProvider } from '../context/EøsContext';
+import { FeatureTogglesProvider } from '../context/FeatureToggleContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import * as pdlRequest from '../context/pdl';
+import { RoutesProvider } from '../context/RoutesContext';
 import { StegProvider } from '../context/StegContext';
 import { AlternativtSvarForInput } from '../typer/common';
 import { IKvittering } from '../typer/kvittering';
@@ -163,8 +165,10 @@ const wrapMedDefaultProvidere = (children: ReactNode, språkTekster: Record<stri
             HttpProvider,
             LastRessurserProvider,
             InnloggetProvider,
+            FeatureTogglesProvider,
             AppProvider,
             EøsProvider,
+            RoutesProvider,
             StegProvider,
             AppNavigationProvider,
         ],
