@@ -23,13 +23,16 @@ import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
 import * as eøsContext from '../context/EøsContext';
 import { EøsProvider } from '../context/EøsContext';
+import * as featureToggleContext from '../context/FeatureToggleContext';
 import { FeatureTogglesProvider } from '../context/FeatureToggleContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import * as pdlRequest from '../context/pdl';
-import { RoutesProvider } from '../context/RoutesContext';
+import * as routesContext from '../context/RoutesContext';
+import { getRoutes, RoutesProvider } from '../context/RoutesContext';
 import { StegProvider } from '../context/StegContext';
 import { AlternativtSvarForInput } from '../typer/common';
+import { EFeatureToggle } from '../typer/feature-toggles';
 import { IKvittering } from '../typer/kvittering';
 import {
     andreForelderDataKeySpørsmål,
@@ -124,6 +127,21 @@ export const mockEøs = (eøsSkruddAv = false, barnSomTriggerEøs = [], søkerTr
         søkerTriggerEøs,
     });
     return { landSvarSomKanTriggeEøs, jaNeiSvarTriggerEøs, useEøs, erEøsLand };
+};
+
+export const mockRoutes = () => {
+    const useRoutes = jest.spyOn(routesContext, 'useRoutes').mockReturnValue({
+        routes: getRoutes(false),
+        hentRouteObjektForRouteEnum: jest.fn(),
+    });
+    return { useRoutes };
+};
+
+export const mockFeatureToggle = () => {
+    const useFeatureToggle = jest.spyOn(featureToggleContext, 'useFeatureToggles').mockReturnValue({
+        toggles: { [EFeatureToggle.EØS_KOMPLETT]: false },
+    });
+    return { useFeatureToggle };
 };
 
 export const brukUseAppMedTomSøknadForRouting = () => spyOnUseApp({ barnInkludertISøknaden: [] });

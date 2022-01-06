@@ -7,10 +7,8 @@ import { useFeatureToggles } from './FeatureToggleContext';
 export const omBarnetBasePath = 'om-barnet';
 export const eøsBarnBasePath = 'eøs-barn';
 
-const [RoutesProvider, useRoutes] = createUseContext(() => {
-    const { toggles } = useFeatureToggles();
-
-    const routes: IRoute[] = [
+export const getRoutes = (brukEøsKomplett: boolean | undefined) => {
+    return [
         { path: '/', label: 'Forside', route: RouteEnum.Forside },
         { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg },
         {
@@ -25,7 +23,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
             label: `Om barnet`,
             route: RouteEnum.OmBarnet,
         },
-        ...(toggles[EFeatureToggle.EØS_KOMPLETT]
+        ...(brukEøsKomplett
             ? [
                   {
                       path: '/eøs-søker',
@@ -34,7 +32,7 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
                   },
               ]
             : []),
-        ...(toggles[EFeatureToggle.EØS_KOMPLETT]
+        ...(brukEøsKomplett
             ? [
                   {
                       path: `/${eøsBarnBasePath}/barn-:number`,
@@ -59,6 +57,12 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
             route: RouteEnum.Kvittering,
         },
     ];
+};
+
+const [RoutesProvider, useRoutes] = createUseContext(() => {
+    const { toggles } = useFeatureToggles();
+
+    const routes = getRoutes(toggles[EFeatureToggle.EØS_KOMPLETT]);
     const hentRouteObjektForRouteEnum = (routeEnum: RouteEnum) =>
         routes.find(route => route.route === routeEnum) ?? routes[0];
 
