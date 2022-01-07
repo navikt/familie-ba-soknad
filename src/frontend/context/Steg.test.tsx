@@ -2,9 +2,9 @@ import React from 'react';
 
 import { renderHook } from '@testing-library/react-hooks';
 
-import { RoutesProvider } from '../context/RoutesContext';
 import { RouteEnum } from '../typer/routes';
 import { mockFeatureToggle, mockHistory, spyOnUseApp } from '../utils/testing';
+import { RoutesProvider } from './RoutesContext';
 import { StegProvider, useSteg } from './StegContext';
 
 mockHistory(['/om-barnet/barn-1']);
@@ -22,7 +22,7 @@ describe('Steg', () => {
             </RoutesProvider>
         );
         const { result } = renderHook(() => useSteg(), { wrapper });
-        expect(result.current.steg.length).toEqual(8);
+        expect(result.current.steg.length).toEqual(9);
     });
 
     test(`hentStegObjekterForStegIndikator skal returnere en liste uten forside`, () => {
@@ -36,7 +36,7 @@ describe('Steg', () => {
             </RoutesProvider>
         );
         const { result } = renderHook(() => useSteg(), { wrapper });
-        expect(result.current.stegIndikatorObjekter.length).toEqual(7);
+        expect(result.current.stegIndikatorObjekter.length).toEqual(8);
     });
 
     test(`Kan hente neste steg fra forsiden`, () => {
@@ -121,7 +121,7 @@ describe('Steg', () => {
         expect(label).toEqual('Om barnet');
     });
 
-    test(`Kan navigere mellom steg for utfyllende info om flere barn`, () => {
+    test(`Kan navigere til om-barna og barn-2 dersom det er to barn`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [
                 {
@@ -138,22 +138,36 @@ describe('Steg', () => {
                 <StegProvider>{children}</StegProvider>
             </RoutesProvider>
         );
-        const { result } = renderHook(() => useSteg(), { wrapper });
-        const {
-            current: { hentForrigeSteg, hentNesteSteg },
-        } = result;
-        mockHistory(['/om-barnet/barn-1']);
-        const forrigeRouteFraJens = hentForrigeSteg();
-        mockHistory(['/om-barnet/barn-2']);
-        const forrigeRouteFraLine = hentForrigeSteg();
-        mockHistory(['/om-barnet/barn-1']);
-        const nesteRouteFraJens = hentNesteSteg();
-        mockHistory(['/om-barnet/barn-2']);
-        const nesteRouteFraLine = hentNesteSteg();
 
-        expect(forrigeRouteFraJens.route).toBe(RouteEnum.OmBarna);
-        expect(nesteRouteFraJens.label).toBe('Om barnet');
-        expect(forrigeRouteFraLine.label).toBe('Om Jens');
-        expect(nesteRouteFraLine.route).toBe(RouteEnum.Oppsummering);
+        mockHistory(['/om-barnet/barn-1']);
+        const { result } = renderHook(() => useSteg(), { wrapper });
+
+        expect(result.current.hentForrigeSteg().path).toBe('/om-barna');
+        expect(result.current.hentNesteSteg().path).toBe('/om-barnet/barn-2');
+    });
+
+    test(`Kan navigere mellom tilbake til barn-1 eller til oppsummering dersom det er to barn`, () => {
+        spyOnUseApp({
+            barnInkludertISøknaden: [
+                {
+                    navn: 'Jens',
+                },
+                {
+                    navn: 'Line',
+                },
+            ],
+        });
+        mockFeatureToggle();
+        const wrapper = ({ children }) => (
+            <RoutesProvider>
+                <StegProvider>{children}</StegProvider>
+            </RoutesProvider>
+        );
+
+        mockHistory(['/om-barnet/barn-2']);
+        const { result } = renderHook(() => useSteg(), { wrapper });
+
+        expect(result.current.hentForrigeSteg().path).toBe('/om-barnet/barn-1');
+        expect(result.current.hentNesteSteg().path).toBe('/oppsummering');
     });
 });

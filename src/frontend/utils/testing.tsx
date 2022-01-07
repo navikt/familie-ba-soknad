@@ -106,6 +106,7 @@ export const spyOnUseApp = søknad => {
         settSisteUtfylteStegIndex,
         erPåKvitteringsside,
         axiosRequestMock,
+        søknad,
     };
 };
 

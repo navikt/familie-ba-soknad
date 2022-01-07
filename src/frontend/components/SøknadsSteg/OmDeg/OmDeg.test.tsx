@@ -34,7 +34,7 @@ const TestKomponentMedEkteTekster = () => (
     </TestProvidereMedEkteTekster>
 );
 
-describe.skip('OmDeg', () => {
+describe('OmDeg', () => {
     beforeEach(() => {
         silenceConsoleErrors();
         mockEøs();
