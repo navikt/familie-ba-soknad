@@ -22,7 +22,7 @@ describe('Steg', () => {
             </RoutesProvider>
         );
         const { result } = renderHook(() => useSteg(), { wrapper });
-        expect(result.current.steg.length).toEqual(9);
+        expect(result.current.steg.length).toEqual(8);
     });
 
     test(`hentStegObjekterForStegIndikator skal returnere en liste uten forside`, () => {
@@ -36,7 +36,7 @@ describe('Steg', () => {
             </RoutesProvider>
         );
         const { result } = renderHook(() => useSteg(), { wrapper });
-        expect(result.current.stegIndikatorObjekter.length).toEqual(8);
+        expect(result.current.stegIndikatorObjekter.length).toEqual(7);
     });
 
     test(`Kan hente neste route fra forsiden`, () => {
@@ -96,7 +96,7 @@ describe('Steg', () => {
         );
         const { result } = renderHook(() => useSteg(), { wrapper });
         const nesteRoute = result.current.hentNesteSteg();
-        expect(nesteRoute.route).toBe(RouteEnum.OmBarna);
+        expect(nesteRoute.route).toBe(RouteEnum.Oppsummering);
     });
 
     test(`Label til steg om barnet skal inneholde barnets navn`, () => {
@@ -118,7 +118,7 @@ describe('Steg', () => {
 
         const route = result.current.steg[5];
         const label = route.label;
-        expect(label).toEqual('Om Jens');
+        expect(label).toEqual('Om barnet');
     });
 
     test(`Kan navigere mellom steg for utfyllende info om flere barn`, () => {
@@ -152,7 +152,7 @@ describe('Steg', () => {
         const nesteRouteFraLine = hentNesteSteg();
 
         expect(forrigeRouteFraJens.route).toBe(RouteEnum.OmBarna);
-        expect(nesteRouteFraJens.label).toBe('Om Line');
+        expect(nesteRouteFraJens.label).toBe('Om barnet');
         expect(forrigeRouteFraLine.label).toBe('Om Jens');
         expect(nesteRouteFraLine.route).toBe(RouteEnum.Oppsummering);
     });
