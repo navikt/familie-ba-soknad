@@ -4,13 +4,19 @@ import { act, fireEvent, render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { DeepPartial } from 'ts-essentials';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import { byggSuksessRessurs, RessursStatus } from '@navikt/familie-typer';
 import fnrvalidator from '@navikt/fnrvalidator';
 
 import * as eøsContext from '../../../context/EøsContext';
 import * as pdlRequest from '../../../context/pdl';
-import { ESivilstand, IBarn, IBarnRespons, ISøkerRespons } from '../../../typer/person';
-import { ISøknad } from '../../../typer/søknad';
+import {
+    barnDataKeySpørsmål,
+    ESivilstand,
+    IBarnRespons,
+    ISøkerRespons,
+} from '../../../typer/person';
+import { IBarnMedISøknad, ISøknad } from '../../../typer/søknad';
 import * as eøsUtils from '../../../utils/eøs';
 import {
     mekkGyldigSøker,
@@ -22,23 +28,43 @@ import {
     spyOnUseApp,
     TestProvidere,
 } from '../../../utils/testing';
+import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '../OmBarnet/spørsmål';
 import VelgBarn from './VelgBarn';
 
 jest.mock('@navikt/fnrvalidator');
 
-const manueltRegistrert: Partial<IBarn> = {
+const manueltRegistrert: Partial<IBarnMedISøknad> = {
     id: 'random-id-1',
     ident: '12345',
     navn: 'A',
+    barnetrygdFraEøslandHvilketLand: {
+        id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
+        svar: 'NOR',
+    },
+    utenlandsperioder: [],
+    [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
+        id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
+        svar: ESvar.NEI,
+    },
 };
 const fraPdl: Partial<IBarnRespons> = {
     ident: '54321',
     navn: 'B',
 };
 
-const fraPdlSomIBarn: Partial<IBarn> = {
+const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
     ...fraPdl,
     id: 'random-id-2',
+    barnetrygdFraEøslandHvilketLand: {
+        id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
+        svar: 'NOR',
+    },
+    utenlandsperioder: [],
+    [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
+        id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
+        svar: ESvar.NEI,
+    },
 };
 
 describe('VelgBarn', () => {
@@ -53,18 +79,17 @@ describe('VelgBarn', () => {
                 sivilstand: { type: ESivilstand.UGIFT },
             }),
         }));
-    });
-
-    test('Kan fjerne manuelt registrerte barn', () => {
-        silenceConsoleErrors();
         mockEøs();
         mockRoutes();
         mockFeatureToggle();
+        silenceConsoleErrors();
+    });
 
+    test('Kan fjerne manuelt registrerte barn', () => {
         const søknad = {
             barnRegistrertManuelt: [manueltRegistrert],
-            barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarn],
-            søker: { triggetEøs: false, barn: [fraPdl] },
+            barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarnMedISøknad],
+            søker: { barn: [fraPdl] },
             dokumentasjon: [],
             erEøs: false,
         };
@@ -75,12 +100,12 @@ describe('VelgBarn', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const { getByText, container, debug } = render(
+        const { getByText } = render(
             <TestProvidere>
                 <VelgBarn />
             </TestProvidere>
         );
-        debug(container, 1000000);
+
         const fjernBarnKnapp = getByText(/hvilkebarn.fjern-barn.knapp/);
 
         act(() => fjernBarnKnapp.click());
@@ -91,7 +116,7 @@ describe('VelgBarn', () => {
         // Først blir barnet fjernet fra manuelt registrerte barn
         expect(settSøknad).toHaveBeenNthCalledWith(1, {
             barnRegistrertManuelt: [],
-            barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarn],
+            barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarnMedISøknad],
             søker: {
                 ...mekkGyldigSøker(),
                 barn: [fraPdl],
@@ -103,7 +128,7 @@ describe('VelgBarn', () => {
         // Når man trykker på gå videre blir det manuelt registrerte barnet fjernet fra søknaden
         expect(settSøknad).toHaveBeenNthCalledWith(2, {
             barnRegistrertManuelt: [],
-            barnInkludertISøknaden: [fraPdlSomIBarn],
+            barnInkludertISøknaden: [fraPdlSomIBarnMedISøknad],
             søker: {
                 ...mekkGyldigSøker(),
                 barn: [fraPdl],
@@ -113,7 +138,6 @@ describe('VelgBarn', () => {
         });
     });
     test('Rendrer anonymt barnekort dersom det har adressebeskyttelse', () => {
-        silenceConsoleErrors();
         const søknad = mockDeep<ISøknad>({
             søker: {
                 barn: [
@@ -141,12 +165,11 @@ describe('VelgBarn', () => {
     });
 
     test('Kan legge til, fjerne og så legge et barn til igjen', async () => {
-        silenceConsoleErrors();
         jest.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
 
         const søknad = {
             barnRegistrertManuelt: [manueltRegistrert],
-            barnInkludertISøknaden: [manueltRegistrert, fraPdl],
+            barnInkludertISøknaden: [manueltRegistrert, fraPdlSomIBarnMedISøknad],
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
         };
@@ -200,8 +223,6 @@ describe('VelgBarn', () => {
     });
 
     test('Kan huke av for barn', () => {
-        silenceConsoleErrors();
-
         const søknad: DeepPartial<ISøknad> = {
             søker: {
                 barn: [
