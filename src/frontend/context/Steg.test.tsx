@@ -10,7 +10,7 @@ import { StegProvider, useSteg } from './StegContext';
 mockHistory(['/om-barnet/barn-1']);
 
 describe('Steg', () => {
-    test(`Kan hente routes før barn er valgt`, () => {
+    test(`Kan hente steg før barn er valgt`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [],
         });
@@ -39,7 +39,7 @@ describe('Steg', () => {
         expect(result.current.stegIndikatorObjekter.length).toEqual(7);
     });
 
-    test(`Kan hente neste route fra forsiden`, () => {
+    test(`Kan hente neste steg fra forsiden`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [
                 {
@@ -59,7 +59,7 @@ describe('Steg', () => {
         expect(nesteSteg.route).toBe(RouteEnum.OmDeg);
     });
 
-    test(`Kan hente neste route når inneværende route er eneste barn`, () => {
+    test(`Kan hente neste steg når inneværende route er eneste barn`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [
                 {
@@ -79,7 +79,7 @@ describe('Steg', () => {
         expect(nesteRoute.route).toBe(RouteEnum.Oppsummering);
     });
 
-    test(`Kan hente forrige route når inneværende route er eneste barn`, () => {
+    test(`Kan hente forrige steg når inneværende steg er eneste barn`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [
                 {

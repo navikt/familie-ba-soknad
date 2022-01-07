@@ -30,13 +30,21 @@ const [StegProvider, useSteg] = createUseContext(() => {
 
             switch (route.route) {
                 case RouteEnum.OmBarnet:
-                    return barnForSteg.map((_barn, index) => ({
+                    const omBarnetSteg = barnForSteg.map((_barn, index) => ({
                         path:
                             barnRoute?.path.replace(':number', (index + 1) as unknown as string) ??
                             '/',
                         route: RouteEnum.OmBarnet,
                         label: route.label,
                     }));
+                    return omBarnetSteg.length
+                        ? omBarnetSteg
+                        : {
+                              path:
+                                  barnRoute?.path.replace(':number', 1 as unknown as string) ?? '/',
+                              route: RouteEnum.OmBarnet,
+                              label: route.label,
+                          };
                 case RouteEnum.EøsForBarn:
                     const barnSomSkalHaEøsSteg = søkerTriggerEøs
                         ? barnInkludertISøknaden
