@@ -23,11 +23,16 @@ import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
 import * as eøsContext from '../context/EøsContext';
 import { EøsProvider } from '../context/EøsContext';
+import * as featureToggleContext from '../context/FeatureToggleContext';
+import { FeatureTogglesProvider } from '../context/FeatureToggleContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import * as pdlRequest from '../context/pdl';
-import { RoutesProvider } from '../context/RoutesContext';
+import * as routesContext from '../context/RoutesContext';
+import { getRoutes, RoutesProvider } from '../context/RoutesContext';
+import { StegProvider } from '../context/StegContext';
 import { AlternativtSvarForInput } from '../typer/common';
+import { EFeatureToggle } from '../typer/feature-toggles';
 import { IKvittering } from '../typer/kvittering';
 import {
     andreForelderDataKeySpørsmål,
@@ -101,21 +106,52 @@ export const spyOnUseApp = søknad => {
         settSisteUtfylteStegIndex,
         erPåKvitteringsside,
         axiosRequestMock,
+        søknad,
     };
 };
 
-export const mockEøs = (eøsSkruddAv = false) => {
+export const mockEøs = (eøsSkruddAv = false, barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
     // Prøvde å gjøre dette med __mocks__ uten hell, mocken ble ikke brukt av jest. Gjerne prøv igjen.
     const landSvarSomKanTriggeEøs = jest
         .spyOn(eøsUtils, 'landSvarSomKanTriggeEøs')
         .mockReturnValue([]);
     const jaNeiSvarTriggerEøs = jest.spyOn(eøsUtils, 'jaNeiSvarTriggerEøs').mockReturnValue(false);
     const erEøsLand = jest.fn();
-    const useEøs = jest.spyOn(eøsContext, 'useEøs').mockReturnValue({
-        erEøsLand,
-        eøsSkruddAv,
-    });
+
+    const useEøs = jest.spyOn(eøsContext, 'useEøs').mockImplementation(
+        jest.fn().mockReturnValue({
+            erEøsLand,
+            eøsSkruddAv,
+            barnSomTriggerEøs,
+            settBarnSomTriggerEøs: jest.fn(),
+            settSøkerTriggerEøs: jest.fn(),
+            skalTriggeEøsForBarn: jest.fn().mockReturnValue(false),
+            skalTriggeEøsForSøker: jest.fn().mockReturnValue(false),
+            søkerTriggerEøs,
+        })
+    );
     return { landSvarSomKanTriggeEøs, jaNeiSvarTriggerEøs, useEøs, erEøsLand };
+};
+
+export const mockRoutes = () => {
+    const useRoutes = jest.spyOn(routesContext, 'useRoutes').mockImplementation(
+        jest.fn().mockReturnValue({
+            routes: getRoutes(false),
+            hentRouteObjektForRouteEnum: jest.fn(),
+        })
+    );
+    return { useRoutes };
+};
+
+export const mockFeatureToggle = () => {
+    const useFeatureToggle = jest
+        .spyOn(featureToggleContext, 'useFeatureToggles')
+        .mockImplementation(
+            jest.fn().mockReturnValue({
+                toggles: { [EFeatureToggle.EØS_KOMPLETT]: false },
+            })
+        );
+    return { useFeatureToggle };
 };
 
 export const brukUseAppMedTomSøknadForRouting = () => spyOnUseApp({ barnInkludertISøknaden: [] });
@@ -157,9 +193,11 @@ const wrapMedDefaultProvidere = (children: ReactNode, språkTekster: Record<stri
             HttpProvider,
             LastRessurserProvider,
             InnloggetProvider,
+            FeatureTogglesProvider,
             AppProvider,
             EøsProvider,
             RoutesProvider,
+            StegProvider,
             AppNavigationProvider,
         ],
         children,

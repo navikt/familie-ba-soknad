@@ -34,14 +34,14 @@ interface Props {
 }
 
 const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
-    const { hentStegObjektForRoute } = useRoutes();
     const { søknad } = useApp();
     const [valgtLocale] = useSprakContext();
     const { formatMessage } = useIntl();
+    const { hentRouteObjektForRouteEnum } = useRoutes();
 
     return (
         <Oppsummeringsbolk
-            route={hentStegObjektForRoute(RouteEnum.OmDeg)}
+            steg={hentRouteObjektForRouteEnum(RouteEnum.OmDeg)}
             tittel={'omdeg.sidetittel'}
             skjemaHook={useOmdeg}
             settFeilAnchors={settFeilAnchors}

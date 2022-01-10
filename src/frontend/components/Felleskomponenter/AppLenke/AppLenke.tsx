@@ -7,17 +7,17 @@ import Lenke from 'nav-frontend-lenker';
 import { unslash } from '../../../../shared-utils/unslash';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
 import { basePath } from '../../../Miljø';
-import { IRoute } from '../../../typer/routes';
+import { ISteg } from '../../../typer/routes';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface Props {
-    route: IRoute;
+    steg: ISteg;
     hash?: string;
     språkTekstId?: string;
-    returnTo?: IRoute;
+    returnTo?: ISteg;
 }
 
-export const AppLenke: React.FC<Props> = ({ route, hash, språkTekstId, returnTo, children }) => {
+export const AppLenke: React.FC<Props> = ({ steg, hash, språkTekstId, returnTo, children }) => {
     const { push: pushHistory } = useHistory();
     const { settKomFra } = useAppNavigation();
 
@@ -25,14 +25,14 @@ export const AppLenke: React.FC<Props> = ({ route, hash, språkTekstId, returnTo
         event.preventDefault();
         returnTo && settKomFra(returnTo);
         pushHistory({
-            pathname: route.path,
+            pathname: steg.path,
             hash,
         });
     };
 
     return (
         <Lenke
-            href={basePath + unslash(route.path) + (hash ? '#' + hash : '')}
+            href={basePath + unslash(steg.path) + (hash ? '#' + hash : '')}
             rel="noopener noreferrer"
             onClick={clickHandler}
         >

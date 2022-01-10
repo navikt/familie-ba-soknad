@@ -1,9 +1,13 @@
+export interface ISteg {
+    path: string;
+    label: string;
+    route: RouteEnum;
+}
+
 export interface IRoute {
     path: string;
     label: string;
     route: RouteEnum;
-    // Vi kan ha routes som ser helt like ut (to barn uten navn f.eks), trenger å kunne skille mellom dem
-    spesifisering?: string;
 }
 
 export enum RouteEnum {
@@ -16,4 +20,6 @@ export enum RouteEnum {
     Oppsummering = 'Oppsummering',
     Dokumentasjon = 'Dokumentasjon',
     Kvittering = 'Kvittering',
+    EøsForSøker = 'EøsForSøker',
+    EøsForBarn = 'EøsForBarn',
 }

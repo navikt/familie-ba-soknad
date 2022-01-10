@@ -1,7 +1,10 @@
+import { useEffect } from 'react';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import { barnDataKeySpørsmål, ESivilstand } from '../../../typer/person';
@@ -19,6 +22,7 @@ export const useOmBarnaDine = (): {
     validerAlleSynligeFelter: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
+    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs } = useEøs();
 
     const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt({
         søknadsfelt: søknad.erNoenAvBarnaFosterbarn,
@@ -164,6 +168,28 @@ export const useOmBarnaDine = (): {
         erAvdødPartnerForelder
     );
 
+    useEffect(() => {
+        const oppdaterteBarn = genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn);
+
+        oppdaterteBarn.forEach(oppdatertBarn => {
+            const skalTriggeEøs = skalTriggeEøsForBarn(oppdatertBarn);
+            if (
+                (skalTriggeEøs && !barnSomTriggerEøs.includes(oppdatertBarn.id)) ||
+                (!skalTriggeEøs && barnSomTriggerEøs.includes(oppdatertBarn.id))
+            ) {
+                settBarnSomTriggerEøs(prevState => {
+                    if (skalTriggeEøs) {
+                        return prevState.concat(oppdatertBarn.id);
+                    } else {
+                        return prevState.filter(
+                            barnSomTriggetEøsId => barnSomTriggetEøsId !== oppdatertBarn.id
+                        );
+                    }
+                });
+            }
+        });
+    }, [hvemBarnetrygdFraAnnetEøsland]);
+
     const oppdaterSøknad = () => {
         settSøknad({
             ...søknad,
@@ -195,7 +221,7 @@ export const useOmBarnaDine = (): {
                 ...søknad.erAvdødPartnerForelder,
                 svar: erAvdødPartnerForelder.verdi,
             },
-            barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema),
+            barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn),
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 switch (dok.dokumentasjonsbehov) {
                     case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:

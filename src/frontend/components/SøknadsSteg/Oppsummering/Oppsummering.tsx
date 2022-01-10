@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../context/RoutesContext';
+import { useSteg } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -22,7 +22,7 @@ const StyledNormaltekst = styled(Normaltekst)`
 
 const Oppsummering: React.FC = () => {
     const { søknad } = useApp();
-    const { hentStegNummer } = useRoutes();
+    const { hentStegNummer } = useSteg();
     const { push: pushHistory } = useHistory();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
 

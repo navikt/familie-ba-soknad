@@ -99,7 +99,8 @@ export const genererAndreForelder = (
 
 export const genererOppdaterteBarn = (
     søknad: ISøknad,
-    skjema: ISkjema<IOmBarnaDineFeltTyper, string>
+    skjema: ISkjema<IOmBarnaDineFeltTyper, string>,
+    skalTriggeEøsForBarn: (barn: IBarnMedISøknad) => boolean
 ): IBarnMedISøknad[] => {
     return søknad.barnInkludertISøknaden.map(barn => {
         const oppholderSegIInstitusjon: ESvar = genererSvarForSpørsmålBarn(
@@ -125,7 +126,7 @@ export const genererOppdaterteBarn = (
         const oppholdtSegIUtlandSiste12Mnd: boolean =
             skjema.felter.hvemTolvMndSammenhengendeINorge.verdi.includes(barn.id);
 
-        return {
+        const oppdatertBarn = {
             ...barn,
             utenlandsperioder: oppholdtSegIUtlandSiste12Mnd ? barn.utenlandsperioder : [],
             andreForelder: erFosterbarn
@@ -224,6 +225,8 @@ export const genererOppdaterteBarn = (
                 ),
             },
         };
+
+        return { ...oppdatertBarn, triggetEøs: skalTriggeEøsForBarn(oppdatertBarn) };
     });
 };
 
@@ -250,6 +253,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         barnErFyltUt: false,
         utenlandsperioder: [],
         andreForelder: null,
+        triggetEøs: false,
         [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: {
             id: OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn,
             svar: null,
