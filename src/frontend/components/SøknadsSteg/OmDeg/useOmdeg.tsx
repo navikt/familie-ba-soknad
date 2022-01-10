@@ -104,11 +104,13 @@ export const useOmdeg = (): {
     });
 
     useEffect(() => {
-        registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
+        if (borPåRegistrertAdresse.verdi !== ESvar.NEI) {
+            registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
 
-        const oppdatertSøker = genererOppdatertSøker();
-        skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs &&
-            settSøkerTriggerEøs(prevState => !prevState);
+            const oppdatertSøker = genererOppdatertSøker();
+            skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs &&
+                settSøkerTriggerEøs(prevState => !prevState);
+        }
     }, [værtINorgeITolvMåneder, utenlandsperioder]);
 
     const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {

@@ -41,7 +41,7 @@ describe('OmDeg', () => {
         mockHistory(['/om-deg']);
     });
 
-    test.skip('Alle tekster finnes i språkfil', async () => {
+    test('Alle tekster finnes i språkfil', async () => {
         const { søker } = mekkGyldigSøknad();
         const søkerMedSvarSomViserAlleTekster: ISøker = {
             ...søker,
@@ -49,18 +49,26 @@ describe('OmDeg', () => {
             planleggerÅBoINorgeTolvMnd: { ...søker.planleggerÅBoINorgeTolvMnd, svar: ESvar.NEI },
         };
         spyOnUseApp({ søker: søkerMedSvarSomViserAlleTekster });
-
-        const { findAllByTestId } = render(<TestKomponentMedEkteTekster />);
-
-        søkerMedSvarSomViserAlleTekster.borPåRegistrertAdresse.svar = ESvar.NEI;
-        render(<TestKomponentMedEkteTekster />);
-
         søkerMedSvarSomViserAlleTekster.adresse = undefined;
         søkerMedSvarSomViserAlleTekster.adressebeskyttelse = false;
-        render(<TestKomponentMedEkteTekster />);
+        const { findAllByTestId } = render(<TestKomponentMedEkteTekster />);
 
         // Vent på effect i AppContext så vi ikke får advarsel om act
         await findAllByTestId(/alertstripe/);
+        expect(console.error).toHaveBeenCalledTimes(0);
+    });
+
+    test('Alle tekster finnes når man svarer at man ikke bor på registrert adresse', () => {
+        spyOnUseApp({
+            søker: mockDeep<ISøker>({
+                borPåRegistrertAdresse: {
+                    id: OmDegSpørsmålId.borPåRegistrertAdresse,
+                    svar: ESvar.NEI,
+                },
+            }),
+        });
+
+        render(<TestKomponentMedEkteTekster />);
         expect(console.error).toHaveBeenCalledTimes(0);
     });
 
