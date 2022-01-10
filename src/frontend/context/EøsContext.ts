@@ -90,7 +90,6 @@ const [EøsProvider, useEøs] = createUseContext(() => {
                       barn.andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
                   ]
                 : []),
-            barn.barnetrygdFraEøslandHvilketLand.svar,
             barn.utenlandsperioder.map(periode => periode.oppholdsland.svar),
         ].flat();
 

@@ -745,7 +745,13 @@ export const useOmBarnet = (
                 }
             });
         }
-    }, [skjema]);
+    }, [
+        andreForelderArbeidUtlandet,
+        andreForelderArbeidUtlandetHvilketLand,
+        andreForelderPensjonUtland,
+        andreForelderPensjonHvilketLand,
+        utenlandsperioder,
+    ]);
 
     const oppdaterSøknad = () => {
         const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] =
