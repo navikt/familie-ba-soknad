@@ -3,18 +3,21 @@ import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { RouteEnum } from '../typer/routes';
-import { mockFeatureToggle, mockHistory, spyOnUseApp } from '../utils/testing';
+import { mockEøs, mockFeatureToggle, mockHistory, spyOnUseApp } from '../utils/testing';
 import { RoutesProvider } from './RoutesContext';
 import { StegProvider, useSteg } from './StegContext';
 
 mockHistory(['/om-barnet/barn-1']);
 
 describe('Steg', () => {
+    beforeEach(() => {
+        mockFeatureToggle();
+        mockEøs();
+    });
     test(`Kan hente steg før barn er valgt`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [],
         });
-        mockFeatureToggle();
 
         const wrapper = ({ children }) => (
             <RoutesProvider>
@@ -29,7 +32,6 @@ describe('Steg', () => {
         spyOnUseApp({
             barnInkludertISøknaden: [],
         });
-        mockFeatureToggle();
         const wrapper = ({ children }) => (
             <RoutesProvider>
                 <StegProvider>{children}</StegProvider>
@@ -47,7 +49,7 @@ describe('Steg', () => {
                 },
             ],
         });
-        mockFeatureToggle();
+
         mockHistory(['/']);
         const wrapper = ({ children }) => (
             <RoutesProvider>
@@ -68,7 +70,6 @@ describe('Steg', () => {
             ],
         });
         mockHistory(['/om-barnet/barn-1']);
-        mockFeatureToggle();
         const wrapper = ({ children }) => (
             <RoutesProvider>
                 <StegProvider>{children}</StegProvider>
@@ -88,7 +89,6 @@ describe('Steg', () => {
             ],
         });
         mockHistory(['/om-barnet/barn-1']);
-        mockFeatureToggle();
         const wrapper = ({ children }) => (
             <RoutesProvider>
                 <StegProvider>{children}</StegProvider>
@@ -107,7 +107,6 @@ describe('Steg', () => {
                 },
             ],
         });
-        mockFeatureToggle();
 
         const wrapper = ({ children }) => (
             <RoutesProvider>
@@ -132,7 +131,6 @@ describe('Steg', () => {
                 },
             ],
         });
-        mockFeatureToggle();
         const wrapper = ({ children }) => (
             <RoutesProvider>
                 <StegProvider>{children}</StegProvider>
@@ -157,7 +155,6 @@ describe('Steg', () => {
                 },
             ],
         });
-        mockFeatureToggle();
         const wrapper = ({ children }) => (
             <RoutesProvider>
                 <StegProvider>{children}</StegProvider>
