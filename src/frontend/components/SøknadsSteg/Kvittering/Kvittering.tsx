@@ -9,7 +9,7 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { useRoutes } from '../../../context/RoutesContext';
+import { useSteg } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
@@ -25,7 +25,7 @@ const Kvittering: React.FC = () => {
         useApp();
     const { eøsSkruddAv } = useEøs();
     const { barnInkludertISøknaden, erEøs } = søknad;
-    const { hentStegNummer } = useRoutes();
+    const { hentStegNummer } = useSteg();
 
     const { innsendingStatus } = useApp();
     const innsendtDato: Dayjs =

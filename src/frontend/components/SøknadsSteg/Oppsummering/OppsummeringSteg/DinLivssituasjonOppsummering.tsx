@@ -76,16 +76,16 @@ const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> =
 };
 
 const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
-    const { hentStegObjektForRoute } = useRoutes();
     const { søknad, erUtvidet } = useApp();
     const { formatMessage } = useIntl();
     const [valgtLocale] = useSprakContext();
+    const { hentRouteObjektForRouteEnum } = useRoutes();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
 
     return (
         <Oppsummeringsbolk
-            route={hentStegObjektForRoute(RouteEnum.DinLivssituasjon)}
+            steg={hentRouteObjektForRouteEnum(RouteEnum.DinLivssituasjon)}
             tittel={'dinlivssituasjon.sidetittel'}
             skjemaHook={useDinLivssituasjon}
             settFeilAnchors={settFeilAnchors}
