@@ -34,7 +34,7 @@ interface Props extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
 export const PensjonModal: React.FC<Props> = ({
     erÅpen,
     toggleModal,
-    onLeggTilPensjonsPeriode,
+    //TODO: legg til denne når vi skal sett søknadsdata onLeggTilPensjonsPeriode,
     barn,
     gjelderUtland = false,
     gjelderAndreForelder = false,
@@ -55,7 +55,7 @@ export const PensjonModal: React.FC<Props> = ({
             return false;
         }
 
-        //TODO legg til denne: onLeggTilPensjonsPeriode();
+        //TODO: legg til denne når vi skal sett søknadsdata: onLeggTilPensjonsPeriode();
 
         toggleModal();
         nullstillSkjema();
