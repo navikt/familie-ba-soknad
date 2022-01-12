@@ -17,5 +17,5 @@ export const pensjonFraDatoFeilmeldingSpråkId = (gjelderAndreForelder, tilbakeI
     else
         return tilbakeITid
             ? 'felles.modal.franårfikkpensjon.feilmelding'
-            : 'felles.franårpensjon.feilmelding';
+            : 'pensjonmodal.franårpensjon.nåtid.feilmelding';
 };

@@ -36,7 +36,7 @@ export const PensjonModal: React.FC<Props> = ({
     toggleModal,
     onLeggTilPensjonsPeriode,
     barn,
-    gjelderUtland = true,
+    gjelderUtland = false,
     gjelderAndreForelder = false,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
@@ -130,7 +130,7 @@ export const PensjonModal: React.FC<Props> = ({
                             />
                         }
                         skjema={skjema}
-                        avgrensMaxDato={gårsdagensDato()}
+                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
                         calendarPosition={'fullscreen'}
                     />
                 )}
@@ -152,7 +152,6 @@ export const PensjonModal: React.FC<Props> = ({
                             />
                         }
                         skjema={skjema}
-                        avgrensMinDato={pensjonFraDato.verdi}
                         avgrensMaxDato={dagensDato()}
                         tilhørendeFraOgMedFelt={pensjonFraDato}
                         calendarPosition={'fullscreen'}

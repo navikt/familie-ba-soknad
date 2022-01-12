@@ -60,8 +60,8 @@ export const usePensjonSkjema = ({
         skalFeltetVises:
             mottarPensjonNå.valideringsstatus === Valideringsstatus.OK &&
             (!gjelderUtland || erEøsLand(pensjonsland.verdi)),
-        feilmeldingSpråkId: pensjonFraDatoFeilmeldingSpråkId(gjelderAndreForelder, gjelderUtland),
-        sluttdatoAvgrensning: gårsdagensDato(),
+        feilmeldingSpråkId: pensjonFraDatoFeilmeldingSpråkId(gjelderAndreForelder, tilbakeITid),
+        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
         avhengigheter: { mottarPensjonNå },
         nullstillVedAvhengighetEndring: true,
     });
