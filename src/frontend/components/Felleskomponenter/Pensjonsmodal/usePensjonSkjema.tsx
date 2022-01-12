@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useIntl } from 'react-intl';
 
@@ -28,7 +28,6 @@ export const usePensjonSkjema = ({
     gjelderAndreForelder = false,
 }: IUsePensjonSkjemaParams) => {
     const { erEøsLand } = useEøs();
-    const [eøsPensjon, settEøsPensjon] = useState(false);
     const intl = useIntl();
 
     const mottarPensjonNå = useJaNeiSpmFelt({
@@ -49,8 +48,6 @@ export const usePensjonSkjema = ({
         skalFeltetVises:
             mottarPensjonNå.valideringsstatus === Valideringsstatus.OK && gjelderUtland,
     });
-
-    useEffect(() => settEøsPensjon(erEøsLand(pensjonsland.verdi)), [pensjonsland.verdi]);
 
     const pensjonFraDato = useDatovelgerFelt({
         søknadsfelt: {
@@ -94,6 +91,5 @@ export const usePensjonSkjema = ({
     return {
         ...skjema,
         validerFelterOgVisFeilmelding: skjema.kanSendeSkjema,
-        eøsPensjon,
     };
 };

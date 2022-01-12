@@ -10,7 +10,6 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import Miljø from '../../../Miljø';
 import { RouteEnum } from '../../../typer/routes';
@@ -36,7 +35,6 @@ const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
 
     const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad, settNåværendeRoute } = useApp();
-    const { eøsSkruddAv } = useEøs();
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
 
