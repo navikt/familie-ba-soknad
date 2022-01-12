@@ -12,8 +12,8 @@ export const pensjonslandFeilmeldingSpråkId = (gjelderAndreForelder, tilbakeITi
 export const pensjonFraDatoFeilmeldingSpråkId = (gjelderAndreForelder, tilbakeITid) => {
     if (gjelderAndreForelder)
         return tilbakeITid
-            ? 'felles.modal.franårfikkpensjonandreforelder.feilmelding'
-            : 'ombarnet.franårandreforelderpensjon.feilmelding';
+            ? 'modal.franårandreforelderpensjon.feilmelding'
+            : 'pensjonmodal.franårpensjonandreforelder.nåtid.feilmelding';
     else
         return tilbakeITid
             ? 'felles.modal.franårfikkpensjon.feilmelding'

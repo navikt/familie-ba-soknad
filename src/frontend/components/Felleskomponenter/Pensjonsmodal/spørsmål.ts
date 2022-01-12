@@ -26,7 +26,7 @@ export const pensjonAndreForelderSpørsmålSpråkId = (
         ? 'modal.hvilketlandpensjonandreforelder.spm'
         : 'ombarnet.andre-forelder.utenlandspensjon.land.spm',
     [PensjonSpørsmålId.fraDatoPensjon]: tilbakeITid
-        ? 'pensjonmodal.franårpensjonandreforelder.nåtid.spm'
-        : 'ombarnet.franårandreforelderpensjon.spm',
+        ? 'modal.franårandreforelderpensjon.spm'
+        : 'pensjonmodal.franårpensjonandreforelder.nåtid.spm',
     [PensjonSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
 });

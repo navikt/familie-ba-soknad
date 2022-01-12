@@ -24,7 +24,7 @@ export interface IUsePensjonSkjemaParams {
 
 export const usePensjonSkjema = ({
     barn,
-    gjelderUtland = true,
+    gjelderUtland = false,
     gjelderAndreForelder = false,
 }: IUsePensjonSkjemaParams) => {
     const { erEøsLand } = useEøs();
