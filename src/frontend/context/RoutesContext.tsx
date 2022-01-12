@@ -1,45 +1,14 @@
-import { useState } from 'react';
-
 import createUseContext from 'constate';
-import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg';
-import { matchPath } from 'react-router';
 
-import { IRoute, RouteEnum } from '../typer/routes';
-import { IBarnMedISøknad } from '../typer/søknad';
-import { useApp } from './AppContext';
+import { EFeatureToggle } from '../typer/feature-toggles';
+import { RouteEnum } from '../typer/routes';
+import { useFeatureToggles } from './FeatureToggleContext';
 
 export const omBarnetBasePath = 'om-barnet';
+export const eøsBarnBasePath = 'eøs-barn';
 
-const [RoutesProvider, useRoutes] = createUseContext(() => {
-    const {
-        søknad: { barnInkludertISøknaden },
-    } = useApp();
-
-    const [barnForRoutes, settBarnForRoutes] = useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
-
-    // Hack for å unngå race-condition mellom redirect og oppdatering av ruter med barn ved bruk av mellomlagret verdi
-    const [oppdatertEtterMellomlagring, settOppdatertEtterMellomlagring] = useState(false);
-
-    // En route per barn som er valgt, eller en plassholder hvis ingen er valgt
-    const barnRoutes: IRoute[] = barnForRoutes.length
-        ? barnForRoutes.map((barn, index): IRoute => {
-              return {
-                  path: `/${omBarnetBasePath}/barn-${index + 1}`,
-                  label: `Om ${barn.navn}`,
-                  route: RouteEnum.OmBarnet,
-                  spesifisering: barn.id,
-              };
-          })
-        : [
-              {
-                  path: `/${omBarnetBasePath}/`,
-                  label: 'Om barnet',
-                  route: RouteEnum.OmBarnet,
-              },
-          ];
-
-    // TODO: skrive om label til språktekst
-    const routes: IRoute[] = [
+export const getRoutes = (brukEøsKomplett: boolean | undefined) => {
+    return [
         { path: '/', label: 'Forside', route: RouteEnum.Forside },
         { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg },
         {
@@ -47,10 +16,31 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
             label: 'Din Livssituasjon',
             route: RouteEnum.DinLivssituasjon,
         },
-
         { path: '/velg-barn', label: 'Velg barn', route: RouteEnum.VelgBarn },
         { path: '/om-barna', label: 'Om barna', route: RouteEnum.OmBarna },
-        ...barnRoutes,
+        {
+            path: `/${omBarnetBasePath}/barn-:number`,
+            label: `Om barnet`,
+            route: RouteEnum.OmBarnet,
+        },
+        ...(brukEøsKomplett
+            ? [
+                  {
+                      path: '/eøs-søker',
+                      label: 'Eøs søker',
+                      route: RouteEnum.EøsForSøker,
+                  },
+              ]
+            : []),
+        ...(brukEøsKomplett
+            ? [
+                  {
+                      path: `/${eøsBarnBasePath}/barn-:number`,
+                      label: `Om EØS barn`,
+                      route: RouteEnum.EøsForBarn,
+                  },
+              ]
+            : []),
         {
             path: '/oppsummering',
             label: 'Oppsummering',
@@ -67,87 +57,16 @@ const [RoutesProvider, useRoutes] = createUseContext(() => {
             route: RouteEnum.Kvittering,
         },
     ];
+};
 
-    const hentStegNummer = (route: RouteEnum) => {
-        return routes.findIndex(steg => steg.route === route);
-    };
+const [RoutesProvider, useRoutes] = createUseContext(() => {
+    const { toggles } = useFeatureToggles();
 
-    const hentRouteIndex = (currentPath: string): number => {
-        const index = routes.findIndex(route => {
-            const match = matchPath(currentPath, {
-                path: route.path,
-                exact: true,
-            });
-            return match !== null;
-        });
-        return Math.max(index, 0);
-    };
+    const routes = getRoutes(toggles[EFeatureToggle.EØS_KOMPLETT]);
+    const hentRouteObjektForRouteEnum = (routeEnum: RouteEnum) =>
+        routes.find(route => route.route === routeEnum) ?? routes[0];
 
-    const erPåKvitteringsside = (currentPath: string): boolean =>
-        routes[hentRouteIndex(currentPath)].route === RouteEnum.Kvittering;
-
-    const hentAktivtStegIndexForStegindikator = (currentPath: string) => {
-        // Trekker fra 1 fordi forsiden teller som en route
-        return hentRouteIndex(currentPath) - 1;
-    };
-
-    const hentForrigeRoute = (currentPath: string) => {
-        return routes[hentRouteIndex(currentPath) - 1];
-    };
-
-    const hentNesteRoute = (currentPath: string) => {
-        return routes[hentRouteIndex(currentPath) + 1];
-    };
-
-    const hentNåværendeRoute = (currentPath: string) => {
-        return routes[hentRouteIndex(currentPath)];
-    };
-
-    const hentGjeldendeRoutePåStegindex = (stegIndex: number) => {
-        return routes[stegIndex];
-    };
-
-    const hentPath = (route: RouteEnum): string => {
-        return routes.find(r => r.route === route)?.path ?? '/';
-    };
-
-    const hentStegObjekterForStegIndikator = (): StegindikatorStegProps[] => {
-        return routes
-            .filter(steg => steg.route !== RouteEnum.Forside)
-            .map((steg, index) => {
-                return {
-                    label: steg.label,
-                    index: index,
-                };
-            });
-    };
-
-    const hentStegObjektForRoute = (route: RouteEnum): IRoute => {
-        return routes.find(steg => steg.route === route) ?? routes[0];
-    };
-
-    const hentStegObjektForBarn = (barn: IBarnMedISøknad): IRoute | undefined => {
-        return routes.find(route => route.spesifisering === barn.id);
-    };
-
-    return {
-        hentRouteIndex,
-        hentAktivtStegIndexForStegindikator,
-        hentForrigeRoute,
-        hentNesteRoute,
-        hentGjeldendeRoutePåStegindex,
-        hentPath,
-        hentStegNummer,
-        routes,
-        settBarnForRoutes,
-        oppdatertEtterMellomlagring,
-        settOppdatertEtterMellomlagring,
-        hentStegObjekterForStegIndikator,
-        erPåKvitteringsside,
-        hentNåværendeRoute,
-        hentStegObjektForRoute,
-        hentStegObjektForBarn,
-    };
+    return { routes, hentRouteObjektForRouteEnum };
 });
 
 export { RoutesProvider, useRoutes };

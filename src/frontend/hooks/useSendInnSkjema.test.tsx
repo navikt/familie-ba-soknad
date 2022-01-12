@@ -6,11 +6,14 @@ import { ISøknadKontrakt } from '../typer/søknad';
 import { hentSivilstatusSpråkId } from '../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,
+    silenceConsoleErrors,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../utils/testing';
 import { erGyldigISøknadKontraktUtvidet } from '../utils/typeguards';
 import { useSendInnSkjema } from './useSendInnSkjema';
+
+silenceConsoleErrors();
 
 describe('useSendInnSkjema', () => {
     beforeEach(() => {

@@ -93,6 +93,14 @@ export interface IOmDegFeltTyper {
     registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
+export interface IEøsForSøkerFeltTyper {
+    placeholderForFeltSomKommer: string; //TODO
+}
+
+export interface IEøsForBarnFeltTyper {
+    placeholderForFeltSomKommer: string; //TODO
+}
+
 export interface IVelgBarnFeltTyper {
     barnMedISøknad: IBarn[];
 }
@@ -125,4 +133,6 @@ export type SkjemaFeltTyper =
     | IOmBarnaDineFeltTyper
     | IDinLivssituasjonFeltTyper
     | IUtenlandsoppholdFeltTyper
-    | ITidligereSamboerFeltTyper;
+    | ITidligereSamboerFeltTyper
+    | IEøsForSøkerFeltTyper
+    | IEøsForBarnFeltTyper;

@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../context/RoutesContext';
+import { useEøs } from '../../../context/EøsContext';
+import { useSteg } from '../../../context/StegContext';
 import { BarnetsId } from '../../../typer/common';
 import { IBarn } from '../../../typer/person';
 import { IVelgBarnFeltTyper } from '../../../typer/skjema';
@@ -25,12 +26,13 @@ export const useVelgBarn = (): {
 } => {
     const { søknad, settSøknad, mellomlagre } = useApp();
     const { barnInkludertISøknaden } = søknad;
-    const { settBarnForRoutes } = useRoutes();
+    const { settBarnForSteg } = useSteg();
+    const { settBarnSomTriggerEøs } = useEøs();
     const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] =
         useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
 
     useEffect(() => {
-        settBarnForRoutes(barnSomSkalVæreMed);
+        settBarnForSteg(barnSomSkalVæreMed);
     }, [barnSomSkalVæreMed]);
 
     const fjernBarn = (id: BarnetsId) => {
@@ -39,6 +41,7 @@ export const useVelgBarn = (): {
             barnRegistrertManuelt: søknad.barnRegistrertManuelt.filter(barn => id !== barn.id),
         });
         settBarnSomSkalVæreMed(barnSomSkalVæreMed.filter(barn => id !== barn.id));
+        settBarnSomTriggerEøs(prevState => prevState.filter(barnetsId => id !== barnetsId));
         mellomlagre();
     };
 
@@ -95,6 +98,11 @@ export const useVelgBarn = (): {
                 ? prevState.concat(genererInitialBarnMedISøknad(barn))
                 : prevState.filter(barnMedISøknad => barnMedISøknad.id !== barn.id)
         );
+        if (!skalVæreMed) {
+            settBarnSomTriggerEøs(prevState =>
+                prevState.filter(barnetsId => barn.id !== barnetsId)
+            );
+        }
     };
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<

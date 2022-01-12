@@ -3,14 +3,14 @@ import { ReactNode } from 'react';
 
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
 
-import { IRoute } from '../../../typer/routes';
+import { ISteg } from '../../../typer/routes';
 import { AppLenke } from '../AppLenke/AppLenke';
 
-export const lagRouteFeilRenderer = (route: IRoute) => {
+export const lagRouteFeilRenderer = (steg: ISteg) => {
     return (feil: FeiloppsummeringFeil): ReactNode => {
         const { feilmelding, skjemaelementId } = feil;
         return (
-            <AppLenke route={route} hash={skjemaelementId}>
+            <AppLenke steg={steg} hash={skjemaelementId}>
                 {feilmelding}
             </AppLenke>
         );
