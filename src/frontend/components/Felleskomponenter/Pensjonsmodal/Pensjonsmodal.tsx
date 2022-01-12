@@ -26,29 +26,28 @@ import { IUsePensjonSkjemaParams, usePensjonSkjema } from './usePensjonSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
     onLeggTilPensjonsPeriode: (periode: IPensjonsperiode) => void;
-    barn?: IBarnMedISøknad;
     gjelderUtland?: boolean;
-    gjelderAndreForelder?: boolean;
+    andreForelderData?: { barn: IBarnMedISøknad; erDød: boolean };
 }
 
 export const PensjonModal: React.FC<Props> = ({
     erÅpen,
     toggleModal,
     //TODO: legg til denne når vi skal sett søknadsdata onLeggTilPensjonsPeriode,
-    barn,
     gjelderUtland = false,
-    gjelderAndreForelder = false,
+    andreForelderData,
 }) => {
+    const intl = useIntl();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         usePensjonSkjema({
-            barn,
             gjelderUtland,
-            gjelderAndreForelder,
+            andreForelderData,
         });
 
     const { mottarPensjonNå, pensjonTilDato, pensjonFraDato, pensjonsland } = skjema.felter;
-
-    const intl = useIntl();
+    const gjelderAndreForelder = !!andreForelderData;
+    const barn = andreForelderData?.barn;
+    const erAndreForelderDød = !!andreForelderData?.erDød;
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -76,20 +75,23 @@ export const PensjonModal: React.FC<Props> = ({
             onAvbrytCallback={nullstillSkjema}
         >
             <KomponentGruppe inline>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.mottarPensjonNå}
-                    spørsmålTekstId={
-                        gjelderAndreForelder
-                            ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
-                                  PensjonSpørsmålId.mottarPensjonNå
-                              ]
-                            : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
-                                  PensjonSpørsmålId.mottarPensjonNå
-                              ]
-                    }
-                    språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
-                />
+                {skjema.felter.mottarPensjonNå.erSynlig && (
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.mottarPensjonNå}
+                        spørsmålTekstId={
+                            gjelderAndreForelder
+                                ? pensjonAndreForelderSpørsmålSpråkId(
+                                      tilbakeITid,
+                                      erAndreForelderDød
+                                  )[PensjonSpørsmålId.mottarPensjonNå]
+                                : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
+                                      PensjonSpørsmålId.mottarPensjonNå
+                                  ]
+                        }
+                        språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                    />
+                )}
                 {pensjonsland.erSynlig && (
                     <LandDropdown
                         felt={skjema.felter.pensjonsland}
@@ -98,9 +100,10 @@ export const PensjonModal: React.FC<Props> = ({
                             <SpråkTekst
                                 id={
                                     gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
-                                              PensjonSpørsmålId.pensjonsland
-                                          ]
+                                        ? pensjonAndreForelderSpørsmålSpråkId(
+                                              tilbakeITid,
+                                              erAndreForelderDød
+                                          )[PensjonSpørsmålId.pensjonsland]
                                         : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
                                               PensjonSpørsmålId.pensjonsland
                                           ]
@@ -119,9 +122,10 @@ export const PensjonModal: React.FC<Props> = ({
                             <SpråkTekst
                                 id={
                                     gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
-                                              PensjonSpørsmålId.fraDatoPensjon
-                                          ]
+                                        ? pensjonAndreForelderSpørsmålSpråkId(
+                                              tilbakeITid,
+                                              erAndreForelderDød
+                                          )[PensjonSpørsmålId.fraDatoPensjon]
                                         : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
                                               PensjonSpørsmålId.fraDatoPensjon
                                           ]
@@ -141,9 +145,10 @@ export const PensjonModal: React.FC<Props> = ({
                             <SpråkTekst
                                 id={
                                     gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
-                                              PensjonSpørsmålId.tilDatoPensjon
-                                          ]
+                                        ? pensjonAndreForelderSpørsmålSpråkId(
+                                              tilbakeITid,
+                                              erAndreForelderDød
+                                          )[PensjonSpørsmålId.tilDatoPensjon]
                                         : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
                                               PensjonSpørsmålId.tilDatoPensjon
                                           ]
