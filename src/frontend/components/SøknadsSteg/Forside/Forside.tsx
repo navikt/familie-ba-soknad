@@ -10,7 +10,6 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import Miljø from '../../../Miljø';
 import { RouteEnum } from '../../../typer/routes';
@@ -36,7 +35,6 @@ const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
 
     const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad, settNåværendeRoute } = useApp();
-    const { eøsSkruddAv } = useEøs();
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
 
@@ -67,14 +65,7 @@ const Forside: React.FC = () => {
 
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
             <Informasjonsbolk>
-                <SpråkTekst
-                    id={
-                        eøsSkruddAv
-                            ? 'forside.info.punktliste.med-eøs-info'
-                            : 'forside.info.punktliste'
-                    }
-                    values={{ b: msg => <b>{msg}</b> }}
-                />
+                <SpråkTekst id={'forside.info.punktliste'} values={{ b: msg => <b>{msg}</b> }} />
                 <EksternLenke
                     lenkeSpråkId={'forside.plikter.lenke'}
                     lenkeTekstSpråkId={'forside.plikter.lenketekst'}

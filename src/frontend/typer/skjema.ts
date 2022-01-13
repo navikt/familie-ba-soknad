@@ -127,6 +127,13 @@ export interface IUtenlandsoppholdFeltTyper {
     oppholdslandTilDatoUkjent: ESvar;
 }
 
+export interface IPensjonsperiodeFeltTyper {
+    mottarPensjonNå: ESvar | null;
+    pensjonsland: Alpha3Code | '';
+    pensjonFraDato: ISODateString;
+    pensjonTilDato: ISODateString;
+}
+
 export interface IArbeidsperioderFeltTyper {
     arbeidsperiodeAvsluttet: ESvar | null;
     arbeidsperiodeLand: Alpha3Code | '';
@@ -143,6 +150,7 @@ export type SkjemaFeltTyper =
     | IOmBarnaDineFeltTyper
     | IDinLivssituasjonFeltTyper
     | IUtenlandsoppholdFeltTyper
+    | IPensjonsperiodeFeltTyper
     | ITidligereSamboerFeltTyper
     | IEøsForSøkerFeltTyper
     | IEøsForBarnFeltTyper

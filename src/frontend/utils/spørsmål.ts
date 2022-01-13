@@ -1,52 +1,16 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
-import { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arbeidsperiode/spørsmål';
-import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
-    DinLivssituasjonSpørsmålId,
     dinLivssituasjonSpørsmålSpråkId,
-    SamboerSpørsmålId,
     samboerSpørsmålSpråkId,
     tidligereSamboerSpørsmålSpråkId,
 } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import {
-    OmBarnaDineSpørsmålId,
-    omBarnaDineSpørsmålSpråkId,
-} from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import {
-    OmBarnetSpørsmålsId,
-    omBarnetSpørsmålSpråkId,
-} from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from '../components/SøknadsSteg/OmDeg/spørsmål';
-import {
-    VelgBarnSpørsmålId,
-    velgBarnSpørsmålSpråkId,
-} from '../components/SøknadsSteg/VelgBarn/spørsmål';
+import { omBarnaDineSpørsmålSpråkId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { omBarnetSpørsmålSpråkId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import { omDegSpørsmålSpråkId } from '../components/SøknadsSteg/OmDeg/spørsmål';
+import { velgBarnSpørsmålSpråkId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
 import { AlternativtSvarForInput } from '../typer/common';
-import { SpørsmålId } from '../typer/spørsmål';
-
-export const samletSpørsmålId: { [key: string]: SpørsmålId } = {
-    ...OmDegSpørsmålId,
-    ...VelgBarnSpørsmålId,
-    ...OmBarnaDineSpørsmålId,
-    ...OmBarnetSpørsmålsId,
-    ...DinLivssituasjonSpørsmålId,
-    ...SamboerSpørsmålId,
-};
-
-export const samletSpørsmålSpråkTekstId: Record<
-    Exclude<SpørsmålId, UtenlandsoppholdSpørsmålId | ArbeidsperiodeSpørsmålsId>, // UtenlandsoppholdSpørsmålId har ikke statiske spørsmålstekster
-    string
-> = {
-    ...omDegSpørsmålSpråkId,
-    ...velgBarnSpørsmålSpråkId,
-    ...omBarnaDineSpørsmålSpråkId,
-    ...omBarnetSpørsmålSpråkId,
-    ...dinLivssituasjonSpørsmålSpråkId,
-    ...samboerSpørsmålSpråkId,
-    ...tidligereSamboerSpørsmålSpråkId,
-};
 
 export const språkIndexListe = [
     omDegSpørsmålSpråkId,

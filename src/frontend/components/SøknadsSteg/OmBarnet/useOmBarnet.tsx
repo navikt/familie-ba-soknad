@@ -173,7 +173,8 @@ export const useOmBarnet = (
 
     const planleggerÅBoINorge12Mnd = useJaNeiSpmFelt({
         søknadsfelt: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
-        feilmeldingSpråkId: 'ombarnet.planlagt-sammenhengende-opphold.feilmelding',
+        feilmeldingSpråkId: 'ombarnet.oppholdtsammenhengende.feilmelding',
+        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(barn, intl) },
         skalSkjules:
             !skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge) ||
             flyttetPermanentFraNorge(utenlandsperioder) ||

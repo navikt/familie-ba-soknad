@@ -87,6 +87,13 @@ export interface IArbeidsperiode {
     tilDatoArbeidsperiode?: ISøknadSpørsmål<DatoMedUkjent>;
 }
 
+export interface IPensjonsperiode {
+    mottarPensjonNå: ISøknadSpørsmål<ESvar>;
+    pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    pensjonFra?: ISøknadSpørsmål<ISODateString>;
+    pensjonTil?: ISøknadSpørsmål<ISODateString>;
+}
+
 export interface ISamboer {
     navn: ISøknadSpørsmål<string>;
     ident: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;

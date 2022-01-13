@@ -516,7 +516,7 @@ export const useSendInnSkjema = (): {
                         andreForelder.utvidet[
                             andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
                         ].svar,
-                        omBarnetSpørsmålSpråkId['søker-bor-med-andre-forelder']
+                        omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerBorMedAndreForelder]
                     )
                 ),
             },
@@ -626,7 +626,6 @@ export const useSendInnSkjema = (): {
                 'hvilkebarn.barn.bosted.adressesperre',
                 'ombarnet.fosterbarn',
                 'ombarnet.institusjon',
-                'ombarnet.oppholdutland',
                 'ombarnet.opplystatbarnutlandopphold.info',
                 'ombarnet.barnetrygd-eøs',
                 'omdeg.annensamboer.spm',
