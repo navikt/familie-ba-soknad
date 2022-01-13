@@ -180,6 +180,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                         OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
                                     ]
                                 }
+                                språkValues={{ barn: barnetsNavnValue(barn, intl) }}
                             />
                             {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
                                 <AlertStripe type={'advarsel'} dynamisk>

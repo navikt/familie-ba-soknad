@@ -88,9 +88,8 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
         return antallVedlegg;
     };
 
-    const dokTittel = intl.formatMessage(
-        { id: dokumentasjon.tittelSpråkId },
-        { barn: formatertListeMedBarn() }
+    const dokTittel = (
+        <SpråkTekst id={dokumentasjon.tittelSpråkId} values={{ barn: formatertListeMedBarn() }} />
     );
 
     const skalViseAnnenDokumentasjonsBeskrivelse = () => {
