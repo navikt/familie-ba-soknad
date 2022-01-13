@@ -10,7 +10,13 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { ESivilstand, ISøkerRespons } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
-import { TestProvidere } from '../utils/testing';
+import {
+    mockEøs,
+    mockFeatureToggle,
+    mockRoutes,
+    silenceConsoleErrors,
+    TestProvidere,
+} from '../utils/testing';
 import { useApp } from './AppContext';
 
 const søknadEtterRespons: ISøknad = {
@@ -34,17 +40,6 @@ jest.mock('./InnloggetContext', () => {
             innloggetStatus: 0 /* InnloggetStatus.AUTENTISERT = 0 men kan ikke brukes inni her */,
         }),
         InnloggetProvider: ({ children }) => <>{children}</>,
-    };
-});
-
-jest.mock('./EøsContext', () => {
-    return {
-        __esModule: true,
-        useEøsContext: () => ({
-            eøsSkruddAv: true,
-            erEøsLand: jest.fn(),
-        }),
-        EøsProvider: ({ children }) => <>{children}</>,
     };
 });
 
@@ -83,6 +78,10 @@ describe('AppContext', () => {
         });
 
     beforeEach(() => {
+        mockEøs();
+        mockRoutes();
+        mockFeatureToggle();
+        silenceConsoleErrors();
         const { result } = renderHook(() => useApp(), {
             wrapper: TestProvidere,
         });

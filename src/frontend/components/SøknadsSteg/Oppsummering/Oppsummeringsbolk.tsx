@@ -9,8 +9,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../context/RoutesContext';
-import { IRoute, RouteEnum } from '../../../typer/routes';
+import { useSteg } from '../../../context/StegContext';
+import { ISteg, RouteEnum } from '../../../typer/routes';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { AppLenke } from '../../Felleskomponenter/AppLenke/AppLenke';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -25,7 +25,7 @@ interface IHookReturn {
 interface Props {
     tittel: string;
     språkValues?: { [key: string]: string };
-    route?: IRoute;
+    steg?: ISteg;
     skjemaHook: (...args: string[]) => IHookReturn;
     barnId?: string;
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
@@ -50,12 +50,12 @@ const Oppsummeringsbolk: React.FC<Props> = ({
     children,
     tittel,
     språkValues,
-    route,
+    steg,
     skjemaHook,
     barnId,
     settFeilAnchors,
 }) => {
-    const { hentStegNummer } = useRoutes();
+    const { hentStegNummer } = useSteg();
     const { søknad } = useApp();
     const { validerAlleSynligeFelter, valideringErOk, skjema } = barnId
         ? skjemaHook(barnId)
@@ -88,8 +88,8 @@ const Oppsummeringsbolk: React.FC<Props> = ({
             <StyledEkspanderbartpanel
                 tittel={
                     <Undertittel>
-                        {route?.route !== RouteEnum.OmBarnet &&
-                            `${hentStegNummer(route?.route ?? RouteEnum.OmDeg)}. `}
+                        {steg?.route !== RouteEnum.OmBarnet &&
+                            `${hentStegNummer(steg?.route ?? RouteEnum.OmDeg)}. `}
                         <SpråkTekst id={tittel} values={språkValues} />
                     </Undertittel>
                 }
@@ -101,12 +101,12 @@ const Oppsummeringsbolk: React.FC<Props> = ({
                 {visFeil && (
                     <SkjemaFeiloppsummering
                         skjema={skjema}
-                        routeForFeilmeldinger={route}
+                        routeForFeilmeldinger={steg}
                         id={feilOppsummeringId}
                     />
                 )}
-                {route && !visFeil && (
-                    <AppLenke route={route} språkTekstId={'oppsummering.endresvar.lenketekst'} />
+                {steg && !visFeil && (
+                    <AppLenke steg={steg} språkTekstId={'oppsummering.endresvar.lenketekst'} />
                 )}
             </StyledEkspanderbartpanel>
         </StyledOppsummeringsbolk>

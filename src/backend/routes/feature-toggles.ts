@@ -1,8 +1,9 @@
 import { Express, RequestHandler } from 'express';
+import { ParamsDictionary } from 'express-serve-static-core';
 
-import { byggFeiletRessurs, byggSuksessRessurs } from '@navikt/familie-typer';
+import { byggFeiletRessurs, byggSuksessRessurs, Ressurs } from '@navikt/familie-typer';
 
-import { EFeatureToggle } from '../../frontend/typer/feature-toggles';
+import { EAllFeatureToggles, ToggleKeys } from '../../frontend/typer/feature-toggles';
 import { basePath } from '../environment';
 import { isEnabled } from '../utils/unleash';
 
@@ -13,12 +14,28 @@ const toggleFetchHandler: RequestHandler = (req, res) => {
         return;
     }
 
-    res.send(byggSuksessRessurs(isEnabled(toggleId as EFeatureToggle)));
+    res.send(byggSuksessRessurs(isEnabled(toggleId)));
 };
 
 export const konfigurerFeatureTogglesEndpoint = (app: Express): Express => {
     // Matcher bare toggles som tilhører oss, bruker {0,} pga en express-quirk
     // ref http://expressjs.com/en/guide/routing.html#route-parameters
     app.get(`${basePath}toggles/:id(familie-ba-soknad.[a-zA-Z-]{0,})`, toggleFetchHandler);
+    return app;
+};
+
+const fetchAllFeatureTogglesHandler: RequestHandler<
+    ParamsDictionary,
+    Ressurs<EAllFeatureToggles>
+> = (_, res) => {
+    res.send(
+        byggSuksessRessurs({
+            EØS_KOMPLETT: isEnabled(ToggleKeys.EØS_KOMPLETT),
+        })
+    );
+};
+
+export const konfigurerAllFeatureTogglesEndpoint = (app: Express): Express => {
+    app.get(`${basePath}toggles/all`, fetchAllFeatureTogglesHandler);
     return app;
 };

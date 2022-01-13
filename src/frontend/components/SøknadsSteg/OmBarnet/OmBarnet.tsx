@@ -61,7 +61,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 skjema,
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
-            barn={barn}
         >
             <OmBarnetHeader barn={barn} />
             <Oppfølgningsspørsmål

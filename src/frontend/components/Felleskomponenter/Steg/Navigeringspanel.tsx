@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
@@ -9,7 +8,7 @@ import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
-import { useRoutes } from '../../../context/RoutesContext';
+import { useSteg } from '../../../context/StegContext';
 import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -72,9 +71,8 @@ const Navigeringspanel: React.FC<{
     onTilbakeCallback: () => void;
     valideringErOk: (() => boolean) | undefined;
 }> = ({ onAvbrytCallback, onTilbakeCallback, valideringErOk }) => {
-    const { hentNesteRoute } = useRoutes();
-    const location = useLocation();
-    const nesteRoute = hentNesteRoute(location.pathname);
+    const { hentNesteSteg } = useSteg();
+    const nesteSteg = hentNesteSteg();
     const { innsendingStatus } = useApp();
 
     const hentKnappetype = (): Knappetype => {
@@ -107,7 +105,7 @@ const Navigeringspanel: React.FC<{
             >
                 <SpråkTekst
                     id={
-                        nesteRoute.route === RouteEnum.Kvittering
+                        nesteSteg.route === RouteEnum.Kvittering
                             ? 'dokumentasjon.send-søknad.knapp'
                             : 'felles.navigasjon.gå-videre'
                     }

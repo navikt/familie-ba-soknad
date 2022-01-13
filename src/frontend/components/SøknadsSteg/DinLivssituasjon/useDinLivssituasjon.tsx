@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useInputFelt from '../../../hooks/useInputFelt';
@@ -38,6 +39,7 @@ export const useDinLivssituasjon = (): {
     tidligereSamboere: ITidligereSamboer[];
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
+    const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøs();
     const søker = søknad.søker;
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
@@ -252,7 +254,93 @@ export const useDinLivssituasjon = (): {
         }
     };
 
+    const genererOppdatertSøker = () => ({
+        ...søknad.søker,
+        harSamboerNå: {
+            ...søknad.søker.harSamboerNå,
+            svar: skjema.felter.harSamboerNå.verdi,
+        },
+        nåværendeSamboer:
+            harSamboerNå.verdi === ESvar.JA
+                ? {
+                      ...søknad.søker.nåværendeSamboer,
+                      navn: {
+                          id: SamboerSpørsmålId.nåværendeSamboerNavn,
+                          svar: trimWhiteSpace(skjema.felter.nåværendeSamboerNavn.verdi),
+                      },
+                      ident: {
+                          id: SamboerSpørsmålId.nåværendeSamboerFnr,
+                          svar: svarForSpørsmålMedUkjent(
+                              skjema.felter.nåværendeSamboerFnrUkjent,
+                              skjema.felter.nåværendeSamboerFnr
+                          ),
+                      },
+                      fødselsdato: {
+                          id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
+                          svar: svarForSpørsmålMedUkjent(
+                              skjema.felter.nåværendeSamboerFødselsdatoUkjent,
+                              skjema.felter.nåværendeSamboerFødselsdato
+                          ),
+                      },
+                      samboerFraDato: {
+                          id: SamboerSpørsmålId.nåværendeSamboerFraDato,
+                          svar: skjema.felter.nåværendeSamboerFraDato.verdi,
+                      },
+                  }
+                : null,
+        erAsylsøker: {
+            ...søknad.søker.erAsylsøker,
+            svar: skjema.felter.erAsylsøker.verdi,
+        },
+        jobberPåBåt: {
+            ...søknad.søker.jobberPåBåt,
+            svar: skjema.felter.jobberPåBåt.verdi,
+        },
+        arbeidsland: {
+            ...søknad.søker.arbeidsland,
+            svar: skjema.felter.arbeidsland.verdi,
+        },
+        mottarUtenlandspensjon: {
+            ...søknad.søker.mottarUtenlandspensjon,
+            svar: skjema.felter.mottarUtenlandspensjon.verdi,
+        },
+        pensjonsland: {
+            ...søknad.søker.pensjonsland,
+            svar: skjema.felter.pensjonsland.verdi,
+        },
+        utvidet: {
+            ...søknad.søker.utvidet,
+            tidligereSamboere,
+            spørsmål: {
+                ...søknad.søker.utvidet.spørsmål,
+                årsak: {
+                    ...søknad.søker.utvidet.spørsmål.årsak,
+                    svar: skjema.felter.årsak.verdi,
+                },
+                separertEnkeSkilt: {
+                    ...søknad.søker.utvidet.spørsmål.separertEnkeSkilt,
+                    svar: skjema.felter.separertEnkeSkilt.verdi,
+                },
+                separertEnkeSkiltUtland: {
+                    ...søknad.søker.utvidet.spørsmål.separertEnkeSkiltUtland,
+                    svar: skjema.felter.separertEnkeSkiltUtland.verdi,
+                },
+                separertEnkeSkiltDato: {
+                    ...søknad.søker.utvidet.spørsmål.separertEnkeSkiltDato,
+                    svar: skjema.felter.separertEnkeSkiltDato.verdi,
+                },
+            },
+        },
+    });
+
+    useEffect(() => {
+        const oppdatertSøker = genererOppdatertSøker();
+        skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs &&
+            settSøkerTriggerEøs(prevState => !prevState);
+    }, [arbeidsland, pensjonsland, jobberPåBåt, mottarUtenlandspensjon]);
+
     const oppdaterSøknad = () => {
+        const oppdatertSøker = genererOppdatertSøker();
         settSøknad({
             ...søknad,
             erAvdødPartnerForelder: {
@@ -275,84 +363,7 @@ export const useDinLivssituasjon = (): {
                     return { ...dok, gjelderForSøker: erAsylsøker.verdi === ESvar.JA };
                 else return dok;
             }),
-            søker: {
-                ...søknad.søker,
-                harSamboerNå: {
-                    ...søknad.søker.harSamboerNå,
-                    svar: skjema.felter.harSamboerNå.verdi,
-                },
-                nåværendeSamboer:
-                    harSamboerNå.verdi === ESvar.JA
-                        ? {
-                              ...søknad.søker.nåværendeSamboer,
-                              navn: {
-                                  id: SamboerSpørsmålId.nåværendeSamboerNavn,
-                                  svar: trimWhiteSpace(skjema.felter.nåværendeSamboerNavn.verdi),
-                              },
-                              ident: {
-                                  id: SamboerSpørsmålId.nåværendeSamboerFnr,
-                                  svar: svarForSpørsmålMedUkjent(
-                                      skjema.felter.nåværendeSamboerFnrUkjent,
-                                      skjema.felter.nåværendeSamboerFnr
-                                  ),
-                              },
-                              fødselsdato: {
-                                  id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-                                  svar: svarForSpørsmålMedUkjent(
-                                      skjema.felter.nåværendeSamboerFødselsdatoUkjent,
-                                      skjema.felter.nåværendeSamboerFødselsdato
-                                  ),
-                              },
-                              samboerFraDato: {
-                                  id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-                                  svar: skjema.felter.nåværendeSamboerFraDato.verdi,
-                              },
-                          }
-                        : null,
-                erAsylsøker: {
-                    ...søker.erAsylsøker,
-                    svar: skjema.felter.erAsylsøker.verdi,
-                },
-                jobberPåBåt: {
-                    ...søker.jobberPåBåt,
-                    svar: skjema.felter.jobberPåBåt.verdi,
-                },
-                arbeidsland: {
-                    ...søker.arbeidsland,
-                    svar: skjema.felter.arbeidsland.verdi,
-                },
-                mottarUtenlandspensjon: {
-                    ...søker.mottarUtenlandspensjon,
-                    svar: skjema.felter.mottarUtenlandspensjon.verdi,
-                },
-                pensjonsland: {
-                    ...søker.pensjonsland,
-                    svar: skjema.felter.pensjonsland.verdi,
-                },
-                utvidet: {
-                    ...søknad.søker.utvidet,
-                    tidligereSamboere,
-                    spørsmål: {
-                        ...søknad.søker.utvidet.spørsmål,
-                        årsak: {
-                            ...søknad.søker.utvidet.spørsmål.årsak,
-                            svar: skjema.felter.årsak.verdi,
-                        },
-                        separertEnkeSkilt: {
-                            ...søknad.søker.utvidet.spørsmål.separertEnkeSkilt,
-                            svar: skjema.felter.separertEnkeSkilt.verdi,
-                        },
-                        separertEnkeSkiltUtland: {
-                            ...søknad.søker.utvidet.spørsmål.separertEnkeSkiltUtland,
-                            svar: skjema.felter.separertEnkeSkiltUtland.verdi,
-                        },
-                        separertEnkeSkiltDato: {
-                            ...søknad.søker.utvidet.spørsmål.separertEnkeSkiltDato,
-                            svar: skjema.felter.separertEnkeSkiltDato.verdi,
-                        },
-                    },
-                },
-            },
+            søker: { ...oppdatertSøker, triggetEøs: skalTriggeEøsForSøker(oppdatertSøker) },
         });
     };
 

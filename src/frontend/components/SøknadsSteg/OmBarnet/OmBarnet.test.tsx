@@ -302,6 +302,7 @@ describe('OmBarnet', () => {
             andreForelder: null,
             institusjonsnavn: { svar: '' },
             institusjonsadresse: { svar: '' },
+            utenlandsperioder: [],
         });
 
         const { erStegUtfyltFrafør } = spyOnUseApp({

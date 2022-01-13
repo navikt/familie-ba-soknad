@@ -48,6 +48,7 @@ export interface IBarn extends Omit<IPerson, 'ident'> {
 
 export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     barn: IBarn[];
+    triggetEøs: boolean;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | null>;
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | null>;
@@ -75,6 +76,13 @@ export interface IUtenlandsperiode {
     oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;
     oppholdslandFraDato?: ISøknadSpørsmål<ISODateString>;
     oppholdslandTilDato?: ISøknadSpørsmål<DatoMedUkjent>;
+}
+
+export interface IPensjonsperiode {
+    mottarPensjonNå: ISøknadSpørsmål<ESvar>;
+    pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    pensjonFra?: ISøknadSpørsmål<ISODateString>;
+    pensjonTil?: ISøknadSpørsmål<ISODateString>;
 }
 
 export interface ISamboer {

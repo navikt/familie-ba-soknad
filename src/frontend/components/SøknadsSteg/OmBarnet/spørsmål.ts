@@ -42,7 +42,7 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.institusjonOppholdStartdato]: 'ombarnet.institusjon.startdato.spm',
     [OmBarnetSpørsmålsId.institusjonOppholdSluttdato]: 'ombarnet.institusjon.sluttdato.spm',
     [OmBarnetSpørsmålsId.institusjonOppholdVetIkke]: 'ombarnet.institusjon.ukjent-sluttdato.spm',
-    [OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]: 'ombarnet.planlagt-sammenhengende-opphold.spm',
+    [OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]: 'ombarnet.oppholdtsammenhengende.spm',
     [OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand]: 'ombarnet.barnetrygd-eøs.land.spm',
     [OmBarnetSpørsmålsId.andreForelderNavn]: 'ombarnet.andre-forelder.navn.spm',
     [OmBarnetSpørsmålsId.andreForelderNavnUkjent]: 'ombarnet.andre-forelder.navn-ukjent.spm',

@@ -7,11 +7,11 @@ import { RessursStatus } from '@navikt/familie-typer';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';
 import { useApp } from './context/AppContext';
-import { RoutesProvider } from './context/RoutesContext';
 import Søknad from './Søknad';
 
 const AppContainer = () => {
     const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useApp();
+
     return (
         <main>
             {systemetLaster() && <SystemetLaster />}
@@ -25,11 +25,7 @@ const AppContainer = () => {
                     </Alertstripe>
                 </div>
             )}
-            {systemetOK() && (
-                <RoutesProvider>
-                    <Søknad />
-                </RoutesProvider>
-            )}
+            {systemetOK() && <Søknad />}
             {systemetFeiler() && !systemetLaster() && <Feilside />}
         </main>
     );

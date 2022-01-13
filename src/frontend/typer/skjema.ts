@@ -93,6 +93,14 @@ export interface IOmDegFeltTyper {
     registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
+export interface IEøsForSøkerFeltTyper {
+    placeholderForFeltSomKommer: string; //TODO
+}
+
+export interface IEøsForBarnFeltTyper {
+    placeholderForFeltSomKommer: string; //TODO
+}
+
 export interface IVelgBarnFeltTyper {
     barnMedISøknad: IBarn[];
 }
@@ -125,6 +133,13 @@ export interface IUtbetalingerFeltTyper {
     utbetalingTilDato: ISODateString;
     utbetalingTilDatoUkjent: ESvar;
 }
+
+export interface IPensjonsperiodeFeltTyper {
+    mottarPensjonNå: ESvar | null;
+    pensjonsland: Alpha3Code | '';
+    pensjonFraDato: ISODateString;
+    pensjonTilDato: ISODateString;
+}
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
@@ -133,5 +148,8 @@ export type SkjemaFeltTyper =
     | IOmBarnaDineFeltTyper
     | IDinLivssituasjonFeltTyper
     | IUtenlandsoppholdFeltTyper
+    | IPensjonsperiodeFeltTyper
     | ITidligereSamboerFeltTyper
+    | IEøsForSøkerFeltTyper
+    | IEøsForBarnFeltTyper
     | IUtbetalingerFeltTyper;

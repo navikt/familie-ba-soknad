@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import { useIntl } from 'react-intl';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Sidetittel } from 'nav-frontend-typografi';
@@ -11,11 +10,8 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
-import { useRoutes } from '../../../context/RoutesContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import Miljø from '../../../Miljø';
-import { ILokasjon } from '../../../typer/lokasjon';
 import { RouteEnum } from '../../../typer/routes';
 import { logSidevisningBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -37,18 +33,13 @@ const StyledSpråkvelger = styled(Sprakvelger)`
 
 const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
-    const location = useLocation<ILokasjon>();
 
     const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad, settNåværendeRoute } = useApp();
-    const { eøsSkruddAv } = useEøs();
-    const { hentNåværendeRoute } = useRoutes();
-
-    const nåværendeRoute: RouteEnum = hentNåværendeRoute(location.pathname).route;
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
 
     useEffect(() => {
-        settNåværendeRoute(nåværendeRoute);
+        settNåværendeRoute(RouteEnum.Forside);
     }, []);
 
     const kanFortsettePåSøknad =
@@ -74,14 +65,7 @@ const Forside: React.FC = () => {
 
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
             <Informasjonsbolk>
-                <SpråkTekst
-                    id={
-                        eøsSkruddAv
-                            ? 'forside.info.punktliste.med-eøs-info'
-                            : 'forside.info.punktliste'
-                    }
-                    values={{ b: msg => <b>{msg}</b> }}
-                />
+                <SpråkTekst id={'forside.info.punktliste'} values={{ b: msg => <b>{msg}</b> }} />
                 <EksternLenke
                     lenkeSpråkId={'forside.plikter.lenke'}
                     lenkeTekstSpråkId={'forside.plikter.lenketekst'}

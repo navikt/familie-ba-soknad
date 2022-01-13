@@ -21,12 +21,12 @@ interface Props {
 const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { formatMessage } = useIntl();
     const { søknad } = useApp();
-    const { hentStegObjektForRoute } = useRoutes();
     const intl = useIntl();
+    const { hentRouteObjektForRouteEnum } = useRoutes();
 
     return (
         <Oppsummeringsbolk
-            route={hentStegObjektForRoute(RouteEnum.VelgBarn)}
+            steg={hentRouteObjektForRouteEnum(RouteEnum.VelgBarn)}
             tittel={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]}
             skjemaHook={useVelgBarn}
             settFeilAnchors={settFeilAnchors}
