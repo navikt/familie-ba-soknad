@@ -60,7 +60,8 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode, svar: '' },
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
-            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,
+            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
+              erAndreForelderDød,
         feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
         sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
@@ -83,7 +84,8 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         feilmeldingSpråkId: tilDatoArbeidsperiodeFeilmelding(tilbakeITid, erAndreForelderDød),
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
-            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,
+            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
+              erAndreForelderDød,
         sluttdatoAvgrensning: arbeidsperiodeAvsluttet.verdi === ESvar.JA ? dagensDato() : undefined,
         startdatoAvgrensning: fraDatoArbeidsperiode.verdi,
     });
