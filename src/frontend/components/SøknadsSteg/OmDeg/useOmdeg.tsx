@@ -58,7 +58,7 @@ export const useOmdeg = (): {
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt({
         søknadsfelt: søker.værtINorgeITolvMåneder,
-        feilmeldingSpråkId: 'omdeg.opphold-sammenhengende.feilmelding',
+        feilmeldingSpråkId: 'omdeg.oppholdtsammenhengende.feilmelding',
         avhengigheter: {
             ...(!søker.adressebeskyttelse && {
                 borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresse },

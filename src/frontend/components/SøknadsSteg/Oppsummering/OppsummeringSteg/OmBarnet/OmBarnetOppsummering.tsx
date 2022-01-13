@@ -191,6 +191,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                             OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
                                         ]
                                     }
+                                    values={{ barn: barnetsNavnValue(barn, intl) }}
                                 />
                             }
                             søknadsvar={barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar}
