@@ -1,7 +1,11 @@
-export const pensjonslandFeilmeldingSpråkId = (gjelderAndreForelder, tilbakeITid) => {
+export const pensjonslandFeilmeldingSpråkId = (
+    gjelderAndreForelder,
+    tilbakeITid,
+    andreForelderErDød = false
+) => {
     if (gjelderAndreForelder)
-        return tilbakeITid
-            ? 'felles.hvilketlandpensjonandreforelder.feilmelding'
+        return tilbakeITid || andreForelderErDød
+            ? 'modal.hvilketlandpensjonandreforelder.feilmelding'
             : 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding';
     else
         return tilbakeITid
@@ -9,9 +13,13 @@ export const pensjonslandFeilmeldingSpråkId = (gjelderAndreForelder, tilbakeITi
             : 'omdeg.utenlandspensjon.land.feilmelding';
 };
 
-export const pensjonFraDatoFeilmeldingSpråkId = (gjelderAndreForelder, tilbakeITid) => {
+export const pensjonFraDatoFeilmeldingSpråkId = (
+    gjelderAndreForelder,
+    tilbakeITid,
+    andreForelderErDød = false
+) => {
     if (gjelderAndreForelder)
-        return tilbakeITid
+        return tilbakeITid || andreForelderErDød
             ? 'modal.franårandreforelderpensjon.feilmelding'
             : 'pensjonmodal.franårpensjonandreforelder.nåtid.feilmelding';
     else

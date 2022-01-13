@@ -19,14 +19,17 @@ export const pensjonSøkerSpørsmålSpråkId = (
 });
 
 export const pensjonAndreForelderSpørsmålSpråkId = (
-    tilbakeITid = false
+    tilbakeITid = false,
+    erDød = false
 ): Record<PensjonSpørsmålId, string> => ({
     [PensjonSpørsmålId.mottarPensjonNå]: 'ombarnet.andre-forelder.pensjonnå.spm',
-    [PensjonSpørsmålId.pensjonsland]: tilbakeITid
-        ? 'modal.hvilketlandpensjonandreforelder.spm'
-        : 'ombarnet.andre-forelder.utenlandspensjon.land.spm',
-    [PensjonSpørsmålId.fraDatoPensjon]: tilbakeITid
-        ? 'modal.franårandreforelderpensjon.spm'
-        : 'pensjonmodal.franårpensjonandreforelder.nåtid.spm',
+    [PensjonSpørsmålId.pensjonsland]:
+        tilbakeITid || erDød
+            ? 'modal.hvilketlandpensjonandreforelder.spm'
+            : 'ombarnet.andre-forelder.utenlandspensjon.land.spm',
+    [PensjonSpørsmålId.fraDatoPensjon]:
+        tilbakeITid || erDød
+            ? 'modal.franårandreforelderpensjon.spm'
+            : 'pensjonmodal.franårpensjonandreforelder.nåtid.spm',
     [PensjonSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
 });
