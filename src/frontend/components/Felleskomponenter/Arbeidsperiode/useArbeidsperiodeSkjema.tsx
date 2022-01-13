@@ -17,16 +17,13 @@ import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 export interface IUseArbeidsperiodeSkjemaParams {
     gjelderUtlandet: boolean;
-    gjelderAndreForelder: boolean;
-    erAndreForelderDød?: boolean;
+    andreForelderData?: { erDød: boolean };
 }
 
-export const useArbeidsperiodeSkjema = (
-    gjelderUtlandet,
-    gjelderAndreForelder,
-    erAndreForelderDød
-) => {
+export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
     const { erEøsLand } = useEøs();
+    const gjelderAndreForelder = !!andreForelderData;
+    const erAndreForelderDød = !!andreForelderData?.erDød;
 
     const arbeidsperiodeAvsluttet = useJaNeiSpmFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet, svar: null },
@@ -34,16 +31,19 @@ export const useArbeidsperiodeSkjema = (
         skalSkjules: erAndreForelderDød,
     });
 
+    const tilbakeITid = arbeidsperiodeAvsluttet.verdi === ESvar.JA;
+
     const arbeidsperiodeLand = useLanddropdownFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand, svar: '' },
         feilmeldingSpråkId: arbeidslandFeilmelding(
+            tilbakeITid,
             gjelderAndreForelder,
-            arbeidsperiodeAvsluttet.verdi
+            erAndreForelderDød
         ),
         skalFeltetVises:
-            (gjelderUtlandet &&
-                arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK) ||
-            !arbeidsperiodeAvsluttet.erSynlig,
+            (arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
+                erAndreForelderDød) &&
+            gjelderUtlandet,
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -52,7 +52,8 @@ export const useArbeidsperiodeSkjema = (
         feilmeldingSpråkId: 'felles.oppgiarbeidsgiver.feilmelding',
         skalVises: gjelderUtlandet
             ? erEøsLand(arbeidsperiodeLand.verdi)
-            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,
+            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
+              erAndreForelderDød,
     });
 
     const fraDatoArbeidsperiode = useDatovelgerFelt({
@@ -61,8 +62,7 @@ export const useArbeidsperiodeSkjema = (
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,
         feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
-        sluttdatoAvgrensning:
-            arbeidsperiodeAvsluttet.verdi === ESvar.JA ? gårsdagensDato() : dagensDato(),
+        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -80,7 +80,7 @@ export const useArbeidsperiodeSkjema = (
         feltId: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
         initiellVerdi: '',
         vetIkkeCheckbox: tilDatoArbeidsperiodeUkjent,
-        feilmeldingSpråkId: tilDatoArbeidsperiodeFeilmelding(arbeidsperiodeAvsluttet.verdi),
+        feilmeldingSpråkId: tilDatoArbeidsperiodeFeilmelding(tilbakeITid, erAndreForelderDød),
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK,

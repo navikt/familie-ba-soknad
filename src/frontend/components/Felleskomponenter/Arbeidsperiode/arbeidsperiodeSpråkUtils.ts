@@ -1,7 +1,5 @@
-import { ESvar } from '@navikt/familie-form-elements';
-
-export const arbeidslandFeilmelding = (gjelderAndreForelder, tilbakeITid) => {
-    if (tilbakeITid === ESvar.JA || tilbakeITid === null) {
+export const arbeidslandFeilmelding = (tilbakeITid, gjelderAndreForelder, erAndreForelderDød) => {
+    if (tilbakeITid || erAndreForelderDød) {
         return gjelderAndreForelder
             ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
             : 'dinlivssituasjon.arbeid-utland.land.feilmelding';
@@ -11,7 +9,7 @@ export const arbeidslandFeilmelding = (gjelderAndreForelder, tilbakeITid) => {
             : 'omdeg.arbeid-utland.land.feilmelding';
 };
 
-export const tilDatoArbeidsperiodeFeilmelding = erPeriodeAvsluttet =>
-    erPeriodeAvsluttet === ESvar.JA || erPeriodeAvsluttet === null
+export const tilDatoArbeidsperiodeFeilmelding = (tilbakeITid, erAndreForelderDød) =>
+    tilbakeITid || erAndreForelderDød
         ? 'felles.nåravsluttetarbeidsperiode.feilmelding'
         : 'felles.nåravsluttesarbeidsperiode.feilmelding';

@@ -26,18 +26,21 @@ export const arbeidsperiodeSøkerSpørsmålSpråkId = (
 });
 
 export const arbeidsperiodeAndreForelderSpørsmålSpråkId = (
-    tilbakeITid = false
+    tilbakeITid = false,
+    erDød = false
 ): Record<ArbeidsperiodeSpørsmålsId, string> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: tilbakeITid
-        ? 'enkeenkemann.andreforelder-arbeidutland.land.spm'
-        : 'ombarnet.andre-forelder.arbeid-utland.land.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]:
+        tilbakeITid || erDød
+            ? 'enkeenkemann.andreforelder-arbeidutland.land.spm'
+            : 'ombarnet.andre-forelder.arbeid-utland.land.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsgiver]: 'felles.oppgiarbeidsgiver',
     [ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]: 'felles.nårbegyntearbeidsperiode.spm',
-    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]: tilbakeITid
-        ? 'felles.nåravsluttetarbeidsperiode.spm'
-        : 'felles.nåravsluttesarbeidsperiode.spm',
+    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]:
+        tilbakeITid || erDød
+            ? 'felles.nåravsluttetarbeidsperiode.spm'
+            : 'felles.nåravsluttesarbeidsperiode.spm',
     [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]:
         'felles.nåravsluttesarbeidsperiode.sjekkboks',
 });
