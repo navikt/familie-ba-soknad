@@ -6,16 +6,11 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
-import { ArbeidsperioderOppsummering } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
-import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
-import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
@@ -34,24 +29,10 @@ const DinLivssituasjon: React.FC = () => {
         tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
-        arbeidsperioder,
-        fjernArbeidsperiode,
-        leggTilArbeidsperiode,
     } = useDinLivssituasjon();
 
     const { erUtvidet, søknad } = useApp();
     const { erEøsLand } = useEøs();
-    const { erÅpen: erArbeidsperiodeÅpen, toggleModal: toggleArbeidsperiodeModal } = useModal();
-    const { erÅpen: erArbeidsperiodeUtlandetÅpen, toggleModal: toggleArbeidsperiodeUtlandetModal } =
-        useModal();
-    const {
-        erÅpen: erArbeidsperiodeAndreForelderÅpen,
-        toggleModal: toggleArbeidsperiodeAndreForelderModal,
-    } = useModal();
-    const {
-        erÅpen: erArbeidsperiodeAndreForelderUtlandetÅpen,
-        toggleModal: toggleArbeidsperiodeAndreForelderUtlandetModal,
-    } = useModal();
 
     return (
         <Steg
@@ -172,77 +153,6 @@ const DinLivssituasjon: React.FC = () => {
                     spørsmålTekstId={
                         dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
                     }
-                />
-                <>
-                    {arbeidsperioder.map((periode, index) => (
-                        <ArbeidsperioderOppsummering
-                            periode={periode}
-                            nummer={index + 1}
-                            fjernPeriodeCallback={fjernArbeidsperiode}
-                            visFjernKnapp={true}
-                        />
-                    ))}
-                    {arbeidsperioder.length > 0 && (
-                        <SpråkTekst id={'felles.flerearbeidsperiodernorge.tittel'} />
-                    )}
-                </>
-
-                <div>Søker arbeidsopphold Norge</div>
-                <ArbeidsperiodeModal
-                    erÅpen={erArbeidsperiodeÅpen}
-                    toggleModal={toggleArbeidsperiodeModal}
-                    onLeggTilArbeidsperiode={leggTilArbeidsperiode}
-                    gjelderUtlandet={false}
-                    gjelderAndreForelder={false}
-                />
-                <LeggTilKnapp
-                    språkTekst={'felles.flerearbeidsperiodernorge.tittel'}
-                    onClick={toggleArbeidsperiodeModal}
-                    id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
-                    feilmelding={''}
-                />
-                <div>Søker arbeidsopphold utlandet</div>
-                <ArbeidsperiodeModal
-                    erÅpen={erArbeidsperiodeUtlandetÅpen}
-                    toggleModal={toggleArbeidsperiodeUtlandetModal}
-                    onLeggTilArbeidsperiode={leggTilArbeidsperiode}
-                    gjelderUtlandet={true}
-                    gjelderAndreForelder={false}
-                />
-                <LeggTilKnapp
-                    språkTekst={'felles.flerearbeidsperioderutland.tittel'}
-                    onClick={toggleArbeidsperiodeUtlandetModal}
-                    id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
-                    feilmelding={''}
-                />
-                <div>Andre forelder arbeidsopphold Norge</div>
-                <ArbeidsperiodeModal
-                    erÅpen={erArbeidsperiodeAndreForelderÅpen}
-                    toggleModal={toggleArbeidsperiodeAndreForelderModal}
-                    onLeggTilArbeidsperiode={leggTilArbeidsperiode}
-                    gjelderUtlandet={false}
-                    gjelderAndreForelder={true}
-                />
-                <LeggTilKnapp
-                    språkTekst={'felles.flerearbeidsperiodernorge.tittel'}
-                    onClick={toggleArbeidsperiodeAndreForelderModal}
-                    id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
-                    feilmelding={''}
-                />
-                <div>Andre forelder arbeidsopphold utlandett</div>
-                <ArbeidsperiodeModal
-                    erÅpen={erArbeidsperiodeAndreForelderUtlandetÅpen}
-                    toggleModal={toggleArbeidsperiodeAndreForelderUtlandetModal}
-                    onLeggTilArbeidsperiode={leggTilArbeidsperiode}
-                    gjelderUtlandet={true}
-                    gjelderAndreForelder={true}
-                    erAndreForelderDød={true}
-                />
-                <LeggTilKnapp
-                    språkTekst={'felles.flerearbeidsperioderutland.tittel'}
-                    onClick={toggleArbeidsperiodeAndreForelderUtlandetModal}
-                    id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
-                    feilmelding={''}
                 />
 
                 <LandDropdown

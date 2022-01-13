@@ -8,13 +8,36 @@ export enum ArbeidsperiodeSpørsmålsId {
     tilDatoArbeidsperiodeVetIkke = 'til-dato-arbeidsperiode-vet-ikke',
 }
 
-export const arbeidsperiodeSpørsmålSpråkId: Record<ArbeidsperiodeSpørsmålsId, string> = {
+export const arbeidsperiodeSøkerSpørsmålSpråkId = (
+    tilbakeITid = false
+): Record<ArbeidsperiodeSpørsmålsId, string> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: 'dinlivssituasjon.arbeid-utland.land.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: tilbakeITid
+        ? 'dinlivssituasjon.arbeid-utland.land.spm'
+        : 'omdeg.arbeid-utland.land.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsgiver]: 'felles.oppgiarbeidsgiver',
     [ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]: 'felles.nårbegyntearbeidsperiode.spm',
-    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]: 'felles.nåravsluttesarbeidsperiode.spm',
+    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]: tilbakeITid
+        ? 'felles.nåravsluttetarbeidsperiode.spm'
+        : 'felles.nåravsluttesarbeidsperiode.spm',
     [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]:
         'felles.nåravsluttesarbeidsperiode.sjekkboks',
-};
+});
+
+export const arbeidsperiodeAndreForelderSpørsmålSpråkId = (
+    tilbakeITid = false
+): Record<ArbeidsperiodeSpørsmålsId, string> => ({
+    [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: tilbakeITid
+        ? 'enkeenkemann.andreforelder-arbeidutland.land.spm'
+        : 'ombarnet.andre-forelder.arbeid-utland.land.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsgiver]: 'felles.oppgiarbeidsgiver',
+    [ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]: 'felles.nårbegyntearbeidsperiode.spm',
+    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]: tilbakeITid
+        ? 'felles.nåravsluttetarbeidsperiode.spm'
+        : 'felles.nåravsluttesarbeidsperiode.spm',
+    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]:
+        'felles.nåravsluttesarbeidsperiode.sjekkboks',
+});

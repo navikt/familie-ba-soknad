@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 

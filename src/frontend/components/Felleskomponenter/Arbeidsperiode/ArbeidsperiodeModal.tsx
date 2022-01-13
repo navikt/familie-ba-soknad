@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IArbeidsperiode } from '../../../typer/person';
@@ -18,11 +16,10 @@ import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import {
-    arbeidslandLabelSpråkId,
-    arbeidsperiodeTittelSpråkId,
-    tilDatoSpørsmålstekst,
-} from './arbeidsperiodeSpråkUtils';
-import { ArbeidsperiodeSpørsmålsId, arbeidsperiodeSpørsmålSpråkId } from './spørsmål';
+    arbeidsperiodeAndreForelderSpørsmålSpråkId,
+    ArbeidsperiodeSpørsmålsId,
+    arbeidsperiodeSøkerSpørsmålSpråkId,
+} from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaParams {
@@ -35,7 +32,7 @@ interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaPar
 export const ArbeidsperiodeModal: React.FC<Props> = ({
     erÅpen,
     toggleModal,
-    onLeggTilArbeidsperiode,
+    //onLeggTilArbeidsperiode,
     gjelderUtlandet = false,
     gjelderAndreForelder = false,
     erAndreForelderDød,
@@ -51,13 +48,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
         tilDatoArbeidsperiode,
     } = skjema.felter;
 
-    const intl = useIntl();
-
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
-        }
-        onLeggTilArbeidsperiode({
+            //TODO legg til denne når vi skal sette søknadsdata
+            /* onLeggTilArbeidsperiode({
             ...(arbeidsperiodeAvsluttet.erSynlig && {
                 arbeidsperiodeAvsluttet: {
                     id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
@@ -85,17 +80,22 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                     id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
                     svar: tilDatoArbeidsperiode.verdi,
                 },
-            }),
-        });
+            }),*/
+        }
 
         toggleModal();
         nullstillSkjema();
     };
+    const modalTittel = gjelderUtlandet
+        ? 'felles.flerearbeidsperioderutland.tittel'
+        : 'felles.flerearbeidsperiodernorge.tittel';
+
+    const tilbakeITid = arbeidsperiodeAvsluttet.verdi === ESvar.JA;
 
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            modalTittelSpråkId={arbeidsperiodeTittelSpråkId(gjelderUtlandet)}
+            modalTittelSpråkId={modalTittel}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilarbeidsperiode.knapp'}
             toggleModal={toggleModal}
@@ -103,51 +103,73 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
             onAvbrytCallback={nullstillSkjema}
         >
             <KomponentGruppe inline>
-                {skjema.felter.arbeidsperiodeAvsluttet.erSynlig && (
+                {arbeidsperiodeAvsluttet.erSynlig && (
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.arbeidsperiodeAvsluttet}
                         spørsmålTekstId={
-                            arbeidsperiodeSpørsmålSpråkId[
-                                ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
-                            ]
+                            gjelderAndreForelder
+                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                      ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
+                                  ]
+                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                      ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
+                                  ]
                         }
                     />
                 )}
-                {skjema.felter.arbeidsperiodeLand.erSynlig && (
+                {arbeidsperiodeLand.erSynlig && (
                     <LandDropdown
                         felt={skjema.felter.arbeidsperiodeLand}
                         skjema={skjema}
                         label={
-                            arbeidslandLabelSpråkId(
-                                gjelderAndreForelder,
-                                skjema.felter.arbeidsperiodeAvsluttet.verdi
-                            ) && (
-                                <SpråkTekst
-                                    id={arbeidslandLabelSpråkId(
-                                        gjelderAndreForelder,
-                                        skjema.felter.arbeidsperiodeAvsluttet.verdi
-                                    )}
-                                />
-                            )
+                            <SpråkTekst
+                                id={
+                                    gjelderAndreForelder
+                                        ? arbeidsperiodeAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                              ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
+                                          ]
+                                        : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                              ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
+                                          ]
+                                }
+                            />
                         }
                         dynamisk
                     />
                 )}
-                {skjema.felter.arbeidsgiver.erSynlig && (
+                {arbeidsgiver.erSynlig && (
                     <SkjemaFeltInput
                         felt={skjema.felter.arbeidsgiver}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         labelSpråkTekstId={
-                            arbeidsperiodeSpørsmålSpråkId[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
+                            gjelderAndreForelder
+                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                      ArbeidsperiodeSpørsmålsId.arbeidsgiver
+                                  ]
+                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                      ArbeidsperiodeSpørsmålsId.arbeidsgiver
+                                  ]
                         }
                     />
                 )}
-                {skjema.felter.fraDatoArbeidsperiode.erSynlig && (
+                {fraDatoArbeidsperiode.erSynlig && (
                     <Datovelger
                         felt={skjema.felter.fraDatoArbeidsperiode}
                         skjema={skjema}
-                        label={<SpråkTekst id={'felles.nårbegyntearbeidsperiode.spm'} />}
+                        label={
+                            <SpråkTekst
+                                id={
+                                    gjelderAndreForelder
+                                        ? arbeidsperiodeAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                              ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
+                                          ]
+                                        : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                              ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
+                                          ]
+                                }
+                            />
+                        }
                         calendarPosition={'fullscreen'}
                         avgrensMaxDato={
                             skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
@@ -156,36 +178,51 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         }
                     />
                 )}
-                {skjema.felter.tilDatoArbeidsperiode.erSynlig && (
-                    <Datovelger
-                        felt={skjema.felter.tilDatoArbeidsperiode}
-                        skjema={skjema}
-                        label={
-                            <SpråkTekst
-                                id={tilDatoSpørsmålstekst(
-                                    skjema.felter.arbeidsperiodeAvsluttet.verdi
-                                )}
-                            />
-                        }
-                        avgrensMinDato={
-                            skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
-                                ? skjema.felter.fraDatoArbeidsperiode.verdi
-                                : gårsdagensDato()
-                        }
-                        avgrensMaxDato={
-                            skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
-                                ? dagensDato()
-                                : undefined
-                        }
-                        disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
-                        calendarPosition={'fullscreen'}
-                    />
-                )}
-                {skjema.felter.tilDatoArbeidsperiodeUkjent.erSynlig && (
-                    <SkjemaCheckbox
-                        felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
-                        labelSpråkTekstId={'felles.nåravsluttesarbeidsperiode.sjekkboks'}
-                    />
+                {tilDatoArbeidsperiode.erSynlig && (
+                    <>
+                        <Datovelger
+                            felt={skjema.felter.tilDatoArbeidsperiode}
+                            skjema={skjema}
+                            label={
+                                <SpråkTekst
+                                    id={
+                                        gjelderAndreForelder
+                                            ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                                  tilbakeITid
+                                              )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
+                                            : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                                  ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode
+                                              ]
+                                    }
+                                />
+                            }
+                            avgrensMinDato={
+                                skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
+                                    ? skjema.felter.fraDatoArbeidsperiode.verdi
+                                    : gårsdagensDato()
+                            }
+                            avgrensMaxDato={
+                                skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
+                                    ? dagensDato()
+                                    : undefined
+                            }
+                            disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
+                            calendarPosition={'fullscreen'}
+                        />
+
+                        <SkjemaCheckbox
+                            felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
+                            labelSpråkTekstId={
+                                gjelderAndreForelder
+                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                          ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                                      ]
+                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                          ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                                      ]
+                            }
+                        />
+                    </>
                 )}
             </KomponentGruppe>
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
