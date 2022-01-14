@@ -22,16 +22,19 @@ export const utbetalingerSøkerSpørsmålSpråkId = (
 });
 
 export const utbetalingerAndreForelderSpørsmålSpråkId = (
-    tilbakeITid = false
+    tilbakeITid = false,
+    andreForelderErDød = false
 ): Record<UtbetalingerSpørsmålId, string> => ({
     [UtbetalingerSpørsmålId.fårUtbetalingNå]: 'eøs.andreforelderutbetalinger.spm',
-    [UtbetalingerSpørsmålId.utbetalingFraHvilketLand]: tilbakeITid
-        ? 'modal.andreforelder-utbetalingerland-fikk.spm'
-        : 'modal.andreforelder-utbetalingerland-får.spm',
+    [UtbetalingerSpørsmålId.utbetalingFraHvilketLand]:
+        tilbakeITid || andreForelderErDød
+            ? 'modal.andreforelder-utbetalingerland-fikk.spm'
+            : 'modal.andreforelder-utbetalingerland-får.spm',
     [UtbetalingerSpørsmålId.utbetalingFraDato]: 'felles.nårbegynteutbetalingene.spm',
-    [UtbetalingerSpørsmålId.utbetalingTilDato]: tilbakeITid
-        ? 'felles.nårstoppetutbetalingene.spm'
-        : 'felles.nårstopperutbetalingene.spm',
+    [UtbetalingerSpørsmålId.utbetalingTilDato]:
+        tilbakeITid || andreForelderErDød
+            ? 'felles.nårstoppetutbetalingene.spm'
+            : 'felles.nårstopperutbetalingene.spm',
     [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]:
         'felles.vetikkenårutbetalingerstopper.sjekkboks',
 });

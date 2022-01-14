@@ -44,7 +44,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     const tilbakeITid = skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI;
     const gjelderAndreForelder = !!andreForelderData;
     const barn = andreForelderData?.barn;
-    const erAndreForelderDød = !!andreForelderData?.erDød;
+    const andreForelderErDød = !!andreForelderData?.erDød;
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -82,91 +82,94 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                     språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                 />
             </KomponentGruppe>
-            {skjema.felter.fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK && (
-                <KomponentGruppe inline dynamisk>
-                    <LandDropdown
-                        felt={skjema.felter.ytelseFraHvilketLand}
-                        skjema={skjema}
-                        label={
-                            <SpråkTekst
-                                id={
-                                    gjelderAndreForelder
-                                        ? utbetalingerAndreForelderSpørsmålSpråkId(tilbakeITid)[
-                                              UtbetalingerSpørsmålId.utbetalingFraHvilketLand
-                                          ]
-                                        : utbetalingerSøkerSpørsmålSpråkId(tilbakeITid)[
-                                              UtbetalingerSpørsmålId.utbetalingFraHvilketLand
-                                          ]
-                                }
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
-                            />
-                        }
-                        dynamisk
-                    />
-                    <Datovelger
-                        skjema={skjema}
-                        felt={skjema.felter.utbetalingFraDato}
-                        label={
-                            <SpråkTekst
-                                id={
-                                    gjelderAndreForelder
-                                        ? utbetalingerAndreForelderSpørsmålSpråkId()[
-                                              UtbetalingerSpørsmålId.utbetalingFraDato
-                                          ]
-                                        : utbetalingerSøkerSpørsmålSpråkId()[
-                                              UtbetalingerSpørsmålId.utbetalingFraDato
-                                          ]
-                                }
-                            />
-                        }
-                        avgrensMaxDato={
-                            skjema.felter.fårUtbetalingNå.verdi === ESvar.JA
-                                ? dagensDato()
-                                : gårsdagensDato()
-                        }
-                        calendarPosition={'fullscreen'}
-                    />
-                    <>
-                        <Datovelger
+            {skjema.felter.fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK ||
+                (andreForelderErDød && (
+                    <KomponentGruppe inline dynamisk>
+                        <LandDropdown
+                            felt={skjema.felter.ytelseFraHvilketLand}
                             skjema={skjema}
-                            felt={skjema.felter.utbetalingTilDato}
                             label={
                                 <SpråkTekst
                                     id={
                                         gjelderAndreForelder
-                                            ? utbetalingerAndreForelderSpørsmålSpråkId(tilbakeITid)[
-                                                  UtbetalingerSpørsmålId.utbetalingTilDato
-                                              ]
+                                            ? utbetalingerAndreForelderSpørsmålSpråkId(
+                                                  tilbakeITid,
+                                                  andreForelderErDød
+                                              )[UtbetalingerSpørsmålId.utbetalingFraHvilketLand]
                                             : utbetalingerSøkerSpørsmålSpråkId(tilbakeITid)[
-                                                  UtbetalingerSpørsmålId.utbetalingTilDato
+                                                  UtbetalingerSpørsmålId.utbetalingFraHvilketLand
+                                              ]
+                                    }
+                                    values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                />
+                            }
+                            dynamisk
+                        />
+                        <Datovelger
+                            skjema={skjema}
+                            felt={skjema.felter.utbetalingFraDato}
+                            label={
+                                <SpråkTekst
+                                    id={
+                                        gjelderAndreForelder
+                                            ? utbetalingerAndreForelderSpørsmålSpråkId()[
+                                                  UtbetalingerSpørsmålId.utbetalingFraDato
+                                              ]
+                                            : utbetalingerSøkerSpørsmålSpråkId()[
+                                                  UtbetalingerSpørsmålId.utbetalingFraDato
                                               ]
                                     }
                                 />
                             }
                             avgrensMaxDato={
-                                skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI
+                                skjema.felter.fårUtbetalingNå.verdi === ESvar.JA
                                     ? dagensDato()
-                                    : undefined
+                                    : gårsdagensDato()
                             }
-                            tilhørendeFraOgMedFelt={skjema.felter.utbetalingFraDato}
-                            disabled={skjema.felter.utbetalingTilDatoUkjent.verdi === ESvar.JA}
                             calendarPosition={'fullscreen'}
                         />
-                        <SkjemaCheckbox
-                            labelSpråkTekstId={
-                                gjelderAndreForelder
-                                    ? utbetalingerAndreForelderSpørsmålSpråkId()[
-                                          UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
-                                      ]
-                                    : utbetalingerSøkerSpørsmålSpråkId()[
-                                          UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
-                                      ]
-                            }
-                            felt={skjema.felter.utbetalingTilDatoUkjent}
-                        />
-                    </>
-                </KomponentGruppe>
-            )}
+                        <>
+                            <Datovelger
+                                skjema={skjema}
+                                felt={skjema.felter.utbetalingTilDato}
+                                label={
+                                    <SpråkTekst
+                                        id={
+                                            gjelderAndreForelder
+                                                ? utbetalingerAndreForelderSpørsmålSpråkId(
+                                                      tilbakeITid,
+                                                      andreForelderErDød
+                                                  )[UtbetalingerSpørsmålId.utbetalingTilDato]
+                                                : utbetalingerSøkerSpørsmålSpråkId(tilbakeITid)[
+                                                      UtbetalingerSpørsmålId.utbetalingTilDato
+                                                  ]
+                                        }
+                                    />
+                                }
+                                avgrensMaxDato={
+                                    skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI
+                                        ? dagensDato()
+                                        : undefined
+                                }
+                                tilhørendeFraOgMedFelt={skjema.felter.utbetalingFraDato}
+                                disabled={skjema.felter.utbetalingTilDatoUkjent.verdi === ESvar.JA}
+                                calendarPosition={'fullscreen'}
+                            />
+                            <SkjemaCheckbox
+                                labelSpråkTekstId={
+                                    gjelderAndreForelder
+                                        ? utbetalingerAndreForelderSpørsmålSpråkId()[
+                                              UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
+                                          ]
+                                        : utbetalingerSøkerSpørsmålSpråkId()[
+                                              UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
+                                          ]
+                                }
+                                felt={skjema.felter.utbetalingTilDatoUkjent}
+                            />
+                        </>
+                    </KomponentGruppe>
+                ))}
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );
