@@ -55,7 +55,6 @@ exec(
             });
 
         console.info('------------------------------------------------------------');
-        console.info('------------------------------------------------------------');
         console.info("språkid'er som mangler i nb.json: \n");
         alleBenyttedeSpråkIder.forEach(elem => {
             if (!(elem in nb)) {
