@@ -120,8 +120,8 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         }
                     />
                 )}
-                <KomponentGruppe inline>
-                    {arbeidsperiodeLand.erSynlig && (
+                {arbeidsperiodeLand.erSynlig && (
+                    <KomponentGruppe inline>
                         <LandDropdown
                             felt={skjema.felter.arbeidsperiodeLand}
                             skjema={skjema}
@@ -141,8 +141,8 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             }
                             dynamisk
                         />
-                    )}
-                </KomponentGruppe>
+                    </KomponentGruppe>
+                )}
                 {arbeidsgiver.erSynlig && (
                     <SkjemaFeltInput
                         felt={skjema.felter.arbeidsgiver}
