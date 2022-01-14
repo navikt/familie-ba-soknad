@@ -10,6 +10,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { BarnetsId } from '../../../typer/common';
 import { ESivilstand } from '../../../typer/person';
+import { Årsak } from '../../../typer/utvidet';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
@@ -160,11 +161,13 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 }
                                 avgrensMaxDato={dagensDato()}
                             />
-                            {erUtvidet && søknad.søker.sivilstand.type === ESivilstand.SKILT && (
-                                <VedleggNotis
-                                    språkTekstId={'ombarnet.barnetrygdtilbakeitid.info'}
-                                />
-                            )}
+                            {erUtvidet &&
+                                (søknad.søker.sivilstand.type === ESivilstand.SKILT ||
+                                    søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.SKILT) && (
+                                    <VedleggNotis
+                                        språkTekstId={'ombarnet.barnetrygdtilbakeitid.info'}
+                                    />
+                                )}
                             <>
                                 <Datovelger
                                     felt={skjema.felter.søkerForTidsromSluttdato}
