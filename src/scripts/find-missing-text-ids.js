@@ -24,8 +24,7 @@ const finnMuligensUbrukteIder = (alleBenyttedeSpråkIder, språkfil, språkfilNa
 
 /**
  * Skriptet finner *nesten* alle tekst id'er som er i bruk i ./src/frontend
- *
- * Resultatet vil
+ * i package.json må "type": "module" fjernes for å kunne gjøre scriptet
  *
  * TODO:
  * inkludere id'er med formen 'aaa-bbb.asdf'
