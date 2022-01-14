@@ -8,6 +8,28 @@ const nb = require('../frontend/assets/lang/nb.json');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const nn = require('../frontend/assets/lang/nn.json');
 
+const finnMuligensUbrukteIder = (alleBenyttedeSpråkIder, språkfil, språkfilNavn) => {
+    console.info('------------------------------------------------------------');
+    console.info(`ubrukte språkId'er i ${språkfilNavn}.json: 
+`);
+    const iderSomIkkeErIBruk = Object.keys(språkfil).filter(
+        key => !alleBenyttedeSpråkIder.includes(key)
+    );
+    iderSomIkkeErIBruk.forEach(key => {
+        console.info(`Ikke i bruk? -> ${key}`);
+    });
+    return iderSomIkkeErIBruk;
+};
+
+/**
+ * Skriptet finner *nesten* alle tekst id'er som er i bruk i ./src/frontend
+ *
+ * Resultatet vil
+ *
+ * TODO:
+ * inkludere id'er med formen 'aaa-bbb.asdf'
+ * fikse slik at man ikke trenger å fjerne "type": "module" fra package.json for å kunne kjøre skriptet
+ */
 exec(
     `grep -r -oh -I --exclude '.json' --exclude '.test.ts' -E "([\\'|\\"]{1,1}([a-zA-ZæøåÆØÅ]+\\.{1,1})(([a-zA-ZæøåÆØÅ]+\\.{1,1})|([a-zA-ZæøåÆØÅ]+\\_{1,1})|([a-zA-ZæøåÆØÅ]+\\-{1,1}))*[a-zA-ZæøåÆØÅ]+[\\'|\\"]{1,1})" ./src/frontend`,
     (_, stdout) => {
@@ -31,56 +53,11 @@ exec(
                 );
             });
 
-        console.info('------------------------------------------------------------');
-        console.info("språkid'er som mangler i nb.json: \n");
-        alleBenyttedeSpråkIder.forEach(elem => {
-            if (!(elem in nb)) {
-                console.info(`ERROR -> ${elem}`);
-            }
-        });
+        const iderSomIkkeErIBrukNB = finnMuligensUbrukteIder(alleBenyttedeSpråkIder, nb, 'NB');
+        const iderSomIkkeErIBrukNN = finnMuligensUbrukteIder(alleBenyttedeSpråkIder, nn, 'NN');
+        const iderSomIkkeErIBrukEN = finnMuligensUbrukteIder(alleBenyttedeSpråkIder, en, 'EN');
 
         console.info('------------------------------------------------------------');
-        console.info("språkid'er som mangler i nn.json: \n");
-        alleBenyttedeSpråkIder.forEach(elem => {
-            if (!(elem in nn)) {
-                console.info(`ERROR -> ${elem}`);
-            }
-        });
-        console.info('------------------------------------------------------------');
-        console.info("språkid'er som mangler i en.json: \n");
-        alleBenyttedeSpråkIder.forEach(elem => {
-            if (!(elem in en)) {
-                console.info(`ERROR -> ${elem}`);
-            }
-        });
-
-        console.info('------------------------------------------------------------');
-        console.info("ubrukte språkId'er i nb.json: \n");
-        const iderSomIkkeErIBrukNB = Object.keys(nb).filter(
-            key => !alleBenyttedeSpråkIder.includes(key)
-        );
-        iderSomIkkeErIBrukNB.forEach(key => {
-            console.info(`Ikke i bruk? -> ${key}`);
-        });
-        console.info('------------------------------------------------------------');
-        console.info("ubrukte språkId'er i nn.json: \n");
-        const iderSomIkkeErIBrukNN = Object.keys(nn).filter(
-            key => !alleBenyttedeSpråkIder.includes(key)
-        );
-        iderSomIkkeErIBrukNN.forEach(key => {
-            console.info(`Ikke i bruk? -> ${key}`);
-        });
-        console.info('------------------------------------------------------------');
-        console.info("ubrukte språkId'er i en.json: \n");
-        const iderSomIkkeErIBrukEN = Object.keys(en).filter(
-            key => !alleBenyttedeSpråkIder.includes(key)
-        );
-        iderSomIkkeErIBrukEN.forEach(key => {
-            console.info(`Ikke i bruk? -> ${key}`);
-        });
-
-        console.info('------------------------------------------------------------');
-
         console.info(`nb length: ${Object.keys(nb).length}`);
         console.info(`antall benyttede språknøkkler: ${alleBenyttedeSpråkIder.length}`);
         console.info(`Ider som ikke er i bruk fra nb.json: ${iderSomIkkeErIBrukNB.length}`);
