@@ -2,28 +2,33 @@ import { useState } from 'react';
 
 import createUseContext from 'constate';
 
-import { hentDataFraRessurs } from '@navikt/familie-typer';
+import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import useFørsteRender from '../hooks/useFørsteRender';
 import { basePath } from '../Miljø';
-import { EFeatureToggle, ToggleKeys } from '../typer/feature-toggles';
+import { EAllFeatureToggles, EFeatureToggle } from '../typer/feature-toggles';
 import { useLastRessurserContext } from './LastRessurserContext';
 
 const [FeatureTogglesProvider, useFeatureToggles] = createUseContext(() => {
     const { axiosRequest } = useLastRessurserContext();
-    const [toggles, setToggles] = useState<Partial<Record<EFeatureToggle, boolean>>>({});
+    /**
+     * Husk å legge til nye toggles i funksjon konfigurerAllFeatureTogglesEndpoint (feature-toggles.ts)
+     */
+    const [toggles, setToggles] = useState<EAllFeatureToggles>({
+        [EFeatureToggle.EØS_KOMPLETT]: false,
+    });
 
-    useFørsteRender(() => {
-        Object.entries(ToggleKeys).forEach(async ([toggleKey, toggleValue]) => {
-            const toggleRespons = await axiosRequest<boolean, void>({
-                url: `${basePath}toggles/${toggleValue}`,
-            });
-
-            setToggles(prevState => ({
-                ...prevState,
-                [EFeatureToggle[toggleKey]]: hentDataFraRessurs(toggleRespons) ?? false,
-            }));
+    useFørsteRender(async () => {
+        const allFeatureToggles: Ressurs<EAllFeatureToggles> = await axiosRequest<
+            EAllFeatureToggles,
+            void
+        >({
+            url: `${basePath}toggles/all`,
         });
+
+        if (allFeatureToggles.status === RessursStatus.SUKSESS) {
+            setToggles(allFeatureToggles.data);
+        }
     });
 
     return {
