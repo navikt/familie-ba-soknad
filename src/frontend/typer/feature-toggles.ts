@@ -3,11 +3,11 @@ export enum EToggle {
     UTVIDET = 'familie-ba-soknad.disable-soknad-utvidet',
 }
 
-/**
- * true -> fullt EØS skjema
- * false -> eøs dekkes ved opplasting av utfylt pdf
- */
 export enum EFeatureToggle {
+    /**
+     * true -> fullt EØS skjema
+     * false -> eøs dekkes ved opplasting av utfylt pdf
+     */
     EØS_KOMPLETT = 'EØS_KOMPLETT',
 }
 
