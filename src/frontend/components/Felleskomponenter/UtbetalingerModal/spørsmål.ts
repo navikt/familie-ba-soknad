@@ -11,12 +11,12 @@ export const utbetalingerSøkerSpørsmålSpråkId = (
 ): Record<UtbetalingerSpørsmålId, string> => ({
     [UtbetalingerSpørsmålId.fårUtbetalingNå]: 'eøs.utbetalinger.spm',
     [UtbetalingerSpørsmålId.utbetalingFraHvilketLand]: tilbakeITid
-        ? 'modal.ytselseslandfortid.spm'
-        : 'eøs.ytselseland.spm',
-    [UtbetalingerSpørsmålId.utbetalingFraDato]: 'felles.nårbegynteytelsen.spm',
+        ? 'modal.utbetalingsland-fikk-søker.spm'
+        : 'modal.utbetalingsland-får-søker.spm',
+    [UtbetalingerSpørsmålId.utbetalingFraDato]: 'felles.nårbegynteutbetalingene.spm',
     [UtbetalingerSpørsmålId.utbetalingTilDato]: tilbakeITid
-        ? 'felles.nårytelsenavsluttet.spm'
-        : 'felles.nåravsluttesytelsen.spm',
+        ? 'felles.nårstoppetutbetalingene.spm'
+        : 'felles.nårstopperutbetalingene.spm',
     [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]:
         'felles.vetikkenårutbetalingerstopper.sjekkboks',
 });
@@ -26,12 +26,12 @@ export const utbetalingerAndreForelderSpørsmålSpråkId = (
 ): Record<UtbetalingerSpørsmålId, string> => ({
     [UtbetalingerSpørsmålId.fårUtbetalingNå]: 'eøs.andreforelderutbetalinger.spm',
     [UtbetalingerSpørsmålId.utbetalingFraHvilketLand]: tilbakeITid
-        ? 'modal.andreforelderytselselandfortid.spm'
-        : 'eøs.andreforelderytselseland.spm',
-    [UtbetalingerSpørsmålId.utbetalingFraDato]: 'felles.nårbegynteytelsen.spm',
+        ? 'modal.andreforelder-utbetalingerland-fikk.spm'
+        : 'modal.andreforelder-utbetalingerland-får.spm',
+    [UtbetalingerSpørsmålId.utbetalingFraDato]: 'felles.nårbegynteutbetalingene.spm',
     [UtbetalingerSpørsmålId.utbetalingTilDato]: tilbakeITid
-        ? 'felles.nårytelsenavsluttet.spm'
-        : 'felles.nåravsluttesytelsen.spm',
+        ? 'felles.nårstoppetutbetalingene.spm'
+        : 'felles.nårstopperutbetalingene.spm',
     [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]:
         'felles.vetikkenårutbetalingerstopper.sjekkboks',
 });

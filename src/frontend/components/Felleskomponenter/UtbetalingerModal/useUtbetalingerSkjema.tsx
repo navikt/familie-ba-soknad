@@ -1,3 +1,5 @@
+import { useIntl } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -6,22 +8,27 @@ import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjen
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
+import { IBarnMedISøknad } from '../../../typer/søknad';
+import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 
-export interface IUseUtenlandsoppholdSkjemaParams {
-    gjelderAndreForelder: boolean;
-    tilbakeITid: boolean;
-    barnetsNavn?: string;
-}
+export const useUtbetalingerSkjema = (andreForelderData?: {
+    barn: IBarnMedISøknad;
+    erDød: boolean;
+}) => {
+    const intl = useIntl();
 
-export const useUtbetalingerSkjema = (gjelderAndreForelder, barnetsNavn) => {
+    const gjelderAndreForelder = !!andreForelderData;
+    const barn = andreForelderData?.barn;
+    const erAndreForelderDød = !!andreForelderData?.erDød;
+
     const fårUtbetalingNå = useJaNeiSpmFelt({
         søknadsfelt: { id: UtbetalingerSpørsmålId.fårUtbetalingNå, svar: null },
         feilmeldingSpråkId: gjelderAndreForelder
             ? 'eøs.andreforelderutbetalinger.feilmelding'
             : 'eøs.utbetalinger.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavn },
+        feilmeldingSpråkVerdier: barn ? { barn: barnetsNavnValue(barn, intl) } : undefined,
     });
 
     const tilbakeITid = fårUtbetalingNå.verdi === ESvar.NEI;
@@ -29,12 +36,12 @@ export const useUtbetalingerSkjema = (gjelderAndreForelder, barnetsNavn) => {
     const feilmeldingForLand = () => {
         if (tilbakeITid) {
             return gjelderAndreForelder
-                ? 'modal.andreforelderytselselandfortid.feilmelding'
-                : 'modal.ytselseslandfortid.feilmeldinger';
+                ? 'modal.andreforelder-utbetalingerland-fikk.feilmelding'
+                : 'modal.utbetalingsland-fikk-søker.feilmeldinger';
         } else {
             return gjelderAndreForelder
-                ? 'eøs.andreforelderytselseland.feilmelding'
-                : 'eøs.ytselseland.feilmelding';
+                ? 'modal.andreforelder-utbetalingerland-får.feilmelding'
+                : 'modal.utbetalingsland-får-søker.feilmelding';
         }
     };
 
@@ -43,7 +50,7 @@ export const useUtbetalingerSkjema = (gjelderAndreForelder, barnetsNavn) => {
         feilmeldingSpråkId: feilmeldingForLand(),
         skalFeltetVises: fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         nullstillVedAvhengighetEndring: true,
-        feilmeldingSpråkVerdier: { barn: barnetsNavn },
+        feilmeldingSpråkVerdier: barn ? { barn: barnetsNavnValue(barn, intl) } : undefined,
     });
 
     const utbetalingFraDato = useDatovelgerFelt({
@@ -52,7 +59,7 @@ export const useUtbetalingerSkjema = (gjelderAndreForelder, barnetsNavn) => {
             svar: '',
         },
         skalFeltetVises: fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
-        feilmeldingSpråkId: 'felles.nårbegynteytelsen.feilmelding',
+        feilmeldingSpråkId: 'felles.nårbegynteutbetalingene.feilmelding',
         sluttdatoAvgrensning: fårUtbetalingNå.verdi === ESvar.JA ? dagensDato() : gårsdagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
@@ -69,8 +76,8 @@ export const useUtbetalingerSkjema = (gjelderAndreForelder, barnetsNavn) => {
         initiellVerdi: '',
         vetIkkeCheckbox: utbetalingTilDatoUkjent,
         feilmeldingSpråkId: tilbakeITid
-            ? 'felles.nårytelsenavsluttet.feilmelding'
-            : 'felles.nåravsluttesytelsen.feilmelding',
+            ? 'felles.nårstoppetutbetalingene.feilmelding'
+            : 'felles.nårstopperutbetalingene.feilmelding',
         skalFeltetVises: fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         sluttdatoAvgrensning: fårUtbetalingNå.verdi === ESvar.NEI ? dagensDato() : undefined,
         startdatoAvgrensning: utbetalingFraDato.verdi,

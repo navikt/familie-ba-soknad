@@ -65,7 +65,7 @@ export const usePensjonSkjema = ({
         },
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) &&
-            (!gjelderUtland || erEøsLand(pensjonsland.verdi)),
+            (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
         feilmeldingSpråkId: pensjonFraDatoFeilmeldingSpråkId(
             gjelderAndreForelder,
             tilbakeITid,
@@ -83,7 +83,7 @@ export const usePensjonSkjema = ({
         },
         skalFeltetVises:
             (mottarPensjonNå.verdi === ESvar.NEI || erAndreForelderDød) &&
-            (!gjelderUtland || erEøsLand(pensjonsland.verdi)),
+            (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
         feilmeldingSpråkId: 'felles.nåravsluttetpensjon.feilmelding',
         sluttdatoAvgrensning: dagensDato(),
         startdatoAvgrensning: pensjonFraDato.verdi,

@@ -1,17 +1,23 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
+import { IBarnMedISøknad } from '../../../typer/søknad';
+import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
+import { IUsePensjonSkjemaParams } from '../Pensjonsmodal/usePensjonSkjema';
 import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
+import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import {
     utbetalingerAndreForelderSpørsmålSpråkId,
@@ -20,32 +26,31 @@ import {
 } from './spørsmål';
 import { useUtbetalingerSkjema } from './useUtbetalingerSkjema';
 
-interface UtbetalingerModalProps {
-    erÅpen: boolean;
-    toggleModal: () => void;
-    onLeggTilUtbetalinger: () => void;
-    barnetsNavn?: string;
-    gjelderAndreForelder?: boolean;
+interface UtbetalingerModalProps extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
+    //TODO: legg til denne når vi skal sett søknadsdata  onLeggTilUtbetalinger: () => void;
+    andreForelderData?: { barn: IBarnMedISøknad; erDød: boolean };
 }
 
 export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     erÅpen,
     toggleModal,
-    onLeggTilUtbetalinger,
-    barnetsNavn,
-    gjelderAndreForelder = false,
+    //TODO: legg til når vi skal sette søknadsdata: onLeggTilUtbetalinger,
+    andreForelderData,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useUtbetalingerSkjema(gjelderAndreForelder, barnetsNavn);
+        useUtbetalingerSkjema(andreForelderData);
+    const intl = useIntl();
 
     const tilbakeITid = skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI;
+    const gjelderAndreForelder = !!andreForelderData;
+    const barn = andreForelderData?.barn;
+    const erAndreForelderDød = !!andreForelderData?.erDød;
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
-        // Legg til utbetalinger på søknadsobjekt
-        onLeggTilUtbetalinger();
+        //TODO: legg til når vi skal sette søknadsdata: onLeggTilUtbetalinger();
 
         toggleModal();
         nullstillSkjema();
@@ -54,9 +59,9 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            modalTittelSpråkId={'felles.flereytelser.tittel'}
+            modalTittelSpråkId={'felles.flereytelser.knapp'}
             onSubmitCallback={onLeggTil}
-            submitKnappSpråkId={'felles.flereytelser.tittel'}
+            submitKnappSpråkId={'felles.flereytelser.knapp'}
             toggleModal={toggleModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
@@ -74,7 +79,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                   UtbetalingerSpørsmålId.fårUtbetalingNå
                               ]
                     }
-                    språkValues={{ barn: barnetsNavn }}
+                    språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                 />
             </KomponentGruppe>
             {skjema.felter.fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK && (
@@ -93,7 +98,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                               UtbetalingerSpørsmålId.utbetalingFraHvilketLand
                                           ]
                                 }
-                                values={{ barn: barnetsNavn }}
+                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                             />
                         }
                         dynamisk
