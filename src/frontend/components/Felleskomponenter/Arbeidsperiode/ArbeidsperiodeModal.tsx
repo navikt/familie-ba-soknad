@@ -120,27 +120,29 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         }
                     />
                 )}
-                {arbeidsperiodeLand.erSynlig && (
-                    <LandDropdown
-                        felt={skjema.felter.arbeidsperiodeLand}
-                        skjema={skjema}
-                        label={
-                            <SpråkTekst
-                                id={
-                                    gjelderAndreForelder
-                                        ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                              tilbakeITid,
-                                              erAndreForelderDød
-                                          )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
-                                        : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                              ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
-                                          ]
-                                }
-                            />
-                        }
-                        dynamisk
-                    />
-                )}
+                <KomponentGruppe inline>
+                    {arbeidsperiodeLand.erSynlig && (
+                        <LandDropdown
+                            felt={skjema.felter.arbeidsperiodeLand}
+                            skjema={skjema}
+                            label={
+                                <SpråkTekst
+                                    id={
+                                        gjelderAndreForelder
+                                            ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                                  tilbakeITid,
+                                                  erAndreForelderDød
+                                              )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
+                                            : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                                  ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
+                                              ]
+                                    }
+                                />
+                            }
+                            dynamisk
+                        />
+                    )}
+                </KomponentGruppe>
                 {arbeidsgiver.erSynlig && (
                     <SkjemaFeltInput
                         felt={skjema.felter.arbeidsgiver}
