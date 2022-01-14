@@ -25,6 +25,7 @@ import {
 } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { ESøknadstype, IBarnMedISøknad } from '../../../typer/søknad';
+import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
@@ -790,7 +791,8 @@ export const useOmBarnet = (
                         return genererOppdatertDokumentasjon(
                             dok,
                             søkerForTidsrom.verdi === ESvar.JA &&
-                                søknad.søker.sivilstand.type === ESivilstand.SKILT &&
+                                (søknad.søker.sivilstand.type === ESivilstand.SKILT ||
+                                    søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.SKILT) &&
                                 søknad.søknadstype === ESøknadstype.UTVIDET,
                             barn.id
                         );
