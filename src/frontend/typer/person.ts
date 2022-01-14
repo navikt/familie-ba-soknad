@@ -78,6 +78,14 @@ export interface IUtenlandsperiode {
     oppholdslandTilDato?: ISøknadSpørsmål<DatoMedUkjent>;
 }
 
+export interface IArbeidsperiode {
+    arbeidsperiodeAvsluttet?: ISøknadSpørsmål<ESvar | null>;
+    arbeidsperiodeland: ISøknadSpørsmål<Alpha3Code | ''>;
+    arbeidsgiver?: ISøknadSpørsmål<string>;
+    fraDatoArbeidsperiode?: ISøknadSpørsmål<ISODateString>;
+    tilDatoArbeidsperiode?: ISøknadSpørsmål<DatoMedUkjent>;
+}
+
 export interface IPensjonsperiode {
     mottarPensjonNå: ISøknadSpørsmål<ESvar>;
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;

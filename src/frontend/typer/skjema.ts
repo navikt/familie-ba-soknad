@@ -132,6 +132,15 @@ export interface IPensjonsperiodeFeltTyper {
     pensjonFraDato: ISODateString;
     pensjonTilDato: ISODateString;
 }
+
+export interface IArbeidsperioderFeltTyper {
+    arbeidsperiodeAvsluttet: ESvar | null;
+    arbeidsperiodeLand: Alpha3Code | '';
+    arbeidsgiver: string;
+    fraDatoArbeidsperiode: ISODateString;
+    tilDatoArbeidsperiode: ISODateString;
+    tilDatoArbeidsperiodeUkjent: ESvar;
+}
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
@@ -143,4 +152,5 @@ export type SkjemaFeltTyper =
     | IPensjonsperiodeFeltTyper
     | ITidligereSamboerFeltTyper
     | IEøsForSøkerFeltTyper
-    | IEøsForBarnFeltTyper;
+    | IEøsForBarnFeltTyper
+    | IArbeidsperioderFeltTyper;
