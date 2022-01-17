@@ -16,6 +16,7 @@ import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import {
     barnDataKeySpørsmål,
     ESivilstand,
+    IArbeidsperiode,
     ISamboer,
     ITidligereSamboer,
 } from '../../../typer/person';
@@ -37,6 +38,9 @@ export const useDinLivssituasjon = (): {
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
     tidligereSamboere: ITidligereSamboer[];
+    arbeidsperioder: IArbeidsperiode[];
+    leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
+    fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøs();
@@ -44,6 +48,18 @@ export const useDinLivssituasjon = (): {
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
     );
+    const [arbeidsperioder, settArbeidsperioder] = useState<IArbeidsperiode[]>(
+        søker.arbeidsperioder
+    );
+    const leggTilArbeidsperiode = (periode: IArbeidsperiode) => {
+        settArbeidsperioder(prevState => prevState.concat(periode));
+    };
+
+    const fjernArbeidsperiode = (periodeSomSkalFjernes: IArbeidsperiode) => {
+        settArbeidsperioder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
 
     /*---- UTVIDET BARNETRYGD ----*/
     const årsak = useFelt<Årsak | ''>({
@@ -192,6 +208,16 @@ export const useDinLivssituasjon = (): {
         avhengighet: jobberPåBåt,
     });
 
+    const registrerteArbeidsperioder = useFelt<IArbeidsperiode[]>({
+        verdi: arbeidsperioder,
+        avhengigheter: { jobberPåBåt },
+        skalFeltetVises: avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA,
+    });
+
+    useEffect(() => {
+        registrerteArbeidsperioder.validerOgSettFelt(arbeidsperioder);
+    }, [arbeidsperioder]);
+
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
         feilmeldingSpråkId: 'omdeg.utenlandspensjon.feilmelding',
@@ -223,6 +249,7 @@ export const useDinLivssituasjon = (): {
             erAsylsøker,
             jobberPåBåt,
             arbeidsland,
+            registrerteArbeidsperioder,
             mottarUtenlandspensjon,
             pensjonsland,
         },
@@ -376,5 +403,8 @@ export const useDinLivssituasjon = (): {
         tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
+        arbeidsperioder,
+        leggTilArbeidsperiode,
+        fjernArbeidsperiode,
     };
 };

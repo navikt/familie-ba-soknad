@@ -285,6 +285,7 @@ export const initialStateSøknad: ISøknad = {
             id: DinLivssituasjonSpørsmålId.arbeidsland,
             svar: '',
         },
+        arbeidsperioder: [],
         mottarUtenlandspensjon: {
             id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
             svar: null,

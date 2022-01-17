@@ -31,7 +31,7 @@ interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaPar
 export const ArbeidsperiodeModal: React.FC<Props> = ({
     erÅpen,
     toggleModal,
-    //onLeggTilArbeidsperiode,
+    onLeggTilArbeidsperiode,
     gjelderUtlandet = false,
     andreForelderData,
 }) => {
@@ -51,42 +51,42 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
-            return false;
-            //TODO legg til denne når vi skal sette søknadsdata
-            /* onLeggTilArbeidsperiode({
-            ...(arbeidsperiodeAvsluttet.erSynlig && {
-                arbeidsperiodeAvsluttet: {
-                    id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
-                    svar: arbeidsperiodeAvsluttet.verdi as ESvar,
+            onLeggTilArbeidsperiode({
+                ...(arbeidsperiodeAvsluttet.erSynlig && {
+                    arbeidsperiodeAvsluttet: {
+                        id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
+                        svar: arbeidsperiodeAvsluttet.verdi as ESvar,
+                    },
+                }),
+                arbeidsperiodeland: {
+                    id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
+                    svar: arbeidsperiodeLand.verdi,
                 },
-            }),
-            arbeidsperiodeland: {
-                id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
-                svar: arbeidsperiodeLand.verdi,
-            },
-            ...(arbeidsgiver.erSynlig && {
-                arbeidsgiver: {
-                    id: ArbeidsperiodeSpørsmålsId.arbeidsgiver,
-                    svar: arbeidsgiver.verdi,
-                },
-            }),
-            ...(fraDatoArbeidsperiode.erSynlig && {
-                fraDatoArbeidsperiode: {
-                    id: ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode,
-                    svar: fraDatoArbeidsperiode.verdi,
-                },
-            }),
-            ...(tilDatoArbeidsperiode.erSynlig && {
-                tilDatoArbeidsperiode: {
-                    id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
-                    svar: tilDatoArbeidsperiode.verdi,
-                },
-            }),*/
+                ...(arbeidsgiver.erSynlig && {
+                    arbeidsgiver: {
+                        id: ArbeidsperiodeSpørsmålsId.arbeidsgiver,
+                        svar: arbeidsgiver.verdi,
+                    },
+                }),
+                ...(fraDatoArbeidsperiode.erSynlig && {
+                    fraDatoArbeidsperiode: {
+                        id: ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode,
+                        svar: fraDatoArbeidsperiode.verdi,
+                    },
+                }),
+                ...(tilDatoArbeidsperiode.erSynlig && {
+                    tilDatoArbeidsperiode: {
+                        id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
+                        svar: tilDatoArbeidsperiode.verdi,
+                    },
+                }),
+            });
         }
 
         toggleModal();
         nullstillSkjema();
     };
+
     const modalTittel = gjelderUtlandet
         ? 'felles.flerearbeidsperioderutland.tittel'
         : 'felles.flerearbeidsperiodernorge.tittel';

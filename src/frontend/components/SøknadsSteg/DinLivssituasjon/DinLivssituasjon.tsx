@@ -6,14 +6,18 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { IArbeidsperiode } from '../../../typer/person';
+import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
+import { Arbeidsperiode } from './Arbeidsperiode';
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import TidligereSamboere from './TidligereSamboere';
@@ -29,6 +33,8 @@ const DinLivssituasjon: React.FC = () => {
         tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
+        leggTilArbeidsperiode,
+        fjernArbeidsperiode,
     } = useDinLivssituasjon();
 
     const { erUtvidet, søknad } = useApp();
@@ -147,34 +153,12 @@ const DinLivssituasjon: React.FC = () => {
                 {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
                     <VedleggNotis dynamisk språkTekstId={'omdeg.asylsøker.alert'} />
                 )}
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.jobberPåBåt}
-                    spørsmålTekstId={
-                        dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
-                    }
-                />
 
-                <LandDropdown
-                    felt={skjema.felter.arbeidsland}
+                <Arbeidsperiode
                     skjema={skjema}
-                    label={
-                        <SpråkTekst
-                            id={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.arbeidsland
-                                ]
-                            }
-                        />
-                    }
-                    dynamisk
+                    leggTilArbeidsperiode={leggTilArbeidsperiode}
+                    fjernArbeidsperiode={fjernArbeidsperiode}
                 />
-                {erEøsLand(skjema.felter.arbeidsland.verdi) && (
-                    <VedleggNotisTilleggsskjema
-                        språkTekstId={'omdeg.arbeid-utland.eøs-info'}
-                        dynamisk
-                    />
-                )}
 
                 <JaNeiSpm
                     skjema={skjema}

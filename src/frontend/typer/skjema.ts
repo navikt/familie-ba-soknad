@@ -3,7 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
-import { barnDataKeySpørsmål, IBarn, IUtenlandsperiode } from './person';
+import { barnDataKeySpørsmål, IArbeidsperiode, IBarn, IUtenlandsperiode } from './person';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 
@@ -22,6 +22,7 @@ export interface IDinLivssituasjonFeltTyper {
     erAsylsøker: ESvar | null;
     jobberPåBåt: ESvar | null;
     arbeidsland: Alpha3Code | '';
+    registrerteArbeidsperioder: IArbeidsperiode[];
     mottarUtenlandspensjon: ESvar | null;
     pensjonsland: Alpha3Code | '';
 }
