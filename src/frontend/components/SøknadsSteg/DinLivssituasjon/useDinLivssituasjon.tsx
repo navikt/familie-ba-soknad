@@ -18,6 +18,7 @@ import {
     ESivilstand,
     IArbeidsperiode,
     ISamboer,
+    ISøker,
     ITidligereSamboer,
 } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
@@ -281,7 +282,7 @@ export const useDinLivssituasjon = (): {
         }
     };
 
-    const genererOppdatertSøker = () => ({
+    const genererOppdatertSøker = (): ISøker => ({
         ...søknad.søker,
         harSamboerNå: {
             ...søknad.søker.harSamboerNå,
@@ -327,6 +328,11 @@ export const useDinLivssituasjon = (): {
             ...søknad.søker.arbeidsland,
             svar: skjema.felter.arbeidsland.verdi,
         },
+        arbeidsperioder:
+            skjema.felter.jobberPåBåt.verdi === ESvar.JA
+                ? skjema.felter.registrerteArbeidsperioder.verdi
+                : [],
+
         mottarUtenlandspensjon: {
             ...søknad.søker.mottarUtenlandspensjon,
             svar: skjema.felter.mottarUtenlandspensjon.verdi,

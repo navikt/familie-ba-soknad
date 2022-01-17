@@ -10,6 +10,7 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IArbeidsperiode } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
+import { ArbeidsperiodeOppsummering } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -78,16 +79,14 @@ export const Arbeidsperiode: React.FC<Props> = props => {
                 {skjema.felter.jobberPåBåt.verdi === ESvar.JA && (
                     <>
                         {skjema.felter.registrerteArbeidsperioder.verdi.map((periode, index) => {
-                            // return (
-                            //     <UtenlandsperiodeOppsummering
-                            //         key={index}
-                            //         periode={periode}
-                            //         nummer={index + 1}
-                            //         fjernPeriodeCallback={fjernUtenlandsperiode}
-                            //         erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
-                            //     />
-                            // );
-                            return <div>{periode.arbeidsgiver?.svar} TODO: FIKS OPPSUMMERING!</div>;
+                            return (
+                                <ArbeidsperiodeOppsummering
+                                    arbeidsperiode={periode}
+                                    fjernPeriodeCallback={fjernArbeidsperiode}
+                                    nummer={index + 1}
+                                    visFjernKnapp={true}
+                                />
+                            );
                         })}
                         {skjema.felter.registrerteArbeidsperioder.verdi.length > 0 && (
                             <Element>
