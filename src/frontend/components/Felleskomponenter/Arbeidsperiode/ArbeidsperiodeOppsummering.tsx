@@ -7,6 +7,7 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { DeleteFilled } from '@navikt/ds-icons';
+import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IArbeidsperiode } from '../../../typer/person';
@@ -16,7 +17,11 @@ import { formaterDatoMedUkjent } from '../../../utils/visning';
 import Informasjonsbolk from '../Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { tilDatoUkjentLabelSpråkId } from '../UtenlandsoppholdModal/spørsmål';
-import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
+import {
+    arbeidsperiodeAndreForelderSpørsmålSpråkId,
+    ArbeidsperiodeSpørsmålsId,
+    arbeidsperiodeSøkerSpørsmålSpråkId,
+} from './spørsmål';
 
 const StyledElement = styled(Element)`
     && {
@@ -50,7 +55,18 @@ export const ArbeidsperiodeOppsummering: React.FC<{
     barn?: IBarnMedISøknad;
     visFjernKnapp?: boolean;
     className?: string;
-}> = ({ arbeidsperiode, nummer, fjernPeriodeCallback, barn, visFjernKnapp = true, className }) => {
+    gjelderUtlandet?: boolean;
+    andreForelderData?: { erDød: boolean };
+}> = ({
+    arbeidsperiode,
+    nummer,
+    fjernPeriodeCallback,
+    barn,
+    visFjernKnapp = true,
+    className,
+    gjelderUtlandet,
+    andreForelderData,
+}) => {
     const [valgtLocale] = useSprakContext();
     const intl = useIntl();
     const { formatMessage } = intl;
@@ -62,6 +78,10 @@ export const ArbeidsperiodeOppsummering: React.FC<{
         tilDatoArbeidsperiode,
     } = arbeidsperiode;
 
+    const tilbakeITid = arbeidsperiodeAvsluttet?.svar === ESvar.JA;
+    const gjelderAndreForelder = !!andreForelderData;
+    const erAndreForelderDød = !!andreForelderData?.erDød;
+
     return (
         <PeriodeContainer className={className}>
             <Element>
@@ -69,7 +89,18 @@ export const ArbeidsperiodeOppsummering: React.FC<{
             </Element>
             {arbeidsperiodeAvsluttet && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet} />
+                    <Spørsmål
+                        språkId={
+                            gjelderAndreForelder
+                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                      tilbakeITid,
+                                      erAndreForelderDød
+                                  )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
+                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                      ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
+                                  ]
+                        }
+                    />
                     <Normaltekst>
                         <SpråkTekst id={arbeidsperiodeAvsluttet.svar} />
                     </Normaltekst>
@@ -77,7 +108,18 @@ export const ArbeidsperiodeOppsummering: React.FC<{
             )}
             {arbeidsperiodeland && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand} />
+                    <Spørsmål
+                        språkId={
+                            gjelderAndreForelder
+                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                      tilbakeITid,
+                                      erAndreForelderDød
+                                  )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
+                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                      ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
+                                  ]
+                        }
+                    />
                     <Normaltekst>
                         {landkodeTilSpråk(arbeidsperiodeland.svar, valgtLocale)}
                     </Normaltekst>
@@ -85,7 +127,18 @@ export const ArbeidsperiodeOppsummering: React.FC<{
             )}
             {arbeidsgiver && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={ArbeidsperiodeSpørsmålsId.arbeidsgiver} />
+                    <Spørsmål
+                        språkId={
+                            gjelderAndreForelder
+                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                      tilbakeITid,
+                                      erAndreForelderDød
+                                  )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
+                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                      ArbeidsperiodeSpørsmålsId.arbeidsgiver
+                                  ]
+                        }
+                    />
                     <Normaltekst>
                         <SpråkTekst id={arbeidsgiver.svar} />
                     </Normaltekst>
@@ -93,7 +146,18 @@ export const ArbeidsperiodeOppsummering: React.FC<{
             )}
             {fraDatoArbeidsperiode && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode} />
+                    <Spørsmål
+                        språkId={
+                            gjelderAndreForelder
+                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                      tilbakeITid,
+                                      erAndreForelderDød
+                                  )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
+                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                      ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
+                                  ]
+                        }
+                    />
                     <Normaltekst>
                         <SpråkTekst id={fraDatoArbeidsperiode.svar} />
                     </Normaltekst>
@@ -101,7 +165,18 @@ export const ArbeidsperiodeOppsummering: React.FC<{
             )}
             {tilDatoArbeidsperiode && (
                 <Informasjonsbolk>
-                    <Spørsmål språkId={ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode} />
+                    <Spørsmål
+                        språkId={
+                            gjelderAndreForelder
+                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                      tilbakeITid,
+                                      erAndreForelderDød
+                                  )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
+                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                      ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode
+                                  ]
+                        }
+                    />
                     <Normaltekst>
                         {formaterDatoMedUkjent(
                             tilDatoArbeidsperiode.svar,

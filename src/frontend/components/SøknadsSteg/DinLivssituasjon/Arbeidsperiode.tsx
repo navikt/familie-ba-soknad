@@ -85,6 +85,7 @@ export const Arbeidsperiode: React.FC<Props> = props => {
                                     fjernPeriodeCallback={fjernArbeidsperiode}
                                     nummer={index + 1}
                                     visFjernKnapp={true}
+                                    gjelderUtlandet={true}
                                 />
                             );
                         })}
