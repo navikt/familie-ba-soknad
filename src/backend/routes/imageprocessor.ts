@@ -1,4 +1,6 @@
 import { Express, RequestHandler, raw } from 'express';
+// eslint-disable-next-line import/default
+import ft from 'file-type';
 import sharp from 'sharp';
 
 import { logError, logWarn } from '@navikt/familie-logging';
@@ -28,7 +30,15 @@ const bildeProsesseringHandler: RequestHandler = async (req, res) => {
         res.set('Content-Type', 'image/jpg');
         res.send(jpeg);
     } catch (reason) {
-        logError('Feil under konvertering til jpeg', reason as Error);
+        try {
+            const filetype = await ft.fromBuffer(req.body);
+            logError(
+                `Feil under konvertering til jpeg. Filetype: ${filetype?.ext}. Mimetype: ${filetype?.mime}`,
+                reason as Error
+            );
+        } catch (e) {
+            logError('Feil under konvertering til jpeg', reason as Error);
+        }
         res.sendStatus(500);
     }
 };
