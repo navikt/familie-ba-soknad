@@ -6,7 +6,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IArbeidsperiode } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
@@ -45,7 +44,7 @@ export const Arbeidsperiode: React.FC<Props> = props => {
         barnetsNavn,
     } = props;
     const { erEøsLand } = useEøs();
-    const { toggles } = useFeatureToggles();
+    // const { toggles } = useFeatureToggles();
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
 
     // if (toggles[EFeatureToggle.EØS_KOMPLETT]) {

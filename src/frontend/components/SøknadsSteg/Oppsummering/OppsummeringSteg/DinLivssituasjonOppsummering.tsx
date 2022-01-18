@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -15,6 +16,7 @@ import { RouteEnum } from '../../../../typer/routes';
 import { formaterDato } from '../../../../utils/dato';
 import { landkodeTilSpråk, toÅrsakSpråkId } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
+import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
     DinLivssituasjonSpørsmålId,
@@ -25,6 +27,10 @@ import { useDinLivssituasjon } from '../../DinLivssituasjon/useDinLivssituasjon'
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
 import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
+
+const StyledArbeidsperiodeOppsummering = styled(ArbeidsperiodeOppsummering)`
+    border-bottom: none;
+`;
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -244,6 +250,15 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         søknadsvar={landkodeTilSpråk(søknad.søker.arbeidsland.svar, valgtLocale)}
                     />
                 )}
+                {søknad.søker.arbeidsperioder.map((periode, index) => (
+                    <StyledArbeidsperiodeOppsummering
+                        key={index}
+                        nummer={index + 1}
+                        arbeidsperiode={periode}
+                        fjernPeriodeCallback={() => null}
+                        visFjernKnapp={false}
+                    />
+                ))}
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
