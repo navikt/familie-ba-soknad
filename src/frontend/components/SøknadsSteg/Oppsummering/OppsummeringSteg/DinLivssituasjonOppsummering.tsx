@@ -9,6 +9,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
+import { useFeatureToggles } from '../../../../context/FeatureToggleContext';
 import { useRoutes } from '../../../../context/RoutesContext';
 import { AlternativtSvarForInput } from '../../../../typer/common';
 import { ESivilstand, ISamboer, ITidligereSamboer } from '../../../../typer/person';
@@ -86,6 +87,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { formatMessage } = useIntl();
     const [valgtLocale] = useSprakContext();
     const { hentRouteObjektForRouteEnum } = useRoutes();
+    const { toggles } = useFeatureToggles();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
 
@@ -236,7 +238,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.søker.jobberPåBåt.svar}
                 />
-                {søknad.søker.arbeidsland.svar && (
+                {!toggles.EØS_KOMPLETT && søknad.søker.arbeidsland.svar && (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -250,15 +252,16 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         søknadsvar={landkodeTilSpråk(søknad.søker.arbeidsland.svar, valgtLocale)}
                     />
                 )}
-                {søknad.søker.arbeidsperioder.map((periode, index) => (
-                    <StyledArbeidsperiodeOppsummering
-                        key={index}
-                        nummer={index + 1}
-                        arbeidsperiode={periode}
-                        fjernPeriodeCallback={() => null}
-                        visFjernKnapp={false}
-                    />
-                ))}
+                {toggles.EØS_KOMPLETT &&
+                    søknad.søker.arbeidsperioder.map((periode, index) => (
+                        <StyledArbeidsperiodeOppsummering
+                            key={index}
+                            nummer={index + 1}
+                            arbeidsperiode={periode}
+                            fjernPeriodeCallback={() => null}
+                            visFjernKnapp={false}
+                        />
+                    ))}
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst

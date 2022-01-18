@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IArbeidsperiode } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
@@ -44,98 +45,89 @@ export const Arbeidsperiode: React.FC<Props> = props => {
         barnetsNavn,
     } = props;
     const { erEøsLand } = useEøs();
-    // const { toggles } = useFeatureToggles();
+    const { toggles } = useFeatureToggles();
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
 
-    // if (toggles[EFeatureToggle.EØS_KOMPLETT]) {
-    //     return ()
-    // }
+    return toggles.EØS_KOMPLETT ? (
+        <KomponentGruppe>
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.jobberPåBåt}
+                spørsmålTekstId={
+                    dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
+                }
+            />
+            {skjema.felter.jobberPåBåt.verdi === ESvar.JA && (
+                <>
+                    {skjema.felter.registrerteArbeidsperioder.verdi.map((periode, index) => {
+                        return (
+                            <ArbeidsperiodeOppsummering
+                                arbeidsperiode={periode}
+                                fjernPeriodeCallback={fjernArbeidsperiode}
+                                nummer={index + 1}
+                                visFjernKnapp={true}
+                                gjelderUtlandet={true}
+                            />
+                        );
+                    })}
+                    {skjema.felter.registrerteArbeidsperioder.verdi.length > 0 && (
+                        <Element>
+                            <SpråkTekst
+                                id={arbeidsperiodeFlereSpørsmål(
+                                    gjelderUtlandet,
+                                    gjelderAndreForelder
+                                )}
+                                values={{ barn: barnetsNavn }}
+                            />
+                        </Element>
+                    )}
+                    <LeggTilKnapp
+                        onClick={toggleArbeidsmodal}
+                        språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
+                        id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
+                        feilmelding={
+                            skjema.felter.registrerteArbeidsperioder.erSynlig &&
+                            skjema.felter.registrerteArbeidsperioder.feilmelding &&
+                            skjema.visFeilmeldinger && (
+                                <SpråkTekst id={arbeidsperiodeFeilmelding(gjelderUtlandet)} />
+                            )
+                        }
+                    />
+                    <ArbeidsperiodeModal
+                        erÅpen={arbeidsmodalErÅpen}
+                        toggleModal={toggleArbeidsmodal}
+                        onLeggTilArbeidsperiode={leggTilArbeidsperiode}
+                        gjelderUtlandet
+                    />
+                </>
+            )}
+        </KomponentGruppe>
+    ) : (
+        <KomponentGruppe>
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.jobberPåBåt}
+                spørsmålTekstId={
+                    dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
+                }
+            />
 
-    return (
-        <div>
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.jobberPåBåt}
-                    spørsmålTekstId={
-                        dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
-                    }
-                />
-
-                <LandDropdown
-                    felt={skjema.felter.arbeidsland}
-                    skjema={skjema}
-                    label={
-                        <SpråkTekst
-                            id={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.arbeidsland
-                                ]
-                            }
-                        />
-                    }
+            <LandDropdown
+                felt={skjema.felter.arbeidsland}
+                skjema={skjema}
+                label={
+                    <SpråkTekst
+                        id={dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.arbeidsland]}
+                    />
+                }
+                dynamisk
+            />
+            {erEøsLand(skjema.felter.arbeidsland.verdi) && (
+                <VedleggNotisTilleggsskjema
+                    språkTekstId={'omdeg.arbeid-utland.eøs-info'}
                     dynamisk
                 />
-                {erEøsLand(skjema.felter.arbeidsland.verdi) && (
-                    <VedleggNotisTilleggsskjema
-                        språkTekstId={'omdeg.arbeid-utland.eøs-info'}
-                        dynamisk
-                    />
-                )}
-            </KomponentGruppe>
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.jobberPåBåt}
-                    spørsmålTekstId={
-                        dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
-                    }
-                />
-                {skjema.felter.jobberPåBåt.verdi === ESvar.JA && (
-                    <>
-                        {skjema.felter.registrerteArbeidsperioder.verdi.map((periode, index) => {
-                            return (
-                                <ArbeidsperiodeOppsummering
-                                    arbeidsperiode={periode}
-                                    fjernPeriodeCallback={fjernArbeidsperiode}
-                                    nummer={index + 1}
-                                    visFjernKnapp={true}
-                                    gjelderUtlandet={true}
-                                />
-                            );
-                        })}
-                        {skjema.felter.registrerteArbeidsperioder.verdi.length > 0 && (
-                            <Element>
-                                <SpråkTekst
-                                    id={arbeidsperiodeFlereSpørsmål(
-                                        gjelderUtlandet,
-                                        gjelderAndreForelder
-                                    )}
-                                    values={{ barn: barnetsNavn }}
-                                />
-                            </Element>
-                        )}
-                        <LeggTilKnapp
-                            onClick={toggleArbeidsmodal}
-                            språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
-                            id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
-                            feilmelding={
-                                skjema.felter.registrerteArbeidsperioder.erSynlig &&
-                                skjema.felter.registrerteArbeidsperioder.feilmelding &&
-                                skjema.visFeilmeldinger && (
-                                    <SpråkTekst id={arbeidsperiodeFeilmelding(gjelderUtlandet)} />
-                                )
-                            }
-                        />
-                        <ArbeidsperiodeModal
-                            erÅpen={arbeidsmodalErÅpen}
-                            toggleModal={toggleArbeidsmodal}
-                            onLeggTilArbeidsperiode={leggTilArbeidsperiode}
-                            gjelderUtlandet
-                        />
-                    </>
-                )}
-            </KomponentGruppe>
-        </div>
+            )}
+        </KomponentGruppe>
     );
 };

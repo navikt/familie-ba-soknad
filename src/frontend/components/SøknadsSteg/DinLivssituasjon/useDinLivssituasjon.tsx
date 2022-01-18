@@ -5,6 +5,7 @@ import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useInputFelt from '../../../hooks/useInputFelt';
@@ -46,6 +47,7 @@ export const useDinLivssituasjon = (): {
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøs();
+    const { toggles } = useFeatureToggles();
     const søker = søknad.søker;
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
@@ -208,12 +210,14 @@ export const useDinLivssituasjon = (): {
         feilmeldingSpråkId: 'omdeg.arbeid-utland.land.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: jobberPåBåt,
+        skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
     const registrerteArbeidsperioder = useFelt<IArbeidsperiode[]>({
         verdi: arbeidsperioder,
         avhengigheter: { jobberPåBåt },
-        skalFeltetVises: avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA,
+        skalFeltetVises: avhengigheter =>
+            avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
         valideringsfunksjon: felt =>
             jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
                 ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)

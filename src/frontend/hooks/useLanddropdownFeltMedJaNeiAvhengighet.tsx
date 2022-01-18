@@ -16,21 +16,26 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
     avhengigSvarCondition,
     avhengighet,
     nullstillVedAvhengighetEndring = true,
+    skalFeltetVises = true,
 }: {
     søknadsfelt?: ISøknadSpørsmål<Alpha3Code | ''>;
     feilmeldingSpråkId: string;
     avhengigSvarCondition: ESvar;
     avhengighet: Felt<ESvar | null>;
     nullstillVedAvhengighetEndring?: boolean;
+    skalFeltetVises?: boolean;
 }) => {
-    const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
+    const skalViseFelt = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
 
     const landDropdown = useFelt<Alpha3Code | ''>({
         feltId: søknadsfelt ? søknadsfelt.id : guid(),
         verdi: søknadsfelt?.svar ?? '',
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
+            if (!skalFeltetVises) {
+                return false;
+            }
             return avhengigheter && (avhengigheter.jaNeiSpm as Felt<ESvar | null>)
-                ? skalFeltetVises(avhengigheter.jaNeiSpm.verdi)
+                ? skalViseFelt(avhengigheter.jaNeiSpm.verdi)
                 : true;
         },
         valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>) => {
@@ -43,14 +48,14 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
     });
 
     useEffect(() => {
-        const skalVises = skalFeltetVises(avhengighet.verdi);
+        const skalVises = skalViseFelt(avhengighet.verdi);
 
         skalVises &&
             landDropdown.verdi !== '' &&
             landDropdown.validerOgSettFelt(landDropdown.verdi);
 
         return () => {
-            !skalFeltetVises(avhengighet.verdi) && landDropdown.validerOgSettFelt('');
+            !skalViseFelt(avhengighet.verdi) && landDropdown.validerOgSettFelt('');
         };
     }, [avhengighet]);
 
