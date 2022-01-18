@@ -1,10 +1,10 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { Flatknapp } from 'nav-frontend-knapper';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 
 import { DeleteFilled } from '@navikt/ds-icons';
 import { ESvar } from '@navikt/familie-form-elements';
@@ -15,7 +15,7 @@ import { IBarnMedISøknad } from '../../../typer/søknad';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
-import Informasjonsbolk from '../Informasjonsbolk/Informasjonsbolk';
+import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { tilDatoUkjentLabelSpråkId } from '../UtenlandsoppholdModal/spørsmål';
 import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
@@ -25,20 +25,10 @@ import {
     arbeidsperiodeSøkerSpørsmålSpråkId,
 } from './spørsmål';
 
-const StyledElement = styled(Element)`
-    && {
-        margin-bottom: 0.5rem;
-    }
+const StyledOppsummeringFelt = styled(OppsummeringFelt)`
+    border: 1px dotted red;
+    padding: 10rem;
 `;
-
-const Spørsmål: React.FC<{ språkId: string; språkValues?: Record<string, ReactNode> }> = ({
-    språkId,
-    språkValues = {},
-}) => (
-    <StyledElement>
-        <SpråkTekst id={språkId} values={språkValues} />
-    </StyledElement>
-);
 
 const PeriodeContainer = styled.div`
     margin: 2rem 0;
@@ -92,100 +82,102 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                 />
             </Element>
             {arbeidsperiodeAvsluttet && (
-                <Informasjonsbolk>
-                    <Spørsmål
-                        språkId={
-                            gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                      ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
-                                  ]
-                        }
-                    />
-                    <Normaltekst>
-                        <SpråkTekst id={arbeidsperiodeAvsluttet.svar} />
-                    </Normaltekst>
-                </Informasjonsbolk>
+                <StyledOppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={
+                                gjelderAndreForelder
+                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                          tilbakeITid,
+                                          erAndreForelderDød
+                                      )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
+                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                          ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
+                                      ]
+                            }
+                        />
+                    }
+                    søknadsvar={arbeidsperiodeAvsluttet.svar}
+                />
             )}
             {arbeidsperiodeland && (
-                <Informasjonsbolk>
-                    <Spørsmål
-                        språkId={
-                            gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                      ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
-                                  ]
-                        }
-                    />
-                    <Normaltekst>
-                        {landkodeTilSpråk(arbeidsperiodeland.svar, valgtLocale)}
-                    </Normaltekst>
-                </Informasjonsbolk>
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={
+                                gjelderAndreForelder
+                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                          tilbakeITid,
+                                          erAndreForelderDød
+                                      )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
+                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                          ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
+                                      ]
+                            }
+                        />
+                    }
+                    søknadsvar={landkodeTilSpråk(arbeidsperiodeland.svar, valgtLocale)}
+                />
             )}
             {arbeidsgiver && (
-                <Informasjonsbolk>
-                    <Spørsmål
-                        språkId={
-                            gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                      ArbeidsperiodeSpørsmålsId.arbeidsgiver
-                                  ]
-                        }
-                    />
-                    <Normaltekst>
-                        <SpråkTekst id={arbeidsgiver.svar} />
-                    </Normaltekst>
-                </Informasjonsbolk>
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={
+                                gjelderAndreForelder
+                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                          tilbakeITid,
+                                          erAndreForelderDød
+                                      )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
+                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                          ArbeidsperiodeSpørsmålsId.arbeidsgiver
+                                      ]
+                            }
+                        />
+                    }
+                    søknadsvar={arbeidsgiver.svar}
+                />
             )}
             {fraDatoArbeidsperiode && (
-                <Informasjonsbolk>
-                    <Spørsmål
-                        språkId={
-                            gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                      ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
-                                  ]
-                        }
-                    />
-                    <Normaltekst>{formaterDato(fraDatoArbeidsperiode.svar)}</Normaltekst>
-                </Informasjonsbolk>
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={
+                                gjelderAndreForelder
+                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                          tilbakeITid,
+                                          erAndreForelderDød
+                                      )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
+                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                          ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
+                                      ]
+                            }
+                        />
+                    }
+                    søknadsvar={formaterDato(fraDatoArbeidsperiode.svar)}
+                />
             )}
             {tilDatoArbeidsperiode && (
-                <Informasjonsbolk>
-                    <Spørsmål
-                        språkId={
-                            gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                      ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode
-                                  ]
-                        }
-                    />
-                    <Normaltekst>
-                        {formaterDatoMedUkjent(
-                            tilDatoArbeidsperiode.svar,
-                            formatMessage({ id: tilDatoUkjentLabelSpråkId })
-                        )}
-                    </Normaltekst>
-                </Informasjonsbolk>
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={
+                                gjelderAndreForelder
+                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
+                                          tilbakeITid,
+                                          erAndreForelderDød
+                                      )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
+                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                          ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode
+                                      ]
+                            }
+                        />
+                    }
+                    søknadsvar={formaterDatoMedUkjent(
+                        tilDatoArbeidsperiode.svar,
+                        formatMessage({ id: tilDatoUkjentLabelSpråkId })
+                    )}
+                />
             )}
             {visFjernKnapp && (
                 <SlettKnapp
