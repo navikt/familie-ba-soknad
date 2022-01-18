@@ -12,11 +12,13 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IArbeidsperiode } from '../../../typer/person';
 import { IBarnMedISøknad } from '../../../typer/søknad';
+import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
 import Informasjonsbolk from '../Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { tilDatoUkjentLabelSpråkId } from '../UtenlandsoppholdModal/spørsmål';
+import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
 import {
     arbeidsperiodeAndreForelderSpørsmålSpråkId,
     ArbeidsperiodeSpørsmålsId,
@@ -85,7 +87,10 @@ export const ArbeidsperiodeOppsummering: React.FC<{
     return (
         <PeriodeContainer className={className}>
             <Element>
-                <SpråkTekst id={'LEGG TIL OVERSKRIFT'} values={{ x: nummer }} />
+                <SpråkTekst
+                    id={arbeidsperiodeOppsummeringOverskrift(gjelderUtlandet)}
+                    values={{ x: nummer }}
+                />
             </Element>
             {arbeidsperiodeAvsluttet && (
                 <Informasjonsbolk>
@@ -158,9 +163,7 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                                   ]
                         }
                     />
-                    <Normaltekst>
-                        <SpråkTekst id={fraDatoArbeidsperiode.svar} />
-                    </Normaltekst>
+                    <Normaltekst>{formaterDato(fraDatoArbeidsperiode.svar)}</Normaltekst>
                 </Informasjonsbolk>
             )}
             {tilDatoArbeidsperiode && (
@@ -182,7 +185,6 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                             tilDatoArbeidsperiode.svar,
                             formatMessage({ id: tilDatoUkjentLabelSpråkId })
                         )}
-                        <SpråkTekst id={tilDatoArbeidsperiode.svar} />
                     </Normaltekst>
                 </Informasjonsbolk>
             )}

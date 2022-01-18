@@ -13,3 +13,8 @@ export const tilDatoArbeidsperiodeFeilmelding = (tilbakeITid, erAndreForelderDø
     tilbakeITid || erAndreForelderDød
         ? 'felles.nåravsluttetarbeidsperiode.feilmelding'
         : 'felles.nåravsluttesarbeidsperiode.feilmelding';
+
+export const arbeidsperiodeOppsummeringOverskrift = gjelderUtlandet =>
+    gjelderUtlandet
+        ? 'felles.flerearbeidsperioderutland.periode'
+        : 'felles.flerearbeidsperiodernorge.periode';
