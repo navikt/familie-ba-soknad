@@ -26,6 +26,7 @@ import { Årsak } from '../../../typer/utvidet';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
+import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
@@ -213,6 +214,10 @@ export const useDinLivssituasjon = (): {
         verdi: arbeidsperioder,
         avhengigheter: { jobberPåBåt },
         skalFeltetVises: avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA,
+        valideringsfunksjon: felt =>
+            jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
+                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
+                : ok(felt),
     });
 
     useEffect(() => {
