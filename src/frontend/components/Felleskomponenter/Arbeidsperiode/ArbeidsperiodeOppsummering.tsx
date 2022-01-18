@@ -63,10 +63,9 @@ export const ArbeidsperiodeOppsummering: React.FC<{
     arbeidsperiode,
     nummer,
     fjernPeriodeCallback,
-    barn,
     visFjernKnapp = true,
     className,
-    gjelderUtlandet,
+    gjelderUtlandet = false,
     andreForelderData,
 }) => {
     const [valgtLocale] = useSprakContext();
@@ -196,7 +195,7 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                 >
                     <DeleteFilled />
                     <span>
-                        <SpråkTekst id={'felles.fjernutenlandsopphold.knapp'} />
+                        <SpråkTekst id={'felles.fjernarbeidsperiode.knapp'} />
                     </span>
                 </SlettKnapp>
             )}

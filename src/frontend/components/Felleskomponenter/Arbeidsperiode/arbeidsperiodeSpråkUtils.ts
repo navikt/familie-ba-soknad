@@ -1,4 +1,8 @@
-export const arbeidslandFeilmelding = (tilbakeITid, gjelderAndreForelder, erAndreForelderDød) => {
+export const arbeidslandFeilmelding = (
+    tilbakeITid: boolean,
+    gjelderAndreForelder: boolean,
+    erAndreForelderDød: boolean
+): string => {
     if (tilbakeITid || erAndreForelderDød) {
         return gjelderAndreForelder
             ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
@@ -9,12 +13,39 @@ export const arbeidslandFeilmelding = (tilbakeITid, gjelderAndreForelder, erAndr
             : 'omdeg.arbeid-utland.land.feilmelding';
 };
 
-export const tilDatoArbeidsperiodeFeilmelding = (tilbakeITid, erAndreForelderDød) =>
+export const tilDatoArbeidsperiodeFeilmelding = (
+    tilbakeITid: boolean,
+    erAndreForelderDød: boolean
+): string =>
     tilbakeITid || erAndreForelderDød
         ? 'felles.nåravsluttetarbeidsperiode.feilmelding'
         : 'felles.nåravsluttesarbeidsperiode.feilmelding';
 
-export const arbeidsperiodeOppsummeringOverskrift = gjelderUtlandet =>
+export const arbeidsperiodeOppsummeringOverskrift = (gjelderUtlandet: boolean): string =>
     gjelderUtlandet
         ? 'felles.flerearbeidsperioderutland.periode'
         : 'felles.flerearbeidsperiodernorge.periode';
+
+export const arbeidsperiodeLeggTilFlereKnapp = (gjelderUtlandet: boolean): string =>
+    gjelderUtlandet
+        ? 'felles.flerearbeidsperioderutland.tittel'
+        : 'felles.flerearbeidsperiodernorge.tittel';
+
+export const arbeidsperiodeFlereSpørsmål = (
+    gjelderUtlandet: boolean,
+    gjelderAndreForelder: boolean
+): string => {
+    if (gjelderUtlandet) {
+        return gjelderAndreForelder
+            ? 'eøs.andre-forelder.arbeid-utland-perioder.spm'
+            : 'eøs.arbeid-utland-perioder.spm';
+    } else
+        return gjelderAndreForelder
+            ? 'eøs-om-barn.annenforelderflerearbeidsperiodenorge.spm'
+            : 'eøs-om-deg.flerearbeidsperioderinorge.spm';
+};
+
+export const arbeidsperiodeFeilmelding = (gjelderUtlandet: boolean): string =>
+    gjelderUtlandet
+        ? 'felles.flerearbeidsperioderutland.feilmelding'
+        : 'felles.flerearbeidsperiodernorge.feilmelding';

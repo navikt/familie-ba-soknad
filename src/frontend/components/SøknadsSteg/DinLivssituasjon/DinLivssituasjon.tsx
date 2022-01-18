@@ -155,6 +155,7 @@ const DinLivssituasjon: React.FC = () => {
                     skjema={skjema}
                     leggTilArbeidsperiode={leggTilArbeidsperiode}
                     fjernArbeidsperiode={fjernArbeidsperiode}
+                    gjelderUtlandet={true}
                 />
 
                 <JaNeiSpm
