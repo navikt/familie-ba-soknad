@@ -52,6 +52,8 @@ export const useDinLivssituasjon = (): {
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
     );
+
+    // TODO: Lag egen hook for arbeidsperiodefelt og logikk
     const [arbeidsperioder, settArbeidsperioder] = useState<IArbeidsperiode[]>(
         søker.arbeidsperioder
     );
