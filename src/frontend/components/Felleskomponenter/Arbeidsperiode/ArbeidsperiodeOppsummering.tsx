@@ -23,16 +23,12 @@ import {
     arbeidsperiodeAndreForelderSpørsmålSpråkId,
     ArbeidsperiodeSpørsmålsId,
     arbeidsperiodeSøkerSpørsmålSpråkId,
+    hentArbeidsperiodeSpørsmålIder,
 } from './spørsmål';
-
-const StyledOppsummeringFelt = styled(OppsummeringFelt)`
-    border: 1px dotted red;
-    padding: 10rem;
-`;
 
 const PeriodeContainer = styled.div`
     margin: 2rem 0;
-    border-bottom: 1px solid #78706a; ;
+    border-bottom: 1px solid #78706a; // TODO: Bytt til riktig nav farge og bruk variabel
 `;
 
 const SlettKnapp = styled(Flatknapp)`
@@ -82,7 +78,7 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                 />
             </Element>
             {arbeidsperiodeAvsluttet && (
-                <StyledOppsummeringFelt
+                <OppsummeringFelt
                     tittel={
                         <SpråkTekst
                             id={
@@ -105,14 +101,11 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={
-                                gjelderAndreForelder
-                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                          tilbakeITid,
-                                          erAndreForelderDød
-                                      )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
-                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                          ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
-                                      ]
+                                hentArbeidsperiodeSpørsmålIder(
+                                    gjelderAndreForelder,
+                                    tilbakeITid,
+                                    erAndreForelderDød
+                                )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
                             }
                         />
                     }
@@ -124,14 +117,11 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={
-                                gjelderAndreForelder
-                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                          tilbakeITid,
-                                          erAndreForelderDød
-                                      )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
-                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                          ArbeidsperiodeSpørsmålsId.arbeidsgiver
-                                      ]
+                                hentArbeidsperiodeSpørsmålIder(
+                                    gjelderAndreForelder,
+                                    tilbakeITid,
+                                    erAndreForelderDød
+                                )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
                             }
                         />
                     }
@@ -143,14 +133,11 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={
-                                gjelderAndreForelder
-                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                          tilbakeITid,
-                                          erAndreForelderDød
-                                      )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
-                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                          ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
-                                      ]
+                                hentArbeidsperiodeSpørsmålIder(
+                                    gjelderAndreForelder,
+                                    tilbakeITid,
+                                    erAndreForelderDød
+                                )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
                             }
                         />
                     }
@@ -162,14 +149,11 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={
-                                gjelderAndreForelder
-                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                          tilbakeITid,
-                                          erAndreForelderDød
-                                      )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
-                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                          ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode
-                                      ]
+                                hentArbeidsperiodeSpørsmålIder(
+                                    gjelderAndreForelder,
+                                    tilbakeITid,
+                                    erAndreForelderDød
+                                )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
                             }
                         />
                     }

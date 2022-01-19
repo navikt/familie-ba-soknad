@@ -44,3 +44,12 @@ export const arbeidsperiodeAndreForelderSpørsmålSpråkId = (
     [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]:
         'felles.nåravsluttesarbeidsperiode.sjekkboks',
 });
+
+export const hentArbeidsperiodeSpørsmålIder = (
+    gjelderAndreForelder: boolean,
+    tilbakeITid: boolean,
+    erAndreForelderDød: boolean
+): Record<ArbeidsperiodeSpørsmålsId, string> =>
+    gjelderAndreForelder
+        ? arbeidsperiodeAndreForelderSpørsmålSpråkId(tilbakeITid, erAndreForelderDød)
+        : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid);

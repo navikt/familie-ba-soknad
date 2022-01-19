@@ -15,11 +15,7 @@ import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import {
-    arbeidsperiodeAndreForelderSpørsmålSpråkId,
-    ArbeidsperiodeSpørsmålsId,
-    arbeidsperiodeSøkerSpørsmålSpråkId,
-} from './spørsmål';
+import { ArbeidsperiodeSpørsmålsId, hentArbeidsperiodeSpørsmålIder } from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaParams {
@@ -110,14 +106,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         skjema={skjema}
                         felt={skjema.felter.arbeidsperiodeAvsluttet}
                         spørsmålTekstId={
-                            gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                      ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
-                                  ]
+                            hentArbeidsperiodeSpørsmålIder(
+                                gjelderAndreForelder,
+                                tilbakeITid,
+                                erAndreForelderDød
+                            )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
                         }
                     />
                 )}
@@ -129,14 +122,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             label={
                                 <SpråkTekst
                                     id={
-                                        gjelderAndreForelder
-                                            ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                                  tilbakeITid,
-                                                  erAndreForelderDød
-                                              )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
-                                            : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                                  ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
-                                              ]
+                                        hentArbeidsperiodeSpørsmålIder(
+                                            gjelderAndreForelder,
+                                            tilbakeITid,
+                                            erAndreForelderDød
+                                        )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
                                     }
                                 />
                             }
@@ -149,14 +139,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         felt={skjema.felter.arbeidsgiver}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         labelSpråkTekstId={
-                            gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                      ArbeidsperiodeSpørsmålsId.arbeidsgiver
-                                  ]
+                            hentArbeidsperiodeSpørsmålIder(
+                                gjelderAndreForelder,
+                                tilbakeITid,
+                                erAndreForelderDød
+                            )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
                         }
                     />
                 )}
@@ -167,14 +154,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         label={
                             <SpråkTekst
                                 id={
-                                    gjelderAndreForelder
-                                        ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                              tilbakeITid,
-                                              erAndreForelderDød
-                                          )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
-                                        : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                              ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
-                                          ]
+                                    hentArbeidsperiodeSpørsmålIder(
+                                        gjelderAndreForelder,
+                                        tilbakeITid,
+                                        erAndreForelderDød
+                                    )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
                                 }
                             />
                         }
@@ -194,14 +178,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             label={
                                 <SpråkTekst
                                     id={
-                                        gjelderAndreForelder
-                                            ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                                  tilbakeITid,
-                                                  erAndreForelderDød
-                                              )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
-                                            : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                                  ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode
-                                              ]
+                                        hentArbeidsperiodeSpørsmålIder(
+                                            gjelderAndreForelder,
+                                            tilbakeITid,
+                                            erAndreForelderDød
+                                        )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
                                     }
                                 />
                             }
@@ -222,14 +203,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         <SkjemaCheckbox
                             felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
                             labelSpråkTekstId={
-                                gjelderAndreForelder
-                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                          tilbakeITid,
-                                          erAndreForelderDød
-                                      )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]
-                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                          ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                                      ]
+                                hentArbeidsperiodeSpørsmålIder(
+                                    gjelderAndreForelder,
+                                    tilbakeITid,
+                                    erAndreForelderDød
+                                )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]
                             }
                         />
                     </>
