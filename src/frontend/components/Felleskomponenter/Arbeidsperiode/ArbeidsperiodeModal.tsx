@@ -5,6 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { IArbeidsperiode } from '../../../typer/person';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
@@ -40,6 +41,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
         arbeidsgiver,
         fraDatoArbeidsperiode,
         tilDatoArbeidsperiode,
+        tilDatoArbeidsperiodeUkjent,
     } = skjema.felter;
 
     const gjelderAndreForelder = !!andreForelderData;
@@ -75,7 +77,10 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
             ...(tilDatoArbeidsperiode.erSynlig && {
                 tilDatoArbeidsperiode: {
                     id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
-                    svar: tilDatoArbeidsperiode.verdi,
+                    svar: svarForSpørsmålMedUkjent(
+                        tilDatoArbeidsperiodeUkjent,
+                        tilDatoArbeidsperiode
+                    ),
                 },
             }),
         });

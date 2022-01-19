@@ -159,7 +159,15 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     }
                     søknadsvar={formaterDatoMedUkjent(
                         tilDatoArbeidsperiode.svar,
-                        formatMessage({ id: tilDatoUkjentLabelSpråkId })
+                        formatMessage({
+                            id: gjelderAndreForelder
+                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(false, false)[
+                                      ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                                  ]
+                                : arbeidsperiodeSøkerSpørsmålSpråkId(false)[
+                                      ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                                  ],
+                        })
                     )}
                 />
             )}
