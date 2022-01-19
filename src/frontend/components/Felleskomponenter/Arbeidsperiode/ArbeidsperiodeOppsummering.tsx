@@ -38,17 +38,15 @@ const SlettKnapp = styled(Flatknapp)`
 export const ArbeidsperiodeOppsummering: React.FC<{
     arbeidsperiode: IArbeidsperiode;
     nummer: number;
-    fjernPeriodeCallback: (arbeidsperiode: IArbeidsperiode) => void;
+    fjernPeriodeCallback?: (arbeidsperiode: IArbeidsperiode) => void;
     barn?: IBarnMedISøknad;
-    visFjernKnapp?: boolean;
     className?: string;
     gjelderUtlandet?: boolean;
     andreForelderData?: { erDød: boolean };
 }> = ({
     arbeidsperiode,
     nummer,
-    fjernPeriodeCallback,
-    visFjernKnapp = true,
+    fjernPeriodeCallback = undefined,
     className,
     gjelderUtlandet = false,
     andreForelderData,
@@ -170,7 +168,7 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     )}
                 />
             )}
-            {visFjernKnapp && (
+            {fjernPeriodeCallback !== undefined && (
                 <SlettKnapp
                     htmlType={'button'}
                     kompakt

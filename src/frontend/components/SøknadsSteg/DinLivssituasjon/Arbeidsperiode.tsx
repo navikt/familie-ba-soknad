@@ -62,17 +62,14 @@ export const Arbeidsperiode: React.FC<Props> = props => {
                     {skjema.felter.jobberPåBåt.verdi === ESvar.JA && (
                         <KomponentGruppe inline>
                             {skjema.felter.registrerteArbeidsperioder.verdi.map(
-                                (periode, index) => {
-                                    return (
-                                        <ArbeidsperiodeOppsummering
-                                            arbeidsperiode={periode}
-                                            fjernPeriodeCallback={fjernArbeidsperiode}
-                                            nummer={index + 1}
-                                            visFjernKnapp={true}
-                                            gjelderUtlandet={true}
-                                        />
-                                    );
-                                }
+                                (periode, index) => (
+                                    <ArbeidsperiodeOppsummering
+                                        arbeidsperiode={periode}
+                                        fjernPeriodeCallback={fjernArbeidsperiode}
+                                        nummer={index + 1}
+                                        gjelderUtlandet={true}
+                                    />
+                                )
                             )}
                             {skjema.felter.registrerteArbeidsperioder.verdi.length > 0 && (
                                 <Element>

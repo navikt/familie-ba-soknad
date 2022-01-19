@@ -258,8 +258,6 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                             key={index}
                             nummer={index + 1}
                             arbeidsperiode={periode}
-                            fjernPeriodeCallback={() => null}
-                            visFjernKnapp={false}
                         />
                     ))}
                 <OppsummeringFelt

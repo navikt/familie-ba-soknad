@@ -77,6 +77,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
             søker.arbeidsland.svar,
             søker.pensjonsland.svar,
             søker.utenlandsperioder.map(periode => periode.oppholdsland.svar),
+            søker.arbeidsperioder.map(periode => periode.arbeidsperiodeland?.svar ?? ''),
         ].flat();
 
         return !!landSvarSomKanTrigge.find(land => erEøsLand(land));
