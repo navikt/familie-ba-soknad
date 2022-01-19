@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
-import styled from 'styled-components';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -28,10 +27,6 @@ import { useDinLivssituasjon } from '../../DinLivssituasjon/useDinLivssituasjon'
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
 import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
-
-const StyledArbeidsperiodeOppsummering = styled(ArbeidsperiodeOppsummering)`
-    border-bottom: none;
-`;
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -238,7 +233,17 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.søker.jobberPåBåt.svar}
                 />
-                {!toggles.EØS_KOMPLETT && søknad.søker.arbeidsland.svar && (
+                {toggles.EØS_KOMPLETT ? (
+                    <>
+                        {søknad.søker.arbeidsperioder.map((periode, index) => (
+                            <ArbeidsperiodeOppsummering
+                                key={index}
+                                nummer={index + 1}
+                                arbeidsperiode={periode}
+                            />
+                        ))}
+                    </>
+                ) : (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -252,14 +257,6 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         søknadsvar={landkodeTilSpråk(søknad.søker.arbeidsland.svar, valgtLocale)}
                     />
                 )}
-                {toggles.EØS_KOMPLETT &&
-                    søknad.søker.arbeidsperioder.map((periode, index) => (
-                        <StyledArbeidsperiodeOppsummering
-                            key={index}
-                            nummer={index + 1}
-                            arbeidsperiode={periode}
-                        />
-                    ))}
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst

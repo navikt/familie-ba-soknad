@@ -60,7 +60,7 @@ export const Arbeidsperiode: React.FC<Props> = props => {
             {toggles.EØS_KOMPLETT ? (
                 <>
                     {skjema.felter.jobberPåBåt.verdi === ESvar.JA && (
-                        <KomponentGruppe inline>
+                        <>
                             {skjema.felter.registrerteArbeidsperioder.verdi.map(
                                 (periode, index) => (
                                     <ArbeidsperiodeOppsummering
@@ -102,7 +102,7 @@ export const Arbeidsperiode: React.FC<Props> = props => {
                                 onLeggTilArbeidsperiode={leggTilArbeidsperiode}
                                 gjelderUtlandet
                             />
-                        </KomponentGruppe>
+                        </>
                     )}
                 </>
             ) : (
