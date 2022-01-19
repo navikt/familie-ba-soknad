@@ -4,7 +4,6 @@ import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { IPensjonsperiode } from '../../../typer/person';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
@@ -25,7 +24,7 @@ import {
 import { IUsePensjonSkjemaParams, usePensjonSkjema } from './usePensjonSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
-    onLeggTilPensjonsPeriode: (periode: IPensjonsperiode) => void;
+    //TODO: legg til denne når vi skal sett søknadsdata  onLeggTilPensjonsPeriode: (periode: IPensjonsperiode) => void;
     gjelderUtland?: boolean;
     andreForelderData?: { barn: IBarnMedISøknad; erDød: boolean };
 }
