@@ -17,7 +17,6 @@ import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { tilDatoUkjentLabelSpråkId } from '../UtenlandsoppholdModal/spørsmål';
 import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
 import {
     arbeidsperiodeAndreForelderSpørsmålSpråkId,
