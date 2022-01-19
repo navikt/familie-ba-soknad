@@ -55,6 +55,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     erAsylsøker: ISøknadSpørsmål<ESvar | null>;
     jobberPåBåt: ISøknadSpørsmål<ESvar | null>;
     arbeidsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    arbeidsperioder: IArbeidsperiode[];
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | null>;
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
     harSamboerNå: ISøknadSpørsmål<ESvar | null>;
@@ -79,8 +80,8 @@ export interface IUtenlandsperiode {
 }
 
 export interface IArbeidsperiode {
-    arbeidsperiodeAvsluttet?: ISøknadSpørsmål<ESvar | null>;
-    arbeidsperiodeland: ISøknadSpørsmål<Alpha3Code | ''>;
+    arbeidsperiodeAvsluttet?: ISøknadSpørsmål<ESvar>;
+    arbeidsperiodeland?: ISøknadSpørsmål<Alpha3Code | ''>;
     arbeidsgiver?: ISøknadSpørsmål<string>;
     fraDatoArbeidsperiode?: ISøknadSpørsmål<ISODateString>;
     tilDatoArbeidsperiode?: ISøknadSpørsmål<DatoMedUkjent>;

@@ -8,6 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
+import { useFeatureToggles } from '../../../../context/FeatureToggleContext';
 import { useRoutes } from '../../../../context/RoutesContext';
 import { AlternativtSvarForInput } from '../../../../typer/common';
 import { ESivilstand, ISamboer, ITidligereSamboer } from '../../../../typer/person';
@@ -15,6 +16,7 @@ import { RouteEnum } from '../../../../typer/routes';
 import { formaterDato } from '../../../../utils/dato';
 import { landkodeTilSpråk, toÅrsakSpråkId } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
+import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
     DinLivssituasjonSpørsmålId,
@@ -80,6 +82,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { formatMessage } = useIntl();
     const [valgtLocale] = useSprakContext();
     const { hentRouteObjektForRouteEnum } = useRoutes();
+    const { toggles } = useFeatureToggles();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
 
@@ -230,7 +233,17 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.søker.jobberPåBåt.svar}
                 />
-                {søknad.søker.arbeidsland.svar && (
+                {toggles.EØS_KOMPLETT ? (
+                    <>
+                        {søknad.søker.arbeidsperioder.map((periode, index) => (
+                            <ArbeidsperiodeOppsummering
+                                key={index}
+                                nummer={index + 1}
+                                arbeidsperiode={periode}
+                            />
+                        ))}
+                    </>
+                ) : (
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst

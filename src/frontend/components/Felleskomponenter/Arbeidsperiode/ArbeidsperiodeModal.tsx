@@ -5,6 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { IArbeidsperiode } from '../../../typer/person';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
@@ -15,11 +16,7 @@ import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import {
-    arbeidsperiodeAndreForelderSpørsmålSpråkId,
-    ArbeidsperiodeSpørsmålsId,
-    arbeidsperiodeSøkerSpørsmålSpråkId,
-} from './spørsmål';
+import { ArbeidsperiodeSpørsmålsId, hentArbeidsperiodeSpørsmålIder } from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaParams {
@@ -31,7 +28,7 @@ interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaPar
 export const ArbeidsperiodeModal: React.FC<Props> = ({
     erÅpen,
     toggleModal,
-    //onLeggTilArbeidsperiode,
+    onLeggTilArbeidsperiode,
     gjelderUtlandet = false,
     andreForelderData,
 }) => {
@@ -44,6 +41,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
         arbeidsgiver,
         fraDatoArbeidsperiode,
         tilDatoArbeidsperiode,
+        tilDatoArbeidsperiodeUkjent,
     } = skjema.felter;
 
     const gjelderAndreForelder = !!andreForelderData;
@@ -52,8 +50,8 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
-            //TODO legg til denne når vi skal sette søknadsdata
-            /* onLeggTilArbeidsperiode({
+        }
+        onLeggTilArbeidsperiode({
             ...(arbeidsperiodeAvsluttet.erSynlig && {
                 arbeidsperiodeAvsluttet: {
                     id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
@@ -79,14 +77,18 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
             ...(tilDatoArbeidsperiode.erSynlig && {
                 tilDatoArbeidsperiode: {
                     id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
-                    svar: tilDatoArbeidsperiode.verdi,
+                    svar: svarForSpørsmålMedUkjent(
+                        tilDatoArbeidsperiodeUkjent,
+                        tilDatoArbeidsperiode
+                    ),
                 },
-            }),*/
-        }
+            }),
+        });
 
         toggleModal();
         nullstillSkjema();
     };
+
     const modalTittel = gjelderUtlandet
         ? 'felles.flerearbeidsperioderutland.tittel'
         : 'felles.flerearbeidsperiodernorge.tittel';
@@ -109,14 +111,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         skjema={skjema}
                         felt={skjema.felter.arbeidsperiodeAvsluttet}
                         spørsmålTekstId={
-                            gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                      ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
-                                  ]
+                            hentArbeidsperiodeSpørsmålIder(
+                                gjelderAndreForelder,
+                                tilbakeITid,
+                                erAndreForelderDød
+                            )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
                         }
                     />
                 )}
@@ -128,14 +127,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             label={
                                 <SpråkTekst
                                     id={
-                                        gjelderAndreForelder
-                                            ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                                  tilbakeITid,
-                                                  erAndreForelderDød
-                                              )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
-                                            : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                                  ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
-                                              ]
+                                        hentArbeidsperiodeSpørsmålIder(
+                                            gjelderAndreForelder,
+                                            tilbakeITid,
+                                            erAndreForelderDød
+                                        )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
                                     }
                                 />
                             }
@@ -148,14 +144,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         felt={skjema.felter.arbeidsgiver}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         labelSpråkTekstId={
-                            gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                      ArbeidsperiodeSpørsmålsId.arbeidsgiver
-                                  ]
+                            hentArbeidsperiodeSpørsmålIder(
+                                gjelderAndreForelder,
+                                tilbakeITid,
+                                erAndreForelderDød
+                            )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
                         }
                     />
                 )}
@@ -166,14 +159,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         label={
                             <SpråkTekst
                                 id={
-                                    gjelderAndreForelder
-                                        ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                              tilbakeITid,
-                                              erAndreForelderDød
-                                          )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
-                                        : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                              ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
-                                          ]
+                                    hentArbeidsperiodeSpørsmålIder(
+                                        gjelderAndreForelder,
+                                        tilbakeITid,
+                                        erAndreForelderDød
+                                    )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
                                 }
                             />
                         }
@@ -193,14 +183,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             label={
                                 <SpråkTekst
                                     id={
-                                        gjelderAndreForelder
-                                            ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                                  tilbakeITid,
-                                                  erAndreForelderDød
-                                              )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
-                                            : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                                  ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode
-                                              ]
+                                        hentArbeidsperiodeSpørsmålIder(
+                                            gjelderAndreForelder,
+                                            tilbakeITid,
+                                            erAndreForelderDød
+                                        )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
                                     }
                                 />
                             }
@@ -221,14 +208,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         <SkjemaCheckbox
                             felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
                             labelSpråkTekstId={
-                                gjelderAndreForelder
-                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                          tilbakeITid,
-                                          erAndreForelderDød
-                                      )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]
-                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                          ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                                      ]
+                                hentArbeidsperiodeSpørsmålIder(
+                                    gjelderAndreForelder,
+                                    tilbakeITid,
+                                    erAndreForelderDød
+                                )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]
                             }
                         />
                     </>

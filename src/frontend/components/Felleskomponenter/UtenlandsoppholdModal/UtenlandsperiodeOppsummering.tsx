@@ -45,7 +45,7 @@ const Spørsmål: React.FC<{ språkId: string; språkValues?: Record<string, Rea
 
 const PeriodeContainer = styled.div`
     margin: 2rem 0;
-    border-bottom: 1px solid #78706a; ;
+    border-bottom: 1px solid #78706a; // TODO: Bytt til riktig nav farge og bruk variabel
 `;
 
 const SlettKnapp = styled(Flatknapp)`
@@ -63,7 +63,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
     fjernPeriodeCallback: (periode: IUtenlandsperiode) => void;
     erFørsteEøsPeriode?: boolean;
     barn?: IBarnMedISøknad;
-    visFjernKnapp?: boolean;
+    visFjernKnapp?: boolean; // TODO: Fjern denne og sjekk på fjernPeriodeCallback. Og gjør fjernPeriodeCallback optional
     className?: string;
 }> = ({
     periode,
