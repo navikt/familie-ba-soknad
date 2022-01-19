@@ -63,7 +63,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
     fjernPeriodeCallback: (periode: IUtenlandsperiode) => void;
     erFørsteEøsPeriode?: boolean;
     barn?: IBarnMedISøknad;
-    visFjernKnapp?: boolean;
+    visFjernKnapp?: boolean; // TODO: Fjern denne og sjekk på fjernPeriodeCallback. Og gjør fjernPeriodeCallback optional
     className?: string;
 }> = ({
     periode,
