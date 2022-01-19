@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
@@ -12,11 +12,13 @@ const useLanddropdownFelt = ({
     feilmeldingSpråkId,
     skalFeltetVises,
     nullstillVedAvhengighetEndring = false,
+    feilmeldingSpråkVerdier,
 }: {
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>;
     feilmeldingSpråkId: string;
     skalFeltetVises: boolean;
     nullstillVedAvhengighetEndring?: boolean;
+    feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) => {
     return useFelt<Alpha3Code | ''>({
         feltId: søknadsfelt.id,
@@ -30,7 +32,10 @@ const useLanddropdownFelt = ({
                 : feil(
                       felt,
                       avhengigheter?.feilmeldingSpråkId ? (
-                          <SpråkTekst id={avhengigheter.feilmeldingSpråkId} />
+                          <SpråkTekst
+                              id={avhengigheter.feilmeldingSpråkId}
+                              values={feilmeldingSpråkVerdier}
+                          />
                       ) : (
                           ''
                       )
