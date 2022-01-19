@@ -12,6 +12,7 @@ import { Dokumentasjonsbehov, IDokumentasjon } from '../typer/dokumentasjon';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, ISøker } from '../typer/person';
 import { IBarnMedISøknad } from '../typer/søknad';
 import { useApp } from './AppContext';
+import { useFeatureToggles } from './FeatureToggleContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 
 const [EøsProvider, useEøs] = createUseContext(() => {
@@ -26,6 +27,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     const [barnSomTriggerEøs, settBarnSomTriggerEøs] = useState<BarnetsId[]>(
         søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs).map(barn => barn.id)
     );
+    const { toggles } = useFeatureToggles();
 
     const { soknadApi } = Miljø();
 
@@ -74,10 +76,11 @@ const [EøsProvider, useEøs] = createUseContext(() => {
 
     const skalTriggeEøsForSøker = (søker: ISøker): boolean => {
         const landSvarSomKanTrigge = [
-            søker.arbeidsland.svar,
             søker.pensjonsland.svar,
             søker.utenlandsperioder.map(periode => periode.oppholdsland.svar),
-            søker.arbeidsperioder.map(periode => periode.arbeidsperiodeland?.svar ?? ''),
+            ...(toggles.EØS_KOMPLETT
+                ? [søker.arbeidsperioder.map(periode => periode.arbeidsperiodeland?.svar ?? '')]
+                : [søker.arbeidsland.svar]),
         ].flat();
 
         return !!landSvarSomKanTrigge.find(land => erEøsLand(land));
