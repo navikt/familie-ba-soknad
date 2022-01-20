@@ -2,23 +2,36 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { Element } from 'nav-frontend-typografi';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { andreForelderDataKeySpørsmål } from '../../../typer/person';
+import { andreForelderDataKeySpørsmål, IArbeidsperiode } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IAndreForelder, IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
+import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
+import { ArbeidsperiodeOppsummering } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import {
+    arbeidsperiodeFeilmelding,
+    arbeidsperiodeFlereSpørsmål,
+    arbeidsperiodeLeggTilFlereKnapp,
+} from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
+import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import AndreForelderOppsummering from '../Oppsummering/OppsummeringSteg/OmBarnet/AndreForelderOppsummering';
@@ -30,13 +43,24 @@ const AndreForelder: React.FC<{
     andreForelder: IAndreForelder;
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
     andreBarnSomErFyltUt: IBarnMedISøknad[];
-}> = ({ barn, andreForelder, skjema, andreBarnSomErFyltUt }) => {
+    leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
+    fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
+}> = ({
+    barn,
+    andreForelder,
+    skjema,
+    andreBarnSomErFyltUt,
+    leggTilArbeidsperiode,
+    fjernArbeidsperiode,
+}) => {
     const { erEøsLand } = useEøs();
     const intl = useIntl();
     const barnetsNavn = barnetsNavnValue(barn, intl);
     const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
         annetBarn => annetBarn.id === skjema.felter.sammeForelderSomAnnetBarn.verdi
     );
+    const { toggles } = useFeatureToggles();
+    const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
 
     return (
         <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
@@ -153,35 +177,110 @@ const AndreForelder: React.FC<{
                                     inkluderVetIkke={true}
                                     språkValues={{ navn: barnetsNavn }}
                                 />
-                                <LandDropdown
-                                    felt={skjema.felter.andreForelderArbeidUtlandetHvilketLand}
-                                    skjema={skjema}
-                                    dynamisk
-                                    label={
-                                        <SpråkTekst
-                                            id={
-                                                omBarnetSpørsmålSpråkId[
-                                                    andreForelder[
-                                                        andreForelderDataKeySpørsmål
-                                                            .arbeidUtlandetHvilketLand
-                                                    ].id
-                                                ]
+                                {toggles.EØS_KOMPLETT ? (
+                                    <>
+                                        {skjema.felter.andreForelderArbeidsperioderUtland
+                                            .erSynlig && (
+                                            <>
+                                                {skjema.felter.andreForelderArbeidsperioderUtland.verdi.map(
+                                                    (periode, index) => (
+                                                        <ArbeidsperiodeOppsummering
+                                                            arbeidsperiode={periode}
+                                                            fjernPeriodeCallback={
+                                                                fjernArbeidsperiode
+                                                            }
+                                                            nummer={index + 1}
+                                                            gjelderUtlandet={true}
+                                                            andreForelderData={{
+                                                                erDød:
+                                                                    barn.andreForelderErDød.svar ===
+                                                                    ESvar.JA,
+                                                            }}
+                                                        />
+                                                    )
+                                                )}
+                                                {skjema.felter.andreForelderArbeidsperioderUtland
+                                                    .verdi.length > 0 && (
+                                                    <Element>
+                                                        <SpråkTekst
+                                                            id={arbeidsperiodeFlereSpørsmål(
+                                                                true,
+                                                                true
+                                                            )}
+                                                            values={{ barn: barnetsNavn }}
+                                                        />
+                                                    </Element>
+                                                )}
+                                                <LeggTilKnapp
+                                                    onClick={toggleArbeidsmodal}
+                                                    språkTekst={arbeidsperiodeLeggTilFlereKnapp(
+                                                        true
+                                                    )}
+                                                    id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
+                                                    feilmelding={
+                                                        skjema.felter
+                                                            .andreForelderArbeidsperioderUtland
+                                                            .erSynlig &&
+                                                        skjema.felter
+                                                            .andreForelderArbeidsperioderUtland
+                                                            .feilmelding &&
+                                                        skjema.visFeilmeldinger && (
+                                                            <SpråkTekst
+                                                                id={arbeidsperiodeFeilmelding(true)}
+                                                            />
+                                                        )
+                                                    }
+                                                />
+                                                <ArbeidsperiodeModal
+                                                    erÅpen={arbeidsmodalErÅpen}
+                                                    toggleModal={toggleArbeidsmodal}
+                                                    onLeggTilArbeidsperiode={leggTilArbeidsperiode}
+                                                    gjelderUtlandet
+                                                    andreForelderData={{
+                                                        erDød:
+                                                            barn.andreForelderErDød.svar ===
+                                                            ESvar.JA,
+                                                    }}
+                                                />
+                                            </>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <LandDropdown
+                                            felt={
+                                                skjema.felter.andreForelderArbeidUtlandetHvilketLand
+                                            }
+                                            skjema={skjema}
+                                            dynamisk
+                                            label={
+                                                <SpråkTekst
+                                                    id={
+                                                        omBarnetSpørsmålSpråkId[
+                                                            andreForelder[
+                                                                andreForelderDataKeySpørsmål
+                                                                    .arbeidUtlandetHvilketLand
+                                                            ].id
+                                                        ]
+                                                    }
+                                                />
                                             }
                                         />
-                                    }
-                                />
-                                {erEøsLand(
-                                    skjema.felter.andreForelderArbeidUtlandetHvilketLand.verdi
-                                ) && (
-                                    <VedleggNotisTilleggsskjema
-                                        språkTekstId={
-                                            barn.andreForelderErDød.svar === ESvar.JA
-                                                ? 'enkeenkemann.arbeid-utland.eøs-info'
-                                                : 'ombarnet.andre-forelder.arbeid-utland.eøs-info'
-                                        }
-                                        språkValues={{ navn: barnetsNavn }}
-                                        dynamisk
-                                    />
+                                        {erEøsLand(
+                                            skjema.felter.andreForelderArbeidUtlandetHvilketLand
+                                                .verdi
+                                        ) && (
+                                            <VedleggNotisTilleggsskjema
+                                                språkTekstId={
+                                                    barn.andreForelderErDød.svar === ESvar.JA
+                                                        ? 'enkeenkemann.arbeid-utland.eøs-info'
+                                                        : 'ombarnet.andre-forelder.arbeid-utland.eøs-info'
+                                                }
+                                                språkValues={{ navn: barnetsNavn }}
+                                                dynamisk
+                                            />
+                                        )}
+                                    </>
                                 )}
                                 <JaNeiSpm
                                     skjema={skjema}

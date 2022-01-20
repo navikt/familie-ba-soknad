@@ -120,6 +120,7 @@ export enum andreForelderDataKeySpørsmål {
     fødselsdato = 'fødselsdato',
     arbeidUtlandet = 'arbeidUtlandet',
     arbeidUtlandetHvilketLand = 'arbeidUtlandetHvilketLand',
+    arbeidsperiodeUtlandAndreForelder = 'arbeidsperiodeUtlandAndreForelder',
     pensjonUtland = 'pensjonUtland',
     pensjonHvilketLand = 'pensjonHvilketLand',
     skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
