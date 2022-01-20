@@ -28,6 +28,7 @@ import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { useArbeidsperioder } from '../../Felleskomponenter/Arbeidsperiode/useArbeidsperioder';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
@@ -52,20 +53,9 @@ export const useDinLivssituasjon = (): {
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
     );
-
-    // TODO: Lag egen hook for arbeidsperiodefelt og logikk
-    const [arbeidsperioder, settArbeidsperioder] = useState<IArbeidsperiode[]>(
+    const { arbeidsperioder, fjernArbeidsperiode, leggTilArbeidsperiode } = useArbeidsperioder(
         søker.arbeidsperioder
     );
-    const leggTilArbeidsperiode = (periode: IArbeidsperiode) => {
-        settArbeidsperioder(prevState => prevState.concat(periode));
-    };
-
-    const fjernArbeidsperiode = (periodeSomSkalFjernes: IArbeidsperiode) => {
-        settArbeidsperioder(prevState =>
-            prevState.filter(periode => periode !== periodeSomSkalFjernes)
-        );
-    };
 
     /*---- UTVIDET BARNETRYGD ----*/
     const årsak = useFelt<Årsak | ''>({
