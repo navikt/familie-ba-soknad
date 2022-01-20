@@ -28,6 +28,7 @@ import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { useArbeidsperioder } from '../../Felleskomponenter/Arbeidsperiode/useArbeidsperioder';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
@@ -41,7 +42,6 @@ export const useDinLivssituasjon = (): {
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
     tidligereSamboere: ITidligereSamboer[];
-    arbeidsperioder: IArbeidsperiode[];
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
 } => {
@@ -52,20 +52,6 @@ export const useDinLivssituasjon = (): {
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
     );
-
-    // TODO: Lag egen hook for arbeidsperiodefelt og logikk
-    const [arbeidsperioder, settArbeidsperioder] = useState<IArbeidsperiode[]>(
-        søker.arbeidsperioder
-    );
-    const leggTilArbeidsperiode = (periode: IArbeidsperiode) => {
-        settArbeidsperioder(prevState => prevState.concat(periode));
-    };
-
-    const fjernArbeidsperiode = (periodeSomSkalFjernes: IArbeidsperiode) => {
-        settArbeidsperioder(prevState =>
-            prevState.filter(periode => periode !== periodeSomSkalFjernes)
-        );
-    };
 
     /*---- UTVIDET BARNETRYGD ----*/
     const årsak = useFelt<Årsak | ''>({
@@ -215,20 +201,16 @@ export const useDinLivssituasjon = (): {
         skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
-    const registrerteArbeidsperioder = useFelt<IArbeidsperiode[]>({
-        verdi: arbeidsperioder,
-        avhengigheter: { jobberPåBåt },
-        skalFeltetVises: avhengigheter =>
-            avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        valideringsfunksjon: felt =>
-            jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
-                : ok(felt),
-    });
-
-    useEffect(() => {
-        registrerteArbeidsperioder.validerOgSettFelt(arbeidsperioder);
-    }, [arbeidsperioder]);
+    const { fjernArbeidsperiode, leggTilArbeidsperiode, registrerteArbeidsperioder } =
+        useArbeidsperioder(
+            søker.arbeidsperioder,
+            { jobberPåBåt },
+            avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+            felt =>
+                jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
+                    ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
+                    : ok(felt)
+        );
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
@@ -420,7 +402,6 @@ export const useDinLivssituasjon = (): {
         tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
-        arbeidsperioder,
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
     };
