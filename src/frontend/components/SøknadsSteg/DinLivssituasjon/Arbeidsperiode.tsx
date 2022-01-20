@@ -49,7 +49,7 @@ export const Arbeidsperiode: React.FC<Props> = props => {
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
 
     return (
-        <KomponentGruppe inline>
+        <>
             <JaNeiSpm
                 skjema={skjema}
                 felt={skjema.felter.jobberPåBåt}
@@ -64,6 +64,7 @@ export const Arbeidsperiode: React.FC<Props> = props => {
                             {skjema.felter.registrerteArbeidsperioder.verdi.map(
                                 (periode, index) => (
                                     <ArbeidsperiodeOppsummering
+                                        key={index}
                                         arbeidsperiode={periode}
                                         fjernPeriodeCallback={fjernArbeidsperiode}
                                         nummer={index + 1}
@@ -129,6 +130,6 @@ export const Arbeidsperiode: React.FC<Props> = props => {
                     )}
                 </KomponentGruppe>
             )}
-        </KomponentGruppe>
+        </>
     );
 };
