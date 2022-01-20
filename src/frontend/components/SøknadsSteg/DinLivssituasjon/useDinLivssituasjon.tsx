@@ -53,9 +53,6 @@ export const useDinLivssituasjon = (): {
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
     );
-    const { arbeidsperioder, fjernArbeidsperiode, leggTilArbeidsperiode } = useArbeidsperioder(
-        søker.arbeidsperioder
-    );
 
     /*---- UTVIDET BARNETRYGD ----*/
     const årsak = useFelt<Årsak | ''>({
@@ -205,20 +202,20 @@ export const useDinLivssituasjon = (): {
         skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
-    const registrerteArbeidsperioder = useFelt<IArbeidsperiode[]>({
-        verdi: arbeidsperioder,
-        avhengigheter: { jobberPåBåt },
-        skalFeltetVises: avhengigheter =>
-            avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        valideringsfunksjon: felt =>
+    const {
+        arbeidsperioder,
+        fjernArbeidsperiode,
+        leggTilArbeidsperiode,
+        registrerteArbeidsperioder,
+    } = useArbeidsperioder(
+        søker.arbeidsperioder,
+        { jobberPåBåt },
+        avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        felt =>
             jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
                 ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
-                : ok(felt),
-    });
-
-    useEffect(() => {
-        registrerteArbeidsperioder.validerOgSettFelt(arbeidsperioder);
-    }, [arbeidsperioder]);
+                : ok(felt)
+    );
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
