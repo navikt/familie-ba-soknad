@@ -42,7 +42,6 @@ export const useDinLivssituasjon = (): {
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
     tidligereSamboere: ITidligereSamboer[];
-    arbeidsperioder: IArbeidsperiode[];
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
 } => {
@@ -202,20 +201,16 @@ export const useDinLivssituasjon = (): {
         skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
-    const {
-        arbeidsperioder,
-        fjernArbeidsperiode,
-        leggTilArbeidsperiode,
-        registrerteArbeidsperioder,
-    } = useArbeidsperioder(
-        søker.arbeidsperioder,
-        { jobberPåBåt },
-        avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
-                : ok(felt)
-    );
+    const { fjernArbeidsperiode, leggTilArbeidsperiode, registrerteArbeidsperioder } =
+        useArbeidsperioder(
+            søker.arbeidsperioder,
+            { jobberPåBåt },
+            avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+            felt =>
+                jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
+                    ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
+                    : ok(felt)
+        );
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
@@ -407,7 +402,6 @@ export const useDinLivssituasjon = (): {
         tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
-        arbeidsperioder,
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
     };

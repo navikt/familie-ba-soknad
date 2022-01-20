@@ -34,7 +34,6 @@ export const useArbeidsperioder = (
     }, [arbeidsperioder]);
 
     return {
-        arbeidsperioder,
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
         registrerteArbeidsperioder,
