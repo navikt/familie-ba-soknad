@@ -18,7 +18,6 @@ export enum OmBarnetSpørsmålsId {
     andreForelderArbeidUtlandetEnke = 'andre-forelder-arbeid-enke',
     andreForelderArbeidUtlandetHvilketLand = 'andre-forelder-arbeid-hvilket-land',
     andreForelderArbeidUtlandetHvilketLandEnke = 'andre-forelder-arbeid-hvilket-land-enke',
-    andreForelderArbeidsperiodeUtlandet = 'andre-forelder-arbeidsperiode-utlandet',
     andreForelderPensjonUtland = 'andre-forelder-pensjon-utland',
     andreForelderPensjonUtlandEnke = 'andre-forelder-pensjon-utland-enke',
     andreForelderPensjonHvilketLand = 'andre-forelder-pensjon-hvilket-land',
@@ -58,7 +57,6 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
         'ombarnet.andre-forelder.arbeid-utland.land.spm',
     [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke]:
         'enkeenkemann.andreforelder-arbeidutland.land.spm',
-    [OmBarnetSpørsmålsId.andreForelderArbeidsperiodeUtlandet]: 'todo',
     [OmBarnetSpørsmålsId.andreForelderPensjonUtland]:
         'ombarnet.andre-forelder.utenlandspensjon.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke]:
