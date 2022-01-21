@@ -235,7 +235,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 />
                 {toggles.EØS_KOMPLETT ? (
                     <>
-                        {søknad.søker.arbeidsperioder.map((periode, index) => (
+                        {søknad.søker.arbeidsperioderUtland.map((periode, index) => (
                             <ArbeidsperiodeOppsummering
                                 key={index}
                                 nummer={index + 1}

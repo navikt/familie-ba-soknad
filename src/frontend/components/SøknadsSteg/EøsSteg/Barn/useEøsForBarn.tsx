@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
+import { IBarnMedISøknad } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
-import { IBarnMedISøknad } from '../../../../typer/søknad';
 
 export const useEøsForBarn = (
     barnetsUuid: BarnetsId

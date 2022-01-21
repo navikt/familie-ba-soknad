@@ -10,13 +10,9 @@ import fnrvalidator from '@navikt/fnrvalidator';
 
 import * as eøsContext from '../../../context/EøsContext';
 import * as pdlRequest from '../../../context/pdl';
-import {
-    barnDataKeySpørsmål,
-    ESivilstand,
-    IBarnRespons,
-    ISøkerRespons,
-} from '../../../typer/person';
-import { IBarnMedISøknad, ISøknad } from '../../../typer/søknad';
+import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
+import { ESivilstand, IBarnRespons, ISøkerRespons } from '../../../typer/person';
+import { ISøknad } from '../../../typer/søknad';
 import * as eøsUtils from '../../../utils/eøs';
 import {
     mekkGyldigSøker,

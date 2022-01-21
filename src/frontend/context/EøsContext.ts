@@ -7,10 +7,10 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø from '../Miljø';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
 import { BarnetsId } from '../typer/common';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../typer/dokumentasjon';
-import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, ISøker } from '../typer/person';
-import { IBarnMedISøknad } from '../typer/søknad';
+import { ISøker } from '../typer/person';
 import { useApp } from './AppContext';
 import { useFeatureToggles } from './FeatureToggleContext';
 import { useLastRessurserContext } from './LastRessurserContext';
@@ -79,7 +79,11 @@ const [EøsProvider, useEøs] = createUseContext(() => {
             søker.pensjonsland.svar,
             søker.utenlandsperioder.map(periode => periode.oppholdsland.svar),
             ...(toggles.EØS_KOMPLETT
-                ? [søker.arbeidsperioder.map(periode => periode.arbeidsperiodeland?.svar ?? '')]
+                ? [
+                      søker.arbeidsperioderUtland.map(
+                          periode => periode.arbeidsperiodeland?.svar ?? ''
+                      ),
+                  ]
                 : [søker.arbeidsland.svar]),
         ].flat();
 

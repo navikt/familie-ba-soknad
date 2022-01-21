@@ -6,8 +6,8 @@ import { feil, FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema'
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
-import { IBarnMedISøknad } from '../../../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import {
     harTilhørendeFomFelt,

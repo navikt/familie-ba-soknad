@@ -4,8 +4,8 @@ import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { IUtenlandsperiode } from '../../../typer/person';
-import { IBarnMedISøknad } from '../../../typer/søknad';
+import { IBarnMedISøknad } from '../../../typer/barn';
+import { IUtenlandsperiode } from '../../../typer/perioder';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';

@@ -1,22 +1,21 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Flatknapp } from 'nav-frontend-knapper';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 
-import { DeleteFilled } from '@navikt/ds-icons';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { IUtenlandsperiode } from '../../../typer/person';
-import { IBarnMedISøknad } from '../../../typer/søknad';
+import { IBarnMedISøknad } from '../../../typer/barn';
+import { IUtenlandsperiode } from '../../../typer/perioder';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
-import Informasjonsbolk from '../Informasjonsbolk/Informasjonsbolk';
+import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
+import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { VedleggNotisTilleggsskjema } from '../VedleggNotis';
 import { tilDatoUkjentLabelSpråkId } from './spørsmål';
@@ -28,31 +27,6 @@ import {
     årsakSpråkId,
 } from './utenlandsoppholdSpråkUtils';
 
-const StyledElement = styled(Element)`
-    && {
-        margin-bottom: 0.5rem;
-    }
-`;
-
-const Spørsmål: React.FC<{ språkId: string; språkValues?: Record<string, ReactNode> }> = ({
-    språkId,
-    språkValues = {},
-}) => (
-    <StyledElement>
-        <SpråkTekst id={språkId} values={språkValues} />
-    </StyledElement>
-);
-
-const PeriodeContainer = styled.div`
-    margin: 2rem 0;
-    border-bottom: 1px solid #78706a; // TODO: Bytt til riktig nav farge og bruk variabel
-`;
-
-const SlettKnapp = styled(Flatknapp)`
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-`;
-
 const EøsNotisWrapper = styled.div`
     margin-bottom: 2rem;
 `;
@@ -60,20 +34,10 @@ const EøsNotisWrapper = styled.div`
 export const UtenlandsperiodeOppsummering: React.FC<{
     periode: IUtenlandsperiode;
     nummer: number;
-    fjernPeriodeCallback: (periode: IUtenlandsperiode) => void;
+    fjernPeriodeCallback?: (periode: IUtenlandsperiode) => void;
     erFørsteEøsPeriode?: boolean;
     barn?: IBarnMedISøknad;
-    visFjernKnapp?: boolean; // TODO: Fjern denne og sjekk på fjernPeriodeCallback. Og gjør fjernPeriodeCallback optional
-    className?: string;
-}> = ({
-    periode,
-    nummer,
-    fjernPeriodeCallback,
-    erFørsteEøsPeriode = false,
-    barn,
-    visFjernKnapp = true,
-    className,
-}) => {
+}> = ({ periode, nummer, fjernPeriodeCallback, erFørsteEøsPeriode = false, barn }) => {
     const [valgtLocale] = useSprakContext();
     const intl = useIntl();
     const { formatMessage } = intl;
@@ -91,72 +55,80 @@ export const UtenlandsperiodeOppsummering: React.FC<{
     };
 
     return (
-        <PeriodeContainer className={className}>
-            <Element>
-                <SpråkTekst id={'felles.leggtilutenlands.opphold'} values={{ x: nummer }} />
-            </Element>
-            <Informasjonsbolk>
-                <Spørsmål
-                    språkId={årsakLabelSpråkId(barn)}
-                    språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
-                />
-                <Normaltekst>
-                    <SpråkTekst
-                        id={årsakSpråkId(årsak, barn)}
-                        values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
-                    />
-                </Normaltekst>
-            </Informasjonsbolk>
-            <Informasjonsbolk>
-                <Spørsmål
-                    språkId={landLabelSpråkId(årsak, barn)}
-                    språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
-                />
-                <Normaltekst>{landkodeTilSpråk(oppholdsland.svar, valgtLocale)}</Normaltekst>
-            </Informasjonsbolk>
-            {oppholdslandFraDato && (
-                <Informasjonsbolk>
-                    <Spørsmål
-                        språkId={fraDatoLabelSpråkId(årsak, barn)}
-                        språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
-                    />
-                    <Normaltekst>{formaterDato(oppholdslandFraDato.svar)}</Normaltekst>
-                </Informasjonsbolk>
-            )}
-            {oppholdslandTilDato && (
-                <Informasjonsbolk>
-                    <Spørsmål
-                        språkId={tilDatoLabelSpråkId(årsak, barn)}
-                        språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
-                    />
+        <>
+            <PeriodeOppsummering
+                nummer={nummer}
+                tittelSpråkId={'felles.leggtilutenlands.opphold'}
+                fjernKnappSpråkId={'felles.fjernutenlandsopphold.knapp'}
+                fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(periode))}
+                vedleggNotis={
+                    erFørsteEøsPeriode ? (
+                        <EøsNotisWrapper>
+                            <VedleggNotisTilleggsskjema
+                                språkTekstId={
+                                    årsakTilEøsInfoSpråkIds[periode.utenlandsoppholdÅrsak.svar]
+                                }
+                                språkValues={{
+                                    barn: barn ? barnetsNavnValue(barn, intl) : undefined,
+                                }}
+                            />
+                        </EøsNotisWrapper>
+                    ) : undefined
+                }
+            >
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={årsakLabelSpråkId(barn)}
+                            values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                        />
+                    }
+                >
                     <Normaltekst>
-                        {formaterDatoMedUkjent(
+                        <SpråkTekst
+                            id={årsakSpråkId(årsak, barn)}
+                            values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                        />
+                    </Normaltekst>
+                </OppsummeringFelt>
+
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={landLabelSpråkId(årsak, barn)}
+                            values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                        />
+                    }
+                    søknadsvar={landkodeTilSpråk(oppholdsland.svar, valgtLocale)}
+                />
+
+                {oppholdslandFraDato && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={fraDatoLabelSpråkId(årsak, barn)}
+                                values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                            />
+                        }
+                        søknadsvar={formaterDato(oppholdslandFraDato.svar)}
+                    />
+                )}
+
+                {oppholdslandTilDato && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={tilDatoLabelSpråkId(årsak, barn)}
+                                values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                            />
+                        }
+                        søknadsvar={formaterDatoMedUkjent(
                             oppholdslandTilDato.svar,
                             formatMessage({ id: tilDatoUkjentLabelSpråkId })
                         )}
-                    </Normaltekst>
-                </Informasjonsbolk>
-            )}
-            {visFjernKnapp && (
-                <SlettKnapp
-                    htmlType={'button'}
-                    kompakt
-                    onClick={() => fjernPeriodeCallback(periode)}
-                >
-                    <DeleteFilled />
-                    <span>
-                        <SpråkTekst id={'felles.fjernutenlandsopphold.knapp'} />
-                    </span>
-                </SlettKnapp>
-            )}
-            {erFørsteEøsPeriode && (
-                <EøsNotisWrapper>
-                    <VedleggNotisTilleggsskjema
-                        språkTekstId={årsakTilEøsInfoSpråkIds[periode.utenlandsoppholdÅrsak.svar]}
-                        språkValues={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
                     />
-                </EøsNotisWrapper>
-            )}
-        </PeriodeContainer>
+                )}
+            </PeriodeOppsummering>
+        </>
     );
 };

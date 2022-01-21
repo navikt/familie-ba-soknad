@@ -3,7 +3,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
-import { IBarnMedISøknad, ISøknad } from '../../../typer/søknad';
+import { IBarnMedISøknad } from '../../../typer/barn';
+import { ISøknad } from '../../../typer/søknad';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnetHeader } from './OmBarnetHeader';
 

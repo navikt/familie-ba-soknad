@@ -9,10 +9,10 @@ import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { andreForelderDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { andreForelderDataKeySpørsmål, IArbeidsperiode } from '../../../typer/person';
+import { IArbeidsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { IAndreForelder, IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';

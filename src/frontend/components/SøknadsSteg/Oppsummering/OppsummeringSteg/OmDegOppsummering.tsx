@@ -104,8 +104,6 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         key={index}
                         periode={periode}
                         nummer={index + 1}
-                        fjernPeriodeCallback={() => null}
-                        visFjernKnapp={false}
                     />
                 ))}
                 {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (

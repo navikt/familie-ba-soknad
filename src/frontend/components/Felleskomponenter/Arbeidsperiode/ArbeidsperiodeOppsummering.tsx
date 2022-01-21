@@ -1,21 +1,16 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
-import styled from 'styled-components';
 
-import { Flatknapp } from 'nav-frontend-knapper';
-import { Element } from 'nav-frontend-typografi';
-
-import { DeleteFilled } from '@navikt/ds-icons';
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { IArbeidsperiode } from '../../../typer/person';
-import { IBarnMedISøknad } from '../../../typer/søknad';
+import { IArbeidsperiode } from '../../../typer/perioder';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
+import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
 import {
@@ -25,29 +20,16 @@ import {
     hentArbeidsperiodeSpørsmålIder,
 } from './spørsmål';
 
-const PeriodeContainer = styled.div`
-    margin: 2rem 0;
-    border-bottom: 1px solid #78706a; // TODO: Bytt til riktig nav farge og bruk variabel
-`;
-
-const SlettKnapp = styled(Flatknapp)`
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-`;
-
 export const ArbeidsperiodeOppsummering: React.FC<{
     arbeidsperiode: IArbeidsperiode;
     nummer: number;
     fjernPeriodeCallback?: (arbeidsperiode: IArbeidsperiode) => void;
-    barn?: IBarnMedISøknad;
-    className?: string;
     gjelderUtlandet?: boolean;
     andreForelderData?: { erDød: boolean };
 }> = ({
     arbeidsperiode,
     nummer,
     fjernPeriodeCallback = undefined,
-    className,
     gjelderUtlandet = false,
     andreForelderData,
 }) => {
@@ -67,13 +49,14 @@ export const ArbeidsperiodeOppsummering: React.FC<{
     const erAndreForelderDød = !!andreForelderData?.erDød;
 
     return (
-        <PeriodeContainer className={className}>
-            <Element>
-                <SpråkTekst
-                    id={arbeidsperiodeOppsummeringOverskrift(gjelderUtlandet)}
-                    values={{ x: nummer }}
-                />
-            </Element>
+        <PeriodeOppsummering
+            fjernPeriodeCallback={
+                fjernPeriodeCallback && (() => fjernPeriodeCallback(arbeidsperiode))
+            }
+            fjernKnappSpråkId={'felles.fjernarbeidsperiode.knapp'}
+            nummer={nummer}
+            tittelSpråkId={arbeidsperiodeOppsummeringOverskrift(gjelderUtlandet)}
+        >
             {arbeidsperiodeAvsluttet && (
                 <OppsummeringFelt
                     tittel={
@@ -168,18 +151,6 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     )}
                 />
             )}
-            {fjernPeriodeCallback !== undefined && (
-                <SlettKnapp
-                    htmlType={'button'}
-                    kompakt
-                    onClick={() => fjernPeriodeCallback(arbeidsperiode)}
-                >
-                    <DeleteFilled />
-                    <span>
-                        <SpråkTekst id={'felles.fjernarbeidsperiode.knapp'} />
-                    </span>
-                </SlettKnapp>
-            )}
-        </PeriodeContainer>
+        </PeriodeOppsummering>
     );
 };
