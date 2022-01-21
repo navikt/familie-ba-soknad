@@ -8,9 +8,9 @@ import { Element } from 'nav-frontend-typografi';
 
 import { ISkjema } from '@navikt/familie-skjema';
 
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';

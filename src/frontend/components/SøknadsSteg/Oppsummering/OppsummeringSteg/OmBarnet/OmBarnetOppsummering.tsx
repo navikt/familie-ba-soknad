@@ -7,9 +7,12 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useSteg } from '../../../../../context/StegContext';
+import {
+    andreForelderDataKeySpørsmål,
+    barnDataKeySpørsmål,
+    IBarnMedISøknad,
+} from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
-import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../../../../../typer/person';
-import { IBarnMedISøknad } from '../../../../../typer/søknad';
 import { barnetsNavnValue } from '../../../../../utils/barn';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';

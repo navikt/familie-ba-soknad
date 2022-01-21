@@ -6,7 +6,7 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import { IUtenlandsperiode } from '../../../typer/person';
+import { IUtenlandsperiode } from '../../../typer/perioder';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';

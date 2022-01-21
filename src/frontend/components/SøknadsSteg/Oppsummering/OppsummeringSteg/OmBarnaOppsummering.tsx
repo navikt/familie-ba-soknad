@@ -6,7 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
 import { useRoutes } from '../../../../context/RoutesContext';
-import { barnDataKeySpørsmål } from '../../../../typer/person';
+import { barnDataKeySpørsmål } from '../../../../typer/barn';
 import { RouteEnum } from '../../../../typer/routes';
 import { barnetsNavnValue } from '../../../../utils/barn';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';

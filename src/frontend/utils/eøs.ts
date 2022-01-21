@@ -1,7 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { andreForelderDataKeySpørsmål } from '../typer/person';
-import { IBarnMedISøknad, ISøknad } from '../typer/søknad';
+import { andreForelderDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
+import { ISøknad } from '../typer/søknad';
 
 export const landSvarSomKanTriggeEøs = (søknad: ISøknad) => {
     const fraOmDeg = [

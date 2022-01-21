@@ -4,9 +4,8 @@ import { useIntl } from 'react-intl';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { andreForelderDataKeySpørsmål, IAndreForelder } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
-import { andreForelderDataKeySpørsmål } from '../../../../../typer/person';
-import { IAndreForelder } from '../../../../../typer/søknad';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';

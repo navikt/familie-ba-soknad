@@ -12,16 +12,11 @@ import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
+import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
-import {
-    barnDataKeySpørsmål,
-    ESivilstand,
-    IArbeidsperiode,
-    ISamboer,
-    ISøker,
-    ITidligereSamboer,
-} from '../../../typer/person';
+import { IArbeidsperiode } from '../../../typer/perioder';
+import { ESivilstand, ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { dagensDato } from '../../../utils/dato';
@@ -203,7 +198,7 @@ export const useDinLivssituasjon = (): {
 
     const { fjernArbeidsperiode, leggTilArbeidsperiode, registrerteArbeidsperioder } =
         useArbeidsperioder(
-            søker.arbeidsperioder,
+            søker.arbeidsperioderUtland,
             { jobberPåBåt },
             avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
             felt =>
@@ -321,7 +316,7 @@ export const useDinLivssituasjon = (): {
             ...søknad.søker.arbeidsland,
             svar: skjema.felter.arbeidsland.verdi,
         },
-        arbeidsperioder:
+        arbeidsperioderUtland:
             skjema.felter.jobberPåBåt.verdi === ESvar.JA
                 ? skjema.felter.registrerteArbeidsperioder.verdi
                 : [],

@@ -8,11 +8,12 @@ import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spør
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
-    IBarn,
-    IBarnRespons,
-} from '../typer/person';
+    IAndreForelder,
+    IBarnMedISøknad,
+} from '../typer/barn';
+import { IBarn, IBarnRespons } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
-import { IAndreForelder, IBarnMedISøknad, ISøknad } from '../typer/søknad';
+import { ISøknad } from '../typer/søknad';
 import { formaterFnr } from './visning';
 
 export const genererSvarForSpørsmålBarn = (barn: IBarnMedISøknad, felt: Felt<string[]>): ESvar =>
@@ -31,6 +32,11 @@ export const genererAndreForelder = (
     andreForelderErDød: boolean
 ): IAndreForelder => {
     return {
+        arbeidsperioderNorge: andreForelder?.arbeidsperioderNorge ?? [],
+        arbeidsperioderUtland: andreForelder?.arbeidsperioderUtland ?? [],
+        andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
+        pensjonsperioderNorge: andreForelder?.pensjonsperioderNorge ?? [],
+        pensjonsperioderUtland: andreForelder?.pensjonsperioderUtland ?? [],
         [andreForelderDataKeySpørsmål.navn]: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,
             svar: andreForelder?.[andreForelderDataKeySpørsmål.navn].svar ?? '',
