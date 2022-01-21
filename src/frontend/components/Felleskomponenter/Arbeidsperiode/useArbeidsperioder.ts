@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Avhengigheter, useFelt } from '@navikt/familie-skjema';
 import { ValiderFelt } from '@navikt/familie-skjema/dist/typer';
 
-import { IArbeidsperiode } from '../../../typer/person';
+import { IArbeidsperiode } from '../../../typer/perioder';
 
 export const useArbeidsperioder = (
     verdi: IArbeidsperiode[],

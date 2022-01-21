@@ -14,10 +14,10 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
+import { IArbeidsperiode } from '../../../typer/perioder';
 import {
     barnDataKeySpørsmål,
     ESivilstand,
-    IArbeidsperiode,
     ISamboer,
     ISøker,
     ITidligereSamboer,
@@ -203,7 +203,7 @@ export const useDinLivssituasjon = (): {
 
     const { fjernArbeidsperiode, leggTilArbeidsperiode, registrerteArbeidsperioder } =
         useArbeidsperioder(
-            søker.arbeidsperioder,
+            søker.arbeidsperioderUtland,
             { jobberPåBåt },
             avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
             felt =>
@@ -321,7 +321,7 @@ export const useDinLivssituasjon = (): {
             ...søknad.søker.arbeidsland,
             svar: skjema.felter.arbeidsland.verdi,
         },
-        arbeidsperioder:
+        arbeidsperioderUtland:
             skjema.felter.jobberPåBåt.verdi === ESvar.JA
                 ? skjema.felter.registrerteArbeidsperioder.verdi
                 : [],

@@ -17,11 +17,11 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
+import { IUtenlandsperiode } from '../../../typer/perioder';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
     ESivilstand,
-    IUtenlandsperiode,
 } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { ESøknadstype, IBarnMedISøknad } from '../../../typer/søknad';

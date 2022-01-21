@@ -27,7 +27,7 @@ import {
 import { useUtbetalingerSkjema } from './useUtbetalingerSkjema';
 
 interface UtbetalingerModalProps extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
-    //TODO: legg til denne når vi skal sett søknadsdata  onLeggTilUtbetalinger: () => void;
+    //TODO: legg til denne når vi skal sett søknadsdata  onLeggTilUtbetalinger: (utbetalingsperiode: IUtbetalingPeriode) => void;
     andreForelderData?: { barn: IBarnMedISøknad; erDød: boolean };
 }
 

@@ -8,7 +8,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
-import { barnDataKeySpørsmål, IUtenlandsperiode } from '../../../typer/person';
+import { IUtenlandsperiode } from '../../../typer/perioder';
+import { barnDataKeySpørsmål } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { barnetsNavnValue } from '../../../utils/barn';

@@ -38,13 +38,13 @@ import {
     IVedlegg,
 } from '../typer/dokumentasjon';
 import { IKvittering } from '../typer/kvittering';
+import { IUtenlandsperiode } from '../typer/perioder';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
     ESivilstand,
     ISamboer,
     ITidligereSamboer,
-    IUtenlandsperiode,
 } from '../typer/person';
 import { ISøknadSpørsmål, SpørsmålId } from '../typer/spørsmål';
 import {

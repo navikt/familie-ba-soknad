@@ -79,7 +79,11 @@ const [EøsProvider, useEøs] = createUseContext(() => {
             søker.pensjonsland.svar,
             søker.utenlandsperioder.map(periode => periode.oppholdsland.svar),
             ...(toggles.EØS_KOMPLETT
-                ? [søker.arbeidsperioder.map(periode => periode.arbeidsperiodeland?.svar ?? '')]
+                ? [
+                      søker.arbeidsperioderUtland.map(
+                          periode => periode.arbeidsperiodeland?.svar ?? ''
+                      ),
+                  ]
                 : [søker.arbeidsland.svar]),
         ].flat();
 

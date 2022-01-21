@@ -14,6 +14,7 @@ import {
     IDokumentasjon,
     ISøknadKontraktDokumentasjon,
 } from './dokumentasjon';
+import { IUtenlandsperiode } from './perioder';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
@@ -21,7 +22,6 @@ import {
     IAdresse,
     IBarn,
     ISøker,
-    IUtenlandsperiode,
 } from './person';
 import { ISøknadSpørsmål } from './spørsmål';
 import { Årsak } from './utvidet';
@@ -285,7 +285,6 @@ export const initialStateSøknad: ISøknad = {
             id: DinLivssituasjonSpørsmålId.arbeidsland,
             svar: '',
         },
-        arbeidsperioder: [],
         mottarUtenlandspensjon: {
             id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
             svar: null,
@@ -294,6 +293,11 @@ export const initialStateSøknad: ISøknad = {
             id: DinLivssituasjonSpørsmålId.pensjonsland,
             svar: '',
         },
+        arbeidsperioderUtland: [],
+        arbeidsperioderNorge: [],
+        pensjonsperioderNorge: [],
+        pensjonsperioderUtland: [],
+        andreUtbetalingsperioder: [],
         harSamboerNå: {
             id: DinLivssituasjonSpørsmålId.harSamboerNå,
             svar: null,

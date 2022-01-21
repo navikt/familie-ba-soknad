@@ -3,7 +3,7 @@ import { mockDeep } from 'jest-mock-extended';
 
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import { IUtenlandsperiode } from '../typer/person';
+import { IUtenlandsperiode } from '../typer/perioder';
 import { ISøknad } from '../typer/søknad';
 import { IAndreForelder } from '../typer/søknad';
 import { landSvarSomKanTriggeEøs } from './eøs';

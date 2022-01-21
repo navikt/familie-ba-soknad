@@ -10,7 +10,7 @@ import { DeleteFilled } from '@navikt/ds-icons';
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { IArbeidsperiode } from '../../../typer/person';
+import { IArbeidsperiode } from '../../../typer/perioder';
 import { IBarnMedISøknad } from '../../../typer/søknad';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';

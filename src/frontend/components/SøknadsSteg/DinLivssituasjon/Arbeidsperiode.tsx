@@ -7,7 +7,7 @@ import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
-import { IArbeidsperiode } from '../../../typer/person';
+import { IArbeidsperiode } from '../../../typer/perioder';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
