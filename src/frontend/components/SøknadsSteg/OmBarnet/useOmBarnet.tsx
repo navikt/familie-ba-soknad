@@ -668,6 +668,7 @@ export const useOmBarnet = (
                           },
                       }
                     : {
+                          ...barn.andreForelder,
                           navn: {
                               ...barn.andreForelder[andreForelderDataKeySpørsmål.navn],
                               svar: trimWhiteSpace(
@@ -734,7 +735,7 @@ export const useOmBarnet = (
     };
 
     useEffect(() => {
-        const oppdatertBarn = genererOppdatertBarn(barn);
+        const oppdatertBarn: IBarnMedISøknad = genererOppdatertBarn(barn);
         const skalTriggeEøs = skalTriggeEøsForBarn(oppdatertBarn);
         if (
             (skalTriggeEøs && !barnSomTriggerEøs.includes(barn.id)) ||

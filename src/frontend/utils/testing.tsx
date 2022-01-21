@@ -308,6 +308,11 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     borMedSøker: true,
                 }),
                 andreForelder: {
+                    andreUtbetalingsperioder: [],
+                    arbeidsperioderNorge: [],
+                    pensjonsperioderUtland: [],
+                    arbeidsperioderUtland: [],
+                    pensjonsperioderNorge: [],
                     [andreForelderDataKeySpørsmål.navn]: {
                         id: OmBarnetSpørsmålsId.andreForelderNavn,
                         svar: AlternativtSvarForInput.UKJENT,

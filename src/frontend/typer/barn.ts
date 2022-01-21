@@ -3,7 +3,12 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
-import { IUtenlandsperiode } from './perioder';
+import {
+    IArbeidsperiode,
+    IPensjonsperiode,
+    IUtbetalingsperiode,
+    IUtenlandsperiode,
+} from './perioder';
 import { IBarn } from './person';
 import { ISøknadSpørsmål } from './spørsmål';
 
@@ -44,6 +49,11 @@ export enum barnDataKeySpørsmål {
 }
 
 export interface IAndreForelder {
+    arbeidsperioderUtland: IArbeidsperiode[];
+    arbeidsperioderNorge: IArbeidsperiode[];
+    pensjonsperioderUtland: IPensjonsperiode[];
+    pensjonsperioderNorge: IPensjonsperiode[];
+    andreUtbetalingsperioder: IUtbetalingsperiode[];
     [andreForelderDataKeySpørsmål.navn]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
     [andreForelderDataKeySpørsmål.fnr]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
     [andreForelderDataKeySpørsmål.fødselsdato]: ISøknadSpørsmål<DatoMedUkjent>;
@@ -61,6 +71,7 @@ export interface IAndreForelder {
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
     utenlandsperioder: IUtenlandsperiode[];
+    // TODO: barnetrygdPerioder: IBarnetrygdPeriode[];
     andreForelder: IAndreForelder | null;
     triggetEøs: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;

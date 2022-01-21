@@ -32,6 +32,11 @@ export const genererAndreForelder = (
     andreForelderErDød: boolean
 ): IAndreForelder => {
     return {
+        arbeidsperioderNorge: andreForelder?.arbeidsperioderNorge ?? [],
+        arbeidsperioderUtland: andreForelder?.arbeidsperioderUtland ?? [],
+        andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
+        pensjonsperioderNorge: andreForelder?.pensjonsperioderNorge ?? [],
+        pensjonsperioderUtland: andreForelder?.pensjonsperioderUtland ?? [],
         [andreForelderDataKeySpørsmål.navn]: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,
             svar: andreForelder?.[andreForelderDataKeySpørsmål.navn].svar ?? '',
