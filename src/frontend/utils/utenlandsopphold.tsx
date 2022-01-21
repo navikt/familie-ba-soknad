@@ -1,6 +1,6 @@
 import { ISODateString } from '@navikt/familie-form-elements';
 
-import { IUtenlandsperiode } from '../typer/person';
+import { IUtenlandsperiode } from '../typer/perioder';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { dagensDato, ettÅrTilbakeDato, gårsdagensDato } from './dato';
 

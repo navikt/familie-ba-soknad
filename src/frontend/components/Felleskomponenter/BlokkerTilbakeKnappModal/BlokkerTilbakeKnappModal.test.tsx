@@ -5,8 +5,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { barnDataKeySpørsmål, IBarn, IBarnRespons } from '../../../typer/person';
-import { IBarnMedISøknad } from '../../../typer/søknad';
+import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
+import { IBarn, IBarnRespons } from '../../../typer/person';
 import * as eøsUtils from '../../../utils/eøs';
 import {
     mockEøs,

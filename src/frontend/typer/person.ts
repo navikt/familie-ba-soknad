@@ -3,8 +3,13 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
+import {
+    IArbeidsperiode,
+    IPensjonsperiode,
+    IUtbetalingsperiode,
+    IUtenlandsperiode,
+} from './perioder';
 import { ISøknadSpørsmål } from './spørsmål';
-import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 
 export enum ESivilstand {
@@ -47,20 +52,30 @@ export interface IBarn extends Omit<IPerson, 'ident'> {
 }
 
 export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
+    // Steg: Om Deg
     barn: IBarn[];
     triggetEøs: boolean;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | null>;
+    utenlandsperioder: IUtenlandsperiode[];
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | null>;
+
+    // Steg: Din Livssituasjon
     erAsylsøker: ISøknadSpørsmål<ESvar | null>;
     jobberPåBåt: ISøknadSpørsmål<ESvar | null>;
     arbeidsland: ISøknadSpørsmål<Alpha3Code | ''>;
-    arbeidsperioder: IArbeidsperiode[];
+    arbeidsperioderUtland: IArbeidsperiode[];
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | null>;
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    pensjonsperioderUtland: IPensjonsperiode[];
     harSamboerNå: ISøknadSpørsmål<ESvar | null>;
     nåværendeSamboer: ISamboer | null;
-    utenlandsperioder: IUtenlandsperiode[];
+
+    // Steg: EØS-steg
+    arbeidsperioderNorge: IArbeidsperiode[];
+    pensjonsperioderNorge: IPensjonsperiode[];
+    andreUtbetalingsperioder: IUtbetalingsperiode[];
+
     utvidet: {
         spørsmål: {
             årsak: ISøknadSpørsmål<Årsak | ''>;
@@ -70,28 +85,6 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
         };
         tidligereSamboere: ITidligereSamboer[];
     };
-}
-
-export interface IUtenlandsperiode {
-    utenlandsoppholdÅrsak: ISøknadSpørsmål<EUtenlandsoppholdÅrsak>;
-    oppholdsland: ISøknadSpørsmål<Alpha3Code | ''>;
-    oppholdslandFraDato?: ISøknadSpørsmål<ISODateString>;
-    oppholdslandTilDato?: ISøknadSpørsmål<DatoMedUkjent>;
-}
-
-export interface IArbeidsperiode {
-    arbeidsperiodeAvsluttet?: ISøknadSpørsmål<ESvar>;
-    arbeidsperiodeland?: ISøknadSpørsmål<Alpha3Code | ''>;
-    arbeidsgiver?: ISøknadSpørsmål<string>;
-    fraDatoArbeidsperiode?: ISøknadSpørsmål<ISODateString>;
-    tilDatoArbeidsperiode?: ISøknadSpørsmål<DatoMedUkjent>;
-}
-
-export interface IPensjonsperiode {
-    mottarPensjonNå: ISøknadSpørsmål<ESvar>;
-    pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
-    pensjonFra?: ISøknadSpørsmål<ISODateString>;
-    pensjonTil?: ISøknadSpørsmål<ISODateString>;
 }
 
 export interface ISamboer {
@@ -112,40 +105,4 @@ export interface IAdresse {
     bruksenhetsnummer?: string;
     husnummer?: string;
     poststed?: string;
-}
-
-export enum andreForelderDataKeySpørsmål {
-    navn = 'navn',
-    fnr = 'fnr',
-    fødselsdato = 'fødselsdato',
-    arbeidUtlandet = 'arbeidUtlandet',
-    arbeidUtlandetHvilketLand = 'arbeidUtlandetHvilketLand',
-    pensjonUtland = 'pensjonUtland',
-    pensjonHvilketLand = 'pensjonHvilketLand',
-    skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
-    søkerHarBoddMedAndreForelder = 'søkerHarBoddMedAndreForelder',
-    søkerFlyttetFraAndreForelderDato = 'søkerFlyttetFraAndreForelderDato',
-}
-
-export enum barnDataKeySpørsmål {
-    erFosterbarn = 'erFosterbarn',
-    erAdoptertFraUtland = 'erAdoptertFraUtland',
-    erAsylsøker = 'erAsylsøker',
-    barnetrygdFraAnnetEøsland = 'barnetrygdFraAnnetEøsland',
-    barnetrygdFraEøslandHvilketLand = 'barnetrygdFraEøslandHvilketLand',
-    andreForelderErDød = 'andreForelderErDød',
-    oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
-    institusjonIUtland = 'institusjonIUtland',
-    institusjonsnavn = 'institusjonsnavn',
-    institusjonsadresse = 'institusjonsadresse',
-    institusjonspostnummer = 'institusjonspostnummer',
-    institusjonOppholdStartdato = 'institusjonOppholdStartdato',
-    institusjonOppholdSluttdato = 'institusjonOppholdSluttdato',
-    boddMindreEnn12MndINorge = 'boddMindreEnn12MndINorge',
-    planleggerÅBoINorge12Mnd = 'planleggerÅBoINorge12Mnd',
-    borFastMedSøker = 'borFastMedSøker',
-    søkerForTidsrom = 'søkerForTidsrom',
-    søkerForTidsromStartdato = 'søkerForTidsromStartdato',
-    søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
-    sammeForelderSomAnnetBarnMedId = 'sammeForelderSomAnnetBarnMedId',
 }

@@ -4,9 +4,13 @@ import { DeepPartial } from 'ts-essentials';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import {
+    andreForelderDataKeySpørsmål,
+    barnDataKeySpørsmål,
+    IBarnMedISøknad,
+} from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarn } from '../../../typer/person';
-import { IBarnMedISøknad } from '../../../typer/søknad';
+import { IBarn } from '../../../typer/person';
 import { genererAndreForelder, genererInitialBarnMedISøknad } from '../../../utils/barn';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';

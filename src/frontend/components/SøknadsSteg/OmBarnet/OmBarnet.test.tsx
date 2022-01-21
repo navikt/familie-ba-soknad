@@ -5,9 +5,12 @@ import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import {
+    andreForelderDataKeySpørsmål,
+    barnDataKeySpørsmål,
+    IBarnMedISøknad,
+} from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../../../typer/person';
-import { IBarnMedISøknad } from '../../../typer/søknad';
 import {
     mekkGyldigSøknad,
     mockEøs,

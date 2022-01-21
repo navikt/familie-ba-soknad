@@ -1,4 +1,4 @@
-import { IBarnMedISøknad } from '../../../typer/søknad';
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import {
     landFeilmeldingSpråkIdsSøker,
