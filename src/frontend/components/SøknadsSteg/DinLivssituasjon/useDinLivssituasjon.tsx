@@ -12,16 +12,11 @@ import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
+import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
 import { IArbeidsperiode } from '../../../typer/perioder';
-import {
-    barnDataKeySpørsmål,
-    ESivilstand,
-    ISamboer,
-    ISøker,
-    ITidligereSamboer,
-} from '../../../typer/person';
+import { ESivilstand, ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { dagensDato } from '../../../utils/dato';

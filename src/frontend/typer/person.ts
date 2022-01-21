@@ -106,39 +106,3 @@ export interface IAdresse {
     husnummer?: string;
     poststed?: string;
 }
-
-export enum andreForelderDataKeySpørsmål {
-    navn = 'navn',
-    fnr = 'fnr',
-    fødselsdato = 'fødselsdato',
-    arbeidUtlandet = 'arbeidUtlandet',
-    arbeidUtlandetHvilketLand = 'arbeidUtlandetHvilketLand',
-    pensjonUtland = 'pensjonUtland',
-    pensjonHvilketLand = 'pensjonHvilketLand',
-    skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
-    søkerHarBoddMedAndreForelder = 'søkerHarBoddMedAndreForelder',
-    søkerFlyttetFraAndreForelderDato = 'søkerFlyttetFraAndreForelderDato',
-}
-
-export enum barnDataKeySpørsmål {
-    erFosterbarn = 'erFosterbarn',
-    erAdoptertFraUtland = 'erAdoptertFraUtland',
-    erAsylsøker = 'erAsylsøker',
-    barnetrygdFraAnnetEøsland = 'barnetrygdFraAnnetEøsland',
-    barnetrygdFraEøslandHvilketLand = 'barnetrygdFraEøslandHvilketLand',
-    andreForelderErDød = 'andreForelderErDød',
-    oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
-    institusjonIUtland = 'institusjonIUtland',
-    institusjonsnavn = 'institusjonsnavn',
-    institusjonsadresse = 'institusjonsadresse',
-    institusjonspostnummer = 'institusjonspostnummer',
-    institusjonOppholdStartdato = 'institusjonOppholdStartdato',
-    institusjonOppholdSluttdato = 'institusjonOppholdSluttdato',
-    boddMindreEnn12MndINorge = 'boddMindreEnn12MndINorge',
-    planleggerÅBoINorge12Mnd = 'planleggerÅBoINorge12Mnd',
-    borFastMedSøker = 'borFastMedSøker',
-    søkerForTidsrom = 'søkerForTidsrom',
-    søkerForTidsromStartdato = 'søkerForTidsromStartdato',
-    søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
-    sammeForelderSomAnnetBarnMedId = 'sammeForelderSomAnnetBarnMedId',
-}

@@ -28,6 +28,12 @@ import {
 } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { useApp } from '../context/AppContext';
 import Miljø from '../Miljø';
+import {
+    andreForelderDataKeySpørsmål,
+    barnDataKeySpørsmål,
+    IAndreForelder,
+    IBarnMedISøknad,
+} from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
 import {
     Dokumentasjonsbehov,
@@ -39,19 +45,11 @@ import {
 } from '../typer/dokumentasjon';
 import { IKvittering } from '../typer/kvittering';
 import { IUtenlandsperiode } from '../typer/perioder';
-import {
-    andreForelderDataKeySpørsmål,
-    barnDataKeySpørsmål,
-    ESivilstand,
-    ISamboer,
-    ITidligereSamboer,
-} from '../typer/person';
+import { ESivilstand, ISamboer, ITidligereSamboer } from '../typer/person';
 import { ISøknadSpørsmål, SpørsmålId } from '../typer/spørsmål';
 import {
     ERegistrertBostedType,
-    IAndreForelder,
     IAndreForelderIKontraktFormat,
-    IBarnMedISøknad,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
     ISøknad,

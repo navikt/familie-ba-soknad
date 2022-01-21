@@ -4,9 +4,10 @@ import { DeepPartial } from 'ts-essentials';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { IBarnMedISøknad } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
-import { IBarnMedISøknad, ISøknad } from '../typer/søknad';
+import { ISøknad } from '../typer/søknad';
 import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from './barn';
 
 describe('genererSvarForSpørsmålBarn', () => {

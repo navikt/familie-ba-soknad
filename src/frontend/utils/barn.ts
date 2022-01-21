@@ -8,11 +8,12 @@ import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spør
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
-    IBarn,
-    IBarnRespons,
-} from '../typer/person';
+    IAndreForelder,
+    IBarnMedISøknad,
+} from '../typer/barn';
+import { IBarn, IBarnRespons } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
-import { IAndreForelder, IBarnMedISøknad, ISøknad } from '../typer/søknad';
+import { ISøknad } from '../typer/søknad';
 import { formaterFnr } from './visning';
 
 export const genererSvarForSpørsmålBarn = (barn: IBarnMedISøknad, felt: Felt<string[]>): ESvar =>

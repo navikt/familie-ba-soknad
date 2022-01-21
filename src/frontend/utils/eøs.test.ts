@@ -3,9 +3,9 @@ import { mockDeep } from 'jest-mock-extended';
 
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import { IAndreForelder } from '../typer/barn';
 import { IUtenlandsperiode } from '../typer/perioder';
 import { ISøknad } from '../typer/søknad';
-import { IAndreForelder } from '../typer/søknad';
 import { landSvarSomKanTriggeEøs } from './eøs';
 import { mekkGyldigSøknad } from './testing';
 

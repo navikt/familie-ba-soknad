@@ -31,16 +31,11 @@ import * as pdlRequest from '../context/pdl';
 import * as routesContext from '../context/RoutesContext';
 import { getRoutes, RoutesProvider } from '../context/RoutesContext';
 import { StegProvider } from '../context/StegContext';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
 import { EFeatureToggle } from '../typer/feature-toggles';
 import { IKvittering } from '../typer/kvittering';
-import {
-    andreForelderDataKeySpørsmål,
-    barnDataKeySpørsmål,
-    ESivilstand,
-    ISøker,
-    ISøkerRespons,
-} from '../typer/person';
+import { ESivilstand, ISøker, ISøkerRespons } from '../typer/person';
 import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
 import { genererInitialBarnMedISøknad } from './barn';

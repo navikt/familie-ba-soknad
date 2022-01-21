@@ -15,16 +15,17 @@ import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
-import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
-import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
-import { IUtenlandsperiode } from '../../../typer/perioder';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
-    ESivilstand,
-} from '../../../typer/person';
+    IBarnMedISøknad,
+} from '../../../typer/barn';
+import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
+import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
+import { IUtenlandsperiode } from '../../../typer/perioder';
+import { ESivilstand } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { ESøknadstype, IBarnMedISøknad } from '../../../typer/søknad';
+import { ESøknadstype } from '../../../typer/søknad';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';

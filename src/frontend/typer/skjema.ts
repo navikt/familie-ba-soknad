@@ -2,9 +2,10 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
+import { barnDataKeySpørsmål } from './barn';
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
 import { IArbeidsperiode, IUtenlandsperiode } from './perioder';
-import { barnDataKeySpørsmål, IBarn } from './person';
+import { IBarn } from './person';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 

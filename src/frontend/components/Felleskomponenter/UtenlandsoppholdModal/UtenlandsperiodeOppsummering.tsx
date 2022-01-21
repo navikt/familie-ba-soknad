@@ -9,8 +9,8 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { DeleteFilled } from '@navikt/ds-icons';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsperiode } from '../../../typer/perioder';
-import { IBarnMedISøknad } from '../../../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { formaterDato } from '../../../utils/dato';
