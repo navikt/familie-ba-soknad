@@ -4,7 +4,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål } from './barn';
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
-import { IArbeidsperiode, IUtenlandsperiode } from './perioder';
+import { IArbeidsperiode, IPensjonsperiode, IUtenlandsperiode } from './perioder';
 import { IBarn } from './person';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
@@ -27,6 +27,7 @@ export interface IDinLivssituasjonFeltTyper {
     registrerteArbeidsperioder: IArbeidsperiode[];
     mottarUtenlandspensjon: ESvar | null;
     pensjonsland: Alpha3Code | '';
+    registrertePensjonsperioder: IPensjonsperiode[];
 }
 
 export interface ITidligereSamboerFeltTyper {

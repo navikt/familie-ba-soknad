@@ -3,11 +3,12 @@ export enum PensjonSpørsmålId {
     pensjonsland = 'land-pensjon',
     fraDatoPensjon = 'fra-dato-pensjon',
     tilDatoPensjon = 'til-dato-pensjon',
+    pensjonsperioder = 'pensjonsperioder',
 }
 
 export const pensjonSøkerSpørsmålSpråkId = (
     tilbakeITid = false
-): Record<PensjonSpørsmålId, string> => ({
+): Record<Exclude<PensjonSpørsmålId, PensjonSpørsmålId.pensjonsperioder>, string> => ({
     [PensjonSpørsmålId.mottarPensjonNå]: 'modal.fårdupensjonnå.spm',
     [PensjonSpørsmålId.pensjonsland]: tilbakeITid
         ? 'felles.hvilketlandpensjon.spm'
@@ -21,7 +22,7 @@ export const pensjonSøkerSpørsmålSpråkId = (
 export const pensjonAndreForelderSpørsmålSpråkId = (
     tilbakeITid = false,
     erDød = false
-): Record<PensjonSpørsmålId, string> => ({
+): Record<Exclude<PensjonSpørsmålId, PensjonSpørsmålId.pensjonsperioder>, string> => ({
     [PensjonSpørsmålId.mottarPensjonNå]: 'ombarnet.andre-forelder.pensjonnå.spm',
     [PensjonSpørsmålId.pensjonsland]:
         tilbakeITid || erDød

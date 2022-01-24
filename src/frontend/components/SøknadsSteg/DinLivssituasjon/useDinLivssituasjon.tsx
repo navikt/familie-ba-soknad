@@ -15,7 +15,7 @@ import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdo
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/dokumentasjon';
-import { IArbeidsperiode } from '../../../typer/perioder';
+import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { ESivilstand, ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
@@ -24,6 +24,8 @@ import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { useArbeidsperioder } from '../../Felleskomponenter/Arbeidsperiode/useArbeidsperioder';
+import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
+import { usePensjonsperioder } from '../../Felleskomponenter/Pensjonsmodal/usePensjonsperioder';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
@@ -39,6 +41,8 @@ export const useDinLivssituasjon = (): {
     tidligereSamboere: ITidligereSamboer[];
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
+    leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
+    fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøs();
@@ -219,6 +223,18 @@ export const useDinLivssituasjon = (): {
         avhengighet: mottarUtenlandspensjon,
     });
 
+    const { fjernPensjonsperiode, leggTilPensjonsperiode, registrertePensjonsperioder } =
+        usePensjonsperioder(
+            søker.pensjonsperioderUtland,
+            { mottarUtenlandspensjon },
+            avhengigheter =>
+                avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+            felt =>
+                mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length === 0
+                    ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />)
+                    : ok(felt)
+        );
+
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,
         string
@@ -241,6 +257,7 @@ export const useDinLivssituasjon = (): {
             registrerteArbeidsperioder,
             mottarUtenlandspensjon,
             pensjonsland,
+            registrertePensjonsperioder,
         },
         skjemanavn: 'dinlivssituasjon',
     });
@@ -320,7 +337,6 @@ export const useDinLivssituasjon = (): {
             skjema.felter.jobberPåBåt.verdi === ESvar.JA
                 ? skjema.felter.registrerteArbeidsperioder.verdi
                 : [],
-
         mottarUtenlandspensjon: {
             ...søknad.søker.mottarUtenlandspensjon,
             svar: skjema.felter.mottarUtenlandspensjon.verdi,
@@ -329,6 +345,10 @@ export const useDinLivssituasjon = (): {
             ...søknad.søker.pensjonsland,
             svar: skjema.felter.pensjonsland.verdi,
         },
+        pensjonsperioderUtland:
+            skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA
+                ? skjema.felter.registrertePensjonsperioder.verdi
+                : [],
         utvidet: {
             ...søknad.søker.utvidet,
             tidligereSamboere,
@@ -399,5 +419,7 @@ export const useDinLivssituasjon = (): {
         fjernTidligereSamboer,
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
+        fjernPensjonsperiode,
+        leggTilPensjonsperiode,
     };
 };

@@ -7,14 +7,14 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { Arbeidsperiode } from './Arbeidsperiode';
+import { Pensjonsperiode } from './Pensjonsperiode';
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import TidligereSamboere from './TidligereSamboere';
@@ -32,10 +32,11 @@ const DinLivssituasjon: React.FC = () => {
         fjernTidligereSamboer,
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
+        leggTilPensjonsperiode,
+        fjernPensjonsperiode,
     } = useDinLivssituasjon();
 
     const { erUtvidet, søknad } = useApp();
-    const { erEøsLand } = useEøs();
 
     return (
         <Steg
@@ -157,36 +158,12 @@ const DinLivssituasjon: React.FC = () => {
                     fjernArbeidsperiode={fjernArbeidsperiode}
                     gjelderUtlandet={true}
                 />
-
-                <JaNeiSpm
+                <Pensjonsperiode
                     skjema={skjema}
-                    felt={skjema.felter.mottarUtenlandspensjon}
-                    spørsmålTekstId={
-                        dinLivssituasjonSpørsmålSpråkId[
-                            DinLivssituasjonSpørsmålId.mottarUtenlandspensjon
-                        ]
-                    }
+                    leggTilPensjonsperiode={leggTilPensjonsperiode}
+                    fjernPensjonsperiode={fjernPensjonsperiode}
+                    gjelderUtlandet
                 />
-                <LandDropdown
-                    felt={skjema.felter.pensjonsland}
-                    skjema={skjema}
-                    label={
-                        <SpråkTekst
-                            id={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.pensjonsland
-                                ]
-                            }
-                        />
-                    }
-                    dynamisk
-                />
-                {erEøsLand(skjema.felter.pensjonsland.verdi) && (
-                    <VedleggNotisTilleggsskjema
-                        språkTekstId={'omdeg.utenlandspensjon.eøs-info'}
-                        dynamisk
-                    />
-                )}
             </KomponentGruppe>
         </Steg>
     );
