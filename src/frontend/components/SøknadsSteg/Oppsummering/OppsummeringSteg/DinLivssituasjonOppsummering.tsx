@@ -244,18 +244,25 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         ))}
                     </>
                 ) : (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.arbeidsland
-                                    ]
+                    <>
+                        {søknad.søker.arbeidsland.svar && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            dinLivssituasjonSpørsmålSpråkId[
+                                                DinLivssituasjonSpørsmålId.arbeidsland
+                                            ]
+                                        }
+                                    />
                                 }
+                                søknadsvar={landkodeTilSpråk(
+                                    søknad.søker.arbeidsland.svar,
+                                    valgtLocale
+                                )}
                             />
-                        }
-                        søknadsvar={landkodeTilSpråk(søknad.søker.arbeidsland.svar, valgtLocale)}
-                    />
+                        )}
+                    </>
                 )}
                 <OppsummeringFelt
                     tittel={
