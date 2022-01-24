@@ -5,15 +5,18 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
+import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import { Arbeidsperiode } from './Arbeidsperiode';
-import { Pensjonsperiode } from './Pensjonsperiode';
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import TidligereSamboere from './TidligereSamboere';
@@ -36,6 +39,8 @@ const DinLivssituasjon: React.FC = () => {
     } = useDinLivssituasjon();
 
     const { erUtvidet, søknad } = useApp();
+    const { toggles } = useFeatureToggles();
+    const { erEøsLand } = useEøs();
 
     return (
         <Steg
@@ -157,12 +162,46 @@ const DinLivssituasjon: React.FC = () => {
                     fjernArbeidsperiode={fjernArbeidsperiode}
                     gjelderUtlandet={true}
                 />
-                <Pensjonsperiode
-                    skjema={skjema}
-                    leggTilPensjonsperiode={leggTilPensjonsperiode}
-                    fjernPensjonsperiode={fjernPensjonsperiode}
-                    gjelderUtlandet
-                />
+                {toggles.EØS_KOMPLETT ? (
+                    <Pensjonsperiode
+                        skjema={skjema}
+                        leggTilPensjonsperiode={leggTilPensjonsperiode}
+                        fjernPensjonsperiode={fjernPensjonsperiode}
+                        gjelderUtlandet
+                    />
+                ) : (
+                    <KomponentGruppe inline>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.mottarUtenlandspensjon}
+                            spørsmålTekstId={
+                                dinLivssituasjonSpørsmålSpråkId[
+                                    DinLivssituasjonSpørsmålId.mottarUtenlandspensjon
+                                ]
+                            }
+                        />
+                        <LandDropdown
+                            felt={skjema.felter.pensjonsland}
+                            skjema={skjema}
+                            label={
+                                <SpråkTekst
+                                    id={
+                                        dinLivssituasjonSpørsmålSpråkId[
+                                            DinLivssituasjonSpørsmålId.pensjonsland
+                                        ]
+                                    }
+                                />
+                            }
+                            dynamisk
+                        />
+                        {erEøsLand(skjema.felter.pensjonsland.verdi) && (
+                            <VedleggNotisTilleggsskjema
+                                språkTekstId={'omdeg.utenlandspensjon.eøs-info'}
+                                dynamisk
+                            />
+                        )}
+                    </KomponentGruppe>
+                )}
             </KomponentGruppe>
         </Steg>
     );

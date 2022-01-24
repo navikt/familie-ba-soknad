@@ -5,26 +5,24 @@ import { Element } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
-import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
-import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
-import { PensjonModal } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsmodal';
-import { PensjonsperiodeOppsummering } from '../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
+import {
+    DinLivssituasjonSpørsmålId,
+    dinLivssituasjonSpørsmålSpråkId,
+} from '../../SøknadsSteg/DinLivssituasjon/spørsmål';
+import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import useModal from '../SkjemaModal/useModal';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { PensjonModal } from './Pensjonsmodal';
+import { PensjonsperiodeOppsummering } from './PensjonsperiodeOppsummering';
 import {
     pensjonsperiodeFeilmelding,
     pensjonsperiodeFlereSpørsmål,
     pensjonsperiodeLeggTilFlereKnapp,
-} from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
-import { PensjonSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
-import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
-import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
+} from './språkUtils';
+import { PensjonSpørsmålId } from './spørsmål';
 
 interface Props {
     skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
@@ -44,11 +42,9 @@ export const Pensjonsperiode: React.FC<Props> = props => {
         gjelderAndreForelder = false,
         barnetsNavn,
     } = props;
-    const { erEøsLand } = useEøs();
-    const { toggles } = useFeatureToggles();
     const { erÅpen: pensjonsmodalErÅpen, toggleModal: togglePensjonsmodal } = useModal();
 
-    return toggles.EØS_KOMPLETT ? (
+    return (
         <>
             <JaNeiSpm
                 skjema={skjema}
@@ -103,35 +99,5 @@ export const Pensjonsperiode: React.FC<Props> = props => {
                 </>
             )}
         </>
-    ) : (
-        <KomponentGruppe inline>
-            <JaNeiSpm
-                skjema={skjema}
-                felt={skjema.felter.mottarUtenlandspensjon}
-                spørsmålTekstId={
-                    dinLivssituasjonSpørsmålSpråkId[
-                        DinLivssituasjonSpørsmålId.mottarUtenlandspensjon
-                    ]
-                }
-            />
-            <LandDropdown
-                felt={skjema.felter.pensjonsland}
-                skjema={skjema}
-                label={
-                    <SpråkTekst
-                        id={
-                            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.pensjonsland]
-                        }
-                    />
-                }
-                dynamisk
-            />
-            {erEøsLand(skjema.felter.pensjonsland.verdi) && (
-                <VedleggNotisTilleggsskjema
-                    språkTekstId={'omdeg.utenlandspensjon.eøs-info'}
-                    dynamisk
-                />
-            )}
-        </KomponentGruppe>
     );
 };
