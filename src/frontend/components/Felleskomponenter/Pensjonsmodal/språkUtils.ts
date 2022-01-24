@@ -51,3 +51,6 @@ export const pensjonsperiodeFlereSpørsmål = (
             ? 'eøs-om-barn.leggtilpensjonandreforelder.spm'
             : 'eøs-om-deg.leggtilpensjon.spm';
 };
+
+export const pensjonsperiodeOppsummeringOverskrift = (gjelderUtlandet: boolean): string =>
+    gjelderUtlandet ? 'felles.leggtilpensjon.periode' : 'felles.leggtilpensjon.norge.modal.tittel';

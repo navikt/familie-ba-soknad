@@ -34,3 +34,12 @@ export const pensjonAndreForelderSpørsmålSpråkId = (
             : 'pensjonmodal.franårpensjonandreforelder.nåtid.spm',
     [PensjonSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
 });
+
+export const hentPensjonsperiodeSpørsmålIder = (
+    gjelderAndreForelder: boolean,
+    tilbakeITid: boolean,
+    erAndreForelderDød: boolean
+): Record<Exclude<PensjonSpørsmålId, PensjonSpørsmålId.pensjonsperioder>, string> =>
+    gjelderAndreForelder
+        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid, erAndreForelderDød)
+        : pensjonSøkerSpørsmålSpråkId(tilbakeITid);
