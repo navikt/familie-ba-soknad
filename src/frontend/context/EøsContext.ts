@@ -76,15 +76,15 @@ const [EøsProvider, useEøs] = createUseContext(() => {
 
     const skalTriggeEøsForSøker = (søker: ISøker): boolean => {
         const landSvarSomKanTrigge = [
-            søker.pensjonsland.svar,
             søker.utenlandsperioder.map(periode => periode.oppholdsland.svar),
             ...(toggles.EØS_KOMPLETT
                 ? [
                       søker.arbeidsperioderUtland.map(
                           periode => periode.arbeidsperiodeland?.svar ?? ''
                       ),
+                      søker.pensjonsperioderUtland.map(periode => periode.pensjonsland.svar ?? ''),
                   ]
-                : [søker.arbeidsland.svar]),
+                : [søker.arbeidsland.svar, søker.pensjonsland.svar]),
         ].flat();
 
         return !!landSvarSomKanTrigge.find(land => erEøsLand(land));
