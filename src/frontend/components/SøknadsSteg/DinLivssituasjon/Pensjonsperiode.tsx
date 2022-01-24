@@ -48,7 +48,62 @@ export const Pensjonsperiode: React.FC<Props> = props => {
     const { toggles } = useFeatureToggles();
     const { erÅpen: pensjonsmodalErÅpen, toggleModal: togglePensjonsmodal } = useModal();
 
-    return (
+    return toggles.EØS_KOMPLETT ? (
+        <>
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.mottarUtenlandspensjon}
+                spørsmålTekstId={
+                    dinLivssituasjonSpørsmålSpråkId[
+                        DinLivssituasjonSpørsmålId.mottarUtenlandspensjon
+                    ]
+                }
+            />
+            {skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (
+                <>
+                    {skjema.felter.registrertePensjonsperioder.verdi.map(
+                        (pensjonsperiode, index) => (
+                            <PensjonsperiodeOppsummering
+                                pensjonsperiode={pensjonsperiode}
+                                fjernPeriodeCallback={fjernPensjonsperiode}
+                                nummer={index + 1}
+                                gjelderUtlandet={gjelderUtlandet}
+                            />
+                        )
+                    )}
+                    {skjema.felter.registrertePensjonsperioder.verdi.length > 0 && (
+                        <Element>
+                            <SpråkTekst
+                                id={pensjonsperiodeFlereSpørsmål(
+                                    gjelderUtlandet,
+                                    gjelderAndreForelder
+                                )}
+                                values={{ barn: barnetsNavn }}
+                            />
+                        </Element>
+                    )}
+                    <LeggTilKnapp
+                        onClick={togglePensjonsmodal}
+                        språkTekst={pensjonsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
+                        id={PensjonSpørsmålId.pensjonsperioder}
+                        feilmelding={
+                            skjema.felter.registrertePensjonsperioder.erSynlig &&
+                            skjema.felter.registrertePensjonsperioder.feilmelding &&
+                            skjema.visFeilmeldinger && (
+                                <SpråkTekst id={pensjonsperiodeFeilmelding(gjelderUtlandet)} />
+                            )
+                        }
+                    />
+                    <PensjonModal
+                        erÅpen={pensjonsmodalErÅpen}
+                        toggleModal={togglePensjonsmodal}
+                        onLeggTilPensjonsperiode={leggTilPensjonsperiode}
+                        gjelderUtland={gjelderUtlandet}
+                    />
+                </>
+            )}
+        </>
+    ) : (
         <KomponentGruppe inline>
             <JaNeiSpm
                 skjema={skjema}
@@ -59,77 +114,23 @@ export const Pensjonsperiode: React.FC<Props> = props => {
                     ]
                 }
             />
-            {toggles.EØS_KOMPLETT ? (
-                <>
-                    {skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (
-                        <>
-                            {skjema.felter.registrertePensjonsperioder.verdi.map(
-                                (pensjonsperiode, index) => (
-                                    <PensjonsperiodeOppsummering
-                                        pensjonsperiode={pensjonsperiode}
-                                        fjernPeriodeCallback={fjernPensjonsperiode}
-                                        nummer={index + 1}
-                                        gjelderUtlandet={gjelderUtlandet}
-                                    />
-                                )
-                            )}
-                            {skjema.felter.registrertePensjonsperioder.verdi.length > 0 && (
-                                <Element>
-                                    <SpråkTekst
-                                        id={pensjonsperiodeFlereSpørsmål(
-                                            gjelderUtlandet,
-                                            gjelderAndreForelder
-                                        )}
-                                        values={{ barn: barnetsNavn }}
-                                    />
-                                </Element>
-                            )}
-                            <LeggTilKnapp
-                                onClick={togglePensjonsmodal}
-                                språkTekst={pensjonsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
-                                id={PensjonSpørsmålId.pensjonsperioder}
-                                feilmelding={
-                                    skjema.felter.registrertePensjonsperioder.erSynlig &&
-                                    skjema.felter.registrertePensjonsperioder.feilmelding &&
-                                    skjema.visFeilmeldinger && (
-                                        <SpråkTekst
-                                            id={pensjonsperiodeFeilmelding(gjelderUtlandet)}
-                                        />
-                                    )
-                                }
-                            />
-                            <PensjonModal
-                                erÅpen={pensjonsmodalErÅpen}
-                                toggleModal={togglePensjonsmodal}
-                                onLeggTilPensjonsperiode={leggTilPensjonsperiode}
-                                gjelderUtland={gjelderUtlandet}
-                            />
-                        </>
-                    )}
-                </>
-            ) : (
-                <KomponentGruppe inline>
-                    <LandDropdown
-                        felt={skjema.felter.pensjonsland}
-                        skjema={skjema}
-                        label={
-                            <SpråkTekst
-                                id={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.pensjonsland
-                                    ]
-                                }
-                            />
+            <LandDropdown
+                felt={skjema.felter.pensjonsland}
+                skjema={skjema}
+                label={
+                    <SpråkTekst
+                        id={
+                            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.pensjonsland]
                         }
-                        dynamisk
                     />
-                    {erEøsLand(skjema.felter.pensjonsland.verdi) && (
-                        <VedleggNotisTilleggsskjema
-                            språkTekstId={'omdeg.utenlandspensjon.eøs-info'}
-                            dynamisk
-                        />
-                    )}
-                </KomponentGruppe>
+                }
+                dynamisk
+            />
+            {erEøsLand(skjema.felter.pensjonsland.verdi) && (
+                <VedleggNotisTilleggsskjema
+                    språkTekstId={'omdeg.utenlandspensjon.eøs-info'}
+                    dynamisk
+                />
             )}
         </KomponentGruppe>
     );
