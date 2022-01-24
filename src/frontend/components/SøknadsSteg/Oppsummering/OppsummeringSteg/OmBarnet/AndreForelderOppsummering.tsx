@@ -101,9 +101,7 @@ const AndreForelderOppsummering: React.FC<{
                 )}
                 {toggles.EØS_KOMPLETT ? (
                     <>
-                        {andreForelder[
-                            andreForelderDataKeySpørsmål.arbeidsperiodeUtlandAndreForelder
-                        ].map((periode, index) => (
+                        {andreForelder.arbeidsperioderUtland.map((periode, index) => (
                             <ArbeidsperiodeOppsummering
                                 key={index}
                                 nummer={index + 1}

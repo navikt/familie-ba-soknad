@@ -370,7 +370,7 @@ export const useOmBarnet = (
         leggTilArbeidsperiode,
         registrerteArbeidsperioder: andreForelderArbeidsperioderUtland,
     } = useArbeidsperioder(
-        andreForelder?.[andreForelderDataKeySpørsmål.arbeidsperiodeUtlandAndreForelder] ?? [],
+        andreForelder?.arbeidsperioderUtland ?? [],
         { andreForelderArbeidUtlandet },
         avhengigheter =>
             avhengigheter.andreForelderArbeidUtlandet.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
@@ -725,7 +725,7 @@ export const useOmBarnet = (
                               svar: andreForelderArbeidUtlandetHvilketLand.verdi,
                           },
 
-                          arbeidsperiodeUtlandAndreForelder:
+                          arbeidsperioderUtland:
                               skjema.felter.andreForelderArbeidsperioderUtland.verdi,
 
                           pensjonUtland: {

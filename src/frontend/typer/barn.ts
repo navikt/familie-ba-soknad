@@ -18,7 +18,6 @@ export enum andreForelderDataKeySpørsmål {
     fødselsdato = 'fødselsdato',
     arbeidUtlandet = 'arbeidUtlandet',
     arbeidUtlandetHvilketLand = 'arbeidUtlandetHvilketLand',
-    arbeidsperiodeUtlandAndreForelder = 'arbeidsperiodeUtlandAndreForelder',
     pensjonUtland = 'pensjonUtland',
     pensjonHvilketLand = 'pensjonHvilketLand',
     skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
@@ -60,7 +59,6 @@ export interface IAndreForelder {
     [andreForelderDataKeySpørsmål.fødselsdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [andreForelderDataKeySpørsmål.arbeidUtlandet]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
-    [andreForelderDataKeySpørsmål.arbeidsperiodeUtlandAndreForelder]: IArbeidsperiode[];
     [andreForelderDataKeySpørsmål.pensjonUtland]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.pensjonHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
     [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | null>;

@@ -96,9 +96,9 @@ const [EøsProvider, useEøs] = createUseContext(() => {
                 ? [
                       ...(toggles.EØS_KOMPLETT
                           ? [
-                                barn.andreForelder[
-                                    andreForelderDataKeySpørsmål.arbeidsperiodeUtlandAndreForelder
-                                ].map(periode => periode.arbeidsperiodeland?.svar ?? ''),
+                                barn.andreForelder.arbeidsperioderUtland.map(
+                                    periode => periode.arbeidsperiodeland?.svar ?? ''
+                                ),
                             ]
                           : [
                                 barn.andreForelder[
