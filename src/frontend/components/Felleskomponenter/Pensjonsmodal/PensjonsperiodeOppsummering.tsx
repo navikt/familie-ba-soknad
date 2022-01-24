@@ -9,7 +9,6 @@ import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { pensjonsperiodeOppsummeringOverskrift } from './språkUtils';
 import { hentPensjonsperiodeSpørsmålIder, PensjonSpørsmålId } from './spørsmål';
 
 export const PensjonsperiodeOppsummering: React.FC<{
@@ -18,13 +17,7 @@ export const PensjonsperiodeOppsummering: React.FC<{
     fjernPeriodeCallback?: (pensjonsperiode: IPensjonsperiode) => void;
     gjelderUtlandet?: boolean;
     andreForelderData?: { erDød: boolean };
-}> = ({
-    pensjonsperiode,
-    nummer,
-    fjernPeriodeCallback = undefined,
-    gjelderUtlandet = false,
-    andreForelderData,
-}) => {
+}> = ({ pensjonsperiode, nummer, fjernPeriodeCallback = undefined, andreForelderData }) => {
     const [valgtLocale] = useSprakContext();
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = pensjonsperiode;
 
@@ -39,7 +32,7 @@ export const PensjonsperiodeOppsummering: React.FC<{
             }
             fjernKnappSpråkId={'felles.fjernpensjon.knapp'}
             nummer={nummer}
-            tittelSpråkId={pensjonsperiodeOppsummeringOverskrift(gjelderUtlandet)}
+            tittelSpråkId={'felles.leggtilpensjon.periode'}
         >
             {mottarPensjonNå.svar && (
                 <OppsummeringFelt

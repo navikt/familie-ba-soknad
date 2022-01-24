@@ -221,6 +221,7 @@ export const useDinLivssituasjon = (): {
         feilmeldingSpråkId: 'omdeg.utenlandspensjon.land.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: mottarUtenlandspensjon,
+        skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
     const { fjernPensjonsperiode, leggTilPensjonsperiode, registrertePensjonsperioder } =
