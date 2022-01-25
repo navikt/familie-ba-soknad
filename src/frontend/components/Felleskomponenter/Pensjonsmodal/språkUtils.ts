@@ -1,3 +1,8 @@
+import {
+    DinLivssituasjonSpørsmålId,
+    dinLivssituasjonSpørsmålSpråkId,
+} from '../../SøknadsSteg/DinLivssituasjon/spørsmål';
+
 export const pensjonslandFeilmeldingSpråkId = (
     gjelderAndreForelder,
     tilbakeITid,
@@ -28,7 +33,7 @@ export const pensjonFraDatoFeilmeldingSpråkId = (
             : 'pensjonmodal.franårpensjon.nåtid.feilmelding';
 };
 
-export const pensjonsperiodeLeggTilFlereKnapp = (gjelderUtlandet: boolean): string =>
+export const pensjonsperiodeKnappSpråkId = (gjelderUtlandet: boolean): string =>
     gjelderUtlandet
         ? 'felles.leggtilpensjon.utland.modal.tittel'
         : 'felles.leggtilpensjon.norge.knapp';
@@ -38,7 +43,7 @@ export const pensjonsperiodeFeilmelding = (gjelderUtlandet: boolean): string =>
         ? 'felles.modal.leggtilpensjonutland.feilmelding'
         : 'felles.modal.leggtilpensjonnorge.feilmelding';
 
-export const pensjonsperiodeFlereSpørsmål = (
+export const pensjonFlerePerioderSpmSpråkId = (
     gjelderUtlandet: boolean,
     gjelderAndreForelder: boolean
 ): string => {
@@ -51,3 +56,6 @@ export const pensjonsperiodeFlereSpørsmål = (
             ? 'eøs-om-barn.leggtilpensjonandreforelder.spm'
             : 'eøs-om-deg.leggtilpensjon.spm';
 };
+
+export const mottarEllerMottattPensjonSpråkId = () =>
+    dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.mottarUtenlandspensjon];

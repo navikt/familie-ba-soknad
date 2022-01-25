@@ -7,10 +7,6 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { IDinLivssituasjonFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import {
-    DinLivssituasjonSpørsmålId,
-    dinLivssituasjonSpørsmålSpråkId,
-} from '../../SøknadsSteg/DinLivssituasjon/spørsmål';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -18,13 +14,14 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { PensjonModal } from './Pensjonsmodal';
 import { PensjonsperiodeOppsummering } from './PensjonsperiodeOppsummering';
 import {
+    mottarEllerMottattPensjonSpråkId,
     pensjonsperiodeFeilmelding,
-    pensjonsperiodeFlereSpørsmål,
-    pensjonsperiodeLeggTilFlereKnapp,
+    pensjonFlerePerioderSpmSpråkId,
+    pensjonsperiodeKnappSpråkId,
 } from './språkUtils';
 import { PensjonSpørsmålId } from './spørsmål';
 
-interface Props {
+interface PensjonsperiodeProps {
     skjema: ISkjema<IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper, string>;
     mottarEllerMottattPensjonFelt: Felt<ESvar | null>;
     registrertePensjonsperioder: Felt<IPensjonsperiode[]>;
@@ -35,17 +32,16 @@ interface Props {
     barnetsNavn?: string;
 }
 
-export const Pensjonsperiode: React.FC<Props> = props => {
-    const {
-        skjema,
-        leggTilPensjonsperiode,
-        fjernPensjonsperiode,
-        gjelderUtlandet = false,
-        gjelderAndreForelder = false,
-        barnetsNavn,
-        mottarEllerMottattPensjonFelt,
-        registrertePensjonsperioder,
-    } = props;
+export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
+    skjema,
+    leggTilPensjonsperiode,
+    fjernPensjonsperiode,
+    gjelderUtlandet = false,
+    gjelderAndreForelder = false,
+    barnetsNavn,
+    mottarEllerMottattPensjonFelt,
+    registrertePensjonsperioder,
+}) => {
     const { erÅpen: pensjonsmodalErÅpen, toggleModal: togglePensjonsmodal } = useModal();
 
     return (
@@ -53,11 +49,7 @@ export const Pensjonsperiode: React.FC<Props> = props => {
             <JaNeiSpm
                 skjema={skjema}
                 felt={mottarEllerMottattPensjonFelt}
-                spørsmålTekstId={
-                    dinLivssituasjonSpørsmålSpråkId[
-                        DinLivssituasjonSpørsmålId.mottarUtenlandspensjon
-                    ]
-                }
+                spørsmålTekstId={mottarEllerMottattPensjonSpråkId()}
             />
             {mottarEllerMottattPensjonFelt.verdi === ESvar.JA && (
                 <>
@@ -72,7 +64,7 @@ export const Pensjonsperiode: React.FC<Props> = props => {
                     {registrertePensjonsperioder.verdi.length > 0 && (
                         <Element>
                             <SpråkTekst
-                                id={pensjonsperiodeFlereSpørsmål(
+                                id={pensjonFlerePerioderSpmSpråkId(
                                     gjelderUtlandet,
                                     gjelderAndreForelder
                                 )}
@@ -82,7 +74,7 @@ export const Pensjonsperiode: React.FC<Props> = props => {
                     )}
                     <LeggTilKnapp
                         onClick={togglePensjonsmodal}
-                        språkTekst={pensjonsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
+                        språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}
                         id={PensjonSpørsmålId.pensjonsperioder}
                         feilmelding={
                             registrertePensjonsperioder.erSynlig &&
