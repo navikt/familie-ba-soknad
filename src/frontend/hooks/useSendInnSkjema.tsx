@@ -191,6 +191,9 @@ export const useSendInnSkjema = (): {
             søkerForTidsromSluttdato,
             institusjonOppholdSluttdato,
             utenlandsperioder,
+            // Nye felter under utvikling av EØS full
+            triggetEøs,
+            // resterende felter, hvor alle må være av type ISøknadSpørsmål
             ...barnSpørsmål
         } = barn;
         const typetBarnSpørsmål = barnSpørsmål as unknown as SpørsmålMap;
@@ -538,6 +541,14 @@ export const useSendInnSkjema = (): {
             adressebeskyttelse,
             nåværendeSamboer,
             utenlandsperioder,
+            // Nye felter under utvikling av EØS full
+            andreUtbetalingsperioder,
+            arbeidsperioderNorge,
+            arbeidsperioderUtland,
+            pensjonsperioderNorge,
+            pensjonsperioderUtland,
+            triggetEøs,
+            // resterende felter, hvor alle må være av type ISøknadSpørsmål
             ...søkerSpørsmål
         } = søker;
         const { spørsmål: utvidaSpørsmål, tidligereSamboere } = utvidet;
