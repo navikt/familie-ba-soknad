@@ -84,7 +84,7 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                                     gjelderAndreForelder
                                 )}
                                 values={{
-                                    ...(barn && { navn: barnetsNavnValue(barn, intl) }),
+                                    ...(barn && { barn: barnetsNavnValue(barn, intl) }),
                                 }}
                             />
                         </Element>

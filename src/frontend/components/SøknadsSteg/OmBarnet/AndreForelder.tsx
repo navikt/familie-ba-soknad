@@ -171,7 +171,23 @@ const AndreForelder: React.FC<{
                                             }
                                             inkluderVetIkke={true}
                                         />
-                                        <div>Placeholder for pensjonsperioder</div>
+                                        <div>
+                                            Placeholder for pensjonsperioder
+                                            <JaNeiSpm
+                                                skjema={skjema}
+                                                felt={skjema.felter.andreForelderPensjonUtland}
+                                                spørsmålTekstId={
+                                                    omBarnetSpørsmålSpråkId[
+                                                        andreForelder[
+                                                            andreForelderDataKeySpørsmål
+                                                                .pensjonUtland
+                                                        ].id
+                                                    ]
+                                                }
+                                                inkluderVetIkke={true}
+                                                språkValues={{ navn: barnetsNavn }}
+                                            />
+                                        </div>
                                     </>
                                 ) : (
                                     <KomponentGruppe inline>
