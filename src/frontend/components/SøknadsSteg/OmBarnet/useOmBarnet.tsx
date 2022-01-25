@@ -21,11 +21,10 @@ import {
     IBarnMedISøknad,
 } from '../../../typer/barn';
 import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
-import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
+import { IDokumentasjon } from '../../../typer/dokumentasjon';
+import { Dokumentasjonsbehov, ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { IUtenlandsperiode } from '../../../typer/perioder';
-import { ESivilstand } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { ESøknadstype } from '../../../typer/søknad';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
 import { barnetsNavnValue } from '../../../utils/barn';

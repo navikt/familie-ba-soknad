@@ -8,8 +8,9 @@ import JestMockPromise from 'jest-mock-promise';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { ESivilstand, ISøkerRespons } from '../typer/person';
-import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
+import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
+import { ISøkerRespons } from '../typer/person';
+import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import {
     mockEøs,
     mockFeatureToggle,

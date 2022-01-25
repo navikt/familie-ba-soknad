@@ -5,7 +5,8 @@ import { fromBlob } from 'file-type/browser';
 
 import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
 import Miljø from '../../../../Miljø';
-import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
+import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
+import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/generelle';
 import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { konverter } from './konverteringService';

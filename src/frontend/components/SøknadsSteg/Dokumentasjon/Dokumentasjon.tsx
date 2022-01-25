@@ -8,9 +8,11 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
-import { Dokumentasjonsbehov, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
+import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
+import { Dokumentasjonsbehov } from '../../../typer/kontrakt/generelle';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -27,7 +29,8 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 
 const Dokumentasjon: React.FC = () => {
     const { søknad, settSøknad, innsendingStatus } = useApp();
-    const { sendInnSkjema } = useSendInnSkjema();
+    const { sendInnSkjema, sendInnSkjemaV7 } = useSendInnSkjema();
+    const { toggles } = useFeatureToggles();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
     const oppdaterDokumentasjon = (
@@ -68,7 +71,9 @@ const Dokumentasjon: React.FC = () => {
         <Steg
             tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
             gåVidereCallback={async () => {
-                const [success, _] = await sendInnSkjema();
+                const [success, _] = toggles.EØS_KOMPLETT
+                    ? await sendInnSkjemaV7()
+                    : await sendInnSkjema();
                 return success;
             }}
         >

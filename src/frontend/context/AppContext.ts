@@ -12,11 +12,12 @@ import {
 
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import Miljø, { basePath } from '../Miljø';
+import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
-import { ESivilstand, ISøkerRespons } from '../typer/person';
+import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
-import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
+import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/barn';
 import { preferredAxios } from './axios';

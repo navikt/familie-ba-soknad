@@ -3,9 +3,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
-import { Dokumentasjonsbehov, IDokumentasjon } from '../../../typer/dokumentasjon';
-import { ESivilstand, ISøker } from '../../../typer/person';
-import { ESøknadstype } from '../../../typer/søknad';
+import { IDokumentasjon } from '../../../typer/dokumentasjon';
+import { Dokumentasjonsbehov, ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { ISøker } from '../../../typer/person';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import LastOppVedlegg from './LastOppVedlegg';
 

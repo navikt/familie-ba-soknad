@@ -7,14 +7,8 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
-import {
-    Dokumentasjonsbehov,
-    EFiltyper,
-    IDokumentasjon,
-    IVedlegg,
-} from '../../../typer/dokumentasjon';
-import { ESivilstand } from '../../../typer/person';
-import { ESøknadstype } from '../../../typer/søknad';
+import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
+import { Dokumentasjonsbehov, ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { barnetsNavnValue } from '../../../utils/barn';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';

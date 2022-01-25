@@ -9,7 +9,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { BarnetsId } from '../../../typer/common';
-import { ESivilstand } from '../../../typer/person';
+import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { Årsak } from '../../../typer/utvidet';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';

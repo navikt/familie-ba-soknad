@@ -3,6 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
+import { ESivilstand, IAdresse } from './kontrakt/generelle';
 import {
     IArbeidsperiode,
     IPensjonsperiode,
@@ -11,19 +12,6 @@ import {
 } from './perioder';
 import { ISøknadSpørsmål } from './spørsmål';
 import { Årsak } from './utvidet';
-
-export enum ESivilstand {
-    GIFT = 'GIFT',
-    ENKE_ELLER_ENKEMANN = 'ENKE_ELLER_ENKEMANN',
-    SKILT = 'SKILT',
-    SEPARERT = 'SEPARERT',
-    REGISTRERT_PARTNER = 'REGISTRERT_PARTNER',
-    SEPARERT_PARTNER = 'SEPARERT_PARTNER',
-    SKILT_PARTNER = 'SKILT_PARTNER',
-    GJENLEVENDE_PARTNER = 'GJENLEVENDE_PARTNER',
-    UGIFT = 'UGIFT',
-    UOPPGITT = 'UOPPGITT',
-}
 
 export interface IPerson {
     ident: string;
@@ -96,13 +84,4 @@ export interface ISamboer {
 
 export interface ITidligereSamboer extends ISamboer {
     samboerTilDato: ISøknadSpørsmål<ISODateString>;
-}
-
-export interface IAdresse {
-    adressenavn?: string;
-    postnummer?: string;
-    husbokstav?: string;
-    bruksenhetsnummer?: string;
-    husnummer?: string;
-    poststed?: string;
 }

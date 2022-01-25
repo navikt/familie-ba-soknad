@@ -5,7 +5,8 @@ import { IntlProvider } from 'react-intl';
 
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
-import { ESivilstand, ISøker } from '../../../typer/person';
+import { ESivilstand } from '../../../typer/kontrakt/generelle';
+import { ISøker } from '../../../typer/person';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { Personopplysninger } from './Personopplysninger';
 

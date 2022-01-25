@@ -4,8 +4,8 @@ import { queryByText, render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
-import { ESivilstand } from '../../../typer/person';
-import { ESøknadstype, ISøknad } from '../../../typer/søknad';
+import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { ISøknad } from '../../../typer/søknad';
 import {
     mockEøs,
     mockHistory,

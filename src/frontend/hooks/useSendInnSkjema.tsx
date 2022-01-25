@@ -35,33 +35,32 @@ import {
     IBarnMedISøknad,
 } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
+import { dokumentasjonsbehovTilSpråkId, IDokumentasjon, IVedlegg } from '../typer/dokumentasjon';
 import {
     Dokumentasjonsbehov,
-    dokumentasjonsbehovTilSpråkId,
-    IDokumentasjon,
-    ISøknadKontraktDokumentasjon,
-    ISøknadKontraktVedlegg,
-    IVedlegg,
-} from '../typer/dokumentasjon';
-import { IKvittering } from '../typer/kvittering';
-import { IUtenlandsperiode } from '../typer/perioder';
-import { ESivilstand, ISamboer, ITidligereSamboer } from '../typer/person';
-import { ISøknadSpørsmål, SpørsmålId } from '../typer/spørsmål';
-import {
     ERegistrertBostedType,
+    ESivilstand,
     IAndreForelderIKontraktFormat,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
-    ISøknad,
     ISøknadKontrakt,
     ISøknadKontraktBarn,
+    ISøknadKontraktDokumentasjon,
+    ISøknadKontraktVedlegg,
     ISøknadsfelt,
     IUtenlandsperiodeIKontraktFormat,
     SpørsmålMap as KontraktpørsmålMap,
-} from '../typer/søknad';
+} from '../typer/kontrakt/generelle';
+import { ISøknadKontraktV7 } from '../typer/kontrakt/v7';
+import { IKvittering } from '../typer/kvittering';
+import { IUtenlandsperiode } from '../typer/perioder';
+import { ISamboer, ITidligereSamboer } from '../typer/person';
+import { ISøknadSpørsmål, SpørsmålId } from '../typer/spørsmål';
+import { ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
 import { barnetsNavnValue } from '../utils/barn';
 import { erDokumentasjonRelevant } from '../utils/dokumentasjon';
+import { sendInn } from '../utils/innsending';
 import {
     hentSivilstatusSpråkId,
     hentTekster,
@@ -78,6 +77,7 @@ export type SpørsmålMap = Record<string, ISøknadSpørsmål<any>>;
 
 export const useSendInnSkjema = (): {
     sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;
+    sendInnSkjemaV7: () => Promise<[boolean, ISøknadKontraktV7]>;
 } => {
     const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
     const { soknadApi } = Miljø();
@@ -677,7 +677,29 @@ export const useSendInnSkjema = (): {
         return [res.status === RessursStatus.SUKSESS, formatert];
     };
 
+    const sendInnSkjemaV7 = async (): Promise<[boolean, ISøknadKontraktV7]> => {
+        settInnsendingStatus({ status: RessursStatus.HENTER });
+        const formatert = { ...dataISøknadKontraktFormat(søknad), kontraktVersjon: 7 };
+
+        const res = await sendInn<ISøknadKontraktV7>(
+            formatert,
+            axiosRequest,
+            `${soknadApi}/soknad/v7`,
+            res => {
+                const responseData = res.response?.data;
+                if (responseData && erModellMismatchResponsRessurs(responseData)) {
+                    settSisteModellVersjon(responseData.data.modellVersjon);
+                }
+            }
+        );
+
+        settInnsendingStatus(res);
+
+        return [res.status === RessursStatus.SUKSESS, formatert];
+    };
+
     return {
         sendInnSkjema,
+        sendInnSkjemaV7,
     };
 };
