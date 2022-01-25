@@ -13,6 +13,7 @@ import { IArbeidsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
+import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -22,7 +23,6 @@ import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaF
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
-import { Arbeidsperiode } from '../DinLivssituasjon/Arbeidsperiode';
 import AndreForelderOppsummering from '../Oppsummering/OppsummeringSteg/OmBarnet/AndreForelderOppsummering';
 import SammeSomAnnetBarnRadio from './SammeSomAnnetBarnRadio';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';

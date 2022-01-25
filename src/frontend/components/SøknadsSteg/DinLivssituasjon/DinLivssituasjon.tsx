@@ -7,6 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
@@ -16,7 +17,6 @@ import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsp
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
-import { Arbeidsperiode } from './Arbeidsperiode';
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import TidligereSamboere from './TidligereSamboere';

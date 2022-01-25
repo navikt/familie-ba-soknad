@@ -11,19 +11,19 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { IDinLivssituasjonFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
-import { ArbeidsperiodeOppsummering } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import useModal from '../SkjemaModal/useModal';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { ArbeidsperiodeModal } from './ArbeidsperiodeModal';
+import { ArbeidsperiodeOppsummering } from './ArbeidsperiodeOppsummering';
 import {
     arbeidsperiodeFeilmelding,
     arbeidsperiodeFlereSpørsmål,
     arbeidsperiodeLeggTilFlereKnapp,
     arbeidsperiodeSpørsmålSpråkId,
-} from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
-import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
-import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+} from './arbeidsperiodeSpråkUtils';
+import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 interface ArbeidsperiodeProps {
     skjema: ISkjema<IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper, string>;
