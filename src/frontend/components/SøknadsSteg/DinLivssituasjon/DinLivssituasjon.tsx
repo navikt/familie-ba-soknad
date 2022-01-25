@@ -164,9 +164,6 @@ const DinLivssituasjon: React.FC = () => {
                         gjelderUtlandet={true}
                         arbeiderEllerArbeidetFelt={skjema.felter.jobberPåBåt}
                         registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
-                        arbeidsperiodeSpørsmålSpråkId={
-                            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
-                        }
                     />
                 ) : (
                     <KomponentGruppe inline>

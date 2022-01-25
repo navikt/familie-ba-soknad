@@ -151,40 +151,30 @@ const AndreForelder: React.FC<{
                         </KomponentGruppe>
 
                         {skjema.felter.andreForelderArbeidUtlandet.erSynlig && (
-                            <KomponentGruppe dynamisk>
+                            <>
                                 {toggles.EØS_KOMPLETT ? (
                                     <>
-                                        {skjema.felter.andreForelderArbeidsperioderUtland
-                                            .erSynlig && (
-                                            <Arbeidsperiode
-                                                skjema={skjema}
-                                                arbeiderEllerArbeidetFelt={
-                                                    skjema.felter.andreForelderArbeidUtlandet
-                                                }
-                                                leggTilArbeidsperiode={leggTilArbeidsperiode}
-                                                fjernArbeidsperiode={fjernArbeidsperiode}
-                                                gjelderUtlandet={true}
-                                                andreForelderData={{
-                                                    erDød:
-                                                        barn.andreForelderErDød.svar === ESvar.JA,
-                                                }}
-                                                registrerteArbeidsperioder={
-                                                    skjema.felter.andreForelderArbeidsperioderUtland
-                                                }
-                                                arbeidsperiodeSpørsmålSpråkId={
-                                                    omBarnetSpørsmålSpråkId[
-                                                        andreForelder[
-                                                            andreForelderDataKeySpørsmål
-                                                                .arbeidUtlandet
-                                                        ].id
-                                                    ]
-                                                }
-                                                inkluderVetIkke={true}
-                                            />
-                                        )}
+                                        <Arbeidsperiode
+                                            skjema={skjema}
+                                            arbeiderEllerArbeidetFelt={
+                                                skjema.felter.andreForelderArbeidUtlandet
+                                            }
+                                            leggTilArbeidsperiode={leggTilArbeidsperiode}
+                                            fjernArbeidsperiode={fjernArbeidsperiode}
+                                            gjelderUtlandet={true}
+                                            andreForelderData={{
+                                                erDød: barn.andreForelderErDød.svar === ESvar.JA,
+                                                barn: barn,
+                                            }}
+                                            registrerteArbeidsperioder={
+                                                skjema.felter.andreForelderArbeidsperioderUtland
+                                            }
+                                            inkluderVetIkke={true}
+                                        />
+                                        <div>Placeholder for pensjonsperioder</div>
                                     </>
                                 ) : (
-                                    <>
+                                    <KomponentGruppe inline>
                                         <JaNeiSpm
                                             skjema={skjema}
                                             felt={skjema.felter.andreForelderArbeidUtlandet}
@@ -231,51 +221,54 @@ const AndreForelder: React.FC<{
                                                 dynamisk
                                             />
                                         )}
-                                    </>
-                                )}
-                                <JaNeiSpm
-                                    skjema={skjema}
-                                    felt={skjema.felter.andreForelderPensjonUtland}
-                                    spørsmålTekstId={
-                                        omBarnetSpørsmålSpråkId[
-                                            andreForelder[
-                                                andreForelderDataKeySpørsmål.pensjonUtland
-                                            ].id
-                                        ]
-                                    }
-                                    inkluderVetIkke={true}
-                                    språkValues={{ navn: barnetsNavn }}
-                                />
-                                <LandDropdown
-                                    felt={skjema.felter.andreForelderPensjonHvilketLand}
-                                    skjema={skjema}
-                                    dynamisk
-                                    label={
-                                        <SpråkTekst
-                                            id={
+
+                                        <JaNeiSpm
+                                            skjema={skjema}
+                                            felt={skjema.felter.andreForelderPensjonUtland}
+                                            spørsmålTekstId={
                                                 omBarnetSpørsmålSpråkId[
                                                     andreForelder[
-                                                        andreForelderDataKeySpørsmål
-                                                            .pensjonHvilketLand
+                                                        andreForelderDataKeySpørsmål.pensjonUtland
                                                     ].id
                                                 ]
                                             }
-                                            values={{ barn: barnetsNavn }}
+                                            inkluderVetIkke={true}
+                                            språkValues={{ navn: barnetsNavn }}
                                         />
-                                    }
-                                />
-                                {erEøsLand(skjema.felter.andreForelderPensjonHvilketLand.verdi) && (
-                                    <VedleggNotisTilleggsskjema
-                                        språkTekstId={
-                                            barn.andreForelderErDød.svar === ESvar.JA
-                                                ? 'enkeenkemann.utenlandspensjon.eøs-info'
-                                                : 'ombarnet.andre-forelder.utenlandspensjon.eøs-info'
-                                        }
-                                        språkValues={{ navn: barnetsNavn }}
-                                        dynamisk
-                                    />
+                                        <LandDropdown
+                                            felt={skjema.felter.andreForelderPensjonHvilketLand}
+                                            skjema={skjema}
+                                            dynamisk
+                                            label={
+                                                <SpråkTekst
+                                                    id={
+                                                        omBarnetSpørsmålSpråkId[
+                                                            andreForelder[
+                                                                andreForelderDataKeySpørsmål
+                                                                    .pensjonHvilketLand
+                                                            ].id
+                                                        ]
+                                                    }
+                                                    values={{ barn: barnetsNavn }}
+                                                />
+                                            }
+                                        />
+                                        {erEøsLand(
+                                            skjema.felter.andreForelderPensjonHvilketLand.verdi
+                                        ) && (
+                                            <VedleggNotisTilleggsskjema
+                                                språkTekstId={
+                                                    barn.andreForelderErDød.svar === ESvar.JA
+                                                        ? 'enkeenkemann.utenlandspensjon.eøs-info'
+                                                        : 'ombarnet.andre-forelder.utenlandspensjon.eøs-info'
+                                                }
+                                                språkValues={{ navn: barnetsNavn }}
+                                                dynamisk
+                                            />
+                                        )}
+                                    </KomponentGruppe>
                                 )}
-                            </KomponentGruppe>
+                            </>
                         )}
                     </>
                 ) : (

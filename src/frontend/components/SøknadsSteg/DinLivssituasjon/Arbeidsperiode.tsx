@@ -1,18 +1,23 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { IDinLivssituasjonFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { barnetsNavnValue } from '../../../utils/barn';
 import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import {
     arbeidsperiodeFeilmelding,
     arbeidsperiodeFlereSpørsmål,
     arbeidsperiodeLeggTilFlereKnapp,
+    arbeidsperiodeSpørsmålSpråkId,
 } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -20,43 +25,44 @@ import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp'
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
-interface Props {
+interface ArbeidsperiodeProps {
     skjema: ISkjema<IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper, string>;
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet?: boolean;
-    andreForelderData?: { erDød: boolean };
+    andreForelderData?: { erDød: boolean; barn: IBarnMedISøknad };
     barnetsNavn?: string;
     arbeiderEllerArbeidetFelt: Felt<ESvar | null>;
     registrerteArbeidsperioder: Felt<IArbeidsperiode[]>;
-    arbeidsperiodeSpørsmålSpråkId: string;
     inkluderVetIkke?: boolean;
 }
 
-export const Arbeidsperiode: React.FC<Props> = props => {
-    const {
-        skjema,
-        leggTilArbeidsperiode,
-        fjernArbeidsperiode,
-        gjelderUtlandet = false,
-        andreForelderData,
-        barnetsNavn,
-        arbeiderEllerArbeidetFelt,
-        registrerteArbeidsperioder,
-        arbeidsperiodeSpørsmålSpråkId,
-        inkluderVetIkke = false,
-    } = props;
-    const gjelderAndreForelder = !!andreForelderData;
+export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
+    skjema,
+    leggTilArbeidsperiode,
+    fjernArbeidsperiode,
+    gjelderUtlandet = false,
+    andreForelderData,
+    arbeiderEllerArbeidetFelt,
+    registrerteArbeidsperioder,
+    inkluderVetIkke = false,
+}) => {
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
+    const intl = useIntl();
+
+    const gjelderAndreForelder = !!andreForelderData;
+    const barn = andreForelderData?.barn;
 
     return (
         <>
             <JaNeiSpm
                 skjema={skjema}
                 felt={arbeiderEllerArbeidetFelt}
-                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId}
+                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(gjelderAndreForelder)}
                 inkluderVetIkke={inkluderVetIkke}
-                språkValues={{ navn: barnetsNavn }}
+                språkValues={{
+                    ...(barn && { navn: barnetsNavnValue(barn, intl) }),
+                }}
             />
             {arbeiderEllerArbeidetFelt.verdi === ESvar.JA && (
                 <>
@@ -77,7 +83,9 @@ export const Arbeidsperiode: React.FC<Props> = props => {
                                     gjelderUtlandet,
                                     gjelderAndreForelder
                                 )}
-                                values={{ barn: barnetsNavn }}
+                                values={{
+                                    ...(barn && { navn: barnetsNavnValue(barn, intl) }),
+                                }}
                             />
                         </Element>
                     )}
