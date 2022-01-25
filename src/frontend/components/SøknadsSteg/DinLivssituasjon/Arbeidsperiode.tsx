@@ -3,12 +3,10 @@ import React from 'react';
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { ISkjema } from '@navikt/familie-skjema';
+import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
-import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
+import { IDinLivssituasjonFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { ArbeidsperiodeModal } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from '../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import {
@@ -17,22 +15,21 @@ import {
     arbeidsperiodeLeggTilFlereKnapp,
 } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
-import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
-import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 
 interface Props {
-    skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
+    //TODO hvordan gjøre skjema generelt, se daphne sin kommentar
+    skjema: ISkjema<IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper, string>;
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet?: boolean;
+    andreForelderData?: { erDød: boolean };
     gjelderAndreForelder?: boolean;
     barnetsNavn?: string;
+    tilhørendeJaNeiFelt: Felt<ESvar | null>;
+    registrerteArbeidsperioder: Felt<IArbeidsperiode[]>;
 }
 
 export const Arbeidsperiode: React.FC<Props> = props => {
@@ -41,34 +38,29 @@ export const Arbeidsperiode: React.FC<Props> = props => {
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
         gjelderUtlandet = false,
-        gjelderAndreForelder = false,
+        andreForelderData,
         barnetsNavn,
+        tilhørendeJaNeiFelt,
+        registrerteArbeidsperioder,
     } = props;
-    const { erEøsLand } = useEøs();
-    const { toggles } = useFeatureToggles();
+    const gjelderAndreForelder = !!andreForelderData;
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
 
-    return toggles.EØS_KOMPLETT ? (
+    return (
         <>
-            <JaNeiSpm
-                skjema={skjema}
-                felt={skjema.felter.jobberPåBåt}
-                spørsmålTekstId={
-                    dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
-                }
-            />
-            {skjema.felter.jobberPåBåt.verdi === ESvar.JA && (
+            {tilhørendeJaNeiFelt.verdi === ESvar.JA && (
                 <>
-                    {skjema.felter.registrerteArbeidsperioder.verdi.map((periode, index) => (
+                    {registrerteArbeidsperioder.verdi.map((periode, index) => (
                         <ArbeidsperiodeOppsummering
                             key={index}
                             arbeidsperiode={periode}
                             fjernPeriodeCallback={fjernArbeidsperiode}
                             nummer={index + 1}
                             gjelderUtlandet={true}
+                            andreForelderData={andreForelderData}
                         />
                     ))}
-                    {skjema.felter.registrerteArbeidsperioder.verdi.length > 0 && (
+                    {registrerteArbeidsperioder.verdi.length > 0 && (
                         <Element>
                             <SpråkTekst
                                 id={arbeidsperiodeFlereSpørsmål(
@@ -84,8 +76,8 @@ export const Arbeidsperiode: React.FC<Props> = props => {
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
                         id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
                         feilmelding={
-                            skjema.felter.registrerteArbeidsperioder.erSynlig &&
-                            skjema.felter.registrerteArbeidsperioder.feilmelding &&
+                            registrerteArbeidsperioder.erSynlig &&
+                            registrerteArbeidsperioder.feilmelding &&
                             skjema.visFeilmeldinger && (
                                 <SpråkTekst id={arbeidsperiodeFeilmelding(gjelderUtlandet)} />
                             )
@@ -96,35 +88,10 @@ export const Arbeidsperiode: React.FC<Props> = props => {
                         toggleModal={toggleArbeidsmodal}
                         onLeggTilArbeidsperiode={leggTilArbeidsperiode}
                         gjelderUtlandet
+                        andreForelderData={andreForelderData}
                     />
                 </>
             )}
         </>
-    ) : (
-        <KomponentGruppe inline>
-            <JaNeiSpm
-                skjema={skjema}
-                felt={skjema.felter.jobberPåBåt}
-                spørsmålTekstId={
-                    dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
-                }
-            />
-            <LandDropdown
-                felt={skjema.felter.arbeidsland}
-                skjema={skjema}
-                label={
-                    <SpråkTekst
-                        id={dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.arbeidsland]}
-                    />
-                }
-                dynamisk
-            />
-            {erEøsLand(skjema.felter.arbeidsland.verdi) && (
-                <VedleggNotisTilleggsskjema
-                    språkTekstId={'omdeg.arbeid-utland.eøs-info'}
-                    dynamisk
-                />
-            )}
-        </KomponentGruppe>
     );
 };

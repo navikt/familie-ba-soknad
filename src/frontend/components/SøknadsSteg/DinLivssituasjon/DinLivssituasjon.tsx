@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
@@ -36,6 +37,7 @@ const DinLivssituasjon: React.FC = () => {
 
     const { erUtvidet, søknad } = useApp();
     const { erEøsLand } = useEøs();
+    const { toggles } = useFeatureToggles();
 
     return (
         <Steg
@@ -151,12 +153,55 @@ const DinLivssituasjon: React.FC = () => {
                     <VedleggNotis dynamisk språkTekstId={'omdeg.asylsøker.alert'} />
                 )}
 
-                <Arbeidsperiode
-                    skjema={skjema}
-                    leggTilArbeidsperiode={leggTilArbeidsperiode}
-                    fjernArbeidsperiode={fjernArbeidsperiode}
-                    gjelderUtlandet={true}
-                />
+                {skjema.felter.jobberPåBåt.erSynlig && (
+                    <KomponentGruppe dynamisk>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.jobberPåBåt}
+                            spørsmålTekstId={
+                                dinLivssituasjonSpørsmålSpråkId[
+                                    DinLivssituasjonSpørsmålId.jobberPåBåt
+                                ]
+                            }
+                        />
+
+                        {toggles.EØS_KOMPLETT ? (
+                            <Arbeidsperiode
+                                skjema={skjema}
+                                leggTilArbeidsperiode={leggTilArbeidsperiode}
+                                fjernArbeidsperiode={fjernArbeidsperiode}
+                                gjelderUtlandet={true}
+                                tilhørendeJaNeiFelt={skjema.felter.jobberPåBåt}
+                                registrerteArbeidsperioder={
+                                    skjema.felter.registrerteArbeidsperioder
+                                }
+                            />
+                        ) : (
+                            <>
+                                <LandDropdown
+                                    felt={skjema.felter.arbeidsland}
+                                    skjema={skjema}
+                                    label={
+                                        <SpråkTekst
+                                            id={
+                                                dinLivssituasjonSpørsmålSpråkId[
+                                                    DinLivssituasjonSpørsmålId.arbeidsland
+                                                ]
+                                            }
+                                        />
+                                    }
+                                    dynamisk
+                                />
+                                {erEøsLand(skjema.felter.arbeidsland.verdi) && (
+                                    <VedleggNotisTilleggsskjema
+                                        språkTekstId={'omdeg.arbeid-utland.eøs-info'}
+                                        dynamisk
+                                    />
+                                )}
+                            </>
+                        )}
+                    </KomponentGruppe>
+                )}
 
                 <JaNeiSpm
                     skjema={skjema}
