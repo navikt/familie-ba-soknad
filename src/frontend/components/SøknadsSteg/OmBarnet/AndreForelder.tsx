@@ -169,7 +169,6 @@ const AndreForelder: React.FC<{
                                             registrerteArbeidsperioder={
                                                 skjema.felter.andreForelderArbeidsperioderUtland
                                             }
-                                            inkluderVetIkke={true}
                                         />
                                         <div>
                                             Placeholder for pensjonsperioder

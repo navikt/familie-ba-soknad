@@ -31,10 +31,8 @@ interface ArbeidsperiodeProps {
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet?: boolean;
     andreForelderData?: { erDød: boolean; barn: IBarnMedISøknad };
-    barnetsNavn?: string;
     arbeiderEllerArbeidetFelt: Felt<ESvar | null>;
     registrerteArbeidsperioder: Felt<IArbeidsperiode[]>;
-    inkluderVetIkke?: boolean;
 }
 
 export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
@@ -45,7 +43,6 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
     andreForelderData,
     arbeiderEllerArbeidetFelt,
     registrerteArbeidsperioder,
-    inkluderVetIkke = false,
 }) => {
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
     const intl = useIntl();
@@ -59,7 +56,7 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                 skjema={skjema}
                 felt={arbeiderEllerArbeidetFelt}
                 spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(gjelderAndreForelder)}
-                inkluderVetIkke={inkluderVetIkke}
+                inkluderVetIkke={gjelderAndreForelder}
                 språkValues={{
                     ...(barn && { navn: barnetsNavnValue(barn, intl) }),
                 }}
