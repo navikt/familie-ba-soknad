@@ -152,27 +152,13 @@ const AndreForelder: React.FC<{
 
                         {skjema.felter.andreForelderArbeidUtlandet.erSynlig && (
                             <KomponentGruppe dynamisk>
-                                <JaNeiSpm
-                                    skjema={skjema}
-                                    felt={skjema.felter.andreForelderArbeidUtlandet}
-                                    spørsmålTekstId={
-                                        omBarnetSpørsmålSpråkId[
-                                            andreForelder[
-                                                andreForelderDataKeySpørsmål.arbeidUtlandet
-                                            ].id
-                                        ]
-                                    }
-                                    inkluderVetIkke={true}
-                                    språkValues={{ navn: barnetsNavn }}
-                                />
-
                                 {toggles.EØS_KOMPLETT ? (
                                     <>
                                         {skjema.felter.andreForelderArbeidsperioderUtland
                                             .erSynlig && (
                                             <Arbeidsperiode
                                                 skjema={skjema}
-                                                tilhørendeJaNeiFelt={
+                                                arbeiderEllerArbeidetFelt={
                                                     skjema.felter.andreForelderArbeidUtlandet
                                                 }
                                                 leggTilArbeidsperiode={leggTilArbeidsperiode}
@@ -185,11 +171,33 @@ const AndreForelder: React.FC<{
                                                 registrerteArbeidsperioder={
                                                     skjema.felter.andreForelderArbeidsperioderUtland
                                                 }
+                                                arbeidsperiodeSpørsmålSpråkId={
+                                                    omBarnetSpørsmålSpråkId[
+                                                        andreForelder[
+                                                            andreForelderDataKeySpørsmål
+                                                                .arbeidUtlandet
+                                                        ].id
+                                                    ]
+                                                }
+                                                inkluderVetIkke={true}
                                             />
                                         )}
                                     </>
                                 ) : (
                                     <>
+                                        <JaNeiSpm
+                                            skjema={skjema}
+                                            felt={skjema.felter.andreForelderArbeidUtlandet}
+                                            spørsmålTekstId={
+                                                omBarnetSpørsmålSpråkId[
+                                                    andreForelder[
+                                                        andreForelderDataKeySpørsmål.arbeidUtlandet
+                                                    ].id
+                                                ]
+                                            }
+                                            inkluderVetIkke={true}
+                                            språkValues={{ navn: barnetsNavn }}
+                                        />
                                         <LandDropdown
                                             felt={
                                                 skjema.felter.andreForelderArbeidUtlandetHvilketLand

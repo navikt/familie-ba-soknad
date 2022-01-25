@@ -15,6 +15,7 @@ import {
     arbeidsperiodeLeggTilFlereKnapp,
 } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -25,10 +26,11 @@ interface Props {
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet?: boolean;
     andreForelderData?: { erDød: boolean };
-    gjelderAndreForelder?: boolean;
     barnetsNavn?: string;
-    tilhørendeJaNeiFelt: Felt<ESvar | null>;
+    arbeiderEllerArbeidetFelt: Felt<ESvar | null>;
     registrerteArbeidsperioder: Felt<IArbeidsperiode[]>;
+    arbeidsperiodeSpørsmålSpråkId: string;
+    inkluderVetIkke?: boolean;
 }
 
 export const Arbeidsperiode: React.FC<Props> = props => {
@@ -39,15 +41,24 @@ export const Arbeidsperiode: React.FC<Props> = props => {
         gjelderUtlandet = false,
         andreForelderData,
         barnetsNavn,
-        tilhørendeJaNeiFelt,
+        arbeiderEllerArbeidetFelt,
         registrerteArbeidsperioder,
+        arbeidsperiodeSpørsmålSpråkId,
+        inkluderVetIkke = false,
     } = props;
     const gjelderAndreForelder = !!andreForelderData;
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
 
     return (
         <>
-            {tilhørendeJaNeiFelt.verdi === ESvar.JA && (
+            <JaNeiSpm
+                skjema={skjema}
+                felt={arbeiderEllerArbeidetFelt}
+                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId}
+                inkluderVetIkke={inkluderVetIkke}
+                språkValues={{ navn: barnetsNavn }}
+            />
+            {arbeiderEllerArbeidetFelt.verdi === ESvar.JA && (
                 <>
                     {registrerteArbeidsperioder.verdi.map((periode, index) => (
                         <ArbeidsperiodeOppsummering

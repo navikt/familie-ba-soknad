@@ -153,8 +153,20 @@ const DinLivssituasjon: React.FC = () => {
                     <VedleggNotis dynamisk språkTekstId={'omdeg.asylsøker.alert'} />
                 )}
 
-                {skjema.felter.jobberPåBåt.erSynlig && (
-                    <KomponentGruppe dynamisk>
+                {toggles.EØS_KOMPLETT ? (
+                    <Arbeidsperiode
+                        skjema={skjema}
+                        leggTilArbeidsperiode={leggTilArbeidsperiode}
+                        fjernArbeidsperiode={fjernArbeidsperiode}
+                        gjelderUtlandet={true}
+                        arbeiderEllerArbeidetFelt={skjema.felter.jobberPåBåt}
+                        registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                        arbeidsperiodeSpørsmålSpråkId={
+                            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
+                        }
+                    />
+                ) : (
+                    <KomponentGruppe inline>
                         <JaNeiSpm
                             skjema={skjema}
                             felt={skjema.felter.jobberPåBåt}
@@ -164,41 +176,25 @@ const DinLivssituasjon: React.FC = () => {
                                 ]
                             }
                         />
-
-                        {toggles.EØS_KOMPLETT ? (
-                            <Arbeidsperiode
-                                skjema={skjema}
-                                leggTilArbeidsperiode={leggTilArbeidsperiode}
-                                fjernArbeidsperiode={fjernArbeidsperiode}
-                                gjelderUtlandet={true}
-                                tilhørendeJaNeiFelt={skjema.felter.jobberPåBåt}
-                                registrerteArbeidsperioder={
-                                    skjema.felter.registrerteArbeidsperioder
-                                }
-                            />
-                        ) : (
-                            <>
-                                <LandDropdown
-                                    felt={skjema.felter.arbeidsland}
-                                    skjema={skjema}
-                                    label={
-                                        <SpråkTekst
-                                            id={
-                                                dinLivssituasjonSpørsmålSpråkId[
-                                                    DinLivssituasjonSpørsmålId.arbeidsland
-                                                ]
-                                            }
-                                        />
+                        <LandDropdown
+                            felt={skjema.felter.arbeidsland}
+                            skjema={skjema}
+                            label={
+                                <SpråkTekst
+                                    id={
+                                        dinLivssituasjonSpørsmålSpråkId[
+                                            DinLivssituasjonSpørsmålId.arbeidsland
+                                        ]
                                     }
-                                    dynamisk
                                 />
-                                {erEøsLand(skjema.felter.arbeidsland.verdi) && (
-                                    <VedleggNotisTilleggsskjema
-                                        språkTekstId={'omdeg.arbeid-utland.eøs-info'}
-                                        dynamisk
-                                    />
-                                )}
-                            </>
+                            }
+                            dynamisk
+                        />
+                        {erEøsLand(skjema.felter.arbeidsland.verdi) && (
+                            <VedleggNotisTilleggsskjema
+                                språkTekstId={'omdeg.arbeid-utland.eøs-info'}
+                                dynamisk
+                            />
                         )}
                     </KomponentGruppe>
                 )}
