@@ -3,10 +3,10 @@ import React from 'react';
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { ISkjema } from '@navikt/familie-skjema';
+import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IPensjonsperiode } from '../../../typer/perioder';
-import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
+import { IDinLivssituasjonFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import {
     DinLivssituasjonSpørsmålId,
     dinLivssituasjonSpørsmålSpråkId,
@@ -25,7 +25,9 @@ import {
 import { PensjonSpørsmålId } from './spørsmål';
 
 interface Props {
-    skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
+    skjema: ISkjema<IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper, string>;
+    mottarEllerMottattPensjonFelt: Felt<ESvar | null>;
+    registrertePensjonsperioder: Felt<IPensjonsperiode[]>;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
     gjelderUtlandet?: boolean;
@@ -41,6 +43,8 @@ export const Pensjonsperiode: React.FC<Props> = props => {
         gjelderUtlandet = false,
         gjelderAndreForelder = false,
         barnetsNavn,
+        mottarEllerMottattPensjonFelt,
+        registrertePensjonsperioder,
     } = props;
     const { erÅpen: pensjonsmodalErÅpen, toggleModal: togglePensjonsmodal } = useModal();
 
@@ -48,26 +52,24 @@ export const Pensjonsperiode: React.FC<Props> = props => {
         <>
             <JaNeiSpm
                 skjema={skjema}
-                felt={skjema.felter.mottarUtenlandspensjon}
+                felt={mottarEllerMottattPensjonFelt}
                 spørsmålTekstId={
                     dinLivssituasjonSpørsmålSpråkId[
                         DinLivssituasjonSpørsmålId.mottarUtenlandspensjon
                     ]
                 }
             />
-            {skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA && (
+            {mottarEllerMottattPensjonFelt.verdi === ESvar.JA && (
                 <>
-                    {skjema.felter.registrertePensjonsperioder.verdi.map(
-                        (pensjonsperiode, index) => (
-                            <PensjonsperiodeOppsummering
-                                pensjonsperiode={pensjonsperiode}
-                                fjernPeriodeCallback={fjernPensjonsperiode}
-                                nummer={index + 1}
-                                gjelderUtlandet={gjelderUtlandet}
-                            />
-                        )
-                    )}
-                    {skjema.felter.registrertePensjonsperioder.verdi.length > 0 && (
+                    {registrertePensjonsperioder.verdi.map((pensjonsperiode, index) => (
+                        <PensjonsperiodeOppsummering
+                            pensjonsperiode={pensjonsperiode}
+                            fjernPeriodeCallback={fjernPensjonsperiode}
+                            nummer={index + 1}
+                            gjelderUtlandet={gjelderUtlandet}
+                        />
+                    ))}
+                    {registrertePensjonsperioder.verdi.length > 0 && (
                         <Element>
                             <SpråkTekst
                                 id={pensjonsperiodeFlereSpørsmål(
@@ -83,8 +85,8 @@ export const Pensjonsperiode: React.FC<Props> = props => {
                         språkTekst={pensjonsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
                         id={PensjonSpørsmålId.pensjonsperioder}
                         feilmelding={
-                            skjema.felter.registrertePensjonsperioder.erSynlig &&
-                            skjema.felter.registrertePensjonsperioder.feilmelding &&
+                            registrertePensjonsperioder.erSynlig &&
+                            registrertePensjonsperioder.feilmelding &&
                             skjema.visFeilmeldinger && (
                                 <SpråkTekst id={pensjonsperiodeFeilmelding(gjelderUtlandet)} />
                             )

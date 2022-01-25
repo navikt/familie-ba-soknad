@@ -165,6 +165,8 @@ const DinLivssituasjon: React.FC = () => {
                 {toggles.EØS_KOMPLETT ? (
                     <Pensjonsperiode
                         skjema={skjema}
+                        mottarEllerMottattPensjonFelt={skjema.felter.mottarUtenlandspensjon}
+                        registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
                         leggTilPensjonsperiode={leggTilPensjonsperiode}
                         fjernPensjonsperiode={fjernPensjonsperiode}
                         gjelderUtlandet
