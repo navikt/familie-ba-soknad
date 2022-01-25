@@ -724,10 +724,10 @@ export const useOmBarnet = (
                               ],
                               svar: andreForelderArbeidUtlandetHvilketLand.verdi,
                           },
-
                           arbeidsperioderUtland:
-                              skjema.felter.andreForelderArbeidsperioderUtland.verdi,
-
+                              andreForelderArbeidUtlandet.verdi === ESvar.JA
+                                  ? skjema.felter.andreForelderArbeidsperioderUtland.verdi
+                                  : [],
                           pensjonUtland: {
                               ...barn.andreForelder[andreForelderDataKeySpørsmål.pensjonUtland],
                               svar: andreForelderPensjonUtland.verdi,
