@@ -18,6 +18,7 @@ import { formaterDato } from '../../../../utils/dato';
 import { landkodeTilSpråk, toÅrsakSpråkId } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
     DinLivssituasjonSpørsmålId,
@@ -245,18 +246,25 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         ))}
                     </>
                 ) : (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.arbeidsland
-                                    ]
+                    <>
+                        {søknad.søker.arbeidsland.svar && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            dinLivssituasjonSpørsmålSpråkId[
+                                                DinLivssituasjonSpørsmålId.arbeidsland
+                                            ]
+                                        }
+                                    />
                                 }
+                                søknadsvar={landkodeTilSpråk(
+                                    søknad.søker.arbeidsland.svar,
+                                    valgtLocale
+                                )}
                             />
-                        }
-                        søknadsvar={landkodeTilSpråk(søknad.søker.arbeidsland.svar, valgtLocale)}
-                    />
+                        )}
+                    </>
                 )}
                 <OppsummeringFelt
                     tittel={
@@ -270,19 +278,36 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.søker.mottarUtenlandspensjon.svar}
                 />
-                {søknad.søker.pensjonsland.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.pensjonsland
-                                    ]
-                                }
+                {toggles.EØS_KOMPLETT ? (
+                    <>
+                        {søknad.søker.pensjonsperioderUtland.map((periode, index) => (
+                            <PensjonsperiodeOppsummering
+                                key={index}
+                                nummer={index + 1}
+                                pensjonsperiode={periode}
                             />
-                        }
-                        søknadsvar={landkodeTilSpråk(søknad.søker.pensjonsland.svar, valgtLocale)}
-                    />
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        {søknad.søker.pensjonsland.svar && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            dinLivssituasjonSpørsmålSpråkId[
+                                                DinLivssituasjonSpørsmålId.pensjonsland
+                                            ]
+                                        }
+                                    />
+                                }
+                                søknadsvar={landkodeTilSpråk(
+                                    søknad.søker.pensjonsland.svar,
+                                    valgtLocale
+                                )}
+                            />
+                        )}
+                    </>
                 )}
             </StyledOppsummeringsFeltGruppe>
         </Oppsummeringsbolk>
