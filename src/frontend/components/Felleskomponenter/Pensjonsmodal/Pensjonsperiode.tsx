@@ -58,7 +58,6 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                             pensjonsperiode={pensjonsperiode}
                             fjernPeriodeCallback={fjernPensjonsperiode}
                             nummer={index + 1}
-                            gjelderUtlandet={gjelderUtlandet}
                         />
                     ))}
                     {registrertePensjonsperioder.verdi.length > 0 && (

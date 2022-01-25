@@ -103,9 +103,10 @@ const AndreForelderOppsummering: React.FC<{
                     <>
                         {andreForelder.arbeidsperioderUtland.map((periode, index) => (
                             <ArbeidsperiodeOppsummering
-                                key={index}
+                                key={`arbeidsperiode-${index}`}
                                 nummer={index + 1}
                                 arbeidsperiode={periode}
+                                gjelderUtlandet
                             />
                         ))}
                     </>

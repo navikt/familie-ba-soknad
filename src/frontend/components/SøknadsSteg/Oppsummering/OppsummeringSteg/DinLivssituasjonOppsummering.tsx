@@ -238,9 +238,10 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     <>
                         {søknad.søker.arbeidsperioderUtland.map((periode, index) => (
                             <ArbeidsperiodeOppsummering
-                                key={index}
+                                key={`arbeidsperiode-${index}`}
                                 nummer={index + 1}
                                 arbeidsperiode={periode}
+                                gjelderUtlandet
                             />
                         ))}
                     </>
@@ -281,7 +282,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     <>
                         {søknad.søker.pensjonsperioderUtland.map((periode, index) => (
                             <PensjonsperiodeOppsummering
-                                key={index}
+                                key={`utenlandsperiode-${index}`}
                                 nummer={index + 1}
                                 pensjonsperiode={periode}
                             />
