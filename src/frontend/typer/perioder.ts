@@ -22,7 +22,7 @@ export interface IArbeidsperiode {
 }
 
 export interface IPensjonsperiode {
-    mottarPensjonNå: ISøknadSpørsmål<ESvar>;
+    mottarPensjonNå: ISøknadSpørsmål<ESvar | null>;
     pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
     pensjonFra?: ISøknadSpørsmål<ISODateString>;
     pensjonTil?: ISøknadSpørsmål<ISODateString>;
