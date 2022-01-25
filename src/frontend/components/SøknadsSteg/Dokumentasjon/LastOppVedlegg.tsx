@@ -8,7 +8,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
-import { Dokumentasjonsbehov, ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
+import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { barnetsNavnValue } from '../../../utils/barn';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';

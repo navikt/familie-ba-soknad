@@ -1,5 +1,5 @@
 import { IDokumentasjon } from '../typer/dokumentasjon';
-import { Dokumentasjonsbehov } from '../typer/kontrakt/generelle';
+import { Dokumentasjonsbehov } from '../typer/kontrakt/dokumentasjon';
 
 export const formaterFilstørrelse = (bytes: number, decimals = 2) => {
     if (bytes === 0) return '0 Bytes';

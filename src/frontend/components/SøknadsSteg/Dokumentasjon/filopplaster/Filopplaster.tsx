@@ -10,7 +10,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { Upload } from '@navikt/ds-icons';
 
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
-import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/generelle';
+import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 import AlertStripe from '../../../Felleskomponenter/AlertStripe/AlertStripe';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import OpplastedeFiler from './OpplastedeFiler';

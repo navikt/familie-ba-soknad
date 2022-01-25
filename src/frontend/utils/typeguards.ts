@@ -1,15 +1,15 @@
 import { Alpha3Code, getAlpha3Codes } from 'i18n-iso-countries';
 
+import { ISøknadKontraktBarn } from '../typer/kontrakt/barn';
+import { ISøknadKontraktDokumentasjon } from '../typer/kontrakt/dokumentasjon';
 import {
     ESøknadstype,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
-    ISøknadKontrakt,
-    ISøknadKontraktBarn,
-    ISøknadKontraktDokumentasjon,
-    ISøknadKontraktSøker,
     ISøknadsfelt,
 } from '../typer/kontrakt/generelle';
+import { ISøknadKontraktSøker } from '../typer/kontrakt/søker';
+import { ISøknadKontrakt } from '../typer/kontrakt/v6';
 import { ISamboer, ITidligereSamboer } from '../typer/person';
 
 export const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>

@@ -1,4 +1,4 @@
-import { Dokumentasjonsbehov } from './kontrakt/generelle';
+import { Dokumentasjonsbehov } from './kontrakt/dokumentasjon';
 
 export interface IVedlegg {
     dokumentId: string;

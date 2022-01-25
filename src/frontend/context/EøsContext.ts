@@ -10,7 +10,7 @@ import Miljø from '../Miljø';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
 import { BarnetsId } from '../typer/common';
 import { IDokumentasjon } from '../typer/dokumentasjon';
-import { Dokumentasjonsbehov } from '../typer/kontrakt/generelle';
+import { Dokumentasjonsbehov } from '../typer/kontrakt/dokumentasjon';
 import { ISøker } from '../typer/person';
 import { useApp } from './AppContext';
 import { useFeatureToggles } from './FeatureToggleContext';

@@ -5,8 +5,7 @@ import { ISøknadKontraktDokumentasjon } from './dokumentasjon';
 import { ESøknadstype, SpørsmålMap } from './generelle';
 import { ISøknadKontraktSøker } from './søker';
 
-export interface ISøknadKontraktV7 {
-    kontraktVersjon: number;
+export interface ISøknadKontrakt {
     søknadstype: ESøknadstype;
     søker: ISøknadKontraktSøker;
     barn: ISøknadKontraktBarn[];

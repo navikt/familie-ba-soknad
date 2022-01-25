@@ -36,21 +36,23 @@ import {
 } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
 import { dokumentasjonsbehovTilSpråkId, IDokumentasjon, IVedlegg } from '../typer/dokumentasjon';
+import { ISøknadKontraktBarn } from '../typer/kontrakt/barn';
 import {
     Dokumentasjonsbehov,
+    ISøknadKontraktDokumentasjon,
+    ISøknadKontraktVedlegg,
+} from '../typer/kontrakt/dokumentasjon';
+import {
     ERegistrertBostedType,
     ESivilstand,
     IAndreForelderIKontraktFormat,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
-    ISøknadKontrakt,
-    ISøknadKontraktBarn,
-    ISøknadKontraktDokumentasjon,
-    ISøknadKontraktVedlegg,
     ISøknadsfelt,
     IUtenlandsperiodeIKontraktFormat,
     SpørsmålMap as KontraktpørsmålMap,
 } from '../typer/kontrakt/generelle';
+import { ISøknadKontrakt } from '../typer/kontrakt/v6';
 import { ISøknadKontraktV7 } from '../typer/kontrakt/v7';
 import { IKvittering } from '../typer/kvittering';
 import { IUtenlandsperiode } from '../typer/perioder';
@@ -60,7 +62,7 @@ import { ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
 import { barnetsNavnValue } from '../utils/barn';
 import { erDokumentasjonRelevant } from '../utils/dokumentasjon';
-import { sendInn } from '../utils/innsending';
+import { sendInn } from '../utils/sendInnSkjema';
 import {
     hentSivilstatusSpråkId,
     hentTekster,

@@ -22,7 +22,8 @@ import {
 } from '../../../typer/barn';
 import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { IDokumentasjon } from '../../../typer/dokumentasjon';
-import { Dokumentasjonsbehov, ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
+import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
