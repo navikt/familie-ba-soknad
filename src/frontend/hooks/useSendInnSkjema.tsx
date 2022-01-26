@@ -226,7 +226,7 @@ export const useSendInnSkjema = (): {
         return {
             navn: søknadsfeltBarn(
                 'pdf.barn.navn.label',
-                sammeVerdiAlleSpråk(adressebeskyttelse ? `Barn ${formaterFnr(ident)}` : navn),
+                sammeVerdiAlleSpråk(navn ?? `Barn ${formaterFnr(ident)}`),
                 barn
             ),
             ident: søknadsfeltBarn(

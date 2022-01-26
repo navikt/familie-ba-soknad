@@ -363,10 +363,10 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
 };
 
 export const barnetsNavnValue = (barn: IBarn, intl: IntlShape): string => {
-    return barn.adressebeskyttelse
-        ? (intl.formatMessage(
+    return barn.navn
+        ? barn.navn.toUpperCase()
+        : intl.formatMessage(
               { id: 'felles.anonym.barn.fnr' },
               { fødselsnummer: formaterFnr(barn.ident) }
-          ) as string)
-        : barn.navn.toUpperCase();
+          );
 };
