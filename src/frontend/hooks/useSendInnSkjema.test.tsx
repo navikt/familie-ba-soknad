@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-dom/test-utils';
 
-import { ESivilstand } from '../typer/person';
-import { ISøknadKontrakt } from '../typer/søknad';
+import { ESivilstand } from '../typer/kontrakt/generelle';
+import { ISøknadKontrakt } from '../typer/kontrakt/v6';
 import { hentSivilstatusSpråkId } from '../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,

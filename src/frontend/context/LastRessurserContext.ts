@@ -8,10 +8,18 @@ import { ApiRessurs, Ressurs, RessursStatus } from '@navikt/familie-typer';
 import { hentUid } from '../utils/barn';
 import { håndterApiRessurs, loggFeil, preferredAxios } from './axios';
 
+export type AxiosRequest = <T, D>(
+    config: AxiosRequestConfig & {
+        data?: D;
+        påvirkerSystemLaster?: boolean;
+        rejectCallback?: (res: AxiosError) => void;
+    }
+) => Promise<Ressurs<T>>;
+
 const [LastRessurserProvider, useLastRessurserContext] = createUseContext(() => {
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
 
-    const axiosRequest = async <T, D>(
+    const axiosRequest: AxiosRequest = async <T, D>(
         config: AxiosRequestConfig & {
             data?: D;
             påvirkerSystemLaster?: boolean;

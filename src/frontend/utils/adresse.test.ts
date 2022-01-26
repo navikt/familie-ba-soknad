@@ -1,4 +1,4 @@
-import { IAdresse } from '../typer/person';
+import { IAdresse } from '../typer/kontrakt/generelle';
 import { hentAdressefelterSortert, erNorskPostnummer } from './adresse';
 
 describe('postnummer', () => {

@@ -2,7 +2,8 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 
-import { ESivilstand, IBarn } from '../../../../typer/person';
+import { ESivilstand } from '../../../../typer/kontrakt/generelle';
+import { IBarn } from '../../../../typer/person';
 import {
     mekkGyldigSøker,
     mockEøs,

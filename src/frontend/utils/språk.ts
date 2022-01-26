@@ -11,7 +11,8 @@ import * as bokmål from '../assets/lang/nb.json';
 import * as nynorsk from '../assets/lang/nn.json';
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { AlternativtSvarForInput } from '../typer/common';
-import { ESivilstand, IBarn } from '../typer/person';
+import { ESivilstand } from '../typer/kontrakt/generelle';
+import { IBarn } from '../typer/person';
 import { Årsak } from '../typer/utvidet';
 
 export const toÅrsakSpråkId = (årsak: Årsak): string => {

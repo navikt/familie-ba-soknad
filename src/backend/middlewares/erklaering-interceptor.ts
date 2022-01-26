@@ -6,7 +6,7 @@ import { byggFeiletRessurs } from '@navikt/familie-typer';
 import engelsk from '../../frontend/assets/lang/en.json';
 import bokmål from '../../frontend/assets/lang/nb.json';
 import nynorsk from '../../frontend/assets/lang/nn.json';
-import { ISøknadKontrakt } from '../../frontend/typer/søknad';
+import { ISøknadKontrakt } from '../../frontend/typer/kontrakt/v6';
 
 export const hentSpråkteksterAlleSpråk = (språknøkkel: string): Record<LocaleType, string> => {
     return {
