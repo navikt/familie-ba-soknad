@@ -38,6 +38,21 @@ export const PensjonsperiodeOppsummering: React.FC<{
     const erAndreForelderDød = !!andreForelderData?.erDød;
     const barn = andreForelderData?.barn;
 
+    const spørsmålSpråkTekst = (spørsmålId: PensjonSpørsmålId) => (
+        <SpråkTekst
+            id={
+                hentPensjonsperiodeSpørsmålIder(
+                    gjelderAndreForelder,
+                    tilbakeITid,
+                    erAndreForelderDød
+                )[spørsmålId]
+            }
+            values={{
+                ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+            }}
+        />
+    );
+
     return (
         <PeriodeOppsummering
             fjernPeriodeCallback={
@@ -49,74 +64,25 @@ export const PensjonsperiodeOppsummering: React.FC<{
         >
             {mottarPensjonNå.svar && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                hentPensjonsperiodeSpørsmålIder(
-                                    gjelderAndreForelder,
-                                    tilbakeITid,
-                                    erAndreForelderDød
-                                )[PensjonSpørsmålId.mottarPensjonNå]
-                            }
-                            values={{
-                                ...(barn && { barn: barnetsNavnValue(barn, intl) }),
-                            }}
-                        />
-                    }
+                    tittel={spørsmålSpråkTekst(PensjonSpørsmålId.mottarPensjonNå)}
                     søknadsvar={mottarPensjonNå.svar}
                 />
             )}
             {pensjonsland.svar && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                hentPensjonsperiodeSpørsmålIder(
-                                    gjelderAndreForelder,
-                                    tilbakeITid,
-                                    erAndreForelderDød
-                                )[PensjonSpørsmålId.pensjonsland]
-                            }
-                            values={{
-                                ...(barn && { barn: barnetsNavnValue(barn, intl) }),
-                            }}
-                        />
-                    }
+                    tittel={spørsmålSpråkTekst(PensjonSpørsmålId.pensjonsland)}
                     søknadsvar={landkodeTilSpråk(pensjonsland.svar, valgtLocale)}
                 />
             )}
             {pensjonFra?.svar && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                hentPensjonsperiodeSpørsmålIder(
-                                    gjelderAndreForelder,
-                                    tilbakeITid,
-                                    erAndreForelderDød
-                                )[PensjonSpørsmålId.fraDatoPensjon]
-                            }
-                            values={{
-                                ...(barn && { barn: barnetsNavnValue(barn, intl) }),
-                            }}
-                        />
-                    }
+                    tittel={spørsmålSpråkTekst(PensjonSpørsmålId.fraDatoPensjon)}
                     søknadsvar={formaterDato(pensjonFra.svar)}
                 />
             )}
             {pensjonTil?.svar && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                hentPensjonsperiodeSpørsmålIder(
-                                    gjelderAndreForelder,
-                                    tilbakeITid,
-                                    erAndreForelderDød
-                                )[PensjonSpørsmålId.tilDatoPensjon]
-                            }
-                        />
-                    }
+                    tittel={spørsmålSpråkTekst(PensjonSpørsmålId.tilDatoPensjon)}
                     søknadsvar={formaterDato(pensjonTil.svar)}
                 />
             )}
