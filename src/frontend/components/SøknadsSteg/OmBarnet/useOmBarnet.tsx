@@ -16,6 +16,7 @@ import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
+import { usePerioder } from '../../../hooks/usePerioder';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
@@ -36,9 +37,7 @@ import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '..
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
-import { useArbeidsperioder } from '../../Felleskomponenter/Arbeidsperiode/useArbeidsperioder';
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
-import { usePensjonsperioder } from '../../Felleskomponenter/Pensjonsmodal/usePensjonsperioder';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -370,10 +369,10 @@ export const useOmBarnet = (
     });
 
     const {
-        fjernArbeidsperiode,
-        leggTilArbeidsperiode,
-        registrerteArbeidsperioder: andreForelderArbeidsperioderUtland,
-    } = useArbeidsperioder(
+        fjernPeriode: fjernArbeidsperiode,
+        leggTilPeriode: leggTilArbeidsperiode,
+        registrertePerioder: andreForelderArbeidsperioderUtland,
+    } = usePerioder<IArbeidsperiode>(
         andreForelder?.arbeidsperioderUtland ?? [],
         { andreForelderArbeidUtlandet },
         avhengigheter =>
@@ -421,10 +420,10 @@ export const useOmBarnet = (
     });
 
     const {
-        fjernPensjonsperiode,
-        leggTilPensjonsperiode,
-        registrertePensjonsperioder: andreForelderPensjonsperioderUtland,
-    } = usePensjonsperioder(
+        fjernPeriode: fjernPensjonsperiode,
+        leggTilPeriode: leggTilPensjonsperiode,
+        registrertePerioder: andreForelderPensjonsperioderUtland,
+    } = usePerioder<IPensjonsperiode>(
         andreForelder?.pensjonsperioderUtland ?? [],
         { andreForelderPensjonUtland },
         avhengigheter =>
