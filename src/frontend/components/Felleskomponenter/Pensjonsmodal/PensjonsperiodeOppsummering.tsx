@@ -1,28 +1,42 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
+import { barnetsNavnValue } from '../../../utils/barn';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { pensjonsperiodeOppsummeringOverskrift } from './språkUtils';
 import { hentPensjonsperiodeSpørsmålIder, PensjonSpørsmålId } from './spørsmål';
 
 export const PensjonsperiodeOppsummering: React.FC<{
     pensjonsperiode: IPensjonsperiode;
     nummer: number;
     fjernPeriodeCallback?: (pensjonsperiode: IPensjonsperiode) => void;
-    andreForelderData?: { erDød: boolean };
-}> = ({ pensjonsperiode, nummer, fjernPeriodeCallback = undefined, andreForelderData }) => {
+    gjelderUtlandet?: boolean;
+    andreForelderData?: { erDød: boolean; barn: IBarnMedISøknad };
+}> = ({
+    pensjonsperiode,
+    nummer,
+    fjernPeriodeCallback = undefined,
+    andreForelderData,
+    gjelderUtlandet = false,
+}) => {
     const [valgtLocale] = useSprakContext();
+    const intl = useIntl();
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = pensjonsperiode;
 
     const tilbakeITid = mottarPensjonNå?.svar === ESvar.NEI;
     const gjelderAndreForelder = !!andreForelderData;
     const erAndreForelderDød = !!andreForelderData?.erDød;
+    const barn = andreForelderData?.barn;
 
     return (
         <PeriodeOppsummering
@@ -31,7 +45,7 @@ export const PensjonsperiodeOppsummering: React.FC<{
             }
             fjernKnappSpråkId={'felles.fjernpensjon.knapp'}
             nummer={nummer}
-            tittelSpråkId={'felles.leggtilpensjon.periode'}
+            tittelSpråkId={pensjonsperiodeOppsummeringOverskrift(gjelderUtlandet)}
         >
             {mottarPensjonNå.svar && (
                 <OppsummeringFelt
@@ -44,6 +58,9 @@ export const PensjonsperiodeOppsummering: React.FC<{
                                     erAndreForelderDød
                                 )[PensjonSpørsmålId.mottarPensjonNå]
                             }
+                            values={{
+                                ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                            }}
                         />
                     }
                     søknadsvar={mottarPensjonNå.svar}
@@ -60,6 +77,9 @@ export const PensjonsperiodeOppsummering: React.FC<{
                                     erAndreForelderDød
                                 )[PensjonSpørsmålId.pensjonsland]
                             }
+                            values={{
+                                ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                            }}
                         />
                     }
                     søknadsvar={landkodeTilSpråk(pensjonsland.svar, valgtLocale)}
@@ -76,6 +96,9 @@ export const PensjonsperiodeOppsummering: React.FC<{
                                     erAndreForelderDød
                                 )[PensjonSpørsmålId.fraDatoPensjon]
                             }
+                            values={{
+                                ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                            }}
                         />
                     }
                     søknadsvar={formaterDato(pensjonFra.svar)}

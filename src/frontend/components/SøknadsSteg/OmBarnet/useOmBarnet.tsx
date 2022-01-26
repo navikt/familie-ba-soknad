@@ -25,7 +25,7 @@ import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { IDokumentasjon } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
-import { IUtenlandsperiode, IArbeidsperiode } from '../../../typer/perioder';
+import { IUtenlandsperiode, IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
@@ -37,6 +37,8 @@ import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { useArbeidsperioder } from '../../Felleskomponenter/Arbeidsperiode/useArbeidsperioder';
+import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
+import { usePensjonsperioder } from '../../Felleskomponenter/Pensjonsmodal/usePensjonsperioder';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -53,9 +55,11 @@ export const useOmBarnet = (
     validerAlleSynligeFelter: () => void;
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    utenlandsperioder: IUtenlandsperiode[];
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
-    utenlandsperioder: IUtenlandsperiode[];
+    leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
+    fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
@@ -413,7 +417,23 @@ export const useOmBarnet = (
         nullstillVedAvhengighetEndring:
             sammeForelderSomAnnetBarn.verdi === null ||
             sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
+        skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
+
+    const {
+        fjernPensjonsperiode,
+        leggTilPensjonsperiode,
+        registrertePensjonsperioder: andreForelderPensjonsperioderUtland,
+    } = usePensjonsperioder(
+        andreForelder?.pensjonsperioderUtland ?? [],
+        { andreForelderPensjonUtland },
+        avhengigheter =>
+            avhengigheter.andreForelderPensjonUtland.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        felt =>
+            andreForelderPensjonUtland.verdi === ESvar.JA && felt.verdi.length === 0
+                ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />)
+                : ok(felt)
+    );
 
     /*--- BOSTED ---*/
     const borFastMedSøker = useJaNeiSpmFelt({
@@ -569,6 +589,7 @@ export const useOmBarnet = (
             andreForelderArbeidsperioderUtland,
             andreForelderPensjonUtland,
             andreForelderPensjonHvilketLand,
+            andreForelderPensjonsperioderUtland,
             borFastMedSøker,
             skriftligAvtaleOmDeltBosted,
             søkerForTidsrom,
@@ -738,6 +759,10 @@ export const useOmBarnet = (
                               ],
                               svar: andreForelderPensjonHvilketLand.verdi,
                           },
+                          pensjonsperioderUtland:
+                              andreForelderPensjonUtland.verdi === ESvar.JA
+                                  ? skjema.felter.andreForelderPensjonsperioderUtland.verdi
+                                  : [],
                           skriftligAvtaleOmDeltBosted: {
                               ...barn.andreForelder.skriftligAvtaleOmDeltBosted,
                               svar: skriftligAvtaleOmDeltBosted.verdi,
@@ -844,5 +869,7 @@ export const useOmBarnet = (
         utenlandsperioder,
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
+        leggTilPensjonsperiode,
+        fjernPensjonsperiode,
     };
 };

@@ -1,12 +1,16 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { IDinLivssituasjonFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { barnetsNavnValue } from '../../../utils/barn';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -23,13 +27,12 @@ import { PensjonSpørsmålId } from './spørsmål';
 
 interface PensjonsperiodeProps {
     skjema: ISkjema<IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper, string>;
-    mottarEllerMottattPensjonFelt: Felt<ESvar | null>;
-    registrertePensjonsperioder: Felt<IPensjonsperiode[]>;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
     gjelderUtlandet?: boolean;
-    gjelderAndreForelder?: boolean;
-    barnetsNavn?: string;
+    andreForelderData?: { erDød: boolean; barn: IBarnMedISøknad };
+    mottarEllerMottattPensjonFelt: Felt<ESvar | null>;
+    registrertePensjonsperioder: Felt<IPensjonsperiode[]>;
 }
 
 export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
@@ -37,12 +40,15 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
     leggTilPensjonsperiode,
     fjernPensjonsperiode,
     gjelderUtlandet = false,
-    gjelderAndreForelder = false,
-    barnetsNavn,
+    andreForelderData,
     mottarEllerMottattPensjonFelt,
     registrertePensjonsperioder,
 }) => {
+    const intl = useIntl();
     const { erÅpen: pensjonsmodalErÅpen, toggleModal: togglePensjonsmodal } = useModal();
+
+    const gjelderAndreForelder = !!andreForelderData;
+    const barn = andreForelderData?.barn;
 
     return (
         <>
@@ -50,14 +56,21 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                 skjema={skjema}
                 felt={mottarEllerMottattPensjonFelt}
                 spørsmålTekstId={mottarEllerMottattPensjonSpråkId()}
+                inkluderVetIkke={gjelderAndreForelder}
+                språkValues={{
+                    ...(barn && { navn: barnetsNavnValue(barn, intl) }),
+                }}
             />
             {mottarEllerMottattPensjonFelt.verdi === ESvar.JA && (
                 <>
                     {registrertePensjonsperioder.verdi.map((pensjonsperiode, index) => (
                         <PensjonsperiodeOppsummering
+                            key={`pensjonsperiode-${index}`}
                             pensjonsperiode={pensjonsperiode}
                             fjernPeriodeCallback={fjernPensjonsperiode}
                             nummer={index + 1}
+                            gjelderUtlandet={gjelderUtlandet}
+                            andreForelderData={andreForelderData}
                         />
                     ))}
                     {registrertePensjonsperioder.verdi.length > 0 && (
@@ -67,7 +80,9 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                                     gjelderUtlandet,
                                     gjelderAndreForelder
                                 )}
-                                values={{ barn: barnetsNavn }}
+                                values={{
+                                    ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                                }}
                             />
                         </Element>
                     )}
@@ -88,6 +103,7 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                         toggleModal={togglePensjonsmodal}
                         onLeggTilPensjonsperiode={leggTilPensjonsperiode}
                         gjelderUtland={gjelderUtlandet}
+                        andreForelderData={andreForelderData}
                     />
                 </>
             )}

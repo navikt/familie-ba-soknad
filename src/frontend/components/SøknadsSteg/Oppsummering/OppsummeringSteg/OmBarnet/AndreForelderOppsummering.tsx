@@ -18,6 +18,7 @@ import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
@@ -165,28 +166,51 @@ const AndreForelderOppsummering: React.FC<{
                         søknadsvar={andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar}
                     />
                 )}
-                {andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        andreForelder[
-                                            andreForelderDataKeySpørsmål.pensjonHvilketLand
-                                        ].id
-                                    ]
-                                }
-                                values={{
-                                    navn: barnetsNavn,
-                                    barn: barnetsNavn,
+
+                {toggles.EØS_KOMPLETT ? (
+                    <>
+                        {andreForelder.pensjonsperioderUtland.map((periode, index) => (
+                            <PensjonsperiodeOppsummering
+                                key={`pensjonsperiode-${index}`}
+                                nummer={index + 1}
+                                pensjonsperiode={periode}
+                                gjelderUtlandet
+                                andreForelderData={{
+                                    erDød:
+                                        barn[barnDataKeySpørsmål.andreForelderErDød].svar ===
+                                        ESvar.JA,
+                                    barn: barn,
                                 }}
                             />
-                        }
-                        søknadsvar={landkodeTilSpråk(
-                            andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
-                            valgtLocale
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        {andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                andreForelder[
+                                                    andreForelderDataKeySpørsmål.pensjonHvilketLand
+                                                ].id
+                                            ]
+                                        }
+                                        values={{
+                                            navn: barnetsNavn,
+                                            barn: barnetsNavn,
+                                        }}
+                                    />
+                                }
+                                søknadsvar={landkodeTilSpråk(
+                                    andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand]
+                                        .svar,
+                                    valgtLocale
+                                )}
+                            />
                         )}
-                    />
+                    </>
                 )}
                 {andreForelder.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]
                     .svar && (
