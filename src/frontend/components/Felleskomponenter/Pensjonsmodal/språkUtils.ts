@@ -59,3 +59,8 @@ export const pensjonFlerePerioderSpmSpråkId = (
 
 export const mottarEllerMottattPensjonSpråkId = () =>
     dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.mottarUtenlandspensjon];
+
+export const pensjonsperiodeOppsummeringOverskrift = (gjelderUtlandet: boolean): string =>
+    gjelderUtlandet
+        ? 'felles.leggtilpensjon.periode.utland'
+        : 'felles.leggtilpensjon.periode.norge';

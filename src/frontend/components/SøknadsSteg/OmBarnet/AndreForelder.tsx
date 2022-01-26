@@ -9,7 +9,7 @@ import { useEøs } from '../../../context/EøsContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { andreForelderDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { IArbeidsperiode } from '../../../typer/perioder';
+import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
@@ -18,6 +18,7 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
@@ -34,6 +35,8 @@ const AndreForelder: React.FC<{
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
+    leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
+    fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
 }> = ({
     barn,
     andreForelder,
@@ -41,6 +44,8 @@ const AndreForelder: React.FC<{
     andreBarnSomErFyltUt,
     leggTilArbeidsperiode,
     fjernArbeidsperiode,
+    leggTilPensjonsperiode,
+    fjernPensjonsperiode,
 }) => {
     const { erEøsLand } = useEøs();
     const intl = useIntl();
@@ -153,7 +158,7 @@ const AndreForelder: React.FC<{
                         {skjema.felter.andreForelderArbeidUtlandet.erSynlig && (
                             <>
                                 {toggles.EØS_KOMPLETT ? (
-                                    <>
+                                    <KomponentGruppe>
                                         <Arbeidsperiode
                                             skjema={skjema}
                                             arbeiderEllerArbeidetFelt={
@@ -161,7 +166,7 @@ const AndreForelder: React.FC<{
                                             }
                                             leggTilArbeidsperiode={leggTilArbeidsperiode}
                                             fjernArbeidsperiode={fjernArbeidsperiode}
-                                            gjelderUtlandet={true}
+                                            gjelderUtlandet
                                             andreForelderData={{
                                                 erDød: barn.andreForelderErDød.svar === ESvar.JA,
                                                 barn: barn,
@@ -170,24 +175,23 @@ const AndreForelder: React.FC<{
                                                 skjema.felter.andreForelderArbeidsperioderUtland
                                             }
                                         />
-                                        <div>
-                                            Placeholder for pensjonsperioder
-                                            <JaNeiSpm
-                                                skjema={skjema}
-                                                felt={skjema.felter.andreForelderPensjonUtland}
-                                                spørsmålTekstId={
-                                                    omBarnetSpørsmålSpråkId[
-                                                        andreForelder[
-                                                            andreForelderDataKeySpørsmål
-                                                                .pensjonUtland
-                                                        ].id
-                                                    ]
-                                                }
-                                                inkluderVetIkke={true}
-                                                språkValues={{ navn: barnetsNavn }}
-                                            />
-                                        </div>
-                                    </>
+                                        <Pensjonsperiode
+                                            skjema={skjema}
+                                            mottarEllerMottattPensjonFelt={
+                                                skjema.felter.andreForelderPensjonUtland
+                                            }
+                                            leggTilPensjonsperiode={leggTilPensjonsperiode}
+                                            fjernPensjonsperiode={fjernPensjonsperiode}
+                                            gjelderUtlandet
+                                            andreForelderData={{
+                                                erDød: barn.andreForelderErDød.svar === ESvar.JA,
+                                                barn: barn,
+                                            }}
+                                            registrertePensjonsperioder={
+                                                skjema.felter.andreForelderPensjonsperioderUtland
+                                            }
+                                        />
+                                    </KomponentGruppe>
                                 ) : (
                                     <KomponentGruppe inline>
                                         <JaNeiSpm
