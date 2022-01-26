@@ -75,6 +75,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderFødselsdato: DatoMedUkjent;
     andreForelderArbeidUtlandet: ESvar | null;
     andreForelderArbeidUtlandetHvilketLand: Alpha3Code | '';
+    andreForelderArbeidsperioderUtland: IArbeidsperiode[];
     andreForelderPensjonUtland: ESvar | null;
     andreForelderPensjonHvilketLand: Alpha3Code | '';
     borFastMedSøker: ESvar | null;

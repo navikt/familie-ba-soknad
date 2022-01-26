@@ -7,6 +7,7 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
@@ -24,7 +25,7 @@ import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { IDokumentasjon } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
-import { IUtenlandsperiode } from '../../../typer/perioder';
+import { IUtenlandsperiode, IArbeidsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
@@ -34,6 +35,8 @@ import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
+import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { useArbeidsperioder } from '../../Felleskomponenter/Arbeidsperiode/useArbeidsperioder';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -50,12 +53,14 @@ export const useOmBarnet = (
     validerAlleSynligeFelter: () => void;
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
+    leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
+    fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     utenlandsperioder: IUtenlandsperiode[];
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs } = useEøs();
-
+    const { toggles } = useFeatureToggles();
     const barn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
 
     if (!barn) {
@@ -357,7 +362,23 @@ export const useOmBarnet = (
         nullstillVedAvhengighetEndring:
             sammeForelderSomAnnetBarn.verdi === null ||
             sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
+        skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
+
+    const {
+        fjernArbeidsperiode,
+        leggTilArbeidsperiode,
+        registrerteArbeidsperioder: andreForelderArbeidsperioderUtland,
+    } = useArbeidsperioder(
+        andreForelder?.arbeidsperioderUtland ?? [],
+        { andreForelderArbeidUtlandet },
+        avhengigheter =>
+            avhengigheter.andreForelderArbeidUtlandet.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        felt =>
+            andreForelderArbeidUtlandet.verdi === ESvar.JA && felt.verdi.length === 0
+                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
+                : ok(felt)
+    );
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonUtland],
@@ -545,6 +566,7 @@ export const useOmBarnet = (
             andreForelderFødselsdatoUkjent,
             andreForelderArbeidUtlandet,
             andreForelderArbeidUtlandetHvilketLand,
+            andreForelderArbeidsperioderUtland,
             andreForelderPensjonUtland,
             andreForelderPensjonHvilketLand,
             borFastMedSøker,
@@ -586,7 +608,7 @@ export const useOmBarnet = (
         return oppdatertDokumentasjon;
     };
 
-    const genererOppdatertBarn = (barn: IBarnMedISøknad) => {
+    const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
         const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
             barn => barn.id === sammeForelderSomAnnetBarn.verdi
         );
@@ -702,6 +724,10 @@ export const useOmBarnet = (
                               ],
                               svar: andreForelderArbeidUtlandetHvilketLand.verdi,
                           },
+                          arbeidsperioderUtland:
+                              andreForelderArbeidUtlandet.verdi === ESvar.JA
+                                  ? skjema.felter.andreForelderArbeidsperioderUtland.verdi
+                                  : [],
                           pensjonUtland: {
                               ...barn.andreForelder[andreForelderDataKeySpørsmål.pensjonUtland],
                               svar: andreForelderPensjonUtland.verdi,
@@ -816,5 +842,7 @@ export const useOmBarnet = (
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
+        leggTilArbeidsperiode,
+        fjernArbeidsperiode,
     };
 };

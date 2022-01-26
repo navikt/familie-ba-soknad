@@ -95,8 +95,17 @@ const [EøsProvider, useEøs] = createUseContext(() => {
         const landSvarSomKanTriggeEøs = [
             ...(barn.andreForelder
                 ? [
-                      barn.andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]
-                          .svar,
+                      ...(toggles.EØS_KOMPLETT
+                          ? [
+                                barn.andreForelder.arbeidsperioderUtland.map(
+                                    periode => periode.arbeidsperiodeland?.svar ?? ''
+                                ),
+                            ]
+                          : [
+                                barn.andreForelder[
+                                    andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand
+                                ].svar,
+                            ]),
                       barn.andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
                   ]
                 : []),

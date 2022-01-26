@@ -15,7 +15,6 @@ export const PensjonsperiodeOppsummering: React.FC<{
     pensjonsperiode: IPensjonsperiode;
     nummer: number;
     fjernPeriodeCallback?: (pensjonsperiode: IPensjonsperiode) => void;
-    gjelderUtlandet?: boolean;
     andreForelderData?: { erDød: boolean };
 }> = ({ pensjonsperiode, nummer, fjernPeriodeCallback = undefined, andreForelderData }) => {
     const [valgtLocale] = useSprakContext();

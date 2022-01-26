@@ -2,25 +2,36 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { andreForelderDataKeySpørsmål, IAndreForelder } from '../../../../../typer/barn';
+import { useFeatureToggles } from '../../../../../context/FeatureToggleContext';
+import {
+    andreForelderDataKeySpørsmål,
+    barnDataKeySpørsmål,
+    IAndreForelder,
+    IBarnMedISøknad,
+} from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
+import { barnetsNavnValue } from '../../../../../utils/barn';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
+import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
 const AndreForelderOppsummering: React.FC<{
-    barnetsNavn: string;
+    barn: IBarnMedISøknad;
     andreForelder: IAndreForelder;
-}> = ({ barnetsNavn, andreForelder }) => {
+}> = ({ barn, andreForelder }) => {
     const intl = useIntl();
     const { formatMessage } = intl;
     const [valgtLocale] = useSprakContext();
+    const { toggles } = useFeatureToggles();
+    const barnetsNavn = barnetsNavnValue(barn, intl);
 
     return (
         <>
@@ -96,25 +107,48 @@ const AndreForelderOppsummering: React.FC<{
                         søknadsvar={andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar}
                     />
                 )}
-                {andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand].svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        andreForelder[
-                                            andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand
-                                        ].id
-                                    ]
-                                }
+                {toggles.EØS_KOMPLETT ? (
+                    <>
+                        {andreForelder.arbeidsperioderUtland.map((periode, index) => (
+                            <ArbeidsperiodeOppsummering
+                                key={`arbeidsperiode-${index}`}
+                                nummer={index + 1}
+                                arbeidsperiode={periode}
+                                gjelderUtlandet
+                                andreForelderData={{
+                                    erDød:
+                                        barn[barnDataKeySpørsmål.andreForelderErDød].svar ===
+                                        ESvar.JA,
+                                }}
                             />
-                        }
-                        søknadsvar={landkodeTilSpråk(
-                            andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]
-                                .svar,
-                            valgtLocale
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        {andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]
+                            .svar && (
+                            <OppsummeringFelt
+                                tittel={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                andreForelder[
+                                                    andreForelderDataKeySpørsmål
+                                                        .arbeidUtlandetHvilketLand
+                                                ].id
+                                            ]
+                                        }
+                                    />
+                                }
+                                søknadsvar={landkodeTilSpråk(
+                                    andreForelder[
+                                        andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand
+                                    ].svar,
+                                    valgtLocale
+                                )}
+                            />
                         )}
-                    />
+                    </>
                 )}
                 {andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar && (
                     <OppsummeringFelt
