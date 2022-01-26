@@ -11,7 +11,8 @@ import fnrvalidator from '@navikt/fnrvalidator';
 import * as eøsContext from '../../../context/EøsContext';
 import * as pdlRequest from '../../../context/pdl';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { ESivilstand, IBarnRespons, ISøkerRespons } from '../../../typer/person';
+import { ESivilstand } from '../../../typer/kontrakt/generelle';
+import { IBarnRespons, ISøkerRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import * as eøsUtils from '../../../utils/eøs';
 import {

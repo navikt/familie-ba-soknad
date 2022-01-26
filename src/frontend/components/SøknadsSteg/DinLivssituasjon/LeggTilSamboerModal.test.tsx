@@ -4,7 +4,8 @@ import { render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
-import { ESøknadstype, ISøknad } from '../../../typer/søknad';
+import { ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { ISøknad } from '../../../typer/søknad';
 import {
     mockHistory,
     silenceConsoleErrors,

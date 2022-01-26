@@ -3,7 +3,8 @@ import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { IAdresse, ISøker } from '../typer/person';
+import { IAdresse } from '../typer/kontrakt/generelle';
+import { ISøker } from '../typer/person';
 import { uppercaseFørsteBokstav } from './visning';
 
 export const erNorskPostnummer = (verdi: string) =>

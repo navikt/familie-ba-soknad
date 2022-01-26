@@ -1,16 +1,16 @@
 import { Alpha3Code, getAlpha3Codes } from 'i18n-iso-countries';
 
-import { ISøknadKontraktDokumentasjon } from '../typer/dokumentasjon';
-import { ISamboer, ITidligereSamboer } from '../typer/person';
+import { ISøknadKontraktBarn } from '../typer/kontrakt/barn';
+import { ISøknadKontraktDokumentasjon } from '../typer/kontrakt/dokumentasjon';
 import {
     ESøknadstype,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
-    ISøknadKontrakt,
-    ISøknadKontraktBarn,
-    ISøknadKontraktSøker,
     ISøknadsfelt,
-} from '../typer/søknad';
+} from '../typer/kontrakt/generelle';
+import { ISøknadKontraktSøker } from '../typer/kontrakt/søker';
+import { ISøknadKontrakt } from '../typer/kontrakt/v6';
+import { ISamboer, ITidligereSamboer } from '../typer/person';
 
 export const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>
     !!(input && input.navn && input.ident && input.fødselsdato && input.samboerFraDato);

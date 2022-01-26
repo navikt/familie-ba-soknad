@@ -5,8 +5,8 @@ import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { ESivilstand } from '../../../typer/person';
-import { ESøknadstype, ISøknad } from '../../../typer/søknad';
+import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { ISøknad } from '../../../typer/søknad';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import DinLivssituasjon from './DinLivssituasjon';
 import {
