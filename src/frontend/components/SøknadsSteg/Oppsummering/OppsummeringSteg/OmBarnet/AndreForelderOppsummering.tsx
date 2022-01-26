@@ -2,11 +2,18 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useFeatureToggles } from '../../../../../context/FeatureToggleContext';
-import { andreForelderDataKeySpørsmål, IAndreForelder } from '../../../../../typer/barn';
+import {
+    andreForelderDataKeySpørsmål,
+    barnDataKeySpørsmål,
+    IAndreForelder,
+    IBarnMedISøknad,
+} from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
+import { barnetsNavnValue } from '../../../../../utils/barn';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
@@ -17,13 +24,14 @@ import { OppsummeringFelt } from '../../OppsummeringFelt';
 import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
 const AndreForelderOppsummering: React.FC<{
-    barnetsNavn: string;
+    barn: IBarnMedISøknad;
     andreForelder: IAndreForelder;
-}> = ({ barnetsNavn, andreForelder }) => {
+}> = ({ barn, andreForelder }) => {
     const intl = useIntl();
     const { formatMessage } = intl;
     const [valgtLocale] = useSprakContext();
     const { toggles } = useFeatureToggles();
+    const barnetsNavn = barnetsNavnValue(barn, intl);
 
     return (
         <>
@@ -107,6 +115,11 @@ const AndreForelderOppsummering: React.FC<{
                                 nummer={index + 1}
                                 arbeidsperiode={periode}
                                 gjelderUtlandet
+                                andreForelderData={{
+                                    erDød:
+                                        barn[barnDataKeySpørsmål.andreForelderErDød].svar ===
+                                        ESvar.JA,
+                                }}
                             />
                         ))}
                     </>

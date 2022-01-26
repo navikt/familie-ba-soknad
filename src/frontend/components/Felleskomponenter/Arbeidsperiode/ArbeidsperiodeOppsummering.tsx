@@ -13,12 +13,7 @@ import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFe
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
-import {
-    arbeidsperiodeAndreForelderSpørsmålSpråkId,
-    ArbeidsperiodeSpørsmålsId,
-    arbeidsperiodeSøkerSpørsmålSpråkId,
-    hentArbeidsperiodeSpørsmålIder,
-} from './spørsmål';
+import { ArbeidsperiodeSpørsmålsId, hentArbeidsperiodeSpørsmålIder } from './spørsmål';
 
 export const ArbeidsperiodeOppsummering: React.FC<{
     arbeidsperiode: IArbeidsperiode;
@@ -62,14 +57,11 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={
-                                gjelderAndreForelder
-                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                          tilbakeITid,
-                                          erAndreForelderDød
-                                      )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
-                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                          ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
-                                      ]
+                                hentArbeidsperiodeSpørsmålIder(
+                                    gjelderAndreForelder,
+                                    tilbakeITid,
+                                    erAndreForelderDød
+                                )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
                             }
                         />
                     }
@@ -140,13 +132,11 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     søknadsvar={formaterDatoMedUkjent(
                         tilDatoArbeidsperiode.svar,
                         formatMessage({
-                            id: gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(false, false)[
-                                      ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                                  ]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(false)[
-                                      ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                                  ],
+                            id: hentArbeidsperiodeSpørsmålIder(
+                                gjelderAndreForelder,
+                                tilbakeITid,
+                                erAndreForelderDød
+                            )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke],
                         })
                     )}
                 />

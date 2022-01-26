@@ -289,7 +289,7 @@ const AndreForelder: React.FC<{
                 ) : (
                     barnMedSammeForelder?.andreForelder && (
                         <AndreForelderOppsummering
-                            barnetsNavn={barnetsNavn}
+                            barn={barn}
                             andreForelder={barnMedSammeForelder.andreForelder}
                         />
                     )
