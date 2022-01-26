@@ -83,7 +83,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
                       søker.arbeidsperioderUtland.map(
                           periode => periode.arbeidsperiodeland?.svar ?? ''
                       ),
-                      søker.pensjonsperioderUtland.map(periode => periode.pensjonsland.svar ?? ''),
+                      søker.pensjonsperioderUtland.map(periode => periode.pensjonsland?.svar ?? ''),
                   ]
                 : [søker.arbeidsland.svar, søker.pensjonsland.svar]),
         ].flat();

@@ -7,6 +7,7 @@ import {
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
 } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { EøsBarnSpørsmålsId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
@@ -23,7 +24,8 @@ export type SpørsmålId =
     | UtenlandsoppholdSpørsmålId
     | ArbeidsperiodeSpørsmålsId
     | UtbetalingerSpørsmålId
-    | PensjonSpørsmålId;
+    | PensjonSpørsmålId
+    | EøsBarnSpørsmålsId;
 
 export interface ISøknadSpørsmål<T> {
     id: SpørsmålId;
