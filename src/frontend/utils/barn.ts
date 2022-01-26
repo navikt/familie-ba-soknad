@@ -3,7 +3,7 @@ import { IntlShape } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { EøsBarnSpørsmålsId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
@@ -72,8 +72,8 @@ export const genererAndreForelder = (
         [andreForelderDataKeySpørsmål.pensjonNorge]: {
             svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonNorge].svar ?? null,
             id: andreForelderErDød
-                ? EøsBarnSpørsmålsId.andreForelderPensjonNorgeEnke
-                : EøsBarnSpørsmålsId.andreForelderPensjonNorge,
+                ? EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke
+                : EøsBarnSpørsmålId.andreForelderPensjonNorge,
         },
         [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
             svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar ?? '',

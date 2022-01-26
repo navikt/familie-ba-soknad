@@ -2,10 +2,7 @@ import {
     DinLivssituasjonSpørsmålId,
     dinLivssituasjonSpørsmålSpråkId,
 } from '../../SøknadsSteg/DinLivssituasjon/spørsmål';
-import {
-    EøsBarnSpørsmålsId,
-    eøsBarnSpørsmålSpråkId,
-} from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 
 export const pensjonslandFeilmeldingSpråkId = (
@@ -71,11 +68,11 @@ export const mottarEllerMottattPensjonSpråkId = (
         if (andreForelderErDød) {
             return gjelderUtlandet
                 ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke]
-                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålsId.andreForelderPensjonNorgeEnke];
+                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke];
         } else {
             return gjelderUtlandet
                 ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderPensjonUtland]
-                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålsId.andreForelderPensjonNorge];
+                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderPensjonNorge];
         }
     } else {
         return dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.mottarUtenlandspensjon];

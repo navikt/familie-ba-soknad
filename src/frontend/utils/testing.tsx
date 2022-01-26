@@ -15,7 +15,7 @@ import {
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
 } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import { EøsBarnSpørsmålsId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
@@ -336,7 +336,7 @@ export const mekkGyldigSøknad = (): ISøknad => {
                         svar: ESvar.NEI,
                     },
                     [andreForelderDataKeySpørsmål.pensjonNorge]: {
-                        id: EøsBarnSpørsmålsId.andreForelderPensjonNorge,
+                        id: EøsBarnSpørsmålId.andreForelderPensjonNorge,
                         svar: ESvar.NEI,
                     },
                     [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
