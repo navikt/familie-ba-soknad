@@ -1,17 +1,17 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-dom/test-utils';
 
-import { ESivilstand } from '../typer/kontrakt/generelle';
-import { ISøknadKontrakt } from '../typer/kontrakt/v6';
-import { hentSivilstatusSpråkId } from '../utils/språk';
+import { ESivilstand } from '../../typer/kontrakt/generelle';
+import { ISøknadKontrakt } from '../../typer/kontrakt/v6';
+import { hentSivilstatusSpråkId } from '../../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
-} from '../utils/testing';
-import { erGyldigISøknadKontrakt } from '../utils/typeguards';
-import { useSendInnSkjema } from './useSendInnSkjema';
+} from '../../utils/testing';
+import { erGyldigISøknadKontrakt } from '../../utils/typeguards';
+import { useSendInnSkjema } from '../useSendInnSkjema';
 
 silenceConsoleErrors();
 
