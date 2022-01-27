@@ -64,31 +64,31 @@ export const ArbeidsperiodeOppsummering: React.FC<{
             nummer={nummer}
             tittelSpråkId={arbeidsperiodeOppsummeringOverskrift(gjelderUtlandet)}
         >
-            {arbeidsperiodeAvsluttet?.svar && (
+            {arbeidsperiodeAvsluttet && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet)}
                     søknadsvar={arbeidsperiodeAvsluttet.svar}
                 />
             )}
-            {arbeidsperiodeland?.svar && (
+            {arbeidsperiodeland && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand)}
                     søknadsvar={landkodeTilSpråk(arbeidsperiodeland.svar, valgtLocale)}
                 />
             )}
-            {arbeidsgiver?.svar && (
+            {arbeidsgiver && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.arbeidsgiver)}
                     søknadsvar={arbeidsgiver.svar}
                 />
             )}
-            {fraDatoArbeidsperiode?.svar && (
+            {fraDatoArbeidsperiode && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode)}
                     søknadsvar={formaterDato(fraDatoArbeidsperiode.svar)}
                 />
             )}
-            {tilDatoArbeidsperiode?.svar && (
+            {tilDatoArbeidsperiode && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)}
                     søknadsvar={formaterDatoMedUkjent(
