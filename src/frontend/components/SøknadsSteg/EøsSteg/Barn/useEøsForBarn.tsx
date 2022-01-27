@@ -7,13 +7,13 @@ import { feil, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
+import { usePerioder } from '../../../../hooks/usePerioder';
 import { andreForelderDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
 import { IPensjonsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { barnetsNavnValue } from '../../../../utils/barn';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
-import { usePensjonsperioder } from '../../../Felleskomponenter/Pensjonsmodal/usePensjonsperioder';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export const useEøsForBarn = (
@@ -51,10 +51,10 @@ export const useEøsForBarn = (
     });
 
     const {
-        fjernPensjonsperiode,
-        leggTilPensjonsperiode,
-        registrertePensjonsperioder: andreForelderPensjonsperioderNorge,
-    } = usePensjonsperioder(
+        fjernPeriode: fjernPensjonsperiode,
+        leggTilPeriode: leggTilPensjonsperiode,
+        registrertePerioder: andreForelderPensjonsperioderNorge,
+    } = usePerioder<IPensjonsperiode>(
         andreForelder?.pensjonsperioderNorge ?? [],
         { andreForelderPensjonNorge },
         avhengigheter => avhengigheter.andreForelderPensjonNorge.verdi === ESvar.JA,
