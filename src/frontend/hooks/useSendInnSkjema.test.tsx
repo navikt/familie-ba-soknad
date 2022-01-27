@@ -10,7 +10,7 @@ import {
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../utils/testing';
-import { erGyldigISøknadKontraktUtvidet } from '../utils/typeguards';
+import { erGyldigISøknadKontrakt } from '../utils/typeguards';
 import { useSendInnSkjema } from './useSendInnSkjema';
 
 silenceConsoleErrors();
@@ -27,7 +27,7 @@ describe('useSendInnSkjema', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
-        expect(erGyldigISøknadKontraktUtvidet(formatert)).toBeTruthy();
+        expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
         await act(async () => {
             jest.advanceTimersByTime(500);
         });
