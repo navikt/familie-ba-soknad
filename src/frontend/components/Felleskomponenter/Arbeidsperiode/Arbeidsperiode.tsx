@@ -62,7 +62,10 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
             <JaNeiSpm
                 skjema={skjema}
                 felt={arbeiderEllerArbeidetFelt}
-                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(gjelderAndreForelder)}
+                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(
+                    gjelderUtlandet,
+                    gjelderAndreForelder
+                )}
                 inkluderVetIkke={gjelderAndreForelder}
                 språkValues={{
                     ...(barn && { navn: barnetsNavnValue(barn, intl) }),
@@ -109,7 +112,7 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                         erÅpen={arbeidsmodalErÅpen}
                         toggleModal={toggleArbeidsmodal}
                         onLeggTilArbeidsperiode={leggTilArbeidsperiode}
-                        gjelderUtlandet
+                        gjelderUtlandet={gjelderUtlandet}
                         andreForelderData={andreForelderData}
                     />
                 </>

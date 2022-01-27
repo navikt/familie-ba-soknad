@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
-import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { useEøsForSøker } from './useEøsForSøker';
 
@@ -17,7 +17,7 @@ const EøsForSøker: React.FC = () => {
 
     return (
         <Steg
-            tittel={'Steg for eøs søker'}
+            tittel={<SpråkTekst id="eøs-om-deg.sidetittel" />}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
@@ -25,15 +25,14 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <SkjemaFieldset tittelId={'eøs-om-deg.sidetittel'}>
-                <Arbeidsperiode
-                    skjema={skjema}
-                    arbeiderEllerArbeidetFelt={skjema.felter.arbeiderINorge}
-                    leggTilArbeidsperiode={leggTilArbeidsperiode}
-                    fjernArbeidsperiode={fjernArbeidsperiode}
-                    registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
-                />
-            </SkjemaFieldset>
+            <Arbeidsperiode
+                skjema={skjema}
+                arbeiderEllerArbeidetFelt={skjema.felter.arbeiderINorge}
+                leggTilArbeidsperiode={leggTilArbeidsperiode}
+                fjernArbeidsperiode={fjernArbeidsperiode}
+                registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                gjelderUtlandet={false}
+            />
         </Steg>
     );
 };

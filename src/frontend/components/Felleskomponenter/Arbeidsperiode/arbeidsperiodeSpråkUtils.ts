@@ -56,10 +56,16 @@ export const arbeidsperiodeFeilmelding = (gjelderUtlandet: boolean): string =>
         ? 'felles.flerearbeidsperioderutland.feilmelding'
         : 'felles.flerearbeidsperiodernorge.feilmelding';
 
-export const arbeidsperiodeSpørsmålSpråkId = (gjelderAndreForelder: boolean) => {
-    if (gjelderAndreForelder) {
-        return omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet];
-    } else {
-        return dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt];
-    }
+export const arbeidsperiodeSpørsmålSpråkId = (
+    gjelderUtlandet: boolean,
+    gjelderAndreForelder: boolean
+): string => {
+    if (gjelderUtlandet) {
+        return gjelderAndreForelder
+            ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]
+            : dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt];
+    } else
+        return gjelderAndreForelder
+            ? 'eøs-om-barn.annenforelderarbeidsperiodenorge.spm'
+            : 'eøs-om-deg.arbeidsperioderinorge.spm';
 };
