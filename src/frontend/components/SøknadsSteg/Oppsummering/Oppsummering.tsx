@@ -32,7 +32,7 @@ const Oppsummering: React.FC = () => {
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
     const { toggles } = useFeatureToggles();
     const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();
-    const søkerHarEøsSteg = søkerTriggerEøs || barnSomTriggerEøs.length;
+    const søkerHarEøsSteg = søkerTriggerEøs || !!barnSomTriggerEøs.length;
     const barnSomHarEøsSteg: IBarnMedISøknad[] = søkerTriggerEøs
         ? søknad.barnInkludertISøknaden
         : søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs);
