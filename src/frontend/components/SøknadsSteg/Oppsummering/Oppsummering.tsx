@@ -68,7 +68,7 @@ const Oppsummering: React.FC = () => {
                 const nummer = (hentStegNummer(RouteEnum.OmBarna) + enIndeksert).toString();
                 return (
                     <OmBarnetOppsummering
-                        key={`Om-barnet-${index}`}
+                        key={`om-barnet-${index}`}
                         barn={barn}
                         nummer={nummer}
                         settFeilAnchors={settFeilAnchors}
@@ -87,7 +87,7 @@ const Oppsummering: React.FC = () => {
                         ).toString();
                         return (
                             <EøsBarnOppsummering
-                                key={`Om-barnet-EØS-${index}`}
+                                key={`om-barnet-eøs-${index}`}
                                 nummer={nummer}
                                 settFeilAnchors={settFeilAnchors}
                                 barn={barn}

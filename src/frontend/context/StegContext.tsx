@@ -110,7 +110,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
         return steg[hentStegNummer(RouteEnum.OmBarnet, barn)];
     };
 
-    const hentStegObjektForBarnEØS = (barn: IBarnMedISøknad): ISteg => {
+    const hentStegObjektForBarnEøs = (barn: IBarnMedISøknad): ISteg => {
         return steg[hentStegNummer(RouteEnum.EøsForBarn, barn)];
     };
 
@@ -139,7 +139,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
         erPåKvitteringsside,
         settBarnForSteg,
         hentNåværendeStegindikatorNummer,
-        hentStegObjektForBarnEØS,
+        hentStegObjektForBarnEøs,
     };
 });
 

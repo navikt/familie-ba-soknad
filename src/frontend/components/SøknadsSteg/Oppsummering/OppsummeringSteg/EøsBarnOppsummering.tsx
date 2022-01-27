@@ -19,7 +19,7 @@ interface Props {
 }
 
 const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }) => {
-    const { hentStegObjektForBarnEØS } = useSteg();
+    const { hentStegObjektForBarnEøs } = useSteg();
 
     const intl = useIntl();
     const barnetsNavn = barnetsNavnValue(barn, intl);
@@ -28,7 +28,7 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
         <Oppsummeringsbolk
             tittel={'eøs-om-barn.oppsummering.tittel'}
             språkValues={{ nummer, barn: barnetsNavn }}
-            steg={hentStegObjektForBarnEØS(barn)}
+            steg={hentStegObjektForBarnEøs(barn)}
             skjemaHook={useEøsForBarn}
             barnId={barn.id}
             settFeilAnchors={settFeilAnchors}
