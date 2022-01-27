@@ -72,11 +72,11 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                 <>
                     {registrerteArbeidsperioder.verdi.map((periode, index) => (
                         <ArbeidsperiodeOppsummering
-                            key={index}
+                            key={`arbeidsperiode-${index}`}
                             arbeidsperiode={periode}
                             fjernPeriodeCallback={fjernArbeidsperiode}
                             nummer={index + 1}
-                            gjelderUtlandet={true}
+                            gjelderUtlandet={gjelderUtlandet}
                             andreForelderData={andreForelderData}
                         />
                     ))}

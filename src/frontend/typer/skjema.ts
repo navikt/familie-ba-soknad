@@ -78,6 +78,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderArbeidsperioderUtland: IArbeidsperiode[];
     andreForelderPensjonUtland: ESvar | null;
     andreForelderPensjonHvilketLand: Alpha3Code | '';
+    andreForelderPensjonsperioderUtland: IPensjonsperiode[];
     borFastMedSøker: ESvar | null;
     skriftligAvtaleOmDeltBosted: ESvar | null;
     søkerForTidsrom: ESvar | null;
@@ -104,7 +105,8 @@ export interface IEøsForSøkerFeltTyper {
 }
 
 export interface IEøsForBarnFeltTyper {
-    placeholderForFeltSomKommer: string; //TODO
+    andreForelderPensjonNorge: ESvar | null;
+    andreForelderPensjonsperioderNorge: IPensjonsperiode[];
 }
 
 export interface IVelgBarnFeltTyper {

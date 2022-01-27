@@ -83,7 +83,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
                       søker.arbeidsperioderUtland.map(
                           periode => periode.arbeidsperiodeland?.svar ?? ''
                       ),
-                      søker.pensjonsperioderUtland.map(periode => periode.pensjonsland.svar ?? ''),
+                      søker.pensjonsperioderUtland.map(periode => periode.pensjonsland?.svar ?? ''),
                   ]
                 : [søker.arbeidsland.svar, søker.pensjonsland.svar]),
         ].flat();
@@ -100,13 +100,17 @@ const [EøsProvider, useEøs] = createUseContext(() => {
                                 barn.andreForelder.arbeidsperioderUtland.map(
                                     periode => periode.arbeidsperiodeland?.svar ?? ''
                                 ),
+                                barn.andreForelder.pensjonsperioderUtland.map(
+                                    periode => periode.pensjonsland?.svar ?? ''
+                                ),
                             ]
                           : [
                                 barn.andreForelder[
                                     andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand
                                 ].svar,
+                                barn.andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand]
+                                    .svar,
                             ]),
-                      barn.andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
                   ]
                 : []),
             barn.utenlandsperioder.map(periode => periode.oppholdsland.svar),

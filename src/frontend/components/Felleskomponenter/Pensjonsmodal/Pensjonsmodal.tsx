@@ -59,10 +59,12 @@ export const PensjonModal: React.FC<Props> = ({
                 id: PensjonSpørsmålId.mottarPensjonNå,
                 svar: skjema.felter.mottarPensjonNå.verdi,
             },
-            pensjonsland: {
-                id: PensjonSpørsmålId.pensjonsland,
-                svar: skjema.felter.pensjonsland.verdi,
-            },
+            ...(skjema.felter.pensjonsland.erSynlig && {
+                pensjonsland: {
+                    id: PensjonSpørsmålId.pensjonsland,
+                    svar: skjema.felter.pensjonsland.verdi,
+                },
+            }),
             ...(skjema.felter.pensjonFraDato.erSynlig && {
                 pensjonFra: {
                     id: PensjonSpørsmålId.fraDatoPensjon,
