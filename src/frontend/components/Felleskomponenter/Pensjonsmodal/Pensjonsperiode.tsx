@@ -9,7 +9,11 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
-import { IDinLivssituasjonFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import {
+    IDinLivssituasjonFeltTyper,
+    IEøsForBarnFeltTyper,
+    IOmBarnetUtvidetFeltTyper,
+} from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -26,7 +30,10 @@ import {
 import { PensjonSpørsmålId } from './spørsmål';
 
 interface PensjonsperiodeProps {
-    skjema: ISkjema<IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper, string>;
+    skjema: ISkjema<
+        IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper | IEøsForBarnFeltTyper,
+        string
+    >;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
     gjelderUtlandet?: boolean;
@@ -49,16 +56,25 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
 
     const gjelderAndreForelder = !!andreForelderData;
     const barn = andreForelderData?.barn;
+    const andreForelderErDød = !!andreForelderData?.erDød;
+    const barnetsNavn = barn && barnetsNavnValue(barn, intl);
 
     return (
         <>
             <JaNeiSpm
                 skjema={skjema}
                 felt={mottarEllerMottattPensjonFelt}
-                spørsmålTekstId={mottarEllerMottattPensjonSpråkId()}
+                spørsmålTekstId={mottarEllerMottattPensjonSpråkId(
+                    gjelderUtlandet,
+                    gjelderAndreForelder,
+                    andreForelderErDød
+                )}
                 inkluderVetIkke={gjelderAndreForelder}
                 språkValues={{
-                    ...(barn && { navn: barnetsNavnValue(barn, intl) }),
+                    ...(barn && {
+                        navn: barnetsNavn,
+                        barn: barnetsNavn,
+                    }),
                 }}
             />
             {mottarEllerMottattPensjonFelt.verdi === ESvar.JA && (
@@ -81,7 +97,7 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                                     gjelderAndreForelder
                                 )}
                                 values={{
-                                    ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                                    ...(barn && { barn: barnetsNavn }),
                                 }}
                             />
                         </Element>

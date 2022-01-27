@@ -68,7 +68,7 @@ export const PensjonsperiodeOppsummering: React.FC<{
                     søknadsvar={mottarPensjonNå.svar}
                 />
             )}
-            {pensjonsland.svar && (
+            {pensjonsland?.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(PensjonSpørsmålId.pensjonsland)}
                     søknadsvar={landkodeTilSpråk(pensjonsland.svar, valgtLocale)}
