@@ -9,7 +9,11 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IArbeidsperiode } from '../../../typer/perioder';
-import { IDinLivssituasjonFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import {
+    IDinLivssituasjonFeltTyper,
+    IEøsForSøkerFeltTyper,
+    IOmBarnetUtvidetFeltTyper,
+} from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -26,7 +30,10 @@ import {
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 interface ArbeidsperiodeProps {
-    skjema: ISkjema<IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper, string>;
+    skjema: ISkjema<
+        IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper | IEøsForSøkerFeltTyper,
+        string
+    >;
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet?: boolean;

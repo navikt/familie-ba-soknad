@@ -99,6 +99,7 @@ export interface IOmDegFeltTyper {
 }
 
 export interface IEøsForSøkerFeltTyper {
+    registrerteArbeidsperioder: IArbeidsperiode[];
     placeholderForFeltSomKommer: string; //TODO
 }
 
