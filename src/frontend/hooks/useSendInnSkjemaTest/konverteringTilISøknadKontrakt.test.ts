@@ -1,7 +1,11 @@
 import { renderHook } from '@testing-library/react-hooks';
 
 import { ISøknadKontrakt } from '../../typer/kontrakt/v6';
-import { spyOnUseApp, TestProvidereMedEkteTekster } from '../../utils/testing';
+import {
+    silenceConsoleErrors,
+    spyOnUseApp,
+    TestProvidereMedEkteTekster,
+} from '../../utils/testing';
 import { erGyldigISøknadKontrakt } from '../../utils/typeguards';
 import { useSendInnSkjema } from '../useSendInnSkjema';
 import { testdata1 } from './test-data/testdata1';
@@ -9,6 +13,8 @@ import { testdata2 } from './test-data/testdata2';
 import { testdata3 } from './test-data/testdata3';
 import { testdata4 } from './test-data/testdata4';
 import { testdata5 } from './test-data/testdata5';
+
+silenceConsoleErrors();
 
 describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
     it('case 1', async () => {
