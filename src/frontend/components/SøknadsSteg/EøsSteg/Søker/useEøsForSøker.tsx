@@ -5,6 +5,7 @@ import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 export const useEøsForSøker = (): {
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
+    validerAlleSynligeFelter: () => void;
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
 } => {
@@ -20,7 +21,10 @@ export const useEøsForSøker = (): {
         //TODO
     };
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IEøsForSøkerFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
+        IEøsForSøkerFeltTyper,
+        string
+    >({
         felter: { placeholderForFeltSomKommer },
         skjemanavn: 'eøsForSøker',
     });
@@ -29,6 +33,7 @@ export const useEøsForSøker = (): {
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
+        validerAlleSynligeFelter,
         oppdaterSøknad,
     };
 };

@@ -87,6 +87,8 @@
   "eøs-om-barn.dittslektsforhold.feilmelding": "You must state your relation to {barn} in order to be able to proceed",
   "eøs-om-barn.dittslektsforhold.spm": "What is your relation to {barn}?",
   "eøs-om-barn.leggtilpensjonandreforelder.spm": "Has {barn}'s other parent received a pension from Norway in additional periods?",
+  "eøs-om-barn.sidetittel": "Barnetrygd etter EØS-reglene - Om {barn}",
+  "eøs-om-barn.oppsummering.tittel": "{nummer}. Barnetrygd etter EØS-reglene - Om {barn}",
   "eøs-om-deg.arbeidsperioderinorge.feilmelding": "You must state whether you work or have worked in Norway, on the Norwegian continental shelf or on a ship flying the Norwegian flag in order to be able to proceed",
   "eøs-om-deg.arbeidsperioderinorge.spm": "Do you work or have you worked in Norway, on the Norwegian continental shelf or on a ship flying the Norwegian flag?",
   "eøs-om-deg.dittidnummer.feilmelding": "You must state your personal ID-number in order to be able to proceed",

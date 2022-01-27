@@ -1,5 +1,6 @@
 import React from 'react';
 
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { useEøsForSøker } from './useEøsForSøker';
 
@@ -9,7 +10,7 @@ const EøsForSøker: React.FC = () => {
 
     return (
         <Steg
-            tittel={'Steg for eøs søker'}
+            tittel={<SpråkTekst id={'eøs-om-deg.sidetittel'} />}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,

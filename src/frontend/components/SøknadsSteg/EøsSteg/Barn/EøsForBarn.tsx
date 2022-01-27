@@ -8,6 +8,7 @@ import { BarnetsId } from '../../../../typer/common';
 import { barnetsNavnValue } from '../../../../utils/barn';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { useEøsForBarn } from './useEøsForBarn';
 
@@ -25,7 +26,12 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
 
     return (
         <Steg
-            tittel={'Steg for eøs: ' + barnetsNavnValue(barn, intl)}
+            tittel={
+                <SpråkTekst
+                    id={'eøs-om-barn.sidetittel'}
+                    values={{ barn: barnetsNavnValue(barn, intl) }}
+                />
+            }
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
