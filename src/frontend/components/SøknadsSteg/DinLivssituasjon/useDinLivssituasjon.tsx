@@ -12,6 +12,7 @@ import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
+import { usePerioder } from '../../../hooks/usePerioder';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
@@ -24,9 +25,7 @@ import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
-import { useArbeidsperioder } from '../../Felleskomponenter/Arbeidsperiode/useArbeidsperioder';
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
-import { usePensjonsperioder } from '../../Felleskomponenter/Pensjonsmodal/usePensjonsperioder';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
@@ -201,16 +200,19 @@ export const useDinLivssituasjon = (): {
         skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
-    const { fjernArbeidsperiode, leggTilArbeidsperiode, registrerteArbeidsperioder } =
-        useArbeidsperioder(
-            søker.arbeidsperioderUtland,
-            { jobberPåBåt },
-            avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-            felt =>
-                jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
-                    ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
-                    : ok(felt)
-        );
+    const {
+        fjernPeriode: fjernArbeidsperiode,
+        leggTilPeriode: leggTilArbeidsperiode,
+        registrertePerioder: registrerteArbeidsperioder,
+    } = usePerioder<IArbeidsperiode>(
+        søker.arbeidsperioderUtland,
+        { jobberPåBåt },
+        avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        felt =>
+            jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
+                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
+                : ok(felt)
+    );
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
@@ -225,17 +227,20 @@ export const useDinLivssituasjon = (): {
         skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
-    const { fjernPensjonsperiode, leggTilPensjonsperiode, registrertePensjonsperioder } =
-        usePensjonsperioder(
-            søker.pensjonsperioderUtland,
-            { mottarUtenlandspensjon },
-            avhengigheter =>
-                avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-            felt =>
-                mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length === 0
-                    ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />)
-                    : ok(felt)
-        );
+    const {
+        fjernPeriode: fjernPensjonsperiode,
+        leggTilPeriode: leggTilPensjonsperiode,
+        registrertePerioder: registrertePensjonsperioder,
+    } = usePerioder<IPensjonsperiode>(
+        søker.pensjonsperioderUtland,
+        { mottarUtenlandspensjon },
+        avhengigheter =>
+            avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        felt =>
+            mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length === 0
+                ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />)
+                : ok(felt)
+    );
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,

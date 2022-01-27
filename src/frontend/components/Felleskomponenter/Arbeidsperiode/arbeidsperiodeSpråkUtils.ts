@@ -1,3 +1,9 @@
+import {
+    DinLivssituasjonSpørsmålId,
+    dinLivssituasjonSpørsmålSpråkId,
+} from '../../SøknadsSteg/DinLivssituasjon/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
+
 export const arbeidslandFeilmelding = (
     tilbakeITid: boolean,
     gjelderAndreForelder: boolean,
@@ -49,3 +55,11 @@ export const arbeidsperiodeFeilmelding = (gjelderUtlandet: boolean): string =>
     gjelderUtlandet
         ? 'felles.flerearbeidsperioderutland.feilmelding'
         : 'felles.flerearbeidsperiodernorge.feilmelding';
+
+export const arbeidsperiodeSpørsmålSpråkId = (gjelderAndreForelder: boolean) => {
+    if (gjelderAndreForelder) {
+        return omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet];
+    } else {
+        return dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt];
+    }
+};

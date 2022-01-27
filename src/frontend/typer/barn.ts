@@ -23,6 +23,9 @@ export enum andreForelderDataKeySpørsmål {
     skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
     søkerHarBoddMedAndreForelder = 'søkerHarBoddMedAndreForelder',
     søkerFlyttetFraAndreForelderDato = 'søkerFlyttetFraAndreForelderDato',
+
+    // EØS
+    pensjonNorge = 'pensjonNorge',
 }
 
 export enum barnDataKeySpørsmål {
@@ -62,6 +65,10 @@ export interface IAndreForelder {
     [andreForelderDataKeySpørsmål.pensjonUtland]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.pensjonHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
     [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | null>;
+
+    //EØS
+    [andreForelderDataKeySpørsmål.pensjonNorge]: ISøknadSpørsmål<ESvar | null>;
+
     utvidet: {
         [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
         [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: ISøknadSpørsmål<DatoMedUkjent>;

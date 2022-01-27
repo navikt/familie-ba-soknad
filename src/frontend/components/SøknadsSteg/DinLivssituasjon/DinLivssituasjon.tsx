@@ -7,6 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
@@ -16,7 +17,6 @@ import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsp
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
-import { Arbeidsperiode } from './Arbeidsperiode';
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import TidligereSamboere from './TidligereSamboere';
@@ -156,12 +156,49 @@ const DinLivssituasjon: React.FC = () => {
                     <VedleggNotis dynamisk språkTekstId={'omdeg.asylsøker.alert'} />
                 )}
 
-                <Arbeidsperiode
-                    skjema={skjema}
-                    leggTilArbeidsperiode={leggTilArbeidsperiode}
-                    fjernArbeidsperiode={fjernArbeidsperiode}
-                    gjelderUtlandet={true}
-                />
+                {toggles.EØS_KOMPLETT ? (
+                    <Arbeidsperiode
+                        skjema={skjema}
+                        leggTilArbeidsperiode={leggTilArbeidsperiode}
+                        fjernArbeidsperiode={fjernArbeidsperiode}
+                        gjelderUtlandet={true}
+                        arbeiderEllerArbeidetFelt={skjema.felter.jobberPåBåt}
+                        registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                    />
+                ) : (
+                    <KomponentGruppe inline>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.jobberPåBåt}
+                            spørsmålTekstId={
+                                dinLivssituasjonSpørsmålSpråkId[
+                                    DinLivssituasjonSpørsmålId.jobberPåBåt
+                                ]
+                            }
+                        />
+                        <LandDropdown
+                            felt={skjema.felter.arbeidsland}
+                            skjema={skjema}
+                            label={
+                                <SpråkTekst
+                                    id={
+                                        dinLivssituasjonSpørsmålSpråkId[
+                                            DinLivssituasjonSpørsmålId.arbeidsland
+                                        ]
+                                    }
+                                />
+                            }
+                            dynamisk
+                        />
+                        {erEøsLand(skjema.felter.arbeidsland.verdi) && (
+                            <VedleggNotisTilleggsskjema
+                                språkTekstId={'omdeg.arbeid-utland.eøs-info'}
+                                dynamisk
+                            />
+                        )}
+                    </KomponentGruppe>
+                )}
+
                 {toggles.EØS_KOMPLETT ? (
                     <Pensjonsperiode
                         skjema={skjema}
