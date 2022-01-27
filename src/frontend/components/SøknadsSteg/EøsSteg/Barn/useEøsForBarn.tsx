@@ -7,13 +7,13 @@ import { feil, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
+import { usePerioder } from '../../../../hooks/usePerioder';
 import { andreForelderDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
-import { IPensjonsperiode } from '../../../../typer/perioder';
+import { IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { barnetsNavnValue } from '../../../../utils/barn';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
-import { usePensjonsperioder } from '../../../Felleskomponenter/Pensjonsmodal/usePensjonsperioder';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export const useEøsForBarn = (
@@ -26,6 +26,8 @@ export const useEøsForBarn = (
     oppdaterSøknad: () => void;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
+    leggTilAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
+    fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
 } => {
     const { søknad, settSøknad } = useApp();
     const intl = useIntl();
@@ -51,15 +53,38 @@ export const useEøsForBarn = (
     });
 
     const {
-        fjernPensjonsperiode,
-        leggTilPensjonsperiode,
-        registrertePensjonsperioder: andreForelderPensjonsperioderNorge,
-    } = usePensjonsperioder(
+        fjernPeriode: fjernPensjonsperiode,
+        leggTilPeriode: leggTilPensjonsperiode,
+        registrertePerioder: andreForelderPensjonsperioderNorge,
+    } = usePerioder<IPensjonsperiode>(
         andreForelder?.pensjonsperioderNorge ?? [],
         { andreForelderPensjonNorge },
         avhengigheter => avhengigheter.andreForelderPensjonNorge.verdi === ESvar.JA,
         felt =>
             andreForelderPensjonNorge.verdi === ESvar.JA && felt.verdi.length === 0
+                ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />)
+                : ok(felt)
+    );
+
+    const andreForelderAndreUtbetalinger = useJaNeiSpmFelt({
+        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.andreUtbetalinger],
+        feilmeldingSpråkId:
+            barn.andreForelderErDød.svar === ESvar.JA
+                ? 'enkeenkemann.annenforelderytelser.feilmelding'
+                : 'eøs-om-barn.andreforelderutbetalinger.feilmelding',
+        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(barn, intl) },
+    });
+
+    const {
+        fjernPeriode: fjernAndreUtbetalingsperiode,
+        leggTilPeriode: leggTilAndreUtbetalingsperiode,
+        registrertePerioder: andreForelderAndreUtbetalingsperioder,
+    } = usePerioder<IUtbetalingsperiode>(
+        andreForelder?.andreUtbetalingsperioder ?? [],
+        { andreForelderAndreUtbetalinger },
+        avhengigheter => avhengigheter.andreForelderAndreUtbetalinger.verdi === ESvar.JA,
+        felt =>
+            andreForelderAndreUtbetalinger.verdi === ESvar.JA && felt.verdi.length === 0
                 ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />)
                 : ok(felt)
     );
@@ -74,10 +99,17 @@ export const useEøsForBarn = (
                         ...barn.andreForelder[andreForelderDataKeySpørsmål.pensjonNorge],
                         svar: andreForelderPensjonNorge.verdi,
                     },
-
                     pensjonsperioderNorge:
                         andreForelderPensjonNorge.verdi === ESvar.JA
                             ? skjema.felter.andreForelderPensjonsperioderNorge.verdi
+                            : [],
+                    andreUtbetalinger: {
+                        ...barn.andreForelder[andreForelderDataKeySpørsmål.andreUtbetalinger],
+                        svar: andreForelderAndreUtbetalinger.verdi,
+                    },
+                    andreUtbetalingsperioder:
+                        andreForelderAndreUtbetalinger.verdi === ESvar.JA
+                            ? skjema.felter.andreForelderAndreUtbetalingsperioder.verdi
                             : [],
                 },
             }),
@@ -97,7 +129,12 @@ export const useEøsForBarn = (
     };
 
     const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IEøsForBarnFeltTyper, string>({
-        felter: { andreForelderPensjonNorge, andreForelderPensjonsperioderNorge },
+        felter: {
+            andreForelderPensjonNorge,
+            andreForelderPensjonsperioderNorge,
+            andreForelderAndreUtbetalinger,
+            andreForelderAndreUtbetalingsperioder,
+        },
         skjemanavn: 'eøsForBarn',
     });
 
@@ -109,5 +146,7 @@ export const useEøsForBarn = (
         oppdaterSøknad,
         leggTilPensjonsperiode,
         fjernPensjonsperiode,
+        leggTilAndreUtbetalingsperiode,
+        fjernAndreUtbetalingsperiode,
     };
 };

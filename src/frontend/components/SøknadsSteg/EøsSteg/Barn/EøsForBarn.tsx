@@ -9,6 +9,7 @@ import { barnetsNavnValue } from '../../../../utils/barn';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
+import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import { useEøsForBarn } from './useEøsForBarn';
 
 const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
@@ -20,6 +21,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         barn,
         leggTilPensjonsperiode,
         fjernPensjonsperiode,
+        leggTilAndreUtbetalingsperiode,
+        fjernAndreUtbetalingsperiode,
     } = useEøsForBarn(barnetsId);
     const intl = useIntl();
 
@@ -44,6 +47,19 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         barn: barn,
                     }}
                     registrertePensjonsperioder={skjema.felter.andreForelderPensjonsperioderNorge}
+                />
+                <Utbetalingsperiode
+                    skjema={skjema}
+                    mottarEllerMottattUtbetalingFelt={skjema.felter.andreForelderAndreUtbetalinger}
+                    leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
+                    fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
+                    andreForelderData={{
+                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
+                        barn: barn,
+                    }}
+                    registrerteUtbetalingsperioder={
+                        skjema.felter.andreForelderAndreUtbetalingsperioder
+                    }
                 />
             </SkjemaFieldset>
         </Steg>
