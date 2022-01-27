@@ -69,12 +69,6 @@ export const genererAndreForelder = (
                 ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
                 : OmBarnetSpørsmålsId.andreForelderPensjonUtland,
         },
-        [andreForelderDataKeySpørsmål.pensjonNorge]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonNorge].svar ?? null,
-            id: andreForelderErDød
-                ? EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke
-                : EøsBarnSpørsmålId.andreForelderPensjonNorge,
-        },
         [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
             svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar ?? '',
             id: andreForelderErDød

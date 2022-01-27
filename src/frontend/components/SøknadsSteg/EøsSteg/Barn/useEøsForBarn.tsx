@@ -85,7 +85,7 @@ export const useEøsForBarn = (
         avhengigheter => avhengigheter.andreForelderAndreUtbetalinger.verdi === ESvar.JA,
         felt =>
             andreForelderAndreUtbetalinger.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />)
+                ? feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />)
                 : ok(felt)
     );
 

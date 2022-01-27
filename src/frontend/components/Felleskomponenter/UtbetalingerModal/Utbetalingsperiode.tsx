@@ -92,11 +92,7 @@ export const Utbetalingsperiode: React.FC<UtbetalingsperiodeProps> = ({
                         språkTekst={'felles.flereytelser.knapp'}
                         id={UtbetalingerSpørsmålId.utbetalingsperioder}
                         feilmelding={
-                            registrerteUtbetalingsperioder.erSynlig &&
-                            registrerteUtbetalingsperioder.feilmelding &&
-                            skjema.visFeilmeldinger && (
-                                <SpråkTekst id={'felles.flereytelser.feilmelding'} />
-                            )
+                            skjema.visFeilmeldinger && registrerteUtbetalingsperioder.feilmelding
                         }
                     />
                     <UtbetalingerModal
