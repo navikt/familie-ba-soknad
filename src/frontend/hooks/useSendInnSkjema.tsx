@@ -14,6 +14,7 @@ import { ISøknadKontrakt } from '../typer/kontrakt/v6';
 import { ISøknadKontraktV7 } from '../typer/kontrakt/v7';
 import { IKvittering } from '../typer/kvittering';
 import { dataISøknadKontraktFormat } from '../utils/mappingTilKontrakt/søknad';
+import { dataISøknadKontraktFormatV7 } from '../utils/mappingTilKontrakt/søknadV7';
 import { sendInn } from '../utils/sendInnSkjema';
 
 export const useSendInnSkjema = (): {
@@ -51,10 +52,8 @@ export const useSendInnSkjema = (): {
 
     const sendInnSkjemaV7 = async (): Promise<[boolean, ISøknadKontraktV7]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
-        const formatert = {
-            ...dataISøknadKontraktFormat(intl, valgtSpråk, søknad),
-            kontraktVersjon: 7,
-        };
+
+        const formatert: ISøknadKontraktV7 = dataISøknadKontraktFormatV7(intl, valgtSpråk, søknad);
 
         const res = await sendInn<ISøknadKontraktV7>(
             formatert,
