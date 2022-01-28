@@ -11,6 +11,7 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import {
     IDinLivssituasjonFeltTyper,
+    IEøsForBarnFeltTyper,
     IEøsForSøkerFeltTyper,
     IOmBarnetUtvidetFeltTyper,
 } from '../../../typer/skjema';
@@ -31,7 +32,10 @@ import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 interface ArbeidsperiodeProps {
     skjema: ISkjema<
-        IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper | IEøsForSøkerFeltTyper,
+        | IDinLivssituasjonFeltTyper
+        | IOmBarnetUtvidetFeltTyper
+        | IEøsForSøkerFeltTyper
+        | IEøsForBarnFeltTyper,
         string
     >;
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
@@ -57,6 +61,7 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
     const gjelderAndreForelder = !!andreForelderData;
     const andreForelderErDød = !!andreForelderData?.erDød;
     const barn = andreForelderData?.barn;
+    const barnetsNavn = !!barn && barnetsNavnValue(barn, intl);
 
     return (
         <>
@@ -70,7 +75,10 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                 )}
                 inkluderVetIkke={gjelderAndreForelder}
                 språkValues={{
-                    ...(barn && { navn: barnetsNavnValue(barn, intl) }),
+                    ...(barnetsNavn && {
+                        navn: barnetsNavn,
+                        barn: barnetsNavn,
+                    }),
                 }}
             />
             {arbeiderEllerArbeidetFelt.verdi === ESvar.JA && (
@@ -93,7 +101,7 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                                     gjelderAndreForelder
                                 )}
                                 values={{
-                                    ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                                    ...(barnetsNavn && { barn: barnetsNavn }),
                                 }}
                             />
                         </Element>
