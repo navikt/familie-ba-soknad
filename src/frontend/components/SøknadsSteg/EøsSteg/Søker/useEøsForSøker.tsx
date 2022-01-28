@@ -6,7 +6,7 @@ import { feil, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../../hooks/usePerioder';
-import { IArbeidsperiode, IPensjonsperiode } from '../../../../typer/perioder';
+import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { ISøker } from '../../../../typer/person';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
@@ -23,6 +23,8 @@ export const useEøsForSøker = (): {
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
+    leggTilAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
+    fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
@@ -64,6 +66,24 @@ export const useEøsForSøker = (): {
                 : ok(felt)
     );
 
+    const andreUtbetalinger = useJaNeiSpmFelt({
+        søknadsfelt: søker.andreUtbetalinger,
+        feilmeldingSpråkId: 'eøs-om-deg.utbetalinger.feilmelding',
+    });
+    const {
+        fjernPeriode: fjernAndreUtbetalingsperiode,
+        leggTilPeriode: leggTilAndreUtbetalingsperiode,
+        registrertePerioder: registrerteAndreUtbetalinger,
+    } = usePerioder<IUtbetalingsperiode>(
+        søker.andreUtbetalingsperioder,
+        { andreUtbetalinger },
+        avhengigheter => avhengigheter.andreUtbetalinger.verdi === ESvar.JA,
+        felt =>
+            andreUtbetalinger.verdi === ESvar.JA && felt.verdi.length === 0
+                ? feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />)
+                : ok(felt)
+    );
+
     const oppdaterSøknad = () => {
         const oppdatertSøker = genererOppdatertSøker();
         settSøknad({
@@ -91,6 +111,14 @@ export const useEøsForSøker = (): {
             skjema.felter.pensjonNorge.verdi === ESvar.JA
                 ? skjema.felter.registrertePensjonsperioder.verdi
                 : [],
+        andreUtbetalinger: {
+            ...søknad.søker.andreUtbetalinger,
+            svar: skjema.felter.andreUtbetalinger.verdi,
+        },
+        andreUtbetalingsperioder:
+            skjema.felter.andreUtbetalinger.verdi === ESvar.JA
+                ? skjema.felter.registrerteAndreUtbetalinger.verdi
+                : [],
     });
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
@@ -102,6 +130,8 @@ export const useEøsForSøker = (): {
             registrerteArbeidsperioder,
             pensjonNorge,
             registrertePensjonsperioder,
+            andreUtbetalinger,
+            registrerteAndreUtbetalinger,
         },
         skjemanavn: 'eøsForSøker',
     });
@@ -116,5 +146,7 @@ export const useEøsForSøker = (): {
         leggTilArbeidsperiode,
         leggTilPensjonsperiode,
         fjernPensjonsperiode,
+        leggTilAndreUtbetalingsperiode,
+        fjernAndreUtbetalingsperiode,
     };
 };

@@ -9,6 +9,7 @@ import { ISøknadSpørsmål } from '../../../../typer/spørsmål';
 import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtbetalingsperiodeOppsummering } from '../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
 import { eøsSøkerSpørsmålSpråkId } from '../../EøsSteg/Søker/spørsmål';
 import { useEøsForSøker } from '../../EøsSteg/Søker/useEøsForSøker';
 import { OppsummeringFelt } from '../OppsummeringFelt';
@@ -53,6 +54,15 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     <PensjonsperiodeOppsummering
                         key={`pensjonsperiode-søker-norge-${index}`}
                         pensjonsperiode={pensjonsperiode}
+                        nummer={index + 1}
+                    />
+                ))}
+
+                {jaNeiSpmOppsummering(søker.andreUtbetalinger)}
+                {søker.andreUtbetalingsperioder.map((utbetalingsperiode, index) => (
+                    <UtbetalingsperiodeOppsummering
+                        key={`utbetalingsperiode-søker-norge-${index}`}
+                        utbetalingsperiode={utbetalingsperiode}
                         nummer={index + 1}
                     />
                 ))}

@@ -165,6 +165,10 @@ export const initialStateSøknad: ISøknad = {
         },
         pensjonsperioderNorge: [],
         pensjonsperioderUtland: [],
+        andreUtbetalinger: {
+            id: EøsSøkerSpørsmålId.utbetalinger,
+            svar: null,
+        },
         andreUtbetalingsperioder: [],
         harSamboerNå: {
             id: DinLivssituasjonSpørsmålId.harSamboerNå,

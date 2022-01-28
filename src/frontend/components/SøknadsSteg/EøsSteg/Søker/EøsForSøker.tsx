@@ -5,6 +5,7 @@ import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/Komponen
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
+import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import { useEøsForSøker } from './useEøsForSøker';
 
 const EøsForSøker: React.FC = () => {
@@ -17,6 +18,8 @@ const EøsForSøker: React.FC = () => {
         fjernArbeidsperiode,
         leggTilPensjonsperiode,
         fjernPensjonsperiode,
+        leggTilAndreUtbetalingsperiode,
+        fjernAndreUtbetalingsperiode,
     } = useEøsForSøker();
 
     return (
@@ -43,6 +46,13 @@ const EøsForSøker: React.FC = () => {
                     leggTilPensjonsperiode={leggTilPensjonsperiode}
                     fjernPensjonsperiode={fjernPensjonsperiode}
                     registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
+                />
+                <Utbetalingsperiode
+                    skjema={skjema}
+                    leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
+                    fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
+                    mottarEllerMottattUtbetalingFelt={skjema.felter.andreUtbetalinger}
+                    registrerteUtbetalingsperioder={skjema.felter.registrerteAndreUtbetalinger}
                 />
             </KomponentGruppe>
         </Steg>
