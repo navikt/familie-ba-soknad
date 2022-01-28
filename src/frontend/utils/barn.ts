@@ -12,6 +12,7 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../typer/barn';
+import { AlternativtSvarForInput } from '../typer/common';
 import { IBarn, IBarnRespons } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
 import { ISøknad } from '../typer/søknad';
@@ -388,4 +389,14 @@ export const barnetsNavnValue = (barn: IBarn, intl: IntlShape): string => {
               { fødselsnummer: formaterFnr(barn.ident) }
           ) as string)
         : barn.navn.toUpperCase();
+};
+
+export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
+    const kanIkkeGiOpplysningerOmAndreForelder =
+        barn.andreForelder?.[andreForelderDataKeySpørsmål.navn].svar ===
+        AlternativtSvarForInput.UKJENT;
+    return (
+        kanIkkeGiOpplysningerOmAndreForelder ||
+        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
+    );
 };

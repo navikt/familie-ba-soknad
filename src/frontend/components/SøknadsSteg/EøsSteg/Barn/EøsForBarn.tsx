@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { BarnetsId } from '../../../../typer/common';
-import { barnetsNavnValue } from '../../../../utils/barn';
+import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
@@ -45,43 +45,49 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
-                <Arbeidsperiode
-                    skjema={skjema}
-                    leggTilArbeidsperiode={leggTilArbeidsperiode}
-                    fjernArbeidsperiode={fjernArbeidsperiode}
-                    arbeiderEllerArbeidetFelt={skjema.felter.andreForelderArbeidNorge}
-                    registrerteArbeidsperioder={skjema.felter.andreForelderArbeidsperioderNorge}
-                    andreForelderData={{
-                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                        barn: barn,
-                    }}
-                />
-                <Pensjonsperiode
-                    skjema={skjema}
-                    mottarEllerMottattPensjonFelt={skjema.felter.andreForelderPensjonNorge}
-                    leggTilPensjonsperiode={leggTilPensjonsperiode}
-                    fjernPensjonsperiode={fjernPensjonsperiode}
-                    andreForelderData={{
-                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                        barn: barn,
-                    }}
-                    registrertePensjonsperioder={skjema.felter.andreForelderPensjonsperioderNorge}
-                />
-                <Utbetalingsperiode
-                    skjema={skjema}
-                    mottarEllerMottattUtbetalingFelt={skjema.felter.andreForelderAndreUtbetalinger}
-                    leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
-                    fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
-                    andreForelderData={{
-                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                        barn: barn,
-                    }}
-                    registrerteUtbetalingsperioder={
-                        skjema.felter.andreForelderAndreUtbetalingsperioder
-                    }
-                />
-            </SkjemaFieldset>
+            {!skalSkjuleAndreForelderFelt(barn) && (
+                <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
+                    <Arbeidsperiode
+                        skjema={skjema}
+                        leggTilArbeidsperiode={leggTilArbeidsperiode}
+                        fjernArbeidsperiode={fjernArbeidsperiode}
+                        arbeiderEllerArbeidetFelt={skjema.felter.andreForelderArbeidNorge}
+                        registrerteArbeidsperioder={skjema.felter.andreForelderArbeidsperioderNorge}
+                        andreForelderData={{
+                            erDød: barn.andreForelderErDød.svar === ESvar.JA,
+                            barn: barn,
+                        }}
+                    />
+                    <Pensjonsperiode
+                        skjema={skjema}
+                        mottarEllerMottattPensjonFelt={skjema.felter.andreForelderPensjonNorge}
+                        leggTilPensjonsperiode={leggTilPensjonsperiode}
+                        fjernPensjonsperiode={fjernPensjonsperiode}
+                        andreForelderData={{
+                            erDød: barn.andreForelderErDød.svar === ESvar.JA,
+                            barn: barn,
+                        }}
+                        registrertePensjonsperioder={
+                            skjema.felter.andreForelderPensjonsperioderNorge
+                        }
+                    />
+                    <Utbetalingsperiode
+                        skjema={skjema}
+                        mottarEllerMottattUtbetalingFelt={
+                            skjema.felter.andreForelderAndreUtbetalinger
+                        }
+                        leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
+                        fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
+                        andreForelderData={{
+                            erDød: barn.andreForelderErDød.svar === ESvar.JA,
+                            barn: barn,
+                        }}
+                        registrerteUtbetalingsperioder={
+                            skjema.felter.andreForelderAndreUtbetalingsperioder
+                        }
+                    />
+                </SkjemaFieldset>
+            )}
         </Steg>
     );
 };

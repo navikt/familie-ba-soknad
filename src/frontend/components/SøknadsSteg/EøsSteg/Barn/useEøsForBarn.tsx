@@ -12,7 +12,7 @@ import { andreForelderDataKeySpørsmål, IBarnMedISøknad } from '../../../../ty
 import { BarnetsId } from '../../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
-import { barnetsNavnValue } from '../../../../utils/barn';
+import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -54,6 +54,7 @@ export const useEøsForBarn = (
                 ? 'enkeenkemann.annenforelderarbeidnorge.feilmelding'
                 : 'eøs-om-barn.annenforelderarbeidsperiodenorge.feilmelding',
         feilmeldingSpråkVerdier: { barn: barnetsNavnValue(barn, intl) },
+        skalSkjules: skalSkjuleAndreForelderFelt(barn),
     });
 
     const {
@@ -77,6 +78,7 @@ export const useEøsForBarn = (
                 ? 'enkeenkemann.andreforelderpensjon.feilmelding'
                 : 'eøs-om-barn.andreforelderpensjon.feilmelding',
         feilmeldingSpråkVerdier: { barn: barnetsNavnValue(barn, intl) },
+        skalSkjules: skalSkjuleAndreForelderFelt(barn),
     });
 
     const {
@@ -100,6 +102,7 @@ export const useEøsForBarn = (
                 ? 'enkeenkemann.annenforelderytelser.feilmelding'
                 : 'eøs-om-barn.andreforelderutbetalinger.feilmelding',
         feilmeldingSpråkVerdier: { barn: barnetsNavnValue(barn, intl) },
+        skalSkjules: skalSkjuleAndreForelderFelt(barn),
     });
 
     const {
