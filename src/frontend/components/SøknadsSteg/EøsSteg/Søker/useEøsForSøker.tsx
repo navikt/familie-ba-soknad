@@ -4,7 +4,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
-import { useFeatureToggles } from '../../../../context/FeatureToggleContext';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../../hooks/usePerioder';
 import { IArbeidsperiode } from '../../../../typer/perioder';
@@ -23,9 +22,8 @@ export const useEøsForSøker = (): {
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
-    const { toggles } = useFeatureToggles();
 
-    const arbeiderINorge = useJaNeiSpmFelt({
+    const arbeidINorge = useJaNeiSpmFelt({
         søknadsfelt: søker.arbeiderINorge,
         feilmeldingSpråkId: 'eøs-om-deg.arbeidsperioderinorge.feilmelding',
     });
@@ -36,10 +34,10 @@ export const useEøsForSøker = (): {
         registrertePerioder: registrerteArbeidsperioder,
     } = usePerioder<IArbeidsperiode>(
         søker.arbeidsperioderNorge,
-        { arbeiderINorge },
-        avhengigheter => avhengigheter.arbeiderINorge.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        { arbeiderINorge: arbeidINorge },
+        avhengigheter => avhengigheter.arbeiderINorge.verdi === ESvar.JA,
         felt =>
-            arbeiderINorge.verdi === ESvar.JA && felt.verdi.length === 0
+            arbeidINorge.verdi === ESvar.JA && felt.verdi.length === 0
                 ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />)
                 : ok(felt)
     );
@@ -55,17 +53,17 @@ export const useEøsForSøker = (): {
         ...søknad.søker,
         arbeiderINorge: {
             ...søknad.søker.arbeiderINorge,
-            svar: skjema.felter.arbeiderINorge.verdi,
+            svar: skjema.felter.arbeidINorge.verdi,
         },
 
         arbeidsperioderNorge:
-            skjema.felter.arbeiderINorge.verdi === ESvar.JA
+            skjema.felter.arbeidINorge.verdi === ESvar.JA
                 ? skjema.felter.registrerteArbeidsperioder.verdi
                 : [],
     });
 
     const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IEøsForSøkerFeltTyper, string>({
-        felter: { arbeiderINorge, registrerteArbeidsperioder },
+        felter: { arbeidINorge: arbeidINorge, registrerteArbeidsperioder },
         skjemanavn: 'eøsForSøker',
     });
 

@@ -100,7 +100,7 @@ export interface IOmDegFeltTyper {
 }
 
 export interface IEøsForSøkerFeltTyper {
-    arbeiderINorge: ESvar | null;
+    arbeidINorge: ESvar | null;
     registrerteArbeidsperioder: IArbeidsperiode[];
 }
 

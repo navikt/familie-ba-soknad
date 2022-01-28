@@ -2,6 +2,10 @@ import {
     DinLivssituasjonSpørsmålId,
     dinLivssituasjonSpørsmålSpråkId,
 } from '../../SøknadsSteg/DinLivssituasjon/spørsmål';
+import {
+    EøsSøkerSpørsmålId,
+    eøsSøkerSpørsmålSpråkId,
+} from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 
 export const arbeidslandFeilmelding = (
@@ -67,5 +71,5 @@ export const arbeidsperiodeSpørsmålSpråkId = (
     } else
         return gjelderAndreForelder
             ? 'eøs-om-barn.annenforelderarbeidsperiodenorge.spm'
-            : 'eøs-om-deg.arbeidsperioderinorge.spm';
+            : eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.arbeidINorge];
 };

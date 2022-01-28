@@ -27,11 +27,10 @@ const EøsForSøker: React.FC = () => {
         >
             <Arbeidsperiode
                 skjema={skjema}
-                arbeiderEllerArbeidetFelt={skjema.felter.arbeiderINorge}
+                arbeiderEllerArbeidetFelt={skjema.felter.arbeidINorge}
                 leggTilArbeidsperiode={leggTilArbeidsperiode}
                 fjernArbeidsperiode={fjernArbeidsperiode}
                 registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
-                gjelderUtlandet={false}
             />
         </Steg>
     );
