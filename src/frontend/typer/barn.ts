@@ -26,6 +26,7 @@ export enum andreForelderDataKeySpørsmål {
 
     // EØS
     pensjonNorge = 'pensjonNorge',
+    arbeidNorge = 'arbeidNorge',
     andreUtbetalinger = 'andreUtbetalinger',
 }
 
@@ -69,6 +70,7 @@ export interface IAndreForelder {
     pensjonsperioderNorge: IPensjonsperiode[];
     andreUtbetalingsperioder: IUtbetalingsperiode[];
     [andreForelderDataKeySpørsmål.pensjonNorge]: ISøknadSpørsmål<ESvar | null>;
+    [andreForelderDataKeySpørsmål.arbeidNorge]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.andreUtbetalinger]: ISøknadSpørsmål<ESvar | null>;
 
     utvidet: {

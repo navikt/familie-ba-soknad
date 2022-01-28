@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { BarnetsId } from '../../../../typer/common';
 import { barnetsNavnValue } from '../../../../utils/barn';
+import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -24,6 +25,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
+        leggTilArbeidsperiode,
+        fjernArbeidsperiode,
     } = useEøsForBarn(barnetsId);
     const intl = useIntl();
 
@@ -43,6 +46,17 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             }}
         >
             <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
+                <Arbeidsperiode
+                    skjema={skjema}
+                    leggTilArbeidsperiode={leggTilArbeidsperiode}
+                    fjernArbeidsperiode={fjernArbeidsperiode}
+                    arbeiderEllerArbeidetFelt={skjema.felter.andreForelderArbeidNorge}
+                    registrerteArbeidsperioder={skjema.felter.andreForelderArbeidsperioderNorge}
+                    andreForelderData={{
+                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
+                        barn: barn,
+                    }}
+                />
                 <Pensjonsperiode
                     skjema={skjema}
                     mottarEllerMottattPensjonFelt={skjema.felter.andreForelderPensjonNorge}

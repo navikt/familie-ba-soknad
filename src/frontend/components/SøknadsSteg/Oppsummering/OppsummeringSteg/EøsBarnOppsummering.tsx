@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { useSteg } from '../../../../context/StegContext';
 import { andreForelderDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { barnetsNavnValue } from '../../../../utils/barn';
+import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingsperiodeOppsummering } from '../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
@@ -50,6 +51,16 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
         >
             {barn.andreForelder && (
                 <>
+                    <StyledOppsummeringsFeltGruppe>
+                        {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.arbeidNorge)}
+                        {barn.andreForelder.arbeidsperioderNorge.map((arbeidsperiode, index) => (
+                            <ArbeidsperiodeOppsummering
+                                key={`arbeidsperiode-andre-forelder-norge-${index}`}
+                                arbeidsperiode={arbeidsperiode}
+                                nummer={index + 1}
+                            />
+                        ))}
+                    </StyledOppsummeringsFeltGruppe>
                     <StyledOppsummeringsFeltGruppe>
                         {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.pensjonNorge)}
                         {barn.andreForelder.pensjonsperioderNorge.map((pensjonsperiode, index) => (
