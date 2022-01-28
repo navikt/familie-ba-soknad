@@ -10,9 +10,10 @@ import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../../hooks/usePerioder';
 import { andreForelderDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
-import { IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
+import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { barnetsNavnValue } from '../../../../utils/barn';
+import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -29,6 +30,8 @@ export const useEøsForBarn = (
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
     leggTilAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
+    leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
+    fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
 } => {
     const { søknad, settSøknad } = useApp();
     const intl = useIntl();
@@ -43,6 +46,29 @@ export const useEøsForBarn = (
 
     /*--- ANDRE FORELDER ---*/
     const andreForelder = barn.andreForelder;
+
+    const andreForelderArbeidNorge = useJaNeiSpmFelt({
+        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidNorge],
+        feilmeldingSpråkId:
+            barn.andreForelderErDød.svar === ESvar.JA
+                ? 'enkeenkemann.annenforelderarbeidnorge.feilmelding'
+                : 'eøs-om-barn.annenforelderarbeidsperiodenorge.feilmelding',
+        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(barn, intl) },
+    });
+
+    const {
+        fjernPeriode: fjernArbeidsperiode,
+        leggTilPeriode: leggTilArbeidsperiode,
+        registrertePerioder: andreForelderArbeidsperioderNorge,
+    } = usePerioder<IArbeidsperiode>(
+        andreForelder?.arbeidsperioderNorge ?? [],
+        { andreForelderArbeidNorge },
+        avhengigheter => avhengigheter.andreForelderArbeidNorge.verdi === ESvar.JA,
+        felt =>
+            andreForelderArbeidNorge.verdi === ESvar.JA && felt.verdi.length === 0
+                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />)
+                : ok(felt)
+    );
 
     const andreForelderPensjonNorge = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonNorge],
@@ -112,6 +138,14 @@ export const useEøsForBarn = (
                         andreForelderAndreUtbetalinger.verdi === ESvar.JA
                             ? skjema.felter.andreForelderAndreUtbetalingsperioder.verdi
                             : [],
+                    arbeidNorge: {
+                        ...barn.andreForelder[andreForelderDataKeySpørsmål.arbeidNorge],
+                        svar: andreForelderArbeidNorge.verdi,
+                    },
+                    arbeidsperioderNorge:
+                        andreForelderArbeidNorge.verdi === ESvar.JA
+                            ? skjema.felter.andreForelderArbeidsperioderNorge.verdi
+                            : [],
                 },
             }),
         };
@@ -138,6 +172,8 @@ export const useEøsForBarn = (
             andreForelderPensjonsperioderNorge,
             andreForelderAndreUtbetalinger,
             andreForelderAndreUtbetalingsperioder,
+            andreForelderArbeidNorge,
+            andreForelderArbeidsperioderNorge,
         },
         skjemanavn: 'eøsForBarn',
     });
@@ -153,5 +189,7 @@ export const useEøsForBarn = (
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
+        leggTilArbeidsperiode,
+        fjernArbeidsperiode,
     };
 };
