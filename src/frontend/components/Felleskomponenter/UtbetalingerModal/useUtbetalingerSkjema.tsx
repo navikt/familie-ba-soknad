@@ -46,8 +46,8 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         }
     };
 
-    const ytelseFraHvilketLand = useLanddropdownFelt({
-        søknadsfelt: { id: UtbetalingerSpørsmålId.utbetalingFraHvilketLand, svar: '' },
+    const utbetalingLand = useLanddropdownFelt({
+        søknadsfelt: { id: UtbetalingerSpørsmålId.utbetalingLand, svar: '' },
         feilmeldingSpråkId: feilmeldingForLand(),
         skalFeltetVises:
             fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
@@ -91,7 +91,7 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
     const skjema = useSkjema<IUtbetalingerFeltTyper, 'string'>({
         felter: {
             fårUtbetalingNå,
-            ytelseFraHvilketLand,
+            utbetalingLand,
             utbetalingFraDato,
             utbetalingTilDato,
             utbetalingTilDatoUkjent,

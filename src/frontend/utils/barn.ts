@@ -69,12 +69,6 @@ export const genererAndreForelder = (
                 ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
                 : OmBarnetSpørsmålsId.andreForelderPensjonUtland,
         },
-        [andreForelderDataKeySpørsmål.pensjonNorge]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonNorge].svar ?? null,
-            id: andreForelderErDød
-                ? EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke
-                : EøsBarnSpørsmålId.andreForelderPensjonNorge,
-        },
         [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
             svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar ?? '',
             id: andreForelderErDød
@@ -87,6 +81,18 @@ export const genererAndreForelder = (
                 andreForelder && !andreForelderErDød
                     ? andreForelder[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
                     : null,
+        },
+        [andreForelderDataKeySpørsmål.pensjonNorge]: {
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonNorge].svar ?? null,
+            id: andreForelderErDød
+                ? EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke
+                : EøsBarnSpørsmålId.andreForelderPensjonNorge,
+        },
+        [andreForelderDataKeySpørsmål.andreUtbetalinger]: {
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.andreUtbetalinger].svar ?? null,
+            id: andreForelderErDød
+                ? EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke
+                : EøsBarnSpørsmålId.andreForelderAndreUtbetalinger,
         },
         utvidet: {
             ...andreForelder?.utvidet,

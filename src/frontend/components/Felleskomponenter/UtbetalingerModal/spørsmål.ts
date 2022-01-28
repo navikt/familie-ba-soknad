@@ -1,16 +1,17 @@
 export enum UtbetalingerSpørsmålId {
     fårUtbetalingNå = 'får-utbetaling-nå',
-    utbetalingFraHvilketLand = 'utbetaling-fra-hvilket-land',
+    utbetalingLand = 'utbetaling-fra-hvilket-land',
     utbetalingFraDato = 'utbetaling-startdato',
     utbetalingTilDato = 'utbetaling-sluttdato',
     utbetalingTilDatoVetIkke = 'utbetaling-ukjent-sluttdato',
+    utbetalingsperioder = 'utbetalingsperioder',
 }
 
 export const utbetalingerSøkerSpørsmålSpråkId = (
     tilbakeITid = false
-): Record<UtbetalingerSpørsmålId, string> => ({
+): Record<Exclude<UtbetalingerSpørsmålId, UtbetalingerSpørsmålId.utbetalingsperioder>, string> => ({
     [UtbetalingerSpørsmålId.fårUtbetalingNå]: 'eøs.utbetalinger.spm',
-    [UtbetalingerSpørsmålId.utbetalingFraHvilketLand]: tilbakeITid
+    [UtbetalingerSpørsmålId.utbetalingLand]: tilbakeITid
         ? 'modal.utbetalingsland-fikk-søker.spm'
         : 'modal.utbetalingsland-får-søker.spm',
     [UtbetalingerSpørsmålId.utbetalingFraDato]: 'felles.nårbegynteutbetalingene.spm',
@@ -24,9 +25,9 @@ export const utbetalingerSøkerSpørsmålSpråkId = (
 export const utbetalingerAndreForelderSpørsmålSpråkId = (
     tilbakeITid = false,
     andreForelderErDød = false
-): Record<UtbetalingerSpørsmålId, string> => ({
+): Record<Exclude<UtbetalingerSpørsmålId, UtbetalingerSpørsmålId.utbetalingsperioder>, string> => ({
     [UtbetalingerSpørsmålId.fårUtbetalingNå]: 'eøs.andreforelderutbetalinger.spm',
-    [UtbetalingerSpørsmålId.utbetalingFraHvilketLand]:
+    [UtbetalingerSpørsmålId.utbetalingLand]:
         tilbakeITid || andreForelderErDød
             ? 'modal.andreforelder-utbetalingerland-fikk.spm'
             : 'modal.andreforelder-utbetalingerland-får.spm',
@@ -38,3 +39,12 @@ export const utbetalingerAndreForelderSpørsmålSpråkId = (
     [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]:
         'felles.vetikkenårutbetalingerstopper.sjekkboks',
 });
+
+export const hentUtbetalingsperiodeSpørsmålIder = (
+    gjelderAndreForelder: boolean,
+    tilbakeITid: boolean,
+    erAndreForelderDød: boolean
+): Record<Exclude<UtbetalingerSpørsmålId, UtbetalingerSpørsmålId.utbetalingsperioder>, string> =>
+    gjelderAndreForelder
+        ? utbetalingerAndreForelderSpørsmålSpråkId(tilbakeITid, erAndreForelderDød)
+        : utbetalingerSøkerSpørsmålSpråkId(tilbakeITid);
