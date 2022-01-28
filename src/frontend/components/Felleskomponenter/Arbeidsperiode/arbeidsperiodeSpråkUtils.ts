@@ -63,14 +63,22 @@ export const arbeidsperiodeFeilmelding = (gjelderUtlandet: boolean): string =>
 
 export const arbeidsperiodeSpørsmålSpråkId = (
     gjelderUtlandet: boolean,
-    gjelderAndreForelder: boolean
+    gjelderAndreForelder: boolean,
+    andreForelderErDød: boolean
 ): string => {
-    if (gjelderUtlandet) {
-        return gjelderAndreForelder
-            ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]
-            : dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt];
-    } else
-        return gjelderAndreForelder
-            ? eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderArbeidNorge]
+    if (gjelderAndreForelder) {
+        if (andreForelderErDød) {
+            return gjelderUtlandet
+                ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke]
+                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke];
+        } else {
+            return gjelderUtlandet
+                ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]
+                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderArbeidNorge];
+        }
+    } else {
+        return gjelderUtlandet
+            ? dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
             : eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.arbeidINorge];
+    }
 };

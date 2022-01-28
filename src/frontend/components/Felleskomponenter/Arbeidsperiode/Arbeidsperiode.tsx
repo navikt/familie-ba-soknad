@@ -55,6 +55,7 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
     const intl = useIntl();
 
     const gjelderAndreForelder = !!andreForelderData;
+    const andreForelderErDød = !!andreForelderData?.erDød;
     const barn = andreForelderData?.barn;
 
     return (
@@ -64,7 +65,8 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                 felt={arbeiderEllerArbeidetFelt}
                 spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(
                     gjelderUtlandet,
-                    gjelderAndreForelder
+                    gjelderAndreForelder,
+                    andreForelderErDød
                 )}
                 inkluderVetIkke={gjelderAndreForelder}
                 språkValues={{
