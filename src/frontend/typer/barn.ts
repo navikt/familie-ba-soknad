@@ -26,6 +26,7 @@ export enum andreForelderDataKeySpørsmål {
 
     // EØS
     pensjonNorge = 'pensjonNorge',
+    andreUtbetalinger = 'andreUtbetalinger',
 }
 
 export enum barnDataKeySpørsmål {
@@ -53,10 +54,7 @@ export enum barnDataKeySpørsmål {
 
 export interface IAndreForelder {
     arbeidsperioderUtland: IArbeidsperiode[];
-    arbeidsperioderNorge: IArbeidsperiode[];
     pensjonsperioderUtland: IPensjonsperiode[];
-    pensjonsperioderNorge: IPensjonsperiode[];
-    andreUtbetalingsperioder: IUtbetalingsperiode[];
     [andreForelderDataKeySpørsmål.navn]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
     [andreForelderDataKeySpørsmål.fnr]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
     [andreForelderDataKeySpørsmål.fødselsdato]: ISøknadSpørsmål<DatoMedUkjent>;
@@ -67,7 +65,11 @@ export interface IAndreForelder {
     [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: ISøknadSpørsmål<ESvar | null>;
 
     //EØS
+    arbeidsperioderNorge: IArbeidsperiode[];
+    pensjonsperioderNorge: IPensjonsperiode[];
+    andreUtbetalingsperioder: IUtbetalingsperiode[];
     [andreForelderDataKeySpørsmål.pensjonNorge]: ISøknadSpørsmål<ESvar | null>;
+    [andreForelderDataKeySpørsmål.andreUtbetalinger]: ISøknadSpørsmål<ESvar | null>;
 
     utvidet: {
         [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
