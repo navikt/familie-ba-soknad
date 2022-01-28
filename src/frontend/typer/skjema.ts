@@ -116,6 +116,8 @@ export interface IEøsForSøkerFeltTyper {
 export interface IEøsForBarnFeltTyper {
     andreForelderPensjonNorge: ESvar | null;
     andreForelderPensjonsperioderNorge: IPensjonsperiode[];
+    andreForelderArbeidNorge: ESvar | null;
+    andreForelderArbeidsperioderNorge: IArbeidsperiode[];
     andreForelderAndreUtbetalinger: ESvar | null;
     andreForelderAndreUtbetalingsperioder: IUtbetalingsperiode[];
 }
