@@ -51,7 +51,7 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 {jaNeiSpmOppsummering(søker.pensjonNorge)}
                 {søker.pensjonsperioderNorge.map((pensjonsperiode, index) => (
                     <PensjonsperiodeOppsummering
-                        key={`arbeidsperiode-søker-norge-${index}`}
+                        key={`pensjonsperiode-søker-norge-${index}`}
                         pensjonsperiode={pensjonsperiode}
                         nummer={index + 1}
                     />
