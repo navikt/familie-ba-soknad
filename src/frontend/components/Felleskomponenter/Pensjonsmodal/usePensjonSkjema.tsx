@@ -40,6 +40,7 @@ export const usePensjonSkjema = ({
         feilmeldingSpråkVerdier: barn ? { barn: barnetsNavnValue(barn, intl) } : undefined,
         skalSkjules: erAndreForelderDød,
     });
+
     const tilbakeITid = mottarPensjonNå.verdi === ESvar.NEI;
 
     useEffect(() => {

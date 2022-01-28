@@ -107,6 +107,8 @@ export interface IOmDegFeltTyper {
 export interface IEøsForSøkerFeltTyper {
     arbeidINorge: ESvar | null;
     registrerteArbeidsperioder: IArbeidsperiode[];
+    pensjonNorge: ESvar | null;
+    registrertePensjonsperioder: IPensjonsperiode[];
 }
 
 export interface IEøsForBarnFeltTyper {
