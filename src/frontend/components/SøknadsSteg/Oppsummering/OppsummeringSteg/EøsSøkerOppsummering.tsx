@@ -7,6 +7,7 @@ import { useRoutes } from '../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../typer/routes';
 import { ISøknadSpørsmål } from '../../../../typer/spørsmål';
 import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { eøsSøkerSpørsmålSpråkId } from '../../EøsSteg/Søker/spørsmål';
 import { useEøsForSøker } from '../../EøsSteg/Søker/useEøsForSøker';
@@ -43,6 +44,15 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     <ArbeidsperiodeOppsummering
                         key={`arbeidsperiode-søker-norge-${index}`}
                         arbeidsperiode={arbeidsperiode}
+                        nummer={index + 1}
+                    />
+                ))}
+
+                {jaNeiSpmOppsummering(søker.pensjonNorge)}
+                {søker.pensjonsperioderNorge.map((pensjonsperiode, index) => (
+                    <PensjonsperiodeOppsummering
+                        key={`arbeidsperiode-søker-norge-${index}`}
+                        pensjonsperiode={pensjonsperiode}
                         nummer={index + 1}
                     />
                 ))}
