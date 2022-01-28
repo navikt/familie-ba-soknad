@@ -12,7 +12,6 @@ import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { utbetalingerFeilmelding } from '../../../Felleskomponenter/UtbetalingerModal/språkUtils';
 
 export const useEøsForSøker = (): {
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
@@ -69,7 +68,7 @@ export const useEøsForSøker = (): {
 
     const andreUtbetalinger = useJaNeiSpmFelt({
         søknadsfelt: søker.andreUtbetalinger,
-        feilmeldingSpråkId: utbetalingerFeilmelding(false),
+        feilmeldingSpråkId: 'eøs-om-deg.utbetalinger.feilmelding',
     });
     const {
         fjernPeriode: fjernAndreUtbetalingsperiode,
