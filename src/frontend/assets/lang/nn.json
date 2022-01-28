@@ -87,6 +87,8 @@
   "eøs-om-barn.dittslektsforhold.feilmelding": "Du må oppgje ditt slektsforhold til {barn} for å gå vidare",
   "eøs-om-barn.dittslektsforhold.spm": "Kva er slektsforholdet ditt til {barn}?",
   "eøs-om-barn.leggtilpensjonandreforelder.spm": "Har {barn} sin andre forelder fått pensjon frå Noreg i fleire periodar?",
+  "eøs-om-barn.sidetittel": "Barnetrygd etter EØS-reglene - Om {barn}",
+  "eøs-om-barn.oppsummering.tittel": "{nummer}. Barnetrygd etter EØS-reglene - Om {barn}",
   "eøs-om-deg.arbeidsperioderinorge.feilmelding": "Du må oppgje om du har arbeidar eller har arbeida i Noreg, på norsk kontinentalsokkel eller på skip med norsk flagg for å gå vidare",
   "eøs-om-deg.arbeidsperioderinorge.spm": "Arbeider eller har du arbeida i Noreg, på norsk kontinentalsokkel eller på skip med norsk flagg?",
   "eøs-om-deg.dittidnummer.feilmelding": "Du må oppgje ditt id-nummer for å gå vidare",

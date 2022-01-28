@@ -89,6 +89,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
                 tittel={
                     <Undertittel>
                         {steg?.route !== RouteEnum.OmBarnet &&
+                            steg?.route !== RouteEnum.EøsForBarn &&
                             `${hentStegNummer(steg?.route ?? RouteEnum.OmDeg)}. `}
                         <SpråkTekst id={tittel} values={språkValues} />
                     </Undertittel>

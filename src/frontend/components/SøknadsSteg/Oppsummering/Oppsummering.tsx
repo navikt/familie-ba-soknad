@@ -6,11 +6,16 @@ import styled from 'styled-components';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { useApp } from '../../../context/AppContext';
+import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { RouteEnum } from '../../../typer/routes';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import DinLivssituasjonOppsummering from './OppsummeringSteg/DinLivssituasjonOppsummering';
+import EøsBarnOppsummering from './OppsummeringSteg/EøsBarnOppsummering';
+import EøsSøkerOppsummering from './OppsummeringSteg/EøsSøkerOppsummering';
 import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
 import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
 import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
@@ -25,6 +30,12 @@ const Oppsummering: React.FC = () => {
     const { hentStegNummer } = useSteg();
     const { push: pushHistory } = useHistory();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
+    const { toggles } = useFeatureToggles();
+    const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();
+    const søkerHarEøsSteg = søkerTriggerEøs || !!barnSomTriggerEøs.length;
+    const barnSomHarEøsSteg: IBarnMedISøknad[] = søkerTriggerEøs
+        ? søknad.barnInkludertISøknaden
+        : søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs);
 
     const scrollTilFeil = (elementId: string) => {
         // Gjør dette for syns skyld, men push scroller ikke vinduet
@@ -57,7 +68,7 @@ const Oppsummering: React.FC = () => {
                 const nummer = (hentStegNummer(RouteEnum.OmBarna) + enIndeksert).toString();
                 return (
                     <OmBarnetOppsummering
-                        key={index}
+                        key={`om-barnet-${index}`}
                         barn={barn}
                         nummer={nummer}
                         settFeilAnchors={settFeilAnchors}
@@ -65,6 +76,26 @@ const Oppsummering: React.FC = () => {
                     />
                 );
             })}
+
+            {toggles.EØS_KOMPLETT && (
+                <>
+                    {søkerHarEøsSteg && <EøsSøkerOppsummering settFeilAnchors={settFeilAnchors} />}
+                    {barnSomHarEøsSteg.map((barn, index) => {
+                        const enIndeksert = index + 1;
+                        const nummer = (
+                            hentStegNummer(RouteEnum.EøsForSøker) + enIndeksert
+                        ).toString();
+                        return (
+                            <EøsBarnOppsummering
+                                key={`om-barnet-eøs-${index}`}
+                                nummer={nummer}
+                                settFeilAnchors={settFeilAnchors}
+                                barn={barn}
+                            />
+                        );
+                    })}
+                </>
+            )}
         </Steg>
     );
 };

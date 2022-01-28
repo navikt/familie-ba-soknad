@@ -23,6 +23,7 @@ export const useEøsForBarn = (
     barn: IBarnMedISøknad;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
+    validerAlleSynligeFelter: () => void;
     oppdaterSøknad: () => void;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
@@ -128,7 +129,10 @@ export const useEøsForBarn = (
         });
     };
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IEøsForBarnFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
+        IEøsForBarnFeltTyper,
+        string
+    >({
         felter: {
             andreForelderPensjonNorge,
             andreForelderPensjonsperioderNorge,
@@ -143,6 +147,7 @@ export const useEøsForBarn = (
         barn,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
+        validerAlleSynligeFelter,
         oppdaterSøknad,
         leggTilPensjonsperiode,
         fjernPensjonsperiode,

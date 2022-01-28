@@ -17,7 +17,7 @@ const EøsForSøker: React.FC = () => {
 
     return (
         <Steg
-            tittel={<SpråkTekst id="eøs-om-deg.sidetittel" />}
+            tittel={<SpråkTekst id={'eøs-om-deg.sidetittel'} />}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,

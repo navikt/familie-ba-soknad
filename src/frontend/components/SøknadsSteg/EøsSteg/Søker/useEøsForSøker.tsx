@@ -15,6 +15,7 @@ import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 export const useEøsForSøker = (): {
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
     validerFelterOgVisFeilmelding: () => boolean;
+    validerAlleSynligeFelter: () => void;
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
@@ -62,7 +63,10 @@ export const useEøsForSøker = (): {
                 : [],
     });
 
-    const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IEøsForSøkerFeltTyper, string>({
+    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
+        IEøsForSøkerFeltTyper,
+        string
+    >({
         felter: { arbeidINorge, registrerteArbeidsperioder },
         skjemanavn: 'eøsForSøker',
     });
@@ -71,6 +75,7 @@ export const useEøsForSøker = (): {
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
+        validerAlleSynligeFelter,
         oppdaterSøknad,
         fjernArbeidsperiode,
         leggTilArbeidsperiode,
