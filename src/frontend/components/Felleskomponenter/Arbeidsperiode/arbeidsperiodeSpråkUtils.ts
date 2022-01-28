@@ -2,6 +2,7 @@ import {
     DinLivssituasjonSpørsmålId,
     dinLivssituasjonSpørsmålSpråkId,
 } from '../../SøknadsSteg/DinLivssituasjon/spørsmål';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
 import {
     EøsSøkerSpørsmålId,
     eøsSøkerSpørsmålSpråkId,
@@ -70,6 +71,6 @@ export const arbeidsperiodeSpørsmålSpråkId = (
             : dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt];
     } else
         return gjelderAndreForelder
-            ? 'eøs-om-barn.annenforelderarbeidsperiodenorge.spm'
+            ? eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderArbeidNorge]
             : eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.arbeidINorge];
 };

@@ -1,5 +1,5 @@
 export enum EøsSøkerSpørsmålId {
-    arbeidINorge = 'arbeider-i-norge',
+    arbeidINorge = 'arbeid-i-norge',
 }
 
 export const eøsSøkerSpørsmålSpråkId: Record<EøsSøkerSpørsmålId, string> = {

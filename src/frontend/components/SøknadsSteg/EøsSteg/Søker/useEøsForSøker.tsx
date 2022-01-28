@@ -34,7 +34,7 @@ export const useEøsForSøker = (): {
         registrertePerioder: registrerteArbeidsperioder,
     } = usePerioder<IArbeidsperiode>(
         søker.arbeidsperioderNorge,
-        { arbeidINorge: arbeidINorge },
+        { arbeidINorge },
         avhengigheter => avhengigheter.arbeidINorge.verdi === ESvar.JA,
         felt =>
             arbeidINorge.verdi === ESvar.JA && felt.verdi.length === 0
@@ -63,7 +63,7 @@ export const useEøsForSøker = (): {
     });
 
     const { skjema, kanSendeSkjema, valideringErOk } = useSkjema<IEøsForSøkerFeltTyper, string>({
-        felter: { arbeidINorge: arbeidINorge, registrerteArbeidsperioder },
+        felter: { arbeidINorge, registrerteArbeidsperioder },
         skjemanavn: 'eøsForSøker',
     });
 
