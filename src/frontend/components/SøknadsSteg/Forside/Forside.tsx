@@ -14,6 +14,7 @@ import useFørsteRender from '../../../hooks/useFørsteRender';
 import Miljø from '../../../Miljø';
 import { RouteEnum } from '../../../typer/routes';
 import { logSidevisningBarnetrygd } from '../../../utils/amplitude';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
@@ -29,6 +30,10 @@ const StyledSidetittel = styled(Sidetittel)`
 
 const StyledSpråkvelger = styled(Sprakvelger)`
     margin: auto;
+`;
+
+const StyledAlertStripeUtvidetInfo = styled(AlertStripe)`
+    margin-top: 3rem;
 `;
 
 const Forside: React.FC = () => {
@@ -64,6 +69,18 @@ const Forside: React.FC = () => {
             </StyledSidetittel>
 
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
+
+            {!erUtvidet && (
+                <StyledAlertStripeUtvidetInfo type={'info'} form={'default'}>
+                    <SpråkTekst id={'forside.utvidetinfo.info'} />
+                    <EksternLenke
+                        lenkeSpråkId={'forside.utvidetinfo.lenke'}
+                        lenkeTekstSpråkId={'forside.utvidetinfo.lenketekst'}
+                        target="_blank"
+                    />
+                </StyledAlertStripeUtvidetInfo>
+            )}
+
             <Informasjonsbolk>
                 <SpråkTekst id={'forside.info.punktliste'} values={{ b: msg => <b>{msg}</b> }} />
                 <EksternLenke
