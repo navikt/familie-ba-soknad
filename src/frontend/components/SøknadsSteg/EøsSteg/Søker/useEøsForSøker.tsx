@@ -69,7 +69,7 @@ export const useEøsForSøker = (): {
 
     const andreUtbetalinger = useJaNeiSpmFelt({
         søknadsfelt: søker.andreUtbetalinger,
-        feilmeldingSpråkId: 'eøs-om-deg.utbetalinger.feilmelding',
+        feilmeldingSpråkId: utbetalingerFeilmelding(false),
     });
     const {
         fjernPeriode: fjernAndreUtbetalingsperiode,
@@ -81,7 +81,7 @@ export const useEøsForSøker = (): {
         avhengigheter => avhengigheter.andreUtbetalinger.verdi === ESvar.JA,
         felt =>
             andreUtbetalinger.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={utbetalingerFeilmelding(false)} />)
+                ? feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />)
                 : ok(felt)
     );
 
