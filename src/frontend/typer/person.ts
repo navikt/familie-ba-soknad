@@ -64,6 +64,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     arbeidsperioderNorge: IArbeidsperiode[];
     pensjonNorge: ISøknadSpørsmål<ESvar | null>;
     pensjonsperioderNorge: IPensjonsperiode[];
+    andreUtbetalinger: ISøknadSpørsmål<ESvar | null>;
     andreUtbetalingsperioder: IUtbetalingsperiode[];
 
     utvidet: {

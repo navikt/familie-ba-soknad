@@ -109,6 +109,8 @@ export interface IEøsForSøkerFeltTyper {
     registrerteArbeidsperioder: IArbeidsperiode[];
     pensjonNorge: ESvar | null;
     registrertePensjonsperioder: IPensjonsperiode[];
+    andreUtbetalinger: ESvar | null;
+    registrerteAndreUtbetalinger: IUtbetalingsperiode[];
 }
 
 export interface IEøsForBarnFeltTyper {

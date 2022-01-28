@@ -17,3 +17,8 @@ export const utbetalingerFlerePerioderSpmSpråkId = (gjelderAndreForelder: boole
     gjelderAndreForelder
         ? 'eøs-om-barn.andreforelder-utbetalinger-andreperioder.spm'
         : 'eøs-om-deg.flere-utbetalinger.spm';
+
+export const utbetalingerFeilmelding = (gjelderAndreForelder: boolean) =>
+    gjelderAndreForelder
+        ? 'eøs.andreforelderutbetalinger.feilmelding'
+        : 'eøs.utbetalinger.feilmelding';

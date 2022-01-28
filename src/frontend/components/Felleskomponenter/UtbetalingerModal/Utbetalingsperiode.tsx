@@ -9,7 +9,7 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
-import { IEøsForBarnFeltTyper } from '../../../typer/skjema';
+import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -24,7 +24,7 @@ import { UtbetalingerModal } from './UtbetalingerModal';
 import { UtbetalingsperiodeOppsummering } from './UtbetalingsperiodeOppsummering';
 
 interface UtbetalingsperiodeProps {
-    skjema: ISkjema<IEøsForBarnFeltTyper, string>;
+    skjema: ISkjema<IEøsForBarnFeltTyper | IEøsForSøkerFeltTyper, string>;
     leggTilUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     fjernUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     gjelderUtlandet?: boolean;
