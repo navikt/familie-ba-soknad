@@ -1,6 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { EøsSøkerSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
@@ -152,6 +153,11 @@ export const initialStateSøknad: ISøknad = {
             svar: '',
         },
         arbeidsperioderUtland: [],
+
+        arbeidINorge: {
+            id: EøsSøkerSpørsmålId.arbeidINorge,
+            svar: null,
+        },
         arbeidsperioderNorge: [],
         pensjonsperioderNorge: [],
         pensjonsperioderUtland: [],

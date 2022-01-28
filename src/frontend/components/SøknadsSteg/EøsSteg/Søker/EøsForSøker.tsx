@@ -1,12 +1,19 @@
 import React from 'react';
 
+import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { useEøsForSøker } from './useEøsForSøker';
 
 const EøsForSøker: React.FC = () => {
-    const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
-        useEøsForSøker();
+    const {
+        skjema,
+        validerFelterOgVisFeilmelding,
+        valideringErOk,
+        oppdaterSøknad,
+        leggTilArbeidsperiode,
+        fjernArbeidsperiode,
+    } = useEøsForSøker();
 
     return (
         <Steg
@@ -18,7 +25,13 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <div>Dette er et nytt steg for EØS Søker</div>
+            <Arbeidsperiode
+                skjema={skjema}
+                arbeiderEllerArbeidetFelt={skjema.felter.arbeidINorge}
+                leggTilArbeidsperiode={leggTilArbeidsperiode}
+                fjernArbeidsperiode={fjernArbeidsperiode}
+                registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+            />
         </Steg>
     );
 };

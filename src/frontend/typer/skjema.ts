@@ -105,7 +105,8 @@ export interface IOmDegFeltTyper {
 }
 
 export interface IEøsForSøkerFeltTyper {
-    placeholderForFeltSomKommer: string; //TODO
+    arbeidINorge: ESvar | null;
+    registrerteArbeidsperioder: IArbeidsperiode[];
 }
 
 export interface IEøsForBarnFeltTyper {
