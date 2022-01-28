@@ -4,7 +4,12 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål } from './barn';
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
-import { IArbeidsperiode, IPensjonsperiode, IUtenlandsperiode } from './perioder';
+import {
+    IArbeidsperiode,
+    IPensjonsperiode,
+    IUtbetalingsperiode,
+    IUtenlandsperiode,
+} from './perioder';
 import { IBarn } from './person';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
@@ -107,6 +112,8 @@ export interface IEøsForSøkerFeltTyper {
 export interface IEøsForBarnFeltTyper {
     andreForelderPensjonNorge: ESvar | null;
     andreForelderPensjonsperioderNorge: IPensjonsperiode[];
+    andreForelderAndreUtbetalinger: ESvar | null;
+    andreForelderAndreUtbetalingsperioder: IUtbetalingsperiode[];
 }
 
 export interface IVelgBarnFeltTyper {
@@ -136,7 +143,7 @@ export interface IUtenlandsoppholdFeltTyper {
 
 export interface IUtbetalingerFeltTyper {
     fårUtbetalingNå: ESvar | null;
-    ytelseFraHvilketLand: Alpha3Code | '';
+    utbetalingLand: Alpha3Code | '';
     utbetalingFraDato: ISODateString;
     utbetalingTilDato: ISODateString;
     utbetalingTilDatoUkjent: ESvar;
