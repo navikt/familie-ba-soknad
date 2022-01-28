@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
+import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { useEøsForSøker } from './useEøsForSøker';
@@ -13,6 +15,8 @@ const EøsForSøker: React.FC = () => {
         oppdaterSøknad,
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
+        leggTilPensjonsperiode,
+        fjernPensjonsperiode,
     } = useEøsForSøker();
 
     return (
@@ -25,13 +29,22 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <Arbeidsperiode
-                skjema={skjema}
-                arbeiderEllerArbeidetFelt={skjema.felter.arbeidINorge}
-                leggTilArbeidsperiode={leggTilArbeidsperiode}
-                fjernArbeidsperiode={fjernArbeidsperiode}
-                registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
-            />
+            <KomponentGruppe>
+                <Arbeidsperiode
+                    skjema={skjema}
+                    arbeiderEllerArbeidetFelt={skjema.felter.arbeidINorge}
+                    leggTilArbeidsperiode={leggTilArbeidsperiode}
+                    fjernArbeidsperiode={fjernArbeidsperiode}
+                    registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                />
+                <Pensjonsperiode
+                    skjema={skjema}
+                    mottarEllerMottattPensjonFelt={skjema.felter.pensjonNorge}
+                    leggTilPensjonsperiode={leggTilPensjonsperiode}
+                    fjernPensjonsperiode={fjernPensjonsperiode}
+                    registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
+                />
+            </KomponentGruppe>
         </Steg>
     );
 };

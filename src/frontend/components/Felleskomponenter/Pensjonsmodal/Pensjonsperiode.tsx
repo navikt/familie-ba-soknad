@@ -12,6 +12,7 @@ import { IPensjonsperiode } from '../../../typer/perioder';
 import {
     IDinLivssituasjonFeltTyper,
     IEøsForBarnFeltTyper,
+    IEøsForSøkerFeltTyper,
     IOmBarnetUtvidetFeltTyper,
 } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
@@ -31,7 +32,10 @@ import { PensjonSpørsmålId } from './spørsmål';
 
 interface PensjonsperiodeProps {
     skjema: ISkjema<
-        IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper | IEøsForBarnFeltTyper,
+        | IDinLivssituasjonFeltTyper
+        | IOmBarnetUtvidetFeltTyper
+        | IEøsForSøkerFeltTyper
+        | IEøsForBarnFeltTyper,
         string
     >;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
