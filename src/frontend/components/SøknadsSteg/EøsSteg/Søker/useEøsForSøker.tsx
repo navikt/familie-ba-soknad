@@ -24,7 +24,7 @@ export const useEøsForSøker = (): {
     const søker = søknad.søker;
 
     const arbeidINorge = useJaNeiSpmFelt({
-        søknadsfelt: søker.arbeiderINorge,
+        søknadsfelt: søker.arbeidINorge,
         feilmeldingSpråkId: 'eøs-om-deg.arbeidsperioderinorge.feilmelding',
     });
 
@@ -34,8 +34,8 @@ export const useEøsForSøker = (): {
         registrertePerioder: registrerteArbeidsperioder,
     } = usePerioder<IArbeidsperiode>(
         søker.arbeidsperioderNorge,
-        { arbeiderINorge: arbeidINorge },
-        avhengigheter => avhengigheter.arbeiderINorge.verdi === ESvar.JA,
+        { arbeidINorge: arbeidINorge },
+        avhengigheter => avhengigheter.arbeidINorge.verdi === ESvar.JA,
         felt =>
             arbeidINorge.verdi === ESvar.JA && felt.verdi.length === 0
                 ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />)
@@ -51,8 +51,8 @@ export const useEøsForSøker = (): {
     };
     const genererOppdatertSøker = (): ISøker => ({
         ...søknad.søker,
-        arbeiderINorge: {
-            ...søknad.søker.arbeiderINorge,
+        arbeidINorge: {
+            ...søknad.søker.arbeidINorge,
             svar: skjema.felter.arbeidINorge.verdi,
         },
 

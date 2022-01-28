@@ -154,7 +154,7 @@ export const initialStateSøknad: ISøknad = {
         },
         arbeidsperioderUtland: [],
 
-        arbeiderINorge: {
+        arbeidINorge: {
             id: EøsSøkerSpørsmålId.arbeidINorge,
             svar: null,
         },
