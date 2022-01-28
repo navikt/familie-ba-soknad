@@ -3,6 +3,10 @@ import {
     dinLivssituasjonSpørsmålSpråkId,
 } from '../../SøknadsSteg/DinLivssituasjon/spørsmål';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
+import {
+    EøsSøkerSpørsmålId,
+    eøsSøkerSpørsmålSpråkId,
+} from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 
 export const pensjonslandFeilmeldingSpråkId = (
@@ -75,8 +79,9 @@ export const mottarEllerMottattPensjonSpråkId = (
                 : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderPensjonNorge];
         }
     } else {
-        return dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.mottarUtenlandspensjon];
-        //TODO: return gjelderUtlandet ? dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.mottarUtenlandspensjon] : eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålsId.pensjonNorge];
+        return gjelderUtlandet
+            ? dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.mottarUtenlandspensjon]
+            : eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.pensjonNorge];
     }
 };
 
