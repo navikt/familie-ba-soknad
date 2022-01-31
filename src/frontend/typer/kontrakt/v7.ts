@@ -34,7 +34,7 @@ export interface ISøknadKontraktSøker {
     tidligereSamboere: ISøknadsfelt<IKontraktTidligereSamboer>[];
     nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
-    // nye
+    // eøs
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
 }
 

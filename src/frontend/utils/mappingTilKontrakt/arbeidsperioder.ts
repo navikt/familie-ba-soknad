@@ -1,7 +1,7 @@
 import { arbeidsperiodeOppsummeringOverskrift } from '../../components/Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import {
-    arbeidsperiodeSpørsmålSpråkId,
     ArbeidsperiodeSpørsmålsId,
+    arbeidsperiodeSpørsmålSpråkId,
 } from '../../components/Felleskomponenter/Arbeidsperiode/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/v7';
@@ -76,7 +76,7 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
                 ),
                 verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     tilDatoArbeidsperiode?.svar,
-                    'felles.vetikkenåravsluttes.spm'
+                    hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke)
                 ),
             },
         }),
