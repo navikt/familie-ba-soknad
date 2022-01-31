@@ -26,7 +26,7 @@ export const usePerioder = <T>(
     });
 
     useEffect(() => {
-        avhengigheter !== undefined && registrertePerioder.validerOgSettFelt(perioder);
+        !!avhengigheter && registrertePerioder.validerOgSettFelt(perioder);
     }, [perioder, avhengigheter]);
 
     return {
