@@ -57,6 +57,7 @@ export const usePensjonSkjema = ({
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) &&
             gjelderUtland,
+        nullstillVedAvhengighetEndring: true,
     });
 
     const pensjonFraDato = useDatovelgerFelt({
