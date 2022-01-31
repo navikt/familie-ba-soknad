@@ -30,7 +30,7 @@ export interface IPensjonsperiode {
 
 export interface IUtbetalingsperiode {
     fårUtbetalingNå: ISøknadSpørsmål<ESvar | null>;
-    ytelseFraHvilketLand: ISøknadSpørsmål<Alpha3Code | ''>;
+    utbetalingLand: ISøknadSpørsmål<Alpha3Code | ''>;
     utbetalingFraDato: ISøknadSpørsmål<ISODateString>;
     utbetalingTilDato: ISøknadSpørsmål<DatoMedUkjent>;
 }

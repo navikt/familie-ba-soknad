@@ -60,8 +60,11 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     nåværendeSamboer: ISamboer | null;
 
     // Steg: EØS-steg
+    arbeidINorge: ISøknadSpørsmål<ESvar | null>;
     arbeidsperioderNorge: IArbeidsperiode[];
+    pensjonNorge: ISøknadSpørsmål<ESvar | null>;
     pensjonsperioderNorge: IPensjonsperiode[];
+    andreUtbetalinger: ISøknadSpørsmål<ESvar | null>;
     andreUtbetalingsperioder: IUtbetalingsperiode[];
 
     utvidet: {

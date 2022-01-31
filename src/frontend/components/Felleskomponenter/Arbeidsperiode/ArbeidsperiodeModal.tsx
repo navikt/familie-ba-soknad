@@ -58,10 +58,12 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                     svar: arbeidsperiodeAvsluttet.verdi as ESvar,
                 },
             }),
-            arbeidsperiodeland: {
-                id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
-                svar: arbeidsperiodeLand.verdi,
-            },
+            ...(skjema.felter.arbeidsperiodeLand.erSynlig && {
+                arbeidsperiodeland: {
+                    id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
+                    svar: arbeidsperiodeLand.verdi,
+                },
+            }),
             ...(arbeidsgiver.erSynlig && {
                 arbeidsgiver: {
                     id: ArbeidsperiodeSpørsmålsId.arbeidsgiver,

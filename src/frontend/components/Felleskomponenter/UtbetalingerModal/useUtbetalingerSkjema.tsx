@@ -11,6 +11,7 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { utbetalingerFeilmelding } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 
 export const useUtbetalingerSkjema = (andreForelderData?: {
@@ -25,9 +26,7 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
 
     const fårUtbetalingNå = useJaNeiSpmFelt({
         søknadsfelt: { id: UtbetalingerSpørsmålId.fårUtbetalingNå, svar: null },
-        feilmeldingSpråkId: gjelderAndreForelder
-            ? 'eøs.andreforelderutbetalinger.feilmelding'
-            : 'eøs.utbetalinger.feilmelding',
+        feilmeldingSpråkId: utbetalingerFeilmelding(gjelderAndreForelder),
         skalSkjules: andreForelderErDød,
         feilmeldingSpråkVerdier: barn ? { barn: barnetsNavnValue(barn, intl) } : undefined,
     });
@@ -46,8 +45,8 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         }
     };
 
-    const ytelseFraHvilketLand = useLanddropdownFelt({
-        søknadsfelt: { id: UtbetalingerSpørsmålId.utbetalingFraHvilketLand, svar: '' },
+    const utbetalingLand = useLanddropdownFelt({
+        søknadsfelt: { id: UtbetalingerSpørsmålId.utbetalingLand, svar: '' },
         feilmeldingSpråkId: feilmeldingForLand(),
         skalFeltetVises:
             fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
@@ -91,7 +90,7 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
     const skjema = useSkjema<IUtbetalingerFeltTyper, 'string'>({
         felter: {
             fårUtbetalingNå,
-            ytelseFraHvilketLand,
+            utbetalingLand,
             utbetalingFraDato,
             utbetalingTilDato,
             utbetalingTilDatoUkjent,

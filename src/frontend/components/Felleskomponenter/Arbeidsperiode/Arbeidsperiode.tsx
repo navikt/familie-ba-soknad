@@ -9,7 +9,12 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IArbeidsperiode } from '../../../typer/perioder';
-import { IDinLivssituasjonFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import {
+    IDinLivssituasjonFeltTyper,
+    IEøsForBarnFeltTyper,
+    IEøsForSøkerFeltTyper,
+    IOmBarnetUtvidetFeltTyper,
+} from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -26,7 +31,13 @@ import {
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 interface ArbeidsperiodeProps {
-    skjema: ISkjema<IDinLivssituasjonFeltTyper | IOmBarnetUtvidetFeltTyper, string>;
+    skjema: ISkjema<
+        | IDinLivssituasjonFeltTyper
+        | IOmBarnetUtvidetFeltTyper
+        | IEøsForSøkerFeltTyper
+        | IEøsForBarnFeltTyper,
+        string
+    >;
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet?: boolean;
@@ -48,17 +59,26 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
     const intl = useIntl();
 
     const gjelderAndreForelder = !!andreForelderData;
+    const andreForelderErDød = !!andreForelderData?.erDød;
     const barn = andreForelderData?.barn;
+    const barnetsNavn = !!barn && barnetsNavnValue(barn, intl);
 
     return (
         <>
             <JaNeiSpm
                 skjema={skjema}
                 felt={arbeiderEllerArbeidetFelt}
-                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(gjelderAndreForelder)}
+                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(
+                    gjelderUtlandet,
+                    gjelderAndreForelder,
+                    andreForelderErDød
+                )}
                 inkluderVetIkke={gjelderAndreForelder}
                 språkValues={{
-                    ...(barn && { navn: barnetsNavnValue(barn, intl) }),
+                    ...(barnetsNavn && {
+                        navn: barnetsNavn,
+                        barn: barnetsNavn,
+                    }),
                 }}
             />
             {arbeiderEllerArbeidetFelt.verdi === ESvar.JA && (
@@ -81,7 +101,7 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                                     gjelderAndreForelder
                                 )}
                                 values={{
-                                    ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                                    ...(barnetsNavn && { barn: barnetsNavn }),
                                 }}
                             />
                         </Element>
@@ -102,7 +122,7 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                         erÅpen={arbeidsmodalErÅpen}
                         toggleModal={toggleArbeidsmodal}
                         onLeggTilArbeidsperiode={leggTilArbeidsperiode}
-                        gjelderUtlandet
+                        gjelderUtlandet={gjelderUtlandet}
                         andreForelderData={andreForelderData}
                     />
                 </>

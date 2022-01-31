@@ -47,7 +47,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
                           };
                 case RouteEnum.EøsForBarn:
                     const barnSomSkalHaEøsSteg = søkerTriggerEøs
-                        ? barnInkludertISøknaden
+                        ? barnInkludertISøknaden.map(barn => barn.id)
                         : barnSomTriggerEøs;
                     return barnSomSkalHaEøsSteg.map((_barnId, index) => ({
                         path:
@@ -110,6 +110,10 @@ const [StegProvider, useSteg] = createUseContext(() => {
         return steg[hentStegNummer(RouteEnum.OmBarnet, barn)];
     };
 
+    const hentStegObjektForBarnEøs = (barn: IBarnMedISøknad): ISteg => {
+        return steg[hentStegNummer(RouteEnum.EøsForBarn, barn)];
+    };
+
     const hentNåværendeStegIndex = (): number => {
         return Math.max(
             steg.findIndex(steg => steg === hentNåværendeSteg()),
@@ -135,6 +139,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
         erPåKvitteringsside,
         settBarnForSteg,
         hentNåværendeStegindikatorNummer,
+        hentStegObjektForBarnEøs,
     };
 });
 
