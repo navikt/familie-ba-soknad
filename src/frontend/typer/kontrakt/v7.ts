@@ -39,9 +39,9 @@ export interface ISøknadKontraktSøker {
 }
 
 export interface IArbeidsperiodeIKontraktFormat {
-    arbeidsperiodeAvsluttet: ISøknadsfelt<string> | null;
-    arbeidsperiodeland: ISøknadsfelt<string> | null;
-    arbeidsgiver: ISøknadsfelt<string> | null;
-    fraDatoArbeidsperiode: ISøknadsfelt<string> | null;
-    tilDatoArbeidsperiode: ISøknadsfelt<string> | null;
+    arbeidsperiodeAvsluttet: ISøknadsfelt<string | undefined>;
+    arbeidsperiodeland: ISøknadsfelt<string | undefined>;
+    arbeidsgiver: ISøknadsfelt<string | undefined>;
+    fraDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
+    tilDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
 }

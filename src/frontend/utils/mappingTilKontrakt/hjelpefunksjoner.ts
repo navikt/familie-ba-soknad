@@ -34,10 +34,10 @@ export const verdiCallbackAlleSpråk = <T>(
 export const sammeVerdiAlleSpråk = <T>(verdi: T): Record<LocaleType, T> =>
     verdiCallbackAlleSpråk(() => verdi);
 
-export const sammeVerdiAlleSpråkEllerUkjentSpråktekst = (
-    svar: string | AlternativtSvarForInput,
+export const sammeVerdiAlleSpråkEllerUkjentSpråktekst = <T>(
+    svar: T | AlternativtSvarForInput,
     ukjentTekstid: string
-) =>
+): Record<LocaleType, T | string> =>
     svar === AlternativtSvarForInput.UKJENT
         ? hentTekster(ukjentTekstid)
         : sammeVerdiAlleSpråk(svar);

@@ -23,14 +23,14 @@ export const dataISøknadKontraktFormatV7 = (
         søker: {
             ...v6.søker,
             arbeidsperioderUtland: arbeidsperioderUtland.map((periode, index) =>
-                tilIArbeidsperiodeIKontraktFormat(
+                tilIArbeidsperiodeIKontraktFormat({
                     periode,
-                    index + 1,
-                    true,
-                    false,
-                    periode.arbeidsperiodeAvsluttet?.svar === ESvar.JA,
-                    false
-                )
+                    periodeNummer: index + 1,
+                    gjelderUtlandet: true,
+                    gjelderAndreForelder: false,
+                    tilbakeITid: periode.arbeidsperiodeAvsluttet?.svar === ESvar.JA,
+                    erAndreForelderDød: false,
+                })
             ),
         },
     };
