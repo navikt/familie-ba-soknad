@@ -1,9 +1,7 @@
 import { arbeidsperiodeOppsummeringOverskrift } from '../../components/Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import {
-    arbeidsperiodeAndreForelderSpørsmålSpråkId,
+    arbeidsperiodeSpråkId,
     ArbeidsperiodeSpørsmålsId,
-    arbeidsperiodeSøkerSpørsmålSpråkId,
-    hentArbeidsperiodeSpørsmålIder,
 } from '../../components/Felleskomponenter/Arbeidsperiode/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/v7';
@@ -30,6 +28,7 @@ export const tilIArbeidsperiodeIKontraktFormat = (
         fraDatoArbeidsperiode,
         tilDatoArbeidsperiode,
     } = periode;
+    const språkId = arbeidsperiodeSpråkId(gjelderAndreForelder, tilbakeITid, erAndreForelderDød);
     return {
         label: hentTekster(arbeidsperiodeOppsummeringOverskrift(gjelderUtlandet), {
             x: periodeNummer,
@@ -38,27 +37,14 @@ export const tilIArbeidsperiodeIKontraktFormat = (
             arbeidsperiodeAvsluttet: arbeidsperiodeAvsluttet
                 ? {
                       label: hentTekster(
-                          gjelderAndreForelder
-                              ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                    tilbakeITid,
-                                    erAndreForelderDød
-                                )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
-                              : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                    ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
-                                ]
+                          språkId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet)
                       ),
                       verdi: sammeVerdiAlleSpråk(arbeidsperiodeAvsluttet?.svar),
                   }
                 : null,
             arbeidsperiodeland: arbeidsperiodeland
                 ? {
-                      label: hentTekster(
-                          hentArbeidsperiodeSpørsmålIder(
-                              gjelderAndreForelder,
-                              tilbakeITid,
-                              erAndreForelderDød
-                          )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
-                      ),
+                      label: hentTekster(språkId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand)),
                       verdi: verdiCallbackAlleSpråk(locale =>
                           landkodeTilSpråk(arbeidsperiodeland.svar, locale)
                       ),
@@ -66,37 +52,19 @@ export const tilIArbeidsperiodeIKontraktFormat = (
                 : null,
             arbeidsgiver: arbeidsgiver
                 ? {
-                      label: hentTekster(
-                          hentArbeidsperiodeSpørsmålIder(
-                              gjelderAndreForelder,
-                              tilbakeITid,
-                              erAndreForelderDød
-                          )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
-                      ),
+                      label: hentTekster(språkId(ArbeidsperiodeSpørsmålsId.arbeidsgiver)),
                       verdi: sammeVerdiAlleSpråk(arbeidsgiver.svar),
                   }
                 : null,
             fraDatoArbeidsperiode: fraDatoArbeidsperiode
                 ? {
-                      label: hentTekster(
-                          hentArbeidsperiodeSpørsmålIder(
-                              gjelderAndreForelder,
-                              tilbakeITid,
-                              erAndreForelderDød
-                          )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
-                      ),
+                      label: hentTekster(språkId(ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode)),
                       verdi: sammeVerdiAlleSpråk(fraDatoArbeidsperiode.svar),
                   }
                 : null,
             tilDatoArbeidsperiode: tilDatoArbeidsperiode
                 ? {
-                      label: hentTekster(
-                          hentArbeidsperiodeSpørsmålIder(
-                              gjelderAndreForelder,
-                              tilbakeITid,
-                              erAndreForelderDød
-                          )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
-                      ),
+                      label: hentTekster(språkId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)),
                       verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                           tilDatoArbeidsperiode.svar,
                           'felles.vetikkenåravsluttes.spm'

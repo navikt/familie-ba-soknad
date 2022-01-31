@@ -16,7 +16,7 @@ import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { ArbeidsperiodeSpørsmålsId, hentArbeidsperiodeSpørsmålIder } from './spørsmål';
+import { arbeidsperiodeSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaParams {
@@ -95,6 +95,8 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
 
     const tilbakeITid = arbeidsperiodeAvsluttet.verdi === ESvar.JA;
 
+    const språkId = arbeidsperiodeSpråkId(gjelderAndreForelder, tilbakeITid, erAndreForelderDød);
+
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -110,13 +112,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.arbeidsperiodeAvsluttet}
-                        spørsmålTekstId={
-                            hentArbeidsperiodeSpørsmålIder(
-                                gjelderAndreForelder,
-                                tilbakeITid,
-                                erAndreForelderDød
-                            )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
-                        }
+                        spørsmålTekstId={språkId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet)}
                     />
                 )}
                 {arbeidsperiodeLand.erSynlig && (
@@ -126,13 +122,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             skjema={skjema}
                             label={
                                 <SpråkTekst
-                                    id={
-                                        hentArbeidsperiodeSpørsmålIder(
-                                            gjelderAndreForelder,
-                                            tilbakeITid,
-                                            erAndreForelderDød
-                                        )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
-                                    }
+                                    id={språkId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand)}
                                 />
                             }
                             dynamisk
@@ -143,13 +133,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                     <SkjemaFeltInput
                         felt={skjema.felter.arbeidsgiver}
                         visFeilmeldinger={skjema.visFeilmeldinger}
-                        labelSpråkTekstId={
-                            hentArbeidsperiodeSpørsmålIder(
-                                gjelderAndreForelder,
-                                tilbakeITid,
-                                erAndreForelderDød
-                            )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
-                        }
+                        labelSpråkTekstId={språkId(ArbeidsperiodeSpørsmålsId.arbeidsgiver)}
                     />
                 )}
                 {fraDatoArbeidsperiode.erSynlig && (
@@ -158,13 +142,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                         skjema={skjema}
                         label={
                             <SpråkTekst
-                                id={
-                                    hentArbeidsperiodeSpørsmålIder(
-                                        gjelderAndreForelder,
-                                        tilbakeITid,
-                                        erAndreForelderDød
-                                    )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
-                                }
+                                id={språkId(ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode)}
                             />
                         }
                         calendarPosition={'fullscreen'}
@@ -182,13 +160,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             skjema={skjema}
                             label={
                                 <SpråkTekst
-                                    id={
-                                        hentArbeidsperiodeSpørsmålIder(
-                                            gjelderAndreForelder,
-                                            tilbakeITid,
-                                            erAndreForelderDød
-                                        )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
-                                    }
+                                    id={språkId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)}
                                 />
                             }
                             avgrensMinDato={
@@ -207,13 +179,9 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
 
                         <SkjemaCheckbox
                             felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
-                            labelSpråkTekstId={
-                                hentArbeidsperiodeSpørsmålIder(
-                                    gjelderAndreForelder,
-                                    tilbakeITid,
-                                    erAndreForelderDød
-                                )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]
-                            }
+                            labelSpråkTekstId={språkId(
+                                ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                            )}
                         />
                     </>
                 )}
