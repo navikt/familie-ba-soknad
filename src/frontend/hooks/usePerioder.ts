@@ -27,7 +27,7 @@ export const usePerioder = <T>(
 
     useEffect(() => {
         registrertePerioder.validerOgSettFelt(perioder);
-    }, [perioder]);
+    }, [perioder, avhengigheter]);
 
     return {
         leggTilPeriode,
