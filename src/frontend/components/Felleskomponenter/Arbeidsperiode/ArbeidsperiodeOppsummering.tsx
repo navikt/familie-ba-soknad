@@ -13,7 +13,7 @@ import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFe
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
-import { arbeidsperiodeSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
+import { arbeidsperiodeSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 export const ArbeidsperiodeOppsummering: React.FC<{
     arbeidsperiode: IArbeidsperiode;
@@ -43,10 +43,14 @@ export const ArbeidsperiodeOppsummering: React.FC<{
     const gjelderAndreForelder = !!andreForelderData;
     const erAndreForelderDød = !!andreForelderData?.erDød;
 
-    const språkId = arbeidsperiodeSpråkId(gjelderAndreForelder, tilbakeITid, erAndreForelderDød);
+    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
+        gjelderAndreForelder,
+        tilbakeITid,
+        erAndreForelderDød
+    );
 
     const spørsmålSpråkTekst = (spørsmålId: ArbeidsperiodeSpørsmålsId) => (
-        <SpråkTekst id={språkId(spørsmålId)} />
+        <SpråkTekst id={hentSpørsmålTekstId(spørsmålId)} />
     );
 
     return (
@@ -88,7 +92,9 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     søknadsvar={formaterDatoMedUkjent(
                         tilDatoArbeidsperiode.svar,
                         formatMessage({
-                            id: språkId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke),
+                            id: hentSpørsmålTekstId(
+                                ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                            ),
                         })
                     )}
                 />

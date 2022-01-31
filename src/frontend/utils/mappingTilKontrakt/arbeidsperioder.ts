@@ -1,6 +1,6 @@
 import { arbeidsperiodeOppsummeringOverskrift } from '../../components/Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import {
-    arbeidsperiodeSpråkId,
+    arbeidsperiodeSpørsmålSpråkId,
     ArbeidsperiodeSpørsmålsId,
 } from '../../components/Felleskomponenter/Arbeidsperiode/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
@@ -35,7 +35,7 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
         fraDatoArbeidsperiode,
         tilDatoArbeidsperiode,
     } = periode;
-    const språkId: (spørsmålId: ArbeidsperiodeSpørsmålsId) => string = arbeidsperiodeSpråkId(
+    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
         gjelderAndreForelder,
         tilbakeITid,
         erAndreForelderDød
@@ -46,26 +46,34 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
         }),
         verdi: sammeVerdiAlleSpråk({
             arbeidsperiodeAvsluttet: {
-                label: hentTekster(språkId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet)),
+                label: hentTekster(
+                    hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet)
+                ),
                 verdi: sammeVerdiAlleSpråk(arbeidsperiodeAvsluttet?.svar),
             },
             arbeidsperiodeland: {
-                label: hentTekster(språkId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand)),
+                label: hentTekster(
+                    hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand)
+                ),
                 verdi: verdiCallbackAlleSpråk(
                     locale =>
                         arbeidsperiodeland && landkodeTilSpråk(arbeidsperiodeland.svar, locale)
                 ),
             },
             arbeidsgiver: {
-                label: hentTekster(språkId(ArbeidsperiodeSpørsmålsId.arbeidsgiver)),
+                label: hentTekster(hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.arbeidsgiver)),
                 verdi: sammeVerdiAlleSpråk(arbeidsgiver?.svar),
             },
             fraDatoArbeidsperiode: {
-                label: hentTekster(språkId(ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode)),
+                label: hentTekster(
+                    hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode)
+                ),
                 verdi: sammeVerdiAlleSpråk(fraDatoArbeidsperiode?.svar),
             },
             tilDatoArbeidsperiode: {
-                label: hentTekster(språkId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)),
+                label: hentTekster(
+                    hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)
+                ),
                 verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     tilDatoArbeidsperiode?.svar,
                     'felles.vetikkenåravsluttes.spm'

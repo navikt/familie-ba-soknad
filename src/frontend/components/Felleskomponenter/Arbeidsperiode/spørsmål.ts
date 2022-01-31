@@ -45,11 +45,11 @@ export const arbeidsperiodeAndreForelderSpørsmålSpråkId = (
         'felles.nåravsluttesarbeidsperiode.sjekkboks',
 });
 
-export const arbeidsperiodeSpråkId =
+export const arbeidsperiodeSpørsmålSpråkId =
     (gjelderAndreForelder: boolean, tilbakeITid: boolean, erAndreForelderDød: boolean) =>
-    (spørsmålId: ArbeidsperiodeSpørsmålsId) =>
+    (spørsmålId: ArbeidsperiodeSpørsmålsId): string =>
         gjelderAndreForelder
             ? arbeidsperiodeAndreForelderSpørsmålSpråkId(tilbakeITid, erAndreForelderDød)[
-                  ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
+                  spørsmålId
               ]
             : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[spørsmålId];
