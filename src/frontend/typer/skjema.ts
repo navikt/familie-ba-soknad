@@ -170,6 +170,14 @@ export interface IArbeidsperioderFeltTyper {
     tilDatoArbeidsperiode: ISODateString;
     tilDatoArbeidsperiodeUkjent: ESvar;
 }
+
+export interface IBarnetrygdperioderFeltTyper {
+    mottarBarnetrygdNå: ESvar | null;
+    barnetrygdsland: Alpha3Code | '';
+    fraDatoBarnetrygdperiode: ISODateString;
+    tilDatoBarnetrygdperiode: ISODateString;
+    månedligBeløp: string;
+}
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
