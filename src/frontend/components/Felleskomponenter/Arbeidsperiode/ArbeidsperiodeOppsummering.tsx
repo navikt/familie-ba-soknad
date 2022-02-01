@@ -13,7 +13,7 @@ import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFe
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
-import { ArbeidsperiodeSpørsmålsId, hentArbeidsperiodeSpørsmålIder } from './spørsmål';
+import { arbeidsperiodeSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 export const ArbeidsperiodeOppsummering: React.FC<{
     arbeidsperiode: IArbeidsperiode;
@@ -43,16 +43,14 @@ export const ArbeidsperiodeOppsummering: React.FC<{
     const gjelderAndreForelder = !!andreForelderData;
     const erAndreForelderDød = !!andreForelderData?.erDød;
 
+    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
+        gjelderAndreForelder,
+        tilbakeITid,
+        erAndreForelderDød
+    );
+
     const spørsmålSpråkTekst = (spørsmålId: ArbeidsperiodeSpørsmålsId) => (
-        <SpråkTekst
-            id={
-                hentArbeidsperiodeSpørsmålIder(
-                    gjelderAndreForelder,
-                    tilbakeITid,
-                    erAndreForelderDød
-                )[spørsmålId]
-            }
-        />
+        <SpråkTekst id={hentSpørsmålTekstId(spørsmålId)} />
     );
 
     return (
@@ -94,11 +92,9 @@ export const ArbeidsperiodeOppsummering: React.FC<{
                     søknadsvar={formaterDatoMedUkjent(
                         tilDatoArbeidsperiode.svar,
                         formatMessage({
-                            id: hentArbeidsperiodeSpørsmålIder(
-                                gjelderAndreForelder,
-                                tilbakeITid,
-                                erAndreForelderDød
-                            )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke],
+                            id: hentSpørsmålTekstId(
+                                ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                            ),
                         })
                     )}
                 />
