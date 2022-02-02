@@ -94,7 +94,7 @@
   },
   "dependencies": {
     "@formatjs/intl-datetimeformat": "^4.2.3",
-    "@formatjs/intl-numberformat": "^7.2.3",
+    "@formatjs/intl-numberformat": "^7.4.0",
     "@navikt/familie-logging": "^1.0.5",
     "@navikt/familie-typer": "^3.0.14",
     "compression": "^1.7.4",
