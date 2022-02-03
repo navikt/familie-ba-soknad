@@ -13,6 +13,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
+import { BarnetrygdperiodeSpørsmålsId, barnetrygdperiodeSøkerSpørsmålSpråkId } from './spørsmål';
 import { useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal> {
@@ -24,7 +25,6 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     erÅpen,
     toggleModal,
     onLeggTilBarnetrygdperiode,
-    gjelderUtlandet = false,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useBarnetrygdperiodeSkjema();
@@ -41,22 +41,19 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
-        onLeggTilBarnetrygdperiode({});
-        console.log('barnetrygdperioder');
+        // onLeggTilBarnetrygdperiode({});
         toggleModal();
         nullstillSkjema();
     };
-
-    const modalTittel = gjelderUtlandet ? 'TODO' : 'fTODO ';
 
     const tilbakeITid = mottarBarnetrygdNå.verdi === ESvar.JA;
 
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            modalTittelSpråkId={modalTittel}
+            modalTittelSpråkId={'modal.trygdandreperioder.tittel'}
             onSubmitCallback={onLeggTil}
-            submitKnappSpråkId={'felles.leggtilarbeidsperiode.knapp'}
+            submitKnappSpråkId={'modal.trygdandreperioder.tittel'}
             toggleModal={toggleModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
@@ -66,14 +63,22 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.mottarBarnetrygdNå}
-                        spørsmålTekstId={'modal.barnetrygdnå.spm'}
+                        spørsmålTekstId={
+                            barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                BarnetrygdperiodeSpørsmålsId.mottarBarnetrygdNå
+                            ]
+                        }
                     />
                 )}
                 {barnetrygdsland.erSynlig && (
                     <LandDropdown
                         felt={skjema.felter.barnetrygdsland}
                         skjema={skjema}
-                        label={'todo'}
+                        label={
+                            barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                BarnetrygdperiodeSpørsmålsId.barnetrygdsland
+                            ]
+                        }
                         dynamisk
                     />
                 )}
@@ -81,7 +86,11 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                     <Datovelger
                         felt={skjema.felter.fraDatoBarnetrygdperiode}
                         skjema={skjema}
-                        label={'todo'}
+                        label={
+                            barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                BarnetrygdperiodeSpørsmålsId.fraDatoBarnetrygdperiode
+                            ]
+                        }
                         calendarPosition={'fullscreen'}
                         avgrensMaxDato={
                             skjema.felter.mottarBarnetrygdNå.verdi === ESvar.JA
@@ -94,7 +103,11 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                     <Datovelger
                         felt={skjema.felter.tilDatoBarnetrygdperiode}
                         skjema={skjema}
-                        label={'todd'}
+                        label={
+                            barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                BarnetrygdperiodeSpørsmålsId.tilDatoBarnetrygdperiode
+                            ]
+                        }
                         avgrensMinDato={
                             skjema.felter.mottarBarnetrygdNå.verdi === ESvar.JA
                                 ? skjema.felter.mottarBarnetrygdNå.verdi
@@ -112,7 +125,11 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                     <SkjemaFeltInput
                         felt={skjema.felter.månedligBeløp}
                         visFeilmeldinger={skjema.visFeilmeldinger}
-                        labelSpråkTekstId={'todod'}
+                        labelSpråkTekstId={
+                            barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
+                                BarnetrygdperiodeSpørsmålsId.månedligBeløp
+                            ]
+                        }
                     />
                 )}
             </KomponentGruppe>

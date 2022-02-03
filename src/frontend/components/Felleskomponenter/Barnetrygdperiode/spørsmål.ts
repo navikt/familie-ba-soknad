@@ -9,14 +9,11 @@ export enum BarnetrygdperiodeSpørsmålsId {
 export const barnetrygdperiodeSøkerSpørsmålSpråkId = (
     tilbakeITid = false
 ): Record<BarnetrygdperiodeSpørsmålsId, string> => ({
-    //TODO fylle inn riktige ID
-    [BarnetrygdperiodeSpørsmålsId.mottarBarnetrygdNå]: 'felles.erarbeidsperiodenavsluttet.spm',
+    [BarnetrygdperiodeSpørsmålsId.mottarBarnetrygdNå]: 'modal.barnetrygdnå.spmm',
     [BarnetrygdperiodeSpørsmålsId.barnetrygdsland]: tilbakeITid
-        ? 'dinlivssituasjon.arbeid-utland.land.spm'
-        : 'omdeg.arbeid-utland.land.spm',
-    [BarnetrygdperiodeSpørsmålsId.fraDatoBarnetrygdperiode]: 'felles.nårbegyntearbeidsperiode.spm',
-    [BarnetrygdperiodeSpørsmålsId.tilDatoBarnetrygdperiode]: tilbakeITid
-        ? 'felles.nåravsluttetarbeidsperiode.spm'
-        : 'felles.nåravsluttesarbeidsperiode.spm',
-    [BarnetrygdperiodeSpørsmålsId.månedligBeløp]: 'felles.nåravsluttesarbeidsperiode.sjekkboks',
+        ? 'modal.hvilketlandbarnetrygd.spm'
+        : 'ombarnet.hvilketlandfår.spm',
+    [BarnetrygdperiodeSpørsmålsId.fraDatoBarnetrygdperiode]: 'modal.trygdnårbegynte.spm',
+    [BarnetrygdperiodeSpørsmålsId.tilDatoBarnetrygdperiode]: 'modal.trygdnåravsluttet.spm',
+    [BarnetrygdperiodeSpørsmålsId.månedligBeløp]: 'ombarnet.trygdbeløp.spm',
 });
