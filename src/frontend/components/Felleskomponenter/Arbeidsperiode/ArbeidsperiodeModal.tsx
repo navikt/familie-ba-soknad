@@ -204,7 +204,6 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                                     : undefined
                             }
                             disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
-                            calendarPosition={'fullscreen'}
                         />
 
                         <SkjemaCheckbox

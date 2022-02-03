@@ -191,4 +191,5 @@ export type SkjemaFeltTyper =
     | IEøsForSøkerFeltTyper
     | IEøsForBarnFeltTyper
     | IUtbetalingerFeltTyper
-    | IArbeidsperioderFeltTyper;
+    | IArbeidsperioderFeltTyper
+    | IBarnetrygdperioderFeltTyper;

@@ -13,7 +13,7 @@ import {
 } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålsId } from './spørsmål';
 
-export const useArbeidsperiodeSkjema = () => {
+export const useBarnetrygdperiodeSkjema = () => {
     const mottarBarnetrygdNå = useJaNeiSpmFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålsId.mottarBarnetrygdNå, svar: null },
         feilmeldingSpråkId: 'todo',

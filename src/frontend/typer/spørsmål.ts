@@ -1,4 +1,5 @@
 import { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arbeidsperiode/spørsmål';
+import { BarnetrygdperiodeSpørsmålsId } from '../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { PensjonSpørsmålId } from '../components/Felleskomponenter/Pensjonsmodal/spørsmål';
 import { UtbetalingerSpørsmålId } from '../components/Felleskomponenter/UtbetalingerModal/spørsmål';
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
@@ -25,6 +26,7 @@ export type SpørsmålId =
     | UtenlandsoppholdSpørsmålId
     | ArbeidsperiodeSpørsmålsId
     | UtbetalingerSpørsmålId
+    | BarnetrygdperiodeSpørsmålsId
     | PensjonSpørsmålId
     | EøsSøkerSpørsmålId
     | EøsBarnSpørsmålId;
