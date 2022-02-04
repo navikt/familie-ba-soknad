@@ -172,7 +172,7 @@ export interface IArbeidsperioderFeltTyper {
 }
 
 export interface IBarnetrygdperioderFeltTyper {
-    mottarBarnetrygdNå: ESvar | null;
+    mottarEøsBarnetrygdNå: ESvar | null;
     barnetrygdsland: Alpha3Code | '';
     fraDatoBarnetrygdperiode: ISODateString;
     tilDatoBarnetrygdperiode: ISODateString;

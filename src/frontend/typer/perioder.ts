@@ -36,6 +36,7 @@ export interface IUtbetalingsperiode {
 }
 
 export interface IBarnetrygdsperiode {
+    mottarEøsBarnetrygdNå: ISøknadSpørsmål<ESvar | null>;
     barnetrygdsland: ISøknadSpørsmål<Alpha3Code | ''>;
     fraDatoBarnetrygdperiode: ISøknadSpørsmål<ISODateString>;
     tilDatoBarnetrygdperiode: ISøknadSpørsmål<ISODateString>;

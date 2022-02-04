@@ -25,7 +25,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
         useBarnetrygdperiodeSkjema();
 
     const {
-        mottarBarnetrygdNå,
+        mottarEøsBarnetrygdNå,
         barnetrygdsland,
         fraDatoBarnetrygdperiode,
         tilDatoBarnetrygdperiode,
@@ -41,7 +41,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
         nullstillSkjema();
     };
 
-    const tilbakeITid = mottarBarnetrygdNå.verdi === ESvar.JA;
+    const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.JA;
 
     return (
         <SkjemaModal
@@ -54,10 +54,10 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
             onAvbrytCallback={nullstillSkjema}
         >
             <KomponentGruppe inline>
-                {mottarBarnetrygdNå.erSynlig && (
+                {mottarEøsBarnetrygdNå.erSynlig && (
                     <JaNeiSpm
                         skjema={skjema}
-                        felt={skjema.felter.mottarBarnetrygdNå}
+                        felt={skjema.felter.mottarEøsBarnetrygdNå}
                         spørsmålTekstId={
                             barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
                                 BarnetrygdperiodeSpørsmålsId.mottarBarnetrygdNå
@@ -88,7 +88,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                         }
                         calendarPosition={'fullscreen'}
                         avgrensMaxDato={
-                            skjema.felter.mottarBarnetrygdNå.verdi === ESvar.JA
+                            skjema.felter.mottarEøsBarnetrygdNå.verdi === ESvar.JA
                                 ? gårsdagensDato()
                                 : dagensDato()
                         }
@@ -104,12 +104,12 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                             ]
                         }
                         avgrensMinDato={
-                            skjema.felter.mottarBarnetrygdNå.verdi === ESvar.JA
-                                ? skjema.felter.mottarBarnetrygdNå.verdi
+                            skjema.felter.mottarEøsBarnetrygdNå.verdi === ESvar.JA
+                                ? skjema.felter.mottarEøsBarnetrygdNå.verdi
                                 : gårsdagensDato()
                         }
                         avgrensMaxDato={
-                            skjema.felter.mottarBarnetrygdNå.verdi === ESvar.JA
+                            skjema.felter.mottarEøsBarnetrygdNå.verdi === ESvar.JA
                                 ? dagensDato()
                                 : undefined
                         }
