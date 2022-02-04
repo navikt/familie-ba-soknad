@@ -1,21 +1,21 @@
-export enum BarnetrygdperiodeSpørsmålsId {
+export enum BarnetrygdperiodeSpørsmålId {
     barnetrygdsperiodeEøs = 'barnetrygdsperiode-eøs',
-    mottarBarnetrygdNå = 'mottar-barnetrygd-nå',
+    mottarEøsBarnetrygdNå = 'mottar-barnetrygd-nå',
     barnetrygdsland = 'barnetrygdsland',
     fraDatoBarnetrygdperiode = 'fra-dato-barnetrygdperiode',
     tilDatoBarnetrygdperiode = 'til-dato-barnetrygdperiode',
     månedligBeløp = 'månedlig-beløp',
 }
 
-export const barnetrygdperiodeSøkerSpørsmålSpråkId = (
+export const barnetrygdperiodeSpørsmålSpråkId = (
     tilbakeITid = false
-): Record<BarnetrygdperiodeSpørsmålsId, string> => ({
-    [BarnetrygdperiodeSpørsmålsId.barnetrygdsperiodeEøs]: 'modal.trygdandreperioder.tittel',
-    [BarnetrygdperiodeSpørsmålsId.mottarBarnetrygdNå]: 'modal.barnetrygdnå.spmm',
-    [BarnetrygdperiodeSpørsmålsId.barnetrygdsland]: tilbakeITid
+): Record<BarnetrygdperiodeSpørsmålId, string> => ({
+    [BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs]: 'modal.trygdandreperioder.tittel',
+    [BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå]: 'modal.barnetrygdnå.spmm',
+    [BarnetrygdperiodeSpørsmålId.barnetrygdsland]: tilbakeITid
         ? 'modal.hvilketlandbarnetrygd.spm'
         : 'ombarnet.hvilketlandfår.spm',
-    [BarnetrygdperiodeSpørsmålsId.fraDatoBarnetrygdperiode]: 'modal.trygdnårbegynte.spm',
-    [BarnetrygdperiodeSpørsmålsId.tilDatoBarnetrygdperiode]: 'modal.trygdnåravsluttet.spm',
-    [BarnetrygdperiodeSpørsmålsId.månedligBeløp]: 'ombarnet.trygdbeløp.spm',
+    [BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode]: 'modal.trygdnårbegynte.spm',
+    [BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode]: 'modal.trygdnåravsluttet.spm',
+    [BarnetrygdperiodeSpørsmålId.månedligBeløp]: 'ombarnet.trygdbeløp.spm',
 });

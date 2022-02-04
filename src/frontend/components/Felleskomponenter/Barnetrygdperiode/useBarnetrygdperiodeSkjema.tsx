@@ -8,25 +8,25 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { barnetrygdslandFeilmelding } from './barnetrygdperiodeSpråkUtils';
-import { BarnetrygdperiodeSpørsmålsId } from './spørsmål';
+import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 export const useBarnetrygdperiodeSkjema = () => {
     const mottarEøsBarnetrygdNå = useJaNeiSpmFelt({
-        søknadsfelt: { id: BarnetrygdperiodeSpørsmålsId.mottarBarnetrygdNå, svar: null },
+        søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå, svar: null },
         feilmeldingSpråkId: 'modal.barnetrygdnå.feilmelding',
     });
 
-    const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.JA;
+    const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.NEI;
 
     const barnetrygdsland = useLanddropdownFelt({
-        søknadsfelt: { id: BarnetrygdperiodeSpørsmålsId.barnetrygdsland, svar: '' },
+        søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.barnetrygdsland, svar: '' },
         feilmeldingSpråkId: barnetrygdslandFeilmelding(tilbakeITid),
         skalFeltetVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
         nullstillVedAvhengighetEndring: true,
     });
 
     const fraDatoBarnetrygdperiode = useDatovelgerFelt({
-        søknadsfelt: { id: BarnetrygdperiodeSpørsmålsId.fraDatoBarnetrygdperiode, svar: '' },
+        søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode, svar: '' },
         skalFeltetVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
         feilmeldingSpråkId: 'modal.trygdnårbegynte.feilmelding',
         sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
@@ -34,17 +34,15 @@ export const useBarnetrygdperiodeSkjema = () => {
     });
 
     const tilDatoBarnetrygdperiode = useDatovelgerFelt({
-        søknadsfelt: { id: BarnetrygdperiodeSpørsmålsId.tilDatoBarnetrygdperiode, svar: '' },
-        skalFeltetVises:
-            mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK &&
-            mottarEøsBarnetrygdNå.verdi === ESvar.NEI,
+        søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode, svar: '' },
+        skalFeltetVises: tilbakeITid,
         feilmeldingSpråkId: 'modal.trygdnåravsluttet.spm',
-        sluttdatoAvgrensning: mottarEøsBarnetrygdNå.verdi === ESvar.JA ? dagensDato() : undefined,
+        sluttdatoAvgrensning: dagensDato(),
         startdatoAvgrensning: fraDatoBarnetrygdperiode.verdi,
     });
 
     const månedligBeløp = useInputFelt({
-        søknadsfelt: { id: BarnetrygdperiodeSpørsmålsId.månedligBeløp, svar: '' },
+        søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.månedligBeløp, svar: '' },
         feilmeldingSpråkId: 'ombarnet.trygdbeløp.feilmelding',
         skalVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
     });

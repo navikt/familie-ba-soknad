@@ -13,7 +13,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
-import { BarnetrygdperiodeSpørsmålsId, barnetrygdperiodeSøkerSpørsmålSpråkId } from './spørsmål';
+import { BarnetrygdperiodeSpørsmålId, barnetrygdperiodeSpørsmålSpråkId } from './spørsmål';
 import { useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal> {
@@ -59,8 +59,8 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                         skjema={skjema}
                         felt={skjema.felter.mottarEøsBarnetrygdNå}
                         spørsmålTekstId={
-                            barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                BarnetrygdperiodeSpørsmålsId.mottarBarnetrygdNå
+                            barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
+                                BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå
                             ]
                         }
                     />
@@ -70,8 +70,8 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                         felt={skjema.felter.barnetrygdsland}
                         skjema={skjema}
                         label={
-                            barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                BarnetrygdperiodeSpørsmålsId.barnetrygdsland
+                            barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
+                                BarnetrygdperiodeSpørsmålId.barnetrygdsland
                             ]
                         }
                         dynamisk
@@ -82,8 +82,8 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                         felt={skjema.felter.fraDatoBarnetrygdperiode}
                         skjema={skjema}
                         label={
-                            barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                BarnetrygdperiodeSpørsmålsId.fraDatoBarnetrygdperiode
+                            barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
+                                BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
                             ]
                         }
                         calendarPosition={'fullscreen'}
@@ -99,8 +99,8 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                         felt={skjema.felter.tilDatoBarnetrygdperiode}
                         skjema={skjema}
                         label={
-                            barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                BarnetrygdperiodeSpørsmålsId.tilDatoBarnetrygdperiode
+                            barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
+                                BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
                             ]
                         }
                         avgrensMinDato={
@@ -121,8 +121,8 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                         felt={skjema.felter.månedligBeløp}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         labelSpråkTekstId={
-                            barnetrygdperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                BarnetrygdperiodeSpørsmålsId.månedligBeløp
+                            barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
+                                BarnetrygdperiodeSpørsmålId.månedligBeløp
                             ]
                         }
                         label={'Ikke i språkfil enda'}
