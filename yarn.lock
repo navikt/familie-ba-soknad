@@ -1807,10 +1807,10 @@
   resolved "https://registry.yarnpkg.com/@navikt/ds-icons/-/ds-icons-0.5.4.tgz#5b00f98f84da5cdb01f7b0dac9e4004d7d4bed0a"
   integrity sha512-4lk4CTKZtNkqGJ2wAtJPheaCcwD6hILh6zWICO7071Lu/O+O+qSmxJSGFJmPh4pTAUuPONp6p8jOUqQwTi4yhw==
 
-"@navikt/familie-form-elements@3.2.3", "@navikt/familie-form-elements@^3.2.3":
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-form-elements/-/familie-form-elements-3.2.3.tgz#4aede31e7eb443bf6049ccc4106058aa466f609d"
-  integrity sha512-Y1fb6XFAA4DBVhG4A1KTX6+7kb5I3OiZ9gn8roRNO79t+pLl0VE3jwbp3dFQQYujcCePoB2jPoiOsmy4oepCAg==
+"@navikt/familie-form-elements@^4.0.0":
+  version "4.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-form-elements/4.0.0/44e15ff850b4ca2df6988e039dc6e8ea6fb8b648c387967809106e1a47e3afa5#f96574d6b605865138426afb87f96c9bd33d325f"
+  integrity sha512-LvrE8yE+h+c+OREOxDvsI6FsZKew01/UGyrF67HW4NOkCw1kKMvpiFns+vblvJFDeG+2Mh/+6P1vrQHsIWyj+A==
   dependencies:
     "@navikt/fnrvalidator" "^1.1.3"
     "@types/classnames" "^2.2.10"
@@ -1832,48 +1832,48 @@
     nav-frontend-typografi-style "^2.0.1"
     react-select "^4.0.13"
 
-"@navikt/familie-http@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-http/-/familie-http-1.1.1.tgz#82a76a518e8b2bac5a3bc414c6234a489c5ebb90"
-  integrity sha512-l+as04bkD6aR0yceHvEL6sswte5RviUTKDRMo8rpPBeHJEUCKgzLHU3VvKOWTrkYCqVsEcgsKRL5kMWkAZWKdQ==
+"@navikt/familie-http@^2.0.0":
+  version "2.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-http/2.0.0/e39c0092f8bc540cee2dd29c6ea6b0112f945b58e477420929a295a9a4c7f652#842f1c975d46d27f01f687bc9e0dc825e1d02f5d"
+  integrity sha512-iy7Y5csLsk9YFeriTUZ7XpjVmUM1e5Tww/UzmeGm8Ij7xpoCt0J6BZqqoAAYVFu2uOn88U+puk1hfttNXwblMw==
   dependencies:
-    "@navikt/familie-typer" "^3.0.14"
+    "@navikt/familie-typer" "^4.0.0"
     "@sentry/core" "^6.2.1"
     constate "^3.2.0"
 
-"@navikt/familie-ikoner@^3.1.12":
-  version "3.1.12"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-ikoner/-/familie-ikoner-3.1.12.tgz#27c065c6db36aa2c7d00e5424b98d13223a3140f"
-  integrity sha512-hZxaCRwSoTHAx9NSqXIcdTzAPMaVWDHfqFRJi+E5w72V7eO0qm5FLfL9Lpmxv84cejGHE2HlgYcI5gaTR/sIGw==
+"@navikt/familie-ikoner@^4.0.0":
+  version "4.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-ikoner/4.0.0/18361c23dc026f7daf514fd3a82e6ffeac6fab878a64a223e55165ed0869f501#2c3d968c951ff21c141f33f42f17e4ba128c856f"
+  integrity sha512-YcRRdUF0F0npDOUC+AUaKgp4h4XQJ2WDnYXcUoVyhaMpEgzkJq38rc69bV3CJEQlO5WaCaNk/nypwmFAc9Mkww==
   dependencies:
-    "@navikt/familie-typer" "^3.0.14"
+    "@navikt/familie-typer" "^4.0.0"
 
-"@navikt/familie-logging@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-logging/-/familie-logging-1.0.5.tgz#546ff5855ac10e14a23b28b53d2b27970965b64f"
-  integrity sha512-/MLIRqVHG6ihqciquOh9nFtUA4sk3l8eVzbAa/a2E+2QMlOqbDoaC3zZeACFB6PkVEAWzGJQ7rYPlbpKz5QxBA==
+"@navikt/familie-logging@^2.0.0":
+  version "2.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-logging/2.0.0/a36fbf16e65ba0de20254fa372d59c57f7f59590580e84b40be8a182fca4a106#a6b041899d45671529d5565a75ecdc9bab68063a"
+  integrity sha512-Odl6NqiqYUgnsxW0uf4jQlXJe/aPMBbLOK1D8fltU2iBvR9dz6ZY/Wh5+itItIr/403TePeelc33LkvwhrudUg==
   dependencies:
     winston "^3.2.1"
 
-"@navikt/familie-skjema@^1.1.9":
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-skjema/-/familie-skjema-1.1.9.tgz#9704a6ceaafcd0a0fb99f1f9384b7b231400fa76"
-  integrity sha512-x28DQpIN/UYkWkfw3sx5F6YysejG5fFn6NK62Zy3J+Gi0MgG8yq2YBshSakhGLf/XEp3GwmBOGNSGuFASpgrNw==
+"@navikt/familie-skjema@^2.0.0":
+  version "2.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-skjema/2.0.0/7d6bf6b58b21930a4af672e16c5e5c248a19ba0f14ed06aa6a39a34e64923095#30171c1685faeb6d99030508d7b90f827f5cabb8"
+  integrity sha512-oWuFSe82dbfr5XFe931lpYm78+0UBJlv/kf4LVG5GmUwEl4xj5326KLyhKtaneK6pkAf7gUSUkJjiYeEq3bhsw==
   dependencies:
-    "@navikt/familie-http" "^1.1.1"
-    "@navikt/familie-typer" "^3.0.14"
+    "@navikt/familie-http" "^2.0.0"
+    "@navikt/familie-typer" "^4.0.0"
     "@types/deep-equal" "^1.0.1"
     deep-equal "^2.0.5"
     hashids "^2.2.8"
 
-"@navikt/familie-sprakvelger@2.0.29":
-  version "2.0.29"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-sprakvelger/-/familie-sprakvelger-2.0.29.tgz#7c31736cfb2434452de9250254ed06b414167359"
-  integrity sha512-QI7jIF9wOpGPX8y4v0p8qiVO0t90+y3VeJL0oekQvhHtw3a0RkX+n5TSx/zQIYjI5hTLmj3Bmx6XF+4iynThbQ==
+"@navikt/familie-sprakvelger@^3.0.0":
+  version "3.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-sprakvelger/3.0.0/5aec70b4f3409cc652a218be70bf64a8d290e318d57e39046958359e7174c80a#1f78f41d80d99590d87edf45207a741a884ff797"
+  integrity sha512-b/RowrqApwDSt/W/cNKg91NCjcNdrqHdJp2TdgRA2gcjDoL3eiAZtMp+4yndB478xYwZjNpQxAjXUAf+BwHiBA==
   dependencies:
     "@navikt/ds-icons" "^0.5.4"
-    "@navikt/familie-form-elements" "^3.2.3"
-    "@navikt/familie-ikoner" "^3.1.12"
+    "@navikt/familie-form-elements" "^4.0.0"
+    "@navikt/familie-ikoner" "^4.0.0"
     "@types/react-aria-menubutton" "^6.2.8"
     nav-frontend-chevron "^1.0.30"
     nav-frontend-chevron-style "^1.0.4"
@@ -1882,10 +1882,10 @@
     nav-frontend-typografi-style "^2.0.1"
     react-aria-menubutton "^7.0.3"
 
-"@navikt/familie-typer@^3.0.14":
-  version "3.0.14"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-typer/-/familie-typer-3.0.14.tgz#f6a78ca686383e4e2c55d2363ee33b1abf662be9"
-  integrity sha512-c3a+WyHPXwQSJfDZnNS6LbbjeHf9wjN8eQ8PKKM7K3VMbrRWC5lFeltV21J70aU9QWvqApTWXUgS5R4qlKqErA==
+"@navikt/familie-typer@^4.0.0":
+  version "4.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-typer/4.0.0/adda0a9283e562ad0b509d1e3a0bc5e6dfffecb2250ed4cb45d8325d35bc58ab#d74b795678bd5c5d80e5e662dd2c4989b300cfd0"
+  integrity sha512-GxXL7TcUa/XTOSG5AEhP/U7rVcENFZRLw9AQlOqnByb3HYX0EeFSRdruXvR/km/NCpVmGC6wOVoiKZk7A4WjAw==
 
 "@navikt/fnrvalidator@^1.1.3", "@navikt/fnrvalidator@^1.1.4":
   version "1.1.4"
