@@ -15,6 +15,7 @@ import {
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
 } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
@@ -34,9 +35,10 @@ import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
 import { EFeatureToggle } from '../typer/feature-toggles';
+import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
-import { ESivilstand, ISøker, ISøkerRespons } from '../typer/person';
-import { ESøknadstype, initialStateSøknad, ISøknad } from '../typer/søknad';
+import { ISøker, ISøkerRespons } from '../typer/person';
+import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
 import { genererInitialBarnMedISøknad } from './barn';
 import * as eøsUtils from './eøs';
@@ -331,6 +333,18 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     },
                     [andreForelderDataKeySpørsmål.pensjonUtland]: {
                         id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
+                        svar: ESvar.NEI,
+                    },
+                    [andreForelderDataKeySpørsmål.pensjonNorge]: {
+                        id: EøsBarnSpørsmålId.andreForelderPensjonNorge,
+                        svar: ESvar.NEI,
+                    },
+                    [andreForelderDataKeySpørsmål.arbeidNorge]: {
+                        id: EøsBarnSpørsmålId.andreForelderArbeidNorge,
+                        svar: ESvar.NEI,
+                    },
+                    [andreForelderDataKeySpørsmål.andreUtbetalinger]: {
+                        id: EøsBarnSpørsmålId.andreForelderAndreUtbetalinger,
                         svar: ESvar.NEI,
                     },
                     [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {

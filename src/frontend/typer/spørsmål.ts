@@ -7,6 +7,8 @@ import {
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
 } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { EøsSøkerSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
@@ -23,9 +25,14 @@ export type SpørsmålId =
     | UtenlandsoppholdSpørsmålId
     | ArbeidsperiodeSpørsmålsId
     | UtbetalingerSpørsmålId
-    | PensjonSpørsmålId;
+    | PensjonSpørsmålId
+    | EøsSøkerSpørsmålId
+    | EøsBarnSpørsmålId;
 
 export interface ISøknadSpørsmål<T> {
     id: SpørsmålId;
     svar: T;
 }
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type ISøknadSpørsmålMap = Record<string, ISøknadSpørsmål<any>>;

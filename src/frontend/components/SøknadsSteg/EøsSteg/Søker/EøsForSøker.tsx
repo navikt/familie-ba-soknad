@@ -1,15 +1,30 @@
 import React from 'react';
 
+import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
+import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
+import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import { useEøsForSøker } from './useEøsForSøker';
 
 const EøsForSøker: React.FC = () => {
-    const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
-        useEøsForSøker();
+    const {
+        skjema,
+        validerFelterOgVisFeilmelding,
+        valideringErOk,
+        oppdaterSøknad,
+        leggTilArbeidsperiode,
+        fjernArbeidsperiode,
+        leggTilPensjonsperiode,
+        fjernPensjonsperiode,
+        leggTilAndreUtbetalingsperiode,
+        fjernAndreUtbetalingsperiode,
+    } = useEøsForSøker();
 
     return (
         <Steg
-            tittel={'Steg for eøs søker'}
+            tittel={<SpråkTekst id={'eøs-om-deg.sidetittel'} />}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
@@ -17,7 +32,29 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <div>Dette er et nytt steg for EØS Søker</div>
+            <KomponentGruppe>
+                <Arbeidsperiode
+                    skjema={skjema}
+                    arbeiderEllerArbeidetFelt={skjema.felter.arbeidINorge}
+                    leggTilArbeidsperiode={leggTilArbeidsperiode}
+                    fjernArbeidsperiode={fjernArbeidsperiode}
+                    registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                />
+                <Pensjonsperiode
+                    skjema={skjema}
+                    mottarEllerMottattPensjonFelt={skjema.felter.pensjonNorge}
+                    leggTilPensjonsperiode={leggTilPensjonsperiode}
+                    fjernPensjonsperiode={fjernPensjonsperiode}
+                    registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
+                />
+                <Utbetalingsperiode
+                    skjema={skjema}
+                    leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
+                    fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
+                    mottarEllerMottattUtbetalingFelt={skjema.felter.andreUtbetalinger}
+                    registrerteUtbetalingsperioder={skjema.felter.registrerteAndreUtbetalinger}
+                />
+            </KomponentGruppe>
         </Steg>
     );
 };

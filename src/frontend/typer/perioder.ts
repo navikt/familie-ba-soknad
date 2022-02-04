@@ -22,15 +22,15 @@ export interface IArbeidsperiode {
 }
 
 export interface IPensjonsperiode {
-    mottarPensjonNå: ISøknadSpørsmål<ESvar>;
-    pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
+    mottarPensjonNå: ISøknadSpørsmål<ESvar | null>;
+    pensjonsland?: ISøknadSpørsmål<Alpha3Code | ''>;
     pensjonFra?: ISøknadSpørsmål<ISODateString>;
     pensjonTil?: ISøknadSpørsmål<ISODateString>;
 }
 
 export interface IUtbetalingsperiode {
     fårUtbetalingNå: ISøknadSpørsmål<ESvar | null>;
-    ytelseFraHvilketLand: ISøknadSpørsmål<Alpha3Code | ''>;
+    utbetalingLand: ISøknadSpørsmål<Alpha3Code | ''>;
     utbetalingFraDato: ISøknadSpørsmål<ISODateString>;
     utbetalingTilDato: ISøknadSpørsmål<DatoMedUkjent>;
 }

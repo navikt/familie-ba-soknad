@@ -3,6 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
+import { ESivilstand, IAdresse } from './kontrakt/generelle';
 import {
     IArbeidsperiode,
     IPensjonsperiode,
@@ -12,41 +13,28 @@ import {
 import { ISøknadSpørsmål } from './spørsmål';
 import { Årsak } from './utvidet';
 
-export enum ESivilstand {
-    GIFT = 'GIFT',
-    ENKE_ELLER_ENKEMANN = 'ENKE_ELLER_ENKEMANN',
-    SKILT = 'SKILT',
-    SEPARERT = 'SEPARERT',
-    REGISTRERT_PARTNER = 'REGISTRERT_PARTNER',
-    SEPARERT_PARTNER = 'SEPARERT_PARTNER',
-    SKILT_PARTNER = 'SKILT_PARTNER',
-    GJENLEVENDE_PARTNER = 'GJENLEVENDE_PARTNER',
-    UGIFT = 'UGIFT',
-    UOPPGITT = 'UOPPGITT',
-}
-
 export interface IPerson {
     ident: string;
-    navn: string;
     adressebeskyttelse: boolean;
 }
 
-export interface IBarnRespons extends Omit<IPerson, 'ident'> {
-    ident: string;
+export interface IBarnRespons extends IPerson {
+    navn: string | null;
     borMedSøker: boolean;
     fødselsdato: string | undefined;
 }
 
 export interface ISøkerRespons extends IPerson {
+    navn: string;
     barn: IBarnRespons[];
     statsborgerskap: { landkode: Alpha3Code }[];
     adresse?: IAdresse;
     sivilstand: { type: ESivilstand };
 }
 
-export interface IBarn extends Omit<IPerson, 'ident'> {
-    ident: string;
+export interface IBarn extends IPerson {
     id: BarnetsId;
+    navn: string | null;
     borMedSøker: boolean | undefined;
     alder: string | undefined;
 }
@@ -72,8 +60,11 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     nåværendeSamboer: ISamboer | null;
 
     // Steg: EØS-steg
+    arbeidINorge: ISøknadSpørsmål<ESvar | null>;
     arbeidsperioderNorge: IArbeidsperiode[];
+    pensjonNorge: ISøknadSpørsmål<ESvar | null>;
     pensjonsperioderNorge: IPensjonsperiode[];
+    andreUtbetalinger: ISøknadSpørsmål<ESvar | null>;
     andreUtbetalingsperioder: IUtbetalingsperiode[];
 
     utvidet: {
@@ -96,13 +87,4 @@ export interface ISamboer {
 
 export interface ITidligereSamboer extends ISamboer {
     samboerTilDato: ISøknadSpørsmål<ISODateString>;
-}
-
-export interface IAdresse {
-    adressenavn?: string;
-    postnummer?: string;
-    husbokstav?: string;
-    bruksenhetsnummer?: string;
-    husnummer?: string;
-    poststed?: string;
 }

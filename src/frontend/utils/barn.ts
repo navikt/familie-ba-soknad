@@ -3,6 +3,7 @@ import { IntlShape } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
@@ -80,6 +81,24 @@ export const genererAndreForelder = (
                 andreForelder && !andreForelderErDød
                     ? andreForelder[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
                     : null,
+        },
+        [andreForelderDataKeySpørsmål.arbeidNorge]: {
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.arbeidNorge].svar ?? null,
+            id: andreForelderErDød
+                ? EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke
+                : EøsBarnSpørsmålId.andreForelderArbeidNorge,
+        },
+        [andreForelderDataKeySpørsmål.pensjonNorge]: {
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonNorge].svar ?? null,
+            id: andreForelderErDød
+                ? EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke
+                : EøsBarnSpørsmålId.andreForelderPensjonNorge,
+        },
+        [andreForelderDataKeySpørsmål.andreUtbetalinger]: {
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.andreUtbetalinger].svar ?? null,
+            id: andreForelderErDød
+                ? EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke
+                : EøsBarnSpørsmålId.andreForelderAndreUtbetalinger,
         },
         utvidet: {
             ...andreForelder?.utvidet,
@@ -363,10 +382,10 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
 };
 
 export const barnetsNavnValue = (barn: IBarn, intl: IntlShape): string => {
-    return barn.adressebeskyttelse
-        ? (intl.formatMessage(
+    return barn.navn
+        ? barn.navn.toUpperCase()
+        : intl.formatMessage(
               { id: 'felles.anonym.barn.fnr' },
               { fødselsnummer: formaterFnr(barn.ident) }
-          ) as string)
-        : barn.navn.toUpperCase();
+          );
 };

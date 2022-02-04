@@ -9,7 +9,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { BarnetsId } from '../../../typer/common';
-import { ESivilstand } from '../../../typer/person';
+import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { Årsak } from '../../../typer/utvidet';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
@@ -45,6 +45,10 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
+        leggTilArbeidsperiode,
+        fjernArbeidsperiode,
+        leggTilPensjonsperiode,
+        fjernPensjonsperiode,
     } = useOmBarnet(barnetsId);
     const intl = useIntl();
 
@@ -77,6 +81,10 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     skjema={skjema}
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
                     andreForelder={barn.andreForelder}
+                    leggTilArbeidsperiode={leggTilArbeidsperiode}
+                    fjernArbeidsperiode={fjernArbeidsperiode}
+                    leggTilPensjonsperiode={leggTilPensjonsperiode}
+                    fjernPensjonsperiode={fjernPensjonsperiode}
                 />
             )}
 

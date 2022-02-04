@@ -13,12 +13,7 @@ import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFe
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
-import {
-    arbeidsperiodeAndreForelderSpørsmålSpråkId,
-    ArbeidsperiodeSpørsmålsId,
-    arbeidsperiodeSøkerSpørsmålSpråkId,
-    hentArbeidsperiodeSpørsmålIder,
-} from './spørsmål';
+import { arbeidsperiodeSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 export const ArbeidsperiodeOppsummering: React.FC<{
     arbeidsperiode: IArbeidsperiode;
@@ -48,6 +43,16 @@ export const ArbeidsperiodeOppsummering: React.FC<{
     const gjelderAndreForelder = !!andreForelderData;
     const erAndreForelderDød = !!andreForelderData?.erDød;
 
+    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
+        gjelderAndreForelder,
+        tilbakeITid,
+        erAndreForelderDød
+    );
+
+    const spørsmålSpråkTekst = (spørsmålId: ArbeidsperiodeSpørsmålsId) => (
+        <SpråkTekst id={hentSpørsmålTekstId(spørsmålId)} />
+    );
+
     return (
         <PeriodeOppsummering
             fjernPeriodeCallback={
@@ -59,94 +64,37 @@ export const ArbeidsperiodeOppsummering: React.FC<{
         >
             {arbeidsperiodeAvsluttet && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                gjelderAndreForelder
-                                    ? arbeidsperiodeAndreForelderSpørsmålSpråkId(
-                                          tilbakeITid,
-                                          erAndreForelderDød
-                                      )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]
-                                    : arbeidsperiodeSøkerSpørsmålSpråkId(tilbakeITid)[
-                                          ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
-                                      ]
-                            }
-                        />
-                    }
+                    tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet)}
                     søknadsvar={arbeidsperiodeAvsluttet.svar}
                 />
             )}
             {arbeidsperiodeland && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                hentArbeidsperiodeSpørsmålIder(
-                                    gjelderAndreForelder,
-                                    tilbakeITid,
-                                    erAndreForelderDød
-                                )[ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]
-                            }
-                        />
-                    }
+                    tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand)}
                     søknadsvar={landkodeTilSpråk(arbeidsperiodeland.svar, valgtLocale)}
                 />
             )}
             {arbeidsgiver && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                hentArbeidsperiodeSpørsmålIder(
-                                    gjelderAndreForelder,
-                                    tilbakeITid,
-                                    erAndreForelderDød
-                                )[ArbeidsperiodeSpørsmålsId.arbeidsgiver]
-                            }
-                        />
-                    }
+                    tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.arbeidsgiver)}
                     søknadsvar={arbeidsgiver.svar}
                 />
             )}
             {fraDatoArbeidsperiode && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                hentArbeidsperiodeSpørsmålIder(
-                                    gjelderAndreForelder,
-                                    tilbakeITid,
-                                    erAndreForelderDød
-                                )[ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]
-                            }
-                        />
-                    }
+                    tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode)}
                     søknadsvar={formaterDato(fraDatoArbeidsperiode.svar)}
                 />
             )}
             {tilDatoArbeidsperiode && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={
-                                hentArbeidsperiodeSpørsmålIder(
-                                    gjelderAndreForelder,
-                                    tilbakeITid,
-                                    erAndreForelderDød
-                                )[ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]
-                            }
-                        />
-                    }
+                    tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)}
                     søknadsvar={formaterDatoMedUkjent(
                         tilDatoArbeidsperiode.svar,
                         formatMessage({
-                            id: gjelderAndreForelder
-                                ? arbeidsperiodeAndreForelderSpørsmålSpråkId(false, false)[
-                                      ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                                  ]
-                                : arbeidsperiodeSøkerSpørsmålSpråkId(false)[
-                                      ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                                  ],
+                            id: hentSpørsmålTekstId(
+                                ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                            ),
                         })
                     )}
                 />

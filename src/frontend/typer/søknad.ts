@@ -1,26 +1,18 @@
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
-import { LocaleType } from '@navikt/familie-sprakvelger';
+import { ESvar } from '@navikt/familie-form-elements';
 
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { EøsSøkerSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 import { IBarnMedISøknad } from './barn';
 import { INøkkelPar } from './common';
-import {
-    Dokumentasjonsbehov,
-    dokumentasjonsbehovTilSpråkId,
-    IDokumentasjon,
-    ISøknadKontraktDokumentasjon,
-} from './dokumentasjon';
-import { ESivilstand, IAdresse, IBarn, ISøker } from './person';
+import { dokumentasjonsbehovTilSpråkId, IDokumentasjon } from './dokumentasjon';
+import { Dokumentasjonsbehov } from './kontrakt/dokumentasjon';
+import { ESivilstand, ESøknadstype } from './kontrakt/generelle';
+import { IBarn, ISøker } from './person';
 import { ISøknadSpørsmål } from './spørsmål';
 import { Årsak } from './utvidet';
-
-export enum ESøknadstype {
-    ORDINÆR = 'ORDINÆR',
-    UTVIDET = 'UTVIDET',
-}
 
 export const søknadstyper: INøkkelPar = {
     ORDINÆR: {
@@ -32,11 +24,6 @@ export const søknadstyper: INøkkelPar = {
         navn: 'Utvidet barnetrygd',
     },
 };
-
-export interface ISøknadsfelt<T> {
-    label: Record<LocaleType, string>;
-    verdi: Record<LocaleType, T>;
-}
 
 export interface ISøknad {
     søknadstype: ESøknadstype;
@@ -53,81 +40,6 @@ export interface ISøknad {
     barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | null>;
     mottarBarnetrygdForBarnFraAnnetEøsland: ISøknadSpørsmål<ESvar | null>;
     dokumentasjon: IDokumentasjon[];
-}
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type SpørsmålMap = Record<string, ISøknadsfelt<any>>;
-
-export interface ISøknadKontrakt {
-    søknadstype: ESøknadstype;
-    søker: ISøknadKontraktSøker;
-    barn: ISøknadKontraktBarn[];
-    spørsmål: SpørsmålMap;
-    dokumentasjon: ISøknadKontraktDokumentasjon[];
-    teksterUtenomSpørsmål: Record<string, Record<LocaleType, string>>;
-    originalSpråk: LocaleType;
-}
-
-export interface IKontraktNåværendeSamboer {
-    navn: ISøknadsfelt<string>;
-    ident: ISøknadsfelt<string>;
-    fødselsdato: ISøknadsfelt<string>;
-    samboerFraDato: ISøknadsfelt<ISODateString>;
-}
-
-export interface IKontraktTidligereSamboer extends IKontraktNåværendeSamboer {
-    samboerTilDato: ISøknadsfelt<ISODateString>;
-}
-
-export interface IUtenlandsperiodeIKontraktFormat {
-    utenlandsoppholdÅrsak: ISøknadsfelt<string>;
-    oppholdsland: ISøknadsfelt<string>;
-    oppholdslandTilDato: ISøknadsfelt<string | undefined>;
-    oppholdslandFraDato: ISøknadsfelt<string | undefined>;
-}
-
-export interface IAndreForelderIKontraktFormat {
-    navn: ISøknadsfelt<string>;
-    fnr: ISøknadsfelt<string>;
-    fødselsdato: ISøknadsfelt<string>;
-    pensjonUtland: ISøknadsfelt<ESvar | null>;
-    pensjonHvilketLand: ISøknadsfelt<string>;
-    arbeidUtlandet: ISøknadsfelt<ESvar | null>;
-    arbeidUtlandetHvilketLand: ISøknadsfelt<string>;
-    skriftligAvtaleOmDeltBosted: ISøknadsfelt<ESvar | null>;
-    utvidet: {
-        søkerHarBoddMedAndreForelder: ISøknadsfelt<ESvar | null>;
-        søkerFlyttetFraAndreForelderDato: ISøknadsfelt<string>;
-    };
-}
-
-export interface ISøknadKontraktSøker {
-    ident: ISøknadsfelt<string>;
-    navn: ISøknadsfelt<string>;
-    statsborgerskap: ISøknadsfelt<string[]>;
-    adresse: ISøknadsfelt<IAdresse>;
-    sivilstand: ISøknadsfelt<ESivilstand>;
-    spørsmål: SpørsmålMap;
-    tidligereSamboere: ISøknadsfelt<IKontraktTidligereSamboer>[];
-    nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null;
-    utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
-}
-
-export enum ERegistrertBostedType {
-    REGISTRERT_SOKERS_ADRESSE = 'REGISTRERT_SOKERS_ADRESSE',
-    REGISTRERT_ANNEN_ADRESSE = 'REGISTRERT_ANNEN_ADRESSE',
-    IKKE_FYLT_INN = 'IKKE_FYLT_INN',
-    ADRESSESPERRE = 'ADRESSESPERRE',
-}
-
-export interface ISøknadKontraktBarn {
-    ident: ISøknadsfelt<string>;
-    navn: ISøknadsfelt<string>;
-    registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
-    alder: ISøknadsfelt<string>;
-    spørsmål: SpørsmålMap;
-    utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
-    andreForelder: IAndreForelderIKontraktFormat | null;
 }
 
 export const hentSøknadstype = () => {
@@ -241,9 +153,22 @@ export const initialStateSøknad: ISøknad = {
             svar: '',
         },
         arbeidsperioderUtland: [],
+
+        arbeidINorge: {
+            id: EøsSøkerSpørsmålId.arbeidINorge,
+            svar: null,
+        },
         arbeidsperioderNorge: [],
+        pensjonNorge: {
+            id: EøsSøkerSpørsmålId.pensjonNorge,
+            svar: null,
+        },
         pensjonsperioderNorge: [],
         pensjonsperioderUtland: [],
+        andreUtbetalinger: {
+            id: EøsSøkerSpørsmålId.utbetalinger,
+            svar: null,
+        },
         andreUtbetalingsperioder: [],
         harSamboerNå: {
             id: DinLivssituasjonSpørsmålId.harSamboerNå,

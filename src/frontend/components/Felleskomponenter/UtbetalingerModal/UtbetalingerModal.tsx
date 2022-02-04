@@ -6,35 +6,32 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { IUsePensjonSkjemaParams } from '../Pensjonsmodal/usePensjonSkjema';
 import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import {
-    utbetalingerAndreForelderSpørsmålSpråkId,
-    UtbetalingerSpørsmålId,
-    utbetalingerSøkerSpørsmålSpråkId,
-} from './spørsmål';
+import { hentUtbetalingsperiodeSpørsmålIder, UtbetalingerSpørsmålId } from './spørsmål';
 import { useUtbetalingerSkjema } from './useUtbetalingerSkjema';
 
-interface UtbetalingerModalProps extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
-    //TODO: legg til denne når vi skal sett søknadsdata  onLeggTilUtbetalinger: (utbetalingsperiode: IUtbetalingPeriode) => void;
+interface UtbetalingerModalProps extends ReturnType<typeof useModal> {
+    onLeggTilUtbetalinger: (utbetalingsperiode: IUtbetalingsperiode) => void;
     andreForelderData?: { barn: IBarnMedISøknad; erDød: boolean };
 }
 
 export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     erÅpen,
     toggleModal,
-    //TODO: legg til når vi skal sette søknadsdata: onLeggTilUtbetalinger,
+    onLeggTilUtbetalinger,
     andreForelderData,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
@@ -50,7 +47,27 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
-        //TODO: legg til når vi skal sette søknadsdata: onLeggTilUtbetalinger();
+        onLeggTilUtbetalinger({
+            fårUtbetalingNå: {
+                id: UtbetalingerSpørsmålId.fårUtbetalingNå,
+                svar: skjema.felter.fårUtbetalingNå.verdi,
+            },
+            utbetalingLand: {
+                id: UtbetalingerSpørsmålId.utbetalingLand,
+                svar: skjema.felter.utbetalingLand.verdi,
+            },
+            utbetalingFraDato: {
+                id: UtbetalingerSpørsmålId.utbetalingFraDato,
+                svar: skjema.felter.utbetalingFraDato.verdi,
+            },
+            utbetalingTilDato: {
+                id: UtbetalingerSpørsmålId.utbetalingTilDato,
+                svar: svarForSpørsmålMedUkjent(
+                    skjema.felter.utbetalingTilDatoUkjent,
+                    skjema.felter.utbetalingTilDato
+                ),
+            },
+        });
 
         toggleModal();
         nullstillSkjema();
@@ -71,13 +88,11 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                     skjema={skjema}
                     felt={skjema.felter.fårUtbetalingNå}
                     spørsmålTekstId={
-                        gjelderAndreForelder
-                            ? utbetalingerAndreForelderSpørsmålSpråkId()[
-                                  UtbetalingerSpørsmålId.fårUtbetalingNå
-                              ]
-                            : utbetalingerSøkerSpørsmålSpråkId()[
-                                  UtbetalingerSpørsmålId.fårUtbetalingNå
-                              ]
+                        hentUtbetalingsperiodeSpørsmålIder(
+                            gjelderAndreForelder,
+                            tilbakeITid,
+                            andreForelderErDød
+                        )[UtbetalingerSpørsmålId.fårUtbetalingNå]
                     }
                     språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                 />
@@ -86,19 +101,16 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                 andreForelderErDød) && (
                 <KomponentGruppe inline dynamisk>
                     <LandDropdown
-                        felt={skjema.felter.ytelseFraHvilketLand}
+                        felt={skjema.felter.utbetalingLand}
                         skjema={skjema}
                         label={
                             <SpråkTekst
                                 id={
-                                    gjelderAndreForelder
-                                        ? utbetalingerAndreForelderSpørsmålSpråkId(
-                                              tilbakeITid,
-                                              andreForelderErDød
-                                          )[UtbetalingerSpørsmålId.utbetalingFraHvilketLand]
-                                        : utbetalingerSøkerSpørsmålSpråkId(tilbakeITid)[
-                                              UtbetalingerSpørsmålId.utbetalingFraHvilketLand
-                                          ]
+                                    hentUtbetalingsperiodeSpørsmålIder(
+                                        gjelderAndreForelder,
+                                        tilbakeITid,
+                                        andreForelderErDød
+                                    )[UtbetalingerSpørsmålId.utbetalingLand]
                                 }
                                 values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                             />
@@ -111,13 +123,11 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                         label={
                             <SpråkTekst
                                 id={
-                                    gjelderAndreForelder
-                                        ? utbetalingerAndreForelderSpørsmålSpråkId()[
-                                              UtbetalingerSpørsmålId.utbetalingFraDato
-                                          ]
-                                        : utbetalingerSøkerSpørsmålSpråkId()[
-                                              UtbetalingerSpørsmålId.utbetalingFraDato
-                                          ]
+                                    hentUtbetalingsperiodeSpørsmålIder(
+                                        gjelderAndreForelder,
+                                        tilbakeITid,
+                                        andreForelderErDød
+                                    )[UtbetalingerSpørsmålId.utbetalingFraDato]
                                 }
                             />
                         }
@@ -135,14 +145,11 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             label={
                                 <SpråkTekst
                                     id={
-                                        gjelderAndreForelder
-                                            ? utbetalingerAndreForelderSpørsmålSpråkId(
-                                                  tilbakeITid,
-                                                  andreForelderErDød
-                                              )[UtbetalingerSpørsmålId.utbetalingTilDato]
-                                            : utbetalingerSøkerSpørsmålSpråkId(tilbakeITid)[
-                                                  UtbetalingerSpørsmålId.utbetalingTilDato
-                                              ]
+                                        hentUtbetalingsperiodeSpørsmålIder(
+                                            gjelderAndreForelder,
+                                            tilbakeITid,
+                                            andreForelderErDød
+                                        )[UtbetalingerSpørsmålId.utbetalingTilDato]
                                     }
                                 />
                             }
@@ -157,13 +164,11 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                         />
                         <SkjemaCheckbox
                             labelSpråkTekstId={
-                                gjelderAndreForelder
-                                    ? utbetalingerAndreForelderSpørsmålSpråkId()[
-                                          UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
-                                      ]
-                                    : utbetalingerSøkerSpørsmålSpråkId()[
-                                          UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
-                                      ]
+                                hentUtbetalingsperiodeSpørsmålIder(
+                                    gjelderAndreForelder,
+                                    tilbakeITid,
+                                    andreForelderErDød
+                                )[UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]
                             }
                             felt={skjema.felter.utbetalingTilDatoUkjent}
                         />

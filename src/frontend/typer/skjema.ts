@@ -4,7 +4,12 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål } from './barn';
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
-import { IArbeidsperiode, IUtenlandsperiode } from './perioder';
+import {
+    IArbeidsperiode,
+    IPensjonsperiode,
+    IUtbetalingsperiode,
+    IUtenlandsperiode,
+} from './perioder';
 import { IBarn } from './person';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
@@ -27,6 +32,7 @@ export interface IDinLivssituasjonFeltTyper {
     registrerteArbeidsperioder: IArbeidsperiode[];
     mottarUtenlandspensjon: ESvar | null;
     pensjonsland: Alpha3Code | '';
+    registrertePensjonsperioder: IPensjonsperiode[];
 }
 
 export interface ITidligereSamboerFeltTyper {
@@ -74,8 +80,10 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderFødselsdato: DatoMedUkjent;
     andreForelderArbeidUtlandet: ESvar | null;
     andreForelderArbeidUtlandetHvilketLand: Alpha3Code | '';
+    andreForelderArbeidsperioderUtland: IArbeidsperiode[];
     andreForelderPensjonUtland: ESvar | null;
     andreForelderPensjonHvilketLand: Alpha3Code | '';
+    andreForelderPensjonsperioderUtland: IPensjonsperiode[];
     borFastMedSøker: ESvar | null;
     skriftligAvtaleOmDeltBosted: ESvar | null;
     søkerForTidsrom: ESvar | null;
@@ -97,11 +105,21 @@ export interface IOmDegFeltTyper {
 }
 
 export interface IEøsForSøkerFeltTyper {
-    placeholderForFeltSomKommer: string; //TODO
+    arbeidINorge: ESvar | null;
+    registrerteArbeidsperioder: IArbeidsperiode[];
+    pensjonNorge: ESvar | null;
+    registrertePensjonsperioder: IPensjonsperiode[];
+    andreUtbetalinger: ESvar | null;
+    registrerteAndreUtbetalinger: IUtbetalingsperiode[];
 }
 
 export interface IEøsForBarnFeltTyper {
-    placeholderForFeltSomKommer: string; //TODO
+    andreForelderPensjonNorge: ESvar | null;
+    andreForelderPensjonsperioderNorge: IPensjonsperiode[];
+    andreForelderArbeidNorge: ESvar | null;
+    andreForelderArbeidsperioderNorge: IArbeidsperiode[];
+    andreForelderAndreUtbetalinger: ESvar | null;
+    andreForelderAndreUtbetalingsperioder: IUtbetalingsperiode[];
 }
 
 export interface IVelgBarnFeltTyper {
@@ -131,7 +149,7 @@ export interface IUtenlandsoppholdFeltTyper {
 
 export interface IUtbetalingerFeltTyper {
     fårUtbetalingNå: ESvar | null;
-    ytelseFraHvilketLand: Alpha3Code | '';
+    utbetalingLand: Alpha3Code | '';
     utbetalingFraDato: ISODateString;
     utbetalingTilDato: ISODateString;
     utbetalingTilDatoUkjent: ESvar;

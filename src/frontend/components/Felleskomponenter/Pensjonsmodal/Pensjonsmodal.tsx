@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { IPensjonsperiode } from '../../../typer/perioder';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
@@ -24,7 +25,7 @@ import {
 import { IUsePensjonSkjemaParams, usePensjonSkjema } from './usePensjonSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
-    //TODO: legg til denne når vi skal sett søknadsdata  onLeggTilPensjonsPeriode: (periode: IPensjonsperiode) => void;
+    onLeggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     gjelderUtland?: boolean;
     andreForelderData?: { barn: IBarnMedISøknad; erDød: boolean };
 }
@@ -32,7 +33,7 @@ interface Props extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
 export const PensjonModal: React.FC<Props> = ({
     erÅpen,
     toggleModal,
-    //TODO: legg til denne når vi skal sett søknadsdata onLeggTilPensjonsPeriode,
+    onLeggTilPensjonsperiode,
     gjelderUtland = false,
     andreForelderData,
 }) => {
@@ -53,7 +54,30 @@ export const PensjonModal: React.FC<Props> = ({
             return false;
         }
 
-        //TODO: legg til denne når vi skal sett søknadsdata: onLeggTilPensjonsPeriode();
+        onLeggTilPensjonsperiode({
+            mottarPensjonNå: {
+                id: PensjonSpørsmålId.mottarPensjonNå,
+                svar: skjema.felter.mottarPensjonNå.verdi,
+            },
+            ...(skjema.felter.pensjonsland.erSynlig && {
+                pensjonsland: {
+                    id: PensjonSpørsmålId.pensjonsland,
+                    svar: skjema.felter.pensjonsland.verdi,
+                },
+            }),
+            ...(skjema.felter.pensjonFraDato.erSynlig && {
+                pensjonFra: {
+                    id: PensjonSpørsmålId.fraDatoPensjon,
+                    svar: skjema.felter.pensjonFraDato.verdi,
+                },
+            }),
+            ...(skjema.felter.pensjonTilDato.erSynlig && {
+                pensjonTil: {
+                    id: PensjonSpørsmålId.tilDatoPensjon,
+                    svar: skjema.felter.pensjonTilDato.verdi,
+                },
+            }),
+        });
 
         toggleModal();
         nullstillSkjema();

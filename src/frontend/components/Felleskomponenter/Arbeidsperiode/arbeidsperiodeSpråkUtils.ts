@@ -1,3 +1,14 @@
+import {
+    DinLivssituasjonSpørsmålId,
+    dinLivssituasjonSpørsmålSpråkId,
+} from '../../SøknadsSteg/DinLivssituasjon/spørsmål';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
+import {
+    EøsSøkerSpørsmålId,
+    eøsSøkerSpørsmålSpråkId,
+} from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
+
 export const arbeidslandFeilmelding = (
     tilbakeITid: boolean,
     gjelderAndreForelder: boolean,
@@ -49,3 +60,25 @@ export const arbeidsperiodeFeilmelding = (gjelderUtlandet: boolean): string =>
     gjelderUtlandet
         ? 'felles.flerearbeidsperioderutland.feilmelding'
         : 'felles.flerearbeidsperiodernorge.feilmelding';
+
+export const arbeidsperiodeSpørsmålSpråkId = (
+    gjelderUtlandet: boolean,
+    gjelderAndreForelder: boolean,
+    andreForelderErDød: boolean
+): string => {
+    if (gjelderAndreForelder) {
+        if (andreForelderErDød) {
+            return gjelderUtlandet
+                ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke]
+                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke];
+        } else {
+            return gjelderUtlandet
+                ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]
+                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderArbeidNorge];
+        }
+    } else {
+        return gjelderUtlandet
+            ? dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
+            : eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.arbeidINorge];
+    }
+};

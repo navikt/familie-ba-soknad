@@ -1,16 +1,15 @@
 import { Alpha3Code, getAlpha3Codes } from 'i18n-iso-countries';
 
-import { ISøknadKontraktDokumentasjon } from '../typer/dokumentasjon';
-import { ISamboer, ITidligereSamboer } from '../typer/person';
+import { ISøknadKontraktBarn } from '../typer/kontrakt/barn';
+import { ISøknadKontraktDokumentasjon } from '../typer/kontrakt/dokumentasjon';
 import {
-    ESøknadstype,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
-    ISøknadKontrakt,
-    ISøknadKontraktBarn,
-    ISøknadKontraktSøker,
     ISøknadsfelt,
-} from '../typer/søknad';
+} from '../typer/kontrakt/generelle';
+import { ISøknadKontraktSøker } from '../typer/kontrakt/søker';
+import { ISøknadKontrakt } from '../typer/kontrakt/v6';
+import { ISamboer, ITidligereSamboer } from '../typer/person';
 
 export const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>
     !!(input && input.navn && input.ident && input.fødselsdato && input.samboerFraDato);
@@ -73,7 +72,7 @@ export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadKontraktB
         input.spørsmål
     );
 
-export const erGyldigeBarnUtvidet = (input): input is ISøknadKontraktBarn[] =>
+export const erGyldigISøknadKontraktBarnListe = (input): input is ISøknadKontraktBarn[] =>
     input &&
     Array.isArray(input) &&
     input.map(erGyldigISøknadsKontraktBarn).reduce((prev, curr) => !!(prev && curr), true);
@@ -83,19 +82,18 @@ export const erGyldigISøknadKontraktDokumentasjon = (
 ): input is ISøknadKontraktDokumentasjon =>
     input.dokumentasjonsbehov && input.harSendtInn !== undefined && input.opplastedeVedlegg;
 
-export const erGyldigDokumentasjonUtvidet = (input): input is ISøknadKontraktDokumentasjon[] =>
+export const erGyldigDokumentasjon = (input): input is ISøknadKontraktDokumentasjon[] =>
     input &&
     Array.isArray(input) &&
     input.map(erGyldigISøknadKontraktDokumentasjon).reduce((prev, curr) => !!(prev && curr), true);
 
-export const erGyldigISøknadKontraktUtvidet = (input): input is ISøknadKontrakt =>
+export const erGyldigISøknadKontrakt = (input): input is ISøknadKontrakt =>
     !!(
         input &&
         input.søknadstype &&
-        input.søknadstype === ESøknadstype.UTVIDET &&
         erGyldigISøknadKontraktSøker(input.søker) &&
-        erGyldigeBarnUtvidet(input.barn) &&
-        erGyldigDokumentasjonUtvidet(input.dokumentasjon)
+        erGyldigISøknadKontraktBarnListe(input.barn) &&
+        erGyldigDokumentasjon(input.dokumentasjon)
     );
 
 export const isAlpha3Code = (code: string): code is Alpha3Code => {
