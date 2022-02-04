@@ -8,7 +8,12 @@ import { feil, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../../hooks/usePerioder';
-import { andreForelderDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
+import {
+    andreForelderDataKeySpørsmål,
+    barnDataKeySpørsmål,
+    IAndreForelder,
+    IBarnMedISøknad,
+} from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
@@ -36,25 +41,25 @@ export const useEøsForBarn = (
     const { søknad, settSøknad } = useApp();
     const intl = useIntl();
 
-    const [barn] = useState<IBarnMedISøknad | undefined>(
+    const [gjeldendeBarn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
     );
 
-    if (!barn) {
+    if (!gjeldendeBarn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
     }
 
     /*--- ANDRE FORELDER ---*/
-    const andreForelder = barn.andreForelder;
+    const andreForelder = gjeldendeBarn.andreForelder;
 
     const andreForelderArbeidNorge = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidNorge],
         feilmeldingSpråkId:
-            barn.andreForelderErDød.svar === ESvar.JA
+            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.annenforelderarbeidnorge.feilmelding'
                 : 'eøs-om-barn.annenforelderarbeidsperiodenorge.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(barn, intl) },
-        skalSkjules: skalSkjuleAndreForelderFelt(barn),
+        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        skalSkjules: skalSkjuleAndreForelderFelt(gjeldendeBarn),
     });
 
     const {
@@ -74,11 +79,11 @@ export const useEøsForBarn = (
     const andreForelderPensjonNorge = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonNorge],
         feilmeldingSpråkId:
-            barn.andreForelderErDød.svar === ESvar.JA
+            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andreforelderpensjon.feilmelding'
                 : 'eøs-om-barn.andreforelderpensjon.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(barn, intl) },
-        skalSkjules: skalSkjuleAndreForelderFelt(barn),
+        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        skalSkjules: skalSkjuleAndreForelderFelt(gjeldendeBarn),
     });
 
     const {
@@ -98,11 +103,11 @@ export const useEøsForBarn = (
     const andreForelderAndreUtbetalinger = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.andreUtbetalinger],
         feilmeldingSpråkId:
-            barn.andreForelderErDød.svar === ESvar.JA
+            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.annenforelderytelser.feilmelding'
                 : 'eøs-om-barn.andreforelderutbetalinger.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(barn, intl) },
-        skalSkjules: skalSkjuleAndreForelderFelt(barn),
+        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        skalSkjules: skalSkjuleAndreForelderFelt(gjeldendeBarn),
     });
 
     const {
@@ -119,46 +124,63 @@ export const useEøsForBarn = (
                 : ok(felt)
     );
 
+    const genererAndreForelder = (andreForelder: IAndreForelder) => ({
+        andreForelder: {
+            ...andreForelder,
+            pensjonNorge: {
+                ...andreForelder[andreForelderDataKeySpørsmål.pensjonNorge],
+                svar: andreForelderPensjonNorge.verdi,
+            },
+            pensjonsperioderNorge:
+                andreForelderPensjonNorge.verdi === ESvar.JA
+                    ? skjema.felter.andreForelderPensjonsperioderNorge.verdi
+                    : [],
+            andreUtbetalinger: {
+                ...andreForelder[andreForelderDataKeySpørsmål.andreUtbetalinger],
+                svar: andreForelderAndreUtbetalinger.verdi,
+            },
+            andreUtbetalingsperioder:
+                andreForelderAndreUtbetalinger.verdi === ESvar.JA
+                    ? skjema.felter.andreForelderAndreUtbetalingsperioder.verdi
+                    : [],
+            arbeidNorge: {
+                ...andreForelder[andreForelderDataKeySpørsmål.arbeidNorge],
+                svar: andreForelderArbeidNorge.verdi,
+            },
+            arbeidsperioderNorge:
+                andreForelderArbeidNorge.verdi === ESvar.JA
+                    ? skjema.felter.andreForelderArbeidsperioderNorge.verdi
+                    : [],
+        },
+    });
+
     const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
+        const barnMedSammeForelder = søknad.barnInkludertISøknaden.find(
+            barn => barn.id === barn[barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId].svar
+        );
+
         return {
             ...barn,
-            ...(!!barn.andreForelder && {
-                andreForelder: {
-                    ...barn.andreForelder,
-                    pensjonNorge: {
-                        ...barn.andreForelder[andreForelderDataKeySpørsmål.pensjonNorge],
-                        svar: andreForelderPensjonNorge.verdi,
-                    },
-                    pensjonsperioderNorge:
-                        andreForelderPensjonNorge.verdi === ESvar.JA
-                            ? skjema.felter.andreForelderPensjonsperioderNorge.verdi
-                            : [],
-                    andreUtbetalinger: {
-                        ...barn.andreForelder[andreForelderDataKeySpørsmål.andreUtbetalinger],
-                        svar: andreForelderAndreUtbetalinger.verdi,
-                    },
-                    andreUtbetalingsperioder:
-                        andreForelderAndreUtbetalinger.verdi === ESvar.JA
-                            ? skjema.felter.andreForelderAndreUtbetalingsperioder.verdi
-                            : [],
-                    arbeidNorge: {
-                        ...barn.andreForelder[andreForelderDataKeySpørsmål.arbeidNorge],
-                        svar: andreForelderArbeidNorge.verdi,
-                    },
-                    arbeidsperioderNorge:
-                        andreForelderArbeidNorge.verdi === ESvar.JA
-                            ? skjema.felter.andreForelderArbeidsperioderNorge.verdi
-                            : [],
-                },
-            }),
+            ...(!!barn.andreForelder &&
+                !barnMedSammeForelder &&
+                genererAndreForelder(barn.andreForelder)),
         };
     };
 
     const oppdaterSøknad = () => {
         const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] =
-            søknad.barnInkludertISøknaden.map(barn =>
-                barn.id === barnetsUuid ? genererOppdatertBarn(barn) : barn
-            );
+            søknad.barnInkludertISøknaden.map(barn => {
+                if (barn === gjeldendeBarn) {
+                    return genererOppdatertBarn(gjeldendeBarn);
+                } else {
+                    const barnSkalOppdatereEnAnnensForelder =
+                        barn[barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId].svar ===
+                        gjeldendeBarn.id;
+                    return !!barn.andreForelder && barnSkalOppdatereEnAnnensForelder
+                        ? { ...barn, ...genererAndreForelder(barn.andreForelder) }
+                        : barn;
+                }
+            });
 
         settSøknad({
             ...søknad,
@@ -183,7 +205,7 @@ export const useEøsForBarn = (
 
     return {
         skjema,
-        barn,
+        barn: gjeldendeBarn,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
         validerAlleSynligeFelter,

@@ -26,7 +26,7 @@ import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { IDokumentasjon } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
-import { IUtenlandsperiode, IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
+import { IArbeidsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
@@ -779,6 +779,26 @@ export const useOmBarnet = (
                                   ),
                               },
                           },
+                          ...(barn.sammeForelderSomAnnetBarnMedId.svar !==
+                              sammeForelderSomAnnetBarn.verdi && {
+                              pensjonNorge: {
+                                  ...barn.andreForelder[andreForelderDataKeySpørsmål.pensjonNorge],
+                                  svar: null,
+                              },
+                              pensjonsperioderNorge: [],
+                              andreUtbetalinger: {
+                                  ...barn.andreForelder[
+                                      andreForelderDataKeySpørsmål.andreUtbetalinger
+                                  ],
+                                  svar: null,
+                              },
+                              andreUtbetalingsperioder: [],
+                              arbeidNorge: {
+                                  ...barn.andreForelder[andreForelderDataKeySpørsmål.arbeidNorge],
+                                  svar: null,
+                              },
+                              arbeidsperioderNorge: [],
+                          }),
                       },
             }),
         };
