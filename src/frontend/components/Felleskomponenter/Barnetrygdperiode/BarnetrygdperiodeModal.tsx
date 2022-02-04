@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { IBarnetrygdperiode } from '../../../typer/perioder';
+import { IBarnetrygdsperiode } from '../../../typer/perioder';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
@@ -17,15 +17,10 @@ import { BarnetrygdperiodeSpørsmålsId, barnetrygdperiodeSøkerSpørsmålSpråk
 import { useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal> {
-    onLeggTilBarnetrygdperiode: (periode: IBarnetrygdperiode) => void;
-    gjelderUtlandet: boolean;
+    onLeggTilBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
 }
 
-export const BarnetrygdperiodeModal: React.FC<Props> = ({
-    erÅpen,
-    toggleModal,
-    onLeggTilBarnetrygdperiode,
-}) => {
+export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useBarnetrygdperiodeSkjema();
 
@@ -41,7 +36,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
-        // onLeggTilBarnetrygdperiode({});
+        //onLeggTilBarnetrygdsperiode({});
         toggleModal();
         nullstillSkjema();
     };
@@ -130,6 +125,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                                 BarnetrygdperiodeSpørsmålsId.månedligBeløp
                             ]
                         }
+                        label={'Ikke i språkfil enda'}
                     />
                 )}
             </KomponentGruppe>

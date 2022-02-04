@@ -35,7 +35,7 @@ export interface IUtbetalingsperiode {
     utbetalingTilDato: ISøknadSpørsmål<DatoMedUkjent>;
 }
 
-export interface IBarnetrygdperiode {
+export interface IBarnetrygdsperiode {
     barnetrygdsland: ISøknadSpørsmål<Alpha3Code | ''>;
     fraDatoBarnetrygdperiode: ISøknadSpørsmål<ISODateString>;
     tilDatoBarnetrygdperiode: ISøknadSpørsmål<ISODateString>;

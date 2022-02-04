@@ -1,4 +1,5 @@
 export enum BarnetrygdperiodeSpørsmålsId {
+    barnetrygdsperiodeEøs = 'barnetrygdsperiode-eøs',
     mottarBarnetrygdNå = 'mottar-barnetrygd-nå',
     barnetrygdsland = 'barnetrygdsland',
     fraDatoBarnetrygdperiode = 'fra-dato-barnetrygdperiode',
@@ -9,6 +10,7 @@ export enum BarnetrygdperiodeSpørsmålsId {
 export const barnetrygdperiodeSøkerSpørsmålSpråkId = (
     tilbakeITid = false
 ): Record<BarnetrygdperiodeSpørsmålsId, string> => ({
+    [BarnetrygdperiodeSpørsmålsId.barnetrygdsperiodeEøs]: 'modal.trygdandreperioder.tittel',
     [BarnetrygdperiodeSpørsmålsId.mottarBarnetrygdNå]: 'modal.barnetrygdnå.spmm',
     [BarnetrygdperiodeSpørsmålsId.barnetrygdsland]: tilbakeITid
         ? 'modal.hvilketlandbarnetrygd.spm'
