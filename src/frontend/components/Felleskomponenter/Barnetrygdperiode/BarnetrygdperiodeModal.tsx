@@ -41,7 +41,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
         nullstillSkjema();
     };
 
-    const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.JA;
+    const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.NEI;
 
     return (
         <SkjemaModal
@@ -54,17 +54,16 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
             onAvbrytCallback={nullstillSkjema}
         >
             <KomponentGruppe inline>
-                {mottarEøsBarnetrygdNå.erSynlig && (
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.mottarEøsBarnetrygdNå}
-                        spørsmålTekstId={
-                            barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
-                                BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå
-                            ]
-                        }
-                    />
-                )}
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.mottarEøsBarnetrygdNå}
+                    spørsmålTekstId={
+                        barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
+                            BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå
+                        ]
+                    }
+                />
+
                 {barnetrygdsland.erSynlig && (
                     <LandDropdown
                         felt={skjema.felter.barnetrygdsland}
@@ -87,11 +86,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                             ]
                         }
                         calendarPosition={'fullscreen'}
-                        avgrensMaxDato={
-                            skjema.felter.mottarEøsBarnetrygdNå.verdi === ESvar.JA
-                                ? gårsdagensDato()
-                                : dagensDato()
-                        }
+                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
                     />
                 )}
                 {tilDatoBarnetrygdperiode.erSynlig && (
@@ -103,16 +98,8 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                                 BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
                             ]
                         }
-                        avgrensMinDato={
-                            skjema.felter.mottarEøsBarnetrygdNå.verdi === ESvar.JA
-                                ? skjema.felter.mottarEøsBarnetrygdNå.verdi
-                                : gårsdagensDato()
-                        }
-                        avgrensMaxDato={
-                            skjema.felter.mottarEøsBarnetrygdNå.verdi === ESvar.JA
-                                ? dagensDato()
-                                : undefined
-                        }
+                        avgrensMinDato={skjema.felter.fraDatoBarnetrygdperiode.verdi}
+                        avgrensMaxDato={dagensDato()}
                         calendarPosition={'fullscreen'}
                     />
                 )}

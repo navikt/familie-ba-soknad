@@ -41,6 +41,7 @@ export const useBarnetrygdperiodeSkjema = () => {
         startdatoAvgrensning: fraDatoBarnetrygdperiode.verdi,
     });
 
+    //TODO legge inn validering for riktig input her
     const månedligBeløp = useInputFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.månedligBeløp, svar: '' },
         feilmeldingSpråkId: 'ombarnet.trygdbeløp.feilmelding',
