@@ -109,7 +109,7 @@
     "mustache-express": "^1.3.0",
     "node-cache": "^5.1.2",
     "openid-client": "^4.9.0",
-    "sharp": "0.27.1",
+    "sharp": "^0.30.0",
     "tslib": "^2.3.1",
     "unleash-client": "^3.10.1",
     "webpack-dev-server": "^4.7.3",
