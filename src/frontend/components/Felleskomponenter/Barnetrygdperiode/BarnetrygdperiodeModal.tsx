@@ -13,6 +13,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { BarnetrygdperiodeSpørsmålId, barnetrygdperiodeSpørsmålSpråkId } from './spørsmål';
 import { useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
 
@@ -42,6 +43,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
     };
 
     const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.NEI;
+    const eøsBarnetrygdSpørsmålSpråkTekst = (spørsmålsId: BarnetrygdperiodeSpørsmålId) => {
+        return <SpråkTekst id={barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[spørsmålsId]} />;
+    };
 
     return (
         <SkjemaModal
@@ -68,11 +72,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                     <LandDropdown
                         felt={skjema.felter.barnetrygdsland}
                         skjema={skjema}
-                        label={
-                            barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
-                                BarnetrygdperiodeSpørsmålId.barnetrygdsland
-                            ]
-                        }
+                        label={eøsBarnetrygdSpørsmålSpråkTekst(
+                            BarnetrygdperiodeSpørsmålId.barnetrygdsland
+                        )}
                         dynamisk
                     />
                 )}
@@ -80,11 +82,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                     <Datovelger
                         felt={skjema.felter.fraDatoBarnetrygdperiode}
                         skjema={skjema}
-                        label={
-                            barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
-                                BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
-                            ]
-                        }
+                        label={eøsBarnetrygdSpørsmålSpråkTekst(
+                            BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
+                        )}
                         calendarPosition={'fullscreen'}
                         avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
                     />
@@ -93,11 +93,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                     <Datovelger
                         felt={skjema.felter.tilDatoBarnetrygdperiode}
                         skjema={skjema}
-                        label={
-                            barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
-                                BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
-                            ]
-                        }
+                        label={eøsBarnetrygdSpørsmålSpråkTekst(
+                            BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
+                        )}
                         avgrensMinDato={skjema.felter.fraDatoBarnetrygdperiode.verdi}
                         avgrensMaxDato={dagensDato()}
                         calendarPosition={'fullscreen'}
@@ -112,6 +110,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                                 BarnetrygdperiodeSpørsmålId.månedligBeløp
                             ]
                         }
+                        //TODO fikse label
                         label={'Ikke i språkfil enda'}
                     />
                 )}
