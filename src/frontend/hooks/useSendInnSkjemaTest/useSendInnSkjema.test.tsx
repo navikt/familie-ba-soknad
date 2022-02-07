@@ -1,17 +1,17 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-dom/test-utils';
 
-import { ESivilstand } from '../typer/kontrakt/generelle';
-import { ISøknadKontrakt } from '../typer/kontrakt/v6';
-import { hentSivilstatusSpråkId } from '../utils/språk';
+import { ESivilstand } from '../../typer/kontrakt/generelle';
+import { ISøknadKontrakt } from '../../typer/kontrakt/v6';
+import { hentSivilstatusSpråkId } from '../../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
-} from '../utils/testing';
-import { erGyldigISøknadKontraktUtvidet } from '../utils/typeguards';
-import { useSendInnSkjema } from './useSendInnSkjema';
+} from '../../utils/testing';
+import { erGyldigISøknadKontrakt } from '../../utils/typeguards';
+import { useSendInnSkjema } from '../useSendInnSkjema';
 
 silenceConsoleErrors();
 
@@ -27,7 +27,7 @@ describe('useSendInnSkjema', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
-        expect(erGyldigISøknadKontraktUtvidet(formatert)).toBeTruthy();
+        expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
         await act(async () => {
             jest.advanceTimersByTime(500);
         });

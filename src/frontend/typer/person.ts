@@ -15,26 +15,26 @@ import { Årsak } from './utvidet';
 
 export interface IPerson {
     ident: string;
-    navn: string;
     adressebeskyttelse: boolean;
 }
 
-export interface IBarnRespons extends Omit<IPerson, 'ident'> {
-    ident: string;
+export interface IBarnRespons extends IPerson {
+    navn: string | null;
     borMedSøker: boolean;
     fødselsdato: string | undefined;
 }
 
 export interface ISøkerRespons extends IPerson {
+    navn: string;
     barn: IBarnRespons[];
     statsborgerskap: { landkode: Alpha3Code }[];
     adresse?: IAdresse;
     sivilstand: { type: ESivilstand };
 }
 
-export interface IBarn extends Omit<IPerson, 'ident'> {
-    ident: string;
+export interface IBarn extends IPerson {
     id: BarnetsId;
+    navn: string | null;
     borMedSøker: boolean | undefined;
     alder: string | undefined;
 }

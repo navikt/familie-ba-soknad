@@ -2,19 +2,19 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../../context/AppContext';
-import { useRoutes } from '../../../../context/RoutesContext';
-import { RouteEnum } from '../../../../typer/routes';
-import { ISøknadSpørsmål } from '../../../../typer/spørsmål';
-import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
-import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { UtbetalingsperiodeOppsummering } from '../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
-import { eøsSøkerSpørsmålSpråkId } from '../../EøsSteg/Søker/spørsmål';
-import { useEøsForSøker } from '../../EøsSteg/Søker/useEøsForSøker';
-import { OppsummeringFelt } from '../OppsummeringFelt';
-import Oppsummeringsbolk from '../Oppsummeringsbolk';
-import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
+import { useApp } from '../../../../../context/AppContext';
+import { useRoutes } from '../../../../../context/RoutesContext';
+import { RouteEnum } from '../../../../../typer/routes';
+import { ISøknadSpørsmål } from '../../../../../typer/spørsmål';
+import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
+import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
+import { eøsSøkerSpørsmålSpråkId } from '../../../EøsSteg/Søker/spørsmål';
+import { useEøsForSøker } from '../../../EøsSteg/Søker/useEøsForSøker';
+import { OppsummeringFelt } from '../../OppsummeringFelt';
+import Oppsummeringsbolk from '../../Oppsummeringsbolk';
+import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;

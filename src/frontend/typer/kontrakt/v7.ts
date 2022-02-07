@@ -2,8 +2,16 @@ import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { ISøknadKontraktBarn } from './barn';
 import { ISøknadKontraktDokumentasjon } from './dokumentasjon';
-import { ESøknadstype, SpørsmålMap } from './generelle';
-import { ISøknadKontraktSøker } from './søker';
+import {
+    ESivilstand,
+    ESøknadstype,
+    IAdresse,
+    IKontraktNåværendeSamboer,
+    IKontraktTidligereSamboer,
+    ISøknadsfelt,
+    IUtenlandsperiodeIKontraktFormat,
+    SpørsmålMap,
+} from './generelle';
 
 export interface ISøknadKontraktV7 {
     kontraktVersjon: number;
@@ -14,4 +22,26 @@ export interface ISøknadKontraktV7 {
     dokumentasjon: ISøknadKontraktDokumentasjon[];
     teksterUtenomSpørsmål: Record<string, Record<LocaleType, string>>;
     originalSpråk: LocaleType;
+}
+
+export interface ISøknadKontraktSøker {
+    ident: ISøknadsfelt<string>;
+    navn: ISøknadsfelt<string>;
+    statsborgerskap: ISøknadsfelt<string[]>;
+    adresse: ISøknadsfelt<IAdresse>;
+    sivilstand: ISøknadsfelt<ESivilstand>;
+    spørsmål: SpørsmålMap;
+    tidligereSamboere: ISøknadsfelt<IKontraktTidligereSamboer>[];
+    nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null;
+    utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
+    // eøs
+    arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
+}
+
+export interface IArbeidsperiodeIKontraktFormat {
+    arbeidsperiodeAvsluttet: ISøknadsfelt<string | undefined>;
+    arbeidsperiodeland: ISøknadsfelt<string | undefined>;
+    arbeidsgiver: ISøknadsfelt<string | undefined>;
+    fraDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
+    tilDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
 }
