@@ -8,7 +8,7 @@ export enum BarnetrygdperiodeSpørsmålId {
 }
 
 export const barnetrygdperiodeSpørsmålSpråkId = (
-    tilbakeITid = false
+    tilbakeITid: boolean
 ): Record<BarnetrygdperiodeSpørsmålId, string> => ({
     [BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs]: 'modal.trygdandreperioder.tittel',
     [BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå]: 'modal.barnetrygdnå.spmm',
