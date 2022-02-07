@@ -747,9 +747,9 @@ export const testdata1: TilKontraktTestData = {
                     },
                     barnetrygdFraAnnetEøsland: {
                         label: {
-                            en: 'For which of the children are you receiving or have you applied for child benefit?',
-                            nb: 'Hvem av barna får du eller er det søkt om barnetrygd for?',
-                            nn: 'Kven av barna får du eller er det søkt om barnetrygd for?',
+                            en: 'For which of the children are you receiving or have applied for child benefit?',
+                            nb: 'Hvem av barna får du eller har du søkt om barnetrygd for?',
+                            nn: 'Kven av barna får du eller har du søkt om barnetrygd for?',
                         },
                         verdi: {
                             nb: 'NEI',
@@ -759,7 +759,7 @@ export const testdata1: TilKontraktTestData = {
                     },
                     andreForelderErDød: {
                         label: {
-                            en: 'Which of the children is your previous spouse/cohabitating partner the parent of?',
+                            en: 'Which of the children is your previous spouse/cohabiting partner the parent of?',
                             nb: 'Hvem av barna er din tidligere ektefelle/samboer forelder til?',
                             nn: 'Kven av barna er din tidlegare ektefelle/sambuar forelder til?',
                         },
