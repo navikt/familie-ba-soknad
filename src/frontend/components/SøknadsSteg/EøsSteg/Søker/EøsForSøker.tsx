@@ -6,6 +6,7 @@ import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjo
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
+import { IdNummer } from '../IdNummer';
 import { useEøsForSøker } from './useEøsForSøker';
 
 const EøsForSøker: React.FC = () => {
@@ -20,7 +21,10 @@ const EøsForSøker: React.FC = () => {
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
+        settIdNummerFelter,
     } = useEøsForSøker();
+
+    const testListeMedLand = ['NOR', 'NED', 'ENG']; //TODO: bytt ut med ekte land
 
     return (
         <Steg
@@ -32,6 +36,17 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
+            {testListeMedLand.map((land, index) => {
+                return (
+                    <IdNummer
+                        skjema={skjema}
+                        key={index}
+                        settIdNummerFelter={settIdNummerFelter}
+                        land={land}
+                    />
+                );
+            })}
+
             <KomponentGruppe>
                 <Arbeidsperiode
                     skjema={skjema}

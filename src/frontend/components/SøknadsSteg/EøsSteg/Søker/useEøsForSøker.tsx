@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
+import { feil, Felt, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
@@ -25,9 +25,12 @@ export const useEøsForSøker = (): {
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
     leggTilAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
+    settIdNummerFelter: (felter: Felt<string>[]) => void;
 } => {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
+
+    const [idNummerFelter, settIdNummerFelter] = useState<Felt<string>[]>([]);
 
     const arbeidINorge = useJaNeiSpmFelt({
         søknadsfelt: søker.arbeidINorge,
@@ -132,6 +135,13 @@ export const useEøsForSøker = (): {
             registrertePensjonsperioder,
             andreUtbetalinger,
             registrerteAndreUtbetalinger,
+            ...idNummerFelter.reduce(
+                (obj, felt) => ({
+                    ...obj,
+                    [felt.id]: felt,
+                }),
+                {}
+            ),
         },
         skjemanavn: 'eøsForSøker',
     });
@@ -148,5 +158,6 @@ export const useEøsForSøker = (): {
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
+        settIdNummerFelter,
     };
 };
