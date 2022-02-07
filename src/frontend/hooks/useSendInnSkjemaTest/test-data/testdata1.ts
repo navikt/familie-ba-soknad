@@ -921,7 +921,7 @@ export const testdata1: TilKontraktTestData = {
                 label: {
                     en: 'Are you receiving or have you applied for child benefit for some of the children from another EEA country?',
                     nb: 'Får du eller har du søkt om barnetrygd for noen av barna fra et annet EØS land?',
-                    nn: 'Får du eller er det søkt om barnetrygd for nokre av barna frå eit anna EØS land?',
+                    nn: 'Får du eller har du søkt om barnetrygd for nokre av barna frå eit anna EØS land?',
                 },
                 verdi: {
                     nb: 'NEI',
