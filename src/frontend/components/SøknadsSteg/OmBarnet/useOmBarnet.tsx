@@ -37,6 +37,7 @@ import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '..
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -441,7 +442,7 @@ export const useOmBarnet = (
             ) {
                 return ok(felt);
             } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                return feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
             }
         }
     );

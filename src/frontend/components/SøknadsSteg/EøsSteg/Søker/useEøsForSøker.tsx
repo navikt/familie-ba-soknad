@@ -10,6 +10,7 @@ import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../..
 import { ISøker } from '../../../../typer/person';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export const useEøsForSøker = (): {
@@ -48,7 +49,7 @@ export const useEøsForSøker = (): {
             ) {
                 return ok(felt);
             } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
             }
         }
     );
@@ -73,7 +74,7 @@ export const useEøsForSøker = (): {
             ) {
                 return ok(felt);
             } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                return feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
             }
         }
     );
@@ -97,7 +98,7 @@ export const useEøsForSøker = (): {
             ) {
                 return ok(felt);
             } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                return feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
             }
         }
     );

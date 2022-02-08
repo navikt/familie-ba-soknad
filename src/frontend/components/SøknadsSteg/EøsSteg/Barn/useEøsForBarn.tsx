@@ -19,6 +19,7 @@ import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../..
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export const useEøsForBarn = (
@@ -76,7 +77,7 @@ export const useEøsForBarn = (
             ) {
                 return ok(felt);
             } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
             }
         }
     );
@@ -106,7 +107,7 @@ export const useEøsForBarn = (
             ) {
                 return ok(felt);
             } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                return feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
             }
         }
     );
@@ -137,7 +138,7 @@ export const useEøsForBarn = (
             ) {
                 return ok(felt);
             } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                return feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
             }
         }
     );
