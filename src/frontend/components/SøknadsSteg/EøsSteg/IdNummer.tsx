@@ -1,39 +1,56 @@
 import React, { useEffect, useState } from 'react';
 
-import { feil, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
+import { getName } from 'i18n-iso-countries';
 
-import useFørsteRender from '../../../hooks/useFørsteRender';
+import { feil, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
+import { useSprakContext } from '@navikt/familie-sprakvelger';
+
 import { IEøsForSøkerFeltTyper } from '../../../typer/skjema';
+import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 //TODO: hent fra søknadsobjekt
+//TODO: trim whitespace ved setting av søknadsobjekt
+
 const idNummerVerdier = [
-    { land: 'NOR', verdi: '111' },
-    { land: 'NED', verdi: '222' },
-    { land: 'ENG', verdi: '333' },
+    { landAlphaCode: 'NOR', verdi: '111' },
+    { landAlphaCode: 'AFG', verdi: '222' },
+    { landAlphaCode: 'ALB', verdi: '333' },
 ];
 
 export const IdNummer: React.FC<{
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
     settIdNummerFelter;
-    land;
-}> = ({ skjema, settIdNummerFelter, land }) => {
+    landAlphaCode;
+}> = ({ skjema, settIdNummerFelter, landAlphaCode }) => {
+    const [valgtLocale] = useSprakContext();
+
     const felt = useFelt({
-        feltId: `id-for-${land}`, //TODO: hva skal være ID?
-        verdi: Object.values(idNummerVerdier).find(verdi => verdi.land === land)?.verdi ?? '',
+        feltId: `id-for-${landAlphaCode}`, //TODO: hva skal være ID?
+        verdi:
+            Object.values(idNummerVerdier).find(verdi => verdi.landAlphaCode === landAlphaCode)
+                ?.verdi ?? '',
         valideringsfunksjon: (felt: FeltState<string>) => {
-            return felt.verdi !== ''
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'eøs-om-deg.dittidnummer.feilmelding'} />);
+            const verdi = trimWhiteSpace(felt.verdi);
+            if (verdi.match(/^[0-9A-Za-z\s\-.\\/]{1,20}$/)) {
+                return ok(felt);
+            } else {
+                return feil(
+                    felt,
+                    <SpråkTekst
+                        id={
+                            verdi === ''
+                                ? 'eøs-om-deg.dittidnummer.feilmelding'
+                                : 'felles.idnummer-feilformat.feilmelding'
+                        }
+                    />
+                );
+            }
         },
     });
 
-    //TODO: trim whitespace
-
     const [harRendretFørsteGang, settHarRendretFørsteGang] = useState(false);
-
-    //TODO: slå sammen disse useeffectene?
 
     useEffect(() => {
         if (harRendretFørsteGang) {
@@ -42,21 +59,19 @@ export const IdNummer: React.FC<{
                 return idNummerFelter.concat(felt);
             });
         } else {
+            settIdNummerFelter(prev => {
+                return prev.concat(felt);
+            });
             settHarRendretFørsteGang(true);
         }
     }, [felt.verdi, felt.valideringsstatus]);
-
-    useFørsteRender(() => {
-        settIdNummerFelter(prev => {
-            return prev.concat(felt);
-        });
-    });
 
     return (
         <SkjemaFeltInput
             felt={felt}
             visFeilmeldinger={skjema.visFeilmeldinger}
-            labelSpråkTekstId={'idNummer'} // TODO: riktig label
+            labelSpråkTekstId={'eøs-om-deg.dittidnummer.spm'}
+            språkVerdier={{ land: getName(landAlphaCode, valgtLocale) }}
         />
     );
 };

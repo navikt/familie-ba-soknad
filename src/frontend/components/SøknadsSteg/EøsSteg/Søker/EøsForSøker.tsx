@@ -24,7 +24,7 @@ const EøsForSøker: React.FC = () => {
         settIdNummerFelter,
     } = useEøsForSøker();
 
-    const testListeMedLand = ['NOR', 'NED', 'ENG']; //TODO: bytt ut med ekte land
+    const testListeMedLand = ['NOR', 'AFG', 'ALB']; //TODO: bytt ut med ekte land
 
     return (
         <Steg
@@ -36,13 +36,13 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            {testListeMedLand.map((land, index) => {
+            {testListeMedLand.map((landAlphaCode, index) => {
                 return (
                     <IdNummer
                         skjema={skjema}
                         key={index}
                         settIdNummerFelter={settIdNummerFelter}
-                        land={land}
+                        landAlphaCode={landAlphaCode}
                     />
                 );
             })}
