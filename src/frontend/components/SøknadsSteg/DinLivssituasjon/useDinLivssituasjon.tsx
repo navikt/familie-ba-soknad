@@ -25,7 +25,6 @@ import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
-import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
@@ -208,10 +207,16 @@ export const useDinLivssituasjon = (): {
         søker.arbeidsperioderUtland,
         { jobberPåBåt },
         avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            if (
+                avhengigheter?.jobberPåBåt.verdi === ESvar.NEI ||
+                (avhengigheter?.jobberPåBåt.verdi === ESvar.JA && felt.verdi.length)
+            ) {
+                return ok(felt);
+            } else {
+                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+            }
+        }
     );
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
@@ -236,10 +241,16 @@ export const useDinLivssituasjon = (): {
         { mottarUtenlandspensjon },
         avhengigheter =>
             avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            if (
+                avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.NEI ||
+                (avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length)
+            ) {
+                return ok(felt);
+            } else {
+                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+            }
+        }
     );
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<

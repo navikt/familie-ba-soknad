@@ -37,7 +37,6 @@ import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '..
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
-import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -377,10 +376,16 @@ export const useOmBarnet = (
         { andreForelderArbeidUtlandet },
         avhengigheter =>
             avhengigheter.andreForelderArbeidUtlandet.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            andreForelderArbeidUtlandet.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            if (
+                avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.NEI ||
+                (avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.JA && felt.verdi.length)
+            ) {
+                return ok(felt);
+            } else {
+                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+            }
+        }
     );
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt({
@@ -428,10 +433,17 @@ export const useOmBarnet = (
         { andreForelderPensjonUtland },
         avhengigheter =>
             avhengigheter.andreForelderPensjonUtland.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            andreForelderPensjonUtland.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />)
-                : ok(felt)
+
+        (felt, avhengigheter) => {
+            if (
+                avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.NEI ||
+                (avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.JA && felt.verdi.length)
+            ) {
+                return ok(felt);
+            } else {
+                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+            }
+        }
     );
 
     /*--- BOSTED ---*/

@@ -19,7 +19,6 @@ import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../..
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
-import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 export const useEøsForBarn = (
@@ -70,10 +69,16 @@ export const useEøsForBarn = (
         andreForelder?.arbeidsperioderNorge ?? [],
         { andreForelderArbeidNorge },
         avhengigheter => avhengigheter.andreForelderArbeidNorge.verdi === ESvar.JA,
-        felt =>
-            andreForelderArbeidNorge.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            if (
+                avhengigheter?.andreForelderArbeidNorge.verdi === ESvar.NEI ||
+                (avhengigheter?.andreForelderArbeidNorge.verdi === ESvar.JA && felt.verdi.length)
+            ) {
+                return ok(felt);
+            } else {
+                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+            }
+        }
     );
 
     const andreForelderPensjonNorge = useJaNeiSpmFelt({
@@ -94,10 +99,16 @@ export const useEøsForBarn = (
         andreForelder?.pensjonsperioderNorge ?? [],
         { andreForelderPensjonNorge },
         avhengigheter => avhengigheter.andreForelderPensjonNorge.verdi === ESvar.JA,
-        felt =>
-            andreForelderPensjonNorge.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            if (
+                avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.NEI ||
+                (avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.JA && felt.verdi.length)
+            ) {
+                return ok(felt);
+            } else {
+                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+            }
+        }
     );
 
     const andreForelderAndreUtbetalinger = useJaNeiSpmFelt({
@@ -118,10 +129,17 @@ export const useEøsForBarn = (
         andreForelder?.andreUtbetalingsperioder ?? [],
         { andreForelderAndreUtbetalinger },
         avhengigheter => avhengigheter.andreForelderAndreUtbetalinger.verdi === ESvar.JA,
-        felt =>
-            andreForelderAndreUtbetalinger.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            if (
+                avhengigheter?.andreForelderAndreUtbetalinger.verdi === ESvar.NEI ||
+                (avhengigheter?.andreForelderAndreUtbetalinger.verdi === ESvar.JA &&
+                    felt.verdi.length)
+            ) {
+                return ok(felt);
+            } else {
+                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+            }
+        }
     );
 
     const genererAndreForelder = (andreForelder: IAndreForelder) => ({
