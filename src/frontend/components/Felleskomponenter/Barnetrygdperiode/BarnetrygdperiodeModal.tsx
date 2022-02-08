@@ -43,10 +43,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
     };
 
     const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.NEI;
-    const eøsBarnetrygdSpørsmålSpråkTekst = (spørsmålsId: BarnetrygdperiodeSpørsmålId) => {
-        return <SpråkTekst id={barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[spørsmålsId]} />;
-    };
-
+    const eøsBarnetrygdSpørsmålSpråkTekst = (spørsmålsId: BarnetrygdperiodeSpørsmålId) => (
+        <SpråkTekst id={barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[spørsmålsId]} />
+    );
     return (
         <SkjemaModal
             erÅpen={erÅpen}
