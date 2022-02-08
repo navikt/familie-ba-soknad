@@ -9,6 +9,7 @@ import { IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './Søker/spørsmål';
 
 //TODO: hent fra søknadsobjekt
 //TODO: trim whitespace ved setting av søknadsobjekt
@@ -70,7 +71,7 @@ export const IdNummer: React.FC<{
         <SkjemaFeltInput
             felt={felt}
             visFeilmeldinger={skjema.visFeilmeldinger}
-            labelSpråkTekstId={'eøs-om-deg.dittidnummer.spm'}
+            labelSpråkTekstId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
             språkVerdier={{ land: getName(landAlphaCode, valgtLocale) }}
         />
     );

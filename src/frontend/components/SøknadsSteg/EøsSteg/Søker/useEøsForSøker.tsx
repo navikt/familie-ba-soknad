@@ -4,6 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
+import useInputFelt from '../../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../../hooks/usePerioder';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
@@ -12,6 +13,7 @@ import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { EøsSøkerSpørsmålId } from './spørsmål';
 
 export const useEøsForSøker = (): {
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
@@ -31,6 +33,14 @@ export const useEøsForSøker = (): {
     const søker = søknad.søker;
 
     const [idNummerFelter, settIdNummerFelter] = useState<Felt<string>[]>([]);
+
+    const adresseISøkeperiode = useInputFelt({
+        søknadsfelt: {
+            id: EøsSøkerSpørsmålId.adresseISøkeperiode,
+            svar: søknad.søker.adresseISøkeperiode.svar,
+        },
+        feilmeldingSpråkId: 'eøs-om-deg.dittoppholdssted.feilmelding',
+    });
 
     const arbeidINorge = useJaNeiSpmFelt({
         søknadsfelt: søker.arbeidINorge,
@@ -129,12 +139,6 @@ export const useEøsForSøker = (): {
         string
     >({
         felter: {
-            arbeidINorge,
-            registrerteArbeidsperioder,
-            pensjonNorge,
-            registrertePensjonsperioder,
-            andreUtbetalinger,
-            registrerteAndreUtbetalinger,
             ...idNummerFelter.reduce(
                 (obj, felt) => ({
                     ...obj,
@@ -142,6 +146,13 @@ export const useEøsForSøker = (): {
                 }),
                 {}
             ),
+            adresseISøkeperiode,
+            arbeidINorge,
+            registrerteArbeidsperioder,
+            pensjonNorge,
+            registrertePensjonsperioder,
+            andreUtbetalinger,
+            registrerteAndreUtbetalinger,
         },
         skjemanavn: 'eøsForSøker',
     });

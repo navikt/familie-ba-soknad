@@ -3,10 +3,12 @@ import React from 'react';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import { IdNummer } from '../IdNummer';
+import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './spørsmål';
 import { useEøsForSøker } from './useEøsForSøker';
 
 const EøsForSøker: React.FC = () => {
@@ -36,16 +38,26 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            {testListeMedLand.map((landAlphaCode, index) => {
-                return (
-                    <IdNummer
-                        skjema={skjema}
-                        key={index}
-                        settIdNummerFelter={settIdNummerFelter}
-                        landAlphaCode={landAlphaCode}
-                    />
-                );
-            })}
+            <KomponentGruppe>
+                {testListeMedLand.map((landAlphaCode, index) => {
+                    return (
+                        <IdNummer
+                            skjema={skjema}
+                            key={index}
+                            settIdNummerFelter={settIdNummerFelter}
+                            landAlphaCode={landAlphaCode}
+                        />
+                    );
+                })}
+                <SkjemaFeltInput
+                    felt={skjema.felter.adresseISøkeperiode}
+                    visFeilmeldinger={skjema.visFeilmeldinger}
+                    labelSpråkTekstId={
+                        eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]
+                    }
+                    description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
+                />
+            </KomponentGruppe>
 
             <KomponentGruppe>
                 <Arbeidsperiode

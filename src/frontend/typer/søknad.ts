@@ -175,6 +175,8 @@ export const initialStateSøknad: ISøknad = {
             svar: null,
         },
         nåværendeSamboer: null,
+        adresseISøkeperiode: { id: EøsSøkerSpørsmålId.adresseISøkeperiode, svar: '' },
+        idNummer: { id: EøsSøkerSpørsmålId.idNummer, svar: [] },
         utvidet: {
             spørsmål: {
                 årsak: {

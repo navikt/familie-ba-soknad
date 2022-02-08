@@ -10,7 +10,7 @@ import {
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
-import { IBarn } from './person';
+import { IBarn, IIdNummer } from './person';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 
@@ -104,6 +104,8 @@ export interface IOmDegFeltTyper {
     registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
+type IdNummerKey = `id-for-${string}`;
+
 export interface IEøsForSøkerFeltTyper {
     arbeidINorge: ESvar | null;
     registrerteArbeidsperioder: IArbeidsperiode[];
@@ -111,6 +113,8 @@ export interface IEøsForSøkerFeltTyper {
     registrertePensjonsperioder: IPensjonsperiode[];
     andreUtbetalinger: ESvar | null;
     registrerteAndreUtbetalinger: IUtbetalingsperiode[];
+    adresseISøkeperiode: string;
+    [key: IdNummerKey]: IIdNummer;
 }
 
 export interface IEøsForBarnFeltTyper {
