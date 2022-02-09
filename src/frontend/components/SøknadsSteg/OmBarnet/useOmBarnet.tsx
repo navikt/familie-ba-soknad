@@ -214,7 +214,7 @@ export const useOmBarnet = (
 
     const mottarEllerMottokEøsBarnetrygd = useJaNeiSpmFelt({
         søknadsfelt: barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
-        feilmeldingSpråkId: 'TODO',
+        feilmeldingSpråkId: 'ombarnet.fårellerharsøktbarnetrygdeøs.feilmelding',
         skalSkjules: !toggles.EØS_KOMPLETT,
     });
 
