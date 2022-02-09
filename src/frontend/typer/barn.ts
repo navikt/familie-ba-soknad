@@ -36,6 +36,7 @@ export enum barnDataKeySpørsmål {
     erAsylsøker = 'erAsylsøker',
     barnetrygdFraAnnetEøsland = 'barnetrygdFraAnnetEøsland',
     barnetrygdFraEøslandHvilketLand = 'barnetrygdFraEøslandHvilketLand',
+    mottarEllerMottokEøsBarnetrygd = 'mottarEllerMottokEøsBarnetrygd',
     andreForelderErDød = 'andreForelderErDød',
     oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
     institusjonIUtland = 'institusjonIUtland',
