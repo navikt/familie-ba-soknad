@@ -215,7 +215,9 @@ export const useOmBarnet = (
     const mottarEllerMottokEøsBarnetrygd = useJaNeiSpmFelt({
         søknadsfelt: barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
         feilmeldingSpråkId: 'ombarnet.fårellerharsøktbarnetrygdeøs.feilmelding',
-        skalSkjules: !toggles.EØS_KOMPLETT,
+        skalSkjules:
+            !toggles.EØS_KOMPLETT ||
+            !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });
 
     /*--- ANDRE FORELDER ---*/
