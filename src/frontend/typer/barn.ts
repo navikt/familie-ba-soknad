@@ -5,6 +5,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
 import {
     IArbeidsperiode,
+    IBarnetrygdsperiode,
     IPensjonsperiode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
@@ -83,12 +84,13 @@ export interface IAndreForelder {
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
     utenlandsperioder: IUtenlandsperiode[];
-    // TODO: barnetrygdPerioder: IBarnetrygdPeriode[];
+    eøsBarnetrygdsperioder: IBarnetrygdsperiode[];
     andreForelder: IAndreForelder | null;
     triggetEøs: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAsylsøker]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.andreForelderErDød]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | null>;

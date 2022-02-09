@@ -21,7 +21,11 @@ interface Props extends ReturnType<typeof useModal> {
     onLeggTilBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
 }
 
-export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }) => {
+export const BarnetrygdperiodeModal: React.FC<Props> = ({
+    erÅpen,
+    toggleModal,
+    onLeggTilBarnetrygdsperiode,
+}) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useBarnetrygdperiodeSkjema();
 
@@ -37,7 +41,32 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
-        //onLeggTilBarnetrygdsperiode({});
+        onLeggTilBarnetrygdsperiode({
+            mottarEøsBarnetrygdNå: {
+                id: BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå,
+                svar: mottarEøsBarnetrygdNå.verdi as ESvar,
+            },
+            barnetrygdsland: {
+                id: BarnetrygdperiodeSpørsmålId.barnetrygdsland,
+                svar: barnetrygdsland.verdi,
+            },
+            fraDatoBarnetrygdperiode: {
+                id: BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode,
+                svar: fraDatoBarnetrygdperiode.verdi,
+            },
+            ...(tilDatoBarnetrygdperiode.erSynlig && {
+                tilDatoBarnetrygdperiode: {
+                    id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode,
+                    svar: tilDatoBarnetrygdperiode.verdi,
+                },
+            }),
+
+            månedligBeløp: {
+                id: BarnetrygdperiodeSpørsmålId.månedligBeløp,
+                svar: månedligBeløp.verdi,
+            },
+        });
+
         toggleModal();
         nullstillSkjema();
     };

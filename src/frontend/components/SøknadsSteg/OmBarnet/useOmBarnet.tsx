@@ -26,7 +26,12 @@ import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { IDokumentasjon } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
-import { IArbeidsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../typer/perioder';
+import {
+    IArbeidsperiode,
+    IBarnetrygdsperiode,
+    IPensjonsperiode,
+    IUtenlandsperiode,
+} from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
@@ -59,6 +64,8 @@ export const useOmBarnet = (
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
+    leggTilBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
+    fjernBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
@@ -219,6 +226,29 @@ export const useOmBarnet = (
             !toggles.EØS_KOMPLETT ||
             !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });
+
+    const {
+        fjernPeriode: fjernBarnetrygdsperiode,
+        leggTilPeriode: leggTilBarnetrygdsperiode,
+        registrertePerioder: eøsBarnetrygdsperioder,
+    } = usePerioder<IBarnetrygdsperiode>(
+        barn.eøsBarnetrygdsperioder,
+        { mottarEllerMottokEøsBarnetrygd },
+        avhengigheter =>
+            avhengigheter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+
+        (felt, avhengigheter) => {
+            if (
+                avhengigheter?.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.NEI ||
+                (avhengigheter?.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA &&
+                    felt.verdi.length)
+            ) {
+                return ok(felt);
+            } else {
+                return feil(felt, <SpråkTekst id={'TODO'} />);
+            }
+        }
+    );
 
     /*--- ANDRE FORELDER ---*/
     const andreForelder = barn.andreForelder;
@@ -589,6 +619,7 @@ export const useOmBarnet = (
             planleggerÅBoINorge12Mnd,
             barnetrygdFraEøslandHvilketLand,
             mottarEllerMottokEøsBarnetrygd,
+            registrerteEøsBarnetrygdsperioder: eøsBarnetrygdsperioder,
             andreForelderNavn,
             andreForelderNavnUkjent,
             andreForelderFnr,
@@ -688,6 +719,15 @@ export const useOmBarnet = (
             barnetrygdFraEøslandHvilketLand: {
                 ...barn.barnetrygdFraEøslandHvilketLand,
                 svar: barnetrygdFraEøslandHvilketLand.verdi,
+            },
+            mottarEllerMottokEøsBarnetrygd: {
+                ...barn.mottarEllerMottokEøsBarnetrygd,
+                svar: mottarEllerMottokEøsBarnetrygd.verdi,
+            },
+            eøsBarnetrygdsperioder: {
+                ...(barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar === ESvar.JA
+                    ? skjema.felter.registrerteEøsBarnetrygdsperioder.verdi
+                    : []),
             },
             borFastMedSøker: {
                 ...barn.borFastMedSøker,
@@ -902,5 +942,7 @@ export const useOmBarnet = (
         fjernArbeidsperiode,
         leggTilPensjonsperiode,
         fjernPensjonsperiode,
+        leggTilBarnetrygdsperiode,
+        fjernBarnetrygdsperiode,
     };
 };
