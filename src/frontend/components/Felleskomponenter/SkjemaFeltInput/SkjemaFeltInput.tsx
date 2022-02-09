@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { Input, InputProps } from 'nav-frontend-skjema';
 
@@ -11,19 +11,26 @@ interface SkjemaFeltInputProps extends InputProps {
     felt: Felt<any>;
     visFeilmeldinger: boolean;
     labelSpråkTekstId: string;
+    språkValues?: Record<string, ReactNode> | undefined;
 }
 
 /**
  * Henter input props fra felt, og fra props. Props overstyrer felt.
  */
 export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
-    const { felt, labelSpråkTekstId, visFeilmeldinger, ...øvrigePropsStøttetAvNavInput } = props;
+    const {
+        felt,
+        labelSpråkTekstId,
+        visFeilmeldinger,
+        språkValues,
+        ...øvrigePropsStøttetAvNavInput
+    } = props;
     const navInputPropsFraFeltHook = felt.hentNavInputProps(visFeilmeldinger);
 
     return felt.erSynlig ? (
         <div>
             <Input
-                label={<SpråkTekst id={labelSpråkTekstId} />}
+                label={<SpråkTekst id={labelSpråkTekstId} values={språkValues} />}
                 {...navInputPropsFraFeltHook}
                 {...øvrigePropsStøttetAvNavInput}
                 maxLength={500}

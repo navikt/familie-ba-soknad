@@ -1,8 +1,12 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { IBarnetrygdsperiode } from '../../../typer/perioder';
+import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
@@ -19,12 +23,14 @@ import { useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal> {
     onLeggTilBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
+    barn: IBarnMedISøknad;
 }
 
 export const BarnetrygdperiodeModal: React.FC<Props> = ({
     erÅpen,
     toggleModal,
     onLeggTilBarnetrygdsperiode,
+    barn,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useBarnetrygdperiodeSkjema();
@@ -36,6 +42,8 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
         tilDatoBarnetrygdperiode,
         månedligBeløp,
     } = skjema.felter;
+
+    const intl = useIntl();
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -138,8 +146,11 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                                 BarnetrygdperiodeSpørsmålId.månedligBeløp
                             ]
                         }
-                        //TODO fikse label
-                        label={'Ikke i språkfil enda'}
+                        språkValues={{
+                            ...(barn && {
+                                barn: barnetsNavnValue(barn, intl),
+                            }),
+                        }}
                     />
                 )}
             </KomponentGruppe>

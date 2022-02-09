@@ -254,13 +254,14 @@ const Oppfølgningsspørsmål: React.FC<{
                                         feilmelding={
                                             registrerteEøsBarnetrygdsperioder.erSynlig &&
                                             registrerteEøsBarnetrygdsperioder.feilmelding &&
-                                            skjema.visFeilmeldinger && <SpråkTekst id={'test'} />
+                                            skjema.visFeilmeldinger && <SpråkTekst id={''} />
                                         }
                                     />
                                     <BarnetrygdperiodeModal
                                         erÅpen={barnetrygdsmodalErÅpen}
                                         toggleModal={toggleBarnetrygdsmodal}
                                         onLeggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
+                                        barn={barn}
                                     />
                                 </>
                             )}
