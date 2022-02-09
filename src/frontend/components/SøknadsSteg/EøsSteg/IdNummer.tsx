@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { getName } from 'i18n-iso-countries';
+import { Alpha3Code, getName } from 'i18n-iso-countries';
 
 import { feil, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
@@ -9,9 +9,11 @@ import { IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { PeriodeType } from './idnummerUtils';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './Søker/spørsmål';
 
 //TODO: hent fra søknadsobjekt
+// Hva med doble land?
 //TODO: trim whitespace ved setting av søknadsobjekt
 
 const idNummerVerdier = [
@@ -23,8 +25,9 @@ const idNummerVerdier = [
 export const IdNummer: React.FC<{
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
     settIdNummerFelter;
-    landAlphaCode;
-}> = ({ skjema, settIdNummerFelter, landAlphaCode }) => {
+    landAlphaCode: Alpha3Code;
+    periodeType: PeriodeType;
+}> = ({ skjema, settIdNummerFelter, landAlphaCode, periodeType }) => {
     const [valgtLocale] = useSprakContext();
 
     const felt = useFelt({
@@ -68,11 +71,16 @@ export const IdNummer: React.FC<{
     }, [felt.verdi, felt.valideringsstatus]);
 
     return (
-        <SkjemaFeltInput
-            felt={felt}
-            visFeilmeldinger={skjema.visFeilmeldinger}
-            labelSpråkTekstId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
-            språkVerdier={{ land: getName(landAlphaCode, valgtLocale) }}
-        />
+        <>
+            <SkjemaFeltInput
+                felt={felt}
+                visFeilmeldinger={skjema.visFeilmeldinger}
+                labelSpråkTekstId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
+                språkVerdier={{ land: getName(landAlphaCode, valgtLocale) }}
+            />
+            {periodeType === PeriodeType.utenlandsperiode && (
+                <div>Dette er en utenlandsperiode</div>
+            )}
+        </>
     );
 };

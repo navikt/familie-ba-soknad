@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useApp } from '../../../../context/AppContext';
+import { useEøs } from '../../../../context/EøsContext';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
@@ -8,6 +10,7 @@ import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import { IdNummer } from '../IdNummer';
+import { idNummerLandMedPeriodeType } from '../idnummerUtils';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './spørsmål';
 import { useEøsForSøker } from './useEøsForSøker';
 
@@ -26,7 +29,9 @@ const EøsForSøker: React.FC = () => {
         settIdNummerFelter,
     } = useEøsForSøker();
 
-    const testListeMedLand = ['NOR', 'AFG', 'ALB']; //TODO: bytt ut med ekte land
+    const { erEøsLand } = useEøs();
+    const { søknad } = useApp();
+    const { søker } = søknad;
 
     return (
         <Steg
@@ -39,14 +44,22 @@ const EøsForSøker: React.FC = () => {
             }}
         >
             <KomponentGruppe>
-                {testListeMedLand.map((landAlphaCode, index) => {
+                {idNummerLandMedPeriodeType(
+                    søker.arbeidsperioderUtland,
+                    søker.pensjonsperioderUtland,
+                    søker.utenlandsperioder,
+                    erEøsLand
+                ).map((landMedPeriodeType, index) => {
                     return (
-                        <IdNummer
-                            skjema={skjema}
-                            key={index}
-                            settIdNummerFelter={settIdNummerFelter}
-                            landAlphaCode={landAlphaCode}
-                        />
+                        !!landMedPeriodeType.land && (
+                            <IdNummer
+                                skjema={skjema}
+                                key={index}
+                                settIdNummerFelter={settIdNummerFelter}
+                                landAlphaCode={landMedPeriodeType.land}
+                                periodeType={landMedPeriodeType.periodeType}
+                            />
+                        )
                     );
                 })}
                 <SkjemaFeltInput
