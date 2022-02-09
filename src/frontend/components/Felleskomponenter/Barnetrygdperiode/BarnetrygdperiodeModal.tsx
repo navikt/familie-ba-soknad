@@ -17,7 +17,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { eøsBarnetrygdSpørsmålSpråkTekst } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId, barnetrygdperiodeSpørsmålSpråkId } from './spørsmål';
 import { useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
 
@@ -80,9 +80,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     };
 
     const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.NEI;
-    const eøsBarnetrygdSpørsmålSpråkTekst = (spørsmålsId: BarnetrygdperiodeSpørsmålId) => (
-        <SpråkTekst id={barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[spørsmålsId]} />
-    );
+
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -109,6 +107,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         felt={skjema.felter.barnetrygdsland}
                         skjema={skjema}
                         label={eøsBarnetrygdSpørsmålSpråkTekst(
+                            tilbakeITid,
                             BarnetrygdperiodeSpørsmålId.barnetrygdsland
                         )}
                         dynamisk
@@ -119,6 +118,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         felt={skjema.felter.fraDatoBarnetrygdperiode}
                         skjema={skjema}
                         label={eøsBarnetrygdSpørsmålSpråkTekst(
+                            tilbakeITid,
                             BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
                         )}
                         calendarPosition={'fullscreen'}
@@ -130,6 +130,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         felt={skjema.felter.tilDatoBarnetrygdperiode}
                         skjema={skjema}
                         label={eøsBarnetrygdSpørsmålSpråkTekst(
+                            tilbakeITid,
                             BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
                         )}
                         avgrensMinDato={skjema.felter.fraDatoBarnetrygdperiode.verdi}

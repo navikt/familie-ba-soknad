@@ -1,14 +1,22 @@
 import React from 'react';
 
+import { ESvar } from '@navikt/familie-form-elements';
+import { useSprakContext } from '@navikt/familie-sprakvelger';
+
 import { IBarnetrygdsperiode } from '../../../typer/perioder';
+import { formaterDato } from '../../../utils/dato';
+import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
+import { eøsBarnetrygdSpørsmålSpråkTekst } from './barnetrygdperiodeSpråkUtils';
+import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 export const BarnetrygdsperiodeOppsummering: React.FC<{
     barnetrygdsperiode: IBarnetrygdsperiode;
     nummer: number;
     fjernPeriodeCallback?: (barnetrygdsperiode: IBarnetrygdsperiode) => void;
-}> = ({ barnetrygdsperiode, nummer, fjernPeriodeCallback = undefined }) => {
+    barnetsNavn: string;
+}> = ({ barnetrygdsperiode, nummer, fjernPeriodeCallback = undefined, barnetsNavn }) => {
     const {
         mottarEøsBarnetrygdNå,
         barnetrygdsland,
@@ -17,7 +25,9 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
         månedligBeløp,
     } = barnetrygdsperiode;
 
-    //TODO sette inn riktige tekster
+    const tilbakeITid = mottarEøsBarnetrygdNå.svar === ESvar.NEI;
+    const [valgtLocale] = useSprakContext();
+
     return (
         <PeriodeOppsummering
             fjernPeriodeCallback={
@@ -25,35 +35,51 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
             }
             fjernKnappSpråkId={'felles.fjernarbeidsperiode.knapp'}
             nummer={nummer}
-            tittelSpråkId={'felles.fjernarbeidsperiode.knapp'}
+            tittelSpråkId={'ombarnet.trygdandreperioder.periode'}
         >
             {mottarEøsBarnetrygdNå && (
                 <OppsummeringFelt
-                    tittel={'felles.fjernarbeidsperiode.knapp'}
+                    tittel={eøsBarnetrygdSpørsmålSpråkTekst(
+                        tilbakeITid,
+                        BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå
+                    )}
                     søknadsvar={mottarEøsBarnetrygdNå.svar}
                 />
             )}
             {barnetrygdsland && (
                 <OppsummeringFelt
-                    tittel={'felles.fjernarbeidsperiode.knapp'}
-                    søknadsvar={barnetrygdsland.svar}
+                    tittel={eøsBarnetrygdSpørsmålSpråkTekst(
+                        tilbakeITid,
+                        BarnetrygdperiodeSpørsmålId.barnetrygdsland
+                    )}
+                    søknadsvar={landkodeTilSpråk(barnetrygdsland.svar, valgtLocale)}
                 />
             )}
             {fraDatoBarnetrygdperiode && (
                 <OppsummeringFelt
-                    tittel={'felles.fjernarbeidsperiode.knapp'}
-                    søknadsvar={fraDatoBarnetrygdperiode.svar}
+                    tittel={eøsBarnetrygdSpørsmålSpråkTekst(
+                        tilbakeITid,
+                        BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
+                    )}
+                    søknadsvar={formaterDato(fraDatoBarnetrygdperiode.svar)}
                 />
             )}
             {tilDatoBarnetrygdperiode && (
                 <OppsummeringFelt
-                    tittel={'felles.fjernarbeidsperiode.knapp'}
-                    søknadsvar={tilDatoBarnetrygdperiode.svar}
+                    tittel={eøsBarnetrygdSpørsmålSpråkTekst(
+                        tilbakeITid,
+                        BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
+                    )}
+                    søknadsvar={formaterDato(tilDatoBarnetrygdperiode.svar)}
                 />
             )}
             {månedligBeløp && (
                 <OppsummeringFelt
-                    tittel={'felles.fjernarbeidsperiode.knapp'}
+                    tittel={eøsBarnetrygdSpørsmålSpråkTekst(
+                        tilbakeITid,
+                        BarnetrygdperiodeSpørsmålId.månedligBeløp,
+                        { ...(barnetsNavn && { barn: barnetsNavn }) }
+                    )}
                     søknadsvar={månedligBeløp.svar}
                 />
             )}

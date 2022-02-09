@@ -237,6 +237,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                                 barnetrygdsperiode={periode}
                                                 fjernPeriodeCallback={fjernBarnetrygdsperiode}
                                                 nummer={index + 1}
+                                                barnetsNavn={barnetsNavnValue(barn, intl)}
                                             />
                                         )
                                     )}
