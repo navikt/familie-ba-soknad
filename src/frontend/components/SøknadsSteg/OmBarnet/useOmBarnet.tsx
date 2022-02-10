@@ -238,15 +238,11 @@ export const useOmBarnet = (
             avhengigheter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
 
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.NEI ||
+            return avhengigheter?.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.NEI ||
                 (avhengigheter?.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA &&
                     felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />);
         }
     );
 
