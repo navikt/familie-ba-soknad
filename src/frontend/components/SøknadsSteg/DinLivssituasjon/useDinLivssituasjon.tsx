@@ -209,14 +209,10 @@ export const useDinLivssituasjon = (): {
         { jobberPåBåt },
         avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.jobberPåBåt.verdi === ESvar.NEI ||
+            return avhengigheter?.jobberPåBåt.verdi === ESvar.NEI ||
                 (avhengigheter?.jobberPåBåt.verdi === ESvar.JA && felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
         }
     );
 
@@ -243,14 +239,10 @@ export const useDinLivssituasjon = (): {
         avhengigheter =>
             avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.NEI ||
+            return avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.NEI ||
                 (avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
         }
     );
 

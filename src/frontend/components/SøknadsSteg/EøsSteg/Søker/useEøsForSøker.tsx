@@ -43,14 +43,10 @@ export const useEøsForSøker = (): {
         { arbeidINorge },
         avhengigheter => avhengigheter.arbeidINorge.verdi === ESvar.JA,
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.arbeidINorge.verdi === ESvar.NEI ||
+            return avhengigheter?.arbeidINorge.verdi === ESvar.NEI ||
                 (avhengigheter?.arbeidINorge.verdi === ESvar.JA && felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
         }
     );
 
@@ -68,14 +64,10 @@ export const useEøsForSøker = (): {
         avhengigheter => avhengigheter.pensjonNorge.verdi === ESvar.JA,
 
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.pensjonNorge.verdi === ESvar.NEI ||
+            return avhengigheter?.pensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.pensjonNorge.verdi === ESvar.JA && felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
         }
     );
 
@@ -92,14 +84,10 @@ export const useEøsForSøker = (): {
         { andreUtbetalinger },
         avhengigheter => avhengigheter.andreUtbetalinger.verdi === ESvar.JA,
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.andreUtbetalinger.verdi === ESvar.NEI ||
+            return avhengigheter?.andreUtbetalinger.verdi === ESvar.NEI ||
                 (avhengigheter?.andreUtbetalinger.verdi === ESvar.JA && felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
         }
     );
 

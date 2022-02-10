@@ -71,14 +71,10 @@ export const useEøsForBarn = (
         { andreForelderArbeidNorge },
         avhengigheter => avhengigheter.andreForelderArbeidNorge.verdi === ESvar.JA,
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.andreForelderArbeidNorge.verdi === ESvar.NEI ||
+            return avhengigheter?.andreForelderArbeidNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderArbeidNorge.verdi === ESvar.JA && felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
         }
     );
 
@@ -101,14 +97,10 @@ export const useEøsForBarn = (
         { andreForelderPensjonNorge },
         avhengigheter => avhengigheter.andreForelderPensjonNorge.verdi === ESvar.JA,
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.NEI ||
+            return avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.JA && felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
         }
     );
 
@@ -131,15 +123,11 @@ export const useEøsForBarn = (
         { andreForelderAndreUtbetalinger },
         avhengigheter => avhengigheter.andreForelderAndreUtbetalinger.verdi === ESvar.JA,
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.andreForelderAndreUtbetalinger.verdi === ESvar.NEI ||
+            return avhengigheter?.andreForelderAndreUtbetalinger.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderAndreUtbetalinger.verdi === ESvar.JA &&
                     felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
         }
     );
 

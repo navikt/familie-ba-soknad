@@ -378,14 +378,10 @@ export const useOmBarnet = (
         avhengigheter =>
             avhengigheter.andreForelderArbeidUtlandet.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.NEI ||
+            return avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.JA && felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
         }
     );
 
@@ -436,14 +432,10 @@ export const useOmBarnet = (
             avhengigheter.andreForelderPensjonUtland.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
 
         (felt, avhengigheter) => {
-            if (
-                avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.NEI ||
+            return avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.JA && felt.verdi.length)
-            ) {
-                return ok(felt);
-            } else {
-                return feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
-            }
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
         }
     );
 
