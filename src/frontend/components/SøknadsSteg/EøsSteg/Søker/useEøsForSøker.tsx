@@ -12,6 +12,7 @@ import { usePerioder } from '../../../../hooks/usePerioder';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { ISøker } from '../../../../typer/person';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
+import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -113,12 +114,12 @@ export const useEøsForSøker = (): {
             ...søknad.søker.idNummer,
             svar: idNummerFelter.map(felt => ({
                 land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
-                idnummer: felt.verdi,
+                idnummer: trimWhiteSpace(felt.verdi),
             })),
         },
         adresseISøkeperiode: {
             ...søknad.søker.adresseISøkeperiode,
-            svar: skjema.felter.adresseISøkeperiode.verdi,
+            svar: trimWhiteSpace(skjema.felter.adresseISøkeperiode.verdi),
         },
         arbeidINorge: {
             ...søknad.søker.arbeidINorge,

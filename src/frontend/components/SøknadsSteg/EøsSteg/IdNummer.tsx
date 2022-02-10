@@ -14,7 +14,6 @@ import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './Søker/spørsmål';
 
 // Hva med doble land?
-//TODO: trim whitespace ved setting av søknadsobjekt
 
 export const IdNummer: React.FC<{
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
