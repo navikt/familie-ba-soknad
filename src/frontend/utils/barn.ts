@@ -155,8 +155,8 @@ export const genererOppdaterteBarn = (
         const oppdatertBarn = {
             ...barn,
             utenlandsperioder: oppholdtSegIUtlandSiste12Mnd ? barn.utenlandsperioder : [],
-            eøsBarnetrygdsperioder: mottarBarnetrygdFraAnnetEøsland
-                ? barn.eøsBarnetrygdsperioder
+            registrerteEøsBarnetrygdsperioder: mottarBarnetrygdFraAnnetEøsland
+                ? barn.registrerteEøsBarnetrygdsperioder
                 : [],
             andreForelder: erFosterbarn
                 ? null
@@ -289,7 +289,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         ...barn,
         barnErFyltUt: false,
         utenlandsperioder: [],
-        eøsBarnetrygdsperioder: [],
+        registrerteEøsBarnetrygdsperioder: [],
         andreForelder: null,
         triggetEøs: false,
         [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: {

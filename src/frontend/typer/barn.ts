@@ -84,7 +84,7 @@ export interface IAndreForelder {
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
     utenlandsperioder: IUtenlandsperiode[];
-    eøsBarnetrygdsperioder: IBarnetrygdsperiode[];
+    registrerteEøsBarnetrygdsperioder: IBarnetrygdsperiode[];
     andreForelder: IAndreForelder | null;
     triggetEøs: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;

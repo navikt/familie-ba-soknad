@@ -230,9 +230,9 @@ export const useOmBarnet = (
     const {
         fjernPeriode: fjernBarnetrygdsperiode,
         leggTilPeriode: leggTilBarnetrygdsperiode,
-        registrertePerioder: eøsBarnetrygdsperioder,
+        registrertePerioder: registrerteEøsBarnetrygdsperioder,
     } = usePerioder<IBarnetrygdsperiode>(
-        barn.eøsBarnetrygdsperioder,
+        barn.registrerteEøsBarnetrygdsperioder,
         { mottarEllerMottokEøsBarnetrygd },
         avhengigheter =>
             avhengigheter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
@@ -619,7 +619,7 @@ export const useOmBarnet = (
             planleggerÅBoINorge12Mnd,
             barnetrygdFraEøslandHvilketLand,
             mottarEllerMottokEøsBarnetrygd,
-            registrerteEøsBarnetrygdsperioder: eøsBarnetrygdsperioder,
+            registrerteEøsBarnetrygdsperioder,
             andreForelderNavn,
             andreForelderNavnUkjent,
             andreForelderFnr,
@@ -724,7 +724,7 @@ export const useOmBarnet = (
                 ...barn.mottarEllerMottokEøsBarnetrygd,
                 svar: mottarEllerMottokEøsBarnetrygd.verdi,
             },
-            eøsBarnetrygdsperioder: {
+            registrerteEøsBarnetrygdsperioder: {
                 ...(barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar === ESvar.JA
                     ? skjema.felter.registrerteEøsBarnetrygdsperioder.verdi
                     : []),
