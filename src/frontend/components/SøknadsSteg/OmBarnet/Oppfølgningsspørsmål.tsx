@@ -211,7 +211,6 @@ const Oppfølgningsspørsmål: React.FC<{
                     )}
                 </SkjemaFieldset>
             )}
-            {/*TODO legge inn alle tekster*/}
             {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.barnetrygd-eøs'}
@@ -255,7 +254,11 @@ const Oppfølgningsspørsmål: React.FC<{
                                         feilmelding={
                                             registrerteEøsBarnetrygdsperioder.erSynlig &&
                                             registrerteEøsBarnetrygdsperioder.feilmelding &&
-                                            skjema.visFeilmeldinger && <SpråkTekst id={''} />
+                                            skjema.visFeilmeldinger && (
+                                                <SpråkTekst
+                                                    id={'ombarnet.trygdandreperioder.feilmelding'}
+                                                />
+                                            )
                                         }
                                     />
                                     <BarnetrygdperiodeModal

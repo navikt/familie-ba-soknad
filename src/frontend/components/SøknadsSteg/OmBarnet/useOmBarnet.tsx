@@ -245,7 +245,7 @@ export const useOmBarnet = (
             ) {
                 return ok(felt);
             } else {
-                return feil(felt, <SpråkTekst id={'TODO'} />);
+                return feil(felt, <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />);
             }
         }
     );

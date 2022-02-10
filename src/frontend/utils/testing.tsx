@@ -386,6 +386,11 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     id: OmBarnetSpørsmålsId.søkerForTidsromSluttdato,
                     svar: AlternativtSvarForInput.UKJENT,
                 },
+                [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
+                    id: OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd,
+                    svar: ESvar.NEI,
+                },
+                eøsBarnetrygdsperioder: [],
             },
         ],
     };
