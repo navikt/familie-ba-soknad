@@ -2,6 +2,8 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { IArbeidsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 
+export const idNummerKeyPrefix = 'idnummer-';
+
 export enum PeriodeType {
     arbeidsperiode = 'arbeidsperiode',
     pensjonsperiode = 'pensjonsperiode',
@@ -9,50 +11,55 @@ export enum PeriodeType {
 }
 
 export type IdNummerLandMedPeriodeType = {
-    periodeType: PeriodeType;
     land: Alpha3Code | undefined | '';
+    periodeType: PeriodeType;
 };
 
 export const idNummerLandMedPeriodeType = (
     arbeidsperioderUtland: IArbeidsperiode[],
     pensjonsperioderUtland: IPensjonsperiode[],
     utenlandsperioder: IUtenlandsperiode[],
-    eøsLand: (land: Alpha3Code | '') => boolean
+    erEøsLand: (land: Alpha3Code | '') => boolean
 ): IdNummerLandMedPeriodeType[] => {
-    const arbeidsperioderSomKreverIdNummer = arbeidsperioderUtland.filter(
-        arbeidsperiode =>
-            !!arbeidsperiode.arbeidsperiodeland?.svar &&
-            eøsLand(arbeidsperiode.arbeidsperiodeland.svar)
-    );
+    const utenlandsperioderLandSomKreverIdNummer = utenlandsperioder
+        .map(utenlandsperiode => utenlandsperiode.oppholdsland.svar)
+        .filter(land => land && erEøsLand(land));
 
-    const pensjonsperioderSomKreverIdNummer = pensjonsperioderUtland.filter(
-        pensjonsperiode =>
-            pensjonsperiode.pensjonsland?.svar && eøsLand(pensjonsperiode.pensjonsland.svar)
-    );
+    const arbeidsperioderLandSomKreverIdNummer = arbeidsperioderUtland
+        .map(arbeidsperiode => arbeidsperiode.arbeidsperiodeland?.svar)
+        .filter(
+            land =>
+                land && erEøsLand(land) && !utenlandsperioderLandSomKreverIdNummer.includes(land)
+        );
 
-    const utenlandsperioderSomKreverIdNummer = utenlandsperioder.filter(
-        utenlandsperiode =>
-            utenlandsperiode.oppholdsland.svar && eøsLand(utenlandsperiode.oppholdsland.svar)
-    );
+    const pensjonsperioderLandSomKreverIdNummer = pensjonsperioderUtland
+        .map(periode => periode.pensjonsland?.svar)
+        .filter(
+            land =>
+                land &&
+                erEøsLand(land) &&
+                !arbeidsperioderLandSomKreverIdNummer.includes(land) &&
+                !utenlandsperioderLandSomKreverIdNummer.includes(land)
+        );
 
-    const mapArbeidTilIdNummerLandMedPeriodeType = arbeidsperioderSomKreverIdNummer.map(
-        periode => ({
+    const mapArbeidTilIdNummerLandMedPeriodeType = arbeidsperioderLandSomKreverIdNummer.map(
+        land => ({
+            land,
             periodeType: PeriodeType.arbeidsperiode,
-            land: periode.arbeidsperiodeland?.svar,
         })
     );
-    const mapPensjonTilIdNummerLandMedPeriodeType = pensjonsperioderSomKreverIdNummer.map(
-        periode => ({
+    const mapPensjonTilIdNummerLandMedPeriodeType = pensjonsperioderLandSomKreverIdNummer.map(
+        land => ({
+            land,
             periodeType: PeriodeType.pensjonsperiode,
-            land: periode.pensjonsland?.svar,
         })
     );
-    const mapUtenlandsppholdTilIdNummerLandMedPeriodeType = utenlandsperioderSomKreverIdNummer.map(
-        periode => ({
+    const mapUtenlandsppholdTilIdNummerLandMedPeriodeType =
+        utenlandsperioderLandSomKreverIdNummer.map(land => ({
+            land,
             periodeType: PeriodeType.utenlandsperiode,
-            land: periode.oppholdsland.svar,
-        })
-    );
+        }));
+
     return [
         ...mapArbeidTilIdNummerLandMedPeriodeType,
         ...mapPensjonTilIdNummerLandMedPeriodeType,

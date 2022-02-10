@@ -104,7 +104,7 @@ export interface IOmDegFeltTyper {
     registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
-type IdNummerKey = `id-for-${string}`;
+type IdNummerKey = `idnummer-${string}`;
 
 export interface IEøsForSøkerFeltTyper {
     arbeidINorge: ESvar | null;

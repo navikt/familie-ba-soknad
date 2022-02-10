@@ -9,7 +9,7 @@ import { IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { PeriodeType } from './idnummerUtils';
+import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './Søker/spørsmål';
 
 //TODO: hent fra søknadsobjekt
@@ -31,7 +31,7 @@ export const IdNummer: React.FC<{
     const [valgtLocale] = useSprakContext();
 
     const felt = useFelt({
-        feltId: `id-for-${landAlphaCode}`, //TODO: hva skal være ID?
+        feltId: `${idNummerKeyPrefix}${landAlphaCode}`,
         verdi:
             Object.values(idNummerVerdier).find(verdi => verdi.landAlphaCode === landAlphaCode)
                 ?.verdi ?? '',

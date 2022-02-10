@@ -41,7 +41,7 @@ export interface IBarn extends IPerson {
 
 export interface IIdNummer {
     land: Alpha3Code;
-    idnummer: string;
+    idnummer: string | AlternativtSvarForInput.UKJENT;
 }
 
 export interface ISøker extends Omit<ISøkerRespons, 'barn'> {

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Alpha3Code } from 'i18n-iso-countries';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
@@ -13,6 +15,7 @@ import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { idNummerKeyPrefix } from '../idnummerUtils';
 import { EøsSøkerSpørsmålId } from './spørsmål';
 
 export const useEøsForSøker = (): {
@@ -37,7 +40,7 @@ export const useEøsForSøker = (): {
     const adresseISøkeperiode = useInputFelt({
         søknadsfelt: {
             id: EøsSøkerSpørsmålId.adresseISøkeperiode,
-            svar: søknad.søker.adresseISøkeperiode.svar,
+            svar: søker.adresseISøkeperiode.svar,
         },
         feilmeldingSpråkId: 'eøs-om-deg.dittoppholdssted.feilmelding',
     });
@@ -106,6 +109,17 @@ export const useEøsForSøker = (): {
     };
     const genererOppdatertSøker = (): ISøker => ({
         ...søknad.søker,
+        idNummer: {
+            ...søknad.søker.idNummer,
+            svar: idNummerFelter.map(felt => ({
+                land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
+                idnummer: felt.verdi,
+            })),
+        },
+        adresseISøkeperiode: {
+            ...søknad.søker.adresseISøkeperiode,
+            svar: skjema.felter.adresseISøkeperiode.verdi,
+        },
         arbeidINorge: {
             ...søknad.søker.arbeidINorge,
             svar: skjema.felter.arbeidINorge.verdi,
