@@ -244,7 +244,7 @@ const Oppfølgningsspørsmål: React.FC<{
 
                                     {registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
                                         <Element>
-                                            <SpråkTekst id={'ngøgn'} />
+                                            <SpråkTekst id={'ombarnet.trygdandreperioder.spm'} />
                                         </Element>
                                     )}
 
