@@ -155,9 +155,7 @@ export const genererOppdaterteBarn = (
         const oppdatertBarn = {
             ...barn,
             utenlandsperioder: oppholdtSegIUtlandSiste12Mnd ? barn.utenlandsperioder : [],
-            registrerteEøsBarnetrygdsperioder: mottarBarnetrygdFraAnnetEøsland
-                ? barn.registrerteEøsBarnetrygdsperioder
-                : [],
+            registrerteEøsBarnetrygdsperioder: barn.registrerteEøsBarnetrygdsperioder ?? [],
             andreForelder: erFosterbarn
                 ? null
                 : genererAndreForelder(barn.andreForelder, andreForelderErDød),
