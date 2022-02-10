@@ -8,6 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
@@ -41,6 +42,7 @@ const Oppfølgningsspørsmål: React.FC<{
     const intl = useIntl();
     const { erÅpen, toggleModal } = useModal();
     const { erEøsLand } = useEøs();
+    const { toggles } = useFeatureToggles();
 
     const erFørsteEøsPeriode = (periode: IUtenlandsperiode) => {
         return periode === utenlandsperioder.find(p => erEøsLand(p.oppholdsland.svar));
@@ -198,20 +200,34 @@ const Oppfølgningsspørsmål: React.FC<{
                     tittelId={'ombarnet.barnetrygd-eøs'}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
-                    <LandDropdown
-                        felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
-                        skjema={skjema}
-                        kunEøs={true}
-                        label={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand
-                                    ]
+                    {toggles.EØS_KOMPLETT ? (
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.mottarEllerMottokEøsBarnetrygd}
+                            spørsmålTekstId={
+                                omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd
+                                ]
+                            }
+                        />
+                    ) : (
+                        <>
+                            <LandDropdown
+                                felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
+                                skjema={skjema}
+                                kunEøs={true}
+                                label={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand
+                                            ]
+                                        }
+                                    />
                                 }
                             />
-                        }
-                    />
+                        </>
+                    )}
                 </SkjemaFieldset>
             )}
             <UtenlandsoppholdModal

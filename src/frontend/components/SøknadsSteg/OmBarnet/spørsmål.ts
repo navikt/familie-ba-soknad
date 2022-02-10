@@ -8,6 +8,7 @@ export enum OmBarnetSpørsmålsId {
     institusjonOppholdVetIkke = 'institusjon-opphold-ukjent-sluttdato',
     planleggerÅBoINorge12Mnd = 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
     barnetrygdFraEøslandHvilketLand = 'barnetrygd-hvilket-eøsland',
+    mottarEllerMottokEøsBarnetrygd = 'mottar-eller-mottok-eøs-barnetrygd',
     andreForelderNavn = 'andre-forelder-navn',
     andreForelderNavnUkjent = 'andre-forelder-navn-ukjent',
     andreForelderFnr = 'andre-forelder-fødsels-/dnummer',
@@ -44,6 +45,8 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.institusjonOppholdVetIkke]: 'ombarnet.institusjon.ukjent-sluttdato.spm',
     [OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]: 'ombarnet.oppholdtsammenhengende.spm',
     [OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand]: 'ombarnet.barnetrygd-eøs.land.spm',
+    [OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd]:
+        'ombarnet.fårellerharsøktbarnetrygdeøs.spm',
     [OmBarnetSpørsmålsId.andreForelderNavn]: 'ombarnet.andre-forelder.navn.spm',
     [OmBarnetSpørsmålsId.andreForelderNavnUkjent]: 'ombarnet.andre-forelder.navn-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFnr]: 'felles.fødsels-eller-dnummer.label',
