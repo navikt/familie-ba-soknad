@@ -5,6 +5,7 @@ import { Alpha3Code, getName } from 'i18n-iso-countries';
 import { feil, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { useApp } from '../../../context/AppContext';
 import { IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
@@ -12,15 +13,8 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './Søker/spørsmål';
 
-//TODO: hent fra søknadsobjekt
 // Hva med doble land?
 //TODO: trim whitespace ved setting av søknadsobjekt
-
-const idNummerVerdier = [
-    { landAlphaCode: 'NOR', verdi: '111' },
-    { landAlphaCode: 'AFG', verdi: '222' },
-    { landAlphaCode: 'ALB', verdi: '333' },
-];
 
 export const IdNummer: React.FC<{
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
@@ -29,12 +23,13 @@ export const IdNummer: React.FC<{
     periodeType: PeriodeType;
 }> = ({ skjema, settIdNummerFelter, landAlphaCode, periodeType }) => {
     const [valgtLocale] = useSprakContext();
+    const { søknad } = useApp();
 
     const felt = useFelt({
         feltId: `${idNummerKeyPrefix}${landAlphaCode}`,
         verdi:
-            Object.values(idNummerVerdier).find(verdi => verdi.landAlphaCode === landAlphaCode)
-                ?.verdi ?? '',
+            Object.values(søknad.søker.idNummer.svar).find(verdi => verdi.land === landAlphaCode)
+                ?.idnummer ?? '',
         valideringsfunksjon: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
             if (verdi.match(/^[0-9A-Za-z\s\-.\\/]{1,20}$/)) {
