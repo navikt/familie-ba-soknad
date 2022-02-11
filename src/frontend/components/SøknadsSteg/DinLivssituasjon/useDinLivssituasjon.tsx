@@ -208,10 +208,12 @@ export const useDinLivssituasjon = (): {
         søker.arbeidsperioderUtland,
         { jobberPåBåt },
         avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            return avhengigheter?.jobberPåBåt.verdi === ESvar.NEI ||
+                (avhengigheter?.jobberPåBåt.verdi === ESvar.JA && felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+        }
     );
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
@@ -236,10 +238,12 @@ export const useDinLivssituasjon = (): {
         { mottarUtenlandspensjon },
         avhengigheter =>
             avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            return avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.NEI ||
+                (avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
+        }
     );
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<

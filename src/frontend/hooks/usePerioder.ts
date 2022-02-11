@@ -25,8 +25,14 @@ export const usePerioder = <T>(
         valideringsfunksjon,
     });
 
+    const [harRendretEnGang, settHarRendretEnGang] = useState<boolean>(false);
+
     useEffect(() => {
-        registrertePerioder.validerOgSettFelt(perioder);
+        if (harRendretEnGang) {
+            registrertePerioder.validerOgSettFelt(perioder);
+        } else {
+            settHarRendretEnGang(true);
+        }
     }, [perioder]);
 
     return {
