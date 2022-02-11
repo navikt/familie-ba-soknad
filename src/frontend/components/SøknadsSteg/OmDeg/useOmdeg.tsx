@@ -11,6 +11,7 @@ import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { idNummerLand } from '../EøsSteg/idnummerUtils';
 
 export const useOmdeg = (): {
     skjema: ISkjema<IOmDegFeltTyper, string>;
@@ -23,6 +24,7 @@ export const useOmdeg = (): {
     utenlandsperioder: IUtenlandsperiode[];
 } => {
     const { søknad, settSøknad } = useApp();
+    const { erEøsLand } = useEøs();
     const søker = søknad.søker;
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
         søker.utenlandsperioder
@@ -124,18 +126,29 @@ export const useOmdeg = (): {
     };
 
     const genererOppdatertSøker = () => ({
-        ...søknad.søker,
+        ...søker,
         utenlandsperioder: værtINorgeITolvMåneder.verdi === ESvar.NEI ? utenlandsperioder : [],
+        idNummer: {
+            ...søker.idNummer,
+            svar: søknad.søker.idNummer.svar.filter(idNummer => {
+                return idNummerLand(
+                    søker.arbeidsperioderUtland,
+                    søker.pensjonsperioderUtland,
+                    registrerteUtenlandsperioder.verdi,
+                    erEøsLand
+                ).includes(idNummer.land);
+            }),
+        },
         borPåRegistrertAdresse: {
-            ...søknad.søker.borPåRegistrertAdresse,
+            ...søker.borPåRegistrertAdresse,
             svar: skjema.felter.borPåRegistrertAdresse.verdi,
         },
         værtINorgeITolvMåneder: {
-            ...søknad.søker.værtINorgeITolvMåneder,
+            ...søker.værtINorgeITolvMåneder,
             svar: skjema.felter.værtINorgeITolvMåneder.verdi,
         },
         planleggerÅBoINorgeTolvMnd: {
-            ...søknad.søker.planleggerÅBoINorgeTolvMnd,
+            ...søker.planleggerÅBoINorgeTolvMnd,
             svar:
                 !flyttetPermanentFraNorge(utenlandsperioder) &&
                 værtINorgeITolvMåneder.verdi === ESvar.NEI

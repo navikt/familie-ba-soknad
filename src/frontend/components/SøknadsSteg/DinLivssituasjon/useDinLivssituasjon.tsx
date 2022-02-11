@@ -27,6 +27,7 @@ import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { idNummerLand } from '../EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
 
@@ -45,7 +46,7 @@ export const useDinLivssituasjon = (): {
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
-    const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøs();
+    const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs, erEøsLand } = useEøs();
     const { toggles } = useFeatureToggles();
     const søker = søknad.søker;
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
@@ -360,6 +361,17 @@ export const useDinLivssituasjon = (): {
             skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA
                 ? skjema.felter.registrertePensjonsperioder.verdi
                 : [],
+        idNummer: {
+            ...søker.idNummer,
+            svar: søknad.søker.idNummer.svar.filter(idNummer => {
+                return idNummerLand(
+                    registrerteArbeidsperioder.verdi,
+                    registrertePensjonsperioder.verdi,
+                    søker.utenlandsperioder,
+                    erEøsLand
+                ).includes(idNummer.land);
+            }),
+        },
         utvidet: {
             ...søknad.søker.utvidet,
             tidligereSamboere,

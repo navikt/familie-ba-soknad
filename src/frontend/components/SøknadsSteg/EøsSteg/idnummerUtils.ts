@@ -15,8 +15,8 @@ export type IdNummerLandMedPeriodeType = {
     periodeType: PeriodeType;
 };
 
-export const fjernDuplikat = (land: (Alpha3Code | '' | undefined)[]) =>
-    land.filter((land, index) => land && !land.includes(land, index + 1));
+export const fjernDuplikat = (landList: (Alpha3Code | '' | undefined)[]) =>
+    landList.filter((land, index) => land && !landList.includes(land, index + 1));
 
 export const utenlandsperioderIdNummerLand = (
     utenlandsperioder: IUtenlandsperiode[],
@@ -39,10 +39,10 @@ export const arbeidsperioderIdNummerLand = (
 };
 
 export const pensjonsperioderIdNummerLand = (
-    pernsjonsperioder: IPensjonsperiode[],
+    pensjonsperioder: IPensjonsperiode[],
     erEøsLand: (land: Alpha3Code | '') => boolean
 ) => {
-    const landSomKreverIdNummer = pernsjonsperioder
+    const landSomKreverIdNummer = pensjonsperioder
         .map(periode => periode.pensjonsland?.svar)
         .filter(land => land && erEøsLand(land));
     return fjernDuplikat(landSomKreverIdNummer);
@@ -98,3 +98,16 @@ export const idNummerLandMedPeriodeType = (
         ...mapUtenlandsppholdTilIdNummerLandMedPeriodeType,
     ];
 };
+
+export const idNummerLand = (
+    arbeidsperioderUtland: IArbeidsperiode[],
+    pensjonsperioderUtland: IPensjonsperiode[],
+    utenlandsperioder: IUtenlandsperiode[],
+    erEøsLand: (land: Alpha3Code | '') => boolean
+) =>
+    idNummerLandMedPeriodeType(
+        arbeidsperioderUtland,
+        pensjonsperioderUtland,
+        utenlandsperioder,
+        erEøsLand
+    ).map(landMedPeriode => landMedPeriode.land);
