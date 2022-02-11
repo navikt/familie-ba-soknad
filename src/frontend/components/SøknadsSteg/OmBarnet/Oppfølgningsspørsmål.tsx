@@ -55,7 +55,7 @@ const Oppfølgningsspørsmål: React.FC<{
     registrerteEøsBarnetrygdsperioder,
 }) => {
     const intl = useIntl();
-    const { erÅpen, toggleModal } = useModal();
+    const { erÅpen: utenlandsmodalErÅpen, toggleModal: toggleUtenlandsmodal } = useModal();
     const { erEøsLand } = useEøs();
     const { toggles } = useFeatureToggles();
     const { erÅpen: barnetrygdsmodalErÅpen, toggleModal: toggleBarnetrygdsmodal } = useModal();
@@ -179,7 +179,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     <LeggTilKnapp
                         id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                         språkTekst={'felles.leggtilutenlands.knapp'}
-                        onClick={toggleModal}
+                        onClick={toggleUtenlandsmodal}
                         feilmelding={
                             skjema.felter.registrerteUtenlandsperioder.erSynlig &&
                             skjema.felter.registrerteUtenlandsperioder.feilmelding &&
@@ -291,8 +291,8 @@ const Oppfølgningsspørsmål: React.FC<{
                 </SkjemaFieldset>
             )}
             <UtenlandsoppholdModal
-                erÅpen={erÅpen}
-                toggleModal={toggleModal}
+                erÅpen={utenlandsmodalErÅpen}
+                toggleModal={toggleUtenlandsmodal}
                 onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
                 barn={barn}
             />

@@ -37,7 +37,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
             nummer={nummer}
             tittelSpråkId={'ombarnet.trygdandreperioder.periode'}
         >
-            {mottarEøsBarnetrygdNå && (
+            {mottarEøsBarnetrygdNå.svar && (
                 <OppsummeringFelt
                     tittel={eøsBarnetrygdSpørsmålSpråkTekst(
                         tilbakeITid,
@@ -46,7 +46,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
                     søknadsvar={mottarEøsBarnetrygdNå.svar}
                 />
             )}
-            {barnetrygdsland && (
+            {barnetrygdsland.svar && (
                 <OppsummeringFelt
                     tittel={eøsBarnetrygdSpørsmålSpråkTekst(
                         tilbakeITid,
@@ -55,7 +55,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
                     søknadsvar={landkodeTilSpråk(barnetrygdsland.svar, valgtLocale)}
                 />
             )}
-            {fraDatoBarnetrygdperiode && (
+            {fraDatoBarnetrygdperiode.svar && (
                 <OppsummeringFelt
                     tittel={eøsBarnetrygdSpørsmålSpråkTekst(
                         tilbakeITid,
@@ -64,7 +64,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
                     søknadsvar={formaterDato(fraDatoBarnetrygdperiode.svar)}
                 />
             )}
-            {tilDatoBarnetrygdperiode && (
+            {tilDatoBarnetrygdperiode?.svar && (
                 <OppsummeringFelt
                     tittel={eøsBarnetrygdSpørsmålSpråkTekst(
                         tilbakeITid,
@@ -73,12 +73,12 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
                     søknadsvar={formaterDato(tilDatoBarnetrygdperiode.svar)}
                 />
             )}
-            {månedligBeløp && (
+            {månedligBeløp.svar && (
                 <OppsummeringFelt
                     tittel={eøsBarnetrygdSpørsmålSpråkTekst(
                         tilbakeITid,
                         BarnetrygdperiodeSpørsmålId.månedligBeløp,
-                        { ...(barnetsNavn && { barn: barnetsNavn }) }
+                        { barn: barnetsNavn }
                     )}
                     søknadsvar={månedligBeløp.svar}
                 />

@@ -11,7 +11,7 @@ interface SkjemaFeltInputProps extends InputProps {
     felt: Felt<any>;
     visFeilmeldinger: boolean;
     labelSpråkTekstId: string;
-    språkValues?: Record<string, ReactNode> | undefined;
+    språkValues?: Record<string, ReactNode>;
 }
 
 /**

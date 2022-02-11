@@ -52,7 +52,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
         onLeggTilBarnetrygdsperiode({
             mottarEøsBarnetrygdNå: {
                 id: BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå,
-                svar: mottarEøsBarnetrygdNå.verdi as ESvar,
+                svar: mottarEøsBarnetrygdNå.verdi,
             },
             barnetrygdsland: {
                 id: BarnetrygdperiodeSpørsmålId.barnetrygdsland,
@@ -68,7 +68,6 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                     svar: tilDatoBarnetrygdperiode.verdi,
                 },
             }),
-
             månedligBeløp: {
                 id: BarnetrygdperiodeSpørsmålId.månedligBeløp,
                 svar: månedligBeløp.verdi,

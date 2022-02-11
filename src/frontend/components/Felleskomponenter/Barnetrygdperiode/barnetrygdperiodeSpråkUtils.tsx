@@ -9,7 +9,7 @@ export const barnetrygdslandFeilmelding = (tilbakeITid: boolean): string =>
 export const eøsBarnetrygdSpørsmålSpråkTekst = (
     tilbakeITid: boolean,
     spørsmålsId: BarnetrygdperiodeSpørsmålId,
-    språkValues?: Record<string, ReactNode> | undefined
+    språkValues?: Record<string, ReactNode>
 ) => (
     <SpråkTekst
         id={barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[spørsmålsId]}

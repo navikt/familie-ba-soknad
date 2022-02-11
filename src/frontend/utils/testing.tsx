@@ -390,7 +390,7 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     id: OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd,
                     svar: ESvar.NEI,
                 },
-                registrerteEøsBarnetrygdsperioder: [],
+                eøsBarnetrygdsperioder: [],
             },
         ],
     };

@@ -155,7 +155,8 @@ export const genererOppdaterteBarn = (
         const oppdatertBarn = {
             ...barn,
             utenlandsperioder: oppholdtSegIUtlandSiste12Mnd ? barn.utenlandsperioder : [],
-            registrerteEøsBarnetrygdsperioder: barn.registrerteEøsBarnetrygdsperioder ?? [],
+            eøsBarnetrygdsperioder:
+                mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [],
             andreForelder: erFosterbarn
                 ? null
                 : genererAndreForelder(barn.andreForelder, andreForelderErDød),
@@ -256,7 +257,7 @@ export const genererOppdaterteBarn = (
                 svar: genererSvarForOppfølgningspørsmålBarn(
                     mottarBarnetrygdFraAnnetEøsland,
                     barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
-                    ''
+                    null
                 ),
             },
         };
@@ -287,7 +288,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         ...barn,
         barnErFyltUt: false,
         utenlandsperioder: [],
-        registrerteEøsBarnetrygdsperioder: [],
+        eøsBarnetrygdsperioder: [],
         andreForelder: null,
         triggetEøs: false,
         [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: {

@@ -232,7 +232,7 @@ export const useOmBarnet = (
         leggTilPeriode: leggTilBarnetrygdsperiode,
         registrertePerioder: registrerteEøsBarnetrygdsperioder,
     } = usePerioder<IBarnetrygdsperiode>(
-        barn.registrerteEøsBarnetrygdsperioder,
+        barn.eøsBarnetrygdsperioder,
         { mottarEllerMottokEøsBarnetrygd },
         avhengigheter =>
             avhengigheter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
@@ -666,6 +666,7 @@ export const useOmBarnet = (
 
         return oppdatertDokumentasjon;
     };
+    console.log(skjema.felter.mottarEllerMottokEøsBarnetrygd);
 
     const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
         const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
@@ -720,11 +721,10 @@ export const useOmBarnet = (
                 ...barn.mottarEllerMottokEøsBarnetrygd,
                 svar: mottarEllerMottokEøsBarnetrygd.verdi,
             },
-            registrerteEøsBarnetrygdsperioder: {
-                ...(barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar === ESvar.JA
+            eøsBarnetrygdsperioder:
+                mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA
                     ? skjema.felter.registrerteEøsBarnetrygdsperioder.verdi
-                    : []),
-            },
+                    : [],
             borFastMedSøker: {
                 ...barn.borFastMedSøker,
                 svar: borFastMedSøker.verdi,
