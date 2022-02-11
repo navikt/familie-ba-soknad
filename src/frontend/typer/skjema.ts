@@ -72,6 +72,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     institusjonOppholdSluttVetIkke: ESvar;
     planleggerÅBoINorge12Mnd: ESvar | null;
     barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
+    mottarEllerMottokEøsBarnetrygd: ESvar | null;
     andreForelderNavn: string;
     andreForelderNavnUkjent: ESvar;
     andreForelderFnr: string;
@@ -174,6 +175,14 @@ export interface IArbeidsperioderFeltTyper {
     tilDatoArbeidsperiode: ISODateString;
     tilDatoArbeidsperiodeUkjent: ESvar;
 }
+
+export interface IBarnetrygdperioderFeltTyper {
+    mottarEøsBarnetrygdNå: ESvar | null;
+    barnetrygdsland: Alpha3Code | '';
+    fraDatoBarnetrygdperiode: ISODateString;
+    tilDatoBarnetrygdperiode: ISODateString;
+    månedligBeløp: string;
+}
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
@@ -187,4 +196,5 @@ export type SkjemaFeltTyper =
     | IEøsForSøkerFeltTyper
     | IEøsForBarnFeltTyper
     | IUtbetalingerFeltTyper
-    | IArbeidsperioderFeltTyper;
+    | IArbeidsperioderFeltTyper
+    | IBarnetrygdperioderFeltTyper;

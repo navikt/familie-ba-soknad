@@ -206,7 +206,18 @@ export const useOmBarnet = (
     const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt({
         søknadsfelt: barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
         feilmeldingSpråkId: 'ombarnet.barnetrygd-eøs.land.feilmelding',
-        skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
+        skalFeltetVises:
+            skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland) && !toggles.EØS_KOMPLETT,
+    });
+
+    /*--- EØS SPØRSMÅL MOTTAR BARNETRYGD ---*/
+
+    const mottarEllerMottokEøsBarnetrygd = useJaNeiSpmFelt({
+        søknadsfelt: barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
+        feilmeldingSpråkId: 'ombarnet.fårellerharsøktbarnetrygdeøs.feilmelding',
+        skalSkjules:
+            !toggles.EØS_KOMPLETT ||
+            !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });
 
     /*--- ANDRE FORELDER ---*/
@@ -377,10 +388,12 @@ export const useOmBarnet = (
         { andreForelderArbeidUtlandet },
         avhengigheter =>
             avhengigheter.andreForelderArbeidUtlandet.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            andreForelderArbeidUtlandet.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            return avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.NEI ||
+                (avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.JA && felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+        }
     );
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt({
@@ -428,10 +441,13 @@ export const useOmBarnet = (
         { andreForelderPensjonUtland },
         avhengigheter =>
             avhengigheter.andreForelderPensjonUtland.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            andreForelderPensjonUtland.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />)
-                : ok(felt)
+
+        (felt, avhengigheter) => {
+            return avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.NEI ||
+                (avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.JA && felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
+        }
     );
 
     /*--- BOSTED ---*/
@@ -577,6 +593,7 @@ export const useOmBarnet = (
             registrerteUtenlandsperioder,
             planleggerÅBoINorge12Mnd,
             barnetrygdFraEøslandHvilketLand,
+            mottarEllerMottokEøsBarnetrygd,
             andreForelderNavn,
             andreForelderNavnUkjent,
             andreForelderFnr,
