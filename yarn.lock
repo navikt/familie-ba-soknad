@@ -2782,10 +2782,10 @@
     "@types/mime" "^1"
     "@types/node" "*"
 
-"@types/sharp@0.27.1":
-  version "0.27.1"
-  resolved "https://registry.yarnpkg.com/@types/sharp/-/sharp-0.27.1.tgz#26212ceb191b3de654a898a06577869afc200c57"
-  integrity sha512-RbYmyPjDUzi3lI9Qm68I+82I+DNOe/jW5w+EC1FvpT/f2TYXDG6mmPZQQohy98ufq+u6OB6pQkqpcNMDxzVclg==
+"@types/sharp@0.29.5":
+  version "0.29.5"
+  resolved "https://registry.yarnpkg.com/@types/sharp/-/sharp-0.29.5.tgz#9c7032d30d138ad16dde6326beaff2af757b91b3"
+  integrity sha512-3TC+S3H5RwnJmLYMHrcdfNjz/CaApKmujjY9b6PU/pE6n0qfooi99YqXGWoW8frU9EWYj/XTI35Pzxa+ThAZ5Q==
   dependencies:
     "@types/node" "*"
 
@@ -4398,7 +4398,7 @@ color@3.0.x:
     color-convert "^1.9.1"
     color-string "^1.5.2"
 
-color@^4.2.0:
+color@^4.0.1:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/color/-/color-4.2.0.tgz#0c782459a3e98838ea01e4bc0fb43310ca35af78"
   integrity sha512-hHTcrbvEnGjC7WBMk6ibQWFVDgEFTVmjrz2Q5HlU6ltwxv0JJN2Z8I7uRbWeQLF04dikxs8zgyZkazRJvSMtyQ==
@@ -5207,6 +5207,11 @@ destroy@^1.0.4, destroy@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
+
+detect-libc@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
+  integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
 
 detect-libc@^2.0.0:
   version "2.0.0"
@@ -6862,6 +6867,22 @@ he@^1.2.0:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
+heic-convert@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/heic-convert/-/heic-convert-1.2.4.tgz#605820f98ace3949a40fc7b263ee0bc573a0176b"
+  integrity sha512-klJHyv+BqbgKiCQvCqI9IKIvweCcohDuDl0Jphearj8+16+v8eff2piVevHqq4dW9TK0r1onTR6PKHP1I4hdbA==
+  dependencies:
+    heic-decode "^1.1.2"
+    jpeg-js "^0.4.1"
+    pngjs "^3.4.0"
+
+heic-decode@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/heic-decode/-/heic-decode-1.1.2.tgz#974701666432e31ed64b2263a1ece7cff5218209"
+  integrity sha512-UF8teegxvzQPdSTcx5frIUhitNDliz/9Pui0JFdIqVRE00spVE33DcCYtZqaLNyd4y5RP/QQWZFIc1YWVKKm2A==
+  dependencies:
+    libheif-js "^1.10.0"
+
 hex-color-regex@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
@@ -8313,6 +8334,11 @@ jose@^3.19.0:
   resolved "https://registry.yarnpkg.com/jose/-/jose-3.19.0.tgz#4b64c89b619d6256268865ed223c5228203d50df"
   integrity sha512-G5imz/7oSe8Ohg4EMEhGhMhN+yzACMw7NC7ZrEYSoJekQXHPf+TPQNc/XJkYRm6TFWIbf3HA4OHZhdRv8KsskA==
 
+jpeg-js@^0.4.1:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.4.3.tgz#6158e09f1983ad773813704be80680550eff977b"
+  integrity sha512-ru1HWKek8octvUHFHvE5ZzQ1yAsJmIvRdGWvSoKV52XKyuyYA437QWDttXT8eZXDSbuMpHlLzPDZUPd6idIz+Q==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -8685,6 +8711,11 @@ levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+libheif-js@^1.10.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/libheif-js/-/libheif-js-1.12.0.tgz#9ad1ed16a8e6412b4d3d83565d285465a00e7305"
+  integrity sha512-hDs6xQ7028VOwAFwEtM0Q+B2x2NW69Jb2MhQFUbk3rUrHzz4qo5mqS8VrqNgYnSc8TiUGnR691LnO4uIfEE23w==
 
 lilconfig@^2.0.3:
   version "2.0.3"
@@ -9551,7 +9582,7 @@ node-abi@^3.3.0:
   dependencies:
     semver "^7.3.5"
 
-node-addon-api@^4.3.0:
+node-addon-api@^4.2.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-4.3.0.tgz#52a1a0b475193e0928e98e0426a0d1254782b77f"
   integrity sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==
@@ -10243,6 +10274,11 @@ please-upgrade-node@^3.2.0:
   dependencies:
     semver-compare "^1.0.0"
 
+pngjs@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.4.0.tgz#99ca7d725965fb655814eaf65f38f12bbdbf555f"
+  integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
+
 portfinder@^1.0.28:
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.28.tgz#67c4622852bd5374dd1dd900f779f53462fac778"
@@ -10515,7 +10551,7 @@ postcss@^8.2.4, postcss@^8.3.5:
     nanoid "^3.1.23"
     source-map-js "^0.6.2"
 
-prebuild-install@^7.0.1:
+prebuild-install@^7.0.0:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-7.0.1.tgz#c10075727c318efe72412f333e0ef625beaf3870"
   integrity sha512-QBSab31WqkyxpnMWQxubYAHR5S9B2+r81ucocew34Fkl98FhvKIF50jIJnNOBmAZfyNV7vE5T6gd3hTVWgY6tg==
@@ -11624,17 +11660,17 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-sharp@^0.30.0:
-  version "0.30.0"
-  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.30.0.tgz#b2dd62d5f14088b11c72212354f31dff6511b070"
-  integrity sha512-L3m/l6yQFr3oGBUzcSAlN/R9yGFPYqM9FpMUe6Z4nHg4sWtP3hW1rcz+aaHklhD4wX5Jqh5PY9z+A1d4Qt3Hfg==
+sharp@^0.29.3:
+  version "0.29.3"
+  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.29.3.tgz#0da183d626094c974516a48fab9b3e4ba92eb5c2"
+  integrity sha512-fKWUuOw77E4nhpyzCCJR1ayrttHoFHBT2U/kR/qEMRhvPEcluG4BKj324+SCO1e84+knXHwhJ1HHJGnUt4ElGA==
   dependencies:
-    color "^4.2.0"
-    detect-libc "^2.0.0"
-    node-addon-api "^4.3.0"
-    prebuild-install "^7.0.1"
+    color "^4.0.1"
+    detect-libc "^1.0.3"
+    node-addon-api "^4.2.0"
+    prebuild-install "^7.0.0"
     semver "^7.3.5"
-    simple-get "^4.0.1"
+    simple-get "^4.0.0"
     tar-fs "^2.1.1"
     tunnel-agent "^0.6.0"
 
@@ -11678,15 +11714,6 @@ simple-get@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/simple-get/-/simple-get-4.0.0.tgz#73fa628278d21de83dadd5512d2cc1f4872bd675"
   integrity sha512-ZalZGexYr3TA0SwySsr5HlgOOinS4Jsa8YB2GJ6lUNAazyAu4KG/VmzMTwAt2YVXzzVj8QmefmAonZIK2BSGcQ==
-  dependencies:
-    decompress-response "^6.0.0"
-    once "^1.3.1"
-    simple-concat "^1.0.0"
-
-simple-get@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/simple-get/-/simple-get-4.0.1.tgz#4a39db549287c979d352112fa03fd99fd6bc3543"
-  integrity sha512-brv7p5WgH0jmQJr1ZDDfKDOSeWWg+OVypG99A/5vYGPqJ6pxiaHLy8nxtFjBA7oMa01ebA9gfh1uMCFqOuXxvA==
   dependencies:
     decompress-response "^6.0.0"
     once "^1.3.1"

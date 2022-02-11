@@ -1,5 +1,5 @@
 import { Express, RequestHandler, raw } from 'express';
-import sharp from 'sharp';
+import { default as convert } from 'heic-convert';
 
 import { logError, logWarn } from '@navikt/familie-logging';
 
@@ -7,13 +7,11 @@ import { basePath } from '../environment';
 import { jwtValidationInterceptor } from '../middlewares/jwt-interceptor';
 
 async function prosesser(bilde: Buffer): Promise<Buffer> {
-    return sharp(bilde)
-        .rotate()
-        .resize(600, 1200, {
-            fit: sharp.fit.inside,
-        })
-        .toFormat('jpeg', { quality: 80 })
-        .toBuffer();
+    return await convert({
+        buffer: bilde, // the HEIC file buffer
+        format: 'JPEG', // output format
+        quality: 0.8, // the jpeg compression quality, between 0 and 1
+    });
 }
 
 const bildeProsesseringHandler: RequestHandler = async (req, res) => {
