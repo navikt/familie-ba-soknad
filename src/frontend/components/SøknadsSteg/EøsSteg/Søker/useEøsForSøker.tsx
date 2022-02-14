@@ -29,7 +29,6 @@ export const useEøsForSøker = (): {
     const { søknad, settSøknad } = useApp();
     const søker = søknad.søker;
 
-    console.log(søknad);
     const arbeidINorge = useJaNeiSpmFelt({
         søknadsfelt: søker.arbeidINorge,
         feilmeldingSpråkId: 'eøs-om-deg.arbeidsperioderinorge.feilmelding',

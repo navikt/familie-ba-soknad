@@ -671,7 +671,6 @@ export const useOmBarnet = (
 
         return oppdatertDokumentasjon;
     };
-    console.log(skjema.felter.mottarEllerMottokEøsBarnetrygd);
 
     const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
         const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
