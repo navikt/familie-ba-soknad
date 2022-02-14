@@ -15,9 +15,7 @@ import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
-import { BarnetrygdperiodeModal } from '../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeModal';
-import { BarnetrygdsperiodeOppsummering } from '../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
-import { BarnetrygdperiodeSpørsmålId } from '../../Felleskomponenter/Barnetrygdperiode/spørsmål';
+import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -58,7 +56,6 @@ const Oppfølgningsspørsmål: React.FC<{
     const { erÅpen: utenlandsmodalErÅpen, toggleModal: toggleUtenlandsmodal } = useModal();
     const { erEøsLand } = useEøs();
     const { toggles } = useFeatureToggles();
-    const { erÅpen: barnetrygdsmodalErÅpen, toggleModal: toggleBarnetrygdsmodal } = useModal();
 
     const erFørsteEøsPeriode = (periode: IUtenlandsperiode) => {
         return periode === utenlandsperioder.find(p => erEøsLand(p.oppholdsland.svar));
@@ -217,59 +214,13 @@ const Oppfølgningsspørsmål: React.FC<{
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     {toggles.EØS_KOMPLETT ? (
-                        <>
-                            <JaNeiSpm
-                                skjema={skjema}
-                                felt={skjema.felter.mottarEllerMottokEøsBarnetrygd}
-                                spørsmålTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd
-                                    ]
-                                }
-                            />
-                            {skjema.felter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA && (
-                                <>
-                                    {registrerteEøsBarnetrygdsperioder.verdi.map(
-                                        (periode, index) => (
-                                            <BarnetrygdsperiodeOppsummering
-                                                key={`eøs-barnetrygdsperiode-${index}`}
-                                                barnetrygdsperiode={periode}
-                                                fjernPeriodeCallback={fjernBarnetrygdsperiode}
-                                                nummer={index + 1}
-                                                barnetsNavn={barnetsNavnValue(barn, intl)}
-                                            />
-                                        )
-                                    )}
-
-                                    {registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
-                                        <Element>
-                                            <SpråkTekst id={'ombarnet.trygdandreperioder.spm'} />
-                                        </Element>
-                                    )}
-
-                                    <LeggTilKnapp
-                                        onClick={toggleBarnetrygdsmodal}
-                                        språkTekst={'ombarnet.trygdandreperioder.knapp'}
-                                        id={BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs}
-                                        feilmelding={
-                                            registrerteEøsBarnetrygdsperioder.erSynlig &&
-                                            registrerteEøsBarnetrygdsperioder.feilmelding &&
-                                            skjema.visFeilmeldinger && (
-                                                <SpråkTekst
-                                                    id={'ombarnet.trygdandreperioder.feilmelding'}
-                                                />
-                                            )
-                                        }
-                                    />
-                                    <BarnetrygdperiodeModal
-                                        erÅpen={barnetrygdsmodalErÅpen}
-                                        toggleModal={toggleBarnetrygdsmodal}
-                                        onLeggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
-                                        barn={barn}
-                                    />
-                                </>
-                            )}
-                        </>
+                        <Barnetrygdperiode
+                            skjema={skjema}
+                            registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
+                            leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
+                            fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
+                            barn={barn}
+                        />
                     ) : (
                         <>
                             <LandDropdown
