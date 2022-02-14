@@ -6,6 +6,7 @@ import { barnDataKeySpørsmål } from './barn';
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
 import {
     IArbeidsperiode,
+    IBarnetrygdsperiode,
     IPensjonsperiode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
@@ -73,6 +74,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     planleggerÅBoINorge12Mnd: ESvar | null;
     barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
     mottarEllerMottokEøsBarnetrygd: ESvar | null;
+    registrerteEøsBarnetrygdsperioder: IBarnetrygdsperiode[];
     andreForelderNavn: string;
     andreForelderNavnUkjent: ESvar;
     andreForelderFnr: string;
