@@ -9,6 +9,7 @@ import { useApp } from '../../../../context/AppContext';
 import useInputFelt from '../../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../../hooks/usePerioder';
+import { AlternativtSvarForInput } from '../../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { ISøker } from '../../../../typer/person';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
@@ -121,7 +122,8 @@ export const useEøsForSøker = (): {
             ...søknad.søker.idNummer,
             svar: idNummerFelter.map(felt => ({
                 land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
-                idnummer: trimWhiteSpace(felt.verdi),
+                idnummer:
+                    trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
             })),
         },
         adresseISøkeperiode: {
@@ -162,9 +164,9 @@ export const useEøsForSøker = (): {
     >({
         felter: {
             ...idNummerFelter.reduce(
-                (obj, felt) => ({
-                    ...obj,
-                    [felt.id]: felt,
+                (objekt, felt) => ({
+                    ...objekt,
+                    [felt.id]: felt.verdi,
                 }),
                 {}
             ),

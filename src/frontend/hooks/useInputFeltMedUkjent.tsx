@@ -15,14 +15,14 @@ import { formaterInitVerdiForInputMedUkjent } from '../utils/input';
 const useInputFeltMedUkjent = ({
     søknadsfelt,
     avhengighet,
-    feilmeldingSpråkId,
+    feilmeldingSpråkId = '',
     erFnrInput = false,
     skalVises = true,
     customValidering = undefined,
 }: {
-    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | null;
+    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | { id: string; svar: string } | null;
     avhengighet: Felt<ESvar>;
-    feilmeldingSpråkId: string;
+    feilmeldingSpråkId?: string;
     erFnrInput?: boolean;
     skalVises?: boolean;
     customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
