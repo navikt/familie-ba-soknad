@@ -19,10 +19,10 @@ import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './Søker/s
 
 export const IdNummer: React.FC<{
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
-    settIdNummerFelter;
+    settIdNummerSkjemaFelter;
     landAlphaCode: Alpha3Code;
     periodeType: PeriodeType;
-}> = ({ skjema, settIdNummerFelter, landAlphaCode, periodeType }) => {
+}> = ({ skjema, settIdNummerSkjemaFelter, landAlphaCode, periodeType }) => {
     const [valgtLocale] = useSprakContext();
     const { søknad } = useApp();
 
@@ -63,11 +63,11 @@ export const IdNummer: React.FC<{
 
     useEffect(() => {
         if (harRendretFørsteGang) {
-            settIdNummerFelter(prev =>
+            settIdNummerSkjemaFelter(prev =>
                 prev.filter(felt => felt.id !== idNummerFelt.id).concat(idNummerFelt)
             );
         } else {
-            settIdNummerFelter(prev => {
+            settIdNummerSkjemaFelter(prev => {
                 return prev.concat(idNummerFelt);
             });
             settHarRendretFørsteGang(true);

@@ -40,6 +40,14 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             settFeilAnchors={settFeilAnchors}
         >
             <StyledOppsummeringsFeltGruppe>
+                {søker.idNummer.svar.map(idNummer => (
+                    <>
+                        <div>{idNummer.land}</div>
+                        <div>{idNummer.idnummer}</div>
+                    </>
+                ))}
+            </StyledOppsummeringsFeltGruppe>
+            <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(søker.arbeidINorge)}
                 {søker.arbeidsperioderNorge.map((arbeidsperiode, index) => (
                     <ArbeidsperiodeOppsummering
