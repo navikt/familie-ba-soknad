@@ -85,6 +85,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const [valgtLocale] = useSprakContext();
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const { toggles } = useFeatureToggles();
+    const dinLivsituasjonHook = useDinLivssituasjon();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
 
@@ -92,7 +93,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.DinLivssituasjon)}
             tittel={'dinlivssituasjon.sidetittel'}
-            skjemaHook={useDinLivssituasjon}
+            skjemaHook={dinLivsituasjonHook}
             settFeilAnchors={settFeilAnchors}
         >
             {erUtvidet && (

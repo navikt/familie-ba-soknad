@@ -37,6 +37,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
     const { formatMessage } = intl;
     const { hentStegObjektForBarn } = useSteg();
     const [valgtLocale] = useSprakContext();
+    const omBarnetHook = useOmBarnet(barn.id);
 
     return (
         <Oppsummeringsbolk
@@ -44,8 +45,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
             språkValues={{ nummer, navn: barnetsNavnValue(barn, intl) }}
             key={index}
             steg={hentStegObjektForBarn(barn)}
-            skjemaHook={useOmBarnet}
-            barnId={barn.id}
+            skjemaHook={omBarnetHook}
             settFeilAnchors={settFeilAnchors}
         >
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (

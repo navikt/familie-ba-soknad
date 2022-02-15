@@ -26,8 +26,8 @@ const EøsForSøker: React.FC = () => {
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
+        settIdNummerFelter,
     } = useEøsForSøker();
-    const { settIdNummerSkjemaFelter } = useApp();
 
     const { erEøsLand } = useEøs();
     const { søknad } = useApp();
@@ -55,7 +55,7 @@ const EøsForSøker: React.FC = () => {
                             <IdNummer
                                 skjema={skjema}
                                 key={index}
-                                settIdNummerSkjemaFelter={settIdNummerSkjemaFelter}
+                                settIdNummerFelter={settIdNummerFelter}
                                 landAlphaCode={landMedPeriodeType.land}
                                 periodeType={landMedPeriodeType.periodeType}
                             />

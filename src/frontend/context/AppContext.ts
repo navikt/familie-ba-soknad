@@ -41,7 +41,6 @@ const [AppProvider, useApp] = createUseContext(() => {
     const { modellVersjon } = Miljø();
     const [sisteModellVersjon, settSisteModellVersjon] = useState(modellVersjon);
     const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
-    const [idNummerSkjemaFelter, settIdNummerSkjemaFelter] = useState<Felt<string>[]>([]);
 
     useEffect(() => {
         if (nåværendeRoute === RouteEnum.Kvittering) {
@@ -226,8 +225,6 @@ const [AppProvider, useApp] = createUseContext(() => {
         mellomlagre,
         modellVersjonOppdatert,
         settSisteModellVersjon,
-        idNummerSkjemaFelter,
-        settIdNummerSkjemaFelter,
     };
 });
 

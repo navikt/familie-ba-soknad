@@ -3,6 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../../context/AppContext';
+import { useEøs } from '../../../../../context/EøsContext';
 import { useRoutes } from '../../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../../typer/routes';
 import { ISøknadSpørsmål } from '../../../../../typer/spørsmål';
@@ -10,6 +11,8 @@ import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeid
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
+import { IdNummer } from '../../../EøsSteg/IdNummer';
+import { idNummerLandMedPeriodeType } from '../../../EøsSteg/idnummerUtils';
 import { eøsSøkerSpørsmålSpråkId } from '../../../EøsSteg/Søker/spørsmål';
 import { useEøsForSøker } from '../../../EøsSteg/Søker/useEøsForSøker';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
@@ -24,6 +27,8 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const { søknad } = useApp();
     const søker = søknad.søker;
+    const eøsForSøkerHook = useEøsForSøker();
+    const { erEøsLand } = useEøs();
 
     const jaNeiSpmOppsummering = (søknadSpørsmål: ISøknadSpørsmål<ESvar | null>) => (
         <OppsummeringFelt
@@ -36,16 +41,29 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.EøsForSøker)}
             tittel={'eøs-om-deg.sidetittel'}
-            skjemaHook={useEøsForSøker}
+            skjemaHook={eøsForSøkerHook}
             settFeilAnchors={settFeilAnchors}
         >
             <StyledOppsummeringsFeltGruppe>
-                {søker.idNummer.svar.map(idNummer => (
-                    <>
-                        <div>{idNummer.land}</div>
-                        <div>{idNummer.idnummer}</div>
-                    </>
-                ))}
+                {idNummerLandMedPeriodeType(
+                    søker.arbeidsperioderUtland,
+                    søker.pensjonsperioderUtland,
+                    søker.utenlandsperioder,
+                    erEøsLand
+                ).map((landMedPeriodeType, index) => {
+                    return (
+                        !!landMedPeriodeType.land && (
+                            <IdNummer
+                                lesevisning={true}
+                                skjema={eøsForSøkerHook.skjema}
+                                key={index}
+                                settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
+                                landAlphaCode={landMedPeriodeType.land}
+                                periodeType={landMedPeriodeType.periodeType}
+                            />
+                        )
+                    );
+                })}
             </StyledOppsummeringsFeltGruppe>
             <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(søker.arbeidINorge)}

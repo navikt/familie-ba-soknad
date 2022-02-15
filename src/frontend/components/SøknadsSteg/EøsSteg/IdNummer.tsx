@@ -14,15 +14,17 @@ import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './Søker/spørsmål';
 
 export const IdNummer: React.FC<{
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
-    settIdNummerSkjemaFelter;
+    settIdNummerFelter;
     landAlphaCode: Alpha3Code;
     periodeType: PeriodeType;
-}> = ({ skjema, settIdNummerSkjemaFelter, landAlphaCode, periodeType }) => {
+    lesevisning?: boolean;
+}> = ({ skjema, settIdNummerFelter, landAlphaCode, periodeType, lesevisning = false }) => {
     const [valgtLocale] = useSprakContext();
     const { søknad } = useApp();
 
@@ -63,18 +65,28 @@ export const IdNummer: React.FC<{
 
     useEffect(() => {
         if (harRendretFørsteGang) {
-            settIdNummerSkjemaFelter(prev =>
+            settIdNummerFelter(prev =>
                 prev.filter(felt => felt.id !== idNummerFelt.id).concat(idNummerFelt)
             );
         } else {
-            settIdNummerSkjemaFelter(prev => {
+            settIdNummerFelter(prev => {
                 return prev.concat(idNummerFelt);
             });
             settHarRendretFørsteGang(true);
         }
     }, [idNummerFelt.verdi, idNummerFelt.valideringsstatus]);
 
-    return (
+    return lesevisning ? (
+        <OppsummeringFelt
+            tittel={
+                <SpråkTekst
+                    id={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
+                    values={{ land: getName(landAlphaCode, valgtLocale) }}
+                />
+            }
+            søknadsvar={idNummerVerdiFraSøknad}
+        />
+    ) : (
         <>
             <SkjemaFeltInput
                 felt={idNummerFelt}

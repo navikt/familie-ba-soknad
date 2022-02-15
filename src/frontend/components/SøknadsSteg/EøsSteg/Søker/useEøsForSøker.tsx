@@ -32,8 +32,13 @@ export const useEøsForSøker = (): {
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
     leggTilAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
+    settIdNummerFelter: (idNummer: Felt<string>[]) => void;
+    idNummerFelter: Felt<string>[];
 } => {
-    const { søknad, settSøknad, idNummerSkjemaFelter } = useApp();
+    const { søknad, settSøknad } = useApp();
+
+    const [idNummerFelter, settIdNummerFelter] = useState<Felt<string>[]>([]);
+
     const søker = søknad.søker;
 
     const adresseISøkeperiode = useInputFelt({
@@ -117,7 +122,7 @@ export const useEøsForSøker = (): {
         ...søknad.søker,
         idNummer: {
             ...søknad.søker.idNummer,
-            svar: idNummerSkjemaFelter.map(felt => ({
+            svar: idNummerFelter.map(felt => ({
                 land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
                 idnummer:
                     trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
@@ -160,7 +165,7 @@ export const useEøsForSøker = (): {
         string
     >({
         felter: {
-            ...idNummerSkjemaFelter.reduce(
+            ...idNummerFelter.reduce(
                 (objekt, felt) => ({
                     ...objekt,
                     [felt.id]: felt,
@@ -190,5 +195,7 @@ export const useEøsForSøker = (): {
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
+        settIdNummerFelter,
+        idNummerFelter,
     };
 };
