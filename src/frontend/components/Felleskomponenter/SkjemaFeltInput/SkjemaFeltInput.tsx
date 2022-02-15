@@ -11,7 +11,7 @@ interface SkjemaFeltInputProps extends InputProps {
     felt: Felt<any>;
     visFeilmeldinger: boolean;
     labelSpråkTekstId: string;
-    språkVerdier?: { [key: string]: ReactNode };
+    språkValues?: Record<string, ReactNode>;
 }
 
 /**
@@ -22,7 +22,7 @@ export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
         felt,
         labelSpråkTekstId,
         visFeilmeldinger,
-        språkVerdier,
+        språkValues,
         ...øvrigePropsStøttetAvNavInput
     } = props;
     const navInputPropsFraFeltHook = felt.hentNavInputProps(visFeilmeldinger);
@@ -30,7 +30,7 @@ export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
     return felt.erSynlig ? (
         <div>
             <Input
-                label={<SpråkTekst id={labelSpråkTekstId} values={språkVerdier} />}
+                label={<SpråkTekst id={labelSpråkTekstId} values={språkValues} />}
                 {...navInputPropsFraFeltHook}
                 {...øvrigePropsStøttetAvNavInput}
                 maxLength={500}

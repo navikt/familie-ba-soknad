@@ -155,6 +155,8 @@ export const genererOppdaterteBarn = (
         const oppdatertBarn = {
             ...barn,
             utenlandsperioder: oppholdtSegIUtlandSiste12Mnd ? barn.utenlandsperioder : [],
+            eøsBarnetrygdsperioder:
+                mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [],
             andreForelder: erFosterbarn
                 ? null
                 : genererAndreForelder(barn.andreForelder, andreForelderErDød),
@@ -250,6 +252,14 @@ export const genererOppdaterteBarn = (
                     ''
                 ),
             },
+            [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
+                ...barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
+                svar: genererSvarForOppfølgningspørsmålBarn(
+                    mottarBarnetrygdFraAnnetEøsland,
+                    barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
+                    null
+                ),
+            },
         };
 
         return { ...oppdatertBarn, triggetEøs: skalTriggeEøsForBarn(oppdatertBarn) };
@@ -278,6 +288,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         ...barn,
         barnErFyltUt: false,
         utenlandsperioder: [],
+        eøsBarnetrygdsperioder: [],
         andreForelder: null,
         triggetEøs: false,
         [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: {
@@ -343,6 +354,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
             id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
             svar: '',
+        },
+        [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
+            id: OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd,
+            svar: null,
         },
         [barnDataKeySpørsmål.borFastMedSøker]: {
             id: OmBarnetSpørsmålsId.borFastMedSøker,

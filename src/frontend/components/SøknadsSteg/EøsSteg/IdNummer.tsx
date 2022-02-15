@@ -92,7 +92,7 @@ export const IdNummer: React.FC<{
                 felt={idNummerFelt}
                 visFeilmeldinger={skjema.visFeilmeldinger}
                 labelSpråkTekstId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
-                språkVerdier={{ land: getName(landAlphaCode, valgtLocale) }}
+                språkValues={{ land: getName(landAlphaCode, valgtLocale) }}
                 disabled={idNummerUkjent.verdi === ESvar.JA}
             />
             {idNummerUkjent.erSynlig && (

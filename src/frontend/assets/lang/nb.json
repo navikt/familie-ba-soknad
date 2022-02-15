@@ -528,6 +528,7 @@
   "ombarnet.søker-for-periode.spm": "Søker du barnetrygd for et spesielt tidsrom for {navn}?",
   "ombarnet.søker-for-periode.startdato.feilmelding": "Du må oppgi når du søker barnetrygd fra for å gå videre",
   "ombarnet.søker-for-periode.startdato.spm": "Fra og med",
+  "ombarnet.trygdandreperioder.feilmelding": "Du må legge til minst en periode med barnetrygd for å gå videre",
   "ombarnet.trygdandreperioder.knapp": "Legg til periode med barnetrygd",
   "ombarnet.trygdandreperioder.periode": "Barnetrygdperiode {x}",
   "ombarnet.trygdandreperioder.spm": "Har du fått barnetrygd fra et EU/EØS land i andre perioder?",

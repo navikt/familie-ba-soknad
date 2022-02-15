@@ -528,6 +528,7 @@
   "ombarnet.søker-for-periode.spm": "Are you applying for child benefit for a particular period of time for {navn}?",
   "ombarnet.søker-for-periode.startdato.feilmelding": "You must state from when you are applying for child benefit in order to be able to proceed",
   "ombarnet.søker-for-periode.startdato.spm": "From",
+  "ombarnet.trygdandreperioder.feilmelding": "You must add at least one period of receiving child benefit in order to be able to continue",
   "ombarnet.trygdandreperioder.knapp": "Add period of receiving child benefit",
   "ombarnet.trygdandreperioder.periode": "Child benefit period {x}",
   "ombarnet.trygdandreperioder.spm": "Have you received child benefit from an EEA country during other periods?",

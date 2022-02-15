@@ -40,5 +40,5 @@ export interface IBarnetrygdsperiode {
     barnetrygdsland: ISøknadSpørsmål<Alpha3Code | ''>;
     fraDatoBarnetrygdperiode: ISøknadSpørsmål<ISODateString>;
     tilDatoBarnetrygdperiode?: ISøknadSpørsmål<ISODateString>;
-    månedligBeløp: string;
+    månedligBeløp: ISøknadSpørsmål<string>;
 }

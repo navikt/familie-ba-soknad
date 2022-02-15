@@ -11,7 +11,7 @@ export const barnetrygdperiodeSpørsmålSpråkId = (
     tilbakeITid: boolean
 ): Record<BarnetrygdperiodeSpørsmålId, string> => ({
     [BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs]: 'modal.trygdandreperioder.tittel',
-    [BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå]: 'modal.barnetrygdnå.spmm',
+    [BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå]: 'modal.barnetrygdnå.spm',
     [BarnetrygdperiodeSpørsmålId.barnetrygdsland]: tilbakeITid
         ? 'modal.hvilketlandbarnetrygd.spm'
         : 'ombarnet.hvilketlandfår.spm',

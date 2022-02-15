@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import createUseContext from 'constate';
 
-import { Felt } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 import {
     byggHenterRessurs,
