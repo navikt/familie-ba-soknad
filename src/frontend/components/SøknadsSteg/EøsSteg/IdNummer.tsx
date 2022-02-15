@@ -48,21 +48,13 @@ export const IdNummer: React.FC<{
                     : '',
         },
         avhengighet: idNummerUkjent,
+        feilmeldingSpråkId: 'eøs-om-deg.dittidnummer.feilmelding',
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
-            if (verdi.match(/^[0-9A-Za-z\s\-.\\/]{1,20}$/)) {
+            if (verdi.match(/^[0-9A-Za-z\s\-.\\/]{4,20}$/)) {
                 return ok(felt);
             } else {
-                return feil(
-                    felt,
-                    <SpråkTekst
-                        id={
-                            verdi === ''
-                                ? 'eøs-om-deg.dittidnummer.feilmelding'
-                                : 'felles.idnummer-feilformat.feilmelding'
-                        }
-                    />
-                );
+                return feil(felt, <SpråkTekst id={'felles.idnummer-feilformat.feilmelding'} />);
             }
         },
     });

@@ -15,14 +15,14 @@ import { formaterInitVerdiForInputMedUkjent } from '../utils/input';
 const useInputFeltMedUkjent = ({
     søknadsfelt,
     avhengighet,
-    feilmeldingSpråkId = '',
+    feilmeldingSpråkId,
     erFnrInput = false,
     skalVises = true,
     customValidering = undefined,
 }: {
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | { id: string; svar: string } | null;
     avhengighet: Felt<ESvar>;
-    feilmeldingSpråkId?: string;
+    feilmeldingSpråkId: string;
     erFnrInput?: boolean;
     skalVises?: boolean;
     customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
@@ -34,12 +34,7 @@ const useInputFeltMedUkjent = ({
             : '',
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter): FeltState<string> => {
             const feltVerdi = trimWhiteSpace(felt.verdi);
-
-            if (
-                avhengigheter &&
-                avhengigheter.vetIkkeCheckbox &&
-                avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA
-            ) {
+            if (avhengigheter?.vetIkkeCheckbox?.verdi === ESvar.JA) {
                 return ok(felt);
             }
 

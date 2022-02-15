@@ -166,7 +166,7 @@ export const useEøsForSøker = (): {
             ...idNummerFelter.reduce(
                 (objekt, felt) => ({
                     ...objekt,
-                    [felt.id]: felt.verdi,
+                    [felt.id]: felt,
                 }),
                 {}
             ),
