@@ -8,6 +8,7 @@ import { idnr } from '@navikt/fnrvalidator';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { DatoMedUkjent } from '../typer/common';
+import { IdNummerKey } from '../typer/skjema';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent } from '../utils/input';
@@ -20,7 +21,7 @@ const useInputFeltMedUkjent = ({
     skalVises = true,
     customValidering = undefined,
 }: {
-    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | { id: string; svar: string } | null;
+    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | { id: IdNummerKey; svar: string } | null;
     avhengighet: Felt<ESvar>;
     feilmeldingSpråkId: string;
     erFnrInput?: boolean;
