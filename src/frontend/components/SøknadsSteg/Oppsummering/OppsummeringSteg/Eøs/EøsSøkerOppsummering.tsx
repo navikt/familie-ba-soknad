@@ -13,7 +13,7 @@ import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
 import { IdNummer } from '../../../EøsSteg/IdNummer';
 import { idNummerLandMedPeriodeType } from '../../../EøsSteg/idnummerUtils';
-import { eøsSøkerSpørsmålSpråkId } from '../../../EøsSteg/Søker/spørsmål';
+import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from '../../../EøsSteg/Søker/spørsmål';
 import { useEøsForSøker } from '../../../EøsSteg/Søker/useEøsForSøker';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
@@ -64,6 +64,16 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         )
                     );
                 })}
+                {søker.adresseISøkeperiode.svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]}
+                            />
+                        }
+                        søknadsvar={søker.adresseISøkeperiode.svar}
+                    />
+                )}
             </StyledOppsummeringsFeltGruppe>
             <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(søker.arbeidINorge)}

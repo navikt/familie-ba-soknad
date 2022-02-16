@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Alpha3Code, getName } from 'i18n-iso-countries';
+import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
@@ -27,6 +28,7 @@ export const IdNummer: React.FC<{
 }> = ({ skjema, settIdNummerFelter, landAlphaCode, periodeType, lesevisning = false }) => {
     const [valgtLocale] = useSprakContext();
     const { søknad } = useApp();
+    const { formatMessage } = useIntl();
 
     const idNummerVerdiFraSøknad = Object.values(søknad.søker.idNummer.svar).find(
         verdi => verdi.land === landAlphaCode
@@ -84,7 +86,16 @@ export const IdNummer: React.FC<{
                     values={{ land: getName(landAlphaCode, valgtLocale) }}
                 />
             }
-            søknadsvar={idNummerVerdiFraSøknad}
+            søknadsvar={
+                idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
+                    ? formatMessage(
+                          {
+                              id: eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent],
+                          },
+                          { land: getName(landAlphaCode, valgtLocale) }
+                      )
+                    : idNummerVerdiFraSøknad
+            }
         />
     ) : (
         <>
