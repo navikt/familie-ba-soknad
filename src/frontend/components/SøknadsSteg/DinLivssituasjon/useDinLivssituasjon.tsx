@@ -365,8 +365,10 @@ export const useDinLivssituasjon = (): {
             ...søker.idNummer,
             svar: søknad.søker.idNummer.svar.filter(idNummer => {
                 return idNummerLand(
-                    registrerteArbeidsperioder.verdi,
-                    registrertePensjonsperioder.verdi,
+                    jobberPåBåt.verdi === ESvar.JA ? registrerteArbeidsperioder.verdi : [],
+                    mottarUtenlandspensjon.verdi === ESvar.JA
+                        ? registrertePensjonsperioder.verdi
+                        : [],
                     søker.utenlandsperioder,
                     erEøsLand
                 ).includes(idNummer.land);

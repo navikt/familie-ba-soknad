@@ -135,7 +135,7 @@ export const useOmdeg = (): {
     const relevanteLandMedPeriodeType = idNummerLandMedPeriodeType(
         søker.arbeidsperioderUtland,
         søker.pensjonsperioderUtland,
-        registrerteUtenlandsperioder.verdi,
+        værtINorgeITolvMåneder.verdi === ESvar.NEI ? registrerteUtenlandsperioder.verdi : [],
         erEøsLand
     );
 
@@ -150,8 +150,6 @@ export const useOmdeg = (): {
             idNummerObjekt.idnummer !== AlternativtSvarForInput.UKJENT ||
             gyldigUkjentVerdiPåIdNummer(idNummerObjekt)
     );
-
-    console.log(oppdaterteIdNummer);
 
     const genererOppdatertSøker = () => ({
         ...søker,
