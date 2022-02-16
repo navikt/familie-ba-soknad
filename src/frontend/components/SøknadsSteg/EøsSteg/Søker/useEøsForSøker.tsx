@@ -47,6 +47,7 @@ export const useEøsForSøker = (): {
             svar: søker.adresseISøkeperiode.svar,
         },
         feilmeldingSpråkId: 'eøs-om-deg.dittoppholdssted.feilmelding',
+        skalVises: søker.triggetEøs,
     });
 
     const arbeidINorge = useJaNeiSpmFelt({
