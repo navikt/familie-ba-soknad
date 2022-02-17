@@ -29,7 +29,15 @@ export const andreForelderTilISøknadsfeltV7 = (
     andreForelder: IAndreForelder,
     barn: IBarnMedISøknad
 ): IAndreForelderIKontraktFormatV7 => {
-    const { navn, fnr, fødselsdato, arbeidsperioderUtland, pensjonsperioderUtland } = andreForelder;
+    const {
+        navn,
+        fnr,
+        fødselsdato,
+        arbeidsperioderUtland,
+        pensjonsperioderUtland,
+        arbeidsperioderNorge,
+        pensjonsperioderNorge,
+    } = andreForelder;
     const forelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
     return {
         [andreForelderDataKeySpørsmål.navn]: søknadsfeltBarn(
@@ -157,6 +165,26 @@ export const andreForelderTilISøknadsfeltV7 = (
                 gjelderAndreForelder: true,
                 erAndreForelderDød: forelderErDød,
                 gjelderUtlandet: true,
+            })
+        ),
+        arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
+            tilIArbeidsperiodeIKontraktFormat({
+                periode,
+                periodeNummer: index + 1,
+                gjelderUtlandet: false,
+                gjelderAndreForelder: true,
+                tilbakeITid: periode.arbeidsperiodeAvsluttet?.svar === ESvar.JA,
+                erAndreForelderDød: forelderErDød,
+            })
+        ),
+        pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
+            tilIPensjonsperiodeIKontraktFormat({
+                periode,
+                periodeNummer: index + 1,
+                tilbakeITid: periode.mottarPensjonNå?.svar === ESvar.NEI,
+                gjelderAndreForelder: true,
+                erAndreForelderDød: forelderErDød,
+                gjelderUtlandet: false,
             })
         ),
     };
