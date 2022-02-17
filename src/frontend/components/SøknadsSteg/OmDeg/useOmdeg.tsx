@@ -127,34 +127,32 @@ export const useOmdeg = (): {
         );
     };
 
-    const gyldigUkjentVerdiPåIdNummer = (idNummerMedLand: IIdNummer) =>
-        relevanteLandMedPeriodeType.find(
-            landMedPeriode => idNummerMedLand.land === landMedPeriode.land
+    const gyldigVerdiPåIdNummer = (idNummerObj: IIdNummer) =>
+        idNummerObj.idnummer !== AlternativtSvarForInput.UKJENT ||
+        relevanteLandMedPeriodeType().find(
+            landMedPeriode => idNummerObj.land === landMedPeriode.land
         )?.periodeType === PeriodeType.utenlandsperiode;
 
-    const relevanteLandMedPeriodeType = idNummerLandMedPeriodeType(
-        søker.arbeidsperioderUtland,
-        søker.pensjonsperioderUtland,
-        værtINorgeITolvMåneder.verdi === ESvar.NEI ? registrerteUtenlandsperioder.verdi : [],
-        erEøsLand
-    );
+    const relevanteLandMedPeriodeType = () =>
+        idNummerLandMedPeriodeType(
+            søker.arbeidsperioderUtland,
+            søker.pensjonsperioderUtland,
+            værtINorgeITolvMåneder.verdi === ESvar.NEI ? registrerteUtenlandsperioder.verdi : [],
+            erEøsLand
+        );
 
-    const filtrerteRelevanteIdNummer = søknad.søker.idNummer.filter(idNummer => {
-        return relevanteLandMedPeriodeType
-            .map(landMedPeriode => landMedPeriode.land)
-            .includes(idNummer.land);
-    });
-
-    const oppdaterteIdNummer: IIdNummer[] = filtrerteRelevanteIdNummer.filter(
-        idNummerObjekt =>
-            idNummerObjekt.idnummer !== AlternativtSvarForInput.UKJENT ||
-            gyldigUkjentVerdiPåIdNummer(idNummerObjekt)
-    );
+    const filtrerteRelevanteIdNummer = (): IIdNummer[] =>
+        søknad.søker.idNummer.filter(
+            idNummerObj =>
+                relevanteLandMedPeriodeType()
+                    .map(landMedPeriode => landMedPeriode.land)
+                    .includes(idNummerObj.land) && gyldigVerdiPåIdNummer(idNummerObj)
+        );
 
     const genererOppdatertSøker = () => ({
         ...søker,
         utenlandsperioder: værtINorgeITolvMåneder.verdi === ESvar.NEI ? utenlandsperioder : [],
-        idNummer: oppdaterteIdNummer,
+        idNummer: filtrerteRelevanteIdNummer(),
         borPåRegistrertAdresse: {
             ...søker.borPåRegistrertAdresse,
             svar: skjema.felter.borPåRegistrertAdresse.verdi,
