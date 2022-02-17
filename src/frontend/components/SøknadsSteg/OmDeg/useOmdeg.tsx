@@ -139,13 +139,13 @@ export const useOmdeg = (): {
         erEøsLand
     );
 
-    const filtrerteRelevanteIdNummer = søknad.søker.idNummer.svar.filter(idNummer => {
+    const filtrerteRelevanteIdNummer = søknad.søker.idNummer.filter(idNummer => {
         return relevanteLandMedPeriodeType
             .map(landMedPeriode => landMedPeriode.land)
             .includes(idNummer.land);
     });
 
-    const oppdaterteIdNummer = filtrerteRelevanteIdNummer.filter(
+    const oppdaterteIdNummer: IIdNummer[] = filtrerteRelevanteIdNummer.filter(
         idNummerObjekt =>
             idNummerObjekt.idnummer !== AlternativtSvarForInput.UKJENT ||
             gyldigUkjentVerdiPåIdNummer(idNummerObjekt)
@@ -154,10 +154,7 @@ export const useOmdeg = (): {
     const genererOppdatertSøker = () => ({
         ...søker,
         utenlandsperioder: værtINorgeITolvMåneder.verdi === ESvar.NEI ? utenlandsperioder : [],
-        idNummer: {
-            ...søker.idNummer,
-            svar: oppdaterteIdNummer,
-        },
+        idNummer: oppdaterteIdNummer,
         borPåRegistrertAdresse: {
             ...søker.borPåRegistrertAdresse,
             svar: skjema.felter.borPåRegistrertAdresse.verdi,

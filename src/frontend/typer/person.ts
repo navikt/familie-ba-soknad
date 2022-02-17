@@ -71,7 +71,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     pensjonsperioderNorge: IPensjonsperiode[];
     andreUtbetalinger: ISøknadSpørsmål<ESvar | null>;
     andreUtbetalingsperioder: IUtbetalingsperiode[];
-    idNummer: ISøknadSpørsmål<IIdNummer[]>;
+    idNummer: IIdNummer[];
     adresseISøkeperiode: ISøknadSpørsmål<string>;
 
     utvidet: {

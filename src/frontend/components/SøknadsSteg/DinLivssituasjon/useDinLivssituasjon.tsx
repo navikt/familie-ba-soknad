@@ -361,19 +361,14 @@ export const useDinLivssituasjon = (): {
             skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA
                 ? skjema.felter.registrertePensjonsperioder.verdi
                 : [],
-        idNummer: {
-            ...søker.idNummer,
-            svar: søknad.søker.idNummer.svar.filter(idNummer => {
-                return idNummerLand(
-                    jobberPåBåt.verdi === ESvar.JA ? registrerteArbeidsperioder.verdi : [],
-                    mottarUtenlandspensjon.verdi === ESvar.JA
-                        ? registrertePensjonsperioder.verdi
-                        : [],
-                    søker.utenlandsperioder,
-                    erEøsLand
-                ).includes(idNummer.land);
-            }),
-        },
+        idNummer: søknad.søker.idNummer.filter(idNummer => {
+            return idNummerLand(
+                jobberPåBåt.verdi === ESvar.JA ? registrerteArbeidsperioder.verdi : [],
+                mottarUtenlandspensjon.verdi === ESvar.JA ? registrertePensjonsperioder.verdi : [],
+                søker.utenlandsperioder,
+                erEøsLand
+            ).includes(idNummer.land);
+        }),
         utvidet: {
             ...søknad.søker.utvidet,
             tidligereSamboere,

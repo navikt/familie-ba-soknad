@@ -121,14 +121,11 @@ export const useEøsForSøker = (): {
     };
     const genererOppdatertSøker = (): ISøker => ({
         ...søknad.søker,
-        idNummer: {
-            ...søknad.søker.idNummer,
-            svar: idNummerFelter.map(felt => ({
-                land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
-                idnummer:
-                    trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
-            })),
-        },
+        idNummer: idNummerFelter.map(felt => ({
+            land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
+            idnummer:
+                trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
+        })),
         adresseISøkeperiode: {
             ...søknad.søker.adresseISøkeperiode,
             svar: trimWhiteSpace(skjema.felter.adresseISøkeperiode.verdi),

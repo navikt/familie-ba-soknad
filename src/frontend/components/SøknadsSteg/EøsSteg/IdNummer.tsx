@@ -30,7 +30,7 @@ export const IdNummer: React.FC<{
     const { søknad } = useApp();
     const { formatMessage } = useIntl();
 
-    const idNummerVerdiFraSøknad = søknad.søker.idNummer.svar.find(
+    const idNummerVerdiFraSøknad = søknad.søker.idNummer.find(
         verdi => verdi.land === landAlphaCode
     )?.idnummer;
 
