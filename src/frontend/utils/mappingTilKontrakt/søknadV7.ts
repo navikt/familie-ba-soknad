@@ -6,8 +6,7 @@ import { LocaleType } from '@navikt/familie-sprakvelger';
 import { ISøknadKontraktV7 } from '../../typer/kontrakt/v7';
 import { ISøknad } from '../../typer/søknad';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
-import { barnISøknadsFormat } from './barn';
-import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
+import { barnISøknadsFormatV7 } from './barnV7';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 import { dataISøknadKontraktFormat } from './søknad';
 
@@ -36,7 +35,7 @@ export const dataISøknadKontraktFormatV7 = (
                     erAndreForelderDød: false,
                 })
             ),
-            pensjonsperiodeUtland: pensjonsperioderUtland.map((periode, index) =>
+            pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
@@ -48,18 +47,7 @@ export const dataISøknadKontraktFormatV7 = (
             ),
         },
         barn: barnInkludertISøknaden.map(barn => {
-            const iSøknadKontraktBarnV6 = barnISøknadsFormat(intl, barn);
-            return {
-                ...iSøknadKontraktBarnV6,
-                eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder.map((periode, index) =>
-                    tilIEøsBarnetrygsperiodeIKontraktFormat({
-                        periode,
-                        periodeNummer: index + 1,
-                        tilbakeITid: periode.mottarEøsBarnetrygdNå.svar === ESvar.NEI,
-                        barn,
-                    })
-                ),
-            };
+            return barnISøknadsFormatV7(intl, barn);
         }),
     };
 };

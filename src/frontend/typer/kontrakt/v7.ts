@@ -38,7 +38,7 @@ export interface ISøknadKontraktSøker {
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
     // eøs
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
-    pensjonsperiodeUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
+    pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
 }
 
 export interface IArbeidsperiodeIKontraktFormat {
@@ -65,6 +65,26 @@ export interface ISøknadIKontraktBarnV7 {
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
     andreForelder: IAndreForelderIKontraktFormat | null;
     eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
+}
+
+export interface IAndreForelderIKontraktFormatV7 {
+    navn: ISøknadsfelt<string>;
+    fnr: ISøknadsfelt<string>;
+    fødselsdato: ISøknadsfelt<string>;
+    pensjonUtland: ISøknadsfelt<ESvar | null>;
+    //Skal vi fortsatt ha på de gamle feltene med hvilket land?
+    pensjonHvilketLand: ISøknadsfelt<string>;
+    arbeidUtlandet: ISøknadsfelt<ESvar | null>;
+    arbeidUtlandetHvilketLand: ISøknadsfelt<string>;
+    skriftligAvtaleOmDeltBosted: ISøknadsfelt<ESvar | null>;
+    utvidet: {
+        søkerHarBoddMedAndreForelder: ISøknadsfelt<ESvar | null>;
+        søkerFlyttetFraAndreForelderDato: ISøknadsfelt<string>;
+    };
+
+    //EØS
+    arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
+    pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
 }
 
 export interface IEøsBarnetrygdsperiodeIKontraktFormatV7 {
