@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 import { Alpha3Code, getName } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
+import { feil, Felt, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
@@ -21,7 +21,7 @@ import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './Søker/s
 
 export const IdNummer: React.FC<{
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
-    settIdNummerFelter;
+    settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
     landAlphaCode: Alpha3Code;
     periodeType: PeriodeType;
     lesevisning?: boolean;
@@ -30,7 +30,7 @@ export const IdNummer: React.FC<{
     const { søknad } = useApp();
     const { formatMessage } = useIntl();
 
-    const idNummerVerdiFraSøknad = Object.values(søknad.søker.idNummer.svar).find(
+    const idNummerVerdiFraSøknad = søknad.søker.idNummer.svar.find(
         verdi => verdi.land === landAlphaCode
     )?.idnummer;
 
@@ -43,6 +43,7 @@ export const IdNummer: React.FC<{
         feltId: `idnummer-ukjent-${landAlphaCode}`,
         skalFeltetVises: () => periodeType === PeriodeType.utenlandsperiode,
     });
+
     const idNummerFelt = useInputFeltMedUkjent({
         søknadsfelt: {
             id: `${idNummerKeyPrefix}${landAlphaCode}`,
@@ -63,19 +64,10 @@ export const IdNummer: React.FC<{
         },
     });
 
-    const [harRendretFørsteGang, settHarRendretFørsteGang] = useState(false);
-
     useEffect(() => {
-        if (harRendretFørsteGang) {
-            settIdNummerFelter(prev =>
-                prev.filter(felt => felt.id !== idNummerFelt.id).concat(idNummerFelt)
-            );
-        } else {
-            settIdNummerFelter(prev => {
-                return prev.concat(idNummerFelt);
-            });
-            settHarRendretFørsteGang(true);
-        }
+        settIdNummerFelter((prev: Felt<string>[]) =>
+            prev.filter(felt => felt.id !== idNummerFelt.id).concat(idNummerFelt)
+        );
     }, [idNummerFelt.verdi, idNummerFelt.valideringsstatus]);
 
     return lesevisning ? (

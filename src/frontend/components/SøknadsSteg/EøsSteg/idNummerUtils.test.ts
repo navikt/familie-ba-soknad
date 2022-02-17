@@ -15,7 +15,7 @@ import {
 } from './idnummerUtils';
 
 describe('idNummerLandMedPeriodeType', () => {
-    it('Skal returnere idnummer til utenlandsperiode dersom det er flere like land på tvers av perioder', () => {
+    it('Skal returnere idnummer-landMedPeriode til utenlandsperiode dersom det er flere like land på tvers av perioder', () => {
         const { erEøsLand } = mockEøs();
         erEøsLand.mockImplementation(landKode => ['BEL', 'NLD', 'BGR'].includes(landKode));
 

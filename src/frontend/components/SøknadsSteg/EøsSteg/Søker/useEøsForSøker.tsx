@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
@@ -32,7 +32,7 @@ export const useEøsForSøker = (): {
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
     leggTilAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
-    settIdNummerFelter: (idNummer: Felt<string>[]) => void;
+    settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
     idNummerFelter: Felt<string>[];
 } => {
     const { søknad, settSøknad } = useApp();

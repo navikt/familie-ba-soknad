@@ -27,7 +27,6 @@ interface Props {
     språkValues?: { [key: string]: string };
     steg?: ISteg;
     skjemaHook: IHookReturn;
-    barnId?: string;
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
