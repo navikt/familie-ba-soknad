@@ -8,6 +8,7 @@ import { ISøknad } from '../../typer/søknad';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import { barnISøknadsFormat } from './barn';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
+import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 import { dataISøknadKontraktFormat } from './søknad';
 
 export const dataISøknadKontraktFormatV7 = (
@@ -17,7 +18,7 @@ export const dataISøknadKontraktFormatV7 = (
 ): ISøknadKontraktV7 => {
     const v6 = dataISøknadKontraktFormat(intl, valgtSpråk, søknad);
     const {
-        søker: { arbeidsperioderUtland },
+        søker: { arbeidsperioderUtland, pensjonsperioderUtland },
         barnInkludertISøknaden,
     } = søknad;
     return {
@@ -33,6 +34,16 @@ export const dataISøknadKontraktFormatV7 = (
                     gjelderAndreForelder: false,
                     tilbakeITid: periode.arbeidsperiodeAvsluttet?.svar === ESvar.JA,
                     erAndreForelderDød: false,
+                })
+            ),
+            pensjonsperiodeUtland: pensjonsperioderUtland.map((periode, index) =>
+                tilIPensjonsperiodeIKontraktFormat({
+                    periode,
+                    periodeNummer: index + 1,
+                    tilbakeITid: periode.mottarPensjonNå?.svar === ESvar.NEI,
+                    gjelderAndreForelder: false,
+                    erAndreForelderDød: false,
+                    gjelderUtlandet: true,
                 })
             ),
         },

@@ -38,6 +38,7 @@ export interface ISøknadKontraktSøker {
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
     // eøs
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
+    pensjonsperiodeUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
 }
 
 export interface IArbeidsperiodeIKontraktFormat {
@@ -46,6 +47,13 @@ export interface IArbeidsperiodeIKontraktFormat {
     arbeidsgiver: ISøknadsfelt<string | undefined>;
     fraDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
     tilDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
+}
+
+export interface IPensjonsperiodeIKontraktFormatV7 {
+    mottarPensjonNå: ISøknadsfelt<ESvar | null>;
+    pensjonsland?: ISøknadsfelt<string | undefined>;
+    pensjonFra?: ISøknadsfelt<string | undefined>;
+    pensjonTil?: ISøknadsfelt<string | undefined>;
 }
 
 export interface ISøknadIKontraktBarnV7 {
