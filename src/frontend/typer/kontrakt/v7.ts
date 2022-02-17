@@ -60,7 +60,6 @@ export interface IAndreForelderIKontraktFormatV7 {
     fnr: ISøknadsfelt<string>;
     fødselsdato: ISøknadsfelt<string>;
     pensjonUtland: ISøknadsfelt<ESvar | null>;
-    //Skal vi fortsatt ha på de gamle feltene med hvilket land?
     pensjonHvilketLand: ISøknadsfelt<string>;
     arbeidUtlandet: ISøknadsfelt<ESvar | null>;
     arbeidUtlandetHvilketLand: ISøknadsfelt<string>;
