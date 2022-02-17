@@ -5,6 +5,7 @@ import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { ISøknadKontraktV7 } from '../../typer/kontrakt/v7';
 import { ISøknad } from '../../typer/søknad';
+import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import { barnISøknadsFormatV7 } from './barnV7';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
@@ -22,6 +23,7 @@ export const dataISøknadKontraktFormatV7 = (
             pensjonsperioderUtland,
             arbeidsperioderNorge,
             pensjonsperioderNorge,
+            andreUtbetalingsperioder,
         },
         barnInkludertISøknaden,
     } = søknad;
@@ -68,6 +70,15 @@ export const dataISøknadKontraktFormatV7 = (
                     gjelderAndreForelder: false,
                     erAndreForelderDød: false,
                     gjelderUtlandet: false,
+                })
+            ),
+            andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
+                tilIAndreUtbetalingsperioderIKontraktFormat({
+                    periode,
+                    periodeNummer: index + 1,
+                    tilbakeITid: periode.fårUtbetalingNå?.svar === ESvar.NEI,
+                    gjelderAndreForelder: false,
+                    erAndreForelderDød: false,
                 })
             ),
         },

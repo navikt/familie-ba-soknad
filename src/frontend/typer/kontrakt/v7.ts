@@ -41,21 +41,7 @@ export interface ISøknadKontraktSøker {
     pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
-}
-
-export interface IArbeidsperiodeIKontraktFormat {
-    arbeidsperiodeAvsluttet: ISøknadsfelt<string | undefined>;
-    arbeidsperiodeland: ISøknadsfelt<string | undefined>;
-    arbeidsgiver: ISøknadsfelt<string | undefined>;
-    fraDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
-    tilDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
-}
-
-export interface IPensjonsperiodeIKontraktFormatV7 {
-    mottarPensjonNå: ISøknadsfelt<ESvar | null>;
-    pensjonsland?: ISøknadsfelt<string | undefined>;
-    pensjonFra?: ISøknadsfelt<string | undefined>;
-    pensjonTil?: ISøknadsfelt<string | undefined>;
+    andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormat7>[];
 }
 
 export interface ISøknadIKontraktBarnV7 {
@@ -89,6 +75,22 @@ export interface IAndreForelderIKontraktFormatV7 {
     pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
+    andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormat7>[];
+}
+
+export interface IArbeidsperiodeIKontraktFormat {
+    arbeidsperiodeAvsluttet: ISøknadsfelt<string | undefined>;
+    arbeidsperiodeland: ISøknadsfelt<string | undefined>;
+    arbeidsgiver: ISøknadsfelt<string | undefined>;
+    fraDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
+    tilDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
+}
+
+export interface IPensjonsperiodeIKontraktFormatV7 {
+    mottarPensjonNå: ISøknadsfelt<ESvar | null>;
+    pensjonsland?: ISøknadsfelt<string | undefined>;
+    pensjonFra?: ISøknadsfelt<string | undefined>;
+    pensjonTil?: ISøknadsfelt<string | undefined>;
 }
 
 export interface IEøsBarnetrygdsperiodeIKontraktFormatV7 {
@@ -97,4 +99,11 @@ export interface IEøsBarnetrygdsperiodeIKontraktFormatV7 {
     fraDatoBarnetrygdperiode: ISøknadsfelt<string | undefined>;
     tilDatoBarnetrygdperiode: ISøknadsfelt<string | undefined>;
     månedligBeløp: ISøknadsfelt<string | undefined>;
+}
+
+export interface IUtbetalingsperiodeIKontraktFormat7 {
+    fårUtbetalingNå: ISøknadsfelt<ESvar | null>;
+    utbetalingLand: ISøknadsfelt<string | undefined>;
+    utbetalingFraDato: ISøknadsfelt<string | undefined>;
+    utbetalingTilDato: ISøknadsfelt<string | undefined>;
 }

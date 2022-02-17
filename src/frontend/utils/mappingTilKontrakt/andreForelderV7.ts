@@ -14,6 +14,7 @@ import {
 } from '../../typer/barn';
 import { IAndreForelderIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { landkodeTilSpråk } from '../språk';
+import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import {
     sammeVerdiAlleSpråk,
@@ -37,6 +38,7 @@ export const andreForelderTilISøknadsfeltV7 = (
         pensjonsperioderUtland,
         arbeidsperioderNorge,
         pensjonsperioderNorge,
+        andreUtbetalingsperioder,
     } = andreForelder;
     const forelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
     return {
@@ -185,6 +187,15 @@ export const andreForelderTilISøknadsfeltV7 = (
                 gjelderAndreForelder: true,
                 erAndreForelderDød: forelderErDød,
                 gjelderUtlandet: false,
+            })
+        ),
+        andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
+            tilIAndreUtbetalingsperioderIKontraktFormat({
+                periode,
+                periodeNummer: index + 1,
+                tilbakeITid: periode.fårUtbetalingNå?.svar === ESvar.NEI,
+                gjelderAndreForelder: true,
+                erAndreForelderDød: forelderErDød,
             })
         ),
     };
