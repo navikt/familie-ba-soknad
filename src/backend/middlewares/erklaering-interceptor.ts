@@ -1,7 +1,7 @@
 import { RequestHandler, Request, Response } from 'express';
 
 import { LocaleType } from '@navikt/familie-sprakvelger';
-import { byggFeiletRessurs } from '@navikt/familie-typer';
+import familieTyper from '@navikt/familie-typer';
 
 import engelsk from '../../frontend/assets/lang/en.json';
 import bokmål from '../../frontend/assets/lang/nb.json';
@@ -29,7 +29,7 @@ export const erklaeringInterceptor: RequestHandler = (
     if (
         !('spørsmål' in søknad && spmKey in søknad.spørsmål && 'verdi' in søknad.spørsmål[spmKey])
     ) {
-        return response.status(400).send(byggFeiletRessurs('Ugyldig søknadformat'));
+        return response.status(400).send(familieTyper.byggFeiletRessurs('Ugyldig søknadformat'));
     }
 
     const svar = søknad.spørsmål[spmKey];
@@ -39,6 +39,10 @@ export const erklaeringInterceptor: RequestHandler = (
     } else {
         return response
             .status(403)
-            .send(byggFeiletRessurs('Du må huke av for at du oppgir korrekte opplysninger'));
+            .send(
+                familieTyper.byggFeiletRessurs(
+                    'Du må huke av for at du oppgir korrekte opplysninger'
+                )
+            );
     }
 };

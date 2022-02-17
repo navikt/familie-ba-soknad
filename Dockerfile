@@ -6,13 +6,13 @@ USER root
 RUN apk --no-cache add curl binutils make gcc g++ vips-dev
 USER apprunner
 
-COPY --chown=apprunner:apprunner ./yarn.lock ./package.json /var/server/
+ARG NPM_TOKEN
+COPY --chown=apprunner:apprunner ./.npmrc ./.yarnrc ./yarn.lock ./package.json /var/server/
 
 
 FROM builder-base as runtime-deps-builder
 RUN yarn install --prod
 RUN rm -rf .cache
-
 
 FROM builder-base as webpack-express-deps-builder
 RUN yarn
@@ -39,6 +39,8 @@ USER apprunner
 COPY --from=runtime-deps-builder /var/server/ /var/server
 COPY --from=webpack-express-builder /var/server/build /var/server/build
 COPY --from=webpack-express-builder /var/server/dist /var/server/dist
+RUN rm -f .npmrc
+RUN rm -f .yarnrc
 
 EXPOSE 9000
 CMD ["yarn", "start"]

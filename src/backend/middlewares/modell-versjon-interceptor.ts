@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { ApiRessurs, RessursStatus } from '@navikt/familie-typer';
+import familieTyper from '@navikt/familie-typer';
 
 import {
     modellMismatchMelding,
@@ -13,11 +13,11 @@ export const modellVersjonInterceptor: RequestHandler = (req, res, next) => {
     const requestModellVersjon = req.get(modellVersjonHeaderName);
     const requestModellVersjonInt = Number.parseInt(requestModellVersjon ?? '0');
     if (!requestModellVersjon || requestModellVersjonInt < modellVersjon) {
-        const responsBody: ApiRessurs<ModellMismatchRespons> = {
+        const responsBody: familieTyper.ApiRessurs<ModellMismatchRespons> = {
             data: { modellVersjon },
             melding: modellMismatchMelding,
             stacktrace: '',
-            status: RessursStatus.FEILET,
+            status: familieTyper.RessursStatus.FEILET,
         };
         res.status(403).send(responsBody);
     } else {
