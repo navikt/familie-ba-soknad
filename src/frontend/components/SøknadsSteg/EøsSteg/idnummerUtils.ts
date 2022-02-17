@@ -15,38 +15,17 @@ export type IdNummerLandMedPeriodeType = {
     periodeType: PeriodeType;
 };
 
-export const fjernDuplikat = (landList: (Alpha3Code | '' | undefined)[]) =>
+export const fjernDuplikat = (landList: Alpha3Code[]): Alpha3Code[] =>
     landList.filter((land, index) => land && !landList.includes(land, index + 1));
 
-export const utenlandsperioderIdNummerLand = (
-    utenlandsperioder: IUtenlandsperiode[],
-    erEøsLand: (land: Alpha3Code | '') => boolean
-) => {
-    const landSomKreverIdNummer = utenlandsperioder
-        .map(periode => periode.oppholdsland.svar)
-        .filter(land => land && erEøsLand(land));
-    return fjernDuplikat(landSomKreverIdNummer);
-};
-
-export const arbeidsperioderIdNummerLand = (
-    arbeidsperioder: IArbeidsperiode[],
-    erEøsLand: (land: Alpha3Code | '') => boolean
-) => {
-    const landSomKreverIdNummer = arbeidsperioder
-        .map(periode => periode.arbeidsperiodeland?.svar)
-        .filter(land => land && erEøsLand(land));
-    return fjernDuplikat(landSomKreverIdNummer);
-};
-
-export const pensjonsperioderIdNummerLand = (
-    pensjonsperioder: IPensjonsperiode[],
-    erEøsLand: (land: Alpha3Code | '') => boolean
-) => {
-    const landSomKreverIdNummer = pensjonsperioder
-        .map(periode => periode.pensjonsland?.svar)
-        .filter(land => land && erEøsLand(land));
-    return fjernDuplikat(landSomKreverIdNummer);
-};
+const eøsLandUtenDuplikatHof =
+    (erEøsLand: (land: Alpha3Code | '') => boolean) =>
+    (landListe: (Alpha3Code | '' | undefined)[]): Alpha3Code[] => {
+        const eøsLand: Alpha3Code[] = landListe.filter(
+            land => !!land && erEøsLand(land)
+        ) as Alpha3Code[];
+        return fjernDuplikat(eøsLand);
+    };
 
 export const idNummerLandMedPeriodeType = (
     arbeidsperioderUtland: IArbeidsperiode[],
@@ -54,19 +33,18 @@ export const idNummerLandMedPeriodeType = (
     utenlandsperioder: IUtenlandsperiode[],
     erEøsLand: (land: Alpha3Code | '') => boolean
 ): IdNummerLandMedPeriodeType[] => {
-    const utenlandsperioderLandSomKreverIdNummer = utenlandsperioderIdNummerLand(
-        utenlandsperioder,
-        erEøsLand
+    const eøsLandUtenDuplikat = eøsLandUtenDuplikatHof(erEøsLand);
+
+    const utenlandsperioderLandSomKreverIdNummer: Alpha3Code[] = eøsLandUtenDuplikat(
+        utenlandsperioder.map(periode => periode.oppholdsland.svar)
     );
 
-    const arbeidsperioderLandSomKreverIdNummer = arbeidsperioderIdNummerLand(
-        arbeidsperioderUtland,
-        erEøsLand
+    const arbeidsperioderLandSomKreverIdNummer: Alpha3Code[] = eøsLandUtenDuplikat(
+        arbeidsperioderUtland.map(periode => periode.arbeidsperiodeland?.svar)
     ).filter(land => land && !utenlandsperioderLandSomKreverIdNummer.includes(land));
 
-    const pensjonsperioderLandSomKreverIdNummer = pensjonsperioderIdNummerLand(
-        pensjonsperioderUtland,
-        erEøsLand
+    const pensjonsperioderLandSomKreverIdNummer: Alpha3Code[] = eøsLandUtenDuplikat(
+        pensjonsperioderUtland.map(periode => periode.pensjonsland?.svar)
     ).filter(
         land =>
             land &&
@@ -74,19 +52,17 @@ export const idNummerLandMedPeriodeType = (
             !utenlandsperioderLandSomKreverIdNummer.includes(land)
     );
 
-    const mapArbeidTilIdNummerLandMedPeriodeType = arbeidsperioderLandSomKreverIdNummer.map(
-        land => ({
+    const mapArbeidTilIdNummerLandMedPeriodeType: IdNummerLandMedPeriodeType[] =
+        arbeidsperioderLandSomKreverIdNummer.map(land => ({
             land,
             periodeType: PeriodeType.arbeidsperiode,
-        })
-    );
-    const mapPensjonTilIdNummerLandMedPeriodeType = pensjonsperioderLandSomKreverIdNummer.map(
-        land => ({
+        }));
+    const mapPensjonTilIdNummerLandMedPeriodeType: IdNummerLandMedPeriodeType[] =
+        pensjonsperioderLandSomKreverIdNummer.map(land => ({
             land,
             periodeType: PeriodeType.pensjonsperiode,
-        })
-    );
-    const mapUtenlandsppholdTilIdNummerLandMedPeriodeType =
+        }));
+    const mapUtenlandsppholdTilIdNummerLandMedPeriodeType: IdNummerLandMedPeriodeType[] =
         utenlandsperioderLandSomKreverIdNummer.map(land => ({
             land,
             periodeType: PeriodeType.utenlandsperiode,
