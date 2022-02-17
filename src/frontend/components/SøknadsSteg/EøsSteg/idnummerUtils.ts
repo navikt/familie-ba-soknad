@@ -41,11 +41,12 @@ export const idNummerLandMedPeriodeType = (
 
     const arbeidsperioderLandSomKreverIdNummer: Alpha3Code[] = eøsLandUtenDuplikat(
         arbeidsperioderUtland.map(periode => periode.arbeidsperiodeland?.svar)
-    ).filter(land => land && !utenlandsperioderLandSomKreverIdNummer.includes(land));
+    ).filter(land => land && !utenlandsperioderLandSomKreverIdNummer.includes(land)); // Filtrer bort det som allerede finnes i utenlandsopphold
 
     const pensjonsperioderLandSomKreverIdNummer: Alpha3Code[] = eøsLandUtenDuplikat(
         pensjonsperioderUtland.map(periode => periode.pensjonsland?.svar)
     ).filter(
+        //Filtrer bort det som allerede finnes i arbeidsperioder og utenlandsopphold
         land =>
             land &&
             !arbeidsperioderLandSomKreverIdNummer.includes(land) &&
