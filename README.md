@@ -5,8 +5,15 @@ Frontend - søknad for barnetrygd.
 ## Avhengigheter
 1. Node versjon >=14
 
-## Kjør lokalt
 
+## Log in på https://npm.pkg.github.com
+På github -> Settings -> Developer Settings -> Generate New Token
+Select scopes `repo` og `read:packages`
+
+eksporter miljøvariabel NPM_TOKEN, f eks ved å legge til 
+`export NPM_TOKEN=<ditt token>` i ~/.zshrc
+
+## Kjør lokalt
 
 1. `yarn install`
 2. `yarn start:dev` evt `docker-compose up -d`

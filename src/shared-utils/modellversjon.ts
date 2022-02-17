@@ -1,4 +1,4 @@
-import familieTyper from '@navikt/familie-typer';
+import { ApiRessurs, Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 export const modellVersjon = 32;
 
@@ -12,14 +12,11 @@ export interface ModellMismatchRespons {
 
 export const erModellMismatchResponsRessurs = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ressurs: familieTyper.ApiRessurs<any> | familieTyper.Ressurs<any>
-): ressurs is familieTyper.ApiRessurs<ModellMismatchRespons> => {
+    ressurs: ApiRessurs<any> | Ressurs<any>
+): ressurs is ApiRessurs<ModellMismatchRespons> => {
     if (!('melding' in ressurs)) {
         return false;
     }
 
-    return (
-        ressurs.melding === modellMismatchMelding &&
-        ressurs.status === familieTyper.RessursStatus.FEILET
-    );
+    return ressurs.melding === modellMismatchMelding && ressurs.status === RessursStatus.FEILET;
 };

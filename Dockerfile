@@ -6,15 +6,15 @@ USER root
 RUN apk --no-cache add curl binutils make gcc g++ vips-dev
 USER apprunner
 
-ARG NPM_TOKEN
 COPY --chown=apprunner:apprunner ./.npmrc ./.yarnrc ./yarn.lock ./package.json /var/server/
 
-
 FROM builder-base as runtime-deps-builder
+ARG NPM_TOKEN
 RUN yarn install --prod
 RUN rm -rf .cache
 
 FROM builder-base as webpack-express-deps-builder
+ARG NPM_TOKEN
 RUN yarn
 COPY --chown=apprunner:apprunner ./src /var/server/src
 COPY --chown=apprunner:apprunner ./tsconfig* babel.config.cjs /var/server/

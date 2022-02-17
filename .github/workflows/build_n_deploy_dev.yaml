@@ -21,12 +21,20 @@ jobs:
           node-version: '14'
           registry-url: "https://npm.pkg.github.com"
       - name: Installer node-pakker
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
         run: npx yarn
       - name: Kjør typecheck
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
         run: npx yarn typecheck
       - name: Kjør tester
         env:
           CI: true
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
         run: npx yarn test
 
   build:
@@ -58,6 +66,7 @@ jobs:
           build-args: |
             base_path=${{ env.BASE_PATH }}
             sentry_release=${{ github.sha }}
+            NPM_TOKEN=${{ secrets.READER_TOKEN }}
           secrets: |
             sentry_token=${{ secrets.SENTRY_AUTH_TOKEN }}
           cache-from: type=gha
@@ -72,6 +81,7 @@ jobs:
             base_path=${{ env.BASE_PATH }}
             sentry_auth_token=${{ secrets.SENTRY_AUTH_TOKEN }}
             sentry_release=${{ github.sha }}
+            NPM_TOKEN=${{ secrets.READER_TOKEN }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

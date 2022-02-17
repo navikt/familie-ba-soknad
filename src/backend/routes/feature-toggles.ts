@@ -1,7 +1,7 @@
 import { Express, RequestHandler } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-import familieTyper from '@navikt/familie-typer';
+import { byggFeiletRessurs, byggSuksessRessurs, Ressurs } from '@navikt/familie-typer';
 
 import {
     EAllFeatureToggles,
@@ -10,7 +10,6 @@ import {
 } from '../../frontend/typer/feature-toggles';
 import { basePath } from '../environment';
 import { isEnabled } from '../utils/unleash';
-const { byggFeiletRessurs, byggSuksessRessurs } = familieTyper;
 
 const toggleFetchHandler: RequestHandler = (req, res) => {
     const toggleId = req.params.id;
@@ -31,7 +30,7 @@ export const konfigurerFeatureTogglesEndpoint = (app: Express): Express => {
 
 const fetchAllFeatureTogglesHandler: RequestHandler<
     ParamsDictionary,
-    familieTyper.Ressurs<EAllFeatureToggles>
+    Ressurs<EAllFeatureToggles>
 > = (_, res) => {
     res.send(
         byggSuksessRessurs({
