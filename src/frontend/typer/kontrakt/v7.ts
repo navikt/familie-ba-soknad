@@ -1,11 +1,13 @@
+import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
-import { ISøknadKontraktBarn } from './barn';
 import { ISøknadKontraktDokumentasjon } from './dokumentasjon';
 import {
+    ERegistrertBostedType,
     ESivilstand,
     ESøknadstype,
     IAdresse,
+    IAndreForelderIKontraktFormat,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
     ISøknadsfelt,
@@ -17,7 +19,7 @@ export interface ISøknadKontraktV7 {
     kontraktVersjon: number;
     søknadstype: ESøknadstype;
     søker: ISøknadKontraktSøker;
-    barn: ISøknadKontraktBarn[];
+    barn: ISøknadIKontraktBarnV7[];
     spørsmål: SpørsmålMap;
     dokumentasjon: ISøknadKontraktDokumentasjon[];
     teksterUtenomSpørsmål: Record<string, Record<LocaleType, string>>;
@@ -44,4 +46,23 @@ export interface IArbeidsperiodeIKontraktFormat {
     arbeidsgiver: ISøknadsfelt<string | undefined>;
     fraDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
     tilDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
+}
+
+export interface ISøknadIKontraktBarnV7 {
+    ident: ISøknadsfelt<string>;
+    navn: ISøknadsfelt<string>;
+    registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
+    alder: ISøknadsfelt<string>;
+    spørsmål: SpørsmålMap;
+    utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
+    andreForelder: IAndreForelderIKontraktFormat | null;
+    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
+}
+
+export interface IEøsBarnetrygdsperiodeIKontraktFormatV7 {
+    mottarEøsBarnetrygdNå: ISøknadsfelt<ESvar | null>;
+    barnetrygdsland: ISøknadsfelt<string | undefined>;
+    fraDatoBarnetrygdperiode: ISøknadsfelt<string | undefined>;
+    tilDatoBarnetrygdperiode: ISøknadsfelt<string | undefined>;
+    månedligBeløp: ISøknadsfelt<string | undefined>;
 }

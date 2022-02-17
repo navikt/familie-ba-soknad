@@ -6,6 +6,8 @@ import { LocaleType } from '@navikt/familie-sprakvelger';
 import { ISøknadKontraktV7 } from '../../typer/kontrakt/v7';
 import { ISøknad } from '../../typer/søknad';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
+import { barnISøknadsFormat } from './barn';
+import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import { dataISøknadKontraktFormat } from './søknad';
 
 export const dataISøknadKontraktFormatV7 = (
@@ -16,6 +18,7 @@ export const dataISøknadKontraktFormatV7 = (
     const v6 = dataISøknadKontraktFormat(intl, valgtSpråk, søknad);
     const {
         søker: { arbeidsperioderUtland },
+        barnInkludertISøknaden,
     } = søknad;
     return {
         ...v6,
@@ -33,5 +36,19 @@ export const dataISøknadKontraktFormatV7 = (
                 })
             ),
         },
+        barn: barnInkludertISøknaden.map(barn => {
+            const iSøknadKontraktBarnV6 = barnISøknadsFormat(intl, barn);
+            return {
+                ...iSøknadKontraktBarnV6,
+                eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder.map((periode, index) =>
+                    tilIEøsBarnetrygsperiodeIKontraktFormat({
+                        periode,
+                        periodeNummer: index + 1,
+                        tilbakeITid: periode.mottarEøsBarnetrygdNå.svar === ESvar.NEI,
+                        barn,
+                    })
+                ),
+            };
+        }),
     };
 };

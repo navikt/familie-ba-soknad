@@ -36,6 +36,7 @@ export const barnISøknadsFormat = (intl: IntlShape, barn: IBarnMedISøknad): IS
         søkerForTidsromSluttdato,
         institusjonOppholdSluttdato,
         utenlandsperioder,
+        eøsBarnetrygdsperioder,
         // Nye felter under utvikling av EØS full
         triggetEøs,
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
