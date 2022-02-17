@@ -1,3 +1,5 @@
+import { Alpha3Code } from 'i18n-iso-countries';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IArbeidsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../typer/perioder';
@@ -7,11 +9,10 @@ import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperi
 import { PensjonSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
-    arbeidsperioderIdNummerLand,
+    eøsLandUtenDuplikatHof,
+    fjernDuplikat,
     idNummerLandMedPeriodeType,
-    pensjonsperioderIdNummerLand,
     PeriodeType,
-    utenlandsperioderIdNummerLand,
 } from './idnummerUtils';
 
 describe('idNummerLandMedPeriodeType', () => {
@@ -126,69 +127,19 @@ describe('idNummerLandMedPeriodeType', () => {
     });
 });
 
-describe('utenlandsperioderIdNummerLand', () => {
+describe('fjernDuplikat', () => {
     it('Skal returnere land kun 1 gang dersom det er flere like land i samme liste', () => {
-        const { erEøsLand } = mockEøs();
-        erEøsLand.mockImplementation(landKode => ['BEL', 'NLD', 'BGR'].includes(landKode));
-
-        const utenlandsperioder: IUtenlandsperiode[] = [
-            {
-                utenlandsoppholdÅrsak: {
-                    id: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
-                    svar: EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
-                },
-                oppholdsland: { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: 'BEL' },
-            },
-            {
-                utenlandsoppholdÅrsak: {
-                    id: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
-                    svar: EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
-                },
-                oppholdsland: { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: 'BEL' },
-            },
-        ];
-        expect(utenlandsperioderIdNummerLand(utenlandsperioder, erEøsLand)).toEqual(['BEL']);
+        expect(fjernDuplikat(['BEL', 'BEL', 'NLD'])).toEqual(['BEL', 'NLD']);
     });
 });
 
-describe('arbeidsperioderIdNummerLand', () => {
-    it('Skal returnere land kun 1 gang dersom det er flere like land i samme liste', () => {
+describe('eøsLandUtenDuplikatHof', () => {
+    it('Skal returnere kun eøs land uten duplikater', () => {
         const { erEøsLand } = mockEøs();
         erEøsLand.mockImplementation(landKode => ['BEL', 'NLD', 'BGR'].includes(landKode));
 
-        const arbeidsperioder: IArbeidsperiode[] = [
-            {
-                arbeidsperiodeland: {
-                    id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
-                    svar: 'NLD',
-                },
-            },
-            {
-                arbeidsperiodeland: {
-                    id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
-                    svar: 'NLD',
-                },
-            },
-        ];
-        expect(arbeidsperioderIdNummerLand(arbeidsperioder, erEøsLand)).toEqual(['NLD']);
-    });
-});
+        const utenlandsperioderLand: Alpha3Code[] = ['BEL', 'AFG', 'BGR'];
 
-describe('pensjonsperioderIdNummerLand', () => {
-    it('Skal returnere land kun 1 gang dersom det er flere like land i samme liste', () => {
-        const { erEøsLand } = mockEøs();
-        erEøsLand.mockImplementation(landKode => ['BEL', 'NLD', 'BGR'].includes(landKode));
-
-        const pensjonsperioder: IPensjonsperiode[] = [
-            {
-                mottarPensjonNå: { id: PensjonSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
-                pensjonsland: { id: PensjonSpørsmålId.pensjonsland, svar: 'BGR' },
-            },
-            {
-                mottarPensjonNå: { id: PensjonSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
-                pensjonsland: { id: PensjonSpørsmålId.pensjonsland, svar: 'BGR' },
-            },
-        ];
-        expect(pensjonsperioderIdNummerLand(pensjonsperioder, erEøsLand)).toEqual(['BGR']);
+        expect(eøsLandUtenDuplikatHof(erEøsLand)(utenlandsperioderLand)).toEqual(['BEL', 'BGR']);
     });
 });

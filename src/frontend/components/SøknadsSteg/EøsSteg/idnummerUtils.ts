@@ -18,7 +18,7 @@ export type IdNummerLandMedPeriodeType = {
 export const fjernDuplikat = (landList: Alpha3Code[]): Alpha3Code[] =>
     landList.filter((land, index) => land && !landList.includes(land, index + 1));
 
-const eøsLandUtenDuplikatHof =
+export const eøsLandUtenDuplikatHof =
     (erEøsLand: (land: Alpha3Code | '') => boolean) =>
     (landListe: (Alpha3Code | '' | undefined)[]): Alpha3Code[] => {
         const eøsLand: Alpha3Code[] = landListe.filter(
