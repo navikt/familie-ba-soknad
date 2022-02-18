@@ -55,6 +55,9 @@ export const dataISøknadKontraktFormat = (
         pensjonsperioderNorge,
         pensjonsperioderUtland,
         triggetEøs,
+        arbeidINorge,
+        pensjonNorge,
+        andreUtbetalinger,
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...søkerSpørsmål
     } = søker;
