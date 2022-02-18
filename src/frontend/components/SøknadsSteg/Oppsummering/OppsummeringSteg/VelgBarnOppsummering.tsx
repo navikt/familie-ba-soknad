@@ -23,12 +23,13 @@ const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { søknad } = useApp();
     const intl = useIntl();
     const { hentRouteObjektForRouteEnum } = useRoutes();
+    const velgBarnHook = useVelgBarn();
 
     return (
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.VelgBarn)}
             tittel={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]}
-            skjemaHook={useVelgBarn}
+            skjemaHook={velgBarnHook}
             settFeilAnchors={settFeilAnchors}
         >
             {søknad.barnInkludertISøknaden.map((barn, index) => (

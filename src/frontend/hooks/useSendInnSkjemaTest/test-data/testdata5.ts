@@ -428,6 +428,8 @@ export const testdata5: TilKontraktTestData = {
                 },
             ],
             triggetEøs: false,
+            idNummer: [],
+            adresseISøkeperiode: { id: 'eøs-om-deg.dittoppholdssted.spm', svar: '' },
             statsborgerskap: [
                 {
                     landkode: 'NOR',

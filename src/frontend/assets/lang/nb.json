@@ -161,6 +161,7 @@
   "felles.hjelpetekst.fulladresse": "Full adresse",
   "felles.hvilketlandpensjon.feilmelding": "Du må oppgi hvilket land du fikk pensjon fra for å gå videre",
   "felles.hvilketlandpensjon.spm": "Hvilket land fikk du pensjon fra?",
+  "felles.idnummer-feilformat.feilmelding": "Id-nummeret må være mellom 4 og 20 tegn, og kan ikke inneholde andre spesialtegn enn . - / \\",
   "felles.kjennerikkeidnummer.sjekkboks": "Jeg kjenner ikke id-nummeret",
   "felles.korteopphold.info": "Du trenger ikke opplyse om kortvarige opphold på under fire uker",
   "felles.leggtilarbeidsperiode.knapp": "Legg til arbeidsperiode",
