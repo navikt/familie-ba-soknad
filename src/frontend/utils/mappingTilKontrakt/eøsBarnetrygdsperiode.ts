@@ -1,25 +1,37 @@
+import { IntlShape } from 'react-intl';
+
+import { ESvar } from '@navikt/familie-form-elements';
+
 import {
     BarnetrygdperiodeSpørsmålId,
     barnetrygdperiodeSpørsmålSpråkId,
 } from '../../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IEøsBarnetrygdsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { IEøsBarnetrygdsperiode } from '../../typer/perioder';
+import { barnetsNavnValue } from '../barn';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
 export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
+    intl,
     periode,
     periodeNummer,
     tilbakeITid,
     barn,
 }: {
+    intl: IntlShape;
     periode: IEøsBarnetrygdsperiode;
     periodeNummer: number;
     tilbakeITid: boolean;
     barn: IBarnMedISøknad;
-}): ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7> => {
+}): ISøknadsfelt<{
+    mottarEøsBarnetrygdNå: ISøknadsfelt<ESvar | null>;
+    barnetrygdsland: ISøknadsfelt<string | undefined>;
+    fraDatoBarnetrygdperiode: ISøknadsfelt<string | undefined>;
+    tilDatoBarnetrygdperiode: ISøknadsfelt<string | undefined>;
+    månedligBeløp: ISøknadsfelt<string | undefined>;
+}> => {
     const {
         mottarEøsBarnetrygdNå,
         barnetrygdsland,
@@ -60,9 +72,10 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
                 ),
                 verdi: sammeVerdiAlleSpråk(tilDatoBarnetrygdperiode?.svar),
             },
+
             månedligBeløp: {
                 label: hentTekster(hentSpørsmålTekstId[BarnetrygdperiodeSpørsmålId.månedligBeløp], {
-                    barn,
+                    barn: barnetsNavnValue(barn, intl),
                 }),
                 verdi: sammeVerdiAlleSpråk(månedligBeløp?.svar),
             },

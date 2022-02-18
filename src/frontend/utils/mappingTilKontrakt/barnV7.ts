@@ -108,14 +108,17 @@ export const barnISøknadsFormatV7 = (
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1, barn)
         ),
+
         eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder.map((periode, index) =>
             tilIEøsBarnetrygsperiodeIKontraktFormat({
+                intl,
                 periode,
                 periodeNummer: index + 1,
                 tilbakeITid: periode.mottarEøsBarnetrygdNå.svar === ESvar.NEI,
                 barn,
             })
         ),
+
         andreForelder: andreForelder
             ? andreForelderTilISøknadsfeltV7(intl, andreForelder, barn)
             : null,
