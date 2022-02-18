@@ -8,7 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { IBarnetrygdsperiode } from '../../../typer/perioder';
+import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
@@ -22,9 +22,9 @@ import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 interface BarnetrygdperiodeProps {
     skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
-    registrerteEøsBarnetrygdsperioder: Felt<IBarnetrygdsperiode[]>;
-    leggTilBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
-    fjernBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
+    registrerteEøsBarnetrygdsperioder: Felt<IEøsBarnetrygdsperiode[]>;
+    leggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
+    fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     barn: IBarnMedISøknad;
 }
 
