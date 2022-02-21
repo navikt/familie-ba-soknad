@@ -34,54 +34,35 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
 }): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
 
+    const hentSpørsmålstekster = (pensjonSpørsmålId: string) =>
+        hentTekster(
+            hentPensjonsperiodeSpørsmålIder(gjelderAndreForelder, tilbakeITid, erAndreForelderDød)[
+                pensjonSpørsmålId
+            ],
+            { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
+        );
+
     return {
         label: hentTekster(pensjonsperiodeOppsummeringOverskrift(gjelderUtlandet), {
             x: periodeNummer,
         }),
         verdi: sammeVerdiAlleSpråk({
             mottarPensjonNå: {
-                label: hentTekster(
-                    hentPensjonsperiodeSpørsmålIder(
-                        gjelderAndreForelder,
-                        tilbakeITid,
-                        erAndreForelderDød
-                    )[PensjonSpørsmålId.mottarPensjonNå],
-                    { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
-                ),
+                label: hentSpørsmålstekster(PensjonSpørsmålId.mottarPensjonNå),
                 verdi: sammeVerdiAlleSpråk(mottarPensjonNå?.svar),
             },
             pensjonsland: {
-                label: hentTekster(
-                    hentPensjonsperiodeSpørsmålIder(
-                        gjelderAndreForelder,
-                        tilbakeITid,
-                        erAndreForelderDød
-                    )[PensjonSpørsmålId.pensjonsland],
-                    { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
-                ),
+                label: hentSpørsmålstekster(PensjonSpørsmålId.pensjonsland),
                 verdi: verdiCallbackAlleSpråk(
                     locale => pensjonsland && landkodeTilSpråk(pensjonsland.svar, locale)
                 ),
             },
             pensjonFra: {
-                label: hentTekster(
-                    hentPensjonsperiodeSpørsmålIder(
-                        gjelderAndreForelder,
-                        tilbakeITid,
-                        erAndreForelderDød
-                    )[PensjonSpørsmålId.fraDatoPensjon],
-                    { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
-                ),
+                label: hentSpørsmålstekster(PensjonSpørsmålId.fraDatoPensjon),
                 verdi: sammeVerdiAlleSpråk(pensjonFra?.svar),
             },
             pensjonTil: {
-                label: hentTekster(
-                    hentPensjonsperiodeSpørsmålIder(
-                        gjelderAndreForelder,
-                        tilbakeITid,
-                        erAndreForelderDød
-                    )[PensjonSpørsmålId.tilDatoPensjon]
-                ),
+                label: hentSpørsmålstekster(PensjonSpørsmålId.tilDatoPensjon),
                 verdi: sammeVerdiAlleSpråk(pensjonTil?.svar),
             },
         }),

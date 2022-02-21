@@ -31,53 +31,36 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
 }): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormat7> => {
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } = periode;
 
+    const hentSpørsmålstekster = (utbetalingsSpørsmålId: string) =>
+        hentTekster(
+            hentUtbetalingsperiodeSpørsmålIder(
+                gjelderAndreForelder,
+                tilbakeITid,
+                erAndreForelderDød
+            )[utbetalingsSpørsmålId],
+            { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
+        );
     return {
         label: hentTekster('felles.flereytelser.periode', {
             x: periodeNummer,
         }),
         verdi: sammeVerdiAlleSpråk({
             fårUtbetalingNå: {
-                label: hentTekster(
-                    hentUtbetalingsperiodeSpørsmålIder(
-                        gjelderAndreForelder,
-                        tilbakeITid,
-                        erAndreForelderDød
-                    )[UtbetalingerSpørsmålId.fårUtbetalingNå],
-                    { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
-                ),
+                label: hentSpørsmålstekster(UtbetalingerSpørsmålId.fårUtbetalingNå),
                 verdi: sammeVerdiAlleSpråk(fårUtbetalingNå?.svar),
             },
             utbetalingLand: {
-                label: hentTekster(
-                    hentUtbetalingsperiodeSpørsmålIder(
-                        gjelderAndreForelder,
-                        tilbakeITid,
-                        erAndreForelderDød
-                    )[UtbetalingerSpørsmålId.utbetalingLand],
-                    { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
-                ),
+                label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingLand),
                 verdi: verdiCallbackAlleSpråk(
                     locale => utbetalingLand && landkodeTilSpråk(utbetalingLand.svar, locale)
                 ),
             },
             utbetalingFraDato: {
-                label: hentTekster(
-                    hentUtbetalingsperiodeSpørsmålIder(
-                        gjelderAndreForelder,
-                        tilbakeITid,
-                        erAndreForelderDød
-                    )[UtbetalingerSpørsmålId.utbetalingFraDato]
-                ),
+                label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingFraDato),
                 verdi: sammeVerdiAlleSpråk(utbetalingFraDato?.svar),
             },
             utbetalingTilDato: {
-                label: hentTekster(
-                    hentUtbetalingsperiodeSpørsmålIder(
-                        gjelderAndreForelder,
-                        tilbakeITid,
-                        erAndreForelderDød
-                    )[UtbetalingerSpørsmålId.utbetalingTilDato]
-                ),
+                label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingTilDato),
                 verdi: sammeVerdiAlleSpråk(utbetalingTilDato?.svar),
             },
         }),
