@@ -38,7 +38,10 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
         månedligBeløp,
     } = periode;
     const tilbakeITid = mottarEøsBarnetrygdNå.svar === ESvar.NEI;
-    const hentSpørsmålTekstId = barnetrygdperiodeSpørsmålSpråkId(tilbakeITid);
+    const hentSpørsmålTekstId = (spørsmålId: string) =>
+        hentTekster(barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[spørsmålId], {
+            ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }),
+        });
 
     return {
         label: hentTekster('ombarnet.trygdandreperioder.periode', {
@@ -46,36 +49,26 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
         }),
         verdi: sammeVerdiAlleSpråk({
             mottarEøsBarnetrygdNå: {
-                label: hentTekster(
-                    hentSpørsmålTekstId[BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå]
-                ),
+                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå),
                 verdi: sammeVerdiAlleSpråk(mottarEøsBarnetrygdNå?.svar),
             },
             barnetrygdsland: {
-                label: hentTekster(
-                    hentSpørsmålTekstId[BarnetrygdperiodeSpørsmålId.barnetrygdsland]
-                ),
+                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.barnetrygdsland),
                 verdi: verdiCallbackAlleSpråk(
                     locale => barnetrygdsland && landkodeTilSpråk(barnetrygdsland.svar, locale)
                 ),
             },
             fraDatoBarnetrygdperiode: {
-                label: hentTekster(
-                    hentSpørsmålTekstId[BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode]
-                ),
+                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode),
                 verdi: sammeVerdiAlleSpråk(fraDatoBarnetrygdperiode?.svar),
             },
             tilDatoBarnetrygdperiode: {
-                label: hentTekster(
-                    hentSpørsmålTekstId[BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode]
-                ),
+                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode),
                 verdi: sammeVerdiAlleSpråk(tilDatoBarnetrygdperiode?.svar),
             },
 
             månedligBeløp: {
-                label: hentTekster(hentSpørsmålTekstId[BarnetrygdperiodeSpørsmålId.månedligBeløp], {
-                    barn: barnetsNavnValue(barn, intl),
-                }),
+                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.månedligBeløp),
                 verdi: sammeVerdiAlleSpråk(månedligBeløp?.svar),
             },
         }),
