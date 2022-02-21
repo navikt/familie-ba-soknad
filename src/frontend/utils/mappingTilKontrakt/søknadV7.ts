@@ -103,7 +103,6 @@ export const dataISøknadKontraktFormatV7 = (
                     periodeNummer: index + 1,
                     gjelderUtlandet: true,
                     gjelderAndreForelder: false,
-                    tilbakeITid: periode.arbeidsperiodeAvsluttet?.svar === ESvar.JA,
                     erAndreForelderDød: false,
                 })
             ),
@@ -113,7 +112,6 @@ export const dataISøknadKontraktFormatV7 = (
                     periodeNummer: index + 1,
                     gjelderUtlandet: false,
                     gjelderAndreForelder: false,
-                    tilbakeITid: periode.arbeidsperiodeAvsluttet?.svar === ESvar.JA,
                     erAndreForelderDød: false,
                 })
             ),
@@ -121,7 +119,6 @@ export const dataISøknadKontraktFormatV7 = (
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    tilbakeITid: periode.mottarPensjonNå?.svar === ESvar.NEI,
                     gjelderAndreForelder: false,
                     erAndreForelderDød: false,
                     gjelderUtlandet: true,
@@ -131,7 +128,6 @@ export const dataISøknadKontraktFormatV7 = (
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    tilbakeITid: periode.mottarPensjonNå?.svar === ESvar.NEI,
                     gjelderAndreForelder: false,
                     erAndreForelderDød: false,
                     gjelderUtlandet: false,
@@ -141,7 +137,6 @@ export const dataISøknadKontraktFormatV7 = (
                 tilIAndreUtbetalingsperioderIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    tilbakeITid: periode.fårUtbetalingNå?.svar === ESvar.NEI,
                     gjelderAndreForelder: false,
                     erAndreForelderDød: false,
                 })

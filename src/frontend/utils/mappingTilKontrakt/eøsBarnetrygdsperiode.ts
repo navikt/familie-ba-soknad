@@ -17,13 +17,11 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
     intl,
     periode,
     periodeNummer,
-    tilbakeITid,
     barn,
 }: {
     intl: IntlShape;
     periode: IEøsBarnetrygdsperiode;
     periodeNummer: number;
-    tilbakeITid: boolean;
     barn: IBarnMedISøknad;
 }): ISøknadsfelt<{
     mottarEøsBarnetrygdNå: ISøknadsfelt<ESvar | null>;
@@ -39,6 +37,7 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
         tilDatoBarnetrygdperiode,
         månedligBeløp,
     } = periode;
+    const tilbakeITid = mottarEøsBarnetrygdNå.svar === ESvar.NEI;
     const hentSpørsmålTekstId = barnetrygdperiodeSpørsmålSpråkId(tilbakeITid);
 
     return {

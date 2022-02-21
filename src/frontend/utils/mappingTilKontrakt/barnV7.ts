@@ -1,7 +1,5 @@
 import { IntlShape } from 'react-intl';
 
-import { ESvar } from '@navikt/familie-form-elements';
-
 import {
     OmBarnetSpørsmålsId,
     omBarnetSpørsmålSpråkId,
@@ -114,7 +112,6 @@ export const barnISøknadsFormatV7 = (
                 intl,
                 periode,
                 periodeNummer: index + 1,
-                tilbakeITid: periode.mottarEøsBarnetrygdNå.svar === ESvar.NEI,
                 barn,
             })
         ),

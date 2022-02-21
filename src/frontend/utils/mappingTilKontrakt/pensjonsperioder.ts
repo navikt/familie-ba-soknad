@@ -1,5 +1,7 @@
 import { IntlShape } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { pensjonsperiodeOppsummeringOverskrift } from '../../components/Felleskomponenter/Pensjonsmodal/språkUtils';
 import {
     hentPensjonsperiodeSpørsmålIder,
@@ -16,7 +18,6 @@ import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjone
 export const tilIPensjonsperiodeIKontraktFormat = ({
     periode,
     periodeNummer,
-    tilbakeITid,
     gjelderAndreForelder,
     erAndreForelderDød,
     gjelderUtlandet,
@@ -25,7 +26,6 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
 }: {
     periode: IPensjonsperiode;
     periodeNummer: number;
-    tilbakeITid: boolean;
     gjelderAndreForelder: boolean;
     erAndreForelderDød: boolean;
     gjelderUtlandet: boolean;
@@ -33,6 +33,7 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
     intl?: IntlShape;
 }): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
+    const tilbakeITid = mottarPensjonNå?.svar === ESvar.NEI;
 
     const hentSpørsmålstekster = (pensjonSpørsmålId: string) =>
         hentTekster(

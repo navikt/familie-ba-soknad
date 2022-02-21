@@ -155,7 +155,6 @@ export const andreForelderTilISøknadsfeltV7 = (
                 periodeNummer: index + 1,
                 gjelderUtlandet: true,
                 gjelderAndreForelder: true,
-                tilbakeITid: periode.arbeidsperiodeAvsluttet?.svar === ESvar.JA,
                 erAndreForelderDød: forelderErDød,
             })
         ),
@@ -163,7 +162,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             tilIPensjonsperiodeIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
-                tilbakeITid: periode.mottarPensjonNå?.svar === ESvar.NEI,
                 gjelderAndreForelder: true,
                 erAndreForelderDød: forelderErDød,
                 gjelderUtlandet: true,
@@ -177,7 +175,6 @@ export const andreForelderTilISøknadsfeltV7 = (
                 periodeNummer: index + 1,
                 gjelderUtlandet: false,
                 gjelderAndreForelder: true,
-                tilbakeITid: periode.arbeidsperiodeAvsluttet?.svar === ESvar.JA,
                 erAndreForelderDød: forelderErDød,
             })
         ),
@@ -185,7 +182,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             tilIPensjonsperiodeIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
-                tilbakeITid: periode.mottarPensjonNå?.svar === ESvar.NEI,
                 gjelderAndreForelder: true,
                 erAndreForelderDød: forelderErDød,
                 gjelderUtlandet: false,
@@ -197,7 +193,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             tilIAndreUtbetalingsperioderIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
-                tilbakeITid: periode.fårUtbetalingNå?.svar === ESvar.NEI,
                 gjelderAndreForelder: true,
                 erAndreForelderDød: forelderErDød,
                 barn,

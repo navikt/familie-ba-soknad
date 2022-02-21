@@ -1,5 +1,7 @@
 import { IntlShape } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import {
     hentUtbetalingsperiodeSpørsmålIder,
     UtbetalingerSpørsmålId,
@@ -15,7 +17,6 @@ import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjone
 export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
     periode,
     periodeNummer,
-    tilbakeITid,
     gjelderAndreForelder,
     erAndreForelderDød,
     barn,
@@ -23,13 +24,13 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
 }: {
     periode: IUtbetalingsperiode;
     periodeNummer: number;
-    tilbakeITid: boolean;
     gjelderAndreForelder: boolean;
     erAndreForelderDød: boolean;
     barn?: IBarnMedISøknad;
     intl?: IntlShape;
 }): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormat7> => {
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } = periode;
+    const tilbakeITid = fårUtbetalingNå?.svar === ESvar.NEI;
 
     const hentSpørsmålstekster = (utbetalingsSpørsmålId: string) =>
         hentTekster(

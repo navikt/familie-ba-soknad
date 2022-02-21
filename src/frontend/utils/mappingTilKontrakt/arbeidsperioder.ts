@@ -1,3 +1,5 @@
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { arbeidsperiodeOppsummeringOverskrift } from '../../components/Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import {
     ArbeidsperiodeSpørsmålsId,
@@ -18,14 +20,12 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
     periodeNummer,
     gjelderUtlandet,
     gjelderAndreForelder,
-    tilbakeITid,
     erAndreForelderDød,
 }: {
     periode: IArbeidsperiode;
     periodeNummer: number;
     gjelderUtlandet: boolean;
     gjelderAndreForelder: boolean;
-    tilbakeITid: boolean;
     erAndreForelderDød: boolean;
 }): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
     const {
@@ -35,6 +35,8 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
         fraDatoArbeidsperiode,
         tilDatoArbeidsperiode,
     } = periode;
+    const tilbakeITid = arbeidsperiodeAvsluttet?.svar === ESvar.JA;
+
     const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
         gjelderAndreForelder,
         tilbakeITid,
