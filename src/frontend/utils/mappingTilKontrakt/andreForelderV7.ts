@@ -167,6 +167,8 @@ export const andreForelderTilISøknadsfeltV7 = (
                 gjelderAndreForelder: true,
                 erAndreForelderDød: forelderErDød,
                 gjelderUtlandet: true,
+                barn,
+                intl,
             })
         ),
         arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -187,6 +189,8 @@ export const andreForelderTilISøknadsfeltV7 = (
                 gjelderAndreForelder: true,
                 erAndreForelderDød: forelderErDød,
                 gjelderUtlandet: false,
+                barn,
+                intl,
             })
         ),
         andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
@@ -196,6 +200,8 @@ export const andreForelderTilISøknadsfeltV7 = (
                 tilbakeITid: periode.fårUtbetalingNå?.svar === ESvar.NEI,
                 gjelderAndreForelder: true,
                 erAndreForelderDød: forelderErDød,
+                barn,
+                intl,
             })
         ),
     };

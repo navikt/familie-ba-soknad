@@ -1,11 +1,15 @@
+import { IntlShape } from 'react-intl';
+
 import { pensjonsperiodeOppsummeringOverskrift } from '../../components/Felleskomponenter/Pensjonsmodal/språkUtils';
 import {
     hentPensjonsperiodeSpørsmålIder,
     PensjonSpørsmålId,
 } from '../../components/Felleskomponenter/Pensjonsmodal/spørsmål';
+import { IBarnMedISøknad } from '../../typer/barn';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IPensjonsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { IPensjonsperiode } from '../../typer/perioder';
+import { barnetsNavnValue } from '../barn';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
@@ -16,6 +20,8 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
     gjelderAndreForelder,
     erAndreForelderDød,
     gjelderUtlandet,
+    barn,
+    intl,
 }: {
     periode: IPensjonsperiode;
     periodeNummer: number;
@@ -23,6 +29,8 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
     gjelderAndreForelder: boolean;
     erAndreForelderDød: boolean;
     gjelderUtlandet: boolean;
+    barn?: IBarnMedISøknad;
+    intl?: IntlShape;
 }): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
 
@@ -37,7 +45,8 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
                         gjelderAndreForelder,
                         tilbakeITid,
                         erAndreForelderDød
-                    )[PensjonSpørsmålId.mottarPensjonNå]
+                    )[PensjonSpørsmålId.mottarPensjonNå],
+                    { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
                 ),
                 verdi: sammeVerdiAlleSpråk(mottarPensjonNå?.svar),
             },
@@ -47,7 +56,8 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
                         gjelderAndreForelder,
                         tilbakeITid,
                         erAndreForelderDød
-                    )[PensjonSpørsmålId.pensjonsland]
+                    )[PensjonSpørsmålId.pensjonsland],
+                    { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
                 ),
                 verdi: verdiCallbackAlleSpråk(
                     locale => pensjonsland && landkodeTilSpråk(pensjonsland.svar, locale)
@@ -59,7 +69,8 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
                         gjelderAndreForelder,
                         tilbakeITid,
                         erAndreForelderDød
-                    )[PensjonSpørsmålId.fraDatoPensjon]
+                    )[PensjonSpørsmålId.fraDatoPensjon],
+                    { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
                 ),
                 verdi: sammeVerdiAlleSpråk(pensjonFra?.svar),
             },
