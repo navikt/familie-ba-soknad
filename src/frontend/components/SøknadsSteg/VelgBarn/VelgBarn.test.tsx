@@ -14,7 +14,6 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { IBarnRespons, ISøkerRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
-import * as eøsUtils from '../../../utils/eøs';
 import {
     mekkGyldigSøker,
     mockEøs,
@@ -67,8 +66,6 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
 describe('VelgBarn', () => {
     beforeEach(() => {
         mockHistory(['/velg-barn']);
-        jest.spyOn(eøsUtils, 'landSvarSomKanTriggeEøs').mockReturnValue([]);
-        jest.spyOn(eøsUtils, 'jaNeiSvarTriggerEøs').mockReturnValue(false);
         jest.spyOn(eøsContext, 'useEøs').mockImplementation(jest.fn());
         jest.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
             status: RessursStatus.SUKSESS,

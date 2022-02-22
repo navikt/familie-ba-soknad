@@ -1,11 +1,17 @@
 import React from 'react';
 
+import { useApp } from '../../../../context/AppContext';
+import { useEøs } from '../../../../context/EøsContext';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
+import { IdNummer } from '../IdNummer';
+import { idNummerLandMedPeriodeType } from '../idnummerUtils';
+import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './spørsmål';
 import { useEøsForSøker } from './useEøsForSøker';
 
 const EøsForSøker: React.FC = () => {
@@ -20,7 +26,12 @@ const EøsForSøker: React.FC = () => {
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
+        settIdNummerFelter,
     } = useEøsForSøker();
+
+    const { erEøsLand } = useEøs();
+    const { søknad } = useApp();
+    const { søker } = søknad;
 
     return (
         <Steg
@@ -32,6 +43,35 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
+            <KomponentGruppe>
+                {idNummerLandMedPeriodeType(
+                    søker.arbeidsperioderUtland,
+                    søker.pensjonsperioderUtland,
+                    søker.utenlandsperioder,
+                    erEøsLand
+                ).map((landMedPeriodeType, index) => {
+                    return (
+                        !!landMedPeriodeType.land && (
+                            <IdNummer
+                                skjema={skjema}
+                                key={index}
+                                settIdNummerFelter={settIdNummerFelter}
+                                landAlphaCode={landMedPeriodeType.land}
+                                periodeType={landMedPeriodeType.periodeType}
+                            />
+                        )
+                    );
+                })}
+                <SkjemaFeltInput
+                    felt={skjema.felter.adresseISøkeperiode}
+                    visFeilmeldinger={skjema.visFeilmeldinger}
+                    labelSpråkTekstId={
+                        eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]
+                    }
+                    description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
+                />
+            </KomponentGruppe>
+
             <KomponentGruppe>
                 <Arbeidsperiode
                     skjema={skjema}

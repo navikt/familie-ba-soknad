@@ -8,6 +8,7 @@ import { idnr } from '@navikt/fnrvalidator';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { DatoMedUkjent } from '../typer/common';
+import { IdNummerKey } from '../typer/skjema';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent } from '../utils/input';
@@ -20,7 +21,7 @@ const useInputFeltMedUkjent = ({
     skalVises = true,
     customValidering = undefined,
 }: {
-    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | null;
+    søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | { id: IdNummerKey; svar: string } | null;
     avhengighet: Felt<ESvar>;
     feilmeldingSpråkId: string;
     erFnrInput?: boolean;
@@ -34,12 +35,7 @@ const useInputFeltMedUkjent = ({
             : '',
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter): FeltState<string> => {
             const feltVerdi = trimWhiteSpace(felt.verdi);
-
-            if (
-                avhengigheter &&
-                avhengigheter.vetIkkeCheckbox &&
-                avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA
-            ) {
+            if (avhengigheter?.vetIkkeCheckbox?.verdi === ESvar.JA) {
                 return ok(felt);
             }
 
