@@ -1,7 +1,7 @@
 import { Express, RequestHandler } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-import { byggFeiletRessurs, byggSuksessRessurs, Ressurs } from '@navikt/familie-typer';
+import typer, { Ressurs } from '@navikt/familie-typer';
 
 import {
     EAllFeatureToggles,
@@ -14,11 +14,11 @@ import { isEnabled } from '../utils/unleash';
 const toggleFetchHandler: RequestHandler = (req, res) => {
     const toggleId = req.params.id;
     if (!toggleId) {
-        res.status(404).send(byggFeiletRessurs('Mangler toggle-id'));
+        res.status(404).send(typer.byggFeiletRessurs('Mangler toggle-id'));
         return;
     }
 
-    res.send(byggSuksessRessurs(isEnabled(toggleId)));
+    res.send(typer.byggSuksessRessurs(isEnabled(toggleId)));
 };
 
 export const konfigurerFeatureTogglesEndpoint = (app: Express): Express => {
@@ -33,7 +33,7 @@ const fetchAllFeatureTogglesHandler: RequestHandler<
     Ressurs<EAllFeatureToggles>
 > = (_, res) => {
     res.send(
-        byggSuksessRessurs({
+        typer.byggSuksessRessurs({
             [EFeatureToggle.EØS_KOMPLETT]: isEnabled(ToggleKeys.EØS_KOMPLETT),
         })
     );

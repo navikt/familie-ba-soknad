@@ -1,10 +1,11 @@
 import { IntlShape, useIntl } from 'react-intl';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
-import { RessursStatus } from '@navikt/familie-typer';
+import { ApiRessurs, Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import {
-    erModellMismatchResponsRessurs,
+    modellMismatchMelding,
+    ModellMismatchRespons,
     modellVersjon,
     modellVersjonHeaderName,
 } from '../../shared-utils/modellversjon';
@@ -16,6 +17,17 @@ import { IKvittering } from '../typer/kvittering';
 import { dataISøknadKontraktFormat } from '../utils/mappingTilKontrakt/søknad';
 import { dataISøknadKontraktFormatV7 } from '../utils/mappingTilKontrakt/søknadV7';
 import { sendInn } from '../utils/sendInnSkjema';
+
+export const erModellMismatchResponsRessurs = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ressurs: ApiRessurs<any> | Ressurs<any>
+): ressurs is ApiRessurs<ModellMismatchRespons> => {
+    if (!('melding' in ressurs)) {
+        return false;
+    }
+
+    return ressurs.melding === modellMismatchMelding && ressurs.status === RessursStatus.FEILET;
+};
 
 export const useSendInnSkjema = (): {
     sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;

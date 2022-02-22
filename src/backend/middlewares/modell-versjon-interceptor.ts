@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { ApiRessurs, RessursStatus } from '@navikt/familie-typer';
+import familieTyper, { ApiRessurs } from '@navikt/familie-typer';
 
 import {
     modellMismatchMelding,
@@ -8,6 +8,7 @@ import {
     modellVersjon,
     modellVersjonHeaderName,
 } from '../../shared-utils/modellversjon';
+const { RessursStatus } = familieTyper;
 
 export const modellVersjonInterceptor: RequestHandler = (req, res, next) => {
     const requestModellVersjon = req.get(modellVersjonHeaderName);
