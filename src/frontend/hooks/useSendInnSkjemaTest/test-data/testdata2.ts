@@ -409,6 +409,8 @@ export const testdata2: TilKontraktTestData = {
                     },
                 },
             ],
+            idNummer: [{ idnummer: '123', land: 'BEL' }],
+            adresseISøkeperiode: { id: 'eøs-om-deg.dittoppholdssted.spm', svar: '' },
             borPåRegistrertAdresse: {
                 id: 'bor-på-registrert-adresse',
                 svar: 'JA',

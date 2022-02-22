@@ -161,6 +161,7 @@
   "felles.hjelpetekst.fulladresse": "Full address",
   "felles.hvilketlandpensjon.feilmelding": "You must state from which country you received a pension in order to be able to proceed",
   "felles.hvilketlandpensjon.spm": "From which country did you receive a pension?",
+  "felles.idnummer-feilformat.feilmelding": "The ID-number has to be between 4 and 20 characters, and cannot contain other special characters than . - / \\",
   "felles.kjennerikkeidnummer.sjekkboks": "I don't know the ID-number",
   "felles.korteopphold.info": "You do not have to state stays shorter than four weeks",
   "felles.leggtilarbeidsperiode.knapp": "Add period of work",
