@@ -1,7 +1,7 @@
 import { RequestHandler, Request, Response } from 'express';
 
 import { LocaleType } from '@navikt/familie-sprakvelger';
-import familieTyper from '@navikt/familie-typer';
+import * as familieTyper from '@navikt/familie-typer';
 
 import engelsk from '../../frontend/assets/lang/en.json';
 import bokmål from '../../frontend/assets/lang/nb.json';

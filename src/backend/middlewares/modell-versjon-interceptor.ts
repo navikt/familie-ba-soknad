@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 
-import familieTyper, { ApiRessurs } from '@navikt/familie-typer';
+import * as familieTyper from '@navikt/familie-typer';
+import { ApiRessurs } from '@navikt/familie-typer';
 
 import {
     modellMismatchMelding,
