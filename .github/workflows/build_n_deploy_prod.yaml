@@ -21,6 +21,9 @@ jobs:
           node-version: '14'
           registry-url: "https://npm.pkg.github.com"
       - name: Installer node-pakker
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
         run: npx yarn
       - name: Kjør typecheck
         env:
@@ -55,7 +58,6 @@ jobs:
       - name: Bygg Docker image
         uses: docker/build-push-action@v2
         env:
-          DEKORATOREN_URL: "https://dekoratoren.dev.nav.no"
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         with:
           tags: |
@@ -80,6 +82,7 @@ jobs:
           build-args: |
             base_path=${{ env.BASE_PATH }}
             sentry_release=${{ github.sha }}
+            NPM_TOKEN=${{ secrets.READER_TOKEN }}
           secrets: |
             sentry_token=${{ secrets.SENTRY_AUTH_TOKEN }}
           cache-from: type=gha
