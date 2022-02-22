@@ -12,7 +12,11 @@ import { IUtbetalingsperiodeIKontraktFormat7 } from '../../typer/kontrakt/v7';
 import { IUtbetalingsperiode } from '../../typer/perioder';
 import { barnetsNavnValue } from '../barn';
 import { hentTekster, landkodeTilSpråk } from '../språk';
-import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
+import {
+    sammeVerdiAlleSpråk,
+    sammeVerdiAlleSpråkEllerUkjentSpråktekst,
+    verdiCallbackAlleSpråk,
+} from './hjelpefunksjoner';
 
 export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
     periode,
@@ -62,7 +66,12 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
             },
             utbetalingTilDato: {
                 label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingTilDato),
-                verdi: sammeVerdiAlleSpråk(utbetalingTilDato?.svar),
+                verdi: utbetalingTilDato?.svar
+                    ? sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                          utbetalingTilDato?.svar,
+                          'felles.vetikkenåravsluttes.spm'
+                      )
+                    : sammeVerdiAlleSpråk(undefined),
             },
         }),
     };

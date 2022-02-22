@@ -76,10 +76,14 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
                 label: hentTekster(
                     hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)
                 ),
-                verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    tilDatoArbeidsperiode?.svar,
-                    hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke)
-                ),
+                verdi: periode.tilDatoArbeidsperiode?.svar
+                    ? sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                          tilDatoArbeidsperiode?.svar,
+                          hentSpørsmålTekstId(
+                              ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                          )
+                      )
+                    : sammeVerdiAlleSpråk(undefined),
             },
         }),
     };

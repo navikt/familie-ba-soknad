@@ -1,4 +1,4 @@
-import { ESvar } from '@navikt/familie-form-elements';
+import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { ISøknadKontraktDokumentasjon } from './dokumentasjon';
@@ -78,31 +78,31 @@ export interface IAndreForelderIKontraktFormatV7 {
 }
 
 export interface IArbeidsperiodeIKontraktFormat {
-    arbeidsperiodeAvsluttet: ISøknadsfelt<string | undefined>;
-    arbeidsperiodeland: ISøknadsfelt<string | undefined>;
-    arbeidsgiver: ISøknadsfelt<string | undefined>;
-    fraDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
-    tilDatoArbeidsperiode: ISøknadsfelt<string | undefined>;
+    arbeidsperiodeAvsluttet?: ISøknadsfelt<string | undefined>;
+    arbeidsperiodeland?: ISøknadsfelt<string | undefined>;
+    arbeidsgiver?: ISøknadsfelt<string | undefined>;
+    fraDatoArbeidsperiode?: ISøknadsfelt<ISODateString | undefined>;
+    tilDatoArbeidsperiode?: ISøknadsfelt<ISODateString | undefined>;
 }
 
 export interface IPensjonsperiodeIKontraktFormatV7 {
     mottarPensjonNå: ISøknadsfelt<ESvar | null>;
     pensjonsland?: ISøknadsfelt<string | undefined>;
-    pensjonFra?: ISøknadsfelt<string | undefined>;
-    pensjonTil?: ISøknadsfelt<string | undefined>;
+    pensjonFra?: ISøknadsfelt<ISODateString | undefined>;
+    pensjonTil?: ISøknadsfelt<ISODateString | undefined>;
 }
 
 export interface IEøsBarnetrygdsperiodeIKontraktFormatV7 {
     mottarEøsBarnetrygdNå: ISøknadsfelt<ESvar | null>;
     barnetrygdsland: ISøknadsfelt<string | undefined>;
-    fraDatoBarnetrygdperiode: ISøknadsfelt<string | undefined>;
-    tilDatoBarnetrygdperiode: ISøknadsfelt<string | undefined>;
+    fraDatoBarnetrygdperiode: ISøknadsfelt<ISODateString>;
+    tilDatoBarnetrygdperiode: ISøknadsfelt<ISODateString | undefined>;
     månedligBeløp: ISøknadsfelt<string | undefined>;
 }
 
 export interface IUtbetalingsperiodeIKontraktFormat7 {
     fårUtbetalingNå: ISøknadsfelt<ESvar | null>;
     utbetalingLand: ISøknadsfelt<string | undefined>;
-    utbetalingFraDato: ISøknadsfelt<string | undefined>;
-    utbetalingTilDato: ISøknadsfelt<string | undefined>;
+    utbetalingFraDato: ISøknadsfelt<ISODateString>;
+    utbetalingTilDato: ISøknadsfelt<ISODateString | undefined>;
 }

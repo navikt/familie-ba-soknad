@@ -8,6 +8,7 @@ import {
 } from '../../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
+import { IEøsBarnetrygdsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { IEøsBarnetrygdsperiode } from '../../typer/perioder';
 import { barnetsNavnValue } from '../barn';
 import { hentTekster, landkodeTilSpråk } from '../språk';
@@ -23,13 +24,7 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
     periode: IEøsBarnetrygdsperiode;
     periodeNummer: number;
     barn: IBarnMedISøknad;
-}): ISøknadsfelt<{
-    mottarEøsBarnetrygdNå: ISøknadsfelt<ESvar | null>;
-    barnetrygdsland: ISøknadsfelt<string | undefined>;
-    fraDatoBarnetrygdperiode: ISøknadsfelt<string | undefined>;
-    tilDatoBarnetrygdperiode: ISøknadsfelt<string | undefined>;
-    månedligBeløp: ISøknadsfelt<string | undefined>;
-}> => {
+}): ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7> => {
     const {
         mottarEøsBarnetrygdNå,
         barnetrygdsland,
