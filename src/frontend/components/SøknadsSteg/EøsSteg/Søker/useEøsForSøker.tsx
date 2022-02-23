@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+
+import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
+import { feil, Felt, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
+import useInputFelt from '../../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../../hooks/usePerioder';
+import { AlternativtSvarForInput } from '../../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { ISøker } from '../../../../typer/person';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
+import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { idNummerKeyPrefix } from '../idnummerUtils';
+import { EøsSøkerSpørsmålId } from './spørsmål';
 
 export const useEøsForSøker = (): {
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
@@ -25,9 +32,23 @@ export const useEøsForSøker = (): {
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
     leggTilAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
+    settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
+    idNummerFelter: Felt<string>[];
 } => {
     const { søknad, settSøknad } = useApp();
+
+    const [idNummerFelter, settIdNummerFelter] = useState<Felt<string>[]>([]);
+
     const søker = søknad.søker;
+
+    const adresseISøkeperiode = useInputFelt({
+        søknadsfelt: {
+            id: EøsSøkerSpørsmålId.adresseISøkeperiode,
+            svar: søker.adresseISøkeperiode.svar,
+        },
+        feilmeldingSpråkId: 'eøs-om-deg.dittoppholdssted.feilmelding',
+        skalVises: søker.triggetEøs,
+    });
 
     const arbeidINorge = useJaNeiSpmFelt({
         søknadsfelt: søker.arbeidINorge,
@@ -100,6 +121,15 @@ export const useEøsForSøker = (): {
     };
     const genererOppdatertSøker = (): ISøker => ({
         ...søknad.søker,
+        idNummer: idNummerFelter.map(felt => ({
+            land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
+            idnummer:
+                trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
+        })),
+        adresseISøkeperiode: {
+            ...søknad.søker.adresseISøkeperiode,
+            svar: trimWhiteSpace(skjema.felter.adresseISøkeperiode.verdi),
+        },
         arbeidINorge: {
             ...søknad.søker.arbeidINorge,
             svar: skjema.felter.arbeidINorge.verdi,
@@ -133,6 +163,14 @@ export const useEøsForSøker = (): {
         string
     >({
         felter: {
+            ...idNummerFelter.reduce(
+                (objekt, felt) => ({
+                    ...objekt,
+                    [felt.id]: felt,
+                }),
+                {}
+            ),
+            adresseISøkeperiode,
             arbeidINorge,
             registrerteArbeidsperioder,
             pensjonNorge,
@@ -155,5 +193,7 @@ export const useEøsForSøker = (): {
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
+        settIdNummerFelter,
+        idNummerFelter,
     };
 };

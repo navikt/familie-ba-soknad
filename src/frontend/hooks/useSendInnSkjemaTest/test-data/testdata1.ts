@@ -265,6 +265,8 @@ export const testdata1: TilKontraktTestData = {
                 type: 'GIFT',
             },
             adressebeskyttelse: false,
+            idNummer: [],
+            adresseISøkeperiode: { id: 'eøs-om-deg.dittoppholdssted.spm', svar: '' },
             adresse: {
                 adressenavn: 'Solveien',
                 postnummer: '2304',

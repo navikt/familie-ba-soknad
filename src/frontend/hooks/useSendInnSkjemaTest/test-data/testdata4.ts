@@ -370,6 +370,8 @@ export const testdata4: TilKontraktTestData = {
                 },
             ],
             triggetEøs: true,
+            idNummer: [{ idnummer: '123', land: 'BEL' }],
+            adresseISøkeperiode: { id: 'eøs-om-deg.dittoppholdssted.spm', svar: '' },
             statsborgerskap: [
                 {
                     landkode: 'NOR',

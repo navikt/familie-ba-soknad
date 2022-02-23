@@ -54,6 +54,21 @@ const [AppProvider, useApp] = createUseContext(() => {
     }, [nåværendeRoute]);
 
     useEffect(() => {
+        if (!søknad.søker.triggetEøs) {
+            settSøknad({
+                ...søknad,
+                søker: {
+                    ...søknad.søker,
+                    adresseISøkeperiode: {
+                        ...søknad.søker.adresseISøkeperiode,
+                        svar: '',
+                    },
+                },
+            });
+        }
+    }, [søknad.søker.triggetEøs]);
+
+    useEffect(() => {
         if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 

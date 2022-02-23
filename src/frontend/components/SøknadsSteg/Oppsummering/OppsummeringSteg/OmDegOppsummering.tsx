@@ -38,12 +38,13 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const [valgtLocale] = useSprakContext();
     const { formatMessage } = useIntl();
     const { hentRouteObjektForRouteEnum } = useRoutes();
+    const omDegHook = useOmdeg();
 
     return (
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.OmDeg)}
             tittel={'omdeg.sidetittel'}
-            skjemaHook={useOmdeg}
+            skjemaHook={omDegHook}
             settFeilAnchors={settFeilAnchors}
         >
             <StyledOppsummeringsFeltGruppe>

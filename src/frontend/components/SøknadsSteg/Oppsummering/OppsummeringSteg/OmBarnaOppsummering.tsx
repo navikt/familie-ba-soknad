@@ -24,6 +24,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const intl = useIntl();
     const { søknad } = useApp();
     const { hentRouteObjektForRouteEnum } = useRoutes();
+    const omBarnaDineHook = useOmBarnaDine();
 
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden
@@ -35,7 +36,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.OmBarna)}
             tittel={'ombarna.sidetittel'}
-            skjemaHook={useOmBarnaDine}
+            skjemaHook={omBarnaDineHook}
             settFeilAnchors={settFeilAnchors}
         >
             <StyledOppsummeringsFeltGruppe>
