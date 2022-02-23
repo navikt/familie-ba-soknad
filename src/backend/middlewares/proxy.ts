@@ -3,10 +3,9 @@ import { ClientRequest } from 'http';
 import { Request, Response } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
-import familieLogging from '@navikt/familie-logging';
+import { logError, logSecure } from '@navikt/familie-logging';
 
 import environment from '../environment';
-const { logError, logSecure } = familieLogging;
 
 const restream = (proxyReq: ClientRequest, req: Request, _res: Response) => {
     if (req.body) {
