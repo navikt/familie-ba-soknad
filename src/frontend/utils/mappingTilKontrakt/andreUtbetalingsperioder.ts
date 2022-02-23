@@ -8,7 +8,7 @@ import {
 } from '../../components/Felleskomponenter/UtbetalingerModal/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IUtbetalingsperiodeIKontraktFormat7 } from '../../typer/kontrakt/v7';
+import { IUtbetalingsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { IUtbetalingsperiode } from '../../typer/perioder';
 import { barnetsNavnValue } from '../barn';
 import { hentTekster, landkodeTilSpråk } from '../språk';
@@ -32,7 +32,7 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
     erAndreForelderDød: boolean;
     barn?: IBarnMedISøknad;
     intl?: IntlShape;
-}): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormat7> => {
+}): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7> => {
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } = periode;
     const tilbakeITid = fårUtbetalingNå?.svar === ESvar.NEI;
 
@@ -62,16 +62,14 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
             },
             utbetalingFraDato: {
                 label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingFraDato),
-                verdi: sammeVerdiAlleSpråk(utbetalingFraDato?.svar),
+                verdi: sammeVerdiAlleSpråk(utbetalingFraDato.svar),
             },
             utbetalingTilDato: {
                 label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingTilDato),
-                verdi: utbetalingTilDato?.svar
-                    ? sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                          utbetalingTilDato?.svar,
-                          'felles.vetikkenåravsluttes.spm'
-                      )
-                    : sammeVerdiAlleSpråk(undefined),
+                verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                    utbetalingTilDato.svar,
+                    'felles.vetikkenåravsluttes.spm'
+                ),
             },
         }),
     };

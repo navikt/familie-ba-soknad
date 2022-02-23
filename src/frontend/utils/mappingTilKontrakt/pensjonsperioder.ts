@@ -54,17 +54,17 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
             },
             pensjonsland: {
                 label: hentSpørsmålstekster(PensjonSpørsmålId.pensjonsland),
-                verdi: verdiCallbackAlleSpråk(
-                    locale => pensjonsland && landkodeTilSpråk(pensjonsland.svar, locale)
+                verdi: verdiCallbackAlleSpråk(locale =>
+                    pensjonsland ? landkodeTilSpråk(pensjonsland.svar, locale) : null
                 ),
             },
             pensjonFra: {
                 label: hentSpørsmålstekster(PensjonSpørsmålId.fraDatoPensjon),
-                verdi: sammeVerdiAlleSpråk(pensjonFra?.svar),
+                verdi: sammeVerdiAlleSpråk(pensjonFra?.svar ?? null),
             },
             pensjonTil: {
                 label: hentSpørsmålstekster(PensjonSpørsmålId.tilDatoPensjon),
-                verdi: sammeVerdiAlleSpråk(pensjonTil?.svar),
+                verdi: sammeVerdiAlleSpråk(pensjonTil?.svar ?? null),
             },
         }),
     };

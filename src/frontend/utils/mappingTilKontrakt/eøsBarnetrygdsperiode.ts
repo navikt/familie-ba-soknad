@@ -57,14 +57,15 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
                 label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode),
                 verdi: sammeVerdiAlleSpråk(fraDatoBarnetrygdperiode?.svar),
             },
+
             tilDatoBarnetrygdperiode: {
                 label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode),
-                verdi: sammeVerdiAlleSpråk(tilDatoBarnetrygdperiode?.svar),
+                verdi: sammeVerdiAlleSpråk(tilDatoBarnetrygdperiode?.svar ?? null),
             },
 
             månedligBeløp: {
                 label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.månedligBeløp),
-                verdi: sammeVerdiAlleSpråk(månedligBeløp?.svar),
+                verdi: sammeVerdiAlleSpråk(månedligBeløp.svar),
             },
         }),
     };

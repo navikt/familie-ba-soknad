@@ -51,39 +51,34 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
                 label: hentTekster(
                     hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet)
                 ),
-                verdi: sammeVerdiAlleSpråk(arbeidsperiodeAvsluttet?.svar),
+                verdi: sammeVerdiAlleSpråk(arbeidsperiodeAvsluttet?.svar ?? null),
             },
             arbeidsperiodeland: {
                 label: hentTekster(
                     hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand)
                 ),
-                verdi: verdiCallbackAlleSpråk(
-                    locale =>
-                        arbeidsperiodeland && landkodeTilSpråk(arbeidsperiodeland.svar, locale)
+                verdi: verdiCallbackAlleSpråk(locale =>
+                    arbeidsperiodeland ? landkodeTilSpråk(arbeidsperiodeland.svar, locale) : null
                 ),
             },
             arbeidsgiver: {
                 label: hentTekster(hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.arbeidsgiver)),
-                verdi: sammeVerdiAlleSpråk(arbeidsgiver?.svar),
+                verdi: sammeVerdiAlleSpråk(arbeidsgiver?.svar ?? null),
             },
             fraDatoArbeidsperiode: {
                 label: hentTekster(
                     hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode)
                 ),
-                verdi: sammeVerdiAlleSpråk(fraDatoArbeidsperiode?.svar),
+                verdi: sammeVerdiAlleSpråk(fraDatoArbeidsperiode?.svar ?? null),
             },
             tilDatoArbeidsperiode: {
                 label: hentTekster(
                     hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)
                 ),
-                verdi: periode.tilDatoArbeidsperiode?.svar
-                    ? sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                          tilDatoArbeidsperiode?.svar,
-                          hentSpørsmålTekstId(
-                              ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                          )
-                      )
-                    : sammeVerdiAlleSpråk(undefined),
+                verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                    tilDatoArbeidsperiode?.svar ?? null,
+                    hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke)
+                ),
             },
         }),
     };
