@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-alpine
+FROM openjdk:15-jdk-alpine
 ARG github_username
 ARG github_token
 ARG git_commit

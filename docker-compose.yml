@@ -102,7 +102,7 @@ services:
       context: dockerstuff/mottak
       args:
         <<: *common-build-variables
-        git_commit: 827a9a8b80536a58a770b2fda0de800d8f11b1eb
+        git_commit: d21eb13f835e371dd63d932b9d85ae6d697ea86d
     depends_on:
       - key_generator
       - postgres
@@ -129,7 +129,7 @@ services:
       context: dockerstuff/dokument
       args:
         <<: *common-build-variables
-        git_commit: 5730545eaf45b8ed4c0ace57254b76599c809f5c
+        git_commit: 16125c5016e082f283a525d0e69d2c785f38621e
     depends_on:
       - key_generator
       - oauthmock
