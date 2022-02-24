@@ -27,6 +27,8 @@ services:
     build:
       context: ./
       target: webpack-express-deps-builder # Før vi bygger og sletter dev-dependencies
+      args:
+        NPM_TOKEN: ${NPM_TOKEN}
     command: ["yarn", "start:dev:ts-server"]
     environment:
       <<: *common-token-environment
@@ -48,29 +50,29 @@ services:
   # DOCKER_BUILDKIT=1
   # COMPOSE_DOCKER_CLI_BUILD=1
   #
-  # Altså `DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose up -d --build frontend-prod`
+#   Altså `DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose up -d --build frontend-prod`
   #
   # Vi kan ikke bruke buildkit for hele stacken, siden buildkit ikke støtter git subdirectory contexts,
   # som vi bruker for ldap, zookeper og kafka
-  frontend-prod:
-    profiles:
-      - test-prod-build
-    logging: *common-log-config
-    container_name: "frontend-prod"
-    build:
-      context: ./
-      target: prod-runner # Samme docker image som kjører i preprod og prod
-      args:
-        base_path: /familie/barnetrygd/soknad/ordinaer/
-    environment:
-      <<: *common-token-environment
-      BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
-      ENV: docker-compose-prod
-      # FORCE_DISABLED: 1 # Uncomment for å utvikle disabled-appen
-    volumes:
-      - secure-logs:/secure-logs
-    ports:
-      - "3000:3000"
+  #frontend-prod:
+  #  profiles:
+  #    - test-prod-build
+  #  logging: *common-log-config
+  #  container_name: "frontend-prod"
+  #  build:
+#      context: ./
+#      target: prod-runner # Samme docker image som kjører i preprod og prod
+#      args:
+#        base_path: /familie/barnetrygd/soknad/ordinaer/
+#    environment:
+#      <<: *common-token-environment
+#      BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
+#      ENV: docker-compose-prod
+#       FORCE_DISABLED: 1 # Uncomment for å utvikle disabled-appen
+#    volumes:
+#      - secure-logs:/secure-logs
+#    ports:
+#      - "3000:3000"
 
   # familie-ba-soknad-api, henter bl.a. data fra PDL og forwarder søknader til mottak
   api:
@@ -129,7 +131,7 @@ services:
       context: dockerstuff/dokument
       args:
         <<: *common-build-variables
-        git_commit: 16125c5016e082f283a525d0e69d2c785f38621e
+        git_commit: d07c4826ebdff9b6f0b29628b499cbe80d20924b
     depends_on:
       - key_generator
       - oauthmock
