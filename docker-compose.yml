@@ -34,6 +34,7 @@ services:
       <<: *common-token-environment
       BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
       ENV: docker-compose
+      NPM_TOKEN: ${NPM_TOKEN}
       # FORCE_DISABLED: 1 # Uncomment for å utvikle disabled-appen
     volumes:
       - ./src:/var/server/src
@@ -150,7 +151,7 @@ services:
     logging: *common-log-config
     container_name: dokgen
     build:
-      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#c3289add7bd4c8fc00f055142439d2edac25627a"
+      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#58b331e701782d81ccc8ea61aff7bd1fac720f40"
     environment:
       RUNTIME_OPTS: "--write.access=true"
     ports:
