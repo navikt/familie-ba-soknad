@@ -80,7 +80,7 @@ services:
       context: dockerstuff/soknad-api
       args:
         <<: *common-build-variables
-        git_commit: b9d16c17fa8664c259d87a38abc489ef06ee2eb8
+        git_commit: 2121ffb8462ef28159fb9f3100aea80263ba9004
     depends_on:
       - key_generator
       - oauthmock
