@@ -3,7 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { IBarnetrygdsperiode } from '../../../typer/perioder';
+import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
@@ -12,9 +12,9 @@ import { eøsBarnetrygdSpørsmålSpråkTekst } from './barnetrygdperiodeSpråkUt
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 export const BarnetrygdsperiodeOppsummering: React.FC<{
-    barnetrygdsperiode: IBarnetrygdsperiode;
+    barnetrygdsperiode: IEøsBarnetrygdsperiode;
     nummer: number;
-    fjernPeriodeCallback?: (barnetrygdsperiode: IBarnetrygdsperiode) => void;
+    fjernPeriodeCallback?: (barnetrygdsperiode: IEøsBarnetrygdsperiode) => void;
     barnetsNavn: string;
 }> = ({ barnetrygdsperiode, nummer, fjernPeriodeCallback = undefined, barnetsNavn }) => {
     const {

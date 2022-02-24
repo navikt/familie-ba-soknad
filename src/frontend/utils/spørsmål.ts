@@ -6,6 +6,8 @@ import {
     samboerSpørsmålSpråkId,
     tidligereSamboerSpørsmålSpråkId,
 } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { eøsBarnSpørsmålSpråkId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { eøsSøkerSpørsmålSpråkId } from '../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { omBarnaDineSpørsmålSpråkId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { omBarnetSpørsmålSpråkId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { omDegSpørsmålSpråkId } from '../components/SøknadsSteg/OmDeg/spørsmål';
@@ -20,6 +22,8 @@ export const språkIndexListe = [
     dinLivssituasjonSpørsmålSpråkId,
     samboerSpørsmålSpråkId,
     tidligereSamboerSpørsmålSpråkId,
+    eøsSøkerSpørsmålSpråkId,
+    eøsBarnSpørsmålSpråkId,
 ];
 export const svarForSpørsmålMedUkjent = (
     vetIkkeFelt: Felt<ESvar>,
