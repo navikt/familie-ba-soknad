@@ -4,7 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 
-import familieLogging from '@navikt/familie-logging';
+import { logInfo } from '@navikt/familie-logging';
 
 import environment, { basePath } from './environment';
 import { expressToggleInterceptor } from './middlewares/feature-toggles';
@@ -18,7 +18,6 @@ import { konfigurerBildeProsessering } from './routes/imageprocessor';
 import { konfigurerModellVersjonEndpoint } from './routes/modellversjon';
 import { konfigurerNais } from './routes/nais';
 import { konfigurerStatic } from './routes/static';
-const { logInfo } = familieLogging;
 
 dotenv.config();
 const app = express();
