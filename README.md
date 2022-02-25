@@ -42,7 +42,8 @@ Du trenger og å sette github credentials. Kjør `yarn setup:docker:env` eller l
 `GITHUB_USER=<GitHub brukernavnet ditt>`\
 `GITHUB_TOKEN=<TOKEN GENERERT PÅ GITHUB>`
 
-**OBS!** Dersom man ikke får oppdatert versjon i frontend kan det være pga. utdatert docker images, så da kan man kjøre `docker-compose up -d --build`.
+**OBS!** Dersom man ikke får oppdatert versjon i frontend kan det være pga. utdatert docker images, så da kan man kjøre `docker-compose up -d --build`. 
+Skjer det noe annet uventet kan det kanskje hjelpe å slette alle images og volumes (starte fra scratch).
 
 **OBS2!** Husk å stoppe docker og colima når du er ferdig `docker-compose down` og `colima stop`.
 
