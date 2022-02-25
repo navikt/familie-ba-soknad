@@ -24,16 +24,6 @@ For å kjøre med mellomlagring må du ha familie-dokument kjørende (er en del 
 For å kunne se PDFen som blir sent til joark (arkivering) lokalt må vi kjøre en del apper i tillegg til denne.
 Alle disse tjenestene bygges og kjøres via docker-compose. Start med laste ned docker og docker-compose `brew install docker` og `brew install docker-compose`. 
 
-Siden Docker Desktop ikke lenger er gratis kan du f.eks. bruke Colima. For å kunne kjøre hele stacken må vi starte colima med ekstra memory, disk og cpu.
-1. Last ned colima med brew `brew install colima`
-2. Kjør `colima start -c 4 -d 120 -m 8`
-
-Deretter åpne `docker-compose.yml`
-i intellij og start alle servicene for å komme i gang. 
-
-Eventuelt kan du kjøre `docker-compose up` i terminalen. Da vil den bygge alt første gang, men om du trenger å bygge på nytt etter første gang kjør 
-`docker-compose up -- build`. 
-
 For å bygge containerene må vi sette npm-token og docker buildkit som miljøvariabler. Dette legges typisk til i filene .zshrc eller .bash-profile slik:\
 `export NPM_TOKEN=<TOKEN GENERERT PÅ GITHUB>`\
 `export DOCKER_BUILDKIT=0`
@@ -42,8 +32,18 @@ Du trenger og å sette github credentials. Kjør `yarn setup:docker:env` eller l
 `GITHUB_USER=<GitHub brukernavnet ditt>`\
 `GITHUB_TOKEN=<TOKEN GENERERT PÅ GITHUB>`
 
+Siden Docker Desktop ikke lenger er gratis kan du f.eks. bruke Colima. For å kunne kjøre hele stacken må vi starte colima med ekstra memory, disk og cpu.
+1. Last ned colima med brew `brew install colima`
+2. Kjør `colima start -c 4 -d 120 -m 8`
+
+Deretter åpne `docker-compose.yml`
+i intellij og start alle servicene for å komme i gang.
+
+Eventuelt kan du kjøre `docker-compose up` i terminalen. Da vil den bygge alt første gang, men om du trenger å bygge på nytt etter første gang kjør
+`docker-compose up -- build`.
+
 **OBS!** Dersom man ikke får oppdatert versjon i frontend kan det være pga. utdatert docker images, så da kan man kjøre `docker-compose up -d --build`. 
-Skjer det noe annet uventet kan det kanskje hjelpe å slette alle images og volumes (starte fra scratch).
+Skjer det noe annet uventet kan det kanskje hjelpe å slette alle images, stoppa containere og volumes (starte fra scratch).
 
 **OBS2!** Husk å stoppe docker og colima når du er ferdig `docker-compose down` og `colima stop`.
 
