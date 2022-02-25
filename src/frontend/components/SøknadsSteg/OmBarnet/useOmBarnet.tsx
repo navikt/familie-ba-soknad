@@ -28,7 +28,7 @@ import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import {
     IArbeidsperiode,
-    IBarnetrygdsperiode,
+    IEøsBarnetrygdsperiode,
     IPensjonsperiode,
     IUtenlandsperiode,
 } from '../../../typer/perioder';
@@ -64,8 +64,8 @@ export const useOmBarnet = (
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
-    leggTilBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
-    fjernBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
+    leggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
+    fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
@@ -231,7 +231,7 @@ export const useOmBarnet = (
         fjernPeriode: fjernBarnetrygdsperiode,
         leggTilPeriode: leggTilBarnetrygdsperiode,
         registrertePerioder: registrerteEøsBarnetrygdsperioder,
-    } = usePerioder<IBarnetrygdsperiode>(
+    } = usePerioder<IEøsBarnetrygdsperiode>(
         barn.eøsBarnetrygdsperioder,
         { mottarEllerMottokEøsBarnetrygd },
         avhengigheter =>

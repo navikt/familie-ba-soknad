@@ -10,7 +10,7 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { useEøs } from '../../../context/EøsContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { IBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
+import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
@@ -39,9 +39,9 @@ const Oppfølgningsspørsmål: React.FC<{
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     utenlandsperioder: IUtenlandsperiode[];
-    leggTilBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
-    fjernBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
-    registrerteEøsBarnetrygdsperioder: Felt<IBarnetrygdsperiode[]>;
+    leggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
+    fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
+    registrerteEøsBarnetrygdsperioder: Felt<IEøsBarnetrygdsperiode[]>;
 }> = ({
     barn,
     skjema,
