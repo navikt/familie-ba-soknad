@@ -45,6 +45,11 @@ const jens = {
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: { id: '14', svar: ESvar.NEI },
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.JA },
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: 'AUS' },
+    [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
+        id: '166',
+        svar: ESvar.NEI,
+    },
+    eøsBarnetrygdsperioder: [],
     [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
     [barnDataKeySpørsmål.søkerForTidsrom]: { id: '255', svar: ESvar.JA },
     [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
@@ -118,6 +123,11 @@ const line = {
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: null },
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.NEI },
     [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: '' },
+    [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
+        id: '166',
+        svar: ESvar.NEI,
+    },
+    eøsBarnetrygdsperioder: [],
     [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
     [barnDataKeySpørsmål.søkerForTidsrom]: { id: '255', svar: ESvar.JA },
     [barnDataKeySpørsmål.søkerForTidsromStartdato]: {

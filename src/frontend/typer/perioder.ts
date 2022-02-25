@@ -35,10 +35,10 @@ export interface IUtbetalingsperiode {
     utbetalingTilDato: ISøknadSpørsmål<DatoMedUkjent>;
 }
 
-export interface IBarnetrygdsperiode {
+export interface IEøsBarnetrygdsperiode {
     mottarEøsBarnetrygdNå: ISøknadSpørsmål<ESvar | null>;
     barnetrygdsland: ISøknadSpørsmål<Alpha3Code | ''>;
     fraDatoBarnetrygdperiode: ISøknadSpørsmål<ISODateString>;
     tilDatoBarnetrygdperiode?: ISøknadSpørsmål<ISODateString>;
-    månedligBeløp: string;
+    månedligBeløp: ISøknadSpørsmål<string>;
 }

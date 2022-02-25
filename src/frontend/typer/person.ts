@@ -39,6 +39,11 @@ export interface IBarn extends IPerson {
     alder: string | undefined;
 }
 
+export interface IIdNummer {
+    land: Alpha3Code;
+    idnummer: string | AlternativtSvarForInput.UKJENT;
+}
+
 export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     // Steg: Om Deg
     barn: IBarn[];
@@ -66,6 +71,8 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     pensjonsperioderNorge: IPensjonsperiode[];
     andreUtbetalinger: ISøknadSpørsmål<ESvar | null>;
     andreUtbetalingsperioder: IUtbetalingsperiode[];
+    idNummer: IIdNummer[];
+    adresseISøkeperiode: ISøknadSpørsmål<string>;
 
     utvidet: {
         spørsmål: {

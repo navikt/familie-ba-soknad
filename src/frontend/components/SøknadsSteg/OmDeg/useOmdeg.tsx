@@ -6,11 +6,14 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
+import { AlternativtSvarForInput } from '../../../typer/common';
 import { IUtenlandsperiode } from '../../../typer/perioder';
+import { IIdNummer } from '../../../typer/person';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { idNummerLandMedPeriodeType, PeriodeType } from '../EøsSteg/idnummerUtils';
 
 export const useOmdeg = (): {
     skjema: ISkjema<IOmDegFeltTyper, string>;
@@ -23,6 +26,7 @@ export const useOmdeg = (): {
     utenlandsperioder: IUtenlandsperiode[];
 } => {
     const { søknad, settSøknad } = useApp();
+    const { erEøsLand } = useEøs();
     const søker = søknad.søker;
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
         søker.utenlandsperioder
@@ -123,19 +127,42 @@ export const useOmdeg = (): {
         );
     };
 
+    const gyldigVerdiPåIdNummer = (idNummerObj: IIdNummer) =>
+        idNummerObj.idnummer !== AlternativtSvarForInput.UKJENT ||
+        relevanteLandMedPeriodeType().find(
+            landMedPeriode => idNummerObj.land === landMedPeriode.land
+        )?.periodeType === PeriodeType.utenlandsperiode;
+
+    const relevanteLandMedPeriodeType = () =>
+        idNummerLandMedPeriodeType(
+            søker.arbeidsperioderUtland,
+            søker.pensjonsperioderUtland,
+            værtINorgeITolvMåneder.verdi === ESvar.NEI ? registrerteUtenlandsperioder.verdi : [],
+            erEøsLand
+        );
+
+    const filtrerteRelevanteIdNummer = (): IIdNummer[] =>
+        søknad.søker.idNummer.filter(
+            idNummerObj =>
+                relevanteLandMedPeriodeType()
+                    .map(landMedPeriode => landMedPeriode.land)
+                    .includes(idNummerObj.land) && gyldigVerdiPåIdNummer(idNummerObj)
+        );
+
     const genererOppdatertSøker = () => ({
-        ...søknad.søker,
+        ...søker,
         utenlandsperioder: værtINorgeITolvMåneder.verdi === ESvar.NEI ? utenlandsperioder : [],
+        idNummer: filtrerteRelevanteIdNummer(),
         borPåRegistrertAdresse: {
-            ...søknad.søker.borPåRegistrertAdresse,
+            ...søker.borPåRegistrertAdresse,
             svar: skjema.felter.borPåRegistrertAdresse.verdi,
         },
         værtINorgeITolvMåneder: {
-            ...søknad.søker.værtINorgeITolvMåneder,
+            ...søker.værtINorgeITolvMåneder,
             svar: skjema.felter.værtINorgeITolvMåneder.verdi,
         },
         planleggerÅBoINorgeTolvMnd: {
-            ...søknad.søker.planleggerÅBoINorgeTolvMnd,
+            ...søker.planleggerÅBoINorgeTolvMnd,
             svar:
                 !flyttetPermanentFraNorge(utenlandsperioder) &&
                 værtINorgeITolvMåneder.verdi === ESvar.NEI

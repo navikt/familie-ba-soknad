@@ -27,11 +27,14 @@ services:
     build:
       context: ./
       target: webpack-express-deps-builder # Før vi bygger og sletter dev-dependencies
+      args:
+        NPM_TOKEN: ${NPM_TOKEN}
     command: ["yarn", "start:dev:ts-server"]
     environment:
       <<: *common-token-environment
       BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
       ENV: docker-compose
+      NPM_TOKEN: ${NPM_TOKEN}
       # FORCE_DISABLED: 1 # Uncomment for å utvikle disabled-appen
     volumes:
       - ./src:/var/server/src
@@ -48,29 +51,29 @@ services:
   # DOCKER_BUILDKIT=1
   # COMPOSE_DOCKER_CLI_BUILD=1
   #
-  # Altså `DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose up -d --build frontend-prod`
+#   Altså `DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose up -d --build frontend-prod`
   #
   # Vi kan ikke bruke buildkit for hele stacken, siden buildkit ikke støtter git subdirectory contexts,
   # som vi bruker for ldap, zookeper og kafka
-  frontend-prod:
-    profiles:
-      - test-prod-build
-    logging: *common-log-config
-    container_name: "frontend-prod"
-    build:
-      context: ./
-      target: prod-runner # Samme docker image som kjører i preprod og prod
-      args:
-        base_path: /familie/barnetrygd/soknad/ordinaer/
-    environment:
-      <<: *common-token-environment
-      BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
-      ENV: docker-compose-prod
-      # FORCE_DISABLED: 1 # Uncomment for å utvikle disabled-appen
-    volumes:
-      - secure-logs:/secure-logs
-    ports:
-      - "3000:3000"
+  #frontend-prod:
+  #  profiles:
+  #    - test-prod-build
+  #  logging: *common-log-config
+  #  container_name: "frontend-prod"
+  #  build:
+#      context: ./
+#      target: prod-runner # Samme docker image som kjører i preprod og prod
+#      args:
+#        base_path: /familie/barnetrygd/soknad/ordinaer/
+#    environment:
+#      <<: *common-token-environment
+#      BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
+#      ENV: docker-compose-prod
+#       FORCE_DISABLED: 1 # Uncomment for å utvikle disabled-appen
+#    volumes:
+#      - secure-logs:/secure-logs
+#    ports:
+#      - "3000:3000"
 
   # familie-ba-soknad-api, henter bl.a. data fra PDL og forwarder søknader til mottak
   api:
@@ -80,7 +83,7 @@ services:
       context: dockerstuff/soknad-api
       args:
         <<: *common-build-variables
-        git_commit: 762ef18a208c2054312cb999e536bae3fa453564
+        git_commit: 2121ffb8462ef28159fb9f3100aea80263ba9004
     depends_on:
       - key_generator
       - oauthmock
@@ -102,7 +105,7 @@ services:
       context: dockerstuff/mottak
       args:
         <<: *common-build-variables
-        git_commit: 3be17f0f3ac16012eecb03b6ccfb3e6716dd5dea
+        git_commit: d21eb13f835e371dd63d932b9d85ae6d697ea86d
     depends_on:
       - key_generator
       - postgres
@@ -129,7 +132,7 @@ services:
       context: dockerstuff/dokument
       args:
         <<: *common-build-variables
-        git_commit: 16125c5016e082f283a525d0e69d2c785f38621e
+        git_commit: d07c4826ebdff9b6f0b29628b499cbe80d20924b
     depends_on:
       - key_generator
       - oauthmock
@@ -148,7 +151,7 @@ services:
     logging: *common-log-config
     container_name: dokgen
     build:
-      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#f7ee973be5e808490192813d85e7564c547d49bc"
+      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#58b331e701782d81ccc8ea61aff7bd1fac720f40"
     environment:
       RUNTIME_OPTS: "--write.access=true"
     ports:

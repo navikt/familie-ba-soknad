@@ -1,8 +1,12 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { IBarnetrygdsperiode } from '../../../typer/perioder';
+import { IBarnMedISøknad } from '../../../typer/barn';
+import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
+import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
@@ -13,15 +17,21 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { eøsBarnetrygdSpørsmålSpråkTekst } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId, barnetrygdperiodeSpørsmålSpråkId } from './spørsmål';
 import { useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal> {
-    onLeggTilBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
+    onLeggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
+    barn: IBarnMedISøknad;
 }
 
-export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }) => {
+export const BarnetrygdperiodeModal: React.FC<Props> = ({
+    erÅpen,
+    toggleModal,
+    onLeggTilBarnetrygdsperiode,
+    barn,
+}) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useBarnetrygdperiodeSkjema();
 
@@ -33,19 +43,43 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
         månedligBeløp,
     } = skjema.felter;
 
+    const intl = useIntl();
+
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
-        //onLeggTilBarnetrygdsperiode({});
+        onLeggTilBarnetrygdsperiode({
+            mottarEøsBarnetrygdNå: {
+                id: BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå,
+                svar: mottarEøsBarnetrygdNå.verdi,
+            },
+            barnetrygdsland: {
+                id: BarnetrygdperiodeSpørsmålId.barnetrygdsland,
+                svar: barnetrygdsland.verdi,
+            },
+            fraDatoBarnetrygdperiode: {
+                id: BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode,
+                svar: fraDatoBarnetrygdperiode.verdi,
+            },
+            ...(tilDatoBarnetrygdperiode.erSynlig && {
+                tilDatoBarnetrygdperiode: {
+                    id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode,
+                    svar: tilDatoBarnetrygdperiode.verdi,
+                },
+            }),
+            månedligBeløp: {
+                id: BarnetrygdperiodeSpørsmålId.månedligBeløp,
+                svar: månedligBeløp.verdi,
+            },
+        });
+
         toggleModal();
         nullstillSkjema();
     };
 
     const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.NEI;
-    const eøsBarnetrygdSpørsmålSpråkTekst = (spørsmålsId: BarnetrygdperiodeSpørsmålId) => (
-        <SpråkTekst id={barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[spørsmålsId]} />
-    );
+
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -72,6 +106,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                         felt={skjema.felter.barnetrygdsland}
                         skjema={skjema}
                         label={eøsBarnetrygdSpørsmålSpråkTekst(
+                            tilbakeITid,
                             BarnetrygdperiodeSpørsmålId.barnetrygdsland
                         )}
                         dynamisk
@@ -82,6 +117,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                         felt={skjema.felter.fraDatoBarnetrygdperiode}
                         skjema={skjema}
                         label={eøsBarnetrygdSpørsmålSpråkTekst(
+                            tilbakeITid,
                             BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
                         )}
                         calendarPosition={'fullscreen'}
@@ -93,6 +129,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                         felt={skjema.felter.tilDatoBarnetrygdperiode}
                         skjema={skjema}
                         label={eøsBarnetrygdSpørsmålSpråkTekst(
+                            tilbakeITid,
                             BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
                         )}
                         avgrensMinDato={skjema.felter.fraDatoBarnetrygdperiode.verdi}
@@ -109,8 +146,11 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({ erÅpen, toggleModal }
                                 BarnetrygdperiodeSpørsmålId.månedligBeløp
                             ]
                         }
-                        //TODO fikse label
-                        label={'Ikke i språkfil enda'}
+                        språkValues={{
+                            ...(barn && {
+                                barn: barnetsNavnValue(barn, intl),
+                            }),
+                        }}
                     />
                 )}
             </KomponentGruppe>

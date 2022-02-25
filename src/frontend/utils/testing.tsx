@@ -41,7 +41,6 @@ import { ISøker, ISøkerRespons } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
 import { genererInitialBarnMedISøknad } from './barn';
-import * as eøsUtils from './eøs';
 
 jest.mock('../context/pdl');
 
@@ -108,11 +107,6 @@ export const spyOnUseApp = søknad => {
 };
 
 export const mockEøs = (eøsSkruddAv = false, barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
-    // Prøvde å gjøre dette med __mocks__ uten hell, mocken ble ikke brukt av jest. Gjerne prøv igjen.
-    const landSvarSomKanTriggeEøs = jest
-        .spyOn(eøsUtils, 'landSvarSomKanTriggeEøs')
-        .mockReturnValue([]);
-    const jaNeiSvarTriggerEøs = jest.spyOn(eøsUtils, 'jaNeiSvarTriggerEøs').mockReturnValue(false);
     const erEøsLand = jest.fn();
 
     const useEøs = jest.spyOn(eøsContext, 'useEøs').mockImplementation(
@@ -127,7 +121,7 @@ export const mockEøs = (eøsSkruddAv = false, barnSomTriggerEøs = [], søkerTr
             søkerTriggerEøs,
         })
     );
-    return { landSvarSomKanTriggeEøs, jaNeiSvarTriggerEøs, useEøs, erEøsLand };
+    return { useEøs, erEøsLand };
 };
 
 export const mockRoutes = () => {
@@ -150,8 +144,6 @@ export const mockFeatureToggle = () => {
         );
     return { useFeatureToggle };
 };
-
-export const brukUseAppMedTomSøknadForRouting = () => spyOnUseApp({ barnInkludertISøknaden: [] });
 
 /**
  * Åpen for norsk oversettelse av funksjonsnavn
@@ -200,9 +192,6 @@ const wrapMedDefaultProvidere = (children: ReactNode, språkTekster: Record<stri
         children,
         språkTekster
     );
-
-export const wrapMedDefaultProvidereOgNorskeSpråktekster = (children: ReactNode) =>
-    wrapMedDefaultProvidere(children, norskeTekster);
 
 export const TestProvidere: React.FC<{ tekster?: Record<string, string> }> = ({
     tekster,
@@ -386,6 +375,11 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     id: OmBarnetSpørsmålsId.søkerForTidsromSluttdato,
                     svar: AlternativtSvarForInput.UKJENT,
                 },
+                [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
+                    id: OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd,
+                    svar: ESvar.NEI,
+                },
+                eøsBarnetrygdsperioder: [],
             },
         ],
     };
