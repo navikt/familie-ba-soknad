@@ -6,13 +6,14 @@ import {
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
 import { AlternativtSvarForInput } from '../../typer/common';
-import { ISøknadKontraktBarn } from '../../typer/kontrakt/barn';
 import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
+import { ISøknadIKontraktBarnV7 } from '../../typer/kontrakt/v7';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { barnetsNavnValue } from '../barn';
 import { hentTekster } from '../språk';
 import { formaterFnr } from '../visning';
-import { andreForelderTilISøknadsfelt } from './andreForelder';
+import { andreForelderTilISøknadsfeltV7 } from './andreForelderV7';
+import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
     sammeVerdiAlleSpråk,
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,
@@ -22,7 +23,10 @@ import {
 } from './hjelpefunksjoner';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
-export const barnISøknadsFormat = (intl: IntlShape, barn: IBarnMedISøknad): ISøknadKontraktBarn => {
+export const barnISøknadsFormatV7 = (
+    intl: IntlShape,
+    barn: IBarnMedISøknad
+): ISøknadIKontraktBarnV7 => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         id,
@@ -36,8 +40,8 @@ export const barnISøknadsFormat = (intl: IntlShape, barn: IBarnMedISøknad): IS
         søkerForTidsromSluttdato,
         institusjonOppholdSluttdato,
         utenlandsperioder,
-        // Nye felter under utvikling av EØS full
         eøsBarnetrygdsperioder,
+        // Nye felter under utvikling av EØS full
         triggetEøs,
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...barnSpørsmål
@@ -102,8 +106,18 @@ export const barnISøknadsFormat = (intl: IntlShape, barn: IBarnMedISøknad): IS
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1, barn)
         ),
+
+        eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder.map((periode, index) =>
+            tilIEøsBarnetrygsperiodeIKontraktFormat({
+                intl,
+                periode,
+                periodeNummer: index + 1,
+                barn,
+            })
+        ),
+
         andreForelder: andreForelder
-            ? andreForelderTilISøknadsfelt(intl, andreForelder, barn)
+            ? andreForelderTilISøknadsfeltV7(intl, andreForelder, barn)
             : null,
         spørsmål: {
             ...spørmålISøknadsFormat(typetBarnSpørsmål, {

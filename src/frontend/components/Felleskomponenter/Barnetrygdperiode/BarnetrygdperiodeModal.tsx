@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { IBarnetrygdsperiode } from '../../../typer/perioder';
+import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
@@ -22,7 +22,7 @@ import { BarnetrygdperiodeSpørsmålId, barnetrygdperiodeSpørsmålSpråkId } fr
 import { useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
 
 interface Props extends ReturnType<typeof useModal> {
-    onLeggTilBarnetrygdsperiode: (periode: IBarnetrygdsperiode) => void;
+    onLeggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     barn: IBarnMedISøknad;
 }
 

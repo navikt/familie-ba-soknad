@@ -5,7 +5,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
 import {
     IArbeidsperiode,
-    IBarnetrygdsperiode,
+    IEøsBarnetrygdsperiode,
     IPensjonsperiode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
@@ -84,7 +84,7 @@ export interface IAndreForelder {
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
     utenlandsperioder: IUtenlandsperiode[];
-    eøsBarnetrygdsperioder: IBarnetrygdsperiode[];
+    eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     andreForelder: IAndreForelder | null;
     triggetEøs: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
