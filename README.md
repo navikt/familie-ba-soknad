@@ -22,11 +22,30 @@ For å kjøre med mellomlagring må du ha familie-dokument kjørende (er en del 
 
 ## Kjør full app
 For å kunne se PDFen som blir sent til joark (arkivering) lokalt må vi kjøre en del apper i tillegg til denne.
-Alle disse tjenestene bygges og kjøres via docker-compose, kjør `docker-compose up` eller åpne `docker-compose.yml`
-i intellij og start alle servicene for å komme i gang. For å bygge containerene trenger vi github credentials
-og å sette en docker-config. Kjør `yarn setup:docker:env` for å gjøre dette enkelt.
+Alle disse tjenestene bygges og kjøres via docker-compose. Start med laste ned docker og docker-compose `brew install docker` og `brew install docker-compose`. 
 
-OBS! Dersom man ikke får oppdatert versjon i frontend kan det være pga. utdatert docker images, så da kan man kjøre `docker-compose up -d --build`
+For å bygge containerene må vi sette npm-token og docker buildkit som miljøvariabler. Dette legges typisk til i filene .zshrc eller .bash-profile slik:\
+`export NPM_TOKEN=<TOKEN GENERERT PÅ GITHUB>`\
+`export DOCKER_BUILDKIT=0`
+
+Du trenger og å sette github credentials. Kjør `yarn setup:docker:env` eller legg til dette i en .env på rotnivå:\
+`GITHUB_USER=<GitHub brukernavnet ditt>`\
+`GITHUB_TOKEN=<TOKEN GENERERT PÅ GITHUB>`
+
+Siden Docker Desktop ikke lenger er gratis kan du f.eks. bruke Colima. For å kunne kjøre hele stacken må vi starte colima med ekstra memory, disk og cpu.
+1. Last ned colima med brew `brew install colima`
+2. Kjør `colima start -c 4 -d 120 -m 8`
+
+Deretter åpne `docker-compose.yml`
+i intellij og start alle servicene for å komme i gang.
+
+Eventuelt kan du kjøre `docker-compose up` i terminalen. Da vil den bygge alt første gang, men om du trenger å bygge på nytt etter første gang kjør
+`docker-compose up -- build`.
+
+**OBS!** Dersom man ikke får oppdatert versjon i frontend kan det være pga. utdatert docker images, så da kan man kjøre `docker-compose up -d --build`. 
+Skjer det noe annet uventet kan det kanskje hjelpe å slette alle images, stoppa containere og volumes (starte fra scratch).
+
+**OBS2!** Husk å stoppe docker og colima når du er ferdig `docker-compose down` og `colima stop`.
 
 Når `docker-compose` sier at alle tjenestene er oppe betyr det bare at containerene har startet og at init-programmet
 kjører. Følg med på loggen til frontend-containeren for å se når webpack er ferdig, og følg med på loggen til mottak
