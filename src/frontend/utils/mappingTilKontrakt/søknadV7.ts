@@ -59,6 +59,7 @@ export const dataISøknadKontraktFormatV7 = (
         pensjonsperioderNorge,
         pensjonsperioderUtland,
         triggetEøs,
+        idNummer,
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...søkerSpørsmål
     } = søker;
@@ -90,9 +91,7 @@ export const dataISøknadKontraktFormatV7 = (
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1)
             ),
-            idNummer: søker.idNummer.map(idnummerObj =>
-                idNummerTilISøknadsfelt(idnummerObj, valgtSpråk)
-            ),
+            idNummer: idNummer.map(idnummerObj => idNummerTilISøknadsfelt(idnummerObj, valgtSpråk)),
             spørsmål: {
                 ...spørmålISøknadsFormat(typetSøkerSpørsmål),
                 ...spørmålISøknadsFormat(typetUtvidaSpørsmål),
