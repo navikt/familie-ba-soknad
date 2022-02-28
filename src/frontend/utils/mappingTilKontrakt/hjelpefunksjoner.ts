@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { IntlShape } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -36,10 +38,11 @@ export const sammeVerdiAlleSpråk = <T>(verdi: T): Record<LocaleType, T> =>
 
 export const sammeVerdiAlleSpråkEllerUkjentSpråktekst = <T>(
     svar: T | AlternativtSvarForInput,
-    ukjentTekstid: string
+    ukjentTekstid: string,
+    språkVerdier: Record<string, ReactNode> = {}
 ): Record<LocaleType, T | string> =>
     svar === AlternativtSvarForInput.UKJENT
-        ? hentTekster(ukjentTekstid)
+        ? hentTekster(ukjentTekstid, språkVerdier)
         : sammeVerdiAlleSpråk(svar);
 
 export const spørmålISøknadsFormat = (
