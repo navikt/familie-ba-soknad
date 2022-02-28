@@ -27,6 +27,7 @@ import {
     søknadsfelt,
     verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
+import { idNummerTilISøknadsfelt } from './idNummer';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 import { samboerISøknadKontraktFormat } from './samboer';
 import { tidligereSamboerISøknadKontraktFormat } from './tidligereSamboer';
@@ -88,6 +89,9 @@ export const dataISøknadKontraktFormatV7 = (
             ),
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1)
+            ),
+            idNummer: søker.idNummer.map(idnummerObj =>
+                idNummerTilISøknadsfelt(idnummerObj, valgtSpråk)
             ),
             spørsmål: {
                 ...spørmålISøknadsFormat(typetSøkerSpørsmål),

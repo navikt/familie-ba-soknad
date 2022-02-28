@@ -1,3 +1,5 @@
+import { Alpha3Code } from 'i18n-iso-countries';
+
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
@@ -42,6 +44,7 @@ export interface ISøknadKontraktSøker {
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7>[];
+    idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
 }
 
 export interface ISøknadIKontraktBarnV7 {
@@ -83,6 +86,11 @@ export interface IArbeidsperiodeIKontraktFormat {
     arbeidsgiver: ISøknadsfelt<string | null>;
     fraDatoArbeidsperiode: ISøknadsfelt<ISODateString | null>;
     tilDatoArbeidsperiode: ISøknadsfelt<ISODateString | null>;
+}
+
+export interface IIdNummerIKontraktFormat {
+    land: ISøknadsfelt<Alpha3Code>;
+    idNummer: ISøknadsfelt<string>;
 }
 
 export interface IPensjonsperiodeIKontraktFormatV7 {
