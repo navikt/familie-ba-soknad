@@ -211,6 +211,23 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                     {toggles.EØS_KOMPLETT ? (
                         <>
+                            {barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar && (
+                                <OppsummeringFelt
+                                    tittel={
+                                        <SpråkTekst
+                                            id={
+                                                omBarnetSpørsmålSpråkId[
+                                                    OmBarnetSpørsmålsId
+                                                        .pågåendeSøknadFraAnnetEøsLand
+                                                ]
+                                            }
+                                        />
+                                    }
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar
+                                    }
+                                />
+                            )}
                             {barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar && (
                                 <OppsummeringFelt
                                     tittel={

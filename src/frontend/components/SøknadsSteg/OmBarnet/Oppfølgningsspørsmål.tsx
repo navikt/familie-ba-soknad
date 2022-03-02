@@ -214,13 +214,26 @@ const Oppfølgningsspørsmål: React.FC<{
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     {toggles.EØS_KOMPLETT ? (
-                        <Barnetrygdperiode
-                            skjema={skjema}
-                            registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
-                            leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
-                            fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
-                            barn={barn}
-                        />
+                        <>
+                            <JaNeiSpm
+                                skjema={skjema}
+                                felt={skjema.felter.pågåendeSøknadFraAnnetEøsLand}
+                                spørsmålTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand
+                                    ]
+                                }
+                            />
+                            <Barnetrygdperiode
+                                skjema={skjema}
+                                registrerteEøsBarnetrygdsperioder={
+                                    registrerteEøsBarnetrygdsperioder
+                                }
+                                leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
+                                fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
+                                barn={barn}
+                            />
+                        </>
                     ) : (
                         <>
                             <LandDropdown

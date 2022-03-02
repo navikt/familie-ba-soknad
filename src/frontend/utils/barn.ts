@@ -351,6 +351,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd,
             svar: null,
         },
+        [barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
+            id: OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand,
+            svar: null,
+        },
         [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
             id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
             svar: '',

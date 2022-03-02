@@ -208,6 +208,15 @@ export const useOmBarnet = (
         );
     };
 
+    /*--- PÅGÅDENDE SØKNAD BARNETRYGD FRA ANNET EØSLAND ---*/
+    const pågåendeSøknadFraAnnetEøsLand = useJaNeiSpmFelt({
+        søknadsfelt: barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
+        feilmeldingSpråkId: 'ombarnet.pågåendesøknad.feilmelding',
+        skalSkjules:
+            !toggles.EØS_KOMPLETT ||
+            !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
+    });
+
     /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
 
     const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt({
@@ -618,6 +627,7 @@ export const useOmBarnet = (
             institusjonOppholdSluttVetIkke,
             registrerteUtenlandsperioder,
             planleggerÅBoINorge12Mnd,
+            pågåendeSøknadFraAnnetEøsLand,
             barnetrygdFraEøslandHvilketLand,
             mottarEllerMottokEøsBarnetrygd,
             registrerteEøsBarnetrygdsperioder,
@@ -716,6 +726,10 @@ export const useOmBarnet = (
                 svar: !flyttetPermanentFraNorge(utenlandsperioder)
                     ? skjema.felter.planleggerÅBoINorge12Mnd.verdi
                     : null,
+            },
+            pågåendeSøknadFraAnnetEøsLand: {
+                ...barn.pågåendeSøknadFraAnnetEøsLand,
+                svar: pågåendeSøknadFraAnnetEøsLand.verdi,
             },
             barnetrygdFraEøslandHvilketLand: {
                 ...barn.barnetrygdFraEøslandHvilketLand,

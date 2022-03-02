@@ -72,6 +72,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     institusjonOppholdSluttdato: DatoMedUkjent;
     institusjonOppholdSluttVetIkke: ESvar;
     planleggerÅBoINorge12Mnd: ESvar | null;
+    pågåendeSøknadFraAnnetEøsLand: ESvar | null;
     barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
     mottarEllerMottokEøsBarnetrygd: ESvar | null;
     registrerteEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];

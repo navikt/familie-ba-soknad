@@ -7,6 +7,7 @@ export enum OmBarnetSpørsmålsId {
     institusjonOppholdSluttdato = 'institusjon-opphold-sluttdato',
     institusjonOppholdVetIkke = 'institusjon-opphold-ukjent-sluttdato',
     planleggerÅBoINorge12Mnd = 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
+    pågåendeSøknadFraAnnetEøsLand = 'pågående-søknad-fra-annet-eøsland',
     barnetrygdFraEøslandHvilketLand = 'barnetrygd-hvilket-eøsland',
     mottarEllerMottokEøsBarnetrygd = 'mottar-eller-mottok-eøs-barnetrygd',
     andreForelderNavn = 'andre-forelder-navn',
@@ -44,6 +45,7 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.institusjonOppholdSluttdato]: 'ombarnet.institusjon.sluttdato.spm',
     [OmBarnetSpørsmålsId.institusjonOppholdVetIkke]: 'ombarnet.institusjon.ukjent-sluttdato.spm',
     [OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]: 'ombarnet.oppholdtsammenhengende.spm',
+    [OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand]: 'ombarnet.pågåendesøknad.spm',
     [OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand]: 'ombarnet.barnetrygd-eøs.land.spm',
     [OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd]:
         'ombarnet.fårellerharsøktbarnetrygdeøs.spm',
