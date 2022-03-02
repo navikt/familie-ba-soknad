@@ -6,11 +6,12 @@ import { barnDataKeySpørsmål } from './barn';
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
 import {
     IArbeidsperiode,
+    IEøsBarnetrygdsperiode,
     IPensjonsperiode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
-import { IBarn } from './person';
+import { IBarn, IIdNummer } from './person';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 
@@ -72,6 +73,8 @@ export interface IOmBarnetUtvidetFeltTyper {
     institusjonOppholdSluttVetIkke: ESvar;
     planleggerÅBoINorge12Mnd: ESvar | null;
     barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
+    mottarEllerMottokEøsBarnetrygd: ESvar | null;
+    registrerteEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     andreForelderNavn: string;
     andreForelderNavnUkjent: ESvar;
     andreForelderFnr: string;
@@ -104,6 +107,8 @@ export interface IOmDegFeltTyper {
     registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
+export type IdNummerKey = `idnummer-${string}`;
+
 export interface IEøsForSøkerFeltTyper {
     arbeidINorge: ESvar | null;
     registrerteArbeidsperioder: IArbeidsperiode[];
@@ -111,6 +116,8 @@ export interface IEøsForSøkerFeltTyper {
     registrertePensjonsperioder: IPensjonsperiode[];
     andreUtbetalinger: ESvar | null;
     registrerteAndreUtbetalinger: IUtbetalingsperiode[];
+    adresseISøkeperiode: string;
+    [key: IdNummerKey]: IIdNummer;
 }
 
 export interface IEøsForBarnFeltTyper {
@@ -170,6 +177,14 @@ export interface IArbeidsperioderFeltTyper {
     tilDatoArbeidsperiode: ISODateString;
     tilDatoArbeidsperiodeUkjent: ESvar;
 }
+
+export interface IBarnetrygdperioderFeltTyper {
+    mottarEøsBarnetrygdNå: ESvar | null;
+    barnetrygdsland: Alpha3Code | '';
+    fraDatoBarnetrygdperiode: ISODateString;
+    tilDatoBarnetrygdperiode: ISODateString;
+    månedligBeløp: string;
+}
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
@@ -183,4 +198,5 @@ export type SkjemaFeltTyper =
     | IEøsForSøkerFeltTyper
     | IEøsForBarnFeltTyper
     | IUtbetalingerFeltTyper
-    | IArbeidsperioderFeltTyper;
+    | IArbeidsperioderFeltTyper
+    | IBarnetrygdperioderFeltTyper;

@@ -409,6 +409,8 @@ export const testdata2: TilKontraktTestData = {
                     },
                 },
             ],
+            idNummer: [{ idnummer: '123', land: 'BEL' }],
+            adresseISøkeperiode: { id: 'eøs-om-deg.dittoppholdssted.spm', svar: '' },
             borPåRegistrertAdresse: {
                 id: 'bor-på-registrert-adresse',
                 svar: 'JA',
@@ -800,7 +802,7 @@ export const testdata2: TilKontraktTestData = {
                             },
                             oppholdslandTilDato: {
                                 label: {
-                                    en: 'When us the stay ending?',
+                                    en: 'When is the stay ending?',
                                     nb: 'Når avsluttes oppholdet?',
                                     nn: 'Når skal opphaldet avsluttast?',
                                 },
@@ -846,7 +848,7 @@ export const testdata2: TilKontraktTestData = {
                             },
                             oppholdslandTilDato: {
                                 label: {
-                                    en: 'When us the stay ending?',
+                                    en: 'When is the stay ending?',
                                     nb: 'Når avsluttes oppholdet?',
                                     nn: 'Når skal opphaldet avsluttast?',
                                 },
@@ -892,7 +894,7 @@ export const testdata2: TilKontraktTestData = {
                             },
                             oppholdslandTilDato: {
                                 label: {
-                                    en: 'When us the stay ending?',
+                                    en: 'When is the stay ending?',
                                     nb: 'Når avsluttes oppholdet?',
                                     nn: 'Når skal opphaldet avsluttast?',
                                 },
@@ -1011,7 +1013,7 @@ export const testdata2: TilKontraktTestData = {
                     nb: {
                         navn: {
                             label: {
-                                en: 'Name of your cohabitating partner',
+                                en: 'Name of your cohabiting partner',
                                 nb: 'Samboerens navn',
                                 nn: 'Sambuaren sitt namn',
                             },
@@ -1061,7 +1063,7 @@ export const testdata2: TilKontraktTestData = {
                     nn: {
                         navn: {
                             label: {
-                                en: 'Name of your cohabitating partner',
+                                en: 'Name of your cohabiting partner',
                                 nb: 'Samboerens navn',
                                 nn: 'Sambuaren sitt namn',
                             },
@@ -1111,7 +1113,7 @@ export const testdata2: TilKontraktTestData = {
                     en: {
                         navn: {
                             label: {
-                                en: 'Name of your cohabitating partner',
+                                en: 'Name of your cohabiting partner',
                                 nb: 'Samboerens navn',
                                 nn: 'Sambuaren sitt namn',
                             },
@@ -1417,7 +1419,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandTilDato: {
                                     label: {
-                                        en: 'When us the stay ending?',
+                                        en: 'When is the stay ending?',
                                         nb: 'Når avsluttes oppholdet?',
                                         nn: 'Når skal opphaldet avsluttast?',
                                     },
@@ -1463,7 +1465,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandTilDato: {
                                     label: {
-                                        en: 'When us the stay ending?',
+                                        en: 'When is the stay ending?',
                                         nb: 'Når avsluttes oppholdet?',
                                         nn: 'Når skal opphaldet avsluttast?',
                                     },
@@ -1509,7 +1511,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandTilDato: {
                                     label: {
-                                        en: 'When us the stay ending?',
+                                        en: 'When is the stay ending?',
                                         nb: 'Når avsluttes oppholdet?',
                                         nn: 'Når skal opphaldet avsluttast?',
                                     },
@@ -1559,9 +1561,9 @@ export const testdata2: TilKontraktTestData = {
                     },
                     barnetrygdFraAnnetEøsland: {
                         label: {
-                            en: 'For which of the children are you receiving or have you applied for child benefit?',
-                            nb: 'Hvem av barna får du eller er det søkt om barnetrygd for?',
-                            nn: 'Kven av barna får du eller er det søkt om barnetrygd for?',
+                            en: 'For which of the children are you receiving or have applied for child benefit?',
+                            nb: 'Hvem av barna får du eller har du søkt om barnetrygd for?',
+                            nn: 'Kven av barna får du eller har du søkt om barnetrygd for?',
                         },
                         verdi: {
                             nb: 'JA',
@@ -1571,7 +1573,7 @@ export const testdata2: TilKontraktTestData = {
                     },
                     andreForelderErDød: {
                         label: {
-                            en: 'Which of the children is your previous spouse/cohabitating partner the parent of?',
+                            en: 'Which of the children is your previous spouse/cohabiting partner the parent of?',
                             nb: 'Hvem av barna er din tidligere ektefelle/samboer forelder til?',
                             nn: 'Kven av barna er din tidlegare ektefelle/sambuar forelder til?',
                         },
@@ -1799,7 +1801,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandTilDato: {
                                     label: {
-                                        en: 'When us the stay ending?',
+                                        en: 'When is the stay ending?',
                                         nb: 'Når avsluttes oppholdet?',
                                         nn: 'Når skal opphaldet avsluttast?',
                                     },
@@ -1849,7 +1851,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandTilDato: {
                                     label: {
-                                        en: 'When us the stay ending?',
+                                        en: 'When is the stay ending?',
                                         nb: 'Når avsluttes oppholdet?',
                                         nn: 'Når skal opphaldet avsluttast?',
                                     },
@@ -1899,7 +1901,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandTilDato: {
                                     label: {
-                                        en: 'When us the stay ending?',
+                                        en: 'When is the stay ending?',
                                         nb: 'Når avsluttes oppholdet?',
                                         nn: 'Når skal opphaldet avsluttast?',
                                     },
@@ -1953,9 +1955,9 @@ export const testdata2: TilKontraktTestData = {
                     },
                     barnetrygdFraAnnetEøsland: {
                         label: {
-                            en: 'For which of the children are you receiving or have you applied for child benefit?',
-                            nb: 'Hvem av barna får du eller er det søkt om barnetrygd for?',
-                            nn: 'Kven av barna får du eller er det søkt om barnetrygd for?',
+                            en: 'For which of the children are you receiving or have applied for child benefit?',
+                            nb: 'Hvem av barna får du eller har du søkt om barnetrygd for?',
+                            nn: 'Kven av barna får du eller har du søkt om barnetrygd for?',
                         },
                         verdi: {
                             nb: 'JA',
@@ -1965,7 +1967,7 @@ export const testdata2: TilKontraktTestData = {
                     },
                     andreForelderErDød: {
                         label: {
-                            en: 'Which of the children is your previous spouse/cohabitating partner the parent of?',
+                            en: 'Which of the children is your previous spouse/cohabiting partner the parent of?',
                             nb: 'Hvem av barna er din tidligere ektefelle/samboer forelder til?',
                             nn: 'Kven av barna er din tidlegare ektefelle/sambuar forelder til?',
                         },
@@ -2211,7 +2213,7 @@ export const testdata2: TilKontraktTestData = {
                 label: {
                     en: 'Are you receiving or have you applied for child benefit for some of the children from another EEA country?',
                     nb: 'Får du eller har du søkt om barnetrygd for noen av barna fra et annet EØS land?',
-                    nn: 'Får du eller er det søkt om barnetrygd for nokre av barna frå eit anna EØS land?',
+                    nn: 'Får du eller har du søkt om barnetrygd for nokre av barna frå eit anna EØS land?',
                 },
                 verdi: {
                     nb: 'JA',

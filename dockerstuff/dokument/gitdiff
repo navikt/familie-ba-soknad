@@ -1,9 +1,9 @@
 diff --git a/pom.xml b/pom.xml
-index 37c247b..dc288fd 100644
+index 3d1c8c2..afa3604 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -190,12 +190,6 @@
-             <version>1.15.3</version>
+@@ -197,12 +197,6 @@
+             <version>1.16.3</version>
              <scope>test</scope>
          </dependency>
 -        <dependency>
@@ -12,21 +12,21 @@ index 37c247b..dc288fd 100644
 -            <version>${token-validation-spring.version}</version>
 -            <scope>test</scope>
 -        </dependency>
- 
+
          <!-- PDFgen -->
          <dependency>
 diff --git a/src/main/kotlin/no/nav/familie/dokument/config/CORSResponseFilter.kt b/src/main/kotlin/no/nav/familie/dokument/config/CORSResponseFilter.kt
-index d2676cb..d943362 100644
+index 5b31abe..64031da 100644
 --- a/src/main/kotlin/no/nav/familie/dokument/config/CORSResponseFilter.kt
 +++ b/src/main/kotlin/no/nav/familie/dokument/config/CORSResponseFilter.kt
 @@ -38,7 +38,7 @@ class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
- 
+
      private fun erCorsOk(request: HttpServletRequest): Boolean {
          val (allowedOrigins) = corsProperties
 -        return allowedOrigins.contains(request.getHeader("Origin"))
 +        return true
      }
- 
+
      private fun erOptionRequest(request: HttpServletRequest) = "OPTIONS" == request.method.toUpperCase() && erCorsOk(request)
 diff --git a/src/test/kotlin/no/nav/familie/dokument/ApiFeilIntegrationTest.kt b/src/test/kotlin/no/nav/familie/dokument/ApiFeilIntegrationTest.kt
 deleted file mode 100644
@@ -150,20 +150,20 @@ index f352510..f6cd034 100644
 +++ b/src/test/kotlin/no/nav/familie/dokument/DevLauncher.kt
 @@ -1,13 +1,10 @@
  package no.nav.familie.dokument
- 
+
  import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 -import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration
  import org.springframework.boot.SpringApplication
  import org.springframework.boot.autoconfigure.SpringBootApplication
 -import org.springframework.context.annotation.Import
- 
+
  @SpringBootApplication(scanBasePackages = ["no.nav.familie.dokument"])
 -@Import(TokenGeneratorConfiguration::class)
  @EnableJwtTokenValidation
  class DevLauncher
- 
+
 diff --git a/src/test/kotlin/no/nav/familie/dokument/config/TestStorageConfiguration.kt b/src/test/kotlin/no/nav/familie/dokument/config/TestStorageConfiguration.kt
-index 2fd0566..92c35a0 100644
+index 109cb46..fd5764d 100644
 --- a/src/test/kotlin/no/nav/familie/dokument/config/TestStorageConfiguration.kt
 +++ b/src/test/kotlin/no/nav/familie/dokument/config/TestStorageConfiguration.kt
 @@ -10,7 +10,6 @@ import no.nav.familie.dokument.storage.encryption.EncryptedStorage
@@ -175,20 +175,104 @@ index 2fd0566..92c35a0 100644
  import org.springframework.beans.factory.annotation.Qualifier
  import org.springframework.context.annotation.*
 @@ -19,7 +18,6 @@ import java.io.InputStream
- 
+
  @Profile("dev")
  @Configuration
 -@Import(TokenGeneratorConfiguration::class)
  class TestStorageConfiguration {
- 
+
      val lokalStorage: MutableMap<String, ByteArray> = HashMap()
+diff --git a/src/test/kotlin/no/nav/familie/dokument/storage/HentFnrTest.kt b/src/test/kotlin/no/nav/familie/dokument/storage/HentFnrTest.kt
+deleted file mode 100644
+index 945f5cb..0000000
+--- a/src/test/kotlin/no/nav/familie/dokument/storage/HentFnrTest.kt
++++ /dev/null
+@@ -1,77 +0,0 @@
+-package no.nav.familie.dokument.storage
+-
+-import com.nimbusds.jwt.JWTClaimsSet
+-import io.mockk.every
+-import io.mockk.mockk
+-import no.nav.security.token.support.core.context.TokenValidationContext
+-import no.nav.security.token.support.core.jwt.JwtToken
+-import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
+-import no.nav.security.token.support.test.JwtTokenGenerator
+-import org.assertj.core.api.Assertions.assertThat
+-import org.assertj.core.api.Assertions.assertThatThrownBy
+-import org.junit.jupiter.api.AfterEach
+-import org.junit.jupiter.api.Test
+-import org.springframework.web.context.request.RequestAttributes
+-import org.springframework.web.context.request.RequestContextHolder
+-
+-internal class HentFnrTest {
+-
+-    private val sub: String = "11111111111"
+-    private val pid: String = "22222222222"
+-
+-    private val contextHolder = SpringTokenValidationContextHolder()
+-
+-    @AfterEach
+-    internal fun tearDown() {
+-        RequestContextHolder.resetRequestAttributes()
+-    }
+-
+-    @Test
+-    internal fun `skal kaste feil hvis det ikke finnes en token`() {
+-        mockRequestContextHolder(emptyMap())
+-        assertThatThrownBy { contextHolder.hentFnr() }
+-                .hasMessage("Finner ikke token for ekstern bruker - issuers=[]")
+-    }
+-
+-    @Test
+-    internal fun `skal kaste feil hvis det ikke finnes subject eller pid`() {
+-        mockContext()
+-        assertThatThrownBy { contextHolder.hentFnr() }
+-                .hasMessage("Finner ikke sub/pid på token")
+-    }
+-
+-    @Test
+-    internal fun `returnerer subject hvis ikke pid finnes`() {
+-        mockContext(sub = sub)
+-        assertThat(contextHolder.hentFnr()).isEqualTo(sub)
+-    }
+-
+-    @Test
+-    internal fun `returnerer pid hvis pid og sub finnes finnes`() {
+-        mockContext(sub = sub, pid = pid)
+-        assertThat(contextHolder.hentFnr()).isEqualTo(pid)
+-    }
+-
+-    @Test
+-    internal fun `returnerer pid hvis kun pid finnes`() {
+-        mockContext(pid = pid)
+-        assertThat(contextHolder.hentFnr()).isEqualTo(pid)
+-    }
+-
+-    private fun mockContext(sub: String? = null, pid: String? = null) {
+-
+-        val builder = JWTClaimsSet.Builder()
+-        sub?.let { builder.subject(it) }
+-        pid?.let { builder.claim("pid", it) }
+-        val jwtToken = JwtTokenGenerator.createSignedJWT(builder.build())
+-
+-        mockRequestContextHolder(mapOf("selvbetjening" to JwtToken(jwtToken.serialize())))
+-    }
+-
+-    private fun mockRequestContextHolder(map: Map<String, JwtToken>) {
+-        val requestAttributes = mockk<RequestAttributes>()
+-        every { requestAttributes.getAttribute(any(), any()) } returns TokenValidationContext(map)
+-        RequestContextHolder.setRequestAttributes(requestAttributes)
+-    }
+-
+-}
+\ No newline at end of file
 diff --git a/src/test/resources/application-dev.yaml b/src/test/resources/application-dev.yaml
-index c0a4130..dd23613 100644
+index c0a4130..476162d 100644
 --- a/src/test/resources/application-dev.yaml
 +++ b/src/test/resources/application-dev.yaml
-@@ -7,11 +7,9 @@ cors:
+@@ -7,11 +7,10 @@ cors:
      - "http://localhost:3000"
- 
+
  no.nav.security.jwt:
 -  issuers: selvbetjening
 -  issuer.selvbetjening:
@@ -198,7 +282,7 @@ index c0a4130..dd23613 100644
 +  issuer.tokenx:
 +    discoveryurl: ${TOKEN_X_WELL_KNOWN_URL}
 +    accepted_audience: ${TOKEN_X_CLIENT_ID}
- 
++
+
  FAMILIE_DOKUMENT_STORAGE_ENCRYPTION_PASSWORD: not-a-real-pw
  FAMILIE_DOKUMENT_FNR_SECRET_SALT: detteErIkkeSaltMenHemmeligSalt
-

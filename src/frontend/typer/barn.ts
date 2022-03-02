@@ -5,6 +5,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
 import {
     IArbeidsperiode,
+    IEøsBarnetrygdsperiode,
     IPensjonsperiode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
@@ -36,6 +37,7 @@ export enum barnDataKeySpørsmål {
     erAsylsøker = 'erAsylsøker',
     barnetrygdFraAnnetEøsland = 'barnetrygdFraAnnetEøsland',
     barnetrygdFraEøslandHvilketLand = 'barnetrygdFraEøslandHvilketLand',
+    mottarEllerMottokEøsBarnetrygd = 'mottarEllerMottokEøsBarnetrygd',
     andreForelderErDød = 'andreForelderErDød',
     oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
     institusjonIUtland = 'institusjonIUtland',
@@ -82,12 +84,13 @@ export interface IAndreForelder {
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
     utenlandsperioder: IUtenlandsperiode[];
-    // TODO: barnetrygdPerioder: IBarnetrygdPeriode[];
+    eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     andreForelder: IAndreForelder | null;
     triggetEøs: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAsylsøker]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.andreForelderErDød]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: ISøknadSpørsmål<ESvar | null>;

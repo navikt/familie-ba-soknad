@@ -27,6 +27,7 @@ import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { idNummerLand } from '../EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { SamboerSpørsmålId } from './spørsmål';
 
@@ -45,7 +46,7 @@ export const useDinLivssituasjon = (): {
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
-    const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøs();
+    const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs, erEøsLand } = useEøs();
     const { toggles } = useFeatureToggles();
     const søker = søknad.søker;
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
@@ -208,10 +209,12 @@ export const useDinLivssituasjon = (): {
         søker.arbeidsperioderUtland,
         { jobberPåBåt },
         avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            jobberPåBåt.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            return avhengigheter?.jobberPåBåt.verdi === ESvar.NEI ||
+                (avhengigheter?.jobberPåBåt.verdi === ESvar.JA && felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+        }
     );
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
@@ -236,10 +239,12 @@ export const useDinLivssituasjon = (): {
         { mottarUtenlandspensjon },
         avhengigheter =>
             avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        felt =>
-            mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length === 0
-                ? feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />)
-                : ok(felt)
+        (felt, avhengigheter) => {
+            return avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.NEI ||
+                (avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
+        }
     );
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
@@ -356,6 +361,14 @@ export const useDinLivssituasjon = (): {
             skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA
                 ? skjema.felter.registrertePensjonsperioder.verdi
                 : [],
+        idNummer: søknad.søker.idNummer.filter(idNummer => {
+            return idNummerLand(
+                jobberPåBåt.verdi === ESvar.JA ? registrerteArbeidsperioder.verdi : [],
+                mottarUtenlandspensjon.verdi === ESvar.JA ? registrertePensjonsperioder.verdi : [],
+                søker.utenlandsperioder,
+                erEøsLand
+            ).includes(idNummer.land);
+        }),
         utvidet: {
             ...søknad.søker.utvidet,
             tidligereSamboere,

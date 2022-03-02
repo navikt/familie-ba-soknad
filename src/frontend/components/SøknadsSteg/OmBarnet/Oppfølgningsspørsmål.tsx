@@ -5,15 +5,17 @@ import { useIntl } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { ISkjema } from '@navikt/familie-skjema';
+import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { IUtenlandsperiode } from '../../../typer/perioder';
+import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
+import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -37,10 +39,23 @@ const Oppfølgningsspørsmål: React.FC<{
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     utenlandsperioder: IUtenlandsperiode[];
-}> = ({ barn, skjema, leggTilUtenlandsperiode, fjernUtenlandsperiode, utenlandsperioder }) => {
+    leggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
+    fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
+    registrerteEøsBarnetrygdsperioder: Felt<IEøsBarnetrygdsperiode[]>;
+}> = ({
+    barn,
+    skjema,
+    leggTilUtenlandsperiode,
+    fjernUtenlandsperiode,
+    utenlandsperioder,
+    leggTilBarnetrygdsperiode,
+    fjernBarnetrygdsperiode,
+    registrerteEøsBarnetrygdsperioder,
+}) => {
     const intl = useIntl();
-    const { erÅpen, toggleModal } = useModal();
+    const { erÅpen: utenlandsmodalErÅpen, toggleModal: toggleUtenlandsmodal } = useModal();
     const { erEøsLand } = useEøs();
+    const { toggles } = useFeatureToggles();
 
     const erFørsteEøsPeriode = (periode: IUtenlandsperiode) => {
         return periode === utenlandsperioder.find(p => erEøsLand(p.oppholdsland.svar));
@@ -161,7 +176,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     <LeggTilKnapp
                         id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                         språkTekst={'felles.leggtilutenlands.knapp'}
-                        onClick={toggleModal}
+                        onClick={toggleUtenlandsmodal}
                         feilmelding={
                             skjema.felter.registrerteUtenlandsperioder.erSynlig &&
                             skjema.felter.registrerteUtenlandsperioder.feilmelding &&
@@ -198,25 +213,37 @@ const Oppfølgningsspørsmål: React.FC<{
                     tittelId={'ombarnet.barnetrygd-eøs'}
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
-                    <LandDropdown
-                        felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
-                        skjema={skjema}
-                        kunEøs={true}
-                        label={
-                            <SpråkTekst
-                                id={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand
-                                    ]
+                    {toggles.EØS_KOMPLETT ? (
+                        <Barnetrygdperiode
+                            skjema={skjema}
+                            registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
+                            leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
+                            fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
+                            barn={barn}
+                        />
+                    ) : (
+                        <>
+                            <LandDropdown
+                                felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
+                                skjema={skjema}
+                                kunEøs={true}
+                                label={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand
+                                            ]
+                                        }
+                                    />
                                 }
                             />
-                        }
-                    />
+                        </>
+                    )}
                 </SkjemaFieldset>
             )}
             <UtenlandsoppholdModal
-                erÅpen={erÅpen}
-                toggleModal={toggleModal}
+                erÅpen={utenlandsmodalErÅpen}
+                toggleModal={toggleUtenlandsmodal}
                 onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
                 barn={barn}
             />

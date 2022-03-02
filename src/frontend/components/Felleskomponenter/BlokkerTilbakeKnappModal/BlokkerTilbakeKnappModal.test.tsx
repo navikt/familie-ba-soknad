@@ -7,7 +7,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IBarn, IBarnRespons } from '../../../typer/person';
-import * as eøsUtils from '../../../utils/eøs';
 import {
     mockEøs,
     mockHistory,
@@ -61,7 +60,6 @@ describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
         mockEøs();
     });
     test(`Render BlokkerTilbakeKnappModal og sjekk at den virker`, async () => {
-        jest.spyOn(eøsUtils, 'landSvarSomKanTriggeEøs').mockReturnValue([]);
         const { mockedHistory } = mockHistory(['dokumentasjon', 'kvittering']);
         silenceConsoleErrors();
         const søknad = {

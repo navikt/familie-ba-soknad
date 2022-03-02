@@ -1807,10 +1807,10 @@
   resolved "https://registry.yarnpkg.com/@navikt/ds-icons/-/ds-icons-0.5.4.tgz#5b00f98f84da5cdb01f7b0dac9e4004d7d4bed0a"
   integrity sha512-4lk4CTKZtNkqGJ2wAtJPheaCcwD6hILh6zWICO7071Lu/O+O+qSmxJSGFJmPh4pTAUuPONp6p8jOUqQwTi4yhw==
 
-"@navikt/familie-form-elements@3.2.3", "@navikt/familie-form-elements@^3.2.3":
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-form-elements/-/familie-form-elements-3.2.3.tgz#4aede31e7eb443bf6049ccc4106058aa466f609d"
-  integrity sha512-Y1fb6XFAA4DBVhG4A1KTX6+7kb5I3OiZ9gn8roRNO79t+pLl0VE3jwbp3dFQQYujcCePoB2jPoiOsmy4oepCAg==
+"@navikt/familie-form-elements@^4.0.0":
+  version "4.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-form-elements/4.0.0/44e15ff850b4ca2df6988e039dc6e8ea6fb8b648c387967809106e1a47e3afa5#f96574d6b605865138426afb87f96c9bd33d325f"
+  integrity sha512-LvrE8yE+h+c+OREOxDvsI6FsZKew01/UGyrF67HW4NOkCw1kKMvpiFns+vblvJFDeG+2Mh/+6P1vrQHsIWyj+A==
   dependencies:
     "@navikt/fnrvalidator" "^1.1.3"
     "@types/classnames" "^2.2.10"
@@ -1832,48 +1832,48 @@
     nav-frontend-typografi-style "^2.0.1"
     react-select "^4.0.13"
 
-"@navikt/familie-http@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-http/-/familie-http-1.1.1.tgz#82a76a518e8b2bac5a3bc414c6234a489c5ebb90"
-  integrity sha512-l+as04bkD6aR0yceHvEL6sswte5RviUTKDRMo8rpPBeHJEUCKgzLHU3VvKOWTrkYCqVsEcgsKRL5kMWkAZWKdQ==
+"@navikt/familie-http@^3.0.0":
+  version "3.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-http/3.0.0/560a0d4ecc1414f7f7d5f8723fdcaa1fe44014e1c0f1a4e90ad318e5c6cd13d6#deb611291de24ffd91f25e1b8f2d15c4ff135750"
+  integrity sha512-D96leJXA0ag98rsWB9oibuiommc8cgvyvuW2zbP8ddL5t9dktq1bNm99LQg+NcA8F02XDwXOnpCbW/iUajXMrw==
   dependencies:
-    "@navikt/familie-typer" "^3.0.14"
+    "@navikt/familie-typer" "^5.0.0"
     "@sentry/core" "^6.2.1"
     constate "^3.2.0"
 
-"@navikt/familie-ikoner@^3.1.12":
-  version "3.1.12"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-ikoner/-/familie-ikoner-3.1.12.tgz#27c065c6db36aa2c7d00e5424b98d13223a3140f"
-  integrity sha512-hZxaCRwSoTHAx9NSqXIcdTzAPMaVWDHfqFRJi+E5w72V7eO0qm5FLfL9Lpmxv84cejGHE2HlgYcI5gaTR/sIGw==
+"@navikt/familie-ikoner@^4.0.1":
+  version "4.0.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-ikoner/4.0.1/3e14afdbf7322fe36173dab08de45e49e26736e84e4066e6c3ca8987af5a361e#2f92679e39e207eb4ed9e1f3a69950c187fcf362"
+  integrity sha512-XPPFvX/20GpwnIcuqsuqu9fSqfwO5i+y637HbmcPQ7yv15s0bGHWaujnJm6HU6/G17te0UApJ71cFH/YwnVphg==
   dependencies:
-    "@navikt/familie-typer" "^3.0.14"
+    "@navikt/familie-typer" "^5.0.0"
 
-"@navikt/familie-logging@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-logging/-/familie-logging-1.0.5.tgz#546ff5855ac10e14a23b28b53d2b27970965b64f"
-  integrity sha512-/MLIRqVHG6ihqciquOh9nFtUA4sk3l8eVzbAa/a2E+2QMlOqbDoaC3zZeACFB6PkVEAWzGJQ7rYPlbpKz5QxBA==
+"@navikt/familie-logging@^3.0.0":
+  version "3.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-logging/3.0.0/9f25db42689547b9016fe1640759af6b809853bbb5cc249af79078423bd44b51#66f7b66ae2849d3df36079be3151e25eb67a6514"
+  integrity sha512-oYVF5jIPZdnEhlA/cXrTTOKkMIAQmR6DW5i+08cs/jI4LnfCjdr2lNkHCUEnYxxhu4rmtniqBiPyeBi+8HjljA==
   dependencies:
     winston "^3.2.1"
 
-"@navikt/familie-skjema@^1.1.9":
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-skjema/-/familie-skjema-1.1.9.tgz#9704a6ceaafcd0a0fb99f1f9384b7b231400fa76"
-  integrity sha512-x28DQpIN/UYkWkfw3sx5F6YysejG5fFn6NK62Zy3J+Gi0MgG8yq2YBshSakhGLf/XEp3GwmBOGNSGuFASpgrNw==
+"@navikt/familie-skjema@^3.0.0":
+  version "3.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-skjema/3.0.0/f239d9ef32b2fc9d8f31c7d2edce3de6a3c1512662ead58c420837de3228322e#298ff47749f4925dca13067631e36254e7f56e96"
+  integrity sha512-wBfbR8XySr4N8IsHz8bB5goppBEZGRjdOpfVRC9xcPYUBGikqP4qHWU4d3mhGTKIh8Kt2NKRH+Uy4Qcrzq6kog==
   dependencies:
-    "@navikt/familie-http" "^1.1.1"
-    "@navikt/familie-typer" "^3.0.14"
+    "@navikt/familie-http" "^3.0.0"
+    "@navikt/familie-typer" "^5.0.0"
     "@types/deep-equal" "^1.0.1"
     deep-equal "^2.0.5"
     hashids "^2.2.8"
 
-"@navikt/familie-sprakvelger@2.0.29":
-  version "2.0.29"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-sprakvelger/-/familie-sprakvelger-2.0.29.tgz#7c31736cfb2434452de9250254ed06b414167359"
-  integrity sha512-QI7jIF9wOpGPX8y4v0p8qiVO0t90+y3VeJL0oekQvhHtw3a0RkX+n5TSx/zQIYjI5hTLmj3Bmx6XF+4iynThbQ==
+"@navikt/familie-sprakvelger@^3.0.1":
+  version "3.0.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-sprakvelger/3.0.1/115bcf960dba708d1d99263e5b44e9d1e8fdb09b535d88340a7c93d897fe3cfa#c53f61be3d4bb1fd037f4a0302e1f170a992f43e"
+  integrity sha512-uMcGaqowlnt20R14Uo4m/9vW2Pesicmi1x77kUCEJF/8MWcnDqCmrON/iz/Q16h0LRrmmsVtcZhC/XFQvLrQ4A==
   dependencies:
     "@navikt/ds-icons" "^0.5.4"
-    "@navikt/familie-form-elements" "^3.2.3"
-    "@navikt/familie-ikoner" "^3.1.12"
+    "@navikt/familie-form-elements" "^4.0.0"
+    "@navikt/familie-ikoner" "^4.0.1"
     "@types/react-aria-menubutton" "^6.2.8"
     nav-frontend-chevron "^1.0.30"
     nav-frontend-chevron-style "^1.0.4"
@@ -1882,10 +1882,10 @@
     nav-frontend-typografi-style "^2.0.1"
     react-aria-menubutton "^7.0.3"
 
-"@navikt/familie-typer@^3.0.14":
-  version "3.0.14"
-  resolved "https://registry.yarnpkg.com/@navikt/familie-typer/-/familie-typer-3.0.14.tgz#f6a78ca686383e4e2c55d2363ee33b1abf662be9"
-  integrity sha512-c3a+WyHPXwQSJfDZnNS6LbbjeHf9wjN8eQ8PKKM7K3VMbrRWC5lFeltV21J70aU9QWvqApTWXUgS5R4qlKqErA==
+"@navikt/familie-typer@^5.0.0":
+  version "5.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-typer/5.0.0/457a7865af7d164c5ea26ba942fec62da74e02c0fdcd48165fc6c1c8c9d19f1c#9b59ac4a1b044de72586339c2e3e4af60c9baac4"
+  integrity sha512-rHc1Q+ND28qJ02A7ddn7Y3LDZBelvZv/g528GvxNhgYidpN+nD75czbUje/x3ZwD3W+f+WealUlcDMf057DTGg==
 
 "@navikt/fnrvalidator@^1.1.3", "@navikt/fnrvalidator@^1.1.4":
   version "1.1.4"
@@ -3449,11 +3449,6 @@ array-flatten@^2.1.0:
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-2.1.2.tgz#24ef80a28c1a893617e2149b0c6d0d788293b099"
   integrity sha512-hNfzcOV8W4NdualtqBFPyVO+54DSJuZGY9qT4pRroB6S9e3iiido2ISIC5h9R2sPJ8H3FHCIiEnsv1lPXO3KtQ==
 
-array-flatten@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-3.0.0.tgz#6428ca2ee52c7b823192ec600fa3ed2f157cd541"
-  integrity sha512-zPMVc3ZYlGLNk4mpK1NzP2wg0ml9t7fUgDsayR5Y5rSzxQilzR9FGu/EH2jQOcKSAeAfWeylyW8juy3OkWRvNA==
-
 array-includes@^3.1.1, array-includes@^3.1.2, array-includes@^3.1.3:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/array-includes/-/array-includes-3.1.4.tgz#f5b493162c760f3539631f005ba2bb46acb45ba9"
@@ -3584,12 +3579,12 @@ axios-mock-adapter@^1.19.0:
     fast-deep-equal "^3.1.3"
     is-buffer "^2.0.3"
 
-axios@^0.21.3:
-  version "0.21.3"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.3.tgz#f85d9b747f9b66d59ca463605cedf1844872b82e"
-  integrity sha512-JtoZ3Ndke/+Iwt5n+BgSli/3idTvpt5OjKyoCmz4LX5+lPiY5l7C1colYezhlxThjNa/NhngCUWZSZFypIFuaA==
+axios@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.25.0.tgz#349cfbb31331a9b4453190791760a8d35b093e0a"
+  integrity sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==
   dependencies:
-    follow-redirects "^1.14.0"
+    follow-redirects "^1.14.7"
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -4355,7 +4350,7 @@ collection-visit@^1.0.0:
     map-visit "^1.0.0"
     object-visit "^1.0.0"
 
-color-convert@^1.9.0, color-convert@^1.9.1, color-convert@^1.9.3:
+color-convert@^1.9.0, color-convert@^1.9.1:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
   integrity sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==
@@ -4379,10 +4374,18 @@ color-name@^1.0.0, color-name@~1.1.4:
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
-color-string@^1.5.2, color-string@^1.6.0:
+color-string@^1.5.2:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/color-string/-/color-string-1.6.0.tgz#c3915f61fe267672cb7e1e064c9d692219f6c312"
   integrity sha512-c/hGS+kRWJutUBEngKKmk4iH3sD59MBkoxVapS/0wgpCz2u7XsNloxknyvBhzwEs1IbV36D9PwqLPJ2DTu3vMA==
+  dependencies:
+    color-name "^1.0.0"
+    simple-swizzle "^0.2.2"
+
+color-string@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/color-string/-/color-string-1.9.0.tgz#63b6ebd1bec11999d1df3a79a7569451ac2be8aa"
+  integrity sha512-9Mrz2AQLefkH1UvASKj6v6hj/7eWgjnT/cVsR8CumieLoT+g900exWeNogqtweI8dxloXN9BDQTYro1oWu/5CQ==
   dependencies:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
@@ -4395,13 +4398,13 @@ color@3.0.x:
     color-convert "^1.9.1"
     color-string "^1.5.2"
 
-color@^3.1.3:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/color/-/color-3.2.1.tgz#3544dc198caf4490c3ecc9a790b54fe9ff45e164"
-  integrity sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA==
+color@^4.0.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/color/-/color-4.2.1.tgz#498aee5fce7fc982606c8875cab080ac0547c884"
+  integrity sha512-MFJr0uY4RvTQUKvPq7dh9grVOTYSFeXja2mBXioCGjnjJoXrAp9jJ1NQTDR73c9nwBSAQiNKloKl5zq9WB9UPw==
   dependencies:
-    color-convert "^1.9.3"
-    color-string "^1.6.0"
+    color-convert "^2.0.1"
+    color-string "^1.9.0"
 
 colord@^2.0.1:
   version "2.6.0"
@@ -6385,10 +6388,10 @@ focus-trap@^6.6.1:
   dependencies:
     tabbable "^5.2.1"
 
-follow-redirects@^1.0.0, follow-redirects@^1.14.0:
-  version "1.14.7"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
-  integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
+follow-redirects@^1.0.0, follow-redirects@^1.14.7:
+  version "1.14.9"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.9.tgz#dd4ea157de7bfaf9ea9b3fbd85aa16951f78d8d7"
+  integrity sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -9560,10 +9563,10 @@ node-abi@^2.21.0:
   dependencies:
     semver "^5.4.1"
 
-node-addon-api@^3.1.0:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-3.2.1.tgz#81325e0a2117789c0128dab65e7e38f07ceba161"
-  integrity sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==
+node-addon-api@^4.1.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-4.3.0.tgz#52a1a0b475193e0928e98e0426a0d1254782b77f"
+  integrity sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==
 
 node-cache@^5.1.2:
   version "5.1.2"
@@ -10524,7 +10527,7 @@ postcss@^8.2.4, postcss@^8.3.5:
     nanoid "^3.1.23"
     source-map-js "^0.6.2"
 
-prebuild-install@^6.0.0:
+prebuild-install@^6.1.4:
   version "6.1.4"
   resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-6.1.4.tgz#ae3c0142ad611d58570b89af4986088a4937e00f"
   integrity sha512-Z4vpywnK1lBg+zdPCVCsKq0xO66eEV9rWo2zrROGGiRS4JtueBOdlB1FnY8lcy7JsUud/Q3ijUxyWN26Ika0vQ==
@@ -11633,19 +11636,17 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-sharp@0.27.1:
-  version "0.27.1"
-  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.27.1.tgz#cd04926406a697b58dfc5fb62e3c7a3a2d68389a"
-  integrity sha512-IQNXWdspb4nZcJemXa6cfgz+JvKONsuqP8Mwi1Oti23Uo7+J+UF2jihJDf6I1BQbrmhcZ0lagH/1WYG+ReAzyQ==
+sharp@0.29.1:
+  version "0.29.1"
+  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.29.1.tgz#f60b50f24f399464a24187c86bd2da41aae50b85"
+  integrity sha512-DpgdAny9TuS+oWCQ7MRS8XyY9x6q1+yW3a5wNx0J3HrGuB/Jot/8WcT+lElHY9iJu2pwtegSGxqMaqFiMhs4rQ==
   dependencies:
-    array-flatten "^3.0.0"
-    color "^3.1.3"
+    color "^4.0.1"
     detect-libc "^1.0.3"
-    node-addon-api "^3.1.0"
-    npmlog "^4.1.2"
-    prebuild-install "^6.0.0"
-    semver "^7.3.4"
-    simple-get "^4.0.0"
+    node-addon-api "^4.1.0"
+    prebuild-install "^6.1.4"
+    semver "^7.3.5"
+    simple-get "^3.1.0"
     tar-fs "^2.1.1"
     tunnel-agent "^0.6.0"
 
@@ -11685,21 +11686,12 @@ simple-concat@^1.0.0:
   resolved "https://registry.yarnpkg.com/simple-concat/-/simple-concat-1.0.1.tgz#f46976082ba35c2263f1c8ab5edfe26c41c9552f"
   integrity sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==
 
-simple-get@^3.0.3:
+simple-get@^3.0.3, simple-get@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/simple-get/-/simple-get-3.1.1.tgz#cc7ba77cfbe761036fbfce3d021af25fc5584d55"
   integrity sha512-CQ5LTKGfCpvE1K0n2us+kuMPbk/q0EKl82s4aheV9oXjFEz6W/Y7oQFVJuU6QG77hRT4Ghb5RURteF5vnWjupA==
   dependencies:
     decompress-response "^4.2.0"
-    once "^1.3.1"
-    simple-concat "^1.0.0"
-
-simple-get@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/simple-get/-/simple-get-4.0.0.tgz#73fa628278d21de83dadd5512d2cc1f4872bd675"
-  integrity sha512-ZalZGexYr3TA0SwySsr5HlgOOinS4Jsa8YB2GJ6lUNAazyAu4KG/VmzMTwAt2YVXzzVj8QmefmAonZIK2BSGcQ==
-  dependencies:
-    decompress-response "^6.0.0"
     once "^1.3.1"
     simple-concat "^1.0.0"
 
