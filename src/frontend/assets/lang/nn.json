@@ -533,7 +533,7 @@
   "ombarnet.trygdandreperioder.periode": "Barnetrygdperiode {x}",
   "ombarnet.trygdandreperioder.spm": "Har du fått barnetrygd frå eit EU/EØS land i andre periodar?",
   "ombarnet.trygdbeløp.feilmelding": "Du må oppgje beløp for å gå vidare",
-  "ombarnet.trygdbeløp.format.feilmelding": "Du må oppgje eit gyldig beløp som berre inneheld tal for å gå vidare",
+  "ombarnet.trygdbeløp.format.feilmelding": "Du må oppgje eit gyldig beløp beståande av 6 tall eller færre for å gå vidare",
   "ombarnet.trygdbeløp.info": "Oppgje beløpet i lokal valuta",
   "ombarnet.trygdbeløp.spm": "Beløp kvar månad for {barn}",
   "ombarnet.undertittel": "Barn {x} av {antall}",
