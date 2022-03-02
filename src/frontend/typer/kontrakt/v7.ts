@@ -29,6 +29,7 @@ export interface ISøknadKontraktV7 {
 }
 
 export interface ISøknadKontraktSøker {
+    triggetEøs: ISøknadsfelt<boolean>;
     ident: ISøknadsfelt<string>;
     navn: ISøknadsfelt<string>;
     statsborgerskap: ISøknadsfelt<string[]>;
@@ -48,6 +49,7 @@ export interface ISøknadKontraktSøker {
 }
 
 export interface ISøknadIKontraktBarnV7 {
+    triggetEøs: ISøknadsfelt<boolean>;
     ident: ISøknadsfelt<string>;
     navn: ISøknadsfelt<string>;
     registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
