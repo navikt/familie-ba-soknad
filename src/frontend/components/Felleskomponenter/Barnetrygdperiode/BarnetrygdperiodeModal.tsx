@@ -109,6 +109,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                             tilbakeITid,
                             BarnetrygdperiodeSpørsmålId.barnetrygdsland
                         )}
+                        kunEøs={true}
                         dynamisk
                     />
                 )}
