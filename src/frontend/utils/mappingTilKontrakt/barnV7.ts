@@ -74,6 +74,10 @@ export const barnISøknadsFormatV7 = (
     };
 
     return {
+        triggetEøs: {
+            label: sammeVerdiAlleSpråk('triggetEøs'),
+            verdi: sammeVerdiAlleSpråk(triggetEøs),
+        },
         navn: søknadsfeltBarn(
             intl,
             'pdf.barn.navn.label',

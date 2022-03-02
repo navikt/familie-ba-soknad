@@ -72,22 +72,23 @@ export const dataISøknadKontraktFormatV7 = (
         søknadstype: søknad.søknadstype,
         kontraktVersjon: 7,
         søker: {
-            navn: søknadsfelt('pdf.søker.navn.label', sammeVerdiAlleSpråk(søker.navn)),
-            ident: søknadsfelt('pdf.søker.ident.label', sammeVerdiAlleSpråk(søker.ident)),
+            triggetEøs: {
+                label: sammeVerdiAlleSpråk('triggetEøs'),
+                verdi: sammeVerdiAlleSpråk(triggetEøs),
+            },
+            navn: søknadsfelt('pdf.søker.navn.label', sammeVerdiAlleSpråk(navn)),
+            ident: søknadsfelt('pdf.søker.ident.label', sammeVerdiAlleSpråk(ident)),
             sivilstand: søknadsfelt(
                 'pdf.søker.sivilstand.label',
-                sammeVerdiAlleSpråk(søker.sivilstand.type)
+                sammeVerdiAlleSpråk(sivilstand.type)
             ),
             statsborgerskap: søknadsfelt(
                 'pdf.søker.statsborgerskap.label',
                 verdiCallbackAlleSpråk(locale =>
-                    søker.statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, locale))
+                    statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, locale))
                 )
             ),
-            adresse: søknadsfelt(
-                'pdf.søker.adresse.label',
-                sammeVerdiAlleSpråk(søker.adresse ?? {})
-            ),
+            adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse ?? {})),
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1)
             ),
