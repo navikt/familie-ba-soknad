@@ -228,6 +228,24 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                     }
                                 />
                             )}
+                            {barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar && (
+                                <OppsummeringFelt
+                                    tittel={
+                                        <SpråkTekst
+                                            id={
+                                                omBarnetSpørsmålSpråkId[
+                                                    OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
+                                                ]
+                                            }
+                                        />
+                                    }
+                                    søknadsvar={landkodeTilSpråk(
+                                        barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar,
+                                        valgtLocale
+                                    )}
+                                />
+                            )}
+
                             {barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar && (
                                 <OppsummeringFelt
                                     tittel={
