@@ -214,7 +214,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     {toggles.EØS_KOMPLETT ? (
-                        <>
+                        <KomponentGruppe dynamisk>
                             <JaNeiSpm
                                 skjema={skjema}
                                 felt={skjema.felter.pågåendeSøknadFraAnnetEøsLand}
@@ -224,6 +224,22 @@ const Oppfølgningsspørsmål: React.FC<{
                                     ]
                                 }
                             />
+                            {skjema.felter.pågåendeSøknadHvilketLand.erSynlig && (
+                                <LandDropdown
+                                    felt={skjema.felter.pågåendeSøknadHvilketLand}
+                                    skjema={skjema}
+                                    kunEøs={true}
+                                    label={
+                                        <SpråkTekst
+                                            id={
+                                                omBarnetSpørsmålSpråkId[
+                                                    OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
+                                                ]
+                                            }
+                                        />
+                                    }
+                                />
+                            )}
                             <Barnetrygdperiode
                                 skjema={skjema}
                                 registrerteEøsBarnetrygdsperioder={
@@ -233,7 +249,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                 fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
                                 barn={barn}
                             />
-                        </>
+                        </KomponentGruppe>
                     ) : (
                         <>
                             <LandDropdown
