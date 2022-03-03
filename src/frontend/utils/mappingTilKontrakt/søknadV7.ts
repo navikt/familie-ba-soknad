@@ -4,8 +4,10 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { OmBarnaDineSpørsmålId } from '../../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { IBarnMedISøknad } from '../../typer/barn';
 import { ESivilstand } from '../../typer/kontrakt/generelle';
 import { ISøknadKontraktV7 } from '../../typer/kontrakt/v7';
+import { ISøker } from '../../typer/person';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
@@ -32,6 +34,17 @@ import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 import { samboerISøknadKontraktFormat } from './samboer';
 import { tidligereSamboerISøknadKontraktFormat } from './tidligereSamboer';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
+
+const antallEøsSteg = (søker: ISøker, barnInkludertISøknaden: IBarnMedISøknad[]) => {
+    const barnSomTriggerEøs = barnInkludertISøknaden.filter(barn => barn.triggetEøs);
+    if (søker.triggetEøs) {
+        return barnInkludertISøknaden.length + 1;
+    } else if (barnSomTriggerEøs.length) {
+        return barnSomTriggerEøs.length + 1;
+    } else {
+        return 0;
+    }
+};
 
 export const dataISøknadKontraktFormatV7 = (
     intl: IntlShape,
@@ -71,11 +84,10 @@ export const dataISøknadKontraktFormatV7 = (
     return {
         søknadstype: søknad.søknadstype,
         kontraktVersjon: 7,
+        antallEøsSteg: antallEøsSteg(søker, barnInkludertISøknaden),
         søker: {
-            triggetEøs: {
-                label: sammeVerdiAlleSpråk('triggetEøs'),
-                verdi: sammeVerdiAlleSpråk(triggetEøs),
-            },
+            harEøsSteg:
+                triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
             navn: søknadsfelt('pdf.søker.navn.label', sammeVerdiAlleSpråk(navn)),
             ident: søknadsfelt('pdf.søker.ident.label', sammeVerdiAlleSpråk(ident)),
             sivilstand: søknadsfelt(
@@ -146,7 +158,7 @@ export const dataISøknadKontraktFormatV7 = (
                 })
             ),
         },
-        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormatV7(intl, barn)),
+        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormatV7(intl, barn, søker)),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfelt(
                 språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),
@@ -213,6 +225,8 @@ export const dataISøknadKontraktFormatV7 = (
             'dokumentasjon.har-sendt-inn.spm',
             'dinlivssituasjon.sidetittel',
             'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
+            'eøs-om-deg.sidetittel',
+            'eøs-om-barn.sidetittel',
             ...Object.values(ESivilstand).map(hentSivilstatusSpråkId),
             ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
         ].reduce((map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }), {}),
