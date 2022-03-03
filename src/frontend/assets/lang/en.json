@@ -533,7 +533,7 @@
   "ombarnet.trygdandreperioder.periode": "Child benefit period {x}",
   "ombarnet.trygdandreperioder.spm": "Have you received child benefit from an EEA country during other periods?",
   "ombarnet.trygdbeløp.feilmelding": "You must state the amount in order to be able to proceed",
-  "ombarnet.trygdbeløp.format.feilmelding": "You must state a valid amount containing only numbers in order to be able to proceed",
+  "ombarnet.trygdbeløp.format.feilmelding": "You must state a valid amount consisting only of numbers and no longer than 6 digits in order to be able to proceed",
   "ombarnet.trygdbeløp.info": "Enter the amount in local currency",
   "ombarnet.trygdbeløp.spm": "Amount each month for {barn}",
   "ombarnet.undertittel": "Child {x} of {antall}",
