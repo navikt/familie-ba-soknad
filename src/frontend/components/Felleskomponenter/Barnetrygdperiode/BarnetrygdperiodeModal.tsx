@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -9,6 +10,7 @@ import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import AlertStripe from '../AlertStripe/AlertStripe';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
@@ -17,6 +19,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { eøsBarnetrygdSpørsmålSpråkTekst } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId, barnetrygdperiodeSpørsmålSpråkId } from './spørsmål';
 import { useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
@@ -25,6 +28,9 @@ interface Props extends ReturnType<typeof useModal> {
     onLeggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     barn: IBarnMedISøknad;
 }
+const StyledAlertStripe = styled(AlertStripe)`
+    margin: 1rem 0 1rem 0;
+`;
 
 export const BarnetrygdperiodeModal: React.FC<Props> = ({
     erÅpen,
@@ -109,6 +115,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                             tilbakeITid,
                             BarnetrygdperiodeSpørsmålId.barnetrygdsland
                         )}
+                        kunEøs={true}
                         dynamisk
                     />
                 )}
@@ -151,6 +158,12 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                                 barn: barnetsNavnValue(barn, intl),
                             }),
                         }}
+                        tilleggsinfo={
+                            <StyledAlertStripe>
+                                <SpråkTekst id={'ombarnet.trygdbeløp.info'} />
+                            </StyledAlertStripe>
+                        }
+                        bredde={'S'}
                     />
                 )}
             </KomponentGruppe>

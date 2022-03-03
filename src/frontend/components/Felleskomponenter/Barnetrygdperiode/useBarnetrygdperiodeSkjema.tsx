@@ -1,12 +1,15 @@
+import React from 'react';
+
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { feil, FeltState, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
-import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { barnetrygdslandFeilmelding } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
@@ -41,11 +44,30 @@ export const useBarnetrygdperiodeSkjema = () => {
         startdatoAvgrensning: fraDatoBarnetrygdperiode.verdi,
     });
 
-    //TODO legge inn validering for riktig input her
-    const månedligBeløp = useInputFelt({
-        søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.månedligBeløp, svar: '' },
-        feilmeldingSpråkId: 'ombarnet.trygdbeløp.feilmelding',
-        skalVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
+    const månedligBeløp = useFelt<string>({
+        verdi: '',
+        feltId: BarnetrygdperiodeSpørsmålId.månedligBeløp,
+        valideringsfunksjon: (felt: FeltState<string>) => {
+            const verdi = trimWhiteSpace(felt.verdi);
+            if (verdi.match(/^[0-9\s.\\/]{1,7}$/)) {
+                return ok(felt);
+            } else {
+                return feil(
+                    felt,
+                    <SpråkTekst
+                        id={
+                            verdi === ''
+                                ? 'ombarnet.trygdbeløp.feilmelding'
+                                : 'ombarnet.trygdbeløp.format.feilmelding'
+                        }
+                    />
+                );
+            }
+        },
+
+        skalFeltetVises: avhengigheter =>
+            avhengigheter.mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
+        avhengigheter: { mottarEøsBarnetrygdNå },
     });
 
     const skjema = useSkjema<IBarnetrygdperioderFeltTyper, 'string'>({
