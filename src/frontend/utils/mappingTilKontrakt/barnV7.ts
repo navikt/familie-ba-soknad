@@ -1,5 +1,11 @@
 import { IntlShape } from 'react-intl';
 
+import { LocaleType } from '@navikt/familie-sprakvelger';
+
+import {
+    EøsBarnSpørsmålId,
+    eøsBarnSpørsmålSpråkId,
+} from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import {
     OmBarnetSpørsmålsId,
     omBarnetSpørsmålSpråkId,
@@ -22,12 +28,14 @@ import {
     spørmålISøknadsFormat,
     søknadsfeltBarn,
 } from './hjelpefunksjoner';
+import { idNummerTilISøknadsfelt } from './idNummer';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const barnISøknadsFormatV7 = (
     intl: IntlShape,
     barn: IBarnMedISøknad,
-    søker: ISøker
+    søker: ISøker,
+    valgtSpråk: LocaleType
 ): ISøknadIKontraktBarnV7 => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
@@ -42,8 +50,9 @@ export const barnISøknadsFormatV7 = (
         søkerForTidsromSluttdato,
         institusjonOppholdSluttdato,
         utenlandsperioder,
-        eøsBarnetrygdsperioder,
         // Nye felter under utvikling av EØS full
+        eøsBarnetrygdsperioder,
+        idNummer,
         triggetEøs,
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...barnSpørsmål
@@ -109,7 +118,6 @@ export const barnISøknadsFormatV7 = (
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1, barn)
         ),
-
         eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder.map((periode, index) =>
             tilIEøsBarnetrygsperiodeIKontraktFormat({
                 intl,
@@ -118,7 +126,15 @@ export const barnISøknadsFormatV7 = (
                 barn,
             })
         ),
-
+        idNummer: idNummer.map(idnummerObj =>
+            idNummerTilISøknadsfelt(
+                idnummerObj,
+                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer],
+                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent],
+                valgtSpråk,
+                barnetsNavnValue(barn, intl)
+            )
+        ),
         andreForelder: andreForelder
             ? andreForelderTilISøknadsfeltV7(intl, andreForelder, barn)
             : null,
