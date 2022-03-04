@@ -9,6 +9,7 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn'
 import { BarnetsId } from '../../../../typer/common';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
+import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
@@ -16,6 +17,7 @@ import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import EøsAndreForelderOppsummering from '../../Oppsummering/OppsummeringSteg/Eøs/EøsAndreForelderOppsummering';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 import { useEøsForBarn } from './useEøsForBarn';
 
 const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
@@ -59,6 +61,16 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
+            <SlektsforholdDropdown
+                felt={skjema.felter.søkersSlektsforhold}
+                skjema={skjema}
+                placeholder={intl.formatMessage({ id: 'felles.velgslektsforhold.spm' })}
+                label={
+                    <SpråkTekst
+                        id={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.søkersSlektsforhold]}
+                    />
+                }
+            />
             {!skalSkjuleAndreForelderFelt(barn) && (
                 <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
                     {!barnMedSammeForelder ? (
