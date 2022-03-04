@@ -61,16 +61,19 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <SlektsforholdDropdown
-                felt={skjema.felter.søkersSlektsforhold}
-                skjema={skjema}
-                placeholder={intl.formatMessage({ id: 'felles.velgslektsforhold.spm' })}
-                label={
-                    <SpråkTekst
-                        id={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.søkersSlektsforhold]}
-                    />
-                }
-            />
+            <KomponentGruppe>
+                <SlektsforholdDropdown
+                    felt={skjema.felter.søkersSlektsforhold}
+                    skjema={skjema}
+                    placeholder={intl.formatMessage({ id: 'felles.velgslektsforhold.spm' })}
+                    label={
+                        <SpråkTekst
+                            id={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.søkersSlektsforhold]}
+                            values={{ barn: barnetsNavnValue(barn, intl) }}
+                        />
+                    }
+                />
+            </KomponentGruppe>
             {!skalSkjuleAndreForelderFelt(barn) && (
                 <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
                     {!barnMedSammeForelder ? (
