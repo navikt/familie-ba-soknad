@@ -8,6 +8,7 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
 import { AlternativtSvarForInput } from '../../typer/common';
 import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarnV7 } from '../../typer/kontrakt/v7';
+import { ISøker } from '../../typer/person';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { barnetsNavnValue } from '../barn';
 import { hentTekster } from '../språk';
@@ -25,7 +26,8 @@ import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const barnISøknadsFormatV7 = (
     intl: IntlShape,
-    barn: IBarnMedISøknad
+    barn: IBarnMedISøknad,
+    søker: ISøker
 ): ISøknadIKontraktBarnV7 => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
@@ -74,10 +76,7 @@ export const barnISøknadsFormatV7 = (
     };
 
     return {
-        triggetEøs: {
-            label: sammeVerdiAlleSpråk('triggetEøs'),
-            verdi: sammeVerdiAlleSpråk(triggetEøs),
-        },
+        harEøsSteg: triggetEøs || søker.triggetEøs,
         navn: søknadsfeltBarn(
             intl,
             'pdf.barn.navn.label',
