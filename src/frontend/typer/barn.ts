@@ -10,7 +10,7 @@ import {
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
-import { IBarn } from './person';
+import { IBarn, IIdNummer } from './person';
 import { ISøknadSpørsmål } from './spørsmål';
 
 export enum andreForelderDataKeySpørsmål {
@@ -85,6 +85,7 @@ export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
     utenlandsperioder: IUtenlandsperiode[];
     eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
+    idNummer: IIdNummer[];
     andreForelder: IAndreForelder | null;
     triggetEøs: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;

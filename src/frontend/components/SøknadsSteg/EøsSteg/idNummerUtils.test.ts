@@ -46,9 +46,11 @@ describe('idNummerLandMedPeriodeType', () => {
 
         expect(
             idNummerLandMedPeriodeType(
-                arbeidsperioder,
-                pensjonsperioder,
-                utenlandsperioder,
+                {
+                    arbeidsperioderUtland: arbeidsperioder,
+                    pensjonsperioderUtland: pensjonsperioder,
+                    utenlandsperioder,
+                },
                 erEøsLand
             )
         ).toEqual([{ land: 'BGR', periodeType: PeriodeType.utenlandsperiode }]);
@@ -76,9 +78,11 @@ describe('idNummerLandMedPeriodeType', () => {
 
         expect(
             idNummerLandMedPeriodeType(
-                arbeidsperioder,
-                pensjonsperioder,
-                utenlandsperioder,
+                {
+                    arbeidsperioderUtland: arbeidsperioder,
+                    pensjonsperioderUtland: pensjonsperioder,
+                    utenlandsperioder,
+                },
                 erEøsLand
             )
         ).toEqual([{ land: 'BGR', periodeType: PeriodeType.arbeidsperiode }]);
@@ -114,9 +118,11 @@ describe('idNummerLandMedPeriodeType', () => {
 
         expect(
             idNummerLandMedPeriodeType(
-                arbeidsperioder,
-                pensjonsperioder,
-                utenlandsperioder,
+                {
+                    arbeidsperioderUtland: arbeidsperioder,
+                    pensjonsperioderUtland: pensjonsperioder,
+                    utenlandsperioder,
+                },
                 erEøsLand
             )
         ).toEqual([

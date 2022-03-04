@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
+import { useEøs } from '../../../../context/EøsContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
@@ -16,6 +17,9 @@ import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import EøsAndreForelderOppsummering from '../../Oppsummering/OppsummeringSteg/Eøs/EøsAndreForelderOppsummering';
+import { IdNummer } from '../IdNummer';
+import { idNummerLandMedPeriodeType } from '../idnummerUtils';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 import { useEøsForBarn } from './useEøsForBarn';
 
 const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
@@ -31,9 +35,12 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernAndreUtbetalingsperiode,
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
+        settIdNummerFelterForBarn,
     } = useEøsForBarn(barnetsId);
     const intl = useIntl();
+    const { erEøsLand } = useEøs();
     const { søknad } = useApp();
+    const { eøsBarnetrygdsperioder, utenlandsperioder } = barn;
 
     const andreBarnSomErFyltUt = søknad.barnInkludertISøknaden.filter(
         barnISøknad =>
@@ -59,6 +66,38 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
+            <KomponentGruppe>
+                {idNummerLandMedPeriodeType(
+                    {
+                        utenlandsperioder,
+                        eøsBarnetrygdsperioder,
+                    },
+                    erEøsLand
+                ).map((landMedPeriodeType, index) => {
+                    return (
+                        !!landMedPeriodeType.land && (
+                            <IdNummer
+                                spørsmålSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer]}
+                                spørsmålCheckboxSpråkId={
+                                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]
+                                }
+                                feilmeldingSpråkId={'eøs-om-barn.barnidnummer.feilmelding'}
+                                idNummerVerdiFraSøknad={
+                                    barn.idNummer.find(
+                                        verdi => verdi.land === landMedPeriodeType.land
+                                    )?.idnummer
+                                }
+                                skjema={skjema}
+                                key={index}
+                                settIdNummerFelter={settIdNummerFelterForBarn}
+                                landAlphaCode={landMedPeriodeType.land}
+                                periodeType={landMedPeriodeType.periodeType}
+                                barn={barn}
+                            />
+                        )
+                    );
+                })}
+            </KomponentGruppe>
             {!skalSkjuleAndreForelderFelt(barn) && (
                 <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
                     {!barnMedSammeForelder ? (
