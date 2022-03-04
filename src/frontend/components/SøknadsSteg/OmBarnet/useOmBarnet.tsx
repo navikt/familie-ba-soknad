@@ -208,7 +208,7 @@ export const useOmBarnet = (
         );
     };
 
-    /*--- PÅGÅDENDE SØKNAD BARNETRYGD FRA ANNET EØSLAND ---*/
+    /*--- PÅGÅENDE SØKNAD BARNETRYGD FRA ANNET EØSLAND ---*/
     const pågåendeSøknadFraAnnetEøsLand = useJaNeiSpmFelt({
         søknadsfelt: barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
         feilmeldingSpråkId: 'ombarnet.pågåendesøknad.feilmelding',

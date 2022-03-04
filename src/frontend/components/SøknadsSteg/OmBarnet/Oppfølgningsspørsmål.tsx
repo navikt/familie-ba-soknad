@@ -214,7 +214,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     {toggles.EØS_KOMPLETT ? (
-                        <KomponentGruppe dynamisk>
+                        <KomponentGruppe>
                             <JaNeiSpm
                                 skjema={skjema}
                                 felt={skjema.felter.pågåendeSøknadFraAnnetEøsLand}
