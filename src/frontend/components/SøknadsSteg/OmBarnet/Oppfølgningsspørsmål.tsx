@@ -214,13 +214,42 @@ const Oppfølgningsspørsmål: React.FC<{
                     språkValues={{ navn: barnetsNavnValue(barn, intl) }}
                 >
                     {toggles.EØS_KOMPLETT ? (
-                        <Barnetrygdperiode
-                            skjema={skjema}
-                            registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
-                            leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
-                            fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
-                            barn={barn}
-                        />
+                        <KomponentGruppe>
+                            <JaNeiSpm
+                                skjema={skjema}
+                                felt={skjema.felter.pågåendeSøknadFraAnnetEøsLand}
+                                spørsmålTekstId={
+                                    omBarnetSpørsmålSpråkId[
+                                        OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand
+                                    ]
+                                }
+                            />
+                            {skjema.felter.pågåendeSøknadHvilketLand.erSynlig && (
+                                <LandDropdown
+                                    felt={skjema.felter.pågåendeSøknadHvilketLand}
+                                    skjema={skjema}
+                                    kunEøs={true}
+                                    label={
+                                        <SpråkTekst
+                                            id={
+                                                omBarnetSpørsmålSpråkId[
+                                                    OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
+                                                ]
+                                            }
+                                        />
+                                    }
+                                />
+                            )}
+                            <Barnetrygdperiode
+                                skjema={skjema}
+                                registrerteEøsBarnetrygdsperioder={
+                                    registrerteEøsBarnetrygdsperioder
+                                }
+                                leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
+                                fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
+                                barn={barn}
+                            />
+                        </KomponentGruppe>
                     ) : (
                         <>
                             <LandDropdown
