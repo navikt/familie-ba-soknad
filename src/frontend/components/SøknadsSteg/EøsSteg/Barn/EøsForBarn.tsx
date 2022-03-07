@@ -84,9 +84,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             ]
                         }
                         språkValues={{
-                            ...(barn && {
-                                barn: barnetsNavnValue(barn, intl),
-                            }),
+                            barn: barnetsNavnValue(barn, intl),
                         }}
                     />
                 )}

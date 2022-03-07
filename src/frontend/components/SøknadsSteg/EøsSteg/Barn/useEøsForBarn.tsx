@@ -78,7 +78,7 @@ export const useEøsForBarn = (
                                 : 'felles.relasjon.format.feilmelding'
                         }
                         values={{
-                            ...(gjeldendeBarn && { barn: barnetsNavnValue(gjeldendeBarn, intl) }),
+                            barn: barnetsNavnValue(gjeldendeBarn, intl),
                         }}
                     />
                 );
