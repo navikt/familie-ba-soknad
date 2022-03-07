@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
+import useInputFelt from '../../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../../hooks/usePerioder';
 import {
@@ -61,33 +62,25 @@ export const useEøsForBarn = (
                 : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
         },
     });
-    const søkersSlektsforholdSpesifisering = useFelt<string>({
-        verdi: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering].svar,
-        feltId: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering].id,
-        valideringsfunksjon: (felt: FeltState<string>) => {
+    const søkersSlektsforholdSpesifisering = useInputFelt({
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering],
+        feilmeldingSpråkId: 'eøs-om-barn.dinrelasjon.feilmelding',
+        skalVises: søkersSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
+        customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
-            if (verdi.match(/^[0-9A-Za-z\s\-\\,\\.]{4,60}$/)) {
-                return ok(felt);
-            } else {
-                return feil(
-                    felt,
-                    <SpråkTekst
-                        id={
-                            verdi === ''
-                                ? 'eøs-om-barn.dinrelasjon.feilmelding'
-                                : 'felles.relasjon.format.feilmelding'
-                        }
-                        values={{
-                            barn: barnetsNavnValue(gjeldendeBarn, intl),
-                        }}
-                    />
-                );
-            }
+            return verdi.match(/^[0-9A-Za-z\s\-\\,\\.]{4,60}$/)
+                ? ok(felt)
+                : feil(
+                      felt,
+                      <SpråkTekst
+                          id={'felles.relasjon.format.feilmelding'}
+                          values={{
+                              barn: barnetsNavnValue(gjeldendeBarn, intl),
+                          }}
+                      />
+                  );
         },
-        skalFeltetVises: avhengigheter =>
-            avhengigheter.søkersSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
-        avhengigheter: { søkersSlektsforhold },
-        nullstillVedAvhengighetEndring: true,
+        nullstillVedAvhengighetEndring: false,
     });
 
     /*--- ANDRE FORELDER ---*/

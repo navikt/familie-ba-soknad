@@ -10,20 +10,29 @@ const useInputFelt = ({
     søknadsfelt,
     feilmeldingSpråkId,
     skalVises = true,
+    customValidering = undefined,
+    nullstillVedAvhengighetEndring = true,
 }: {
     søknadsfelt: ISøknadSpørsmål<string>;
     feilmeldingSpråkId: string;
     skalVises?: boolean;
+    customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
+    nullstillVedAvhengighetEndring?: boolean;
 }) =>
     useFelt<string>({
         feltId: søknadsfelt.id,
         verdi: trimWhiteSpace(søknadsfelt.svar),
         valideringsfunksjon: (felt: FeltState<string>) => {
             const feltVerdi = trimWhiteSpace(felt.verdi);
-            return feltVerdi !== '' ? ok(felt) : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
+            return feltVerdi !== ''
+                ? customValidering
+                    ? customValidering(felt)
+                    : ok(felt)
+                : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
         },
         avhengigheter: { skalVises },
         skalFeltetVises: avhengigheter => avhengigheter.skalVises,
+        nullstillVedAvhengighetEndring,
     });
 
 export default useInputFelt;
