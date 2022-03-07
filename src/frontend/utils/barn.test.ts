@@ -9,6 +9,7 @@ import { AlternativtSvarForInput } from '../typer/common';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
 import { ISøknad } from '../typer/søknad';
 import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from './barn';
+import { mockEøs } from './testing';
 
 describe('genererSvarForSpørsmålBarn', () => {
     const mockBarn = mockDeep<IBarnMedISøknad>({ id: 'random-id' });
@@ -72,7 +73,8 @@ describe('genererOppdaterteBarn', () => {
     });
 
     test('Returner objekt med barn, med forventede verdier', () => {
-        expect(genererOppdaterteBarn(mockSøknad, mockSkjema, _barn => false)).toEqual([
+        const { erEøsLand } = mockEøs();
+        expect(genererOppdaterteBarn(mockSøknad, mockSkjema, _barn => false, erEøsLand)).toEqual([
             objectContaining<DeepPartial<IBarnMedISøknad>>({
                 id: 'random-id',
                 erFosterbarn: objectContaining({ svar: 'JA' }),

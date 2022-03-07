@@ -55,14 +55,17 @@ export const idNummerLandMedPeriodeType = (
         utenlandsperioder.map(periode => periode.oppholdsland.svar)
     );
 
+    // Gjelder kun barn
     const eøsBarnetrygsperioderLandSomKreverIdNummer: Alpha3Code[] = eøsLandUtenDuplikat(
         eøsBarnetrygdsperioder.map(periode => periode.barnetrygdsland.svar)
-    );
+    ).filter(land => land && !utenlandsperioderLandSomKreverIdNummer.includes(land)); // Filtrer bort det som allerede finnes i utenlandsopphold
 
+    // Gjelder kun søker
     const arbeidsperioderLandSomKreverIdNummer: Alpha3Code[] = eøsLandUtenDuplikat(
         arbeidsperioderUtland.map(periode => periode.arbeidsperiodeland?.svar)
     ).filter(land => land && !utenlandsperioderLandSomKreverIdNummer.includes(land)); // Filtrer bort det som allerede finnes i utenlandsopphold
 
+    // Gjelder kun søker
     const pensjonsperioderLandSomKreverIdNummer: Alpha3Code[] = eøsLandUtenDuplikat(
         pensjonsperioderUtland.map(periode => periode.pensjonsland?.svar)
     ).filter(

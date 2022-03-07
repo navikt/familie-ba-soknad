@@ -1,9 +1,11 @@
+import { Alpha3Code } from 'i18n-iso-countries';
 import { IntlShape } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { idNummerLandMedPeriodeType } from '../components/SøknadsSteg/EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
@@ -126,7 +128,8 @@ export const genererAndreForelder = (
 export const genererOppdaterteBarn = (
     søknad: ISøknad,
     skjema: ISkjema<IOmBarnaDineFeltTyper, string>,
-    skalTriggeEøsForBarn: (barn: IBarnMedISøknad) => boolean
+    skalTriggeEøsForBarn: (barn: IBarnMedISøknad) => boolean,
+    erEøsLand: (land: Alpha3Code | '') => boolean
 ): IBarnMedISøknad[] => {
     return søknad.barnInkludertISøknaden.map(barn => {
         const oppholderSegIInstitusjon: ESvar = genererSvarForSpørsmålBarn(
@@ -149,14 +152,32 @@ export const genererOppdaterteBarn = (
         const erFosterbarn: boolean =
             genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn) === ESvar.JA;
 
-        const oppholdtSegIUtlandSiste12Mnd: boolean =
-            skjema.felter.hvemTolvMndSammenhengendeINorge.verdi.includes(barn.id);
+        const utenlandsperioder =
+            boddMindreEnn12MndINorge === ESvar.JA ? barn.utenlandsperioder : [];
+        const eøsBarnetrygdsperioder =
+            mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [];
+
+        const relevanteIdNummerFiltrert = () => {
+            const relevanteIdNummerLandMedPeriodeType = idNummerLandMedPeriodeType(
+                {
+                    utenlandsperioder,
+                    eøsBarnetrygdsperioder,
+                },
+                erEøsLand
+            );
+
+            return barn.idNummer.filter(idNummerObj =>
+                relevanteIdNummerLandMedPeriodeType
+                    .map(periodeMedLand => periodeMedLand.land)
+                    .includes(idNummerObj.land)
+            );
+        };
 
         const oppdatertBarn = {
             ...barn,
-            utenlandsperioder: oppholdtSegIUtlandSiste12Mnd ? barn.utenlandsperioder : [],
-            eøsBarnetrygdsperioder:
-                mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [],
+            idNummer: relevanteIdNummerFiltrert(),
+            utenlandsperioder,
+            eøsBarnetrygdsperioder,
             andreForelder: erFosterbarn
                 ? null
                 : genererAndreForelder(barn.andreForelder, andreForelderErDød),

@@ -32,6 +32,7 @@ import {
     IPensjonsperiode,
     IUtenlandsperiode,
 } from '../../../typer/perioder';
+import { IIdNummer } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
@@ -45,6 +46,7 @@ import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiod
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { idNummerLandMedPeriodeType } from '../EøsSteg/idnummerUtils';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 
 export const useOmBarnet = (
@@ -69,7 +71,8 @@ export const useOmBarnet = (
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
-    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs } = useEøs();
+    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
+
     const { toggles } = useFeatureToggles();
     const barn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
 
@@ -691,12 +694,31 @@ export const useOmBarnet = (
         return oppdatertDokumentasjon;
     };
 
+    const filtrerteRelevanteIdNummer = (): IIdNummer[] => {
+        const relevanteLandMedPeriodeType = idNummerLandMedPeriodeType(
+            {
+                eøsBarnetrygdsperioder:
+                    mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA
+                        ? registrerteEøsBarnetrygdsperioder.verdi
+                        : [],
+                utenlandsperioder: registrerteUtenlandsperioder.verdi,
+            },
+            erEøsLand
+        );
+        return barn.idNummer.filter(idNummerObj =>
+            relevanteLandMedPeriodeType
+                .map(landMedPeriode => landMedPeriode.land)
+                .includes(idNummerObj.land)
+        );
+    };
+
     const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
         const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
             barn => barn.id === sammeForelderSomAnnetBarn.verdi
         );
         return {
             ...barn,
+            idNummer: filtrerteRelevanteIdNummer(),
             barnErFyltUt: true,
             utenlandsperioder: skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
                 ? utenlandsperioder
