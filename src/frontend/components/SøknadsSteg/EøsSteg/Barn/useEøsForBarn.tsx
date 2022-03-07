@@ -50,7 +50,6 @@ export const useEøsForBarn = (
         throw new TypeError('Kunne ikke finne barn som skulle være her');
     }
 
-    console.log(gjeldendeBarn);
     /*--- SLEKTSFORHOLD ---*/
     const søkersSlektsforhold = useFelt<Slektsforhold | ''>({
         feltId: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforhold].id,
@@ -58,7 +57,7 @@ export const useEøsForBarn = (
         valideringsfunksjon: (felt: FeltState<Slektsforhold | ''>) => {
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.velgårsak.feilmelding'} />);
+                : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
         },
     });
 
