@@ -57,6 +57,7 @@ export enum barnDataKeySpørsmål {
     søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
     sammeForelderSomAnnetBarnMedId = 'sammeForelderSomAnnetBarnMedId',
     søkersSlektsforhold = 'søkersSlektsforhold',
+    borMedAndreForelder = 'borMedAndreForelder',
 }
 
 export interface IAndreForelder {
@@ -117,6 +118,7 @@ export interface IBarnMedISøknad extends IBarn {
         BarnetsId | AlternativtSvarForInput.ANNEN_FORELDER | null
     >;
     [barnDataKeySpørsmål.søkersSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
+    [barnDataKeySpørsmål.borMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
 }
 
 export const muligeSlektsforhold: Slektsforhold[] = [

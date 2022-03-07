@@ -60,6 +60,14 @@ export const useEøsForBarn = (
                 : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
         },
     });
+    /*--- BOSITUASJON ---*/
+    const borMedAndreForelder = useJaNeiSpmFelt({
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borMedAndreForelder],
+        feilmeldingSpråkId: '',
+        avhengigheter: {},
+        nullstillVedAvhengighetEndring: true,
+        // skalSkjules: gjeldendeBarn.borFastMedSøker.svar === ESvar.JA && gjeldendeBarn.andreForelder.[andreForelderDataKeySpørsmål.],
+    });
 
     /*--- ANDRE FORELDER ---*/
     const andreForelder = gjeldendeBarn.andreForelder;
@@ -223,6 +231,7 @@ export const useEøsForBarn = (
             andreForelderArbeidNorge,
             andreForelderArbeidsperioderNorge,
             søkersSlektsforhold,
+            borMedAndreForelder,
         },
         skjemanavn: 'eøsForBarn',
     });
