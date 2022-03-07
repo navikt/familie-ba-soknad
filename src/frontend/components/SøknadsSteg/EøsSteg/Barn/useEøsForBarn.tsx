@@ -66,7 +66,7 @@ export const useEøsForBarn = (
         feltId: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering].id,
         valideringsfunksjon: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
-            if (verdi.match(/^[0-9A-Za-z\s\-\\,\\.]{1,60}$/)) {
+            if (verdi.match(/^[0-9A-Za-z\s\-\\,\\.]{4,60}$/)) {
                 return ok(felt);
             } else {
                 return feil(
@@ -75,8 +75,11 @@ export const useEøsForBarn = (
                         id={
                             verdi === ''
                                 ? 'eøs-om-barn.dinrelasjon.feilmelding'
-                                : 'ombarnet.trygdbeløp.format.feilmelding'
+                                : 'felles.relasjon.format.feilmelding'
                         }
+                        values={{
+                            ...(gjeldendeBarn && { barn: barnetsNavnValue(gjeldendeBarn, intl) }),
+                        }}
                     />
                 );
             }
