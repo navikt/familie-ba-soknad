@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
+import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
@@ -15,6 +15,7 @@ import {
     IBarnMedISøknad,
 } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
+import { Slektsforhold } from '../../../../typer/kontrakt/barn';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
@@ -48,6 +49,17 @@ export const useEøsForBarn = (
     if (!gjeldendeBarn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
     }
+
+    /*--- SLEKTSFORHOLD ---*/
+    const søkersSlektsforhold = useFelt<Slektsforhold | ''>({
+        feltId: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforhold].id,
+        verdi: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforhold].svar,
+        valideringsfunksjon: (felt: FeltState<Slektsforhold | ''>) => {
+            return felt.verdi !== ''
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
+        },
+    });
 
     /*--- ANDRE FORELDER ---*/
     const andreForelder = gjeldendeBarn.andreForelder;
@@ -168,6 +180,10 @@ export const useEøsForBarn = (
 
         return {
             ...barn,
+            søkersSlektsforhold: {
+                ...barn.søkersSlektsforhold,
+                svar: søkersSlektsforhold.verdi,
+            },
             ...(!!barn.andreForelder &&
                 !barnMedSammeForelder &&
                 genererAndreForelder(barn.andreForelder)),
@@ -206,6 +222,7 @@ export const useEøsForBarn = (
             andreForelderAndreUtbetalingsperioder,
             andreForelderArbeidNorge,
             andreForelderArbeidsperioderNorge,
+            søkersSlektsforhold,
         },
         skjemanavn: 'eøsForBarn',
     });
