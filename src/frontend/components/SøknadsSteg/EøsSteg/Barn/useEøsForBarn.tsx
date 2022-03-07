@@ -19,6 +19,7 @@ import { Slektsforhold } from '../../../../typer/kontrakt/barn';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
+import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -59,6 +60,31 @@ export const useEøsForBarn = (
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
         },
+    });
+    const søkersSlektsforholdSpesifisering = useFelt<string>({
+        verdi: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering].svar,
+        feltId: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering].id,
+        valideringsfunksjon: (felt: FeltState<string>) => {
+            const verdi = trimWhiteSpace(felt.verdi);
+            if (verdi.match(/^[0-9A-Za-z\s\-\\,\\.]{1,60}$/)) {
+                return ok(felt);
+            } else {
+                return feil(
+                    felt,
+                    <SpråkTekst
+                        id={
+                            verdi === ''
+                                ? 'eøs-om-barn.dinrelasjon.feilmelding'
+                                : 'ombarnet.trygdbeløp.format.feilmelding'
+                        }
+                    />
+                );
+            }
+        },
+        skalFeltetVises: avhengigheter =>
+            avhengigheter.søkersSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
+        avhengigheter: { søkersSlektsforhold },
+        nullstillVedAvhengighetEndring: true,
     });
 
     /*--- ANDRE FORELDER ---*/
@@ -184,6 +210,12 @@ export const useEøsForBarn = (
                 ...barn.søkersSlektsforhold,
                 svar: søkersSlektsforhold.verdi,
             },
+            søkersSlektsforholdSpesifisering: {
+                ...barn.søkersSlektsforholdSpesifisering,
+                svar: søkersSlektsforholdSpesifisering.erSynlig
+                    ? søkersSlektsforholdSpesifisering.verdi
+                    : '',
+            },
             ...(!!barn.andreForelder &&
                 !barnMedSammeForelder &&
                 genererAndreForelder(barn.andreForelder)),
@@ -223,6 +255,7 @@ export const useEøsForBarn = (
             andreForelderArbeidNorge,
             andreForelderArbeidsperioderNorge,
             søkersSlektsforhold,
+            søkersSlektsforholdSpesifisering,
         },
         skjemanavn: 'eøsForBarn',
     });

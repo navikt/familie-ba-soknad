@@ -387,6 +387,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: EøsBarnSpørsmålId.søkersSlektsforhold,
             svar: '',
         },
+        [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: {
+            id: EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering,
+            svar: '',
+        },
     };
 };
 

@@ -50,6 +50,21 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                             toSlektsforholdSpråkId(barn.søkersSlektsforhold.svar),
                     })}
                 />
+                {barn.søkersSlektsforholdSpesifisering.svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    eøsBarnSpørsmålSpråkId[
+                                        EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering
+                                    ]
+                                }
+                                values={{ barn: barnetsNavnValue(barn, intl) }}
+                            />
+                        }
+                        søknadsvar={barn.søkersSlektsforholdSpesifisering.svar}
+                    />
+                )}
             </StyledOppsummeringsFeltGruppe>
             {barn.andreForelder && (
                 <EøsAndreForelderOppsummering barn={barn} andreForelder={barn.andreForelder} />
