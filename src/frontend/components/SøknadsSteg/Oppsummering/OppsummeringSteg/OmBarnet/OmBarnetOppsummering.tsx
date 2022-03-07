@@ -211,6 +211,41 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                     {toggles.EØS_KOMPLETT ? (
                         <>
+                            {barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar && (
+                                <OppsummeringFelt
+                                    tittel={
+                                        <SpråkTekst
+                                            id={
+                                                omBarnetSpørsmålSpråkId[
+                                                    OmBarnetSpørsmålsId
+                                                        .pågåendeSøknadFraAnnetEøsLand
+                                                ]
+                                            }
+                                        />
+                                    }
+                                    søknadsvar={
+                                        barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar
+                                    }
+                                />
+                            )}
+                            {barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar && (
+                                <OppsummeringFelt
+                                    tittel={
+                                        <SpråkTekst
+                                            id={
+                                                omBarnetSpørsmålSpråkId[
+                                                    OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
+                                                ]
+                                            }
+                                        />
+                                    }
+                                    søknadsvar={landkodeTilSpråk(
+                                        barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar,
+                                        valgtLocale
+                                    )}
+                                />
+                            )}
+
                             {barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar && (
                                 <OppsummeringFelt
                                     tittel={

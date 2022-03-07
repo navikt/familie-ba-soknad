@@ -208,6 +208,23 @@ export const useOmBarnet = (
         );
     };
 
+    /*--- PÅGÅENDE SØKNAD BARNETRYGD FRA ANNET EØSLAND ---*/
+    const pågåendeSøknadFraAnnetEøsLand = useJaNeiSpmFelt({
+        søknadsfelt: barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
+        feilmeldingSpråkId: 'ombarnet.pågåendesøknad.feilmelding',
+        skalSkjules:
+            !toggles.EØS_KOMPLETT ||
+            !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
+    });
+
+    const pågåendeSøknadHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
+        søknadsfelt: barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
+        feilmeldingSpråkId: 'ombarnet.hvilketlandsøkt.feilmelding',
+        avhengigSvarCondition: ESvar.JA,
+        avhengighet: pågåendeSøknadFraAnnetEøsLand,
+        skalFeltetVises: toggles.EØS_KOMPLETT,
+    });
+
     /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
 
     const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt({
@@ -618,6 +635,8 @@ export const useOmBarnet = (
             institusjonOppholdSluttVetIkke,
             registrerteUtenlandsperioder,
             planleggerÅBoINorge12Mnd,
+            pågåendeSøknadFraAnnetEøsLand,
+            pågåendeSøknadHvilketLand,
             barnetrygdFraEøslandHvilketLand,
             mottarEllerMottokEøsBarnetrygd,
             registrerteEøsBarnetrygdsperioder,
@@ -716,6 +735,14 @@ export const useOmBarnet = (
                 svar: !flyttetPermanentFraNorge(utenlandsperioder)
                     ? skjema.felter.planleggerÅBoINorge12Mnd.verdi
                     : null,
+            },
+            pågåendeSøknadFraAnnetEøsLand: {
+                ...barn.pågåendeSøknadFraAnnetEøsLand,
+                svar: pågåendeSøknadFraAnnetEøsLand.verdi,
+            },
+            pågåendeSøknadHvilketLand: {
+                ...barn.pågåendeSøknadHvilketLand,
+                svar: pågåendeSøknadHvilketLand.verdi,
             },
             barnetrygdFraEøslandHvilketLand: {
                 ...barn.barnetrygdFraEøslandHvilketLand,
