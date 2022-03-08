@@ -9,7 +9,6 @@ import { AlternativtSvarForInput } from '../typer/common';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
 import { ISøknad } from '../typer/søknad';
 import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from './barn';
-import { mockEøs } from './testing';
 
 describe('genererSvarForSpørsmålBarn', () => {
     const mockBarn = mockDeep<IBarnMedISøknad>({ id: 'random-id' });
@@ -32,6 +31,9 @@ describe('genererOppdaterteBarn', () => {
         barnInkludertISøknaden: [
             {
                 id: 'random-id',
+                idNummer: [],
+                utenlandsperioder: [],
+                eøsBarnetrygdsperioder: [],
                 institusjonsnavn: { svar: 'Narvesen' },
                 institusjonsadresse: { svar: 'Narvesen' },
                 institusjonspostnummer: { svar: '2020' },
@@ -73,8 +75,7 @@ describe('genererOppdaterteBarn', () => {
     });
 
     test('Returner objekt med barn, med forventede verdier', () => {
-        const { erEøsLand } = mockEøs();
-        expect(genererOppdaterteBarn(mockSøknad, mockSkjema, _barn => false, erEøsLand)).toEqual([
+        expect(genererOppdaterteBarn(mockSøknad, mockSkjema, _barn => false, jest.fn())).toEqual([
             objectContaining<DeepPartial<IBarnMedISøknad>>({
                 id: 'random-id',
                 erFosterbarn: objectContaining({ svar: 'JA' }),
