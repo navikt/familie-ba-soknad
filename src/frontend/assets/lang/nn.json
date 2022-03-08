@@ -210,6 +210,7 @@
   "felles.og": "og",
   "felles.oppgiarbeidsgiver": "Arbeidsgjevar",
   "felles.oppgiarbeidsgiver.feilmelding": "Du må oppgje arbeidsgjevar for å gå vidare",
+  "felles.relasjon.format.feilmelding": "Svaret må vere mellom 4 og 60 teikn, og kan ikkje innehalde andre spesialteikn enn  . , -",
   "felles.samboernavn.spm": "Sambuaren sitt namn",
   "felles.sende-skjema.info": "Du kan sende oss skjemaet elektronisk eller på papir.",
   "felles.sivilstatus.kode.ENKE_ELLER_ENKEMANN": "Enke/enkemann",

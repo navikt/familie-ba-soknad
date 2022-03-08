@@ -131,6 +131,7 @@ export interface IEøsForBarnFeltTyper {
     andreForelderAndreUtbetalinger: ESvar | null;
     andreForelderAndreUtbetalingsperioder: IUtbetalingsperiode[];
     søkersSlektsforhold: Slektsforhold | '';
+    søkersSlektsforholdSpesifisering: string;
 }
 
 export interface IVelgBarnFeltTyper {

@@ -7,7 +7,7 @@ import { IBarnMedISøknad } from '../../../../../typer/barn';
 import { barnetsNavnValue } from '../../../../../utils/barn';
 import { toSlektsforholdSpråkId } from '../../../../../utils/språk';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
+import { eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { useEøsForBarn } from '../../../EøsSteg/Barn/useEøsForBarn';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
@@ -28,6 +28,9 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
     const intl = useIntl();
     const barnetsNavn = barnetsNavnValue(barn, intl);
 
+    const tittelSpm = (spørsmålId: string) => (
+        <SpråkTekst id={eøsBarnSpørsmålSpråkId[spørsmålId]} values={{ barn: barnetsNavn }} />
+    );
     return (
         <Oppsummeringsbolk
             tittel={'eøs-om-barn.oppsummering.tittel'}
@@ -38,18 +41,19 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
         >
             <StyledOppsummeringsFeltGruppe>
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.søkersSlektsforhold]}
-                            values={{ barn: barnetsNavnValue(barn, intl) }}
-                        />
-                    }
+                    tittel={tittelSpm(barn.søkersSlektsforhold.id)}
                     søknadsvar={formatMessage({
                         id:
                             barn.søkersSlektsforhold.svar &&
                             toSlektsforholdSpråkId(barn.søkersSlektsforhold.svar),
                     })}
                 />
+                {barn.søkersSlektsforholdSpesifisering.svar && (
+                    <OppsummeringFelt
+                        tittel={tittelSpm(barn.søkersSlektsforholdSpesifisering.id)}
+                        søknadsvar={barn.søkersSlektsforholdSpesifisering.svar}
+                    />
+                )}
             </StyledOppsummeringsFeltGruppe>
             {barn.andreForelder && (
                 <EøsAndreForelderOppsummering barn={barn} andreForelder={barn.andreForelder} />
