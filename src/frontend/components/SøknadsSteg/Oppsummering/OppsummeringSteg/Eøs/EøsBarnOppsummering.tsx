@@ -57,12 +57,7 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
 
                 {barn.borMedAndreForelder.svar && (
                     <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedAndreForelder]}
-                                values={{ barn: barnetsNavnValue(barn, intl) }}
-                            />
-                        }
+                        tittel={tittelSpm(barn.borMedAndreForelder.id)}
                         søknadsvar={barn.borMedAndreForelder.svar}
                     />
                 )}
