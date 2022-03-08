@@ -60,13 +60,18 @@ export const useEøsForBarn = (
                 : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
         },
     });
+
     /*--- BOSITUASJON ---*/
     const borMedAndreForelder = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borMedAndreForelder],
-        feilmeldingSpråkId: '',
-        avhengigheter: {},
+        feilmeldingSpråkId: 'eøs-om-barn.borbarnmedandreforelder.feilmelding',
+        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
         nullstillVedAvhengighetEndring: true,
-        // skalSkjules: gjeldendeBarn.borFastMedSøker.svar === ESvar.JA && gjeldendeBarn.andreForelder.[andreForelderDataKeySpørsmål.],
+        skalSkjules: !(
+            gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
+            gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI &&
+            gjeldendeBarn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.NEI
+        ),
     });
 
     /*--- ANDRE FORELDER ---*/
@@ -191,6 +196,10 @@ export const useEøsForBarn = (
             søkersSlektsforhold: {
                 ...barn.søkersSlektsforhold,
                 svar: søkersSlektsforhold.verdi,
+            },
+            borMedAndreForelder: {
+                ...barn.borMedAndreForelder,
+                svar: borMedAndreForelder.erSynlig ? borMedAndreForelder.verdi : null,
             },
             ...(!!barn.andreForelder &&
                 !barnMedSammeForelder &&
