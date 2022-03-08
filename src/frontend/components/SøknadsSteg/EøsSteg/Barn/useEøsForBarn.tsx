@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
+import useInputFelt from '../../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../../hooks/usePerioder';
 import {
@@ -19,6 +20,7 @@ import { Slektsforhold } from '../../../../typer/kontrakt/barn';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
+import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -59,6 +61,26 @@ export const useEøsForBarn = (
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
         },
+    });
+    const søkersSlektsforholdSpesifisering = useInputFelt({
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering],
+        feilmeldingSpråkId: 'eøs-om-barn.dinrelasjon.feilmelding',
+        skalVises: søkersSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
+        customValidering: (felt: FeltState<string>) => {
+            const verdi = trimWhiteSpace(felt.verdi);
+            return verdi.match(/^[0-9A-Za-z\s\-\\,\\.]{4,60}$/)
+                ? ok(felt)
+                : feil(
+                      felt,
+                      <SpråkTekst
+                          id={'felles.relasjon.format.feilmelding'}
+                          values={{
+                              barn: barnetsNavnValue(gjeldendeBarn, intl),
+                          }}
+                      />
+                  );
+        },
+        nullstillVedAvhengighetEndring: false,
     });
 
     /*--- BOSITUASJON ---*/
@@ -197,6 +219,12 @@ export const useEøsForBarn = (
                 ...barn.søkersSlektsforhold,
                 svar: søkersSlektsforhold.verdi,
             },
+            søkersSlektsforholdSpesifisering: {
+                ...barn.søkersSlektsforholdSpesifisering,
+                svar: søkersSlektsforholdSpesifisering.erSynlig
+                    ? søkersSlektsforholdSpesifisering.verdi
+                    : '',
+            },
             borMedAndreForelder: {
                 ...barn.borMedAndreForelder,
                 svar: borMedAndreForelder.erSynlig ? borMedAndreForelder.verdi : null,
@@ -240,6 +268,7 @@ export const useEøsForBarn = (
             andreForelderArbeidNorge,
             andreForelderArbeidsperioderNorge,
             søkersSlektsforhold,
+            søkersSlektsforholdSpesifisering,
             borMedAndreForelder,
         },
         skjemanavn: 'eøsForBarn',

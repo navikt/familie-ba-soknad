@@ -13,6 +13,7 @@ import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/Slektsfo
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
@@ -74,6 +75,20 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         />
                     }
                 />
+                {skjema.felter.søkersSlektsforholdSpesifisering.erSynlig && (
+                    <SkjemaFeltInput
+                        felt={skjema.felter.søkersSlektsforholdSpesifisering}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={
+                            eøsBarnSpørsmålSpråkId[
+                                EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering
+                            ]
+                        }
+                        språkValues={{
+                            barn: barnetsNavnValue(barn, intl),
+                        }}
+                    />
+                )}
 
                 <JaNeiSpm
                     skjema={skjema}
