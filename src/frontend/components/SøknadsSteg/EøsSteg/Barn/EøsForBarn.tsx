@@ -17,9 +17,8 @@ import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import EøsAndreForelderOppsummering from '../../Oppsummering/OppsummeringSteg/Eøs/EøsAndreForelderOppsummering';
-import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType } from '../idnummerUtils';
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
+import IdNummerForBarn from './IdNummerForBarn';
 import { useEøsForBarn } from './useEøsForBarn';
 
 const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
@@ -51,6 +50,21 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         annetBarn => annetBarn.id === barn[barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId].svar
     );
 
+    const skalSpørreOmIdNummerForPågåendeSøknadEøsLand = (): boolean => {
+        return (
+            barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar !== '' &&
+            !idNummerLandMedPeriodeType(
+                {
+                    utenlandsperioder,
+                    eøsBarnetrygdsperioder,
+                },
+                erEøsLand
+            )
+                .map(landMedPeriode => landMedPeriode.land)
+                .includes(barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar)
+        );
+    };
+
     return (
         <Steg
             tittel={
@@ -76,17 +90,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 ).map((landMedPeriodeType, index) => {
                     return (
                         !!landMedPeriodeType.land && (
-                            <IdNummer
-                                spørsmålSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer]}
-                                spørsmålCheckboxSpråkId={
-                                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]
-                                }
-                                feilmeldingSpråkId={'eøs-om-barn.barnidnummer.feilmelding'}
-                                idNummerVerdiFraSøknad={
-                                    barn.idNummer.find(
-                                        verdi => verdi.land === landMedPeriodeType.land
-                                    )?.idnummer
-                                }
+                            <IdNummerForBarn
                                 skjema={skjema}
                                 key={index}
                                 settIdNummerFelter={settIdNummerFelterForBarn}
@@ -97,6 +101,14 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         )
                     );
                 })}
+                {skalSpørreOmIdNummerForPågåendeSøknadEøsLand() && (
+                    <IdNummerForBarn
+                        skjema={skjema}
+                        settIdNummerFelter={settIdNummerFelterForBarn}
+                        landAlphaCode={barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar}
+                        barn={barn}
+                    />
+                )}
             </KomponentGruppe>
             {!skalSkjuleAndreForelderFelt(barn) && (
                 <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>

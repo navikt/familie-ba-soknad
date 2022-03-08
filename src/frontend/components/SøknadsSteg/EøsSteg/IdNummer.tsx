@@ -22,8 +22,8 @@ import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
 export const IdNummer: React.FC<{
     skjema: ISkjema<IEøsForSøkerFeltTyper | IEøsForBarnFeltTyper, string>;
     settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
-    landAlphaCode: Alpha3Code;
-    periodeType: PeriodeType;
+    landAlphaCode: Alpha3Code | '';
+    periodeType?: PeriodeType;
     idNummerVerdiFraSøknad: string | undefined;
     feilmeldingSpråkId: string;
     spørsmålSpråkId: string;
@@ -34,7 +34,7 @@ export const IdNummer: React.FC<{
     skjema,
     settIdNummerFelter,
     landAlphaCode,
-    periodeType,
+    periodeType = undefined,
     idNummerVerdiFraSøknad,
     feilmeldingSpråkId,
     spørsmålSpråkId,
@@ -48,13 +48,15 @@ export const IdNummer: React.FC<{
 
     const idNummerUkjent = useFelt<ESvar>({
         verdi:
-            (periodeType === PeriodeType.utenlandsperiode ||
+            (periodeType === undefined ||
+                periodeType === PeriodeType.utenlandsperiode ||
                 periodeType === PeriodeType.eøsBarnetrygdPeriode) &&
             idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: `idnummer-ukjent-${landAlphaCode}`,
         skalFeltetVises: () =>
+            periodeType === undefined ||
             periodeType === PeriodeType.utenlandsperiode ||
             periodeType === PeriodeType.eøsBarnetrygdPeriode,
     });
