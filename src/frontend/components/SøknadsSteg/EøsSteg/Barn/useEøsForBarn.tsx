@@ -84,17 +84,16 @@ export const useEøsForBarn = (
     });
 
     /*--- BOSITUASJON ---*/
-    const skalBorMedAndreForelderVises =
-        gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
-        gjeldendeBarn.andreForelderErDød.svar === ESvar.NEI &&
-        gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI;
-
     const borMedAndreForelder = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borMedAndreForelder],
         feilmeldingSpråkId: 'eøs-om-barn.borbarnmedandreforelder.feilmelding',
         feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
         nullstillVedAvhengighetEndring: true,
-        skalSkjules: !skalBorMedAndreForelderVises,
+        skalSkjules: !(
+            gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
+            gjeldendeBarn.andreForelderErDød.svar === ESvar.NEI &&
+            gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI
+        ),
     });
 
     /*--- ANDRE FORELDER ---*/
@@ -228,7 +227,7 @@ export const useEøsForBarn = (
             },
             borMedAndreForelder: {
                 ...barn.borMedAndreForelder,
-                svar: skalBorMedAndreForelderVises ? borMedAndreForelder.verdi : null,
+                svar: borMedAndreForelder.verdi,
             },
             ...(!!barn.andreForelder &&
                 !barnMedSammeForelder &&

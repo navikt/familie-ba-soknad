@@ -160,6 +160,13 @@ export const genererOppdaterteBarn = (
             andreForelder: erFosterbarn
                 ? null
                 : genererAndreForelder(barn.andreForelder, andreForelderErDød),
+            [barnDataKeySpørsmål.borMedAndreForelder]: {
+                ...barn[barnDataKeySpørsmål.borMedAndreForelder],
+                svar:
+                    oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød === true
+                        ? null
+                        : barn.borMedAndreForelder.svar,
+            },
             [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
                 svar: erFosterbarn ? ESvar.JA : ESvar.NEI,
