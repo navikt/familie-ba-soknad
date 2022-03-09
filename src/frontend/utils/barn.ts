@@ -15,7 +15,8 @@ import {
     IBarnMedISøknad,
 } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
-import { IBarn, IBarnRespons } from '../typer/person';
+import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
+import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
 import { ISøknad } from '../typer/søknad';
 import { formaterFnr } from './visning';
@@ -157,25 +158,27 @@ export const genererOppdaterteBarn = (
         const eøsBarnetrygdsperioder =
             mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [];
 
-        const relevanteIdNummerFiltrert = () => {
-            const relevanteIdNummerLandMedPeriodeType = idNummerLandMedPeriodeType(
-                {
-                    utenlandsperioder,
-                    eøsBarnetrygdsperioder,
-                },
-                erEøsLand
-            );
+        const pågåendeSøknadFraAnnetEøsLand: ESvar | null = genererSvarForOppfølgningspørsmålBarn(
+            mottarBarnetrygdFraAnnetEøsland,
+            barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
+            null
+        );
 
-            return barn.idNummer.filter(idNummerObj =>
-                relevanteIdNummerLandMedPeriodeType
-                    .map(periodeMedLand => periodeMedLand.land)
-                    .includes(idNummerObj.land)
-            );
-        };
+        const pågåendeSøknadHvilketLand: Alpha3Code | '' = genererSvarForOppfølgningspørsmålBarn(
+            mottarBarnetrygdFraAnnetEøsland,
+            barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
+            ''
+        );
 
         const oppdatertBarn = {
             ...barn,
-            idNummer: relevanteIdNummerFiltrert(),
+            idNummer: filtrerteRelevanteIdNummerForBarn(
+                { eøsBarnetrygdsperioder, utenlandsperioder },
+                pågåendeSøknadFraAnnetEøsLand,
+                pågåendeSøknadHvilketLand,
+                barn,
+                erEøsLand
+            ),
             utenlandsperioder,
             eøsBarnetrygdsperioder,
             andreForelder: erFosterbarn
@@ -280,6 +283,14 @@ export const genererOppdaterteBarn = (
                     barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
                     null
                 ),
+            },
+            [barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
+                ...barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
+                svar: pågåendeSøknadFraAnnetEøsLand,
+            },
+            [barnDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
+                ...barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
+                svar: pågåendeSøknadHvilketLand,
             },
         };
 
@@ -470,4 +481,34 @@ export const skalSpørreOmIdNummerForPågåendeSøknadEøsLand = (
             .map(landMedPeriode => landMedPeriode.land)
             .includes(barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar)
     );
+};
+
+export const filtrerteRelevanteIdNummerForBarn = (
+    perioder: {
+        eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
+        utenlandsperioder: IUtenlandsperiode[];
+    },
+    pågåendeSøknadFraAnnetEøsLand: ESvar | null,
+    pågåendeSøknadHvilketLand: Alpha3Code | '',
+    barn: IBarnMedISøknad,
+    erEøsLand: (land: Alpha3Code | '') => boolean
+): IIdNummer[] => {
+    const relevanteLandForPerioder = idNummerLandMedPeriodeType(
+        {
+            eøsBarnetrygdsperioder: perioder.eøsBarnetrygdsperioder,
+            utenlandsperioder: perioder.utenlandsperioder,
+        },
+        erEøsLand
+    ).map(landMedPeriode => landMedPeriode.land);
+
+    const inkluderPågåendeSøknadIAnnetLand =
+        pågåendeSøknadFraAnnetEøsLand === ESvar.JA &&
+        pågåendeSøknadHvilketLand !== '' &&
+        !relevanteLandForPerioder.includes(pågåendeSøknadHvilketLand);
+
+    const relevanteLand = inkluderPågåendeSøknadIAnnetLand
+        ? relevanteLandForPerioder.concat(pågåendeSøknadHvilketLand)
+        : relevanteLandForPerioder;
+
+    return barn.idNummer.filter(idNummerObj => relevanteLand.includes(idNummerObj.land));
 };

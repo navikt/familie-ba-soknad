@@ -32,11 +32,10 @@ import {
     IPensjonsperiode,
     IUtenlandsperiode,
 } from '../../../typer/perioder';
-import { IIdNummer } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
-import { barnetsNavnValue } from '../../../utils/barn';
+import { barnetsNavnValue, filtrerteRelevanteIdNummerForBarn } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
@@ -46,7 +45,6 @@ import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiod
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
-import { idNummerLandMedPeriodeType } from '../EøsSteg/idnummerUtils';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 
 export const useOmBarnet = (
@@ -694,37 +692,25 @@ export const useOmBarnet = (
         return oppdatertDokumentasjon;
     };
 
-    const filtrerteRelevanteIdNummer = (): IIdNummer[] => {
-        const relevanteLandForPerioder = idNummerLandMedPeriodeType(
-            {
-                eøsBarnetrygdsperioder:
-                    mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA
-                        ? registrerteEøsBarnetrygdsperioder.verdi
-                        : [],
-                utenlandsperioder: registrerteUtenlandsperioder.verdi,
-            },
-            erEøsLand
-        ).map(landMedPeriode => landMedPeriode.land);
-
-        const inkluderPågåendeSøknadIAnnetLand =
-            pågåendeSøknadFraAnnetEøsLand.verdi === ESvar.JA &&
-            pågåendeSøknadHvilketLand.verdi !== '' &&
-            !relevanteLandForPerioder.includes(pågåendeSøknadHvilketLand.verdi);
-
-        const relevanteLand = inkluderPågåendeSøknadIAnnetLand
-            ? relevanteLandForPerioder.concat(pågåendeSøknadHvilketLand.verdi)
-            : relevanteLandForPerioder;
-
-        return barn.idNummer.filter(idNummerObj => relevanteLand.includes(idNummerObj.land));
-    };
-
     const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
         const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
             barn => barn.id === sammeForelderSomAnnetBarn.verdi
         );
+        const eøsBarnetrygdsperioder =
+            mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA
+                ? registrerteEøsBarnetrygdsperioder.verdi
+                : [];
+        const utenlandsperioder = registrerteUtenlandsperioder.verdi;
+
         return {
             ...barn,
-            idNummer: filtrerteRelevanteIdNummer(),
+            idNummer: filtrerteRelevanteIdNummerForBarn(
+                { eøsBarnetrygdsperioder, utenlandsperioder },
+                pågåendeSøknadFraAnnetEøsLand.verdi,
+                pågåendeSøknadHvilketLand.verdi,
+                barn,
+                erEøsLand
+            ),
             barnErFyltUt: true,
             utenlandsperioder: skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
                 ? utenlandsperioder
