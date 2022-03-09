@@ -7,6 +7,7 @@ export enum EøsBarnSpørsmålId {
     andreForelderAndreUtbetalingerEnke = 'andre-forelder-andre-utbetalinger-enke',
     søkersSlektsforhold = 'søkers-slektsforhold',
     søkersSlektsforholdSpesifisering = 'søkers-slektsforhold-spesifisering',
+    borMedAndreForelder = 'bor-med-andre-forelder',
     idNummer = 'id-nummer',
     idNummerUkjent = 'id-nummer-ukjent',
 }
@@ -21,6 +22,7 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
     [EøsBarnSpørsmålId.andreForelderAndreUtbetalinger]: 'eøs-om-barn.andreforelderutbetalinger.spm',
     [EøsBarnSpørsmålId.søkersSlektsforhold]: 'eøs-om-barn.dittslektsforhold.spm',
     [EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering]: 'eøs-om-barn.dinrelasjon.spm',
+    [EøsBarnSpørsmålId.borMedAndreForelder]: 'eøs-om-barn.borbarnmedandreforelder.spm',
     [EøsBarnSpørsmålId.idNummer]: 'eøs-om-barn.barnidnummer.spm',
     [EøsBarnSpørsmålId.idNummerUkjent]: 'felles.kjennerikkeidnummer.sjekkboks',
 };

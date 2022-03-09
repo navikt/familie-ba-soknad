@@ -89,6 +89,19 @@ export const useEøsForBarn = (
         nullstillVedAvhengighetEndring: false,
     });
 
+    /*--- BOSITUASJON ---*/
+    const borMedAndreForelder = useJaNeiSpmFelt({
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borMedAndreForelder],
+        feilmeldingSpråkId: 'eøs-om-barn.borbarnmedandreforelder.feilmelding',
+        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        nullstillVedAvhengighetEndring: true,
+        skalSkjules: !(
+            gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
+            gjeldendeBarn.andreForelderErDød.svar === ESvar.NEI &&
+            gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI
+        ),
+    });
+
     /*--- ANDRE FORELDER ---*/
     const andreForelder = gjeldendeBarn.andreForelder;
 
@@ -223,6 +236,10 @@ export const useEøsForBarn = (
                     ? søkersSlektsforholdSpesifisering.verdi
                     : '',
             },
+            borMedAndreForelder: {
+                ...barn.borMedAndreForelder,
+                svar: borMedAndreForelder.verdi,
+            },
             ...(!!barn.andreForelder &&
                 !barnMedSammeForelder &&
                 genererAndreForelder(barn.andreForelder)),
@@ -263,6 +280,7 @@ export const useEøsForBarn = (
             andreForelderArbeidsperioderNorge,
             søkersSlektsforhold,
             søkersSlektsforholdSpesifisering,
+            borMedAndreForelder,
         },
         skjemanavn: 'eøsForBarn',
     });

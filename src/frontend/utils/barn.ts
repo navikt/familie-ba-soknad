@@ -184,6 +184,13 @@ export const genererOppdaterteBarn = (
             andreForelder: erFosterbarn
                 ? null
                 : genererAndreForelder(barn.andreForelder, andreForelderErDød),
+            [barnDataKeySpørsmål.borMedAndreForelder]: {
+                ...barn[barnDataKeySpørsmål.borMedAndreForelder],
+                svar:
+                    oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød
+                        ? null
+                        : barn[barnDataKeySpørsmål.borMedAndreForelder].svar,
+            },
             [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
                 svar: erFosterbarn ? ESvar.JA : ESvar.NEI,
@@ -423,6 +430,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: {
             id: EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering,
             svar: '',
+        },
+        [barnDataKeySpørsmål.borMedAndreForelder]: {
+            id: EøsBarnSpørsmålId.borMedAndreForelder,
+            svar: null,
         },
     };
 };

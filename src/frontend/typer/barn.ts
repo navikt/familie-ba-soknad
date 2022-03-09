@@ -58,6 +58,7 @@ export enum barnDataKeySpørsmål {
     sammeForelderSomAnnetBarnMedId = 'sammeForelderSomAnnetBarnMedId',
     søkersSlektsforhold = 'søkersSlektsforhold',
     søkersSlektsforholdSpesifisering = 'søkersSlektsforholdSpesifisering',
+    borMedAndreForelder = 'borMedAndreForelder',
 }
 
 export interface IAndreForelder {
@@ -120,6 +121,7 @@ export interface IBarnMedISøknad extends IBarn {
     >;
     [barnDataKeySpørsmål.søkersSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
     [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.borMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
 }
 
 export const muligeSlektsforhold: Slektsforhold[] = [
