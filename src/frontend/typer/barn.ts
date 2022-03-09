@@ -3,6 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
+import { Slektsforhold } from './kontrakt/barn';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
@@ -55,6 +56,8 @@ export enum barnDataKeySpørsmål {
     søkerForTidsromStartdato = 'søkerForTidsromStartdato',
     søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
     sammeForelderSomAnnetBarnMedId = 'sammeForelderSomAnnetBarnMedId',
+    søkersSlektsforhold = 'søkersSlektsforhold',
+    søkersSlektsforholdSpesifisering = 'søkersSlektsforholdSpesifisering',
 }
 
 export interface IAndreForelder {
@@ -115,4 +118,14 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: ISøknadSpørsmål<
         BarnetsId | AlternativtSvarForInput.ANNEN_FORELDER | null
     >;
+    [barnDataKeySpørsmål.søkersSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
+    [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
 }
+
+export const muligeSlektsforhold: Slektsforhold[] = [
+    Slektsforhold.FORELDER,
+    Slektsforhold.ONKEL_ELLER_TANTE,
+    Slektsforhold.BESTEFORELDER,
+    Slektsforhold.ANNEN_FAMILIERELASJON,
+    Slektsforhold.ANNEN_RELASJON,
+];

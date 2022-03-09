@@ -4,6 +4,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål } from './barn';
 import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
+import { Slektsforhold } from './kontrakt/barn';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
@@ -129,6 +130,8 @@ export interface IEøsForBarnFeltTyper {
     andreForelderArbeidsperioderNorge: IArbeidsperiode[];
     andreForelderAndreUtbetalinger: ESvar | null;
     andreForelderAndreUtbetalingsperioder: IUtbetalingsperiode[];
+    søkersSlektsforhold: Slektsforhold | '';
+    søkersSlektsforholdSpesifisering: string;
 }
 
 export interface IVelgBarnFeltTyper {

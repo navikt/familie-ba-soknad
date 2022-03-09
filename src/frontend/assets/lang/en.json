@@ -210,6 +210,7 @@
   "felles.og": "and",
   "felles.oppgiarbeidsgiver": "Employer",
   "felles.oppgiarbeidsgiver.feilmelding": "You must state an employer to be able to proceed",
+  "felles.relasjon.format.feilmelding": "The answer has to be between 4 and 60 characters, and cannot contain other special characters than . , -",
   "felles.samboernavn.spm": "Name of your cohabiting partner",
   "felles.sende-skjema.info": "This form can be submitted electronically or on paper.",
   "felles.sivilstatus.kode.ENKE_ELLER_ENKEMANN": "Widow(er)",

@@ -4,9 +4,10 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, Felt, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
+import { feil, FeltState, ISkjema, ok, useFelt, useSkjema, Felt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
+import useInputFelt from '../../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../../hooks/usePerioder';
 import {
@@ -16,6 +17,7 @@ import {
     IBarnMedISøknad,
 } from '../../../../typer/barn';
 import { AlternativtSvarForInput, BarnetsId } from '../../../../typer/common';
+import { Slektsforhold } from '../../../../typer/kontrakt/barn';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
@@ -55,6 +57,37 @@ export const useEøsForBarn = (
     if (!gjeldendeBarn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
     }
+
+    /*--- SLEKTSFORHOLD ---*/
+    const søkersSlektsforhold = useFelt<Slektsforhold | ''>({
+        feltId: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforhold].id,
+        verdi: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforhold].svar,
+        valideringsfunksjon: (felt: FeltState<Slektsforhold | ''>) => {
+            return felt.verdi !== ''
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
+        },
+    });
+    const søkersSlektsforholdSpesifisering = useInputFelt({
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering],
+        feilmeldingSpråkId: 'eøs-om-barn.dinrelasjon.feilmelding',
+        skalVises: søkersSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
+        customValidering: (felt: FeltState<string>) => {
+            const verdi = trimWhiteSpace(felt.verdi);
+            return verdi.match(/^[0-9A-Za-z\s\-\\,\\.]{4,60}$/)
+                ? ok(felt)
+                : feil(
+                      felt,
+                      <SpråkTekst
+                          id={'felles.relasjon.format.feilmelding'}
+                          values={{
+                              barn: barnetsNavnValue(gjeldendeBarn, intl),
+                          }}
+                      />
+                  );
+        },
+        nullstillVedAvhengighetEndring: false,
+    });
 
     /*--- ANDRE FORELDER ---*/
     const andreForelder = gjeldendeBarn.andreForelder;
@@ -180,6 +213,16 @@ export const useEøsForBarn = (
                 idnummer:
                     trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
             })),
+            søkersSlektsforhold: {
+                ...barn.søkersSlektsforhold,
+                svar: søkersSlektsforhold.verdi,
+            },
+            søkersSlektsforholdSpesifisering: {
+                ...barn.søkersSlektsforholdSpesifisering,
+                svar: søkersSlektsforholdSpesifisering.erSynlig
+                    ? søkersSlektsforholdSpesifisering.verdi
+                    : '',
+            },
             ...(!!barn.andreForelder &&
                 !barnMedSammeForelder &&
                 genererAndreForelder(barn.andreForelder)),
@@ -218,6 +261,8 @@ export const useEøsForBarn = (
             andreForelderAndreUtbetalingsperioder,
             andreForelderArbeidNorge,
             andreForelderArbeidsperioderNorge,
+            søkersSlektsforhold,
+            søkersSlektsforholdSpesifisering,
         },
         skjemanavn: 'eøsForBarn',
     });

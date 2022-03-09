@@ -405,6 +405,14 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnetSpørsmålsId.søkerForTidsromSluttdato,
             svar: '',
         },
+        [barnDataKeySpørsmål.søkersSlektsforhold]: {
+            id: EøsBarnSpørsmålId.søkersSlektsforhold,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: {
+            id: EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering,
+            svar: '',
+        },
     };
 };
 

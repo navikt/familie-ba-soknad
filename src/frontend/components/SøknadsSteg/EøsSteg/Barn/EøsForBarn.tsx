@@ -10,8 +10,10 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn'
 import { BarnetsId } from '../../../../typer/common';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
+import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
@@ -19,6 +21,7 @@ import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal
 import EøsAndreForelderOppsummering from '../../Oppsummering/OppsummeringSteg/Eøs/EøsAndreForelderOppsummering';
 import { idNummerLandMedPeriodeType } from '../idnummerUtils';
 import IdNummerForBarn from './IdNummerForBarn';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 import { useEøsForBarn } from './useEøsForBarn';
 
 const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
@@ -107,6 +110,33 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         settIdNummerFelter={settIdNummerFelterForBarn}
                         landAlphaCode={barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar}
                         barn={barn}
+                    />
+                )}
+            </KomponentGruppe>
+            <KomponentGruppe>
+                <SlektsforholdDropdown
+                    felt={skjema.felter.søkersSlektsforhold}
+                    skjema={skjema}
+                    placeholder={intl.formatMessage({ id: 'felles.velgslektsforhold.spm' })}
+                    label={
+                        <SpråkTekst
+                            id={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.søkersSlektsforhold]}
+                            values={{ barn: barnetsNavnValue(barn, intl) }}
+                        />
+                    }
+                />
+                {skjema.felter.søkersSlektsforholdSpesifisering.erSynlig && (
+                    <SkjemaFeltInput
+                        felt={skjema.felter.søkersSlektsforholdSpesifisering}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={
+                            eøsBarnSpørsmålSpråkId[
+                                EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering
+                            ]
+                        }
+                        språkValues={{
+                            barn: barnetsNavnValue(barn, intl),
+                        }}
                     />
                 )}
             </KomponentGruppe>

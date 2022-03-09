@@ -11,6 +11,7 @@ import * as bokmål from '../assets/lang/nb.json';
 import * as nynorsk from '../assets/lang/nn.json';
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { AlternativtSvarForInput } from '../typer/common';
+import { Slektsforhold } from '../typer/kontrakt/barn';
 import { ESivilstand } from '../typer/kontrakt/generelle';
 import { IBarn } from '../typer/person';
 import { Årsak } from '../typer/utvidet';
@@ -37,6 +38,21 @@ export const toÅrsakSpråkId = (årsak: Årsak): string => {
             return 'omdeg.velgårsak.forvaring';
         case Årsak.PSYKISK_HELSEVERN:
             return 'omdeg.velgårsak.psykiskhelsevern';
+    }
+};
+
+export const toSlektsforholdSpråkId = (slektsforhold: Slektsforhold): string => {
+    switch (slektsforhold) {
+        case Slektsforhold.FORELDER:
+            return 'felles.velgslektsforhold.forelder';
+        case Slektsforhold.BESTEFORELDER:
+            return 'felles.velgslektsforhold.besteforelder';
+        case Slektsforhold.ONKEL_ELLER_TANTE:
+            return 'felles.velgslektsforhold.onkeltante';
+        case Slektsforhold.ANNEN_FAMILIERELASJON:
+            return 'felles.velgslektsforhold.annenfamilie';
+        case Slektsforhold.ANNEN_RELASJON:
+            return 'felles.velgslektsforhold.annenrelasjon';
     }
 };
 
