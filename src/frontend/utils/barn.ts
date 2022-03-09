@@ -165,7 +165,7 @@ export const genererOppdaterteBarn = (
                 svar:
                     oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød
                         ? null
-                        : barn.borMedAndreForelder.svar,
+                        : barn[barnDataKeySpørsmål.borMedAndreForelder].svar,
             },
             [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
