@@ -299,6 +299,17 @@ export const useDinLivssituasjon = (): {
         }
     };
 
+    function filtrerteRelevanteIdNummer() {
+        return søknad.søker.idNummer.filter(idNummer => {
+            return idNummerLand(
+                jobberPåBåt.verdi === ESvar.JA ? registrerteArbeidsperioder.verdi : [],
+                mottarUtenlandspensjon.verdi === ESvar.JA ? registrertePensjonsperioder.verdi : [],
+                søker.utenlandsperioder,
+                erEøsLand
+            ).includes(idNummer.land);
+        });
+    }
+
     const genererOppdatertSøker = (): ISøker => ({
         ...søknad.søker,
         harSamboerNå: {
@@ -361,14 +372,7 @@ export const useDinLivssituasjon = (): {
             skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA
                 ? skjema.felter.registrertePensjonsperioder.verdi
                 : [],
-        idNummer: søknad.søker.idNummer.filter(idNummer => {
-            return idNummerLand(
-                jobberPåBåt.verdi === ESvar.JA ? registrerteArbeidsperioder.verdi : [],
-                mottarUtenlandspensjon.verdi === ESvar.JA ? registrertePensjonsperioder.verdi : [],
-                søker.utenlandsperioder,
-                erEøsLand
-            ).includes(idNummer.land);
-        }),
+        idNummer: filtrerteRelevanteIdNummer(),
         utvidet: {
             ...søknad.søker.utvidet,
             tidligereSamboere,

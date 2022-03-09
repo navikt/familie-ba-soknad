@@ -695,7 +695,7 @@ export const useOmBarnet = (
     };
 
     const filtrerteRelevanteIdNummer = (): IIdNummer[] => {
-        const relevanteLandMedPeriodeType = idNummerLandMedPeriodeType(
+        const relevanteLandForPerioder = idNummerLandMedPeriodeType(
             {
                 eøsBarnetrygdsperioder:
                     mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA
@@ -704,12 +704,18 @@ export const useOmBarnet = (
                 utenlandsperioder: registrerteUtenlandsperioder.verdi,
             },
             erEøsLand
-        );
-        return barn.idNummer.filter(idNummerObj =>
-            relevanteLandMedPeriodeType
-                .map(landMedPeriode => landMedPeriode.land)
-                .includes(idNummerObj.land)
-        );
+        ).map(landMedPeriode => landMedPeriode.land);
+
+        const inkluderPågåendeSøknadIAnnetLand =
+            pågåendeSøknadFraAnnetEøsLand.verdi === ESvar.JA &&
+            pågåendeSøknadHvilketLand.verdi !== '' &&
+            !relevanteLandForPerioder.includes(pågåendeSøknadHvilketLand.verdi);
+
+        const relevanteLand = inkluderPågåendeSøknadIAnnetLand
+            ? relevanteLandForPerioder.concat(pågåendeSøknadHvilketLand.verdi)
+            : relevanteLandForPerioder;
+
+        return barn.idNummer.filter(idNummerObj => relevanteLand.includes(idNummerObj.land));
     };
 
     const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
