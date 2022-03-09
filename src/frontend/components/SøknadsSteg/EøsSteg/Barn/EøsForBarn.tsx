@@ -5,7 +5,6 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
-import { useEøs } from '../../../../context/EøsContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
@@ -19,8 +18,7 @@ import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import EøsAndreForelderOppsummering from '../../Oppsummering/OppsummeringSteg/Eøs/EøsAndreForelderOppsummering';
-import { idNummerLandMedPeriodeType } from '../idnummerUtils';
-import IdNummerForBarn from './IdNummerForBarn';
+import SamletIdNummerForBarn from './SamletIdNummerForBarn';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 import { useEøsForBarn } from './useEøsForBarn';
 
@@ -40,9 +38,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         settIdNummerFelterForBarn,
     } = useEøsForBarn(barnetsId);
     const intl = useIntl();
-    const { erEøsLand } = useEøs();
     const { søknad } = useApp();
-    const { eøsBarnetrygdsperioder, utenlandsperioder } = barn;
 
     const andreBarnSomErFyltUt = søknad.barnInkludertISøknaden.filter(
         barnISøknad =>
@@ -52,21 +48,6 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
         annetBarn => annetBarn.id === barn[barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId].svar
     );
-
-    const skalSpørreOmIdNummerForPågåendeSøknadEøsLand = (): boolean => {
-        return (
-            barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar !== '' &&
-            !idNummerLandMedPeriodeType(
-                {
-                    utenlandsperioder,
-                    eøsBarnetrygdsperioder,
-                },
-                erEøsLand
-            )
-                .map(landMedPeriode => landMedPeriode.land)
-                .includes(barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar)
-        );
-    };
 
     return (
         <Steg
@@ -83,36 +64,11 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <KomponentGruppe>
-                {idNummerLandMedPeriodeType(
-                    {
-                        utenlandsperioder,
-                        eøsBarnetrygdsperioder,
-                    },
-                    erEøsLand
-                ).map((landMedPeriodeType, index) => {
-                    return (
-                        !!landMedPeriodeType.land && (
-                            <IdNummerForBarn
-                                skjema={skjema}
-                                key={index}
-                                settIdNummerFelter={settIdNummerFelterForBarn}
-                                landAlphaCode={landMedPeriodeType.land}
-                                periodeType={landMedPeriodeType.periodeType}
-                                barn={barn}
-                            />
-                        )
-                    );
-                })}
-                {skalSpørreOmIdNummerForPågåendeSøknadEøsLand() && (
-                    <IdNummerForBarn
-                        skjema={skjema}
-                        settIdNummerFelter={settIdNummerFelterForBarn}
-                        landAlphaCode={barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar}
-                        barn={barn}
-                    />
-                )}
-            </KomponentGruppe>
+            <SamletIdNummerForBarn
+                barn={barn}
+                settIdNummerFelter={settIdNummerFelterForBarn}
+                skjema={skjema}
+            />
             <KomponentGruppe>
                 <SlektsforholdDropdown
                     felt={skjema.felter.søkersSlektsforhold}

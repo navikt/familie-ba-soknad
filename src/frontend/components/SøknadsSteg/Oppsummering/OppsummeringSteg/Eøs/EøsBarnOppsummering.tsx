@@ -2,16 +2,14 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { useEøs } from '../../../../../context/EøsContext';
 import { useSteg } from '../../../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../../../typer/barn';
 import { barnetsNavnValue } from '../../../../../utils/barn';
 import { toSlektsforholdSpråkId } from '../../../../../utils/språk';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
+import SamletIdNummerForBarn from '../../../EøsSteg/Barn/SamletIdNummerForBarn';
+import { eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { useEøsForBarn } from '../../../EøsSteg/Barn/useEøsForBarn';
-import { IdNummer } from '../../../EøsSteg/IdNummer';
-import { idNummerLandMedPeriodeType } from '../../../EøsSteg/idnummerUtils';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
 import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
@@ -25,14 +23,12 @@ interface Props {
 
 const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }) => {
     const { hentStegObjektForBarnEøs } = useSteg();
-    const { erEøsLand } = useEøs();
 
     const eøsForBarnHook = useEøsForBarn(barn.id);
 
     const { formatMessage } = useIntl();
     const intl = useIntl();
     const barnetsNavn = barnetsNavnValue(barn, intl);
-    const { utenlandsperioder, eøsBarnetrygdsperioder } = barn;
 
     const tittelSpm = (spørsmålId: string) => (
         <SpråkTekst id={eøsBarnSpørsmålSpråkId[spørsmålId]} values={{ barn: barnetsNavn }} />
@@ -45,39 +41,12 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
             skjemaHook={eøsForBarnHook}
             settFeilAnchors={settFeilAnchors}
         >
-            <StyledOppsummeringsFeltGruppe>
-                {idNummerLandMedPeriodeType(
-                    {
-                        utenlandsperioder,
-                        eøsBarnetrygdsperioder,
-                    },
-                    erEøsLand
-                ).map((landMedPeriodeType, index) => {
-                    return (
-                        !!landMedPeriodeType.land && (
-                            <IdNummer
-                                lesevisning={true}
-                                spørsmålSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer]}
-                                spørsmålCheckboxSpråkId={
-                                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]
-                                }
-                                feilmeldingSpråkId={'eøs-om-barn.barnidnummer.feilmelding'}
-                                idNummerVerdiFraSøknad={
-                                    barn.idNummer.find(
-                                        verdi => verdi.land === landMedPeriodeType.land
-                                    )?.idnummer
-                                }
-                                skjema={eøsForBarnHook.skjema}
-                                key={index}
-                                settIdNummerFelter={eøsForBarnHook.settIdNummerFelterForBarn}
-                                landAlphaCode={landMedPeriodeType.land}
-                                periodeType={landMedPeriodeType.periodeType}
-                                barn={barn}
-                            />
-                        )
-                    );
-                })}
-            </StyledOppsummeringsFeltGruppe>
+            <SamletIdNummerForBarn
+                barn={barn}
+                settIdNummerFelter={eøsForBarnHook.settIdNummerFelterForBarn}
+                skjema={eøsForBarnHook.skjema}
+                lesevisning={true}
+            />
             <StyledOppsummeringsFeltGruppe>
                 <OppsummeringFelt
                     tittel={tittelSpm(barn.søkersSlektsforhold.id)}

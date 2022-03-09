@@ -453,3 +453,21 @@ export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
     );
 };
+
+export const skalSpørreOmIdNummerForPågåendeSøknadEøsLand = (
+    barn: IBarnMedISøknad,
+    erEøsLand: (land: Alpha3Code | '') => boolean
+): boolean => {
+    return (
+        barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar !== '' &&
+        !idNummerLandMedPeriodeType(
+            {
+                utenlandsperioder: barn.utenlandsperioder,
+                eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder,
+            },
+            erEøsLand
+        )
+            .map(landMedPeriode => landMedPeriode.land)
+            .includes(barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar)
+    );
+};
