@@ -135,9 +135,14 @@ export const useOmdeg = (): {
 
     const relevanteLandMedPeriodeType = () =>
         idNummerLandMedPeriodeType(
-            søker.arbeidsperioderUtland,
-            søker.pensjonsperioderUtland,
-            værtINorgeITolvMåneder.verdi === ESvar.NEI ? registrerteUtenlandsperioder.verdi : [],
+            {
+                arbeidsperioderUtland: søker.arbeidsperioderUtland,
+                pensjonsperioderUtland: søker.pensjonsperioderUtland,
+                utenlandsperioder:
+                    værtINorgeITolvMåneder.verdi === ESvar.NEI
+                        ? registrerteUtenlandsperioder.verdi
+                        : [],
+            },
             erEøsLand
         );
 

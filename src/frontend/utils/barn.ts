@@ -1,9 +1,11 @@
+import { Alpha3Code } from 'i18n-iso-countries';
 import { IntlShape } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { idNummerLandMedPeriodeType } from '../components/SøknadsSteg/EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import {
@@ -13,7 +15,8 @@ import {
     IBarnMedISøknad,
 } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
-import { IBarn, IBarnRespons } from '../typer/person';
+import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
+import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
 import { ISøknad } from '../typer/søknad';
 import { formaterFnr } from './visning';
@@ -126,7 +129,8 @@ export const genererAndreForelder = (
 export const genererOppdaterteBarn = (
     søknad: ISøknad,
     skjema: ISkjema<IOmBarnaDineFeltTyper, string>,
-    skalTriggeEøsForBarn: (barn: IBarnMedISøknad) => boolean
+    skalTriggeEøsForBarn: (barn: IBarnMedISøknad) => boolean,
+    erEøsLand: (land: Alpha3Code | '') => boolean
 ): IBarnMedISøknad[] => {
     return søknad.barnInkludertISøknaden.map(barn => {
         const oppholderSegIInstitusjon: ESvar = genererSvarForSpørsmålBarn(
@@ -149,14 +153,34 @@ export const genererOppdaterteBarn = (
         const erFosterbarn: boolean =
             genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn) === ESvar.JA;
 
-        const oppholdtSegIUtlandSiste12Mnd: boolean =
-            skjema.felter.hvemTolvMndSammenhengendeINorge.verdi.includes(barn.id);
+        const utenlandsperioder =
+            boddMindreEnn12MndINorge === ESvar.JA ? barn.utenlandsperioder : [];
+        const eøsBarnetrygdsperioder =
+            mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [];
+
+        const pågåendeSøknadFraAnnetEøsLand: ESvar | null = genererSvarForOppfølgningspørsmålBarn(
+            mottarBarnetrygdFraAnnetEøsland,
+            barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
+            null
+        );
+
+        const pågåendeSøknadHvilketLand: Alpha3Code | '' = genererSvarForOppfølgningspørsmålBarn(
+            mottarBarnetrygdFraAnnetEøsland,
+            barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
+            ''
+        );
 
         const oppdatertBarn = {
             ...barn,
-            utenlandsperioder: oppholdtSegIUtlandSiste12Mnd ? barn.utenlandsperioder : [],
-            eøsBarnetrygdsperioder:
-                mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [],
+            idNummer: filtrerteRelevanteIdNummerForBarn(
+                { eøsBarnetrygdsperioder, utenlandsperioder },
+                pågåendeSøknadFraAnnetEøsLand,
+                pågåendeSøknadHvilketLand,
+                barn,
+                erEøsLand
+            ),
+            utenlandsperioder,
+            eøsBarnetrygdsperioder,
             andreForelder: erFosterbarn
                 ? null
                 : genererAndreForelder(barn.andreForelder, andreForelderErDød),
@@ -267,6 +291,14 @@ export const genererOppdaterteBarn = (
                     null
                 ),
             },
+            [barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
+                ...barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
+                svar: pågåendeSøknadFraAnnetEøsLand,
+            },
+            [barnDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
+                ...barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
+                svar: pågåendeSøknadHvilketLand,
+            },
         };
 
         return { ...oppdatertBarn, triggetEøs: skalTriggeEøsForBarn(oppdatertBarn) };
@@ -296,6 +328,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         barnErFyltUt: false,
         utenlandsperioder: [],
         eøsBarnetrygdsperioder: [],
+        idNummer: [],
         andreForelder: null,
         triggetEøs: false,
         [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: {
@@ -441,4 +474,52 @@ export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
         kanIkkeGiOpplysningerOmAndreForelder ||
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
     );
+};
+
+export const skalSpørreOmIdNummerForPågåendeSøknadEøsLand = (
+    barn: IBarnMedISøknad,
+    erEøsLand: (land: Alpha3Code | '') => boolean
+): boolean => {
+    return (
+        barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar !== '' &&
+        !idNummerLandMedPeriodeType(
+            {
+                utenlandsperioder: barn.utenlandsperioder,
+                eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder,
+            },
+            erEøsLand
+        )
+            .map(landMedPeriode => landMedPeriode.land)
+            .includes(barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar)
+    );
+};
+
+export const filtrerteRelevanteIdNummerForBarn = (
+    perioder: {
+        eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
+        utenlandsperioder: IUtenlandsperiode[];
+    },
+    pågåendeSøknadFraAnnetEøsLand: ESvar | null,
+    pågåendeSøknadHvilketLand: Alpha3Code | '',
+    barn: IBarnMedISøknad,
+    erEøsLand: (land: Alpha3Code | '') => boolean
+): IIdNummer[] => {
+    const relevanteLandForPerioder = idNummerLandMedPeriodeType(
+        {
+            eøsBarnetrygdsperioder: perioder.eøsBarnetrygdsperioder,
+            utenlandsperioder: perioder.utenlandsperioder,
+        },
+        erEøsLand
+    ).map(landMedPeriode => landMedPeriode.land);
+
+    const inkluderPågåendeSøknadIAnnetLand =
+        pågåendeSøknadFraAnnetEøsLand === ESvar.JA &&
+        pågåendeSøknadHvilketLand !== '' &&
+        !relevanteLandForPerioder.includes(pågåendeSøknadHvilketLand);
+
+    const relevanteLand = inkluderPågåendeSøknadIAnnetLand
+        ? relevanteLandForPerioder.concat(pågåendeSøknadHvilketLand)
+        : relevanteLandForPerioder;
+
+    return barn.idNummer.filter(idNummerObj => relevanteLand.includes(idNummerObj.land));
 };

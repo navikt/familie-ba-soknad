@@ -3,6 +3,10 @@ import { IntlShape } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
+import {
+    EøsSøkerSpørsmålId,
+    eøsSøkerSpørsmålSpråkId,
+} from '../../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { ESivilstand } from '../../typer/kontrakt/generelle';
@@ -104,7 +108,14 @@ export const dataISøknadKontraktFormatV7 = (
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1)
             ),
-            idNummer: idNummer.map(idnummerObj => idNummerTilISøknadsfelt(idnummerObj, valgtSpråk)),
+            idNummer: idNummer.map(idnummerObj =>
+                idNummerTilISøknadsfelt(
+                    idnummerObj,
+                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer],
+                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent],
+                    valgtSpråk
+                )
+            ),
             spørsmål: {
                 ...spørmålISøknadsFormat(typetSøkerSpørsmål),
                 ...spørmålISøknadsFormat(typetUtvidaSpørsmål),
@@ -158,7 +169,9 @@ export const dataISøknadKontraktFormatV7 = (
                 })
             ),
         },
-        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormatV7(intl, barn, søker)),
+        barn: barnInkludertISøknaden.map(barn =>
+            barnISøknadsFormatV7(intl, barn, søker, valgtSpråk)
+        ),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfelt(
                 språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),

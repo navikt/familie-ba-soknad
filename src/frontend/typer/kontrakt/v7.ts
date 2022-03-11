@@ -59,6 +59,7 @@ export interface ISøknadIKontraktBarnV7 {
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
     andreForelder: IAndreForelderIKontraktFormat | null;
     eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
+    idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
 }
 
 export interface IAndreForelderIKontraktFormatV7 {

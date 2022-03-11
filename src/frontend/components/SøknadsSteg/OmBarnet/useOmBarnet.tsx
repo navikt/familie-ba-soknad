@@ -35,7 +35,7 @@ import {
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
-import { barnetsNavnValue } from '../../../utils/barn';
+import { barnetsNavnValue, filtrerteRelevanteIdNummerForBarn } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
@@ -69,7 +69,8 @@ export const useOmBarnet = (
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const intl = useIntl();
-    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs } = useEøs();
+    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
+
     const { toggles } = useFeatureToggles();
     const barn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
 
@@ -695,8 +696,21 @@ export const useOmBarnet = (
         const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
             barn => barn.id === sammeForelderSomAnnetBarn.verdi
         );
+        const eøsBarnetrygdsperioder =
+            mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA
+                ? registrerteEøsBarnetrygdsperioder.verdi
+                : [];
+        const utenlandsperioder = registrerteUtenlandsperioder.verdi;
+
         return {
             ...barn,
+            idNummer: filtrerteRelevanteIdNummerForBarn(
+                { eøsBarnetrygdsperioder, utenlandsperioder },
+                pågåendeSøknadFraAnnetEøsLand.verdi,
+                pågåendeSøknadHvilketLand.verdi,
+                barn,
+                erEøsLand
+            ),
             barnErFyltUt: true,
             utenlandsperioder: skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
                 ? utenlandsperioder

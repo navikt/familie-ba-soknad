@@ -23,7 +23,7 @@ export const useOmBarnaDine = (): {
     validerAlleSynligeFelter: () => void;
 } => {
     const { søknad, settSøknad } = useApp();
-    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs } = useEøs();
+    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
 
     const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt({
         søknadsfelt: søknad.erNoenAvBarnaFosterbarn,
@@ -170,7 +170,12 @@ export const useOmBarnaDine = (): {
     );
 
     useEffect(() => {
-        const oppdaterteBarn = genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn);
+        const oppdaterteBarn = genererOppdaterteBarn(
+            søknad,
+            skjema,
+            skalTriggeEøsForBarn,
+            erEøsLand
+        );
 
         oppdaterteBarn.forEach(oppdatertBarn => {
             const skalTriggeEøs = skalTriggeEøsForBarn(oppdatertBarn);
@@ -222,7 +227,12 @@ export const useOmBarnaDine = (): {
                 ...søknad.erAvdødPartnerForelder,
                 svar: erAvdødPartnerForelder.verdi,
             },
-            barnInkludertISøknaden: genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn),
+            barnInkludertISøknaden: genererOppdaterteBarn(
+                søknad,
+                skjema,
+                skalTriggeEøsForBarn,
+                erEøsLand
+            ),
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 switch (dok.dokumentasjonsbehov) {
                     case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:
