@@ -59,6 +59,11 @@ export enum barnDataKeySpørsmål {
     søkersSlektsforhold = 'søkersSlektsforhold',
     søkersSlektsforholdSpesifisering = 'søkersSlektsforholdSpesifisering',
     borMedAndreForelder = 'borMedAndreForelder',
+    omsorgspersonNavn = 'omsorgspersonNavn',
+    omsorgspersonSlektsforhold = 'omsorgspersonSlektsforhold',
+    omsorgspersonIdNummer = 'omsorgspersonIdNummer',
+    omsorgspersonIdNummerVetIkke = 'omsorgspersonIdNummerVetIkke',
+    omsorgspersonAdresse = 'omsorgspersonAdresse',
 }
 
 export interface IAndreForelder {
@@ -121,6 +126,11 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.søkersSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
     [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.borMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.omsorgspersonNavn]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.omsorgspersonSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
+    [barnDataKeySpørsmål.omsorgspersonIdNummer]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.omsorgspersonIdNummerVetIkke]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.omsorgspersonAdresse]: ISøknadSpørsmål<string>;
 }
 
 export const muligeSlektsforhold: Slektsforhold[] = [

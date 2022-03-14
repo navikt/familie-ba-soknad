@@ -15,6 +15,7 @@ export interface StyledDropdownProps<ConstrainedString extends string> {
     label?: ReactNode;
     dynamisk?: boolean;
     bredde?: 'fullbredde' | 'xxl' | 'xl' | 'l' | 'm' | 's' | 'xs';
+    slektsforholdSøker?: boolean;
 }
 
 const StyledSelect = styled(Select)`

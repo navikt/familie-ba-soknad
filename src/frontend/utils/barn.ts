@@ -402,6 +402,26 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: EøsBarnSpørsmålId.borMedAndreForelder,
             svar: null,
         },
+        [barnDataKeySpørsmål.omsorgspersonNavn]: {
+            id: EøsBarnSpørsmålId.omsorgspersonNavn,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.omsorgspersonSlektsforhold]: {
+            id: EøsBarnSpørsmålId.omsorgspersonSlektsforhold,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.omsorgspersonIdNummer]: {
+            id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.omsorgspersonIdNummerVetIkke]: {
+            id: EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke,
+            svar: null,
+        },
+        [barnDataKeySpørsmål.omsorgspersonAdresse]: {
+            id: EøsBarnSpørsmålId.omsorgspersonAdresse,
+            svar: '',
+        },
     };
 };
 

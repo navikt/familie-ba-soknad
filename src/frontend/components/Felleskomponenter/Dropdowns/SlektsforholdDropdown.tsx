@@ -9,9 +9,13 @@ import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 
 const SlektsforholdDropdown: React.FC<StyledDropdownProps<Slektsforhold | ''>> = props => {
     const intl = useIntl();
+    const slektsforholdSøker = props.slektsforholdSøker;
+    const aktuelleSlektsforhold = slektsforholdSøker
+        ? muligeSlektsforhold
+        : muligeSlektsforhold.filter(mulighet => mulighet !== Slektsforhold.FORELDER);
     return (
         <StyledDropdown<Slektsforhold | ''> {...props} bredde={'fullbredde'}>
-            {muligeSlektsforhold.map(
+            {aktuelleSlektsforhold.map(
                 (slektsforhold): ReactNode => (
                     <option value={slektsforhold} key={slektsforhold}>
                         {intl.formatMessage({ id: toSlektsforholdSpråkId(slektsforhold) })}

@@ -8,6 +8,11 @@ export enum EøsBarnSpørsmålId {
     søkersSlektsforhold = 'søkers-slektsforhold',
     søkersSlektsforholdSpesifisering = 'søkers-slektsforhold-spesifisering',
     borMedAndreForelder = 'bor-med-andre-forelder',
+    omsorgspersonNavn = 'omsorgsperson-navn',
+    omsorgspersonSlektsforhold = 'omsorgsperson-slektsforhold',
+    omsorgspersonIdNummerVetIkke = 'omsorgsperson-id-nummer-vet-ikke',
+    omsorgspersonIdNummer = 'omsorgsperson-id-nummer',
+    omsorgspersonAdresse = 'omsorgsperson-adresse',
 }
 
 export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = {
@@ -21,4 +26,10 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
     [EøsBarnSpørsmålId.søkersSlektsforhold]: 'eøs-om-barn.dittslektsforhold.spm',
     [EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering]: 'eøs-om-barn.dinrelasjon.spm',
     [EøsBarnSpørsmålId.borMedAndreForelder]: 'eøs-om-barn.borbarnmedandreforelder.spm',
+    [EøsBarnSpørsmålId.omsorgspersonNavn]: 'eøs-om-barn.annenomsorgspersonnavn.spm',
+    [EøsBarnSpørsmålId.omsorgspersonSlektsforhold]:
+        'eøs-om-barn.annenomsorgspersonslektsforhold.spm',
+    [EøsBarnSpørsmålId.omsorgspersonIdNummer]: 'eøs-om-barn.annenomsorgspersonidnummer.spm',
+    [EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke]: 'felles.kjennerikkeidnummer.sjekkboks',
+    [EøsBarnSpørsmålId.omsorgspersonAdresse]: 'eøs-om-barn.annenomsorgspersonoppholdssted.spm',
 };
