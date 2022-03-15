@@ -9,7 +9,6 @@ import {
     ESivilstand,
     ESøknadstype,
     IAdresse,
-    IAndreForelderIKontraktFormat,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
     ISøknadsfelt,
@@ -57,7 +56,7 @@ export interface ISøknadIKontraktBarnV7 {
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
-    andreForelder: IAndreForelderIKontraktFormat | null;
+    andreForelder: IAndreForelderIKontraktFormatV7 | null;
     eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
     idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
 }
@@ -67,9 +66,7 @@ export interface IAndreForelderIKontraktFormatV7 {
     fnr: ISøknadsfelt<string>;
     fødselsdato: ISøknadsfelt<string>;
     pensjonUtland: ISøknadsfelt<ESvar | null>;
-    pensjonHvilketLand: ISøknadsfelt<string>;
     arbeidUtlandet: ISøknadsfelt<ESvar | null>;
-    arbeidUtlandetHvilketLand: ISøknadsfelt<string>;
     skriftligAvtaleOmDeltBosted: ISøknadsfelt<ESvar | null>;
     utvidet: {
         søkerHarBoddMedAndreForelder: ISøknadsfelt<ESvar | null>;
@@ -77,6 +74,9 @@ export interface IAndreForelderIKontraktFormatV7 {
     };
 
     //EØS
+    pensjonNorge: ISøknadsfelt<ESvar | null>;
+    arbeidNorge: ISøknadsfelt<ESvar | null>;
+    andreUtbetalinger: ISøknadsfelt<ESvar | null>;
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
