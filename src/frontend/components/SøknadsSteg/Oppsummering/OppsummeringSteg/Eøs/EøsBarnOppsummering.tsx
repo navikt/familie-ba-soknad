@@ -4,11 +4,12 @@ import { useIntl } from 'react-intl';
 
 import { useSteg } from '../../../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../../../typer/barn';
+import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { barnetsNavnValue } from '../../../../../utils/barn';
 import { toSlektsforholdSpråkId } from '../../../../../utils/språk';
 import KomponentGruppe from '../../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { useEøsForBarn } from '../../../EøsSteg/Barn/useEøsForBarn';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
@@ -72,7 +73,11 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                     {barn.omsorgspersonSlektsforhold.svar && (
                         <OppsummeringFelt
                             tittel={tittelSpm(barn.omsorgspersonSlektsforhold.id)}
-                            søknadsvar={barn.omsorgspersonSlektsforhold.svar}
+                            søknadsvar={formatMessage({
+                                id:
+                                    barn.omsorgspersonSlektsforhold.svar &&
+                                    toSlektsforholdSpråkId(barn.omsorgspersonSlektsforhold.svar),
+                            })}
                         />
                     )}
                     {barn.omsorgpersonSlektsforholdSpesifisering.svar && (
@@ -84,7 +89,15 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                     {barn.omsorgspersonIdNummer.svar && (
                         <OppsummeringFelt
                             tittel={tittelSpm(barn.omsorgspersonIdNummer.id)}
-                            søknadsvar={barn.omsorgspersonIdNummer.svar}
+                            søknadsvar={
+                                barn.omsorgspersonIdNummer.svar === AlternativtSvarForInput.UKJENT
+                                    ? formatMessage({
+                                          id: eøsBarnSpørsmålSpråkId[
+                                              EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke
+                                          ],
+                                      })
+                                    : barn.omsorgspersonIdNummer.svar
+                            }
                         />
                     )}
                     {barn.omsorgspersonAdresse.svar && (
