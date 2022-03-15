@@ -410,6 +410,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: EøsBarnSpørsmålId.omsorgspersonSlektsforhold,
             svar: '',
         },
+        [barnDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: {
+            id: EøsBarnSpørsmålId.omsorgpersonSlektsforholdSpesifisering,
+            svar: '',
+        },
         [barnDataKeySpørsmål.omsorgspersonIdNummer]: {
             id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
             svar: '',
@@ -421,6 +425,14 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         [barnDataKeySpørsmål.omsorgspersonAdresse]: {
             id: EøsBarnSpørsmålId.omsorgspersonAdresse,
             svar: '',
+        },
+        [barnDataKeySpørsmål.barnetsAdresse]: {
+            id: EøsBarnSpørsmålId.barnetsAdresse,
+            svar: '',
+        },
+        [barnDataKeySpørsmål.barnetsAdresseVetIkke]: {
+            id: EøsBarnSpørsmålId.barnetsAdresseVetIkke,
+            svar: null,
         },
     };
 };

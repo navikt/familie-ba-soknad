@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { feil, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
@@ -12,12 +12,14 @@ const useInputFelt = ({
     skalVises = true,
     customValidering = undefined,
     nullstillVedAvhengighetEndring = true,
+    feilmeldingSpråkVerdier,
 }: {
     søknadsfelt: ISøknadSpørsmål<string>;
     feilmeldingSpråkId: string;
     skalVises?: boolean;
     customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
     nullstillVedAvhengighetEndring?: boolean;
+    feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) =>
     useFelt<string>({
         feltId: søknadsfelt.id,
@@ -28,7 +30,10 @@ const useInputFelt = ({
                 ? customValidering
                     ? customValidering(felt)
                     : ok(felt)
-                : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
+                : feil(
+                      felt,
+                      <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
+                  );
         },
         avhengigheter: { skalVises },
         skalFeltetVises: avhengigheter => avhengigheter.skalVises,

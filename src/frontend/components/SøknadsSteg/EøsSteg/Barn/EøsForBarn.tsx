@@ -132,6 +132,20 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 slektsforholdSøker={false}
                             />
                         )}
+                        {skjema.felter.omsorgpersonSlektsforholdSpesifisering.erSynlig && (
+                            <SkjemaFeltInput
+                                felt={skjema.felter.omsorgpersonSlektsforholdSpesifisering}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={
+                                    eøsBarnSpørsmålSpråkId[
+                                        EøsBarnSpørsmålId.omsorgpersonSlektsforholdSpesifisering
+                                    ]
+                                }
+                                språkValues={{
+                                    barn: barnetsNavnValue(barn, intl),
+                                }}
+                            />
+                        )}
                         {skjema.felter.omsorgspersonIdNummer.erSynlig && (
                             <>
                                 <SkjemaFeltInput
@@ -158,16 +172,36 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 />
                             </>
                         )}
+                        {skjema.felter.omsorgspersonAdresse.erSynlig && (
+                            <SkjemaFeltInput
+                                felt={skjema.felter.omsorgspersonAdresse}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={
+                                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonAdresse]
+                                }
+                            />
+                        )}
                     </SkjemaFieldset>
                 )}
-                {skjema.felter.omsorgspersonAdresse.erSynlig && (
-                    <SkjemaFeltInput
-                        felt={skjema.felter.omsorgspersonAdresse}
-                        visFeilmeldinger={skjema.visFeilmeldinger}
-                        labelSpråkTekstId={
-                            eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonAdresse]
-                        }
-                    />
+                {skjema.felter.barnetsAdresse.erSynlig && (
+                    <>
+                        <SkjemaFeltInput
+                            felt={skjema.felter.barnetsAdresse}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            labelSpråkTekstId={
+                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresse]
+                            }
+                            språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                            disabled={skjema.felter.barnetsAdresseVetIkke.verdi === ESvar.JA}
+                        />
+
+                        <SkjemaCheckbox
+                            felt={skjema.felter.barnetsAdresseVetIkke}
+                            labelSpråkTekstId={
+                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
+                            }
+                        />
+                    </>
                 )}
             </KomponentGruppe>
             {!skalSkjuleAndreForelderFelt(barn) && (
