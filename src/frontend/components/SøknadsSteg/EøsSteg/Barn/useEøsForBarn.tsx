@@ -17,7 +17,7 @@ import {
     IBarnMedISøknad,
     IOmsorgsperson,
 } from '../../../../typer/barn';
-import { AlternativtSvarForInput, BarnetsId } from '../../../../typer/common';
+import { BarnetsId } from '../../../../typer/common';
 import { Slektsforhold } from '../../../../typer/kontrakt/barn';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
@@ -210,39 +210,6 @@ export const useEøsForBarn = (
         nullstillVedAvhengighetEndring: true,
     });
 
-    const barnetsAdresseVetIkke = useFelt<ESvar>({
-        verdi: formaterVerdiForCheckbox(gjeldendeBarn[barnDataKeySpørsmål.barnetsAdresse].svar),
-        feltId: EøsBarnSpørsmålId.barnetsAdresseVetIkke,
-        skalFeltetVises: avhengigheter => avhengigheter.borMedAndreForelder.verdi === ESvar.JA,
-        avhengigheter: { borMedAndreForelder },
-    });
-
-    const barnetsAdresse = useInputFeltMedUkjent({
-        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.barnetsAdresse],
-        avhengighet: barnetsAdresseVetIkke,
-        feilmeldingSpråkId: 'eøs.hvorborbarn.feilmelding',
-        feilmeldingSpråkVerdier: {
-            barn: barnetsNavnValue(gjeldendeBarn, intl),
-        },
-        skalVises:
-            borMedAndreForelder.verdi === ESvar.JA &&
-            andreForelder?.navn.svar === AlternativtSvarForInput.UKJENT,
-        customValidering: (felt: FeltState<string>) => {
-            const verdi = trimWhiteSpace(felt.verdi);
-            return verdi.match(/^[0-9A-Za-z\s\-.\\/]{4,20}$/)
-                ? ok(felt)
-                : feil(
-                      felt,
-                      <SpråkTekst
-                          id={'felles.relasjon.format.feilmelding'}
-                          values={{
-                              barn: barnetsNavnValue(gjeldendeBarn, intl),
-                          }}
-                      />
-                  );
-        },
-    });
-
     /*--- ANDRE FORELDER ---*/
 
     const andreForelderArbeidNorge = useJaNeiSpmFelt({
@@ -401,10 +368,6 @@ export const useEøsForBarn = (
                 ...barn.borMedAndreForelder,
                 svar: borMedAndreForelder.verdi,
             },
-            barnetsAdresse: {
-                ...barn.barnetsAdresse,
-                svar: svarForSpørsmålMedUkjent(barnetsAdresseVetIkke, barnetsAdresse),
-            },
             ...(!!barn.andreForelder &&
                 !barnMedSammeForelder &&
                 genererAndreForelder(barn.andreForelder)),
@@ -453,8 +416,6 @@ export const useEøsForBarn = (
             omsorgspersonIdNummer,
             omsorgspersonIdNummerVetIkke,
             omsorgspersonAdresse,
-            barnetsAdresse,
-            barnetsAdresseVetIkke,
         },
         skjemanavn: 'eøsForBarn',
     });

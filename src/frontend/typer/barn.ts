@@ -142,8 +142,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.søkersSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
     [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.borMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.barnetsAdresse]: ISøknadSpørsmål<string>;
-    [barnDataKeySpørsmål.barnetsAdresseVetIkke]: ISøknadSpørsmål<ESvar | null>;
 }
 
 export const muligeSlektsforhold: Slektsforhold[] = [

@@ -14,8 +14,6 @@ export enum EøsBarnSpørsmålId {
     omsorgspersonIdNummerVetIkke = 'omsorgsperson-id-nummer-vet-ikke',
     omsorgspersonIdNummer = 'omsorgsperson-id-nummer',
     omsorgspersonAdresse = 'omsorgsperson-adresse',
-    barnetsAdresse = 'barnets-adresse',
-    barnetsAdresseVetIkke = 'barnets-adresse-vet-ikke',
 }
 
 export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = {
@@ -37,6 +35,4 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
     [EøsBarnSpørsmålId.omsorgspersonIdNummer]: 'eøs-om-barn.annenomsorgspersonidnummer.spm',
     [EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke]: 'felles.kjennerikkeidnummer.sjekkboks',
     [EøsBarnSpørsmålId.omsorgspersonAdresse]: 'eøs-om-barn.annenomsorgspersonoppholdssted.spm',
-    [EøsBarnSpørsmålId.barnetsAdresse]: 'eøs.hvorborbarn.spm',
-    [EøsBarnSpørsmålId.barnetsAdresseVetIkke]: 'eøs.kjennerikkeadresse.sjekkboks',
 };
