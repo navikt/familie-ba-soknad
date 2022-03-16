@@ -11,6 +11,8 @@ import {
     barnDataKeySpørsmål,
     IAndreForelder,
     IBarnMedISøknad,
+    IOmsorgsperson,
+    omsorgspersonDataKeySpørsmål,
 } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
 import { IBarn, IBarnRespons } from '../typer/person';
@@ -123,6 +125,40 @@ export const genererAndreForelder = (
     };
 };
 
+export const genererOmsorgsperson = (omsorgsperson: IOmsorgsperson | null): IOmsorgsperson => {
+    return {
+        [omsorgspersonDataKeySpørsmål.omsorgspersonNavn]: {
+            id: EøsBarnSpørsmålId.omsorgspersonNavn,
+            svar: omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonNavn].svar ?? '',
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold]: {
+            id: EøsBarnSpørsmålId.omsorgspersonSlektsforhold,
+            svar:
+                omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold].svar ?? '',
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: {
+            id: EøsBarnSpørsmålId.omsorgpersonSlektsforholdSpesifisering,
+            svar:
+                omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]
+                    .svar ?? '',
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer]: {
+            id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
+            svar: omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer].svar ?? '',
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummerVetIkke]: {
+            id: EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke,
+            svar:
+                omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonIdNummerVetIkke].svar ??
+                null,
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgspersonAdresse]: {
+            id: EøsBarnSpørsmålId.omsorgspersonAdresse,
+            svar: omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonAdresse].svar ?? '',
+        },
+    };
+};
+
 export const genererOppdaterteBarn = (
     søknad: ISøknad,
     skjema: ISkjema<IOmBarnaDineFeltTyper, string>,
@@ -160,6 +196,7 @@ export const genererOppdaterteBarn = (
             andreForelder: erFosterbarn
                 ? null
                 : genererAndreForelder(barn.andreForelder, andreForelderErDød),
+            omsorgsperson: genererOmsorgsperson(barn.omsorgsperson),
             [barnDataKeySpørsmål.borMedAndreForelder]: {
                 ...barn[barnDataKeySpørsmål.borMedAndreForelder],
                 svar:
@@ -297,6 +334,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         utenlandsperioder: [],
         eøsBarnetrygdsperioder: [],
         andreForelder: null,
+        omsorgsperson: null,
         triggetEøs: false,
         [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: {
             id: OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn,
@@ -401,30 +439,6 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         [barnDataKeySpørsmål.borMedAndreForelder]: {
             id: EøsBarnSpørsmålId.borMedAndreForelder,
             svar: null,
-        },
-        [barnDataKeySpørsmål.omsorgspersonNavn]: {
-            id: EøsBarnSpørsmålId.omsorgspersonNavn,
-            svar: '',
-        },
-        [barnDataKeySpørsmål.omsorgspersonSlektsforhold]: {
-            id: EøsBarnSpørsmålId.omsorgspersonSlektsforhold,
-            svar: '',
-        },
-        [barnDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: {
-            id: EøsBarnSpørsmålId.omsorgpersonSlektsforholdSpesifisering,
-            svar: '',
-        },
-        [barnDataKeySpørsmål.omsorgspersonIdNummer]: {
-            id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
-            svar: '',
-        },
-        [barnDataKeySpørsmål.omsorgspersonIdNummerVetIkke]: {
-            id: EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke,
-            svar: null,
-        },
-        [barnDataKeySpørsmål.omsorgspersonAdresse]: {
-            id: EøsBarnSpørsmålId.omsorgspersonAdresse,
-            svar: '',
         },
         [barnDataKeySpørsmål.barnetsAdresse]: {
             id: EøsBarnSpørsmålId.barnetsAdresse,

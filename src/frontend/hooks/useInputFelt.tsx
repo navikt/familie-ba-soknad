@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react';
 
+import { guid } from 'nav-frontend-js-utils';
+
 import { feil, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -14,7 +16,7 @@ const useInputFelt = ({
     nullstillVedAvhengighetEndring = true,
     feilmeldingSpråkVerdier,
 }: {
-    søknadsfelt: ISøknadSpørsmål<string>;
+    søknadsfelt: ISøknadSpørsmål<string> | null;
     feilmeldingSpråkId: string;
     skalVises?: boolean;
     customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
@@ -22,8 +24,8 @@ const useInputFelt = ({
     feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) =>
     useFelt<string>({
-        feltId: søknadsfelt.id,
-        verdi: trimWhiteSpace(søknadsfelt.svar),
+        feltId: søknadsfelt?.id ?? guid(),
+        verdi: søknadsfelt ? trimWhiteSpace(søknadsfelt.svar) : '',
         valideringsfunksjon: (felt: FeltState<string>) => {
             const feltVerdi = trimWhiteSpace(felt.verdi);
             return feltVerdi !== ''

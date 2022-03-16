@@ -32,6 +32,15 @@ export enum andreForelderDataKeySpørsmål {
     andreUtbetalinger = 'andreUtbetalinger',
 }
 
+export enum omsorgspersonDataKeySpørsmål {
+    omsorgspersonNavn = 'omsorgspersonNavn',
+    omsorgspersonSlektsforhold = 'omsorgspersonSlektsforhold',
+    omsorgpersonSlektsforholdSpesifisering = 'omsorgpersonSlektsforholdSpesifisering',
+    omsorgspersonIdNummer = 'omsorgspersonIdNummer',
+    omsorgspersonIdNummerVetIkke = 'omsorgspersonIdNummerVetIkke',
+    omsorgspersonAdresse = 'omsorgspersonAdresse',
+}
+
 export enum barnDataKeySpørsmål {
     erFosterbarn = 'erFosterbarn',
     erAdoptertFraUtland = 'erAdoptertFraUtland',
@@ -59,12 +68,6 @@ export enum barnDataKeySpørsmål {
     søkersSlektsforhold = 'søkersSlektsforhold',
     søkersSlektsforholdSpesifisering = 'søkersSlektsforholdSpesifisering',
     borMedAndreForelder = 'borMedAndreForelder',
-    omsorgspersonNavn = 'omsorgspersonNavn',
-    omsorgspersonSlektsforhold = 'omsorgspersonSlektsforhold',
-    omsorgpersonSlektsforholdSpesifisering = 'omsorgpersonSlektsforholdSpesifisering',
-    omsorgspersonIdNummer = 'omsorgspersonIdNummer',
-    omsorgspersonIdNummerVetIkke = 'omsorgspersonIdNummerVetIkke',
-    omsorgspersonAdresse = 'omsorgspersonAdresse',
     barnetsAdresse = 'barnetsAdresse',
     barnetsAdresseVetIkke = 'barnetsAdresseVetIkke',
 }
@@ -95,11 +98,21 @@ export interface IAndreForelder {
     };
 }
 
+export interface IOmsorgsperson {
+    [omsorgspersonDataKeySpørsmål.omsorgspersonNavn]: ISøknadSpørsmål<string>;
+    [omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
+    [omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
+    [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer]: ISøknadSpørsmål<string>;
+    [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummerVetIkke]: ISøknadSpørsmål<ESvar | null>;
+    [omsorgspersonDataKeySpørsmål.omsorgspersonAdresse]: ISøknadSpørsmål<string>;
+}
+
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
     utenlandsperioder: IUtenlandsperiode[];
     eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     andreForelder: IAndreForelder | null;
+    omsorgsperson: IOmsorgsperson | null;
     triggetEøs: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;
@@ -129,12 +142,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.søkersSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
     [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.borMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.omsorgspersonNavn]: ISøknadSpørsmål<string>;
-    [barnDataKeySpørsmål.omsorgspersonSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
-    [barnDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
-    [barnDataKeySpørsmål.omsorgspersonIdNummer]: ISøknadSpørsmål<string>;
-    [barnDataKeySpørsmål.omsorgspersonIdNummerVetIkke]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.omsorgspersonAdresse]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.barnetsAdresse]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.barnetsAdresseVetIkke]: ISøknadSpørsmål<ESvar | null>;
 }

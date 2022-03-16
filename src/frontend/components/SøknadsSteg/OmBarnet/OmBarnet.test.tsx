@@ -9,8 +9,10 @@ import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
     IBarnMedISøknad,
+    omsorgspersonDataKeySpørsmål,
 } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
+import { Slektsforhold } from '../../../typer/kontrakt/barn';
 import {
     mekkGyldigSøknad,
     mockEøs,
@@ -104,6 +106,28 @@ const jens = {
             },
         },
     },
+    omsorgsperson: {
+        [omsorgspersonDataKeySpørsmål.omsorgspersonNavn]: {
+            id: 33,
+            svar: 'Test omsorgspersonen',
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold]: {
+            id: 29,
+            svar: Slektsforhold.ANNEN_RELASJON,
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: {
+            id: 30,
+            svar: 'Søskenbarn',
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer]: {
+            id: 31,
+            svar: '12345678',
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgspersonAdresse]: {
+            id: 32,
+            svar: 'Oslogata 1',
+        },
+    },
 };
 const line = {
     navn: 'Line',
@@ -184,6 +208,28 @@ const line = {
                 id: 27,
                 svar: ESvar.JA,
             },
+        },
+    },
+    omsorgsperson: {
+        [omsorgspersonDataKeySpørsmål.omsorgspersonNavn]: {
+            id: 33,
+            svar: 'Test omsorgspersonen',
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold]: {
+            id: 29,
+            svar: Slektsforhold.ANNEN_RELASJON,
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: {
+            id: 30,
+            svar: 'Søskenbarn',
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer]: {
+            id: 31,
+            svar: '12345678',
+        },
+        [omsorgspersonDataKeySpørsmål.omsorgspersonAdresse]: {
+            id: 32,
+            svar: 'Oslogata 1',
         },
     },
 };
