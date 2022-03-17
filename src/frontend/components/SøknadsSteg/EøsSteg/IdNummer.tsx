@@ -79,6 +79,7 @@ export const IdNummer: React.FC<{
                 return feil(felt, <SpråkTekst id={'felles.idnummer-feilformat.feilmelding'} />);
             }
         },
+        ...(barn && { språkVerdier: { barn: barnetsNavnValue(barn, intl) } }),
     });
 
     useEffect(() => {
