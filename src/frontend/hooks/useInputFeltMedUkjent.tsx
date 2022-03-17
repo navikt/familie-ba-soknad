@@ -20,7 +20,6 @@ const useInputFeltMedUkjent = ({
     erFnrInput = false,
     skalVises = true,
     customValidering = undefined,
-    feilmeldingSpråkVerdier,
     språkVerdier = {},
 }: {
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | { id: IdNummerKey; svar: string } | null;

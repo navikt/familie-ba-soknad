@@ -29,8 +29,8 @@ import { svarForSpørsmålMedUkjent } from '../../../../utils/spørsmål';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { EøsBarnSpørsmålId } from './spørsmål';
 import { idNummerKeyPrefix } from '../idnummerUtils';
+import { EøsBarnSpørsmålId } from './spørsmål';
 
 export const useEøsForBarn = (
     barnetsUuid: BarnetsId

@@ -57,7 +57,6 @@ export interface ISøknadIKontraktBarnV7 {
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
-    andreForelder: IAndreForelderIKontraktFormat | null;
     omsorgsperson: IOmsorgspersonIKontraktFormatV7 | null;
     andreForelder: IAndreForelderIKontraktFormatV7 | null;
     eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];

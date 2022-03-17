@@ -29,8 +29,8 @@ import {
     spørmålISøknadsFormat,
     søknadsfeltBarn,
 } from './hjelpefunksjoner';
-import { omsorgspersonTilISøknadsfeltV7 } from './omsorgspersonV7';
 import { idNummerTilISøknadsfelt } from './idNummer';
+import { omsorgspersonTilISøknadsfeltV7 } from './omsorgspersonV7';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const barnISøknadsFormatV7 = (
