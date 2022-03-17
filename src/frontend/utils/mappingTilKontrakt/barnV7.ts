@@ -1,17 +1,24 @@
 import { IntlShape } from 'react-intl';
 
+import { LocaleType } from '@navikt/familie-sprakvelger';
+
+import {
+    EøsBarnSpørsmålId,
+    eøsBarnSpørsmålSpråkId,
+} from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import {
     OmBarnetSpørsmålsId,
     omBarnetSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
 import { AlternativtSvarForInput } from '../../typer/common';
+import { Slektsforhold } from '../../typer/kontrakt/barn';
 import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarnV7 } from '../../typer/kontrakt/v7';
 import { ISøker } from '../../typer/person';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { barnetsNavnValue } from '../barn';
-import { hentTekster } from '../språk';
+import { hentTekster, toSlektsforholdSpråkId } from '../språk';
 import { formaterFnr } from '../visning';
 import { andreForelderTilISøknadsfeltV7 } from './andreForelderV7';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
@@ -23,12 +30,14 @@ import {
     søknadsfeltBarn,
 } from './hjelpefunksjoner';
 import { omsorgspersonTilISøknadsfeltV7 } from './omsorgspersonV7';
+import { idNummerTilISøknadsfelt } from './idNummer';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const barnISøknadsFormatV7 = (
     intl: IntlShape,
     barn: IBarnMedISøknad,
-    søker: ISøker
+    søker: ISøker,
+    valgtSpråk: LocaleType
 ): ISøknadIKontraktBarnV7 => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
@@ -44,9 +53,11 @@ export const barnISøknadsFormatV7 = (
         søkerForTidsromSluttdato,
         institusjonOppholdSluttdato,
         utenlandsperioder,
-        eøsBarnetrygdsperioder,
         // Nye felter under utvikling av EØS full
+        eøsBarnetrygdsperioder,
+        idNummer,
         triggetEøs,
+        søkersSlektsforhold,
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...barnSpørsmål
     } = barn;
@@ -111,7 +122,6 @@ export const barnISøknadsFormatV7 = (
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1, barn)
         ),
-
         eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder.map((periode, index) =>
             tilIEøsBarnetrygsperiodeIKontraktFormat({
                 intl,
@@ -120,7 +130,15 @@ export const barnISøknadsFormatV7 = (
                 barn,
             })
         ),
-
+        idNummer: idNummer.map(idnummerObj =>
+            idNummerTilISøknadsfelt(
+                idnummerObj,
+                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer],
+                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent],
+                valgtSpråk,
+                barnetsNavnValue(barn, intl)
+            )
+        ),
         andreForelder: andreForelder
             ? andreForelderTilISøknadsfeltV7(intl, andreForelder, barn)
             : null,
@@ -135,7 +153,6 @@ export const barnISøknadsFormatV7 = (
             }),
             [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfeltBarn(
                 intl,
-
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     søkerForTidsromSluttdato.svar,
@@ -146,7 +163,6 @@ export const barnISøknadsFormatV7 = (
 
             [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
                 intl,
-
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     institusjonOppholdSluttdato.svar,
@@ -154,6 +170,18 @@ export const barnISøknadsFormatV7 = (
                 ),
                 barn
             ),
+            ...(søkersSlektsforhold.svar && {
+                [barnDataKeySpørsmål.søkersSlektsforhold]: søknadsfeltBarn(
+                    intl,
+                    språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.søkersSlektsforhold),
+                    hentTekster(
+                        toSlektsforholdSpråkId(
+                            barn[barnDataKeySpørsmål.søkersSlektsforhold].svar as Slektsforhold
+                        )
+                    ),
+                    barn
+                ),
+            }),
         },
     };
 };

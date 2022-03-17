@@ -7,41 +7,58 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { useApp } from '../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { IEøsForSøkerFeltTyper } from '../../../typer/skjema';
+import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
+import { barnetsNavnValue } from '../../../utils/barn';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
-import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './Søker/spørsmål';
 
 export const IdNummer: React.FC<{
-    skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
+    skjema: ISkjema<IEøsForSøkerFeltTyper | IEøsForBarnFeltTyper, string>;
     settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
-    landAlphaCode: Alpha3Code;
-    periodeType: PeriodeType;
+    landAlphaCode: Alpha3Code | '';
+    periodeType?: PeriodeType;
+    idNummerVerdiFraSøknad: string | undefined;
+    feilmeldingSpråkId: string;
+    spørsmålSpråkId: string;
+    spørsmålCheckboxSpråkId: string;
     lesevisning?: boolean;
-}> = ({ skjema, settIdNummerFelter, landAlphaCode, periodeType, lesevisning = false }) => {
+    barn?: IBarnMedISøknad;
+}> = ({
+    skjema,
+    settIdNummerFelter,
+    landAlphaCode,
+    periodeType = undefined,
+    idNummerVerdiFraSøknad,
+    feilmeldingSpråkId,
+    spørsmålSpråkId,
+    spørsmålCheckboxSpråkId,
+    barn,
+    lesevisning = false,
+}) => {
     const [valgtLocale] = useSprakContext();
-    const { søknad } = useApp();
-    const { formatMessage } = useIntl();
-
-    const idNummerVerdiFraSøknad = søknad.søker.idNummer.find(
-        verdi => verdi.land === landAlphaCode
-    )?.idnummer;
+    const intl = useIntl();
+    const { formatMessage } = intl;
 
     const idNummerUkjent = useFelt<ESvar>({
         verdi:
-            periodeType === PeriodeType.utenlandsperiode &&
+            (periodeType === undefined ||
+                periodeType === PeriodeType.utenlandsperiode ||
+                periodeType === PeriodeType.eøsBarnetrygdPeriode) &&
             idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: `idnummer-ukjent-${landAlphaCode}`,
-        skalFeltetVises: () => periodeType === PeriodeType.utenlandsperiode,
+        skalFeltetVises: () =>
+            periodeType === undefined ||
+            periodeType === PeriodeType.utenlandsperiode ||
+            periodeType === PeriodeType.eøsBarnetrygdPeriode,
     });
 
     const idNummerFelt = useInputFeltMedUkjent({
@@ -53,7 +70,7 @@ export const IdNummer: React.FC<{
                     : '',
         },
         avhengighet: idNummerUkjent,
-        feilmeldingSpråkId: 'eøs-om-deg.dittidnummer.feilmelding',
+        feilmeldingSpråkId: feilmeldingSpråkId,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
             if (verdi.match(/^[0-9A-Za-z\s\-.\\/]{4,20}$/)) {
@@ -62,6 +79,7 @@ export const IdNummer: React.FC<{
                 return feil(felt, <SpråkTekst id={'felles.idnummer-feilformat.feilmelding'} />);
             }
         },
+        ...(barn && { språkVerdier: { barn: barnetsNavnValue(barn, intl) } }),
     });
 
     useEffect(() => {
@@ -74,15 +92,18 @@ export const IdNummer: React.FC<{
         <OppsummeringFelt
             tittel={
                 <SpråkTekst
-                    id={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
-                    values={{ land: getName(landAlphaCode, valgtLocale) }}
+                    id={spørsmålSpråkId}
+                    values={{
+                        land: getName(landAlphaCode, valgtLocale),
+                        ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                    }}
                 />
             }
             søknadsvar={
                 idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
                     ? formatMessage(
                           {
-                              id: eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent],
+                              id: spørsmålCheckboxSpråkId,
                           },
                           { land: getName(landAlphaCode, valgtLocale) }
                       )
@@ -94,13 +115,16 @@ export const IdNummer: React.FC<{
             <SkjemaFeltInput
                 felt={idNummerFelt}
                 visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
-                språkValues={{ land: getName(landAlphaCode, valgtLocale) }}
+                labelSpråkTekstId={spørsmålSpråkId}
+                språkValues={{
+                    land: getName(landAlphaCode, valgtLocale),
+                    ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                }}
                 disabled={idNummerUkjent.verdi === ESvar.JA}
             />
             {idNummerUkjent.erSynlig && (
                 <SkjemaCheckbox
-                    labelSpråkTekstId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent]}
+                    labelSpråkTekstId={spørsmålCheckboxSpråkId}
                     felt={idNummerUkjent}
                     språkVerdier={{ land: getName(landAlphaCode, valgtLocale) }}
                 />

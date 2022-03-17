@@ -2,6 +2,7 @@ import { IntlShape } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { EøsBarnSpørsmålId } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import {
     OmBarnetSpørsmålsId,
     omBarnetSpørsmålSpråkId,
@@ -13,7 +14,6 @@ import {
     IBarnMedISøknad,
 } from '../../typer/barn';
 import { IAndreForelderIKontraktFormatV7 } from '../../typer/kontrakt/v7';
-import { landkodeTilSpråk } from '../språk';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import {
@@ -21,7 +21,6 @@ import {
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,
     språktekstIdFraSpørsmålId,
     søknadsfeltBarn,
-    verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 
@@ -79,22 +78,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar),
             barn
         ),
-
-        [andreForelderDataKeySpørsmål.pensjonHvilketLand]: søknadsfeltBarn(
-            intl,
-            språktekstIdFraSpørsmålId(
-                forelderErDød
-                    ? OmBarnetSpørsmålsId.andreForelderPensjonHvilketLandEnke
-                    : OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand
-            ),
-            verdiCallbackAlleSpråk(locale =>
-                landkodeTilSpråk(
-                    andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
-                    locale
-                )
-            ),
-            barn
-        ),
         [andreForelderDataKeySpørsmål.arbeidUtlandet]: søknadsfeltBarn(
             intl,
             språktekstIdFraSpørsmålId(
@@ -105,19 +88,34 @@ export const andreForelderTilISøknadsfeltV7 = (
             sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar),
             barn
         ),
-        [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: søknadsfeltBarn(
+        [andreForelderDataKeySpørsmål.pensjonNorge]: søknadsfeltBarn(
             intl,
             språktekstIdFraSpørsmålId(
                 forelderErDød
-                    ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke
-                    : OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
+                    ? EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke
+                    : EøsBarnSpørsmålId.andreForelderPensjonNorge
             ),
-            verdiCallbackAlleSpråk(locale =>
-                landkodeTilSpråk(
-                    andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand].svar,
-                    locale
-                )
+            sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.pensjonNorge].svar),
+            barn
+        ),
+        [andreForelderDataKeySpørsmål.arbeidNorge]: søknadsfeltBarn(
+            intl,
+            språktekstIdFraSpørsmålId(
+                forelderErDød
+                    ? EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke
+                    : EøsBarnSpørsmålId.andreForelderArbeidNorge
             ),
+            sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.arbeidNorge].svar),
+            barn
+        ),
+        [andreForelderDataKeySpørsmål.andreUtbetalinger]: søknadsfeltBarn(
+            intl,
+            språktekstIdFraSpørsmålId(
+                forelderErDød
+                    ? EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke
+                    : EøsBarnSpørsmålId.andreForelderAndreUtbetalinger
+            ),
+            sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.andreUtbetalinger].svar),
             barn
         ),
         [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: søknadsfeltBarn(

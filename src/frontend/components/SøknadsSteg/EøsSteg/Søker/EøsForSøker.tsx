@@ -32,6 +32,7 @@ const EøsForSøker: React.FC = () => {
     const { erEøsLand } = useEøs();
     const { søknad } = useApp();
     const { søker } = søknad;
+    const { arbeidsperioderUtland, pensjonsperioderUtland, utenlandsperioder } = søker;
 
     return (
         <Steg
@@ -45,14 +46,28 @@ const EøsForSøker: React.FC = () => {
         >
             <KomponentGruppe>
                 {idNummerLandMedPeriodeType(
-                    søker.arbeidsperioderUtland,
-                    søker.pensjonsperioderUtland,
-                    søker.utenlandsperioder,
+                    {
+                        arbeidsperioderUtland,
+                        pensjonsperioderUtland,
+                        utenlandsperioder,
+                    },
                     erEøsLand
                 ).map((landMedPeriodeType, index) => {
                     return (
                         !!landMedPeriodeType.land && (
                             <IdNummer
+                                spørsmålSpråkId={
+                                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]
+                                }
+                                spørsmålCheckboxSpråkId={
+                                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent]
+                                }
+                                feilmeldingSpråkId={'eøs-om-deg.dittidnummer.feilmelding'}
+                                idNummerVerdiFraSøknad={
+                                    søker.idNummer.find(
+                                        verdi => verdi.land === landMedPeriodeType.land
+                                    )?.idnummer
+                                }
                                 skjema={skjema}
                                 key={index}
                                 settIdNummerFelter={settIdNummerFelter}

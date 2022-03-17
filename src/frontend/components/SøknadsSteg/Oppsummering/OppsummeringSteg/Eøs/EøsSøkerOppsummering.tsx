@@ -26,7 +26,8 @@ interface Props {
 const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const { søknad } = useApp();
-    const søker = søknad.søker;
+    const { søker } = søknad;
+    const { arbeidsperioderUtland, pensjonsperioderUtland, utenlandsperioder } = søker;
     const eøsForSøkerHook = useEøsForSøker();
     const { erEøsLand } = useEøs();
 
@@ -46,14 +47,28 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
         >
             <StyledOppsummeringsFeltGruppe>
                 {idNummerLandMedPeriodeType(
-                    søker.arbeidsperioderUtland,
-                    søker.pensjonsperioderUtland,
-                    søker.utenlandsperioder,
+                    {
+                        arbeidsperioderUtland,
+                        pensjonsperioderUtland,
+                        utenlandsperioder,
+                    },
                     erEøsLand
                 ).map((landMedPeriodeType, index) => {
                     return (
                         !!landMedPeriodeType.land && (
                             <IdNummer
+                                spørsmålSpråkId={
+                                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]
+                                }
+                                spørsmålCheckboxSpråkId={
+                                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent]
+                                }
+                                feilmeldingSpråkId={'eøs-om-deg.dittidnummer.feilmelding'}
+                                idNummerVerdiFraSøknad={
+                                    søker.idNummer.find(
+                                        verdi => verdi.land === landMedPeriodeType.land
+                                    )?.idnummer
+                                }
                                 lesevisning={true}
                                 skjema={eøsForSøkerHook.skjema}
                                 key={index}

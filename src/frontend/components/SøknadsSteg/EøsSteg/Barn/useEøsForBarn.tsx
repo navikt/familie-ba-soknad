@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
+import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, FeltState, ISkjema, ok, useFelt, useSkjema, Felt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
 import useInputFelt from '../../../../hooks/useInputFelt';
@@ -17,7 +18,7 @@ import {
     IBarnMedISøknad,
     IOmsorgsperson,
 } from '../../../../typer/barn';
-import { BarnetsId } from '../../../../typer/common';
+import { AlternativtSvarForInput, BarnetsId } from '../../../../typer/common';
 import { Slektsforhold } from '../../../../typer/kontrakt/barn';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
@@ -29,6 +30,7 @@ import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsper
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { EøsBarnSpørsmålId } from './spørsmål';
+import { idNummerKeyPrefix } from '../idnummerUtils';
 
 export const useEøsForBarn = (
     barnetsUuid: BarnetsId
@@ -45,6 +47,8 @@ export const useEøsForBarn = (
     fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
+    settIdNummerFelterForBarn: Dispatch<SetStateAction<Felt<string>[]>>;
+    idNummerFelterForBarn: Felt<string>[];
 } => {
     const { søknad, settSøknad } = useApp();
     const intl = useIntl();
@@ -52,6 +56,8 @@ export const useEøsForBarn = (
     const [gjeldendeBarn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
     );
+
+    const [idNummerFelterForBarn, settIdNummerFelterForBarn] = useState<Felt<string>[]>([]);
 
     if (!gjeldendeBarn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
@@ -354,6 +360,11 @@ export const useEøsForBarn = (
 
         return {
             ...barn,
+            idNummer: idNummerFelterForBarn.map(felt => ({
+                land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
+                idnummer:
+                    trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
+            })),
             søkersSlektsforhold: {
                 ...barn.søkersSlektsforhold,
                 svar: søkersSlektsforhold.verdi,
@@ -401,6 +412,13 @@ export const useEøsForBarn = (
         string
     >({
         felter: {
+            ...idNummerFelterForBarn.reduce(
+                (objekt, felt) => ({
+                    ...objekt,
+                    [felt.id]: felt,
+                }),
+                {}
+            ),
             andreForelderPensjonNorge,
             andreForelderPensjonsperioderNorge,
             andreForelderAndreUtbetalinger,
@@ -433,5 +451,7 @@ export const useEøsForBarn = (
         fjernAndreUtbetalingsperiode,
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
+        settIdNummerFelterForBarn,
+        idNummerFelterForBarn,
     };
 };

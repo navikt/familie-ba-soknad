@@ -31,6 +31,9 @@ describe('genererOppdaterteBarn', () => {
         barnInkludertISøknaden: [
             {
                 id: 'random-id',
+                idNummer: [],
+                utenlandsperioder: [],
+                eøsBarnetrygdsperioder: [],
                 institusjonsnavn: { svar: 'Narvesen' },
                 institusjonsadresse: { svar: 'Narvesen' },
                 institusjonspostnummer: { svar: '2020' },
@@ -72,7 +75,7 @@ describe('genererOppdaterteBarn', () => {
     });
 
     test('Returner objekt med barn, med forventede verdier', () => {
-        expect(genererOppdaterteBarn(mockSøknad, mockSkjema, _barn => false)).toEqual([
+        expect(genererOppdaterteBarn(mockSøknad, mockSkjema, _barn => false, jest.fn())).toEqual([
             objectContaining<DeepPartial<IBarnMedISøknad>>({
                 id: 'random-id',
                 erFosterbarn: objectContaining({ svar: 'JA' }),

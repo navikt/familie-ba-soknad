@@ -21,6 +21,7 @@ const useInputFeltMedUkjent = ({
     skalVises = true,
     customValidering = undefined,
     feilmeldingSpråkVerdier,
+    språkVerdier = {},
 }: {
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | { id: IdNummerKey; svar: string } | null;
     avhengighet: Felt<ESvar>;
@@ -28,7 +29,7 @@ const useInputFeltMedUkjent = ({
     erFnrInput?: boolean;
     skalVises?: boolean;
     customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
-    feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
+    språkVerdier?: Record<string, ReactNode>;
 }) => {
     const inputFelt = useFelt<string>({
         feltId: søknadsfelt ? søknadsfelt.id : guid(),
@@ -54,10 +55,7 @@ const useInputFeltMedUkjent = ({
                     ? customValidering
                         ? customValidering(felt)
                         : ok(felt)
-                    : feil(
-                          felt,
-                          <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
-                      );
+                    : feil(felt, <SpråkTekst id={feilmeldingSpråkId} values={språkVerdier} />);
             }
         },
         avhengigheter: { vetIkkeCheckbox: avhengighet, skalVises },

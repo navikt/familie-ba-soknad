@@ -20,6 +20,7 @@ import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import EøsAndreForelderOppsummering from '../../Oppsummering/OppsummeringSteg/Eøs/EøsAndreForelderOppsummering';
+import SamletIdNummerForBarn from './SamletIdNummerForBarn';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 import { useEøsForBarn } from './useEøsForBarn';
 
@@ -36,6 +37,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernAndreUtbetalingsperiode,
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
+        settIdNummerFelterForBarn,
     } = useEøsForBarn(barnetsId);
     const intl = useIntl();
     const { søknad } = useApp();
@@ -64,6 +66,11 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
+            <SamletIdNummerForBarn
+                barn={barn}
+                settIdNummerFelter={settIdNummerFelterForBarn}
+                skjema={skjema}
+            />
             <KomponentGruppe>
                 <SlektsforholdDropdown
                     felt={skjema.felter.søkersSlektsforhold}

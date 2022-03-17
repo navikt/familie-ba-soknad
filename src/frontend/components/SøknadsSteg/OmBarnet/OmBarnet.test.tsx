@@ -32,6 +32,8 @@ const jens = {
     id: 'random-id-jens',
     ident: '12345678910',
     utenlandsperioder: [],
+    idNummer: [],
+    eøsBarnetrygdsperioder: [],
     [barnDataKeySpørsmål.erFosterbarn]: { id: '1', svar: ESvar.NEI },
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: { id: '2', svar: ESvar.JA },
     [barnDataKeySpørsmål.institusjonIUtland]: { id: '21', svar: ESvar.NEI },
@@ -51,7 +53,6 @@ const jens = {
         id: '166',
         svar: ESvar.NEI,
     },
-    eøsBarnetrygdsperioder: [],
     [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
     [barnDataKeySpørsmål.søkerForTidsrom]: { id: '255', svar: ESvar.JA },
     [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
@@ -134,6 +135,8 @@ const line = {
     id: 'random-id-line',
     ident: '12345678911',
     utenlandsperioder: [],
+    idNummer: [],
+    eøsBarnetrygdsperioder: [],
     [barnDataKeySpørsmål.erFosterbarn]: { id: '', svar: ESvar.NEI },
     [barnDataKeySpørsmål.oppholderSegIInstitusjon]: { id: '', svar: ESvar.NEI },
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: { id: '', svar: ESvar.NEI },
@@ -152,7 +155,6 @@ const line = {
         id: '166',
         svar: ESvar.NEI,
     },
-    eøsBarnetrygdsperioder: [],
     [barnDataKeySpørsmål.borFastMedSøker]: { id: '24', svar: ESvar.NEI },
     [barnDataKeySpørsmål.søkerForTidsrom]: { id: '255', svar: ESvar.JA },
     [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
