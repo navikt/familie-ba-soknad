@@ -3,6 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
+import { Slektsforhold } from './barn';
 import { ISøknadKontraktDokumentasjon } from './dokumentasjon';
 import {
     ERegistrertBostedType,
@@ -58,7 +59,16 @@ export interface ISøknadIKontraktBarnV7 {
     spørsmål: SpørsmålMap;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
     andreForelder: IAndreForelderIKontraktFormat | null;
+    omsorgsperson: IOmsorgspersonIKontraktFormatV7 | null;
     eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
+}
+
+export interface IOmsorgspersonIKontraktFormatV7 {
+    omsorgspersonNavn: ISøknadsfelt<string>;
+    omsorgspersonSlektsforhold: ISøknadsfelt<Slektsforhold | ''>;
+    omsorgpersonSlektsforholdSpesifisering: ISøknadsfelt<string>;
+    omsorgspersonIdNummer: ISøknadsfelt<string>;
+    omsorgspersonAdresse: ISøknadsfelt<string>;
 }
 
 export interface IAndreForelderIKontraktFormatV7 {

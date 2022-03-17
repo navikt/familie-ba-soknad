@@ -33,6 +33,7 @@ export const barnISøknadsFormat = (intl: IntlShape, barn: IBarnMedISøknad): IS
         alder,
         adressebeskyttelse,
         andreForelder,
+        omsorgsperson,
         søkerForTidsromSluttdato,
         institusjonOppholdSluttdato,
         utenlandsperioder,
