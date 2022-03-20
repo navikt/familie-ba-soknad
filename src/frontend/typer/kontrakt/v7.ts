@@ -82,6 +82,7 @@ export interface IAndreForelderIKontraktFormatV7 {
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7>[];
+    idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
 }
 
 export interface IArbeidsperiodeIKontraktFormat {
