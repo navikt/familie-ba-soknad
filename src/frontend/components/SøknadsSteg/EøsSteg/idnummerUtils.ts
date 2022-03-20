@@ -35,7 +35,7 @@ export const eøsLandUtenDuplikatHof =
 
 export const idNummerLandMedPeriodeType = (
     perioder: {
-        utenlandsperioder: IUtenlandsperiode[];
+        utenlandsperioder?: IUtenlandsperiode[];
         arbeidsperioderUtland?: IArbeidsperiode[];
         pensjonsperioderUtland?: IPensjonsperiode[];
         eøsBarnetrygdsperioder?: IEøsBarnetrygdsperiode[];

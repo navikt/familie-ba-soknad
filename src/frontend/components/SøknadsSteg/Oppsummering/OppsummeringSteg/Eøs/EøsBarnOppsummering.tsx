@@ -71,7 +71,12 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                 )}
             </StyledOppsummeringsFeltGruppe>
             {barn.andreForelder && (
-                <EøsAndreForelderOppsummering barn={barn} andreForelder={barn.andreForelder} />
+                <EøsAndreForelderOppsummering
+                    barn={barn}
+                    andreForelder={barn.andreForelder}
+                    skjema={eøsForBarnHook.skjema}
+                    settIdNummerFelter={eøsForBarnHook.settIdNummerFelterForAndreForelder}
+                />
             )}
         </Oppsummeringsbolk>
     );

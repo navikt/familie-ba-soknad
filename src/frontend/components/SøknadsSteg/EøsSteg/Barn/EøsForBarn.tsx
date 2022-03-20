@@ -19,6 +19,7 @@ import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import EøsAndreForelderOppsummering from '../../Oppsummering/OppsummeringSteg/Eøs/EøsAndreForelderOppsummering';
+import IdNummerForAndreForelder from './IdNummerForAndreForelder';
 import SamletIdNummerForBarn from './SamletIdNummerForBarn';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 import { useEøsForBarn } from './useEøsForBarn';
@@ -37,6 +38,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         leggTilArbeidsperiode,
         fjernArbeidsperiode,
         settIdNummerFelterForBarn,
+        settIdNummerFelterForAndreForelder,
     } = useEøsForBarn(barnetsId);
     const intl = useIntl();
     const { søknad } = useApp();
@@ -108,6 +110,12 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
                     {!barnMedSammeForelder ? (
                         <KomponentGruppe>
+                            <IdNummerForAndreForelder
+                                skjema={skjema}
+                                settIdNummerFelter={settIdNummerFelterForAndreForelder}
+                                barn={barn}
+                                andreForelder={barn.andreForelder}
+                            />
                             <Arbeidsperiode
                                 skjema={skjema}
                                 leggTilArbeidsperiode={leggTilArbeidsperiode}
@@ -157,6 +165,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             <EøsAndreForelderOppsummering
                                 barn={barn}
                                 andreForelder={barnMedSammeForelder.andreForelder}
+                                skjema={skjema}
+                                settIdNummerFelter={settIdNummerFelterForAndreForelder}
                             />
                         )
                     )}

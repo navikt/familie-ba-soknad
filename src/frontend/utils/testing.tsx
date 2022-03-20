@@ -304,6 +304,7 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     pensjonsperioderUtland: [],
                     arbeidsperioderUtland: [],
                     pensjonsperioderNorge: [],
+                    idNummer: [],
                     [andreForelderDataKeySpørsmål.navn]: {
                         id: OmBarnetSpørsmålsId.andreForelderNavn,
                         svar: AlternativtSvarForInput.UKJENT,
