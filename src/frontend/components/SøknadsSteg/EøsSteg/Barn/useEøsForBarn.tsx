@@ -289,6 +289,13 @@ export const useEøsForBarn = (
                 }),
                 {}
             ),
+            ...idNummerFelterForAndreForelder.reduce(
+                (objekt, felt) => ({
+                    ...objekt,
+                    [felt.id]: felt,
+                }),
+                {}
+            ),
             andreForelderPensjonNorge,
             andreForelderPensjonsperioderNorge,
             andreForelderAndreUtbetalinger,
