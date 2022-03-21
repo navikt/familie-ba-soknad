@@ -149,12 +149,6 @@ export const genererOmsorgsperson = (omsorgsperson: IOmsorgsperson | null): IOms
             id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
             svar: omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer].svar ?? '',
         },
-        [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummerVetIkke]: {
-            id: EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke,
-            svar:
-                omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonIdNummerVetIkke].svar ??
-                null,
-        },
         [omsorgspersonDataKeySpørsmål.omsorgspersonAdresse]: {
             id: EøsBarnSpørsmålId.omsorgspersonAdresse,
             svar: omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonAdresse].svar ?? '',
@@ -220,7 +214,6 @@ export const genererOppdaterteBarn = (
             andreForelder: erFosterbarn
                 ? null
                 : genererAndreForelder(barn.andreForelder, andreForelderErDød),
-            omsorgsperson: genererOmsorgsperson(barn.omsorgsperson),
             [barnDataKeySpørsmål.borMedAndreForelder]: {
                 ...barn[barnDataKeySpørsmål.borMedAndreForelder],
                 svar:

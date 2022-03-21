@@ -16,7 +16,6 @@ import {
     barnDataKeySpørsmål,
     IAndreForelder,
     IBarnMedISøknad,
-    IOmsorgsperson,
 } from '../../../../typer/barn';
 import { AlternativtSvarForInput, BarnetsId } from '../../../../typer/common';
 import { Slektsforhold } from '../../../../typer/kontrakt/barn';
@@ -327,29 +326,26 @@ export const useEøsForBarn = (
         },
     });
 
-    const genererOmsorgsperson = (omsorgsperson: IOmsorgsperson) => ({
-        omsorgsperson: {
-            ...omsorgsperson,
-            omsorgspersonNavn: {
-                ...omsorgsperson.omsorgspersonNavn,
-                svar: omsorgspersonNavn.verdi,
-            },
-            omsorgspersonSlektsforhold: {
-                ...omsorgsperson.omsorgspersonSlektsforhold,
-                svar: omsorgspersonSlektsforhold.verdi,
-            },
-            omsorgpersonSlektsforholdSpesifisering: {
-                ...omsorgsperson.omsorgpersonSlektsforholdSpesifisering,
-                svar: omsorgpersonSlektsforholdSpesifisering.verdi,
-            },
-            omsorgspersonIdNummer: {
-                ...omsorgsperson.omsorgspersonIdNummer,
-                svar: svarForSpørsmålMedUkjent(omsorgspersonIdNummerVetIkke, omsorgspersonIdNummer),
-            },
-            omsorgspersonAdresse: {
-                ...omsorgsperson.omsorgspersonAdresse,
-                svar: omsorgspersonAdresse.verdi,
-            },
+    const genererOmsorgsperson = () => ({
+        omsorgspersonNavn: {
+            id: EøsBarnSpørsmålId.omsorgspersonNavn,
+            svar: omsorgspersonNavn.verdi,
+        },
+        omsorgspersonSlektsforhold: {
+            id: EøsBarnSpørsmålId.omsorgspersonSlektsforhold,
+            svar: omsorgspersonSlektsforhold.verdi,
+        },
+        omsorgpersonSlektsforholdSpesifisering: {
+            id: EøsBarnSpørsmålId.omsorgpersonSlektsforholdSpesifisering,
+            svar: omsorgpersonSlektsforholdSpesifisering.verdi,
+        },
+        omsorgspersonIdNummer: {
+            id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
+            svar: svarForSpørsmålMedUkjent(omsorgspersonIdNummerVetIkke, omsorgspersonIdNummer),
+        },
+        omsorgspersonAdresse: {
+            id: EøsBarnSpørsmålId.omsorgspersonAdresse,
+            svar: omsorgspersonAdresse.verdi,
         },
     });
 
@@ -379,10 +375,10 @@ export const useEøsForBarn = (
                 ...barn.borMedAndreForelder,
                 svar: borMedAndreForelder.verdi,
             },
+            omsorgsperson: borMedAndreForelder.verdi === ESvar.NEI ? genererOmsorgsperson() : null,
             ...(!!barn.andreForelder &&
                 !barnMedSammeForelder &&
                 genererAndreForelder(barn.andreForelder)),
-            ...(!!barn.omsorgsperson && genererOmsorgsperson(barn.omsorgsperson)),
         };
     };
 

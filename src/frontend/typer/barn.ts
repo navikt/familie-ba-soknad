@@ -102,8 +102,9 @@ export interface IOmsorgsperson {
     [omsorgspersonDataKeySpørsmål.omsorgspersonNavn]: ISøknadSpørsmål<string>;
     [omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
     [omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
-    [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer]: ISøknadSpørsmål<string>;
-    [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummerVetIkke]: ISøknadSpørsmål<ESvar | null>;
+    [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer]: ISøknadSpørsmål<
+        string | AlternativtSvarForInput.UKJENT
+    >;
     [omsorgspersonDataKeySpørsmål.omsorgspersonAdresse]: ISøknadSpørsmål<string>;
 }
 
