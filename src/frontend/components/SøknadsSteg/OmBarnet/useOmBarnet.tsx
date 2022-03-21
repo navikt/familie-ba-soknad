@@ -20,6 +20,7 @@ import { usePerioder } from '../../../hooks/usePerioder';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
+    IAndreForelder,
     IBarnMedISøknad,
 } from '../../../typer/barn';
 import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
@@ -45,6 +46,7 @@ import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiod
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { idNummerLand } from '../EøsSteg/idnummerUtils';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 
 export const useOmBarnet = (
@@ -692,6 +694,24 @@ export const useOmBarnet = (
         return oppdatertDokumentasjon;
     };
 
+    const filtrerteRelevanteIdNummerForAndreForelder = (andreForelder: IAndreForelder) => {
+        return andreForelder.idNummer.filter(idNummer => {
+            return idNummerLand(
+                {
+                    arbeidsperioderUtland:
+                        andreForelderArbeidUtlandet.verdi === ESvar.JA
+                            ? andreForelderArbeidsperioderUtland.verdi
+                            : [],
+                    pensjonsperioderUtland:
+                        andreForelderPensjonUtland.verdi === ESvar.JA
+                            ? andreForelderPensjonsperioderUtland.verdi
+                            : [],
+                },
+                erEøsLand
+            ).includes(idNummer.land);
+        });
+    };
+
     const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
         const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
             barn => barn.id === sammeForelderSomAnnetBarn.verdi
@@ -808,6 +828,7 @@ export const useOmBarnet = (
                       }
                     : {
                           ...barn.andreForelder,
+                          idNummer: filtrerteRelevanteIdNummerForAndreForelder(barn.andreForelder),
                           navn: {
                               ...barn.andreForelder[andreForelderDataKeySpørsmål.navn],
                               svar: trimWhiteSpace(
@@ -843,7 +864,7 @@ export const useOmBarnet = (
                           },
                           arbeidsperioderUtland:
                               andreForelderArbeidUtlandet.verdi === ESvar.JA
-                                  ? skjema.felter.andreForelderArbeidsperioderUtland.verdi
+                                  ? andreForelderArbeidsperioderUtland.verdi
                                   : [],
                           pensjonUtland: {
                               ...barn.andreForelder[andreForelderDataKeySpørsmål.pensjonUtland],
@@ -857,7 +878,7 @@ export const useOmBarnet = (
                           },
                           pensjonsperioderUtland:
                               andreForelderPensjonUtland.verdi === ESvar.JA
-                                  ? skjema.felter.andreForelderPensjonsperioderUtland.verdi
+                                  ? andreForelderPensjonsperioderUtland.verdi
                                   : [],
                           skriftligAvtaleOmDeltBosted: {
                               ...barn.andreForelder.skriftligAvtaleOmDeltBosted,

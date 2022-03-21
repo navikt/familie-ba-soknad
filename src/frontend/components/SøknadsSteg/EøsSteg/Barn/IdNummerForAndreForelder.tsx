@@ -5,6 +5,7 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { useEøs } from '../../../../context/EøsContext';
 import { IAndreForelder, IBarnMedISøknad } from '../../../../typer/barn';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
+import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType } from '../idnummerUtils';
@@ -18,7 +19,7 @@ const IdNummerForAndreForelder: React.FC<{
     andreForelder: IAndreForelder | null;
 }> = ({ skjema, barn, settIdNummerFelter, lesevisning = false, andreForelder }) => {
     const { erEøsLand } = useEøs();
-    return andreForelder ? (
+    return andreForelder && !skalSkjuleAndreForelderFelt(barn) ? (
         <KomponentGruppe>
             {idNummerLandMedPeriodeType(
                 {

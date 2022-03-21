@@ -106,12 +106,19 @@ export const idNummerLandMedPeriodeType = (
 };
 
 export const idNummerLand = (
-    arbeidsperioderUtland: IArbeidsperiode[],
-    pensjonsperioderUtland: IPensjonsperiode[],
-    utenlandsperioder: IUtenlandsperiode[],
+    perioder: {
+        arbeidsperioderUtland?: IArbeidsperiode[];
+        pensjonsperioderUtland?: IPensjonsperiode[];
+        utenlandsperioder?: IUtenlandsperiode[];
+    },
     erEøsLand: (land: Alpha3Code | '') => boolean
-) =>
-    idNummerLandMedPeriodeType(
+) => {
+    const {
+        arbeidsperioderUtland = [],
+        pensjonsperioderUtland = [],
+        utenlandsperioder = [],
+    } = perioder;
+    return idNummerLandMedPeriodeType(
         {
             arbeidsperioderUtland,
             pensjonsperioderUtland,
@@ -119,3 +126,4 @@ export const idNummerLand = (
         },
         erEøsLand
     ).map(landMedPeriode => landMedPeriode.land);
+};
