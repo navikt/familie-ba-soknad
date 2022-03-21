@@ -778,6 +778,7 @@ export const useOmBarnet = (
                 ...barn.borMedAndreForelder,
                 svar: borFastMedSøker.verdi === ESvar.JA ? null : barn.borMedAndreForelder.svar,
             },
+            omsorgsperson: borFastMedSøker.verdi === ESvar.JA ? null : barn.omsorgsperson,
             søkerForTidsrom: {
                 ...barn.søkerForTidsrom,
                 svar: søkerForTidsrom.verdi,
