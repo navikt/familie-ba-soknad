@@ -17,6 +17,7 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../typer/barn';
+import { AlternativtSvarForInput } from '../../typer/common';
 import { IAndreForelderIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { barnetsNavnValue } from '../barn';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
@@ -49,6 +50,7 @@ export const andreForelderTilISøknadsfeltV7 = (
     } = andreForelder;
     const forelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
     return {
+        kanIkkeGiOpplysninger: navn.svar === AlternativtSvarForInput.UKJENT,
         [andreForelderDataKeySpørsmål.navn]: søknadsfeltBarn(
             intl,
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),

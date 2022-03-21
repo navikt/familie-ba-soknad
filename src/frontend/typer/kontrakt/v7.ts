@@ -62,6 +62,7 @@ export interface ISøknadIKontraktBarnV7 {
 }
 
 export interface IAndreForelderIKontraktFormatV7 {
+    kanIkkeGiOpplysninger: boolean;
     navn: ISøknadsfelt<string>;
     fnr: ISøknadsfelt<string>;
     fødselsdato: ISøknadsfelt<string>;
