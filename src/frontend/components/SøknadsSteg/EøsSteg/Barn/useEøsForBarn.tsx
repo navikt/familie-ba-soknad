@@ -115,7 +115,7 @@ export const useEøsForBarn = (
         skalVises: borMedAndreForelder.verdi === ESvar.NEI,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
-            return verdi.match(/^[A-Za-z\s\-\\,\\.]{1,60}$/)
+            return verdi.match(/^[A-Za-zæøåÆØÅ\s\-\\,\\.]{1,60}$/)
                 ? ok(felt)
                 : feil(
                       felt,
@@ -151,7 +151,7 @@ export const useEøsForBarn = (
         skalVises: omsorgspersonSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
-            return verdi.match(/^[0-9A-Za-z\s\-\\,\\.]{4,60}$/)
+            return verdi.match(/^[0-9A-Za-zæøåÆØÅ\s\-\\,\\.]{4,60}$/)
                 ? ok(felt)
                 : feil(
                       felt,
@@ -180,7 +180,7 @@ export const useEøsForBarn = (
         skalVises: borMedAndreForelder.verdi === ESvar.NEI,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
-            return verdi.match(/^[0-9A-Za-z\s\-.\\/]{4,20}$/)
+            return verdi.match(/^[0-9A-Za-zæøåÆØÅ\s\-.\\/]{4,20}$/)
                 ? ok(felt)
                 : feil(
                       felt,
@@ -200,7 +200,7 @@ export const useEøsForBarn = (
         skalVises: borMedAndreForelder.verdi === ESvar.NEI,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
-            return verdi.match(/^[A-Za-z\s\-\\,\\.]{1,60}$/)
+            return verdi.match(/^[0-9A-Za-zæøåÆØÅ\s\-\\,\\.]{1,60}$/)
                 ? ok(felt)
                 : feil(
                       felt,
