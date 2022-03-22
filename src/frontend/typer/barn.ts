@@ -88,6 +88,7 @@ export interface IAndreForelder {
     arbeidsperioderNorge: IArbeidsperiode[];
     pensjonsperioderNorge: IPensjonsperiode[];
     andreUtbetalingsperioder: IUtbetalingsperiode[];
+    idNummer: IIdNummer[];
     [andreForelderDataKeySpørsmål.pensjonNorge]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.arbeidNorge]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.andreUtbetalinger]: ISøknadSpørsmål<ESvar | null>;

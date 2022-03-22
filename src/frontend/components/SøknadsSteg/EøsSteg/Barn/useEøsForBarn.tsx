@@ -48,6 +48,8 @@ export const useEøsForBarn = (
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     settIdNummerFelterForBarn: Dispatch<SetStateAction<Felt<string>[]>>;
     idNummerFelterForBarn: Felt<string>[];
+    idNummerFelterForAndreForelder: Felt<string>[];
+    settIdNummerFelterForAndreForelder: Dispatch<SetStateAction<Felt<string>[]>>;
 } => {
     const { søknad, settSøknad } = useApp();
     const intl = useIntl();
@@ -57,6 +59,9 @@ export const useEøsForBarn = (
     );
 
     const [idNummerFelterForBarn, settIdNummerFelterForBarn] = useState<Felt<string>[]>([]);
+    const [idNummerFelterForAndreForelder, settIdNummerFelterForAndreForelder] = useState<
+        Felt<string>[]
+    >([]);
 
     if (!gjeldendeBarn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
@@ -323,6 +328,11 @@ export const useEøsForBarn = (
                 andreForelderArbeidNorge.verdi === ESvar.JA
                     ? skjema.felter.andreForelderArbeidsperioderNorge.verdi
                     : [],
+            idNummer: idNummerFelterForAndreForelder.map(felt => ({
+                land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
+                idnummer:
+                    trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
+            })),
         },
     });
 
@@ -415,6 +425,13 @@ export const useEøsForBarn = (
                 }),
                 {}
             ),
+            ...idNummerFelterForAndreForelder.reduce(
+                (objekt, felt) => ({
+                    ...objekt,
+                    [felt.id]: felt,
+                }),
+                {}
+            ),
             andreForelderPensjonNorge,
             andreForelderPensjonsperioderNorge,
             andreForelderAndreUtbetalinger,
@@ -449,5 +466,7 @@ export const useEøsForBarn = (
         fjernArbeidsperiode,
         settIdNummerFelterForBarn,
         idNummerFelterForBarn,
+        idNummerFelterForAndreForelder,
+        settIdNummerFelterForAndreForelder,
     };
 };

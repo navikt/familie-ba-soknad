@@ -67,6 +67,7 @@ const jens = {
     [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
     [barnDataKeySpørsmål.borMedAndreForelder]: { id: '29', svar: ESvar.NEI },
     andreForelder: {
+        idNummer: [],
         [andreForelderDataKeySpørsmål.navn]: {
             id: '17',
             svar: AlternativtSvarForInput.UKJENT,
@@ -172,6 +173,7 @@ const line = {
     },
     [barnDataKeySpørsmål.borMedAndreForelder]: { id: '29', svar: ESvar.NEI },
     andreForelder: {
+        idNummer: [],
         [andreForelderDataKeySpørsmål.navn]: {
             id: '17',
             svar: AlternativtSvarForInput.UKJENT,

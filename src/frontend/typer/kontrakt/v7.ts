@@ -72,6 +72,7 @@ export interface IOmsorgspersonIKontraktFormatV7 {
 }
 
 export interface IAndreForelderIKontraktFormatV7 {
+    kanIkkeGiOpplysninger: boolean;
     navn: ISøknadsfelt<string>;
     fnr: ISøknadsfelt<string>;
     fødselsdato: ISøknadsfelt<string>;
@@ -92,6 +93,7 @@ export interface IAndreForelderIKontraktFormatV7 {
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7>[];
+    idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
 }
 
 export interface IArbeidsperiodeIKontraktFormat {
