@@ -299,16 +299,22 @@ export const useDinLivssituasjon = (): {
         }
     };
 
-    function filtrerteRelevanteIdNummer() {
+    const filtrerteRelevanteIdNummer = () => {
         return søknad.søker.idNummer.filter(idNummer => {
             return idNummerLand(
-                jobberPåBåt.verdi === ESvar.JA ? registrerteArbeidsperioder.verdi : [],
-                mottarUtenlandspensjon.verdi === ESvar.JA ? registrertePensjonsperioder.verdi : [],
-                søker.utenlandsperioder,
+                {
+                    arbeidsperioderUtland:
+                        jobberPåBåt.verdi === ESvar.JA ? registrerteArbeidsperioder.verdi : [],
+                    pensjonsperioderUtland:
+                        mottarUtenlandspensjon.verdi === ESvar.JA
+                            ? registrertePensjonsperioder.verdi
+                            : [],
+                    utenlandsperioder: søker.utenlandsperioder,
+                },
                 erEøsLand
             ).includes(idNummer.land);
         });
-    }
+    };
 
     const genererOppdatertSøker = (): ISøker => ({
         ...søknad.søker,

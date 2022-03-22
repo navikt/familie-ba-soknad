@@ -138,7 +138,7 @@ export const barnISøknadsFormatV7 = (
             )
         ),
         andreForelder: andreForelder
-            ? andreForelderTilISøknadsfeltV7(intl, andreForelder, barn)
+            ? andreForelderTilISøknadsfeltV7(intl, andreForelder, barn, valgtSpråk)
             : null,
         spørsmål: {
             ...spørmålISøknadsFormat(typetBarnSpørsmål, {

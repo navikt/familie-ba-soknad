@@ -1,8 +1,12 @@
 import { IntlShape } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
+import { LocaleType } from '@navikt/familie-sprakvelger';
 
-import { EøsBarnSpørsmålId } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import {
+    EøsBarnSpørsmålId,
+    eøsBarnSpørsmålSpråkId,
+} from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import {
     OmBarnetSpørsmålsId,
     omBarnetSpørsmålSpråkId,
@@ -13,7 +17,9 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../typer/barn';
+import { AlternativtSvarForInput } from '../../typer/common';
 import { IAndreForelderIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { barnetsNavnValue } from '../barn';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import {
@@ -22,12 +28,14 @@ import {
     språktekstIdFraSpørsmålId,
     søknadsfeltBarn,
 } from './hjelpefunksjoner';
+import { idNummerTilISøknadsfelt } from './idNummer';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 
 export const andreForelderTilISøknadsfeltV7 = (
     intl: IntlShape,
     andreForelder: IAndreForelder,
-    barn: IBarnMedISøknad
+    barn: IBarnMedISøknad,
+    valgtSpråk: LocaleType
 ): IAndreForelderIKontraktFormatV7 => {
     const {
         navn,
@@ -38,9 +46,11 @@ export const andreForelderTilISøknadsfeltV7 = (
         arbeidsperioderNorge,
         pensjonsperioderNorge,
         andreUtbetalingsperioder,
+        idNummer,
     } = andreForelder;
     const forelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
     return {
+        kanIkkeGiOpplysninger: navn.svar === AlternativtSvarForInput.UKJENT,
         [andreForelderDataKeySpørsmål.navn]: søknadsfeltBarn(
             intl,
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
@@ -196,6 +206,15 @@ export const andreForelderTilISøknadsfeltV7 = (
                 barn,
                 intl,
             })
+        ),
+        idNummer: idNummer.map(idnummerObj =>
+            idNummerTilISøknadsfelt(
+                idnummerObj,
+                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerAndreForelder],
+                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent],
+                valgtSpråk,
+                barnetsNavnValue(barn, intl)
+            )
         ),
     };
 };

@@ -42,6 +42,7 @@ export const genererAndreForelder = (
         andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
         pensjonsperioderNorge: andreForelder?.pensjonsperioderNorge ?? [],
         pensjonsperioderUtland: andreForelder?.pensjonsperioderUtland ?? [],
+        idNummer: andreForelder?.idNummer ?? [],
         [andreForelderDataKeySpørsmål.navn]: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,
             svar: andreForelder?.[andreForelderDataKeySpørsmål.navn].svar ?? '',

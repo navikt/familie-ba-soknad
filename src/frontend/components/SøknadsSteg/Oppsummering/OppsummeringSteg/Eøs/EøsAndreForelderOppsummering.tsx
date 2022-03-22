@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import { useIntl } from 'react-intl';
+
+import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import {
     andreForelderDataKeySpørsmål,
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
+import { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
 import { barnetsNavnValue } from '../../../../../utils/barn';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
+import IdNummerForAndreForelder from '../../../EøsSteg/Barn/IdNummerForAndreForelder';
 import { eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
@@ -19,7 +23,9 @@ import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 const EøsAndreForelderOppsummering: React.FC<{
     barn: IBarnMedISøknad;
     andreForelder: IAndreForelder;
-}> = ({ barn, andreForelder }) => {
+    skjema: ISkjema<IEøsForBarnFeltTyper, string>;
+    settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
+}> = ({ barn, andreForelder, skjema, settIdNummerFelter }) => {
     const intl = useIntl();
     const barnetsNavn = barnetsNavnValue(barn, intl);
 
@@ -38,6 +44,12 @@ const EøsAndreForelderOppsummering: React.FC<{
 
     return (
         <>
+            <IdNummerForAndreForelder
+                skjema={skjema}
+                barn={barn}
+                settIdNummerFelter={settIdNummerFelter}
+                lesevisning={true}
+            />
             <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.arbeidNorge)}
                 {andreForelder.arbeidsperioderNorge.map((arbeidsperiode, index) => (
