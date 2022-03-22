@@ -114,7 +114,6 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 skjema={skjema}
                                 settIdNummerFelter={settIdNummerFelterForAndreForelder}
                                 barn={barn}
-                                andreForelder={barn.andreForelder}
                             />
                             <Arbeidsperiode
                                 skjema={skjema}

@@ -48,7 +48,6 @@ const EøsAndreForelderOppsummering: React.FC<{
                 skjema={skjema}
                 barn={barn}
                 settIdNummerFelter={settIdNummerFelter}
-                andreForelder={andreForelder}
                 lesevisning={true}
             />
             <StyledOppsummeringsFeltGruppe>

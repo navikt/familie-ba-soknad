@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../../context/EøsContext';
-import { IAndreForelder, IBarnMedISøknad } from '../../../../typer/barn';
+import { IBarnMedISøknad } from '../../../../typer/barn';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -16,15 +16,14 @@ const IdNummerForAndreForelder: React.FC<{
     barn: IBarnMedISøknad;
     settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
     lesevisning?: boolean;
-    andreForelder: IAndreForelder | null;
-}> = ({ skjema, barn, settIdNummerFelter, lesevisning = false, andreForelder }) => {
+}> = ({ skjema, barn, settIdNummerFelter, lesevisning = false }) => {
     const { erEøsLand } = useEøs();
-    return andreForelder && !skalSkjuleAndreForelderFelt(barn) ? (
+    return barn.andreForelder && !skalSkjuleAndreForelderFelt(barn) ? (
         <KomponentGruppe>
             {idNummerLandMedPeriodeType(
                 {
-                    pensjonsperioderUtland: andreForelder.pensjonsperioderUtland,
-                    arbeidsperioderUtland: andreForelder.arbeidsperioderUtland,
+                    pensjonsperioderUtland: barn.andreForelder.pensjonsperioderUtland,
+                    arbeidsperioderUtland: barn.andreForelder.arbeidsperioderUtland,
                 },
                 erEøsLand
             ).map((landMedPeriodeType, index) => {
@@ -41,7 +40,7 @@ const IdNummerForAndreForelder: React.FC<{
                             }
                             feilmeldingSpråkId={'eøs-om-barn.andreforelderidnummer.feilmelding'}
                             idNummerVerdiFraSøknad={
-                                andreForelder?.idNummer.find(
+                                barn.andreForelder?.idNummer.find(
                                     verdi => verdi.land === landMedPeriodeType.land
                                 )?.idnummer
                             }

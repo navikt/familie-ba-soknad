@@ -33,6 +33,7 @@ import {
     IPensjonsperiode,
     IUtenlandsperiode,
 } from '../../../typer/perioder';
+import { IIdNummer } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
@@ -694,7 +695,9 @@ export const useOmBarnet = (
         return oppdatertDokumentasjon;
     };
 
-    const filtrerteRelevanteIdNummerForAndreForelder = (andreForelder: IAndreForelder) => {
+    const filtrerteRelevanteIdNummerForAndreForelder = (
+        andreForelder: IAndreForelder
+    ): IIdNummer[] => {
         return andreForelder.idNummer.filter(idNummer => {
             return idNummerLand(
                 {
