@@ -72,54 +72,52 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                     />
                 )}
                 <KomponentGruppe>
-                    {barn.omsorgsperson?.omsorgspersonNavn.svar && (
-                        <OppsummeringFelt
-                            tittel={tittelSpm(barn.omsorgsperson?.omsorgspersonNavn.id)}
-                            søknadsvar={barn.omsorgsperson?.omsorgspersonNavn.svar}
-                        />
-                    )}
-                    {barn.omsorgsperson?.omsorgspersonSlektsforhold.svar && (
-                        <OppsummeringFelt
-                            tittel={tittelSpm(barn.omsorgsperson?.omsorgspersonSlektsforhold.id)}
-                            søknadsvar={formatMessage({
-                                id:
-                                    barn.omsorgsperson?.omsorgspersonSlektsforhold.svar &&
-                                    toSlektsforholdSpråkId(
-                                        barn.omsorgsperson?.omsorgspersonSlektsforhold.svar
-                                    ),
-                            })}
-                        />
-                    )}
-                    {barn.omsorgsperson?.omsorgpersonSlektsforholdSpesifisering.svar && (
-                        <OppsummeringFelt
-                            tittel={tittelSpm(
-                                barn.omsorgsperson?.omsorgpersonSlektsforholdSpesifisering.id
-                            )}
-                            søknadsvar={
-                                barn.omsorgsperson?.omsorgpersonSlektsforholdSpesifisering.svar
-                            }
-                        />
-                    )}
-                    {barn.omsorgsperson?.omsorgspersonIdNummer.svar && (
-                        <OppsummeringFelt
-                            tittel={tittelSpm(barn.omsorgsperson?.omsorgspersonIdNummer.id)}
-                            søknadsvar={
-                                barn.omsorgsperson?.omsorgspersonIdNummer.svar ===
-                                AlternativtSvarForInput.UKJENT
-                                    ? formatMessage({
-                                          id: eøsBarnSpørsmålSpråkId[
-                                              EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke
-                                          ],
-                                      })
-                                    : barn.omsorgsperson?.omsorgspersonIdNummer.svar
-                            }
-                        />
-                    )}
-                    {barn.omsorgsperson?.omsorgspersonAdresse.svar && (
-                        <OppsummeringFelt
-                            tittel={tittelSpm(barn.omsorgsperson?.omsorgspersonAdresse.id)}
-                            søknadsvar={barn.omsorgsperson?.omsorgspersonAdresse.svar}
-                        />
+                    {barn.omsorgsperson && (
+                        <>
+                            <OppsummeringFelt
+                                tittel={tittelSpm(barn.omsorgsperson.omsorgspersonNavn.id)}
+                                søknadsvar={barn.omsorgsperson.omsorgspersonNavn.svar}
+                            />
+
+                            <OppsummeringFelt
+                                tittel={tittelSpm(barn.omsorgsperson.omsorgspersonSlektsforhold.id)}
+                                søknadsvar={formatMessage({
+                                    id:
+                                        barn.omsorgsperson.omsorgspersonSlektsforhold.svar &&
+                                        toSlektsforholdSpråkId(
+                                            barn.omsorgsperson.omsorgspersonSlektsforhold.svar
+                                        ),
+                                })}
+                            />
+
+                            <OppsummeringFelt
+                                tittel={tittelSpm(
+                                    barn.omsorgsperson.omsorgpersonSlektsforholdSpesifisering.id
+                                )}
+                                søknadsvar={
+                                    barn.omsorgsperson.omsorgpersonSlektsforholdSpesifisering.svar
+                                }
+                            />
+
+                            <OppsummeringFelt
+                                tittel={tittelSpm(barn.omsorgsperson.omsorgspersonIdNummer.id)}
+                                søknadsvar={
+                                    barn.omsorgsperson.omsorgspersonIdNummer.svar ===
+                                    AlternativtSvarForInput.UKJENT
+                                        ? formatMessage({
+                                              id: eøsBarnSpørsmålSpråkId[
+                                                  EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke
+                                              ],
+                                          })
+                                        : barn.omsorgsperson.omsorgspersonIdNummer.svar
+                                }
+                            />
+
+                            <OppsummeringFelt
+                                tittel={tittelSpm(barn.omsorgsperson.omsorgspersonAdresse.id)}
+                                søknadsvar={barn.omsorgsperson.omsorgspersonAdresse.svar}
+                            />
+                        </>
                     )}
                 </KomponentGruppe>
             </StyledOppsummeringsFeltGruppe>

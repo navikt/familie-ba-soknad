@@ -147,7 +147,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 visFeilmeldinger={skjema.visFeilmeldinger}
                                 labelSpråkTekstId={
                                     eøsBarnSpørsmålSpråkId[
-                                        EøsBarnSpørsmålId.omsorgpersonSlektsforholdSpesifisering
+                                        EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering
                                     ]
                                 }
                                 språkValues={{

@@ -346,7 +346,7 @@ export const useEøsForBarn = (
             svar: omsorgspersonSlektsforhold.verdi,
         },
         omsorgpersonSlektsforholdSpesifisering: {
-            id: EøsBarnSpørsmålId.omsorgpersonSlektsforholdSpesifisering,
+            id: EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering,
             svar: omsorgpersonSlektsforholdSpesifisering.verdi,
         },
         omsorgspersonIdNummer: {
