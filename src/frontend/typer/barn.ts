@@ -68,8 +68,6 @@ export enum barnDataKeySpørsmål {
     søkersSlektsforhold = 'søkersSlektsforhold',
     søkersSlektsforholdSpesifisering = 'søkersSlektsforholdSpesifisering',
     borMedAndreForelder = 'borMedAndreForelder',
-    barnetsAdresse = 'barnetsAdresse',
-    barnetsAdresseVetIkke = 'barnetsAdresseVetIkke',
 }
 
 export interface IAndreForelder {
