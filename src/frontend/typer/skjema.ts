@@ -110,7 +110,7 @@ export interface IOmDegFeltTyper {
     registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
-export type IdNummerKey = `idnummer-${string}`;
+export type IdNummerKey = `${string}-idnummer-${string}`;
 
 export interface IEøsForSøkerFeltTyper {
     arbeidINorge: ESvar | null;
@@ -133,6 +133,7 @@ export interface IEøsForBarnFeltTyper {
     søkersSlektsforhold: Slektsforhold | '';
     søkersSlektsforholdSpesifisering: string;
     borMedAndreForelder: ESvar | null;
+    [key: IdNummerKey]: IIdNummer;
 }
 
 export interface IVelgBarnFeltTyper {
