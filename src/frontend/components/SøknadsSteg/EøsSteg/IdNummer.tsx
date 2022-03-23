@@ -3,6 +3,8 @@ import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { Alpha3Code, getName } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
+import { guid } from 'nav-frontend-js-utils';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
@@ -63,7 +65,7 @@ export const IdNummer: React.FC<{
 
     const idNummerFelt = useInputFeltMedUkjent({
         søknadsfelt: {
-            id: `${idNummerKeyPrefix}${landAlphaCode}`,
+            id: `${guid()}${idNummerKeyPrefix}${landAlphaCode}`,
             svar:
                 idNummerVerdiFraSøknad && idNummerVerdiFraSøknad !== AlternativtSvarForInput.UKJENT
                     ? idNummerVerdiFraSøknad

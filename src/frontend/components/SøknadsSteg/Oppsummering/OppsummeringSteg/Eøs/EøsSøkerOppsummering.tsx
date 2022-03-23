@@ -3,7 +3,6 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../../context/AppContext';
-import { useEøs } from '../../../../../context/EøsContext';
 import { useRoutes } from '../../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../../typer/routes';
 import { ISøknadSpørsmål } from '../../../../../typer/spørsmål';
@@ -11,8 +10,7 @@ import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeid
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
-import { IdNummer } from '../../../EøsSteg/IdNummer';
-import { idNummerLandMedPeriodeType } from '../../../EøsSteg/idnummerUtils';
+import IdNummerForSøker from '../../../EøsSteg/Søker/IdNummerForSøker';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from '../../../EøsSteg/Søker/spørsmål';
 import { useEøsForSøker } from '../../../EøsSteg/Søker/useEøsForSøker';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
@@ -27,9 +25,7 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const { søknad } = useApp();
     const { søker } = søknad;
-    const { arbeidsperioderUtland, pensjonsperioderUtland, utenlandsperioder } = søker;
     const eøsForSøkerHook = useEøsForSøker();
-    const { erEøsLand } = useEøs();
 
     const jaNeiSpmOppsummering = (søknadSpørsmål: ISøknadSpørsmål<ESvar | null>) => (
         <OppsummeringFelt
@@ -46,39 +42,11 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             settFeilAnchors={settFeilAnchors}
         >
             <StyledOppsummeringsFeltGruppe>
-                {idNummerLandMedPeriodeType(
-                    {
-                        arbeidsperioderUtland,
-                        pensjonsperioderUtland,
-                        utenlandsperioder,
-                    },
-                    erEøsLand
-                ).map((landMedPeriodeType, index) => {
-                    return (
-                        !!landMedPeriodeType.land && (
-                            <IdNummer
-                                spørsmålSpråkId={
-                                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]
-                                }
-                                spørsmålCheckboxSpråkId={
-                                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent]
-                                }
-                                feilmeldingSpråkId={'eøs-om-deg.dittidnummer.feilmelding'}
-                                idNummerVerdiFraSøknad={
-                                    søker.idNummer.find(
-                                        verdi => verdi.land === landMedPeriodeType.land
-                                    )?.idnummer
-                                }
-                                lesevisning={true}
-                                skjema={eøsForSøkerHook.skjema}
-                                key={index}
-                                settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
-                                landAlphaCode={landMedPeriodeType.land}
-                                periodeType={landMedPeriodeType.periodeType}
-                            />
-                        )
-                    );
-                })}
+                <IdNummerForSøker
+                    skjema={eøsForSøkerHook.skjema}
+                    settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
+                    lesevisning={true}
+                />
                 {søker.adresseISøkeperiode.svar && (
                     <OppsummeringFelt
                         tittel={

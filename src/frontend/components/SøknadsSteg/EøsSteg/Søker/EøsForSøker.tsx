@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useApp } from '../../../../context/AppContext';
-import { useEøs } from '../../../../context/EøsContext';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
@@ -9,8 +7,7 @@ import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/Skje
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
-import { IdNummer } from '../IdNummer';
-import { idNummerLandMedPeriodeType } from '../idnummerUtils';
+import IdNummerForSøker from './IdNummerForSøker';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './spørsmål';
 import { useEøsForSøker } from './useEøsForSøker';
 
@@ -29,11 +26,6 @@ const EøsForSøker: React.FC = () => {
         settIdNummerFelter,
     } = useEøsForSøker();
 
-    const { erEøsLand } = useEøs();
-    const { søknad } = useApp();
-    const { søker } = søknad;
-    const { arbeidsperioderUtland, pensjonsperioderUtland, utenlandsperioder } = søker;
-
     return (
         <Steg
             tittel={<SpråkTekst id={'eøs-om-deg.sidetittel'} />}
@@ -45,38 +37,7 @@ const EøsForSøker: React.FC = () => {
             }}
         >
             <KomponentGruppe>
-                {idNummerLandMedPeriodeType(
-                    {
-                        arbeidsperioderUtland,
-                        pensjonsperioderUtland,
-                        utenlandsperioder,
-                    },
-                    erEøsLand
-                ).map((landMedPeriodeType, index) => {
-                    return (
-                        !!landMedPeriodeType.land && (
-                            <IdNummer
-                                spørsmålSpråkId={
-                                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]
-                                }
-                                spørsmålCheckboxSpråkId={
-                                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent]
-                                }
-                                feilmeldingSpråkId={'eøs-om-deg.dittidnummer.feilmelding'}
-                                idNummerVerdiFraSøknad={
-                                    søker.idNummer.find(
-                                        verdi => verdi.land === landMedPeriodeType.land
-                                    )?.idnummer
-                                }
-                                skjema={skjema}
-                                key={index}
-                                settIdNummerFelter={settIdNummerFelter}
-                                landAlphaCode={landMedPeriodeType.land}
-                                periodeType={landMedPeriodeType.periodeType}
-                            />
-                        )
-                    );
-                })}
+                <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
                 <SkjemaFeltInput
                     felt={skjema.felter.adresseISøkeperiode}
                     visFeilmeldinger={skjema.visFeilmeldinger}

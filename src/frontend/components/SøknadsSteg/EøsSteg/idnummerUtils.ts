@@ -7,7 +7,7 @@ import {
     IUtenlandsperiode,
 } from '../../../typer/perioder';
 
-export const idNummerKeyPrefix = 'idnummer-';
+export const idNummerKeyPrefix = '-idnummer-';
 
 export enum PeriodeType {
     arbeidsperiode = 'arbeidsperiode',
