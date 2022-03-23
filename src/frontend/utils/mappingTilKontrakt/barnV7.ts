@@ -30,6 +30,7 @@ import {
     søknadsfeltBarn,
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
+import { omsorgspersonTilISøknadsfeltV7 } from './omsorgspersonV7';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const barnISøknadsFormatV7 = (
@@ -48,6 +49,7 @@ export const barnISøknadsFormatV7 = (
         alder,
         adressebeskyttelse,
         andreForelder,
+        omsorgsperson,
         søkerForTidsromSluttdato,
         institusjonOppholdSluttdato,
         utenlandsperioder,
@@ -139,6 +141,10 @@ export const barnISøknadsFormatV7 = (
         ),
         andreForelder: andreForelder
             ? andreForelderTilISøknadsfeltV7(intl, andreForelder, barn, valgtSpråk)
+            : null,
+
+        omsorgsperson: omsorgsperson
+            ? omsorgspersonTilISøknadsfeltV7(intl, omsorgsperson, barn)
             : null,
         spørsmål: {
             ...spørmålISøknadsFormat(typetBarnSpørsmål, {

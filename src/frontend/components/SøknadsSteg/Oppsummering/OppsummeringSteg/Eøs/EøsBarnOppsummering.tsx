@@ -4,11 +4,13 @@ import { useIntl } from 'react-intl';
 
 import { useSteg } from '../../../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../../../typer/barn';
+import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { barnetsNavnValue } from '../../../../../utils/barn';
 import { toSlektsforholdSpråkId } from '../../../../../utils/språk';
+import KomponentGruppe from '../../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import SamletIdNummerForBarn from '../../../EøsSteg/Barn/SamletIdNummerForBarn';
-import { eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { useEøsForBarn } from '../../../EøsSteg/Barn/useEøsForBarn';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
@@ -68,6 +70,55 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                         tittel={tittelSpm(barn.borMedAndreForelder.id)}
                         søknadsvar={barn.borMedAndreForelder.svar}
                     />
+                )}
+                {barn.omsorgsperson && (
+                    <KomponentGruppe>
+                        <OppsummeringFelt
+                            tittel={tittelSpm(barn.omsorgsperson.omsorgspersonNavn.id)}
+                            søknadsvar={barn.omsorgsperson.omsorgspersonNavn.svar}
+                        />
+
+                        <OppsummeringFelt
+                            tittel={tittelSpm(barn.omsorgsperson.omsorgspersonSlektsforhold.id)}
+                            søknadsvar={formatMessage({
+                                id:
+                                    barn.omsorgsperson.omsorgspersonSlektsforhold.svar &&
+                                    toSlektsforholdSpråkId(
+                                        barn.omsorgsperson.omsorgspersonSlektsforhold.svar
+                                    ),
+                            })}
+                        />
+
+                        {barn.omsorgsperson.omsorgpersonSlektsforholdSpesifisering.svar && (
+                            <OppsummeringFelt
+                                tittel={tittelSpm(
+                                    barn.omsorgsperson.omsorgpersonSlektsforholdSpesifisering.id
+                                )}
+                                søknadsvar={
+                                    barn.omsorgsperson.omsorgpersonSlektsforholdSpesifisering.svar
+                                }
+                            />
+                        )}
+
+                        <OppsummeringFelt
+                            tittel={tittelSpm(barn.omsorgsperson.omsorgspersonIdNummer.id)}
+                            søknadsvar={
+                                barn.omsorgsperson.omsorgspersonIdNummer.svar ===
+                                AlternativtSvarForInput.UKJENT
+                                    ? formatMessage({
+                                          id: eøsBarnSpørsmålSpråkId[
+                                              EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke
+                                          ],
+                                      })
+                                    : barn.omsorgsperson.omsorgspersonIdNummer.svar
+                            }
+                        />
+
+                        <OppsummeringFelt
+                            tittel={tittelSpm(barn.omsorgsperson.omsorgspersonAdresse.id)}
+                            søknadsvar={barn.omsorgsperson.omsorgspersonAdresse.svar}
+                        />
+                    </KomponentGruppe>
                 )}
             </StyledOppsummeringsFeltGruppe>
             {barn.andreForelder && (

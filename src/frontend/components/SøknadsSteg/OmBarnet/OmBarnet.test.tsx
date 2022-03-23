@@ -11,6 +11,7 @@ import {
     IBarnMedISøknad,
 } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
+import { Slektsforhold } from '../../../typer/kontrakt/barn';
 import {
     mekkGyldigSøknad,
     mockEøs,
@@ -106,6 +107,28 @@ const jens = {
             },
         },
     },
+    omsorgsperson: {
+        omsorgspersonNavn: {
+            id: 33,
+            svar: 'Test omsorgspersonen',
+        },
+        omsorgspersonSlektsforhold: {
+            id: 29,
+            svar: Slektsforhold.ANNEN_RELASJON,
+        },
+        omsorgpersonSlektsforholdSpesifisering: {
+            id: 30,
+            svar: 'Søskenbarn',
+        },
+        omsorgspersonIdNummer: {
+            id: 31,
+            svar: '12345678',
+        },
+        omsorgspersonAdresse: {
+            id: 32,
+            svar: 'Oslogata 1',
+        },
+    },
 };
 const line = {
     navn: 'Line',
@@ -188,6 +211,28 @@ const line = {
                 id: 27,
                 svar: ESvar.JA,
             },
+        },
+    },
+    omsorgsperson: {
+        omsorgspersonNavn: {
+            id: 33,
+            svar: 'Test omsorgspersonen',
+        },
+        omsorgspersonSlektsforhold: {
+            id: 29,
+            svar: Slektsforhold.ANNEN_RELASJON,
+        },
+        omsorgpersonSlektsforholdSpesifisering: {
+            id: 30,
+            svar: 'Søskenbarn',
+        },
+        omsorgspersonIdNummer: {
+            id: 31,
+            svar: '12345678',
+        },
+        omsorgspersonAdresse: {
+            id: 32,
+            svar: 'Oslogata 1',
         },
     },
 };

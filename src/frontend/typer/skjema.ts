@@ -133,6 +133,12 @@ export interface IEøsForBarnFeltTyper {
     søkersSlektsforhold: Slektsforhold | '';
     søkersSlektsforholdSpesifisering: string;
     borMedAndreForelder: ESvar | null;
+    omsorgspersonNavn: string;
+    omsorgspersonSlektsforhold: Slektsforhold | '';
+    omsorgpersonSlektsforholdSpesifisering: string;
+    omsorgspersonIdNummer: string;
+    omsorgspersonIdNummerVetIkke: ESvar;
+    omsorgspersonAdresse: string;
 }
 
 export interface IVelgBarnFeltTyper {
