@@ -13,8 +13,6 @@ import {
     barnDataKeySpørsmål,
     IAndreForelder,
     IBarnMedISøknad,
-    IOmsorgsperson,
-    omsorgspersonDataKeySpørsmål,
 } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
@@ -125,34 +123,6 @@ export const genererAndreForelder = (
                           ].svar
                         : '',
             },
-        },
-    };
-};
-
-export const genererOmsorgsperson = (omsorgsperson: IOmsorgsperson | null): IOmsorgsperson => {
-    return {
-        [omsorgspersonDataKeySpørsmål.omsorgspersonNavn]: {
-            id: EøsBarnSpørsmålId.omsorgspersonNavn,
-            svar: omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonNavn].svar ?? '',
-        },
-        [omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold]: {
-            id: EøsBarnSpørsmålId.omsorgspersonSlektsforhold,
-            svar:
-                omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold].svar ?? '',
-        },
-        [omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: {
-            id: EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering,
-            svar:
-                omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]
-                    .svar ?? '',
-        },
-        [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer]: {
-            id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
-            svar: omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer].svar ?? '',
-        },
-        [omsorgspersonDataKeySpørsmål.omsorgspersonAdresse]: {
-            id: EøsBarnSpørsmålId.omsorgspersonAdresse,
-            svar: omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonAdresse].svar ?? '',
         },
     };
 };

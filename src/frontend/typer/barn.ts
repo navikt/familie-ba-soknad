@@ -32,15 +32,6 @@ export enum andreForelderDataKeySpørsmål {
     andreUtbetalinger = 'andreUtbetalinger',
 }
 
-export enum omsorgspersonDataKeySpørsmål {
-    omsorgspersonNavn = 'omsorgspersonNavn',
-    omsorgspersonSlektsforhold = 'omsorgspersonSlektsforhold',
-    omsorgpersonSlektsforholdSpesifisering = 'omsorgpersonSlektsforholdSpesifisering',
-    omsorgspersonIdNummer = 'omsorgspersonIdNummer',
-    omsorgspersonIdNummerVetIkke = 'omsorgspersonIdNummerVetIkke',
-    omsorgspersonAdresse = 'omsorgspersonAdresse',
-}
-
 export enum barnDataKeySpørsmål {
     erFosterbarn = 'erFosterbarn',
     erAdoptertFraUtland = 'erAdoptertFraUtland',
@@ -98,13 +89,11 @@ export interface IAndreForelder {
 }
 
 export interface IOmsorgsperson {
-    [omsorgspersonDataKeySpørsmål.omsorgspersonNavn]: ISøknadSpørsmål<string>;
-    [omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
-    [omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
-    [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer]: ISøknadSpørsmål<
-        string | AlternativtSvarForInput.UKJENT
-    >;
-    [omsorgspersonDataKeySpørsmål.omsorgspersonAdresse]: ISøknadSpørsmål<string>;
+    omsorgspersonNavn: ISøknadSpørsmål<string>;
+    omsorgspersonSlektsforhold: ISøknadSpørsmål<Slektsforhold | ''>;
+    omsorgpersonSlektsforholdSpesifisering: ISøknadSpørsmål<string>;
+    omsorgspersonIdNummer: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
+    omsorgspersonAdresse: ISøknadSpørsmål<string>;
 }
 
 export interface IBarnMedISøknad extends IBarn {

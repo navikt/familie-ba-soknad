@@ -9,7 +9,6 @@ import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
     IBarnMedISøknad,
-    omsorgspersonDataKeySpørsmål,
 } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { Slektsforhold } from '../../../typer/kontrakt/barn';
@@ -109,23 +108,23 @@ const jens = {
         },
     },
     omsorgsperson: {
-        [omsorgspersonDataKeySpørsmål.omsorgspersonNavn]: {
+        omsorgspersonNavn: {
             id: 33,
             svar: 'Test omsorgspersonen',
         },
-        [omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold]: {
+        omsorgspersonSlektsforhold: {
             id: 29,
             svar: Slektsforhold.ANNEN_RELASJON,
         },
-        [omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: {
+        omsorgpersonSlektsforholdSpesifisering: {
             id: 30,
             svar: 'Søskenbarn',
         },
-        [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer]: {
+        omsorgspersonIdNummer: {
             id: 31,
             svar: '12345678',
         },
-        [omsorgspersonDataKeySpørsmål.omsorgspersonAdresse]: {
+        omsorgspersonAdresse: {
             id: 32,
             svar: 'Oslogata 1',
         },
@@ -215,23 +214,23 @@ const line = {
         },
     },
     omsorgsperson: {
-        [omsorgspersonDataKeySpørsmål.omsorgspersonNavn]: {
+        omsorgspersonNavn: {
             id: 33,
             svar: 'Test omsorgspersonen',
         },
-        [omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold]: {
+        omsorgspersonSlektsforhold: {
             id: 29,
             svar: Slektsforhold.ANNEN_RELASJON,
         },
-        [omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: {
+        omsorgpersonSlektsforholdSpesifisering: {
             id: 30,
             svar: 'Søskenbarn',
         },
-        [omsorgspersonDataKeySpørsmål.omsorgspersonIdNummer]: {
+        omsorgspersonIdNummer: {
             id: 31,
             svar: '12345678',
         },
-        [omsorgspersonDataKeySpørsmål.omsorgspersonAdresse]: {
+        omsorgspersonAdresse: {
             id: 32,
             svar: 'Oslogata 1',
         },
