@@ -35,6 +35,7 @@ import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
 import { EFeatureToggle } from '../typer/feature-toggles';
+import { Slektsforhold } from '../typer/kontrakt/barn';
 import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { ISøker, ISøkerRespons } from '../typer/person';
@@ -360,6 +361,7 @@ export const mekkGyldigSøknad = (): ISøknad => {
                         },
                     },
                 },
+                omsorgsperson: null,
                 [barnDataKeySpørsmål.borFastMedSøker]: {
                     id: OmBarnetSpørsmålsId.borFastMedSøker,
                     svar: ESvar.JA,
@@ -450,6 +452,34 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                             id: OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato,
                             svar: AlternativtSvarForInput.UKJENT,
                         },
+                    },
+                },
+            }),
+            ...(barn.omsorgsperson && {
+                omsorgsperson: {
+                    omsorgspersonNavn: {
+                        id: EøsBarnSpørsmålId.omsorgspersonNavn,
+                        svar: 'Testnavn',
+                    },
+                    omsorgspersonSlektsforhold: {
+                        id: EøsBarnSpørsmålId.omsorgspersonSlektsforhold,
+                        svar: Slektsforhold.ANNEN_RELASJON,
+                    },
+                    omsorgpersonSlektsforholdSpesifisering: {
+                        id: EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering,
+                        svar: 'Tantebarnebarn',
+                    },
+                    omsorgspersonIdNummer: {
+                        id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
+                        svar: '12345',
+                    },
+                    omsorgspersonIdNummerVetIkke: {
+                        id: EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke,
+                        svar: ESvar.NEI,
+                    },
+                    omsorgspersonAdresse: {
+                        id: EøsBarnSpørsmålId.omsorgspersonAdresse,
+                        svar: 'Osloveien 123',
                     },
                 },
             }),

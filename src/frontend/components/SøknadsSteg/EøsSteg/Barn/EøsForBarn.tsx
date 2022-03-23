@@ -13,6 +13,7 @@ import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/Slektsfo
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -83,6 +84,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             values={{ barn: barnetsNavnValue(barn, intl) }}
                         />
                     }
+                    gjelderSøker={true}
                 />
                 {skjema.felter.søkersSlektsforholdSpesifisering.erSynlig && (
                     <SkjemaFeltInput
@@ -105,6 +107,91 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     spørsmålTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedAndreForelder]}
                     språkValues={{ barn: barnetsNavnValue(barn, intl) }}
                 />
+                {skjema.felter.borMedAndreForelder.verdi === ESvar.NEI && (
+                    <SkjemaFieldset
+                        tittelId={'eøs-om-barn.annenomsorgsperson.gjenlevende'}
+                        språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                    >
+                        {skjema.felter.omsorgspersonNavn.erSynlig && (
+                            <SkjemaFeltInput
+                                felt={skjema.felter.omsorgspersonNavn}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={
+                                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonNavn]
+                                }
+                            />
+                        )}
+                        {skjema.felter.omsorgspersonSlektsforhold.erSynlig && (
+                            <SlektsforholdDropdown
+                                felt={skjema.felter.omsorgspersonSlektsforhold}
+                                skjema={skjema}
+                                placeholder={intl.formatMessage({
+                                    id: 'felles.velgslektsforhold.spm',
+                                })}
+                                label={
+                                    <SpråkTekst
+                                        id={
+                                            eøsBarnSpørsmålSpråkId[
+                                                EøsBarnSpørsmålId.omsorgspersonSlektsforhold
+                                            ]
+                                        }
+                                        values={{ barn: barnetsNavnValue(barn, intl) }}
+                                    />
+                                }
+                                gjelderSøker={false}
+                            />
+                        )}
+                        {skjema.felter.omsorgpersonSlektsforholdSpesifisering.erSynlig && (
+                            <SkjemaFeltInput
+                                felt={skjema.felter.omsorgpersonSlektsforholdSpesifisering}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={
+                                    eøsBarnSpørsmålSpråkId[
+                                        EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering
+                                    ]
+                                }
+                                språkValues={{
+                                    barn: barnetsNavnValue(barn, intl),
+                                }}
+                            />
+                        )}
+                        {skjema.felter.omsorgspersonIdNummer.erSynlig && (
+                            <>
+                                <SkjemaFeltInput
+                                    felt={skjema.felter.omsorgspersonIdNummer}
+                                    visFeilmeldinger={skjema.visFeilmeldinger}
+                                    labelSpråkTekstId={
+                                        eøsBarnSpørsmålSpråkId[
+                                            EøsBarnSpørsmålId.omsorgspersonIdNummer
+                                        ]
+                                    }
+                                    disabled={
+                                        skjema.felter.omsorgspersonIdNummerVetIkke.verdi ===
+                                        ESvar.JA
+                                    }
+                                />
+
+                                <SkjemaCheckbox
+                                    felt={skjema.felter.omsorgspersonIdNummerVetIkke}
+                                    labelSpråkTekstId={
+                                        eøsBarnSpørsmålSpråkId[
+                                            EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke
+                                        ]
+                                    }
+                                />
+                            </>
+                        )}
+                        {skjema.felter.omsorgspersonAdresse.erSynlig && (
+                            <SkjemaFeltInput
+                                felt={skjema.felter.omsorgspersonAdresse}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={
+                                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonAdresse]
+                                }
+                            />
+                        )}
+                    </SkjemaFieldset>
+                )}
             </KomponentGruppe>
             {!skalSkjuleAndreForelderFelt(barn) && (
                 <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>

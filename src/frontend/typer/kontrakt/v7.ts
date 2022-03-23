@@ -56,9 +56,18 @@ export interface ISøknadIKontraktBarnV7 {
     alder: ISøknadsfelt<string>;
     spørsmål: SpørsmålMap;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
+    omsorgsperson: IOmsorgspersonIKontraktFormatV7 | null;
     andreForelder: IAndreForelderIKontraktFormatV7 | null;
     eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
     idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
+}
+
+export interface IOmsorgspersonIKontraktFormatV7 {
+    omsorgspersonNavn: ISøknadsfelt<string>;
+    omsorgspersonSlektsforhold: ISøknadsfelt<string>;
+    omsorgpersonSlektsforholdSpesifisering: ISøknadsfelt<string>;
+    omsorgspersonIdNummer: ISøknadsfelt<string>;
+    omsorgspersonAdresse: ISøknadsfelt<string>;
 }
 
 export interface IAndreForelderIKontraktFormatV7 {

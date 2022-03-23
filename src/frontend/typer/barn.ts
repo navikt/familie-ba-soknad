@@ -88,12 +88,21 @@ export interface IAndreForelder {
     };
 }
 
+export interface IOmsorgsperson {
+    omsorgspersonNavn: ISøknadSpørsmål<string>;
+    omsorgspersonSlektsforhold: ISøknadSpørsmål<Slektsforhold | ''>;
+    omsorgpersonSlektsforholdSpesifisering: ISøknadSpørsmål<string>;
+    omsorgspersonIdNummer: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
+    omsorgspersonAdresse: ISøknadSpørsmål<string>;
+}
+
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
     utenlandsperioder: IUtenlandsperiode[];
     eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     idNummer: IIdNummer[];
     andreForelder: IAndreForelder | null;
+    omsorgsperson: IOmsorgsperson | null;
     triggetEøs: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;
