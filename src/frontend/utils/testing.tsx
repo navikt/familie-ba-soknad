@@ -466,7 +466,7 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                         svar: Slektsforhold.ANNEN_RELASJON,
                     },
                     omsorgpersonSlektsforholdSpesifisering: {
-                        id: EøsBarnSpørsmålId.omsorgpersonSlektsforholdSpesifisering,
+                        id: EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering,
                         svar: 'Tantebarnebarn',
                     },
                     omsorgspersonIdNummer: {

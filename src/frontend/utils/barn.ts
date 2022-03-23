@@ -141,7 +141,7 @@ export const genererOmsorgsperson = (omsorgsperson: IOmsorgsperson | null): IOms
                 omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgspersonSlektsforhold].svar ?? '',
         },
         [omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]: {
-            id: EøsBarnSpørsmålId.omsorgpersonSlektsforholdSpesifisering,
+            id: EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering,
             svar:
                 omsorgsperson?.[omsorgspersonDataKeySpørsmål.omsorgpersonSlektsforholdSpesifisering]
                     .svar ?? '',

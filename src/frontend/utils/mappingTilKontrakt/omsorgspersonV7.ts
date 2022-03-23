@@ -44,7 +44,7 @@ export const omsorgspersonTilISøknadsfeltV7 = (
 
         omsorgpersonSlektsforholdSpesifisering: søknadsfeltBarn(
             intl,
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgpersonSlektsforholdSpesifisering),
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering),
             sammeVerdiAlleSpråk(omsorgpersonSlektsforholdSpesifisering.svar),
             barn
         ),
