@@ -84,7 +84,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             values={{ barn: barnetsNavnValue(barn, intl) }}
                         />
                     }
-                    slektsforholdSøker={true}
+                    gjelderSøker={true}
                 />
                 {skjema.felter.søkersSlektsforholdSpesifisering.erSynlig && (
                     <SkjemaFeltInput
@@ -138,7 +138,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         values={{ barn: barnetsNavnValue(barn, intl) }}
                                     />
                                 }
-                                slektsforholdSøker={false}
+                                gjelderSøker={false}
                             />
                         )}
                         {skjema.felter.omsorgpersonSlektsforholdSpesifisering.erSynlig && (
