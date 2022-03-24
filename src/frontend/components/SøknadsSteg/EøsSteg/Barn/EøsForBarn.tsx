@@ -192,6 +192,26 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         )}
                     </SkjemaFieldset>
                 )}
+                {skjema.felter.barnetsAdresse.erSynlig && (
+                    <>
+                        <SkjemaFeltInput
+                            felt={skjema.felter.barnetsAdresse}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            labelSpråkTekstId={
+                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresse]
+                            }
+                            språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                            disabled={skjema.felter.barnetsAdresseVetIkke.verdi === ESvar.JA}
+                        />
+
+                        <SkjemaCheckbox
+                            felt={skjema.felter.barnetsAdresseVetIkke}
+                            labelSpråkTekstId={
+                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
+                            }
+                        />
+                    </>
+                )}
             </KomponentGruppe>
             {!skalSkjuleAndreForelderFelt(barn) && (
                 <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
