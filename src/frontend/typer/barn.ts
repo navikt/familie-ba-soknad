@@ -133,7 +133,7 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.søkersSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
     [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.borMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.barnetsAdresse]: ISøknadSpørsmål<string>;
+    [barnDataKeySpørsmål.barnetsAdresse]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
 }
 
 export const muligeSlektsforhold: Slektsforhold[] = [

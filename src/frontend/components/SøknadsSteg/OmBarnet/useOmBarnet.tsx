@@ -37,7 +37,11 @@ import { IIdNummer } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
-import { barnetsNavnValue, filtrerteRelevanteIdNummerForBarn } from '../../../utils/barn';
+import {
+    barnetsNavnValue,
+    filtrerteRelevanteIdNummerForBarn,
+    skalSkjuleAndreForelderFelt,
+} from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
@@ -802,6 +806,11 @@ export const useOmBarnet = (
                 svar: borFastMedSøker.verdi === ESvar.JA ? null : barn.borMedAndreForelder.svar,
             },
             omsorgsperson: borFastMedSøker.verdi === ESvar.JA ? null : barn.omsorgsperson,
+
+            barnetsAdresse: {
+                ...barn.barnetsAdresse,
+                svar: skalSkjuleAndreForelderFelt(barn) ? barn.barnetsAdresse.svar : '',
+            },
             søkerForTidsrom: {
                 ...barn.søkerForTidsrom,
                 svar: søkerForTidsrom.verdi,

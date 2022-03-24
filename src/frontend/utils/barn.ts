@@ -304,6 +304,15 @@ export const genererOppdaterteBarn = (
                 ...barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
                 svar: pågåendeSøknadHvilketLand,
             },
+            [barnDataKeySpørsmål.barnetsAdresse]: {
+                ...barn[barnDataKeySpørsmål.barnetsAdresse],
+                svar:
+                    (barn.borMedAndreForelder.svar === ESvar.JA &&
+                        skalSkjuleAndreForelderFelt(barn)) ||
+                    barn.erFosterbarn.svar === ESvar.JA
+                        ? barn.barnetsAdresse.svar
+                        : '',
+            },
         };
 
         return { ...oppdatertBarn, triggetEøs: skalTriggeEøsForBarn(oppdatertBarn) };

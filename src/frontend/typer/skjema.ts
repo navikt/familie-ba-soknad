@@ -3,7 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål } from './barn';
-import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
+import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
 import { Slektsforhold } from './kontrakt/barn';
 import {
     IArbeidsperiode,
@@ -140,7 +140,7 @@ export interface IEøsForBarnFeltTyper {
     omsorgspersonIdNummer: string;
     omsorgspersonIdNummerVetIkke: ESvar;
     omsorgspersonAdresse: string;
-    barnetsAdresse: string;
+    barnetsAdresse: string | AlternativtSvarForInput.UKJENT;
     barnetsAdresseVetIkke: ESvar;
 }
 

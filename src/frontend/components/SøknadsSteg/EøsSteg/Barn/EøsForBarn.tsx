@@ -197,6 +197,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         <SkjemaFeltInput
                             felt={skjema.felter.barnetsAdresse}
                             visFeilmeldinger={skjema.visFeilmeldinger}
+                            description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
                             labelSpråkTekstId={
                                 eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresse]
                             }

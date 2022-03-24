@@ -222,11 +222,14 @@ export const useEøsForBarn = (
         nullstillVedAvhengighetEndring: true,
     });
 
+    /*--- BARNETS ADRESSE ---*/
     const barnetsAdresseVetIkke = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(gjeldendeBarn[barnDataKeySpørsmål.barnetsAdresse].svar),
         feltId: EøsBarnSpørsmålId.barnetsAdresseVetIkke,
-        skalFeltetVises: avhengigheter => avhengigheter.borMedAndreForelder.verdi === ESvar.JA,
-        avhengigheter: { borMedAndreForelder },
+        skalFeltetVises: () =>
+            (borMedAndreForelder.verdi === ESvar.JA &&
+                skalSkjuleAndreForelderFelt(gjeldendeBarn)) ||
+            gjeldendeBarn.erFosterbarn.svar === ESvar.JA,
     });
 
     const barnetsAdresse = useInputFeltMedUkjent({
@@ -409,9 +412,7 @@ export const useEøsForBarn = (
             },
             barnetsAdresse: {
                 ...barn.barnetsAdresse,
-                svar: barnetsAdresse.erSynlig
-                    ? svarForSpørsmålMedUkjent(barnetsAdresseVetIkke, barnetsAdresse)
-                    : '',
+                svar: svarForSpørsmålMedUkjent(barnetsAdresseVetIkke, barnetsAdresse),
             },
             omsorgsperson: borMedAndreForelder.verdi === ESvar.NEI ? genererOmsorgsperson() : null,
             ...(!!barn.andreForelder &&
