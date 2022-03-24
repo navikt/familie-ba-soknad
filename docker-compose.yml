@@ -158,7 +158,7 @@ services:
       - "5914:8080"
     volumes:
       - secure-logs:/secure-logs
-      - ../familie-ba-dokgen/content:/app/content
+      #- ../familie-ba-dokgen/content:/app/content
     user: root # ellers klager den så fælt på permissions til /secure-logs
 
   # Fake tokenx, gir akkurat det den blir bedt om. Når loginservice ber om en
