@@ -230,6 +230,7 @@ export const useEøsForBarn = (
             (borMedAndreForelder.verdi === ESvar.JA &&
                 skalSkjuleAndreForelderFelt(gjeldendeBarn)) ||
             gjeldendeBarn.erFosterbarn.svar === ESvar.JA,
+        avhengigheter: { borMedAndreForelder },
     });
 
     const barnetsAdresse = useInputFeltMedUkjent({
