@@ -47,6 +47,7 @@ export const andreForelderTilISøknadsfeltV7 = (
         pensjonsperioderNorge,
         andreUtbetalingsperioder,
         idNummer,
+        adresse,
     } = andreForelder;
     const forelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
     return {
@@ -133,6 +134,15 @@ export const andreForelderTilISøknadsfeltV7 = (
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted),
             sammeVerdiAlleSpråk(
                 andreForelder[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
+            ),
+            barn
+        ),
+        [andreForelderDataKeySpørsmål.adresse]: søknadsfeltBarn(
+            intl,
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderAdresse),
+            sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                adresse.svar,
+                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderAdresseVetIkke]
             ),
             barn
         ),

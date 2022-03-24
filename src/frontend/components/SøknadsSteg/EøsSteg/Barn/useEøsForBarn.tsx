@@ -228,7 +228,7 @@ export const useEøsForBarn = (
     });
 
     const andreForelderAdresse = useInputFeltMedUkjent({
-        søknadsfelt: andreForelder && andreForelder.adresse,
+        søknadsfelt: andreForelder && andreForelder[andreForelderDataKeySpørsmål.adresse],
         avhengighet: andreForelderAdresseVetIkke,
         feilmeldingSpråkId: 'eøs-om-barn.andreforelderoppholdssted.feilmelding',
         språkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
@@ -347,7 +347,7 @@ export const useEøsForBarn = (
                     trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
             })),
             adresse: {
-                ...andreForelder.adresse,
+                ...andreForelder[andreForelderDataKeySpørsmål.adresse],
                 svar: svarForSpørsmålMedUkjent(andreForelderAdresseVetIkke, andreForelderAdresse),
             },
         },
