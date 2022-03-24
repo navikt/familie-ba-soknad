@@ -202,6 +202,34 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 settIdNummerFelter={settIdNummerFelterForAndreForelder}
                                 barn={barn}
                             />
+                            <>
+                                <SkjemaFeltInput
+                                    felt={skjema.felter.andreForelderAdresse}
+                                    visFeilmeldinger={skjema.visFeilmeldinger}
+                                    labelSpråkTekstId={
+                                        eøsBarnSpørsmålSpråkId[
+                                            EøsBarnSpørsmålId.andreForelderAdresse
+                                        ]
+                                    }
+                                    description={
+                                        <SpråkTekst id={'felles.hjelpetekst.fulladresse'} />
+                                    }
+                                    disabled={
+                                        skjema.felter.andreForelderAdresseVetIkke.verdi === ESvar.JA
+                                    }
+                                    språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                                />
+
+                                <SkjemaCheckbox
+                                    felt={skjema.felter.andreForelderAdresseVetIkke}
+                                    labelSpråkTekstId={
+                                        eøsBarnSpørsmålSpråkId[
+                                            EøsBarnSpørsmålId.andreForelderAdresseVetIkke
+                                        ]
+                                    }
+                                />
+                            </>
+
                             <Arbeidsperiode
                                 skjema={skjema}
                                 leggTilArbeidsperiode={leggTilArbeidsperiode}

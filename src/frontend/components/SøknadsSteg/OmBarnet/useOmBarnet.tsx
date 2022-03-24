@@ -920,6 +920,8 @@ export const useOmBarnet = (
                                   svar: null,
                               },
                               arbeidsperioderNorge: [],
+                              idNummer: [],
+                              adresse: { ...barn.andreForelder.adresse, svar: '' },
                           }),
                       },
             }),
