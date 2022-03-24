@@ -310,7 +310,12 @@ export const genererOppdaterteBarn = (
             },
             [barnDataKeySpørsmål.adresse]: {
                 ...barn[barnDataKeySpørsmål.adresse],
-                svar: barn.erFosterbarn.svar === ESvar.JA ? barn.adresse.svar : '',
+                svar:
+                    erFosterbarn ||
+                    (barn.andreForelder?.navn.svar === AlternativtSvarForInput.UKJENT &&
+                        barn.borMedAndreForelder.svar === ESvar.JA)
+                        ? barn.adresse.svar
+                        : '',
             },
         };
 

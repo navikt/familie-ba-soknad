@@ -37,11 +37,7 @@ import { IIdNummer } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
-import {
-    barnetsNavnValue,
-    filtrerteRelevanteIdNummerForBarn,
-    skalSkjuleAndreForelderFelt,
-} from '../../../utils/barn';
+import { barnetsNavnValue, filtrerteRelevanteIdNummerForBarn } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
@@ -729,6 +725,15 @@ export const useOmBarnet = (
                 : [];
         const utenlandsperioder = registrerteUtenlandsperioder.verdi;
 
+        const borMedAndreForelder =
+            borFastMedSøker.verdi === ESvar.JA ? null : barn.borMedAndreForelder.svar;
+
+        const kanIkkeGiOpplysningerOmAndreForelder: boolean =
+            (barnMedSammeForelder?.andreForelder?.navn ??
+                trimWhiteSpace(
+                    svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
+                )) === AlternativtSvarForInput.UKJENT;
+
         return {
             ...barn,
             idNummer: filtrerteRelevanteIdNummerForBarn(
@@ -803,13 +808,17 @@ export const useOmBarnet = (
             },
             borMedAndreForelder: {
                 ...barn.borMedAndreForelder,
-                svar: borFastMedSøker.verdi === ESvar.JA ? null : barn.borMedAndreForelder.svar,
+                svar: borMedAndreForelder,
             },
             omsorgsperson: borFastMedSøker.verdi === ESvar.JA ? null : barn.omsorgsperson,
 
             adresse: {
                 ...barn.adresse,
-                svar: skalSkjuleAndreForelderFelt(barn) ? barn.adresse.svar : '',
+                svar:
+                    barn.erFosterbarn.svar === ESvar.JA ||
+                    (borMedAndreForelder && kanIkkeGiOpplysningerOmAndreForelder)
+                        ? barn.adresse.svar
+                        : '',
             },
             søkerForTidsrom: {
                 ...barn.søkerForTidsrom,
