@@ -921,7 +921,10 @@ export const useOmBarnet = (
                               },
                               arbeidsperioderNorge: [],
                               idNummer: [],
-                              adresse: { ...barn.andreForelder.adresse, svar: '' },
+                              adresse: {
+                                  ...barn.andreForelder[andreForelderDataKeySpørsmål.adresse],
+                                  svar: '',
+                              },
                           }),
                       },
             }),

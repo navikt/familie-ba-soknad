@@ -105,7 +105,7 @@ export const genererAndreForelder = (
                 ? EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke
                 : EøsBarnSpørsmålId.andreForelderAndreUtbetalinger,
         },
-        adresse: {
+        [andreForelderDataKeySpørsmål.adresse]: {
             svar: andreForelder?.adresse.svar ?? '',
             id: EøsBarnSpørsmålId.andreForelderAdresse,
         },
