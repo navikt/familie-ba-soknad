@@ -388,7 +388,7 @@ export const mekkGyldigSøknad = (): ISøknad => {
                 },
                 eøsBarnetrygdsperioder: [],
                 [barnDataKeySpørsmål.adresse]: {
-                    id: EøsBarnSpørsmålId.adresse,
+                    id: EøsBarnSpørsmålId.barnetsAdresse,
                     svar: '',
                 },
             },

@@ -185,10 +185,10 @@ export const barnISøknadsFormatV7 = (
             }),
             [barnDataKeySpørsmål.adresse]: søknadsfeltBarn(
                 intl,
-                språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.adresse),
+                språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.barnetsAdresse),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     adresse.svar,
-                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.adresseVetIkke]
+                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
                 ),
                 barn
             ),

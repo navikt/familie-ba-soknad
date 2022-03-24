@@ -450,7 +450,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             svar: null,
         },
         [barnDataKeySpørsmål.adresse]: {
-            id: EøsBarnSpørsmålId.adresse,
+            id: EøsBarnSpørsmålId.barnetsAdresse,
             svar: '',
         },
     };

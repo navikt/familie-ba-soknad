@@ -126,7 +126,9 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                         søknadsvar={
                             barn.adresse.svar === AlternativtSvarForInput.UKJENT
                                 ? formatMessage({
-                                      id: eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.adresseVetIkke],
+                                      id: eøsBarnSpørsmålSpråkId[
+                                          EøsBarnSpørsmålId.barnetsAdresseVetIkke
+                                      ],
                                   })
                                 : barn.adresse.svar
                         }
