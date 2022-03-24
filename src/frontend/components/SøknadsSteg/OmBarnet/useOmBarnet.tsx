@@ -807,9 +807,9 @@ export const useOmBarnet = (
             },
             omsorgsperson: borFastMedSøker.verdi === ESvar.JA ? null : barn.omsorgsperson,
 
-            barnetsAdresse: {
-                ...barn.barnetsAdresse,
-                svar: skalSkjuleAndreForelderFelt(barn) ? barn.barnetsAdresse.svar : '',
+            adresse: {
+                ...barn.adresse,
+                svar: skalSkjuleAndreForelderFelt(barn) ? barn.adresse.svar : '',
             },
             søkerForTidsrom: {
                 ...barn.søkerForTidsrom,

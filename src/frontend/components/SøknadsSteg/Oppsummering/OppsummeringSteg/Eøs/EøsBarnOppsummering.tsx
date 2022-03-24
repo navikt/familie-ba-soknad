@@ -120,17 +120,15 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                         />
                     </KomponentGruppe>
                 )}
-                {barn.barnetsAdresse.svar && (
+                {barn.adresse.svar && (
                     <OppsummeringFelt
-                        tittel={tittelSpm(barn.barnetsAdresse.id)}
+                        tittel={tittelSpm(barn.adresse.id)}
                         søknadsvar={
-                            barn.barnetsAdresse.svar === AlternativtSvarForInput.UKJENT
+                            barn.adresse.svar === AlternativtSvarForInput.UKJENT
                                 ? formatMessage({
-                                      id: eøsBarnSpørsmålSpråkId[
-                                          EøsBarnSpørsmålId.barnetsAdresseVetIkke
-                                      ],
+                                      id: eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.adresseVetIkke],
                                   })
-                                : barn.barnetsAdresse.svar
+                                : barn.adresse.svar
                         }
                     />
                 )}

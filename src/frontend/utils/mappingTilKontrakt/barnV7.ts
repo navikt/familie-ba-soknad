@@ -58,7 +58,7 @@ export const barnISøknadsFormatV7 = (
         idNummer,
         triggetEøs,
         søkersSlektsforhold,
-        barnetsAdresse,
+        adresse,
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...barnSpørsmål
     } = barn;
@@ -183,12 +183,12 @@ export const barnISøknadsFormatV7 = (
                     barn
                 ),
             }),
-            [barnDataKeySpørsmål.barnetsAdresse]: søknadsfeltBarn(
+            [barnDataKeySpørsmål.adresse]: søknadsfeltBarn(
                 intl,
-                språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.barnetsAdresse),
+                språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.adresse),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    barnetsAdresse.svar,
-                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
+                    adresse.svar,
+                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.adresseVetIkke]
                 ),
                 barn
             ),

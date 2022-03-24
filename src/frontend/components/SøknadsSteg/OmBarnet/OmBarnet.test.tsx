@@ -129,7 +129,7 @@ const jens = {
             svar: 'Oslogata 1',
         },
     },
-    barnetsAdresse: {
+    adresse: {
         id: 35,
         svar: 'Osloveien',
     },
@@ -239,7 +239,7 @@ const line = {
             svar: 'Oslogata 1',
         },
     },
-    barnetsAdresse: {
+    adresse: {
         id: 35,
         svar: 'Osloveien',
     },

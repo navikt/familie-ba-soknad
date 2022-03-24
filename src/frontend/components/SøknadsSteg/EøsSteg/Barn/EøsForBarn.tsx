@@ -192,23 +192,21 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         )}
                     </SkjemaFieldset>
                 )}
-                {skjema.felter.barnetsAdresse.erSynlig && (
+                {skjema.felter.adresse.erSynlig && (
                     <>
                         <SkjemaFeltInput
-                            felt={skjema.felter.barnetsAdresse}
+                            felt={skjema.felter.adresse}
                             visFeilmeldinger={skjema.visFeilmeldinger}
                             description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
-                            labelSpråkTekstId={
-                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresse]
-                            }
+                            labelSpråkTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.adresse]}
                             språkValues={{ barn: barnetsNavnValue(barn, intl) }}
-                            disabled={skjema.felter.barnetsAdresseVetIkke.verdi === ESvar.JA}
+                            disabled={skjema.felter.adresseVetIkke.verdi === ESvar.JA}
                         />
 
                         <SkjemaCheckbox
-                            felt={skjema.felter.barnetsAdresseVetIkke}
+                            felt={skjema.felter.adresseVetIkke}
                             labelSpråkTekstId={
-                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
+                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.adresseVetIkke]
                             }
                         />
                     </>

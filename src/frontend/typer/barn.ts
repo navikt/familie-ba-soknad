@@ -60,7 +60,7 @@ export enum barnDataKeySpørsmål {
     søkersSlektsforhold = 'søkersSlektsforhold',
     søkersSlektsforholdSpesifisering = 'søkersSlektsforholdSpesifisering',
     borMedAndreForelder = 'borMedAndreForelder',
-    barnetsAdresse = 'barnetsAdresse',
+    adresse = 'adresse',
 }
 
 export interface IAndreForelder {
@@ -137,7 +137,7 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.søkersSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
     [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.borMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.barnetsAdresse]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
+    [barnDataKeySpørsmål.adresse]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
 }
 
 export const muligeSlektsforhold: Slektsforhold[] = [

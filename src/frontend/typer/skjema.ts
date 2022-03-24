@@ -142,8 +142,8 @@ export interface IEøsForBarnFeltTyper {
     omsorgspersonIdNummer: string;
     omsorgspersonIdNummerVetIkke: ESvar;
     omsorgspersonAdresse: string;
-    barnetsAdresse: string | AlternativtSvarForInput.UKJENT;
-    barnetsAdresseVetIkke: ESvar;
+    adresse: string | AlternativtSvarForInput.UKJENT;
+    adresseVetIkke: ESvar;
 }
 
 export interface IVelgBarnFeltTyper {

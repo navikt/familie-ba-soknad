@@ -308,9 +308,9 @@ export const genererOppdaterteBarn = (
                 ...barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
                 svar: pågåendeSøknadHvilketLand,
             },
-            [barnDataKeySpørsmål.barnetsAdresse]: {
-                ...barn[barnDataKeySpørsmål.barnetsAdresse],
-                svar: barn.erFosterbarn.svar === ESvar.JA ? barn.barnetsAdresse.svar : '',
+            [barnDataKeySpørsmål.adresse]: {
+                ...barn[barnDataKeySpørsmål.adresse],
+                svar: barn.erFosterbarn.svar === ESvar.JA ? barn.adresse.svar : '',
             },
         };
 
@@ -449,8 +449,8 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: EøsBarnSpørsmålId.borMedAndreForelder,
             svar: null,
         },
-        [barnDataKeySpørsmål.barnetsAdresse]: {
-            id: EøsBarnSpørsmålId.barnetsAdresse,
+        [barnDataKeySpørsmål.adresse]: {
+            id: EøsBarnSpørsmålId.adresse,
             svar: '',
         },
     };

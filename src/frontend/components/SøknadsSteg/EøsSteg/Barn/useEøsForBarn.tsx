@@ -223,9 +223,9 @@ export const useEøsForBarn = (
     });
 
     /*--- BARNETS ADRESSE ---*/
-    const barnetsAdresseVetIkke = useFelt<ESvar>({
-        verdi: formaterVerdiForCheckbox(gjeldendeBarn[barnDataKeySpørsmål.barnetsAdresse].svar),
-        feltId: EøsBarnSpørsmålId.barnetsAdresseVetIkke,
+    const adresseVetIkke = useFelt<ESvar>({
+        verdi: formaterVerdiForCheckbox(gjeldendeBarn[barnDataKeySpørsmål.adresse].svar),
+        feltId: EøsBarnSpørsmålId.adresseVetIkke,
         skalFeltetVises: () =>
             (borMedAndreForelder.verdi === ESvar.JA &&
                 skalSkjuleAndreForelderFelt(gjeldendeBarn)) ||
@@ -233,9 +233,9 @@ export const useEøsForBarn = (
         avhengigheter: { borMedAndreForelder },
     });
 
-    const barnetsAdresse = useInputFeltMedUkjent({
-        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.barnetsAdresse],
-        avhengighet: barnetsAdresseVetIkke,
+    const adresse = useInputFeltMedUkjent({
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.adresse],
+        avhengighet: adresseVetIkke,
         feilmeldingSpråkId: 'eøs.hvorborbarn.feilmelding',
         språkVerdier: {
             barn: barnetsNavnValue(gjeldendeBarn, intl),
@@ -428,9 +428,9 @@ export const useEøsForBarn = (
                 ...barn.borMedAndreForelder,
                 svar: borMedAndreForelder.verdi,
             },
-            barnetsAdresse: {
-                ...barn.barnetsAdresse,
-                svar: svarForSpørsmålMedUkjent(barnetsAdresseVetIkke, barnetsAdresse),
+            adresse: {
+                ...barn.adresse,
+                svar: svarForSpørsmålMedUkjent(adresseVetIkke, adresse),
             },
             omsorgsperson: borMedAndreForelder.verdi === ESvar.NEI ? genererOmsorgsperson() : null,
             ...(!!barn.andreForelder &&
@@ -496,8 +496,8 @@ export const useEøsForBarn = (
             omsorgspersonIdNummer,
             omsorgspersonIdNummerVetIkke,
             omsorgspersonAdresse,
-            barnetsAdresse,
-            barnetsAdresseVetIkke,
+            adresse,
+            adresseVetIkke,
         },
         skjemanavn: 'eøsForBarn',
     });
