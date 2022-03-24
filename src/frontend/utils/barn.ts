@@ -105,6 +105,10 @@ export const genererAndreForelder = (
                 ? EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke
                 : EøsBarnSpørsmålId.andreForelderAndreUtbetalinger,
         },
+        [andreForelderDataKeySpørsmål.adresse]: {
+            svar: andreForelder?.adresse.svar ?? '',
+            id: EøsBarnSpørsmålId.andreForelderAdresse,
+        },
         utvidet: {
             ...andreForelder?.utvidet,
             [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: {

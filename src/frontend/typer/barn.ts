@@ -25,6 +25,7 @@ export enum andreForelderDataKeySpørsmål {
     skriftligAvtaleOmDeltBosted = 'skriftligAvtaleOmDeltBosted',
     søkerHarBoddMedAndreForelder = 'søkerHarBoddMedAndreForelder',
     søkerFlyttetFraAndreForelderDato = 'søkerFlyttetFraAndreForelderDato',
+    adresse = 'adresse',
 
     // EØS
     pensjonNorge = 'pensjonNorge',
@@ -79,6 +80,9 @@ export interface IAndreForelder {
     pensjonsperioderNorge: IPensjonsperiode[];
     andreUtbetalingsperioder: IUtbetalingsperiode[];
     idNummer: IIdNummer[];
+    [andreForelderDataKeySpørsmål.adresse]: ISøknadSpørsmål<
+        string | AlternativtSvarForInput.UKJENT
+    >;
     [andreForelderDataKeySpørsmål.pensjonNorge]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.arbeidNorge]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.andreUtbetalinger]: ISøknadSpørsmål<ESvar | null>;

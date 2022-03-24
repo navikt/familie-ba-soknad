@@ -9,6 +9,7 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
+import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
 import { barnetsNavnValue } from '../../../../../utils/barn';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
@@ -16,7 +17,7 @@ import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensj
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
 import IdNummerForAndreForelder from '../../../EøsSteg/Barn/IdNummerForAndreForelder';
-import { eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
@@ -27,10 +28,11 @@ const EøsAndreForelderOppsummering: React.FC<{
     settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
 }> = ({ barn, andreForelder, skjema, settIdNummerFelter }) => {
     const intl = useIntl();
+    const { formatMessage } = intl;
     const barnetsNavn = barnetsNavnValue(barn, intl);
 
     const jaNeiSpmOppsummering = (andreForelderDataKeySpm: andreForelderDataKeySpørsmål) =>
-        barn.andreForelder ? (
+        barn.andreForelder && barn.andreForelder[andreForelderDataKeySpm].svar ? (
             <OppsummeringFelt
                 tittel={
                     <SpråkTekst
@@ -44,12 +46,33 @@ const EøsAndreForelderOppsummering: React.FC<{
 
     return (
         <>
-            <IdNummerForAndreForelder
-                skjema={skjema}
-                barn={barn}
-                settIdNummerFelter={settIdNummerFelter}
-                lesevisning={true}
-            />
+            <StyledOppsummeringsFeltGruppe>
+                <IdNummerForAndreForelder
+                    skjema={skjema}
+                    barn={barn}
+                    settIdNummerFelter={settIdNummerFelter}
+                    lesevisning={true}
+                />
+                {andreForelder.adresse.svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={eøsBarnSpørsmålSpråkId[andreForelder.adresse.id]}
+                                values={{ barn: barnetsNavn }}
+                            />
+                        }
+                        søknadsvar={
+                            andreForelder.adresse.svar === AlternativtSvarForInput.UKJENT
+                                ? formatMessage({
+                                      id: eøsBarnSpørsmålSpråkId[
+                                          EøsBarnSpørsmålId.andreForelderAdresseVetIkke
+                                      ],
+                                  })
+                                : andreForelder.adresse.svar
+                        }
+                    />
+                )}
+            </StyledOppsummeringsFeltGruppe>
             <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.arbeidNorge)}
                 {andreForelder.arbeidsperioderNorge.map((arbeidsperiode, index) => (

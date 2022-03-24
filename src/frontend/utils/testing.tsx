@@ -300,6 +300,10 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     borMedSøker: true,
                 }),
                 andreForelder: {
+                    adresse: {
+                        id: EøsBarnSpørsmålId.andreForelderAdresse,
+                        svar: AlternativtSvarForInput.UKJENT,
+                    },
                     andreUtbetalingsperioder: [],
                     arbeidsperioderNorge: [],
                     pensjonsperioderUtland: [],

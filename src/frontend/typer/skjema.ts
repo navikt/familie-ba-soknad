@@ -130,6 +130,8 @@ export interface IEøsForBarnFeltTyper {
     andreForelderArbeidsperioderNorge: IArbeidsperiode[];
     andreForelderAndreUtbetalinger: ESvar | null;
     andreForelderAndreUtbetalingsperioder: IUtbetalingsperiode[];
+    andreForelderAdresse: string | AlternativtSvarForInput.UKJENT;
+    andreForelderAdresseVetIkke: ESvar;
     søkersSlektsforhold: Slektsforhold | '';
     søkersSlektsforholdSpesifisering: string;
     borMedAndreForelder: ESvar | null;

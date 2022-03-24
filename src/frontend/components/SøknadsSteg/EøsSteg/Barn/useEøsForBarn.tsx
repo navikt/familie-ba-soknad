@@ -246,6 +246,19 @@ export const useEøsForBarn = (
     });
 
     /*--- ANDRE FORELDER ---*/
+    const andreForelderAdresseVetIkke = useFelt<ESvar>({
+        verdi: formaterVerdiForCheckbox(andreForelder?.adresse.svar),
+        feltId: EøsBarnSpørsmålId.andreForelderAdresseVetIkke,
+        skalFeltetVises: () => !skalSkjuleAndreForelderFelt(gjeldendeBarn),
+    });
+
+    const andreForelderAdresse = useInputFeltMedUkjent({
+        søknadsfelt: andreForelder && andreForelder[andreForelderDataKeySpørsmål.adresse],
+        avhengighet: andreForelderAdresseVetIkke,
+        feilmeldingSpråkId: 'eøs-om-barn.andreforelderoppholdssted.feilmelding',
+        språkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        skalVises: !skalSkjuleAndreForelderFelt(gjeldendeBarn),
+    });
 
     const andreForelderArbeidNorge = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidNorge],
@@ -358,6 +371,10 @@ export const useEøsForBarn = (
                 idnummer:
                     trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
             })),
+            adresse: {
+                ...andreForelder[andreForelderDataKeySpørsmål.adresse],
+                svar: svarForSpørsmålMedUkjent(andreForelderAdresseVetIkke, andreForelderAdresse),
+            },
         },
     });
 
@@ -467,6 +484,8 @@ export const useEøsForBarn = (
             andreForelderAndreUtbetalingsperioder,
             andreForelderArbeidNorge,
             andreForelderArbeidsperioderNorge,
+            andreForelderAdresse,
+            andreForelderAdresseVetIkke,
             søkersSlektsforhold,
             søkersSlektsforholdSpesifisering,
             borMedAndreForelder,
