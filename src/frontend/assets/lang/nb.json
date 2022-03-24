@@ -58,6 +58,7 @@
   "eøs-om-barn.andreforelderidnummer.feilmelding": "Du må oppgi {barn} sin andre forelder sitt id-nummer i hjemlandet for å gå videre",
   "eøs-om-barn.andreforelderidnummer.spm": "Hva er id-nummeret til {barn} sin andre forelder i {land}?",
   "eøs-om-barn.andreforelderoppholdssted.feilmelding": "Du må oppgi hvor {barn} sin andre forelder bor i perioden det søkes om barnetrygd for å gå videre",
+  "eøs-om-barn.andreforelderoppholdssted.sjekkboks": "Jeg vet ikke hvor den andre forelderen bor",
   "eøs-om-barn.andreforelderoppholdssted.spm": "Hvor bor {barn} sin andre forelder i perioden det søkes om barnetrygd?",
   "eøs-om-barn.andreforelderpensjon.feilmelding": "Du må oppgi om {barn} sin andre forelder får eller har fått pensjon fra Norge for å gå videre",
   "eøs-om-barn.andreforelderpensjon.spm": "Får eller har {barn} sin andre forelder fått pensjon fra Norge?",

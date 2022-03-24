@@ -58,6 +58,7 @@
   "eøs-om-barn.andreforelderidnummer.feilmelding": "You must state {barn}'s other parent's ID-number in their home country in order to be able to proceed",
   "eøs-om-barn.andreforelderidnummer.spm": "What is the ID-number of {barn}'s other parent in {land}?",
   "eøs-om-barn.andreforelderoppholdssted.feilmelding": "You must state where {barn}'s other parent is living during the period for which you are applying for child benefit in order to be able to proceed",
+  "eøs-om-barn.andreforelderoppholdssted.sjekkboks": "I don't know where the other parent is living",
   "eøs-om-barn.andreforelderoppholdssted.spm": "Where is {barn}'s other parent living during the period for which you are applying for child benefit?",
   "eøs-om-barn.andreforelderpensjon.feilmelding": "You must state whether {barn}'s other parent receives or has received a pension from Norway in order to be able to proceed",
   "eøs-om-barn.andreforelderpensjon.spm": "Does {barn}'s other parent receive, or have they received a pension from Norway?",
