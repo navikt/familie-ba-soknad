@@ -250,7 +250,9 @@ export const useEøsForBarn = (
     const andreForelderAdresseVetIkke = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(andreForelder?.adresse.svar),
         feltId: EøsBarnSpørsmålId.andreForelderAdresseVetIkke,
-        skalFeltetVises: () => !skalSkjuleAndreForelderFelt(gjeldendeBarn),
+        skalFeltetVises: () =>
+            gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar !== ESvar.JA &&
+            !skalSkjuleAndreForelderFelt(gjeldendeBarn),
     });
 
     const andreForelderAdresse = useInputFeltMedUkjent({
@@ -258,7 +260,9 @@ export const useEøsForBarn = (
         avhengighet: andreForelderAdresseVetIkke,
         feilmeldingSpråkId: 'eøs-om-barn.andreforelderoppholdssted.feilmelding',
         språkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
-        skalVises: !skalSkjuleAndreForelderFelt(gjeldendeBarn),
+        skalVises:
+            gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar !== ESvar.JA &&
+            !skalSkjuleAndreForelderFelt(gjeldendeBarn),
     });
 
     const andreForelderArbeidNorge = useJaNeiSpmFelt({
