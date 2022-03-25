@@ -21,6 +21,7 @@ import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/barn';
 import { preferredAxios } from './axios';
+import { useFeatureToggles } from './FeatureToggleContext';
 import { useInnloggetContext } from './InnloggetContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 import { hentSluttbrukerFraPdl } from './pdl';
@@ -39,6 +40,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [nåværendeRoute, settNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
     const { modellVersjon } = Miljø();
     const [sisteModellVersjon, settSisteModellVersjon] = useState(modellVersjon);
+    const { toggles } = useFeatureToggles();
     const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
 
     useEffect(() => {
@@ -105,6 +107,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         const barnetrygd: IMellomlagretBarnetrygd = {
             søknad: søknad,
             modellVersjon: Miljø().modellVersjon,
+            eøsToggleErPå: toggles.EØS_KOMPLETT,
             sisteUtfylteStegIndex: sisteUtfylteStegIndex,
             locale: valgtLocale,
         };

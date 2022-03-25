@@ -10,6 +10,7 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import Miljø from '../../../Miljø';
 import { RouteEnum } from '../../../typer/routes';
@@ -40,6 +41,7 @@ const Forside: React.FC = () => {
     const { formatMessage } = useIntl();
 
     const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad, settNåværendeRoute } = useApp();
+    const { toggles } = useFeatureToggles();
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
 
@@ -50,7 +52,8 @@ const Forside: React.FC = () => {
     const kanFortsettePåSøknad =
         mellomlagretVerdi &&
         mellomlagretVerdi.modellVersjon === Miljø().modellVersjon &&
-        mellomlagretVerdi.søknad.søknadstype === søknad.søknadstype;
+        mellomlagretVerdi.søknad.søknadstype === søknad.søknadstype &&
+        mellomlagretVerdi.eøsToggleErPå === toggles.EØS_KOMPLETT;
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 
