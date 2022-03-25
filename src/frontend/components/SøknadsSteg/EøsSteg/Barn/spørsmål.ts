@@ -19,7 +19,7 @@ export enum EøsBarnSpørsmålId {
     idNummer = 'id-nummer',
     idNummerAndreForelder = 'id-nummer-andre-forelder',
     idNummerUkjent = 'id-nummer-ukjent',
-    barnetsAdresse = 'barnets-Adresse',
+    barnetsAdresse = 'barnets-adresse',
     barnetsAdresseVetIkke = 'barnets-adresse-vet-ikke',
 }
 
