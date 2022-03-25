@@ -308,6 +308,15 @@ export const genererOppdaterteBarn = (
                 ...barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
                 svar: pågåendeSøknadHvilketLand,
             },
+            [barnDataKeySpørsmål.adresse]: {
+                ...barn[barnDataKeySpørsmål.adresse],
+                svar:
+                    erFosterbarn ||
+                    (barn.andreForelder?.navn.svar === AlternativtSvarForInput.UKJENT &&
+                        barn.borMedAndreForelder.svar === ESvar.JA)
+                        ? barn.adresse.svar
+                        : '',
+            },
         };
 
         return { ...oppdatertBarn, triggetEøs: skalTriggeEøsForBarn(oppdatertBarn) };
@@ -444,6 +453,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         [barnDataKeySpørsmål.borMedAndreForelder]: {
             id: EøsBarnSpørsmålId.borMedAndreForelder,
             svar: null,
+        },
+        [barnDataKeySpørsmål.adresse]: {
+            id: EøsBarnSpørsmålId.barnetsAdresse,
+            svar: '',
         },
     };
 };
