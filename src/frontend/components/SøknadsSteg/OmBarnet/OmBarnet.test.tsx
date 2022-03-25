@@ -129,6 +129,10 @@ const jens = {
             svar: 'Oslogata 1',
         },
     },
+    adresse: {
+        id: 35,
+        svar: 'Osloveien',
+    },
 };
 const line = {
     navn: 'Line',
@@ -234,6 +238,10 @@ const line = {
             id: 32,
             svar: 'Oslogata 1',
         },
+    },
+    adresse: {
+        id: 35,
+        svar: 'Osloveien',
     },
 };
 

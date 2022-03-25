@@ -725,6 +725,15 @@ export const useOmBarnet = (
                 : [];
         const utenlandsperioder = registrerteUtenlandsperioder.verdi;
 
+        const borMedAndreForelder =
+            borFastMedSøker.verdi === ESvar.JA ? null : barn.borMedAndreForelder.svar;
+
+        const kanIkkeGiOpplysningerOmAndreForelder: boolean =
+            (barnMedSammeForelder?.andreForelder?.navn ??
+                trimWhiteSpace(
+                    svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
+                )) === AlternativtSvarForInput.UKJENT;
+
         return {
             ...barn,
             idNummer: filtrerteRelevanteIdNummerForBarn(
@@ -799,9 +808,18 @@ export const useOmBarnet = (
             },
             borMedAndreForelder: {
                 ...barn.borMedAndreForelder,
-                svar: borFastMedSøker.verdi === ESvar.JA ? null : barn.borMedAndreForelder.svar,
+                svar: borMedAndreForelder,
             },
             omsorgsperson: borFastMedSøker.verdi === ESvar.JA ? null : barn.omsorgsperson,
+
+            adresse: {
+                ...barn.adresse,
+                svar:
+                    barn.erFosterbarn.svar === ESvar.JA ||
+                    (borMedAndreForelder && kanIkkeGiOpplysningerOmAndreForelder)
+                        ? barn.adresse.svar
+                        : '',
+            },
             søkerForTidsrom: {
                 ...barn.søkerForTidsrom,
                 svar: søkerForTidsrom.verdi,
