@@ -94,11 +94,11 @@ export interface IAndreForelder {
 }
 
 export interface IOmsorgsperson {
-    omsorgspersonNavn: ISøknadSpørsmål<string>;
-    omsorgspersonSlektsforhold: ISøknadSpørsmål<Slektsforhold | ''>;
-    omsorgpersonSlektsforholdSpesifisering: ISøknadSpørsmål<string>;
-    omsorgspersonIdNummer: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
-    omsorgspersonAdresse: ISøknadSpørsmål<string>;
+    navn: ISøknadSpørsmål<string>;
+    slektsforhold: ISøknadSpørsmål<Slektsforhold | ''>;
+    slektsforholdSpesifisering: ISøknadSpørsmål<string>;
+    idNummer: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
+    adresse: ISøknadSpørsmål<string>;
 }
 
 export interface IBarnMedISøknad extends IBarn {
