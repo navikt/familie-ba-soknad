@@ -20,49 +20,43 @@ export const omsorgspersonTilISøknadsfeltV7 = (
     omsorgsperson: IOmsorgsperson,
     barn: IBarnMedISøknad
 ): IOmsorgspersonIKontraktFormatV7 => {
-    const {
-        omsorgspersonNavn,
-        omsorgspersonSlektsforhold,
-        omsorgpersonSlektsforholdSpesifisering,
-        omsorgspersonIdNummer,
-        omsorgspersonAdresse,
-    } = omsorgsperson;
+    const { navn, slektsforhold, slektsforholdSpesifisering, idNummer, adresse } = omsorgsperson;
     return {
-        omsorgspersonNavn: søknadsfeltBarn(
+        navn: søknadsfeltBarn(
             intl,
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonNavn),
-            sammeVerdiAlleSpråk(omsorgspersonNavn.svar),
+            sammeVerdiAlleSpråk(navn.svar),
             barn
         ),
 
-        omsorgspersonSlektsforhold: søknadsfeltBarn(
+        slektsforhold: søknadsfeltBarn(
             intl,
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonSlektsforhold),
-            hentTekster(toSlektsforholdSpråkId(omsorgspersonSlektsforhold.svar as Slektsforhold)),
+            hentTekster(toSlektsforholdSpråkId(slektsforhold.svar as Slektsforhold)),
             barn
         ),
 
-        omsorgpersonSlektsforholdSpesifisering: søknadsfeltBarn(
+        slektsforholdSpesifisering: søknadsfeltBarn(
             intl,
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering),
-            sammeVerdiAlleSpråk(omsorgpersonSlektsforholdSpesifisering.svar),
+            sammeVerdiAlleSpråk(slektsforholdSpesifisering.svar),
             barn
         ),
 
-        omsorgspersonIdNummer: søknadsfeltBarn(
+        idNummer: søknadsfeltBarn(
             intl,
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonIdNummer),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                omsorgspersonIdNummer.svar,
+                idNummer.svar,
                 eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke]
             ),
             barn
         ),
 
-        omsorgspersonAdresse: søknadsfeltBarn(
+        adresse: søknadsfeltBarn(
             intl,
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonAdresse),
-            sammeVerdiAlleSpråk(omsorgspersonAdresse.svar),
+            sammeVerdiAlleSpråk(adresse.svar),
             barn
         ),
     };

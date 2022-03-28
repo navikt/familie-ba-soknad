@@ -63,11 +63,11 @@ export interface ISøknadIKontraktBarnV7 {
 }
 
 export interface IOmsorgspersonIKontraktFormatV7 {
-    omsorgspersonNavn: ISøknadsfelt<string>;
-    omsorgspersonSlektsforhold: ISøknadsfelt<string>;
-    omsorgpersonSlektsforholdSpesifisering: ISøknadsfelt<string>;
-    omsorgspersonIdNummer: ISøknadsfelt<string>;
-    omsorgspersonAdresse: ISøknadsfelt<string>;
+    navn: ISøknadsfelt<string>;
+    slektsforhold: ISøknadsfelt<string>;
+    slektsforholdSpesifisering: ISøknadsfelt<string>;
+    idNummer: ISøknadsfelt<string>;
+    adresse: ISøknadsfelt<string>;
 }
 
 export interface IAndreForelderIKontraktFormatV7 {
