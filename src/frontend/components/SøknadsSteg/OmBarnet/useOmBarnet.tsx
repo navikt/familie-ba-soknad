@@ -37,7 +37,11 @@ import { IIdNummer } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer } from '../../../utils/adresse';
-import { barnetsNavnValue, filtrerteRelevanteIdNummerForBarn } from '../../../utils/barn';
+import {
+    barnetsNavnValue,
+    filtrerteRelevanteIdNummerForBarn,
+    genererInitiellAndreForelder,
+} from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
@@ -376,20 +380,6 @@ export const useOmBarnet = (
         sluttdatoAvgrensning: dagensDato(),
     });
 
-    //TODO: Vurder å gjør dette når vi setter søknaden i stedet for.
-    useEffect(() => {
-        if (andreForelderNavnUkjent.verdi === ESvar.JA) {
-            andreForelderFnr.validerOgSettFelt('');
-            andreForelderFnrUkjent.validerOgSettFelt(ESvar.NEI);
-            andreForelderFødselsdato.validerOgSettFelt('');
-            andreForelderFødselsdatoUkjent.validerOgSettFelt(ESvar.NEI);
-            andreForelderArbeidUtlandet.validerOgSettFelt(null);
-            andreForelderArbeidUtlandetHvilketLand.validerOgSettFelt('');
-            andreForelderPensjonUtland.validerOgSettFelt(null);
-            andreForelderPensjonHvilketLand.validerOgSettFelt('');
-        }
-    }, [andreForelderNavnUkjent.verdi]);
-
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandet],
         feilmeldingSpråkId:
@@ -726,100 +716,109 @@ export const useOmBarnet = (
 
     const genererOppdatertAndreForelder = (andreForelder: IAndreForelder): IAndreForelder => {
         const barnMedSammeForelder = annetBarnMedSammeForelder();
+        const andreForelderErDød = barn.andreForelderErDød.svar === ESvar.JA;
 
-        return barnMedSammeForelder?.andreForelder
-            ? {
-                  ...barnMedSammeForelder.andreForelder,
-                  skriftligAvtaleOmDeltBosted: {
-                      ...andreForelder.skriftligAvtaleOmDeltBosted,
-                      svar: skriftligAvtaleOmDeltBosted.verdi,
-                  },
-              }
-            : {
-                  ...andreForelder,
-                  idNummer: filtrerteRelevanteIdNummerForAndreForelder(andreForelder),
-                  navn: {
-                      ...andreForelder[andreForelderDataKeySpørsmål.navn],
-                      svar: trimWhiteSpace(
-                          svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
-                      ),
-                  },
-                  fnr: {
-                      ...andreForelder[andreForelderDataKeySpørsmål.fnr],
-                      svar: svarForSpørsmålMedUkjent(andreForelderFnrUkjent, andreForelderFnr),
-                  },
-                  fødselsdato: {
-                      ...andreForelder[andreForelderDataKeySpørsmål.fødselsdato],
-                      svar: svarForSpørsmålMedUkjent(
-                          andreForelderFødselsdatoUkjent,
-                          andreForelderFødselsdato
-                      ),
-                  },
-                  arbeidUtlandet: {
-                      ...andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet],
-                      svar: andreForelderArbeidUtlandet.verdi,
-                  },
-                  arbeidUtlandetHvilketLand: {
-                      ...andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand],
-                      svar: andreForelderArbeidUtlandetHvilketLand.verdi,
-                  },
-                  arbeidsperioderUtland:
-                      andreForelderArbeidUtlandet.verdi === ESvar.JA
-                          ? andreForelderArbeidsperioderUtland.verdi
-                          : [],
-                  pensjonUtland: {
-                      ...andreForelder[andreForelderDataKeySpørsmål.pensjonUtland],
-                      svar: andreForelderPensjonUtland.verdi,
-                  },
-                  pensjonHvilketLand: {
-                      ...andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand],
-                      svar: andreForelderPensjonHvilketLand.verdi,
-                  },
-                  pensjonsperioderUtland:
-                      andreForelderPensjonUtland.verdi === ESvar.JA
-                          ? andreForelderPensjonsperioderUtland.verdi
-                          : [],
-                  skriftligAvtaleOmDeltBosted: {
-                      ...andreForelder.skriftligAvtaleOmDeltBosted,
-                      svar: skriftligAvtaleOmDeltBosted.verdi,
-                  },
-                  utvidet: {
-                      søkerHarBoddMedAndreForelder: {
-                          ...andreForelder.utvidet.søkerHarBoddMedAndreForelder,
-                          svar: søkerHarBoddMedAndreForelder.verdi,
-                      },
-                      søkerFlyttetFraAndreForelderDato: {
-                          ...andreForelder.utvidet.søkerFlyttetFraAndreForelderDato,
-                          svar: svarForSpørsmålMedUkjent(
-                              borMedAndreForelderCheckbox,
-                              søkerFlyttetFraAndreForelderDato
-                          ),
-                      },
-                  },
-                  ...(barn.sammeForelderSomAnnetBarnMedId.svar !==
-                      sammeForelderSomAnnetBarn.verdi && {
-                      pensjonNorge: {
-                          ...andreForelder[andreForelderDataKeySpørsmål.pensjonNorge],
-                          svar: null,
-                      },
-                      pensjonsperioderNorge: [],
-                      andreUtbetalinger: {
-                          ...andreForelder[andreForelderDataKeySpørsmål.andreUtbetalinger],
-                          svar: null,
-                      },
-                      andreUtbetalingsperioder: [],
-                      arbeidNorge: {
-                          ...andreForelder[andreForelderDataKeySpørsmål.arbeidNorge],
-                          svar: null,
-                      },
-                      arbeidsperioderNorge: [],
-                      idNummer: [],
-                      adresse: {
-                          ...andreForelder[andreForelderDataKeySpørsmål.adresse],
-                          svar: '',
-                      },
-                  }),
-              };
+        if (barnMedSammeForelder?.andreForelder) {
+            return {
+                ...barnMedSammeForelder.andreForelder,
+                skriftligAvtaleOmDeltBosted: {
+                    ...andreForelder.skriftligAvtaleOmDeltBosted,
+                    svar: skriftligAvtaleOmDeltBosted.verdi,
+                },
+            };
+        } else if (kanIkkeGiOpplysningerOmAndreForelder()) {
+            return {
+                ...genererInitiellAndreForelder(null, andreForelderErDød),
+                kanIkkeGiOpplysninger: true,
+                navn: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.navn],
+                    svar: trimWhiteSpace(
+                        svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
+                    ),
+                },
+                skriftligAvtaleOmDeltBosted: {
+                    ...andreForelder.skriftligAvtaleOmDeltBosted,
+                    svar: skriftligAvtaleOmDeltBosted.verdi,
+                },
+                utvidet: {
+                    søkerHarBoddMedAndreForelder: {
+                        ...andreForelder.utvidet.søkerHarBoddMedAndreForelder,
+                        svar: søkerHarBoddMedAndreForelder.verdi,
+                    },
+                    søkerFlyttetFraAndreForelderDato: {
+                        ...andreForelder.utvidet.søkerFlyttetFraAndreForelderDato,
+                        svar: svarForSpørsmålMedUkjent(
+                            borMedAndreForelderCheckbox,
+                            søkerFlyttetFraAndreForelderDato
+                        ),
+                    },
+                },
+            };
+        } else {
+            return {
+                ...andreForelder,
+                kanIkkeGiOpplysninger: false,
+                idNummer: filtrerteRelevanteIdNummerForAndreForelder(andreForelder),
+                navn: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.navn],
+                    svar: trimWhiteSpace(
+                        svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
+                    ),
+                },
+                fnr: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.fnr],
+                    svar: svarForSpørsmålMedUkjent(andreForelderFnrUkjent, andreForelderFnr),
+                },
+                fødselsdato: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.fødselsdato],
+                    svar: svarForSpørsmålMedUkjent(
+                        andreForelderFødselsdatoUkjent,
+                        andreForelderFødselsdato
+                    ),
+                },
+                arbeidUtlandet: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet],
+                    svar: andreForelderArbeidUtlandet.verdi,
+                },
+                arbeidUtlandetHvilketLand: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand],
+                    svar: andreForelderArbeidUtlandetHvilketLand.verdi,
+                },
+                arbeidsperioderUtland:
+                    andreForelderArbeidUtlandet.verdi === ESvar.JA
+                        ? andreForelderArbeidsperioderUtland.verdi
+                        : [],
+                pensjonUtland: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.pensjonUtland],
+                    svar: andreForelderPensjonUtland.verdi,
+                },
+                pensjonHvilketLand: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand],
+                    svar: andreForelderPensjonHvilketLand.verdi,
+                },
+                pensjonsperioderUtland:
+                    andreForelderPensjonUtland.verdi === ESvar.JA
+                        ? andreForelderPensjonsperioderUtland.verdi
+                        : [],
+                skriftligAvtaleOmDeltBosted: {
+                    ...andreForelder.skriftligAvtaleOmDeltBosted,
+                    svar: skriftligAvtaleOmDeltBosted.verdi,
+                },
+                utvidet: {
+                    søkerHarBoddMedAndreForelder: {
+                        ...andreForelder.utvidet.søkerHarBoddMedAndreForelder,
+                        svar: søkerHarBoddMedAndreForelder.verdi,
+                    },
+                    søkerFlyttetFraAndreForelderDato: {
+                        ...andreForelder.utvidet.søkerFlyttetFraAndreForelderDato,
+                        svar: svarForSpørsmålMedUkjent(
+                            borMedAndreForelderCheckbox,
+                            søkerFlyttetFraAndreForelderDato
+                        ),
+                    },
+                },
+            };
+        }
     };
 
     const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
@@ -909,7 +908,6 @@ export const useOmBarnet = (
                 svar: borMedAndreForelder,
             },
             omsorgsperson: borFastMedSøker.verdi === ESvar.JA ? null : barn.omsorgsperson,
-
             adresse: {
                 ...barn.adresse,
                 svar:

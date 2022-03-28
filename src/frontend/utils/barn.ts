@@ -32,11 +32,12 @@ export const genererSvarForOppfølgningspørsmålBarn = (
     return svarPåGrunnSpørsmål === ESvar.JA ? søknadsfelt.svar : nullstillingsVerdi;
 };
 
-export const genererAndreForelder = (
+export const genererInitiellAndreForelder = (
     andreForelder: IAndreForelder | null,
     andreForelderErDød: boolean
 ): IAndreForelder => {
     return {
+        kanIkkeGiOpplysninger: false,
         arbeidsperioderNorge: andreForelder?.arbeidsperioderNorge ?? [],
         arbeidsperioderUtland: andreForelder?.arbeidsperioderUtland ?? [],
         andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
@@ -188,7 +189,7 @@ export const genererOppdaterteBarn = (
             eøsBarnetrygdsperioder,
             andreForelder: erFosterbarn
                 ? null
-                : genererAndreForelder(barn.andreForelder, andreForelderErDød),
+                : genererInitiellAndreForelder(barn.andreForelder, andreForelderErDød),
             omsorgsperson:
                 oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød
                     ? null

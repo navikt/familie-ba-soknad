@@ -66,6 +66,7 @@ export enum barnDataKeySpørsmål {
 export interface IAndreForelder {
     arbeidsperioderUtland: IArbeidsperiode[];
     pensjonsperioderUtland: IPensjonsperiode[];
+    kanIkkeGiOpplysninger: boolean;
     [andreForelderDataKeySpørsmål.navn]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
     [andreForelderDataKeySpørsmål.fnr]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
     [andreForelderDataKeySpørsmål.fødselsdato]: ISøknadSpørsmål<DatoMedUkjent>;
