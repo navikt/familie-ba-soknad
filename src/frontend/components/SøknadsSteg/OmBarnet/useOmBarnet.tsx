@@ -79,14 +79,14 @@ export const useOmBarnet = (
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
 
     const { toggles } = useFeatureToggles();
-    const barn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
+    const gjeldendeBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
 
-    if (!barn) {
+    if (!gjeldendeBarn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
     }
 
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
-        barn.utenlandsperioder
+        gjeldendeBarn.utenlandsperioder
     );
 
     const skalFeltetVises = (
@@ -95,24 +95,26 @@ export const useOmBarnet = (
             barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId
         >
     ) => {
-        return barn[søknadsdataFelt].svar === ESvar.JA;
+        return gjeldendeBarn[søknadsdataFelt].svar === ESvar.JA;
     };
 
     const andreBarnSomErFyltUt = søknad.barnInkludertISøknaden.filter(
         barnISøknad =>
-            barnISøknad.barnErFyltUt && barnISøknad.id !== barn.id && !!barnISøknad.andreForelder
+            barnISøknad.barnErFyltUt &&
+            barnISøknad.id !== gjeldendeBarn.id &&
+            !!barnISøknad.andreForelder
     );
 
     /*---INSTITUSJON---*/
 
     const institusjonIUtlandCheckbox = useFelt<ESvar>({
-        verdi: barn[barnDataKeySpørsmål.institusjonIUtland].svar,
+        verdi: gjeldendeBarn[barnDataKeySpørsmål.institusjonIUtland].svar,
         feltId: OmBarnetSpørsmålsId.institusjonIUtland,
         skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
     });
 
     const institusjonsnavn = useInputFelt({
-        søknadsfelt: barn[barnDataKeySpørsmål.institusjonsnavn],
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.institusjonsnavn],
         feilmeldingSpråkId: 'ombarnet.institusjon.navn.feilmelding',
         skalVises:
             skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
@@ -120,7 +122,7 @@ export const useOmBarnet = (
     });
 
     const institusjonsadresse = useInputFelt({
-        søknadsfelt: barn[barnDataKeySpørsmål.institusjonsadresse],
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.institusjonsadresse],
         feilmeldingSpråkId: 'ombarnet.institusjon.adresse.feilmelding',
         skalVises:
             skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
@@ -128,8 +130,8 @@ export const useOmBarnet = (
     });
 
     const institusjonspostnummer = useFelt<string>({
-        verdi: barn[barnDataKeySpørsmål.institusjonspostnummer].svar,
-        feltId: barn[barnDataKeySpørsmål.institusjonspostnummer].id,
+        verdi: gjeldendeBarn[barnDataKeySpørsmål.institusjonspostnummer].svar,
+        feltId: gjeldendeBarn[barnDataKeySpørsmål.institusjonspostnummer].id,
         valideringsfunksjon: felt =>
             erNorskPostnummer(trimWhiteSpace(felt.verdi))
                 ? ok(felt)
@@ -150,7 +152,7 @@ export const useOmBarnet = (
     });
 
     const institusjonOppholdStartdato = useDatovelgerFelt({
-        søknadsfelt: barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdStartdato],
         skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
         feilmeldingSpråkId: 'ombarnet.institusjon.startdato.feilmelding',
         sluttdatoAvgrensning: dagensDato(),
@@ -158,7 +160,7 @@ export const useOmBarnet = (
 
     const institusjonOppholdSluttVetIkke = useFelt<ESvar>({
         verdi:
-            barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar ===
+            gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar ===
             AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
@@ -166,11 +168,11 @@ export const useOmBarnet = (
     });
 
     const institusjonOppholdSluttdato = useDatovelgerFeltMedUkjent({
-        feltId: barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].id,
+        feltId: gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].id,
         initiellVerdi:
-            barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar !==
+            gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar !==
             AlternativtSvarForInput.UKJENT
-                ? barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
+                ? gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
                 : '',
         vetIkkeCheckbox: institusjonOppholdSluttVetIkke,
         feilmeldingSpråkId: 'ombarnet.institusjon.sluttdato.feilmelding',
@@ -183,7 +185,7 @@ export const useOmBarnet = (
 
     const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
         feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
-        verdi: barn.utenlandsperioder,
+        verdi: gjeldendeBarn.utenlandsperioder,
         valideringsfunksjon: felt => {
             return felt.verdi.length
                 ? ok(felt)
@@ -197,9 +199,9 @@ export const useOmBarnet = (
     }, [utenlandsperioder]);
 
     const planleggerÅBoINorge12Mnd = useJaNeiSpmFelt({
-        søknadsfelt: barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
         feilmeldingSpråkId: 'ombarnet.oppholdtsammenhengende.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(barn, intl) },
+        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
         skalSkjules:
             !skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge) ||
             flyttetPermanentFraNorge(utenlandsperioder) ||
@@ -218,7 +220,7 @@ export const useOmBarnet = (
 
     /*--- PÅGÅENDE SØKNAD BARNETRYGD FRA ANNET EØSLAND ---*/
     const pågåendeSøknadFraAnnetEøsLand = useJaNeiSpmFelt({
-        søknadsfelt: barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
         feilmeldingSpråkId: 'ombarnet.pågåendesøknad.feilmelding',
         skalSkjules:
             !toggles.EØS_KOMPLETT ||
@@ -226,7 +228,7 @@ export const useOmBarnet = (
     });
 
     const pågåendeSøknadHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt: barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
         feilmeldingSpråkId: 'ombarnet.hvilketlandsøkt.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: pågåendeSøknadFraAnnetEøsLand,
@@ -236,7 +238,7 @@ export const useOmBarnet = (
     /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
 
     const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt({
-        søknadsfelt: barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
         feilmeldingSpråkId: 'ombarnet.barnetrygd-eøs.land.feilmelding',
         skalFeltetVises:
             skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland) && !toggles.EØS_KOMPLETT,
@@ -245,7 +247,7 @@ export const useOmBarnet = (
     /*--- EØS SPØRSMÅL MOTTAR BARNETRYGD ---*/
 
     const mottarEllerMottokEøsBarnetrygd = useJaNeiSpmFelt({
-        søknadsfelt: barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
         feilmeldingSpråkId: 'ombarnet.fårellerharsøktbarnetrygdeøs.feilmelding',
         skalSkjules:
             !toggles.EØS_KOMPLETT ||
@@ -257,7 +259,7 @@ export const useOmBarnet = (
         leggTilPeriode: leggTilBarnetrygdsperiode,
         registrertePerioder: registrerteEøsBarnetrygdsperioder,
     } = usePerioder<IEøsBarnetrygdsperiode>(
-        barn.eøsBarnetrygdsperioder,
+        gjeldendeBarn.eøsBarnetrygdsperioder,
         { mottarEllerMottokEøsBarnetrygd },
         avhengigheter =>
             avhengigheter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
@@ -272,13 +274,13 @@ export const useOmBarnet = (
     );
 
     /*--- ANDRE FORELDER ---*/
-    const andreForelder = barn.andreForelder;
+    const andreForelder = gjeldendeBarn.andreForelder;
 
     const sammeForelderSomAnnetBarn = useFelt<
         BarnetsId | AlternativtSvarForInput.ANNEN_FORELDER | null
     >({
         feltId: OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn,
-        verdi: barn[barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId].svar,
+        verdi: gjeldendeBarn[barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId].svar,
         valideringsfunksjon: (felt: FeltState<string | null>) => {
             return felt.verdi !== null
                 ? ok(felt)
@@ -286,13 +288,14 @@ export const useOmBarnet = (
                       felt,
                       <SpråkTekst
                           id={'ombarnet.hvemerandreforelder.feilmelding'}
-                          values={{ barn: barnetsNavnValue(barn, intl) }}
+                          values={{ barn: barnetsNavnValue(gjeldendeBarn, intl) }}
                       />
                   );
         },
         skalFeltetVises: () =>
             !!andreForelder &&
-            søknad.barnInkludertISøknaden.find(barn => barn.andreForelder)?.id !== barn.id &&
+            søknad.barnInkludertISøknaden.find(barn => barn.andreForelder)?.id !==
+                gjeldendeBarn.id &&
             andreBarnSomErFyltUt.length > 0,
     });
 
@@ -383,7 +386,7 @@ export const useOmBarnet = (
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandet],
         feilmeldingSpråkId:
-            barn.andreForelderErDød.svar === ESvar.JA
+            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andreforelder-arbeidutland.feilmelding'
                 : 'ombarnet.andre-forelder.arbeid-utland.feilmelding',
         avhengigheter: {
@@ -399,13 +402,13 @@ export const useOmBarnet = (
                     : undefined,
         },
         skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
+        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
     });
 
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand],
         feilmeldingSpråkId:
-            barn.andreForelderErDød.svar === ESvar.JA
+            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
                 : 'ombarnet.andre-forelder.arbeid-utland.land.feilmelding',
         avhengigSvarCondition: ESvar.JA,
@@ -436,7 +439,7 @@ export const useOmBarnet = (
     const andreForelderPensjonUtland = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonUtland],
         feilmeldingSpråkId:
-            barn.andreForelderErDød.svar === ESvar.JA
+            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andre-forelder.utenlandspensjon.feilmelding'
                 : 'ombarnet.andre-forelder.utenlandspensjon.feilmelding',
         avhengigheter: {
@@ -452,13 +455,13 @@ export const useOmBarnet = (
                     : undefined,
         },
         skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
+        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
     });
 
     const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand],
         feilmeldingSpråkId:
-            barn.andreForelderErDød.svar === ESvar.JA
+            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andre-forelder.utenlandspensjon.land.feilmelding'
                 : 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
         avhengigSvarCondition: ESvar.JA,
@@ -489,22 +492,23 @@ export const useOmBarnet = (
 
     /*--- BOSTED ---*/
     const borFastMedSøker = useJaNeiSpmFelt({
-        søknadsfelt: barn[barnDataKeySpørsmål.borFastMedSøker],
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borFastMedSøker],
         feilmeldingSpråkId: 'ombarnet.bor-fast.feilmelding',
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
+        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
     });
 
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
         feilmeldingSpråkId: 'ombarnet.delt-bosted.feilmelding',
         skalSkjules:
-            !andreForelder || barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
+            !andreForelder ||
+            gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
+        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
     });
 
     /*--- SØKER FOR PERIODE ---*/
     const søkerForTidsrom = useJaNeiSpmFelt({
-        søknadsfelt: barn.søkerForTidsrom,
+        søknadsfelt: gjeldendeBarn.søkerForTidsrom,
         feilmeldingSpråkId: 'ombarnet.søker-for-periode.feilmelding',
         avhengigheter: {
             borFastMedSøker: { hovedSpørsmål: borFastMedSøker },
@@ -514,11 +518,11 @@ export const useOmBarnet = (
                   }
                 : undefined,
         },
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
+        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
     });
 
     const søkerForTidsromStartdato = useDatovelgerFeltMedJaNeiAvhengighet({
-        søknadsfelt: barn[barnDataKeySpørsmål.søkerForTidsromStartdato],
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.søkerForTidsromStartdato],
         avhengigSvarCondition: ESvar.JA,
         avhengighet: søkerForTidsrom,
         feilmeldingSpråkId: 'ombarnet.søker-for-periode.startdato.feilmelding',
@@ -527,7 +531,7 @@ export const useOmBarnet = (
 
     const søkerForTidsromSluttdatoVetIkke = useFelt<ESvar>({
         verdi:
-            barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar ===
+            gjeldendeBarn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar ===
             AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
@@ -543,12 +547,12 @@ export const useOmBarnet = (
     });
 
     const søkerForTidsromSluttdato = useDatovelgerFeltMedUkjent({
-        feltId: barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].id,
+        feltId: gjeldendeBarn[barnDataKeySpørsmål.søkerForTidsromSluttdato].id,
         initiellVerdi:
-            barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar ===
+            gjeldendeBarn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar ===
             AlternativtSvarForInput.UKJENT
                 ? ''
-                : barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
+                : gjeldendeBarn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar,
         vetIkkeCheckbox: søkerForTidsromSluttdatoVetIkke,
         feilmeldingSpråkId: 'ombarnet.søker-for-periode.sluttdato.feilmelding',
         skalFeltetVises: søkerForTidsrom.verdi === ESvar.JA,
@@ -574,7 +578,7 @@ export const useOmBarnet = (
                 : undefined,
         },
         skalSkjules: !erUtvidet || !andreForelder,
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(barn, intl) },
+        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
     });
 
     const borMedAndreForelderCheckbox = useFelt<ESvar>({
@@ -586,7 +590,7 @@ export const useOmBarnet = (
         feltId: OmBarnetSpørsmålsId.søkerBorMedAndreForelder,
         skalFeltetVises: avhengigheter => {
             return (
-                barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI &&
+                gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI &&
                 avhengigheter &&
                 avhengigheter.søkerHarBoddMedAndreForelder &&
                 avhengigheter.søkerHarBoddMedAndreForelder.verdi === ESvar.JA
@@ -610,7 +614,7 @@ export const useOmBarnet = (
         feilmeldingSpråkId: 'ombarnet.nårflyttetfra.feilmelding',
         skalFeltetVises:
             søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
-            barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI,
+            gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI,
         nullstillVedAvhengighetEndring: true,
         sluttdatoAvgrensning: dagensDato(),
     });
@@ -657,7 +661,7 @@ export const useOmBarnet = (
             borMedAndreForelderCheckbox,
             søkerFlyttetFraAndreForelderDato,
         },
-        skjemanavn: `om-barnet-${barn.id}`,
+        skjemanavn: `om-barnet-${gjeldendeBarn.id}`,
     });
 
     const genererOppdatertDokumentasjon = (
@@ -716,7 +720,7 @@ export const useOmBarnet = (
 
     const genererOppdatertAndreForelder = (andreForelder: IAndreForelder): IAndreForelder => {
         const barnMedSammeForelder = annetBarnMedSammeForelder();
-        const andreForelderErDød = barn.andreForelderErDød.svar === ESvar.JA;
+        const andreForelderErDød = gjeldendeBarn.andreForelderErDød.svar === ESvar.JA;
 
         if (barnMedSammeForelder?.andreForelder) {
             return {
@@ -942,17 +946,19 @@ export const useOmBarnet = (
     };
 
     useEffect(() => {
-        const oppdatertBarn: IBarnMedISøknad = genererOppdatertBarn(barn);
+        const oppdatertBarn: IBarnMedISøknad = genererOppdatertBarn(gjeldendeBarn);
         const skalTriggeEøs = skalTriggeEøsForBarn(oppdatertBarn);
         if (
-            (skalTriggeEøs && !barnSomTriggerEøs.includes(barn.id)) ||
-            (!skalTriggeEøs && barnSomTriggerEøs.includes(barn.id))
+            (skalTriggeEøs && !barnSomTriggerEøs.includes(gjeldendeBarn.id)) ||
+            (!skalTriggeEøs && barnSomTriggerEøs.includes(gjeldendeBarn.id))
         ) {
             settBarnSomTriggerEøs(prevState => {
                 if (skalTriggeEøs) {
-                    return prevState.concat(barn.id);
+                    return prevState.concat(gjeldendeBarn.id);
                 } else {
-                    return prevState.filter(barnSomTriggetEøsId => barnSomTriggetEøsId !== barn.id);
+                    return prevState.filter(
+                        barnSomTriggetEøsId => barnSomTriggetEøsId !== gjeldendeBarn.id
+                    );
                 }
             });
         }
@@ -967,7 +973,21 @@ export const useOmBarnet = (
     const oppdaterSøknad = () => {
         const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] =
             søknad.barnInkludertISøknaden.map(barn => {
-                const oppdatertBarn = barn.id === barnetsUuid ? genererOppdatertBarn(barn) : barn;
+                let oppdatertBarn;
+                if (barn === gjeldendeBarn) {
+                    oppdatertBarn = genererOppdatertBarn(barn);
+                } else if (barn.sammeForelderSomAnnetBarnMedId.svar === gjeldendeBarn.id) {
+                    oppdatertBarn = {
+                        ...barn,
+                        ...(!!gjeldendeBarn.andreForelder && {
+                            andreForelder: genererOppdatertAndreForelder(
+                                gjeldendeBarn.andreForelder
+                            ),
+                        }),
+                    };
+                } else {
+                    oppdatertBarn = barn;
+                }
                 return { ...oppdatertBarn, triggetEøs: skalTriggeEøsForBarn(oppdatertBarn) };
             });
 
@@ -980,21 +1000,22 @@ export const useOmBarnet = (
                         return genererOppdatertDokumentasjon(
                             dok,
                             skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && !!andreForelder,
-                            barn.id
+                            gjeldendeBarn.id
                         );
                     case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
                         return genererOppdatertDokumentasjon(
                             dok,
-                            borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker,
-                            barn.id
+                            borFastMedSøker.verdi === ESvar.JA && !gjeldendeBarn.borMedSøker,
+                            gjeldendeBarn.id
                         );
                     case Dokumentasjonsbehov.MEKLINGSATTEST:
                         return genererOppdatertDokumentasjon(
                             dok,
-                            barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI &&
+                            gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar ===
+                                ESvar.NEI &&
                                 søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
                                 borMedAndreForelderCheckbox.verdi === ESvar.NEI,
-                            barn.id
+                            gjeldendeBarn.id
                         );
                     case Dokumentasjonsbehov.SEPARERT_SKILT_ENKE:
                         return genererOppdatertDokumentasjon(
@@ -1003,7 +1024,7 @@ export const useOmBarnet = (
                                 (søknad.søker.sivilstand.type === ESivilstand.SKILT ||
                                     søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.SKILT) &&
                                 søknad.søknadstype === ESøknadstype.UTVIDET,
-                            barn.id
+                            gjeldendeBarn.id
                         );
                     default:
                         return dok;
@@ -1017,7 +1038,7 @@ export const useOmBarnet = (
         skjema,
         validerFelterOgVisFeilmelding: kanSendeSkjema,
         valideringErOk,
-        barn,
+        barn: gjeldendeBarn,
         andreBarnSomErFyltUt,
         validerAlleSynligeFelter,
         leggTilUtenlandsperiode,
