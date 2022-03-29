@@ -21,6 +21,7 @@ import { AlternativtSvarForInput, BarnetsId } from '../../../../typer/common';
 import { Slektsforhold } from '../../../../typer/kontrakt/barn';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
+import { valideringAdresse } from '../../../../utils/adresse';
 import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { formaterVerdiForCheckbox } from '../../../../utils/input';
@@ -205,12 +206,7 @@ export const useEøsForBarn = (
         søknadsfelt: omsorgsperson && omsorgsperson.adresse,
         feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonoppholdssted.feilmelding',
         skalVises: borMedAndreForelder.verdi === ESvar.NEI,
-        customValidering: (felt: FeltState<string>) => {
-            const verdi = trimWhiteSpace(felt.verdi);
-            return verdi.length < 100
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.fulladresse.format.feilmelding'} />);
-        },
+        customValidering: valideringAdresse,
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -236,12 +232,7 @@ export const useEøsForBarn = (
             (borMedAndreForelder.verdi === ESvar.JA &&
                 skalSkjuleAndreForelderFelt(gjeldendeBarn)) ||
             gjeldendeBarn.erFosterbarn.svar === ESvar.JA,
-        customValidering: (felt: FeltState<string>) => {
-            const verdi = trimWhiteSpace(felt.verdi);
-            return verdi.length < 100
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.fulladresse.format.feilmelding'} />);
-        },
+        customValidering: valideringAdresse,
     });
 
     /*--- ANDRE FORELDER ---*/
@@ -261,12 +252,7 @@ export const useEøsForBarn = (
         skalVises:
             gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar !== ESvar.JA &&
             !skalSkjuleAndreForelderFelt(gjeldendeBarn),
-        customValidering: (felt: FeltState<string>) => {
-            const verdi = trimWhiteSpace(felt.verdi);
-            return verdi.length < 100
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.fulladresse.format.feilmelding'} />);
-        },
+        customValidering: valideringAdresse,
     });
 
     const andreForelderArbeidNorge = useJaNeiSpmFelt({

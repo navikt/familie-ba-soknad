@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, Felt, FeltState, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
+import { feil, Felt, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
 import useInputFelt from '../../../../hooks/useInputFelt';
@@ -13,6 +13,7 @@ import { AlternativtSvarForInput } from '../../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { ISøker } from '../../../../typer/person';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
+import { valideringAdresse } from '../../../../utils/adresse';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
@@ -48,12 +49,7 @@ export const useEøsForSøker = (): {
         },
         feilmeldingSpråkId: 'eøs-om-deg.dittoppholdssted.feilmelding',
         skalVises: søker.triggetEøs,
-        customValidering: (felt: FeltState<string>) => {
-            const verdi = trimWhiteSpace(felt.verdi);
-            return verdi.length < 100
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.fulladresse.format.feilmelding'} />);
-        },
+        customValidering: valideringAdresse,
     });
 
     const arbeidINorge = useJaNeiSpmFelt({
