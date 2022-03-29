@@ -102,7 +102,10 @@ export const useOmBarnet = (
         barnISøknad =>
             barnISøknad.barnErFyltUt &&
             barnISøknad.id !== gjeldendeBarn.id &&
-            !!barnISøknad.andreForelder
+            !!barnISøknad.andreForelder &&
+            (barnISøknad.sammeForelderSomAnnetBarnMedId.svar ===
+                AlternativtSvarForInput.ANNEN_FORELDER ||
+                barnISøknad.sammeForelderSomAnnetBarnMedId.svar === null)
     );
 
     /*---INSTITUSJON---*/
