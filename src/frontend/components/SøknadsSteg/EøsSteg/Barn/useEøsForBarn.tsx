@@ -207,17 +207,9 @@ export const useEøsForBarn = (
         skalVises: borMedAndreForelder.verdi === ESvar.NEI,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
-            return verdi.match(/^[0-9A-Za-zæøåÆØÅ\s\-\\,\\.]{1,60}$/)
+            return verdi.length < 100
                 ? ok(felt)
-                : feil(
-                      felt,
-                      <SpråkTekst
-                          id={'felles.relasjon.format.feilmelding'}
-                          values={{
-                              barn: barnetsNavnValue(gjeldendeBarn, intl),
-                          }}
-                      />
-                  );
+                : feil(felt, <SpråkTekst id={'felles.fulladresse.format.feilmelding'} />);
         },
         nullstillVedAvhengighetEndring: true,
     });
@@ -248,15 +240,7 @@ export const useEøsForBarn = (
             const verdi = trimWhiteSpace(felt.verdi);
             return verdi.length < 100
                 ? ok(felt)
-                : feil(
-                      felt,
-                      <SpråkTekst
-                          id={'felles.fulladresse.format.feilmelding'}
-                          values={{
-                              barn: barnetsNavnValue(gjeldendeBarn, intl),
-                          }}
-                      />
-                  );
+                : feil(felt, <SpråkTekst id={'felles.fulladresse.format.feilmelding'} />);
         },
     });
 
@@ -281,15 +265,7 @@ export const useEøsForBarn = (
             const verdi = trimWhiteSpace(felt.verdi);
             return verdi.length < 100
                 ? ok(felt)
-                : feil(
-                      felt,
-                      <SpråkTekst
-                          id={'felles.fulladresse.format.feilmelding'}
-                          values={{
-                              barn: barnetsNavnValue(gjeldendeBarn, intl),
-                          }}
-                      />
-                  );
+                : feil(felt, <SpråkTekst id={'felles.fulladresse.format.feilmelding'} />);
         },
     });
 
