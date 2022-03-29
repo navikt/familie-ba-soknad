@@ -33,7 +33,7 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     const { soknadApi } = Miljø();
 
     useEffect(() => {
-        if (toggles.EØS_KOMPLETT === false) {
+        if (!toggles.EØS_KOMPLETT) {
             if (!eøsSkruddAv) {
                 const erEøs = søknad.erEøs;
                 settSøknad({
