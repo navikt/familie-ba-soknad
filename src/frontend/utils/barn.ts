@@ -14,7 +14,6 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../typer/barn';
-import { AlternativtSvarForInput } from '../typer/common';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
@@ -313,7 +312,7 @@ export const genererOppdaterteBarn = (
                 ...barn[barnDataKeySpørsmål.adresse],
                 svar:
                     erFosterbarn ||
-                    (barn.andreForelder?.navn.svar === AlternativtSvarForInput.UKJENT &&
+                    (barn.andreForelder?.kanIkkeGiOpplysninger &&
                         barn.borMedAndreForelder.svar === ESvar.JA)
                         ? barn.adresse.svar
                         : '',
@@ -491,11 +490,8 @@ export const barnetsNavnValue = (barn: IBarn, intl: IntlShape): string => {
 };
 
 export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
-    const kanIkkeGiOpplysningerOmAndreForelder =
-        barn.andreForelder?.[andreForelderDataKeySpørsmål.navn].svar ===
-        AlternativtSvarForInput.UKJENT;
     return (
-        kanIkkeGiOpplysningerOmAndreForelder ||
+        barn.andreForelder?.kanIkkeGiOpplysninger ||
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
     );
 };
