@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, Felt, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
+import { feil, Felt, FeltState, ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
 import useInputFelt from '../../../../hooks/useInputFelt';
@@ -48,6 +48,12 @@ export const useEøsForSøker = (): {
         },
         feilmeldingSpråkId: 'eøs-om-deg.dittoppholdssted.feilmelding',
         skalVises: søker.triggetEøs,
+        customValidering: (felt: FeltState<string>) => {
+            const verdi = trimWhiteSpace(felt.verdi);
+            return verdi.length < 100
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.fulladresse.format.feilmelding'} />);
+        },
     });
 
     const arbeidINorge = useJaNeiSpmFelt({

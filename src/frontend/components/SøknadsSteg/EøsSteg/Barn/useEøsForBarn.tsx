@@ -244,6 +244,20 @@ export const useEøsForBarn = (
             (borMedAndreForelder.verdi === ESvar.JA &&
                 skalSkjuleAndreForelderFelt(gjeldendeBarn)) ||
             gjeldendeBarn.erFosterbarn.svar === ESvar.JA,
+        customValidering: (felt: FeltState<string>) => {
+            const verdi = trimWhiteSpace(felt.verdi);
+            return verdi.length < 100
+                ? ok(felt)
+                : feil(
+                      felt,
+                      <SpråkTekst
+                          id={'felles.fulladresse.format.feilmelding'}
+                          values={{
+                              barn: barnetsNavnValue(gjeldendeBarn, intl),
+                          }}
+                      />
+                  );
+        },
     });
 
     /*--- ANDRE FORELDER ---*/
@@ -263,6 +277,20 @@ export const useEøsForBarn = (
         skalVises:
             gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar !== ESvar.JA &&
             !skalSkjuleAndreForelderFelt(gjeldendeBarn),
+        customValidering: (felt: FeltState<string>) => {
+            const verdi = trimWhiteSpace(felt.verdi);
+            return verdi.length < 100
+                ? ok(felt)
+                : feil(
+                      felt,
+                      <SpråkTekst
+                          id={'felles.fulladresse.format.feilmelding'}
+                          values={{
+                              barn: barnetsNavnValue(gjeldendeBarn, intl),
+                          }}
+                      />
+                  );
+        },
     });
 
     const andreForelderArbeidNorge = useJaNeiSpmFelt({

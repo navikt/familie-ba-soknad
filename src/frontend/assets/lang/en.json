@@ -155,6 +155,7 @@
   "felles.flereytelser.periode": "Benefit period {x}",
   "felles.fnr.feil-format.feilmelding": "You must provide a valid 11-digit Norwegian national identity number or D number",
   "felles.franårpensjon.spm": "From when have you received a pension?",
+  "felles.fulladresse.format.feilmelding": "The address has to be less than 100 characters",
   "felles.fødsels-eller-dnummer.label": "Norwegian National identity number or D number",
   "felles.fødselsdato-ukjent": "I don't know the date of birth",
   "felles.fødselsdato.feilmelding": "The date of birth has to be a valid date in the format dd.mm.yyyy",

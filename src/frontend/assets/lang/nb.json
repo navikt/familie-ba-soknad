@@ -155,6 +155,7 @@
   "felles.flereytelser.periode": "Utbetalingsperiode {x}",
   "felles.fnr.feil-format.feilmelding": "Du må oppgi et gyldig fødselsnummer eller d-nummer med 11 siffer",
   "felles.franårpensjon.spm": "Når har du fått pensjon fra?",
+  "felles.fulladresse.format.feilmelding": "Adressen må være under 100 tegn",
   "felles.fødsels-eller-dnummer.label": "Fødselsnummer eller d-nummer",
   "felles.fødselsdato-ukjent": "Jeg kjenner ikke fødselsdato",
   "felles.fødselsdato.feilmelding": "Fødselsdato må være en gyldig dato i formatet dd.mm.åååå",

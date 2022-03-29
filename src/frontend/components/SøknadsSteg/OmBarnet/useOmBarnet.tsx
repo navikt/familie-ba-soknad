@@ -121,6 +121,20 @@ export const useOmBarnet = (
         skalVises:
             skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
             institusjonIUtlandCheckbox.verdi === ESvar.NEI,
+        customValidering: (felt: FeltState<string>) => {
+            const verdi = trimWhiteSpace(felt.verdi);
+            return verdi.length < 100
+                ? ok(felt)
+                : feil(
+                      felt,
+                      <SpråkTekst
+                          id={'felles.fulladresse.format.feilmelding'}
+                          values={{
+                              barn: barnetsNavnValue(barn, intl),
+                          }}
+                      />
+                  );
+        },
     });
 
     const institusjonspostnummer = useFelt<string>({
