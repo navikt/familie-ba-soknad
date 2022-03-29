@@ -74,49 +74,42 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                 {barn.omsorgsperson && (
                     <KomponentGruppe>
                         <OppsummeringFelt
-                            tittel={tittelSpm(barn.omsorgsperson.omsorgspersonNavn.id)}
-                            søknadsvar={barn.omsorgsperson.omsorgspersonNavn.svar}
+                            tittel={tittelSpm(barn.omsorgsperson.navn.id)}
+                            søknadsvar={barn.omsorgsperson.navn.svar}
                         />
 
                         <OppsummeringFelt
-                            tittel={tittelSpm(barn.omsorgsperson.omsorgspersonSlektsforhold.id)}
+                            tittel={tittelSpm(barn.omsorgsperson.slektsforhold.id)}
                             søknadsvar={formatMessage({
                                 id:
-                                    barn.omsorgsperson.omsorgspersonSlektsforhold.svar &&
-                                    toSlektsforholdSpråkId(
-                                        barn.omsorgsperson.omsorgspersonSlektsforhold.svar
-                                    ),
+                                    barn.omsorgsperson.slektsforhold.svar &&
+                                    toSlektsforholdSpråkId(barn.omsorgsperson.slektsforhold.svar),
                             })}
                         />
 
-                        {barn.omsorgsperson.omsorgpersonSlektsforholdSpesifisering.svar && (
+                        {barn.omsorgsperson.slektsforholdSpesifisering.svar && (
                             <OppsummeringFelt
-                                tittel={tittelSpm(
-                                    barn.omsorgsperson.omsorgpersonSlektsforholdSpesifisering.id
-                                )}
-                                søknadsvar={
-                                    barn.omsorgsperson.omsorgpersonSlektsforholdSpesifisering.svar
-                                }
+                                tittel={tittelSpm(barn.omsorgsperson.slektsforholdSpesifisering.id)}
+                                søknadsvar={barn.omsorgsperson.slektsforholdSpesifisering.svar}
                             />
                         )}
 
                         <OppsummeringFelt
-                            tittel={tittelSpm(barn.omsorgsperson.omsorgspersonIdNummer.id)}
+                            tittel={tittelSpm(barn.omsorgsperson.idNummer.id)}
                             søknadsvar={
-                                barn.omsorgsperson.omsorgspersonIdNummer.svar ===
-                                AlternativtSvarForInput.UKJENT
+                                barn.omsorgsperson.idNummer.svar === AlternativtSvarForInput.UKJENT
                                     ? formatMessage({
                                           id: eøsBarnSpørsmålSpråkId[
                                               EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke
                                           ],
                                       })
-                                    : barn.omsorgsperson.omsorgspersonIdNummer.svar
+                                    : barn.omsorgsperson.idNummer.svar
                             }
                         />
 
                         <OppsummeringFelt
-                            tittel={tittelSpm(barn.omsorgsperson.omsorgspersonAdresse.id)}
-                            søknadsvar={barn.omsorgsperson.omsorgspersonAdresse.svar}
+                            tittel={tittelSpm(barn.omsorgsperson.adresse.id)}
+                            søknadsvar={barn.omsorgsperson.adresse.svar}
                         />
                     </KomponentGruppe>
                 )}

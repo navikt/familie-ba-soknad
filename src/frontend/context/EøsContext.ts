@@ -33,21 +33,23 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     const { soknadApi } = Miljø();
 
     useEffect(() => {
-        if (!eøsSkruddAv) {
-            const erEøs = søknad.erEøs;
-            settSøknad({
-                ...søknad,
-                dokumentasjon: søknad.dokumentasjon.map((dok: IDokumentasjon) =>
-                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA
-                        ? {
-                              ...dok,
-                              gjelderForSøker: erEøs,
-                              opplastedeVedlegg: erEøs ? dok.opplastedeVedlegg : [],
-                              harSendtInn: erEøs ? dok.harSendtInn : false,
-                          }
-                        : dok
-                ),
-            });
+        if (!toggles.EØS_KOMPLETT) {
+            if (!eøsSkruddAv) {
+                const erEøs = søknad.erEøs;
+                settSøknad({
+                    ...søknad,
+                    dokumentasjon: søknad.dokumentasjon.map((dok: IDokumentasjon) =>
+                        dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA
+                            ? {
+                                  ...dok,
+                                  gjelderForSøker: erEøs,
+                                  opplastedeVedlegg: erEøs ? dok.opplastedeVedlegg : [],
+                                  harSendtInn: erEøs ? dok.harSendtInn : false,
+                              }
+                            : dok
+                    ),
+                });
+            }
         }
     }, [søknad.erEøs]);
 

@@ -36,7 +36,7 @@ import {
 import { IIdNummer } from '../../../typer/person';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
-import { erNorskPostnummer } from '../../../utils/adresse';
+import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
 import {
     barnetsNavnValue,
     filtrerteRelevanteIdNummerForBarn,
@@ -130,6 +130,7 @@ export const useOmBarnet = (
         skalVises:
             skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
             institusjonIUtlandCheckbox.verdi === ESvar.NEI,
+        customValidering: valideringAdresse,
     });
 
     const institusjonspostnummer = useFelt<string>({

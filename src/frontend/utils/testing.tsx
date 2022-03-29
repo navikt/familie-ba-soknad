@@ -466,27 +466,27 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
             }),
             ...(barn.omsorgsperson && {
                 omsorgsperson: {
-                    omsorgspersonNavn: {
+                    navn: {
                         id: EøsBarnSpørsmålId.omsorgspersonNavn,
                         svar: 'Testnavn',
                     },
-                    omsorgspersonSlektsforhold: {
+                    slektsforhold: {
                         id: EøsBarnSpørsmålId.omsorgspersonSlektsforhold,
                         svar: Slektsforhold.ANNEN_RELASJON,
                     },
-                    omsorgpersonSlektsforholdSpesifisering: {
+                    slektsforholdSpesifisering: {
                         id: EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering,
                         svar: 'Tantebarnebarn',
                     },
-                    omsorgspersonIdNummer: {
+                    idNummer: {
                         id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
                         svar: '12345',
                     },
-                    omsorgspersonIdNummerVetIkke: {
+                    idNummerVetIkke: {
                         id: EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke,
                         svar: ESvar.NEI,
                     },
-                    omsorgspersonAdresse: {
+                    adresse: {
                         id: EøsBarnSpørsmålId.omsorgspersonAdresse,
                         svar: 'Osloveien 123',
                     },
