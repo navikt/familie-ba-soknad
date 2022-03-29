@@ -7,6 +7,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
@@ -40,6 +41,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
 }> = ({ periode, nummer, fjernPeriodeCallback, erFørsteEøsPeriode = false, barn }) => {
     const [valgtLocale] = useSprakContext();
     const intl = useIntl();
+    const { toggles } = useFeatureToggles();
     const { formatMessage } = intl;
     const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
         periode;
@@ -62,7 +64,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                 fjernKnappSpråkId={'felles.fjernutenlandsopphold.knapp'}
                 fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(periode))}
                 vedleggNotis={
-                    erFørsteEøsPeriode ? (
+                    !toggles.EØS_KOMPLETT && erFørsteEøsPeriode ? (
                         <EøsNotisWrapper>
                             <VedleggNotisTilleggsskjema
                                 språkTekstId={
