@@ -228,9 +228,11 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     tittel={
                         <SpråkTekst
                             id={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.jobberPåBåt
-                                ]
+                                toggles.EØS_KOMPLETT
+                                    ? dinLivssituasjonSpørsmålSpråkId[
+                                          DinLivssituasjonSpørsmålId.jobberPåBåt
+                                      ]
+                                    : 'omdeg.arbeid-utland.spm'
                             }
                         />
                     }

@@ -170,11 +170,7 @@ const DinLivssituasjon: React.FC = () => {
                         <JaNeiSpm
                             skjema={skjema}
                             felt={skjema.felter.jobberPåBåt}
-                            spørsmålTekstId={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.jobberPåBåt
-                                ]
-                            }
+                            spørsmålTekstId={'omdeg.arbeid-utland.spm'}
                         />
                         <LandDropdown
                             felt={skjema.felter.arbeidsland}

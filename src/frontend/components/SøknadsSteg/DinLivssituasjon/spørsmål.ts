@@ -24,7 +24,7 @@ export const dinLivssituasjonSpørsmålSpråkId: Record<DinLivssituasjonSpørsm�
     [DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode]: 'omdeg.annensamboer.spm',
     [DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode]: 'omdeg.leggtilfleresamboere.spm',
     [DinLivssituasjonSpørsmålId.erAsylsøker]: 'omdeg.asylsøker.spm',
-    [DinLivssituasjonSpørsmålId.jobberPåBåt]: 'omdeg.arbeid-utland.spm',
+    [DinLivssituasjonSpørsmålId.jobberPåBåt]: 'eøs.arbeid-utland.spm',
     [DinLivssituasjonSpørsmålId.arbeidsland]: 'omdeg.arbeid-utland.land.spm',
     [DinLivssituasjonSpørsmålId.mottarUtenlandspensjon]: 'omdeg.utenlandspensjon.spm',
     [DinLivssituasjonSpørsmålId.pensjonsland]: 'omdeg.utenlandspensjon.land.spm',
