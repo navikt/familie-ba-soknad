@@ -14,7 +14,6 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../typer/barn';
-import { AlternativtSvarForInput } from '../typer/common';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
@@ -32,11 +31,12 @@ export const genererSvarForOppfølgningspørsmålBarn = (
     return svarPåGrunnSpørsmål === ESvar.JA ? søknadsfelt.svar : nullstillingsVerdi;
 };
 
-export const genererAndreForelder = (
+export const genererInitiellAndreForelder = (
     andreForelder: IAndreForelder | null,
     andreForelderErDød: boolean
 ): IAndreForelder => {
     return {
+        kanIkkeGiOpplysninger: false,
         arbeidsperioderNorge: andreForelder?.arbeidsperioderNorge ?? [],
         arbeidsperioderUtland: andreForelder?.arbeidsperioderUtland ?? [],
         andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
@@ -188,7 +188,7 @@ export const genererOppdaterteBarn = (
             eøsBarnetrygdsperioder,
             andreForelder: erFosterbarn
                 ? null
-                : genererAndreForelder(barn.andreForelder, andreForelderErDød),
+                : genererInitiellAndreForelder(barn.andreForelder, andreForelderErDød),
             omsorgsperson:
                 oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød
                     ? null
@@ -196,7 +196,7 @@ export const genererOppdaterteBarn = (
             [barnDataKeySpørsmål.borMedAndreForelder]: {
                 ...barn[barnDataKeySpørsmål.borMedAndreForelder],
                 svar:
-                    oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød
+                    erFosterbarn || oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød
                         ? null
                         : barn[barnDataKeySpørsmål.borMedAndreForelder].svar,
             },
@@ -312,7 +312,7 @@ export const genererOppdaterteBarn = (
                 ...barn[barnDataKeySpørsmål.adresse],
                 svar:
                     erFosterbarn ||
-                    (barn.andreForelder?.navn.svar === AlternativtSvarForInput.UKJENT &&
+                    (barn.andreForelder?.kanIkkeGiOpplysninger &&
                         barn.borMedAndreForelder.svar === ESvar.JA)
                         ? barn.adresse.svar
                         : '',
@@ -490,11 +490,8 @@ export const barnetsNavnValue = (barn: IBarn, intl: IntlShape): string => {
 };
 
 export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
-    const kanIkkeGiOpplysningerOmAndreForelder =
-        barn.andreForelder?.[andreForelderDataKeySpørsmål.navn].svar ===
-        AlternativtSvarForInput.UKJENT;
     return (
-        kanIkkeGiOpplysningerOmAndreForelder ||
+        barn.andreForelder?.kanIkkeGiOpplysninger ||
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
     );
 };

@@ -300,6 +300,7 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     borMedSøker: true,
                 }),
                 andreForelder: {
+                    kanIkkeGiOpplysninger: false,
                     adresse: {
                         id: EøsBarnSpørsmålId.andreForelderAdresse,
                         svar: AlternativtSvarForInput.UKJENT,
