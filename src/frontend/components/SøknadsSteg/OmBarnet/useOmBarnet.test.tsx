@@ -11,7 +11,7 @@ import {
 } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IBarn } from '../../../typer/person';
-import { genererAndreForelder, genererInitialBarnMedISøknad } from '../../../utils/barn';
+import { genererInitiellAndreForelder, genererInitialBarnMedISøknad } from '../../../utils/barn';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -119,7 +119,7 @@ describe('useOmBarnet', () => {
         const barn: DeepPartial<IBarnMedISøknad> = {
             ...genererInitialBarnMedISøknad(barnFraPdl),
             andreForelder: {
-                ...genererAndreForelder(null, false),
+                ...genererInitiellAndreForelder(null, false),
                 [andreForelderDataKeySpørsmål.navn]: {
                     svar: AlternativtSvarForInput.UKJENT,
                     id: OmBarnetSpørsmålsId.andreForelderNavn,

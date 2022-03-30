@@ -40,6 +40,7 @@ export const barnISøknadsFormat = (intl: IntlShape, barn: IBarnMedISøknad): IS
         // Nye felter under utvikling av EØS full
         eøsBarnetrygdsperioder,
         triggetEøs,
+        idNummer,
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...barnSpørsmål
     } = barn;
