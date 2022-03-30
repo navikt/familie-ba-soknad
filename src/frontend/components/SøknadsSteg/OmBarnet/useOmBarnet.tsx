@@ -41,11 +41,13 @@ import {
     barnetsNavnValue,
     filtrerteRelevanteIdNummerForBarn,
     genererInitiellAndreForelder,
+    nullstilteEøsFelterForBarn,
 } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
+import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
@@ -992,11 +994,25 @@ export const useOmBarnet = (
                 } else {
                     oppdatertBarn = barn;
                 }
-                return { ...oppdatertBarn, triggetEøs: skalTriggeEøsForBarn(oppdatertBarn) };
+                const triggetEøs = skalTriggeEøsForBarn(oppdatertBarn);
+                const harEøsSteg = triggetEøs || søknad.søker.triggetEøs;
+
+                return {
+                    ...oppdatertBarn,
+                    triggetEøs,
+                    ...(!harEøsSteg && nullstilteEøsFelterForBarn(oppdatertBarn)),
+                };
             });
+
+        const skalNullstilleEøsForSøker =
+            !søknad.søker.triggetEøs ||
+            !oppdatertBarnInkludertISøknaden.find(barn => barn.triggetEøs);
 
         settSøknad({
             ...søknad,
+            søker: skalNullstilleEøsForSøker
+                ? { ...søknad.søker, ...nullstilteEøsFelterForSøker(søknad.søker) }
+                : søknad.søker,
             barnInkludertISøknaden: oppdatertBarnInkludertISøknaden,
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 switch (dok.dokumentasjonsbehov) {

@@ -137,7 +137,7 @@ export const genererOppdaterteBarn = (
     skalTriggeEøsForBarn: (barn: IBarnMedISøknad) => boolean,
     erEøsLand: (land: Alpha3Code | '') => boolean
 ): IBarnMedISøknad[] => {
-    return søknad.barnInkludertISøknaden.map(barn => {
+    return søknad.barnInkludertISøknaden.map((barn): IBarnMedISøknad => {
         const oppholderSegIInstitusjon: ESvar = genererSvarForSpørsmålBarn(
             barn,
             skjema.felter.hvemOppholderSegIInstitusjon
@@ -319,7 +319,14 @@ export const genererOppdaterteBarn = (
             },
         };
 
-        return { ...oppdatertBarn, triggetEøs: skalTriggeEøsForBarn(oppdatertBarn) };
+        const triggetEøs = skalTriggeEøsForBarn(oppdatertBarn);
+        const harEøsSteg = triggetEøs || søknad.søker.triggetEøs;
+
+        return {
+            ...oppdatertBarn,
+            triggetEøs,
+            ...(!harEøsSteg && nullstilteEøsFelterForBarn(oppdatertBarn)),
+        };
     });
 };
 
@@ -543,3 +550,37 @@ export const filtrerteRelevanteIdNummerForBarn = (
 
     return barn.idNummer.filter(idNummerObj => relevanteLand.includes(idNummerObj.land));
 };
+
+export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
+    idNummer: [],
+    ...(barn.andreForelder && {
+        andreForelder: {
+            ...barn.andreForelder,
+            idNummer: [],
+            pensjonNorge: {
+                ...barn.andreForelder.pensjonNorge,
+                svar: null,
+            },
+            arbeidNorge: {
+                ...barn.andreForelder.arbeidNorge,
+                svar: null,
+            },
+            andreUtbetalinger: {
+                ...barn.andreForelder.andreUtbetalinger,
+                svar: null,
+            },
+            pensjonsperioderNorge: [],
+            arbeidsperioderNorge: [],
+            andreUtbetalingsperioder: [],
+            adresse: { ...barn.andreForelder.adresse, svar: '' },
+        },
+    }),
+    //TODO: søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: '' },
+    søkersSlektsforholdSpesifisering: {
+        ...barn.søkersSlektsforholdSpesifisering,
+        svar: '',
+    },
+    borMedAndreForelder: { ...barn.borMedAndreForelder, svar: null },
+    omsorgsperson: null,
+    adresse: { ...barn[barnDataKeySpørsmål.adresse], svar: '' },
+});

@@ -21,9 +21,11 @@ import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
+import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
+import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -412,6 +414,10 @@ export const useDinLivssituasjon = (): {
 
     const oppdaterSøknad = () => {
         const oppdatertSøker = genererOppdatertSøker();
+        const triggetEøs = skalTriggeEøsForSøker(oppdatertSøker);
+        const harEøsSteg =
+            triggetEøs || !!søknad.barnInkludertISøknaden.find(barn => barn.triggetEøs);
+
         settSøknad({
             ...søknad,
             erAvdødPartnerForelder: {
@@ -434,7 +440,17 @@ export const useDinLivssituasjon = (): {
                     return { ...dok, gjelderForSøker: erAsylsøker.verdi === ESvar.JA };
                 else return dok;
             }),
-            søker: { ...oppdatertSøker, triggetEøs: skalTriggeEøsForSøker(oppdatertSøker) },
+            søker: {
+                ...oppdatertSøker,
+                triggetEøs,
+                ...(!harEøsSteg && nullstilteEøsFelterForSøker(søknad.søker)),
+            },
+            ...(!harEøsSteg && {
+                barnInkludertISøknaden: søknad.barnInkludertISøknaden.map(barn => ({
+                    ...barn,
+                    ...nullstilteEøsFelterForBarn(barn),
+                })),
+            }),
         });
     };
 
