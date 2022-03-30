@@ -7,6 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -31,6 +32,7 @@ const OmBarnaDine: React.FC = () => {
     const { søknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
     const { eøsSkruddAv } = useEøs();
+    const { toggles } = useFeatureToggles();
 
     if (!barnInkludertISøknaden.length) {
         history.push('/velg-barn');
@@ -205,7 +207,9 @@ const OmBarnaDine: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     >
-                        {skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.JA &&
+                        {!toggles.EØS_KOMPLETT &&
+                            skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi ===
+                                ESvar.JA &&
                             (eøsSkruddAv ? (
                                 <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
                             ) : (
