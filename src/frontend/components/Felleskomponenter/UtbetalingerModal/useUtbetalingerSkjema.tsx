@@ -83,7 +83,8 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
                 : 'felles.nårstopperutbetalingene.feilmelding',
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
-        sluttdatoAvgrensning: fårUtbetalingNå.verdi === ESvar.NEI ? dagensDato() : undefined,
+        sluttdatoAvgrensning:
+            fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød ? dagensDato() : undefined,
         startdatoAvgrensning: utbetalingFraDato.verdi,
     });
 

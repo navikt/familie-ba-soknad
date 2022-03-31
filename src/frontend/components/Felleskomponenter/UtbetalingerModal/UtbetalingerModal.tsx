@@ -154,7 +154,8 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                 />
                             }
                             avgrensMaxDato={
-                                skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI
+                                skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI ||
+                                andreForelderErDød
                                     ? dagensDato()
                                     : undefined
                             }
