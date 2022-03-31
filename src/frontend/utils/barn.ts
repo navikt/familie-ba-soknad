@@ -14,6 +14,7 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../typer/barn';
+import { tomString } from '../typer/common';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
@@ -137,7 +138,7 @@ export const genererOppdaterteBarn = (
     skalTriggeEøsForBarn: (barn: IBarnMedISøknad) => boolean,
     erEøsLand: (land: Alpha3Code | '') => boolean
 ): IBarnMedISøknad[] => {
-    return søknad.barnInkludertISøknaden.map(barn => {
+    return søknad.barnInkludertISøknaden.map((barn): IBarnMedISøknad => {
         const oppholderSegIInstitusjon: ESvar = genererSvarForSpørsmålBarn(
             barn,
             skjema.felter.hvemOppholderSegIInstitusjon
@@ -319,7 +320,14 @@ export const genererOppdaterteBarn = (
             },
         };
 
-        return { ...oppdatertBarn, triggetEøs: skalTriggeEøsForBarn(oppdatertBarn) };
+        const barnTriggetEøs = skalTriggeEøsForBarn(oppdatertBarn);
+        const harEøsSteg = barnTriggetEøs || søknad.søker.triggetEøs;
+
+        return {
+            ...oppdatertBarn,
+            triggetEøs: barnTriggetEøs,
+            ...(!harEøsSteg && nullstilteEøsFelterForBarn(oppdatertBarn)),
+        };
     });
 };
 
@@ -543,3 +551,37 @@ export const filtrerteRelevanteIdNummerForBarn = (
 
     return barn.idNummer.filter(idNummerObj => relevanteLand.includes(idNummerObj.land));
 };
+
+export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
+    idNummer: [],
+    søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: tomString },
+    søkersSlektsforholdSpesifisering: {
+        ...barn.søkersSlektsforholdSpesifisering,
+        svar: '',
+    },
+    borMedAndreForelder: { ...barn.borMedAndreForelder, svar: null },
+    omsorgsperson: null,
+    adresse: { ...barn.adresse, svar: '' },
+    ...(barn.andreForelder && {
+        andreForelder: {
+            ...barn.andreForelder,
+            idNummer: [],
+            pensjonNorge: {
+                ...barn.andreForelder.pensjonNorge,
+                svar: null,
+            },
+            arbeidNorge: {
+                ...barn.andreForelder.arbeidNorge,
+                svar: null,
+            },
+            andreUtbetalinger: {
+                ...barn.andreForelder.andreUtbetalinger,
+                svar: null,
+            },
+            pensjonsperioderNorge: [],
+            arbeidsperioderNorge: [],
+            andreUtbetalingsperioder: [],
+            adresse: { ...barn.andreForelder.adresse, svar: '' },
+        },
+    }),
+});

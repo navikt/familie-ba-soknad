@@ -2,7 +2,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
-import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
+import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, TomString } from './common';
 import { Slektsforhold } from './kontrakt/barn';
 import {
     IArbeidsperiode,
@@ -135,7 +135,7 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: ISøknadSpørsmål<
         BarnetsId | AlternativtSvarForInput.ANNEN_FORELDER | null
     >;
-    [barnDataKeySpørsmål.søkersSlektsforhold]: ISøknadSpørsmål<Slektsforhold | ''>;
+    [barnDataKeySpørsmål.søkersSlektsforhold]: ISøknadSpørsmål<Slektsforhold | TomString>;
     [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.borMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.adresse]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;

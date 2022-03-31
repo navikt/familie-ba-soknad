@@ -10,6 +10,8 @@ import { AlternativtSvarForInput } from '../../../typer/common';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { IIdNummer } from '../../../typer/person';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
+import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
+import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
@@ -178,10 +180,23 @@ export const useOmdeg = (): {
 
     const oppdaterSøknad = () => {
         const oppdatertSøker = genererOppdatertSøker();
+        const søkerTriggetEøs = skalTriggeEøsForSøker(oppdatertSøker);
+        const harEøsSteg =
+            søkerTriggetEøs || !!søknad.barnInkludertISøknaden.find(barn => barn.triggetEøs);
 
         settSøknad({
             ...søknad,
-            søker: { ...oppdatertSøker, triggetEøs: skalTriggeEøsForSøker(oppdatertSøker) },
+            søker: {
+                ...oppdatertSøker,
+                triggetEøs: søkerTriggetEøs,
+                ...(!harEøsSteg && nullstilteEøsFelterForSøker(søknad.søker)),
+            },
+            ...(!harEøsSteg && {
+                barnInkludertISøknaden: søknad.barnInkludertISøknaden.map(barn => ({
+                    ...barn,
+                    ...nullstilteEøsFelterForBarn(barn),
+                })),
+            }),
         });
     };
 

@@ -12,6 +12,7 @@ import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { IOmBarnaDineFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { genererOppdaterteBarn } from '../../../utils/barn';
+import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { OmBarnaDineSpørsmålId } from './spørsmål';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 
@@ -197,8 +198,21 @@ export const useOmBarnaDine = (): {
     }, [hvemBarnetrygdFraAnnetEøsland]);
 
     const oppdaterSøknad = () => {
+        const oppdaterteBarn = genererOppdaterteBarn(
+            søknad,
+            skjema,
+            skalTriggeEøsForBarn,
+            erEøsLand
+        );
+
+        const skalNullstilleEøsForSøker =
+            !søknad.søker.triggetEøs && !oppdaterteBarn.find(barn => barn.triggetEøs);
+
         settSøknad({
             ...søknad,
+            søker: skalNullstilleEøsForSøker
+                ? { ...søknad.søker, ...nullstilteEøsFelterForSøker(søknad.søker) }
+                : søknad.søker,
             erNoenAvBarnaFosterbarn: {
                 ...søknad.erNoenAvBarnaFosterbarn,
                 svar: erNoenAvBarnaFosterbarn.verdi,
@@ -227,12 +241,7 @@ export const useOmBarnaDine = (): {
                 ...søknad.erAvdødPartnerForelder,
                 svar: erAvdødPartnerForelder.verdi,
             },
-            barnInkludertISøknaden: genererOppdaterteBarn(
-                søknad,
-                skjema,
-                skalTriggeEøsForBarn,
-                erEøsLand
-            ),
+            barnInkludertISøknaden: oppdaterteBarn,
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 switch (dok.dokumentasjonsbehov) {
                     case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:
