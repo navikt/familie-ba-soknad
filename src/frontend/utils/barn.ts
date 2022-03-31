@@ -14,6 +14,7 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../typer/barn';
+import { tomString } from '../typer/common';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
@@ -553,6 +554,14 @@ export const filtrerteRelevanteIdNummerForBarn = (
 
 export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
     idNummer: [],
+    søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: tomString },
+    søkersSlektsforholdSpesifisering: {
+        ...barn.søkersSlektsforholdSpesifisering,
+        svar: '',
+    },
+    borMedAndreForelder: { ...barn.borMedAndreForelder, svar: null },
+    omsorgsperson: null,
+    adresse: { ...barn.adresse, svar: '' },
     ...(barn.andreForelder && {
         andreForelder: {
             ...barn.andreForelder,
@@ -575,12 +584,4 @@ export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
             adresse: { ...barn.andreForelder.adresse, svar: '' },
         },
     }),
-    //TODO: søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: '' },
-    søkersSlektsforholdSpesifisering: {
-        ...barn.søkersSlektsforholdSpesifisering,
-        svar: '',
-    },
-    borMedAndreForelder: { ...barn.borMedAndreForelder, svar: null },
-    omsorgsperson: null,
-    adresse: { ...barn[barnDataKeySpørsmål.adresse], svar: '' },
 });
