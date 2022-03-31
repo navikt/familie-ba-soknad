@@ -86,7 +86,10 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               erAndreForelderDød,
-        sluttdatoAvgrensning: arbeidsperiodeAvsluttet.verdi === ESvar.JA ? dagensDato() : undefined,
+        sluttdatoAvgrensning:
+            arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød
+                ? dagensDato()
+                : undefined,
         startdatoAvgrensning: fraDatoArbeidsperiode.verdi,
     });
 
