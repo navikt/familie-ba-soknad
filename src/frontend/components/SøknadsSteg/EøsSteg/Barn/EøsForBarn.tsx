@@ -188,6 +188,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 labelSpråkTekstId={
                                     eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonAdresse]
                                 }
+                                description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
                             />
                         )}
                     </SkjemaFieldset>
