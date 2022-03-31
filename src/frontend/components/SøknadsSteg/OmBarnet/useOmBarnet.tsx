@@ -994,18 +994,18 @@ export const useOmBarnet = (
                 } else {
                     oppdatertBarn = barn;
                 }
-                const triggetEøs = skalTriggeEøsForBarn(oppdatertBarn);
-                const harEøsSteg = triggetEøs || søknad.søker.triggetEøs;
+                const barnTriggetEøs = skalTriggeEøsForBarn(oppdatertBarn);
+                const harEøsSteg = barnTriggetEøs || søknad.søker.triggetEøs;
 
                 return {
                     ...oppdatertBarn,
-                    triggetEøs,
+                    triggetEøs: barnTriggetEøs,
                     ...(!harEøsSteg && nullstilteEøsFelterForBarn(oppdatertBarn)),
                 };
             });
 
         const skalNullstilleEøsForSøker =
-            !søknad.søker.triggetEøs ||
+            !søknad.søker.triggetEøs &&
             !oppdatertBarnInkludertISøknaden.find(barn => barn.triggetEøs);
 
         settSøknad({

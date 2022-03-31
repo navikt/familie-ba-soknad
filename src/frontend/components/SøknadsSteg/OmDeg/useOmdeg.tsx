@@ -180,15 +180,15 @@ export const useOmdeg = (): {
 
     const oppdaterSøknad = () => {
         const oppdatertSøker = genererOppdatertSøker();
-        const triggetEøs = skalTriggeEøsForSøker(oppdatertSøker);
+        const søkerTriggetEøs = skalTriggeEøsForSøker(oppdatertSøker);
         const harEøsSteg =
-            triggetEøs || !!søknad.barnInkludertISøknaden.find(barn => barn.triggetEøs);
+            søkerTriggetEøs || !!søknad.barnInkludertISøknaden.find(barn => barn.triggetEøs);
 
         settSøknad({
             ...søknad,
             søker: {
                 ...oppdatertSøker,
-                triggetEøs,
+                triggetEøs: søkerTriggetEøs,
                 ...(!harEøsSteg && nullstilteEøsFelterForSøker(søknad.søker)),
             },
             ...(!harEøsSteg && {

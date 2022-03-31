@@ -206,7 +206,7 @@ export const useOmBarnaDine = (): {
         );
 
         const skalNullstilleEøsForSøker =
-            !søknad.søker.triggetEøs || !oppdaterteBarn.find(barn => barn.triggetEøs);
+            !søknad.søker.triggetEøs && !oppdaterteBarn.find(barn => barn.triggetEøs);
 
         settSøknad({
             ...søknad,

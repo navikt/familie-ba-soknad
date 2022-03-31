@@ -320,12 +320,12 @@ export const genererOppdaterteBarn = (
             },
         };
 
-        const triggetEøs = skalTriggeEøsForBarn(oppdatertBarn);
-        const harEøsSteg = triggetEøs || søknad.søker.triggetEøs;
+        const barnTriggetEøs = skalTriggeEøsForBarn(oppdatertBarn);
+        const harEøsSteg = barnTriggetEøs || søknad.søker.triggetEøs;
 
         return {
             ...oppdatertBarn,
-            triggetEøs,
+            triggetEøs: barnTriggetEøs,
             ...(!harEøsSteg && nullstilteEøsFelterForBarn(oppdatertBarn)),
         };
     });
