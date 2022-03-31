@@ -190,7 +190,9 @@ export const useDinLivssituasjon = (): {
 
     const jobberPåBåt = useJaNeiSpmFelt({
         søknadsfelt: søker.jobberPåBåt,
-        feilmeldingSpråkId: 'omdeg.arbeid-utland.feilmelding',
+        feilmeldingSpråkId: toggles.EØS_KOMPLETT
+            ? 'eøs.arbeid-utland.feilmelding'
+            : 'omdeg.arbeid-utland.feilmelding',
     });
 
     const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet({
