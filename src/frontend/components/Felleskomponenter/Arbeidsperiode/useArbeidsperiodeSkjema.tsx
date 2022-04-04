@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -63,7 +65,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               erAndreForelderDød,
         feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
-        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
+        sluttdatoAvgrensning: gårsdagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -90,7 +92,14 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
             arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød
                 ? dagensDato()
                 : undefined,
-        startdatoAvgrensning: fraDatoArbeidsperiode.verdi,
+        startdatoAvgrensning:
+            arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød
+                ? dayjs(fraDatoArbeidsperiode.verdi).add(1, 'day').format('YYYY-MM-DD')
+                : dagensDato(),
+        customStartdatoFeilmelding:
+            arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød
+                ? ''
+                : 'felles.dato.tilbake-i-tid.feilmelding',
     });
 
     const skjema = useSkjema<IArbeidsperioderFeltTyper, 'string'>({

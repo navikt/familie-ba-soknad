@@ -1,5 +1,7 @@
 import React from 'react';
 
+import dayjs from 'dayjs';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IArbeidsperiode } from '../../../typer/perioder';
@@ -160,11 +162,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             />
                         }
                         calendarPosition={'fullscreen'}
-                        avgrensMaxDato={
-                            skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
-                                ? gårsdagensDato()
-                                : dagensDato()
-                        }
+                        avgrensMaxDato={gårsdagensDato()}
                     />
                 )}
                 {tilDatoArbeidsperiode.erSynlig && (
@@ -180,9 +178,12 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                                 />
                             }
                             avgrensMinDato={
-                                skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
-                                    ? skjema.felter.fraDatoArbeidsperiode.verdi
-                                    : gårsdagensDato()
+                                skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA ||
+                                erAndreForelderDød
+                                    ? dayjs(skjema.felter.fraDatoArbeidsperiode.verdi)
+                                          .add(1, 'day')
+                                          .format('YYYY-MM-DD')
+                                    : dagensDato()
                             }
                             avgrensMaxDato={
                                 skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA ||
