@@ -116,14 +116,22 @@ export const useEøsForBarn = (
             gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.JA,
     });
 
+    console.log(
+        borMedAndreForelder.verdi === ESvar.NEI ||
+            (gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
+                gjeldendeBarn.andreForelderErDød.svar === ESvar.JA &&
+                gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI)
+    );
+
     const omsorgspersonNavn = useInputFelt({
         søknadsfelt: omsorgsperson && omsorgsperson.navn,
         feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonnavn.feilmelding',
         skalVises:
             borMedAndreForelder.verdi === ESvar.NEI ||
-            (gjeldendeBarn.andreForelderErDød.svar === ESvar.JA &&
-                gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
-                gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI),
+            (gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
+                ((gjeldendeBarn.andreForelderErDød.svar === ESvar.JA &&
+                    gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI) ||
+                    gjeldendeBarn.erFosterbarn.svar === ESvar.JA)),
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
             return verdi.match(/^[A-Za-zæøåÆØÅ\s\-\\,\\.]{1,60}$/)
@@ -187,9 +195,10 @@ export const useEøsForBarn = (
         feltId: EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke,
         skalFeltetVises: avhengigheter =>
             avhengigheter.borMedAndreForelder.verdi === ESvar.NEI ||
-            (gjeldendeBarn.andreForelderErDød.svar === ESvar.JA &&
-                gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
-                gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI),
+            (gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
+                ((gjeldendeBarn.andreForelderErDød.svar === ESvar.JA &&
+                    gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI) ||
+                    gjeldendeBarn.erFosterbarn.svar === ESvar.JA)),
         avhengigheter: { borMedAndreForelder },
     });
 
@@ -199,9 +208,10 @@ export const useEøsForBarn = (
         feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonidnummer.feilmelding',
         skalVises:
             borMedAndreForelder.verdi === ESvar.NEI ||
-            (gjeldendeBarn.andreForelderErDød.svar === ESvar.JA &&
-                gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
-                gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI),
+            (gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
+                ((gjeldendeBarn.andreForelderErDød.svar === ESvar.JA &&
+                    gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI) ||
+                    gjeldendeBarn.erFosterbarn.svar === ESvar.JA)),
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
             return verdi.match(/^[0-9A-Za-zæøåÆØÅ\s\-.\\/]{4,20}$/)
@@ -223,9 +233,10 @@ export const useEøsForBarn = (
         feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonoppholdssted.feilmelding',
         skalVises:
             borMedAndreForelder.verdi === ESvar.NEI ||
-            (gjeldendeBarn.andreForelderErDød.svar === ESvar.JA &&
-                gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
-                gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI),
+            (gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
+                ((gjeldendeBarn.andreForelderErDød.svar === ESvar.JA &&
+                    gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI) ||
+                    gjeldendeBarn.erFosterbarn.svar === ESvar.JA)),
         customValidering: valideringAdresse,
         nullstillVedAvhengighetEndring: true,
     });
