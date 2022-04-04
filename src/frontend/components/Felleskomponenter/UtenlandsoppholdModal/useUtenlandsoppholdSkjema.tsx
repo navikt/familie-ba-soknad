@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 
-import dayjs from 'dayjs';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
@@ -11,6 +9,7 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
+import { dagenEtterDato } from '../../../utils/dato';
 import {
     harTilhørendeFomFelt,
     hentMinAvgrensningPåTilDato,
@@ -85,7 +84,7 @@ export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaPa
             utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE,
         sluttdatoAvgrensning: hentMaxAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
         startdatoAvgrensning: harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
-            ? dayjs(oppholdslandFraDato.verdi).add(1, 'day').format('YYYY-MM-DD')
+            ? dagenEtterDato(oppholdslandFraDato.verdi)
             : hentMinAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
         customStartdatoFeilmelding: !harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
             ? utenlandsoppholdÅrsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE

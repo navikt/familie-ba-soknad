@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 
-import dayjs from 'dayjs';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -13,7 +12,7 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagensDato, gårsdagensDato, dagenEtterDato } from '../../../utils/dato';
 import { pensjonFraDatoFeilmeldingSpråkId, pensjonslandFeilmeldingSpråkId } from './språkUtils';
 import { PensjonSpørsmålId } from './spørsmål';
 
@@ -89,7 +88,7 @@ export const usePensjonSkjema = ({
             (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
         feilmeldingSpråkId: 'felles.nåravsluttetpensjon.feilmelding',
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: dayjs(pensjonFraDato.verdi).add(1, 'day').format('YYYY-MM-DD'),
+        startdatoAvgrensning: dagenEtterDato(pensjonFraDato.verdi),
         avhengigheter: { mottarPensjonNå, pensjonFraDato },
         nullstillVedAvhengighetEndring: true,
     });

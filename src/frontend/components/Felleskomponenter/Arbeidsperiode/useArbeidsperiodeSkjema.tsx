@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -10,7 +8,7 @@ import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IArbeidsperioderFeltTyper } from '../../../typer/skjema';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagensDato, gårsdagensDato, dagenEtterDato } from '../../../utils/dato';
 import {
     arbeidslandFeilmelding,
     tilDatoArbeidsperiodeFeilmelding,
@@ -94,7 +92,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
                 : undefined,
         startdatoAvgrensning:
             arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød
-                ? dayjs(fraDatoArbeidsperiode.verdi).add(1, 'day').format('YYYY-MM-DD')
+                ? dagenEtterDato(fraDatoArbeidsperiode.verdi)
                 : dagensDato(),
         customStartdatoFeilmelding:
             arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød

@@ -38,6 +38,9 @@ export const morgendagensDato = () => dayjs().add(1, 'day').format('YYYY-MM-DD')
 
 export const erSammeDatoSomDagensDato = (dato: ISODateString) => dayjs(dato).isSame(dayjs(), 'day');
 
+export const dagenEtterDato = (dato: ISODateString) =>
+    dayjs(dato).add(1, 'day').format('YYYY-MM-DD');
+
 export const validerDato = (
     feltState: FeltState<string>,
     feilmeldingSpråkId: string,

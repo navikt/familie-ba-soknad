@@ -10,9 +10,9 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
-import { utbetalingerFeilmelding } from './språkUtils';
+import { dagensDato, erSammeDatoSomDagensDato, gårsdagensDato } from '../../../utils/dato';
 import { UtbetalingerSpørsmålId } from './spørsmål';
+import { minAvgrensningUtbetalingTilDato, utbetalingerFeilmelding } from './utils';
 
 export const useUtbetalingerSkjema = (andreForelderData?: {
     barn: IBarnMedISøknad;
@@ -62,7 +62,7 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         feilmeldingSpråkId: 'felles.nårbegynteutbetalingene.feilmelding',
-        sluttdatoAvgrensning: fårUtbetalingNå.verdi === ESvar.JA ? dagensDato() : gårsdagensDato(),
+        sluttdatoAvgrensning: fårUtbetalingNå.verdi === ESvar.NEI ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -85,7 +85,17 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         sluttdatoAvgrensning:
             fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød ? dagensDato() : undefined,
-        startdatoAvgrensning: utbetalingFraDato.verdi,
+        startdatoAvgrensning: minAvgrensningUtbetalingTilDato(
+            fårUtbetalingNå,
+            andreForelderErDød,
+            utbetalingFraDato
+        ),
+        customStartdatoFeilmelding:
+            erSammeDatoSomDagensDato(utbetalingFraDato.verdi) ||
+            fårUtbetalingNå.verdi === ESvar.NEI ||
+            andreForelderErDød
+                ? undefined
+                : 'felles.dato.tilbake-i-tid.feilmelding',
     });
 
     const skjema = useSkjema<IUtbetalingerFeltTyper, 'string'>({

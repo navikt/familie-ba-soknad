@@ -22,6 +22,7 @@ import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { hentUtbetalingsperiodeSpørsmålIder, UtbetalingerSpørsmålId } from './spørsmål';
 import { useUtbetalingerSkjema } from './useUtbetalingerSkjema';
+import { minAvgrensningUtbetalingTilDato } from './utils';
 
 interface UtbetalingerModalProps extends ReturnType<typeof useModal> {
     onLeggTilUtbetalinger: (utbetalingsperiode: IUtbetalingsperiode) => void;
@@ -132,9 +133,9 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             />
                         }
                         avgrensMaxDato={
-                            skjema.felter.fårUtbetalingNå.verdi === ESvar.JA
-                                ? dagensDato()
-                                : gårsdagensDato()
+                            skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI
+                                ? gårsdagensDato()
+                                : dagensDato()
                         }
                         calendarPosition={'fullscreen'}
                     />
@@ -159,7 +160,11 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                     ? dagensDato()
                                     : undefined
                             }
-                            tilhørendeFraOgMedFelt={skjema.felter.utbetalingFraDato}
+                            avgrensMinDato={minAvgrensningUtbetalingTilDato(
+                                skjema.felter.fårUtbetalingNå,
+                                andreForelderErDød,
+                                skjema.felter.utbetalingFraDato
+                            )}
                             disabled={skjema.felter.utbetalingTilDatoUkjent.verdi === ESvar.JA}
                             calendarPosition={'fullscreen'}
                         />
