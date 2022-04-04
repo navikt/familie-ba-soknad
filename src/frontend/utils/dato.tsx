@@ -24,10 +24,7 @@ export const erDatoEtterSluttdatoAvgresning = (dato: ISODateString, sluttdato: I
     return dayjs(dato).isAfter(dayjs(sluttdato));
 };
 
-export const erDatoFørEllerSammeSomStartDatoAvgrensning = (
-    dato: ISODateString,
-    startdato: ISODateString
-) => {
+export const erDatoFørStartDatoAvgrensning = (dato: ISODateString, startdato: ISODateString) => {
     return dayjs(dato).isBefore(dayjs(startdato));
 };
 
@@ -67,7 +64,7 @@ export const validerDato = (
     }
     if (
         !!startdatoAvgrensning &&
-        erDatoFørEllerSammeSomStartDatoAvgrensning(feltState.verdi, startdatoAvgrensning)
+        erDatoFørStartDatoAvgrensning(feltState.verdi, startdatoAvgrensning)
     ) {
         return feil(
             feltState,
