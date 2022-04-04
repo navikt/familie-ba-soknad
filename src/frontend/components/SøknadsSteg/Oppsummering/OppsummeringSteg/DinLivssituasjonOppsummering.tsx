@@ -232,7 +232,9 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                     ? dinLivssituasjonSpørsmålSpråkId[
                                           DinLivssituasjonSpørsmålId.jobberPåBåt
                                       ]
-                                    : 'omdeg.arbeid-utland.spm'
+                                    : dinLivssituasjonSpørsmålSpråkId[
+                                          DinLivssituasjonSpørsmålId.jobberPåBåtGammel
+                                      ]
                             }
                         />
                     }

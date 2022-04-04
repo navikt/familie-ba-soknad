@@ -943,9 +943,9 @@ export const testdata2: TilKontraktTestData = {
                 },
                 jobberPåBåt: {
                     label: {
-                        en: "Do you work outside of Norway, on a foreign ship or on another country's continental shelf?",
-                        nb: 'Arbeider du utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                        nn: 'Arbeidar du utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                        en: "Do you or have you worked outside of Norway, on a foreign ship or on another country's continental shelf?",
+                        nb: 'Arbeider eller har du arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
+                        nn: 'Arbeidar eller har du arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                     },
                     verdi: {
                         nb: 'JA',
