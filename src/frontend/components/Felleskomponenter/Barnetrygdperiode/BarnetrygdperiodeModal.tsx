@@ -9,7 +9,7 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
-import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import AlertStripe from '../AlertStripe/AlertStripe';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -76,7 +76,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
             }),
             månedligBeløp: {
                 id: BarnetrygdperiodeSpørsmålId.månedligBeløp,
-                svar: månedligBeløp.verdi,
+                svar: trimWhiteSpace(månedligBeløp.verdi),
             },
         });
 

@@ -368,7 +368,9 @@ export const useEøsForBarn = (
             })),
             adresse: {
                 ...andreForelder[andreForelderDataKeySpørsmål.adresse],
-                svar: svarForSpørsmålMedUkjent(andreForelderAdresseVetIkke, andreForelderAdresse),
+                svar: trimWhiteSpace(
+                    svarForSpørsmålMedUkjent(andreForelderAdresseVetIkke, andreForelderAdresse)
+                ),
             },
         },
     });
@@ -376,7 +378,7 @@ export const useEøsForBarn = (
     const genererOmsorgsperson = () => ({
         navn: {
             id: EøsBarnSpørsmålId.omsorgspersonNavn,
-            svar: omsorgspersonNavn.verdi,
+            svar: trimWhiteSpace(omsorgspersonNavn.verdi),
         },
         slektsforhold: {
             id: EøsBarnSpørsmålId.omsorgspersonSlektsforhold,
@@ -384,15 +386,17 @@ export const useEøsForBarn = (
         },
         slektsforholdSpesifisering: {
             id: EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering,
-            svar: omsorgpersonSlektsforholdSpesifisering.verdi,
+            svar: trimWhiteSpace(omsorgpersonSlektsforholdSpesifisering.verdi),
         },
         idNummer: {
             id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
-            svar: svarForSpørsmålMedUkjent(omsorgspersonIdNummerVetIkke, omsorgspersonIdNummer),
+            svar: trimWhiteSpace(
+                svarForSpørsmålMedUkjent(omsorgspersonIdNummerVetIkke, omsorgspersonIdNummer)
+            ),
         },
         adresse: {
             id: EøsBarnSpørsmålId.omsorgspersonAdresse,
-            svar: omsorgspersonAdresse.verdi,
+            svar: trimWhiteSpace(omsorgspersonAdresse.verdi),
         },
     });
 
@@ -424,7 +428,9 @@ export const useEøsForBarn = (
             },
             adresse: {
                 ...barn.adresse,
-                svar: svarForSpørsmålMedUkjent(barnetsAdresseVetIkke, barnetsAdresse),
+                svar: trimWhiteSpace(
+                    svarForSpørsmålMedUkjent(barnetsAdresseVetIkke, barnetsAdresse)
+                ),
             },
             omsorgsperson: borMedAndreForelder.verdi === ESvar.NEI ? genererOmsorgsperson() : null,
             ...(!!barn.andreForelder &&

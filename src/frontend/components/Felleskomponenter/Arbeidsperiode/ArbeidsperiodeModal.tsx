@@ -6,7 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
-import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -69,7 +69,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
             ...(arbeidsgiver.erSynlig && {
                 arbeidsgiver: {
                     id: ArbeidsperiodeSpørsmålsId.arbeidsgiver,
-                    svar: arbeidsgiver.verdi,
+                    svar: trimWhiteSpace(arbeidsgiver.verdi),
                 },
             }),
             ...(fraDatoArbeidsperiode.erSynlig && {
