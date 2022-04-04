@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import dayjs from 'dayjs';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -88,7 +89,7 @@ export const usePensjonSkjema = ({
             (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
         feilmeldingSpråkId: 'felles.nåravsluttetpensjon.feilmelding',
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: pensjonFraDato.verdi,
+        startdatoAvgrensning: dayjs(pensjonFraDato.verdi).add(1, 'day').format('YYYY-MM-DD'),
         avhengigheter: { mottarPensjonNå, pensjonFraDato },
         nullstillVedAvhengighetEndring: true,
     });
