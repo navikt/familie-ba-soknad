@@ -28,7 +28,7 @@ export const erDatoFørEllerSammeSomStartDatoAvgrensning = (
     dato: ISODateString,
     startdato: ISODateString
 ) => {
-    return dayjs(dato).isBefore(dayjs(startdato)) || dayjs(dato).isSame(dayjs(startdato));
+    return dayjs(dato).isBefore(dayjs(startdato));
 };
 
 export const gårsdagensDato = () => dayjs().subtract(1, 'day').format('YYYY-MM-DD');

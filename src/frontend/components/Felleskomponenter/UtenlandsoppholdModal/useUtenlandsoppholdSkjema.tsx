@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 
+import dayjs from 'dayjs';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
@@ -83,10 +85,12 @@ export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaPa
             utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE,
         sluttdatoAvgrensning: hentMaxAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
         startdatoAvgrensning: harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
-            ? oppholdslandFraDato.verdi
+            ? dayjs(oppholdslandFraDato.verdi).add(1, 'day').format('YYYY-MM-DD')
             : hentMinAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
         customStartdatoFeilmelding: !harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
-            ? 'modal.nårflyttettilnorge.mer-enn-ett-år.feilmelding'
+            ? utenlandsoppholdÅrsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
+                ? 'felles.dato.tilbake-i-tid.feilmelding'
+                : 'modal.nårflyttettilnorge.mer-enn-ett-år.feilmelding'
             : undefined,
         avhengigheter: { utenlandsoppholdÅrsak },
     });
