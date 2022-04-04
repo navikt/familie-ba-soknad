@@ -44,7 +44,7 @@ import {
     genererInitiellAndreForelder,
     nullstilteEøsFelterForBarn,
 } from '../../../utils/barn';
-import { dagensDato } from '../../../utils/dato';
+import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -185,11 +185,15 @@ export const useOmBarnet = (
         feilmeldingSpråkId: 'ombarnet.institusjon.sluttdato.feilmelding',
         skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
         nullstillVedAvhengighetEndring: false,
-        startdatoAvgrensning: institusjonOppholdStartdato.verdi,
+        startdatoAvgrensning: erSammeDatoSomDagensDato(institusjonOppholdStartdato.verdi)
+            ? morgendagensDato()
+            : dagensDato(),
+        customStartdatoFeilmelding: erSammeDatoSomDagensDato(institusjonOppholdStartdato.verdi)
+            ? undefined
+            : 'felles.dato.tilbake-i-tid.feilmelding',
     });
 
     /*---UTENLANDSOPPHOLD---*/
-
     const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
         feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
         verdi: gjeldendeBarn.utenlandsperioder,

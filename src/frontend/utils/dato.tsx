@@ -34,6 +34,10 @@ export const ettÅrTilbakeDato = () => dayjs().subtract(1, 'year').format('YYYY-
 
 export const dagensDato = () => dayjs().format('YYYY-MM-DD');
 
+export const morgendagensDato = () => dayjs().add(1, 'day').format('YYYY-MM-DD');
+
+export const erSammeDatoSomDagensDato = (dato: ISODateString) => dayjs(dato).isSame(dayjs(), 'day');
+
 export const validerDato = (
     feltState: FeltState<string>,
     feilmeldingSpråkId: string,
