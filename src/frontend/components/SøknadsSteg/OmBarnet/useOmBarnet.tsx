@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import dayjs from 'dayjs';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -564,7 +565,9 @@ export const useOmBarnet = (
         skalFeltetVises: søkerForTidsrom.verdi === ESvar.JA,
         nullstillVedAvhengighetEndring: false,
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: søkerForTidsromStartdato.verdi,
+        startdatoAvgrensning: dayjs(søkerForTidsromStartdato.verdi)
+            .add(1, 'day')
+            .format('YYYY-MM-DD'),
     });
 
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
