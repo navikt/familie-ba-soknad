@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema, useFelt, useSkjema } from '@navikt/familie-skjema';
 
@@ -73,7 +75,9 @@ export const useTidligereSamboer = (): {
         skalFeltetVises: true,
         feilmeldingSpråkId: 'omdeg.nårsamboerforholdavsluttet.feilmelding',
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: tidligereSamboerFraDato.verdi,
+        startdatoAvgrensning: dayjs(tidligereSamboerFraDato.verdi)
+            .add(1, 'day')
+            .format('YYYY-MM-DD'),
     });
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
