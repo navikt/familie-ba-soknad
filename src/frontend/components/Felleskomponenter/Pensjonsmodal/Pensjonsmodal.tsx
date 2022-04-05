@@ -86,7 +86,7 @@ export const PensjonModal: React.FC<Props> = ({
         ? 'felles.leggtilpensjon.utland.modal.tittel'
         : 'felles.leggtilpensjon.norge.modal.tittel';
 
-    const tilbakeITid = mottarPensjonNå.verdi === ESvar.NEI;
+    const tilbakeITid = mottarPensjonNå.verdi === ESvar.NEI || erAndreForelderDød;
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -104,10 +104,9 @@ export const PensjonModal: React.FC<Props> = ({
                         felt={skjema.felter.mottarPensjonNå}
                         spørsmålTekstId={
                             gjelderAndreForelder
-                                ? pensjonAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[PensjonSpørsmålId.mottarPensjonNå]
+                                ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                      PensjonSpørsmålId.mottarPensjonNå
+                                  ]
                                 : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
                                       PensjonSpørsmålId.mottarPensjonNå
                                   ]
@@ -123,10 +122,9 @@ export const PensjonModal: React.FC<Props> = ({
                             <SpråkTekst
                                 id={
                                     gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(
-                                              tilbakeITid,
-                                              erAndreForelderDød
-                                          )[PensjonSpørsmålId.pensjonsland]
+                                        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                              PensjonSpørsmålId.pensjonsland
+                                          ]
                                         : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
                                               PensjonSpørsmålId.pensjonsland
                                           ]
@@ -145,10 +143,9 @@ export const PensjonModal: React.FC<Props> = ({
                             <SpråkTekst
                                 id={
                                     gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(
-                                              tilbakeITid,
-                                              erAndreForelderDød
-                                          )[PensjonSpørsmålId.fraDatoPensjon]
+                                        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                              PensjonSpørsmålId.fraDatoPensjon
+                                          ]
                                         : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
                                               PensjonSpørsmålId.fraDatoPensjon
                                           ]
@@ -157,9 +154,7 @@ export const PensjonModal: React.FC<Props> = ({
                             />
                         }
                         skjema={skjema}
-                        avgrensMaxDato={
-                            tilbakeITid || erAndreForelderDød ? gårsdagensDato() : dagensDato()
-                        }
+                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
                         calendarPosition={'fullscreen'}
                     />
                 )}
@@ -170,10 +165,9 @@ export const PensjonModal: React.FC<Props> = ({
                             <SpråkTekst
                                 id={
                                     gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(
-                                              tilbakeITid,
-                                              erAndreForelderDød
-                                          )[PensjonSpørsmålId.tilDatoPensjon]
+                                        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                              PensjonSpørsmålId.tilDatoPensjon
+                                          ]
                                         : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
                                               PensjonSpørsmålId.tilDatoPensjon
                                           ]

@@ -2,10 +2,12 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import {
     andreForelderDataKeySpørsmål,
+    barnDataKeySpørsmål,
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
@@ -30,6 +32,7 @@ const EøsAndreForelderOppsummering: React.FC<{
     const intl = useIntl();
     const { formatMessage } = intl;
     const barnetsNavn = barnetsNavnValue(barn, intl);
+    const andreForelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
 
     const jaNeiSpmOppsummering = (andreForelderDataKeySpm: andreForelderDataKeySpørsmål) =>
         barn.andreForelder && barn.andreForelder[andreForelderDataKeySpm].svar ? (
@@ -80,6 +83,9 @@ const EøsAndreForelderOppsummering: React.FC<{
                         key={`arbeidsperiode-andre-forelder-norge-${index}`}
                         arbeidsperiode={arbeidsperiode}
                         nummer={index + 1}
+                        andreForelderData={{
+                            erDød: andreForelderErDød,
+                        }}
                     />
                 ))}
             </StyledOppsummeringsFeltGruppe>
@@ -90,6 +96,7 @@ const EøsAndreForelderOppsummering: React.FC<{
                         key={`pensjonsperiode-andre-forelder-norge-${index}`}
                         pensjonsperiode={pensjonsperiode}
                         nummer={index + 1}
+                        andreForelderData={{ erDød: andreForelderErDød, barn }}
                     />
                 ))}
             </StyledOppsummeringsFeltGruppe>
@@ -100,6 +107,7 @@ const EøsAndreForelderOppsummering: React.FC<{
                         key={`utbetalingsperiode-andre-forelder-${index}`}
                         utbetalingsperiode={utbetalingsperiode}
                         nummer={index + 1}
+                        andreForelderData={{ erDød: andreForelderErDød, barn }}
                     />
                 ))}
             </StyledOppsummeringsFeltGruppe>

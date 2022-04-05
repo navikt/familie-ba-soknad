@@ -27,20 +27,14 @@ export const UtbetalingsperiodeOppsummering: React.FC<{
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } =
         utbetalingsperiode;
 
-    const tilbakeITid = fårUtbetalingNå?.svar === ESvar.NEI;
     const gjelderAndreForelder = !!andreForelderData;
     const erAndreForelderDød = !!andreForelderData?.erDød;
+    const tilbakeITid = fårUtbetalingNå?.svar === ESvar.NEI || erAndreForelderDød;
     const barn = andreForelderData?.barn;
 
     const utbetalingerSpørsmålSpråkTekst = (spørsmålId: UtbetalingerSpørsmålId) => (
         <SpråkTekst
-            id={
-                hentUtbetalingsperiodeSpørsmålIder(
-                    gjelderAndreForelder,
-                    tilbakeITid,
-                    erAndreForelderDød
-                )[spørsmålId]
-            }
+            id={hentUtbetalingsperiodeSpørsmålIder(gjelderAndreForelder, tilbakeITid)[spørsmålId]}
             values={{
                 ...(barn && { barn: barnetsNavnValue(barn, intl) }),
             }}
@@ -87,8 +81,7 @@ export const UtbetalingsperiodeOppsummering: React.FC<{
                             id={
                                 hentUtbetalingsperiodeSpørsmålIder(
                                     gjelderAndreForelder,
-                                    tilbakeITid,
-                                    erAndreForelderDød
+                                    tilbakeITid
                                 )[UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]
                             }
                         />

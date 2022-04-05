@@ -96,13 +96,9 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
         ? 'felles.flerearbeidsperioderutland.tittel'
         : 'felles.flerearbeidsperiodernorge.tittel';
 
-    const tilbakeITid = arbeidsperiodeAvsluttet.verdi === ESvar.JA;
+    const tilbakeITid = arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød;
 
-    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
-        gjelderAndreForelder,
-        tilbakeITid,
-        erAndreForelderDød
-    );
+    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(gjelderAndreForelder, tilbakeITid);
 
     return (
         <SkjemaModal
@@ -161,9 +157,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             />
                         }
                         calendarPosition={'fullscreen'}
-                        avgrensMaxDato={
-                            tilbakeITid || erAndreForelderDød ? gårsdagensDato() : dagensDato()
-                        }
+                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
                     />
                 )}
                 {tilDatoArbeidsperiode.erSynlig && (
@@ -183,9 +177,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                                 erAndreForelderDød,
                                 skjema.felter.fraDatoArbeidsperiode
                             )}
-                            avgrensMaxDato={
-                                tilbakeITid || erAndreForelderDød ? dagensDato() : undefined
-                            }
+                            avgrensMaxDato={tilbakeITid ? dagensDato() : undefined}
                             disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
                             calendarPosition={'fullscreen'}
                         />

@@ -32,15 +32,11 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         skalSkjules: erAndreForelderDød,
     });
 
-    const tilbakeITid = arbeidsperiodeAvsluttet.verdi === ESvar.JA;
+    const tilbakeITid = arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød;
 
     const arbeidsperiodeLand = useLanddropdownFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand, svar: '' },
-        feilmeldingSpråkId: arbeidslandFeilmelding(
-            tilbakeITid,
-            gjelderAndreForelder,
-            erAndreForelderDød
-        ),
+        feilmeldingSpråkId: arbeidslandFeilmelding(tilbakeITid, gjelderAndreForelder),
         skalFeltetVises:
             (arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
                 erAndreForelderDød) &&
@@ -64,7 +60,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               erAndreForelderDød,
         feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
-        sluttdatoAvgrensning: tilbakeITid || erAndreForelderDød ? gårsdagensDato() : dagensDato(),
+        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -82,21 +78,19 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         feltId: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
         initiellVerdi: '',
         vetIkkeCheckbox: tilDatoArbeidsperiodeUkjent,
-        feilmeldingSpråkId: tilDatoArbeidsperiodeFeilmelding(tilbakeITid, erAndreForelderDød),
+        feilmeldingSpråkId: tilDatoArbeidsperiodeFeilmelding(tilbakeITid),
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               erAndreForelderDød,
-        sluttdatoAvgrensning: tilbakeITid || erAndreForelderDød ? dagensDato() : undefined,
+        sluttdatoAvgrensning: tilbakeITid ? dagensDato() : undefined,
         startdatoAvgrensning: minAvgrensningArbeidsperiodeTilDato(
             arbeidsperiodeAvsluttet,
             erAndreForelderDød,
             fraDatoArbeidsperiode
         ),
         customStartdatoFeilmelding:
-            erSammeDatoSomDagensDato(fraDatoArbeidsperiode.verdi) ||
-            tilbakeITid ||
-            erAndreForelderDød
+            erSammeDatoSomDagensDato(fraDatoArbeidsperiode.verdi) || tilbakeITid
                 ? undefined
                 : 'felles.dato.tilbake-i-tid.feilmelding',
     });
