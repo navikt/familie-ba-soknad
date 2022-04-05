@@ -4,11 +4,11 @@ import { dagenEtterDato, dagensDato, erSammeDatoSomDagensDato, morgendagensDato 
 
 export const minTilDatoForUtbetalingEllerArbeidsperiode = (
     tilbakeITid: boolean,
-    dato: ISODateString
+    fraDato: ISODateString
 ) => {
     if (tilbakeITid) {
-        return dagenEtterDato(dato);
-    } else if (erSammeDatoSomDagensDato(dato)) {
+        return dagenEtterDato(fraDato);
+    } else if (erSammeDatoSomDagensDato(fraDato)) {
         return morgendagensDato();
     } else {
         return dagensDato();
