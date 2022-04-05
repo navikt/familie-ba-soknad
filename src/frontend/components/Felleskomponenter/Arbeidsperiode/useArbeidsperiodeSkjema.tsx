@@ -8,12 +8,13 @@ import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IArbeidsperioderFeltTyper } from '../../../typer/skjema';
-import { dagensDato, gårsdagensDato, dagenEtterDato } from '../../../utils/dato';
+import { dagensDato, gårsdagensDato, erSammeDatoSomDagensDato } from '../../../utils/dato';
 import {
     arbeidslandFeilmelding,
     tilDatoArbeidsperiodeFeilmelding,
 } from './arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
+import { minAvgrensningArbeidsperiodeTilDato } from './utils';
 
 export interface IUseArbeidsperiodeSkjemaParams {
     gjelderUtlandet: boolean;
@@ -63,7 +64,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               erAndreForelderDød,
         feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
-        sluttdatoAvgrensning: gårsdagensDato(),
+        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -86,17 +87,17 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               erAndreForelderDød,
-        sluttdatoAvgrensning:
-            arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød
-                ? dagensDato()
-                : undefined,
-        startdatoAvgrensning:
-            arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød
-                ? dagenEtterDato(fraDatoArbeidsperiode.verdi)
-                : dagensDato(),
+        sluttdatoAvgrensning: tilbakeITid || erAndreForelderDød ? dagensDato() : undefined,
+        startdatoAvgrensning: minAvgrensningArbeidsperiodeTilDato(
+            arbeidsperiodeAvsluttet,
+            erAndreForelderDød,
+            fraDatoArbeidsperiode
+        ),
         customStartdatoFeilmelding:
-            arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød
-                ? ''
+            erSammeDatoSomDagensDato(fraDatoArbeidsperiode.verdi) ||
+            tilbakeITid ||
+            erAndreForelderDød
+                ? undefined
                 : 'felles.dato.tilbake-i-tid.feilmelding',
     });
 

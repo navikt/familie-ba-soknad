@@ -1,7 +1,5 @@
 import React from 'react';
 
-import dayjs from 'dayjs';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IArbeidsperiode } from '../../../typer/perioder';
@@ -20,6 +18,7 @@ import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { arbeidsperiodeSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
+import { minAvgrensningArbeidsperiodeTilDato } from './utils';
 
 interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaParams {
     onLeggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
@@ -162,7 +161,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             />
                         }
                         calendarPosition={'fullscreen'}
-                        avgrensMaxDato={gårsdagensDato()}
+                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
                     />
                 )}
                 {tilDatoArbeidsperiode.erSynlig && (
@@ -177,19 +176,13 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                                     )}
                                 />
                             }
-                            avgrensMinDato={
-                                skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA ||
-                                erAndreForelderDød
-                                    ? dayjs(skjema.felter.fraDatoArbeidsperiode.verdi)
-                                          .add(1, 'day')
-                                          .format('YYYY-MM-DD')
-                                    : dagensDato()
-                            }
+                            avgrensMinDato={minAvgrensningArbeidsperiodeTilDato(
+                                skjema.felter.arbeidsperiodeAvsluttet,
+                                erAndreForelderDød,
+                                skjema.felter.fraDatoArbeidsperiode
+                            )}
                             avgrensMaxDato={
-                                skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA ||
-                                erAndreForelderDød
-                                    ? dagensDato()
-                                    : undefined
+                                tilbakeITid || erAndreForelderDød ? dagensDato() : undefined
                             }
                             disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
                             calendarPosition={'fullscreen'}
