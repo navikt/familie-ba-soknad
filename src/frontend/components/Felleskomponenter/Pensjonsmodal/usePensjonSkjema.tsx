@@ -73,7 +73,7 @@ export const usePensjonSkjema = ({
             tilbakeITid,
             erAndreForelderDød
         ),
-        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
+        sluttdatoAvgrensning: tilbakeITid || erAndreForelderDød ? gårsdagensDato() : dagensDato(),
         avhengigheter: { mottarPensjonNå },
         nullstillVedAvhengighetEndring: true,
     });

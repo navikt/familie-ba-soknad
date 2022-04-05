@@ -64,7 +64,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               erAndreForelderDød,
         feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
-        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
+        sluttdatoAvgrensning: tilbakeITid || erAndreForelderDød ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 

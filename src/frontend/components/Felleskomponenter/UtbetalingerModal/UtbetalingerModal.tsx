@@ -133,9 +133,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             />
                         }
                         avgrensMaxDato={
-                            skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI
-                                ? gårsdagensDato()
-                                : dagensDato()
+                            tilbakeITid || andreForelderErDød ? gårsdagensDato() : dagensDato()
                         }
                         calendarPosition={'fullscreen'}
                     />
@@ -155,10 +153,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                 />
                             }
                             avgrensMaxDato={
-                                skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI ||
-                                andreForelderErDød
-                                    ? dagensDato()
-                                    : undefined
+                                tilbakeITid || andreForelderErDød ? dagensDato() : undefined
                             }
                             avgrensMinDato={minAvgrensningUtbetalingTilDato(
                                 skjema.felter.fårUtbetalingNå,

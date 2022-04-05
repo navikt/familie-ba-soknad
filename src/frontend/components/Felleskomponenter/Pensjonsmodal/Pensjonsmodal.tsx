@@ -157,7 +157,9 @@ export const PensjonModal: React.FC<Props> = ({
                             />
                         }
                         skjema={skjema}
-                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
+                        avgrensMaxDato={
+                            tilbakeITid || erAndreForelderDød ? gårsdagensDato() : dagensDato()
+                        }
                         calendarPosition={'fullscreen'}
                     />
                 )}

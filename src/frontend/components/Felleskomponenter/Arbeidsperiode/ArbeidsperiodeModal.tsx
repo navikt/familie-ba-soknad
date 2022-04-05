@@ -161,7 +161,9 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             />
                         }
                         calendarPosition={'fullscreen'}
-                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
+                        avgrensMaxDato={
+                            tilbakeITid || erAndreForelderDød ? gårsdagensDato() : dagensDato()
+                        }
                     />
                 )}
                 {tilDatoArbeidsperiode.erSynlig && (

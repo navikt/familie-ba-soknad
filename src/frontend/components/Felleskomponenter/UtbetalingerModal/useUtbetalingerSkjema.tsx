@@ -62,7 +62,7 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         feilmeldingSpråkId: 'felles.nårbegynteutbetalingene.feilmelding',
-        sluttdatoAvgrensning: fårUtbetalingNå.verdi === ESvar.NEI ? gårsdagensDato() : dagensDato(),
+        sluttdatoAvgrensning: tilbakeITid || andreForelderErDød ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -83,17 +83,14 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
                 : 'felles.nårstopperutbetalingene.feilmelding',
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
-        sluttdatoAvgrensning:
-            fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød ? dagensDato() : undefined,
+        sluttdatoAvgrensning: tilbakeITid || andreForelderErDød ? dagensDato() : undefined,
         startdatoAvgrensning: minAvgrensningUtbetalingTilDato(
             fårUtbetalingNå,
             andreForelderErDød,
             utbetalingFraDato
         ),
         customStartdatoFeilmelding:
-            erSammeDatoSomDagensDato(utbetalingFraDato.verdi) ||
-            fårUtbetalingNå.verdi === ESvar.NEI ||
-            andreForelderErDød
+            erSammeDatoSomDagensDato(utbetalingFraDato.verdi) || tilbakeITid || andreForelderErDød
                 ? undefined
                 : 'felles.dato.tilbake-i-tid.feilmelding',
     });
