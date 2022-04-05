@@ -11,8 +11,9 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, erSammeDatoSomDagensDato, gårsdagensDato } from '../../../utils/dato';
+import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
+import { utbetalingerFeilmelding } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
-import { minAvgrensningUtbetalingTilDato, utbetalingerFeilmelding } from './utils';
 
 export const useUtbetalingerSkjema = (andreForelderData?: {
     barn: IBarnMedISøknad;
@@ -83,7 +84,10 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         sluttdatoAvgrensning: tilbakeITid ? dagensDato() : undefined,
-        startdatoAvgrensning: minAvgrensningUtbetalingTilDato(tilbakeITid, utbetalingFraDato),
+        startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
+            tilbakeITid,
+            utbetalingFraDato.verdi
+        ),
         customStartdatoFeilmelding:
             erSammeDatoSomDagensDato(utbetalingFraDato.verdi) || tilbakeITid
                 ? undefined

@@ -15,10 +15,13 @@ import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import {
+    mottarEllerMottattUtbetalingSpråkId,
+    utbetalingerFlerePerioderSpmSpråkId,
+} from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 import { UtbetalingerModal } from './UtbetalingerModal';
 import { UtbetalingsperiodeOppsummering } from './UtbetalingsperiodeOppsummering';
-import { mottarEllerMottattUtbetalingSpråkId, utbetalingerFlerePerioderSpmSpråkId } from './utils';
 
 interface UtbetalingsperiodeProps {
     skjema: ISkjema<IEøsForBarnFeltTyper | IEøsForSøkerFeltTyper, string>;

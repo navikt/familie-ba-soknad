@@ -5,6 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -18,7 +19,6 @@ import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { arbeidsperiodeSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
-import { minAvgrensningArbeidsperiodeTilDato } from './utils';
 
 interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaParams {
     onLeggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
@@ -172,9 +172,9 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                                     )}
                                 />
                             }
-                            avgrensMinDato={minAvgrensningArbeidsperiodeTilDato(
+                            avgrensMinDato={minTilDatoForUtbetalingEllerArbeidsperiode(
                                 tilbakeITid,
-                                skjema.felter.fraDatoArbeidsperiode
+                                skjema.felter.fraDatoArbeidsperiode.verdi
                             )}
                             avgrensMaxDato={tilbakeITid ? dagensDato() : undefined}
                             disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}

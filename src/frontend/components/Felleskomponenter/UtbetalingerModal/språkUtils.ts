@@ -1,12 +1,3 @@
-import { ISODateString } from '@navikt/familie-form-elements';
-import { Felt } from '@navikt/familie-skjema';
-
-import {
-    dagenEtterDato,
-    dagensDato,
-    erSammeDatoSomDagensDato,
-    morgendagensDato,
-} from '../../../utils/dato';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
 
 export const mottarEllerMottattUtbetalingSpråkId = (
@@ -31,16 +22,3 @@ export const utbetalingerFeilmelding = (gjelderAndreForelder: boolean) =>
     gjelderAndreForelder
         ? 'eøs.andreforelderutbetalinger.feilmelding'
         : 'eøs.utbetalinger.feilmelding';
-
-export const minAvgrensningUtbetalingTilDato = (
-    tilbakeITid: boolean,
-    utbetalingFraDato: Felt<ISODateString>
-) => {
-    if (tilbakeITid) {
-        return dagenEtterDato(utbetalingFraDato.verdi);
-    } else if (erSammeDatoSomDagensDato(utbetalingFraDato.verdi)) {
-        return morgendagensDato();
-    } else {
-        return dagensDato();
-    }
-};

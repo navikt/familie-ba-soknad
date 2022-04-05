@@ -10,6 +10,7 @@ import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -22,7 +23,6 @@ import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { hentUtbetalingsperiodeSpørsmålIder, UtbetalingerSpørsmålId } from './spørsmål';
 import { useUtbetalingerSkjema } from './useUtbetalingerSkjema';
-import { minAvgrensningUtbetalingTilDato } from './utils';
 
 interface UtbetalingerModalProps extends ReturnType<typeof useModal> {
     onLeggTilUtbetalinger: (utbetalingsperiode: IUtbetalingsperiode) => void;
@@ -146,9 +146,9 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                 />
                             }
                             avgrensMaxDato={tilbakeITid ? dagensDato() : undefined}
-                            avgrensMinDato={minAvgrensningUtbetalingTilDato(
+                            avgrensMinDato={minTilDatoForUtbetalingEllerArbeidsperiode(
                                 tilbakeITid,
-                                skjema.felter.utbetalingFraDato
+                                skjema.felter.utbetalingFraDato.verdi
                             )}
                             disabled={skjema.felter.utbetalingTilDatoUkjent.verdi === ESvar.JA}
                             calendarPosition={'fullscreen'}

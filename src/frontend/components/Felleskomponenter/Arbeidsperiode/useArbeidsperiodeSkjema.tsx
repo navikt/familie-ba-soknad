@@ -9,12 +9,12 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IArbeidsperioderFeltTyper } from '../../../typer/skjema';
 import { dagensDato, gårsdagensDato, erSammeDatoSomDagensDato } from '../../../utils/dato';
+import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import {
     arbeidslandFeilmelding,
     tilDatoArbeidsperiodeFeilmelding,
 } from './arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
-import { minAvgrensningArbeidsperiodeTilDato } from './utils';
 
 export interface IUseArbeidsperiodeSkjemaParams {
     gjelderUtlandet: boolean;
@@ -84,9 +84,9 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               erAndreForelderDød,
         sluttdatoAvgrensning: tilbakeITid ? dagensDato() : undefined,
-        startdatoAvgrensning: minAvgrensningArbeidsperiodeTilDato(
+        startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
             tilbakeITid,
-            fraDatoArbeidsperiode
+            fraDatoArbeidsperiode.verdi
         ),
         customStartdatoFeilmelding:
             erSammeDatoSomDagensDato(fraDatoArbeidsperiode.verdi) || tilbakeITid
