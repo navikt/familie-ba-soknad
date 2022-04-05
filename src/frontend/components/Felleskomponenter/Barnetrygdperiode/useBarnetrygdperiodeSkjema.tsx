@@ -1,7 +1,5 @@
 import React from 'react';
 
-import dayjs from 'dayjs';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -9,7 +7,7 @@ import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagenEtterDato, dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { barnetrygdslandFeilmelding } from './barnetrygdperiodeSpråkUtils';
@@ -43,9 +41,7 @@ export const useBarnetrygdperiodeSkjema = () => {
         skalFeltetVises: tilbakeITid,
         feilmeldingSpråkId: 'modal.trygdnåravsluttet.spm',
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: dayjs(fraDatoBarnetrygdperiode.verdi)
-            .add(1, 'day')
-            .format('YYYY-MM-DD'),
+        startdatoAvgrensning: dagenEtterDato(fraDatoBarnetrygdperiode.verdi),
     });
 
     const månedligBeløp = useFelt<string>({

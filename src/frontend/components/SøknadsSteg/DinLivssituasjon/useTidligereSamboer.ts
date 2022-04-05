@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema, useFelt, useSkjema } from '@navikt/familie-skjema';
 
@@ -8,7 +6,7 @@ import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjen
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import { ITidligereSamboerFeltTyper } from '../../../typer/skjema';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagenEtterDato, dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { TidligereSamboerSpørsmålId } from './spørsmål';
 
 export const useTidligereSamboer = (): {
@@ -75,9 +73,7 @@ export const useTidligereSamboer = (): {
         skalFeltetVises: true,
         feilmeldingSpråkId: 'omdeg.nårsamboerforholdavsluttet.feilmelding',
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: dayjs(tidligereSamboerFraDato.verdi)
-            .add(1, 'day')
-            .format('YYYY-MM-DD'),
+        startdatoAvgrensning: dagenEtterDato(tidligereSamboerFraDato.verdi),
     });
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<

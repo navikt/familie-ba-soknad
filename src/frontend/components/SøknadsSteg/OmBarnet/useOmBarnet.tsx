@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import dayjs from 'dayjs';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -44,7 +43,12 @@ import {
     genererInitiellAndreForelder,
     nullstilteEøsFelterForBarn,
 } from '../../../utils/barn';
-import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from '../../../utils/dato';
+import {
+    dagenEtterDato,
+    dagensDato,
+    erSammeDatoSomDagensDato,
+    morgendagensDato,
+} from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -569,9 +573,7 @@ export const useOmBarnet = (
         skalFeltetVises: søkerForTidsrom.verdi === ESvar.JA,
         nullstillVedAvhengighetEndring: false,
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: dayjs(søkerForTidsromStartdato.verdi)
-            .add(1, 'day')
-            .format('YYYY-MM-DD'),
+        startdatoAvgrensning: dagenEtterDato(søkerForTidsromStartdato.verdi),
     });
 
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
