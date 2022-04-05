@@ -83,11 +83,7 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         sluttdatoAvgrensning: tilbakeITid ? dagensDato() : undefined,
-        startdatoAvgrensning: minAvgrensningUtbetalingTilDato(
-            fårUtbetalingNå,
-            andreForelderErDød,
-            utbetalingFraDato
-        ),
+        startdatoAvgrensning: minAvgrensningUtbetalingTilDato(tilbakeITid, utbetalingFraDato),
         customStartdatoFeilmelding:
             erSammeDatoSomDagensDato(utbetalingFraDato.verdi) || tilbakeITid
                 ? undefined

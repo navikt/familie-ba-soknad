@@ -85,8 +85,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
               erAndreForelderDød,
         sluttdatoAvgrensning: tilbakeITid ? dagensDato() : undefined,
         startdatoAvgrensning: minAvgrensningArbeidsperiodeTilDato(
-            arbeidsperiodeAvsluttet,
-            erAndreForelderDød,
+            tilbakeITid,
             fraDatoArbeidsperiode
         ),
         customStartdatoFeilmelding:

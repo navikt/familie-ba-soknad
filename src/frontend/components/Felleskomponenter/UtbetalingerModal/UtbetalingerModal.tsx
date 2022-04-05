@@ -147,8 +147,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             }
                             avgrensMaxDato={tilbakeITid ? dagensDato() : undefined}
                             avgrensMinDato={minAvgrensningUtbetalingTilDato(
-                                skjema.felter.fårUtbetalingNå,
-                                andreForelderErDød,
+                                tilbakeITid,
                                 skjema.felter.utbetalingFraDato
                             )}
                             disabled={skjema.felter.utbetalingTilDatoUkjent.verdi === ESvar.JA}

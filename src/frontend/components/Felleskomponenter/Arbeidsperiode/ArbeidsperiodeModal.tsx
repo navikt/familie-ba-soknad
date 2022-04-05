@@ -173,8 +173,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                                 />
                             }
                             avgrensMinDato={minAvgrensningArbeidsperiodeTilDato(
-                                skjema.felter.arbeidsperiodeAvsluttet,
-                                erAndreForelderDød,
+                                tilbakeITid,
                                 skjema.felter.fraDatoArbeidsperiode
                             )}
                             avgrensMaxDato={tilbakeITid ? dagensDato() : undefined}

@@ -1,4 +1,4 @@
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ISODateString } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
 import {
@@ -33,11 +33,10 @@ export const utbetalingerFeilmelding = (gjelderAndreForelder: boolean) =>
         : 'eøs.utbetalinger.feilmelding';
 
 export const minAvgrensningUtbetalingTilDato = (
-    fårUtbetalingNå: Felt<ESvar | null>,
-    andreForelderErDød: boolean,
+    tilbakeITid: boolean,
     utbetalingFraDato: Felt<ISODateString>
 ) => {
-    if (fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød) {
+    if (tilbakeITid) {
         return dagenEtterDato(utbetalingFraDato.verdi);
     } else if (erSammeDatoSomDagensDato(utbetalingFraDato.verdi)) {
         return morgendagensDato();

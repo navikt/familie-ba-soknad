@@ -1,4 +1,4 @@
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ISODateString } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
 import {
@@ -9,11 +9,10 @@ import {
 } from '../../../utils/dato';
 
 export const minAvgrensningArbeidsperiodeTilDato = (
-    arbeidperiodeErAvsluttet: Felt<ESvar | null>,
-    andreForelderErDød: boolean,
+    tilbakeITid: boolean,
     arbeidsperiodeFraDato: Felt<ISODateString>
 ) => {
-    if (arbeidperiodeErAvsluttet.verdi === ESvar.JA || andreForelderErDød) {
+    if (tilbakeITid) {
         return dagenEtterDato(arbeidsperiodeFraDato.verdi);
     } else if (erSammeDatoSomDagensDato(arbeidsperiodeFraDato.verdi)) {
         return morgendagensDato();
