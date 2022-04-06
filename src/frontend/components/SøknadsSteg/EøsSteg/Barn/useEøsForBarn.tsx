@@ -22,7 +22,11 @@ import { Slektsforhold } from '../../../../typer/kontrakt/barn';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { valideringAdresse } from '../../../../utils/adresse';
-import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
+import {
+    barnetsNavnValue,
+    skalSkjuleAndreForelderFelt,
+    skalViseOmsorgspersonHof,
+} from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { formaterVerdiForCheckbox } from '../../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../../utils/spørsmål';
@@ -126,24 +130,19 @@ export const useEøsForBarn = (
         ),
     });
 
-    const skalViseOmsorgsperson = (borMedAndreForelderFelt: Felt<ESvar | null>) => {
-        const andreSituasjonerSomUtløserOmsorgsperson =
-            gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
-            gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI &&
-            (gjeldendeBarn.andreForelderErDød.svar === ESvar.JA ||
-                gjeldendeBarn.erFosterbarn.svar === ESvar.JA);
-
-        return (
-            (borMedAndreForelderFelt.verdi === ESvar.NEI &&
-                (!borMedOmsorgsperson.erSynlig || borMedOmsorgsperson.verdi === ESvar.JA)) ||
-            andreSituasjonerSomUtløserOmsorgsperson
-        );
-    };
+    const skalViseOmsorgsperson = skalViseOmsorgspersonHof(
+        borMedAndreForelder.verdi,
+        borMedOmsorgsperson.verdi,
+        gjeldendeBarn.borFastMedSøker.svar,
+        gjeldendeBarn.oppholderSegIInstitusjon.svar,
+        gjeldendeBarn.andreForelderErDød.svar,
+        gjeldendeBarn.erFosterbarn.svar
+    );
 
     const omsorgspersonNavn = useInputFelt({
         søknadsfelt: omsorgsperson && omsorgsperson.navn,
         feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonnavn.feilmelding',
-        skalVises: skalViseOmsorgsperson(borMedAndreForelder),
+        skalVises: skalViseOmsorgsperson(),
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
             return verdi.match(/^[A-Za-zæøåÆØÅ\s\-\\,\\.]{1,60}$/)
@@ -170,9 +169,9 @@ export const useEøsForBarn = (
                 : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
         },
         skalFeltetVises: avhengigheter =>
-            gjeldendeBarn.erFosterbarn.svar === ESvar.NEI &&
-            skalViseOmsorgsperson(avhengigheter.borMedAndreForelder),
-        avhengigheter: { borMedAndreForelder },
+            gjeldendeBarn.erFosterbarn.svar === ESvar.NEI && avhengigheter.skalViseOmsorgsperson(),
+        avhengigheter: { skalViseOmsorgsperson },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const omsorgpersonSlektsforholdSpesifisering = useInputFelt({
@@ -202,15 +201,14 @@ export const useEøsForBarn = (
     const omsorgspersonIdNummerVetIkke = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(omsorgsperson?.idNummer.svar),
         feltId: EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke,
-        skalFeltetVises: avhengigheter => skalViseOmsorgsperson(avhengigheter.borMedAndreForelder),
-        avhengigheter: { borMedAndreForelder },
+        skalFeltetVises: () => skalViseOmsorgsperson(),
     });
 
     const omsorgspersonIdNummer = useInputFeltMedUkjent({
         søknadsfelt: omsorgsperson && omsorgsperson.idNummer,
         avhengighet: omsorgspersonIdNummerVetIkke,
         feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonidnummer.feilmelding',
-        skalVises: skalViseOmsorgsperson(borMedAndreForelder),
+        skalVises: skalViseOmsorgsperson(),
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
             return verdi.match(/^[0-9A-Za-zæøåÆØÅ\s\-.\\/]{4,20}$/)
@@ -231,7 +229,7 @@ export const useEøsForBarn = (
     const omsorgspersonAdresse = useInputFelt({
         søknadsfelt: omsorgsperson && omsorgsperson.adresse,
         feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonoppholdssted.feilmelding',
-        skalVises: skalViseOmsorgsperson(borMedAndreForelder),
+        skalVises: skalViseOmsorgsperson(),
         customValidering: valideringAdresse,
         nullstillVedAvhengighetEndring: false,
     });
@@ -454,7 +452,7 @@ export const useEøsForBarn = (
             },
             borMedOmsorgsperson: {
                 ...barn.borMedOmsorgsperson,
-                svar: borMedOmsorgsperson.verdi,
+                svar: borMedOmsorgsperson.erSynlig ? borMedOmsorgsperson.verdi : null,
             },
             adresse: {
                 ...barn.adresse,
@@ -462,7 +460,8 @@ export const useEøsForBarn = (
                     svarForSpørsmålMedUkjent(barnetsAdresseVetIkke, barnetsAdresse)
                 ),
             },
-            omsorgsperson: borMedAndreForelder.verdi === ESvar.NEI ? genererOmsorgsperson() : null,
+            omsorgsperson: skalViseOmsorgsperson() ? genererOmsorgsperson() : null,
+
             ...(!!barn.andreForelder &&
                 !barnMedSammeForelder &&
                 genererAndreForelder(barn.andreForelder)),

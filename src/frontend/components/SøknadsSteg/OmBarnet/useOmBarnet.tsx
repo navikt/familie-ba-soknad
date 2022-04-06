@@ -42,6 +42,7 @@ import {
     filtrerteRelevanteIdNummerForBarn,
     genererInitiellAndreForelder,
     nullstilteEøsFelterForBarn,
+    skalViseOmsorgspersonHof,
 } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
@@ -838,8 +839,17 @@ export const useOmBarnet = (
                 : [];
         const utenlandsperioder = registrerteUtenlandsperioder.verdi;
 
-        const borMedAndreForelder =
-            borFastMedSøker.verdi === ESvar.JA ? null : barn.borMedAndreForelder.svar;
+        const borMedOmsorgsperson =
+            borFastMedSøker.verdi === ESvar.NEI ? null : barn.borMedOmsorgsperson.svar;
+
+        const skalViseOmsorgsperson = skalViseOmsorgspersonHof(
+            barn.borMedAndreForelder.svar,
+            borMedOmsorgsperson,
+            borFastMedSøker.verdi,
+            barn.oppholderSegIInstitusjon.svar,
+            barn.andreForelderErDød.svar,
+            barn.erFosterbarn.svar
+        );
 
         return {
             ...barn,
@@ -913,16 +923,17 @@ export const useOmBarnet = (
                 ...barn.borFastMedSøker,
                 svar: borFastMedSøker.verdi,
             },
-            borMedAndreForelder: {
-                ...barn.borMedAndreForelder,
-                svar: borMedAndreForelder,
+            borMedOmsorgsperson: {
+                ...barn.borMedOmsorgsperson,
+                svar: borFastMedSøker.verdi === ESvar.NEI ? null : barn.borMedOmsorgsperson.svar,
             },
-            omsorgsperson: borFastMedSøker.verdi === ESvar.JA ? null : barn.omsorgsperson,
+            omsorgsperson: skalViseOmsorgsperson() ? barn.omsorgsperson : null,
             adresse: {
                 ...barn.adresse,
                 svar:
                     barn.erFosterbarn.svar === ESvar.JA ||
-                    (borMedAndreForelder && kanIkkeGiOpplysningerOmAndreForelder())
+                    (barn.borMedAndreForelder.svar === ESvar.JA &&
+                        kanIkkeGiOpplysningerOmAndreForelder())
                         ? barn.adresse.svar
                         : '',
             },
