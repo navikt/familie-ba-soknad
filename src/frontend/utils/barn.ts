@@ -191,15 +191,22 @@ export const genererOppdaterteBarn = (
                 ? null
                 : genererInitiellAndreForelder(barn.andreForelder, andreForelderErDød),
             omsorgsperson:
-                oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød
-                    ? null
-                    : barn.omsorgsperson,
+                oppholderSegIInstitusjon === ESvar.NEI && (andreForelderErDød || erFosterbarn)
+                    ? barn.omsorgsperson
+                    : null,
             [barnDataKeySpørsmål.borMedAndreForelder]: {
                 ...barn[barnDataKeySpørsmål.borMedAndreForelder],
                 svar:
                     erFosterbarn || oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød
                         ? null
                         : barn[barnDataKeySpørsmål.borMedAndreForelder].svar,
+            },
+            [barnDataKeySpørsmål.borMedOmsorgsperson]: {
+                ...barn[barnDataKeySpørsmål.borMedOmsorgsperson],
+                svar:
+                    erFosterbarn || oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød
+                        ? null
+                        : barn[barnDataKeySpørsmål.borMedOmsorgsperson].svar,
             },
             [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
@@ -564,6 +571,7 @@ export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
         svar: '',
     },
     borMedAndreForelder: { ...barn.borMedAndreForelder, svar: null },
+    borMedOmsorgsperson: { ...barn.borMedOmsorgsperson, svar: null },
     omsorgsperson: null,
     adresse: { ...barn.adresse, svar: '' },
     ...(barn.andreForelder && {
