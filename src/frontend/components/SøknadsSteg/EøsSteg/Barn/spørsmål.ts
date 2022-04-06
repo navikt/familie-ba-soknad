@@ -10,6 +10,7 @@ export enum EøsBarnSpørsmålId {
     søkersSlektsforhold = 'søkers-slektsforhold',
     søkersSlektsforholdSpesifisering = 'søkers-slektsforhold-spesifisering',
     borMedAndreForelder = 'bor-med-andre-forelder',
+    borMedOmsorgsperson = 'bor-med-omsorgsperson',
     omsorgspersonNavn = 'omsorgsperson-navn',
     omsorgspersonSlektsforhold = 'omsorgsperson-slektsforhold',
     omsorgspersonSlektsforholdSpesifisering = 'omsorgsperson-slektsforhold-spesifisering',
@@ -50,4 +51,5 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
         'eøs-om-barn.andreforelderoppholdssted.sjekkboks',
     [EøsBarnSpørsmålId.barnetsAdresse]: 'eøs.hvorborbarn.spm',
     [EøsBarnSpørsmålId.barnetsAdresseVetIkke]: 'eøs.kjennerikkeadresse.sjekkboks',
+    [EøsBarnSpørsmålId.borMedOmsorgsperson]: 'todo: bor barn med omsorgsperson',
 };

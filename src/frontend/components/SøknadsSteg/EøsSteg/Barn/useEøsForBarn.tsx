@@ -115,12 +115,30 @@ export const useEøsForBarn = (
             gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.JA,
     });
 
-    const skalViseOmsorgsperson = (borMedAndreForelderFelt: Felt<ESvar | null>) =>
-        borMedAndreForelderFelt.verdi === ESvar.NEI ||
-        (gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
+    const borMedOmsorgsperson = useJaNeiSpmFelt({
+        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borMedOmsorgsperson],
+        feilmeldingSpråkId: 'todo: oppgi om barn bor med omsorgsperson',
+        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        nullstillVedAvhengighetEndring: true,
+        skalSkjules: !(
+            gjeldendeBarn.borFastMedSøker.svar === ESvar.JA &&
+            borMedAndreForelder.verdi === ESvar.NEI
+        ),
+    });
+
+    const skalViseOmsorgsperson = (borMedAndreForelderFelt: Felt<ESvar | null>) => {
+        const andreSituasjonerSomUtløserOmsorgsperson =
+            gjeldendeBarn.borFastMedSøker.svar === ESvar.NEI &&
             gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.NEI &&
             (gjeldendeBarn.andreForelderErDød.svar === ESvar.JA ||
-                gjeldendeBarn.erFosterbarn.svar === ESvar.JA));
+                gjeldendeBarn.erFosterbarn.svar === ESvar.JA);
+
+        return (
+            (borMedAndreForelderFelt.verdi === ESvar.NEI &&
+                (!borMedOmsorgsperson.erSynlig || borMedOmsorgsperson.verdi === ESvar.JA)) ||
+            andreSituasjonerSomUtløserOmsorgsperson
+        );
+    };
 
     const omsorgspersonNavn = useInputFelt({
         søknadsfelt: omsorgsperson && omsorgsperson.navn,
@@ -140,7 +158,7 @@ export const useEøsForBarn = (
                       />
                   );
         },
-        nullstillVedAvhengighetEndring: true,
+        nullstillVedAvhengighetEndring: false,
     });
 
     const omsorgspersonSlektsforhold = useFelt<Slektsforhold | ''>({
@@ -207,6 +225,7 @@ export const useEøsForBarn = (
                       />
                   );
         },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const omsorgspersonAdresse = useInputFelt({
@@ -214,7 +233,7 @@ export const useEøsForBarn = (
         feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonoppholdssted.feilmelding',
         skalVises: skalViseOmsorgsperson(borMedAndreForelder),
         customValidering: valideringAdresse,
-        nullstillVedAvhengighetEndring: true,
+        nullstillVedAvhengighetEndring: false,
     });
 
     /*--- BARNETS ADRESSE ---*/
@@ -433,6 +452,10 @@ export const useEøsForBarn = (
                 ...barn.borMedAndreForelder,
                 svar: borMedAndreForelder.verdi,
             },
+            borMedOmsorgsperson: {
+                ...barn.borMedOmsorgsperson,
+                svar: borMedOmsorgsperson.verdi,
+            },
             adresse: {
                 ...barn.adresse,
                 svar: trimWhiteSpace(
@@ -505,6 +528,7 @@ export const useEøsForBarn = (
             omsorgspersonAdresse,
             barnetsAdresse,
             barnetsAdresseVetIkke,
+            borMedOmsorgsperson,
         },
         skjemanavn: 'eøsForBarn',
     });

@@ -107,6 +107,12 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     spørsmålTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedAndreForelder]}
                     språkValues={{ barn: barnetsNavnValue(barn, intl) }}
                 />
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.borMedOmsorgsperson}
+                    spørsmålTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedOmsorgsperson]}
+                    språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                />
                 {skjema.felter.omsorgspersonNavn.erSynlig && (
                     <SkjemaFieldset
                         tittelId={'eøs-om-barn.annenomsorgsperson.gjenlevende'}
