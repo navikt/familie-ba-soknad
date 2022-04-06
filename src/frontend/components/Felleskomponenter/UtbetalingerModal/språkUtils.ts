@@ -1,4 +1,8 @@
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
+import {
+    EøsSøkerSpørsmålId,
+    eøsSøkerSpørsmålSpråkId,
+} from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
 
 export const mottarEllerMottattUtbetalingSpråkId = (
     gjelderAndreForelder: boolean,
@@ -9,7 +13,7 @@ export const mottarEllerMottattUtbetalingSpråkId = (
             ? eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke]
             : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderAndreUtbetalinger];
     } else {
-        return 'eøs-om-deg.utbetalinger.spm'; // TODO: legg inn i eøsSpråkId[SpørsmålId..] for søker
+        return eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.utbetalinger];
     }
 };
 
