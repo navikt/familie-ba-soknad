@@ -121,7 +121,7 @@ export const useEøsForBarn = (
 
     const borMedOmsorgsperson = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borMedOmsorgsperson],
-        feilmeldingSpråkId: 'todo: oppgi om barn bor med omsorgsperson',
+        feilmeldingSpråkId: 'eøs-om-barn.bormedannenomsorgsperson.feilmelding',
         feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
         nullstillVedAvhengighetEndring: true,
         skalSkjules: !(

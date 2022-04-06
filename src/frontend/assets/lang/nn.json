@@ -83,6 +83,8 @@
   "eøs-om-barn.barnidnummer.spm": "Kva er id-nummeret til {barn} i {land}?",
   "eøs-om-barn.borbarnmedandreforelder.feilmelding": "Du må oppgje om {barn} bur saman med den andre forelderen for å gå vidare",
   "eøs-om-barn.borbarnmedandreforelder.spm": "Bur {barn} saman med den andre forelderen?",
+  "eøs-om-barn.bormedannenomsorgsperson.feilmelding": "Du må oppgje om {barn} bur saman med ein anna omsorgsperson for å gå vidare",
+  "eøs-om-barn.bormedannenomsorgsperson.spm": "Bur {barn} saman med ein anna omsorgsperson?",
   "eøs-om-barn.bosituasjon.samme-info": "Du har opplyst at {barn} har same busituasjon som {barn}.",
   "eøs-om-barn.dinrelasjon.feilmelding": "Du må oppgje kva relasjon du har til {barn} for å gå vidare",
   "eøs-om-barn.dinrelasjon.spm": "Kva relasjon har du til {barn}?",

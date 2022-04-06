@@ -51,5 +51,5 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
         'eøs-om-barn.andreforelderoppholdssted.sjekkboks',
     [EøsBarnSpørsmålId.barnetsAdresse]: 'eøs.hvorborbarn.spm',
     [EøsBarnSpørsmålId.barnetsAdresseVetIkke]: 'eøs.kjennerikkeadresse.sjekkboks',
-    [EøsBarnSpørsmålId.borMedOmsorgsperson]: 'todo: bor barn med omsorgsperson',
+    [EøsBarnSpørsmålId.borMedOmsorgsperson]: 'eøs-om-barn.bormedannenomsorgsperson.spm',
 };
