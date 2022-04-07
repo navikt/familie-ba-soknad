@@ -20,26 +20,22 @@ export const pensjonSøkerSpørsmålSpråkId = (
 });
 
 export const pensjonAndreForelderSpørsmålSpråkId = (
-    tilbakeITid = false,
-    erDød = false
+    tilbakeITid = false
 ): Record<Exclude<PensjonSpørsmålId, PensjonSpørsmålId.pensjonsperioder>, string> => ({
     [PensjonSpørsmålId.mottarPensjonNå]: 'ombarnet.andre-forelder.pensjonnå.spm',
-    [PensjonSpørsmålId.pensjonsland]:
-        tilbakeITid || erDød
-            ? 'modal.hvilketlandpensjonandreforelder.spm'
-            : 'ombarnet.andre-forelder.utenlandspensjon.land.spm',
-    [PensjonSpørsmålId.fraDatoPensjon]:
-        tilbakeITid || erDød
-            ? 'modal.franårandreforelderpensjon.spm'
-            : 'pensjonmodal.franårpensjonandreforelder.nåtid.spm',
+    [PensjonSpørsmålId.pensjonsland]: tilbakeITid
+        ? 'modal.hvilketlandpensjonandreforelder.spm'
+        : 'ombarnet.andre-forelder.utenlandspensjon.land.spm',
+    [PensjonSpørsmålId.fraDatoPensjon]: tilbakeITid
+        ? 'modal.franårandreforelderpensjon.spm'
+        : 'pensjonmodal.franårpensjonandreforelder.nåtid.spm',
     [PensjonSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
 });
 
 export const hentPensjonsperiodeSpørsmålIder = (
     gjelderAndreForelder: boolean,
-    tilbakeITid: boolean,
-    erAndreForelderDød: boolean
+    tilbakeITid: boolean
 ): Record<Exclude<PensjonSpørsmålId, PensjonSpørsmålId.pensjonsperioder>, string> =>
     gjelderAndreForelder
-        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid, erAndreForelderDød)
+        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)
         : pensjonSøkerSpørsmålSpråkId(tilbakeITid);
