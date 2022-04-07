@@ -118,7 +118,7 @@ const OmDeg: React.FC = () => {
                                 ))}
                                 {utenlandsperioder.length > 0 && (
                                     <Element>
-                                        <SpråkTekst id={'eøs.flereutenlandsopphold.spm'} />
+                                        <SpråkTekst id={'omdeg.flereopphold.spm'} />
                                     </Element>
                                 )}
                                 <LeggTilKnapp
