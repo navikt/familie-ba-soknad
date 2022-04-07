@@ -1,25 +1,25 @@
 diff --git a/pom.xml b/pom.xml
-index 1229a24..2395521 100644
+index cf00ba3..07c1218 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -243,12 +243,6 @@
+@@ -253,12 +253,6 @@
              <version>4.2.0</version>
              <scope>test</scope>
          </dependency>
 -        <dependency>
 -            <groupId>no.nav.security</groupId>
 -            <artifactId>token-validation-test-support</artifactId>
--            <version>${token-validation-spring.version}</version>
+-            <version>2.0.5</version>
 -            <scope>test</scope>
 -        </dependency>
      </dependencies>
 
      <repositories>
 diff --git a/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt b/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
-index b02b735..621e705 100644
+index ea9c051..870b45b 100644
 --- a/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
 +++ b/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
-@@ -16,7 +16,6 @@ import org.springframework.web.client.RestOperations
+@@ -19,7 +19,6 @@ import org.springframework.web.client.RestOperations
          RestTemplateSts::class)
  class RestTemplateConfig {
 
@@ -28,15 +28,15 @@ index b02b735..621e705 100644
      fun restTemplateClientCredentials(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
                                        bearerTokenClientInterceptor: BearerTokenClientInterceptor): RestOperations {
 diff --git a/src/main/resources/application-postgres.yaml b/src/main/resources/application-postgres.yaml
-index 51a0aef..71c16de 100644
+index ffb408f..3dc04f9 100644
 --- a/src/main/resources/application-postgres.yaml
 +++ b/src/main/resources/application-postgres.yaml
 @@ -1,9 +1,12 @@
  no.nav.security.jwt:
    issuer:
 +    tokenx:
-+      discoveryurl: ${TOKEN_X_WELL_KNOWN_URL}
-+      accepted_audience: ${TOKEN_X_CLIENT_ID}
++    +      discoveryurl: ${TOKEN_X_WELL_KNOWN_URL}
++    +      accepted_audience: ${TOKEN_X_CLIENT_ID}
      selvbetjening:
 -      discoveryurl: http://metadata
 -      accepted_audience: aud-localhost
@@ -47,29 +47,29 @@ index 51a0aef..71c16de 100644
        # Kommenteres ut ved lokal testing av innsending av søknad
      #    azuread:
      #      discoveryurl: https://login.microsoftonline.com/navq.onmicrosoft.com/v2.0/.well-known/openid-configuration
-@@ -23,7 +26,7 @@ no.nav.security.jwt:
-           client-auth-method: client_secret_basic
-       integrasjoner-clientcredentials:
-         resource-url: ${FAMILIE_INTEGRASJONER_API_URL}
+@@ -14,7 +17,7 @@ no.nav.security.jwt:
+     registration:
+       ba-sak-clientcredentials:
+         resource-url: ${FAMILIE_BA_SAK_API_URL}
 -        token-endpoint-url: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/token
 +        well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
          grant-type: client_credentials
-         scope: ${FAMILIE_INTEGRASJONER_SCOPE}
+         scope: ${BA_SAK_SCOPE}
          authentication:
 @@ -39,6 +42,16 @@ no.nav.security.jwt:
            client-id: ${CLIENT_ID}
            client-secret: ${CLIENT_SECRET}
            client-auth-method: client_secret_basic
-+      dokument-clientauth:
-+        resource-url: ${FAMILIE_DOKUMENT_API_URL}
-+        well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
-+        grant-type: urn:ietf:params:oauth:grant-type:token-exchange
-+        token-exchange:
-+          audience: dev-local:teamfamilie:familie-dokument
-+        authentication:
-+          client-id: ${TOKEN_X_CLIENT_ID}
-+          client-auth-method: private_key_jwt
-+          client-jwk: ${TOKEN_X_PRIVATE_JWK}
++        dokument-clientauth:
++          resource-url: ${FAMILIE_DOKUMENT_API_URL}
++          well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
++          grant-type: urn:ietf:params:oauth:grant-type:token-exchange
++          token-exchange:
++            audience: dev-local:teamfamilie:familie-dokument
++          authentication:
++            client-id: ${TOKEN_X_CLIENT_ID}
++            client-auth-method: private_key_jwt
++            client-jwk: ${TOKEN_X_PRIVATE_JWK}
 
 
  credential:
@@ -114,75 +114,3 @@ index b4cf801..31ca7f5 100644
      app.run(*args)
  }
 \ No newline at end of file
-diff --git a/src/test/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt b/src/test/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
-deleted file mode 100644
-index 4cd15eb..0000000
---- a/src/test/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
-+++ /dev/null
-@@ -1,66 +0,0 @@
--package no.nav.familie.ba.mottak.config
--
--import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
--import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
--import no.nav.familie.http.interceptor.StsBearerTokenClientInterceptor
--import no.nav.familie.kontrakter.felles.objectMapper
--import org.springframework.boot.web.client.RestTemplateBuilder
--import org.springframework.context.annotation.Bean
--import org.springframework.context.annotation.Configuration
--import org.springframework.context.annotation.Import
--import org.springframework.context.annotation.Profile
--import org.springframework.http.converter.ByteArrayHttpMessageConverter
--import org.springframework.http.converter.StringHttpMessageConverter
--import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
--import org.springframework.web.client.RestOperations
--import org.springframework.web.client.RestTemplate
--import java.nio.charset.StandardCharsets
--
--@Configuration
--@Profile("dev")
--@Import(ConsumerIdClientInterceptor::class, MdcValuesPropagatingClientInterceptor::class, StsBearerTokenClientInterceptor::class,)
--class RestTemplateConfig {
--
--    @Bean
--    fun restTemplate(): RestTemplate {
--        return RestTemplate(listOf(StringHttpMessageConverter(StandardCharsets.UTF_8), ByteArrayHttpMessageConverter()))
--    }
--
--    @Bean("jwtBearer")
--    fun restTemplateJwtBearer(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
--                              mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
--
--        return RestTemplateBuilder()
--                .additionalCustomizers(NaisProxyCustomizer())
--                .additionalInterceptors(consumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor)
--                .build()
--    }
--
--
--    @Bean("clientCredentials")
--    fun restTemplateClientCredentials(consumerIdClientInterceptor: ConsumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
--        return RestTemplateBuilder()
--                .additionalCustomizers(NaisProxyCustomizer())
--                .additionalInterceptors(consumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor)
--                .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
--                .build()
--    }
--
--    @Bean("restTemplateUnsecured")
--    fun restTemplate(restTemplateBuilder: RestTemplateBuilder,
--                     mdcInterceptor: MdcValuesPropagatingClientInterceptor,
--                     consumerIdClientInterceptor: ConsumerIdClientInterceptor): RestOperations {
--        return restTemplateBuilder.interceptors(mdcInterceptor, consumerIdClientInterceptor).build()
--    }
--
--    @Bean("sts")
--    fun restTemplateSts(stsBearerTokenClientInterceptor: StsBearerTokenClientInterceptor,
--                        consumerIdClientInterceptor: ConsumerIdClientInterceptor): RestOperations {
--
--        return RestTemplateBuilder()
--                .interceptors(consumerIdClientInterceptor,
--                              stsBearerTokenClientInterceptor,
--                              MdcValuesPropagatingClientInterceptor())
--                .build()
--    }
--}
