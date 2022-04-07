@@ -45,7 +45,7 @@ describe('LandDropdown', () => {
 
         options = await findAllByRole('option');
 
-        expect(options).toHaveLength(251);
+        expect(options).toHaveLength(antallLandUtenNorge);
     }, /* Denne testen trenger litt ekstra tid pga unmount, vanligvis rundt 6s */ 12000);
 
     it('Rendrer kun EØS-land når EØS er på og kunEøs-prop er true', async () => {
