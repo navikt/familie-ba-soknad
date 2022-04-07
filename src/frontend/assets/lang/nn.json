@@ -136,6 +136,7 @@
   "felles.dato-format.feilmelding": "Dato må vere ein gyldig dato i formatet dd.mm.åååå",
   "felles.dato-frem-i-tid-eller-i-idag.feilmelding": "Dato kan ikkje vere dagens dato eller fram i tid",
   "felles.dato-frem-i-tid.feilmelding": "Dato kan ikkje vere fram i tid",
+  "felles.dato.tilbake-i-tid.feilmelding": "Du kan ikkje velge ein dato som er tilbake i tid",
   "felles.enkeenkemann.franårpensjonandreforelder.spm": "Når fekk {barn} sin andre forelder pensjon frå?",
   "felles.erarbeidsperiodenavsluttet.feilmelding": "Du må oppgje om arbeidsperioden er avslutta for å gå vidare",
   "felles.erarbeidsperiodenavsluttet.spm": "Er arbeidsperioden avslutta?",

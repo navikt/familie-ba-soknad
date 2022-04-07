@@ -12,7 +12,7 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagensDato, gårsdagensDato, dagenEtterDato } from '../../../utils/dato';
 import { pensjonFraDatoFeilmeldingSpråkId, pensjonslandFeilmeldingSpråkId } from './språkUtils';
 import { PensjonSpørsmålId } from './spørsmål';
 
@@ -41,7 +41,7 @@ export const usePensjonSkjema = ({
         skalSkjules: erAndreForelderDød,
     });
 
-    const tilbakeITid = mottarPensjonNå.verdi === ESvar.NEI;
+    const tilbakeITid = mottarPensjonNå.verdi === ESvar.NEI || erAndreForelderDød;
 
     useEffect(() => {
         skjema.settVisfeilmeldinger(false);
@@ -49,11 +49,7 @@ export const usePensjonSkjema = ({
 
     const pensjonsland = useLanddropdownFelt({
         søknadsfelt: { id: PensjonSpørsmålId.pensjonsland, svar: '' },
-        feilmeldingSpråkId: pensjonslandFeilmeldingSpråkId(
-            gjelderAndreForelder,
-            tilbakeITid,
-            erAndreForelderDød
-        ),
+        feilmeldingSpråkId: pensjonslandFeilmeldingSpråkId(gjelderAndreForelder, tilbakeITid),
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) &&
             gjelderUtland,
@@ -68,11 +64,7 @@ export const usePensjonSkjema = ({
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) &&
             (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
-        feilmeldingSpråkId: pensjonFraDatoFeilmeldingSpråkId(
-            gjelderAndreForelder,
-            tilbakeITid,
-            erAndreForelderDød
-        ),
+        feilmeldingSpråkId: pensjonFraDatoFeilmeldingSpråkId(gjelderAndreForelder, tilbakeITid),
         sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
         avhengigheter: { mottarPensjonNå },
         nullstillVedAvhengighetEndring: true,
@@ -88,7 +80,7 @@ export const usePensjonSkjema = ({
             (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
         feilmeldingSpråkId: 'felles.nåravsluttetpensjon.feilmelding',
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: pensjonFraDato.verdi,
+        startdatoAvgrensning: dagenEtterDato(pensjonFraDato.verdi),
         avhengigheter: { mottarPensjonNå, pensjonFraDato },
         nullstillVedAvhengighetEndring: true,
     });
