@@ -26,7 +26,8 @@ export const LandDropdown: React.FC<LandDropdownProps> = props => {
 
     const landkoderSortertPåNavn = Object.keys(getAlpha3Codes())
         .sort((a, b) => (getName(a, valgtLocale) >= getName(b, valgtLocale) ? 1 : -1))
-        .filter(landKode => (kunEøs ? erEøsLand(landKode as Alpha3Code) : true));
+        .filter(landKode => (kunEøs ? erEøsLand(landKode as Alpha3Code) : true))
+        .filter(landKode => landKode !== 'NOR');
 
     return (
         <StyledDropdown<Alpha3Code | ''>
