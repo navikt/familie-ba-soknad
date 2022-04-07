@@ -32,10 +32,10 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         feilmeldingSpråkVerdier: barn ? { barn: barnetsNavnValue(barn, intl) } : undefined,
     });
 
-    const tilbakeITid = fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød;
+    const periodenErAvsluttet = fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød;
 
     const feilmeldingForLand = () => {
-        if (tilbakeITid) {
+        if (periodenErAvsluttet) {
             return gjelderAndreForelder
                 ? 'modal.andreforelder-utbetalingerland-fikk.feilmelding'
                 : 'modal.utbetalingsland-fikk-søker.feilmeldinger';
@@ -63,7 +63,7 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         feilmeldingSpråkId: 'felles.nårbegynteutbetalingene.feilmelding',
-        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
+        sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -78,18 +78,18 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         feltId: UtbetalingerSpørsmålId.utbetalingTilDato,
         initiellVerdi: '',
         vetIkkeCheckbox: utbetalingTilDatoUkjent,
-        feilmeldingSpråkId: tilbakeITid
+        feilmeldingSpråkId: periodenErAvsluttet
             ? 'felles.nårstoppetutbetalingene.feilmelding'
             : 'felles.nårstopperutbetalingene.feilmelding',
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
-        sluttdatoAvgrensning: tilbakeITid ? dagensDato() : undefined,
+        sluttdatoAvgrensning: periodenErAvsluttet ? dagensDato() : undefined,
         startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
-            tilbakeITid,
+            periodenErAvsluttet,
             utbetalingFraDato.verdi
         ),
         customStartdatoFeilmelding:
-            erSammeDatoSomDagensDato(utbetalingFraDato.verdi) || tilbakeITid
+            erSammeDatoSomDagensDato(utbetalingFraDato.verdi) || periodenErAvsluttet
                 ? undefined
                 : 'felles.dato.tilbake-i-tid.feilmelding',
     });

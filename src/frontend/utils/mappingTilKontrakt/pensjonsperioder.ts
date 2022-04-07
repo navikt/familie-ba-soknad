@@ -33,11 +33,13 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
     intl?: IntlShape;
 }): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
-    const tilbakeITid = mottarPensjonNå?.svar === ESvar.NEI || erAndreForelderDød;
+    const periodenErAvsluttet = mottarPensjonNå?.svar === ESvar.NEI || erAndreForelderDød;
 
     const hentSpørsmålstekster = (pensjonSpørsmålId: string) =>
         hentTekster(
-            hentPensjonsperiodeSpørsmålIder(gjelderAndreForelder, tilbakeITid)[pensjonSpørsmålId],
+            hentPensjonsperiodeSpørsmålIder(gjelderAndreForelder, periodenErAvsluttet)[
+                pensjonSpørsmålId
+            ],
             { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
         );
 

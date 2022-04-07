@@ -84,7 +84,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
         nullstillSkjema();
     };
 
-    const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.NEI;
+    const periodenErAvsluttet = mottarEøsBarnetrygdNå.verdi === ESvar.NEI;
 
     return (
         <SkjemaModal
@@ -101,7 +101,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                     skjema={skjema}
                     felt={skjema.felter.mottarEøsBarnetrygdNå}
                     spørsmålTekstId={
-                        barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
+                        barnetrygdperiodeSpørsmålSpråkId(periodenErAvsluttet)[
                             BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå
                         ]
                     }
@@ -112,7 +112,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         felt={skjema.felter.barnetrygdsland}
                         skjema={skjema}
                         label={eøsBarnetrygdSpørsmålSpråkTekst(
-                            tilbakeITid,
+                            periodenErAvsluttet,
                             BarnetrygdperiodeSpørsmålId.barnetrygdsland
                         )}
                         kunEøs={true}
@@ -124,11 +124,11 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         felt={skjema.felter.fraDatoBarnetrygdperiode}
                         skjema={skjema}
                         label={eøsBarnetrygdSpørsmålSpråkTekst(
-                            tilbakeITid,
+                            periodenErAvsluttet,
                             BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
                         )}
                         calendarPosition={'fullscreen'}
-                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
+                        avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
                     />
                 )}
                 {tilDatoBarnetrygdperiode.erSynlig && (
@@ -136,7 +136,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         felt={skjema.felter.tilDatoBarnetrygdperiode}
                         skjema={skjema}
                         label={eøsBarnetrygdSpørsmålSpråkTekst(
-                            tilbakeITid,
+                            periodenErAvsluttet,
                             BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
                         )}
                         avgrensMinDato={skjema.felter.fraDatoBarnetrygdperiode.verdi}
@@ -149,7 +149,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         felt={skjema.felter.månedligBeløp}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         labelSpråkTekstId={
-                            barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[
+                            barnetrygdperiodeSpørsmålSpråkId(periodenErAvsluttet)[
                                 BarnetrygdperiodeSpørsmålId.månedligBeløp
                             ]
                         }

@@ -3,10 +3,10 @@ import { ISODateString } from '@navikt/familie-form-elements';
 import { dagenEtterDato, dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from './dato';
 
 export const minTilDatoForUtbetalingEllerArbeidsperiode = (
-    tilbakeITid: boolean,
+    periodenErAvsluttet: boolean,
     fraDato: ISODateString
 ) => {
-    if (tilbakeITid) {
+    if (periodenErAvsluttet) {
         return dagenEtterDato(fraDato);
     } else if (erSammeDatoSomDagensDato(fraDato)) {
         return morgendagensDato();

@@ -35,9 +35,12 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
         fraDatoArbeidsperiode,
         tilDatoArbeidsperiode,
     } = periode;
-    const tilbakeITid = arbeidsperiodeAvsluttet?.svar === ESvar.JA || erAndreForelderDød;
+    const periodenErAvsluttet = arbeidsperiodeAvsluttet?.svar === ESvar.JA || erAndreForelderDød;
 
-    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(gjelderAndreForelder, tilbakeITid);
+    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
+        gjelderAndreForelder,
+        periodenErAvsluttet
+    );
     return {
         label: hentTekster(arbeidsperiodeOppsummeringOverskrift(gjelderUtlandet), {
             x: periodeNummer,
