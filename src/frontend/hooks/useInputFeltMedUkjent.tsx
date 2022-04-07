@@ -21,6 +21,7 @@ const useInputFeltMedUkjent = ({
     skalVises = true,
     customValidering = undefined,
     språkVerdier = {},
+    nullstillVedAvhengighetEndring = true,
 }: {
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | { id: IdNummerKey; svar: string } | null;
     avhengighet: Felt<ESvar>;
@@ -29,6 +30,7 @@ const useInputFeltMedUkjent = ({
     skalVises?: boolean;
     customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
     språkVerdier?: Record<string, ReactNode>;
+    nullstillVedAvhengighetEndring?: boolean;
 }) => {
     const inputFelt = useFelt<string>({
         feltId: søknadsfelt ? søknadsfelt.id : guid(),
@@ -59,6 +61,7 @@ const useInputFeltMedUkjent = ({
         },
         avhengigheter: { vetIkkeCheckbox: avhengighet, skalVises },
         skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalVises,
+        nullstillVedAvhengighetEndring,
     });
     useEffect(() => {
         if (avhengighet.verdi === ESvar.JA) {

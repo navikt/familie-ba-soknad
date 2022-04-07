@@ -42,8 +42,14 @@ import {
     filtrerteRelevanteIdNummerForBarn,
     genererInitiellAndreForelder,
     nullstilteEøsFelterForBarn,
+    skalViseOmsorgspersonHof,
 } from '../../../utils/barn';
-import { dagensDato } from '../../../utils/dato';
+import {
+    dagenEtterDato,
+    dagensDato,
+    erSammeDatoSomDagensDato,
+    morgendagensDato,
+} from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -184,11 +190,15 @@ export const useOmBarnet = (
         feilmeldingSpråkId: 'ombarnet.institusjon.sluttdato.feilmelding',
         skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
         nullstillVedAvhengighetEndring: false,
-        startdatoAvgrensning: institusjonOppholdStartdato.verdi,
+        startdatoAvgrensning: erSammeDatoSomDagensDato(institusjonOppholdStartdato.verdi)
+            ? morgendagensDato()
+            : dagensDato(),
+        customStartdatoFeilmelding: erSammeDatoSomDagensDato(institusjonOppholdStartdato.verdi)
+            ? undefined
+            : 'felles.dato.tilbake-i-tid.feilmelding',
     });
 
     /*---UTENLANDSOPPHOLD---*/
-
     const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
         feltId: UtenlandsoppholdSpørsmålId.utenlandsopphold,
         verdi: gjeldendeBarn.utenlandsperioder,
@@ -564,7 +574,7 @@ export const useOmBarnet = (
         skalFeltetVises: søkerForTidsrom.verdi === ESvar.JA,
         nullstillVedAvhengighetEndring: false,
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: søkerForTidsromStartdato.verdi,
+        startdatoAvgrensning: dagenEtterDato(søkerForTidsromStartdato.verdi),
     });
 
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
@@ -838,8 +848,17 @@ export const useOmBarnet = (
                 : [];
         const utenlandsperioder = registrerteUtenlandsperioder.verdi;
 
-        const borMedAndreForelder =
-            borFastMedSøker.verdi === ESvar.JA ? null : barn.borMedAndreForelder.svar;
+        const borMedOmsorgsperson =
+            borFastMedSøker.verdi === ESvar.NEI ? null : barn.borMedOmsorgsperson.svar;
+
+        const skalViseOmsorgsperson = skalViseOmsorgspersonHof(
+            barn.borMedAndreForelder.svar,
+            borMedOmsorgsperson,
+            borFastMedSøker.verdi,
+            barn.oppholderSegIInstitusjon.svar,
+            barn.andreForelderErDød.svar,
+            barn.erFosterbarn.svar
+        );
 
         return {
             ...barn,
@@ -913,16 +932,17 @@ export const useOmBarnet = (
                 ...barn.borFastMedSøker,
                 svar: borFastMedSøker.verdi,
             },
-            borMedAndreForelder: {
-                ...barn.borMedAndreForelder,
-                svar: borMedAndreForelder,
+            borMedOmsorgsperson: {
+                ...barn.borMedOmsorgsperson,
+                svar: borFastMedSøker.verdi === ESvar.NEI ? null : barn.borMedOmsorgsperson.svar,
             },
-            omsorgsperson: borFastMedSøker.verdi === ESvar.JA ? null : barn.omsorgsperson,
+            omsorgsperson: skalViseOmsorgsperson() ? barn.omsorgsperson : null,
             adresse: {
                 ...barn.adresse,
                 svar:
                     barn.erFosterbarn.svar === ESvar.JA ||
-                    (borMedAndreForelder && kanIkkeGiOpplysningerOmAndreForelder())
+                    (barn.borMedAndreForelder.svar === ESvar.JA &&
+                        kanIkkeGiOpplysningerOmAndreForelder())
                         ? barn.adresse.svar
                         : '',
             },

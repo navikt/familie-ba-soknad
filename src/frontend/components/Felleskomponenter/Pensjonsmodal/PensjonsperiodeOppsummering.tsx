@@ -33,20 +33,14 @@ export const PensjonsperiodeOppsummering: React.FC<{
     const intl = useIntl();
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = pensjonsperiode;
 
-    const tilbakeITid = mottarPensjonNå?.svar === ESvar.NEI;
     const gjelderAndreForelder = !!andreForelderData;
     const erAndreForelderDød = !!andreForelderData?.erDød;
+    const tilbakeITid = mottarPensjonNå?.svar === ESvar.NEI || erAndreForelderDød;
     const barn = andreForelderData?.barn;
 
     const spørsmålSpråkTekst = (spørsmålId: PensjonSpørsmålId) => (
         <SpråkTekst
-            id={
-                hentPensjonsperiodeSpørsmålIder(
-                    gjelderAndreForelder,
-                    tilbakeITid,
-                    erAndreForelderDød
-                )[spørsmålId]
-            }
+            id={hentPensjonsperiodeSpørsmålIder(gjelderAndreForelder, tilbakeITid)[spørsmålId]}
             values={{
                 ...(barn && { barn: barnetsNavnValue(barn, intl) }),
             }}

@@ -10,7 +10,8 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagensDato, erSammeDatoSomDagensDato, gårsdagensDato } from '../../../utils/dato';
+import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import { utbetalingerFeilmelding } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 
@@ -31,10 +32,10 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         feilmeldingSpråkVerdier: barn ? { barn: barnetsNavnValue(barn, intl) } : undefined,
     });
 
-    const tilbakeITid = fårUtbetalingNå.verdi === ESvar.NEI;
+    const tilbakeITid = fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød;
 
     const feilmeldingForLand = () => {
-        if (tilbakeITid || andreForelderErDød) {
+        if (tilbakeITid) {
             return gjelderAndreForelder
                 ? 'modal.andreforelder-utbetalingerland-fikk.feilmelding'
                 : 'modal.utbetalingsland-fikk-søker.feilmeldinger';
@@ -62,7 +63,7 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         feilmeldingSpråkId: 'felles.nårbegynteutbetalingene.feilmelding',
-        sluttdatoAvgrensning: fårUtbetalingNå.verdi === ESvar.JA ? dagensDato() : gårsdagensDato(),
+        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -77,14 +78,20 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         feltId: UtbetalingerSpørsmålId.utbetalingTilDato,
         initiellVerdi: '',
         vetIkkeCheckbox: utbetalingTilDatoUkjent,
-        feilmeldingSpråkId:
-            tilbakeITid || andreForelderErDød
-                ? 'felles.nårstoppetutbetalingene.feilmelding'
-                : 'felles.nårstopperutbetalingene.feilmelding',
+        feilmeldingSpråkId: tilbakeITid
+            ? 'felles.nårstoppetutbetalingene.feilmelding'
+            : 'felles.nårstopperutbetalingene.feilmelding',
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
-        sluttdatoAvgrensning: fårUtbetalingNå.verdi === ESvar.NEI ? dagensDato() : undefined,
-        startdatoAvgrensning: utbetalingFraDato.verdi,
+        sluttdatoAvgrensning: tilbakeITid ? dagensDato() : undefined,
+        startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
+            tilbakeITid,
+            utbetalingFraDato.verdi
+        ),
+        customStartdatoFeilmelding:
+            erSammeDatoSomDagensDato(utbetalingFraDato.verdi) || tilbakeITid
+                ? undefined
+                : 'felles.dato.tilbake-i-tid.feilmelding',
     });
 
     const skjema = useSkjema<IUtbetalingerFeltTyper, 'string'>({

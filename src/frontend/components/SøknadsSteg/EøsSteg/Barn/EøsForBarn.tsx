@@ -107,20 +107,24 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     spørsmålTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedAndreForelder]}
                     språkValues={{ barn: barnetsNavnValue(barn, intl) }}
                 />
-                {skjema.felter.borMedAndreForelder.verdi === ESvar.NEI && (
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.borMedOmsorgsperson}
+                    spørsmålTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedOmsorgsperson]}
+                    språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                />
+                {skjema.felter.omsorgspersonNavn.erSynlig && (
                     <SkjemaFieldset
                         tittelId={'eøs-om-barn.annenomsorgsperson.gjenlevende'}
                         språkValues={{ barn: barnetsNavnValue(barn, intl) }}
                     >
-                        {skjema.felter.omsorgspersonNavn.erSynlig && (
-                            <SkjemaFeltInput
-                                felt={skjema.felter.omsorgspersonNavn}
-                                visFeilmeldinger={skjema.visFeilmeldinger}
-                                labelSpråkTekstId={
-                                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonNavn]
-                                }
-                            />
-                        )}
+                        <SkjemaFeltInput
+                            felt={skjema.felter.omsorgspersonNavn}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            labelSpråkTekstId={
+                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonNavn]
+                            }
+                        />
                         {skjema.felter.omsorgspersonSlektsforhold.erSynlig && (
                             <SlektsforholdDropdown
                                 felt={skjema.felter.omsorgspersonSlektsforhold}

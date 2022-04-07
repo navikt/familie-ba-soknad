@@ -14,7 +14,7 @@ export interface IUtenlandsperiode {
 }
 
 export interface IArbeidsperiode {
-    arbeidsperiodeAvsluttet?: ISøknadSpørsmål<ESvar>; //TODO skrive om til å være null
+    arbeidsperiodeAvsluttet?: ISøknadSpørsmål<ESvar>;
     arbeidsperiodeland?: ISøknadSpørsmål<Alpha3Code | ''>;
     arbeidsgiver?: ISøknadSpørsmål<string>;
     fraDatoArbeidsperiode?: ISøknadSpørsmål<ISODateString>;

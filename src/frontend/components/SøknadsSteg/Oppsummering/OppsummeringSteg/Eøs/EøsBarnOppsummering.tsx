@@ -71,6 +71,12 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                         søknadsvar={barn.borMedAndreForelder.svar}
                     />
                 )}
+                {barn.borMedOmsorgsperson.svar && (
+                    <OppsummeringFelt
+                        tittel={tittelSpm(barn.borMedOmsorgsperson.id)}
+                        søknadsvar={barn.borMedOmsorgsperson.svar}
+                    />
+                )}
                 {barn.omsorgsperson && (
                     <KomponentGruppe>
                         <OppsummeringFelt

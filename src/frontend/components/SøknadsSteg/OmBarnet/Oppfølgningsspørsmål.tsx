@@ -13,7 +13,7 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { barnetsNavnValue } from '../../../utils/barn';
-import { dagensDato } from '../../../utils/dato';
+import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
@@ -124,7 +124,13 @@ const Oppfølgningsspørsmål: React.FC<{
                     <>
                         <Datovelger
                             felt={skjema.felter.institusjonOppholdSluttdato}
-                            tilhørendeFraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
+                            avgrensMinDato={
+                                erSammeDatoSomDagensDato(
+                                    skjema.felter.institusjonOppholdStartdato.verdi
+                                )
+                                    ? morgendagensDato()
+                                    : dagensDato()
+                            }
                             skjema={skjema}
                             label={
                                 <SpråkTekst

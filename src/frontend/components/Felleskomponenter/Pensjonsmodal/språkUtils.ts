@@ -9,13 +9,9 @@ import {
 } from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 
-export const pensjonslandFeilmeldingSpråkId = (
-    gjelderAndreForelder,
-    tilbakeITid,
-    andreForelderErDød = false
-) => {
+export const pensjonslandFeilmeldingSpråkId = (gjelderAndreForelder, tilbakeITid) => {
     if (gjelderAndreForelder)
-        return tilbakeITid || andreForelderErDød
+        return tilbakeITid
             ? 'modal.hvilketlandpensjonandreforelder.feilmelding'
             : 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding';
     else
@@ -24,13 +20,9 @@ export const pensjonslandFeilmeldingSpråkId = (
             : 'omdeg.utenlandspensjon.land.feilmelding';
 };
 
-export const pensjonFraDatoFeilmeldingSpråkId = (
-    gjelderAndreForelder,
-    tilbakeITid,
-    andreForelderErDød = false
-) => {
+export const pensjonFraDatoFeilmeldingSpråkId = (gjelderAndreForelder, tilbakeITid) => {
     if (gjelderAndreForelder)
-        return tilbakeITid || andreForelderErDød
+        return tilbakeITid
             ? 'modal.franårandreforelderpensjon.feilmelding'
             : 'pensjonmodal.franårpensjonandreforelder.nåtid.feilmelding';
     else

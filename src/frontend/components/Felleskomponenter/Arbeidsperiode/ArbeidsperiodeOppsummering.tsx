@@ -39,15 +39,11 @@ export const ArbeidsperiodeOppsummering: React.FC<{
         tilDatoArbeidsperiode,
     } = arbeidsperiode;
 
-    const tilbakeITid = arbeidsperiodeAvsluttet?.svar === ESvar.JA;
-    const gjelderAndreForelder = !!andreForelderData;
     const erAndreForelderDød = !!andreForelderData?.erDød;
+    const tilbakeITid = arbeidsperiodeAvsluttet?.svar === ESvar.JA || erAndreForelderDød;
+    const gjelderAndreForelder = !!andreForelderData;
 
-    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
-        gjelderAndreForelder,
-        tilbakeITid,
-        erAndreForelderDød
-    );
+    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(gjelderAndreForelder, tilbakeITid);
 
     const spørsmålSpråkTekst = (spørsmålId: ArbeidsperiodeSpørsmålsId) => (
         <SpråkTekst id={hentSpørsmålTekstId(spørsmålId)} />

@@ -135,6 +135,7 @@ export interface IEøsForBarnFeltTyper {
     søkersSlektsforhold: Slektsforhold | '';
     søkersSlektsforholdSpesifisering: string;
     borMedAndreForelder: ESvar | null;
+    borMedOmsorgsperson: ESvar | null;
     [key: IdNummerKey]: IIdNummer;
     omsorgspersonNavn: string;
     omsorgspersonSlektsforhold: Slektsforhold | '';
