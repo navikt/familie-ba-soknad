@@ -87,7 +87,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     }, [tilhørendeFraOgMedFelt?.verdi, avgrensMaxDato]);
 
     return felt.erSynlig ? (
-        <span aria-live={dynamisk ? 'polite' : 'off'}>
+        <div aria-live={dynamisk ? 'polite' : 'off'}>
             <StyledFamilieDatovelger
                 description={
                     <Normaltekst>
@@ -110,7 +110,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 calendarSettings={{ position: calendarPosition }}
             />
             {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
-        </span>
+        </div>
     ) : null;
 };
 
