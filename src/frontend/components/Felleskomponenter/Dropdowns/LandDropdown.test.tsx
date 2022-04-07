@@ -16,7 +16,7 @@ describe('LandDropdown', () => {
         spyOnUseApp({});
     });
 
-    it('Rendrer alle land i alle dropdowns når eøs er skrudd av', async () => {
+    it('Rendrer alle land bortsett fra Norge i alle dropdowns når eøs er skrudd av', async () => {
         mockEøs(true);
         const felt = mockDeep<Felt<'' | Alpha3Code>>({
             erSynlig: true,
@@ -32,7 +32,9 @@ describe('LandDropdown', () => {
 
         let options = await findAllByRole('option');
 
-        expect(options).toHaveLength(251);
+        const antallLandUtenNorge = 250;
+
+        expect(options).toHaveLength(antallLandUtenNorge);
         unmount();
 
         render(
