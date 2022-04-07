@@ -83,6 +83,8 @@
   "eøs-om-barn.barnidnummer.spm": "What is the ID-number of {barn} in {land}?",
   "eøs-om-barn.borbarnmedandreforelder.feilmelding": "You must state whether {barn} is staying with their other parent in order to be able to proceed",
   "eøs-om-barn.borbarnmedandreforelder.spm": "Is {barn} staying with their other parent?",
+  "eøs-om-barn.bormedannenomsorgsperson.feilmelding": "You must state whether {barn} is staying with another caregiver in order to be able to proceed",
+  "eøs-om-barn.bormedannenomsorgsperson.spm": "Is {barn} staying with another caregiver?",
   "eøs-om-barn.bosituasjon.samme-info": "You have stated that {barn} has the same living situation as {barn}.",
   "eøs-om-barn.dinrelasjon.feilmelding": "You must state what your relation to {barn} is in order to be able to proceed",
   "eøs-om-barn.dinrelasjon.spm": "What is your relation to {barn}?",
