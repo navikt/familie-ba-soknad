@@ -234,7 +234,7 @@
   "felles.svaralternativ.ja": "Yes",
   "felles.svaralternativ.nei": "No",
   "felles.svaralternativ.vetikke": "Don't know",
-  "felles.tilogmedfeilformat.feilmelding": "Up to and including date can not be before or same as from date",
+  "felles.tilogmedfeilformat.feilmelding": "The period cannot end before or the same date that it started",
   "felles.veilederillustrasjon.tittel": "Guide illustration",
   "felles.velg-dato.hjelpetekst": "Format dd.mm.yyyy",
   "felles.velg-dato.placeholder": "DD.MM.YYYY",

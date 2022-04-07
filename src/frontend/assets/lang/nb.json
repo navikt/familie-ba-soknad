@@ -234,7 +234,7 @@
   "felles.svaralternativ.ja": "Ja",
   "felles.svaralternativ.nei": "Nei",
   "felles.svaralternativ.vetikke": "Jeg vet ikke",
-  "felles.tilogmedfeilformat.feilmelding": "Til og med dato kan ikke være før eller samme som fra og med dato",
+  "felles.tilogmedfeilformat.feilmelding": "Perioden kan ikke avsluttes før eller samme dato som den startet",
   "felles.veilederillustrasjon.tittel": "Veilederillustrasjon",
   "felles.velg-dato.hjelpetekst": "Format dd.mm.åååå",
   "felles.velg-dato.placeholder": "DD.MM.ÅÅÅÅ",
