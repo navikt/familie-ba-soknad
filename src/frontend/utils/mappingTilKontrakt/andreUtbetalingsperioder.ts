@@ -34,11 +34,11 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
     intl?: IntlShape;
 }): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7> => {
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } = periode;
-    const tilbakeITid = fårUtbetalingNå?.svar === ESvar.NEI || erAndreForelderDød;
+    const periodenErAvsluttet = fårUtbetalingNå?.svar === ESvar.NEI || erAndreForelderDød;
 
     const hentSpørsmålstekster = (utbetalingsSpørsmålId: string) =>
         hentTekster(
-            hentUtbetalingsperiodeSpørsmålIder(gjelderAndreForelder, tilbakeITid)[
+            hentUtbetalingsperiodeSpørsmålIder(gjelderAndreForelder, periodenErAvsluttet)[
                 utbetalingsSpørsmålId
             ],
             { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }

@@ -25,7 +25,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
         månedligBeløp,
     } = barnetrygdsperiode;
 
-    const tilbakeITid = mottarEøsBarnetrygdNå.svar === ESvar.NEI;
+    const periodenErAvsluttet = mottarEøsBarnetrygdNå.svar === ESvar.NEI;
     const [valgtLocale] = useSprakContext();
 
     return (
@@ -40,7 +40,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
             {mottarEøsBarnetrygdNå.svar && (
                 <OppsummeringFelt
                     tittel={eøsBarnetrygdSpørsmålSpråkTekst(
-                        tilbakeITid,
+                        periodenErAvsluttet,
                         BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå
                     )}
                     søknadsvar={mottarEøsBarnetrygdNå.svar}
@@ -49,7 +49,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
             {barnetrygdsland.svar && (
                 <OppsummeringFelt
                     tittel={eøsBarnetrygdSpørsmålSpråkTekst(
-                        tilbakeITid,
+                        periodenErAvsluttet,
                         BarnetrygdperiodeSpørsmålId.barnetrygdsland
                     )}
                     søknadsvar={landkodeTilSpråk(barnetrygdsland.svar, valgtLocale)}
@@ -58,7 +58,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
             {fraDatoBarnetrygdperiode.svar && (
                 <OppsummeringFelt
                     tittel={eøsBarnetrygdSpørsmålSpråkTekst(
-                        tilbakeITid,
+                        periodenErAvsluttet,
                         BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
                     )}
                     søknadsvar={formaterDato(fraDatoBarnetrygdperiode.svar)}
@@ -67,7 +67,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
             {tilDatoBarnetrygdperiode?.svar && (
                 <OppsummeringFelt
                     tittel={eøsBarnetrygdSpørsmålSpråkTekst(
-                        tilbakeITid,
+                        periodenErAvsluttet,
                         BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
                     )}
                     søknadsvar={formaterDato(tilDatoBarnetrygdperiode.svar)}
@@ -76,7 +76,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<{
             {månedligBeløp.svar && (
                 <OppsummeringFelt
                     tittel={eøsBarnetrygdSpørsmålSpråkTekst(
-                        tilbakeITid,
+                        periodenErAvsluttet,
                         BarnetrygdperiodeSpørsmålId.månedligBeløp,
                         { barn: barnetsNavn }
                     )}

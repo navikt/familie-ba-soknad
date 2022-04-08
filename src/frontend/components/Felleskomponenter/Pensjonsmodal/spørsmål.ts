@@ -7,26 +7,26 @@ export enum PensjonSpørsmålId {
 }
 
 export const pensjonSøkerSpørsmålSpråkId = (
-    tilbakeITid = false
+    periodenErAvsluttet = false
 ): Record<Exclude<PensjonSpørsmålId, PensjonSpørsmålId.pensjonsperioder>, string> => ({
     [PensjonSpørsmålId.mottarPensjonNå]: 'modal.fårdupensjonnå.spm',
-    [PensjonSpørsmålId.pensjonsland]: tilbakeITid
+    [PensjonSpørsmålId.pensjonsland]: periodenErAvsluttet
         ? 'felles.hvilketlandpensjon.spm'
         : 'omdeg.utenlandspensjon.land.spm',
-    [PensjonSpørsmålId.fraDatoPensjon]: tilbakeITid
+    [PensjonSpørsmålId.fraDatoPensjon]: periodenErAvsluttet
         ? 'felles.modal.franårfikkpensjon.spm'
         : 'felles.franårpensjon.spm',
     [PensjonSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
 });
 
 export const pensjonAndreForelderSpørsmålSpråkId = (
-    tilbakeITid = false
+    periodenErAvsluttet = false
 ): Record<Exclude<PensjonSpørsmålId, PensjonSpørsmålId.pensjonsperioder>, string> => ({
     [PensjonSpørsmålId.mottarPensjonNå]: 'ombarnet.andre-forelder.pensjonnå.spm',
-    [PensjonSpørsmålId.pensjonsland]: tilbakeITid
+    [PensjonSpørsmålId.pensjonsland]: periodenErAvsluttet
         ? 'modal.hvilketlandpensjonandreforelder.spm'
         : 'ombarnet.andre-forelder.utenlandspensjon.land.spm',
-    [PensjonSpørsmålId.fraDatoPensjon]: tilbakeITid
+    [PensjonSpørsmålId.fraDatoPensjon]: periodenErAvsluttet
         ? 'modal.franårandreforelderpensjon.spm'
         : 'pensjonmodal.franårpensjonandreforelder.nåtid.spm',
     [PensjonSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
@@ -34,8 +34,8 @@ export const pensjonAndreForelderSpørsmålSpråkId = (
 
 export const hentPensjonsperiodeSpørsmålIder = (
     gjelderAndreForelder: boolean,
-    tilbakeITid: boolean
+    periodenErAvsluttet: boolean
 ): Record<Exclude<PensjonSpørsmålId, PensjonSpørsmålId.pensjonsperioder>, string> =>
     gjelderAndreForelder
-        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)
-        : pensjonSøkerSpørsmålSpråkId(tilbakeITid);
+        ? pensjonAndreForelderSpørsmålSpråkId(periodenErAvsluttet)
+        : pensjonSøkerSpørsmålSpråkId(periodenErAvsluttet);

@@ -8,11 +8,11 @@ export enum BarnetrygdperiodeSpørsmålId {
 }
 
 export const barnetrygdperiodeSpørsmålSpråkId = (
-    tilbakeITid: boolean
+    periodenErAvsluttet: boolean
 ): Record<BarnetrygdperiodeSpørsmålId, string> => ({
     [BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs]: 'modal.trygdandreperioder.tittel',
     [BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå]: 'modal.barnetrygdnå.spm',
-    [BarnetrygdperiodeSpørsmålId.barnetrygdsland]: tilbakeITid
+    [BarnetrygdperiodeSpørsmålId.barnetrygdsland]: periodenErAvsluttet
         ? 'modal.hvilketlandbarnetrygd.spm'
         : 'ombarnet.hvilketlandfår.spm',
     [BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode]: 'modal.trygdnårbegynte.spm',

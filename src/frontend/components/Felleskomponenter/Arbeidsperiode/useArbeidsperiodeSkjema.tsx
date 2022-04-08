@@ -32,11 +32,11 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         skalSkjules: erAndreForelderDød,
     });
 
-    const tilbakeITid = arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød;
+    const periodenErAvsluttet = arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød;
 
     const arbeidsperiodeLand = useLanddropdownFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand, svar: '' },
-        feilmeldingSpråkId: arbeidslandFeilmelding(tilbakeITid, gjelderAndreForelder),
+        feilmeldingSpråkId: arbeidslandFeilmelding(periodenErAvsluttet, gjelderAndreForelder),
         skalFeltetVises:
             (arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
                 erAndreForelderDød) &&
@@ -60,7 +60,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               erAndreForelderDød,
         feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
-        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
+        sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 
@@ -78,18 +78,18 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         feltId: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
         initiellVerdi: '',
         vetIkkeCheckbox: tilDatoArbeidsperiodeUkjent,
-        feilmeldingSpråkId: tilDatoArbeidsperiodeFeilmelding(tilbakeITid),
+        feilmeldingSpråkId: tilDatoArbeidsperiodeFeilmelding(periodenErAvsluttet),
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               erAndreForelderDød,
-        sluttdatoAvgrensning: tilbakeITid ? dagensDato() : undefined,
+        sluttdatoAvgrensning: periodenErAvsluttet ? dagensDato() : undefined,
         startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
-            tilbakeITid,
+            periodenErAvsluttet,
             fraDatoArbeidsperiode.verdi
         ),
         customStartdatoFeilmelding:
-            erSammeDatoSomDagensDato(fraDatoArbeidsperiode.verdi) || tilbakeITid
+            erSammeDatoSomDagensDato(fraDatoArbeidsperiode.verdi) || periodenErAvsluttet
                 ? undefined
                 : 'felles.dato.tilbake-i-tid.feilmelding',
     });

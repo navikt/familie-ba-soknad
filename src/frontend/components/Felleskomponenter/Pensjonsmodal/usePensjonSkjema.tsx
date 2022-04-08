@@ -41,7 +41,7 @@ export const usePensjonSkjema = ({
         skalSkjules: erAndreForelderDød,
     });
 
-    const tilbakeITid = mottarPensjonNå.verdi === ESvar.NEI || erAndreForelderDød;
+    const periodenErAvsluttet = mottarPensjonNå.verdi === ESvar.NEI || erAndreForelderDød;
 
     useEffect(() => {
         skjema.settVisfeilmeldinger(false);
@@ -49,7 +49,10 @@ export const usePensjonSkjema = ({
 
     const pensjonsland = useLanddropdownFelt({
         søknadsfelt: { id: PensjonSpørsmålId.pensjonsland, svar: '' },
-        feilmeldingSpråkId: pensjonslandFeilmeldingSpråkId(gjelderAndreForelder, tilbakeITid),
+        feilmeldingSpråkId: pensjonslandFeilmeldingSpråkId(
+            gjelderAndreForelder,
+            periodenErAvsluttet
+        ),
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) &&
             gjelderUtland,
@@ -64,8 +67,11 @@ export const usePensjonSkjema = ({
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) &&
             (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
-        feilmeldingSpråkId: pensjonFraDatoFeilmeldingSpråkId(gjelderAndreForelder, tilbakeITid),
-        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
+        feilmeldingSpråkId: pensjonFraDatoFeilmeldingSpråkId(
+            gjelderAndreForelder,
+            periodenErAvsluttet
+        ),
+        sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
         avhengigheter: { mottarPensjonNå },
         nullstillVedAvhengighetEndring: true,
     });
