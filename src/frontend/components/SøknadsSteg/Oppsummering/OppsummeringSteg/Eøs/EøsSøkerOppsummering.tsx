@@ -41,23 +41,29 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             skjemaHook={eøsForSøkerHook}
             settFeilAnchors={settFeilAnchors}
         >
-            <StyledOppsummeringsFeltGruppe>
-                <IdNummerForSøker
-                    skjema={eøsForSøkerHook.skjema}
-                    settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
-                    lesevisning={true}
-                />
-                {søker.adresseISøkeperiode.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]}
-                            />
-                        }
-                        søknadsvar={søker.adresseISøkeperiode.svar}
+            {søker.triggetEøs && (
+                <StyledOppsummeringsFeltGruppe>
+                    <IdNummerForSøker
+                        skjema={eøsForSøkerHook.skjema}
+                        settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
+                        lesevisning={true}
                     />
-                )}
-            </StyledOppsummeringsFeltGruppe>
+                    {
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        eøsSøkerSpørsmålSpråkId[
+                                            EøsSøkerSpørsmålId.adresseISøkeperiode
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={søker.adresseISøkeperiode.svar}
+                        />
+                    }
+                </StyledOppsummeringsFeltGruppe>
+            )}
             <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(søker.arbeidINorge)}
                 {søker.arbeidsperioderNorge.map((arbeidsperiode, index) => (

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useApp } from '../../../../context/AppContext';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
@@ -25,6 +26,7 @@ const EøsForSøker: React.FC = () => {
         fjernAndreUtbetalingsperiode,
         settIdNummerFelter,
     } = useEøsForSøker();
+    const { søknad } = useApp();
 
     return (
         <Steg
@@ -36,18 +38,19 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <KomponentGruppe>
-                <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
-                <SkjemaFeltInput
-                    felt={skjema.felter.adresseISøkeperiode}
-                    visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]
-                    }
-                    description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
-                />
-            </KomponentGruppe>
-
+            {søknad.søker.triggetEøs && (
+                <KomponentGruppe>
+                    <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
+                    <SkjemaFeltInput
+                        felt={skjema.felter.adresseISøkeperiode}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={
+                            eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]
+                        }
+                        description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
+                    />
+                </KomponentGruppe>
+            )}
             <KomponentGruppe>
                 <Arbeidsperiode
                     skjema={skjema}

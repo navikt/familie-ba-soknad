@@ -23,7 +23,7 @@ const IdNummerForSøker: React.FC<Props> = ({ lesevisning = false, skjema, settI
     const { erEøsLand } = useEøs();
 
     return (
-        <KomponentGruppe>
+        <KomponentGruppe inline>
             {idNummerLandMedPeriodeType(
                 {
                     arbeidsperioderUtland,
