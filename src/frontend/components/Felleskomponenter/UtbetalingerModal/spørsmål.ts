@@ -8,14 +8,14 @@ export enum UtbetalingerSpørsmålId {
 }
 
 export const utbetalingerSøkerSpørsmålSpråkId = (
-    tilbakeITid = false
+    periodenErAvsluttet = false
 ): Record<Exclude<UtbetalingerSpørsmålId, UtbetalingerSpørsmålId.utbetalingsperioder>, string> => ({
     [UtbetalingerSpørsmålId.fårUtbetalingNå]: 'eøs.utbetalinger.spm',
-    [UtbetalingerSpørsmålId.utbetalingLand]: tilbakeITid
+    [UtbetalingerSpørsmålId.utbetalingLand]: periodenErAvsluttet
         ? 'modal.utbetalingsland-fikk-søker.spm'
         : 'modal.utbetalingsland-får-søker.spm',
     [UtbetalingerSpørsmålId.utbetalingFraDato]: 'felles.nårbegynteutbetalingene.spm',
-    [UtbetalingerSpørsmålId.utbetalingTilDato]: tilbakeITid
+    [UtbetalingerSpørsmålId.utbetalingTilDato]: periodenErAvsluttet
         ? 'felles.nårstoppetutbetalingene.spm'
         : 'felles.nårstopperutbetalingene.spm',
     [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]:
@@ -23,14 +23,14 @@ export const utbetalingerSøkerSpørsmålSpråkId = (
 });
 
 export const utbetalingerAndreForelderSpørsmålSpråkId = (
-    tilbakeITid = false
+    periodenErAvsluttet = false
 ): Record<Exclude<UtbetalingerSpørsmålId, UtbetalingerSpørsmålId.utbetalingsperioder>, string> => ({
     [UtbetalingerSpørsmålId.fårUtbetalingNå]: 'eøs.andreforelderutbetalinger.spm',
-    [UtbetalingerSpørsmålId.utbetalingLand]: tilbakeITid
+    [UtbetalingerSpørsmålId.utbetalingLand]: periodenErAvsluttet
         ? 'modal.andreforelder-utbetalingerland-fikk.spm'
         : 'modal.andreforelder-utbetalingerland-får.spm',
     [UtbetalingerSpørsmålId.utbetalingFraDato]: 'felles.nårbegynteutbetalingene.spm',
-    [UtbetalingerSpørsmålId.utbetalingTilDato]: tilbakeITid
+    [UtbetalingerSpørsmålId.utbetalingTilDato]: periodenErAvsluttet
         ? 'felles.nårstoppetutbetalingene.spm'
         : 'felles.nårstopperutbetalingene.spm',
     [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]:
@@ -39,8 +39,8 @@ export const utbetalingerAndreForelderSpørsmålSpråkId = (
 
 export const hentUtbetalingsperiodeSpørsmålIder = (
     gjelderAndreForelder: boolean,
-    tilbakeITid: boolean
+    periodenErAvsluttet: boolean
 ): Record<Exclude<UtbetalingerSpørsmålId, UtbetalingerSpørsmålId.utbetalingsperioder>, string> =>
     gjelderAndreForelder
-        ? utbetalingerAndreForelderSpørsmålSpråkId(tilbakeITid)
-        : utbetalingerSøkerSpørsmålSpråkId(tilbakeITid);
+        ? utbetalingerAndreForelderSpørsmålSpråkId(periodenErAvsluttet)
+        : utbetalingerSøkerSpørsmålSpråkId(periodenErAvsluttet);

@@ -86,7 +86,7 @@ export const PensjonModal: React.FC<Props> = ({
         ? 'felles.leggtilpensjon.utland.modal.tittel'
         : 'felles.leggtilpensjon.norge.modal.tittel';
 
-    const tilbakeITid = mottarPensjonNå.verdi === ESvar.NEI || erAndreForelderDød;
+    const periodenErAvsluttet = mottarPensjonNå.verdi === ESvar.NEI || erAndreForelderDød;
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -104,10 +104,10 @@ export const PensjonModal: React.FC<Props> = ({
                         felt={skjema.felter.mottarPensjonNå}
                         spørsmålTekstId={
                             gjelderAndreForelder
-                                ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                ? pensjonAndreForelderSpørsmålSpråkId(periodenErAvsluttet)[
                                       PensjonSpørsmålId.mottarPensjonNå
                                   ]
-                                : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
+                                : pensjonSøkerSpørsmålSpråkId(periodenErAvsluttet)[
                                       PensjonSpørsmålId.mottarPensjonNå
                                   ]
                         }
@@ -122,10 +122,10 @@ export const PensjonModal: React.FC<Props> = ({
                             <SpråkTekst
                                 id={
                                     gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                        ? pensjonAndreForelderSpørsmålSpråkId(periodenErAvsluttet)[
                                               PensjonSpørsmålId.pensjonsland
                                           ]
-                                        : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
+                                        : pensjonSøkerSpørsmålSpråkId(periodenErAvsluttet)[
                                               PensjonSpørsmålId.pensjonsland
                                           ]
                                 }
@@ -143,10 +143,10 @@ export const PensjonModal: React.FC<Props> = ({
                             <SpråkTekst
                                 id={
                                     gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                        ? pensjonAndreForelderSpørsmålSpråkId(periodenErAvsluttet)[
                                               PensjonSpørsmålId.fraDatoPensjon
                                           ]
-                                        : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
+                                        : pensjonSøkerSpørsmålSpråkId(periodenErAvsluttet)[
                                               PensjonSpørsmålId.fraDatoPensjon
                                           ]
                                 }
@@ -154,7 +154,7 @@ export const PensjonModal: React.FC<Props> = ({
                             />
                         }
                         skjema={skjema}
-                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
+                        avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
                         calendarPosition={'fullscreen'}
                     />
                 )}
@@ -165,10 +165,10 @@ export const PensjonModal: React.FC<Props> = ({
                             <SpråkTekst
                                 id={
                                     gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(tilbakeITid)[
+                                        ? pensjonAndreForelderSpørsmålSpråkId(periodenErAvsluttet)[
                                               PensjonSpørsmålId.tilDatoPensjon
                                           ]
-                                        : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
+                                        : pensjonSøkerSpørsmålSpråkId(periodenErAvsluttet)[
                                               PensjonSpørsmålId.tilDatoPensjon
                                           ]
                                 }

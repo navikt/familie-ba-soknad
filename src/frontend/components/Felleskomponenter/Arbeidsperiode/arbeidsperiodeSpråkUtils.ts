@@ -10,10 +10,10 @@ import {
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 
 export const arbeidslandFeilmelding = (
-    tilbakeITid: boolean,
+    periodenErAvsluttet: boolean,
     gjelderAndreForelder: boolean
 ): string => {
-    if (tilbakeITid) {
+    if (periodenErAvsluttet) {
         return gjelderAndreForelder
             ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
             : 'dinlivssituasjon.arbeid-utland.land.feilmelding';
@@ -23,8 +23,8 @@ export const arbeidslandFeilmelding = (
             : 'omdeg.arbeid-utland.land.feilmelding';
 };
 
-export const tilDatoArbeidsperiodeFeilmelding = (tilbakeITid: boolean): string =>
-    tilbakeITid
+export const tilDatoArbeidsperiodeFeilmelding = (periodenErAvsluttet: boolean): string =>
+    periodenErAvsluttet
         ? 'felles.nåravsluttetarbeidsperiode.feilmelding'
         : 'felles.nåravsluttesarbeidsperiode.feilmelding';
 

@@ -32,9 +32,9 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
         tilDatoBarnetrygdperiode,
         månedligBeløp,
     } = periode;
-    const tilbakeITid = mottarEøsBarnetrygdNå.svar === ESvar.NEI;
+    const periodenErAvsluttet = mottarEøsBarnetrygdNå.svar === ESvar.NEI;
     const hentSpørsmålTekstId = (spørsmålId: string) =>
-        hentTekster(barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[spørsmålId], {
+        hentTekster(barnetrygdperiodeSpørsmålSpråkId(periodenErAvsluttet)[spørsmålId], {
             ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }),
         });
 

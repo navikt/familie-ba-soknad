@@ -42,7 +42,8 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     const gjelderAndreForelder = !!andreForelderData;
     const barn = andreForelderData?.barn;
     const andreForelderErDød = !!andreForelderData?.erDød;
-    const tilbakeITid = skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød;
+    const periodenErAvsluttet =
+        skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød;
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -89,9 +90,10 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                     skjema={skjema}
                     felt={skjema.felter.fårUtbetalingNå}
                     spørsmålTekstId={
-                        hentUtbetalingsperiodeSpørsmålIder(gjelderAndreForelder, tilbakeITid)[
-                            UtbetalingerSpørsmålId.fårUtbetalingNå
-                        ]
+                        hentUtbetalingsperiodeSpørsmålIder(
+                            gjelderAndreForelder,
+                            periodenErAvsluttet
+                        )[UtbetalingerSpørsmålId.fårUtbetalingNå]
                     }
                     språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
                 />
@@ -107,7 +109,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                 id={
                                     hentUtbetalingsperiodeSpørsmålIder(
                                         gjelderAndreForelder,
-                                        tilbakeITid
+                                        periodenErAvsluttet
                                     )[UtbetalingerSpørsmålId.utbetalingLand]
                                 }
                                 values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
@@ -123,12 +125,12 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                 id={
                                     hentUtbetalingsperiodeSpørsmålIder(
                                         gjelderAndreForelder,
-                                        tilbakeITid
+                                        periodenErAvsluttet
                                     )[UtbetalingerSpørsmålId.utbetalingFraDato]
                                 }
                             />
                         }
-                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
+                        avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
                         calendarPosition={'fullscreen'}
                     />
                     <>
@@ -140,14 +142,14 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                     id={
                                         hentUtbetalingsperiodeSpørsmålIder(
                                             gjelderAndreForelder,
-                                            tilbakeITid
+                                            periodenErAvsluttet
                                         )[UtbetalingerSpørsmålId.utbetalingTilDato]
                                     }
                                 />
                             }
-                            avgrensMaxDato={tilbakeITid ? dagensDato() : undefined}
+                            avgrensMaxDato={periodenErAvsluttet ? dagensDato() : undefined}
                             avgrensMinDato={minTilDatoForUtbetalingEllerArbeidsperiode(
-                                tilbakeITid,
+                                periodenErAvsluttet,
                                 skjema.felter.utbetalingFraDato.verdi
                             )}
                             disabled={skjema.felter.utbetalingTilDatoUkjent.verdi === ESvar.JA}
@@ -157,7 +159,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             labelSpråkTekstId={
                                 hentUtbetalingsperiodeSpørsmålIder(
                                     gjelderAndreForelder,
-                                    tilbakeITid
+                                    periodenErAvsluttet
                                 )[UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]
                             }
                             felt={skjema.felter.utbetalingTilDatoUkjent}
