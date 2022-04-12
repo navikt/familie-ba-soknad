@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
+import styled from 'styled-components';
 
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -8,10 +9,17 @@ import { useEøs } from '../../../../context/EøsContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { skalSpørreOmIdNummerForPågåendeSøknadEøsLand } from '../../../../utils/barn';
-import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType, PeriodeType } from '../idnummerUtils';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
+
+const IdNummerContainer = styled.div<{ lesevisning: boolean }>`
+    margin-bottom: ${props => (props.lesevisning ? '2.5rem' : '4rem')};
+
+    :not(:last-child) {
+        margin-bottom: 1rem;
+    }
+`;
 
 const IdNummerForBarn: React.FC<{
     landAlphaCode: Alpha3Code | '';
@@ -26,23 +34,25 @@ const IdNummerForBarn: React.FC<{
     barn,
     settIdNummerFelter,
     periodeType = undefined,
-    lesevisning,
+    lesevisning = false,
 }) => {
     return (
-        <IdNummer
-            lesevisning={lesevisning}
-            spørsmålSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer]}
-            spørsmålCheckboxSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]}
-            feilmeldingSpråkId={'eøs-om-barn.barnidnummer.feilmelding'}
-            idNummerVerdiFraSøknad={
-                barn.idNummer.find(verdi => verdi.land === landAlphaCode)?.idnummer
-            }
-            skjema={skjema}
-            settIdNummerFelter={settIdNummerFelter}
-            landAlphaCode={landAlphaCode}
-            periodeType={periodeType}
-            barn={barn}
-        />
+        <IdNummerContainer lesevisning={lesevisning}>
+            <IdNummer
+                lesevisning={lesevisning}
+                spørsmålSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer]}
+                spørsmålCheckboxSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]}
+                feilmeldingSpråkId={'eøs-om-barn.barnidnummer.feilmelding'}
+                idNummerVerdiFraSøknad={
+                    barn.idNummer.find(verdi => verdi.land === landAlphaCode)?.idnummer
+                }
+                skjema={skjema}
+                settIdNummerFelter={settIdNummerFelter}
+                landAlphaCode={landAlphaCode}
+                periodeType={periodeType}
+                barn={barn}
+            />
+        </IdNummerContainer>
     );
 };
 
@@ -53,15 +63,22 @@ const SamletIdNummerForBarn: React.FC<{
     lesevisning?: boolean;
 }> = ({ barn, skjema, settIdNummerFelter, lesevisning = false }) => {
     const { erEøsLand } = useEøs();
-    return (
-        <KomponentGruppe>
-            {idNummerLandMedPeriodeType(
-                {
-                    utenlandsperioder: barn.utenlandsperioder,
-                    eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder,
-                },
-                erEøsLand
-            ).map((landMedPeriodeType, index) => {
+
+    const skalSpørreOmIdNummerForPågåendeSøknad = skalSpørreOmIdNummerForPågåendeSøknadEøsLand(
+        barn,
+        erEøsLand
+    );
+    const idNummerSomMåOppgisFraPerioder = idNummerLandMedPeriodeType(
+        {
+            utenlandsperioder: barn.utenlandsperioder,
+            eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder,
+        },
+        erEøsLand
+    );
+
+    return skalSpørreOmIdNummerForPågåendeSøknad || idNummerSomMåOppgisFraPerioder.length ? (
+        <div>
+            {idNummerSomMåOppgisFraPerioder.map((landMedPeriodeType, index) => {
                 return (
                     !!landMedPeriodeType.land && (
                         <IdNummerForBarn
@@ -76,7 +93,7 @@ const SamletIdNummerForBarn: React.FC<{
                     )
                 );
             })}
-            {skalSpørreOmIdNummerForPågåendeSøknadEøsLand(barn, erEøsLand) && (
+            {skalSpørreOmIdNummerForPågåendeSøknad && (
                 <IdNummerForBarn
                     lesevisning={lesevisning}
                     skjema={skjema}
@@ -85,8 +102,8 @@ const SamletIdNummerForBarn: React.FC<{
                     barn={barn}
                 />
             )}
-        </KomponentGruppe>
-    );
+        </div>
+    ) : null;
 };
 
 export default SamletIdNummerForBarn;
