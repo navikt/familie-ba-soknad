@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useApp } from '../../../../context/AppContext';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
@@ -26,7 +25,6 @@ const EøsForSøker: React.FC = () => {
         fjernAndreUtbetalingsperiode,
         settIdNummerFelter,
     } = useEøsForSøker();
-    const { søknad } = useApp();
 
     return (
         <Steg
@@ -38,9 +36,9 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            {søknad.søker.triggetEøs && (
+            <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
+            {skjema.felter.adresseISøkeperiode.erSynlig && (
                 <KomponentGruppe>
-                    <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
                     <SkjemaFeltInput
                         felt={skjema.felter.adresseISøkeperiode}
                         visFeilmeldinger={skjema.visFeilmeldinger}
@@ -51,6 +49,7 @@ const EøsForSøker: React.FC = () => {
                     />
                 </KomponentGruppe>
             )}
+
             <KomponentGruppe>
                 <Arbeidsperiode
                     skjema={skjema}

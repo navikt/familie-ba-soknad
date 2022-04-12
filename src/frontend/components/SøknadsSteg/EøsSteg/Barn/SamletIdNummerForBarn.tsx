@@ -13,14 +13,6 @@ import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType, PeriodeType } from '../idnummerUtils';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 
-const IdNummerContainer = styled.div<{ lesevisning: boolean }>`
-    margin-bottom: ${props => (props.lesevisning ? '2.5rem' : '4rem')};
-
-    :not(:last-child) {
-        margin-bottom: 1rem;
-    }
-`;
-
 const IdNummerForBarn: React.FC<{
     landAlphaCode: Alpha3Code | '';
     periodeType?: PeriodeType;
@@ -37,24 +29,26 @@ const IdNummerForBarn: React.FC<{
     lesevisning = false,
 }) => {
     return (
-        <IdNummerContainer lesevisning={lesevisning}>
-            <IdNummer
-                lesevisning={lesevisning}
-                spørsmålSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer]}
-                spørsmålCheckboxSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]}
-                feilmeldingSpråkId={'eøs-om-barn.barnidnummer.feilmelding'}
-                idNummerVerdiFraSøknad={
-                    barn.idNummer.find(verdi => verdi.land === landAlphaCode)?.idnummer
-                }
-                skjema={skjema}
-                settIdNummerFelter={settIdNummerFelter}
-                landAlphaCode={landAlphaCode}
-                periodeType={periodeType}
-                barn={barn}
-            />
-        </IdNummerContainer>
+        <IdNummer
+            lesevisning={lesevisning}
+            spørsmålSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer]}
+            spørsmålCheckboxSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]}
+            feilmeldingSpråkId={'eøs-om-barn.barnidnummer.feilmelding'}
+            idNummerVerdiFraSøknad={
+                barn.idNummer.find(verdi => verdi.land === landAlphaCode)?.idnummer
+            }
+            skjema={skjema}
+            settIdNummerFelter={settIdNummerFelter}
+            landAlphaCode={landAlphaCode}
+            periodeType={periodeType}
+            barn={barn}
+        />
     );
 };
+
+const SamleIdNummerContainer = styled.div<{ lesevisning: boolean }>`
+    margin-bottom: ${props => (props.lesevisning ? '2.5rem' : '4rem')};
+`;
 
 const SamletIdNummerForBarn: React.FC<{
     skjema: ISkjema<IEøsForBarnFeltTyper, string>;
@@ -77,7 +71,7 @@ const SamletIdNummerForBarn: React.FC<{
     );
 
     return skalSpørreOmIdNummerForPågåendeSøknad || idNummerSomMåOppgisFraPerioder.length ? (
-        <div>
+        <SamleIdNummerContainer lesevisning={lesevisning}>
             {idNummerSomMåOppgisFraPerioder.map((landMedPeriodeType, index) => {
                 return (
                     !!landMedPeriodeType.land && (
@@ -102,7 +96,7 @@ const SamletIdNummerForBarn: React.FC<{
                     barn={barn}
                 />
             )}
-        </div>
+        </SamleIdNummerContainer>
     ) : null;
 };
 

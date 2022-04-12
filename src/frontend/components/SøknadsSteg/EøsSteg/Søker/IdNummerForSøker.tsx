@@ -5,7 +5,6 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../../context/AppContext';
 import { useEøs } from '../../../../context/EøsContext';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
-import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType } from '../idnummerUtils';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './spørsmål';
@@ -22,16 +21,18 @@ const IdNummerForSøker: React.FC<Props> = ({ lesevisning = false, skjema, settI
     const { arbeidsperioderUtland, pensjonsperioderUtland, utenlandsperioder } = søker;
     const { erEøsLand } = useEøs();
 
-    return (
-        <KomponentGruppe inline>
-            {idNummerLandMedPeriodeType(
-                {
-                    arbeidsperioderUtland,
-                    pensjonsperioderUtland,
-                    utenlandsperioder,
-                },
-                erEøsLand
-            ).map((landMedPeriodeType, index) => {
+    const idNummerSomMåOppgisFraPerioder = idNummerLandMedPeriodeType(
+        {
+            arbeidsperioderUtland,
+            pensjonsperioderUtland,
+            utenlandsperioder,
+        },
+        erEøsLand
+    );
+
+    return idNummerSomMåOppgisFraPerioder ? (
+        <>
+            {idNummerSomMåOppgisFraPerioder.map((landMedPeriodeType, index) => {
                 return (
                     !!landMedPeriodeType.land && (
                         <IdNummer
@@ -54,8 +55,8 @@ const IdNummerForSøker: React.FC<Props> = ({ lesevisning = false, skjema, settI
                     )
                 );
             })}
-        </KomponentGruppe>
-    );
+        </>
+    ) : null;
 };
 
 export default IdNummerForSøker;

@@ -41,27 +41,21 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             skjemaHook={eøsForSøkerHook}
             settFeilAnchors={settFeilAnchors}
         >
-            {søker.triggetEøs && (
+            <IdNummerForSøker
+                skjema={eøsForSøkerHook.skjema}
+                settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
+                lesevisning={true}
+            />
+            {søker.adresseISøkeperiode.svar && (
                 <StyledOppsummeringsFeltGruppe>
-                    <IdNummerForSøker
-                        skjema={eøsForSøkerHook.skjema}
-                        settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
-                        lesevisning={true}
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]}
+                            />
+                        }
+                        søknadsvar={søker.adresseISøkeperiode.svar}
                     />
-                    {
-                        <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        eøsSøkerSpørsmålSpråkId[
-                                            EøsSøkerSpørsmålId.adresseISøkeperiode
-                                        ]
-                                    }
-                                />
-                            }
-                            søknadsvar={søker.adresseISøkeperiode.svar}
-                        />
-                    }
                 </StyledOppsummeringsFeltGruppe>
             )}
             <StyledOppsummeringsFeltGruppe>
