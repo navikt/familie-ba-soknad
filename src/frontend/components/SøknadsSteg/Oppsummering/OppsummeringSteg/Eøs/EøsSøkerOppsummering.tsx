@@ -41,13 +41,13 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             skjemaHook={eøsForSøkerHook}
             settFeilAnchors={settFeilAnchors}
         >
-            <StyledOppsummeringsFeltGruppe>
-                <IdNummerForSøker
-                    skjema={eøsForSøkerHook.skjema}
-                    settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
-                    lesevisning={true}
-                />
-                {søker.adresseISøkeperiode.svar && (
+            <IdNummerForSøker
+                skjema={eøsForSøkerHook.skjema}
+                settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
+                lesevisning={true}
+            />
+            {søker.adresseISøkeperiode.svar && (
+                <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -56,8 +56,8 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         }
                         søknadsvar={søker.adresseISøkeperiode.svar}
                     />
-                )}
-            </StyledOppsummeringsFeltGruppe>
+                </StyledOppsummeringsFeltGruppe>
+            )}
             <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(søker.arbeidINorge)}
                 {søker.arbeidsperioderNorge.map((arbeidsperiode, index) => (

@@ -6,7 +6,6 @@ import { useEøs } from '../../../../context/EøsContext';
 import { IBarnMedISøknad } from '../../../../typer/barn';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
-import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType } from '../idnummerUtils';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
@@ -18,15 +17,22 @@ const IdNummerForAndreForelder: React.FC<{
     lesevisning?: boolean;
 }> = ({ skjema, barn, settIdNummerFelter, lesevisning = false }) => {
     const { erEøsLand } = useEøs();
-    return barn.andreForelder && !skalSkjuleAndreForelderFelt(barn) ? (
-        <KomponentGruppe>
-            {idNummerLandMedPeriodeType(
-                {
-                    pensjonsperioderUtland: barn.andreForelder.pensjonsperioderUtland,
-                    arbeidsperioderUtland: barn.andreForelder.arbeidsperioderUtland,
-                },
-                erEøsLand
-            ).map((landMedPeriodeType, index) => {
+
+    if (!barn.andreForelder || skalSkjuleAndreForelderFelt(barn)) {
+        return null;
+    }
+
+    const idNummerSomMåOppgisFraPerioder = idNummerLandMedPeriodeType(
+        {
+            pensjonsperioderUtland: barn.andreForelder.pensjonsperioderUtland,
+            arbeidsperioderUtland: barn.andreForelder.arbeidsperioderUtland,
+        },
+        erEøsLand
+    );
+
+    return idNummerSomMåOppgisFraPerioder ? (
+        <>
+            {idNummerSomMåOppgisFraPerioder.map((landMedPeriodeType, index) => {
                 return (
                     !!landMedPeriodeType.land && (
                         <IdNummer
@@ -53,7 +59,7 @@ const IdNummerForAndreForelder: React.FC<{
                     )
                 );
             })}
-        </KomponentGruppe>
+        </>
     ) : null;
 };
 export default IdNummerForAndreForelder;

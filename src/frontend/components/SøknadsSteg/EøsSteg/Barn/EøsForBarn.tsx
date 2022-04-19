@@ -73,233 +73,251 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 settIdNummerFelter={settIdNummerFelterForBarn}
                 skjema={skjema}
             />
-            <KomponentGruppe>
-                <SlektsforholdDropdown
-                    felt={skjema.felter.søkersSlektsforhold}
-                    skjema={skjema}
-                    placeholder={intl.formatMessage({ id: 'felles.velgslektsforhold.spm' })}
-                    label={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.søkersSlektsforhold]}
-                            values={{ barn: barnetsNavnValue(barn, intl) }}
+
+            {skjema.felter.søkersSlektsforhold.erSynlig && (
+                <KomponentGruppe>
+                    <SlektsforholdDropdown
+                        felt={skjema.felter.søkersSlektsforhold}
+                        skjema={skjema}
+                        placeholder={intl.formatMessage({ id: 'felles.velgslektsforhold.spm' })}
+                        label={
+                            <SpråkTekst
+                                id={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.søkersSlektsforhold]}
+                                values={{ barn: barnetsNavnValue(barn, intl) }}
+                            />
+                        }
+                        gjelderSøker={true}
+                    />
+                    {skjema.felter.søkersSlektsforholdSpesifisering.erSynlig && (
+                        <SkjemaFeltInput
+                            felt={skjema.felter.søkersSlektsforholdSpesifisering}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            labelSpråkTekstId={
+                                eøsBarnSpørsmålSpråkId[
+                                    EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering
+                                ]
+                            }
+                            språkValues={{
+                                barn: barnetsNavnValue(barn, intl),
+                            }}
                         />
-                    }
-                    gjelderSøker={true}
-                />
-                {skjema.felter.søkersSlektsforholdSpesifisering.erSynlig && (
+                    )}
+                </KomponentGruppe>
+            )}
+
+            {(skjema.felter.borMedAndreForelder.erSynlig ||
+                skjema.felter.borMedOmsorgsperson.erSynlig) && (
+                <KomponentGruppe>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.borMedAndreForelder}
+                        spørsmålTekstId={
+                            eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedAndreForelder]
+                        }
+                        språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                    />
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.borMedOmsorgsperson}
+                        spørsmålTekstId={
+                            eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedOmsorgsperson]
+                        }
+                        språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                    />
+                </KomponentGruppe>
+            )}
+
+            {skjema.felter.omsorgspersonNavn.erSynlig && (
+                <SkjemaFieldset
+                    tittelId={'eøs-om-barn.annenomsorgsperson.gjenlevende'}
+                    språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                >
                     <SkjemaFeltInput
-                        felt={skjema.felter.søkersSlektsforholdSpesifisering}
+                        felt={skjema.felter.omsorgspersonNavn}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         labelSpråkTekstId={
-                            eøsBarnSpørsmålSpråkId[
-                                EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering
-                            ]
+                            eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonNavn]
                         }
-                        språkValues={{
-                            barn: barnetsNavnValue(barn, intl),
-                        }}
                     />
-                )}
-
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.borMedAndreForelder}
-                    spørsmålTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedAndreForelder]}
-                    språkValues={{ barn: barnetsNavnValue(barn, intl) }}
-                />
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.borMedOmsorgsperson}
-                    spørsmålTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedOmsorgsperson]}
-                    språkValues={{ barn: barnetsNavnValue(barn, intl) }}
-                />
-                {skjema.felter.omsorgspersonNavn.erSynlig && (
-                    <SkjemaFieldset
-                        tittelId={'eøs-om-barn.annenomsorgsperson.gjenlevende'}
-                        språkValues={{ barn: barnetsNavnValue(barn, intl) }}
-                    >
+                    {skjema.felter.omsorgspersonSlektsforhold.erSynlig && (
+                        <SlektsforholdDropdown
+                            felt={skjema.felter.omsorgspersonSlektsforhold}
+                            skjema={skjema}
+                            placeholder={intl.formatMessage({
+                                id: 'felles.velgslektsforhold.spm',
+                            })}
+                            label={
+                                <SpråkTekst
+                                    id={
+                                        eøsBarnSpørsmålSpråkId[
+                                            EøsBarnSpørsmålId.omsorgspersonSlektsforhold
+                                        ]
+                                    }
+                                    values={{ barn: barnetsNavnValue(barn, intl) }}
+                                />
+                            }
+                            gjelderSøker={false}
+                        />
+                    )}
+                    {skjema.felter.omsorgpersonSlektsforholdSpesifisering.erSynlig && (
                         <SkjemaFeltInput
-                            felt={skjema.felter.omsorgspersonNavn}
+                            felt={skjema.felter.omsorgpersonSlektsforholdSpesifisering}
                             visFeilmeldinger={skjema.visFeilmeldinger}
                             labelSpråkTekstId={
-                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonNavn]
+                                eøsBarnSpørsmålSpråkId[
+                                    EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering
+                                ]
                             }
+                            språkValues={{
+                                barn: barnetsNavnValue(barn, intl),
+                            }}
                         />
-                        {skjema.felter.omsorgspersonSlektsforhold.erSynlig && (
-                            <SlektsforholdDropdown
-                                felt={skjema.felter.omsorgspersonSlektsforhold}
-                                skjema={skjema}
-                                placeholder={intl.formatMessage({
-                                    id: 'felles.velgslektsforhold.spm',
-                                })}
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            eøsBarnSpørsmålSpråkId[
-                                                EøsBarnSpørsmålId.omsorgspersonSlektsforhold
-                                            ]
-                                        }
-                                        values={{ barn: barnetsNavnValue(barn, intl) }}
-                                    />
-                                }
-                                gjelderSøker={false}
-                            />
-                        )}
-                        {skjema.felter.omsorgpersonSlektsforholdSpesifisering.erSynlig && (
+                    )}
+                    {skjema.felter.omsorgspersonIdNummer.erSynlig && (
+                        <>
                             <SkjemaFeltInput
-                                felt={skjema.felter.omsorgpersonSlektsforholdSpesifisering}
+                                felt={skjema.felter.omsorgspersonIdNummer}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={
+                                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonIdNummer]
+                                }
+                                disabled={
+                                    skjema.felter.omsorgspersonIdNummerVetIkke.verdi === ESvar.JA
+                                }
+                            />
+
+                            <SkjemaCheckbox
+                                felt={skjema.felter.omsorgspersonIdNummerVetIkke}
                                 labelSpråkTekstId={
                                     eøsBarnSpørsmålSpråkId[
-                                        EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering
+                                        EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke
                                     ]
                                 }
-                                språkValues={{
-                                    barn: barnetsNavnValue(barn, intl),
-                                }}
                             />
-                        )}
-                        {skjema.felter.omsorgspersonIdNummer.erSynlig && (
-                            <>
-                                <SkjemaFeltInput
-                                    felt={skjema.felter.omsorgspersonIdNummer}
-                                    visFeilmeldinger={skjema.visFeilmeldinger}
-                                    labelSpråkTekstId={
-                                        eøsBarnSpørsmålSpråkId[
-                                            EøsBarnSpørsmålId.omsorgspersonIdNummer
-                                        ]
-                                    }
-                                    disabled={
-                                        skjema.felter.omsorgspersonIdNummerVetIkke.verdi ===
-                                        ESvar.JA
-                                    }
-                                />
-
-                                <SkjemaCheckbox
-                                    felt={skjema.felter.omsorgspersonIdNummerVetIkke}
-                                    labelSpråkTekstId={
-                                        eøsBarnSpørsmålSpråkId[
-                                            EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke
-                                        ]
-                                    }
-                                />
-                            </>
-                        )}
-                        {skjema.felter.omsorgspersonAdresse.erSynlig && (
-                            <SkjemaFeltInput
-                                felt={skjema.felter.omsorgspersonAdresse}
-                                visFeilmeldinger={skjema.visFeilmeldinger}
-                                labelSpråkTekstId={
-                                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonAdresse]
-                                }
-                                description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
-                            />
-                        )}
-                    </SkjemaFieldset>
-                )}
-                {skjema.felter.barnetsAdresse.erSynlig && (
-                    <>
+                        </>
+                    )}
+                    {skjema.felter.omsorgspersonAdresse.erSynlig && (
                         <SkjemaFeltInput
-                            felt={skjema.felter.barnetsAdresse}
+                            felt={skjema.felter.omsorgspersonAdresse}
                             visFeilmeldinger={skjema.visFeilmeldinger}
+                            labelSpråkTekstId={
+                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonAdresse]
+                            }
                             description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
-                            labelSpråkTekstId={
-                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresse]
-                            }
-                            språkValues={{ barn: barnetsNavnValue(barn, intl) }}
-                            disabled={skjema.felter.barnetsAdresseVetIkke.verdi === ESvar.JA}
                         />
+                    )}
+                </SkjemaFieldset>
+            )}
 
-                        <SkjemaCheckbox
-                            felt={skjema.felter.barnetsAdresseVetIkke}
-                            labelSpråkTekstId={
-                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
-                            }
-                        />
-                    </>
-                )}
-            </KomponentGruppe>
+            {skjema.felter.barnetsAdresse.erSynlig && (
+                <KomponentGruppe>
+                    <SkjemaFeltInput
+                        felt={skjema.felter.barnetsAdresse}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
+                        labelSpråkTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresse]}
+                        språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                        disabled={skjema.felter.barnetsAdresseVetIkke.verdi === ESvar.JA}
+                    />
+
+                    <SkjemaCheckbox
+                        felt={skjema.felter.barnetsAdresseVetIkke}
+                        labelSpråkTekstId={
+                            eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
+                        }
+                    />
+                </KomponentGruppe>
+            )}
+
             {!skalSkjuleAndreForelderFelt(barn) && (
                 <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
                     {!barnMedSammeForelder ? (
-                        <KomponentGruppe>
+                        <>
                             <IdNummerForAndreForelder
                                 skjema={skjema}
                                 settIdNummerFelter={settIdNummerFelterForAndreForelder}
                                 barn={barn}
                             />
-                            <>
-                                <SkjemaFeltInput
-                                    felt={skjema.felter.andreForelderAdresse}
-                                    visFeilmeldinger={skjema.visFeilmeldinger}
-                                    labelSpråkTekstId={
-                                        eøsBarnSpørsmålSpråkId[
-                                            EøsBarnSpørsmålId.andreForelderAdresse
-                                        ]
-                                    }
-                                    description={
-                                        <SpråkTekst id={'felles.hjelpetekst.fulladresse'} />
-                                    }
-                                    disabled={
-                                        skjema.felter.andreForelderAdresseVetIkke.verdi === ESvar.JA
-                                    }
-                                    språkValues={{ barn: barnetsNavnValue(barn, intl) }}
-                                />
 
-                                <SkjemaCheckbox
-                                    felt={skjema.felter.andreForelderAdresseVetIkke}
-                                    labelSpråkTekstId={
-                                        eøsBarnSpørsmålSpråkId[
-                                            EøsBarnSpørsmålId.andreForelderAdresseVetIkke
-                                        ]
+                            {skjema.felter.andreForelderAdresse.erSynlig && (
+                                <KomponentGruppe>
+                                    <SkjemaFeltInput
+                                        felt={skjema.felter.andreForelderAdresse}
+                                        visFeilmeldinger={skjema.visFeilmeldinger}
+                                        labelSpråkTekstId={
+                                            eøsBarnSpørsmålSpråkId[
+                                                EøsBarnSpørsmålId.andreForelderAdresse
+                                            ]
+                                        }
+                                        description={
+                                            <SpråkTekst id={'felles.hjelpetekst.fulladresse'} />
+                                        }
+                                        disabled={
+                                            skjema.felter.andreForelderAdresseVetIkke.verdi ===
+                                            ESvar.JA
+                                        }
+                                        språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                                    />
+
+                                    <SkjemaCheckbox
+                                        felt={skjema.felter.andreForelderAdresseVetIkke}
+                                        labelSpråkTekstId={
+                                            eøsBarnSpørsmålSpråkId[
+                                                EøsBarnSpørsmålId.andreForelderAdresseVetIkke
+                                            ]
+                                        }
+                                    />
+                                </KomponentGruppe>
+                            )}
+
+                            <KomponentGruppe>
+                                <Arbeidsperiode
+                                    skjema={skjema}
+                                    leggTilArbeidsperiode={leggTilArbeidsperiode}
+                                    fjernArbeidsperiode={fjernArbeidsperiode}
+                                    arbeiderEllerArbeidetFelt={
+                                        skjema.felter.andreForelderArbeidNorge
+                                    }
+                                    registrerteArbeidsperioder={
+                                        skjema.felter.andreForelderArbeidsperioderNorge
+                                    }
+                                    andreForelderData={{
+                                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
+                                        barn: barn,
+                                    }}
+                                />
+                                <Pensjonsperiode
+                                    skjema={skjema}
+                                    mottarEllerMottattPensjonFelt={
+                                        skjema.felter.andreForelderPensjonNorge
+                                    }
+                                    leggTilPensjonsperiode={leggTilPensjonsperiode}
+                                    fjernPensjonsperiode={fjernPensjonsperiode}
+                                    andreForelderData={{
+                                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
+                                        barn: barn,
+                                    }}
+                                    registrertePensjonsperioder={
+                                        skjema.felter.andreForelderPensjonsperioderNorge
                                     }
                                 />
-                            </>
-
-                            <Arbeidsperiode
-                                skjema={skjema}
-                                leggTilArbeidsperiode={leggTilArbeidsperiode}
-                                fjernArbeidsperiode={fjernArbeidsperiode}
-                                arbeiderEllerArbeidetFelt={skjema.felter.andreForelderArbeidNorge}
-                                registrerteArbeidsperioder={
-                                    skjema.felter.andreForelderArbeidsperioderNorge
-                                }
-                                andreForelderData={{
-                                    erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                                    barn: barn,
-                                }}
-                            />
-                            <Pensjonsperiode
-                                skjema={skjema}
-                                mottarEllerMottattPensjonFelt={
-                                    skjema.felter.andreForelderPensjonNorge
-                                }
-                                leggTilPensjonsperiode={leggTilPensjonsperiode}
-                                fjernPensjonsperiode={fjernPensjonsperiode}
-                                andreForelderData={{
-                                    erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                                    barn: barn,
-                                }}
-                                registrertePensjonsperioder={
-                                    skjema.felter.andreForelderPensjonsperioderNorge
-                                }
-                            />
-                            <Utbetalingsperiode
-                                skjema={skjema}
-                                mottarEllerMottattUtbetalingFelt={
-                                    skjema.felter.andreForelderAndreUtbetalinger
-                                }
-                                leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
-                                fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
-                                andreForelderData={{
-                                    erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                                    barn: barn,
-                                }}
-                                registrerteUtbetalingsperioder={
-                                    skjema.felter.andreForelderAndreUtbetalingsperioder
-                                }
-                            />
-                        </KomponentGruppe>
+                                <Utbetalingsperiode
+                                    skjema={skjema}
+                                    mottarEllerMottattUtbetalingFelt={
+                                        skjema.felter.andreForelderAndreUtbetalinger
+                                    }
+                                    leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
+                                    fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
+                                    andreForelderData={{
+                                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
+                                        barn: barn,
+                                    }}
+                                    registrerteUtbetalingsperioder={
+                                        skjema.felter.andreForelderAndreUtbetalingsperioder
+                                    }
+                                />
+                            </KomponentGruppe>
+                        </>
                     ) : (
                         barnMedSammeForelder?.andreForelder && (
                             <EøsAndreForelderOppsummering

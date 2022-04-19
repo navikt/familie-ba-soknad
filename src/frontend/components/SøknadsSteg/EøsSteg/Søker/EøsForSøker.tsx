@@ -36,17 +36,19 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <KomponentGruppe>
-                <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
-                <SkjemaFeltInput
-                    felt={skjema.felter.adresseISøkeperiode}
-                    visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]
-                    }
-                    description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
-                />
-            </KomponentGruppe>
+            <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
+            {skjema.felter.adresseISøkeperiode.erSynlig && (
+                <KomponentGruppe>
+                    <SkjemaFeltInput
+                        felt={skjema.felter.adresseISøkeperiode}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={
+                            eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]
+                        }
+                        description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
+                    />
+                </KomponentGruppe>
+            )}
 
             <KomponentGruppe>
                 <Arbeidsperiode

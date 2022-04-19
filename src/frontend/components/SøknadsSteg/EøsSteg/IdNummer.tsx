@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 import { Alpha3Code, getName } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 
 import { guid } from 'nav-frontend-js-utils';
 
@@ -20,6 +21,10 @@ import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaF
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
+
+export const IdNummerContainer = styled.div<{ lesevisning: boolean }>`
+    margin-bottom: ${props => (props.lesevisning ? '1rem' : '2rem')};
+`;
 
 export const IdNummer: React.FC<{
     skjema: ISkjema<IEøsForSøkerFeltTyper | IEøsForBarnFeltTyper, string>;
@@ -90,47 +95,51 @@ export const IdNummer: React.FC<{
         );
     }, [idNummerFelt.verdi, idNummerFelt.valideringsstatus]);
 
-    return lesevisning ? (
-        <OppsummeringFelt
-            tittel={
-                <SpråkTekst
-                    id={spørsmålSpråkId}
-                    values={{
-                        land: getName(landAlphaCode, valgtLocale),
-                        ...(barn && { barn: barnetsNavnValue(barn, intl) }),
-                    }}
+    return (
+        <IdNummerContainer lesevisning={lesevisning}>
+            {lesevisning ? (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={spørsmålSpråkId}
+                            values={{
+                                land: getName(landAlphaCode, valgtLocale),
+                                ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                            }}
+                        />
+                    }
+                    søknadsvar={
+                        idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
+                            ? formatMessage(
+                                  {
+                                      id: spørsmålCheckboxSpråkId,
+                                  },
+                                  { land: getName(landAlphaCode, valgtLocale) }
+                              )
+                            : idNummerVerdiFraSøknad
+                    }
                 />
-            }
-            søknadsvar={
-                idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
-                    ? formatMessage(
-                          {
-                              id: spørsmålCheckboxSpråkId,
-                          },
-                          { land: getName(landAlphaCode, valgtLocale) }
-                      )
-                    : idNummerVerdiFraSøknad
-            }
-        />
-    ) : (
-        <>
-            <SkjemaFeltInput
-                felt={idNummerFelt}
-                visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={spørsmålSpråkId}
-                språkValues={{
-                    land: getName(landAlphaCode, valgtLocale),
-                    ...(barn && { barn: barnetsNavnValue(barn, intl) }),
-                }}
-                disabled={idNummerUkjent.verdi === ESvar.JA}
-            />
-            {idNummerUkjent.erSynlig && (
-                <SkjemaCheckbox
-                    labelSpråkTekstId={spørsmålCheckboxSpråkId}
-                    felt={idNummerUkjent}
-                    språkVerdier={{ land: getName(landAlphaCode, valgtLocale) }}
-                />
+            ) : (
+                <>
+                    <SkjemaFeltInput
+                        felt={idNummerFelt}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={spørsmålSpråkId}
+                        språkValues={{
+                            land: getName(landAlphaCode, valgtLocale),
+                            ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                        }}
+                        disabled={idNummerUkjent.verdi === ESvar.JA}
+                    />
+                    {idNummerUkjent.erSynlig && (
+                        <SkjemaCheckbox
+                            labelSpråkTekstId={spørsmålCheckboxSpråkId}
+                            felt={idNummerUkjent}
+                            språkVerdier={{ land: getName(landAlphaCode, valgtLocale) }}
+                        />
+                    )}
+                </>
             )}
-        </>
+        </IdNummerContainer>
     );
 };

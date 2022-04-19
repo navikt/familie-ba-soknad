@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
+import styled from 'styled-components';
 
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -8,7 +9,6 @@ import { useEøs } from '../../../../context/EøsContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { skalSpørreOmIdNummerForPågåendeSøknadEøsLand } from '../../../../utils/barn';
-import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType, PeriodeType } from '../idnummerUtils';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
@@ -26,7 +26,7 @@ const IdNummerForBarn: React.FC<{
     barn,
     settIdNummerFelter,
     periodeType = undefined,
-    lesevisning,
+    lesevisning = false,
 }) => {
     return (
         <IdNummer
@@ -46,6 +46,10 @@ const IdNummerForBarn: React.FC<{
     );
 };
 
+const SamleIdNummerContainer = styled.div<{ lesevisning: boolean }>`
+    margin-bottom: ${props => (props.lesevisning ? '2.5rem' : '4rem')};
+`;
+
 const SamletIdNummerForBarn: React.FC<{
     skjema: ISkjema<IEøsForBarnFeltTyper, string>;
     barn: IBarnMedISøknad;
@@ -53,15 +57,22 @@ const SamletIdNummerForBarn: React.FC<{
     lesevisning?: boolean;
 }> = ({ barn, skjema, settIdNummerFelter, lesevisning = false }) => {
     const { erEøsLand } = useEøs();
-    return (
-        <KomponentGruppe>
-            {idNummerLandMedPeriodeType(
-                {
-                    utenlandsperioder: barn.utenlandsperioder,
-                    eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder,
-                },
-                erEøsLand
-            ).map((landMedPeriodeType, index) => {
+
+    const skalSpørreOmIdNummerForPågåendeSøknad = skalSpørreOmIdNummerForPågåendeSøknadEøsLand(
+        barn,
+        erEøsLand
+    );
+    const idNummerSomMåOppgisFraPerioder = idNummerLandMedPeriodeType(
+        {
+            utenlandsperioder: barn.utenlandsperioder,
+            eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder,
+        },
+        erEøsLand
+    );
+
+    return skalSpørreOmIdNummerForPågåendeSøknad || idNummerSomMåOppgisFraPerioder.length ? (
+        <SamleIdNummerContainer lesevisning={lesevisning}>
+            {idNummerSomMåOppgisFraPerioder.map((landMedPeriodeType, index) => {
                 return (
                     !!landMedPeriodeType.land && (
                         <IdNummerForBarn
@@ -76,7 +87,7 @@ const SamletIdNummerForBarn: React.FC<{
                     )
                 );
             })}
-            {skalSpørreOmIdNummerForPågåendeSøknadEøsLand(barn, erEøsLand) && (
+            {skalSpørreOmIdNummerForPågåendeSøknad && (
                 <IdNummerForBarn
                     lesevisning={lesevisning}
                     skjema={skjema}
@@ -85,8 +96,8 @@ const SamletIdNummerForBarn: React.FC<{
                     barn={barn}
                 />
             )}
-        </KomponentGruppe>
-    );
+        </SamleIdNummerContainer>
+    ) : null;
 };
 
 export default SamletIdNummerForBarn;
