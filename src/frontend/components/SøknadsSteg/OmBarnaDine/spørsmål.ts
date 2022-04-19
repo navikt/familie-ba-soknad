@@ -29,8 +29,9 @@ export const omBarnaDineSpørsmålSpråkId: Record<OmBarnaDineSpørsmålId, stri
     [OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge]:
         'ombarna.oppholdtsammenhengende.spm',
     [OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge]: 'ombarna.hvemavbarnaoppholdt.spm',
-    [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]: 'ombarna.barnetrygd-eøs.spm',
-    [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]: 'ombarna.barnetrygd-eøs.hvem.spm',
+    [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]:
+        'ombarna.barnetrygd-eøs-fortid.spm',
+    [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]: 'ombarna.barnetrygd-eøs-fortid.hvem.spm',
     [OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder]: 'ombarna.enkeenkemann.oppgitt.spm',
     [OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder]:
         'ombarna.enkeenkemann.folkeregisteret-enke.spm',

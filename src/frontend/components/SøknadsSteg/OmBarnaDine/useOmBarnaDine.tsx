@@ -114,7 +114,7 @@ export const useOmBarnaDine = (): {
 
     const mottarBarnetrygdForBarnFraAnnetEøsland = useJaNeiSpmFelt({
         søknadsfelt: søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
-        feilmeldingSpråkId: 'ombarna.barnetrygd-eøs.feilmelding',
+        feilmeldingSpråkId: 'ombarna.barnetrygd-eøs-fortid.feilmelding',
         avhengigheter: {
             erBarnAdoptertFraUtland: {
                 hovedSpørsmål: erBarnAdoptertFraUtland,
@@ -129,7 +129,7 @@ export const useOmBarnaDine = (): {
 
     const hvemBarnetrygdFraAnnetEøsland = useBarnCheckboxFelt(
         barnDataKeySpørsmål.barnetrygdFraAnnetEøsland,
-        'ombarna.barnetrygd-eøs.hvem.feilmelding',
+        'ombarna.barnetrygd-eøs-fortid.hvem.feilmelding',
         mottarBarnetrygdForBarnFraAnnetEøsland
     );
 
