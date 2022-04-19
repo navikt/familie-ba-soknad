@@ -457,7 +457,7 @@ export const useOmBarnet = (
         feilmeldingSpråkId:
             gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andre-forelder.utenlandspensjon.feilmelding'
-                : 'ombarnet.andre-forelder.utenlandspensjon.feilmelding',
+                : 'ombarnet.andreforelderpensjonutland.feilmelding',
         avhengigheter: {
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,

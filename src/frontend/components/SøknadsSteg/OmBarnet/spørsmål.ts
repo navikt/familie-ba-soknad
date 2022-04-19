@@ -64,8 +64,7 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
         'ombarnet.andre-forelder.arbeid-utland.land.spm',
     [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke]:
         'enkeenkemann.andreforelder-arbeidutland.land.spm',
-    [OmBarnetSpørsmålsId.andreForelderPensjonUtland]:
-        'ombarnet.andre-forelder.utenlandspensjon.spm',
+    [OmBarnetSpørsmålsId.andreForelderPensjonUtland]: 'ombarnet.andreforelderpensjonutland.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke]:
         'enkeenkemann.andre-forelder.utenlandspensjon.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand]:
