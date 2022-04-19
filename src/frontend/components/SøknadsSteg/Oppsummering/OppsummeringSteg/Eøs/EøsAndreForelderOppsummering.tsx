@@ -49,14 +49,14 @@ const EøsAndreForelderOppsummering: React.FC<{
 
     return (
         <>
-            <StyledOppsummeringsFeltGruppe>
-                <IdNummerForAndreForelder
-                    skjema={skjema}
-                    barn={barn}
-                    settIdNummerFelter={settIdNummerFelter}
-                    lesevisning={true}
-                />
-                {andreForelder.adresse.svar && (
+            <IdNummerForAndreForelder
+                skjema={skjema}
+                barn={barn}
+                settIdNummerFelter={settIdNummerFelter}
+                lesevisning={true}
+            />
+            {andreForelder.adresse.svar && (
+                <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -74,8 +74,8 @@ const EøsAndreForelderOppsummering: React.FC<{
                                 : andreForelder.adresse.svar
                         }
                     />
-                )}
-            </StyledOppsummeringsFeltGruppe>
+                </StyledOppsummeringsFeltGruppe>
+            )}
             <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.arbeidNorge)}
                 {andreForelder.arbeidsperioderNorge.map((arbeidsperiode, index) => (
@@ -88,8 +88,6 @@ const EøsAndreForelderOppsummering: React.FC<{
                         }}
                     />
                 ))}
-            </StyledOppsummeringsFeltGruppe>
-            <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.pensjonNorge)}
                 {andreForelder.pensjonsperioderNorge.map((pensjonsperiode, index) => (
                     <PensjonsperiodeOppsummering
@@ -99,8 +97,6 @@ const EøsAndreForelderOppsummering: React.FC<{
                         andreForelderData={{ erDød: andreForelderErDød, barn }}
                     />
                 ))}
-            </StyledOppsummeringsFeltGruppe>
-            <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.andreUtbetalinger)}
                 {andreForelder.andreUtbetalingsperioder.map((utbetalingsperiode, index) => (
                     <UtbetalingsperiodeOppsummering
