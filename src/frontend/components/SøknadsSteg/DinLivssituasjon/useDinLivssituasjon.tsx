@@ -221,7 +221,7 @@ export const useDinLivssituasjon = (): {
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
-        feilmeldingSpråkId: 'omdeg.utenlandspensjon.feilmelding',
+        feilmeldingSpråkId: 'omdeg.pensjonutland.feilmelding',
     });
 
     const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet({
