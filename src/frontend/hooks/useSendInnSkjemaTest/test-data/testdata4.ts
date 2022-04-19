@@ -679,7 +679,7 @@ export const testdata4: TilKontraktTestData = {
                 },
                 mottarUtenlandspensjon: {
                     label: {
-                        en: 'Do you or have you received a pension from abroad',
+                        en: 'Do you or have you received a pension from abroad?',
                         nb: 'Får eller har du fått pensjon fra utlandet?',
                         nn: 'Får eller har du fått pensjon frå utlandet?',
                     },
@@ -1210,9 +1210,9 @@ export const testdata4: TilKontraktTestData = {
                     },
                     barnetrygdFraAnnetEøsland: {
                         label: {
-                            en: 'For which of the children are you receiving or have applied for child benefit?',
-                            nb: 'Hvem av barna får du eller har du søkt om barnetrygd for?',
-                            nn: 'Kven av barna får du eller har du søkt om barnetrygd for?',
+                            en: 'For which of the children are you receiving, have received or have applied for child benefit?',
+                            nb: 'Hvem av barna får du, har du fått eller har du søkt om barnetrygd for?',
+                            nn: 'Kven av barna får du, har du fått eller har du søkt om barnetrygd for?',
                         },
                         verdi: {
                             nb: 'JA',
@@ -1591,9 +1591,9 @@ export const testdata4: TilKontraktTestData = {
                     },
                     pensjonUtland: {
                         label: {
-                            en: "Does BARN BARNESSEN III's other parent receive a pension from abroad?",
-                            nb: 'Får den andre forelderen til BARN BARNESSEN III pensjon fra utlandet?',
-                            nn: 'Får den andre forelderen til BARN BARNESSEN III pensjon frå utlandet?',
+                            en: "Does BARN BARNESSEN III's other parent receive, or have they received a pension from abroad?",
+                            nb: 'Får eller har den andre forelderen til BARN BARNESSEN III fått pensjon fra utlandet?',
+                            nn: 'Får eller har den andre forelderen til BARN BARNESSEN III fått pensjon frå utlandet?',
                         },
                         verdi: {
                             nb: null,
@@ -1615,9 +1615,9 @@ export const testdata4: TilKontraktTestData = {
                     },
                     arbeidUtlandet: {
                         label: {
-                            en: "Does BARN BARNESSEN III's other parent work outside of Norway, on a foreign ship or on a foreign continental shelf?",
-                            nb: 'Arbeider den andre forelderen til BARN BARNESSEN III utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                            nn: 'Arbeidar den andre forelderen til BARN BARNESSEN III utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                            en: "Does BARN BARNESSEN III's other parent work, or have they worked outside of Norway, on a foreign ship or on a foreign continental shelf?",
+                            nb: 'Arbeider eller har den andre forelderen til BARN BARNESSEN III arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
+                            nn: 'Arbeidar eller har den andre forelderen til BARN BARNESSEN III arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                         },
                         verdi: {
                             nb: null,
@@ -1715,9 +1715,9 @@ export const testdata4: TilKontraktTestData = {
                     },
                     barnetrygdFraAnnetEøsland: {
                         label: {
-                            en: 'For which of the children are you receiving or have applied for child benefit?',
-                            nb: 'Hvem av barna får du eller har du søkt om barnetrygd for?',
-                            nn: 'Kven av barna får du eller har du søkt om barnetrygd for?',
+                            en: 'For which of the children are you receiving, have received or have applied for child benefit?',
+                            nb: 'Hvem av barna får du, har du fått eller har du søkt om barnetrygd for?',
+                            nn: 'Kven av barna får du, har du fått eller har du søkt om barnetrygd for?',
                         },
                         verdi: {
                             nb: 'NEI',
