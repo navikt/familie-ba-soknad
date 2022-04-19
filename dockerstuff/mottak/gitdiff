@@ -1,25 +1,25 @@
 diff --git a/pom.xml b/pom.xml
-index 1229a24..2395521 100644
+index 4095631..79468e2 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -243,12 +243,6 @@
+@@ -253,12 +253,6 @@
              <version>4.2.0</version>
              <scope>test</scope>
          </dependency>
 -        <dependency>
 -            <groupId>no.nav.security</groupId>
 -            <artifactId>token-validation-test-support</artifactId>
--            <version>${token-validation-spring.version}</version>
+-            <version>2.0.5</version>
 -            <scope>test</scope>
 -        </dependency>
      </dependencies>
 
      <repositories>
 diff --git a/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt b/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
-index b02b735..621e705 100644
+index ea9c051..870b45b 100644
 --- a/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
 +++ b/src/main/kotlin/no/nav/familie/ba/mottak/config/RestTemplateConfig.kt
-@@ -16,7 +16,6 @@ import org.springframework.web.client.RestOperations
+@@ -19,7 +19,6 @@ import org.springframework.web.client.RestOperations
          RestTemplateSts::class)
  class RestTemplateConfig {
 
@@ -28,7 +28,7 @@ index b02b735..621e705 100644
      fun restTemplateClientCredentials(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
                                        bearerTokenClientInterceptor: BearerTokenClientInterceptor): RestOperations {
 diff --git a/src/main/resources/application-postgres.yaml b/src/main/resources/application-postgres.yaml
-index 51a0aef..71c16de 100644
+index ffb408f..b59c95a 100644
 --- a/src/main/resources/application-postgres.yaml
 +++ b/src/main/resources/application-postgres.yaml
 @@ -1,9 +1,12 @@
@@ -91,7 +91,7 @@ index 6c92612..24fa324 100644
 
  fun main(args: Array<String>) {
 diff --git a/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt b/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
-index b4cf801..31ca7f5 100644
+index b4cf801..c5e0cd5 100644
 --- a/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
 +++ b/src/test/kotlin/no/nav/familie/ba/mottak/DevLauncherPostgres.kt
 @@ -1,16 +1,14 @@
