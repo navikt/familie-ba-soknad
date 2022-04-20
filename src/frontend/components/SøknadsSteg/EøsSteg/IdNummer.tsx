@@ -55,17 +55,12 @@ export const IdNummer: React.FC<{
 
     const idNummerUkjent = useFelt<ESvar>({
         verdi:
-            (periodeType === undefined ||
-                periodeType === PeriodeType.utenlandsperiode ||
-                periodeType === PeriodeType.eøsBarnetrygdPeriode) &&
+            (!!barn || periodeType === PeriodeType.utenlandsperiode) &&
             idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
-        feltId: `idnummer-ukjent-${landAlphaCode}`,
-        skalFeltetVises: () =>
-            periodeType === undefined ||
-            periodeType === PeriodeType.utenlandsperiode ||
-            periodeType === PeriodeType.eøsBarnetrygdPeriode,
+        feltId: `${guid()}idnummer-ukjent-${landAlphaCode}`,
+        skalFeltetVises: () => !!barn || periodeType === PeriodeType.utenlandsperiode,
     });
 
     const idNummerFelt = useInputFeltMedUkjent({
