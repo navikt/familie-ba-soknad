@@ -1,5 +1,6 @@
 import { IntlShape } from 'react-intl';
 
+import { tilDatoUkjentLabelSpråkId } from '../../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     fraDatoLabelSpråkId,
     landLabelSpråkId,
@@ -57,7 +58,7 @@ export const utenlandsperiodeTilISøknadsfelt = (
                 verdi: utenlandperiode.oppholdslandTilDato?.svar
                     ? sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                           utenlandperiode.oppholdslandTilDato?.svar,
-                          'felles.vetikkenåravsluttes.spm'
+                          tilDatoUkjentLabelSpråkId
                       )
                     : sammeVerdiAlleSpråk(undefined),
             },

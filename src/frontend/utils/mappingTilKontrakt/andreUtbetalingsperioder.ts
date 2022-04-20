@@ -66,7 +66,9 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
                 label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingTilDato),
                 verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     utbetalingTilDato.svar,
-                    'felles.vetikkenåravsluttes.spm'
+                    hentUtbetalingsperiodeSpørsmålIder(gjelderAndreForelder, periodenErAvsluttet)[
+                        UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
+                    ]
                 ),
             },
         }),
