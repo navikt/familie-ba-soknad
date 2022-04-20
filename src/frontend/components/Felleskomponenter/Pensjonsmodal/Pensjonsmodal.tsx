@@ -133,6 +133,7 @@ export const PensjonModal: React.FC<Props> = ({
                             />
                         }
                         dynamisk
+                        ekskluderNorge
                     />
                 )}
 

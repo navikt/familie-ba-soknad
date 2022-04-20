@@ -144,6 +144,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         )
                     }
                     dynamisk
+                    ekskluderNorge
                 />
 
                 {skjema.felter.oppholdslandFraDato.erSynlig && (
