@@ -213,6 +213,7 @@ const AndreForelder: React.FC<{
                                             }
                                             skjema={skjema}
                                             dynamisk
+                                            ekskluderNorge
                                             label={
                                                 <SpråkTekst
                                                     id={
@@ -258,6 +259,7 @@ const AndreForelder: React.FC<{
                                             felt={skjema.felter.andreForelderPensjonHvilketLand}
                                             skjema={skjema}
                                             dynamisk
+                                            ekskluderNorge
                                             label={
                                                 <SpråkTekst
                                                     id={

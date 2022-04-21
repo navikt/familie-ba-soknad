@@ -16,7 +16,7 @@ describe('LandDropdown', () => {
         spyOnUseApp({});
     });
 
-    it('Rendrer alle land bortsett fra Norge i alle dropdowns når eøs er skrudd av', async () => {
+    it('Rendrer alle land i alle dropdowns når eøs er skrudd av', async () => {
         mockEøs(true);
         const felt = mockDeep<Felt<'' | Alpha3Code>>({
             erSynlig: true,
@@ -32,9 +32,9 @@ describe('LandDropdown', () => {
 
         let options = await findAllByRole('option');
 
-        const antallLandUtenNorge = 250;
+        const antallLand = 251;
 
-        expect(options).toHaveLength(antallLandUtenNorge);
+        expect(options).toHaveLength(antallLand);
         unmount();
 
         render(
@@ -45,7 +45,7 @@ describe('LandDropdown', () => {
 
         options = await findAllByRole('option');
 
-        expect(options).toHaveLength(antallLandUtenNorge);
+        expect(options).toHaveLength(antallLand);
     }, /* Denne testen trenger litt ekstra tid pga unmount, vanligvis rundt 6s */ 12000);
 
     it('Rendrer kun EØS-land når EØS er på og kunEøs-prop er true', async () => {

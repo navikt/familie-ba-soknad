@@ -136,6 +136,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                                 />
                             }
                             dynamisk
+                            ekskluderNorge
                         />
                     </KomponentGruppe>
                 )}

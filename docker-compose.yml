@@ -151,7 +151,7 @@ services:
     logging: *common-log-config
     container_name: dokgen
     build:
-      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#74481563292793bfdd4e68a54f56abbeb92f79c3"
+      context: "https://${GITHUB_TOKEN}:@github.com/navikt/familie-ba-dokgen.git#af0ec4e60a07ef0bb204123cf0f4081be78a9539"
     environment:
       RUNTIME_OPTS: "--write.access=true"
     ports:
