@@ -189,6 +189,7 @@ const DinLivssituasjon: React.FC = () => {
                                 />
                             }
                             dynamisk
+                            ekskluderNorge
                         />
                         {erEøsLand(skjema.felter.arbeidsland.verdi) && (
                             <VedleggNotisTilleggsskjema
@@ -232,6 +233,7 @@ const DinLivssituasjon: React.FC = () => {
                                 />
                             }
                             dynamisk
+                            ekskluderNorge
                         />
                         {erEøsLand(skjema.felter.pensjonsland.verdi) && (
                             <VedleggNotisTilleggsskjema

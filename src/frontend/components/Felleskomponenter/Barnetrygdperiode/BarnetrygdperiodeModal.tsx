@@ -117,6 +117,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         )}
                         kunEøs={true}
                         dynamisk
+                        ekskluderNorge
                     />
                 )}
                 {fraDatoBarnetrygdperiode.erSynlig && (

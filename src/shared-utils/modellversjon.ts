@@ -14,7 +14,7 @@ export const erModellMismatchResponsRessurs = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ressurs: ApiRessurs<any> | Ressurs<any>
 ): ressurs is ApiRessurs<ModellMismatchRespons> => {
-    if (!('melding' in ressurs)) {
+    if (!(typeof ressurs !== 'object' || 'melding' in ressurs)) {
         return false;
     }
 

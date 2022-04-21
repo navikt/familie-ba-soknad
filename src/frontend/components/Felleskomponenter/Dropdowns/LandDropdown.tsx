@@ -16,6 +16,7 @@ interface LandDropdownProps {
     label?: ReactNode;
     dynamisk?: boolean;
     kunEøs?: boolean;
+    ekskluderNorge?: boolean;
 }
 
 export const LandDropdown: React.FC<LandDropdownProps> = props => {
@@ -27,7 +28,7 @@ export const LandDropdown: React.FC<LandDropdownProps> = props => {
     const landkoderSortertPåNavn = Object.keys(getAlpha3Codes())
         .sort((a, b) => (getName(a, valgtLocale) >= getName(b, valgtLocale) ? 1 : -1))
         .filter(landKode => (kunEøs ? erEøsLand(landKode as Alpha3Code) : true))
-        .filter(landKode => landKode !== 'NOR');
+        .filter(landKode => (props.ekskluderNorge ? landKode !== 'NOR' : true));
 
     return (
         <StyledDropdown<Alpha3Code | ''>

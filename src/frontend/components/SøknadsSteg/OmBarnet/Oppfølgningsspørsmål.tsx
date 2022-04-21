@@ -235,6 +235,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                     felt={skjema.felter.pågåendeSøknadHvilketLand}
                                     skjema={skjema}
                                     kunEøs={true}
+                                    ekskluderNorge
                                     label={
                                         <SpråkTekst
                                             id={
@@ -261,6 +262,7 @@ const Oppfølgningsspørsmål: React.FC<{
                             <LandDropdown
                                 felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
                                 skjema={skjema}
+                                ekskluderNorge
                                 kunEøs={true}
                                 label={
                                     <SpråkTekst
