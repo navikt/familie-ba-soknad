@@ -53,14 +53,17 @@ export const IdNummer: React.FC<{
     const intl = useIntl();
     const { formatMessage } = intl;
 
+    // Bruker skal ha mulighet til å velge at hen ikke kjenner idnummer for: barn, andre forelder og søker (dersom idnummer for søker trigges av et utenlandsopphold).
+    // Barn blir sendt med som prop når vi render Idnummer for andre forelder og barn, derfor kan vi sjekke på den propen.
+    const skalViseVetIkkeCheckbox = !!barn || periodeType === PeriodeType.utenlandsperiode;
+
     const idNummerUkjent = useFelt<ESvar>({
         verdi:
-            (!!barn || periodeType === PeriodeType.utenlandsperiode) &&
-            idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
+            skalViseVetIkkeCheckbox && idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
         feltId: `${guid()}idnummer-ukjent-${landAlphaCode}`,
-        skalFeltetVises: () => !!barn || periodeType === PeriodeType.utenlandsperiode,
+        skalFeltetVises: () => skalViseVetIkkeCheckbox,
     });
 
     const idNummerFelt = useInputFeltMedUkjent({
