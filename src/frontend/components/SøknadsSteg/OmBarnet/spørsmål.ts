@@ -57,15 +57,14 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.andreForelderFnrUkjent]: 'ombarnet.andre-forelder.fnr-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFødselsdato]: 'felles.fødselsdato.label',
     [OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]: 'felles.fødselsdato-ukjent',
-    [OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]: 'ombarnet.andre-forelder.arbeid-utland.spm',
+    [OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]: 'eøs.andre-forelder.arbeid-utland.spm',
     [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke]:
         'enkeenkemann.andreforelder-arbeidutland.spm',
     [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand]:
         'ombarnet.andre-forelder.arbeid-utland.land.spm',
     [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke]:
         'enkeenkemann.andreforelder-arbeidutland.land.spm',
-    [OmBarnetSpørsmålsId.andreForelderPensjonUtland]:
-        'ombarnet.andre-forelder.utenlandspensjon.spm',
+    [OmBarnetSpørsmålsId.andreForelderPensjonUtland]: 'ombarnet.andreforelderpensjonutland.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke]:
         'enkeenkemann.andre-forelder.utenlandspensjon.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand]:
