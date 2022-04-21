@@ -139,14 +139,16 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
             <ScrollHandler />
             <header>
                 <Banner språkTekstId={erUtvidet ? 'felles.banner.utvidet' : 'felles.banner'} />
-                <StegindikatorContainer>
-                    <Stegindikator
-                        autoResponsiv={true}
-                        aktivtSteg={hentNåværendeStegindikatorNummer()}
-                        steg={stegIndikatorObjekter}
-                        visLabel={false}
-                    />
-                </StegindikatorContainer>
+                {nyesteNåværendeRoute !== RouteEnum.Kvittering && (
+                    <StegindikatorContainer>
+                        <Stegindikator
+                            autoResponsiv={true}
+                            aktivtSteg={hentNåværendeStegindikatorNummer()}
+                            steg={stegIndikatorObjekter}
+                            visLabel={false}
+                        />
+                    </StegindikatorContainer>
+                )}
             </header>
             <InnholdContainer>
                 <StyledSystemtittel>{tittel}</StyledSystemtittel>
