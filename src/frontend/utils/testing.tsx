@@ -107,13 +107,12 @@ export const spyOnUseApp = søknad => {
     };
 };
 
-export const mockEøs = (eøsSkruddAv = false, barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
+export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
     const erEøsLand = jest.fn();
 
     const useEøs = jest.spyOn(eøsContext, 'useEøs').mockImplementation(
         jest.fn().mockReturnValue({
             erEøsLand,
-            eøsSkruddAv,
             barnSomTriggerEøs,
             settBarnSomTriggerEøs: jest.fn(),
             settSøkerTriggerEøs: jest.fn(),

@@ -4,7 +4,7 @@ import createUseContext from 'constate';
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { RessursStatus } from '@navikt/familie-typer';
+import { byggHenterRessurs, hentDataFraRessurs } from '@navikt/familie-typer';
 
 import Miljø from '../Miljø';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
@@ -19,63 +19,56 @@ import { useLastRessurserContext } from './LastRessurserContext';
 const [EøsProvider, useEøs] = createUseContext(() => {
     const { axiosRequest } = useLastRessurserContext();
 
-    const skruddAvByDefault = true; //TODO denne må endres når EØS går live
-    const [eøsSkruddAv, settEøsSkruddAv] = useState(skruddAvByDefault);
-
     const { søknad, settSøknad } = useApp();
-    const [eøsLand, settEøsLand] = useState<Alpha3Code[]>();
     const [søkerTriggerEøs, settSøkerTriggerEøs] = useState(søknad.søker.triggetEøs);
     const [barnSomTriggerEøs, settBarnSomTriggerEøs] = useState<BarnetsId[]>(
         søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs).map(barn => barn.id)
     );
     const { toggles } = useFeatureToggles();
+    const { eøsLand, settEøsLand } = useApp();
 
     const { soknadApi } = Miljø();
 
     useEffect(() => {
         if (!toggles.EØS_KOMPLETT) {
-            if (!eøsSkruddAv) {
-                const erEøs = søknad.erEøs;
-                settSøknad({
-                    ...søknad,
-                    dokumentasjon: søknad.dokumentasjon.map((dok: IDokumentasjon) =>
-                        dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA
-                            ? {
-                                  ...dok,
-                                  gjelderForSøker: erEøs,
-                                  opplastedeVedlegg: erEøs ? dok.opplastedeVedlegg : [],
-                                  harSendtInn: erEøs ? dok.harSendtInn : false,
-                              }
-                            : dok
-                    ),
-                });
-            }
+            const erEøs = søknad.erEøs;
+            settSøknad({
+                ...søknad,
+                dokumentasjon: søknad.dokumentasjon.map((dok: IDokumentasjon) =>
+                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA
+                        ? {
+                              ...dok,
+                              gjelderForSøker: erEøs,
+                              opplastedeVedlegg: erEøs ? dok.opplastedeVedlegg : [],
+                              harSendtInn: erEøs ? dok.harSendtInn : false,
+                          }
+                        : dok
+                ),
+            });
         }
     }, [søknad.erEøs]);
 
     useEffect(() => {
+        settEøsLand(byggHenterRessurs());
         (async () => {
-            try {
-                const eøsLandResponse = await axiosRequest<Map<Alpha3Code, string>, void>({
-                    url: `${soknadApi}/kodeverk/eos-land`,
-                    method: 'GET',
-                    påvirkerSystemLaster: true,
-                });
-
-                if (eøsLandResponse.status === RessursStatus.SUKSESS) {
-                    settEøsLand(Object.keys(eøsLandResponse.data) as Alpha3Code[]);
-                    settEøsSkruddAv(false);
-                } else {
-                    settEøsSkruddAv(true);
-                }
-            } catch (_e) {
-                settEøsSkruddAv(true);
-            }
+            const eøsLandResponse = await axiosRequest<Map<Alpha3Code, string>, void>({
+                url: `${soknadApi}/kodeverk/eos-land`,
+                method: 'GET',
+                påvirkerSystemLaster: true,
+            });
+            settEøsLand(eøsLandResponse);
         })();
     }, []);
 
-    const erEøsLand = (land: Alpha3Code | ''): boolean =>
-        !eøsSkruddAv && !!land && !!eøsLand?.includes(land);
+    const erEøsLand = (land: Alpha3Code | ''): boolean => {
+        const eøsLandData = hentDataFraRessurs(eøsLand);
+
+        if (!eøsLandData) {
+            return false;
+        }
+        const eøsLandListe = Object.keys(eøsLandData) as Alpha3Code[];
+        return !!(land && eøsLandListe?.includes(land));
+    };
 
     const skalTriggeEøsForSøker = (søker: ISøker): boolean => {
         const landSvarSomKanTrigge = [
@@ -142,7 +135,6 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     }, [søknad.søker, søknad.barnInkludertISøknaden]);
 
     return {
-        eøsSkruddAv,
         erEøsLand,
         skalTriggeEøsForSøker,
         skalTriggeEøsForBarn,
