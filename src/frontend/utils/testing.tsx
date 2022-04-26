@@ -75,6 +75,10 @@ export const spyOnUseApp = søknad => {
         ...mekkGyldigSøker(),
         ...søknad.søker,
     };
+    søknad.dokumentasjon = søknad.dokumentasjon ?? [];
+
+    const settEøsLand = jest.fn();
+    const eøsLand = { status: RessursStatus.SUKSESS, data: ['BEL', 'AFG', 'NLD', 'NOR'] };
 
     const useAppMock = jest.fn().mockReturnValue({
         søknad,
@@ -90,6 +94,8 @@ export const spyOnUseApp = søknad => {
         settNåværendeRoute,
         mellomlagre,
         sluttbruker,
+        settEøsLand,
+        eøsLand,
         systemetLaster: jest.fn().mockReturnValue(false),
         systemetOK: () => jest.fn().mockReturnValue(true),
         systemetFeiler: jest.fn().mockReturnValue(false),

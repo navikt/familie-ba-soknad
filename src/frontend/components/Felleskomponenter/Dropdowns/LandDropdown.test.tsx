@@ -39,7 +39,7 @@ describe('LandDropdown', () => {
 
         render(
             <TestProvidereMedEkteTekster>
-                <LandDropdown felt={felt} skjema={skjema} kunEøs />
+                <LandDropdown felt={felt} skjema={skjema} />
             </TestProvidereMedEkteTekster>
         );
 

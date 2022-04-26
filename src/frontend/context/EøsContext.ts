@@ -19,44 +19,52 @@ import { useLastRessurserContext } from './LastRessurserContext';
 const [EøsProvider, useEøs] = createUseContext(() => {
     const { axiosRequest } = useLastRessurserContext();
 
-    const { søknad, settSøknad } = useApp();
+    const { søknad, settSøknad, eøsLand, settEøsLand } = useApp();
     const [søkerTriggerEøs, settSøkerTriggerEøs] = useState(søknad.søker.triggetEøs);
     const [barnSomTriggerEøs, settBarnSomTriggerEøs] = useState<BarnetsId[]>(
         søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs).map(barn => barn.id)
     );
     const { toggles } = useFeatureToggles();
-    const { eøsLand, settEøsLand } = useApp();
 
     const { soknadApi } = Miljø();
 
     useEffect(() => {
         if (!toggles.EØS_KOMPLETT) {
             const erEøs = søknad.erEøs;
-            settSøknad({
-                ...søknad,
-                dokumentasjon: søknad.dokumentasjon.map((dok: IDokumentasjon) =>
-                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA
-                        ? {
-                              ...dok,
-                              gjelderForSøker: erEøs,
-                              opplastedeVedlegg: erEøs ? dok.opplastedeVedlegg : [],
-                              harSendtInn: erEøs ? dok.harSendtInn : false,
-                          }
-                        : dok
-                ),
-            });
+            const dokumentasjon = søknad.dokumentasjon.map((dok: IDokumentasjon) =>
+                dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA
+                    ? {
+                          ...dok,
+                          gjelderForSøker: erEøs,
+                          opplastedeVedlegg: erEøs ? dok.opplastedeVedlegg : [],
+                          harSendtInn: erEøs ? dok.harSendtInn : false,
+                      }
+                    : dok
+            );
+
+            if (JSON.stringify(dokumentasjon) !== JSON.stringify(søknad.dokumentasjon)) {
+                settSøknad({
+                    ...søknad,
+                    dokumentasjon,
+                });
+            }
         }
     }, [søknad.erEøs]);
 
     useEffect(() => {
         settEøsLand(byggHenterRessurs());
         (async () => {
-            const eøsLandResponse = await axiosRequest<Map<Alpha3Code, string>, void>({
-                url: `${soknadApi}/kodeverk/eos-land`,
-                method: 'GET',
-                påvirkerSystemLaster: true,
-            });
-            settEøsLand(eøsLandResponse);
+            try {
+                const eøsLandResponse = await axiosRequest<Map<Alpha3Code, string>, void>({
+                    url: `${soknadApi}/kodeverk/eos-land`,
+                    method: 'GET',
+                    påvirkerSystemLaster: true,
+                });
+
+                settEøsLand(eøsLandResponse);
+            } catch (_) {
+                // do nothing
+            }
         })();
     }, []);
 

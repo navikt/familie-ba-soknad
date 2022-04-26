@@ -78,6 +78,7 @@ describe('FjernBarnKnapp', () => {
                 barn: [],
             },
             barnRegistrertManuelt: [registrertBarn],
+            dokumentasjon: [],
         });
         const { getByText } = render(
             <TestProvidere>
@@ -93,6 +94,7 @@ describe('FjernBarnKnapp', () => {
             barnInkludertISøknaden: [],
             barnRegistrertManuelt: [],
             erEøs: false,
+            dokumentasjon: [],
             søker: {
                 ...mekkGyldigSøker(),
                 barn: [],
