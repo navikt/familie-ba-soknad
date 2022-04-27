@@ -53,9 +53,7 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                     <OppsummeringFelt
                         tittel={tittelSpm(barn.søkersSlektsforhold.id)}
                         søknadsvar={formatMessage({
-                            id:
-                                barn.søkersSlektsforhold.svar &&
-                                toSlektsforholdSpråkId(barn.søkersSlektsforhold.svar),
+                            id: toSlektsforholdSpråkId(barn.søkersSlektsforhold.svar),
                         })}
                     />
                     {barn.søkersSlektsforholdSpesifisering.svar && (
@@ -93,9 +91,7 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                         <OppsummeringFelt
                             tittel={tittelSpm(barn.omsorgsperson.slektsforhold.id)}
                             søknadsvar={formatMessage({
-                                id:
-                                    barn.omsorgsperson.slektsforhold.svar &&
-                                    toSlektsforholdSpråkId(barn.omsorgsperson.slektsforhold.svar),
+                                id: toSlektsforholdSpråkId(barn.omsorgsperson.slektsforhold.svar),
                             })}
                         />
                     )}
