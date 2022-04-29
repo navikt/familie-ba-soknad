@@ -42,7 +42,7 @@ import {
     filtrerteRelevanteIdNummerForBarn,
     genererInitiellAndreForelder,
     nullstilteEøsFelterForBarn,
-    skalViseOmsorgspersonHof,
+    skalViseBorMedOmsorgsperson,
 } from '../../../utils/barn';
 import {
     dagenEtterDato,
@@ -848,17 +848,18 @@ export const useOmBarnet = (
                 : [];
         const utenlandsperioder = registrerteUtenlandsperioder.verdi;
 
-        const borMedOmsorgsperson =
-            borFastMedSøker.verdi === ESvar.NEI ? null : barn.borMedOmsorgsperson.svar;
-
-        const skalViseOmsorgsperson = skalViseOmsorgspersonHof(
-            barn.borMedAndreForelder.svar,
-            borMedOmsorgsperson,
-            borFastMedSøker.verdi,
-            barn.oppholderSegIInstitusjon.svar,
-            barn.andreForelderErDød.svar,
-            barn.erFosterbarn.svar
-        );
+        const borMedOmsorgsperson = {
+            ...barn.borMedOmsorgsperson,
+            svar: skalViseBorMedOmsorgsperson(
+                barn.borMedAndreForelder.svar,
+                borFastMedSøker.verdi,
+                barn.oppholderSegIInstitusjon.svar,
+                barn.andreForelderErDød.svar,
+                barn.erFosterbarn.svar
+            )
+                ? barn.borMedOmsorgsperson.svar
+                : null,
+        };
 
         return {
             ...barn,
@@ -932,11 +933,8 @@ export const useOmBarnet = (
                 ...barn.borFastMedSøker,
                 svar: borFastMedSøker.verdi,
             },
-            borMedOmsorgsperson: {
-                ...barn.borMedOmsorgsperson,
-                svar: borFastMedSøker.verdi === ESvar.NEI ? null : barn.borMedOmsorgsperson.svar,
-            },
-            omsorgsperson: skalViseOmsorgsperson() ? barn.omsorgsperson : null,
+            borMedOmsorgsperson,
+            omsorgsperson: borMedOmsorgsperson.svar === ESvar.JA ? barn.omsorgsperson : null,
             adresse: {
                 ...barn.adresse,
                 svar:
