@@ -22,8 +22,8 @@ interface LandDropdownProps {
 export const LandDropdown: React.FC<LandDropdownProps> = props => {
     const intl = useIntl();
     const [valgtLocale] = useSprakContext();
-    const { erEøsLand, eøsSkruddAv } = useEøs();
-    const kunEøs = !eøsSkruddAv && (props.kunEøs ?? false);
+    const { erEøsLand } = useEøs();
+    const kunEøs = props.kunEøs ?? false;
 
     const landkoderSortertPåNavn = Object.keys(getAlpha3Codes())
         .sort((a, b) => (getName(a, valgtLocale) >= getName(b, valgtLocale) ? 1 : -1))

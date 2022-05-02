@@ -237,6 +237,14 @@ export const genererOppdaterteBarn = (
                 ...barn[barnDataKeySpørsmål.borMedAndreForelder],
                 svar: borMedAndreForelder,
             },
+            [barnDataKeySpørsmål.søkersSlektsforhold]: {
+                id: EøsBarnSpørsmålId.søkersSlektsforhold,
+                svar: erFosterbarn === ESvar.JA ? '' : barn.søkersSlektsforhold.svar,
+            },
+            [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: {
+                id: EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering,
+                svar: erFosterbarn === ESvar.JA ? '' : barn.søkersSlektsforholdSpesifisering.svar,
+            },
             [barnDataKeySpørsmål.borMedOmsorgsperson]: {
                 ...barn[barnDataKeySpørsmål.borMedOmsorgsperson],
                 svar: borMedOmsorgsperson,

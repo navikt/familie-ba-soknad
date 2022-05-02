@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
@@ -14,7 +13,6 @@ import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
 import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
@@ -31,7 +29,6 @@ const OmBarnaDine: React.FC = () => {
     const history = useHistory();
     const { søknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
-    const { eøsSkruddAv } = useEøs();
     const { toggles } = useFeatureToggles();
 
     if (!barnInkludertISøknaden.length) {
@@ -209,14 +206,11 @@ const OmBarnaDine: React.FC = () => {
                     >
                         {!toggles.EØS_KOMPLETT &&
                             skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi ===
-                                ESvar.JA &&
-                            (eøsSkruddAv ? (
-                                <SøkerMåBrukePDF advarselTekstId={'ombarna.barnetrygd-eøs.alert'} />
-                            ) : (
+                                ESvar.JA && (
                                 <VedleggNotisTilleggsskjema
                                     språkTekstId={'ombarna.barnetrygd-eøs.eøs-info'}
                                 />
-                            ))}
+                            )}
                     </HvilkeBarnCheckboxGruppe>
 
                     <JaNeiSpm

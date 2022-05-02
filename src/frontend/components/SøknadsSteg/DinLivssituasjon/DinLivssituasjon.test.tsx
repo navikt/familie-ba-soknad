@@ -47,7 +47,7 @@ describe('DinLivssituasjon', () => {
 
     beforeEach(() => {
         silenceConsoleErrors();
-        mockEøs(false);
+        mockEøs();
         jest.useFakeTimers('modern');
     });
 

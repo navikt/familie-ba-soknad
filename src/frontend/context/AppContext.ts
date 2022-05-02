@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import createUseContext from 'constate';
+import { Alpha3Code } from 'i18n-iso-countries';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 import {
@@ -30,8 +31,8 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [valgtLocale] = useSprakContext();
     const { axiosRequest, lasterRessurser } = useLastRessurserContext();
     const { innloggetStatus } = useInnloggetContext();
-
-    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>()); // TODO: legacy
+    const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>());
+    const [eøsLand, settEøsLand] = useState(byggTomRessurs<Map<Alpha3Code, string>>());
     const [søknad, settSøknad] = useState<ISøknad>(initialStateSøknad);
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
@@ -201,13 +202,16 @@ const [AppProvider, useApp] = createUseContext(() => {
     };
 
     const systemetFeiler = () => {
-        return sluttbruker.status === RessursStatus.FEILET;
+        return (
+            sluttbruker.status === RessursStatus.FEILET || eøsLand.status === RessursStatus.FEILET
+        );
     };
 
     const systemetOK = () => {
         return (
             innloggetStatus === InnloggetStatus.AUTENTISERT &&
-            sluttbruker.status === RessursStatus.SUKSESS
+            sluttbruker.status === RessursStatus.SUKSESS &&
+            eøsLand.status === RessursStatus.SUKSESS
         );
     };
 
@@ -242,6 +246,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         mellomlagre,
         modellVersjonOppdatert,
         settSisteModellVersjon,
+        eøsLand,
+        settEøsLand,
     };
 });
 
