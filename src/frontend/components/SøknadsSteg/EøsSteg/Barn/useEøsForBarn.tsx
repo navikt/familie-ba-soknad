@@ -162,7 +162,9 @@ export const useEøsForBarn = (
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
         },
-        skalFeltetVises: avhengigheter => avhengigheter.borMedOmsorgsperson.verdi === ESvar.JA,
+        skalFeltetVises: avhengigheter =>
+            gjeldendeBarn.erFosterbarn.svar === ESvar.NEI &&
+            avhengigheter.borMedOmsorgsperson.verdi === ESvar.JA,
         avhengigheter: { borMedOmsorgsperson },
         nullstillVedAvhengighetEndring: false,
     });
