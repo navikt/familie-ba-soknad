@@ -12,13 +12,12 @@ import {
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
 import { AlternativtSvarForInput } from '../../typer/common';
-import { Slektsforhold } from '../../typer/kontrakt/barn';
 import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarnV7 } from '../../typer/kontrakt/v7';
 import { ISøker } from '../../typer/person';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { barnetsNavnValue } from '../barn';
-import { hentTekster, toSlektsforholdSpråkId } from '../språk';
+import { hentTekster } from '../språk';
 import { formaterFnr } from '../visning';
 import { andreForelderTilISøknadsfeltV7 } from './andreForelderV7';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
@@ -57,7 +56,6 @@ export const barnISøknadsFormatV7 = (
         eøsBarnetrygdsperioder,
         idNummer,
         triggetEøs,
-        søkersSlektsforhold,
         adresse,
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...barnSpørsmål
@@ -161,7 +159,6 @@ export const barnISøknadsFormatV7 = (
                 ),
                 barn
             ),
-
             [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
                 intl,
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
@@ -171,18 +168,6 @@ export const barnISøknadsFormatV7 = (
                 ),
                 barn
             ),
-            ...(søkersSlektsforhold.svar && {
-                [barnDataKeySpørsmål.søkersSlektsforhold]: søknadsfeltBarn(
-                    intl,
-                    språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.søkersSlektsforhold),
-                    hentTekster(
-                        toSlektsforholdSpråkId(
-                            barn[barnDataKeySpørsmål.søkersSlektsforhold].svar as Slektsforhold
-                        )
-                    ),
-                    barn
-                ),
-            }),
             [barnDataKeySpørsmål.adresse]: søknadsfeltBarn(
                 intl,
                 språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.barnetsAdresse),
