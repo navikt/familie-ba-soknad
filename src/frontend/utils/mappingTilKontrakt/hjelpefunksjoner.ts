@@ -7,11 +7,12 @@ import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { IBarnMedISøknad } from '../../typer/barn';
 import { AlternativtSvarForInput } from '../../typer/common';
+import { Slektsforhold } from '../../typer/kontrakt/barn';
 import { ISøknadsfelt, SpørsmålMap as KontraktpørsmålMap } from '../../typer/kontrakt/generelle';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { Årsak } from '../../typer/utvidet';
 import { barnetsNavnValue } from '../barn';
-import { hentTekster, landkodeTilSpråk, toÅrsakSpråkId } from '../språk';
+import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId, toÅrsakSpråkId } from '../språk';
 import { språkIndexListe } from '../spørsmål';
 import { isAlpha3Code } from '../typeguards';
 
@@ -70,6 +71,8 @@ export const spørmålISøknadsFormat = (
                         formatertVerdi = sammeVerdiAlleSpråk(verdi);
                     } else if (verdi in Årsak) {
                         formatertVerdi = hentTekster(toÅrsakSpråkId(verdi));
+                    } else if (verdi in Slektsforhold) {
+                        formatertVerdi = hentTekster(toSlektsforholdSpråkId(verdi));
                     } else {
                         formatertVerdi = sammeVerdiAlleSpråk(verdi);
                     }

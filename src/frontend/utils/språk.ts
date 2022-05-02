@@ -83,13 +83,15 @@ export const hentTekster = (
 
     for (const locale in LocaleType) {
         const { formatMessage } = createIntl({ locale, messages: texts[locale] }, cache);
-        const message = formatMessage(
-            { id: tekstId },
-            // Fjerner bokmål-tagen, skapte problemer og trenger ikke være med til pdf-gen
-            { ...formatValues, ...innebygdeFormatterere, bokmål: msg => msg }
-        );
+        const message = tekstId
+            ? formatMessage(
+                  { id: tekstId },
+                  // Fjerner bokmål-tagen, skapte problemer og trenger ikke være med til pdf-gen
+                  { ...formatValues, ...innebygdeFormatterere, bokmål: msg => msg }
+              )
+            : '';
 
-        map[locale] = reactElementToJSXString(message as ReactElement);
+        map[locale] = message && reactElementToJSXString(message as ReactElement);
     }
 
     // Typescript er ikke smart nok til å se at alle locales er satt

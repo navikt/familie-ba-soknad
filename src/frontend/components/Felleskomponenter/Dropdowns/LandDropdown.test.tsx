@@ -17,7 +17,7 @@ describe('LandDropdown', () => {
     });
 
     it('Rendrer alle land i alle dropdowns når eøs er skrudd av', async () => {
-        mockEøs(true);
+        mockEøs();
         const felt = mockDeep<Felt<'' | Alpha3Code>>({
             erSynlig: true,
             id: 'test-id',
@@ -39,7 +39,7 @@ describe('LandDropdown', () => {
 
         render(
             <TestProvidereMedEkteTekster>
-                <LandDropdown felt={felt} skjema={skjema} kunEøs />
+                <LandDropdown felt={felt} skjema={skjema} />
             </TestProvidereMedEkteTekster>
         );
 
