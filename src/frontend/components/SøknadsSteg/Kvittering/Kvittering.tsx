@@ -8,7 +8,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
 import { useSteg } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
@@ -23,7 +22,6 @@ import { KontonummerInfo } from './KontonummerInfo';
 const Kvittering: React.FC = () => {
     const { avbrytOgSlettSøknad, sisteUtfylteStegIndex, settFåttGyldigKvittering, søknad } =
         useApp();
-    const { eøsSkruddAv } = useEøs();
     const { barnInkludertISøknaden, erEøs } = søknad;
     const { hentStegNummer } = useSteg();
 
@@ -83,7 +81,7 @@ const Kvittering: React.FC = () => {
                 </Normaltekst>
             </KomponentGruppe>
 
-            {!eøsSkruddAv && varEøsSøknad && (
+            {varEøsSøknad && (
                 <KomponentGruppe>
                     <KontonummerInfo />
                 </KomponentGruppe>
