@@ -65,6 +65,7 @@ const jens = {
     [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: { id: '281', svar: null },
     [barnDataKeySpørsmål.andreForelderErDød]: { id: '28', svar: ESvar.NEI },
     [barnDataKeySpørsmål.borMedAndreForelder]: { id: '29', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.borMedOmsorgsperson]: { id: '291', svar: ESvar.NEI },
     andreForelder: {
         idNummer: [],
         [andreForelderDataKeySpørsmål.navn]: {
@@ -175,6 +176,7 @@ const line = {
         svar: AlternativtSvarForInput.ANNEN_FORELDER,
     },
     [barnDataKeySpørsmål.borMedAndreForelder]: { id: '29', svar: ESvar.NEI },
+    [barnDataKeySpørsmål.borMedOmsorgsperson]: { id: '291', svar: ESvar.NEI },
     andreForelder: {
         idNummer: [],
         [andreForelderDataKeySpørsmål.navn]: {
