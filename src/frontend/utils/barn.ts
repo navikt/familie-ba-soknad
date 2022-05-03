@@ -181,30 +181,27 @@ export const genererOppdaterteBarn = (
             ''
         );
 
-        const borMedAnnenPersonErIkkeRelevant = () =>
+        const borMedAnnenForelderErIkkeRelevant = () =>
             erFosterbarn === ESvar.JA ||
             oppholderSegIInstitusjon === ESvar.JA ||
             andreForelderErDød === ESvar.JA;
 
-        const borMedAndreForelder = borMedAnnenPersonErIkkeRelevant()
+        const borMedAndreForelder = borMedAnnenForelderErIkkeRelevant()
             ? null
             : barn.borMedAndreForelder.svar;
 
-        const borMedOmsorgsperson = borMedAnnenPersonErIkkeRelevant()
-            ? null
-            : barn.borMedOmsorgsperson.svar;
-
-        const skalViseOmsorgsperson = skalViseOmsorgspersonHof(
+        const borMedOmsorgsperson: ESvar | null = skalViseBorMedOmsorgsperson(
             borMedAndreForelder,
-            borMedOmsorgsperson,
             barn.borFastMedSøker.svar,
             oppholderSegIInstitusjon,
             andreForelderErDød,
             erFosterbarn
-        );
+        )
+            ? barn[barnDataKeySpørsmål.borMedOmsorgsperson].svar
+            : null;
 
         const omsorgsperson: IOmsorgsperson | null =
-            barn.omsorgsperson && skalViseOmsorgsperson()
+            barn.omsorgsperson && borMedOmsorgsperson === ESvar.JA
                 ? {
                       ...barn.omsorgsperson,
                       ...(erFosterbarn === ESvar.JA && {
@@ -642,24 +639,17 @@ export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
     }),
 });
 
-export const skalViseOmsorgspersonHof =
-    (
-        borMedAndreForelder: ESvar | null,
-        borMedOmsorgsperson: ESvar | null,
-        borFastMedSøker: ESvar | null,
-        oppholderSegIInstitusjon: ESvar | null,
-        andreForelderErDød: ESvar | null,
-        erFosterbarn: ESvar | null
-    ) =>
-    () => {
-        const andreSituasjonerSomUtløserOmsorgsperson =
-            borFastMedSøker === ESvar.NEI &&
-            oppholderSegIInstitusjon === ESvar.NEI &&
-            (andreForelderErDød === ESvar.JA || erFosterbarn === ESvar.JA);
+export const skalViseBorMedOmsorgsperson = (
+    borMedAndreForelder: ESvar | null,
+    borFastMedSøker: ESvar | null,
+    oppholderSegIInstitusjon: ESvar | null,
+    andreForelderErDød: ESvar | null,
+    erFosterbarn: ESvar | null
+) => {
+    const andreSituasjonerSomUtløserOmsorgsperson =
+        borFastMedSøker === ESvar.NEI &&
+        oppholderSegIInstitusjon === ESvar.NEI &&
+        (andreForelderErDød === ESvar.JA || erFosterbarn === ESvar.JA);
 
-        return (
-            borMedOmsorgsperson === ESvar.JA ||
-            (borMedAndreForelder === ESvar.NEI && borFastMedSøker === ESvar.NEI) ||
-            andreSituasjonerSomUtløserOmsorgsperson
-        );
-    };
+    return borMedAndreForelder === ESvar.NEI || andreSituasjonerSomUtløserOmsorgsperson;
+};
