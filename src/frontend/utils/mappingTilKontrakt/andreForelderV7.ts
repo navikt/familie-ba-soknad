@@ -1,5 +1,3 @@
-import { IntlShape } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
@@ -18,7 +16,6 @@ import {
     IBarnMedISøknad,
 } from '../../typer/barn';
 import { IAndreForelderIKontraktFormatV7 } from '../../typer/kontrakt/v7';
-import { barnetsNavnValue } from '../barn';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import {
@@ -31,7 +28,6 @@ import { idNummerTilISøknadsfelt } from './idNummer';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 
 export const andreForelderTilISøknadsfeltV7 = (
-    intl: IntlShape,
     andreForelder: IAndreForelder,
     barn: IBarnMedISøknad,
     valgtSpråk: LocaleType
@@ -53,7 +49,6 @@ export const andreForelderTilISøknadsfeltV7 = (
     return {
         kanIkkeGiOpplysninger,
         [andreForelderDataKeySpørsmål.navn]: søknadsfeltBarn(
-            intl,
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                 navn.svar,
@@ -62,7 +57,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             barn
         ),
         [andreForelderDataKeySpørsmål.fnr]: søknadsfeltBarn(
-            intl,
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                 fnr.svar,
@@ -71,7 +65,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             barn
         ),
         [andreForelderDataKeySpørsmål.fødselsdato]: søknadsfeltBarn(
-            intl,
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                 fødselsdato.svar,
@@ -80,7 +73,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             barn
         ),
         [andreForelderDataKeySpørsmål.pensjonUtland]: søknadsfeltBarn(
-            intl,
             språktekstIdFraSpørsmålId(
                 forelderErDød
                     ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
@@ -90,7 +82,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             barn
         ),
         [andreForelderDataKeySpørsmål.arbeidUtlandet]: søknadsfeltBarn(
-            intl,
             språktekstIdFraSpørsmålId(
                 forelderErDød
                     ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke
@@ -100,7 +91,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             barn
         ),
         [andreForelderDataKeySpørsmål.pensjonNorge]: søknadsfeltBarn(
-            intl,
             språktekstIdFraSpørsmålId(
                 forelderErDød
                     ? EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke
@@ -110,7 +100,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             barn
         ),
         [andreForelderDataKeySpørsmål.arbeidNorge]: søknadsfeltBarn(
-            intl,
             språktekstIdFraSpørsmålId(
                 forelderErDød
                     ? EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke
@@ -120,7 +109,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             barn
         ),
         [andreForelderDataKeySpørsmål.andreUtbetalinger]: søknadsfeltBarn(
-            intl,
             språktekstIdFraSpørsmålId(
                 forelderErDød
                     ? EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke
@@ -130,7 +118,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             barn
         ),
         [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: søknadsfeltBarn(
-            intl,
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted),
             sammeVerdiAlleSpråk(
                 andreForelder[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
@@ -138,7 +125,6 @@ export const andreForelderTilISøknadsfeltV7 = (
             barn
         ),
         [andreForelderDataKeySpørsmål.adresse]: søknadsfeltBarn(
-            intl,
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderAdresse),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                 adresse.svar,
@@ -148,7 +134,6 @@ export const andreForelderTilISøknadsfeltV7 = (
         ),
         utvidet: {
             [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: søknadsfeltBarn(
-                intl,
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder),
                 sammeVerdiAlleSpråk(
                     andreForelder.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]
@@ -157,7 +142,6 @@ export const andreForelderTilISøknadsfeltV7 = (
                 barn
             ),
             [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: søknadsfeltBarn(
-                intl,
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     andreForelder.utvidet[
@@ -184,7 +168,6 @@ export const andreForelderTilISøknadsfeltV7 = (
                 erAndreForelderDød: forelderErDød,
                 gjelderUtlandet: true,
                 barn,
-                intl,
             })
         ),
         arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -204,7 +187,6 @@ export const andreForelderTilISøknadsfeltV7 = (
                 erAndreForelderDød: forelderErDød,
                 gjelderUtlandet: false,
                 barn,
-                intl,
             })
         ),
         andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
@@ -214,7 +196,6 @@ export const andreForelderTilISøknadsfeltV7 = (
                 gjelderAndreForelder: true,
                 erAndreForelderDød: forelderErDød,
                 barn,
-                intl,
             })
         ),
         idNummer: idNummer.map(idnummerObj =>
@@ -223,7 +204,7 @@ export const andreForelderTilISøknadsfeltV7 = (
                 eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerAndreForelder],
                 eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent],
                 valgtSpråk,
-                barnetsNavnValue(barn, intl)
+                barn.navn
             )
         ),
     };

@@ -1,5 +1,3 @@
-import { IntlShape } from 'react-intl';
-
 import {
     OmBarnetSpørsmålsId,
     omBarnetSpørsmålSpråkId,
@@ -9,7 +7,6 @@ import { AlternativtSvarForInput } from '../../typer/common';
 import { ISøknadKontraktBarn } from '../../typer/kontrakt/barn';
 import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
-import { barnetsNavnValue } from '../barn';
 import { hentTekster } from '../språk';
 import { formaterFnr } from '../visning';
 import { andreForelderTilISøknadsfelt } from './andreForelder';
@@ -22,7 +19,7 @@ import {
 } from './hjelpefunksjoner';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
-export const barnISøknadsFormat = (intl: IntlShape, barn: IBarnMedISøknad): ISøknadKontraktBarn => {
+export const barnISøknadsFormat = (barn: IBarnMedISøknad): ISøknadKontraktBarn => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         id,
@@ -73,28 +70,21 @@ export const barnISøknadsFormat = (intl: IntlShape, barn: IBarnMedISøknad): IS
 
     return {
         navn: søknadsfeltBarn(
-            intl,
             'pdf.barn.navn.label',
             sammeVerdiAlleSpråk(navn ?? `Barn ${formaterFnr(ident)}`),
             barn
         ),
         ident: søknadsfeltBarn(
-            intl,
-
             'pdf.barn.ident.label',
             ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt'),
             barn
         ),
         registrertBostedType: søknadsfeltBarn(
-            intl,
-
             'hvilkebarn.barn.bosted',
             sammeVerdiAlleSpråk(registertBostedVerdi()),
             barn
         ),
         alder: søknadsfeltBarn(
-            intl,
-
             'pdf.barn.alder.label',
             alder
                 ? hentTekster('felles.år', { alder })
@@ -102,19 +92,15 @@ export const barnISøknadsFormat = (intl: IntlShape, barn: IBarnMedISøknad): IS
             barn
         ),
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
-            utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1, barn)
+            utenlandsperiodeTilISøknadsfelt(periode, index + 1, barn)
         ),
-        andreForelder: andreForelder
-            ? andreForelderTilISøknadsfelt(intl, andreForelder, barn)
-            : null,
+        andreForelder: andreForelder ? andreForelderTilISøknadsfelt(andreForelder, barn) : null,
         spørsmål: {
             ...spørmålISøknadsFormat(typetBarnSpørsmål, {
-                navn: barnetsNavnValue(barn, intl),
-                barn: barnetsNavnValue(barn, intl),
+                navn: barn.navn,
+                barn: barn.navn,
             }),
             [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfeltBarn(
-                intl,
-
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     søkerForTidsromSluttdato.svar,
@@ -124,8 +110,6 @@ export const barnISøknadsFormat = (intl: IntlShape, barn: IBarnMedISøknad): IS
             ),
 
             [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
-                intl,
-
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     institusjonOppholdSluttdato.svar,

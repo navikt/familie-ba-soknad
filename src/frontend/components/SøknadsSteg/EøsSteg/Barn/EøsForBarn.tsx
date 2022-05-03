@@ -7,7 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
-import { barnetsNavnValue, skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
+import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -55,12 +55,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
 
     return (
         <Steg
-            tittel={
-                <SpråkTekst
-                    id={'eøs-om-barn.sidetittel'}
-                    values={{ barn: barnetsNavnValue(barn, intl) }}
-                />
-            }
+            tittel={<SpråkTekst id={'eøs-om-barn.sidetittel'} values={{ barn: barn.navn }} />}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
@@ -83,7 +78,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         label={
                             <SpråkTekst
                                 id={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.søkersSlektsforhold]}
-                                values={{ barn: barnetsNavnValue(barn, intl) }}
+                                values={{ barn: barn.navn }}
                             />
                         }
                         gjelderSøker={true}
@@ -98,7 +93,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 ]
                             }
                             språkValues={{
-                                barn: barnetsNavnValue(barn, intl),
+                                barn: barn.navn,
                             }}
                         />
                     )}
@@ -114,7 +109,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         spørsmålTekstId={
                             eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedAndreForelder]
                         }
-                        språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                        språkValues={{ barn: barn.navn }}
                     />
                     <JaNeiSpm
                         skjema={skjema}
@@ -122,7 +117,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         spørsmålTekstId={
                             eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedOmsorgsperson]
                         }
-                        språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                        språkValues={{ barn: barn.navn }}
                     />
                 </KomponentGruppe>
             )}
@@ -130,7 +125,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             {skjema.felter.omsorgspersonNavn.erSynlig && (
                 <SkjemaFieldset
                     tittelId={'eøs-om-barn.annenomsorgsperson.gjenlevende'}
-                    språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                    språkValues={{ barn: barn.navn }}
                 >
                     <SkjemaFeltInput
                         felt={skjema.felter.omsorgspersonNavn}
@@ -153,7 +148,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                             EøsBarnSpørsmålId.omsorgspersonSlektsforhold
                                         ]
                                     }
-                                    values={{ barn: barnetsNavnValue(barn, intl) }}
+                                    values={{ barn: barn.navn }}
                                 />
                             }
                             gjelderSøker={false}
@@ -169,7 +164,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 ]
                             }
                             språkValues={{
-                                barn: barnetsNavnValue(barn, intl),
+                                barn: barn.navn,
                             }}
                         />
                     )}
@@ -216,7 +211,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
                         labelSpråkTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresse]}
-                        språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                        språkValues={{ barn: barn.navn }}
                         disabled={skjema.felter.barnetsAdresseVetIkke.verdi === ESvar.JA}
                     />
 
@@ -256,7 +251,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                             skjema.felter.andreForelderAdresseVetIkke.verdi ===
                                             ESvar.JA
                                         }
-                                        språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                                        språkValues={{ barn: barn.navn }}
                                     />
 
                                     <SkjemaCheckbox

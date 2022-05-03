@@ -1,7 +1,5 @@
 import { ReactNode } from 'react';
 
-import { IntlShape } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
@@ -11,7 +9,6 @@ import { Slektsforhold } from '../../typer/kontrakt/barn';
 import { ISøknadsfelt, SpørsmålMap as KontraktpørsmålMap } from '../../typer/kontrakt/generelle';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { Årsak } from '../../typer/utvidet';
-import { barnetsNavnValue } from '../barn';
 import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId, toÅrsakSpråkId } from '../språk';
 import { språkIndexListe } from '../spørsmål';
 import { isAlpha3Code } from '../typeguards';
@@ -101,7 +98,6 @@ export const språktekstIdFraSpørsmålId = (spørsmålId: SpørsmålId): string
 };
 
 export const søknadsfeltBarn = <T>(
-    intl: IntlShape,
     labelTekstId: string,
     value: Record<LocaleType, T>,
     barn?: IBarnMedISøknad,
@@ -110,7 +106,7 @@ export const søknadsfeltBarn = <T>(
     barn
         ? søknadsfelt(labelTekstId, value, {
               ...labelMessageValues,
-              navn: barnetsNavnValue(barn, intl),
-              barn: barnetsNavnValue(barn, intl),
+              navn: barn.navn,
+              barn: barn.navn,
           })
         : søknadsfelt(labelTekstId, value);

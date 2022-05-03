@@ -1,5 +1,3 @@
-import { IntlShape } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import {
@@ -10,17 +8,14 @@ import { IBarnMedISøknad } from '../../typer/barn';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IEøsBarnetrygdsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { IEøsBarnetrygdsperiode } from '../../typer/perioder';
-import { barnetsNavnValue } from '../barn';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
 export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
-    intl,
     periode,
     periodeNummer,
     barn,
 }: {
-    intl: IntlShape;
     periode: IEøsBarnetrygdsperiode;
     periodeNummer: number;
     barn: IBarnMedISøknad;
@@ -35,7 +30,7 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
     const periodenErAvsluttet = mottarEøsBarnetrygdNå.svar === ESvar.NEI;
     const hentSpørsmålTekstId = (spørsmålId: string) =>
         hentTekster(barnetrygdperiodeSpørsmålSpråkId(periodenErAvsluttet)[spørsmålId], {
-            ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }),
+            ...(barn && { barn: barn.navn }),
         });
 
     return {

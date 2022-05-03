@@ -532,10 +532,10 @@ export const hentUid = () => {
     });
 };
 
-export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
+export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
     return barn.map(barnRespons => ({
         id: hentUid(),
-        navn: barnRespons.navn,
+        navn: barnetsNavnValue(barnRespons, intl),
         ident: barnRespons.ident,
         alder: barnRespons.fødselsdato && hentAlder(barnRespons.fødselsdato),
         borMedSøker: barnRespons.borMedSøker,
@@ -543,9 +543,9 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
     }));
 };
 
-export const barnetsNavnValue = (barn: IBarn, intl: IntlShape): string => {
+export const barnetsNavnValue = (barn: IBarnRespons, intl: IntlShape): string => {
     return barn.navn
-        ? barn.navn.toUpperCase()
+        ? barn.navn
         : intl.formatMessage(
               { id: 'felles.anonym.barn.fnr' },
               { fødselsnummer: formaterFnr(barn.ident) }

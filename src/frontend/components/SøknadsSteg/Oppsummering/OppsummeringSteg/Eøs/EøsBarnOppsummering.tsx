@@ -5,7 +5,6 @@ import { useIntl } from 'react-intl';
 import { useSteg } from '../../../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
-import { barnetsNavnValue } from '../../../../../utils/barn';
 import { toSlektsforholdSpråkId } from '../../../../../utils/språk';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import SamletIdNummerForBarn from '../../../EøsSteg/Barn/SamletIdNummerForBarn';
@@ -28,16 +27,14 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
     const eøsForBarnHook = useEøsForBarn(barn.id);
 
     const { formatMessage } = useIntl();
-    const intl = useIntl();
-    const barnetsNavn = barnetsNavnValue(barn, intl);
 
     const tittelSpm = (spørsmålId: string) => (
-        <SpråkTekst id={eøsBarnSpørsmålSpråkId[spørsmålId]} values={{ barn: barnetsNavn }} />
+        <SpråkTekst id={eøsBarnSpørsmålSpråkId[spørsmålId]} values={{ barn: barn.navn }} />
     );
     return (
         <Oppsummeringsbolk
             tittel={'eøs-om-barn.oppsummering.tittel'}
-            språkValues={{ nummer, barn: barnetsNavn }}
+            språkValues={{ nummer, barn: barn.navn }}
             steg={hentStegObjektForBarnEøs(barn)}
             skjemaHook={eøsForBarnHook}
             settFeilAnchors={settFeilAnchors}

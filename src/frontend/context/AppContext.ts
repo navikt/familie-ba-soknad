@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import createUseContext from 'constate';
 import { Alpha3Code } from 'i18n-iso-countries';
+import { useIntl } from 'react-intl';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 import {
@@ -29,6 +30,7 @@ import { hentSluttbrukerFraPdl } from './pdl';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [valgtLocale] = useSprakContext();
+    const intl = useIntl();
     const { axiosRequest, lasterRessurser } = useLastRessurserContext();
     const { innloggetStatus } = useInnloggetContext();
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>());
@@ -86,7 +88,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                             ...søknad.søker,
                             navn: ressurs.data.navn,
                             statsborgerskap: ressurs.data.statsborgerskap,
-                            barn: mapBarnResponsTilBarn(ressurs.data.barn),
+                            barn: mapBarnResponsTilBarn(ressurs.data.barn, intl),
                             ident: ressurs.data.ident,
                             adresse: ressurs.data.adresse,
                             sivilstand: ressurs.data.sivilstand,

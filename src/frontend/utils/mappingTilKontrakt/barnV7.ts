@@ -1,5 +1,3 @@
-import { IntlShape } from 'react-intl';
-
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import {
@@ -16,9 +14,7 @@ import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarnV7 } from '../../typer/kontrakt/v7';
 import { ISøker } from '../../typer/person';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
-import { barnetsNavnValue } from '../barn';
 import { hentTekster } from '../språk';
-import { formaterFnr } from '../visning';
 import { andreForelderTilISøknadsfeltV7 } from './andreForelderV7';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
@@ -33,7 +29,6 @@ import { omsorgspersonTilISøknadsfeltV7 } from './omsorgspersonV7';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const barnISøknadsFormatV7 = (
-    intl: IntlShape,
     barn: IBarnMedISøknad,
     søker: ISøker,
     valgtSpråk: LocaleType
@@ -89,29 +84,18 @@ export const barnISøknadsFormatV7 = (
 
     return {
         harEøsSteg: triggetEøs || søker.triggetEøs,
-        navn: søknadsfeltBarn(
-            intl,
-            'pdf.barn.navn.label',
-            sammeVerdiAlleSpråk(navn ?? `Barn ${formaterFnr(ident)}`),
-            barn
-        ),
+        navn: søknadsfeltBarn('pdf.barn.navn.label', sammeVerdiAlleSpråk(navn), barn),
         ident: søknadsfeltBarn(
-            intl,
-
             'pdf.barn.ident.label',
             ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt'),
             barn
         ),
         registrertBostedType: søknadsfeltBarn(
-            intl,
-
             'hvilkebarn.barn.bosted',
             sammeVerdiAlleSpråk(registertBostedVerdi()),
             barn
         ),
         alder: søknadsfeltBarn(
-            intl,
-
             'pdf.barn.alder.label',
             alder
                 ? hentTekster('felles.år', { alder })
@@ -119,11 +103,10 @@ export const barnISøknadsFormatV7 = (
             barn
         ),
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
-            utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1, barn)
+            utenlandsperiodeTilISøknadsfelt(periode, index + 1, barn)
         ),
         eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder.map((periode, index) =>
             tilIEøsBarnetrygsperiodeIKontraktFormat({
-                intl,
                 periode,
                 periodeNummer: index + 1,
                 barn,
@@ -135,23 +118,20 @@ export const barnISøknadsFormatV7 = (
                 eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer],
                 eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent],
                 valgtSpråk,
-                barnetsNavnValue(barn, intl)
+                barn.navn
             )
         ),
         andreForelder: andreForelder
-            ? andreForelderTilISøknadsfeltV7(intl, andreForelder, barn, valgtSpråk)
+            ? andreForelderTilISøknadsfeltV7(andreForelder, barn, valgtSpråk)
             : null,
 
-        omsorgsperson: omsorgsperson
-            ? omsorgspersonTilISøknadsfeltV7(intl, omsorgsperson, barn)
-            : null,
+        omsorgsperson: omsorgsperson ? omsorgspersonTilISøknadsfeltV7(omsorgsperson, barn) : null,
         spørsmål: {
             ...spørmålISøknadsFormat(typetBarnSpørsmål, {
-                navn: barnetsNavnValue(barn, intl),
-                barn: barnetsNavnValue(barn, intl),
+                navn: barn.navn,
+                barn: barn.navn,
             }),
             [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfeltBarn(
-                intl,
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     søkerForTidsromSluttdato.svar,
@@ -160,7 +140,6 @@ export const barnISøknadsFormatV7 = (
                 barn
             ),
             [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
-                intl,
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     institusjonOppholdSluttdato.svar,
@@ -169,7 +148,6 @@ export const barnISøknadsFormatV7 = (
                 barn
             ),
             [barnDataKeySpørsmål.adresse]: søknadsfeltBarn(
-                intl,
                 språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.barnetsAdresse),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     adresse.svar,

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -15,7 +13,6 @@ import {
     IEøsForSøkerFeltTyper,
     IOmBarnetUtvidetFeltTyper,
 } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -56,12 +53,10 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
     registrerteArbeidsperioder,
 }) => {
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
-    const intl = useIntl();
-
     const gjelderAndreForelder = !!andreForelderData;
     const andreForelderErDød = !!andreForelderData?.erDød;
     const barn = andreForelderData?.barn;
-    const barnetsNavn = !!barn && barnetsNavnValue(barn, intl);
+    const barnetsNavn = !!barn && barn.navn;
 
     return (
         <>

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
@@ -11,7 +9,6 @@ import { andreForelderDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
@@ -48,8 +45,6 @@ const AndreForelder: React.FC<{
     fjernPensjonsperiode,
 }) => {
     const { erEøsLand } = useEøs();
-    const intl = useIntl();
-    const barnetsNavn = barnetsNavnValue(barn, intl);
     const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
         annetBarn => annetBarn.id === skjema.felter.sammeForelderSomAnnetBarn.verdi
     );
@@ -62,7 +57,7 @@ const AndreForelder: React.FC<{
                     <SammeSomAnnetBarnRadio
                         andreBarnSomErFyltUt={andreBarnSomErFyltUt}
                         skjema={skjema}
-                        barnetsNavn={barnetsNavn}
+                        barnetsNavn={barn.navn}
                     />
                 )}
                 {!skjema.felter.sammeForelderSomAnnetBarn.erSynlig ||
@@ -205,7 +200,7 @@ const AndreForelder: React.FC<{
                                                 ]
                                             }
                                             inkluderVetIkke={true}
-                                            språkValues={{ navn: barnetsNavn }}
+                                            språkValues={{ navn: barn.navn }}
                                         />
                                         <LandDropdown
                                             felt={
@@ -237,7 +232,7 @@ const AndreForelder: React.FC<{
                                                         ? 'enkeenkemann.arbeid-utland.eøs-info'
                                                         : 'ombarnet.andre-forelder.arbeid-utland.eøs-info'
                                                 }
-                                                språkValues={{ navn: barnetsNavn }}
+                                                språkValues={{ navn: barn.navn }}
                                                 dynamisk
                                             />
                                         )}
@@ -253,7 +248,7 @@ const AndreForelder: React.FC<{
                                                 ]
                                             }
                                             inkluderVetIkke={true}
-                                            språkValues={{ navn: barnetsNavn }}
+                                            språkValues={{ navn: barn.navn }}
                                         />
                                         <LandDropdown
                                             felt={skjema.felter.andreForelderPensjonHvilketLand}
@@ -270,7 +265,7 @@ const AndreForelder: React.FC<{
                                                             ].id
                                                         ]
                                                     }
-                                                    values={{ barn: barnetsNavn }}
+                                                    values={{ barn: barn.navn }}
                                                 />
                                             }
                                         />
@@ -283,7 +278,7 @@ const AndreForelder: React.FC<{
                                                         ? 'enkeenkemann.utenlandspensjon.eøs-info'
                                                         : 'ombarnet.andre-forelder.utenlandspensjon.eøs-info'
                                                 }
-                                                språkValues={{ navn: barnetsNavn }}
+                                                språkValues={{ navn: barn.navn }}
                                                 dynamisk
                                             />
                                         )}

@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
-import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -22,11 +21,7 @@ import { Slektsforhold } from '../../../../typer/kontrakt/barn';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { valideringAdresse } from '../../../../utils/adresse';
-import {
-    barnetsNavnValue,
-    skalSkjuleAndreForelderFelt,
-    skalViseOmsorgspersonHof,
-} from '../../../../utils/barn';
+import { skalSkjuleAndreForelderFelt, skalViseOmsorgspersonHof } from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { formaterVerdiForCheckbox } from '../../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../../utils/spørsmål';
@@ -57,7 +52,6 @@ export const useEøsForBarn = (
     settIdNummerFelterForAndreForelder: Dispatch<SetStateAction<Felt<string>[]>>;
 } => {
     const { søknad, settSøknad } = useApp();
-    const intl = useIntl();
 
     const [gjeldendeBarn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
@@ -88,7 +82,7 @@ export const useEøsForBarn = (
     const søkersSlektsforholdSpesifisering = useInputFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering],
         feilmeldingSpråkId: 'eøs-om-barn.dinrelasjon.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         skalVises: søkersSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
@@ -99,7 +93,7 @@ export const useEøsForBarn = (
                       <SpråkTekst
                           id={'felles.relasjon.format.feilmelding'}
                           values={{
-                              barn: barnetsNavnValue(gjeldendeBarn, intl),
+                              barn: gjeldendeBarn.navn,
                           }}
                       />
                   );
@@ -111,7 +105,7 @@ export const useEøsForBarn = (
     const borMedAndreForelder = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borMedAndreForelder],
         feilmeldingSpråkId: 'eøs-om-barn.borbarnmedandreforelder.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         nullstillVedAvhengighetEndring: true,
         skalSkjules:
             gjeldendeBarn.erFosterbarn.svar === ESvar.JA ||
@@ -122,7 +116,7 @@ export const useEøsForBarn = (
     const borMedOmsorgsperson = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borMedOmsorgsperson],
         feilmeldingSpråkId: 'eøs-om-barn.bormedannenomsorgsperson.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         nullstillVedAvhengighetEndring: true,
         skalSkjules: !(
             gjeldendeBarn.borFastMedSøker.svar === ESvar.JA &&
@@ -152,7 +146,7 @@ export const useEøsForBarn = (
                       <SpråkTekst
                           id={'felles.relasjon.format.feilmelding'}
                           values={{
-                              barn: barnetsNavnValue(gjeldendeBarn, intl),
+                              barn: gjeldendeBarn.navn,
                           }}
                       />
                   );
@@ -178,7 +172,7 @@ export const useEøsForBarn = (
         søknadsfelt: omsorgsperson && omsorgsperson.slektsforholdSpesifisering,
         feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonrelasjon.feilmelding',
         feilmeldingSpråkVerdier: {
-            barn: barnetsNavnValue(gjeldendeBarn, intl),
+            barn: gjeldendeBarn.navn,
         },
         skalVises: omsorgspersonSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
         customValidering: (felt: FeltState<string>) => {
@@ -190,7 +184,7 @@ export const useEøsForBarn = (
                       <SpråkTekst
                           id={'felles.relasjon.format.feilmelding'}
                           values={{
-                              barn: barnetsNavnValue(gjeldendeBarn, intl),
+                              barn: gjeldendeBarn.navn,
                           }}
                       />
                   );
@@ -218,7 +212,7 @@ export const useEøsForBarn = (
                       <SpråkTekst
                           id={'felles.idnummer-feilformat.feilmelding'}
                           values={{
-                              barn: barnetsNavnValue(gjeldendeBarn, intl),
+                              barn: gjeldendeBarn.navn,
                           }}
                       />
                   );
@@ -250,7 +244,7 @@ export const useEøsForBarn = (
         avhengighet: barnetsAdresseVetIkke,
         feilmeldingSpråkId: 'eøs.hvorborbarn.feilmelding',
         språkVerdier: {
-            barn: barnetsNavnValue(gjeldendeBarn, intl),
+            barn: gjeldendeBarn.navn,
         },
         skalVises:
             (borMedAndreForelder.verdi === ESvar.JA &&
@@ -272,7 +266,7 @@ export const useEøsForBarn = (
         søknadsfelt: andreForelder && andreForelder[andreForelderDataKeySpørsmål.adresse],
         avhengighet: andreForelderAdresseVetIkke,
         feilmeldingSpråkId: 'eøs-om-barn.andreforelderoppholdssted.feilmelding',
-        språkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        språkVerdier: { barn: gjeldendeBarn.navn },
         skalVises:
             gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar !== ESvar.JA &&
             !skalSkjuleAndreForelderFelt(gjeldendeBarn),
@@ -285,7 +279,7 @@ export const useEøsForBarn = (
             gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.annenforelderarbeidnorge.feilmelding'
                 : 'eøs-om-barn.annenforelderarbeidsperiodenorge.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         skalSkjules: skalSkjuleAndreForelderFelt(gjeldendeBarn),
     });
 
@@ -311,7 +305,7 @@ export const useEøsForBarn = (
             gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.andreforelderpensjon.feilmelding'
                 : 'eøs-om-barn.andreforelderpensjon.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         skalSkjules: skalSkjuleAndreForelderFelt(gjeldendeBarn),
     });
 
@@ -337,7 +331,7 @@ export const useEøsForBarn = (
             gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'enkeenkemann.annenforelderytelser.feilmelding'
                 : 'eøs-om-barn.andreforelderutbetalinger.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         skalSkjules: skalSkjuleAndreForelderFelt(gjeldendeBarn),
     });
 

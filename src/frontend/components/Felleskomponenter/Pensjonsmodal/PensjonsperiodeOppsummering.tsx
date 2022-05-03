@@ -1,13 +1,10 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
@@ -30,7 +27,6 @@ export const PensjonsperiodeOppsummering: React.FC<{
     gjelderUtlandet = false,
 }) => {
     const [valgtLocale] = useSprakContext();
-    const intl = useIntl();
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = pensjonsperiode;
 
     const gjelderAndreForelder = !!andreForelderData;
@@ -46,7 +42,7 @@ export const PensjonsperiodeOppsummering: React.FC<{
                 ]
             }
             values={{
-                ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                ...(barn && { barn: barn.navn }),
             }}
         />
     );

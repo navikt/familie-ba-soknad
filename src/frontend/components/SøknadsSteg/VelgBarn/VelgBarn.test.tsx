@@ -51,6 +51,7 @@ const fraPdl: Partial<IBarnRespons> = {
 
 const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
     ...fraPdl,
+    navn: fraPdl.navn ?? 'ukjent',
     id: 'random-id-2',
     barnetrygdFraEøslandHvilketLand: {
         id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,

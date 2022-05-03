@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -15,7 +13,6 @@ import {
     IEøsForSøkerFeltTyper,
     IOmBarnetUtvidetFeltTyper,
 } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -55,13 +52,11 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
     mottarEllerMottattPensjonFelt,
     registrertePensjonsperioder,
 }) => {
-    const intl = useIntl();
     const { erÅpen: pensjonsmodalErÅpen, toggleModal: togglePensjonsmodal } = useModal();
 
     const gjelderAndreForelder = !!andreForelderData;
     const barn = andreForelderData?.barn;
     const andreForelderErDød = !!andreForelderData?.erDød;
-    const barnetsNavn = barn && barnetsNavnValue(barn, intl);
 
     return (
         <>
@@ -76,8 +71,8 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                 inkluderVetIkke={gjelderAndreForelder}
                 språkValues={{
                     ...(barn && {
-                        navn: barnetsNavn,
-                        barn: barnetsNavn,
+                        navn: barn.navn,
+                        barn: barn.navn,
                     }),
                 }}
             />
@@ -101,7 +96,7 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                                     gjelderAndreForelder
                                 )}
                                 values={{
-                                    ...(barn && { barn: barnetsNavn }),
+                                    ...(barn && { barn: barn.navn }),
                                 }}
                             />
                         </Element>

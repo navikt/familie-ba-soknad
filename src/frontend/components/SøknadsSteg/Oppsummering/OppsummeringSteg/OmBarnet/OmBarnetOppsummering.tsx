@@ -13,7 +13,6 @@ import {
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
-import { barnetsNavnValue } from '../../../../../utils/barn';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
@@ -45,7 +44,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
     return (
         <Oppsummeringsbolk
             tittel={'oppsummering.deltittel.ombarnet'}
-            språkValues={{ nummer, navn: barnetsNavnValue(barn, intl) }}
+            språkValues={{ nummer, navn: barn.navn }}
             key={index}
             steg={hentStegObjektForBarn(barn)}
             skjemaHook={omBarnetHook}
@@ -53,22 +52,14 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
         >
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={'ombarnet.fosterbarn'}
-                            values={{ navn: barnetsNavnValue(barn, intl) }}
-                        />
-                    }
+                    tittel={<SpråkTekst id={'ombarnet.fosterbarn'} values={{ navn: barn.navn }} />}
                 />
             )}
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={
-                            <SpråkTekst
-                                id={'ombarnet.institusjon'}
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
-                            />
+                            <SpråkTekst id={'ombarnet.institusjon'} values={{ navn: barn.navn }} />
                         }
                     />
 
@@ -169,7 +160,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         tittel={
                             <SpråkTekst
                                 id={'ombarnet.opplystatbarnutlandopphold.info'}
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
+                                values={{ navn: barn.navn }}
                             />
                         }
                     />
@@ -190,7 +181,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                             OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
                                         ]
                                     }
-                                    values={{ barn: barnetsNavnValue(barn, intl) }}
+                                    values={{ barn: barn.navn }}
                                 />
                             }
                             søknadsvar={barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar}
@@ -205,7 +196,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         tittel={
                             <SpråkTekst
                                 id={'ombarnet.barnetrygd-eøs'}
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
+                                values={{ navn: barn.navn }}
                             />
                         }
                     />
@@ -269,7 +260,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                     key={`barnetrygdperiode-${index}`}
                                     nummer={index + 1}
                                     barnetrygdsperiode={periode}
-                                    barnetsNavn={barnetsNavnValue(barn, intl)}
+                                    barnetsNavn={barn.navn}
                                 />
                             ))}
                         </>
@@ -303,7 +294,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     tittel={
                         <SpråkTekst
                             id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.borFastMedSøker]}
-                            values={{ navn: barnetsNavnValue(barn, intl) }}
+                            values={{ navn: barn.navn }}
                         />
                     }
                     søknadsvar={barn[barnDataKeySpørsmål.borFastMedSøker].svar}
@@ -318,7 +309,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                         OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
                                     ]
                                 }
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
+                                values={{ navn: barn.navn }}
                             />
                         }
                         søknadsvar={
@@ -334,7 +325,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     tittel={
                         <SpråkTekst
                             id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerForTidsrom]}
-                            values={{ navn: barnetsNavnValue(barn, intl) }}
+                            values={{ navn: barn.navn }}
                         />
                     }
                     søknadsvar={barn[barnDataKeySpørsmål.søkerForTidsrom].svar}

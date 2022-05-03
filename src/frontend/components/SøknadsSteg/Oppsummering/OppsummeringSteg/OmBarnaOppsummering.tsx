@@ -1,14 +1,11 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
 import { useRoutes } from '../../../../context/RoutesContext';
 import { barnDataKeySpørsmål } from '../../../../typer/barn';
 import { RouteEnum } from '../../../../typer/routes';
-import { barnetsNavnValue } from '../../../../utils/barn';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from '../../OmBarnaDine/spørsmål';
 import { useOmBarnaDine } from '../../OmBarnaDine/useOmBarnaDine';
@@ -21,7 +18,6 @@ interface Props {
 }
 
 const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
-    const intl = useIntl();
     const { søknad } = useApp();
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const omBarnaDineHook = useOmBarnaDine();
@@ -29,7 +25,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden
             .filter(barn => barn[søknadDatafelt].svar === ESvar.JA)
-            .map(filtrertBarn => barnetsNavnValue(filtrertBarn, intl))
+            .map(filtrertBarn => filtrertBarn.navn)
             .join(', ');
 
     return (

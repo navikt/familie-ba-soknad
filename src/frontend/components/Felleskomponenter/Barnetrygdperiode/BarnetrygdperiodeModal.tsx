@@ -1,13 +1,11 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import AlertStripe from '../AlertStripe/AlertStripe';
@@ -48,8 +46,6 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
         tilDatoBarnetrygdperiode,
         månedligBeløp,
     } = skjema.felter;
-
-    const intl = useIntl();
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -156,7 +152,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         }
                         språkValues={{
                             ...(barn && {
-                                barn: barnetsNavnValue(barn, intl),
+                                barn: barn.navn,
                             }),
                         }}
                         tilleggsinfo={

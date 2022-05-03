@@ -11,7 +11,6 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
@@ -71,7 +70,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                                     årsakTilEøsInfoSpråkIds[periode.utenlandsoppholdÅrsak.svar]
                                 }
                                 språkValues={{
-                                    barn: barn ? barnetsNavnValue(barn, intl) : undefined,
+                                    barn: barn ? barn.navn : undefined,
                                 }}
                             />
                         </EøsNotisWrapper>
@@ -82,14 +81,14 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={årsakLabelSpråkId(barn)}
-                            values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                            values={{ barn: barn ? barn.navn : undefined }}
                         />
                     }
                 >
                     <Normaltekst>
                         <SpråkTekst
                             id={årsakSpråkId(årsak, barn)}
-                            values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                            values={{ barn: barn ? barn.navn : undefined }}
                         />
                     </Normaltekst>
                 </OppsummeringFelt>
@@ -98,7 +97,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={landLabelSpråkId(årsak, barn)}
-                            values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                            values={{ barn: barn ? barn.navn : undefined }}
                         />
                     }
                     søknadsvar={landkodeTilSpråk(oppholdsland.svar, valgtLocale)}
@@ -109,7 +108,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                         tittel={
                             <SpråkTekst
                                 id={fraDatoLabelSpråkId(årsak, barn)}
-                                values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                                values={{ barn: barn ? barn.navn : undefined }}
                             />
                         }
                         søknadsvar={formaterDato(oppholdslandFraDato.svar)}
@@ -121,7 +120,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                         tittel={
                             <SpråkTekst
                                 id={tilDatoLabelSpråkId(årsak, barn)}
-                                values={{ barn: barn ? barnetsNavnValue(barn, intl) : undefined }}
+                                values={{ barn: barn ? barn.navn : undefined }}
                             />
                         }
                         søknadsvar={formaterDatoMedUkjent(

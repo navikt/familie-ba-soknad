@@ -7,7 +7,7 @@ export const testdata1: TilKontraktTestData = {
         barnInkludertISøknaden: [
             {
                 id: '136f8dd4-e4f0-42b6-aa77-403de54a1650',
-                navn: null,
+                navn: 'Barn 234567 89876',
                 ident: '23456789876',
                 alder: '13',
                 borMedSøker: false,
@@ -236,7 +236,7 @@ export const testdata1: TilKontraktTestData = {
             barn: [
                 {
                     id: '136f8dd4-e4f0-42b6-aa77-403de54a1650',
-                    navn: null,
+                    navn: 'Barn 234567 89876',
                     ident: '23456789876',
                     alder: '13',
                     borMedSøker: false,
@@ -625,9 +625,9 @@ export const testdata1: TilKontraktTestData = {
                     },
                     pensjonUtland: {
                         label: {
-                            en: "Does BARN 234567 89876's other parent receive, or have they received a pension from abroad?",
-                            nb: 'Får eller har den andre forelderen til BARN 234567 89876 fått pensjon fra utlandet?',
-                            nn: 'Får eller har den andre forelderen til BARN 234567 89876 fått pensjon frå utlandet?',
+                            en: "Does Barn 234567 89876's other parent receive, or have they received a pension from abroad?",
+                            nb: 'Får eller har den andre forelderen til Barn 234567 89876 fått pensjon fra utlandet?',
+                            nn: 'Får eller har den andre forelderen til Barn 234567 89876 fått pensjon frå utlandet?',
                         },
                         verdi: {
                             nb: null,
@@ -637,9 +637,9 @@ export const testdata1: TilKontraktTestData = {
                     },
                     pensjonHvilketLand: {
                         label: {
-                            en: "What country does BARN 234567 89876's other parent receive a pension from?",
-                            nb: 'Hvilket land får den andre forelderen til BARN 234567 89876 pensjon fra?',
-                            nn: 'Kva land får den andre forelderen til BARN 234567 89876 pensjon frå?',
+                            en: "What country does Barn 234567 89876's other parent receive a pension from?",
+                            nb: 'Hvilket land får den andre forelderen til Barn 234567 89876 pensjon fra?',
+                            nn: 'Kva land får den andre forelderen til Barn 234567 89876 pensjon frå?',
                         },
                         verdi: {
                             nb: 'UKJENT',
@@ -649,9 +649,9 @@ export const testdata1: TilKontraktTestData = {
                     },
                     arbeidUtlandet: {
                         label: {
-                            en: "Does BARN 234567 89876's other parent work, or have they worked outside of Norway, on a foreign ship or on a foreign continental shelf?",
-                            nb: 'Arbeider eller har den andre forelderen til BARN 234567 89876 arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                            nn: 'Arbeidar eller har den andre forelderen til BARN 234567 89876 arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                            en: "Does Barn 234567 89876's other parent work, or have they worked outside of Norway, on a foreign ship or on a foreign continental shelf?",
+                            nb: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
+                            nn: 'Arbeidar eller har den andre forelderen til Barn 234567 89876 arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                         },
                         verdi: {
                             nb: null,
@@ -673,9 +673,9 @@ export const testdata1: TilKontraktTestData = {
                     },
                     skriftligAvtaleOmDeltBosted: {
                         label: {
-                            en: 'Do you and the other parent have a written agreement on dual residence for BARN 234567 89876?',
-                            nb: 'Har du og den andre forelderen skriftlig avtale om delt bosted for BARN 234567 89876?',
-                            nn: 'Har du og den andre forelderen skriftleg avtale om delt bustad for BARN 234567 89876?',
+                            en: 'Do you and the other parent have a written agreement on dual residence for Barn 234567 89876?',
+                            nb: 'Har du og den andre forelderen skriftlig avtale om delt bosted for Barn 234567 89876?',
+                            nn: 'Har du og den andre forelderen skriftleg avtale om delt bustad for Barn 234567 89876?',
                         },
                         verdi: {
                             nb: 'NEI',
@@ -686,9 +686,9 @@ export const testdata1: TilKontraktTestData = {
                     utvidet: {
                         søkerHarBoddMedAndreForelder: {
                             label: {
-                                en: "Have you ever lived with BARN 234567 89876's other parent?",
-                                nb: 'Har du bodd sammen med BARN 234567 89876 sin andre forelder?',
-                                nn: 'Har du budd saman med BARN 234567 89876 sin andre forelder?',
+                                en: "Have you ever lived with Barn 234567 89876's other parent?",
+                                nb: 'Har du bodd sammen med Barn 234567 89876 sin andre forelder?',
+                                nn: 'Har du budd saman med Barn 234567 89876 sin andre forelder?',
                             },
                             verdi: {
                                 nb: null,
@@ -809,9 +809,9 @@ export const testdata1: TilKontraktTestData = {
                     },
                     borFastMedSøker: {
                         label: {
-                            en: 'Does BARN 234567 89876 live with you on a permanent basis?',
-                            nb: 'Bor BARN 234567 89876 fast sammen med deg?',
-                            nn: 'Bur BARN 234567 89876 fast saman med deg?',
+                            en: 'Does Barn 234567 89876 live with you on a permanent basis?',
+                            nb: 'Bor Barn 234567 89876 fast sammen med deg?',
+                            nn: 'Bur Barn 234567 89876 fast saman med deg?',
                         },
                         verdi: {
                             nb: 'NEI',
@@ -821,9 +821,9 @@ export const testdata1: TilKontraktTestData = {
                     },
                     søkerForTidsrom: {
                         label: {
-                            en: 'Are you applying for child benefit for a particular period of time for BARN 234567 89876?',
-                            nb: 'Søker du barnetrygd for et spesielt tidsrom for BARN 234567 89876?',
-                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for BARN 234567 89876?',
+                            en: 'Are you applying for child benefit for a particular period of time for Barn 234567 89876?',
+                            nb: 'Søker du barnetrygd for et spesielt tidsrom for Barn 234567 89876?',
+                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for Barn 234567 89876?',
                         },
                         verdi: {
                             nb: 'NEI',

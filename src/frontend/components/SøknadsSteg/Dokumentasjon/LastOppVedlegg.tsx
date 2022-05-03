@@ -10,7 +10,6 @@ import { useApp } from '../../../context/AppContext';
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
-import { barnetsNavnValue } from '../../../utils/barn';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Filopplaster from './filopplaster/Filopplaster';
@@ -44,7 +43,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
         );
 
         return barnDokGjelderFor.map((barn, index) => {
-            const visningsNavn = barnetsNavnValue(barn, intl);
+            const visningsNavn = barn.navn;
             if (index === 0) {
                 return visningsNavn;
             } else {

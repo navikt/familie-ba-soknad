@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -10,7 +8,6 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -41,13 +38,12 @@ export const Utbetalingsperiode: React.FC<UtbetalingsperiodeProps> = ({
     mottarEllerMottattUtbetalingFelt,
     registrerteUtbetalingsperioder,
 }) => {
-    const intl = useIntl();
     const { erÅpen: utbetalingermodalErÅpen, toggleModal: toggleUtbetalingsmodal } = useModal();
 
     const gjelderAndreForelder = !!andreForelderData;
     const barn = andreForelderData?.barn;
     const andreForelderErDød = !!andreForelderData?.erDød;
-    const barnetsNavn = barn && barnetsNavnValue(barn, intl);
+    const barnetsNavn = barn && barn.navn;
 
     return (
         <>

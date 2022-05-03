@@ -1,5 +1,3 @@
-import { IntlShape } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
@@ -51,7 +49,6 @@ const antallEøsSteg = (søker: ISøker, barnInkludertISøknaden: IBarnMedISøkn
 };
 
 export const dataISøknadKontraktFormatV7 = (
-    intl: IntlShape,
     valgtSpråk: LocaleType,
     søknad: ISøknad
 ): ISøknadKontraktV7 => {
@@ -106,7 +103,7 @@ export const dataISøknadKontraktFormatV7 = (
             ),
             adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse ?? {})),
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
-                utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1)
+                utenlandsperiodeTilISøknadsfelt(periode, index + 1)
             ),
             idNummer: idNummer.map(idnummerObj =>
                 idNummerTilISøknadsfelt(
@@ -169,9 +166,7 @@ export const dataISøknadKontraktFormatV7 = (
                 })
             ),
         },
-        barn: barnInkludertISøknaden.map(barn =>
-            barnISøknadsFormatV7(intl, barn, søker, valgtSpråk)
-        ),
+        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormatV7(barn, søker, valgtSpråk)),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfelt(
                 språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),

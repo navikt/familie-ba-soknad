@@ -14,7 +14,6 @@ import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
@@ -84,7 +83,7 @@ export const IdNummer: React.FC<{
                 return feil(felt, <SpråkTekst id={'felles.idnummer-feilformat.feilmelding'} />);
             }
         },
-        ...(barn && { språkVerdier: { barn: barnetsNavnValue(barn, intl) } }),
+        ...(barn && { språkVerdier: { barn: barn.navn } }),
     });
 
     useEffect(() => {
@@ -102,7 +101,7 @@ export const IdNummer: React.FC<{
                             id={spørsmålSpråkId}
                             values={{
                                 land: getName(landAlphaCode, valgtLocale),
-                                ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                                ...(barn && { barn: barn.navn }),
                             }}
                         />
                     }
@@ -125,7 +124,7 @@ export const IdNummer: React.FC<{
                         labelSpråkTekstId={spørsmålSpråkId}
                         språkValues={{
                             land: getName(landAlphaCode, valgtLocale),
-                            ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                            ...(barn && { barn: barn.navn }),
                         }}
                         disabled={idNummerUkjent.verdi === ESvar.JA}
                     />

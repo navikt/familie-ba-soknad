@@ -126,15 +126,11 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 )}
                 <StyledCheckbox
                     checked={erMedISøknad}
-                    label={
-                        <SpråkTekst
-                            id={
-                                erUtvidet
-                                    ? 'hvilkebarn-utvidet.barn.søk-om.spm'
-                                    : 'hvilkebarn.barn.søk-om.spm'
-                            }
-                        />
-                    }
+                    label={formatMessage({
+                        id: erUtvidet
+                            ? 'hvilkebarn-utvidet.barn.søk-om.spm'
+                            : 'hvilkebarn.barn.søk-om.spm',
+                    })}
                     aria-label={
                         formatMessage({
                             id: erUtvidet

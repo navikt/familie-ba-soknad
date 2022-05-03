@@ -1,5 +1,3 @@
-import { IntlShape } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
@@ -30,7 +28,6 @@ import { tidligereSamboerISøknadKontraktFormat } from './tidligereSamboer';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const dataISøknadKontraktFormat = (
-    intl: IntlShape,
     valgtSpråk: LocaleType,
     søknad: ISøknad
 ): ISøknadKontrakt => {
@@ -84,7 +81,7 @@ export const dataISøknadKontraktFormat = (
                 sammeVerdiAlleSpråk(søker.adresse ?? {})
             ),
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
-                utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1)
+                utenlandsperiodeTilISøknadsfelt(periode, index + 1)
             ),
             spørsmål: {
                 ...spørmålISøknadsFormat(typetSøkerSpørsmål),
@@ -95,7 +92,7 @@ export const dataISøknadKontraktFormat = (
                 ? samboerISøknadKontraktFormat(nåværendeSamboer)
                 : null,
         },
-        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormat(intl, barn)),
+        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormat(barn)),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfelt(
                 språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),

@@ -1,5 +1,3 @@
-import { IntlShape } from 'react-intl';
-
 import { tilDatoUkjentLabelSpråkId } from '../../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     fraDatoLabelSpråkId,
@@ -11,7 +9,6 @@ import {
 import { IBarnMedISøknad } from '../../typer/barn';
 import { ISøknadsfelt, IUtenlandsperiodeIKontraktFormat } from '../../typer/kontrakt/generelle';
 import { IUtenlandsperiode } from '../../typer/perioder';
-import { barnetsNavnValue } from '../barn';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import {
     sammeVerdiAlleSpråk,
@@ -20,7 +17,6 @@ import {
 } from './hjelpefunksjoner';
 
 export const utenlandsperiodeTilISøknadsfelt = (
-    intl: IntlShape,
     utenlandperiode: IUtenlandsperiode,
     periodeNummer: number,
     barn?: IBarnMedISøknad
@@ -30,14 +26,14 @@ export const utenlandsperiodeTilISøknadsfelt = (
         verdi: sammeVerdiAlleSpråk({
             utenlandsoppholdÅrsak: {
                 label: hentTekster(årsakLabelSpråkId(barn), {
-                    ...(barn && { barn: barnetsNavnValue(barn, intl) }),
+                    ...(barn && { barn: barn.navn }),
                 }),
                 verdi: hentTekster(årsakSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn)),
             },
             oppholdsland: {
                 label: hentTekster(
                     landLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                    { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
+                    { ...(barn && { barn: barn.navn }) }
                 ),
                 verdi: verdiCallbackAlleSpråk(locale =>
                     landkodeTilSpråk(utenlandperiode.oppholdsland.svar, locale)
@@ -46,14 +42,14 @@ export const utenlandsperiodeTilISøknadsfelt = (
             oppholdslandFraDato: {
                 label: hentTekster(
                     fraDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                    { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
+                    { ...(barn && { barn: barn.navn }) }
                 ),
                 verdi: sammeVerdiAlleSpråk(utenlandperiode.oppholdslandFraDato?.svar),
             },
             oppholdslandTilDato: {
                 label: hentTekster(
                     tilDatoLabelSpråkId(utenlandperiode.utenlandsoppholdÅrsak.svar, barn),
-                    { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
+                    { ...(barn && { barn: barn.navn }) }
                 ),
                 verdi: utenlandperiode.oppholdslandTilDato?.svar
                     ? sammeVerdiAlleSpråkEllerUkjentSpråktekst(
