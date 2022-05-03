@@ -1337,8 +1337,8 @@ export const testdata2: TilKontraktTestData = {
                                 oppholdsland: {
                                     label: {
                                         en: 'Which country was Barn 234567 89876 staying in?',
-                                        nb: 'Hvilket land oppholdt BARN 234567 89876 seg i?',
-                                        nn: 'Kva land oppheldt BARN 234567 89876 seg i?',
+                                        nb: 'Hvilket land oppholdt Barn 234567 89876 seg i?',
+                                        nn: 'Kva land oppheldt Barn 234567 89876 seg i?',
                                     },
                                     verdi: {
                                         nb: 'Belgia',
@@ -1383,9 +1383,9 @@ export const testdata2: TilKontraktTestData = {
                             nb: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN 234567 89876 stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN 234567 89876 oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN 234567 89876 har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn 234567 89876 stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn 234567 89876 oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn 234567 89876 har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child has moved permanently from Norway',
@@ -1395,9 +1395,9 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country has BARN 234567 89876 moved to?',
-                                        nb: 'Hvilket land har BARN 234567 89876 flyttet til?',
-                                        nn: 'Kva land har BARN 234567 89876 flytta til?',
+                                        en: 'Which country has Barn 234567 89876 moved to?',
+                                        nb: 'Hvilket land har Barn 234567 89876 flyttet til?',
+                                        nn: 'Kva land har Barn 234567 89876 flytta til?',
                                     },
                                     verdi: {
                                         nb: 'Afghanistan',
@@ -1407,9 +1407,9 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandFraDato: {
                                     label: {
-                                        en: 'When did BARN 234567 89876 move from Norway?',
-                                        nb: 'Når flyttet BARN 234567 89876 fra Norge?',
-                                        nn: 'Når flytta BARN 234567 89876 frå Noreg?',
+                                        en: 'When did Barn 234567 89876 move from Norway?',
+                                        nb: 'Når flyttet Barn 234567 89876 fra Norge?',
+                                        nn: 'Når flytta Barn 234567 89876 frå Noreg?',
                                     },
                                     verdi: {
                                         nb: '2022-01-12',
@@ -1429,9 +1429,9 @@ export const testdata2: TilKontraktTestData = {
                             nn: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN 234567 89876 stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN 234567 89876 oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN 234567 89876 har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn 234567 89876 stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn 234567 89876 oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn 234567 89876 har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child has moved permanently from Norway',
@@ -1441,9 +1441,9 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country has BARN 234567 89876 moved to?',
-                                        nb: 'Hvilket land har BARN 234567 89876 flyttet til?',
-                                        nn: 'Kva land har BARN 234567 89876 flytta til?',
+                                        en: 'Which country has Barn 234567 89876 moved to?',
+                                        nb: 'Hvilket land har Barn 234567 89876 flyttet til?',
+                                        nn: 'Kva land har Barn 234567 89876 flytta til?',
                                     },
                                     verdi: {
                                         nb: 'Afghanistan',
@@ -1453,9 +1453,9 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandFraDato: {
                                     label: {
-                                        en: 'When did BARN 234567 89876 move from Norway?',
-                                        nb: 'Når flyttet BARN 234567 89876 fra Norge?',
-                                        nn: 'Når flytta BARN 234567 89876 frå Noreg?',
+                                        en: 'When did Barn 234567 89876 move from Norway?',
+                                        nb: 'Når flyttet Barn 234567 89876 fra Norge?',
+                                        nn: 'Når flytta Barn 234567 89876 frå Noreg?',
                                     },
                                     verdi: {
                                         nb: '2022-01-12',
@@ -1475,9 +1475,9 @@ export const testdata2: TilKontraktTestData = {
                             en: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN 234567 89876 stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN 234567 89876 oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN 234567 89876 har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn 234567 89876 stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn 234567 89876 oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn 234567 89876 har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child has moved permanently from Norway',
@@ -1487,9 +1487,9 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country has BARN 234567 89876 moved to?',
-                                        nb: 'Hvilket land har BARN 234567 89876 flyttet til?',
-                                        nn: 'Kva land har BARN 234567 89876 flytta til?',
+                                        en: 'Which country has Barn 234567 89876 moved to?',
+                                        nb: 'Hvilket land har Barn 234567 89876 flyttet til?',
+                                        nn: 'Kva land har Barn 234567 89876 flytta til?',
                                     },
                                     verdi: {
                                         nb: 'Afghanistan',
@@ -1499,9 +1499,9 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandFraDato: {
                                     label: {
-                                        en: 'When did BARN 234567 89876 move from Norway?',
-                                        nb: 'Når flyttet BARN 234567 89876 fra Norge?',
-                                        nn: 'Når flytta BARN 234567 89876 frå Noreg?',
+                                        en: 'When did Barn 234567 89876 move from Norway?',
+                                        nb: 'Når flyttet Barn 234567 89876 fra Norge?',
+                                        nn: 'Når flytta Barn 234567 89876 frå Noreg?',
                                     },
                                     verdi: {
                                         nb: '2022-01-12',
@@ -1645,9 +1645,9 @@ export const testdata2: TilKontraktTestData = {
                     },
                     borFastMedSøker: {
                         label: {
-                            en: 'Does BARN 234567 89876 live with you on a permanent basis?',
-                            nb: 'Bor BARN 234567 89876 fast sammen med deg?',
-                            nn: 'Bur BARN 234567 89876 fast saman med deg?',
+                            en: 'Does Barn 234567 89876 live with you on a permanent basis?',
+                            nb: 'Bor Barn 234567 89876 fast sammen med deg?',
+                            nn: 'Bur Barn 234567 89876 fast saman med deg?',
                         },
                         verdi: {
                             nb: 'NEI',
@@ -1657,9 +1657,9 @@ export const testdata2: TilKontraktTestData = {
                     },
                     søkerForTidsrom: {
                         label: {
-                            en: 'Are you applying for child benefit for a particular period of time for BARN 234567 89876?',
-                            nb: 'Søker du barnetrygd for et spesielt tidsrom for BARN 234567 89876?',
-                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for BARN 234567 89876?',
+                            en: 'Are you applying for child benefit for a particular period of time for Barn 234567 89876?',
+                            nb: 'Søker du barnetrygd for et spesielt tidsrom for Barn 234567 89876?',
+                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for Barn 234567 89876?',
                         },
                         verdi: {
                             nb: 'JA',
