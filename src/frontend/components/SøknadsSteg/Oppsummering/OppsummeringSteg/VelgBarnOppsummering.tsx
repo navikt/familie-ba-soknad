@@ -5,7 +5,6 @@ import { useIntl } from 'react-intl';
 import { useApp } from '../../../../context/AppContext';
 import { useRoutes } from '../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../typer/routes';
-import { barnetsNavnValue } from '../../../../utils/barn';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../../VelgBarn/spørsmål';
@@ -21,7 +20,6 @@ interface Props {
 const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { formatMessage } = useIntl();
     const { søknad } = useApp();
-    const intl = useIntl();
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const velgBarnHook = useVelgBarn();
 
@@ -45,7 +43,7 @@ const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                 ? formatMessage({
                                       id: 'hvilkebarn.barn.bosted.adressesperre',
                                   })
-                                : barnetsNavnValue(barn, intl)
+                                : barn.navn
                         }
                     />
 

@@ -1,5 +1,3 @@
-import { IntlShape, useIntl } from 'react-intl';
-
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -24,11 +22,10 @@ export const useSendInnSkjema = (): {
     const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
     const { soknadApi } = Miljø();
     const [valgtSpråk] = useSprakContext();
-    const intl: IntlShape = useIntl();
 
     const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
-        const formatert = dataISøknadKontraktFormat(intl, valgtSpråk, søknad);
+        const formatert = dataISøknadKontraktFormat(valgtSpråk, søknad);
 
         const res = await axiosRequest<IKvittering, ISøknadKontrakt>({
             url: `${soknadApi}/soknad/v6`,
@@ -53,7 +50,7 @@ export const useSendInnSkjema = (): {
     const sendInnSkjemaV7 = async (): Promise<[boolean, ISøknadKontraktV7]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
 
-        const formatert: ISøknadKontraktV7 = dataISøknadKontraktFormatV7(intl, valgtSpråk, søknad);
+        const formatert: ISøknadKontraktV7 = dataISøknadKontraktFormatV7(valgtSpråk, søknad);
 
         const res = await sendInn<ISøknadKontraktV7>(
             formatert,

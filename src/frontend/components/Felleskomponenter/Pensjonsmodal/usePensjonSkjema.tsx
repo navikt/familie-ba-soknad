@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -11,7 +9,6 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato, dagenEtterDato } from '../../../utils/dato';
 import { pensjonFraDatoFeilmeldingSpråkId, pensjonslandFeilmeldingSpråkId } from './språkUtils';
 import { PensjonSpørsmålId } from './spørsmål';
@@ -26,7 +23,6 @@ export const usePensjonSkjema = ({
     andreForelderData,
 }: IUsePensjonSkjemaParams) => {
     const { erEøsLand } = useEøs();
-    const intl = useIntl();
 
     const gjelderAndreForelder = !!andreForelderData;
     const barn = andreForelderData?.barn;
@@ -37,7 +33,7 @@ export const usePensjonSkjema = ({
         feilmeldingSpråkId: gjelderAndreForelder
             ? 'ombarnet.andre-forelder.pensjonnå.feilmelding'
             : 'modal.fårdupensjonnå.feilmelding',
-        feilmeldingSpråkVerdier: barn ? { barn: barnetsNavnValue(barn, intl) } : undefined,
+        feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
         skalSkjules: erAndreForelderDød,
     });
 

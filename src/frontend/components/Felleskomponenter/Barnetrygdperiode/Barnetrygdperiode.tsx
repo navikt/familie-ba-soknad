@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -10,7 +8,6 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -36,7 +33,6 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     barn,
 }) => {
     const { erÅpen: barnetrygdsmodalErÅpen, toggleModal: toggleBarnetrygdsmodal } = useModal();
-    const intl = useIntl();
 
     return (
         <>
@@ -55,7 +51,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             barnetrygdsperiode={periode}
                             fjernPeriodeCallback={fjernBarnetrygdsperiode}
                             nummer={index + 1}
-                            barnetsNavn={barnetsNavnValue(barn, intl)}
+                            barnetsNavn={barn.navn}
                         />
                     ))}
 

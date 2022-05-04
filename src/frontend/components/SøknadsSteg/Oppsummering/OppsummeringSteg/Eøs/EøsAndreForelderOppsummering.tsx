@@ -13,7 +13,6 @@ import {
 } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
-import { barnetsNavnValue } from '../../../../../utils/barn';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -31,7 +30,6 @@ const EøsAndreForelderOppsummering: React.FC<{
 }> = ({ barn, andreForelder, skjema, settIdNummerFelter }) => {
     const intl = useIntl();
     const { formatMessage } = intl;
-    const barnetsNavn = barnetsNavnValue(barn, intl);
     const andreForelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
 
     const jaNeiSpmOppsummering = (andreForelderDataKeySpm: andreForelderDataKeySpørsmål) =>
@@ -40,7 +38,7 @@ const EøsAndreForelderOppsummering: React.FC<{
                 tittel={
                     <SpråkTekst
                         id={eøsBarnSpørsmålSpråkId[barn.andreForelder[andreForelderDataKeySpm].id]}
-                        values={{ barn: barnetsNavn }}
+                        values={{ barn: barn.navn }}
                     />
                 }
                 søknadsvar={barn.andreForelder[andreForelderDataKeySpm].svar}
@@ -61,7 +59,7 @@ const EøsAndreForelderOppsummering: React.FC<{
                         tittel={
                             <SpråkTekst
                                 id={eøsBarnSpørsmålSpråkId[andreForelder.adresse.id]}
-                                values={{ barn: barnetsNavn }}
+                                values={{ barn: barn.navn }}
                             />
                         }
                         søknadsvar={

@@ -1,5 +1,3 @@
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -9,7 +7,6 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, erSammeDatoSomDagensDato, gårsdagensDato } from '../../../utils/dato';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import { utbetalingerFeilmelding } from './språkUtils';
@@ -19,8 +16,6 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
     barn: IBarnMedISøknad;
     erDød: boolean;
 }) => {
-    const intl = useIntl();
-
     const gjelderAndreForelder = !!andreForelderData;
     const barn = andreForelderData?.barn;
     const andreForelderErDød = !!andreForelderData?.erDød;
@@ -29,7 +24,7 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         søknadsfelt: { id: UtbetalingerSpørsmålId.fårUtbetalingNå, svar: null },
         feilmeldingSpråkId: utbetalingerFeilmelding(gjelderAndreForelder),
         skalSkjules: andreForelderErDød,
-        feilmeldingSpråkVerdier: barn ? { barn: barnetsNavnValue(barn, intl) } : undefined,
+        feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
     });
 
     const periodenErAvsluttet = fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød;
@@ -52,7 +47,7 @@ export const useUtbetalingerSkjema = (andreForelderData?: {
         skalFeltetVises:
             fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         nullstillVedAvhengighetEndring: true,
-        feilmeldingSpråkVerdier: barn ? { barn: barnetsNavnValue(barn, intl) } : undefined,
+        feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
     });
 
     const utbetalingFraDato = useDatovelgerFelt({

@@ -1,13 +1,10 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
@@ -37,7 +34,6 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtbetalingerSkjema(andreForelderData);
-    const intl = useIntl();
 
     const gjelderAndreForelder = !!andreForelderData;
     const barn = andreForelderData?.barn;
@@ -95,7 +91,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             periodenErAvsluttet
                         )[UtbetalingerSpørsmålId.fårUtbetalingNå]
                     }
-                    språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                    språkValues={{ ...(barn && { barn: barn.navn }) }}
                 />
             </KomponentGruppe>
             {(skjema.felter.fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK ||
@@ -112,7 +108,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                         periodenErAvsluttet
                                     )[UtbetalingerSpørsmålId.utbetalingLand]
                                 }
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
                         dynamisk

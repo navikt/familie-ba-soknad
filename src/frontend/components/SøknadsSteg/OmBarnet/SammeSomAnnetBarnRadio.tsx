@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
@@ -11,7 +10,6 @@ import { ISkjema } from '@navikt/familie-skjema';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
@@ -28,14 +26,12 @@ const SammeSomAnnetBarnRadio: React.FC<{
 }> = ({ andreBarnSomErFyltUt, skjema, barnetsNavn }) => {
     const felt = skjema.felter.sammeForelderSomAnnetBarn;
 
-    const intl = useIntl();
-
     const radios = andreBarnSomErFyltUt
         .map(barn => ({
             label: (
                 <SpråkTekst
                     id={'ombarnet.svaralternativ.samme-som-barn'}
-                    values={{ navn: barnetsNavnValue(barn, intl) }}
+                    values={{ navn: barn.navn }}
                 />
             ),
             value: barn.id,

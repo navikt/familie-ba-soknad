@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
@@ -38,7 +36,6 @@ import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
 import {
-    barnetsNavnValue,
     filtrerteRelevanteIdNummerForBarn,
     genererInitiellAndreForelder,
     nullstilteEøsFelterForBarn,
@@ -83,7 +80,6 @@ export const useOmBarnet = (
     fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
-    const intl = useIntl();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
 
     const { toggles } = useFeatureToggles();
@@ -217,7 +213,7 @@ export const useOmBarnet = (
     const planleggerÅBoINorge12Mnd = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
         feilmeldingSpråkId: 'ombarnet.oppholdtsammenhengende.feilmelding',
-        feilmeldingSpråkVerdier: { barn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         skalSkjules:
             !skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge) ||
             flyttetPermanentFraNorge(utenlandsperioder) ||
@@ -304,7 +300,7 @@ export const useOmBarnet = (
                       felt,
                       <SpråkTekst
                           id={'ombarnet.hvemerandreforelder.feilmelding'}
-                          values={{ barn: barnetsNavnValue(gjeldendeBarn, intl) }}
+                          values={{ barn: gjeldendeBarn.navn }}
                       />
                   );
         },
@@ -418,7 +414,7 @@ export const useOmBarnet = (
                     : undefined,
         },
         skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
@@ -471,7 +467,7 @@ export const useOmBarnet = (
                     : undefined,
         },
         skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
@@ -510,7 +506,7 @@ export const useOmBarnet = (
     const borFastMedSøker = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borFastMedSøker],
         feilmeldingSpråkId: 'ombarnet.bor-fast.feilmelding',
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt({
@@ -519,7 +515,7 @@ export const useOmBarnet = (
         skalSkjules:
             !andreForelder ||
             gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     /*--- SØKER FOR PERIODE ---*/
@@ -534,7 +530,7 @@ export const useOmBarnet = (
                   }
                 : undefined,
         },
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     const søkerForTidsromStartdato = useDatovelgerFeltMedJaNeiAvhengighet({
@@ -594,7 +590,7 @@ export const useOmBarnet = (
                 : undefined,
         },
         skalSkjules: !erUtvidet || !andreForelder,
-        feilmeldingSpråkVerdier: { navn: barnetsNavnValue(gjeldendeBarn, intl) },
+        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     const borMedAndreForelderCheckbox = useFelt<ESvar>({

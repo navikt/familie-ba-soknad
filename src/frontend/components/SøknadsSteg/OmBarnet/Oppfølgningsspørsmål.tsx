@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -12,7 +10,6 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
@@ -52,7 +49,6 @@ const Oppfølgningsspørsmål: React.FC<{
     fjernBarnetrygdsperiode,
     registrerteEøsBarnetrygdsperioder,
 }) => {
-    const intl = useIntl();
     const { erÅpen: utenlandsmodalErÅpen, toggleModal: toggleUtenlandsmodal } = useModal();
     const { erEøsLand } = useEøs();
     const { toggles } = useFeatureToggles();
@@ -67,7 +63,7 @@ const Oppfølgningsspørsmål: React.FC<{
                 <KomponentGruppe>
                     <Informasjonsbolk
                         tittelId={'ombarnet.fosterbarn'}
-                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                        språkValues={{ navn: barn.navn }}
                     >
                         <VedleggNotis språkTekstId={'ombarnet.fosterbarn.vedleggsinfo'} />
                     </Informasjonsbolk>
@@ -75,10 +71,7 @@ const Oppfølgningsspørsmål: React.FC<{
             )}
 
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
-                <SkjemaFieldset
-                    tittelId={'ombarnet.institusjon'}
-                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
-                >
+                <SkjemaFieldset tittelId={'ombarnet.institusjon'} språkValues={{ navn: barn.navn }}>
                     <SkjemaCheckbox
                         labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonIUtland]
@@ -159,7 +152,7 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
-                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                    språkValues={{ navn: barn.navn }}
                 >
                     {utenlandsperioder.map((periode, index) => (
                         <UtenlandsperiodeOppsummering
@@ -175,7 +168,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         <Element>
                             <SpråkTekst
                                 id={'ombarnet.flereopphold.spm'}
-                                values={{ barn: barnetsNavnValue(barn, intl) }}
+                                values={{ barn: barn.navn }}
                             />
                         </Element>
                     )}
@@ -201,7 +194,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                         OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
                                     ]
                                 }
-                                språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                                språkValues={{ barn: barn.navn }}
                             />
                             {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
                                 <AlertStripe type={'advarsel'} dynamisk>
@@ -217,7 +210,7 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.barnetrygd-eøs'}
-                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                    språkValues={{ navn: barn.navn }}
                 >
                     {toggles.EØS_KOMPLETT ? (
                         <KomponentGruppe>

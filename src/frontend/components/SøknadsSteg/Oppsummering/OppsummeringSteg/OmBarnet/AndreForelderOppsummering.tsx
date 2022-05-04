@@ -13,7 +13,6 @@ import {
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
-import { barnetsNavnValue } from '../../../../../utils/barn';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
@@ -32,7 +31,6 @@ const AndreForelderOppsummering: React.FC<{
     const { formatMessage } = intl;
     const [valgtLocale] = useSprakContext();
     const { toggles } = useFeatureToggles();
-    const barnetsNavn = barnetsNavnValue(barn, intl);
 
     return (
         <>
@@ -102,7 +100,7 @@ const AndreForelderOppsummering: React.FC<{
                                             .id
                                     ]
                                 }
-                                values={{ navn: barnetsNavn }}
+                                values={{ navn: barn.navn }}
                             />
                         }
                         søknadsvar={andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar}
@@ -160,7 +158,7 @@ const AndreForelderOppsummering: React.FC<{
                                         andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].id
                                     ]
                                 }
-                                values={{ navn: barnetsNavn }}
+                                values={{ navn: barn.navn }}
                             />
                         }
                         søknadsvar={andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar}
@@ -198,8 +196,8 @@ const AndreForelderOppsummering: React.FC<{
                                             ]
                                         }
                                         values={{
-                                            navn: barnetsNavn,
-                                            barn: barnetsNavn,
+                                            navn: barn.navn,
+                                            barn: barn.navn,
                                         }}
                                     />
                                 }
@@ -222,7 +220,7 @@ const AndreForelderOppsummering: React.FC<{
                                         OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
                                     ]
                                 }
-                                values={{ navn: barnetsNavn }}
+                                values={{ navn: barn.navn }}
                             />
                         }
                         søknadsvar={

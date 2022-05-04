@@ -285,7 +285,7 @@ describe('OmBarnet', () => {
 
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
 
-        const jensTittel = await findByText('Om JENS');
+        const jensTittel = await findByText('Om Jens');
         expect(jensTittel).toBeInTheDocument();
 
         const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
@@ -312,7 +312,7 @@ describe('OmBarnet', () => {
 
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
 
-        const jensTittel = await findByText('Om JENS');
+        const jensTittel = await findByText('Om Jens');
         expect(jensTittel).toBeInTheDocument();
 
         const gåVidere = await findByText(/felles.navigasjon.gå-videre/);

@@ -1,5 +1,3 @@
-import { IntlShape } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { pensjonsperiodeOppsummeringOverskrift } from '../../components/Felleskomponenter/Pensjonsmodal/språkUtils';
@@ -11,7 +9,6 @@ import { IBarnMedISøknad } from '../../typer/barn';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IPensjonsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { IPensjonsperiode } from '../../typer/perioder';
-import { barnetsNavnValue } from '../barn';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
@@ -22,7 +19,6 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
     erAndreForelderDød,
     gjelderUtlandet,
     barn,
-    intl,
 }: {
     periode: IPensjonsperiode;
     periodeNummer: number;
@@ -30,7 +26,6 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
     erAndreForelderDød: boolean;
     gjelderUtlandet: boolean;
     barn?: IBarnMedISøknad;
-    intl?: IntlShape;
 }): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
     const periodenErAvsluttet = mottarPensjonNå?.svar === ESvar.NEI || erAndreForelderDød;
@@ -40,7 +35,7 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
             hentPensjonsperiodeSpørsmålIder(gjelderAndreForelder, periodenErAvsluttet)[
                 pensjonSpørsmålId
             ],
-            { ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }) }
+            { ...(barn && { barn: barn.navn }) }
         );
 
     return {

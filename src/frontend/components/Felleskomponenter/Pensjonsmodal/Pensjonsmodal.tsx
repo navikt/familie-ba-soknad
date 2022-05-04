@@ -1,12 +1,9 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
@@ -37,7 +34,6 @@ export const PensjonModal: React.FC<Props> = ({
     gjelderUtland = false,
     andreForelderData,
 }) => {
-    const intl = useIntl();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         usePensjonSkjema({
             gjelderUtland,
@@ -111,7 +107,7 @@ export const PensjonModal: React.FC<Props> = ({
                                       PensjonSpørsmålId.mottarPensjonNå
                                   ]
                         }
-                        språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                        språkValues={{ ...(barn && { barn: barn.navn }) }}
                     />
                 )}
                 {pensjonsland.erSynlig && (
@@ -129,7 +125,7 @@ export const PensjonModal: React.FC<Props> = ({
                                               PensjonSpørsmålId.pensjonsland
                                           ]
                                 }
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
                         dynamisk
@@ -151,7 +147,7 @@ export const PensjonModal: React.FC<Props> = ({
                                               PensjonSpørsmålId.fraDatoPensjon
                                           ]
                                 }
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
                         skjema={skjema}
@@ -173,7 +169,7 @@ export const PensjonModal: React.FC<Props> = ({
                                               PensjonSpørsmålId.tilDatoPensjon
                                           ]
                                 }
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
                         skjema={skjema}
