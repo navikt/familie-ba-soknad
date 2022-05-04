@@ -10,7 +10,7 @@ export interface ISøknadKontraktBarn {
     ident: ISøknadsfelt<string>;
     navn: ISøknadsfelt<string>;
     registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
-    alder: ISøknadsfelt<string>;
+    alder: ISøknadsfelt<string | undefined>;
     spørsmål: SpørsmålMap;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
     andreForelder: IAndreForelderIKontraktFormat | null;
