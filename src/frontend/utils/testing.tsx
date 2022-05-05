@@ -9,7 +9,7 @@ import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
-import norskeTekster from '../assets/lang/nb.json';
+import norskeTekster from '../assets/lang/nb.json' assert {type:'json'};
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
