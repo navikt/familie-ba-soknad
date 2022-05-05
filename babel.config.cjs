@@ -2,8 +2,8 @@
 module.exports = {
     presets: ['@babel/preset-env', '@babel/preset-react'],
     plugins: [
+        '@babel/plugin-syntax-import-assertions',
         [
-            '@babel/plugin-syntax-import-assertions',
             'babel-plugin-styled-components',
             {
                 displayName: process.env.NODE_ENV !== 'production',
