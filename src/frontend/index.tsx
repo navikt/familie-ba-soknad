@@ -12,7 +12,7 @@ import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import './index.less';
 import App from './App';
-import * as engelsk from './assets/lang/en.json';
+import * as engelsk from './assets/lang/en.json' assert {type: "json"};
 import * as bokmål from './assets/lang/nb.json';
 import * as nynorsk from './assets/lang/nn.json';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
