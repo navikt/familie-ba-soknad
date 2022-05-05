@@ -164,6 +164,7 @@
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-styled-components": "^1.13.2",
+    "@babel/plugin-syntax-import-assertions": "^7.16.7",
     "babel-preset-react-app": "^10.0.0",
     "buffer": "^6.0.3",
     "case-sensitive-paths-webpack-plugin": "2.4.0",
