@@ -4,7 +4,6 @@ import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
@@ -14,7 +13,6 @@ import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp'
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { SøkerMåBrukePDF } from '../../Felleskomponenter/SøkerMåBrukePDF';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
@@ -23,8 +21,6 @@ import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
-    const { søknad } = useApp();
-    const { søker } = søknad;
     const { erÅpen, toggleModal } = useModal();
 
     const {
@@ -57,37 +53,18 @@ const OmDeg: React.FC = () => {
             </KomponentGruppe>
 
             <KomponentGruppe>
-                {!søker.adresse && !søker.adressebeskyttelse ? (
-                    <SøkerMåBrukePDF
-                        advarselTekstId={'omdeg.personopplysninger.ikke-registrert.alert'}
-                        utfyllendeAdvarselInfoId={'omdeg.personopplysninger.ikke-registrert.info'}
-                    />
-                ) : (
-                    <>
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.borPåRegistrertAdresse}
-                            spørsmålTekstId={
-                                omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]
-                            }
-                            tilleggsinfoTekstId={
-                                søker.adressebeskyttelse
-                                    ? 'omdeg.borpådenneadressen.spm.tilleggsinfo'
-                                    : ''
-                            }
-                        />
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.borPåRegistrertAdresse}
+                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
+                />
 
-                        {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                            <SøkerMåBrukePDF
-                                advarselTekstId={
-                                    'omdeg.borpådenneadressen.kontakt-folkeregister.alert'
-                                }
-                                utfyllendeAdvarselInfoId={
-                                    'omdeg.borpådenneadressen.ikke-endre-adresse'
-                                }
-                            />
-                        )}
-                    </>
+                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
+                    <AlertStripe type={'advarsel'}>
+                        <SpråkTekst
+                            id={'omdeg.borpådenneadressen.kontakt-folkeregister-ukjent.alert'}
+                        />
+                    </AlertStripe>
                 )}
             </KomponentGruppe>
             {skjema.felter.værtINorgeITolvMåneder.erSynlig && (

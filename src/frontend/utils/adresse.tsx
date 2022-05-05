@@ -39,7 +39,7 @@ export const genererAdresseVisning = (søker: ISøker) => {
                 id={
                     søker.adressebeskyttelse
                         ? 'omdeg.personopplysninger.adresse-sperret'
-                        : 'omdeg.personopplysninger.adresse-ukjent'
+                        : 'omdeg.personopplysninger.ikke-registrert.alert'
                 }
             />
         </Normaltekst>

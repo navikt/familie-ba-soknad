@@ -547,6 +547,7 @@
   "omdeg.borpådenneadressen.feilmelding": "You must answer whether you live at this address in order to be able to proceed",
   "omdeg.borpådenneadressen.ikke-endre-adresse": "Are you not going to change your address in the National Registry (<bokmål>folkeregisteret</bokmål>)?",
   "omdeg.borpådenneadressen.kontakt-folkeregister.alert": "You must contact the National Registry (<bokmål>folkeregisteret</bokmål>) and change it to the correct address.",
+  "omdeg.borpådenneadressen.kontakt-folkeregister-ukjent.alert": "You must contact the National Registry (<bokmål>folkeregisteret</bokmål>) and change your address to the correct address.",
   "omdeg.borpådenneadressen.spm": "Do you live at this address?",
   "omdeg.borpådenneadressen.spm.tilleggsinfo": "You are registered with a blocked address. You can answer Yes to this question, and continue the digital application.",
   "omdeg.du-kan-ikke-søke.feilmelding": "If you do not live at an address registered in the Norwegian National Registry (<bokmål>folkeregisteret</bokmål>), you must use a PDF/paper application form to apply.",
