@@ -59,8 +59,7 @@
       "\\.pnp\\.[^\\/]+$"
     ],
     "transform": {
-      "^.+\\.(ts|tsx|js|jsx)$": "ts-jest",
-      "^.+\\.(js|jsx)$": "babel-jest"
+      "\\.[jt]sx?$": "babel-jest"
     },
     "resetMocks": true
   },
