@@ -8,14 +8,6 @@ module.exports = {
                 displayName: process.env.NODE_ENV !== 'production',
             },
             '@babel/plugin-syntax-import-assertions',
-            [
-                'transform-react-remove-prop-types',
-                {
-                    mode: 'remove',
-                    removeImport: 'true',
-                    ignoreFilenames: ['node_modules'],
-                },
-            ],
         ],
     ],
 };
