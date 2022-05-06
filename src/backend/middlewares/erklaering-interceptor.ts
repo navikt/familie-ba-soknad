@@ -3,9 +3,9 @@ import { RequestHandler, Request, Response } from 'express';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 import { byggFeiletRessurs } from '@navikt/familie-typer';
 
-import engelsk from '../../frontend/assets/lang/en.json' assert {type:'json'};
-import bokmål from '../../frontend/assets/lang/nb.json' assert {type:'json'};
-import nynorsk from '../../frontend/assets/lang/nn.json' assert {type:'json'};
+import engelsk from '../../frontend/assets/lang/en.json' assert { type: 'json' };
+import bokmål from '../../frontend/assets/lang/nb.json' assert { type: 'json' };
+import nynorsk from '../../frontend/assets/lang/nn.json' assert { type: 'json' };
 import { ISøknadKontrakt } from '../../frontend/typer/kontrakt/v6';
 
 export const hentSpråkteksterAlleSpråk = (språknøkkel: string): Record<LocaleType, string> => {

@@ -1,6 +1,6 @@
 import amplitude from 'amplitude-js';
 
-import * as bokmålTekster from '../assets/lang/nb.json' assert {type:'json'};
+import * as bokmålTekster from '../assets/lang/nb.json' assert { type: 'json' };
 import { hentSøknadstype, søknadstyper } from '../typer/søknad';
 
 const amplitudeInstance = amplitude.getInstance();
