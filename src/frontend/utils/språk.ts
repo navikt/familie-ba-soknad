@@ -6,9 +6,9 @@ import { createIntl, createIntlCache } from 'react-intl';
 
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
-import * as engelsk from '../assets/lang/en.json' assert { type:'json' };
-import * as bokmål from '../assets/lang/nb.json' assert { type:'json' };
-import * as nynorsk from '../assets/lang/nn.json' assert { type:'json' };
+import * as engelsk from '../assets/lang/en.json' assert { type: 'json' };
+import * as bokmål from '../assets/lang/nb.json' assert { type: 'json' };
+import * as nynorsk from '../assets/lang/nn.json' assert { type: 'json' };
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { AlternativtSvarForInput } from '../typer/common';
 import { Slektsforhold } from '../typer/kontrakt/barn';
