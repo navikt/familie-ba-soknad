@@ -71,7 +71,7 @@ const devConfig: webpack.Configuration = mergeWithRules({
                 loader: 'babel-loader',
                 options: {
                     presets: ['react-app'],
-                    plugins: ['react-refresh/babel'],
+                    plugins: ['react-refresh/babel', '@babel/plugin-syntax-import-assertions'],
                 },
             },
         ],

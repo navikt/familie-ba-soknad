@@ -1,12 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { exec } = require('child_process');
+import { exec } from 'child_process';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const en = require('../frontend/assets/lang/en.json');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const nb = require('../frontend/assets/lang/nb.json');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const nn = require('../frontend/assets/lang/nn.json');
+import en from '../frontend/assets/lang/en.json' assert { type: 'json' };
+import nb from '../frontend/assets/lang/nb.json' assert { type: 'json' };
+import nn from '../frontend/assets/lang/nn.json' assert { type: 'json' };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const finnMuligensUbrukteIder = (alleBenyttedeSpråkIder, språkfil, språkfilNavn) => {
@@ -28,7 +24,6 @@ const finnMuligensUbrukteIder = (alleBenyttedeSpråkIder, språkfil, språkfilNa
  *
  * TODO:
  * inkludere id'er med formen 'aaa-bbb.asdf'
- * fikse slik at man ikke trenger å fjerne "type": "module" fra package.json for å kunne kjøre skriptet
  */
 exec(
     `grep -r -oh -I --exclude '.json' --exclude '.test.ts' -E "([\\'|\\"]{1,1}([a-zA-ZæøåÆØÅ]+\\.{1,1})(([a-zA-ZæøåÆØÅ]+\\.{1,1})|([a-zA-ZæøåÆØÅ]+\\_{1,1})|([a-zA-ZæøåÆØÅ]+\\-{1,1}))*[a-zA-ZæøåÆØÅ]+[\\'|\\"]{1,1})" ./src/frontend`,
