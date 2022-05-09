@@ -5,11 +5,9 @@
   "extends": [
     "eslint:recommended",
     "plugin:import/typescript",
-    "plugin:react-app/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -21,7 +19,6 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "react-app",
     "prettier",
     "import"
   ],
@@ -111,6 +108,13 @@
   "settings": {
     "react": {
       "version": "detect"
-    }
+    },
+    "import/ignore": [
+      "node_modules"
+    ]
+  },
+  "env": {
+    "browser": true,
+    "node": true
   }
 }

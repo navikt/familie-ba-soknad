@@ -89,6 +89,7 @@ const commonConfig: webpack.Configuration = {
                 loader: 'babel-loader',
                 options: {
                     presets: ['react-app'],
+                    plugins: ['@babel/plugin-syntax-import-assertions'],
                 },
             },
             {
