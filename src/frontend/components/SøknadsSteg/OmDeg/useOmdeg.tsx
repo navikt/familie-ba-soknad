@@ -35,15 +35,10 @@ export const useOmdeg = (): {
     );
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøs();
 
-    const borPåRegistrertAdresse = useFelt<ESvar | null>({
-        feltId: søker.borPåRegistrertAdresse.id,
-        verdi: søker.borPåRegistrertAdresse.svar,
-        valideringsfunksjon: felt => {
-            return felt.verdi?.length
-                ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.borpådenneadressen.feilmelding'} />);
-        },
-        skalFeltetVises: () => !!søker.adresse && !søker.adressebeskyttelse,
+    const borPåRegistrertAdresse = useJaNeiSpmFelt({
+        søknadsfelt: søker.borPåRegistrertAdresse,
+        feilmeldingSpråkId: 'omdeg.borpådenneadressen.feilmelding',
+        skalSkjules: !søker.adresse || søker.adressebeskyttelse,
     });
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt({
