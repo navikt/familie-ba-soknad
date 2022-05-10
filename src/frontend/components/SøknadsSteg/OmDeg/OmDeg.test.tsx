@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -94,7 +94,7 @@ describe('OmDeg', () => {
         ).toBeInTheDocument();
     });
 
-    test('Kan ikke gå videre i søknad ved adresse som er ukjent', async () => {
+    test('Kan gå videre i søknad ved adresse som er ukjent, får ikke spm om bosted, men opphold i norge', async () => {
         spyOnUseApp({
             søker: mockDeep<ISøker>({
                 adresse: undefined,
@@ -107,11 +107,14 @@ describe('OmDeg', () => {
         await findAllByTestId('alertstripe');
 
         expect(
-            queryByText(omDegSpørsmålSpråkId['bor-på-registrert-adresse'])
+            queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse])
         ).not.toBeInTheDocument();
+        expect(
+            queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder])
+        ).toBeInTheDocument();
     });
 
-    test('Kan gå videre hvis søker har adresse og ikke sperre', async () => {
+    test('Søker med adresse får opp to spørsmål med en gang', async () => {
         spyOnUseApp({
             søker: mockDeep<ISøker>({
                 adressebeskyttelse: false,
@@ -120,13 +123,9 @@ describe('OmDeg', () => {
                 værtINorgeITolvMåneder: { id: OmDegSpørsmålId.værtINorgeITolvMåneder, svar: null },
             }),
         });
-        const { queryByText, findByText } = render(<TestKomponent />);
+        const { queryByText } = render(<TestKomponent />);
 
         expect(queryByText(omDegSpørsmålSpråkId['bor-på-registrert-adresse'])).toBeInTheDocument();
-
-        const jaKnapp = await findByText(/felles.svaralternativ.ja/);
-        act(() => jaKnapp.click());
-
         expect(
             queryByText(omDegSpørsmålSpråkId['søker-vært-i-norge-sammenhengende-tolv-måneder'])
         ).toBeInTheDocument();
@@ -144,7 +143,7 @@ describe('OmDeg', () => {
         await findAllByTestId('alertstripe');
 
         expect(
-            queryByText(omDegSpørsmålSpråkId['bor-på-registrert-adresse'])
+            queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse])
         ).not.toBeInTheDocument();
 
         expect(

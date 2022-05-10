@@ -43,7 +43,7 @@ export const useOmdeg = (): {
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'omdeg.borpådenneadressen.feilmelding'} />);
         },
-        skalFeltetVises: () => søker.adressebeskyttelse === false || søker.adresse !== undefined,
+        skalFeltetVises: () => !!søker.adresse && !søker.adressebeskyttelse,
     });
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt({
