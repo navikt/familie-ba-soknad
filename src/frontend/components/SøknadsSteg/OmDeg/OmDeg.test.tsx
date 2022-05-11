@@ -88,7 +88,6 @@ describe('OmDeg', () => {
         });
         const { findByText } = render(<TestKomponent />);
 
-        expect(await findByText(/omdeg.personopplysninger.adresse-sperret/)).toBeInTheDocument();
         expect(
             await findByText(/omdeg.personopplysninger.adressesperre.alert/)
         ).toBeInTheDocument();

@@ -79,7 +79,6 @@ describe('Personopplysninger', () => {
                 <Personopplysninger />
             </TestProvidere>
         );
-
-        expect(getByText(/omdeg\.personopplysninger\.adresse-sperret/)).toBeInTheDocument();
+        expect(getByText(/omdeg\.personopplysninger\.adressesperre\.alert/)).toBeInTheDocument();
     });
 });
