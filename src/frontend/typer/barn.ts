@@ -103,6 +103,8 @@ export interface IOmsorgsperson {
     adresse: ISøknadSpørsmål<string>;
     arbeidUtland: ISøknadSpørsmål<ESvar | null>;
     arbeidsperioderUtland: IArbeidsperiode[];
+    arbeidNorge: ISøknadSpørsmål<ESvar | null>;
+    arbeidsperioderNorge: IArbeidsperiode[];
 }
 
 export interface IBarnMedISøknad extends IBarn {

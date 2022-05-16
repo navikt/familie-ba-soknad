@@ -500,6 +500,11 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                         id: EøsBarnSpørsmålId.omsorgspersonArbeidUtland,
                         svar: ESvar.NEI,
                     },
+                    arbeidsperioderNorge: [],
+                    arbeidNorge: {
+                        id: EøsBarnSpørsmålId.omsorgspersonArbeidNorge,
+                        svar: ESvar.NEI,
+                    },
                 },
             }),
         })),

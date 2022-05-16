@@ -92,6 +92,26 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     gjelderUtlandet={true}
                 />
             ))}
+            {omsorgsperson.arbeidNorge.svar && (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.arbeidNorge.id]}
+                            values={{ barn: barnetsNavn }}
+                        />
+                    }
+                    søknadsvar={omsorgsperson.arbeidNorge.svar}
+                />
+            )}
+            {omsorgsperson.arbeidsperioderNorge.map((arbeidsperiode, index) => (
+                <ArbeidsperiodeOppsummering
+                    key={`arbeidsperiode-omsorgsperson-norge-${index}`}
+                    arbeidsperiode={arbeidsperiode}
+                    nummer={index + 1}
+                    personType={PersonType.Omsorgsperson}
+                    gjelderUtlandet={false}
+                />
+            ))}
         </StyledOppsummeringsFeltGruppe>
     );
 };
