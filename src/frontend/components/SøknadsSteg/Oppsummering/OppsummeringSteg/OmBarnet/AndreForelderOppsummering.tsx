@@ -114,7 +114,7 @@ const AndreForelderOppsummering: React.FC<{
                                 key={`arbeidsperiode-${index}`}
                                 nummer={index + 1}
                                 arbeidsperiode={periode}
-                                gjelderUtlandet
+                                gjelderUtlandet={true}
                                 personType={PersonType.AndreForelder}
                                 erDød={
                                     barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA
