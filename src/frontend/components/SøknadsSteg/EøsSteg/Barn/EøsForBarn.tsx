@@ -37,8 +37,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
-        leggTilArbeidsperiode,
-        fjernArbeidsperiode,
+        leggTilArbeidsperiodeNorgeAndreForelder,
+        fjernArbeidsperiodeNorgeAndreForelder,
         settIdNummerFelterForBarn,
         settIdNummerFelterForAndreForelder,
         leggTilArbeidsperiodeUtlandOmsorgsperson,
@@ -284,8 +284,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             <KomponentGruppe>
                                 <Arbeidsperiode
                                     skjema={skjema}
-                                    leggTilArbeidsperiode={leggTilArbeidsperiode}
-                                    fjernArbeidsperiode={fjernArbeidsperiode}
+                                    leggTilArbeidsperiode={leggTilArbeidsperiodeNorgeAndreForelder}
+                                    fjernArbeidsperiode={fjernArbeidsperiodeNorgeAndreForelder}
                                     arbeiderEllerArbeidetFelt={
                                         skjema.felter.andreForelderArbeidNorge
                                     }
