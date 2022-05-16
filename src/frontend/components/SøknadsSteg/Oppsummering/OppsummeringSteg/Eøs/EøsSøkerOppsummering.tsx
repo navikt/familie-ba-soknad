@@ -6,6 +6,7 @@ import { useApp } from '../../../../../context/AppContext';
 import { useRoutes } from '../../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../../typer/routes';
 import { ISøknadSpørsmål } from '../../../../../typer/spørsmål';
+import { PersonType } from '../../../../../utils/perioder';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -65,6 +66,7 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         key={`arbeidsperiode-søker-norge-${index}`}
                         arbeidsperiode={arbeidsperiode}
                         nummer={index + 1}
+                        personType={PersonType.Søker}
                     />
                 ))}
 

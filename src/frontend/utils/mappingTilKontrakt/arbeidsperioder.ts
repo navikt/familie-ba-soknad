@@ -2,12 +2,13 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { arbeidsperiodeOppsummeringOverskrift } from '../../components/Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import {
+    arbeidsperiodeModalSpørsmålSpråkId,
     ArbeidsperiodeSpørsmålsId,
-    arbeidsperiodeSpørsmålSpråkId,
 } from '../../components/Felleskomponenter/Arbeidsperiode/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/v7';
 import { IArbeidsperiode } from '../../typer/perioder';
+import { PersonType } from '../perioder';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import {
     sammeVerdiAlleSpråk,
@@ -19,14 +20,14 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
     periode,
     periodeNummer,
     gjelderUtlandet,
-    gjelderAndreForelder,
-    erAndreForelderDød,
+    personType,
+    erDød = false,
 }: {
     periode: IArbeidsperiode;
     periodeNummer: number;
     gjelderUtlandet: boolean;
-    gjelderAndreForelder: boolean;
-    erAndreForelderDød: boolean;
+    personType: PersonType;
+    erDød?: boolean;
 }): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
     const {
         arbeidsperiodeAvsluttet,
@@ -35,12 +36,11 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
         fraDatoArbeidsperiode,
         tilDatoArbeidsperiode,
     } = periode;
-    const periodenErAvsluttet = arbeidsperiodeAvsluttet?.svar === ESvar.JA || erAndreForelderDød;
 
-    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
-        gjelderAndreForelder,
-        periodenErAvsluttet
-    );
+    const periodenErAvsluttet: boolean = arbeidsperiodeAvsluttet?.svar === ESvar.JA || erDød;
+
+    const hentSpørsmålTekstId = arbeidsperiodeModalSpørsmålSpråkId(personType, periodenErAvsluttet);
+
     return {
         label: hentTekster(arbeidsperiodeOppsummeringOverskrift(gjelderUtlandet), {
             x: periodeNummer,

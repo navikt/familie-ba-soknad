@@ -1,3 +1,5 @@
+import { PersonType } from '../../../utils/perioder';
+
 export enum ArbeidsperiodeSpørsmålsId {
     arbeidsperiodeAvsluttet = 'arbeidsperiode-avluttet',
     arbeidsperioder = 'arbeidsperioder',
@@ -42,9 +44,33 @@ export const arbeidsperiodeAndreForelderSpørsmålSpråkId = (
         'felles.nåravsluttesarbeidsperiode.sjekkboks',
 });
 
-export const arbeidsperiodeSpørsmålSpråkId =
-    (gjelderAndreForelder: boolean, periodenErAvsluttet: boolean) =>
-    (spørsmålId: ArbeidsperiodeSpørsmålsId): string =>
-        gjelderAndreForelder
-            ? arbeidsperiodeAndreForelderSpørsmålSpråkId(periodenErAvsluttet)[spørsmålId]
-            : arbeidsperiodeSøkerSpørsmålSpråkId(periodenErAvsluttet)[spørsmålId];
+export const arbeidsperiodeOmsorgspersonSpørsmålSpråkId = (
+    periodenErAvsluttet = false
+): Record<ArbeidsperiodeSpørsmålsId, string> => ({
+    [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: periodenErAvsluttet
+        ? 'modal.omsorgsperson-arbeid-utland.land-fortid.spm'
+        : 'modal.omsorgsperson-arbeid-utland.land-nåtid.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsgiver]: 'felles.oppgiarbeidsgiver',
+    [ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode]: 'felles.nårbegyntearbeidsperiode.spm',
+    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode]: periodenErAvsluttet
+        ? 'felles.nåravsluttetarbeidsperiode.spm'
+        : 'felles.nåravsluttesarbeidsperiode.spm',
+    [ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke]:
+        'felles.nåravsluttesarbeidsperiode.sjekkboks',
+});
+
+export const arbeidsperiodeModalSpørsmålSpråkId =
+    (personType: PersonType, periodenErAvsluttet: boolean) =>
+    (spørsmålId: ArbeidsperiodeSpørsmålsId): string => {
+        switch (personType) {
+            case PersonType.AndreForelder:
+                return arbeidsperiodeAndreForelderSpørsmålSpråkId(periodenErAvsluttet)[spørsmålId];
+            case PersonType.Omsorgsperson:
+                return arbeidsperiodeOmsorgspersonSpørsmålSpråkId(periodenErAvsluttet)[spørsmålId];
+            case PersonType.Søker:
+            default:
+                return arbeidsperiodeSøkerSpørsmålSpråkId(periodenErAvsluttet)[spørsmålId];
+        }
+    };

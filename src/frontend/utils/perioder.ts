@@ -14,3 +14,9 @@ export const minTilDatoForUtbetalingEllerArbeidsperiode = (
         return dagensDato();
     }
 };
+
+export enum PersonType {
+    AndreForelder = 'AndreForelder',
+    Omsorgsperson = 'Omsorgsperson',
+    Søker = 'Søker',
+}

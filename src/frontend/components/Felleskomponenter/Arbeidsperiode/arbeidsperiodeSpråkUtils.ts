@@ -1,3 +1,4 @@
+import { PersonType } from '../../../utils/perioder';
 import {
     DinLivssituasjonSpørsmålId,
     dinLivssituasjonSpørsmålSpråkId,
@@ -11,16 +12,25 @@ import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../Søknad
 
 export const arbeidslandFeilmelding = (
     periodenErAvsluttet: boolean,
-    gjelderAndreForelder: boolean
+    personType: PersonType
 ): string => {
-    if (periodenErAvsluttet) {
-        return gjelderAndreForelder
-            ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
-            : 'dinlivssituasjon.arbeid-utland.land.feilmelding';
-    } else
-        return gjelderAndreForelder
-            ? 'ombarnet.andre-forelder.arbeid-utland.land.feilmelding'
-            : 'omdeg.arbeid-utland.land.feilmelding';
+    switch (personType) {
+        case PersonType.AndreForelder: {
+            return periodenErAvsluttet
+                ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
+                : 'ombarnet.andre-forelder.arbeid-utland.land.feilmelding';
+        }
+        case PersonType.Omsorgsperson: {
+            return periodenErAvsluttet
+                ? 'modal.omsorgsperson-arbeid-utland.land-fortid.feilmelding'
+                : 'modal.omsorgsperson-arbeid-utland.land-nåtid.feilmelding';
+        }
+        case PersonType.Søker:
+        default:
+            return periodenErAvsluttet
+                ? 'dinlivssituasjon.arbeid-utland.land.feilmelding'
+                : 'omdeg.arbeid-utland.land.feilmelding';
+    }
 };
 
 export const tilDatoArbeidsperiodeFeilmelding = (periodenErAvsluttet: boolean): string =>
@@ -40,16 +50,23 @@ export const arbeidsperiodeLeggTilFlereKnapp = (gjelderUtlandet: boolean): strin
 
 export const arbeidsperiodeFlereSpørsmål = (
     gjelderUtlandet: boolean,
-    gjelderAndreForelder: boolean
+    personType: PersonType
 ): string => {
-    if (gjelderUtlandet) {
-        return gjelderAndreForelder
-            ? 'eøs.andre-forelder.arbeid-utland-perioder.spm'
-            : 'eøs.arbeid-utland-perioder.spm';
-    } else
-        return gjelderAndreForelder
-            ? 'eøs-om-barn.annenforelderflerearbeidsperiodenorge.spm'
-            : 'eøs-om-deg.flerearbeidsperioderinorge.spm';
+    switch (personType) {
+        case PersonType.AndreForelder:
+            return gjelderUtlandet
+                ? 'eøs.andre-forelder.arbeid-utland-perioder.spm'
+                : 'eøs-om-barn.annenforelderflerearbeidsperiodenorge.spm';
+        case PersonType.Omsorgsperson:
+            return gjelderUtlandet
+                ? 'eøs-om-barn.omsorgsperson-arbeid-utland-perioder.spm'
+                : 'eøs-om-barn.omsorgspersonflerearbeidsperiodenorge.spm';
+        case PersonType.Søker:
+        default:
+            return gjelderUtlandet
+                ? 'eøs.arbeid-utland-perioder.spm'
+                : 'eøs-om-deg.flerearbeidsperioderinorge.spm';
+    }
 };
 
 export const arbeidsperiodeFeilmelding = (gjelderUtlandet: boolean): string =>
@@ -59,22 +76,30 @@ export const arbeidsperiodeFeilmelding = (gjelderUtlandet: boolean): string =>
 
 export const arbeidsperiodeSpørsmålSpråkId = (
     gjelderUtlandet: boolean,
-    gjelderAndreForelder: boolean,
-    andreForelderErDød: boolean
+    personType: PersonType,
+    erDød?: boolean
 ): string => {
-    if (gjelderAndreForelder) {
-        if (andreForelderErDød) {
-            return gjelderUtlandet
-                ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke]
-                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke];
-        } else {
-            return gjelderUtlandet
-                ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]
-                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderArbeidNorge];
+    switch (personType) {
+        case PersonType.AndreForelder: {
+            if (erDød) {
+                return gjelderUtlandet
+                    ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke]
+                    : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke];
+            } else {
+                return gjelderUtlandet
+                    ? omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]
+                    : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderArbeidNorge];
+            }
         }
-    } else {
-        return gjelderUtlandet
-            ? dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
-            : eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.arbeidINorge];
+        case PersonType.Omsorgsperson: {
+            return gjelderUtlandet
+                ? eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonArbeidUtland]
+                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonArbeidNorge];
+        }
+        case PersonType.Søker:
+        default:
+            return gjelderUtlandet
+                ? dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.jobberPåBåt]
+                : eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.arbeidINorge];
     }
 };

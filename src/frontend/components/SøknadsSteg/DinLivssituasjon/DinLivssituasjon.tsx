@@ -7,6 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { PersonType } from '../../../utils/perioder';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -164,6 +165,7 @@ const DinLivssituasjon: React.FC = () => {
                         gjelderUtlandet={true}
                         arbeiderEllerArbeidetFelt={skjema.felter.jobberPåBåt}
                         registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                        personType={PersonType.Søker}
                     />
                 ) : (
                     <KomponentGruppe inline>

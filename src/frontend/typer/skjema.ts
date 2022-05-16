@@ -143,6 +143,8 @@ export interface IEøsForBarnFeltTyper {
     omsorgspersonIdNummer: string;
     omsorgspersonIdNummerVetIkke: ESvar;
     omsorgspersonAdresse: string;
+    omsorgspersonArbeidUtland: ESvar | null;
+    omsorgspersonArbeidsperioderUtland: IArbeidsperiode[];
     barnetsAdresse: string | AlternativtSvarForInput.UKJENT;
     barnetsAdresseVetIkke: ESvar;
 }

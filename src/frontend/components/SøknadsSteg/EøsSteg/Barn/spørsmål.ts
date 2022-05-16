@@ -17,6 +17,8 @@ export enum EøsBarnSpørsmålId {
     omsorgspersonIdNummerVetIkke = 'omsorgsperson-id-nummer-vet-ikke',
     omsorgspersonIdNummer = 'omsorgsperson-id-nummer',
     omsorgspersonAdresse = 'omsorgsperson-adresse',
+    omsorgspersonArbeidUtland = 'omsorgsperson-arbeid-utland',
+    omsorgspersonArbeidNorge = 'omsorgsperson-arbeid-norge',
     idNummer = 'id-nummer',
     idNummerAndreForelder = 'id-nummer-andre-forelder',
     idNummerUkjent = 'id-nummer-ukjent',
@@ -35,6 +37,7 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
     [EøsBarnSpørsmålId.søkersSlektsforhold]: 'eøs-om-barn.dittslektsforhold.spm',
     [EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering]: 'eøs-om-barn.dinrelasjon.spm',
     [EøsBarnSpørsmålId.borMedAndreForelder]: 'eøs-om-barn.borbarnmedandreforelder.spm',
+    [EøsBarnSpørsmålId.borMedOmsorgsperson]: 'eøs-om-barn.bormedannenomsorgsperson.spm',
     [EøsBarnSpørsmålId.omsorgspersonNavn]: 'eøs-om-barn.annenomsorgspersonnavn.spm',
     [EøsBarnSpørsmålId.omsorgspersonSlektsforhold]:
         'eøs-om-barn.annenomsorgspersonslektsforhold.spm',
@@ -43,6 +46,9 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
     [EøsBarnSpørsmålId.omsorgspersonIdNummer]: 'eøs-om-barn.annenomsorgspersonidnummer.spm',
     [EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke]: 'felles.kjennerikkeidnummer.sjekkboks',
     [EøsBarnSpørsmålId.omsorgspersonAdresse]: 'eøs-om-barn.annenomsorgspersonoppholdssted.spm',
+    [EøsBarnSpørsmålId.omsorgspersonArbeidUtland]: 'eøs-om-barn.omsorgsperson-arbeid-utland.spm',
+    [EøsBarnSpørsmålId.omsorgspersonArbeidNorge]:
+        'eøs-om-barn.omsorgspersonarbeidsperiodenorge.spm',
     [EøsBarnSpørsmålId.idNummer]: 'eøs-om-barn.barnidnummer.spm',
     [EøsBarnSpørsmålId.idNummerAndreForelder]: 'eøs-om-barn.andreforelderidnummer.spm',
     [EøsBarnSpørsmålId.idNummerUkjent]: 'felles.kjennerikkeidnummer.sjekkboks',
@@ -51,5 +57,4 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
         'eøs-om-barn.andreforelderoppholdssted.sjekkboks',
     [EøsBarnSpørsmålId.barnetsAdresse]: 'eøs.hvorborbarn.spm',
     [EøsBarnSpørsmålId.barnetsAdresseVetIkke]: 'eøs.kjennerikkeadresse.sjekkboks',
-    [EøsBarnSpørsmålId.borMedOmsorgsperson]: 'eøs-om-barn.bormedannenomsorgsperson.spm',
 };

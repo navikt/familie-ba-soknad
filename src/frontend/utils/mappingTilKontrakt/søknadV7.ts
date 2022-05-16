@@ -13,6 +13,7 @@ import { ISøker } from '../../typer/person';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
+import { PersonType } from '../perioder';
 import {
     hentSivilstatusSpråkId,
     hentTekster,
@@ -126,8 +127,7 @@ export const dataISøknadKontraktFormatV7 = (
                     periode,
                     periodeNummer: index + 1,
                     gjelderUtlandet: true,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
             arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -135,8 +135,7 @@ export const dataISøknadKontraktFormatV7 = (
                     periode,
                     periodeNummer: index + 1,
                     gjelderUtlandet: false,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
             pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>

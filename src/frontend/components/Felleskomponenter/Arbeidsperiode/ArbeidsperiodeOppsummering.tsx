@@ -7,26 +7,36 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { formaterDato } from '../../../utils/dato';
+import { PersonType } from '../../../utils/perioder';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
-import { arbeidsperiodeSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
+import { ArbeidsperiodeSpørsmålsId, arbeidsperiodeModalSpørsmålSpråkId } from './spørsmål';
 
-export const ArbeidsperiodeOppsummering: React.FC<{
+interface Props {
     arbeidsperiode: IArbeidsperiode;
     nummer: number;
     fjernPeriodeCallback?: (arbeidsperiode: IArbeidsperiode) => void;
     gjelderUtlandet?: boolean;
-    andreForelderData?: { erDød: boolean };
-}> = ({
+}
+
+type ArbeidperiodeOppsummeringPersonTypeProps =
+    | { personType: PersonType.Søker; erDød?: boolean }
+    | { personType: PersonType.Omsorgsperson; erDød?: boolean }
+    | { personType: PersonType.AndreForelder; erDød: boolean };
+
+type ArbeidsperiodeOppsummeringProps = Props & ArbeidperiodeOppsummeringPersonTypeProps;
+
+export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProps> = ({
     arbeidsperiode,
     nummer,
     fjernPeriodeCallback = undefined,
     gjelderUtlandet = false,
-    andreForelderData,
+    personType,
+    erDød = false,
 }) => {
     const [valgtLocale] = useSprakContext();
     const intl = useIntl();
@@ -39,14 +49,9 @@ export const ArbeidsperiodeOppsummering: React.FC<{
         tilDatoArbeidsperiode,
     } = arbeidsperiode;
 
-    const erAndreForelderDød = !!andreForelderData?.erDød;
-    const periodenErAvsluttet = arbeidsperiodeAvsluttet?.svar === ESvar.JA || erAndreForelderDød;
-    const gjelderAndreForelder = !!andreForelderData;
+    const periodenErAvsluttet = arbeidsperiodeAvsluttet?.svar === ESvar.JA || erDød;
 
-    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
-        gjelderAndreForelder,
-        periodenErAvsluttet
-    );
+    const hentSpørsmålTekstId = arbeidsperiodeModalSpørsmålSpråkId(personType, periodenErAvsluttet);
 
     const spørsmålSpråkTekst = (spørsmålId: ArbeidsperiodeSpørsmålsId) => (
         <SpråkTekst id={hentSpørsmålTekstId(spørsmålId)} />

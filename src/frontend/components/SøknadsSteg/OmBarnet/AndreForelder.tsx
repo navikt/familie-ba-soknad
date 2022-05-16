@@ -10,6 +10,7 @@ import { AlternativtSvarForInput } from '../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { dagensDato } from '../../../utils/dato';
+import { PersonType } from '../../../utils/perioder';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -162,10 +163,9 @@ const AndreForelder: React.FC<{
                                             leggTilArbeidsperiode={leggTilArbeidsperiode}
                                             fjernArbeidsperiode={fjernArbeidsperiode}
                                             gjelderUtlandet
-                                            andreForelderData={{
-                                                erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                                                barn: barn,
-                                            }}
+                                            personType={PersonType.AndreForelder}
+                                            barn={barn}
+                                            erDød={barn.andreForelderErDød.svar === ESvar.JA}
                                             registrerteArbeidsperioder={
                                                 skjema.felter.andreForelderArbeidsperioderUtland
                                             }

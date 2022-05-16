@@ -15,6 +15,7 @@ import { ESivilstand } from '../../../../typer/kontrakt/generelle';
 import { ISamboer, ITidligereSamboer } from '../../../../typer/person';
 import { RouteEnum } from '../../../../typer/routes';
 import { formaterDato } from '../../../../utils/dato';
+import { PersonType } from '../../../../utils/perioder';
 import { landkodeTilSpråk, toÅrsakSpråkId } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
@@ -244,6 +245,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                 nummer={index + 1}
                                 arbeidsperiode={periode}
                                 gjelderUtlandet
+                                personType={PersonType.Søker}
                             />
                         ))}
                     </>

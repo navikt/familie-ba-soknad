@@ -14,6 +14,7 @@ import {
 } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { formaterDato } from '../../../../../utils/dato';
+import { PersonType } from '../../../../../utils/perioder';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
@@ -114,11 +115,10 @@ const AndreForelderOppsummering: React.FC<{
                                 nummer={index + 1}
                                 arbeidsperiode={periode}
                                 gjelderUtlandet
-                                andreForelderData={{
-                                    erDød:
-                                        barn[barnDataKeySpørsmål.andreForelderErDød].svar ===
-                                        ESvar.JA,
-                                }}
+                                personType={PersonType.AndreForelder}
+                                erDød={
+                                    barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA
+                                }
                             />
                         ))}
                     </>

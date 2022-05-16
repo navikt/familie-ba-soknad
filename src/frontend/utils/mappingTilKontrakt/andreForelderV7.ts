@@ -16,6 +16,7 @@ import {
     IBarnMedISøknad,
 } from '../../typer/barn';
 import { IAndreForelderIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { PersonType } from '../perioder';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import {
@@ -156,8 +157,8 @@ export const andreForelderTilISøknadsfeltV7 = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: true,
-                gjelderAndreForelder: true,
-                erAndreForelderDød: forelderErDød,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
             })
         ),
         pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
@@ -175,8 +176,8 @@ export const andreForelderTilISøknadsfeltV7 = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: false,
-                gjelderAndreForelder: true,
-                erAndreForelderDød: forelderErDød,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
             })
         ),
         pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>

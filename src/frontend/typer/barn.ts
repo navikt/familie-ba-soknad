@@ -101,6 +101,8 @@ export interface IOmsorgsperson {
     slektsforholdSpesifisering: ISøknadSpørsmål<string>;
     idNummer: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
     adresse: ISøknadSpørsmål<string>;
+    arbeidUtland: ISøknadSpørsmål<ESvar | null>;
+    arbeidsperioderUtland: IArbeidsperiode[];
 }
 
 export interface IBarnMedISøknad extends IBarn {

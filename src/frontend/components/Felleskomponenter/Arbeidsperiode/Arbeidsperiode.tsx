@@ -13,6 +13,7 @@ import {
     IEøsForSøkerFeltTyper,
     IOmBarnetUtvidetFeltTyper,
 } from '../../../typer/skjema';
+import { PersonType } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -38,24 +39,29 @@ interface ArbeidsperiodeProps {
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet?: boolean;
-    andreForelderData?: { erDød: boolean; barn: IBarnMedISøknad };
     arbeiderEllerArbeidetFelt: Felt<ESvar | null>;
     registrerteArbeidsperioder: Felt<IArbeidsperiode[]>;
 }
 
-export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
+type ArbeidperiodePersonTypeProps =
+    | { personType: PersonType.Søker; barn?: never; erDød?: never }
+    | { personType: PersonType.Omsorgsperson; barn: IBarnMedISøknad; erDød?: never }
+    | { personType: PersonType.AndreForelder; barn: IBarnMedISøknad; erDød: boolean };
+
+type Props = ArbeidsperiodeProps & ArbeidperiodePersonTypeProps;
+
+export const Arbeidsperiode: React.FC<Props> = ({
     skjema,
     leggTilArbeidsperiode,
     fjernArbeidsperiode,
     gjelderUtlandet = false,
-    andreForelderData,
     arbeiderEllerArbeidetFelt,
     registrerteArbeidsperioder,
+    personType,
+    erDød,
+    barn,
 }) => {
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
-    const gjelderAndreForelder = !!andreForelderData;
-    const andreForelderErDød = !!andreForelderData?.erDød;
-    const barn = andreForelderData?.barn;
     const barnetsNavn = !!barn && barn.navn;
 
     return (
@@ -63,12 +69,8 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
             <JaNeiSpm
                 skjema={skjema}
                 felt={arbeiderEllerArbeidetFelt}
-                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(
-                    gjelderUtlandet,
-                    gjelderAndreForelder,
-                    andreForelderErDød
-                )}
-                inkluderVetIkke={gjelderAndreForelder}
+                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(gjelderUtlandet, personType, erDød)}
+                inkluderVetIkke={personType !== PersonType.Søker}
                 språkValues={{
                     ...(barnetsNavn && {
                         navn: barnetsNavn,
@@ -85,16 +87,14 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                             fjernPeriodeCallback={fjernArbeidsperiode}
                             nummer={index + 1}
                             gjelderUtlandet={gjelderUtlandet}
-                            andreForelderData={andreForelderData}
+                            personType={personType}
+                            erDød={personType === PersonType.AndreForelder && erDød}
                         />
                     ))}
                     {registrerteArbeidsperioder.verdi.length > 0 && (
                         <Element>
                             <SpråkTekst
-                                id={arbeidsperiodeFlereSpørsmål(
-                                    gjelderUtlandet,
-                                    gjelderAndreForelder
-                                )}
+                                id={arbeidsperiodeFlereSpørsmål(gjelderUtlandet, personType)}
                                 values={{
                                     ...(barnetsNavn && { barn: barnetsNavn }),
                                 }}
@@ -118,7 +118,8 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                         toggleModal={toggleArbeidsmodal}
                         onLeggTilArbeidsperiode={leggTilArbeidsperiode}
                         gjelderUtlandet={gjelderUtlandet}
-                        andreForelderData={andreForelderData}
+                        personType={personType}
+                        erDød={erDød}
                     />
                 </>
             )}

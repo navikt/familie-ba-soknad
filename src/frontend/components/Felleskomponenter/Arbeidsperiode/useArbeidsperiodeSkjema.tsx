@@ -9,7 +9,7 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IArbeidsperioderFeltTyper } from '../../../typer/skjema';
 import { dagensDato, gårsdagensDato, erSammeDatoSomDagensDato } from '../../../utils/dato';
-import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
+import { minTilDatoForUtbetalingEllerArbeidsperiode, PersonType } from '../../../utils/perioder';
 import {
     arbeidslandFeilmelding,
     tilDatoArbeidsperiodeFeilmelding,
@@ -18,28 +18,30 @@ import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 export interface IUseArbeidsperiodeSkjemaParams {
     gjelderUtlandet: boolean;
-    andreForelderData?: { erDød: boolean };
+    personType: PersonType;
+    erDød?: boolean;
 }
 
-export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
+export const useArbeidsperiodeSkjema = (
+    gjelderUtlandet: boolean,
+    personType: PersonType,
+    erDød = false
+) => {
     const { erEøsLand } = useEøs();
-    const gjelderAndreForelder = !!andreForelderData;
-    const erAndreForelderDød = !!andreForelderData?.erDød;
 
     const arbeidsperiodeAvsluttet = useJaNeiSpmFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet, svar: null },
         feilmeldingSpråkId: 'felles.erarbeidsperiodenavsluttet.feilmelding',
-        skalSkjules: erAndreForelderDød,
+        skalSkjules: erDød,
     });
 
-    const periodenErAvsluttet = arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød;
+    const periodenErAvsluttet = arbeidsperiodeAvsluttet.verdi === ESvar.JA || erDød;
 
     const arbeidsperiodeLand = useLanddropdownFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand, svar: '' },
-        feilmeldingSpråkId: arbeidslandFeilmelding(periodenErAvsluttet, gjelderAndreForelder),
+        feilmeldingSpråkId: arbeidslandFeilmelding(periodenErAvsluttet, personType),
         skalFeltetVises:
-            (arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
-                erAndreForelderDød) &&
+            (arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK || erDød) &&
             gjelderUtlandet,
         nullstillVedAvhengighetEndring: true,
     });
@@ -49,16 +51,14 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         feilmeldingSpråkId: 'felles.oppgiarbeidsgiver.feilmelding',
         skalVises: gjelderUtlandet
             ? erEøsLand(arbeidsperiodeLand.verdi)
-            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
-              erAndreForelderDød,
+            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK || erDød,
     });
 
     const fraDatoArbeidsperiode = useDatovelgerFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode, svar: '' },
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
-            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
-              erAndreForelderDød,
+            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK || erDød,
         feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
@@ -81,8 +81,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         feilmeldingSpråkId: tilDatoArbeidsperiodeFeilmelding(periodenErAvsluttet),
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
-            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
-              erAndreForelderDød,
+            : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK || erDød,
         sluttdatoAvgrensning: periodenErAvsluttet ? dagensDato() : undefined,
         startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
             periodenErAvsluttet,

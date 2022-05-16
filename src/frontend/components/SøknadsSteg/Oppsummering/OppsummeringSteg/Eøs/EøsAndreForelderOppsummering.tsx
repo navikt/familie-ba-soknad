@@ -13,6 +13,7 @@ import {
 } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
+import { PersonType } from '../../../../../utils/perioder';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -81,9 +82,8 @@ const EøsAndreForelderOppsummering: React.FC<{
                         key={`arbeidsperiode-andre-forelder-norge-${index}`}
                         arbeidsperiode={arbeidsperiode}
                         nummer={index + 1}
-                        andreForelderData={{
-                            erDød: andreForelderErDød,
-                        }}
+                        personType={PersonType.AndreForelder}
+                        erDød={andreForelderErDød}
                     />
                 ))}
                 {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.pensjonNorge)}

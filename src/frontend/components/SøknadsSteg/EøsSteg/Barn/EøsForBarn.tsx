@@ -8,6 +8,7 @@ import { useApp } from '../../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
 import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
+import { PersonType } from '../../../../utils/perioder';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -40,6 +41,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernArbeidsperiode,
         settIdNummerFelterForBarn,
         settIdNummerFelterForAndreForelder,
+        leggTilArbeidsperiodeUtlandOmsorgsperson,
+        fjernArbeidsperiodeUtlandOmsorgsperson,
     } = useEøsForBarn(barnetsId);
     const intl = useIntl();
     const { søknad } = useApp();
@@ -201,6 +204,18 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
                         />
                     )}
+                    <Arbeidsperiode
+                        skjema={skjema}
+                        leggTilArbeidsperiode={leggTilArbeidsperiodeUtlandOmsorgsperson}
+                        fjernArbeidsperiode={fjernArbeidsperiodeUtlandOmsorgsperson}
+                        arbeiderEllerArbeidetFelt={skjema.felter.omsorgspersonArbeidUtland}
+                        registrerteArbeidsperioder={
+                            skjema.felter.omsorgspersonArbeidsperioderUtland
+                        }
+                        gjelderUtlandet
+                        personType={PersonType.Omsorgsperson}
+                        barn={barn}
+                    />
                 </SkjemaFieldset>
             )}
 
@@ -276,10 +291,9 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                     registrerteArbeidsperioder={
                                         skjema.felter.andreForelderArbeidsperioderNorge
                                     }
-                                    andreForelderData={{
-                                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                                        barn: barn,
-                                    }}
+                                    personType={PersonType.AndreForelder}
+                                    erDød={barn.andreForelderErDød.svar === ESvar.JA}
+                                    barn={barn}
                                 />
                                 <Pensjonsperiode
                                     skjema={skjema}

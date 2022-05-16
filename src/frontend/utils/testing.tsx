@@ -495,6 +495,11 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                         id: EøsBarnSpørsmålId.omsorgspersonAdresse,
                         svar: 'Osloveien 123',
                     },
+                    arbeidsperioderUtland: [],
+                    arbeidUtland: {
+                        id: EøsBarnSpørsmålId.omsorgspersonArbeidUtland,
+                        svar: ESvar.NEI,
+                    },
                 },
             }),
         })),
