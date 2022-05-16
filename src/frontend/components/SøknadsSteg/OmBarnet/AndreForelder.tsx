@@ -177,11 +177,10 @@ const AndreForelder: React.FC<{
                                             }
                                             leggTilPensjonsperiode={leggTilPensjonsperiode}
                                             fjernPensjonsperiode={fjernPensjonsperiode}
-                                            gjelderUtlandet
-                                            andreForelderData={{
-                                                erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                                                barn: barn,
-                                            }}
+                                            gjelderUtlandet={true}
+                                            personType={PersonType.AndreForelder}
+                                            erDød={barn.andreForelderErDød.svar === ESvar.JA}
+                                            barn={barn}
                                             registrertePensjonsperioder={
                                                 skjema.felter.andreForelderPensjonsperioderUtland
                                             }

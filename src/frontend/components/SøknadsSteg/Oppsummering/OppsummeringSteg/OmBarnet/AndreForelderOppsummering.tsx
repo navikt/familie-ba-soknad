@@ -169,16 +169,15 @@ const AndreForelderOppsummering: React.FC<{
                     <>
                         {andreForelder.pensjonsperioderUtland.map((periode, index) => (
                             <PensjonsperiodeOppsummering
-                                key={`pensjonsperiode-${index}`}
+                                key={`pensjonsperiode-utland-andre-forelder${index}`}
                                 nummer={index + 1}
                                 pensjonsperiode={periode}
-                                gjelderUtlandet
-                                andreForelderData={{
-                                    erDød:
-                                        barn[barnDataKeySpørsmål.andreForelderErDød].svar ===
-                                        ESvar.JA,
-                                    barn: barn,
-                                }}
+                                gjelderUtlandet={true}
+                                personType={PersonType.AndreForelder}
+                                erDød={
+                                    barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA
+                                }
+                                barn={barn}
                             />
                         ))}
                     </>

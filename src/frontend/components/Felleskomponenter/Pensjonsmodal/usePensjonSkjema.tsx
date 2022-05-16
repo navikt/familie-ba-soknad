@@ -9,30 +9,35 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
-import { dagensDato, gårsdagensDato, dagenEtterDato } from '../../../utils/dato';
-import { pensjonFraDatoFeilmeldingSpråkId, pensjonslandFeilmeldingSpråkId } from './språkUtils';
-import { PensjonSpørsmålId } from './spørsmål';
+import { dagenEtterDato, dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { PersonType } from '../../../utils/perioder';
+import {
+    mottarPensjonNåFeilmeldingSpråkId,
+    pensjonFraDatoFeilmeldingSpråkId,
+    pensjonslandFeilmeldingSpråkId,
+} from './språkUtils';
+import { PensjonsperiodeSpørsmålId } from './spørsmål';
 
 export interface IUsePensjonSkjemaParams {
-    gjelderUtland?: boolean;
-    andreForelderData?: { barn: IBarnMedISøknad; erDød: boolean };
+    gjelderUtland: boolean;
+    personType: PersonType;
+    erDød?: boolean;
+    barn?: IBarnMedISøknad;
 }
 
 export const usePensjonSkjema = ({
-    gjelderUtland = false,
-    andreForelderData,
+    gjelderUtland,
+    personType,
+    erDød,
+    barn,
 }: IUsePensjonSkjemaParams) => {
     const { erEøsLand } = useEøs();
 
-    const gjelderAndreForelder = !!andreForelderData;
-    const barn = andreForelderData?.barn;
-    const erAndreForelderDød = !!andreForelderData?.erDød;
+    const erAndreForelderDød = personType === PersonType.AndreForelder && !!erDød;
 
     const mottarPensjonNå = useJaNeiSpmFelt({
-        søknadsfelt: { id: PensjonSpørsmålId.mottarPensjonNå, svar: null },
-        feilmeldingSpråkId: gjelderAndreForelder
-            ? 'ombarnet.andre-forelder.pensjonnå.feilmelding'
-            : 'modal.fårdupensjonnå.feilmelding',
+        søknadsfelt: { id: PensjonsperiodeSpørsmålId.mottarPensjonNå, svar: null },
+        feilmeldingSpråkId: mottarPensjonNåFeilmeldingSpråkId(personType),
         feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
         skalSkjules: erAndreForelderDød,
     });
@@ -44,11 +49,8 @@ export const usePensjonSkjema = ({
     }, [mottarPensjonNå.verdi]);
 
     const pensjonsland = useLanddropdownFelt({
-        søknadsfelt: { id: PensjonSpørsmålId.pensjonsland, svar: '' },
-        feilmeldingSpråkId: pensjonslandFeilmeldingSpråkId(
-            gjelderAndreForelder,
-            periodenErAvsluttet
-        ),
+        søknadsfelt: { id: PensjonsperiodeSpørsmålId.pensjonsland, svar: '' },
+        feilmeldingSpråkId: pensjonslandFeilmeldingSpråkId(personType, periodenErAvsluttet),
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) &&
             gjelderUtland,
@@ -57,16 +59,13 @@ export const usePensjonSkjema = ({
 
     const pensjonFraDato = useDatovelgerFelt({
         søknadsfelt: {
-            id: PensjonSpørsmålId.fraDatoPensjon,
+            id: PensjonsperiodeSpørsmålId.fraDatoPensjon,
             svar: '',
         },
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) &&
             (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
-        feilmeldingSpråkId: pensjonFraDatoFeilmeldingSpråkId(
-            gjelderAndreForelder,
-            periodenErAvsluttet
-        ),
+        feilmeldingSpråkId: pensjonFraDatoFeilmeldingSpråkId(personType, periodenErAvsluttet),
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
         avhengigheter: { mottarPensjonNå },
         nullstillVedAvhengighetEndring: true,
@@ -74,7 +73,7 @@ export const usePensjonSkjema = ({
 
     const pensjonTilDato = useDatovelgerFelt({
         søknadsfelt: {
-            id: PensjonSpørsmålId.tilDatoPensjon,
+            id: PensjonsperiodeSpørsmålId.tilDatoPensjon,
             svar: '',
         },
         skalFeltetVises:

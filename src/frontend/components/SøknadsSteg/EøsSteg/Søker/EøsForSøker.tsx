@@ -63,9 +63,11 @@ const EøsForSøker: React.FC = () => {
                 <Pensjonsperiode
                     skjema={skjema}
                     mottarEllerMottattPensjonFelt={skjema.felter.pensjonNorge}
+                    gjelderUtlandet={false}
                     leggTilPensjonsperiode={leggTilPensjonsperiode}
                     fjernPensjonsperiode={fjernPensjonsperiode}
                     registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
+                    personType={PersonType.Søker}
                 />
                 <Utbetalingsperiode
                     skjema={skjema}

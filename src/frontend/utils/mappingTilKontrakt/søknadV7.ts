@@ -142,8 +142,8 @@ export const dataISøknadKontraktFormatV7 = (
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
+                    erDød: false,
                     gjelderUtlandet: true,
                 })
             ),
@@ -151,8 +151,8 @@ export const dataISøknadKontraktFormatV7 = (
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
+                    erDød: false,
                     gjelderUtlandet: false,
                 })
             ),

@@ -165,8 +165,8 @@ export const andreForelderTilISøknadsfeltV7 = (
             tilIPensjonsperiodeIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
-                gjelderAndreForelder: true,
-                erAndreForelderDød: forelderErDød,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
                 gjelderUtlandet: true,
                 barn,
             })
@@ -184,8 +184,8 @@ export const andreForelderTilISøknadsfeltV7 = (
             tilIPensjonsperiodeIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
-                gjelderAndreForelder: true,
-                erAndreForelderDød: forelderErDød,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
                 gjelderUtlandet: false,
                 barn,
             })

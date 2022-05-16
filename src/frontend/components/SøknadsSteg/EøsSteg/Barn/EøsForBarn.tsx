@@ -315,10 +315,10 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                     }
                                     leggTilPensjonsperiode={leggTilPensjonsperiode}
                                     fjernPensjonsperiode={fjernPensjonsperiode}
-                                    andreForelderData={{
-                                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                                        barn: barn,
-                                    }}
+                                    personType={PersonType.AndreForelder}
+                                    erDød={barn.andreForelderErDød.svar === ESvar.JA}
+                                    barn={barn}
+                                    gjelderUtlandet={false}
                                     registrertePensjonsperioder={
                                         skjema.felter.andreForelderPensjonsperioderNorge
                                     }

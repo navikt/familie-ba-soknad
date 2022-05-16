@@ -43,12 +43,12 @@ interface ArbeidsperiodeProps {
     registrerteArbeidsperioder: Felt<IArbeidsperiode[]>;
 }
 
-type ArbeidperiodePersonTypeProps =
+export type PeriodePersonTypeProps =
     | { personType: PersonType.Søker; barn?: never; erDød?: never }
     | { personType: PersonType.Omsorgsperson; barn: IBarnMedISøknad; erDød?: never }
     | { personType: PersonType.AndreForelder; barn: IBarnMedISøknad; erDød: boolean };
 
-type Props = ArbeidsperiodeProps & ArbeidperiodePersonTypeProps;
+type Props = ArbeidsperiodeProps & PeriodePersonTypeProps;
 
 export const Arbeidsperiode: React.FC<Props> = ({
     skjema,

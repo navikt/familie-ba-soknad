@@ -289,7 +289,8 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                 key={`utenlandsperiode-${index}`}
                                 nummer={index + 1}
                                 pensjonsperiode={periode}
-                                gjelderUtlandet
+                                gjelderUtlandet={true}
+                                personType={PersonType.Søker}
                             />
                         ))}
                     </>
