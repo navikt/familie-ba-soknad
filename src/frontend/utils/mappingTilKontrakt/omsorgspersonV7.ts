@@ -5,7 +5,9 @@ import {
 import { IBarnMedISøknad, IOmsorgsperson } from '../../typer/barn';
 import { Slektsforhold } from '../../typer/kontrakt/barn';
 import { IOmsorgspersonIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { PersonType } from '../perioder';
 import { hentTekster, toSlektsforholdSpråkId } from '../språk';
+import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import {
     sammeVerdiAlleSpråk,
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,
@@ -17,7 +19,15 @@ export const omsorgspersonTilISøknadsfeltV7 = (
     omsorgsperson: IOmsorgsperson,
     barn: IBarnMedISøknad
 ): IOmsorgspersonIKontraktFormatV7 => {
-    const { navn, slektsforhold, slektsforholdSpesifisering, idNummer, adresse } = omsorgsperson;
+    const {
+        navn,
+        slektsforhold,
+        slektsforholdSpesifisering,
+        idNummer,
+        adresse,
+        arbeidUtland,
+        arbeidsperioderUtland,
+    } = omsorgsperson;
     return {
         navn: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonNavn),
@@ -50,6 +60,19 @@ export const omsorgspersonTilISøknadsfeltV7 = (
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonAdresse),
             sammeVerdiAlleSpråk(adresse.svar),
             barn
+        ),
+        arbeidUtland: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonArbeidUtland),
+            sammeVerdiAlleSpråk(arbeidUtland.svar),
+            barn
+        ),
+        arbeidsperioderUtland: arbeidsperioderUtland.map((periode, index) =>
+            tilIArbeidsperiodeIKontraktFormat({
+                periode,
+                periodeNummer: index + 1,
+                gjelderUtlandet: true,
+                personType: PersonType.Omsorgsperson,
+            })
         ),
     };
 };
