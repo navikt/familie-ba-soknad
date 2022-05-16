@@ -14,7 +14,7 @@ import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFe
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
-import { ArbeidsperiodeSpørsmålsId, arbeidsperiodeModalSpørsmålSpråkId } from './spørsmål';
+import { arbeidsperiodeModalSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 interface Props {
     arbeidsperiode: IArbeidsperiode;
@@ -49,7 +49,9 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
         tilDatoArbeidsperiode,
     } = arbeidsperiode;
 
-    const periodenErAvsluttet = arbeidsperiodeAvsluttet?.svar === ESvar.JA || erDød;
+    const periodenErAvsluttet =
+        arbeidsperiodeAvsluttet?.svar === ESvar.JA ||
+        (personType === PersonType.AndreForelder && erDød);
 
     const hentSpørsmålTekstId = arbeidsperiodeModalSpørsmålSpråkId(personType, periodenErAvsluttet);
 

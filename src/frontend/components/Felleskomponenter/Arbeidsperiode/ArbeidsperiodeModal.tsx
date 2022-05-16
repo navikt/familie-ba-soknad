@@ -5,7 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
+import { minTilDatoForUtbetalingEllerArbeidsperiode, PersonType } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -17,7 +17,7 @@ import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { ArbeidsperiodeSpørsmålsId, arbeidsperiodeModalSpørsmålSpråkId } from './spørsmål';
+import { arbeidsperiodeModalSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
 interface ArbeidsperiodeModalProps
@@ -95,7 +95,9 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
         ? 'felles.flerearbeidsperioderutland.tittel'
         : 'felles.flerearbeidsperiodernorge.tittel';
 
-    const periodenErAvsluttet = arbeidsperiodeAvsluttet.verdi === ESvar.JA || erDød;
+    const periodenErAvsluttet =
+        arbeidsperiodeAvsluttet.verdi === ESvar.JA ||
+        (personType === PersonType.AndreForelder && erDød);
 
     const hentSpørsmålTekstId = arbeidsperiodeModalSpørsmålSpråkId(personType, periodenErAvsluttet);
 
