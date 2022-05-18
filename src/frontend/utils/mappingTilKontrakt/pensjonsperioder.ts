@@ -5,10 +5,10 @@ import {
     hentPensjonsperiodeSpørsmålIder,
     PensjonsperiodeSpørsmålId,
 } from '../../components/Felleskomponenter/Pensjonsmodal/spørsmål';
-import { IBarnMedISøknad } from '../../typer/barn';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IPensjonsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { IPensjonsperiode } from '../../typer/perioder';
+import { PeriodePersonTypeMedBarnProps } from '../../typer/personType';
 import { PersonType } from '../perioder';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
@@ -19,11 +19,6 @@ interface PensjonsperiodeIKontraktFormatParams {
     gjelderUtlandet: boolean;
 }
 
-export type PeriodePersonTypeProps =
-    | { personType: PersonType.Søker; barn?: never; erDød?: never }
-    | { personType: PersonType.Omsorgsperson; barn: IBarnMedISøknad; erDød?: never }
-    | { personType: PersonType.AndreForelder; barn: IBarnMedISøknad; erDød: boolean };
-
 export const tilIPensjonsperiodeIKontraktFormat = ({
     periode,
     periodeNummer,
@@ -32,7 +27,7 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
     erDød,
     barn,
 }: PensjonsperiodeIKontraktFormatParams &
-    PeriodePersonTypeProps): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
+    PeriodePersonTypeMedBarnProps): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
     const periodenErAvsluttet =
         mottarPensjonNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);

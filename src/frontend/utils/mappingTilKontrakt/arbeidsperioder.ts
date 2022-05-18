@@ -8,6 +8,7 @@ import {
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/v7';
 import { IArbeidsperiode } from '../../typer/perioder';
+import { PeriodePersonTypeProps } from '../../typer/personType';
 import { PersonType } from '../perioder';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import {
@@ -21,11 +22,6 @@ interface ArbeidsperiodeIKontraktFormatParams {
     periodeNummer: number;
     gjelderUtlandet: boolean;
 }
-
-export type PeriodePersonTypeProps =
-    | { personType: PersonType.Søker; erDød?: never }
-    | { personType: PersonType.Omsorgsperson; erDød?: never }
-    | { personType: PersonType.AndreForelder; erDød: boolean };
 
 export const tilIArbeidsperiodeIKontraktFormat = ({
     periode,

@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IPensjonsperiode } from '../../../typer/perioder';
+import { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
 import {
     IDinLivssituasjonFeltTyper,
     IEøsForBarnFeltTyper,
@@ -13,7 +14,6 @@ import {
     IOmBarnetUtvidetFeltTyper,
 } from '../../../typer/skjema';
 import { PersonType } from '../../../utils/perioder';
-import { PeriodePersonTypeProps } from '../Arbeidsperiode/Arbeidsperiode';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -43,7 +43,7 @@ interface PensjonsperiodeProps {
     registrertePensjonsperioder: Felt<IPensjonsperiode[]>;
 }
 
-type Props = PensjonsperiodeProps & PeriodePersonTypeProps;
+type Props = PensjonsperiodeProps & PeriodePersonTypeMedBarnProps;
 
 export const Pensjonsperiode: React.FC<Props> = ({
     skjema,
