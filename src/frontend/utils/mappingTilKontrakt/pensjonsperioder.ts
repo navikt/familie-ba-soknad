@@ -13,21 +13,26 @@ import { PersonType } from '../perioder';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
+interface PensjonsperiodeIKontraktFormatParams {
+    periode: IPensjonsperiode;
+    periodeNummer: number;
+    gjelderUtlandet: boolean;
+}
+
+export type PeriodePersonTypeProps =
+    | { personType: PersonType.Søker; barn?: never; erDød?: never }
+    | { personType: PersonType.Omsorgsperson; barn: IBarnMedISøknad; erDød?: never }
+    | { personType: PersonType.AndreForelder; barn: IBarnMedISøknad; erDød: boolean };
+
 export const tilIPensjonsperiodeIKontraktFormat = ({
     periode,
     periodeNummer,
+    gjelderUtlandet,
     personType,
     erDød,
-    gjelderUtlandet,
     barn,
-}: {
-    periode: IPensjonsperiode;
-    periodeNummer: number;
-    personType: PersonType;
-    erDød: boolean;
-    gjelderUtlandet: boolean;
-    barn?: IBarnMedISøknad;
-}): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
+}: PensjonsperiodeIKontraktFormatParams &
+    PeriodePersonTypeProps): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
     const periodenErAvsluttet =
         mottarPensjonNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);

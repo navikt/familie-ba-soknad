@@ -16,19 +16,25 @@ import {
     verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 
+interface ArbeidsperiodeIKontraktFormatParams {
+    periode: IArbeidsperiode;
+    periodeNummer: number;
+    gjelderUtlandet: boolean;
+}
+
+export type PeriodePersonTypeProps =
+    | { personType: PersonType.Søker; erDød?: never }
+    | { personType: PersonType.Omsorgsperson; erDød?: never }
+    | { personType: PersonType.AndreForelder; erDød: boolean };
+
 export const tilIArbeidsperiodeIKontraktFormat = ({
     periode,
     periodeNummer,
     gjelderUtlandet,
     personType,
-    erDød = false,
-}: {
-    periode: IArbeidsperiode;
-    periodeNummer: number;
-    gjelderUtlandet: boolean;
-    personType: PersonType;
-    erDød?: boolean;
-}): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
+    erDød,
+}: ArbeidsperiodeIKontraktFormatParams &
+    PeriodePersonTypeProps): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
     const {
         arbeidsperiodeAvsluttet,
         arbeidsperiodeland,
