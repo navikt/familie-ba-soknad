@@ -20,7 +20,7 @@ interface Props {
     arbeidsperiode: IArbeidsperiode;
     nummer: number;
     fjernPeriodeCallback?: (arbeidsperiode: IArbeidsperiode) => void;
-    gjelderUtlandet?: boolean;
+    gjelderUtlandet: boolean;
 }
 
 type ArbeidperiodeOppsummeringPersonTypeProps =
@@ -34,7 +34,7 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
     arbeidsperiode,
     nummer,
     fjernPeriodeCallback = undefined,
-    gjelderUtlandet = false,
+    gjelderUtlandet,
     personType,
     erDød = false,
 }) => {

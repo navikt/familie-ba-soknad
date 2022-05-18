@@ -68,6 +68,8 @@ export interface IOmsorgspersonIKontraktFormatV7 {
     slektsforholdSpesifisering: ISøknadsfelt<string>;
     idNummer: ISøknadsfelt<string>;
     adresse: ISøknadsfelt<string>;
+    arbeidUtland: ISøknadsfelt<ESvar | null>;
+    arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
 }
 
 export interface IAndreForelderIKontraktFormatV7 {

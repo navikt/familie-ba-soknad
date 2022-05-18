@@ -44,8 +44,8 @@ export const useEøsForBarn = (
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
     leggTilAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
-    leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
-    fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
+    leggTilArbeidsperiodeNorgeAndreForelder: (periode: IArbeidsperiode) => void;
+    fjernArbeidsperiodeNorgeAndreForelder: (periode: IArbeidsperiode) => void;
     leggTilArbeidsperiodeUtlandOmsorgsperson: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiodeUtlandOmsorgsperson: (periode: IArbeidsperiode) => void;
     settIdNummerFelterForBarn: Dispatch<SetStateAction<Felt<string>[]>>;
@@ -306,8 +306,8 @@ export const useEøsForBarn = (
     });
 
     const {
-        fjernPeriode: fjernArbeidsperiode,
-        leggTilPeriode: leggTilArbeidsperiode,
+        fjernPeriode: fjernArbeidsperiodeNorgeAndreForelder,
+        leggTilPeriode: leggTilArbeidsperiodeNorgeAndreForelder,
         registrertePerioder: andreForelderArbeidsperioderNorge,
     } = usePerioder<IArbeidsperiode>(
         andreForelder?.arbeidsperioderNorge ?? [],
@@ -568,8 +568,8 @@ export const useEøsForBarn = (
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
-        leggTilArbeidsperiode,
-        fjernArbeidsperiode,
+        leggTilArbeidsperiodeNorgeAndreForelder,
+        fjernArbeidsperiodeNorgeAndreForelder,
         settIdNummerFelterForBarn,
         idNummerFelterForBarn,
         idNummerFelterForAndreForelder,

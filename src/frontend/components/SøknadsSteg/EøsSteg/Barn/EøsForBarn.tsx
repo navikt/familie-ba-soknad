@@ -37,8 +37,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernPensjonsperiode,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
-        leggTilArbeidsperiode,
-        fjernArbeidsperiode,
+        leggTilArbeidsperiodeNorgeAndreForelder,
+        fjernArbeidsperiodeNorgeAndreForelder,
         settIdNummerFelterForBarn,
         settIdNummerFelterForAndreForelder,
         leggTilArbeidsperiodeUtlandOmsorgsperson,
@@ -251,40 +251,41 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
 
                             {skjema.felter.andreForelderAdresse.erSynlig && (
                                 <KomponentGruppe>
-                                    <SkjemaFeltInput
-                                        felt={skjema.felter.andreForelderAdresse}
-                                        visFeilmeldinger={skjema.visFeilmeldinger}
-                                        labelSpråkTekstId={
-                                            eøsBarnSpørsmålSpråkId[
-                                                EøsBarnSpørsmålId.andreForelderAdresse
-                                            ]
-                                        }
-                                        description={
-                                            <SpråkTekst id={'felles.hjelpetekst.fulladresse'} />
-                                        }
-                                        disabled={
-                                            skjema.felter.andreForelderAdresseVetIkke.verdi ===
-                                            ESvar.JA
-                                        }
-                                        språkValues={{ barn: barn.navn }}
-                                    />
-
-                                    <SkjemaCheckbox
-                                        felt={skjema.felter.andreForelderAdresseVetIkke}
-                                        labelSpråkTekstId={
-                                            eøsBarnSpørsmålSpråkId[
-                                                EøsBarnSpørsmålId.andreForelderAdresseVetIkke
-                                            ]
-                                        }
-                                    />
+                                    <>
+                                        <SkjemaFeltInput
+                                            felt={skjema.felter.andreForelderAdresse}
+                                            visFeilmeldinger={skjema.visFeilmeldinger}
+                                            labelSpråkTekstId={
+                                                eøsBarnSpørsmålSpråkId[
+                                                    EøsBarnSpørsmålId.andreForelderAdresse
+                                                ]
+                                            }
+                                            description={
+                                                <SpråkTekst id={'felles.hjelpetekst.fulladresse'} />
+                                            }
+                                            disabled={
+                                                skjema.felter.andreForelderAdresseVetIkke.verdi ===
+                                                ESvar.JA
+                                            }
+                                            språkValues={{ barn: barn.navn }}
+                                        />
+                                        <SkjemaCheckbox
+                                            felt={skjema.felter.andreForelderAdresseVetIkke}
+                                            labelSpråkTekstId={
+                                                eøsBarnSpørsmålSpråkId[
+                                                    EøsBarnSpørsmålId.andreForelderAdresseVetIkke
+                                                ]
+                                            }
+                                        />
+                                    </>
                                 </KomponentGruppe>
                             )}
 
                             <KomponentGruppe>
                                 <Arbeidsperiode
                                     skjema={skjema}
-                                    leggTilArbeidsperiode={leggTilArbeidsperiode}
-                                    fjernArbeidsperiode={fjernArbeidsperiode}
+                                    leggTilArbeidsperiode={leggTilArbeidsperiodeNorgeAndreForelder}
+                                    fjernArbeidsperiode={fjernArbeidsperiodeNorgeAndreForelder}
                                     arbeiderEllerArbeidetFelt={
                                         skjema.felter.andreForelderArbeidNorge
                                     }

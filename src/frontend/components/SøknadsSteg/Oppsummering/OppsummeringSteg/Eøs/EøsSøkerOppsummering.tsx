@@ -67,6 +67,7 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         arbeidsperiode={arbeidsperiode}
                         nummer={index + 1}
                         personType={PersonType.Søker}
+                        gjelderUtlandet={false}
                     />
                 ))}
 
