@@ -27,6 +27,8 @@ export const omsorgspersonTilISøknadsfeltV7 = (
         adresse,
         arbeidUtland,
         arbeidsperioderUtland,
+        arbeidNorge,
+        arbeidsperioderNorge,
     } = omsorgsperson;
     return {
         navn: søknadsfeltBarn(
@@ -71,6 +73,19 @@ export const omsorgspersonTilISøknadsfeltV7 = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: true,
+                personType: PersonType.Omsorgsperson,
+            })
+        ),
+        arbeidNorge: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonArbeidNorge),
+            sammeVerdiAlleSpråk(arbeidNorge.svar),
+            barn
+        ),
+        arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
+            tilIArbeidsperiodeIKontraktFormat({
+                periode,
+                periodeNummer: index + 1,
+                gjelderUtlandet: false,
                 personType: PersonType.Omsorgsperson,
             })
         ),

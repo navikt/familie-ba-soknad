@@ -70,6 +70,8 @@ export interface IOmsorgspersonIKontraktFormatV7 {
     adresse: ISøknadsfelt<string>;
     arbeidUtland: ISøknadsfelt<ESvar | null>;
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
+    arbeidNorge: ISøknadsfelt<ESvar | null>;
+    arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
 }
 
 export interface IAndreForelderIKontraktFormatV7 {

@@ -43,6 +43,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         settIdNummerFelterForAndreForelder,
         leggTilArbeidsperiodeUtlandOmsorgsperson,
         fjernArbeidsperiodeUtlandOmsorgsperson,
+        leggTilArbeidsperiodeNorgeOmsorgsperson,
+        fjernArbeidsperiodeNorgeOmsorgsperson,
     } = useEøsForBarn(barnetsId);
     const intl = useIntl();
     const { søknad } = useApp();
@@ -213,6 +215,16 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             skjema.felter.omsorgspersonArbeidsperioderUtland
                         }
                         gjelderUtlandet
+                        personType={PersonType.Omsorgsperson}
+                        barn={barn}
+                    />
+                    <Arbeidsperiode
+                        skjema={skjema}
+                        leggTilArbeidsperiode={leggTilArbeidsperiodeNorgeOmsorgsperson}
+                        fjernArbeidsperiode={fjernArbeidsperiodeNorgeOmsorgsperson}
+                        arbeiderEllerArbeidetFelt={skjema.felter.omsorgspersonArbeidNorge}
+                        registrerteArbeidsperioder={skjema.felter.omsorgspersonArbeidsperioderNorge}
+                        gjelderUtlandet={false}
                         personType={PersonType.Omsorgsperson}
                         barn={barn}
                     />
