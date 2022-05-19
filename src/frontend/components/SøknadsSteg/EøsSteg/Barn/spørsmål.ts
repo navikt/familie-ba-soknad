@@ -19,6 +19,8 @@ export enum EøsBarnSpørsmålId {
     omsorgspersonAdresse = 'omsorgsperson-adresse',
     omsorgspersonArbeidUtland = 'omsorgsperson-arbeid-utland',
     omsorgspersonArbeidNorge = 'omsorgsperson-arbeid-norge',
+    omsorgspersonPensjonUtland = 'omsorgsperson-pensjon-utland',
+    omsorgspersonPensjonNorge = 'omsorgsperson-pensjon-norge',
     idNummer = 'id-nummer',
     idNummerAndreForelder = 'id-nummer-andre-forelder',
     idNummerUkjent = 'id-nummer-ukjent',
@@ -49,6 +51,8 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
     [EøsBarnSpørsmålId.omsorgspersonArbeidUtland]: 'eøs-om-barn.omsorgsperson-arbeid-utland.spm',
     [EøsBarnSpørsmålId.omsorgspersonArbeidNorge]:
         'eøs-om-barn.omsorgspersonarbeidsperiodenorge.spm',
+    [EøsBarnSpørsmålId.omsorgspersonPensjonUtland]: 'eøs-om-barn.omsorgsperson-pensjon-utland.spm',
+    [EøsBarnSpørsmålId.omsorgspersonPensjonNorge]: 'eøs-om-barn.omsorgsperson-pensjon-norge.spm',
     [EøsBarnSpørsmålId.idNummer]: 'eøs-om-barn.barnidnummer.spm',
     [EøsBarnSpørsmålId.idNummerAndreForelder]: 'eøs-om-barn.andreforelderidnummer.spm',
     [EøsBarnSpørsmålId.idNummerUkjent]: 'felles.kjennerikkeidnummer.sjekkboks',

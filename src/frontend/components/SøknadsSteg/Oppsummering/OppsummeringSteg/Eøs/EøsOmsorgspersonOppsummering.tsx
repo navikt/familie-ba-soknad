@@ -2,11 +2,12 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { IOmsorgsperson } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
+import { IOmsorgsperson } from '../../../../../typer/omsorgsperson';
 import { PersonType } from '../../../../../utils/perioder';
 import { toSlektsforholdSpråkId } from '../../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
@@ -107,6 +108,46 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                 <ArbeidsperiodeOppsummering
                     key={`arbeidsperiode-omsorgsperson-norge-${index}`}
                     arbeidsperiode={arbeidsperiode}
+                    nummer={index + 1}
+                    personType={PersonType.Omsorgsperson}
+                    gjelderUtlandet={false}
+                />
+            ))}
+            {omsorgsperson.pensjonUtland.svar && (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.pensjonUtland.id]}
+                            values={{ barn: barnetsNavn }}
+                        />
+                    }
+                    søknadsvar={omsorgsperson.pensjonUtland.svar}
+                />
+            )}
+            {omsorgsperson.pensjonsperioderUtland.map((pensjonsperiode, index) => (
+                <PensjonsperiodeOppsummering
+                    key={`pensjonsperiode-omsorgsperson-utland-${index}`}
+                    pensjonsperiode={pensjonsperiode}
+                    nummer={index + 1}
+                    personType={PersonType.Omsorgsperson}
+                    gjelderUtlandet={true}
+                />
+            ))}
+            {omsorgsperson.pensjonNorge.svar && (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.pensjonNorge.id]}
+                            values={{ barn: barnetsNavn }}
+                        />
+                    }
+                    søknadsvar={omsorgsperson.pensjonNorge.svar}
+                />
+            )}
+            {omsorgsperson.pensjonsperioderNorge.map((pensjonsperiode, index) => (
+                <PensjonsperiodeOppsummering
+                    key={`pensjonsperiode-omsorgsperson-norge-${index}`}
+                    pensjonsperiode={pensjonsperiode}
                     nummer={index + 1}
                     personType={PersonType.Omsorgsperson}
                     gjelderUtlandet={false}

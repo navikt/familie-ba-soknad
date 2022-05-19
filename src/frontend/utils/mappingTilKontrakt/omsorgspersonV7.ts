@@ -2,9 +2,10 @@ import {
     EøsBarnSpørsmålId,
     eøsBarnSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
-import { IBarnMedISøknad, IOmsorgsperson } from '../../typer/barn';
+import { IBarnMedISøknad } from '../../typer/barn';
 import { Slektsforhold } from '../../typer/kontrakt/barn';
 import { IOmsorgspersonIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { IOmsorgsperson } from '../../typer/omsorgsperson';
 import { PersonType } from '../perioder';
 import { hentTekster, toSlektsforholdSpråkId } from '../språk';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
