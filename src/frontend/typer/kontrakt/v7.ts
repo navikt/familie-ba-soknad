@@ -72,6 +72,10 @@ export interface IOmsorgspersonIKontraktFormatV7 {
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     arbeidNorge: ISøknadsfelt<ESvar | null>;
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
+    pensjonUtland: ISøknadsfelt<ESvar | null>;
+    pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
+    pensjonNorge: ISøknadsfelt<ESvar | null>;
+    pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
 }
 
 export interface IAndreForelderIKontraktFormatV7 {

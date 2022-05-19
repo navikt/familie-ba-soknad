@@ -15,6 +15,7 @@ import {
     språktekstIdFraSpørsmålId,
     søknadsfeltBarn,
 } from './hjelpefunksjoner';
+import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 
 export const omsorgspersonTilISøknadsfeltV7 = (
     omsorgsperson: IOmsorgsperson,
@@ -30,6 +31,10 @@ export const omsorgspersonTilISøknadsfeltV7 = (
         arbeidsperioderUtland,
         arbeidNorge,
         arbeidsperioderNorge,
+        pensjonUtland,
+        pensjonsperioderUtland,
+        pensjonNorge,
+        pensjonsperioderNorge,
     } = omsorgsperson;
     return {
         navn: søknadsfeltBarn(
@@ -88,6 +93,34 @@ export const omsorgspersonTilISøknadsfeltV7 = (
                 periodeNummer: index + 1,
                 gjelderUtlandet: false,
                 personType: PersonType.Omsorgsperson,
+            })
+        ),
+        pensjonUtland: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPensjonUtland),
+            sammeVerdiAlleSpråk(pensjonUtland.svar),
+            barn
+        ),
+        pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
+            tilIPensjonsperiodeIKontraktFormat({
+                periode,
+                periodeNummer: index + 1,
+                gjelderUtlandet: true,
+                personType: PersonType.Omsorgsperson,
+                barn: barn,
+            })
+        ),
+        pensjonNorge: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPensjonNorge),
+            sammeVerdiAlleSpråk(pensjonNorge.svar),
+            barn
+        ),
+        pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
+            tilIPensjonsperiodeIKontraktFormat({
+                periode,
+                periodeNummer: index + 1,
+                gjelderUtlandet: false,
+                personType: PersonType.Omsorgsperson,
+                barn: barn,
             })
         ),
     };
