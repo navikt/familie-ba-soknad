@@ -8,6 +8,7 @@ import {
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/v7';
 import { IArbeidsperiode } from '../../typer/perioder';
+import { PeriodePersonTypeProps } from '../../typer/personType';
 import { PersonType } from '../perioder';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import {
@@ -16,19 +17,20 @@ import {
     verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 
+interface ArbeidsperiodeIKontraktFormatParams {
+    periode: IArbeidsperiode;
+    periodeNummer: number;
+    gjelderUtlandet: boolean;
+}
+
 export const tilIArbeidsperiodeIKontraktFormat = ({
     periode,
     periodeNummer,
     gjelderUtlandet,
     personType,
-    erDød = false,
-}: {
-    periode: IArbeidsperiode;
-    periodeNummer: number;
-    gjelderUtlandet: boolean;
-    personType: PersonType;
-    erDød?: boolean;
-}): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
+    erDød,
+}: ArbeidsperiodeIKontraktFormatParams &
+    PeriodePersonTypeProps): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
     const {
         arbeidsperiodeAvsluttet,
         arbeidsperiodeland,

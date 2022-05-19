@@ -209,7 +209,8 @@ const DinLivssituasjon: React.FC = () => {
                         registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
                         leggTilPensjonsperiode={leggTilPensjonsperiode}
                         fjernPensjonsperiode={fjernPensjonsperiode}
-                        gjelderUtlandet
+                        gjelderUtlandet={true}
+                        personType={PersonType.Søker}
                     />
                 ) : (
                     <KomponentGruppe inline>

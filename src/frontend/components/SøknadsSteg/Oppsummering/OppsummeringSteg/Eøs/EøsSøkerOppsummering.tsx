@@ -77,6 +77,8 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         key={`pensjonsperiode-søker-norge-${index}`}
                         pensjonsperiode={pensjonsperiode}
                         nummer={index + 1}
+                        gjelderUtlandet={false}
+                        personType={PersonType.Søker}
                     />
                 ))}
 

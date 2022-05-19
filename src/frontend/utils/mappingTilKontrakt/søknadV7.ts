@@ -142,18 +142,16 @@ export const dataISøknadKontraktFormatV7 = (
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
                     gjelderUtlandet: true,
+                    personType: PersonType.Søker,
                 })
             ),
             pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
                     gjelderUtlandet: false,
+                    personType: PersonType.Søker,
                 })
             ),
             andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>

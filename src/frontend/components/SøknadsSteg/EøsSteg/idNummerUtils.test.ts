@@ -6,7 +6,7 @@ import { IArbeidsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../t
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { mockEøs } from '../../../utils/testing';
 import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
-import { PensjonSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
+import { PensjonsperiodeSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     eøsLandUtenDuplikatHof,
@@ -39,8 +39,8 @@ describe('idNummerLandMedPeriodeType', () => {
         ];
         const pensjonsperioder: IPensjonsperiode[] = [
             {
-                mottarPensjonNå: { id: PensjonSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
-                pensjonsland: { id: PensjonSpørsmålId.pensjonsland, svar: 'BGR' },
+                mottarPensjonNå: { id: PensjonsperiodeSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
+                pensjonsland: { id: PensjonsperiodeSpørsmålId.pensjonsland, svar: 'BGR' },
             },
         ];
 
@@ -71,8 +71,8 @@ describe('idNummerLandMedPeriodeType', () => {
         ];
         const pensjonsperioder: IPensjonsperiode[] = [
             {
-                mottarPensjonNå: { id: PensjonSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
-                pensjonsland: { id: PensjonSpørsmålId.pensjonsland, svar: 'BGR' },
+                mottarPensjonNå: { id: PensjonsperiodeSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
+                pensjonsland: { id: PensjonsperiodeSpørsmålId.pensjonsland, svar: 'BGR' },
             },
         ];
 
@@ -111,8 +111,8 @@ describe('idNummerLandMedPeriodeType', () => {
         ];
         const pensjonsperioder: IPensjonsperiode[] = [
             {
-                mottarPensjonNå: { id: PensjonSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
-                pensjonsland: { id: PensjonSpørsmålId.pensjonsland, svar: 'BGR' },
+                mottarPensjonNå: { id: PensjonsperiodeSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
+                pensjonsland: { id: PensjonsperiodeSpørsmålId.pensjonsland, svar: 'BGR' },
             },
         ];
 

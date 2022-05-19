@@ -5,8 +5,8 @@ import { Element } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { IBarnMedISøknad } from '../../../typer/barn';
 import { IArbeidsperiode } from '../../../typer/perioder';
+import { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
 import {
     IDinLivssituasjonFeltTyper,
     IEøsForBarnFeltTyper,
@@ -43,12 +43,7 @@ interface ArbeidsperiodeProps {
     registrerteArbeidsperioder: Felt<IArbeidsperiode[]>;
 }
 
-type ArbeidperiodePersonTypeProps =
-    | { personType: PersonType.Søker; barn?: never; erDød?: never }
-    | { personType: PersonType.Omsorgsperson; barn: IBarnMedISøknad; erDød?: never }
-    | { personType: PersonType.AndreForelder; barn: IBarnMedISøknad; erDød: boolean };
-
-type Props = ArbeidsperiodeProps & ArbeidperiodePersonTypeProps;
+type Props = ArbeidsperiodeProps & PeriodePersonTypeMedBarnProps;
 
 export const Arbeidsperiode: React.FC<Props> = ({
     skjema,
