@@ -40,6 +40,22 @@ export const pensjonAndreForelderSpørsmålSpråkId = (
     [PensjonsperiodeSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
 });
 
+export const pensjonOmsorgspersonSpørsmålSpråkId = (
+    periodenErAvsluttet = false
+): Record<
+    Exclude<PensjonsperiodeSpørsmålId, PensjonsperiodeSpørsmålId.pensjonsperioder>,
+    string
+> => ({
+    [PensjonsperiodeSpørsmålId.mottarPensjonNå]: 'modal.omsorgsperson.pensjonnå.spm',
+    [PensjonsperiodeSpørsmålId.pensjonsland]: periodenErAvsluttet
+        ? 'modal.hvilketlandpensjon-fortid-omsorgsperson.spm'
+        : 'modal.hvilketlandpensjon-nåtid-omsorgsperson.spm',
+    [PensjonsperiodeSpørsmålId.fraDatoPensjon]: periodenErAvsluttet
+        ? 'felles.modal.franårpensjon-omsorgsperson-fortid.spm'
+        : 'felles.modal.franårpensjon-omsorgsperson-nåtid.spm',
+    [PensjonsperiodeSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
+});
+
 export const hentPensjonsperiodeSpørsmålIder = (
     personType: PersonType,
     periodenErAvsluttet: boolean
@@ -50,6 +66,8 @@ export const hentPensjonsperiodeSpørsmålIder = (
     switch (personType) {
         case PersonType.AndreForelder:
             return pensjonAndreForelderSpørsmålSpråkId(periodenErAvsluttet);
+        case PersonType.Omsorgsperson:
+            return pensjonOmsorgspersonSpørsmålSpråkId(periodenErAvsluttet);
         case PersonType.Søker:
         default:
             return pensjonSøkerSpørsmålSpråkId(periodenErAvsluttet);

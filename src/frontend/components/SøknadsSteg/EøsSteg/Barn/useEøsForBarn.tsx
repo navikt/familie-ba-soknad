@@ -40,8 +40,8 @@ export const useEøsForBarn = (
     valideringErOk: () => boolean;
     validerAlleSynligeFelter: () => void;
     oppdaterSøknad: () => void;
-    leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
-    fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
+    leggTilPensjonsperiodeNorgeAndreForelder: (periode: IPensjonsperiode) => void;
+    fjernPensjonsperiodeNorgeAndreForelder: (periode: IPensjonsperiode) => void;
     leggTilAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     leggTilArbeidsperiodeNorgeAndreForelder: (periode: IArbeidsperiode) => void;
@@ -50,6 +50,10 @@ export const useEøsForBarn = (
     fjernArbeidsperiodeUtlandOmsorgsperson: (periode: IArbeidsperiode) => void;
     leggTilArbeidsperiodeNorgeOmsorgsperson: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiodeNorgeOmsorgsperson: (periode: IArbeidsperiode) => void;
+    leggTilPensjonsperiodeUtlandOmsorgsperson: (periode: IPensjonsperiode) => void;
+    fjernPensjonsperiodeUtlandOmsorgsperson: (periode: IPensjonsperiode) => void;
+    leggTilPensjonsperiodeNorgeOmsorgsperson: (periode: IPensjonsperiode) => void;
+    fjernPensjonsperiodeNorgeOmsorgsperson: (periode: IPensjonsperiode) => void;
     settIdNummerFelterForBarn: Dispatch<SetStateAction<Felt<string>[]>>;
     idNummerFelterForBarn: Felt<string>[];
     idNummerFelterForAndreForelder: Felt<string>[];
@@ -275,6 +279,52 @@ export const useEøsForBarn = (
         }
     );
 
+    const omsorgspersonPensjonUtland = useJaNeiSpmFelt({
+        søknadsfelt: omsorgsperson?.pensjonUtland,
+        feilmeldingSpråkId: 'eøs-om-barn.omsorgsperson-pensjon-utland.feilmelding',
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
+        skalSkjules: borMedOmsorgsperson.verdi !== ESvar.JA,
+    });
+
+    const {
+        fjernPeriode: fjernPensjonsperiodeUtlandOmsorgsperson,
+        leggTilPeriode: leggTilPensjonsperiodeUtlandOmsorgsperson,
+        registrertePerioder: omsorgspersonPensjonsperioderUtland,
+    } = usePerioder<IPensjonsperiode>(
+        omsorgsperson?.pensjonsperioderUtland ?? [],
+        { omsorgspersonPensjonUtland },
+        avhengigheter => avhengigheter.omsorgspersonPensjonUtland.verdi === ESvar.JA,
+        (felt, avhengigheter) => {
+            return avhengigheter?.omsorgspersonPensjonUtland.verdi === ESvar.NEI ||
+                (avhengigheter?.omsorgspersonPensjonUtland.verdi === ESvar.JA && felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
+        }
+    );
+
+    const omsorgspersonPensjonNorge = useJaNeiSpmFelt({
+        søknadsfelt: omsorgsperson?.pensjonNorge,
+        feilmeldingSpråkId: 'eøs-om-barn.omsorgsperson-pensjon-norge.feilmelding',
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
+        skalSkjules: borMedOmsorgsperson.verdi !== ESvar.JA,
+    });
+
+    const {
+        fjernPeriode: fjernPensjonsperiodeNorgeOmsorgsperson,
+        leggTilPeriode: leggTilPensjonsperiodeNorgeOmsorgsperson,
+        registrertePerioder: omsorgspersonPensjonsperioderNorge,
+    } = usePerioder<IPensjonsperiode>(
+        omsorgsperson?.pensjonsperioderNorge ?? [],
+        { omsorgspersonPensjonNorge },
+        avhengigheter => avhengigheter.omsorgspersonPensjonNorge.verdi === ESvar.JA,
+        (felt, avhengigheter) => {
+            return avhengigheter?.omsorgspersonPensjonNorge.verdi === ESvar.NEI ||
+                (avhengigheter?.omsorgspersonPensjonNorge.verdi === ESvar.JA && felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
+        }
+    );
+
     /*--- BARNETS ADRESSE ---*/
     const barnetsAdresseVetIkke = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(gjeldendeBarn[barnDataKeySpørsmål.adresse].svar),
@@ -357,8 +407,8 @@ export const useEøsForBarn = (
     });
 
     const {
-        fjernPeriode: fjernPensjonsperiode,
-        leggTilPeriode: leggTilPensjonsperiode,
+        fjernPeriode: fjernPensjonsperiodeNorgeAndreForelder,
+        leggTilPeriode: leggTilPensjonsperiodeNorgeAndreForelder,
         registrertePerioder: andreForelderPensjonsperioderNorge,
     } = usePerioder<IPensjonsperiode>(
         andreForelder?.pensjonsperioderNorge ?? [],
@@ -479,6 +529,22 @@ export const useEøsForBarn = (
             omsorgspersonArbeidNorge.verdi === ESvar.JA
                 ? omsorgspersonArbeidsperioderNorge.verdi
                 : [],
+        pensjonUtland: {
+            id: EøsBarnSpørsmålId.omsorgspersonPensjonUtland,
+            svar: omsorgspersonPensjonUtland.verdi,
+        },
+        pensjonsperioderUtland:
+            omsorgspersonPensjonUtland.verdi === ESvar.JA
+                ? omsorgspersonPensjonsperioderUtland.verdi
+                : [],
+        pensjonNorge: {
+            id: EøsBarnSpørsmålId.omsorgspersonPensjonNorge,
+            svar: omsorgspersonPensjonNorge.verdi,
+        },
+        pensjonsperioderNorge:
+            omsorgspersonPensjonNorge.verdi === ESvar.JA
+                ? omsorgspersonPensjonsperioderNorge.verdi
+                : [],
     });
 
     const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
@@ -585,6 +651,10 @@ export const useEøsForBarn = (
             omsorgspersonArbeidsperioderUtland,
             omsorgspersonArbeidNorge,
             omsorgspersonArbeidsperioderNorge,
+            omsorgspersonPensjonUtland,
+            omsorgspersonPensjonsperioderUtland,
+            omsorgspersonPensjonNorge,
+            omsorgspersonPensjonsperioderNorge,
             barnetsAdresse,
             barnetsAdresseVetIkke,
             borMedOmsorgsperson,
@@ -599,8 +669,8 @@ export const useEøsForBarn = (
         valideringErOk,
         validerAlleSynligeFelter,
         oppdaterSøknad,
-        leggTilPensjonsperiode,
-        fjernPensjonsperiode,
+        leggTilPensjonsperiodeNorgeAndreForelder,
+        fjernPensjonsperiodeNorgeAndreForelder,
         leggTilAndreUtbetalingsperiode,
         fjernAndreUtbetalingsperiode,
         leggTilArbeidsperiodeNorgeAndreForelder,
@@ -613,5 +683,9 @@ export const useEøsForBarn = (
         fjernArbeidsperiodeUtlandOmsorgsperson,
         leggTilArbeidsperiodeNorgeOmsorgsperson,
         fjernArbeidsperiodeNorgeOmsorgsperson,
+        leggTilPensjonsperiodeUtlandOmsorgsperson,
+        fjernPensjonsperiodeUtlandOmsorgsperson,
+        leggTilPensjonsperiodeNorgeOmsorgsperson,
+        fjernPensjonsperiodeNorgeOmsorgsperson,
     };
 };

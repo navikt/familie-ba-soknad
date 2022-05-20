@@ -4,6 +4,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
 import { Slektsforhold } from './kontrakt/barn';
+import { IOmsorgsperson } from './omsorgsperson';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
@@ -93,18 +94,6 @@ export interface IAndreForelder {
         [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
         [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: ISøknadSpørsmål<DatoMedUkjent>;
     };
-}
-
-export interface IOmsorgsperson {
-    navn: ISøknadSpørsmål<string>;
-    slektsforhold: ISøknadSpørsmål<Slektsforhold | ''>;
-    slektsforholdSpesifisering: ISøknadSpørsmål<string>;
-    idNummer: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
-    adresse: ISøknadSpørsmål<string>;
-    arbeidUtland: ISøknadSpørsmål<ESvar | null>;
-    arbeidsperioderUtland: IArbeidsperiode[];
-    arbeidNorge: ISøknadSpørsmål<ESvar | null>;
-    arbeidsperioderNorge: IArbeidsperiode[];
 }
 
 export interface IBarnMedISøknad extends IBarn {

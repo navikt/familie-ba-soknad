@@ -13,9 +13,9 @@ import {
     barnDataKeySpørsmål,
     IAndreForelder,
     IBarnMedISøknad,
-    IOmsorgsperson,
 } from '../typer/barn';
 import { tomString } from '../typer/common';
+import { IOmsorgsperson } from '../typer/omsorgsperson';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
