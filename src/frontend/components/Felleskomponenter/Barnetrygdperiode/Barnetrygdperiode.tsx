@@ -7,30 +7,38 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
-import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
+import { PeriodePersonTypeProps } from '../../../typer/personType';
+import { IEøsForBarnFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { PersonType } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { BarnetrygdperiodeModal } from './BarnetrygdperiodeModal';
 import { BarnetrygdsperiodeOppsummering } from './BarnetrygdperiodeOppsummering';
+import { barnetrygdSpørsmålSpråkId } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
-interface BarnetrygdperiodeProps {
-    skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
+interface Props {
+    skjema: ISkjema<IOmBarnetUtvidetFeltTyper | IEøsForBarnFeltTyper, string>;
     registrerteEøsBarnetrygdsperioder: Felt<IEøsBarnetrygdsperiode[]>;
     leggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     barn: IBarnMedISøknad;
+    tilhørendeJaNeiSpmFelt: Felt<ESvar | null>;
 }
+
+type BarnetrygdperiodeProps = Props & PeriodePersonTypeProps;
 
 export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     skjema,
     registrerteEøsBarnetrygdsperioder,
     leggTilBarnetrygdsperiode,
     fjernBarnetrygdsperiode,
+    personType,
+    erDød,
     barn,
+    tilhørendeJaNeiSpmFelt,
 }) => {
     const { erÅpen: barnetrygdsmodalErÅpen, toggleModal: toggleBarnetrygdsmodal } = useModal();
 
@@ -38,12 +46,16 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
         <>
             <JaNeiSpm
                 skjema={skjema}
-                felt={skjema.felter.mottarEllerMottokEøsBarnetrygd}
-                spørsmålTekstId={
-                    omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd]
-                }
+                felt={tilhørendeJaNeiSpmFelt}
+                spørsmålTekstId={barnetrygdSpørsmålSpråkId(personType, erDød)}
+                inkluderVetIkke={personType !== PersonType.Søker}
+                språkValues={{
+                    ...(personType !== PersonType.Søker && {
+                        barn: barn.navn,
+                    }),
+                }}
             />
-            {skjema.felter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA && (
+            {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
                 <>
                     {registrerteEøsBarnetrygdsperioder.verdi.map((periode, index) => (
                         <BarnetrygdsperiodeOppsummering

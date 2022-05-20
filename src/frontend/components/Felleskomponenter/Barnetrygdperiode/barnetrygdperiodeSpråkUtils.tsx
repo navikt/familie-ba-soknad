@@ -1,5 +1,8 @@
 import React, { ReactNode } from 'react';
 
+import { PersonType } from '../../../utils/perioder';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { BarnetrygdperiodeSpørsmålId, barnetrygdperiodeSpørsmålSpråkId } from './spørsmål';
 
@@ -18,3 +21,16 @@ export const eøsBarnetrygdSpørsmålSpråkTekst = (
         values={språkValues}
     />
 );
+
+export const barnetrygdSpørsmålSpråkId = (personType: PersonType, erDød?: boolean): string => {
+    switch (personType) {
+        case PersonType.AndreForelder: {
+            return erDød
+                ? eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderBarnetrygdGjenlevende]
+                : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderBarnetrygd];
+        }
+        case PersonType.Søker:
+        default:
+            return omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd];
+    }
+};

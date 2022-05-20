@@ -9,6 +9,7 @@ import { useEøs } from '../../../context/EøsContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
@@ -245,9 +246,13 @@ const Oppfølgningsspørsmål: React.FC<{
                                 registrerteEøsBarnetrygdsperioder={
                                     registrerteEøsBarnetrygdsperioder
                                 }
+                                tilhørendeJaNeiSpmFelt={
+                                    skjema.felter.mottarEllerMottokEøsBarnetrygd
+                                }
                                 leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
                                 fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
                                 barn={barn}
+                                personType={PersonType.Søker}
                             />
                         </KomponentGruppe>
                     ) : (

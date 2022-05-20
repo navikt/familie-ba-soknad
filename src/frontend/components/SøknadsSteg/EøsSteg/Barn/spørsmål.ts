@@ -7,6 +7,8 @@ export enum EøsBarnSpørsmålId {
     andreForelderAndreUtbetalingerEnke = 'andre-forelder-andre-utbetalinger-enke',
     andreForelderAdresse = 'andre-forelder-adresse',
     andreForelderAdresseVetIkke = 'andre-forelder-adresse-ukjent',
+    andreForelderBarnetrygdGjenlevende = 'andre-forelder-barnetrygd-gjenlevende',
+    andreForelderBarnetrygd = 'andre-forelder-barnetrygd',
     søkersSlektsforhold = 'søkers-slektsforhold',
     søkersSlektsforholdSpesifisering = 'søkers-slektsforhold-spesifisering',
     borMedAndreForelder = 'bor-med-andre-forelder',
@@ -36,6 +38,9 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
     [EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke]: 'enkeenkemann.annenforelderarbeidnorge.spm',
     [EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke]: 'enkeenkemann.annenforelderytelser.spm',
     [EøsBarnSpørsmålId.andreForelderAndreUtbetalinger]: 'eøs-om-barn.andreforelderutbetalinger.spm',
+    [EøsBarnSpørsmålId.andreForelderBarnetrygdGjenlevende]:
+        'eøs-om-barn.andre-forelder-barnetrygd-gjenlevende.spm',
+    [EøsBarnSpørsmålId.andreForelderBarnetrygd]: 'eøs-om-barn.andre-forelder-barnetrygd.spm',
     [EøsBarnSpørsmålId.søkersSlektsforhold]: 'eøs-om-barn.dittslektsforhold.spm',
     [EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering]: 'eøs-om-barn.dinrelasjon.spm',
     [EøsBarnSpørsmålId.borMedAndreForelder]: 'eøs-om-barn.borbarnmedandreforelder.spm',

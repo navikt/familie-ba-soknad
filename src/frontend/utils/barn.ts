@@ -44,6 +44,7 @@ export const genererInitiellAndreForelder = (
         andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
         pensjonsperioderNorge: andreForelder?.pensjonsperioderNorge ?? [],
         pensjonsperioderUtland: andreForelder?.pensjonsperioderUtland ?? [],
+        eøsBarnetrygdperioder: andreForelder?.eøsBarnetrygdperioder ?? [],
         idNummer: andreForelder?.idNummer ?? [],
         [andreForelderDataKeySpørsmål.navn]: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,
@@ -110,6 +111,12 @@ export const genererInitiellAndreForelder = (
         [andreForelderDataKeySpørsmål.adresse]: {
             svar: andreForelder?.adresse.svar ?? '',
             id: EøsBarnSpørsmålId.andreForelderAdresse,
+        },
+        [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: {
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.barnetrygdFraEøs].svar ?? null,
+            id: andreForelderErDød
+                ? EøsBarnSpørsmålId.andreForelderBarnetrygdGjenlevende
+                : EøsBarnSpørsmålId.andreForelderBarnetrygd,
         },
         utvidet: {
             ...andreForelder?.utvidet,
