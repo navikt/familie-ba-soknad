@@ -7,8 +7,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
+import { PersonType } from '../../../../typer/personType';
 import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
-import { PersonType } from '../../../../utils/perioder';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
@@ -267,7 +267,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         skjema.felter.andreForelderBarnetrygdFraEøs
                                     }
                                     registrerteEøsBarnetrygdsperioder={
-                                        skjema.felter.andreForelderEøsBarnetrygdperioder
+                                        skjema.felter.andreForelderEøsBarnetrygdsperioder
                                     }
                                     leggTilBarnetrygdsperiode={
                                         leggTilBarnetrygdsperiodeAndreForelder

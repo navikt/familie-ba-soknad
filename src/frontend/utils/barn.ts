@@ -44,7 +44,7 @@ export const genererInitiellAndreForelder = (
         andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
         pensjonsperioderNorge: andreForelder?.pensjonsperioderNorge ?? [],
         pensjonsperioderUtland: andreForelder?.pensjonsperioderUtland ?? [],
-        eøsBarnetrygdperioder: andreForelder?.eøsBarnetrygdperioder ?? [],
+        eøsBarnetrygdsperioder: andreForelder?.eøsBarnetrygdsperioder ?? [],
         idNummer: andreForelder?.idNummer ?? [],
         [andreForelderDataKeySpørsmål.navn]: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,

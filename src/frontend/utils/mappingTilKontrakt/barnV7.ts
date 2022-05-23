@@ -13,6 +13,7 @@ import { AlternativtSvarForInput } from '../../typer/common';
 import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarnV7 } from '../../typer/kontrakt/v7';
 import { ISøker } from '../../typer/person';
+import { PersonType } from '../../typer/personType';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { hentTekster } from '../språk';
 import { andreForelderTilISøknadsfeltV7 } from './andreForelderV7';
@@ -110,6 +111,7 @@ export const barnISøknadsFormatV7 = (
                 periode,
                 periodeNummer: index + 1,
                 barn,
+                personType: PersonType.Søker,
             })
         ),
         idNummer: idNummer.map(idnummerObj =>

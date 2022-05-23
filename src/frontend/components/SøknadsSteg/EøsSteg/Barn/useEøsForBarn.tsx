@@ -462,15 +462,16 @@ export const useEøsForBarn = (
             gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
                 ? 'eøs-om-barn.andre-forelder-barnetrygd-gjenlevende.feilmelding'
                 : 'eøs-om-barn.andre-forelder-barnetrygd.feilmelding',
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         skalSkjules: skalSkjuleAndreForelderFelt(gjeldendeBarn),
     });
 
     const {
         fjernPeriode: fjernBarnetrygdsperiodeAndreForelder,
         leggTilPeriode: leggTilBarnetrygdsperiodeAndreForelder,
-        registrertePerioder: andreForelderEøsBarnetrygdperioder,
+        registrertePerioder: andreForelderEøsBarnetrygdsperioder,
     } = usePerioder<IEøsBarnetrygdsperiode>(
-        andreForelder?.eøsBarnetrygdperioder ?? [],
+        andreForelder?.eøsBarnetrygdsperioder ?? [],
         { andreForelderBarnetrygdFraEøs },
         avhengigheter => avhengigheter.andreForelderBarnetrygdFraEøs.verdi === ESvar.JA,
         (felt, avhengigheter) => {
@@ -515,7 +516,7 @@ export const useEøsForBarn = (
             },
             eøsBarnetrygdsperioder:
                 andreForelderBarnetrygdFraEøs.verdi === ESvar.JA
-                    ? andreForelderEøsBarnetrygdperioder.verdi
+                    ? andreForelderEøsBarnetrygdsperioder.verdi
                     : [],
             idNummer: idNummerFelterForAndreForelder.map(felt => ({
                 land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
@@ -678,7 +679,7 @@ export const useEøsForBarn = (
             andreForelderArbeidNorge,
             andreForelderArbeidsperioderNorge,
             andreForelderBarnetrygdFraEøs,
-            andreForelderEøsBarnetrygdperioder,
+            andreForelderEøsBarnetrygdsperioder,
             andreForelderAdresse,
             andreForelderAdresseVetIkke,
             søkersSlektsforhold,

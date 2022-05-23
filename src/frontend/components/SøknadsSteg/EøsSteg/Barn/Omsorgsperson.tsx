@@ -7,8 +7,8 @@ import { ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../../typer/barn';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../../typer/perioder';
+import { PersonType } from '../../../../typer/personType';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
-import { PersonType } from '../../../../utils/perioder';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';

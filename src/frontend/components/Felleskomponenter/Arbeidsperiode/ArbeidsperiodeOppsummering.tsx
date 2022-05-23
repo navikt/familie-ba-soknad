@@ -6,15 +6,18 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IArbeidsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { formaterDato } from '../../../utils/dato';
-import { PersonType } from '../../../utils/perioder';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
-import { arbeidsperiodeModalSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
+import {
+    arbeidsperiodeModalSpørsmålSpråkId,
+    arbeidsperiodeOppsummeringOverskrift,
+} from './arbeidsperiodeSpråkUtils';
+import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 interface Props {
     arbeidsperiode: IArbeidsperiode;

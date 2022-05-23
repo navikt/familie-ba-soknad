@@ -6,7 +6,7 @@ import { IBarnMedISøknad } from '../../typer/barn';
 import { Slektsforhold } from '../../typer/kontrakt/barn';
 import { IOmsorgspersonIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { IOmsorgsperson } from '../../typer/omsorgsperson';
-import { PersonType } from '../perioder';
+import { PersonType } from '../../typer/personType';
 import { hentTekster, toSlektsforholdSpråkId } from '../språk';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import {

@@ -7,16 +7,18 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
-import { PeriodePersonTypeProps } from '../../../typer/personType';
+import { PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { PersonType } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { BarnetrygdperiodeModal } from './BarnetrygdperiodeModal';
 import { BarnetrygdsperiodeOppsummering } from './BarnetrygdperiodeOppsummering';
-import { barnetrygdSpørsmålSpråkId } from './barnetrygdperiodeSpråkUtils';
+import {
+    barnetrygdperiodeFlereSpørsmål,
+    barnetrygdSpørsmålSpråkId,
+} from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 interface Props {
@@ -64,12 +66,17 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             fjernPeriodeCallback={fjernBarnetrygdsperiode}
                             nummer={index + 1}
                             barnetsNavn={barn.navn}
+                            personType={personType}
+                            erDød={personType === PersonType.AndreForelder && erDød}
                         />
                     ))}
 
                     {registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
                         <Element>
-                            <SpråkTekst id={'ombarnet.trygdandreperioder.spm'} />
+                            <SpråkTekst
+                                id={barnetrygdperiodeFlereSpørsmål(personType)}
+                                values={{ barn: barn.navn }}
+                            />
                         </Element>
                     )}
 
@@ -90,6 +97,8 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                         toggleModal={toggleBarnetrygdsmodal}
                         onLeggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
                         barn={barn}
+                        personType={personType}
+                        erDød={erDød}
                     />
                 </>
             )}
