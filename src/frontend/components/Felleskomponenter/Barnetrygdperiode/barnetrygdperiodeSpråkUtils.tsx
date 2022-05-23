@@ -13,6 +13,11 @@ export const barnetrygdslandFeilmelding = (
                 ? 'modal.annenforelder-barnetrygd-fortid.feilmelding'
                 : 'modal.annenforelder-barnetrygd-nåtid.feilmelding';
         }
+        case PersonType.Omsorgsperson: {
+            return periodenErAvsluttet
+                ? 'modal.omsorgsperson-barnetrygd-fortid.feilmelding'
+                : 'modal.omsorgsperson-barnetrygd-nåtid.feilmelding';
+        }
         case PersonType.Søker:
         default: {
             return periodenErAvsluttet
@@ -28,6 +33,9 @@ export const barnetrygdSpørsmålSpråkId = (personType: PersonType, erDød?: bo
             return erDød
                 ? eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderBarnetrygdGjenlevende]
                 : eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderBarnetrygd];
+        }
+        case PersonType.Omsorgsperson: {
+            return eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonBarnetrygd];
         }
         case PersonType.Søker:
         default:
@@ -51,36 +59,56 @@ export const mottarBarnetrygdNåFeilmelding = (personType: PersonType) => {
     switch (personType) {
         case PersonType.AndreForelder:
             return 'modal.barnetrygdnå-annenforelder.feilmelding';
+        case PersonType.Omsorgsperson:
+            return 'modal.barnetrygdnå-omsorgsperson.feilmelding';
         case PersonType.Søker:
         default:
             return 'modal.barnetrygdnå.feilmelding';
     }
 };
 
+const barnetrygdperiodeFellesSpørsmålSpråkId: Record<
+    Exclude<
+        BarnetrygdperiodeSpørsmålId,
+        | BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå
+        | BarnetrygdperiodeSpørsmålId.barnetrygdsland
+    >,
+    string
+> = {
+    [BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs]: 'modal.trygdandreperioder.tittel',
+    [BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode]: 'modal.trygdnårbegynte.spm',
+    [BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode]: 'modal.trygdnåravsluttet.spm',
+    [BarnetrygdperiodeSpørsmålId.månedligBeløp]: 'ombarnet.trygdbeløp.spm',
+};
+
 export const barnetrygdperiodeSøkerSpørsmålSpråkId = (
     periodenErAvsluttet = false
 ): Record<BarnetrygdperiodeSpørsmålId, string> => ({
-    [BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs]: 'modal.trygdandreperioder.tittel',
     [BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå]: 'modal.barnetrygdnå.spm',
     [BarnetrygdperiodeSpørsmålId.barnetrygdsland]: periodenErAvsluttet
         ? 'modal.hvilketlandbarnetrygd.spm'
         : 'ombarnet.hvilketlandfår.spm',
-    [BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode]: 'modal.trygdnårbegynte.spm',
-    [BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode]: 'modal.trygdnåravsluttet.spm',
-    [BarnetrygdperiodeSpørsmålId.månedligBeløp]: 'ombarnet.trygdbeløp.spm',
+    ...barnetrygdperiodeFellesSpørsmålSpråkId,
 });
 
 export const barnetrygdperiodeAndreForelderSpørsmålSpråkId = (
     periodenErAvsluttet = false
 ): Record<BarnetrygdperiodeSpørsmålId, string> => ({
-    [BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs]: 'modal.trygdandreperioder.tittel',
     [BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå]: 'modal.barnetrygdnå-annenforelder.spm',
     [BarnetrygdperiodeSpørsmålId.barnetrygdsland]: periodenErAvsluttet
         ? 'modal.annenforelder-barnetrygd-fortid.spm'
         : 'modal.annenforelder-barnetrygd-nåtid.spm',
-    [BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode]: 'modal.trygdnårbegynte.spm',
-    [BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode]: 'modal.trygdnåravsluttet.spm',
-    [BarnetrygdperiodeSpørsmålId.månedligBeløp]: 'ombarnet.trygdbeløp.spm',
+    ...barnetrygdperiodeFellesSpørsmålSpråkId,
+});
+
+export const barnetrygdperiodeOmsorgspersonSpørsmålSpråkId = (
+    periodenErAvsluttet = false
+): Record<BarnetrygdperiodeSpørsmålId, string> => ({
+    [BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå]: 'modal.barnetrygdnå-omsorgsperson.spm',
+    [BarnetrygdperiodeSpørsmålId.barnetrygdsland]: periodenErAvsluttet
+        ? 'modal.omsorgsperson-barnetrygd-fortid.spm'
+        : 'modal.omsorgsperson-barnetrygd-nåtid.spm',
+    ...barnetrygdperiodeFellesSpørsmålSpråkId,
 });
 
 export const barnetrygdperiodeModalSpørsmålSpråkId =
@@ -91,6 +119,11 @@ export const barnetrygdperiodeModalSpørsmålSpråkId =
                 return barnetrygdperiodeAndreForelderSpørsmålSpråkId(periodenErAvsluttet)[
                     spørsmålId
                 ];
+            case PersonType.Omsorgsperson: {
+                return barnetrygdperiodeOmsorgspersonSpørsmålSpråkId(periodenErAvsluttet)[
+                    spørsmålId
+                ];
+            }
             case PersonType.Søker:
             default:
                 return barnetrygdperiodeSøkerSpørsmålSpråkId(periodenErAvsluttet)[spørsmålId];

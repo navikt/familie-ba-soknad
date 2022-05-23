@@ -520,6 +520,11 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                         id: EøsBarnSpørsmålId.omsorgspersonPensjonNorge,
                         svar: ESvar.NEI,
                     },
+                    eøsBarnetrygdsperioder: [],
+                    barnetrygdFraEøs: {
+                        id: EøsBarnSpørsmålId.omsorgspersonBarnetrygd,
+                        svar: ESvar.NEI,
+                    },
                 },
             }),
         })),

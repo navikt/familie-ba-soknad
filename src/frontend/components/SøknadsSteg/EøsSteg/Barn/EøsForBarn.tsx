@@ -53,6 +53,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernPensjonsperiodeUtlandOmsorgsperson,
         leggTilPensjonsperiodeNorgeOmsorgsperson,
         fjernPensjonsperiodeNorgeOmsorgsperson,
+        leggTilBarnetrygdsperiodeOmsorgsperson,
+        fjernBarnetrygdsperiodeOmsorgsperson,
     } = useEøsForBarn(barnetsId);
     const intl = useIntl();
     const { søknad } = useApp();
@@ -148,6 +150,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         fjernPensjonsperiodeUtlandOmsorgsperson,
                         leggTilPensjonsperiodeNorgeOmsorgsperson,
                         fjernPensjonsperiodeNorgeOmsorgsperson,
+                        leggTilBarnetrygdsperiodeOmsorgsperson,
+                        fjernBarnetrygdsperiodeOmsorgsperson,
                     }}
                 />
             )}
