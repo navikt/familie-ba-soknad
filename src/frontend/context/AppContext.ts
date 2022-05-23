@@ -46,8 +46,6 @@ const [AppProvider, useApp] = createUseContext(() => {
     const { toggles } = useFeatureToggles();
     const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
 
-    console.log(søknad.barnInkludertISøknaden[0]?.andreForelder);
-
     useEffect(() => {
         if (nåværendeRoute === RouteEnum.Kvittering) {
             return;

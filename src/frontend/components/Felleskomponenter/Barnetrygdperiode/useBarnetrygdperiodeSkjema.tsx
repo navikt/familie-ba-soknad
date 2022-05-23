@@ -24,26 +24,31 @@ export interface IUsePensjonsperiodeSkjemaParams {
     barn: IBarnMedISøknad;
 }
 
-export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn) => {
+export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød) => {
     const mottarEøsBarnetrygdNå = useJaNeiSpmFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå, svar: null },
         feilmeldingSpråkId: mottarBarnetrygdNåFeilmelding(personType),
         feilmeldingSpråkVerdier: { barn: barn.navn },
+        skalSkjules: erDød,
     });
 
-    const periodenErAvsluttet = mottarEøsBarnetrygdNå.verdi === ESvar.NEI;
+    const andreForelderErDød = personType === PersonType.AndreForelder && erDød;
+
+    const periodenErAvsluttet = mottarEøsBarnetrygdNå.verdi === ESvar.NEI || andreForelderErDød;
 
     const barnetrygdsland = useLanddropdownFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.barnetrygdsland, svar: '' },
         feilmeldingSpråkId: barnetrygdslandFeilmelding(periodenErAvsluttet, personType),
-        skalFeltetVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
+        skalFeltetVises:
+            mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         nullstillVedAvhengighetEndring: true,
         feilmeldingSpråkVerdier: { barn: barn.navn },
     });
 
     const fraDatoBarnetrygdperiode = useDatovelgerFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode, svar: '' },
-        skalFeltetVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
+        skalFeltetVises:
+            mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         feilmeldingSpråkId: 'modal.trygdnårbegynte.feilmelding',
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
@@ -51,7 +56,7 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn) => {
 
     const tilDatoBarnetrygdperiode = useDatovelgerFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode, svar: '' },
-        skalFeltetVises: periodenErAvsluttet,
+        skalFeltetVises: periodenErAvsluttet || andreForelderErDød,
         feilmeldingSpråkId: 'modal.trygdnåravsluttet.spm',
         sluttdatoAvgrensning: dagensDato(),
         startdatoAvgrensning: dagenEtterDato(fraDatoBarnetrygdperiode.verdi),
@@ -79,7 +84,8 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn) => {
         },
 
         skalFeltetVises: avhengigheter =>
-            avhengigheter.mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
+            avhengigheter.mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK ||
+            andreForelderErDød,
         avhengigheter: { mottarEøsBarnetrygdNå },
     });
 

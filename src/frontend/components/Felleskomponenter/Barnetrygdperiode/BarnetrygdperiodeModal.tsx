@@ -41,7 +41,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     erDød = false,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useBarnetrygdperiodeSkjema(personType, barn);
+        useBarnetrygdperiodeSkjema(personType, barn, erDød);
 
     const {
         mottarEøsBarnetrygdNå,
