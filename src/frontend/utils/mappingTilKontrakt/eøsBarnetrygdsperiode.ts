@@ -34,13 +34,16 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
     const periodenErAvsluttet =
         mottarEøsBarnetrygdNå.svar === ESvar.NEI ||
         (personType === PersonType.AndreForelder && erDød);
-    const hentSpørsmålTekstId = (spørsmålId: string) =>
-        hentTekster(
-            barnetrygdperiodeModalSpørsmålSpråkId(personType, periodenErAvsluttet)[spørsmålId],
-            {
-                ...(barn && { barn: barn.navn }),
-            }
+
+    const hentSpørsmålTekstId = (spørsmålId: BarnetrygdperiodeSpørsmålId) => {
+        const barnetrygdperiodeSpørsmålSpråkIder = barnetrygdperiodeModalSpørsmålSpråkId(
+            personType,
+            periodenErAvsluttet
         );
+        return hentTekster(barnetrygdperiodeSpørsmålSpråkIder(spørsmålId), {
+            ...(barn && { barn: barn.navn }),
+        });
+    };
 
     return {
         label: hentTekster('ombarnet.trygdandreperioder.periode', {
