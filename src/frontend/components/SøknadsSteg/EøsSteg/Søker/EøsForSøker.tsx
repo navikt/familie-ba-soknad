@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PersonType } from '../../../../utils/perioder';
+import { PersonType } from '../../../../typer/personType';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';

@@ -8,9 +8,9 @@ import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { PersonType } from '../../../typer/personType';
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, dagensDato, gårsdagensDato } from '../../../utils/dato';
-import { PersonType } from '../../../utils/perioder';
 import {
     mottarPensjonNåFeilmeldingSpråkId,
     pensjonFraDatoFeilmeldingSpråkId,

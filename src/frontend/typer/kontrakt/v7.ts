@@ -95,10 +95,12 @@ export interface IAndreForelderIKontraktFormatV7 {
     pensjonNorge: ISøknadsfelt<ESvar | null>;
     arbeidNorge: ISøknadsfelt<ESvar | null>;
     andreUtbetalinger: ISøknadsfelt<ESvar | null>;
+    barnetrygdFraEøs: ISøknadsfelt<ESvar | null>;
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
+    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
     andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7>[];
     idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
     adresse: ISøknadsfelt<string>;

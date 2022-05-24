@@ -7,9 +7,10 @@ import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjen
 import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
+import { PersonType } from '../../../typer/personType';
 import { IArbeidsperioderFeltTyper } from '../../../typer/skjema';
 import { dagensDato, erSammeDatoSomDagensDato, gårsdagensDato } from '../../../utils/dato';
-import { minTilDatoForUtbetalingEllerArbeidsperiode, PersonType } from '../../../utils/perioder';
+import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import {
     arbeidslandFeilmelding,
     tilDatoArbeidsperiodeFeilmelding,

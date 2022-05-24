@@ -10,10 +10,10 @@ import { IBarnMedISøknad } from '../../typer/barn';
 import { ESivilstand } from '../../typer/kontrakt/generelle';
 import { ISøknadKontraktV7 } from '../../typer/kontrakt/v7';
 import { ISøker } from '../../typer/person';
+import { PersonType } from '../../typer/personType';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
-import { PersonType } from '../perioder';
 import {
     hentSivilstatusSpråkId,
     hentTekster,

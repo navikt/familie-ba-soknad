@@ -3,9 +3,9 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IPensjonsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import { PersonType } from '../../../utils/perioder';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';

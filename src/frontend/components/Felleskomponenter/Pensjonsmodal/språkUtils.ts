@@ -1,4 +1,4 @@
-import { PersonType } from '../../../utils/perioder';
+import { PersonType } from '../../../typer/personType';
 import {
     DinLivssituasjonSpørsmålId,
     dinLivssituasjonSpørsmålSpråkId,
@@ -9,12 +9,7 @@ import {
     eøsSøkerSpørsmålSpråkId,
 } from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
-import {
-    pensjonAndreForelderSpørsmålSpråkId,
-    pensjonOmsorgspersonSpørsmålSpråkId,
-    PensjonsperiodeSpørsmålId,
-    pensjonSøkerSpørsmålSpråkId,
-} from './spørsmål';
+import { PensjonsperiodeSpørsmålId } from './spørsmål';
 
 export const mottarPensjonNåFeilmeldingSpråkId = (personType: PersonType): string => {
     switch (personType) {
@@ -137,6 +132,71 @@ export const pensjonsperiodeOppsummeringOverskrift = (gjelderUtlandet: boolean):
         ? 'felles.leggtilpensjon.periode.utland'
         : 'felles.leggtilpensjon.periode.norge';
 
+export const pensjonSøkerSpørsmålSpråkId = (
+    periodenErAvsluttet = false
+): Record<
+    Exclude<PensjonsperiodeSpørsmålId, PensjonsperiodeSpørsmålId.pensjonsperioder>,
+    string
+> => ({
+    [PensjonsperiodeSpørsmålId.mottarPensjonNå]: 'modal.fårdupensjonnå.spm',
+    [PensjonsperiodeSpørsmålId.pensjonsland]: periodenErAvsluttet
+        ? 'felles.hvilketlandpensjon.spm'
+        : 'omdeg.utenlandspensjon.land.spm',
+    [PensjonsperiodeSpørsmålId.fraDatoPensjon]: periodenErAvsluttet
+        ? 'felles.modal.franårfikkpensjon.spm'
+        : 'felles.franårpensjon.spm',
+    [PensjonsperiodeSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
+});
+
+export const pensjonAndreForelderSpørsmålSpråkId = (
+    periodenErAvsluttet = false
+): Record<
+    Exclude<PensjonsperiodeSpørsmålId, PensjonsperiodeSpørsmålId.pensjonsperioder>,
+    string
+> => ({
+    [PensjonsperiodeSpørsmålId.mottarPensjonNå]: 'ombarnet.andre-forelder.pensjonnå.spm',
+    [PensjonsperiodeSpørsmålId.pensjonsland]: periodenErAvsluttet
+        ? 'modal.hvilketlandpensjonandreforelder.spm'
+        : 'ombarnet.andre-forelder.utenlandspensjon.land.spm',
+    [PensjonsperiodeSpørsmålId.fraDatoPensjon]: periodenErAvsluttet
+        ? 'modal.franårandreforelderpensjon.spm'
+        : 'pensjonmodal.franårpensjonandreforelder.nåtid.spm',
+    [PensjonsperiodeSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
+});
+
+export const pensjonOmsorgspersonSpørsmålSpråkId = (
+    periodenErAvsluttet = false
+): Record<
+    Exclude<PensjonsperiodeSpørsmålId, PensjonsperiodeSpørsmålId.pensjonsperioder>,
+    string
+> => ({
+    [PensjonsperiodeSpørsmålId.mottarPensjonNå]: 'modal.omsorgsperson.pensjonnå.spm',
+    [PensjonsperiodeSpørsmålId.pensjonsland]: periodenErAvsluttet
+        ? 'modal.hvilketlandpensjon-fortid-omsorgsperson.spm'
+        : 'modal.hvilketlandpensjon-nåtid-omsorgsperson.spm',
+    [PensjonsperiodeSpørsmålId.fraDatoPensjon]: periodenErAvsluttet
+        ? 'felles.modal.franårpensjon-omsorgsperson-fortid.spm'
+        : 'felles.modal.franårpensjon-omsorgsperson-nåtid.spm',
+    [PensjonsperiodeSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
+});
+
+export const hentPensjonsperiodeSpørsmålIder = (
+    personType: PersonType,
+    periodenErAvsluttet: boolean
+): Record<
+    Exclude<PensjonsperiodeSpørsmålId, PensjonsperiodeSpørsmålId.pensjonsperioder>,
+    string
+> => {
+    switch (personType) {
+        case PersonType.AndreForelder:
+            return pensjonAndreForelderSpørsmålSpråkId(periodenErAvsluttet);
+        case PersonType.Omsorgsperson:
+            return pensjonOmsorgspersonSpørsmålSpråkId(periodenErAvsluttet);
+        case PersonType.Søker:
+        default:
+            return pensjonSøkerSpørsmålSpråkId(periodenErAvsluttet);
+    }
+};
 export const pensjonsperiodeModalSpørsmålSpråkId =
     (personType: PersonType, periodenErAvsluttet: boolean) =>
     (spørsmålId: PensjonsperiodeSpørsmålId): string => {

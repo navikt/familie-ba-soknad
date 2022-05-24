@@ -3,9 +3,10 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IArbeidsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import { minTilDatoForUtbetalingEllerArbeidsperiode, PersonType } from '../../../utils/perioder';
+import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -17,7 +18,8 @@ import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { arbeidsperiodeModalSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
+import { arbeidsperiodeModalSpørsmålSpråkId } from './arbeidsperiodeSpråkUtils';
+import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
 interface ArbeidsperiodeModalProps

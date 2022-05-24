@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { IOmsorgsperson } from '../../../../../typer/omsorgsperson';
-import { PersonType } from '../../../../../utils/perioder';
+import { PersonType } from '../../../../../typer/personType';
 import { toSlektsforholdSpråkId } from '../../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';

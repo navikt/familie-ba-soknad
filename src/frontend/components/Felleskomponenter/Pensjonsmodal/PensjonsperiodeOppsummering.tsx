@@ -5,14 +5,17 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { formaterDato } from '../../../utils/dato';
-import { PersonType } from '../../../utils/perioder';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { pensjonsperiodeOppsummeringOverskrift } from './språkUtils';
-import { hentPensjonsperiodeSpørsmålIder, PensjonsperiodeSpørsmålId } from './spørsmål';
+import {
+    hentPensjonsperiodeSpørsmålIder,
+    pensjonsperiodeOppsummeringOverskrift,
+} from './språkUtils';
+import { PensjonsperiodeSpørsmålId } from './spørsmål';
 
 interface Props {
     pensjonsperiode: IPensjonsperiode;

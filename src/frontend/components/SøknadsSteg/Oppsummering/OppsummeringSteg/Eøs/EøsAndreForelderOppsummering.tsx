@@ -12,9 +12,10 @@ import {
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
+import { PersonType } from '../../../../../typer/personType';
 import { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
-import { PersonType } from '../../../../../utils/perioder';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
@@ -106,6 +107,17 @@ const EøsAndreForelderOppsummering: React.FC<{
                         utbetalingsperiode={utbetalingsperiode}
                         nummer={index + 1}
                         andreForelderData={{ erDød: andreForelderErDød, barn }}
+                    />
+                ))}
+                {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.barnetrygdFraEøs)}
+                {andreForelder.eøsBarnetrygdsperioder.map((periode, index) => (
+                    <BarnetrygdsperiodeOppsummering
+                        key={`barnetrygdperiode-andre-forelder-${index}`}
+                        nummer={index + 1}
+                        barnetrygdsperiode={periode}
+                        barnetsNavn={barn.navn}
+                        personType={PersonType.AndreForelder}
+                        erDød={andreForelderErDød}
                     />
                 ))}
             </StyledOppsummeringsFeltGruppe>

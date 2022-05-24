@@ -16,9 +16,10 @@ import {
     IBarnMedISøknad,
 } from '../../typer/barn';
 import { IAndreForelderIKontraktFormatV7 } from '../../typer/kontrakt/v7';
-import { PersonType } from '../perioder';
+import { PersonType } from '../../typer/personType';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
+import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
     sammeVerdiAlleSpråk,
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,
@@ -42,6 +43,7 @@ export const andreForelderTilISøknadsfeltV7 = (
         arbeidsperioderNorge,
         pensjonsperioderNorge,
         andreUtbetalingsperioder,
+        eøsBarnetrygdsperioder,
         idNummer,
         adresse,
         kanIkkeGiOpplysninger,
@@ -116,6 +118,15 @@ export const andreForelderTilISøknadsfeltV7 = (
                     : EøsBarnSpørsmålId.andreForelderAndreUtbetalinger
             ),
             sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.andreUtbetalinger].svar),
+            barn
+        ),
+        [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(
+                forelderErDød
+                    ? EøsBarnSpørsmålId.andreForelderBarnetrygd
+                    : EøsBarnSpørsmålId.andreForelderBarnetrygdGjenlevende
+            ),
+            sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.barnetrygdFraEøs].svar),
             barn
         ),
         [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: søknadsfeltBarn(
@@ -196,6 +207,15 @@ export const andreForelderTilISøknadsfeltV7 = (
                 periodeNummer: index + 1,
                 gjelderAndreForelder: true,
                 erAndreForelderDød: forelderErDød,
+                barn,
+            })
+        ),
+        eøsBarnetrygdsperioder: eøsBarnetrygdsperioder.map((periode, index) =>
+            tilIEøsBarnetrygsperiodeIKontraktFormat({
+                periode,
+                periodeNummer: index + 1,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
                 barn,
             })
         ),

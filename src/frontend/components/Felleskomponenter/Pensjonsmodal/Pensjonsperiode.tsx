@@ -6,14 +6,13 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IPensjonsperiode } from '../../../typer/perioder';
-import { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
+import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import {
     IDinLivssituasjonFeltTyper,
     IEøsForBarnFeltTyper,
     IEøsForSøkerFeltTyper,
     IOmBarnetUtvidetFeltTyper,
 } from '../../../typer/skjema';
-import { PersonType } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
