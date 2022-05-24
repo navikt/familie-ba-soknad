@@ -101,7 +101,10 @@ export const dataISøknadKontraktFormatV7 = (
                     statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, locale))
                 )
             ),
-            adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse ?? {})),
+            adresse: adresse
+                ? søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse))
+                : null,
+            adressebeskyttelse: søker.adressebeskyttelse,
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt(periode, index + 1)
             ),
@@ -217,6 +220,8 @@ export const dataISøknadKontraktFormatV7 = (
             'ombarnet.opplystatbarnutlandopphold.info',
             'ombarnet.barnetrygd-eøs',
             'omdeg.annensamboer.spm',
+            'omdeg.personopplysninger.adressesperre.alert',
+            'omdeg.personopplysninger.ikke-registrert.alert',
             'pdf.andreforelder.seksjonstittel',
             'pdf.hvilkebarn.seksjonstittel',
             'pdf.hvilkebarn.registrert-på-adresse',
