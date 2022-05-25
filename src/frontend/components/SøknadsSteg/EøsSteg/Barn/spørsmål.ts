@@ -23,6 +23,7 @@ export enum EøsBarnSpørsmålId {
     omsorgspersonArbeidNorge = 'omsorgsperson-arbeid-norge',
     omsorgspersonPensjonUtland = 'omsorgsperson-pensjon-utland',
     omsorgspersonPensjonNorge = 'omsorgsperson-pensjon-norge',
+    omsorgspersonAndreUtbetalinger = 'omsorgsperson-andre-utbetalinger',
     omsorgspersonBarnetrygd = 'omsorgsperson-barnetrygd-fra-annet-eøs-land',
     idNummer = 'id-nummer',
     idNummerAndreForelder = 'id-nummer-andre-forelder',
@@ -59,6 +60,8 @@ export const eøsBarnSpørsmålSpråkId: Record<EøsBarnSpørsmålId, string> = 
         'eøs-om-barn.omsorgspersonarbeidsperiodenorge.spm',
     [EøsBarnSpørsmålId.omsorgspersonPensjonUtland]: 'eøs-om-barn.omsorgsperson-pensjon-utland.spm',
     [EøsBarnSpørsmålId.omsorgspersonPensjonNorge]: 'eøs-om-barn.omsorgsperson-pensjon-norge.spm',
+    [EøsBarnSpørsmålId.omsorgspersonAndreUtbetalinger]:
+        'eøs-om-barn.omsorgsperson-utbetalinger.spm',
     [EøsBarnSpørsmålId.omsorgspersonBarnetrygd]: 'eøs-om-barn.omsorgsperson-barnetrygd.spm',
     [EøsBarnSpørsmålId.idNummer]: 'eøs-om-barn.barnidnummer.spm',
     [EøsBarnSpørsmålId.idNummerAndreForelder]: 'eøs-om-barn.andreforelderidnummer.spm',

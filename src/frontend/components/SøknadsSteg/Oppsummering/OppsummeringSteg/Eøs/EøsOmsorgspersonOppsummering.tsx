@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { andreForelderDataKeySpørsmål } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { IOmsorgsperson } from '../../../../../typer/omsorgsperson';
 import { PersonType } from '../../../../../typer/personType';
@@ -10,6 +11,7 @@ import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeid
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
@@ -154,7 +156,26 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     gjelderUtlandet={false}
                 />
             ))}
-
+            {omsorgsperson.andreUtbetalinger.svar && (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.andreUtbetalinger.id]}
+                            values={{ barn: barnetsNavn }}
+                        />
+                    }
+                    søknadsvar={omsorgsperson.andreUtbetalinger.svar}
+                />
+            )}
+            {omsorgsperson.andreUtbetalingsperioder.map((utbetalingsperiode, index) => (
+                <UtbetalingsperiodeOppsummering
+                    key={`utbetalingsperiode-omsorgsperson-${index}`}
+                    utbetalingsperiode={utbetalingsperiode}
+                    nummer={index + 1}
+                    personType={PersonType.Omsorgsperson}
+                    //TODO fikse at man sender inn barnet som trengs videre
+                />
+            ))}
             {omsorgsperson.barnetrygdFraEøs.svar && (
                 <OppsummeringFelt
                     tittel={

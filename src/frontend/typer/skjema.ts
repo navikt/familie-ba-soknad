@@ -153,6 +153,8 @@ export interface IEøsForBarnFeltTyper {
     omsorgspersonPensjonsperioderUtland: IPensjonsperiode[];
     omsorgspersonPensjonNorge: ESvar | null;
     omsorgspersonPensjonsperioderNorge: IPensjonsperiode[];
+    omsorgspersonAndreUtbetalinger: ESvar | null;
+    omsorgspersonAndreUtbetalingsperioder: IUtbetalingsperiode[];
     omsorgspersonBarnetrygdFraEøs: ESvar | null;
     omsorgspersonEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     barnetsAdresse: string | AlternativtSvarForInput.UKJENT;

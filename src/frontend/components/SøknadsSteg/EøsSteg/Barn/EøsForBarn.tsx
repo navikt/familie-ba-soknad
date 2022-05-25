@@ -37,8 +37,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         barn,
         leggTilPensjonsperiodeNorgeAndreForelder,
         fjernPensjonsperiodeNorgeAndreForelder,
-        leggTilAndreUtbetalingsperiode,
-        fjernAndreUtbetalingsperiode,
+        leggTilAndreUtbetalingsperiodeAndreForelder,
+        fjernAndreUtbetalingsperiodeAndreForelder,
         leggTilArbeidsperiodeNorgeAndreForelder,
         fjernArbeidsperiodeNorgeAndreForelder,
         leggTilBarnetrygdsperiodeAndreForelder,
@@ -53,6 +53,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernPensjonsperiodeUtlandOmsorgsperson,
         leggTilPensjonsperiodeNorgeOmsorgsperson,
         fjernPensjonsperiodeNorgeOmsorgsperson,
+        leggTilAndreUtbetalingsperiodeOmsorgsperson,
+        fjernAndreUtbetalingsperiodeOmsorgsperson,
         leggTilBarnetrygdsperiodeOmsorgsperson,
         fjernBarnetrygdsperiodeOmsorgsperson,
     } = useEøsForBarn(barnetsId);
@@ -150,6 +152,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         fjernPensjonsperiodeUtlandOmsorgsperson,
                         leggTilPensjonsperiodeNorgeOmsorgsperson,
                         fjernPensjonsperiodeNorgeOmsorgsperson,
+                        leggTilAndreUtbetalingsperiodeOmsorgsperson,
+                        fjernAndreUtbetalingsperiodeOmsorgsperson,
                         leggTilBarnetrygdsperiodeOmsorgsperson,
                         fjernBarnetrygdsperiodeOmsorgsperson,
                     }}
@@ -255,8 +259,12 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                     tilhørendeJaNeiSpmFelt={
                                         skjema.felter.andreForelderAndreUtbetalinger
                                     }
-                                    leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
-                                    fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
+                                    leggTilUtbetalingsperiode={
+                                        leggTilAndreUtbetalingsperiodeAndreForelder
+                                    }
+                                    fjernUtbetalingsperiode={
+                                        fjernAndreUtbetalingsperiodeAndreForelder
+                                    }
                                     personType={PersonType.AndreForelder}
                                     erDød={barn.andreForelderErDød.svar === ESvar.JA}
                                     barn={barn}
