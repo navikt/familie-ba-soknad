@@ -180,6 +180,7 @@ export const pensjonOmsorgspersonSpørsmålSpråkId = (
     [PensjonsperiodeSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
 });
 
+//TODO kan slette denne
 export const hentPensjonsperiodeSpørsmålIder = (
     personType: PersonType,
     periodenErAvsluttet: boolean

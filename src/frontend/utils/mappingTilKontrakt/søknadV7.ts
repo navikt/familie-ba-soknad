@@ -158,8 +158,7 @@ export const dataISøknadKontraktFormatV7 = (
                 tilIAndreUtbetalingsperioderIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
         },

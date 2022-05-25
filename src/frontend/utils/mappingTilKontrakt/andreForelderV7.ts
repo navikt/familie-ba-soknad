@@ -205,8 +205,8 @@ export const andreForelderTilISøknadsfeltV7 = (
             tilIAndreUtbetalingsperioderIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
-                gjelderAndreForelder: true,
-                erAndreForelderDød: forelderErDød,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
                 barn,
             })
         ),

@@ -360,7 +360,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 />
                             }
                             søknadsvar={(() => {
-                                //TODO refactor
                                 const svar =
                                     barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar;
                                 return svar === AlternativtSvarForInput.UKJENT

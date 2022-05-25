@@ -88,6 +88,7 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         key={`utbetalingsperiode-søker-norge-${index}`}
                         utbetalingsperiode={utbetalingsperiode}
                         nummer={index + 1}
+                        personType={PersonType.Søker}
                     />
                 ))}
             </StyledOppsummeringsFeltGruppe>

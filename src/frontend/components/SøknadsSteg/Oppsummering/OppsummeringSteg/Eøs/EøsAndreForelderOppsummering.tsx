@@ -106,7 +106,9 @@ const EøsAndreForelderOppsummering: React.FC<{
                         key={`utbetalingsperiode-andre-forelder-${index}`}
                         utbetalingsperiode={utbetalingsperiode}
                         nummer={index + 1}
-                        andreForelderData={{ erDød: andreForelderErDød, barn }}
+                        personType={PersonType.AndreForelder}
+                        erDød={andreForelderErDød}
+                        barn={barn}
                     />
                 ))}
                 {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.barnetrygdFraEøs)}
