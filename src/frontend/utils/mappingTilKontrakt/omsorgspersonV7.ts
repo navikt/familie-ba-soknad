@@ -9,6 +9,7 @@ import { IOmsorgsperson } from '../../typer/omsorgsperson';
 import { PersonType } from '../../typer/personType';
 import { hentTekster, toSlektsforholdSpråkId } from '../språk';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
+import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
     sammeVerdiAlleSpråk,
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,
@@ -35,6 +36,8 @@ export const omsorgspersonTilISøknadsfeltV7 = (
         pensjonsperioderUtland,
         pensjonNorge,
         pensjonsperioderNorge,
+        barnetrygdFraEøs,
+        eøsBarnetrygdsperioder,
     } = omsorgsperson;
     return {
         navn: søknadsfeltBarn(
@@ -119,6 +122,19 @@ export const omsorgspersonTilISøknadsfeltV7 = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: false,
+                personType: PersonType.Omsorgsperson,
+                barn: barn,
+            })
+        ),
+        barnetrygdFraEøs: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonBarnetrygd),
+            sammeVerdiAlleSpråk(barnetrygdFraEøs.svar),
+            barn
+        ),
+        eøsBarnetrygdsperioder: eøsBarnetrygdsperioder.map((periode, index) =>
+            tilIEøsBarnetrygsperiodeIKontraktFormat({
+                periode,
+                periodeNummer: index + 1,
                 personType: PersonType.Omsorgsperson,
                 barn: barn,
             })

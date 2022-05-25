@@ -76,6 +76,8 @@ export interface IOmsorgspersonIKontraktFormatV7 {
     pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     pensjonNorge: ISøknadsfelt<ESvar | null>;
     pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
+    barnetrygdFraEøs: ISøknadsfelt<ESvar | null>;
+    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
 }
 
 export interface IAndreForelderIKontraktFormatV7 {

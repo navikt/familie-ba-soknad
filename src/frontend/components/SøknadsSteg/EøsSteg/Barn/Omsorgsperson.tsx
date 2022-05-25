@@ -6,10 +6,15 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../../typer/barn';
-import { IArbeidsperiode, IPensjonsperiode } from '../../../../typer/perioder';
+import {
+    IArbeidsperiode,
+    IEøsBarnetrygdsperiode,
+    IPensjonsperiode,
+} from '../../../../typer/perioder';
 import { PersonType } from '../../../../typer/personType';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
+import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
@@ -30,6 +35,8 @@ interface OmsorgspersonProps {
         fjernPensjonsperiodeUtlandOmsorgsperson: (periode: IPensjonsperiode) => void;
         leggTilPensjonsperiodeNorgeOmsorgsperson: (periode: IPensjonsperiode) => void;
         fjernPensjonsperiodeNorgeOmsorgsperson: (periode: IPensjonsperiode) => void;
+        leggTilBarnetrygdsperiodeOmsorgsperson: (periode: IEøsBarnetrygdsperiode) => void;
+        fjernBarnetrygdsperiodeOmsorgsperson: (periode: IEøsBarnetrygdsperiode) => void;
     };
 }
 
@@ -44,6 +51,8 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
         fjernPensjonsperiodeUtlandOmsorgsperson,
         leggTilPensjonsperiodeNorgeOmsorgsperson,
         fjernPensjonsperiodeNorgeOmsorgsperson,
+        leggTilBarnetrygdsperiodeOmsorgsperson,
+        fjernBarnetrygdsperiodeOmsorgsperson,
     } = periodeFunksjoner;
 
     return (
@@ -150,6 +159,17 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                 barn={barn}
                 gjelderUtlandet={false}
                 registrertePensjonsperioder={skjema.felter.omsorgspersonPensjonsperioderNorge}
+            />
+            <Barnetrygdperiode
+                skjema={skjema}
+                tilhørendeJaNeiSpmFelt={skjema.felter.omsorgspersonBarnetrygdFraEøs}
+                registrerteEøsBarnetrygdsperioder={
+                    skjema.felter.omsorgspersonEøsBarnetrygdsperioder
+                }
+                leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiodeOmsorgsperson}
+                fjernBarnetrygdsperiode={fjernBarnetrygdsperiodeOmsorgsperson}
+                barn={barn}
+                personType={PersonType.Omsorgsperson}
             />
         </SkjemaFieldset>
     );

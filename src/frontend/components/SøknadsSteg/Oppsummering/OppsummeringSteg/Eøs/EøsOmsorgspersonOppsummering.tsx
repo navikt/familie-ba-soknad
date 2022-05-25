@@ -7,6 +7,7 @@ import { IOmsorgsperson } from '../../../../../typer/omsorgsperson';
 import { PersonType } from '../../../../../typer/personType';
 import { toSlektsforholdSpråkId } from '../../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
@@ -151,6 +152,27 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     nummer={index + 1}
                     personType={PersonType.Omsorgsperson}
                     gjelderUtlandet={false}
+                />
+            ))}
+
+            {omsorgsperson.barnetrygdFraEøs.svar && (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.barnetrygdFraEøs.id]}
+                            values={{ barn: barnetsNavn }}
+                        />
+                    }
+                    søknadsvar={omsorgsperson.barnetrygdFraEøs.svar}
+                />
+            )}
+            {omsorgsperson.eøsBarnetrygdsperioder.map((periode, index) => (
+                <BarnetrygdsperiodeOppsummering
+                    key={`barnetrygdperiode-omsorgsperson-${index}`}
+                    nummer={index + 1}
+                    barnetrygdsperiode={periode}
+                    barnetsNavn={barnetsNavn}
+                    personType={PersonType.Omsorgsperson}
                 />
             ))}
         </StyledOppsummeringsFeltGruppe>

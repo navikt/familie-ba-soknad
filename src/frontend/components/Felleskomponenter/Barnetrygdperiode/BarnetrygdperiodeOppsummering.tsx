@@ -62,7 +62,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
             fjernPeriodeCallback={
                 fjernPeriodeCallback && (() => fjernPeriodeCallback(barnetrygdsperiode))
             }
-            fjernKnappSpråkId={'felles.fjernarbeidsperiode.knapp'}
+            fjernKnappSpråkId={'felles.fjernbarnetrygd.knapp'}
             nummer={nummer}
             tittelSpråkId={'ombarnet.trygdandreperioder.periode'}
         >

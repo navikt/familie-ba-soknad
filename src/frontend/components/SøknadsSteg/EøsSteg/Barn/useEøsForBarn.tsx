@@ -61,6 +61,8 @@ export const useEøsForBarn = (
     fjernPensjonsperiodeUtlandOmsorgsperson: (periode: IPensjonsperiode) => void;
     leggTilPensjonsperiodeNorgeOmsorgsperson: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiodeNorgeOmsorgsperson: (periode: IPensjonsperiode) => void;
+    leggTilBarnetrygdsperiodeOmsorgsperson: (periode: IEøsBarnetrygdsperiode) => void;
+    fjernBarnetrygdsperiodeOmsorgsperson: (periode: IEøsBarnetrygdsperiode) => void;
     settIdNummerFelterForBarn: Dispatch<SetStateAction<Felt<string>[]>>;
     idNummerFelterForBarn: Felt<string>[];
     idNummerFelterForAndreForelder: Felt<string>[];
@@ -332,6 +334,30 @@ export const useEøsForBarn = (
         }
     );
 
+    const omsorgspersonBarnetrygdFraEøs = useJaNeiSpmFelt({
+        søknadsfelt: omsorgsperson?.barnetrygdFraEøs,
+        feilmeldingSpråkId: 'eøs-om-barn.omsorgsperson-barnetrygd.feilmelding',
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
+        skalSkjules: borMedOmsorgsperson.verdi !== ESvar.JA,
+    });
+
+    const {
+        fjernPeriode: fjernBarnetrygdsperiodeOmsorgsperson,
+        leggTilPeriode: leggTilBarnetrygdsperiodeOmsorgsperson,
+        registrertePerioder: omsorgspersonEøsBarnetrygdsperioder,
+    } = usePerioder<IEøsBarnetrygdsperiode>(
+        omsorgsperson?.eøsBarnetrygdsperioder ?? [],
+        { omsorgspersonBarnetrygdFraEøs },
+        avhengigheter => avhengigheter.omsorgspersonBarnetrygdFraEøs.verdi === ESvar.JA,
+        (felt, avhengigheter) => {
+            return avhengigheter?.omsorgspersonBarnetrygdFraEøs.verdi === ESvar.NEI ||
+                (avhengigheter?.omsorgspersonBarnetrygdFraEøs.verdi === ESvar.JA &&
+                    felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />);
+        }
+    );
+
     /*--- BARNETS ADRESSE ---*/
     const barnetsAdresseVetIkke = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(gjeldendeBarn[barnDataKeySpørsmål.adresse].svar),
@@ -587,6 +613,14 @@ export const useEøsForBarn = (
             omsorgspersonPensjonNorge.verdi === ESvar.JA
                 ? omsorgspersonPensjonsperioderNorge.verdi
                 : [],
+        barnetrygdFraEøs: {
+            id: EøsBarnSpørsmålId.omsorgspersonBarnetrygd,
+            svar: omsorgspersonBarnetrygdFraEøs.verdi,
+        },
+        eøsBarnetrygdsperioder:
+            omsorgspersonBarnetrygdFraEøs.verdi === ESvar.JA
+                ? omsorgspersonEøsBarnetrygdsperioder.verdi
+                : [],
     });
 
     const genererOppdatertBarn = (barn: IBarnMedISøknad): IBarnMedISøknad => {
@@ -699,6 +733,8 @@ export const useEøsForBarn = (
             omsorgspersonPensjonsperioderUtland,
             omsorgspersonPensjonNorge,
             omsorgspersonPensjonsperioderNorge,
+            omsorgspersonBarnetrygdFraEøs,
+            omsorgspersonEøsBarnetrygdsperioder,
             barnetsAdresse,
             barnetsAdresseVetIkke,
             borMedOmsorgsperson,
@@ -733,5 +769,7 @@ export const useEøsForBarn = (
         fjernPensjonsperiodeUtlandOmsorgsperson,
         leggTilPensjonsperiodeNorgeOmsorgsperson,
         fjernPensjonsperiodeNorgeOmsorgsperson,
+        leggTilBarnetrygdsperiodeOmsorgsperson,
+        fjernBarnetrygdsperiodeOmsorgsperson,
     };
 };

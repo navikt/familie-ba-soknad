@@ -2,7 +2,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput } from './common';
 import { Slektsforhold } from './kontrakt/barn';
-import { IArbeidsperiode, IPensjonsperiode } from './perioder';
+import { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode } from './perioder';
 import { ISøknadSpørsmål } from './spørsmål';
 
 export interface IOmsorgsperson {
@@ -19,4 +19,6 @@ export interface IOmsorgsperson {
     pensjonsperioderUtland: IPensjonsperiode[];
     pensjonNorge: ISøknadSpørsmål<ESvar | null>;
     pensjonsperioderNorge: IPensjonsperiode[];
+    barnetrygdFraEøs: ISøknadSpørsmål<ESvar | null>;
+    eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
 }
