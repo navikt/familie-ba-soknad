@@ -12,7 +12,7 @@ import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFe
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import {
-    hentPensjonsperiodeSpørsmålIder,
+    pensjonsperiodeModalSpørsmålSpråkId,
     pensjonsperiodeOppsummeringOverskrift,
 } from './språkUtils';
 import { PensjonsperiodeSpørsmålId } from './spørsmål';
@@ -46,9 +46,14 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
     const periodenErAvsluttet =
         mottarPensjonNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && !!erDød);
 
+    const hentPensjonsperiodeSpråkIder = pensjonsperiodeModalSpørsmålSpråkId(
+        personType,
+        periodenErAvsluttet
+    );
+
     const spørsmålSpråkTekst = (spørsmålId: PensjonsperiodeSpørsmålId) => (
         <SpråkTekst
-            id={hentPensjonsperiodeSpørsmålIder(personType, periodenErAvsluttet)[spørsmålId]}
+            id={hentPensjonsperiodeSpråkIder(spørsmålId)}
             values={{
                 ...(barn && { barn: barn.navn }),
             }}

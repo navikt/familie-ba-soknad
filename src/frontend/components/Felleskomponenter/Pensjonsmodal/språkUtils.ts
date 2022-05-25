@@ -180,24 +180,6 @@ export const pensjonOmsorgspersonSpørsmålSpråkId = (
     [PensjonsperiodeSpørsmålId.tilDatoPensjon]: 'felles.nåravsluttetpensjon.spm',
 });
 
-//TODO kan slette denne
-export const hentPensjonsperiodeSpørsmålIder = (
-    personType: PersonType,
-    periodenErAvsluttet: boolean
-): Record<
-    Exclude<PensjonsperiodeSpørsmålId, PensjonsperiodeSpørsmålId.pensjonsperioder>,
-    string
-> => {
-    switch (personType) {
-        case PersonType.AndreForelder:
-            return pensjonAndreForelderSpørsmålSpråkId(periodenErAvsluttet);
-        case PersonType.Omsorgsperson:
-            return pensjonOmsorgspersonSpørsmålSpråkId(periodenErAvsluttet);
-        case PersonType.Søker:
-        default:
-            return pensjonSøkerSpørsmålSpråkId(periodenErAvsluttet);
-    }
-};
 export const pensjonsperiodeModalSpørsmålSpråkId =
     (personType: PersonType, periodenErAvsluttet: boolean) =>
     (spørsmålId: PensjonsperiodeSpørsmålId): string => {
