@@ -1,7 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
 import {
-    hentPensjonsperiodeSpørsmålIder,
+    pensjonsperiodeModalSpørsmålSpråkId,
     pensjonsperiodeOppsummeringOverskrift,
 } from '../../components/Felleskomponenter/Pensjonsmodal/språkUtils';
 import { PensjonsperiodeSpørsmålId } from '../../components/Felleskomponenter/Pensjonsmodal/spørsmål';
@@ -28,14 +28,19 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
 }: PensjonsperiodeIKontraktFormatParams &
     PeriodePersonTypeMedBarnProps): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
+
     const periodenErAvsluttet =
         mottarPensjonNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);
 
-    const hentSpørsmålstekster = (pensjonSpørsmålId: string) =>
-        hentTekster(
-            hentPensjonsperiodeSpørsmålIder(personType, periodenErAvsluttet)[pensjonSpørsmålId],
-            { ...(barn && { barn: barn.navn }) }
-        );
+    const hentPensjonsperiodeSpråkId = pensjonsperiodeModalSpørsmålSpråkId(
+        personType,
+        periodenErAvsluttet
+    );
+
+    const hentSpørsmålstekster = (pensjonSpørsmålId: PensjonsperiodeSpørsmålId) =>
+        hentTekster(hentPensjonsperiodeSpråkId(pensjonSpørsmålId), {
+            ...(barn && { barn: barn.navn }),
+        });
 
     return {
         label: hentTekster(pensjonsperiodeOppsummeringOverskrift(gjelderUtlandet), {

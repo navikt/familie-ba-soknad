@@ -252,15 +252,14 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 />
                                 <Utbetalingsperiode
                                     skjema={skjema}
-                                    mottarEllerMottattUtbetalingFelt={
+                                    tilhørendeJaNeiSpmFelt={
                                         skjema.felter.andreForelderAndreUtbetalinger
                                     }
                                     leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
                                     fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
-                                    andreForelderData={{
-                                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                                        barn: barn,
-                                    }}
+                                    personType={PersonType.AndreForelder}
+                                    erDød={barn.andreForelderErDød.svar === ESvar.JA}
+                                    barn={barn}
                                     registrerteUtbetalingsperioder={
                                         skjema.felter.andreForelderAndreUtbetalingsperioder
                                     }

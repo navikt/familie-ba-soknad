@@ -73,8 +73,9 @@ const EøsForSøker: React.FC = () => {
                     skjema={skjema}
                     leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
                     fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
-                    mottarEllerMottattUtbetalingFelt={skjema.felter.andreUtbetalinger}
+                    tilhørendeJaNeiSpmFelt={skjema.felter.andreUtbetalinger}
                     registrerteUtbetalingsperioder={skjema.felter.registrerteAndreUtbetalinger}
+                    personType={PersonType.Søker}
                 />
             </KomponentGruppe>
         </Steg>
