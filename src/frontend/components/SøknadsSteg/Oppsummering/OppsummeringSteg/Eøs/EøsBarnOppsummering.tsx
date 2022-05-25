@@ -80,10 +80,7 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
             )}
 
             {barn.omsorgsperson && (
-                <EøsOmsorgspersonOppsummering
-                    omsorgsperson={barn.omsorgsperson}
-                    barnetsNavn={barn.navn}
-                />
+                <EøsOmsorgspersonOppsummering omsorgsperson={barn.omsorgsperson} barn={barn} />
             )}
 
             {barn.adresse.svar && (

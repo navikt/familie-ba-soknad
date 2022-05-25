@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { andreForelderDataKeySpørsmål } from '../../../../../typer/barn';
+import { IBarnMedISøknad } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { IOmsorgsperson } from '../../../../../typer/omsorgsperson';
 import { PersonType } from '../../../../../typer/personType';
@@ -19,25 +19,22 @@ import { tittelSpmEøsBarnOppsummering } from './utils';
 
 const EøsOmsorgspersonOppsummering: React.FC<{
     omsorgsperson: IOmsorgsperson;
-    barnetsNavn: string;
-}> = ({ omsorgsperson, barnetsNavn }) => {
+    barn: IBarnMedISøknad;
+}> = ({ omsorgsperson, barn }) => {
     const { formatMessage } = useIntl();
 
     return (
         <StyledOppsummeringsFeltGruppe>
             {omsorgsperson.navn.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.navn.id, barnetsNavn)}
+                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.navn.id, barn.navn)}
                     søknadsvar={omsorgsperson.navn.svar}
                 />
             )}
 
             {omsorgsperson.slektsforhold.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(
-                        omsorgsperson.slektsforhold.id,
-                        barnetsNavn
-                    )}
+                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.slektsforhold.id, barn.navn)}
                     søknadsvar={formatMessage({
                         id: toSlektsforholdSpråkId(omsorgsperson.slektsforhold.svar),
                     })}
@@ -48,7 +45,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                 <OppsummeringFelt
                     tittel={tittelSpmEøsBarnOppsummering(
                         omsorgsperson.slektsforholdSpesifisering.id,
-                        barnetsNavn
+                        barn.navn
                     )}
                     søknadsvar={omsorgsperson.slektsforholdSpesifisering.svar}
                 />
@@ -56,7 +53,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
 
             {omsorgsperson.idNummer.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.idNummer.id, barnetsNavn)}
+                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.idNummer.id, barn.navn)}
                     søknadsvar={
                         omsorgsperson.idNummer.svar === AlternativtSvarForInput.UKJENT
                             ? formatMessage({
@@ -71,7 +68,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
 
             {omsorgsperson.adresse.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.adresse.id, barnetsNavn)}
+                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.adresse.id, barn.navn)}
                     søknadsvar={omsorgsperson.adresse.svar}
                 />
             )}
@@ -81,7 +78,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={eøsBarnSpørsmålSpråkId[omsorgsperson.arbeidUtland.id]}
-                            values={{ barn: barnetsNavn }}
+                            values={{ barn: barn.navn }}
                         />
                     }
                     søknadsvar={omsorgsperson.arbeidUtland.svar}
@@ -101,7 +98,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={eøsBarnSpørsmålSpråkId[omsorgsperson.arbeidNorge.id]}
-                            values={{ barn: barnetsNavn }}
+                            values={{ barn: barn.navn }}
                         />
                     }
                     søknadsvar={omsorgsperson.arbeidNorge.svar}
@@ -121,7 +118,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={eøsBarnSpørsmålSpråkId[omsorgsperson.pensjonUtland.id]}
-                            values={{ barn: barnetsNavn }}
+                            values={{ barn: barn.navn }}
                         />
                     }
                     søknadsvar={omsorgsperson.pensjonUtland.svar}
@@ -134,6 +131,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     nummer={index + 1}
                     personType={PersonType.Omsorgsperson}
                     gjelderUtlandet={true}
+                    barn={barn}
                 />
             ))}
             {omsorgsperson.pensjonNorge.svar && (
@@ -141,7 +139,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={eøsBarnSpørsmålSpråkId[omsorgsperson.pensjonNorge.id]}
-                            values={{ barn: barnetsNavn }}
+                            values={{ barn: barn.navn }}
                         />
                     }
                     søknadsvar={omsorgsperson.pensjonNorge.svar}
@@ -154,6 +152,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     nummer={index + 1}
                     personType={PersonType.Omsorgsperson}
                     gjelderUtlandet={false}
+                    barn={barn}
                 />
             ))}
             {omsorgsperson.andreUtbetalinger.svar && (
@@ -161,7 +160,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={eøsBarnSpørsmålSpråkId[omsorgsperson.andreUtbetalinger.id]}
-                            values={{ barn: barnetsNavn }}
+                            values={{ barn: barn.navn }}
                         />
                     }
                     søknadsvar={omsorgsperson.andreUtbetalinger.svar}
@@ -173,7 +172,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     utbetalingsperiode={utbetalingsperiode}
                     nummer={index + 1}
                     personType={PersonType.Omsorgsperson}
-                    //TODO fikse at man sender inn barnet som trengs videre
+                    barn={barn}
                 />
             ))}
             {omsorgsperson.barnetrygdFraEøs.svar && (
@@ -181,7 +180,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     tittel={
                         <SpråkTekst
                             id={eøsBarnSpørsmålSpråkId[omsorgsperson.barnetrygdFraEøs.id]}
-                            values={{ barn: barnetsNavn }}
+                            values={{ barn: barn.navn }}
                         />
                     }
                     søknadsvar={omsorgsperson.barnetrygdFraEøs.svar}
@@ -192,7 +191,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     key={`barnetrygdperiode-omsorgsperson-${index}`}
                     nummer={index + 1}
                     barnetrygdsperiode={periode}
-                    barnetsNavn={barnetsNavn}
+                    barnetsNavn={barn.navn}
                     personType={PersonType.Omsorgsperson}
                 />
             ))}
