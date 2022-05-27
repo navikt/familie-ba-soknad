@@ -130,6 +130,8 @@ export interface IEøsForBarnFeltTyper {
     andreForelderArbeidsperioderNorge: IArbeidsperiode[];
     andreForelderAndreUtbetalinger: ESvar | null;
     andreForelderAndreUtbetalingsperioder: IUtbetalingsperiode[];
+    andreForelderPågåendeSøknadFraAnnetEøsLand: ESvar | null;
+    andreForelderPågåendeSøknadHvilketLand: Alpha3Code | '';
     andreForelderBarnetrygdFraEøs: ESvar | null;
     andreForelderEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     andreForelderAdresse: string | AlternativtSvarForInput.UKJENT;
@@ -155,6 +157,8 @@ export interface IEøsForBarnFeltTyper {
     omsorgspersonPensjonsperioderNorge: IPensjonsperiode[];
     omsorgspersonAndreUtbetalinger: ESvar | null;
     omsorgspersonAndreUtbetalingsperioder: IUtbetalingsperiode[];
+    omsorgspersonPågåendeSøknadFraAnnetEøsLand: ESvar | null;
+    omsorgspersonPågåendeSøknadHvilketLand: Alpha3Code | '';
     omsorgspersonBarnetrygdFraEøs: ESvar | null;
     omsorgspersonEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     barnetsAdresse: string | AlternativtSvarForInput.UKJENT;

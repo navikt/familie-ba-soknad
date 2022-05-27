@@ -1,3 +1,5 @@
+import { Alpha3Code } from 'i18n-iso-countries';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput } from './common';
@@ -28,4 +30,6 @@ export interface IOmsorgsperson {
     andreUtbetalingsperioder: IUtbetalingsperiode[];
     barnetrygdFraEøs: ISøknadSpørsmål<ESvar | null>;
     eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
+    pågåendeSøknadFraAnnetEøsLand: ISøknadSpørsmål<ESvar | null>;
+    pågåendeSøknadHvilketLand: ISøknadSpørsmål<Alpha3Code | ''>;
 }
