@@ -16,7 +16,9 @@ import { PersonType } from '../../../../typer/personType';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
+import { LandDropdown } from '../../../Felleskomponenter/Dropdowns/LandDropdown';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
+import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
@@ -175,6 +177,36 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                 barn={barn}
                 registrerteUtbetalingsperioder={skjema.felter.omsorgspersonAndreUtbetalingsperioder}
             />
+
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.omsorgspersonPågåendeSøknadFraAnnetEøsLand}
+                spørsmålTekstId={
+                    eøsBarnSpørsmålSpråkId[
+                        EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadFraAnnetEøsLand
+                    ]
+                }
+                språkValues={{ barn: barn.navn }}
+                inkluderVetIkke
+            />
+            {skjema.felter.omsorgspersonPågåendeSøknadHvilketLand.erSynlig && (
+                <LandDropdown
+                    felt={skjema.felter.omsorgspersonPågåendeSøknadHvilketLand}
+                    skjema={skjema}
+                    kunEøs={true}
+                    ekskluderNorge
+                    label={
+                        <SpråkTekst
+                            id={
+                                eøsBarnSpørsmålSpråkId[
+                                    EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand
+                                ]
+                            }
+                        />
+                    }
+                />
+            )}
+
             <Barnetrygdperiode
                 skjema={skjema}
                 tilhørendeJaNeiSpmFelt={skjema.felter.omsorgspersonBarnetrygdFraEøs}

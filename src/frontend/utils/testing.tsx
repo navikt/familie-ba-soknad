@@ -365,6 +365,14 @@ export const mekkGyldigSøknad = (): ISøknad => {
                         id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
                         svar: ESvar.NEI,
                     },
+                    [andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
+                        id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand,
+                        svar: ESvar.NEI,
+                    },
+                    [andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
+                        id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand,
+                        svar: '',
+                    },
                     utvidet: {
                         [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: {
                             id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,
@@ -524,6 +532,14 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                     andreUtbetalinger: {
                         id: EøsBarnSpørsmålId.omsorgspersonAndreUtbetalinger,
                         svar: ESvar.NEI,
+                    },
+                    pågåendeSøknadFraAnnetEøsLand: {
+                        id: EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadFraAnnetEøsLand,
+                        svar: ESvar.NEI,
+                    },
+                    pågåendeSøknadHvilketLand: {
+                        id: EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand,
+                        svar: '',
                     },
                     eøsBarnetrygdsperioder: [],
                     barnetrygdFraEøs: {

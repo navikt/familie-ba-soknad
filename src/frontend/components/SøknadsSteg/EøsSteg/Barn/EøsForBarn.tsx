@@ -11,6 +11,7 @@ import { PersonType } from '../../../../typer/personType';
 import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
+import { LandDropdown } from '../../../Felleskomponenter/Dropdowns/LandDropdown';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -272,6 +273,39 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         skjema.felter.andreForelderAndreUtbetalingsperioder
                                     }
                                 />
+
+                                <JaNeiSpm
+                                    skjema={skjema}
+                                    felt={skjema.felter.andreForelderPågåendeSøknadFraAnnetEøsLand}
+                                    spørsmålTekstId={
+                                        eøsBarnSpørsmålSpråkId[
+                                            EøsBarnSpørsmålId
+                                                .andreForelderPågåendeSøknadFraAnnetEøsLand
+                                        ]
+                                    }
+                                    språkValues={{ barn: barn.navn }}
+                                    inkluderVetIkke
+                                />
+                                {skjema.felter.andreForelderPågåendeSøknadHvilketLand.erSynlig && (
+                                    <LandDropdown
+                                        felt={skjema.felter.andreForelderPågåendeSøknadHvilketLand}
+                                        skjema={skjema}
+                                        kunEøs={true}
+                                        ekskluderNorge
+                                        label={
+                                            <SpråkTekst
+                                                id={
+                                                    eøsBarnSpørsmålSpråkId[
+                                                        EøsBarnSpørsmålId
+                                                            .andreForelderPågåendeSøknadHvilketLand
+                                                    ]
+                                                }
+                                                values={{ barn: barn.navn }}
+                                            />
+                                        }
+                                    />
+                                )}
+
                                 <Barnetrygdperiode
                                     skjema={skjema}
                                     tilhørendeJaNeiSpmFelt={

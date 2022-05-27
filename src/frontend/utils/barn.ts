@@ -112,6 +112,23 @@ export const genererInitiellAndreForelder = (
             svar: andreForelder?.adresse.svar ?? '',
             id: EøsBarnSpørsmålId.andreForelderAdresse,
         },
+        [andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
+            svar:
+                andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar &&
+                !andreForelderErDød
+                    ? andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]
+                          .svar
+                    : null,
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand,
+        },
+        [andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
+            svar:
+                andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand].svar &&
+                !andreForelderErDød
+                    ? andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand].svar
+                    : '',
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand,
+        },
         [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: {
             svar: andreForelder?.[andreForelderDataKeySpørsmål.barnetrygdFraEøs].svar ?? null,
             id: andreForelderErDød
@@ -611,6 +628,42 @@ export const filtrerteRelevanteIdNummerForBarn = (
     return barn.idNummer.filter(idNummerObj => relevanteLand.includes(idNummerObj.land));
 };
 
+export const nullstilteEøsFelterForAndreForelder = (
+    andreForelder: IAndreForelder
+): IAndreForelder => ({
+    ...andreForelder,
+    idNummer: [],
+    pensjonNorge: {
+        ...andreForelder.pensjonNorge,
+        svar: null,
+    },
+    arbeidNorge: {
+        ...andreForelder.arbeidNorge,
+        svar: null,
+    },
+    andreUtbetalinger: {
+        ...andreForelder.andreUtbetalinger,
+        svar: null,
+    },
+    pågåendeSøknadFraAnnetEøsLand: {
+        ...andreForelder.pågåendeSøknadFraAnnetEøsLand,
+        svar: null,
+    },
+    pågåendeSøknadHvilketLand: {
+        ...andreForelder.pågåendeSøknadHvilketLand,
+        svar: '',
+    },
+    barnetrygdFraEøs: {
+        ...andreForelder.barnetrygdFraEøs,
+        svar: null,
+    },
+    pensjonsperioderNorge: [],
+    arbeidsperioderNorge: [],
+    andreUtbetalingsperioder: [],
+    eøsBarnetrygdsperioder: [],
+    adresse: { ...andreForelder.adresse, svar: '' },
+});
+
 export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
     idNummer: [],
     søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: tomString },
@@ -623,26 +676,7 @@ export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
     omsorgsperson: null,
     adresse: { ...barn.adresse, svar: '' },
     ...(barn.andreForelder && {
-        andreForelder: {
-            ...barn.andreForelder,
-            idNummer: [],
-            pensjonNorge: {
-                ...barn.andreForelder.pensjonNorge,
-                svar: null,
-            },
-            arbeidNorge: {
-                ...barn.andreForelder.arbeidNorge,
-                svar: null,
-            },
-            andreUtbetalinger: {
-                ...barn.andreForelder.andreUtbetalinger,
-                svar: null,
-            },
-            pensjonsperioderNorge: [],
-            arbeidsperioderNorge: [],
-            andreUtbetalingsperioder: [],
-            adresse: { ...barn.andreForelder.adresse, svar: '' },
-        },
+        andreForelder: nullstilteEøsFelterForAndreForelder(barn.andreForelder),
     }),
 });
 

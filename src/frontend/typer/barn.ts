@@ -33,6 +33,8 @@ export enum andreForelderDataKeySpørsmål {
     arbeidNorge = 'arbeidNorge',
     andreUtbetalinger = 'andreUtbetalinger',
     barnetrygdFraEøs = 'barnetrygdFraEøs',
+    pågåendeSøknadFraAnnetEøsLand = 'pågåendeSøknadFraAnnetEøsLand',
+    pågåendeSøknadHvilketLand = 'pågåendeSøknadHvilketLand',
 }
 
 export enum barnDataKeySpørsmål {
@@ -92,6 +94,8 @@ export interface IAndreForelder {
     [andreForelderDataKeySpørsmål.arbeidNorge]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.andreUtbetalinger]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: ISøknadSpørsmål<ESvar | null>;
+    [andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: ISøknadSpørsmål<ESvar | null>;
+    [andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
 
     utvidet: {
         [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;

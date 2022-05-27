@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
+import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import {
     andreForelderDataKeySpørsmål,
@@ -14,6 +15,7 @@ import {
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { PersonType } from '../../../../../typer/personType';
 import { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
+import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
@@ -32,6 +34,8 @@ const EøsAndreForelderOppsummering: React.FC<{
 }> = ({ barn, andreForelder, skjema, settIdNummerFelter }) => {
     const intl = useIntl();
     const { formatMessage } = intl;
+    const [valgtLocale] = useSprakContext();
+
     const andreForelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
 
     const jaNeiSpmOppsummering = (andreForelderDataKeySpm: andreForelderDataKeySpørsmål) =>
@@ -111,6 +115,27 @@ const EøsAndreForelderOppsummering: React.FC<{
                         barn={barn}
                     />
                 ))}
+
+                {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand)}
+                {andreForelder.pågåendeSøknadHvilketLand.svar && (
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    eøsBarnSpørsmålSpråkId[
+                                        andreForelder.pågåendeSøknadHvilketLand.id
+                                    ]
+                                }
+                                values={{ barn: barn.navn }}
+                            />
+                        }
+                        søknadsvar={landkodeTilSpråk(
+                            andreForelder.pågåendeSøknadHvilketLand.svar,
+                            valgtLocale
+                        )}
+                    />
+                )}
+
                 {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.barnetrygdFraEøs)}
                 {andreForelder.eøsBarnetrygdsperioder.map((periode, index) => (
                     <BarnetrygdsperiodeOppsummering
