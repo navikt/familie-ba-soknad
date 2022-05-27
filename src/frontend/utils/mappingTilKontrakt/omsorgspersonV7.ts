@@ -7,7 +7,7 @@ import { Slektsforhold } from '../../typer/kontrakt/barn';
 import { IOmsorgspersonIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { IOmsorgsperson } from '../../typer/omsorgsperson';
 import { PersonType } from '../../typer/personType';
-import { hentTekster, toSlektsforholdSpråkId } from '../språk';
+import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId } from '../språk';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
@@ -16,6 +16,7 @@ import {
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,
     språktekstIdFraSpørsmålId,
     søknadsfeltBarn,
+    verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 
@@ -37,6 +38,8 @@ export const omsorgspersonTilISøknadsfeltV7 = (
         pensjonsperioderUtland,
         pensjonNorge,
         pensjonsperioderNorge,
+        pågåendeSøknadFraAnnetEøsLand,
+        pågåendeSøknadHvilketLand,
         barnetrygdFraEøs,
         eøsBarnetrygdsperioder,
         andreUtbetalinger,
@@ -141,6 +144,18 @@ export const omsorgspersonTilISøknadsfeltV7 = (
                 personType: PersonType.Omsorgsperson,
                 barn,
             })
+        ),
+        pågåendeSøknadFraAnnetEøsLand: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadFraAnnetEøsLand),
+            sammeVerdiAlleSpråk(pågåendeSøknadFraAnnetEøsLand.svar),
+            barn
+        ),
+        pågåendeSøknadHvilketLand: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand),
+            verdiCallbackAlleSpråk(locale =>
+                landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)
+            ),
+            barn
         ),
         barnetrygdFraEøs: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonBarnetrygd),

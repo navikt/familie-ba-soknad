@@ -78,6 +78,8 @@ export interface IOmsorgspersonIKontraktFormatV7 {
     pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     andreUtbetalinger: ISøknadsfelt<ESvar | null>;
     andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7>[];
+    pågåendeSøknadFraAnnetEøsLand: ISøknadsfelt<ESvar | null>;
+    pågåendeSøknadHvilketLand: ISøknadsfelt<string>;
     barnetrygdFraEøs: ISøknadsfelt<ESvar | null>;
     eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
 }
@@ -104,6 +106,8 @@ export interface IAndreForelderIKontraktFormatV7 {
     pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
+    pågåendeSøknadFraAnnetEøsLand: ISøknadsfelt<ESvar | null>;
+    pågåendeSøknadHvilketLand: ISøknadsfelt<string>;
     eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
     andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7>[];
     idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];

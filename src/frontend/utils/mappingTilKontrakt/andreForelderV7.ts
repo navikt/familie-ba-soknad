@@ -17,6 +17,7 @@ import {
 } from '../../typer/barn';
 import { IAndreForelderIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { PersonType } from '../../typer/personType';
+import { landkodeTilSpråk } from '../språk';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
@@ -25,6 +26,7 @@ import {
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,
     språktekstIdFraSpørsmålId,
     søknadsfeltBarn,
+    verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
@@ -118,6 +120,23 @@ export const andreForelderTilISøknadsfeltV7 = (
                     : EøsBarnSpørsmålId.andreForelderAndreUtbetalinger
             ),
             sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.andreUtbetalinger].svar),
+            barn
+        ),
+        [andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand),
+            sammeVerdiAlleSpråk(
+                andreForelder[andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar
+            ),
+            barn
+        ),
+        [andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand]: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand),
+            verdiCallbackAlleSpråk(locale =>
+                landkodeTilSpråk(
+                    andreForelder[andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand].svar,
+                    locale
+                )
+            ),
             barn
         ),
         [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: søknadsfeltBarn(
