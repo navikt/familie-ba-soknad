@@ -2,11 +2,13 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { useSprakContext } from '@navikt/familie-sprakvelger';
+
 import { IBarnMedISøknad } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { IOmsorgsperson } from '../../../../../typer/omsorgsperson';
 import { PersonType } from '../../../../../typer/personType';
-import { toSlektsforholdSpråkId } from '../../../../../utils/språk';
+import { landkodeTilSpråk, toSlektsforholdSpråkId } from '../../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
@@ -22,6 +24,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
     barn: IBarnMedISøknad;
 }> = ({ omsorgsperson, barn }) => {
     const { formatMessage } = useIntl();
+    const [valgtLocale] = useSprakContext();
 
     return (
         <StyledOppsummeringsFeltGruppe>
@@ -186,6 +189,43 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     søknadsvar={omsorgsperson.barnetrygdFraEøs.svar}
                 />
             )}
+
+            {omsorgsperson.pågåendeSøknadFraAnnetEøsLand.svar && (
+                <StyledOppsummeringsFeltGruppe>
+                    <OppsummeringFelt
+                        tittel={
+                            <SpråkTekst
+                                id={
+                                    eøsBarnSpørsmålSpråkId[
+                                        omsorgsperson.pågåendeSøknadFraAnnetEøsLand.id
+                                    ]
+                                }
+                                values={{ barn: barn.navn }}
+                            />
+                        }
+                        søknadsvar={omsorgsperson.pågåendeSøknadFraAnnetEøsLand.svar}
+                    />
+                    {omsorgsperson.pågåendeSøknadHvilketLand.svar && (
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        eøsBarnSpørsmålSpråkId[
+                                            omsorgsperson.pågåendeSøknadHvilketLand.id
+                                        ]
+                                    }
+                                    values={{ barn: barn.navn }}
+                                />
+                            }
+                            søknadsvar={landkodeTilSpråk(
+                                omsorgsperson.pågåendeSøknadHvilketLand.svar,
+                                valgtLocale
+                            )}
+                        />
+                    )}
+                </StyledOppsummeringsFeltGruppe>
+            )}
+
             {omsorgsperson.eøsBarnetrygdsperioder.map((periode, index) => (
                 <BarnetrygdsperiodeOppsummering
                     key={`barnetrygdperiode-omsorgsperson-${index}`}

@@ -112,6 +112,17 @@ export const genererInitiellAndreForelder = (
             svar: andreForelder?.adresse.svar ?? '',
             id: EøsBarnSpørsmålId.andreForelderAdresse,
         },
+        [andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
+            svar:
+                andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar ??
+                null,
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand,
+        },
+        [andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
+            svar:
+                andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand].svar ?? '',
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand,
+        },
         [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: {
             svar: andreForelder?.[andreForelderDataKeySpørsmål.barnetrygdFraEøs].svar ?? null,
             id: andreForelderErDød
