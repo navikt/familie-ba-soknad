@@ -3,7 +3,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { utbetalingsperiodeModalSpørsmålSpråkIder } from '../../components/Felleskomponenter/UtbetalingerModal/språkUtils';
 import { UtbetalingerSpørsmålId } from '../../components/Felleskomponenter/UtbetalingerModal/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IUtbetalingsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { IUtbetalingsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IUtbetalingsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
@@ -25,7 +25,7 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
     erDød,
     barn,
 }: UtbetalingsperiodeIKontraktFormatParams &
-    PeriodePersonTypeMedBarnProps): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7> => {
+    PeriodePersonTypeMedBarnProps): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV8> => {
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } = periode;
     const periodenErAvsluttet =
         fårUtbetalingNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);

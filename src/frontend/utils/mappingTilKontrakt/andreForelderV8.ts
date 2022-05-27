@@ -10,7 +10,7 @@ import {
     omBarnetSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../../typer/barn';
-import { IAndreForelderIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { IAndreForelderIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { PersonType } from '../../typer/personType';
 import { landkodeTilSpråk } from '../språk';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
@@ -26,11 +26,11 @@ import {
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 
-export const andreForelderTilISøknadsfeltV7 = (
+export const andreForelderTilISøknadsfeltV8 = (
     andreForelder: IAndreForelder,
     barn: IBarnMedISøknad,
     valgtSpråk: LocaleType
-): IAndreForelderIKontraktFormatV7 => {
+): IAndreForelderIKontraktFormatV8 => {
     const {
         navn,
         fnr,

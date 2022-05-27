@@ -6,7 +6,7 @@ import {
 } from '../../components/Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from '../../components/Felleskomponenter/Arbeidsperiode/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/v7';
+import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/v8';
 import { IArbeidsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';

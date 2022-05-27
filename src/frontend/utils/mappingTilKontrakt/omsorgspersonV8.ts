@@ -4,7 +4,7 @@ import {
 } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { Slektsforhold } from '../../typer/kontrakt/barn';
-import { IOmsorgspersonIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { IOmsorgspersonIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IOmsorgsperson } from '../../typer/omsorgsperson';
 import { PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId } from '../språk';
@@ -20,10 +20,10 @@ import {
 } from './hjelpefunksjoner';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 
-export const omsorgspersonTilISøknadsfeltV7 = (
+export const omsorgspersonTilISøknadsfeltV8 = (
     omsorgsperson: IOmsorgsperson,
     barn: IBarnMedISøknad
-): IOmsorgspersonIKontraktFormatV7 => {
+): IOmsorgspersonIKontraktFormatV8 => {
     const {
         navn,
         slektsforhold,
