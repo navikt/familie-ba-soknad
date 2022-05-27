@@ -51,19 +51,16 @@ export const omsorgspersonTilISøknadsfeltV7 = (
             sammeVerdiAlleSpråk(navn.svar),
             barn
         ),
-
         slektsforhold: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonSlektsforhold),
             hentTekster(toSlektsforholdSpråkId(slektsforhold.svar as Slektsforhold)),
             barn
         ),
-
         slektsforholdSpesifisering: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering),
             sammeVerdiAlleSpråk(slektsforholdSpesifisering.svar),
             barn
         ),
-
         idNummer: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonIdNummer),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
@@ -72,7 +69,6 @@ export const omsorgspersonTilISøknadsfeltV7 = (
             ),
             barn
         ),
-
         adresse: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonAdresse),
             sammeVerdiAlleSpråk(adresse.svar),
