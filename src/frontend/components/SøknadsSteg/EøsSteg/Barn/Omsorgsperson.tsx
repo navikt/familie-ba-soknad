@@ -10,6 +10,7 @@ import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
     IPensjonsperiode,
+    IUtbetalingsperiode,
 } from '../../../../typer/perioder';
 import { PersonType } from '../../../../typer/personType';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
@@ -21,6 +22,7 @@ import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/Skjema
 import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 
 interface OmsorgspersonProps {
@@ -35,6 +37,8 @@ interface OmsorgspersonProps {
         fjernPensjonsperiodeUtlandOmsorgsperson: (periode: IPensjonsperiode) => void;
         leggTilPensjonsperiodeNorgeOmsorgsperson: (periode: IPensjonsperiode) => void;
         fjernPensjonsperiodeNorgeOmsorgsperson: (periode: IPensjonsperiode) => void;
+        leggTilAndreUtbetalingsperiodeOmsorgsperson: (periode: IUtbetalingsperiode) => void;
+        fjernAndreUtbetalingsperiodeOmsorgsperson: (periode: IUtbetalingsperiode) => void;
         leggTilBarnetrygdsperiodeOmsorgsperson: (periode: IEøsBarnetrygdsperiode) => void;
         fjernBarnetrygdsperiodeOmsorgsperson: (periode: IEøsBarnetrygdsperiode) => void;
     };
@@ -51,6 +55,8 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
         fjernPensjonsperiodeUtlandOmsorgsperson,
         leggTilPensjonsperiodeNorgeOmsorgsperson,
         fjernPensjonsperiodeNorgeOmsorgsperson,
+        leggTilAndreUtbetalingsperiodeOmsorgsperson,
+        fjernAndreUtbetalingsperiodeOmsorgsperson,
         leggTilBarnetrygdsperiodeOmsorgsperson,
         fjernBarnetrygdsperiodeOmsorgsperson,
     } = periodeFunksjoner;
@@ -159,6 +165,15 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                 barn={barn}
                 gjelderUtlandet={false}
                 registrertePensjonsperioder={skjema.felter.omsorgspersonPensjonsperioderNorge}
+            />
+            <Utbetalingsperiode
+                skjema={skjema}
+                tilhørendeJaNeiSpmFelt={skjema.felter.omsorgspersonAndreUtbetalinger}
+                leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiodeOmsorgsperson}
+                fjernUtbetalingsperiode={fjernAndreUtbetalingsperiodeOmsorgsperson}
+                personType={PersonType.Omsorgsperson}
+                barn={barn}
+                registrerteUtbetalingsperioder={skjema.felter.omsorgspersonAndreUtbetalingsperioder}
             />
             <Barnetrygdperiode
                 skjema={skjema}

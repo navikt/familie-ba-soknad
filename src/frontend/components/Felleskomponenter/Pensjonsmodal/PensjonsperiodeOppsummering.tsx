@@ -26,7 +26,7 @@ interface Props {
 
 type PensjonsperiodeOppsummeringPersonTypeProps =
     | { personType: PersonType.Søker; erDød?: boolean; barn?: IBarnMedISøknad | undefined }
-    | { personType: PersonType.Omsorgsperson; erDød?: boolean; barn?: IBarnMedISøknad | undefined }
+    | { personType: PersonType.Omsorgsperson; erDød?: boolean; barn: IBarnMedISøknad | undefined }
     | { personType: PersonType.AndreForelder; erDød: boolean; barn: IBarnMedISøknad | undefined };
 
 type PensjonsperiodeOppsummeringProps = Props & PensjonsperiodeOppsummeringPersonTypeProps;

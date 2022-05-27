@@ -47,8 +47,8 @@ export const useEøsForBarn = (
     oppdaterSøknad: () => void;
     leggTilPensjonsperiodeNorgeAndreForelder: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiodeNorgeAndreForelder: (periode: IPensjonsperiode) => void;
-    leggTilAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
-    fjernAndreUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
+    leggTilAndreUtbetalingsperiodeAndreForelder: (periode: IUtbetalingsperiode) => void;
+    fjernAndreUtbetalingsperiodeAndreForelder: (periode: IUtbetalingsperiode) => void;
     leggTilArbeidsperiodeNorgeAndreForelder: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiodeNorgeAndreForelder: (periode: IArbeidsperiode) => void;
     leggTilBarnetrygdsperiodeAndreForelder: (periode: IEøsBarnetrygdsperiode) => void;
@@ -61,6 +61,8 @@ export const useEøsForBarn = (
     fjernPensjonsperiodeUtlandOmsorgsperson: (periode: IPensjonsperiode) => void;
     leggTilPensjonsperiodeNorgeOmsorgsperson: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiodeNorgeOmsorgsperson: (periode: IPensjonsperiode) => void;
+    leggTilAndreUtbetalingsperiodeOmsorgsperson: (periode: IUtbetalingsperiode) => void;
+    fjernAndreUtbetalingsperiodeOmsorgsperson: (periode: IUtbetalingsperiode) => void;
     leggTilBarnetrygdsperiodeOmsorgsperson: (periode: IEøsBarnetrygdsperiode) => void;
     fjernBarnetrygdsperiodeOmsorgsperson: (periode: IEøsBarnetrygdsperiode) => void;
     settIdNummerFelterForBarn: Dispatch<SetStateAction<Felt<string>[]>>;
@@ -334,6 +336,30 @@ export const useEøsForBarn = (
         }
     );
 
+    const omsorgspersonAndreUtbetalinger = useJaNeiSpmFelt({
+        søknadsfelt: omsorgsperson?.andreUtbetalinger,
+        feilmeldingSpråkId: 'eøs-om-barn.omsorgsperson-utbetalinger.feilmelding',
+        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
+        skalSkjules: borMedOmsorgsperson.verdi !== ESvar.JA,
+    });
+
+    const {
+        fjernPeriode: fjernAndreUtbetalingsperiodeOmsorgsperson,
+        leggTilPeriode: leggTilAndreUtbetalingsperiodeOmsorgsperson,
+        registrertePerioder: omsorgspersonAndreUtbetalingsperioder,
+    } = usePerioder<IUtbetalingsperiode>(
+        omsorgsperson?.andreUtbetalingsperioder ?? [],
+        { omsorgspersonAndreUtbetalinger },
+        avhengigheter => avhengigheter.omsorgspersonAndreUtbetalinger.verdi === ESvar.JA,
+        (felt, avhengigheter) => {
+            return avhengigheter?.omsorgspersonAndreUtbetalinger.verdi === ESvar.NEI ||
+                (avhengigheter?.omsorgspersonAndreUtbetalinger.verdi === ESvar.JA &&
+                    felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
+        }
+    );
+
     const omsorgspersonBarnetrygdFraEøs = useJaNeiSpmFelt({
         søknadsfelt: omsorgsperson?.barnetrygdFraEøs,
         feilmeldingSpråkId: 'eøs-om-barn.omsorgsperson-barnetrygd.feilmelding',
@@ -466,8 +492,8 @@ export const useEøsForBarn = (
     });
 
     const {
-        fjernPeriode: fjernAndreUtbetalingsperiode,
-        leggTilPeriode: leggTilAndreUtbetalingsperiode,
+        fjernPeriode: fjernAndreUtbetalingsperiodeAndreForelder,
+        leggTilPeriode: leggTilAndreUtbetalingsperiodeAndreForelder,
         registrertePerioder: andreForelderAndreUtbetalingsperioder,
     } = usePerioder<IUtbetalingsperiode>(
         andreForelder?.andreUtbetalingsperioder ?? [],
@@ -613,6 +639,14 @@ export const useEøsForBarn = (
             omsorgspersonPensjonNorge.verdi === ESvar.JA
                 ? omsorgspersonPensjonsperioderNorge.verdi
                 : [],
+        andreUtbetalinger: {
+            id: EøsBarnSpørsmålId.omsorgspersonAndreUtbetalinger,
+            svar: omsorgspersonAndreUtbetalinger.verdi,
+        },
+        andreUtbetalingsperioder:
+            omsorgspersonAndreUtbetalinger.verdi === ESvar.JA
+                ? omsorgspersonAndreUtbetalingsperioder.verdi
+                : [],
         barnetrygdFraEøs: {
             id: EøsBarnSpørsmålId.omsorgspersonBarnetrygd,
             svar: omsorgspersonBarnetrygdFraEøs.verdi,
@@ -733,6 +767,8 @@ export const useEøsForBarn = (
             omsorgspersonPensjonsperioderUtland,
             omsorgspersonPensjonNorge,
             omsorgspersonPensjonsperioderNorge,
+            omsorgspersonAndreUtbetalinger,
+            omsorgspersonAndreUtbetalingsperioder,
             omsorgspersonBarnetrygdFraEøs,
             omsorgspersonEøsBarnetrygdsperioder,
             barnetsAdresse,
@@ -751,8 +787,8 @@ export const useEøsForBarn = (
         oppdaterSøknad,
         leggTilPensjonsperiodeNorgeAndreForelder,
         fjernPensjonsperiodeNorgeAndreForelder,
-        leggTilAndreUtbetalingsperiode,
-        fjernAndreUtbetalingsperiode,
+        leggTilAndreUtbetalingsperiodeAndreForelder,
+        fjernAndreUtbetalingsperiodeAndreForelder,
         leggTilArbeidsperiodeNorgeAndreForelder,
         fjernArbeidsperiodeNorgeAndreForelder,
         leggTilBarnetrygdsperiodeAndreForelder,
@@ -769,6 +805,8 @@ export const useEøsForBarn = (
         fjernPensjonsperiodeUtlandOmsorgsperson,
         leggTilPensjonsperiodeNorgeOmsorgsperson,
         fjernPensjonsperiodeNorgeOmsorgsperson,
+        leggTilAndreUtbetalingsperiodeOmsorgsperson,
+        fjernAndreUtbetalingsperiodeOmsorgsperson,
         leggTilBarnetrygdsperiodeOmsorgsperson,
         fjernBarnetrygdsperiodeOmsorgsperson,
     };
