@@ -69,6 +69,20 @@ export interface IOmsorgspersonIKontraktFormatV7 {
     slektsforholdSpesifisering: ISøknadsfelt<string>;
     idNummer: ISøknadsfelt<string>;
     adresse: ISøknadsfelt<string>;
+    arbeidUtland: ISøknadsfelt<ESvar | null>;
+    arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
+    arbeidNorge: ISøknadsfelt<ESvar | null>;
+    arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
+    pensjonUtland: ISøknadsfelt<ESvar | null>;
+    pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
+    pensjonNorge: ISøknadsfelt<ESvar | null>;
+    pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
+    andreUtbetalinger: ISøknadsfelt<ESvar | null>;
+    andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7>[];
+    pågåendeSøknadFraAnnetEøsLand: ISøknadsfelt<ESvar | null>;
+    pågåendeSøknadHvilketLand: ISøknadsfelt<string>;
+    barnetrygdFraEøs: ISøknadsfelt<ESvar | null>;
+    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
 }
 
 export interface IAndreForelderIKontraktFormatV7 {
@@ -88,10 +102,14 @@ export interface IAndreForelderIKontraktFormatV7 {
     pensjonNorge: ISøknadsfelt<ESvar | null>;
     arbeidNorge: ISøknadsfelt<ESvar | null>;
     andreUtbetalinger: ISøknadsfelt<ESvar | null>;
+    barnetrygdFraEøs: ISøknadsfelt<ESvar | null>;
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7>[];
+    pågåendeSøknadFraAnnetEøsLand: ISøknadsfelt<ESvar | null>;
+    pågåendeSøknadHvilketLand: ISøknadsfelt<string>;
+    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7>[];
     andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7>[];
     idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
     adresse: ISøknadsfelt<string>;

@@ -13,6 +13,7 @@ import {
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
+import { PersonType } from '../../../../../typer/personType';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
@@ -113,12 +114,11 @@ const AndreForelderOppsummering: React.FC<{
                                 key={`arbeidsperiode-${index}`}
                                 nummer={index + 1}
                                 arbeidsperiode={periode}
-                                gjelderUtlandet
-                                andreForelderData={{
-                                    erDød:
-                                        barn[barnDataKeySpørsmål.andreForelderErDød].svar ===
-                                        ESvar.JA,
-                                }}
+                                gjelderUtlandet={true}
+                                personType={PersonType.AndreForelder}
+                                erDød={
+                                    barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA
+                                }
                             />
                         ))}
                     </>
@@ -169,16 +169,15 @@ const AndreForelderOppsummering: React.FC<{
                     <>
                         {andreForelder.pensjonsperioderUtland.map((periode, index) => (
                             <PensjonsperiodeOppsummering
-                                key={`pensjonsperiode-${index}`}
+                                key={`pensjonsperiode-utland-andre-forelder${index}`}
                                 nummer={index + 1}
                                 pensjonsperiode={periode}
-                                gjelderUtlandet
-                                andreForelderData={{
-                                    erDød:
-                                        barn[barnDataKeySpørsmål.andreForelderErDød].svar ===
-                                        ESvar.JA,
-                                    barn: barn,
-                                }}
+                                gjelderUtlandet={true}
+                                personType={PersonType.AndreForelder}
+                                erDød={
+                                    barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA
+                                }
+                                barn={barn}
                             />
                         ))}
                     </>

@@ -10,6 +10,7 @@ import { IBarnMedISøknad } from '../../typer/barn';
 import { ESivilstand } from '../../typer/kontrakt/generelle';
 import { ISøknadKontraktV7 } from '../../typer/kontrakt/v7';
 import { ISøker } from '../../typer/person';
+import { PersonType } from '../../typer/personType';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
@@ -127,8 +128,7 @@ export const dataISøknadKontraktFormatV7 = (
                     periode,
                     periodeNummer: index + 1,
                     gjelderUtlandet: true,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
             arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -136,34 +136,30 @@ export const dataISøknadKontraktFormatV7 = (
                     periode,
                     periodeNummer: index + 1,
                     gjelderUtlandet: false,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
             pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
                     gjelderUtlandet: true,
+                    personType: PersonType.Søker,
                 })
             ),
             pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
                     gjelderUtlandet: false,
+                    personType: PersonType.Søker,
                 })
             ),
             andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
                 tilIAndreUtbetalingsperioderIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
         },

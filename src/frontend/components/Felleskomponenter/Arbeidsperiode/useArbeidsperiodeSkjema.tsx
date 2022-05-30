@@ -7,8 +7,9 @@ import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjen
 import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
+import { PersonType } from '../../../typer/personType';
 import { IArbeidsperioderFeltTyper } from '../../../typer/skjema';
-import { dagensDato, gårsdagensDato, erSammeDatoSomDagensDato } from '../../../utils/dato';
+import { dagensDato, erSammeDatoSomDagensDato, gårsdagensDato } from '../../../utils/dato';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import {
     arbeidslandFeilmelding,
@@ -18,28 +19,33 @@ import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 export interface IUseArbeidsperiodeSkjemaParams {
     gjelderUtlandet: boolean;
-    andreForelderData?: { erDød: boolean };
+    personType: PersonType;
+    erDød?: boolean;
 }
 
-export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
+export const useArbeidsperiodeSkjema = (
+    gjelderUtlandet: boolean,
+    personType: PersonType,
+    erDød = false
+) => {
     const { erEøsLand } = useEøs();
-    const gjelderAndreForelder = !!andreForelderData;
-    const erAndreForelderDød = !!andreForelderData?.erDød;
+
+    const andreForelderErDød = personType === PersonType.AndreForelder && erDød;
 
     const arbeidsperiodeAvsluttet = useJaNeiSpmFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet, svar: null },
         feilmeldingSpråkId: 'felles.erarbeidsperiodenavsluttet.feilmelding',
-        skalSkjules: erAndreForelderDød,
+        skalSkjules: andreForelderErDød,
     });
 
-    const periodenErAvsluttet = arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød;
+    const periodenErAvsluttet = arbeidsperiodeAvsluttet.verdi === ESvar.JA || andreForelderErDød;
 
     const arbeidsperiodeLand = useLanddropdownFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand, svar: '' },
-        feilmeldingSpråkId: arbeidslandFeilmelding(periodenErAvsluttet, gjelderAndreForelder),
+        feilmeldingSpråkId: arbeidslandFeilmelding(periodenErAvsluttet, personType),
         skalFeltetVises:
             (arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
-                erAndreForelderDød) &&
+                andreForelderErDød) &&
             gjelderUtlandet,
         nullstillVedAvhengighetEndring: true,
     });
@@ -50,7 +56,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         skalVises: gjelderUtlandet
             ? erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
-              erAndreForelderDød,
+              andreForelderErDød,
     });
 
     const fraDatoArbeidsperiode = useDatovelgerFelt({
@@ -58,7 +64,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
-              erAndreForelderDød,
+              andreForelderErDød,
         feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
@@ -82,7 +88,7 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet, andreForelderData) => {
         skalFeltetVises: gjelderUtlandet
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
-              erAndreForelderDød,
+              andreForelderErDød,
         sluttdatoAvgrensning: periodenErAvsluttet ? dagensDato() : undefined,
         startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
             periodenErAvsluttet,

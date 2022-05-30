@@ -13,6 +13,7 @@ import { useRoutes } from '../../../../context/RoutesContext';
 import { AlternativtSvarForInput } from '../../../../typer/common';
 import { ESivilstand } from '../../../../typer/kontrakt/generelle';
 import { ISamboer, ITidligereSamboer } from '../../../../typer/person';
+import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
 import { formaterDato } from '../../../../utils/dato';
 import { landkodeTilSpråk, toÅrsakSpråkId } from '../../../../utils/språk';
@@ -243,7 +244,8 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                 key={`arbeidsperiode-${index}`}
                                 nummer={index + 1}
                                 arbeidsperiode={periode}
-                                gjelderUtlandet
+                                gjelderUtlandet={true}
+                                personType={PersonType.Søker}
                             />
                         ))}
                     </>
@@ -287,7 +289,8 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                 key={`utenlandsperiode-${index}`}
                                 nummer={index + 1}
                                 pensjonsperiode={periode}
-                                gjelderUtlandet
+                                gjelderUtlandet={true}
+                                personType={PersonType.Søker}
                             />
                         ))}
                     </>

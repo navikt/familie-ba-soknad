@@ -4,6 +4,7 @@ import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
 import { Slektsforhold } from './kontrakt/barn';
+import { IOmsorgsperson } from './omsorgsperson';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
@@ -31,6 +32,9 @@ export enum andreForelderDataKeySpørsmål {
     pensjonNorge = 'pensjonNorge',
     arbeidNorge = 'arbeidNorge',
     andreUtbetalinger = 'andreUtbetalinger',
+    barnetrygdFraEøs = 'barnetrygdFraEøs',
+    pågåendeSøknadFraAnnetEøsLand = 'pågåendeSøknadFraAnnetEøsLand',
+    pågåendeSøknadHvilketLand = 'pågåendeSøknadHvilketLand',
 }
 
 export enum barnDataKeySpørsmål {
@@ -67,6 +71,7 @@ export enum barnDataKeySpørsmål {
 export interface IAndreForelder {
     arbeidsperioderUtland: IArbeidsperiode[];
     pensjonsperioderUtland: IPensjonsperiode[];
+    eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     kanIkkeGiOpplysninger: boolean;
     [andreForelderDataKeySpørsmål.navn]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
     [andreForelderDataKeySpørsmål.fnr]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
@@ -88,19 +93,14 @@ export interface IAndreForelder {
     [andreForelderDataKeySpørsmål.pensjonNorge]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.arbeidNorge]: ISøknadSpørsmål<ESvar | null>;
     [andreForelderDataKeySpørsmål.andreUtbetalinger]: ISøknadSpørsmål<ESvar | null>;
+    [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: ISøknadSpørsmål<ESvar | null>;
+    [andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: ISøknadSpørsmål<ESvar | null>;
+    [andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;
 
     utvidet: {
         [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
         [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: ISøknadSpørsmål<DatoMedUkjent>;
     };
-}
-
-export interface IOmsorgsperson {
-    navn: ISøknadSpørsmål<string>;
-    slektsforhold: ISøknadSpørsmål<Slektsforhold | ''>;
-    slektsforholdSpesifisering: ISøknadSpørsmål<string>;
-    idNummer: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
-    adresse: ISøknadSpørsmål<string>;
 }
 
 export interface IBarnMedISøknad extends IBarn {

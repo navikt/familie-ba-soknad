@@ -9,20 +9,19 @@ import {
     OmBarnetSpørsmålsId,
     omBarnetSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
-import {
-    andreForelderDataKeySpørsmål,
-    barnDataKeySpørsmål,
-    IAndreForelder,
-    IBarnMedISøknad,
-} from '../../typer/barn';
+import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../../typer/barn';
 import { IAndreForelderIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { PersonType } from '../../typer/personType';
+import { landkodeTilSpråk } from '../språk';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
+import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
     sammeVerdiAlleSpråk,
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,
     språktekstIdFraSpørsmålId,
     søknadsfeltBarn,
+    verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
@@ -36,95 +35,101 @@ export const andreForelderTilISøknadsfeltV7 = (
         navn,
         fnr,
         fødselsdato,
+        pensjonUtland,
+        arbeidUtlandet,
+        pensjonNorge,
+        arbeidNorge,
+        andreUtbetalinger,
+        barnetrygdFraEøs,
+        skriftligAvtaleOmDeltBosted,
         arbeidsperioderUtland,
         pensjonsperioderUtland,
         arbeidsperioderNorge,
         pensjonsperioderNorge,
         andreUtbetalingsperioder,
+        pågåendeSøknadFraAnnetEøsLand,
+        pågåendeSøknadHvilketLand,
+        eøsBarnetrygdsperioder,
         idNummer,
         adresse,
         kanIkkeGiOpplysninger,
+        utvidet,
     } = andreForelder;
     const forelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
     return {
         kanIkkeGiOpplysninger,
-        [andreForelderDataKeySpørsmål.navn]: søknadsfeltBarn(
+        navn: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                 navn.svar,
-                omBarnetSpørsmålSpråkId['andre-forelder-navn-ukjent']
+                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavnUkjent]
             ),
             barn
         ),
-        [andreForelderDataKeySpørsmål.fnr]: søknadsfeltBarn(
+        fnr: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                 fnr.svar,
-                omBarnetSpørsmålSpråkId['andre-forelder-fødsels-/dnummer-ukjent']
+                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
             ),
             barn
         ),
-        [andreForelderDataKeySpørsmål.fødselsdato]: søknadsfeltBarn(
+        fødselsdato: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                 fødselsdato.svar,
-                omBarnetSpørsmålSpråkId['andre-forelder-fødselsdato-ukjent']
+                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]
             ),
             barn
         ),
-        [andreForelderDataKeySpørsmål.pensjonUtland]: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(
-                forelderErDød
-                    ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
-                    : OmBarnetSpørsmålsId.andreForelderPensjonUtland
-            ),
-            sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar),
+        pensjonUtland: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(pensjonUtland.id),
+            sammeVerdiAlleSpråk(pensjonUtland.svar),
             barn
         ),
-        [andreForelderDataKeySpørsmål.arbeidUtlandet]: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(
-                forelderErDød
-                    ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke
-                    : OmBarnetSpørsmålsId.andreForelderArbeidUtlandet
-            ),
-            sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar),
+        arbeidUtlandet: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(arbeidUtlandet.id),
+            sammeVerdiAlleSpråk(arbeidUtlandet.svar),
             barn
         ),
-        [andreForelderDataKeySpørsmål.pensjonNorge]: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(
-                forelderErDød
-                    ? EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke
-                    : EøsBarnSpørsmålId.andreForelderPensjonNorge
-            ),
-            sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.pensjonNorge].svar),
+        pensjonNorge: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(pensjonNorge.id),
+            sammeVerdiAlleSpråk(pensjonNorge.svar),
             barn
         ),
-        [andreForelderDataKeySpørsmål.arbeidNorge]: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(
-                forelderErDød
-                    ? EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke
-                    : EøsBarnSpørsmålId.andreForelderArbeidNorge
-            ),
-            sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.arbeidNorge].svar),
+        arbeidNorge: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(arbeidNorge.id),
+            sammeVerdiAlleSpråk(arbeidNorge.svar),
             barn
         ),
-        [andreForelderDataKeySpørsmål.andreUtbetalinger]: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(
-                forelderErDød
-                    ? EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke
-                    : EøsBarnSpørsmålId.andreForelderAndreUtbetalinger
-            ),
-            sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.andreUtbetalinger].svar),
+        andreUtbetalinger: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(andreUtbetalinger.id),
+            sammeVerdiAlleSpråk(andreUtbetalinger.svar),
             barn
         ),
-        [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: søknadsfeltBarn(
+        pågåendeSøknadFraAnnetEøsLand: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand),
+            sammeVerdiAlleSpråk(pågåendeSøknadFraAnnetEøsLand.svar),
+            barn
+        ),
+        pågåendeSøknadHvilketLand: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand),
+            verdiCallbackAlleSpråk(locale =>
+                landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)
+            ),
+            barn
+        ),
+        barnetrygdFraEøs: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(barnetrygdFraEøs.id),
+            sammeVerdiAlleSpråk(barnetrygdFraEøs.svar),
+            barn
+        ),
+        skriftligAvtaleOmDeltBosted: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted),
-            sammeVerdiAlleSpråk(
-                andreForelder[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
-            ),
+            sammeVerdiAlleSpråk(skriftligAvtaleOmDeltBosted.svar),
             barn
         ),
-        [andreForelderDataKeySpørsmål.adresse]: søknadsfeltBarn(
+        adresse: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderAdresse),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                 adresse.svar,
@@ -133,20 +138,15 @@ export const andreForelderTilISøknadsfeltV7 = (
             barn
         ),
         utvidet: {
-            [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: søknadsfeltBarn(
+            søkerHarBoddMedAndreForelder: søknadsfeltBarn(
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder),
-                sammeVerdiAlleSpråk(
-                    andreForelder.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]
-                        .svar
-                ),
+                sammeVerdiAlleSpråk(utvidet.søkerHarBoddMedAndreForelder.svar),
                 barn
             ),
-            [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: søknadsfeltBarn(
+            søkerFlyttetFraAndreForelderDato: søknadsfeltBarn(
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    andreForelder.utvidet[
-                        andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
-                    ].svar,
+                    utvidet.søkerFlyttetFraAndreForelderDato.svar,
                     omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerBorMedAndreForelder]
                 )
             ),
@@ -156,17 +156,17 @@ export const andreForelderTilISøknadsfeltV7 = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: true,
-                gjelderAndreForelder: true,
-                erAndreForelderDød: forelderErDød,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
             })
         ),
         pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
             tilIPensjonsperiodeIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
-                gjelderAndreForelder: true,
-                erAndreForelderDød: forelderErDød,
                 gjelderUtlandet: true,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
                 barn,
             })
         ),
@@ -175,17 +175,17 @@ export const andreForelderTilISøknadsfeltV7 = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: false,
-                gjelderAndreForelder: true,
-                erAndreForelderDød: forelderErDød,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
             })
         ),
         pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
             tilIPensjonsperiodeIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
-                gjelderAndreForelder: true,
-                erAndreForelderDød: forelderErDød,
                 gjelderUtlandet: false,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
                 barn,
             })
         ),
@@ -193,8 +193,17 @@ export const andreForelderTilISøknadsfeltV7 = (
             tilIAndreUtbetalingsperioderIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
-                gjelderAndreForelder: true,
-                erAndreForelderDød: forelderErDød,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
+                barn,
+            })
+        ),
+        eøsBarnetrygdsperioder: eøsBarnetrygdsperioder.map((periode, index) =>
+            tilIEøsBarnetrygsperiodeIKontraktFormat({
+                periode,
+                periodeNummer: index + 1,
+                personType: PersonType.AndreForelder,
+                erDød: forelderErDød,
                 barn,
             })
         ),

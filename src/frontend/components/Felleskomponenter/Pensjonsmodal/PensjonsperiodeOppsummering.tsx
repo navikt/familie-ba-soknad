@@ -5,42 +5,55 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { pensjonsperiodeOppsummeringOverskrift } from './språkUtils';
-import { hentPensjonsperiodeSpørsmålIder, PensjonSpørsmålId } from './spørsmål';
+import {
+    pensjonsperiodeModalSpørsmålSpråkId,
+    pensjonsperiodeOppsummeringOverskrift,
+} from './språkUtils';
+import { PensjonsperiodeSpørsmålId } from './spørsmål';
 
-export const PensjonsperiodeOppsummering: React.FC<{
+interface Props {
     pensjonsperiode: IPensjonsperiode;
     nummer: number;
     fjernPeriodeCallback?: (pensjonsperiode: IPensjonsperiode) => void;
-    gjelderUtlandet?: boolean;
-    andreForelderData?: { erDød: boolean; barn: IBarnMedISøknad };
-}> = ({
+    gjelderUtlandet: boolean;
+}
+
+type PensjonsperiodeOppsummeringPersonTypeProps =
+    | { personType: PersonType.Søker; erDød?: boolean; barn?: IBarnMedISøknad | undefined }
+    | { personType: PersonType.Omsorgsperson; erDød?: boolean; barn: IBarnMedISøknad | undefined }
+    | { personType: PersonType.AndreForelder; erDød: boolean; barn: IBarnMedISøknad | undefined };
+
+type PensjonsperiodeOppsummeringProps = Props & PensjonsperiodeOppsummeringPersonTypeProps;
+
+export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringProps> = ({
     pensjonsperiode,
     nummer,
     fjernPeriodeCallback = undefined,
-    andreForelderData,
-    gjelderUtlandet = false,
+    gjelderUtlandet,
+    personType,
+    erDød = false,
+    barn = undefined,
 }) => {
     const [valgtLocale] = useSprakContext();
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = pensjonsperiode;
 
-    const gjelderAndreForelder = !!andreForelderData;
-    const erAndreForelderDød = !!andreForelderData?.erDød;
-    const periodenErAvsluttet = mottarPensjonNå?.svar === ESvar.NEI || erAndreForelderDød;
-    const barn = andreForelderData?.barn;
+    const periodenErAvsluttet =
+        mottarPensjonNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && !!erDød);
 
-    const spørsmålSpråkTekst = (spørsmålId: PensjonSpørsmålId) => (
+    const hentPensjonsperiodeSpråkIder = pensjonsperiodeModalSpørsmålSpråkId(
+        personType,
+        periodenErAvsluttet
+    );
+
+    const spørsmålSpråkTekst = (spørsmålId: PensjonsperiodeSpørsmålId) => (
         <SpråkTekst
-            id={
-                hentPensjonsperiodeSpørsmålIder(gjelderAndreForelder, periodenErAvsluttet)[
-                    spørsmålId
-                ]
-            }
+            id={hentPensjonsperiodeSpråkIder(spørsmålId)}
             values={{
                 ...(barn && { barn: barn.navn }),
             }}
@@ -58,25 +71,25 @@ export const PensjonsperiodeOppsummering: React.FC<{
         >
             {mottarPensjonNå.svar && (
                 <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(PensjonSpørsmålId.mottarPensjonNå)}
+                    tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.mottarPensjonNå)}
                     søknadsvar={mottarPensjonNå.svar}
                 />
             )}
             {pensjonsland?.svar && (
                 <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(PensjonSpørsmålId.pensjonsland)}
+                    tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.pensjonsland)}
                     søknadsvar={landkodeTilSpråk(pensjonsland.svar, valgtLocale)}
                 />
             )}
             {pensjonFra?.svar && (
                 <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(PensjonSpørsmålId.fraDatoPensjon)}
+                    tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.fraDatoPensjon)}
                     søknadsvar={formaterDato(pensjonFra.svar)}
                 />
             )}
             {pensjonTil?.svar && (
                 <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(PensjonSpørsmålId.tilDatoPensjon)}
+                    tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.tilDatoPensjon)}
                     søknadsvar={formaterDato(pensjonTil.svar)}
                 />
             )}

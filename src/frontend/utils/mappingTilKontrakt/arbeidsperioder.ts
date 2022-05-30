@@ -1,13 +1,14 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { arbeidsperiodeOppsummeringOverskrift } from '../../components/Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import {
-    ArbeidsperiodeSpørsmålsId,
-    arbeidsperiodeSpørsmålSpråkId,
-} from '../../components/Felleskomponenter/Arbeidsperiode/spørsmål';
+    arbeidsperiodeModalSpørsmålSpråkId,
+    arbeidsperiodeOppsummeringOverskrift,
+} from '../../components/Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { ArbeidsperiodeSpørsmålsId } from '../../components/Felleskomponenter/Arbeidsperiode/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/v7';
 import { IArbeidsperiode } from '../../typer/perioder';
+import { PeriodePersonTypeProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import {
     sammeVerdiAlleSpråk,
@@ -15,19 +16,20 @@ import {
     verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 
+interface ArbeidsperiodeIKontraktFormatParams {
+    periode: IArbeidsperiode;
+    periodeNummer: number;
+    gjelderUtlandet: boolean;
+}
+
 export const tilIArbeidsperiodeIKontraktFormat = ({
     periode,
     periodeNummer,
     gjelderUtlandet,
-    gjelderAndreForelder,
-    erAndreForelderDød,
-}: {
-    periode: IArbeidsperiode;
-    periodeNummer: number;
-    gjelderUtlandet: boolean;
-    gjelderAndreForelder: boolean;
-    erAndreForelderDød: boolean;
-}): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
+    personType,
+    erDød,
+}: ArbeidsperiodeIKontraktFormatParams &
+    PeriodePersonTypeProps): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
     const {
         arbeidsperiodeAvsluttet,
         arbeidsperiodeland,
@@ -35,12 +37,13 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
         fraDatoArbeidsperiode,
         tilDatoArbeidsperiode,
     } = periode;
-    const periodenErAvsluttet = arbeidsperiodeAvsluttet?.svar === ESvar.JA || erAndreForelderDød;
 
-    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
-        gjelderAndreForelder,
-        periodenErAvsluttet
-    );
+    const periodenErAvsluttet: boolean =
+        arbeidsperiodeAvsluttet?.svar === ESvar.JA ||
+        (personType === PersonType.AndreForelder && erDød);
+
+    const hentSpørsmålTekstId = arbeidsperiodeModalSpørsmålSpråkId(personType, periodenErAvsluttet);
+
     return {
         label: hentTekster(arbeidsperiodeOppsummeringOverskrift(gjelderUtlandet), {
             x: periodeNummer,

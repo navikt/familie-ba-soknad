@@ -4,6 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../../context/AppContext';
 import { useRoutes } from '../../../../../context/RoutesContext';
+import { PersonType } from '../../../../../typer/personType';
 import { RouteEnum } from '../../../../../typer/routes';
 import { ISøknadSpørsmål } from '../../../../../typer/spørsmål';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
@@ -65,6 +66,8 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         key={`arbeidsperiode-søker-norge-${index}`}
                         arbeidsperiode={arbeidsperiode}
                         nummer={index + 1}
+                        personType={PersonType.Søker}
+                        gjelderUtlandet={false}
                     />
                 ))}
 
@@ -74,6 +77,8 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         key={`pensjonsperiode-søker-norge-${index}`}
                         pensjonsperiode={pensjonsperiode}
                         nummer={index + 1}
+                        gjelderUtlandet={false}
+                        personType={PersonType.Søker}
                     />
                 ))}
 
@@ -83,6 +88,7 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         key={`utbetalingsperiode-søker-norge-${index}`}
                         utbetalingsperiode={utbetalingsperiode}
                         nummer={index + 1}
+                        personType={PersonType.Søker}
                     />
                 ))}
             </StyledOppsummeringsFeltGruppe>

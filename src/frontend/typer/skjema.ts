@@ -130,6 +130,10 @@ export interface IEøsForBarnFeltTyper {
     andreForelderArbeidsperioderNorge: IArbeidsperiode[];
     andreForelderAndreUtbetalinger: ESvar | null;
     andreForelderAndreUtbetalingsperioder: IUtbetalingsperiode[];
+    andreForelderPågåendeSøknadFraAnnetEøsLand: ESvar | null;
+    andreForelderPågåendeSøknadHvilketLand: Alpha3Code | '';
+    andreForelderBarnetrygdFraEøs: ESvar | null;
+    andreForelderEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     andreForelderAdresse: string | AlternativtSvarForInput.UKJENT;
     andreForelderAdresseVetIkke: ESvar;
     søkersSlektsforhold: Slektsforhold | '';
@@ -143,6 +147,20 @@ export interface IEøsForBarnFeltTyper {
     omsorgspersonIdNummer: string;
     omsorgspersonIdNummerVetIkke: ESvar;
     omsorgspersonAdresse: string;
+    omsorgspersonArbeidUtland: ESvar | null;
+    omsorgspersonArbeidsperioderUtland: IArbeidsperiode[];
+    omsorgspersonArbeidNorge: ESvar | null;
+    omsorgspersonArbeidsperioderNorge: IArbeidsperiode[];
+    omsorgspersonPensjonUtland: ESvar | null;
+    omsorgspersonPensjonsperioderUtland: IPensjonsperiode[];
+    omsorgspersonPensjonNorge: ESvar | null;
+    omsorgspersonPensjonsperioderNorge: IPensjonsperiode[];
+    omsorgspersonAndreUtbetalinger: ESvar | null;
+    omsorgspersonAndreUtbetalingsperioder: IUtbetalingsperiode[];
+    omsorgspersonPågåendeSøknadFraAnnetEøsLand: ESvar | null;
+    omsorgspersonPågåendeSøknadHvilketLand: Alpha3Code | '';
+    omsorgspersonBarnetrygdFraEøs: ESvar | null;
+    omsorgspersonEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     barnetsAdresse: string | AlternativtSvarForInput.UKJENT;
     barnetsAdresseVetIkke: ESvar;
 }

@@ -3,6 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IArbeidsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
@@ -17,24 +18,27 @@ import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { arbeidsperiodeSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
+import { arbeidsperiodeModalSpørsmålSpråkId } from './arbeidsperiodeSpråkUtils';
+import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
-interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaParams {
+interface ArbeidsperiodeModalProps
+    extends ReturnType<typeof useModal>,
+        IUseArbeidsperiodeSkjemaParams {
     onLeggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet: boolean;
-    andreForelderData?: { erDød: boolean };
 }
 
-export const ArbeidsperiodeModal: React.FC<Props> = ({
+export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
     erÅpen,
     toggleModal,
     onLeggTilArbeidsperiode,
     gjelderUtlandet = false,
-    andreForelderData,
+    personType,
+    erDød = false,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useArbeidsperiodeSkjema(gjelderUtlandet, andreForelderData);
+        useArbeidsperiodeSkjema(gjelderUtlandet, personType, erDød);
 
     const {
         arbeidsperiodeAvsluttet,
@@ -44,9 +48,6 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
         tilDatoArbeidsperiode,
         tilDatoArbeidsperiodeUkjent,
     } = skjema.felter;
-
-    const gjelderAndreForelder = !!andreForelderData;
-    const erAndreForelderDød = !!andreForelderData?.erDød;
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -96,12 +97,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
         ? 'felles.flerearbeidsperioderutland.tittel'
         : 'felles.flerearbeidsperiodernorge.tittel';
 
-    const periodenErAvsluttet = arbeidsperiodeAvsluttet.verdi === ESvar.JA || erAndreForelderDød;
+    const periodenErAvsluttet =
+        arbeidsperiodeAvsluttet.verdi === ESvar.JA ||
+        (personType === PersonType.AndreForelder && erDød);
 
-    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
-        gjelderAndreForelder,
-        periodenErAvsluttet
-    );
+    const hentSpørsmålTekstId = arbeidsperiodeModalSpørsmålSpråkId(personType, periodenErAvsluttet);
 
     return (
         <SkjemaModal

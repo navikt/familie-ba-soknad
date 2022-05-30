@@ -13,6 +13,7 @@ import {
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
+import { PersonType } from '../../../../../typer/personType';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
@@ -257,10 +258,11 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             )}
                             {barn.eøsBarnetrygdsperioder.map((periode, index) => (
                                 <BarnetrygdsperiodeOppsummering
-                                    key={`barnetrygdperiode-${index}`}
+                                    key={`barnetrygdperiode-søker-${index}`}
                                     nummer={index + 1}
                                     barnetrygdsperiode={periode}
                                     barnetsNavn={barn.navn}
+                                    personType={PersonType.Søker}
                                 />
                             ))}
                         </>
@@ -358,7 +360,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 />
                             }
                             søknadsvar={(() => {
-                                //TODO refactor
                                 const svar =
                                     barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar;
                                 return svar === AlternativtSvarForInput.UKJENT

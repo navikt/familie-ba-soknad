@@ -1,42 +1,46 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { pensjonsperiodeOppsummeringOverskrift } from '../../components/Felleskomponenter/Pensjonsmodal/språkUtils';
 import {
-    hentPensjonsperiodeSpørsmålIder,
-    PensjonSpørsmålId,
-} from '../../components/Felleskomponenter/Pensjonsmodal/spørsmål';
-import { IBarnMedISøknad } from '../../typer/barn';
+    pensjonsperiodeModalSpørsmålSpråkId,
+    pensjonsperiodeOppsummeringOverskrift,
+} from '../../components/Felleskomponenter/Pensjonsmodal/språkUtils';
+import { PensjonsperiodeSpørsmålId } from '../../components/Felleskomponenter/Pensjonsmodal/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IPensjonsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { IPensjonsperiode } from '../../typer/perioder';
+import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
+
+interface PensjonsperiodeIKontraktFormatParams {
+    periode: IPensjonsperiode;
+    periodeNummer: number;
+    gjelderUtlandet: boolean;
+}
 
 export const tilIPensjonsperiodeIKontraktFormat = ({
     periode,
     periodeNummer,
-    gjelderAndreForelder,
-    erAndreForelderDød,
     gjelderUtlandet,
+    personType,
+    erDød,
     barn,
-}: {
-    periode: IPensjonsperiode;
-    periodeNummer: number;
-    gjelderAndreForelder: boolean;
-    erAndreForelderDød: boolean;
-    gjelderUtlandet: boolean;
-    barn?: IBarnMedISøknad;
-}): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
+}: PensjonsperiodeIKontraktFormatParams &
+    PeriodePersonTypeMedBarnProps): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
-    const periodenErAvsluttet = mottarPensjonNå?.svar === ESvar.NEI || erAndreForelderDød;
 
-    const hentSpørsmålstekster = (pensjonSpørsmålId: string) =>
-        hentTekster(
-            hentPensjonsperiodeSpørsmålIder(gjelderAndreForelder, periodenErAvsluttet)[
-                pensjonSpørsmålId
-            ],
-            { ...(barn && { barn: barn.navn }) }
-        );
+    const periodenErAvsluttet =
+        mottarPensjonNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);
+
+    const hentPensjonsperiodeSpråkId = pensjonsperiodeModalSpørsmålSpråkId(
+        personType,
+        periodenErAvsluttet
+    );
+
+    const hentSpørsmålstekster = (pensjonSpørsmålId: PensjonsperiodeSpørsmålId) =>
+        hentTekster(hentPensjonsperiodeSpråkId(pensjonSpørsmålId), {
+            ...(barn && { barn: barn.navn }),
+        });
 
     return {
         label: hentTekster(pensjonsperiodeOppsummeringOverskrift(gjelderUtlandet), {
@@ -44,21 +48,21 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
         }),
         verdi: sammeVerdiAlleSpråk({
             mottarPensjonNå: {
-                label: hentSpørsmålstekster(PensjonSpørsmålId.mottarPensjonNå),
+                label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.mottarPensjonNå),
                 verdi: sammeVerdiAlleSpråk(mottarPensjonNå?.svar),
             },
             pensjonsland: {
-                label: hentSpørsmålstekster(PensjonSpørsmålId.pensjonsland),
+                label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.pensjonsland),
                 verdi: verdiCallbackAlleSpråk(locale =>
                     pensjonsland ? landkodeTilSpråk(pensjonsland.svar, locale) : null
                 ),
             },
             pensjonFra: {
-                label: hentSpørsmålstekster(PensjonSpørsmålId.fraDatoPensjon),
+                label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.fraDatoPensjon),
                 verdi: sammeVerdiAlleSpråk(pensjonFra?.svar ?? null),
             },
             pensjonTil: {
-                label: hentSpørsmålstekster(PensjonSpørsmålId.tilDatoPensjon),
+                label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.tilDatoPensjon),
                 verdi: sammeVerdiAlleSpråk(pensjonTil?.svar ?? null),
             },
         }),
