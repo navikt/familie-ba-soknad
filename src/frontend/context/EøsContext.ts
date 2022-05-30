@@ -9,8 +9,6 @@ import { byggHenterRessurs, hentDataFraRessurs } from '@navikt/familie-typer';
 import Miljø from '../Miljø';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
 import { BarnetsId } from '../typer/common';
-import { IDokumentasjon } from '../typer/dokumentasjon';
-import { Dokumentasjonsbehov } from '../typer/kontrakt/dokumentasjon';
 import { ISøker } from '../typer/person';
 import { useApp } from './AppContext';
 import { useFeatureToggles } from './FeatureToggleContext';
@@ -27,29 +25,6 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     const { toggles } = useFeatureToggles();
 
     const { soknadApi } = Miljø();
-
-    useEffect(() => {
-        if (!toggles.EØS_KOMPLETT) {
-            const erEøs = søknad.erEøs;
-            const dokumentasjon = søknad.dokumentasjon.map((dok: IDokumentasjon) =>
-                dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA
-                    ? {
-                          ...dok,
-                          gjelderForSøker: erEøs,
-                          opplastedeVedlegg: erEøs ? dok.opplastedeVedlegg : [],
-                          harSendtInn: erEøs ? dok.harSendtInn : false,
-                      }
-                    : dok
-            );
-
-            if (JSON.stringify(dokumentasjon) !== JSON.stringify(søknad.dokumentasjon)) {
-                settSøknad({
-                    ...søknad,
-                    dokumentasjon,
-                });
-            }
-        }
-    }, [søknad.erEøs]);
 
     useEffect(() => {
         settEøsLand(byggHenterRessurs());

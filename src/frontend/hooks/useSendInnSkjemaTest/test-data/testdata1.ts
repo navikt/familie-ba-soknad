@@ -213,15 +213,6 @@ export const testdata1: TilKontraktTestData = {
                 opplastedeVedlegg: [],
             },
             {
-                dokumentasjonsbehov: 'EØS_SKJEMA',
-                tittelSpråkId: 'dokumentasjon.tilleggsskjema.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.tilleggsskjema.informasjon',
-                gjelderForBarnId: [],
-                gjelderForSøker: false,
-                harSendtInn: false,
-                opplastedeVedlegg: [],
-            },
-            {
                 dokumentasjonsbehov: 'ANNEN_DOKUMENTASJON',
                 tittelSpråkId: 'dokumentasjon.annendokumentasjon.vedleggtittel',
                 beskrivelseSpråkId: null,

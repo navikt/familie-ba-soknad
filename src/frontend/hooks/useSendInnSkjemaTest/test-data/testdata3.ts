@@ -363,15 +363,6 @@ export const testdata3: TilKontraktTestData = {
                 opplastedeVedlegg: [],
             },
             {
-                dokumentasjonsbehov: 'EØS_SKJEMA',
-                tittelSpråkId: 'dokumentasjon.tilleggsskjema.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.tilleggsskjema.informasjon',
-                gjelderForBarnId: [],
-                gjelderForSøker: true,
-                harSendtInn: true,
-                opplastedeVedlegg: [],
-            },
-            {
                 dokumentasjonsbehov: 'ANNEN_DOKUMENTASJON',
                 tittelSpråkId: 'dokumentasjon.annendokumentasjon.vedleggtittel',
                 beskrivelseSpråkId: null,
@@ -2304,16 +2295,6 @@ export const testdata3: TilKontraktTestData = {
                     en: 'Confirmation that child lives with you',
                     nb: 'Bekreftelse på at barn bor sammen med deg',
                     nn: 'Stadfesting på at barn bur saman med deg',
-                },
-            },
-            {
-                dokumentasjonsbehov: 'EØS_SKJEMA',
-                harSendtInn: true,
-                opplastedeVedlegg: [],
-                dokumentasjonSpråkTittel: {
-                    en: 'Supplementary form for claiming payment of child benefit based on export rules under the EEA agreement',
-                    nb: 'Tilleggsskjema ved krav om utbetaling av barnetrygd og/eller kontantstøtte på grunnlag av regler om eksport etter EØS-avtalen',
-                    nn: 'Tilleggskjema ved krav om utbetaling av barnetrygd og/eller kontantstønad på grunnlag av reglar om eksport etter EØS-avtalen',
                 },
             },
             {
