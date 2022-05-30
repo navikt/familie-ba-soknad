@@ -30,10 +30,8 @@ export interface IDinLivssituasjonFeltTyper {
     nåværendeSamboerFraDato: ISODateString;
     erAsylsøker: ESvar | null;
     jobberPåBåt: ESvar | null;
-    arbeidsland: Alpha3Code | '';
     registrerteArbeidsperioder: IArbeidsperiode[];
     mottarUtenlandspensjon: ESvar | null;
-    pensjonsland: Alpha3Code | '';
     registrertePensjonsperioder: IPensjonsperiode[];
 }
 
@@ -75,7 +73,6 @@ export interface IOmBarnetUtvidetFeltTyper {
     planleggerÅBoINorge12Mnd: ESvar | null;
     pågåendeSøknadFraAnnetEøsLand: ESvar | null;
     pågåendeSøknadHvilketLand: Alpha3Code | '';
-    barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
     mottarEllerMottokEøsBarnetrygd: ESvar | null;
     registrerteEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     andreForelderNavn: string;
@@ -85,10 +82,8 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderFødselsdatoUkjent: ESvar;
     andreForelderFødselsdato: DatoMedUkjent;
     andreForelderArbeidUtlandet: ESvar | null;
-    andreForelderArbeidUtlandetHvilketLand: Alpha3Code | '';
     andreForelderArbeidsperioderUtland: IArbeidsperiode[];
     andreForelderPensjonUtland: ESvar | null;
-    andreForelderPensjonHvilketLand: Alpha3Code | '';
     andreForelderPensjonsperioderUtland: IPensjonsperiode[];
     borFastMedSøker: ESvar | null;
     skriftligAvtaleOmDeltBosted: ESvar | null;

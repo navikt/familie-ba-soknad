@@ -11,7 +11,6 @@ import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjen
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { usePerioder } from '../../../hooks/usePerioder';
 import {
@@ -242,14 +241,6 @@ export const useOmBarnet = (
         avhengighet: pågåendeSøknadFraAnnetEøsLand,
     });
 
-    /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
-    //TODO gammel
-    const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt({
-        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
-        feilmeldingSpråkId: 'ombarnet.barnetrygd-eøs.land.feilmelding',
-        skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
-    });
-
     /*--- EØS SPØRSMÅL MOTTAR BARNETRYGD ---*/
 
     const mottarEllerMottokEøsBarnetrygd = useJaNeiSpmFelt({
@@ -408,20 +399,6 @@ export const useOmBarnet = (
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
-    //TODO gammel
-    const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand],
-        feilmeldingSpråkId:
-            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
-                ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
-                : 'ombarnet.andre-forelder.arbeid-utland.land.feilmelding',
-        avhengigSvarCondition: ESvar.JA,
-        avhengighet: andreForelderArbeidUtlandet,
-        nullstillVedAvhengighetEndring:
-            sammeForelderSomAnnetBarn.verdi === null ||
-            sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
-    });
-
     const {
         fjernPeriode: fjernArbeidsperiode,
         leggTilPeriode: leggTilArbeidsperiode,
@@ -458,20 +435,6 @@ export const useOmBarnet = (
         },
         skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
-    });
-
-    //TODO gammel
-    const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand],
-        feilmeldingSpråkId:
-            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
-                ? 'enkeenkemann.andre-forelder.utenlandspensjon.land.feilmelding'
-                : 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
-        avhengigSvarCondition: ESvar.JA,
-        avhengighet: andreForelderPensjonUtland,
-        nullstillVedAvhengighetEndring:
-            sammeForelderSomAnnetBarn.verdi === null ||
-            sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
     });
 
     const {
@@ -636,7 +599,6 @@ export const useOmBarnet = (
             planleggerÅBoINorge12Mnd,
             pågåendeSøknadFraAnnetEøsLand,
             pågåendeSøknadHvilketLand,
-            barnetrygdFraEøslandHvilketLand,
             mottarEllerMottokEøsBarnetrygd,
             registrerteEøsBarnetrygdsperioder,
             andreForelderNavn,
@@ -646,10 +608,8 @@ export const useOmBarnet = (
             andreForelderFødselsdato,
             andreForelderFødselsdatoUkjent,
             andreForelderArbeidUtlandet,
-            andreForelderArbeidUtlandetHvilketLand,
             andreForelderArbeidsperioderUtland,
             andreForelderPensjonUtland,
-            andreForelderPensjonHvilketLand,
             andreForelderPensjonsperioderUtland,
             borFastMedSøker,
             skriftligAvtaleOmDeltBosted,
@@ -785,10 +745,6 @@ export const useOmBarnet = (
                     ...andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet],
                     svar: andreForelderArbeidUtlandet.verdi,
                 },
-                arbeidUtlandetHvilketLand: {
-                    ...andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand],
-                    svar: andreForelderArbeidUtlandetHvilketLand.verdi,
-                },
                 arbeidsperioderUtland:
                     andreForelderArbeidUtlandet.verdi === ESvar.JA
                         ? andreForelderArbeidsperioderUtland.verdi
@@ -796,10 +752,6 @@ export const useOmBarnet = (
                 pensjonUtland: {
                     ...andreForelder[andreForelderDataKeySpørsmål.pensjonUtland],
                     svar: andreForelderPensjonUtland.verdi,
-                },
-                pensjonHvilketLand: {
-                    ...andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand],
-                    svar: andreForelderPensjonHvilketLand.verdi,
                 },
                 pensjonsperioderUtland:
                     andreForelderPensjonUtland.verdi === ESvar.JA
@@ -902,10 +854,6 @@ export const useOmBarnet = (
                 ...barn.pågåendeSøknadHvilketLand,
                 svar: pågåendeSøknadHvilketLand.verdi,
             },
-            barnetrygdFraEøslandHvilketLand: {
-                ...barn.barnetrygdFraEøslandHvilketLand,
-                svar: barnetrygdFraEøslandHvilketLand.verdi,
-            },
             mottarEllerMottokEøsBarnetrygd: {
                 ...barn.mottarEllerMottokEøsBarnetrygd,
                 svar: mottarEllerMottokEøsBarnetrygd.verdi,
@@ -971,13 +919,7 @@ export const useOmBarnet = (
                 }
             });
         }
-    }, [
-        andreForelderArbeidUtlandet,
-        andreForelderArbeidUtlandetHvilketLand,
-        andreForelderPensjonUtland,
-        andreForelderPensjonHvilketLand,
-        utenlandsperioder,
-    ]);
+    }, [andreForelderArbeidUtlandet, andreForelderPensjonUtland, utenlandsperioder]);
 
     const oppdaterSøknad = () => {
         const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] =

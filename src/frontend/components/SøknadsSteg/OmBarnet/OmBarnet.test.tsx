@@ -47,7 +47,6 @@ const jens = {
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: ESvar.JA },
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: { id: '14', svar: ESvar.NEI },
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.JA },
-    [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: 'AUS' },
     [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
         id: '166',
         svar: ESvar.NEI,
@@ -84,17 +83,9 @@ const jens = {
             id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
             svar: ESvar.JA,
         },
-        [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
-            id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
-            svar: 'AUS',
-        },
         [andreForelderDataKeySpørsmål.pensjonUtland]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
             svar: ESvar.VET_IKKE,
-        },
-        [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
-            id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
-            svar: '',
         },
         [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: { id: '25', svar: ESvar.NEI },
         utvidet: {
@@ -155,7 +146,6 @@ const line = {
     },
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: { id: '13', svar: null },
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: { id: '15', svar: ESvar.NEI },
-    [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: { id: '16', svar: '' },
     [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
         id: '166',
         svar: ESvar.NEI,
@@ -195,17 +185,9 @@ const line = {
             id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
             svar: ESvar.JA,
         },
-        [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
-            id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
-            svar: 'AUS',
-        },
         [andreForelderDataKeySpørsmål.pensjonUtland]: {
             id: OmBarnetSpørsmålsId.andreForelderPensjonUtland,
             svar: ESvar.VET_IKKE,
-        },
-        [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
-            id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
-            svar: '',
         },
         [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: { id: '25', svar: ESvar.NEI },
         utvidet: {

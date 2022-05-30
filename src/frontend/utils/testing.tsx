@@ -347,14 +347,6 @@ export const mekkGyldigSøknad = (): ISøknad => {
                         id: EøsBarnSpørsmålId.andreForelderAndreUtbetalinger,
                         svar: ESvar.NEI,
                     },
-                    [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
-                        id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
-                        svar: '',
-                    },
-                    [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
-                        id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
-                        svar: '',
-                    },
                     [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
                         id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
                         svar: ESvar.NEI,

@@ -56,10 +56,8 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     // Steg: Din Livssituasjon
     erAsylsøker: ISøknadSpørsmål<ESvar | null>;
     jobberPåBåt: ISøknadSpørsmål<ESvar | null>;
-    arbeidsland: ISøknadSpørsmål<Alpha3Code | ''>;
     arbeidsperioderUtland: IArbeidsperiode[];
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | null>;
-    pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
     pensjonsperioderUtland: IPensjonsperiode[];
     harSamboerNå: ISøknadSpørsmål<ESvar | null>;
     nåværendeSamboer: ISamboer | null;

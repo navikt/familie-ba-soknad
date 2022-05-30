@@ -30,9 +30,7 @@ export interface IAndreForelderIKontraktFormat {
     fnr: ISøknadsfelt<string>;
     fødselsdato: ISøknadsfelt<string>;
     pensjonUtland: ISøknadsfelt<ESvar | null>;
-    pensjonHvilketLand: ISøknadsfelt<string>;
     arbeidUtlandet: ISøknadsfelt<ESvar | null>;
-    arbeidUtlandetHvilketLand: ISøknadsfelt<string>;
     skriftligAvtaleOmDeltBosted: ISøknadsfelt<ESvar | null>;
     utvidet: {
         søkerHarBoddMedAndreForelder: ISøknadsfelt<ESvar | null>;

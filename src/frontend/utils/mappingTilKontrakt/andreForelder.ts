@@ -11,13 +11,11 @@ import {
     IBarnMedISøknad,
 } from '../../typer/barn';
 import { IAndreForelderIKontraktFormat } from '../../typer/kontrakt/generelle';
-import { landkodeTilSpråk } from '../språk';
 import {
     sammeVerdiAlleSpråk,
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,
     språktekstIdFraSpørsmålId,
     søknadsfeltBarn,
-    verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 
 export const andreForelderTilISøknadsfelt = (
@@ -60,21 +58,6 @@ export const andreForelderTilISøknadsfelt = (
             sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar),
             barn
         ),
-
-        [andreForelderDataKeySpørsmål.pensjonHvilketLand]: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(
-                forelderErDød
-                    ? OmBarnetSpørsmålsId.andreForelderPensjonHvilketLandEnke
-                    : OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand
-            ),
-            verdiCallbackAlleSpråk(locale =>
-                landkodeTilSpråk(
-                    andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar,
-                    locale
-                )
-            ),
-            barn
-        ),
         [andreForelderDataKeySpørsmål.arbeidUtlandet]: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(
                 forelderErDød
@@ -82,20 +65,6 @@ export const andreForelderTilISøknadsfelt = (
                     : OmBarnetSpørsmålsId.andreForelderArbeidUtlandet
             ),
             sammeVerdiAlleSpråk(andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar),
-            barn
-        ),
-        [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(
-                forelderErDød
-                    ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke
-                    : OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand
-            ),
-            verdiCallbackAlleSpråk(locale =>
-                landkodeTilSpråk(
-                    andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand].svar,
-                    locale
-                )
-            ),
             barn
         ),
         [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: søknadsfeltBarn(

@@ -10,7 +10,6 @@ import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjen
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { usePerioder } from '../../../hooks/usePerioder';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
@@ -193,14 +192,6 @@ export const useDinLivssituasjon = (): {
         feilmeldingSpråkId: 'eøs.arbeid-utland.feilmelding',
     });
 
-    //TODO gammel
-    const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt: søker.arbeidsland,
-        feilmeldingSpråkId: 'omdeg.arbeid-utland.land.feilmelding',
-        avhengigSvarCondition: ESvar.JA,
-        avhengighet: jobberPåBåt,
-    });
-
     const {
         fjernPeriode: fjernArbeidsperiode,
         leggTilPeriode: leggTilArbeidsperiode,
@@ -220,14 +211,6 @@ export const useDinLivssituasjon = (): {
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
         feilmeldingSpråkId: 'omdeg.pensjonutland.feilmelding',
-    });
-
-    //TODO gammel
-    const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt: søker.pensjonsland,
-        feilmeldingSpråkId: 'omdeg.utenlandspensjon.land.feilmelding',
-        avhengigSvarCondition: ESvar.JA,
-        avhengighet: mottarUtenlandspensjon,
     });
 
     const {
@@ -264,10 +247,8 @@ export const useDinLivssituasjon = (): {
             nåværendeSamboerFraDato,
             erAsylsøker,
             jobberPåBåt,
-            arbeidsland,
             registrerteArbeidsperioder,
             mottarUtenlandspensjon,
-            pensjonsland,
             registrertePensjonsperioder,
         },
         skjemanavn: 'dinlivssituasjon',
@@ -357,10 +338,6 @@ export const useDinLivssituasjon = (): {
             ...søknad.søker.jobberPåBåt,
             svar: skjema.felter.jobberPåBåt.verdi,
         },
-        arbeidsland: {
-            ...søknad.søker.arbeidsland,
-            svar: skjema.felter.arbeidsland.verdi,
-        },
         arbeidsperioderUtland:
             skjema.felter.jobberPåBåt.verdi === ESvar.JA
                 ? skjema.felter.registrerteArbeidsperioder.verdi
@@ -368,10 +345,6 @@ export const useDinLivssituasjon = (): {
         mottarUtenlandspensjon: {
             ...søknad.søker.mottarUtenlandspensjon,
             svar: skjema.felter.mottarUtenlandspensjon.verdi,
-        },
-        pensjonsland: {
-            ...søknad.søker.pensjonsland,
-            svar: skjema.felter.pensjonsland.verdi,
         },
         pensjonsperioderUtland:
             skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA
@@ -407,7 +380,7 @@ export const useDinLivssituasjon = (): {
         const oppdatertSøker = genererOppdatertSøker();
         skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs &&
             settSøkerTriggerEøs(prevState => !prevState);
-    }, [arbeidsland, pensjonsland, jobberPåBåt, mottarUtenlandspensjon]);
+    }, [jobberPåBåt, mottarUtenlandspensjon]);
 
     const oppdaterSøknad = () => {
         const oppdatertSøker = genererOppdatertSøker();
