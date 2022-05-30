@@ -5,7 +5,6 @@ import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useInputFelt from '../../../hooks/useInputFelt';
@@ -49,7 +48,6 @@ export const useDinLivssituasjon = (): {
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs, erEøsLand } = useEøs();
-    const { toggles } = useFeatureToggles();
     const søker = søknad.søker;
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
@@ -195,12 +193,12 @@ export const useDinLivssituasjon = (): {
         feilmeldingSpråkId: 'eøs.arbeid-utland.feilmelding',
     });
 
+    //TODO gammel
     const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet({
         søknadsfelt: søker.arbeidsland,
         feilmeldingSpråkId: 'omdeg.arbeid-utland.land.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: jobberPåBåt,
-        skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
     const {
@@ -210,7 +208,7 @@ export const useDinLivssituasjon = (): {
     } = usePerioder<IArbeidsperiode>(
         søker.arbeidsperioderUtland,
         { jobberPåBåt },
-        avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA,
         (felt, avhengigheter) => {
             return avhengigheter?.jobberPåBåt.verdi === ESvar.NEI ||
                 (avhengigheter?.jobberPåBåt.verdi === ESvar.JA && felt.verdi.length)
@@ -224,12 +222,12 @@ export const useDinLivssituasjon = (): {
         feilmeldingSpråkId: 'omdeg.pensjonutland.feilmelding',
     });
 
+    //TODO gammel
     const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet({
         søknadsfelt: søker.pensjonsland,
         feilmeldingSpråkId: 'omdeg.utenlandspensjon.land.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: mottarUtenlandspensjon,
-        skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
     const {
@@ -239,8 +237,7 @@ export const useDinLivssituasjon = (): {
     } = usePerioder<IPensjonsperiode>(
         søker.pensjonsperioderUtland,
         { mottarUtenlandspensjon },
-        avhengigheter =>
-            avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        avhengigheter => avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA,
         (felt, avhengigheter) => {
             return avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.NEI ||
                 (avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length)

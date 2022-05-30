@@ -5,7 +5,6 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
@@ -82,7 +81,6 @@ export const useOmBarnet = (
     const { søknad, settSøknad, erUtvidet } = useApp();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
 
-    const { toggles } = useFeatureToggles();
     const gjeldendeBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
 
     if (!gjeldendeBarn) {
@@ -234,9 +232,7 @@ export const useOmBarnet = (
     const pågåendeSøknadFraAnnetEøsLand = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
         feilmeldingSpråkId: 'ombarnet.pågåendesøknad.feilmelding',
-        skalSkjules:
-            !toggles.EØS_KOMPLETT ||
-            !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
+        skalSkjules: !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });
 
     const pågåendeSøknadHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
@@ -244,16 +240,14 @@ export const useOmBarnet = (
         feilmeldingSpråkId: 'ombarnet.hvilketlandsøkt.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: pågåendeSøknadFraAnnetEøsLand,
-        skalFeltetVises: toggles.EØS_KOMPLETT,
     });
 
     /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
-
+    //TODO gammel
     const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
         feilmeldingSpråkId: 'ombarnet.barnetrygd-eøs.land.feilmelding',
-        skalFeltetVises:
-            skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland) && !toggles.EØS_KOMPLETT,
+        skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });
 
     /*--- EØS SPØRSMÅL MOTTAR BARNETRYGD ---*/
@@ -261,9 +255,7 @@ export const useOmBarnet = (
     const mottarEllerMottokEøsBarnetrygd = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
         feilmeldingSpråkId: 'ombarnet.fårellerharsøktbarnetrygdeøs.feilmelding',
-        skalSkjules:
-            !toggles.EØS_KOMPLETT ||
-            !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
+        skalSkjules: !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });
 
     const {
@@ -273,8 +265,7 @@ export const useOmBarnet = (
     } = usePerioder<IEøsBarnetrygdsperiode>(
         gjeldendeBarn.eøsBarnetrygdsperioder,
         { mottarEllerMottokEøsBarnetrygd },
-        avhengigheter =>
-            avhengigheter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        avhengigheter => avhengigheter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA,
 
         (felt, avhengigheter) => {
             return avhengigheter?.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.NEI ||
@@ -417,6 +408,7 @@ export const useOmBarnet = (
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
+    //TODO gammel
     const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand],
         feilmeldingSpråkId:
@@ -428,7 +420,6 @@ export const useOmBarnet = (
         nullstillVedAvhengighetEndring:
             sammeForelderSomAnnetBarn.verdi === null ||
             sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
-        skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
     const {
@@ -438,8 +429,7 @@ export const useOmBarnet = (
     } = usePerioder<IArbeidsperiode>(
         andreForelder?.arbeidsperioderUtland ?? [],
         { andreForelderArbeidUtlandet },
-        avhengigheter =>
-            avhengigheter.andreForelderArbeidUtlandet.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        avhengigheter => avhengigheter.andreForelderArbeidUtlandet.verdi === ESvar.JA,
         (felt, avhengigheter) => {
             return avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.JA && felt.verdi.length)
@@ -470,6 +460,7 @@ export const useOmBarnet = (
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
+    //TODO gammel
     const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand],
         feilmeldingSpråkId:
@@ -481,7 +472,6 @@ export const useOmBarnet = (
         nullstillVedAvhengighetEndring:
             sammeForelderSomAnnetBarn.verdi === null ||
             sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
-        skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
     const {
@@ -491,8 +481,7 @@ export const useOmBarnet = (
     } = usePerioder<IPensjonsperiode>(
         andreForelder?.pensjonsperioderUtland ?? [],
         { andreForelderPensjonUtland },
-        avhengigheter =>
-            avhengigheter.andreForelderPensjonUtland.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        avhengigheter => avhengigheter.andreForelderPensjonUtland.verdi === ESvar.JA,
 
         (felt, avhengigheter) => {
             return avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.NEI ||
