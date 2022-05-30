@@ -49,7 +49,7 @@ describe('OmDeg', () => {
             planleggerÅBoINorgeTolvMnd: { ...søker.planleggerÅBoINorgeTolvMnd, svar: ESvar.NEI },
         };
         spyOnUseApp({ søker: søkerMedSvarSomViserAlleTekster });
-        søkerMedSvarSomViserAlleTekster.adresse = undefined;
+        søkerMedSvarSomViserAlleTekster.adresse = null;
         søkerMedSvarSomViserAlleTekster.adressebeskyttelse = false;
         const { findAllByTestId } = render(<TestKomponentMedEkteTekster />);
 

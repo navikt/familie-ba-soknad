@@ -101,9 +101,7 @@ export const dataISøknadKontraktFormatV7 = (
                     statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, locale))
                 )
             ),
-            adresse: adresse
-                ? søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse))
-                : null,
+            adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse)),
             adressebeskyttelse: søker.adressebeskyttelse,
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt(periode, index + 1)

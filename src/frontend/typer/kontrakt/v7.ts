@@ -33,7 +33,7 @@ export interface ISøknadKontraktSøker {
     ident: ISøknadsfelt<string>;
     navn: ISøknadsfelt<string>;
     statsborgerskap: ISøknadsfelt<string[]>;
-    adresse: ISøknadsfelt<IAdresse> | null;
+    adresse: ISøknadsfelt<IAdresse | null>;
     adressebeskyttelse: boolean;
     sivilstand: ISøknadsfelt<ESivilstand>;
     spørsmål: SpørsmålMap;
