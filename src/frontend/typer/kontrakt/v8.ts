@@ -17,8 +17,8 @@ import {
 } from './generelle';
 
 export interface ISøknadKontraktV8 {
-    antallEøsSteg: number;
     kontraktVersjon: number;
+    antallEøsSteg: number;
     søknadstype: ESøknadstype;
     søker: ISøknadKontraktSøker;
     barn: ISøknadIKontraktBarnV8[];
@@ -54,7 +54,7 @@ export interface ISøknadIKontraktBarnV8 {
     ident: ISøknadsfelt<string>;
     navn: ISøknadsfelt<string>;
     registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
-    alder: ISøknadsfelt<string>;
+    alder: ISøknadsfelt<string> | null;
     spørsmål: SpørsmålMap;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
     omsorgsperson: IOmsorgspersonIKontraktFormatV8 | null;
@@ -66,7 +66,7 @@ export interface ISøknadIKontraktBarnV8 {
 export interface IOmsorgspersonIKontraktFormatV8 {
     navn: ISøknadsfelt<string>;
     slektsforhold: ISøknadsfelt<string>;
-    slektsforholdSpesifisering: ISøknadsfelt<string>;
+    slektsforholdSpesifisering: ISøknadsfelt<string | null>;
     idNummer: ISøknadsfelt<string>;
     adresse: ISøknadsfelt<string>;
     arbeidUtland: ISøknadsfelt<ESvar | null>;
