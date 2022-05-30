@@ -611,6 +611,7 @@
   "omdeg.borpådenneadressen.feilmelding": "Du må oppgje om du bur på denne adressa for å gå vidare",
   "omdeg.borpådenneadressen.ikke-endre-adresse": "Skal du ikkje endre adresse i folkeregisteret?",
   "omdeg.borpådenneadressen.kontakt-folkeregister.alert": "Du må kontakte folkeregisteret og endre til rett adresse. Har du endra adresse allereie kan du svare Ja på dette spørsmålet, og fortsette på den digitale søknaden.",
+  "omdeg.borpådenneadressen.kontakt-folkeregister-ukjent.alert": "Du må kontakte folkeregisteret og endre til rett adresse.",
   "omdeg.borpådenneadressen.spm": "Bur du på denne adressa?",
   "omdeg.borpådenneadressen.spm.tilleggsinfo": "Du er registrert med adressesperre. Du kan svare Ja på dette spørsmålet, og fortsette med den digitale søknaden.",
   "omdeg.du-kan-ikke-søke.feilmelding": "Du må bruke PDF/papir-skjema for å søke dersom du ikkje bur på folkeregistrert adresse.",

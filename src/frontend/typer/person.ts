@@ -28,7 +28,7 @@ export interface ISøkerRespons extends IPerson {
     navn: string;
     barn: IBarnRespons[];
     statsborgerskap: { landkode: Alpha3Code }[];
-    adresse?: IAdresse;
+    adresse: IAdresse | null;
     sivilstand: { type: ESivilstand };
 }
 
