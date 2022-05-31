@@ -701,7 +701,6 @@ export const testdata1: TilKontraktTestData = {
                             en: null,
                         },
                     },
-                    idNummer: [],
                     skriftligAvtaleOmDeltBosted: {
                         label: {
                             en: 'Do you and the other parent have a written agreement on dual residence for Barn 234567 89876?',
@@ -752,7 +751,14 @@ export const testdata1: TilKontraktTestData = {
                             },
                         },
                     },
+                    arbeidsperioderUtland: [],
+                    pensjonsperioderUtland: [],
+                    arbeidsperioderNorge: [],
+                    pensjonsperioderNorge: [],
+                    andreUtbetalingsperioder: [],
+                    idNummer: [],
                 },
+                omsorgsperson: null,
                 spørsmål: {
                     erFosterbarn: {
                         label: {
@@ -1133,6 +1139,16 @@ export const testdata1: TilKontraktTestData = {
                 en: 'Former cohabitant {x}',
                 nb: 'Tidligere samboer {x}',
                 nn: 'Tidlegare sambuar {x}',
+            },
+            'eøs-om-deg.sidetittel': {
+                en: 'Child benefit by the EEA-regulations - About you',
+                nb: 'Barnetrygd etter EØS-reglene - Om deg',
+                nn: 'Barnetrygd etter EØS-reglane - Om deg',
+            },
+            'eøs-om-barn.sidetittel': {
+                en: 'Child benefit by the EEA-regulations - About {barn}',
+                nb: 'Barnetrygd etter EØS-reglene - Om {barn}',
+                nn: 'Barnetrygd etter EØS-reglane - Om {barn}',
             },
             'felles.sivilstatus.kode.GIFT': {
                 en: 'Married',
