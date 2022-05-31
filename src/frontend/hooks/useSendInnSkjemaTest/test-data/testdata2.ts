@@ -447,11 +447,107 @@ export const testdata2: TilKontraktTestData = {
                 id: 'pensjonsland',
                 svar: 'BEL',
             },
-            arbeidsperioderUtland: [],
-            arbeidsperioderNorge: [],
-            pensjonsperioderNorge: [],
-            pensjonsperioderUtland: [],
-            andreUtbetalingsperioder: [],
+            arbeidsperioderUtland: [
+                {
+                    arbeidsgiver: {
+                        id: 'arbeidsgiver',
+                        svar: 'Jobben',
+                    },
+                    arbeidsperiodeAvsluttet: {
+                        id: 'arbeidsperiode-avluttet',
+                        svar: 'JA',
+                    },
+                    arbeidsperiodeland: {
+                        id: 'arbeidsperiode-land',
+                        svar: 'BEL',
+                    },
+                    fraDatoArbeidsperiode: {
+                        id: 'fra-dato-arbeidsperiode',
+                        svar: '2022-05-16',
+                    },
+                    tilDatoArbeidsperiode: {
+                        id: 'til-dato-arbeidsperiode',
+                        svar: '2022-05-20',
+                    },
+                },
+            ],
+            arbeidsperioderNorge: [
+                {
+                    arbeidsgiver: {
+                        id: 'arbeidsgiver',
+                        svar: 'Jobben',
+                    },
+
+                    arbeidsperiodeAvsluttet: {
+                        id: 'arbeidsperiode-avluttet',
+                        svar: 'JA',
+                    },
+                    fraDatoArbeidsperiode: {
+                        id: 'fra-dato-arbeidsperiode',
+                        svar: '2022-05-03',
+                    },
+                    tilDatoArbeidsperiode: {
+                        id: 'til-dato-arbeidsperiode',
+                        svar: '2022-05-18',
+                    },
+                },
+            ],
+            pensjonsperioderNorge: [
+                {
+                    mottarPensjonNå: {
+                        id: 'mottar-pensjon-nå',
+                        svar: 'NEI',
+                    },
+                    pensjonFra: {
+                        id: 'fra-dato-pensjon',
+                        svar: '2022-05-02',
+                    },
+                    pensjonTil: {
+                        id: 'til-dato-pensjon',
+                        svar: '2022-05-18',
+                    },
+                },
+            ],
+            pensjonsperioderUtland: [
+                {
+                    mottarPensjonNå: {
+                        id: 'mottar-pensjon-nå',
+                        svar: 'NEI',
+                    },
+                    pensjonFra: {
+                        id: 'fra-dato-pensjon',
+                        svar: '2022-05-02',
+                    },
+                    pensjonTil: {
+                        id: 'til-dato-pensjon',
+                        svar: '2022-05-30',
+                    },
+                    pensjonsland: {
+                        id: 'land-pensjon',
+                        svar: 'BEL',
+                    },
+                },
+            ],
+            andreUtbetalingsperioder: [
+                {
+                    fårUtbetalingNå: {
+                        id: 'får-utbetaling-nå',
+                        svar: 'JA',
+                    },
+                    utbetalingFraDato: {
+                        id: 'utbetaling-startdato',
+                        svar: '2022-05-09',
+                    },
+                    utbetalingLand: {
+                        id: 'utbetaling-fra-hvilket-land',
+                        svar: 'ALB',
+                    },
+                    utbetalingTilDato: {
+                        id: 'utbetaling-sluttdato',
+                        svar: 'UKJENT',
+                    },
+                },
+            ],
             harSamboerNå: {
                 id: 'har-samboer-nå-og-gift',
                 svar: 'JA',
@@ -1066,11 +1162,607 @@ export const testdata2: TilKontraktTestData = {
                     },
                 },
             },
-            arbeidsperioderUtland: [],
-            arbeidsperioderNorge: [],
-            pensjonsperioderUtland: [],
-            pensjonsperioderNorge: [],
-            andreUtbetalingsperioder: [],
+            arbeidsperioderUtland: [
+                {
+                    label: {
+                        en: 'Period of work outside of Norway 1',
+                        nb: 'Arbeidsperiode utenfor Norge 1',
+                        nn: 'Arbeidsperiode utanfor Noreg 1',
+                    },
+                    verdi: {
+                        nb: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: {
+                                label: {
+                                    en: 'Which country did you work in?',
+                                    nb: 'Hvilket land arbeidet du i?',
+                                    nn: 'Kva land arbeidde du i?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-16', nn: '2022-05-16', en: '2022-05-16' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-20', nn: '2022-05-20', en: '2022-05-20' },
+                            },
+                        },
+                        nn: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: {
+                                label: {
+                                    en: 'Which country did you work in?',
+                                    nb: 'Hvilket land arbeidet du i?',
+                                    nn: 'Kva land arbeidde du i?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-16', nn: '2022-05-16', en: '2022-05-16' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-20', nn: '2022-05-20', en: '2022-05-20' },
+                            },
+                        },
+                        en: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: {
+                                label: {
+                                    en: 'Which country did you work in?',
+                                    nb: 'Hvilket land arbeidet du i?',
+                                    nn: 'Kva land arbeidde du i?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-16', nn: '2022-05-16', en: '2022-05-16' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-20', nn: '2022-05-20', en: '2022-05-20' },
+                            },
+                        },
+                    },
+                },
+            ],
+            arbeidsperioderNorge: [
+                {
+                    label: {
+                        en: 'Period of work in Norway 1',
+                        nb: 'Arbeidsperiode i Norge 1',
+                        nn: 'Arbeidsperiode i Noreg 1',
+                    },
+                    verdi: {
+                        nb: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: {
+                                label: {
+                                    en: 'Which country did you work in?',
+                                    nb: 'Hvilket land arbeidet du i?',
+                                    nn: 'Kva land arbeidde du i?',
+                                },
+                                verdi: { nb: null, nn: null, en: null },
+                            },
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-03', nn: '2022-05-03', en: '2022-05-03' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                        nn: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: {
+                                label: {
+                                    en: 'Which country did you work in?',
+                                    nb: 'Hvilket land arbeidet du i?',
+                                    nn: 'Kva land arbeidde du i?',
+                                },
+                                verdi: { nb: null, nn: null, en: null },
+                            },
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-03', nn: '2022-05-03', en: '2022-05-03' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                        en: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: {
+                                label: {
+                                    en: 'Which country did you work in?',
+                                    nb: 'Hvilket land arbeidet du i?',
+                                    nn: 'Kva land arbeidde du i?',
+                                },
+                                verdi: { nb: null, nn: null, en: null },
+                            },
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-03', nn: '2022-05-03', en: '2022-05-03' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                    },
+                },
+            ],
+            pensjonsperioderUtland: [
+                {
+                    label: {
+                        en: 'Pension period from abroad 1',
+                        nb: 'Pensjonsperiode fra utlandet 1',
+                        nn: 'Pensjonsperiode frå utlandet 1',
+                    },
+                    verdi: {
+                        nb: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: {
+                                label: {
+                                    en: 'From which country did you receive a pension?',
+                                    nb: 'Hvilket land fikk du pensjon fra?',
+                                    nn: 'Kva land fekk du pensjon frå?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-30', nn: '2022-05-30', en: '2022-05-30' },
+                            },
+                        },
+                        nn: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: {
+                                label: {
+                                    en: 'From which country did you receive a pension?',
+                                    nb: 'Hvilket land fikk du pensjon fra?',
+                                    nn: 'Kva land fekk du pensjon frå?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-30', nn: '2022-05-30', en: '2022-05-30' },
+                            },
+                        },
+                        en: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: {
+                                label: {
+                                    en: 'From which country did you receive a pension?',
+                                    nb: 'Hvilket land fikk du pensjon fra?',
+                                    nn: 'Kva land fekk du pensjon frå?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-30', nn: '2022-05-30', en: '2022-05-30' },
+                            },
+                        },
+                    },
+                },
+            ],
+            pensjonsperioderNorge: [
+                {
+                    label: {
+                        en: 'Pension period from Norway 1',
+                        nb: 'Pensjonsperiode fra Norge 1',
+                        nn: 'Pensjonsperiode frå Noreg 1',
+                    },
+                    verdi: {
+                        nb: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: {
+                                label: {
+                                    en: 'From which country did you receive a pension?',
+                                    nb: 'Hvilket land fikk du pensjon fra?',
+                                    nn: 'Kva land fekk du pensjon frå?',
+                                },
+                                verdi: { nb: null, nn: null, en: null },
+                            },
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                        nn: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: {
+                                label: {
+                                    en: 'From which country did you receive a pension?',
+                                    nb: 'Hvilket land fikk du pensjon fra?',
+                                    nn: 'Kva land fekk du pensjon frå?',
+                                },
+                                verdi: { nb: null, nn: null, en: null },
+                            },
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                        en: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: {
+                                label: {
+                                    en: 'From which country did you receive a pension?',
+                                    nb: 'Hvilket land fikk du pensjon fra?',
+                                    nn: 'Kva land fekk du pensjon frå?',
+                                },
+                                verdi: { nb: null, nn: null, en: null },
+                            },
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                    },
+                },
+            ],
+            andreUtbetalingsperioder: [
+                {
+                    label: {
+                        en: 'Benefit period 1',
+                        nb: 'Utbetalingsperiode 1',
+                        nn: 'Utbetalingsperiode 1',
+                    },
+                    verdi: {
+                        nb: {
+                            fårUtbetalingNå: {
+                                label: {
+                                    en: 'Are you currently receiving benefits?',
+                                    nb: 'Får du utbetalinger nå?',
+                                    nn: 'Får du utbetalingar no?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            utbetalingLand: {
+                                label: {
+                                    en: 'What country are you receiving benefits from?',
+                                    nb: 'Hvilket land får du utbetalinger fra?',
+                                    nn: 'Kva land får du utbetalingar frå?',
+                                },
+                                verdi: { nb: 'Albania', nn: 'Albania', en: 'Albania' },
+                            },
+                            utbetalingFraDato: {
+                                label: {
+                                    en: 'When did you start receiving benefits?',
+                                    nb: 'Når startet utbetalingene?',
+                                    nn: 'Når starta utbetalingane?',
+                                },
+                                verdi: { nb: '2022-05-09', nn: '2022-05-09', en: '2022-05-09' },
+                            },
+                            utbetalingTilDato: {
+                                label: {
+                                    en: 'When will you stop receiving benefits?',
+                                    nb: 'Når stopper utbetalingene?',
+                                    nn: 'Når stoppar utbetalingane?',
+                                },
+                                verdi: {
+                                    en: "I don't know when I will stop receiving benefits",
+                                    nb: 'Jeg vet ikke når utbetalingene stopper',
+                                    nn: 'Eg veit ikkje når utbetalingane stoppar',
+                                },
+                            },
+                        },
+                        nn: {
+                            fårUtbetalingNå: {
+                                label: {
+                                    en: 'Are you currently receiving benefits?',
+                                    nb: 'Får du utbetalinger nå?',
+                                    nn: 'Får du utbetalingar no?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            utbetalingLand: {
+                                label: {
+                                    en: 'What country are you receiving benefits from?',
+                                    nb: 'Hvilket land får du utbetalinger fra?',
+                                    nn: 'Kva land får du utbetalingar frå?',
+                                },
+                                verdi: { nb: 'Albania', nn: 'Albania', en: 'Albania' },
+                            },
+                            utbetalingFraDato: {
+                                label: {
+                                    en: 'When did you start receiving benefits?',
+                                    nb: 'Når startet utbetalingene?',
+                                    nn: 'Når starta utbetalingane?',
+                                },
+                                verdi: { nb: '2022-05-09', nn: '2022-05-09', en: '2022-05-09' },
+                            },
+                            utbetalingTilDato: {
+                                label: {
+                                    en: 'When will you stop receiving benefits?',
+                                    nb: 'Når stopper utbetalingene?',
+                                    nn: 'Når stoppar utbetalingane?',
+                                },
+                                verdi: {
+                                    en: "I don't know when I will stop receiving benefits",
+                                    nb: 'Jeg vet ikke når utbetalingene stopper',
+                                    nn: 'Eg veit ikkje når utbetalingane stoppar',
+                                },
+                            },
+                        },
+                        en: {
+                            fårUtbetalingNå: {
+                                label: {
+                                    en: 'Are you currently receiving benefits?',
+                                    nb: 'Får du utbetalinger nå?',
+                                    nn: 'Får du utbetalingar no?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            utbetalingLand: {
+                                label: {
+                                    en: 'What country are you receiving benefits from?',
+                                    nb: 'Hvilket land får du utbetalinger fra?',
+                                    nn: 'Kva land får du utbetalingar frå?',
+                                },
+                                verdi: { nb: 'Albania', nn: 'Albania', en: 'Albania' },
+                            },
+                            utbetalingFraDato: {
+                                label: {
+                                    en: 'When did you start receiving benefits?',
+                                    nb: 'Når startet utbetalingene?',
+                                    nn: 'Når starta utbetalingane?',
+                                },
+                                verdi: { nb: '2022-05-09', nn: '2022-05-09', en: '2022-05-09' },
+                            },
+                            utbetalingTilDato: {
+                                label: {
+                                    en: 'When will you stop receiving benefits?',
+                                    nb: 'Når stopper utbetalingene?',
+                                    nn: 'Når stoppar utbetalingane?',
+                                },
+                                verdi: {
+                                    en: "I don't know when I will stop receiving benefits",
+                                    nb: 'Jeg vet ikke når utbetalingene stopper',
+                                    nn: 'Eg veit ikkje når utbetalingane stoppar',
+                                },
+                            },
+                        },
+                    },
+                },
+            ],
         },
         barn: [
             {
@@ -1457,7 +2149,11 @@ export const testdata2: TilKontraktTestData = {
                         verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                     },
                     søkerForTidsromSluttdato: {
-                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
+                        label: {
+                            en: 'Up to and including',
+                            nb: 'Til og med',
+                            nn: 'Til og med',
+                        },
                         verdi: { nb: '2022-01-06', nn: '2022-01-06', en: '2022-01-06' },
                     },
                     institusjonOppholdSluttdato: {
@@ -1787,7 +2483,11 @@ export const testdata2: TilKontraktTestData = {
                         verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                     },
                     søkerForTidsromSluttdato: {
-                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
+                        label: {
+                            en: 'Up to and including',
+                            nb: 'Til og med',
+                            nn: 'Til og med',
+                        },
                         verdi: {
                             en: 'Period does not have an up to and including date / Up to and including date is in the future',
                             nb: 'Tidsrommet har ikke en til og med dato / Til og med dato er frem i tid.',

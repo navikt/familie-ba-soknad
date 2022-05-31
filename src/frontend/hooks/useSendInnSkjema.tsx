@@ -14,7 +14,7 @@ export const useSendInnSkjema = (): {
     const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
     const { soknadApi } = Miljø();
     const [valgtSpråk] = useSprakContext();
-
+    console.log(søknad);
     const sendInnSkjemaV7 = async (): Promise<[boolean, ISøknadKontraktV7]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
 
