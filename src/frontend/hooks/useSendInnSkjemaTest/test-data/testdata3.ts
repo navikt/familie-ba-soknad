@@ -142,10 +142,6 @@ export const testdata3: TilKontraktTestData = {
                     id: 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
                     svar: null,
                 },
-                barnetrygdFraEøslandHvilketLand: {
-                    id: 'barnetrygd-hvilket-eøsland',
-                    svar: '',
-                },
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'JA',
@@ -277,10 +273,6 @@ export const testdata3: TilKontraktTestData = {
                 planleggerÅBoINorge12Mnd: {
                     id: 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
                     svar: 'NEI',
-                },
-                barnetrygdFraEøslandHvilketLand: {
-                    id: 'barnetrygd-hvilket-eøsland',
-                    svar: 'MLT',
                 },
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
@@ -1827,14 +1819,6 @@ export const testdata3: TilKontraktTestData = {
                             nn: 'Er det planlagd at Barn Barnessen III skal bu i Noreg samanhengande i meir enn tolv månadar?',
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
-                    },
-                    barnetrygdFraEøslandHvilketLand: {
-                        label: {
-                            en: 'ukjent-spørsmål',
-                            nb: 'ukjent-spørsmål',
-                            nn: 'ukjent-spørsmål',
-                        },
-                        verdi: { nb: 'Malta', nn: 'Malta', en: 'Malta' },
                     },
                     borFastMedSøker: {
                         label: {
