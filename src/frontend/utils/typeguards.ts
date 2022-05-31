@@ -1,14 +1,16 @@
 import { Alpha3Code, getAlpha3Codes } from 'i18n-iso-countries';
 
-import { ISøknadKontraktBarn } from '../typer/kontrakt/barn';
 import { ISøknadKontraktDokumentasjon } from '../typer/kontrakt/dokumentasjon';
 import {
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
     ISøknadsfelt,
 } from '../typer/kontrakt/generelle';
-import { ISøknadKontraktSøker } from '../typer/kontrakt/søker';
-import { ISøknadKontrakt } from '../typer/kontrakt/v6';
+import {
+    ISøknadIKontraktBarnV7,
+    ISøknadKontraktSøker,
+    ISøknadKontraktV7,
+} from '../typer/kontrakt/v7';
 import { ISamboer, ITidligereSamboer } from '../typer/person';
 
 export const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>
@@ -62,7 +64,7 @@ export const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontrakt
         erGyldigNåværendeSamboer(input?.spørsmål?.harSamboerNå, input.nåværendeSamboer)
     );
 
-export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadKontraktBarn =>
+export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontraktBarnV7 =>
     !!(
         input &&
         input.ident &&
@@ -72,7 +74,7 @@ export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadKontraktB
         input.spørsmål
     );
 
-export const erGyldigISøknadKontraktBarnListe = (input): input is ISøknadKontraktBarn[] =>
+export const erGyldigISøknadKontraktBarnListe = (input): input is ISøknadIKontraktBarnV7[] =>
     input &&
     Array.isArray(input) &&
     input.map(erGyldigISøknadsKontraktBarn).reduce((prev, curr) => !!(prev && curr), true);
@@ -87,7 +89,7 @@ export const erGyldigDokumentasjon = (input): input is ISøknadKontraktDokumenta
     Array.isArray(input) &&
     input.map(erGyldigISøknadKontraktDokumentasjon).reduce((prev, curr) => !!(prev && curr), true);
 
-export const erGyldigISøknadKontrakt = (input): input is ISøknadKontrakt =>
+export const erGyldigISøknadKontrakt = (input): input is ISøknadKontraktV7 =>
     !!(
         input &&
         input.søknadstype &&

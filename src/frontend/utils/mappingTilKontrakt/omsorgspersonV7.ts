@@ -3,7 +3,7 @@ import {
     eøsBarnSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { IBarnMedISøknad, IOmsorgsperson } from '../../typer/barn';
-import { Slektsforhold } from '../../typer/kontrakt/barn';
+import { Slektsforhold } from '../../typer/kontrakt/generelle';
 import { IOmsorgspersonIKontraktFormatV7 } from '../../typer/kontrakt/v7';
 import { hentTekster, toSlektsforholdSpråkId } from '../språk';
 import {

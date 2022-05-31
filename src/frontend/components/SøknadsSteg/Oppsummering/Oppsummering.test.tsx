@@ -55,6 +55,7 @@ describe('Oppsummering', () => {
                     erFosterbarn: { id: OmBarnaDineSpørsmålId.hvemErFosterbarn, svar: ESvar.JA },
                     andreForelder: null,
                     utenlandsperioder: [],
+                    triggetEøs: false,
                 },
             ],
         });
@@ -68,7 +69,7 @@ describe('Oppsummering', () => {
         );
         const gåVidere = await findByText('felles.navigasjon.gå-videre');
 
-        act(() => gåVidere.click());
+        await act(() => gåVidere.click());
 
         const omDegFeil = getAllByRole('alert')[0];
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({

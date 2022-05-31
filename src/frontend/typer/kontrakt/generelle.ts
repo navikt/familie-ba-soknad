@@ -73,3 +73,11 @@ export interface IKontraktNåværendeSamboer {
     fødselsdato: ISøknadsfelt<string>;
     samboerFraDato: ISøknadsfelt<ISODateString>;
 }
+
+export enum Slektsforhold {
+    FORELDER = 'FORELDER',
+    ONKEL_ELLER_TANTE = 'ONKEL_ELLER_TANTE',
+    BESTEFORELDER = 'BESTEFORELDER',
+    ANNEN_FAMILIERELASJON = 'ANNEN_FAMILIERELASJON',
+    ANNEN_RELASJON = 'ANNEN_RELASJON',
+}
