@@ -25,7 +25,6 @@ import {
     TestProvidere,
 } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../OmBarnet/spørsmål';
 import VelgBarn from './VelgBarn';
 
 jest.mock('@navikt/fnrvalidator');
@@ -34,10 +33,6 @@ const manueltRegistrert: Partial<IBarnMedISøknad> = {
     id: 'random-id-1',
     ident: '12345',
     navn: 'A',
-    barnetrygdFraEøslandHvilketLand: {
-        id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
-        svar: 'NOR',
-    },
     utenlandsperioder: [],
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
         id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
@@ -53,10 +48,6 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
     ...fraPdl,
     navn: fraPdl.navn ?? 'ukjent',
     id: 'random-id-2',
-    barnetrygdFraEøslandHvilketLand: {
-        id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
-        svar: 'NOR',
-    },
     utenlandsperioder: [],
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
         id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,

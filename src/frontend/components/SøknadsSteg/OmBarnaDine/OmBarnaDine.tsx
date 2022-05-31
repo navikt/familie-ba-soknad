@@ -6,14 +6,13 @@ import styled from 'styled-components';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
@@ -29,7 +28,6 @@ const OmBarnaDine: React.FC = () => {
     const history = useHistory();
     const { søknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
-    const { toggles } = useFeatureToggles();
 
     if (!barnInkludertISøknaden.length) {
         history.push('/velg-barn');
@@ -203,15 +201,7 @@ const OmBarnaDine: React.FC = () => {
                             skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.NEI
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
-                    >
-                        {!toggles.EØS_KOMPLETT &&
-                            skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi ===
-                                ESvar.JA && (
-                                <VedleggNotisTilleggsskjema
-                                    språkTekstId={'ombarna.barnetrygd-eøs.eøs-info'}
-                                />
-                            )}
-                    </HvilkeBarnCheckboxGruppe>
+                    ></HvilkeBarnCheckboxGruppe>
 
                     <JaNeiSpm
                         skjema={skjema}

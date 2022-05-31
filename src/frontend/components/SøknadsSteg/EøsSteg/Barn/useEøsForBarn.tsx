@@ -18,7 +18,7 @@ import {
     IBarnMedISøknad,
 } from '../../../../typer/barn';
 import { AlternativtSvarForInput, BarnetsId } from '../../../../typer/common';
-import { Slektsforhold } from '../../../../typer/kontrakt/barn';
+import { Slektsforhold } from '../../../../typer/kontrakt/generelle';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,

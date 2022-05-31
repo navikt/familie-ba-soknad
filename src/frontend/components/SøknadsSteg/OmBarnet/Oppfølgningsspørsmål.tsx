@@ -5,8 +5,6 @@ import { Element } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
@@ -51,12 +49,6 @@ const Oppfølgningsspørsmål: React.FC<{
     registrerteEøsBarnetrygdsperioder,
 }) => {
     const { erÅpen: utenlandsmodalErÅpen, toggleModal: toggleUtenlandsmodal } = useModal();
-    const { erEøsLand } = useEøs();
-    const { toggles } = useFeatureToggles();
-
-    const erFørsteEøsPeriode = (periode: IUtenlandsperiode) => {
-        return periode === utenlandsperioder.find(p => erEøsLand(p.oppholdsland.svar));
-    };
 
     return (
         <>
@@ -162,7 +154,6 @@ const Oppfølgningsspørsmål: React.FC<{
                             nummer={index + 1}
                             fjernPeriodeCallback={fjernUtenlandsperiode}
                             barn={barn}
-                            erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
                         />
                     ))}
                     {utenlandsperioder.length > 0 && (
@@ -213,67 +204,43 @@ const Oppfølgningsspørsmål: React.FC<{
                     tittelId={'ombarnet.barnetrygd-eøs'}
                     språkValues={{ navn: barn.navn }}
                 >
-                    {toggles.EØS_KOMPLETT ? (
-                        <KomponentGruppe>
-                            <JaNeiSpm
-                                skjema={skjema}
-                                felt={skjema.felter.pågåendeSøknadFraAnnetEøsLand}
-                                spørsmålTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand
-                                    ]
-                                }
-                            />
-                            {skjema.felter.pågåendeSøknadHvilketLand.erSynlig && (
-                                <LandDropdown
-                                    felt={skjema.felter.pågåendeSøknadHvilketLand}
-                                    skjema={skjema}
-                                    kunEøs={true}
-                                    ekskluderNorge
-                                    label={
-                                        <SpråkTekst
-                                            id={
-                                                omBarnetSpørsmålSpråkId[
-                                                    OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
-                                                ]
-                                            }
-                                        />
-                                    }
-                                />
-                            )}
-                            <Barnetrygdperiode
-                                skjema={skjema}
-                                registrerteEøsBarnetrygdsperioder={
-                                    registrerteEøsBarnetrygdsperioder
-                                }
-                                tilhørendeJaNeiSpmFelt={
-                                    skjema.felter.mottarEllerMottokEøsBarnetrygd
-                                }
-                                leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
-                                fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
-                                barn={barn}
-                                personType={PersonType.Søker}
-                            />
-                        </KomponentGruppe>
-                    ) : (
-                        <>
+                    <KomponentGruppe>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.pågåendeSøknadFraAnnetEøsLand}
+                            spørsmålTekstId={
+                                omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand
+                                ]
+                            }
+                        />
+                        {skjema.felter.pågåendeSøknadHvilketLand.erSynlig && (
                             <LandDropdown
-                                felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
+                                felt={skjema.felter.pågåendeSøknadHvilketLand}
                                 skjema={skjema}
-                                ekskluderNorge
                                 kunEøs={true}
+                                ekskluderNorge
                                 label={
                                     <SpråkTekst
                                         id={
                                             omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand
+                                                OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
                                             ]
                                         }
                                     />
                                 }
                             />
-                        </>
-                    )}
+                        )}
+                        <Barnetrygdperiode
+                            skjema={skjema}
+                            registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
+                            tilhørendeJaNeiSpmFelt={skjema.felter.mottarEllerMottokEøsBarnetrygd}
+                            leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
+                            fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
+                            barn={barn}
+                            personType={PersonType.Søker}
+                        />
+                    </KomponentGruppe>
                 </SkjemaFieldset>
             )}
             <UtenlandsoppholdModal

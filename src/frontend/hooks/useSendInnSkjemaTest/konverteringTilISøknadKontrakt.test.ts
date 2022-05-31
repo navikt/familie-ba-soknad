@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { ISøknadKontrakt } from '../../typer/kontrakt/v6';
+import { ISøknadKontraktV8 } from '../../typer/kontrakt/v8';
 import {
     silenceConsoleErrors,
     spyOnUseApp,
@@ -24,7 +24,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
 
-        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
+        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
         expect(JSON.stringify(formatert)).toEqual(JSON.stringify(expectedISøknadKontrakt));
     });
@@ -35,7 +35,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
 
-        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
+        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
         expect(JSON.stringify(formatert)).toEqual(JSON.stringify(expectedISøknadKontrakt));
     });
@@ -46,7 +46,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
 
-        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
+        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
         expect(JSON.stringify(formatert)).toEqual(JSON.stringify(expectedISøknadKontrakt));
     });
@@ -57,7 +57,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
 
-        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
+        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
         expect(JSON.stringify(formatert)).toEqual(JSON.stringify(expectedISøknadKontrakt));
     });
@@ -68,7 +68,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
 
-        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
+        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
         expect(JSON.stringify(formatert)).toEqual(JSON.stringify(expectedISøknadKontrakt));
     });

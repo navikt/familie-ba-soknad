@@ -135,17 +135,9 @@ export const initialStateSøknad: ISøknad = {
             id: DinLivssituasjonSpørsmålId.jobberPåBåt,
             svar: null,
         },
-        arbeidsland: {
-            id: DinLivssituasjonSpørsmålId.arbeidsland,
-            svar: '',
-        },
         mottarUtenlandspensjon: {
             id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
             svar: null,
-        },
-        pensjonsland: {
-            id: DinLivssituasjonSpørsmålId.pensjonsland,
-            svar: '',
         },
         arbeidsperioderUtland: [],
 

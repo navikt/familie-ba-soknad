@@ -5,10 +5,8 @@ import { useIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
-import { useFeatureToggles } from '../../../../context/FeatureToggleContext';
 import { useRoutes } from '../../../../context/RoutesContext';
 import { AlternativtSvarForInput } from '../../../../typer/common';
 import { ESivilstand } from '../../../../typer/kontrakt/generelle';
@@ -16,7 +14,7 @@ import { ISamboer, ITidligereSamboer } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
 import { formaterDato } from '../../../../utils/dato';
-import { landkodeTilSpråk, toÅrsakSpråkId } from '../../../../utils/språk';
+import { toÅrsakSpråkId } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
@@ -83,9 +81,7 @@ const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> =
 const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, erUtvidet } = useApp();
     const { formatMessage } = useIntl();
-    const [valgtLocale] = useSprakContext();
     const { hentRouteObjektForRouteEnum } = useRoutes();
-    const { toggles } = useFeatureToggles();
     const dinLivsituasjonHook = useDinLivssituasjon();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
@@ -237,39 +233,17 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.søker.jobberPåBåt.svar}
                 />
-                {toggles.EØS_KOMPLETT ? (
-                    <>
-                        {søknad.søker.arbeidsperioderUtland.map((periode, index) => (
-                            <ArbeidsperiodeOppsummering
-                                key={`arbeidsperiode-${index}`}
-                                nummer={index + 1}
-                                arbeidsperiode={periode}
-                                gjelderUtlandet={true}
-                                personType={PersonType.Søker}
-                            />
-                        ))}
-                    </>
-                ) : (
-                    <>
-                        {søknad.søker.arbeidsland.svar && (
-                            <OppsummeringFelt
-                                tittel={
-                                    <SpråkTekst
-                                        id={
-                                            dinLivssituasjonSpørsmålSpråkId[
-                                                DinLivssituasjonSpørsmålId.arbeidsland
-                                            ]
-                                        }
-                                    />
-                                }
-                                søknadsvar={landkodeTilSpråk(
-                                    søknad.søker.arbeidsland.svar,
-                                    valgtLocale
-                                )}
-                            />
-                        )}
-                    </>
-                )}
+
+                {søknad.søker.arbeidsperioderUtland.map((periode, index) => (
+                    <ArbeidsperiodeOppsummering
+                        key={`arbeidsperiode-${index}`}
+                        nummer={index + 1}
+                        arbeidsperiode={periode}
+                        gjelderUtlandet={true}
+                        personType={PersonType.Søker}
+                    />
+                ))}
+
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
@@ -282,39 +256,16 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     }
                     søknadsvar={søknad.søker.mottarUtenlandspensjon.svar}
                 />
-                {toggles.EØS_KOMPLETT ? (
-                    <>
-                        {søknad.søker.pensjonsperioderUtland.map((periode, index) => (
-                            <PensjonsperiodeOppsummering
-                                key={`utenlandsperiode-${index}`}
-                                nummer={index + 1}
-                                pensjonsperiode={periode}
-                                gjelderUtlandet={true}
-                                personType={PersonType.Søker}
-                            />
-                        ))}
-                    </>
-                ) : (
-                    <>
-                        {søknad.søker.pensjonsland.svar && (
-                            <OppsummeringFelt
-                                tittel={
-                                    <SpråkTekst
-                                        id={
-                                            dinLivssituasjonSpørsmålSpråkId[
-                                                DinLivssituasjonSpørsmålId.pensjonsland
-                                            ]
-                                        }
-                                    />
-                                }
-                                søknadsvar={landkodeTilSpråk(
-                                    søknad.søker.pensjonsland.svar,
-                                    valgtLocale
-                                )}
-                            />
-                        )}
-                    </>
-                )}
+
+                {søknad.søker.pensjonsperioderUtland.map((periode, index) => (
+                    <PensjonsperiodeOppsummering
+                        key={`utenlandsperiode-${index}`}
+                        nummer={index + 1}
+                        pensjonsperiode={periode}
+                        gjelderUtlandet={true}
+                        personType={PersonType.Søker}
+                    />
+                ))}
             </StyledOppsummeringsFeltGruppe>
         </Oppsummeringsbolk>
     );

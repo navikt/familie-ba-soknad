@@ -3,7 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput } from './common';
-import { Slektsforhold } from './kontrakt/barn';
+import { Slektsforhold } from './kontrakt/generelle';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
