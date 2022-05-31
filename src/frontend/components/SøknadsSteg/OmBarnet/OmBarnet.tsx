@@ -77,7 +77,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     barn={barn}
                     skjema={skjema}
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
-                    andreForelder={barn.andreForelder}
                     leggTilArbeidsperiode={leggTilArbeidsperiode}
                     fjernArbeidsperiode={fjernArbeidsperiode}
                     leggTilPensjonsperiode={leggTilPensjonsperiode}

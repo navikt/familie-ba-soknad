@@ -34,9 +34,7 @@ import { getRoutes, RoutesProvider } from '../context/RoutesContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
-import { EFeatureToggle } from '../typer/feature-toggles';
-import { Slektsforhold } from '../typer/kontrakt/barn';
-import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
+import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { ISøker, ISøkerRespons } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
@@ -133,7 +131,7 @@ export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => 
 export const mockRoutes = () => {
     const useRoutes = jest.spyOn(routesContext, 'useRoutes').mockImplementation(
         jest.fn().mockReturnValue({
-            routes: getRoutes(false),
+            routes: getRoutes(),
             hentRouteObjektForRouteEnum: jest.fn(),
         })
     );
@@ -145,7 +143,7 @@ export const mockFeatureToggle = () => {
         .spyOn(featureToggleContext, 'useFeatureToggles')
         .mockImplementation(
             jest.fn().mockReturnValue({
-                toggles: { [EFeatureToggle.EØS_KOMPLETT]: false },
+                // toggles: { [EFeatureToggle.EXAMPLE]: false },
             })
         );
     return { useFeatureToggle };
@@ -347,14 +345,6 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     [andreForelderDataKeySpørsmål.andreUtbetalinger]: {
                         id: EøsBarnSpørsmålId.andreForelderAndreUtbetalinger,
                         svar: ESvar.NEI,
-                    },
-                    [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
-                        id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
-                        svar: '',
-                    },
-                    [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
-                        id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
-                        svar: '',
                     },
                     [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
                         id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,

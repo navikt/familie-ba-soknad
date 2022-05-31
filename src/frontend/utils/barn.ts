@@ -63,24 +63,11 @@ export const genererInitiellAndreForelder = (
                 ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke
                 : OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
         },
-        [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
-            svar:
-                andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand].svar ?? '',
-            id: andreForelderErDød
-                ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke
-                : OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
-        },
         [andreForelderDataKeySpørsmål.pensjonUtland]: {
             svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonUtland].svar ?? null,
             id: andreForelderErDød
                 ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
                 : OmBarnetSpørsmålsId.andreForelderPensjonUtland,
-        },
-        [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar ?? '',
-            id: andreForelderErDød
-                ? OmBarnetSpørsmålsId.andreForelderPensjonHvilketLandEnke
-                : OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
         },
         [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
             id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
@@ -333,14 +320,6 @@ export const genererOppdaterteBarn = (
                     null
                 ),
             },
-            [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
-                ...barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    mottarBarnetrygdFraAnnetEøsland,
-                    barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
-                    ''
-                ),
-            },
             [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
                 ...barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
                 svar: genererSvarForOppfølgningspørsmålBarn(
@@ -472,10 +451,6 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
         },
         [barnDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
             id: OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand,
-            svar: '',
-        },
-        [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
-            id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
             svar: '',
         },
         [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {

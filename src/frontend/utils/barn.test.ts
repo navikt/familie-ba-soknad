@@ -40,7 +40,6 @@ describe('genererOppdaterteBarn', () => {
                 institusjonOppholdStartdato: { svar: '2020-09-08' },
                 institusjonOppholdSluttdato: { svar: AlternativtSvarForInput.UKJENT },
                 planleggerÅBoINorge12Mnd: { svar: ESvar.JA },
-                barnetrygdFraEøslandHvilketLand: { svar: 'AUS' },
             },
         ],
     });
@@ -90,7 +89,6 @@ describe('genererOppdaterteBarn', () => {
                 institusjonOppholdStartdato: objectContaining({ svar: '' }),
                 institusjonOppholdSluttdato: objectContaining({ svar: '' }),
                 planleggerÅBoINorge12Mnd: objectContaining({ svar: null }),
-                barnetrygdFraEøslandHvilketLand: objectContaining({ svar: 'AUS' }),
             }),
         ]);
     });

@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 
 import { muligeSlektsforhold } from '../../../typer/barn';
-import { Slektsforhold } from '../../../typer/kontrakt/barn';
+import { Slektsforhold } from '../../../typer/kontrakt/generelle';
 import { toSlektsforholdSpråkId } from '../../../utils/språk';
 import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 
