@@ -112,9 +112,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
         const målPath = komFra?.path ?? nesteRoute.path;
         komFra && settKomFra(undefined);
         logSkjemaStegFullført(hentNåværendeStegIndex() + 1);
-        if (målPath !== '/kvittering') {
-            history.push(målPath);
-        }
+        history.push(målPath);
     };
 
     const håndterGåVidere = event => {
