@@ -5,19 +5,16 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { PersonType } from '../../../typer/personType';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggNotis, VedleggNotisTilleggsskjema } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import TidligereSamboere from './TidligereSamboere';
@@ -40,8 +37,6 @@ const DinLivssituasjon: React.FC = () => {
     } = useDinLivssituasjon();
 
     const { erUtvidet, søknad } = useApp();
-    const { toggles } = useFeatureToggles();
-    const { erEøsLand } = useEøs();
 
     return (
         <Steg
@@ -157,95 +152,25 @@ const DinLivssituasjon: React.FC = () => {
                     <VedleggNotis dynamisk språkTekstId={'omdeg.asylsøker.alert'} />
                 )}
 
-                {toggles.EØS_KOMPLETT ? (
-                    <Arbeidsperiode
-                        skjema={skjema}
-                        leggTilArbeidsperiode={leggTilArbeidsperiode}
-                        fjernArbeidsperiode={fjernArbeidsperiode}
-                        gjelderUtlandet={true}
-                        arbeiderEllerArbeidetFelt={skjema.felter.jobberPåBåt}
-                        registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
-                        personType={PersonType.Søker}
-                    />
-                ) : (
-                    <KomponentGruppe inline>
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.jobberPåBåt}
-                            spørsmålTekstId={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.jobberPåBåt
-                                ]
-                            }
-                        />
-                        <LandDropdown
-                            felt={skjema.felter.arbeidsland}
-                            skjema={skjema}
-                            label={
-                                <SpråkTekst
-                                    id={
-                                        dinLivssituasjonSpørsmålSpråkId[
-                                            DinLivssituasjonSpørsmålId.arbeidsland
-                                        ]
-                                    }
-                                />
-                            }
-                            dynamisk
-                            ekskluderNorge
-                        />
-                        {erEøsLand(skjema.felter.arbeidsland.verdi) && (
-                            <VedleggNotisTilleggsskjema
-                                språkTekstId={'omdeg.arbeid-utland.eøs-info'}
-                                dynamisk
-                            />
-                        )}
-                    </KomponentGruppe>
-                )}
+                <Arbeidsperiode
+                    skjema={skjema}
+                    leggTilArbeidsperiode={leggTilArbeidsperiode}
+                    fjernArbeidsperiode={fjernArbeidsperiode}
+                    gjelderUtlandet={true}
+                    arbeiderEllerArbeidetFelt={skjema.felter.jobberPåBåt}
+                    registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                    personType={PersonType.Søker}
+                />
 
-                {toggles.EØS_KOMPLETT ? (
-                    <Pensjonsperiode
-                        skjema={skjema}
-                        mottarEllerMottattPensjonFelt={skjema.felter.mottarUtenlandspensjon}
-                        registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
-                        leggTilPensjonsperiode={leggTilPensjonsperiode}
-                        fjernPensjonsperiode={fjernPensjonsperiode}
-                        gjelderUtlandet={true}
-                        personType={PersonType.Søker}
-                    />
-                ) : (
-                    <KomponentGruppe inline>
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.mottarUtenlandspensjon}
-                            spørsmålTekstId={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.mottarUtenlandspensjon
-                                ]
-                            }
-                        />
-                        <LandDropdown
-                            felt={skjema.felter.pensjonsland}
-                            skjema={skjema}
-                            label={
-                                <SpråkTekst
-                                    id={
-                                        dinLivssituasjonSpørsmålSpråkId[
-                                            DinLivssituasjonSpørsmålId.pensjonsland
-                                        ]
-                                    }
-                                />
-                            }
-                            dynamisk
-                            ekskluderNorge
-                        />
-                        {erEøsLand(skjema.felter.pensjonsland.verdi) && (
-                            <VedleggNotisTilleggsskjema
-                                språkTekstId={'omdeg.utenlandspensjon.eøs-info'}
-                                dynamisk
-                            />
-                        )}
-                    </KomponentGruppe>
-                )}
+                <Pensjonsperiode
+                    skjema={skjema}
+                    mottarEllerMottattPensjonFelt={skjema.felter.mottarUtenlandspensjon}
+                    registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
+                    leggTilPensjonsperiode={leggTilPensjonsperiode}
+                    fjernPensjonsperiode={fjernPensjonsperiode}
+                    gjelderUtlandet={true}
+                    personType={PersonType.Søker}
+                />
             </KomponentGruppe>
         </Steg>
     );

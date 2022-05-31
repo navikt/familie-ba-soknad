@@ -5,8 +5,11 @@ import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { IBarnMedISøknad } from '../../typer/barn';
 import { AlternativtSvarForInput } from '../../typer/common';
-import { Slektsforhold } from '../../typer/kontrakt/barn';
-import { ISøknadsfelt, SpørsmålMap as KontraktpørsmålMap } from '../../typer/kontrakt/generelle';
+import {
+    ISøknadsfelt,
+    Slektsforhold,
+    SpørsmålMap as KontraktpørsmålMap,
+} from '../../typer/kontrakt/generelle';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { Årsak } from '../../typer/utvidet';
 import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId, toÅrsakSpråkId } from '../språk';

@@ -1,23 +1,19 @@
 import React from 'react';
 
 import { useIntl } from 'react-intl';
-import styled from 'styled-components';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsperiode } from '../../../typer/perioder';
-import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { VedleggNotisTilleggsskjema } from '../VedleggNotis';
 import { tilDatoUkjentLabelSpråkId } from './spørsmål';
 import {
     fraDatoLabelSpråkId,
@@ -27,33 +23,18 @@ import {
     årsakSpråkId,
 } from './utenlandsoppholdSpråkUtils';
 
-const EøsNotisWrapper = styled.div`
-    margin-bottom: 2rem;
-`;
-
 export const UtenlandsperiodeOppsummering: React.FC<{
     periode: IUtenlandsperiode;
     nummer: number;
     fjernPeriodeCallback?: (periode: IUtenlandsperiode) => void;
-    erFørsteEøsPeriode?: boolean;
     barn?: IBarnMedISøknad;
-}> = ({ periode, nummer, fjernPeriodeCallback, erFørsteEøsPeriode = false, barn }) => {
+}> = ({ periode, nummer, fjernPeriodeCallback, barn }) => {
     const [valgtLocale] = useSprakContext();
     const intl = useIntl();
-    const { toggles } = useFeatureToggles();
     const { formatMessage } = intl;
     const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
         periode;
     const årsak = utenlandsoppholdÅrsak.svar;
-
-    const språkPrefix = barn ? 'ombarnet' : 'omdeg';
-
-    const årsakTilEøsInfoSpråkIds: Record<EUtenlandsoppholdÅrsak, string> = {
-        [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: `${språkPrefix}.flyttetfranorge.eøs-info`,
-        [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: `${språkPrefix}.flyttettilnorge.eøs-info`,
-        [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: `${språkPrefix}.oppholderi.eøs-info`,
-        [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]: `${språkPrefix}.oppholdti.eøs-info`,
-    };
 
     return (
         <>
@@ -62,20 +43,6 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                 tittelSpråkId={'felles.leggtilutenlands.opphold'}
                 fjernKnappSpråkId={'felles.fjernutenlandsopphold.knapp'}
                 fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(periode))}
-                vedleggNotis={
-                    !toggles.EØS_KOMPLETT && erFørsteEøsPeriode ? (
-                        <EøsNotisWrapper>
-                            <VedleggNotisTilleggsskjema
-                                språkTekstId={
-                                    årsakTilEøsInfoSpråkIds[periode.utenlandsoppholdÅrsak.svar]
-                                }
-                                språkValues={{
-                                    barn: barn ? barn.navn : undefined,
-                                }}
-                            />
-                        </EøsNotisWrapper>
-                    ) : undefined
-                }
             >
                 <OppsummeringFelt
                     tittel={

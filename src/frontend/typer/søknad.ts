@@ -91,11 +91,6 @@ export const initialStateSøknad: ISøknad = {
             'dokumentasjon.meklingsattest.informasjon'
         ),
         genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.EØS_SKJEMA,
-            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.EØS_SKJEMA),
-            'dokumentasjon.tilleggsskjema.informasjon'
-        ),
-        genererInitiellDokumentasjon(
             Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
             dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.ANNEN_DOKUMENTASJON),
             hentSøknadstype() === ESøknadstype.UTVIDET
@@ -140,17 +135,9 @@ export const initialStateSøknad: ISøknad = {
             id: DinLivssituasjonSpørsmålId.jobberPåBåt,
             svar: null,
         },
-        arbeidsland: {
-            id: DinLivssituasjonSpørsmålId.arbeidsland,
-            svar: '',
-        },
         mottarUtenlandspensjon: {
             id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
             svar: null,
-        },
-        pensjonsland: {
-            id: DinLivssituasjonSpørsmålId.pensjonsland,
-            svar: '',
         },
         arbeidsperioderUtland: [],
 

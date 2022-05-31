@@ -11,8 +11,7 @@ import * as bokmål from '../assets/lang/nb.json' assert { type: 'json' };
 import * as nynorsk from '../assets/lang/nn.json' assert { type: 'json' };
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { AlternativtSvarForInput } from '../typer/common';
-import { Slektsforhold } from '../typer/kontrakt/barn';
-import { ESivilstand } from '../typer/kontrakt/generelle';
+import { ESivilstand, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IBarn } from '../typer/person';
 import { Årsak } from '../typer/utvidet';
 
