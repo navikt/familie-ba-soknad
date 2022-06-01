@@ -83,10 +83,6 @@ export const testdata4: TilKontraktTestData = {
                     id: 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
                     svar: null,
                 },
-                barnetrygdFraEøslandHvilketLand: {
-                    id: 'barnetrygd-hvilket-eøsland',
-                    svar: 'BEL',
-                },
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
@@ -146,6 +142,19 @@ export const testdata4: TilKontraktTestData = {
                     pensjonsperioderNorge: [],
                     pensjonsperioderUtland: [],
                     idNummer: [],
+                    pågåendeSøknadFraAnnetEøsLand: {
+                        id: 'andre-forelder-pågående-søknad',
+                        svar: 'JA',
+                    },
+                    pågåendeSøknadHvilketLand: {
+                        id: 'andre-forelder-pågående-søknad-land',
+                        svar: 'BEL',
+                    },
+                    barnetrygdFraEøs: {
+                        id: 'andre-forelder-barnetrygd',
+                        svar: 'NEI',
+                    },
+                    eøsBarnetrygdsperioder: [],
                     adresse: {
                         svar: 'Heisannveien 14',
                         id: 'andre-forelder-adresse',
@@ -178,17 +187,9 @@ export const testdata4: TilKontraktTestData = {
                         svar: null,
                         id: 'andre-forelder-arbeid',
                     },
-                    arbeidUtlandetHvilketLand: {
-                        svar: '',
-                        id: 'andre-forelder-arbeid-hvilket-land',
-                    },
                     pensjonUtland: {
                         svar: null,
                         id: 'andre-forelder-pensjon-utland',
-                    },
-                    pensjonHvilketLand: {
-                        svar: '',
-                        id: 'andre-forelder-pensjon-hvilket-land',
                     },
                     skriftligAvtaleOmDeltBosted: {
                         id: 'skriftlig-avtale-om-delt-bosted',
@@ -265,10 +266,6 @@ export const testdata4: TilKontraktTestData = {
                 planleggerÅBoINorge12Mnd: {
                     id: 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
                     svar: 'NEI',
-                },
-                barnetrygdFraEøslandHvilketLand: {
-                    id: 'barnetrygd-hvilket-eøsland',
-                    svar: '',
                 },
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
@@ -612,6 +609,7 @@ export const testdata4: TilKontraktTestData = {
                     },
                 },
             },
+            adressebeskyttelse: false,
             utenlandsperioder: [],
             idNummer: [
                 {
@@ -1151,14 +1149,6 @@ export const testdata4: TilKontraktTestData = {
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
-                    barnetrygdFraEøslandHvilketLand: {
-                        label: {
-                            en: 'ukjent-spørsmål',
-                            nb: 'ukjent-spørsmål',
-                            nn: 'ukjent-spørsmål',
-                        },
-                        verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
-                    },
                     borFastMedSøker: {
                         label: {
                             en: 'Does Barn 234567 89876 live with you on a permanent basis?',
@@ -1423,6 +1413,30 @@ export const testdata4: TilKontraktTestData = {
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
+                    pågåendeSøknadFraAnnetEøsLand: {
+                        label: {
+                            en: "Does Barn Barnessen III's other parent have an active application for child benefit from another EEA country?",
+                            nb: 'Har Barn Barnessen III sin andre forelder en pågående søknad om barnetrygd fra et annet EU/EØS land?',
+                            nn: 'Har Barn Barnessen III sin andre forelder ein pågåande søknad om barnetrygd frå eit anna EU/EØS-land?',
+                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                    },
+                    pågåendeSøknadHvilketLand: {
+                        label: {
+                            en: "What country has Barn Barnessen III's other parent applied for child benefit from?",
+                            nb: 'Hvilket land har Barn Barnessen III sin andre forelder søkt om barnetrygd fra?',
+                            nn: 'Kva land har Barn Barnessen III sin andre forelder søkt om barnetrygd frå?',
+                        },
+                        verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                    },
+                    barnetrygdFraEøs: {
+                        label: {
+                            en: "Is Barn Barnessen III's other parent receiving or have they received child benefit from another EEA country?",
+                            nb: 'Får eller har Barn Barnessen III sin andre forelder fått barnetrygd fra et annet EU/EØS land?',
+                            nn: 'Får eller har Barn Barnessen III sin andre forelder fått barnetrygd frå eit anna EU/EØS-land?',
+                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                    },
                     skriftligAvtaleOmDeltBosted: {
                         label: {
                             en: 'Do you and the other parent have a written agreement on dual residence for Barn Barnessen III?',
@@ -1470,6 +1484,7 @@ export const testdata4: TilKontraktTestData = {
                     arbeidsperioderNorge: [],
                     pensjonsperioderNorge: [],
                     andreUtbetalingsperioder: [],
+                    eøsBarnetrygdsperioder: [],
                     idNummer: [],
                 },
                 omsorgsperson: null,
@@ -1793,6 +1808,16 @@ export const testdata4: TilKontraktTestData = {
                 en: 'Have you had a cohabiting partner earlier during the period for which you are applying for child benefit?',
                 nb: 'Har du hatt samboer tidligere i perioden du søker barnetrygd for?',
                 nn: 'Har du hatt sambuar tidlegare i perioden du søker barnetrygd for?',
+            },
+            'omdeg.personopplysninger.adressesperre.alert': {
+                en: 'You are registered with a blocked address',
+                nb: 'Du er registrert med adressesperre',
+                nn: 'Du er registrert med adressesperre',
+            },
+            'omdeg.personopplysninger.ikke-registrert.alert': {
+                en: 'You are not registered with a residential address in Norway',
+                nb: 'Du er ikke registrert med bostedsadresse i Norge',
+                nn: 'Du er ikkje registrert med bustadsadresse i Noreg',
             },
             'pdf.andreforelder.seksjonstittel': {
                 en: "Child's other parent",
