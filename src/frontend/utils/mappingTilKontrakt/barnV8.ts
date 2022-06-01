@@ -9,7 +9,6 @@ import {
     omBarnetSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
-import { AlternativtSvarForInput } from '../../typer/common';
 import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarnV8 } from '../../typer/kontrakt/v8';
 import { ISøker } from '../../typer/person';
@@ -96,13 +95,9 @@ export const barnISøknadsFormatV8 = (
             sammeVerdiAlleSpråk(registertBostedVerdi()),
             barn
         ),
-        alder: søknadsfeltBarn(
-            'pdf.barn.alder.label',
-            alder
-                ? hentTekster('felles.år', { alder })
-                : sammeVerdiAlleSpråk(AlternativtSvarForInput.UKJENT),
-            barn
-        ),
+        alder: alder
+            ? søknadsfeltBarn('pdf.barn.alder.label', hentTekster('felles.år', { alder }), barn)
+            : null,
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt(periode, index + 1, barn)
         ),

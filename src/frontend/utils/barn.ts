@@ -533,7 +533,7 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
         id: hentUid(),
         navn: barnetsNavnValue(barnRespons, intl),
         ident: barnRespons.ident,
-        alder: barnRespons.fødselsdato && hentAlder(barnRespons.fødselsdato),
+        alder: barnRespons.fødselsdato ? hentAlder(barnRespons.fødselsdato) : null,
         borMedSøker: barnRespons.borMedSøker,
         adressebeskyttelse: barnRespons.adressebeskyttelse,
     }));

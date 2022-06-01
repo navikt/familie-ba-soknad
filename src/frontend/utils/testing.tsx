@@ -299,7 +299,7 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     ident: '1234',
                     navn: 'Datter Dattersdottir',
                     adressebeskyttelse: false,
-                    alder: undefined,
+                    alder: null,
                     borMedSøker: true,
                 }),
                 andreForelder: {
