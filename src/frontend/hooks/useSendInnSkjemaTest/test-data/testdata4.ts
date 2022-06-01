@@ -83,10 +83,6 @@ export const testdata4: TilKontraktTestData = {
                     id: 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
                     svar: null,
                 },
-                barnetrygdFraEøslandHvilketLand: {
-                    id: 'barnetrygd-hvilket-eøsland',
-                    svar: 'BEL',
-                },
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
@@ -178,17 +174,9 @@ export const testdata4: TilKontraktTestData = {
                         svar: null,
                         id: 'andre-forelder-arbeid',
                     },
-                    arbeidUtlandetHvilketLand: {
-                        svar: '',
-                        id: 'andre-forelder-arbeid-hvilket-land',
-                    },
                     pensjonUtland: {
                         svar: null,
                         id: 'andre-forelder-pensjon-utland',
-                    },
-                    pensjonHvilketLand: {
-                        svar: '',
-                        id: 'andre-forelder-pensjon-hvilket-land',
                     },
                     skriftligAvtaleOmDeltBosted: {
                         id: 'skriftlig-avtale-om-delt-bosted',
@@ -265,10 +253,6 @@ export const testdata4: TilKontraktTestData = {
                 planleggerÅBoINorge12Mnd: {
                     id: 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
                     svar: 'NEI',
-                },
-                barnetrygdFraEøslandHvilketLand: {
-                    id: 'barnetrygd-hvilket-eøsland',
-                    svar: '',
                 },
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
@@ -1150,14 +1134,6 @@ export const testdata4: TilKontraktTestData = {
                             nn: 'Kven av barna har oppheldt seg utanfor Noreg i løpet av dei siste tolv månadene?',
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
-                    },
-                    barnetrygdFraEøslandHvilketLand: {
-                        label: {
-                            en: 'ukjent-spørsmål',
-                            nb: 'ukjent-spørsmål',
-                            nn: 'ukjent-spørsmål',
-                        },
-                        verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
                     },
                     borFastMedSøker: {
                         label: {
