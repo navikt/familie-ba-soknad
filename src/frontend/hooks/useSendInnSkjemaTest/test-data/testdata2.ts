@@ -679,6 +679,7 @@ export const testdata2: TilKontraktTestData = {
                     },
                 },
             },
+            adressebeskyttelse: false,
             utenlandsperioder: [
                 {
                     label: {
@@ -2145,11 +2146,7 @@ export const testdata2: TilKontraktTestData = {
                         verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                     },
                     søkerForTidsromSluttdato: {
-                        label: {
-                            en: 'Up to and including',
-                            nb: 'Til og med',
-                            nn: 'Til og med',
-                        },
+                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
                         verdi: { nb: '2022-01-06', nn: '2022-01-06', en: '2022-01-06' },
                     },
                     institusjonOppholdSluttdato: {
@@ -2471,11 +2468,7 @@ export const testdata2: TilKontraktTestData = {
                         verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                     },
                     søkerForTidsromSluttdato: {
-                        label: {
-                            en: 'Up to and including',
-                            nb: 'Til og med',
-                            nn: 'Til og med',
-                        },
+                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
                         verdi: {
                             en: 'Period does not have an up to and including date / Up to and including date is in the future',
                             nb: 'Tidsrommet har ikke en til og med dato / Til og med dato er frem i tid.',
@@ -2647,6 +2640,16 @@ export const testdata2: TilKontraktTestData = {
                 en: 'Have you had a cohabiting partner earlier during the period for which you are applying for child benefit?',
                 nb: 'Har du hatt samboer tidligere i perioden du søker barnetrygd for?',
                 nn: 'Har du hatt sambuar tidlegare i perioden du søker barnetrygd for?',
+            },
+            'omdeg.personopplysninger.adressesperre.alert': {
+                en: 'You are registered with a blocked address',
+                nb: 'Du er registrert med adressesperre',
+                nn: 'Du er registrert med adressesperre',
+            },
+            'omdeg.personopplysninger.ikke-registrert.alert': {
+                en: 'You are not registered with a residential address in Norway',
+                nb: 'Du er ikke registrert med bostedsadresse i Norge',
+                nn: 'Du er ikkje registrert med bustadsadresse i Noreg',
             },
             'pdf.andreforelder.seksjonstittel': {
                 en: "Child's other parent",
