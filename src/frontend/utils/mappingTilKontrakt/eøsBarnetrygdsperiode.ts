@@ -50,10 +50,12 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
             x: periodeNummer,
         }),
         verdi: sammeVerdiAlleSpråk({
-            mottarEøsBarnetrygdNå: {
-                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå),
-                verdi: sammeVerdiAlleSpråk(mottarEøsBarnetrygdNå?.svar),
-            },
+            mottarEøsBarnetrygdNå: mottarEøsBarnetrygdNå.svar
+                ? {
+                      label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå),
+                      verdi: sammeVerdiAlleSpråk(mottarEøsBarnetrygdNå.svar),
+                  }
+                : null,
             barnetrygdsland: {
                 label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.barnetrygdsland),
                 verdi: verdiCallbackAlleSpråk(
@@ -64,12 +66,14 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
                 label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode),
                 verdi: sammeVerdiAlleSpråk(fraDatoBarnetrygdperiode?.svar),
             },
-
-            tilDatoBarnetrygdperiode: {
-                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode),
-                verdi: sammeVerdiAlleSpråk(tilDatoBarnetrygdperiode?.svar ?? null),
-            },
-
+            tilDatoBarnetrygdperiode: tilDatoBarnetrygdperiode.svar
+                ? {
+                      label: hentSpørsmålTekstId(
+                          BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
+                      ),
+                      verdi: sammeVerdiAlleSpråk(tilDatoBarnetrygdperiode?.svar ?? null),
+                  }
+                : null,
             månedligBeløp: {
                 label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.månedligBeløp),
                 verdi: sammeVerdiAlleSpråk(månedligBeløp.svar),

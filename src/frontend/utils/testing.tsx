@@ -303,10 +303,13 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     borMedSøker: true,
                 }),
                 andreForelder: {
-                    kanIkkeGiOpplysninger: false,
+                    kanIkkeGiOpplysninger: {
+                        id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+                        svar: ESvar.NEI,
+                    },
                     adresse: {
                         id: EøsBarnSpørsmålId.andreForelderAdresse,
-                        svar: AlternativtSvarForInput.UKJENT,
+                        svar: 'Heisannveien 15',
                     },
                     andreUtbetalingsperioder: [],
                     arbeidsperioderNorge: [],

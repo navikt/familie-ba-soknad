@@ -44,10 +44,12 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
             x: periodeNummer,
         }),
         verdi: sammeVerdiAlleSpråk({
-            fårUtbetalingNå: {
-                label: hentSpørsmålstekster(UtbetalingerSpørsmålId.fårUtbetalingNå),
-                verdi: sammeVerdiAlleSpråk(fårUtbetalingNå?.svar),
-            },
+            fårUtbetalingNå: fårUtbetalingNå.svar
+                ? {
+                      label: hentSpørsmålstekster(UtbetalingerSpørsmålId.fårUtbetalingNå),
+                      verdi: sammeVerdiAlleSpråk(fårUtbetalingNå.svar),
+                  }
+                : null,
             utbetalingLand: {
                 label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingLand),
                 verdi: verdiCallbackAlleSpråk(

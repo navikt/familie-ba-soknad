@@ -57,12 +57,16 @@ export const andreForelderTilISøknadsfeltV8 = (
     } = andreForelder;
     const forelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
     return {
-        kanIkkeGiOpplysninger,
+        kanIkkeGiOpplysninger: søknadsfeltBarn(
+            språktekstIdFraSpørsmålId(kanIkkeGiOpplysninger.id),
+            sammeVerdiAlleSpråk(kanIkkeGiOpplysninger.svar),
+            barn
+        ),
         navn: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
             sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                 navn.svar,
-                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavnUkjent]
+                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger]
             ),
             barn
         ),
@@ -82,74 +86,104 @@ export const andreForelderTilISøknadsfeltV8 = (
             ),
             barn
         ),
-        pensjonUtland: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(pensjonUtland.id),
-            sammeVerdiAlleSpråk(pensjonUtland.svar),
-            barn
-        ),
-        arbeidUtlandet: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(arbeidUtlandet.id),
-            sammeVerdiAlleSpråk(arbeidUtlandet.svar),
-            barn
-        ),
-        pensjonNorge: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(pensjonNorge.id),
-            sammeVerdiAlleSpråk(pensjonNorge.svar),
-            barn
-        ),
-        arbeidNorge: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(arbeidNorge.id),
-            sammeVerdiAlleSpråk(arbeidNorge.svar),
-            barn
-        ),
-        andreUtbetalinger: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(andreUtbetalinger.id),
-            sammeVerdiAlleSpråk(andreUtbetalinger.svar),
-            barn
-        ),
-        pågåendeSøknadFraAnnetEøsLand: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand),
-            sammeVerdiAlleSpråk(pågåendeSøknadFraAnnetEøsLand.svar),
-            barn
-        ),
-        pågåendeSøknadHvilketLand: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand),
-            verdiCallbackAlleSpråk(locale =>
-                landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)
-            ),
-            barn
-        ),
-        barnetrygdFraEøs: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(barnetrygdFraEøs.id),
-            sammeVerdiAlleSpråk(barnetrygdFraEøs.svar),
-            barn
-        ),
-        skriftligAvtaleOmDeltBosted: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted),
-            sammeVerdiAlleSpråk(skriftligAvtaleOmDeltBosted.svar),
-            barn
-        ),
-        adresse: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderAdresse),
-            sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                adresse.svar,
-                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderAdresseVetIkke]
-            ),
-            barn
-        ),
+        pensjonUtland: pensjonUtland.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(pensjonUtland.id),
+                  sammeVerdiAlleSpråk(pensjonUtland.svar),
+                  barn
+              )
+            : null,
+        arbeidUtlandet: arbeidUtlandet.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(arbeidUtlandet.id),
+                  sammeVerdiAlleSpråk(arbeidUtlandet.svar),
+                  barn
+              )
+            : null,
+        pensjonNorge: pensjonNorge.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(pensjonNorge.id),
+                  sammeVerdiAlleSpråk(pensjonNorge.svar),
+                  barn
+              )
+            : null,
+        arbeidNorge: arbeidNorge.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(arbeidNorge.id),
+                  sammeVerdiAlleSpråk(arbeidNorge.svar),
+                  barn
+              )
+            : null,
+        andreUtbetalinger: andreUtbetalinger.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(andreUtbetalinger.id),
+                  sammeVerdiAlleSpråk(andreUtbetalinger.svar),
+                  barn
+              )
+            : null,
+        pågåendeSøknadFraAnnetEøsLand: pågåendeSøknadFraAnnetEøsLand.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(
+                      EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand
+                  ),
+                  sammeVerdiAlleSpråk(pågåendeSøknadFraAnnetEøsLand.svar),
+                  barn
+              )
+            : null,
+        pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(
+                      EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand
+                  ),
+                  verdiCallbackAlleSpråk(locale =>
+                      landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)
+                  ),
+                  barn
+              )
+            : null,
+        barnetrygdFraEøs: barnetrygdFraEøs.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(barnetrygdFraEøs.id),
+                  sammeVerdiAlleSpråk(barnetrygdFraEøs.svar),
+                  barn
+              )
+            : null,
+        skriftligAvtaleOmDeltBosted: skriftligAvtaleOmDeltBosted.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted),
+                  sammeVerdiAlleSpråk(skriftligAvtaleOmDeltBosted.svar),
+                  barn
+              )
+            : null,
+        adresse: adresse.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderAdresse),
+                  sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                      adresse.svar,
+                      eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderAdresseVetIkke]
+                  ),
+                  barn
+              )
+            : null,
         utvidet: {
-            søkerHarBoddMedAndreForelder: søknadsfeltBarn(
-                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder),
-                sammeVerdiAlleSpråk(utvidet.søkerHarBoddMedAndreForelder.svar),
-                barn
-            ),
-            søkerFlyttetFraAndreForelderDato: søknadsfeltBarn(
-                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato),
-                sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    utvidet.søkerFlyttetFraAndreForelderDato.svar,
-                    omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerBorMedAndreForelder]
-                )
-            ),
+            søkerHarBoddMedAndreForelder: utvidet.søkerHarBoddMedAndreForelder.svar
+                ? søknadsfeltBarn(
+                      språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder),
+                      sammeVerdiAlleSpråk(utvidet.søkerHarBoddMedAndreForelder.svar),
+                      barn
+                  )
+                : null,
+            søkerFlyttetFraAndreForelderDato: utvidet.søkerFlyttetFraAndreForelderDato.svar
+                ? søknadsfeltBarn(
+                      språktekstIdFraSpørsmålId(
+                          OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                      ),
+                      sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                          utvidet.søkerFlyttetFraAndreForelderDato.svar,
+                          omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerBorMedAndreForelder]
+                      )
+                  )
+                : null,
         },
         arbeidsperioderUtland: arbeidsperioderUtland.map((periode, index) =>
             tilIArbeidsperiodeIKontraktFormat({

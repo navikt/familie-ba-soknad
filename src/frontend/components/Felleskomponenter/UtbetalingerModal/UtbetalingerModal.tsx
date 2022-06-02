@@ -41,6 +41,14 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     const periodenErAvsluttet: boolean =
         skjema.felter.fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød;
 
+    const {
+        fårUtbetalingNå,
+        utbetalingLand,
+        utbetalingFraDato,
+        utbetalingTilDato,
+        utbetalingTilDatoUkjent,
+    } = skjema.felter;
+
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
@@ -48,22 +56,19 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
         onLeggTilUtbetalinger({
             fårUtbetalingNå: {
                 id: UtbetalingerSpørsmålId.fårUtbetalingNå,
-                svar: skjema.felter.fårUtbetalingNå.verdi,
+                svar: fårUtbetalingNå.erSynlig ? fårUtbetalingNå.verdi : null,
             },
             utbetalingLand: {
                 id: UtbetalingerSpørsmålId.utbetalingLand,
-                svar: skjema.felter.utbetalingLand.verdi,
+                svar: utbetalingLand.verdi,
             },
             utbetalingFraDato: {
                 id: UtbetalingerSpørsmålId.utbetalingFraDato,
-                svar: skjema.felter.utbetalingFraDato.verdi,
+                svar: utbetalingFraDato.verdi,
             },
             utbetalingTilDato: {
                 id: UtbetalingerSpørsmålId.utbetalingTilDato,
-                svar: svarForSpørsmålMedUkjent(
-                    skjema.felter.utbetalingTilDatoUkjent,
-                    skjema.felter.utbetalingTilDato
-                ),
+                svar: svarForSpørsmålMedUkjent(utbetalingTilDatoUkjent, utbetalingTilDato),
             },
         });
 
@@ -89,16 +94,15 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
             <KomponentGruppe inline>
                 <JaNeiSpm
                     skjema={skjema}
-                    felt={skjema.felter.fårUtbetalingNå}
+                    felt={fårUtbetalingNå}
                     spørsmålTekstId={hentSpørsmålTekstId(UtbetalingerSpørsmålId.fårUtbetalingNå)}
                     språkValues={{ ...(barn && { barn: barn.navn }) }}
                 />
             </KomponentGruppe>
-            {(skjema.felter.fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK ||
-                andreForelderErDød) && (
+            {(fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød) && (
                 <KomponentGruppe inline dynamisk>
                     <LandDropdown
-                        felt={skjema.felter.utbetalingLand}
+                        felt={utbetalingLand}
                         skjema={skjema}
                         label={
                             <SpråkTekst
@@ -110,7 +114,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                     />
                     <Datovelger
                         skjema={skjema}
-                        felt={skjema.felter.utbetalingFraDato}
+                        felt={utbetalingFraDato}
                         label={
                             <SpråkTekst
                                 id={hentSpørsmålTekstId(UtbetalingerSpørsmålId.utbetalingFraDato)}
@@ -122,7 +126,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                     <>
                         <Datovelger
                             skjema={skjema}
-                            felt={skjema.felter.utbetalingTilDato}
+                            felt={utbetalingTilDato}
                             label={
                                 <SpråkTekst
                                     id={hentSpørsmålTekstId(
@@ -133,16 +137,16 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             avgrensMaxDato={periodenErAvsluttet ? dagensDato() : undefined}
                             avgrensMinDato={minTilDatoForUtbetalingEllerArbeidsperiode(
                                 periodenErAvsluttet,
-                                skjema.felter.utbetalingFraDato.verdi
+                                utbetalingFraDato.verdi
                             )}
-                            disabled={skjema.felter.utbetalingTilDatoUkjent.verdi === ESvar.JA}
+                            disabled={utbetalingTilDatoUkjent.verdi === ESvar.JA}
                             calendarPosition={'fullscreen'}
                         />
                         <SkjemaCheckbox
                             labelSpråkTekstId={hentSpørsmålTekstId(
                                 UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
                             )}
-                            felt={skjema.felter.utbetalingTilDatoUkjent}
+                            felt={utbetalingTilDatoUkjent}
                         />
                     </>
                 </KomponentGruppe>

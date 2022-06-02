@@ -86,7 +86,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
                     søknadsvar={formaterDato(fraDatoBarnetrygdperiode.svar)}
                 />
             )}
-            {tilDatoBarnetrygdperiode?.svar && (
+            {tilDatoBarnetrygdperiode.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(
                         BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode

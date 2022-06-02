@@ -45,6 +45,19 @@ export const omsorgspersonTilISøknadsfeltV8 = (
         andreUtbetalinger,
         andreUtbetalingsperioder,
     } = omsorgsperson;
+
+    if (
+        !arbeidUtland.svar ||
+        !arbeidNorge.svar ||
+        !pensjonUtland.svar ||
+        !pensjonNorge.svar ||
+        !barnetrygdFraEøs.svar ||
+        !pågåendeSøknadFraAnnetEøsLand.svar ||
+        !andreUtbetalinger.svar
+    ) {
+        throw new TypeError('Omsorgspersonfelter mangler');
+    }
+
     return {
         navn: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonNavn),

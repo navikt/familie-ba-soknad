@@ -68,12 +68,10 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                 id: BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode,
                 svar: fraDatoBarnetrygdperiode.verdi,
             },
-            ...(tilDatoBarnetrygdperiode.erSynlig && {
-                tilDatoBarnetrygdperiode: {
-                    id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode,
-                    svar: tilDatoBarnetrygdperiode.verdi,
-                },
-            }),
+            tilDatoBarnetrygdperiode: {
+                id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode,
+                svar: tilDatoBarnetrygdperiode.erSynlig ? tilDatoBarnetrygdperiode.verdi : '',
+            },
             månedligBeløp: {
                 id: BarnetrygdperiodeSpørsmålId.månedligBeløp,
                 svar: trimWhiteSpace(månedligBeløp.verdi),

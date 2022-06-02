@@ -19,6 +19,7 @@ import {
 } from '../../../../typer/barn';
 import { AlternativtSvarForInput, BarnetsId } from '../../../../typer/common';
 import { Slektsforhold } from '../../../../typer/kontrakt/generelle';
+import { IOmsorgsperson } from '../../../../typer/omsorgsperson';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
@@ -618,7 +619,7 @@ export const useEøsForBarn = (
         },
     });
 
-    const genererOmsorgsperson = () => ({
+    const genererOmsorgsperson = (): IOmsorgsperson => ({
         navn: {
             id: EøsBarnSpørsmålId.omsorgspersonNavn,
             svar: trimWhiteSpace(omsorgspersonNavn.verdi),

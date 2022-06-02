@@ -38,7 +38,12 @@ export const genererInitiellAndreForelder = (
     andreForelderErDød: boolean
 ): IAndreForelder => {
     return {
-        kanIkkeGiOpplysninger: false,
+        kanIkkeGiOpplysninger: {
+            id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+            svar:
+                andreForelder?.[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger].svar ??
+                ESvar.NEI,
+        },
         arbeidsperioderNorge: andreForelder?.arbeidsperioderNorge ?? [],
         arbeidsperioderUtland: andreForelder?.arbeidsperioderUtland ?? [],
         andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
@@ -550,7 +555,7 @@ export const barnetsNavnValue = (barn: IBarnRespons, intl: IntlShape): string =>
 
 export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
     return (
-        barn.andreForelder?.kanIkkeGiOpplysninger ||
+        barn.andreForelder?.kanIkkeGiOpplysninger.svar === ESvar.JA ||
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
     );
 };
