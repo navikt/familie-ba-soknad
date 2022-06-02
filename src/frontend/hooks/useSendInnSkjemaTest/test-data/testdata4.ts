@@ -142,6 +142,10 @@ export const testdata4: TilKontraktTestData = {
                     pensjonsperioderNorge: [],
                     pensjonsperioderUtland: [],
                     idNummer: [],
+                    kanIkkeGiOpplysninger: {
+                        id: 'andre-forelder-kan-ikke-gi-opplysninger',
+                        svar: 'NEI',
+                    },
                     pågåendeSøknadFraAnnetEøsLand: {
                         id: 'andre-forelder-pågående-søknad',
                         svar: 'JA',
@@ -1353,6 +1357,14 @@ export const testdata4: TilKontraktTestData = {
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        label: {
+                            en: 'I am unable to provide information about the other parent',
+                            nb: 'Jeg kan ikke gi opplysninger om den andre forelderen',
+                            nn: 'Eg kan ikkje gje opplysningar om den andre forelderen',
+                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                    },
                     navn: {
                         label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                         verdi: {
@@ -1373,22 +1385,8 @@ export const testdata4: TilKontraktTestData = {
                         label: { en: 'Date of birth', nb: 'Fødselsdato', nn: 'Fødselsdato' },
                         verdi: { nb: '', nn: '', en: '' },
                     },
-                    pensjonUtland: {
-                        label: {
-                            en: "Does Barn Barnessen III's other parent receive, or have they received a pension from abroad?",
-                            nb: 'Får eller har den andre forelderen til Barn Barnessen III fått pensjon fra utlandet?',
-                            nn: 'Får eller har den andre forelderen til Barn Barnessen III fått pensjon frå utlandet?',
-                        },
-                        verdi: { nb: null, nn: null, en: null },
-                    },
-                    arbeidUtlandet: {
-                        label: {
-                            en: "Does Barn Barnessen III's other parent work, or have they worked outside of Norway, on a foreign ship or on a foreign continental shelf?",
-                            nb: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                            nn: 'Arbeidar eller har den andre forelderen til Barn Barnessen III arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
-                        },
-                        verdi: { nb: null, nn: null, en: null },
-                    },
+                    pensjonUtland: null,
+                    arbeidUtlandet: null,
                     pensjonNorge: {
                         label: {
                             en: "Does Barn Barnessen III's other parent receive, or have they received a pension from Norway?",
