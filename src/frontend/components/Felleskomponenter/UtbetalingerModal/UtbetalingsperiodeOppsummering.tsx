@@ -72,33 +72,21 @@ export const UtbetalingsperiodeOppsummering: React.FC<UtbetalingsperiodeOppsumme
                     søknadsvar={fårUtbetalingNå.svar}
                 />
             )}
-            {utbetalingLand.svar && (
-                <OppsummeringFelt
-                    tittel={utbetalingerSpørsmålSpråkTekst(UtbetalingerSpørsmålId.utbetalingLand)}
-                    søknadsvar={landkodeTilSpråk(utbetalingLand.svar, valgtLocale)}
-                />
-            )}
-            {utbetalingFraDato.svar && (
-                <OppsummeringFelt
-                    tittel={utbetalingerSpørsmålSpråkTekst(
-                        UtbetalingerSpørsmålId.utbetalingFraDato
-                    )}
-                    søknadsvar={formaterDato(utbetalingFraDato.svar)}
-                />
-            )}
-            {utbetalingTilDato.svar && (
-                <OppsummeringFelt
-                    tittel={utbetalingerSpørsmålSpråkTekst(
-                        UtbetalingerSpørsmålId.utbetalingTilDato
-                    )}
-                    søknadsvar={formaterDatoMedUkjent(
-                        utbetalingTilDato.svar,
-                        utbetalingerSpørsmålSpråkTekst(
-                            UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
-                        )
-                    )}
-                />
-            )}
+            <OppsummeringFelt
+                tittel={utbetalingerSpørsmålSpråkTekst(UtbetalingerSpørsmålId.utbetalingLand)}
+                søknadsvar={landkodeTilSpråk(utbetalingLand.svar, valgtLocale)}
+            />
+            <OppsummeringFelt
+                tittel={utbetalingerSpørsmålSpråkTekst(UtbetalingerSpørsmålId.utbetalingFraDato)}
+                søknadsvar={formaterDato(utbetalingFraDato.svar)}
+            />
+            <OppsummeringFelt
+                tittel={utbetalingerSpørsmålSpråkTekst(UtbetalingerSpørsmålId.utbetalingTilDato)}
+                søknadsvar={formaterDatoMedUkjent(
+                    utbetalingTilDato.svar,
+                    utbetalingerSpørsmålSpråkTekst(UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke)
+                )}
+            />
         </PeriodeOppsummering>
     );
 };

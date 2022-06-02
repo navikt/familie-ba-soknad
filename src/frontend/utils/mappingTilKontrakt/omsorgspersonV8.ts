@@ -159,13 +159,17 @@ export const omsorgspersonTilISøknadsfeltV8 = (
             sammeVerdiAlleSpråk(pågåendeSøknadFraAnnetEøsLand.svar),
             barn
         ),
-        pågåendeSøknadHvilketLand: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand),
-            verdiCallbackAlleSpråk(locale =>
-                landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)
-            ),
-            barn
-        ),
+        pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(
+                      EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand
+                  ),
+                  verdiCallbackAlleSpråk(locale =>
+                      landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)
+                  ),
+                  barn
+              )
+            : null,
         barnetrygdFraEøs: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonBarnetrygd),
             sammeVerdiAlleSpråk(barnetrygdFraEøs.svar),
