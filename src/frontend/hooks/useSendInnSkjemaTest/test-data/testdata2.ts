@@ -940,7 +940,7 @@ export const testdata2: TilKontraktTestData = {
                     label: {
                         en: 'What is your personal ID-number in Belgia?',
                         nb: 'Hva er id-nummeret ditt i Belgia?',
-                        nn: 'Kva er ID-nummeret ditt i Belgia?',
+                        nn: 'Kva er id-nummeret ditt i Belgia?',
                     },
                     verdi: {
                         nb: {
@@ -948,7 +948,7 @@ export const testdata2: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: '123', nn: '123', en: '123' },
                             },
@@ -956,7 +956,7 @@ export const testdata2: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: 'BEL', nn: 'BEL', en: 'BEL' },
                             },
@@ -966,7 +966,7 @@ export const testdata2: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: '123', nn: '123', en: '123' },
                             },
@@ -974,7 +974,7 @@ export const testdata2: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: 'BEL', nn: 'BEL', en: 'BEL' },
                             },
@@ -984,7 +984,7 @@ export const testdata2: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: '123', nn: '123', en: '123' },
                             },
@@ -992,7 +992,7 @@ export const testdata2: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: 'BEL', nn: 'BEL', en: 'BEL' },
                             },
@@ -1029,7 +1029,7 @@ export const testdata2: TilKontraktTestData = {
                     label: {
                         en: "Do you or have you worked outside of Norway, on a foreign ship or on another country's continental shelf?",
                         nb: 'Arbeider eller har du arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                        nn: 'Arbeidar eller har du arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                        nn: 'Arbeider eller har du arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                     },
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
@@ -1627,7 +1627,7 @@ export const testdata2: TilKontraktTestData = {
                             },
                             utbetalingFraDato: {
                                 label: {
-                                    en: 'When did you start receiving benefits?',
+                                    en: 'When did the period of receiving benefits start?',
                                     nb: 'Når startet utbetalingene?',
                                     nn: 'Når starta utbetalingane?',
                                 },
@@ -1635,12 +1635,12 @@ export const testdata2: TilKontraktTestData = {
                             },
                             utbetalingTilDato: {
                                 label: {
-                                    en: 'When will you stop receiving benefits?',
+                                    en: 'When will the period of receiving benefits end?',
                                     nb: 'Når stopper utbetalingene?',
                                     nn: 'Når stoppar utbetalingane?',
                                 },
                                 verdi: {
-                                    en: "I don't know when I will stop receiving benefits",
+                                    en: "I don't know when the period of receiving benefits will end",
                                     nb: 'Jeg vet ikke når utbetalingene stopper',
                                     nn: 'Eg veit ikkje når utbetalingane stoppar',
                                 },
@@ -1665,7 +1665,7 @@ export const testdata2: TilKontraktTestData = {
                             },
                             utbetalingFraDato: {
                                 label: {
-                                    en: 'When did you start receiving benefits?',
+                                    en: 'When did the period of receiving benefits start?',
                                     nb: 'Når startet utbetalingene?',
                                     nn: 'Når starta utbetalingane?',
                                 },
@@ -1673,12 +1673,12 @@ export const testdata2: TilKontraktTestData = {
                             },
                             utbetalingTilDato: {
                                 label: {
-                                    en: 'When will you stop receiving benefits?',
+                                    en: 'When will the period of receiving benefits end?',
                                     nb: 'Når stopper utbetalingene?',
                                     nn: 'Når stoppar utbetalingane?',
                                 },
                                 verdi: {
-                                    en: "I don't know when I will stop receiving benefits",
+                                    en: "I don't know when the period of receiving benefits will end",
                                     nb: 'Jeg vet ikke når utbetalingene stopper',
                                     nn: 'Eg veit ikkje når utbetalingane stoppar',
                                 },
@@ -1703,7 +1703,7 @@ export const testdata2: TilKontraktTestData = {
                             },
                             utbetalingFraDato: {
                                 label: {
-                                    en: 'When did you start receiving benefits?',
+                                    en: 'When did the period of receiving benefits start?',
                                     nb: 'Når startet utbetalingene?',
                                     nn: 'Når starta utbetalingane?',
                                 },
@@ -1711,12 +1711,12 @@ export const testdata2: TilKontraktTestData = {
                             },
                             utbetalingTilDato: {
                                 label: {
-                                    en: 'When will you stop receiving benefits?',
+                                    en: 'When will the period of receiving benefits end?',
                                     nb: 'Når stopper utbetalingene?',
                                     nn: 'Når stoppar utbetalingane?',
                                 },
                                 verdi: {
-                                    en: "I don't know when I will stop receiving benefits",
+                                    en: "I don't know when the period of receiving benefits will end",
                                     nb: 'Jeg vet ikke når utbetalingene stopper',
                                     nn: 'Eg veit ikkje når utbetalingane stoppar',
                                 },

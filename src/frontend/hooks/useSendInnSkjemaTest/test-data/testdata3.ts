@@ -915,7 +915,7 @@ export const testdata3: TilKontraktTestData = {
                     label: {
                         en: 'What is your personal ID-number in Belgia?',
                         nb: 'Hva er id-nummeret ditt i Belgia?',
-                        nn: 'Kva er ID-nummeret ditt i Belgia?',
+                        nn: 'Kva er id-nummeret ditt i Belgia?',
                     },
                     verdi: {
                         nb: {
@@ -923,7 +923,7 @@ export const testdata3: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: '123', nn: '123', en: '123' },
                             },
@@ -931,7 +931,7 @@ export const testdata3: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: 'BEL', nn: 'BEL', en: 'BEL' },
                             },
@@ -941,7 +941,7 @@ export const testdata3: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: '123', nn: '123', en: '123' },
                             },
@@ -949,7 +949,7 @@ export const testdata3: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: 'BEL', nn: 'BEL', en: 'BEL' },
                             },
@@ -959,7 +959,7 @@ export const testdata3: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: '123', nn: '123', en: '123' },
                             },
@@ -967,7 +967,7 @@ export const testdata3: TilKontraktTestData = {
                                 label: {
                                     en: 'What is your personal ID-number in Belgia?',
                                     nb: 'Hva er id-nummeret ditt i Belgia?',
-                                    nn: 'Kva er ID-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
                                 },
                                 verdi: { nb: 'BEL', nn: 'BEL', en: 'BEL' },
                             },
@@ -1004,7 +1004,7 @@ export const testdata3: TilKontraktTestData = {
                     label: {
                         en: "Do you or have you worked outside of Norway, on a foreign ship or on another country's continental shelf?",
                         nb: 'Arbeider eller har du arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                        nn: 'Arbeidar eller har du arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                        nn: 'Arbeider eller har du arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                     },
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
@@ -1246,7 +1246,7 @@ export const testdata3: TilKontraktTestData = {
                         label: {
                             en: "Does Barn 234567 89876's other parent work, or have they worked outside of Norway, on a foreign ship or on a foreign continental shelf?",
                             nb: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                            nn: 'Arbeidar eller har den andre forelderen til Barn 234567 89876 arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                            nn: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                         },
                         verdi: { nb: 'VET_IKKE', nn: 'VET_IKKE', en: 'VET_IKKE' },
                     },
