@@ -714,7 +714,7 @@ export const testdata5: TilKontraktTestData = {
                     label: {
                         en: "Do you or have you worked outside of Norway, on a foreign ship or on another country's continental shelf?",
                         nb: 'Arbeider eller har du arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                        nn: 'Arbeidar eller har du arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                        nn: 'Arbeider eller har du arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                     },
                     verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                 },
@@ -1006,7 +1006,7 @@ export const testdata5: TilKontraktTestData = {
                         label: {
                             en: "Does Barn 234567 89876's other parent work, or have they worked outside of Norway, on a foreign ship or on a foreign continental shelf?",
                             nb: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                            nn: 'Arbeidar eller har den andre forelderen til Barn 234567 89876 arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                            nn: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                         },
                         verdi: { nb: 'VET_IKKE', nn: 'VET_IKKE', en: 'VET_IKKE' },
                     },
@@ -1022,7 +1022,7 @@ export const testdata5: TilKontraktTestData = {
                         label: {
                             en: "Does Barn 234567 89876's other parent work, or have they worked in Norway, on the Norwegian continental shelf or on a ship flying the Norwegian flag?",
                             nb: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidet i Norge, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
-                            nn: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeida i Noreg, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
+                            nn: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidt i Noreg, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
@@ -1410,7 +1410,7 @@ export const testdata5: TilKontraktTestData = {
                         label: {
                             en: "Does Barn Barnessen III's other parent work, or have they worked outside of Norway, on a foreign ship or on a foreign continental shelf?",
                             nb: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                            nn: 'Arbeidar eller har den andre forelderen til Barn Barnessen III arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                            nn: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                         },
                         verdi: { nb: 'VET_IKKE', nn: 'VET_IKKE', en: 'VET_IKKE' },
                     },
@@ -1426,7 +1426,7 @@ export const testdata5: TilKontraktTestData = {
                         label: {
                             en: "Does Barn Barnessen III's other parent work, or have they worked in Norway, on the Norwegian continental shelf or on a ship flying the Norwegian flag?",
                             nb: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeidet i Norge, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
-                            nn: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeida i Noreg, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
+                            nn: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeidt i Noreg, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },

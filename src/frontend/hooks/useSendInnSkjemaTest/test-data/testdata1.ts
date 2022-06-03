@@ -487,7 +487,7 @@ export const testdata1: TilKontraktTestData = {
                     label: {
                         en: "Do you or have you worked outside of Norway, on a foreign ship or on another country's continental shelf?",
                         nb: 'Arbeider eller har du arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                        nn: 'Arbeidar eller har du arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                        nn: 'Arbeider eller har du arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                     },
                     verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                 },
