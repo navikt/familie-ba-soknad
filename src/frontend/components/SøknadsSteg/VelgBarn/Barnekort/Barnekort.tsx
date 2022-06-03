@@ -112,7 +112,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                         verdi={formaterFnr(barn.ident)}
                     />
                 )}
-                {barn.alder && ( // Barn som søker har lagt inn selv har ikke fødselsdato
+                {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
                     <BarneKortInfo
                         labelId={'hvilkebarn.barn.alder'}
                         verdi={<SpråkTekst id={'felles.år'} values={{ alder: barn.alder }} />}

@@ -7,10 +7,10 @@ import {
     ISøknadsfelt,
 } from '../typer/kontrakt/generelle';
 import {
-    ISøknadIKontraktBarnV7,
+    ISøknadIKontraktBarnV8,
     ISøknadKontraktSøker,
-    ISøknadKontraktV7,
-} from '../typer/kontrakt/v7';
+    ISøknadKontraktV8,
+} from '../typer/kontrakt/v8';
 import { ISamboer, ITidligereSamboer } from '../typer/person';
 
 export const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>
@@ -54,27 +54,41 @@ export const erGyldigTidligereSamboere = (input: ISøknadKontraktSøker): boolea
         .reduce((prev, curr) => !!(prev && curr), true);
 
 export const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontraktSøker =>
-    !!(
-        input.ident &&
-        input.navn &&
-        input.statsborgerskap &&
-        input.adresse &&
-        input.sivilstand &&
-        erGyldigTidligereSamboere(input) &&
-        erGyldigNåværendeSamboer(input?.spørsmål?.harSamboerNå, input.nåværendeSamboer)
-    );
+    'harEøsSteg' in input &&
+    'ident' in input &&
+    'navn' in input &&
+    'statsborgerskap' in input &&
+    'adresse' in input &&
+    'adressebeskyttelse' in input &&
+    'sivilstand' in input &&
+    'spørsmål' in input &&
+    'tidligereSamboere' in input &&
+    'nåværendeSamboer' in input &&
+    'utenlandsperioder' in input &&
+    'arbeidsperioderUtland' in input &&
+    'pensjonsperioderUtland' in input &&
+    'arbeidsperioderNorge' in input &&
+    'pensjonsperioderNorge' in input &&
+    'andreUtbetalingsperioder' in input &&
+    'idNummer' in input &&
+    erGyldigTidligereSamboere(input) &&
+    erGyldigNåværendeSamboer(input?.spørsmål?.harSamboerNå, input.nåværendeSamboer);
 
-export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontraktBarnV7 =>
-    !!(
-        input &&
-        input.ident &&
-        input.navn &&
-        input.registrertBostedType &&
-        input.alder &&
-        input.spørsmål
-    );
+export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontraktBarnV8 =>
+    input &&
+    'harEøsSteg' in input &&
+    'ident' in input &&
+    'navn' in input &&
+    'registrertBostedType' in input &&
+    'alder' in input &&
+    'utenlandsperioder' in input &&
+    'omsorgsperson' in input && //todo lage typegurads for omsorgsperson og andre forelder
+    'andreForelder' in input &&
+    'eøsBarnetrygdsperioder' in input &&
+    'idNummer' in input &&
+    'spørsmål' in input;
 
-export const erGyldigISøknadKontraktBarnListe = (input): input is ISøknadIKontraktBarnV7[] =>
+export const erGyldigISøknadKontraktBarnListe = (input): input is ISøknadIKontraktBarnV8[] =>
     input &&
     Array.isArray(input) &&
     input.map(erGyldigISøknadsKontraktBarn).reduce((prev, curr) => !!(prev && curr), true);
@@ -89,14 +103,20 @@ export const erGyldigDokumentasjon = (input): input is ISøknadKontraktDokumenta
     Array.isArray(input) &&
     input.map(erGyldigISøknadKontraktDokumentasjon).reduce((prev, curr) => !!(prev && curr), true);
 
-export const erGyldigISøknadKontrakt = (input): input is ISøknadKontraktV7 =>
-    !!(
+export const erGyldigISøknadKontrakt = (input): input is ISøknadKontraktV8 => {
+    return !!(
         input &&
-        input.søknadstype &&
-        erGyldigISøknadKontraktSøker(input.søker) &&
+        'søknadstype' in input &&
+        'kontraktVersjon' in input &&
+        'antallEøsSteg' in input &&
+        'teksterUtenomSpørsmål' in input &&
+        'spørsmål' in input &&
+        'originalSpråk' in input &&
         erGyldigISøknadKontraktBarnListe(input.barn) &&
+        erGyldigISøknadKontraktSøker(input.søker) &&
         erGyldigDokumentasjon(input.dokumentasjon)
     );
+};
 
 export const isAlpha3Code = (code: string): code is Alpha3Code => {
     return code in getAlpha3Codes();

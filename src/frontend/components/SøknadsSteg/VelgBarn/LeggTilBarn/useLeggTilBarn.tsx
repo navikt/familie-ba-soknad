@@ -144,7 +144,7 @@ export const useLeggTilBarn = (): {
                         intl.formatMessage({ id: 'hvilkebarn.barn.ingen-navn.placeholder' }),
                     ident: ident.verdi,
                     borMedSøker: undefined,
-                    alder: undefined,
+                    alder: null,
                     adressebeskyttelse: false,
                 },
             ]),

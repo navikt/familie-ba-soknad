@@ -299,14 +299,17 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     ident: '1234',
                     navn: 'Datter Dattersdottir',
                     adressebeskyttelse: false,
-                    alder: undefined,
+                    alder: null,
                     borMedSøker: true,
                 }),
                 andreForelder: {
-                    kanIkkeGiOpplysninger: false,
+                    kanIkkeGiOpplysninger: {
+                        id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+                        svar: ESvar.NEI,
+                    },
                     adresse: {
                         id: EøsBarnSpørsmålId.andreForelderAdresse,
-                        svar: AlternativtSvarForInput.UKJENT,
+                        svar: 'Heisannveien 15',
                     },
                     andreUtbetalingsperioder: [],
                     arbeidsperioderNorge: [],

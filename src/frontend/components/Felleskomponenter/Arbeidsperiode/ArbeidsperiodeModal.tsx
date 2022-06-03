@@ -54,39 +54,30 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
             return false;
         }
         onLeggTilArbeidsperiode({
-            ...(arbeidsperiodeAvsluttet.erSynlig && {
-                arbeidsperiodeAvsluttet: {
-                    id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
-                    svar: arbeidsperiodeAvsluttet.verdi as ESvar,
-                },
-            }),
-            ...(skjema.felter.arbeidsperiodeLand.erSynlig && {
-                arbeidsperiodeland: {
-                    id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
-                    svar: arbeidsperiodeLand.verdi,
-                },
-            }),
-            ...(arbeidsgiver.erSynlig && {
-                arbeidsgiver: {
-                    id: ArbeidsperiodeSpørsmålsId.arbeidsgiver,
-                    svar: trimWhiteSpace(arbeidsgiver.verdi),
-                },
-            }),
-            ...(fraDatoArbeidsperiode.erSynlig && {
-                fraDatoArbeidsperiode: {
-                    id: ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode,
-                    svar: fraDatoArbeidsperiode.verdi,
-                },
-            }),
-            ...(tilDatoArbeidsperiode.erSynlig && {
-                tilDatoArbeidsperiode: {
-                    id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
-                    svar: svarForSpørsmålMedUkjent(
-                        tilDatoArbeidsperiodeUkjent,
-                        tilDatoArbeidsperiode
-                    ),
-                },
-            }),
+            arbeidsperiodeAvsluttet: {
+                id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
+                svar: arbeidsperiodeAvsluttet.erSynlig
+                    ? (arbeidsperiodeAvsluttet.verdi as ESvar)
+                    : null,
+            },
+            arbeidsperiodeland: {
+                id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
+                svar: arbeidsperiodeLand.erSynlig ? arbeidsperiodeLand.verdi : '',
+            },
+            arbeidsgiver: {
+                id: ArbeidsperiodeSpørsmålsId.arbeidsgiver,
+                svar: arbeidsgiver.erSynlig ? trimWhiteSpace(arbeidsgiver.verdi) : '',
+            },
+            fraDatoArbeidsperiode: {
+                id: ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode,
+                svar: fraDatoArbeidsperiode.erSynlig ? fraDatoArbeidsperiode.verdi : '',
+            },
+            tilDatoArbeidsperiode: {
+                id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
+                svar: tilDatoArbeidsperiode.erSynlig
+                    ? svarForSpørsmålMedUkjent(tilDatoArbeidsperiodeUkjent, tilDatoArbeidsperiode)
+                    : '',
+            },
         });
 
         toggleModal();

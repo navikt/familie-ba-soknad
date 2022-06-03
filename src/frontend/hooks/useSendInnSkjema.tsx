@@ -4,25 +4,25 @@ import { RessursStatus } from '@navikt/familie-typer';
 import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
 import { useApp } from '../context/AppContext';
 import Miljø from '../Miljø';
-import { ISøknadKontraktV7 } from '../typer/kontrakt/v7';
-import { dataISøknadKontraktFormatV7 } from '../utils/mappingTilKontrakt/søknadV7';
+import { ISøknadKontraktV8 } from '../typer/kontrakt/v8';
+import { dataISøknadKontraktFormatV8 } from '../utils/mappingTilKontrakt/søknadV8';
 import { sendInn } from '../utils/sendInnSkjema';
 
 export const useSendInnSkjema = (): {
-    sendInnSkjemaV7: () => Promise<[boolean, ISøknadKontraktV7]>;
+    sendInnSkjemaV8: () => Promise<[boolean, ISøknadKontraktV8]>;
 } => {
     const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
     const { soknadApi } = Miljø();
     const [valgtSpråk] = useSprakContext();
-    const sendInnSkjemaV7 = async (): Promise<[boolean, ISøknadKontraktV7]> => {
+    const sendInnSkjemaV8 = async (): Promise<[boolean, ISøknadKontraktV8]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
 
-        const formatert: ISøknadKontraktV7 = dataISøknadKontraktFormatV7(valgtSpråk, søknad);
+        const formatert: ISøknadKontraktV8 = dataISøknadKontraktFormatV8(valgtSpråk, søknad);
 
-        const res = await sendInn<ISøknadKontraktV7>(
+        const res = await sendInn<ISøknadKontraktV8>(
             formatert,
             axiosRequest,
-            `${soknadApi}/soknad/v7`,
+            `${soknadApi}/soknad/v8`,
             res => {
                 const responseData = res.response?.data;
                 if (responseData && erModellMismatchResponsRessurs(responseData)) {
@@ -37,6 +37,6 @@ export const useSendInnSkjema = (): {
     };
 
     return {
-        sendInnSkjemaV7,
+        sendInnSkjemaV8,
     };
 };

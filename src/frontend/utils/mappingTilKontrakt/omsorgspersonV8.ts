@@ -4,7 +4,7 @@ import {
 } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { Slektsforhold } from '../../typer/kontrakt/generelle';
-import { IOmsorgspersonIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { IOmsorgspersonIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IOmsorgsperson } from '../../typer/omsorgsperson';
 import { PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId } from '../språk';
@@ -20,10 +20,10 @@ import {
 } from './hjelpefunksjoner';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 
-export const omsorgspersonTilISøknadsfeltV7 = (
+export const omsorgspersonTilISøknadsfeltV8 = (
     omsorgsperson: IOmsorgsperson,
     barn: IBarnMedISøknad
-): IOmsorgspersonIKontraktFormatV7 => {
+): IOmsorgspersonIKontraktFormatV8 => {
     const {
         navn,
         slektsforhold,
@@ -45,6 +45,19 @@ export const omsorgspersonTilISøknadsfeltV7 = (
         andreUtbetalinger,
         andreUtbetalingsperioder,
     } = omsorgsperson;
+
+    if (
+        !arbeidUtland.svar ||
+        !arbeidNorge.svar ||
+        !pensjonUtland.svar ||
+        !pensjonNorge.svar ||
+        !barnetrygdFraEøs.svar ||
+        !pågåendeSøknadFraAnnetEøsLand.svar ||
+        !andreUtbetalinger.svar
+    ) {
+        throw new TypeError('Omsorgspersonfelter mangler');
+    }
+
     return {
         navn: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonNavn),
@@ -146,13 +159,17 @@ export const omsorgspersonTilISøknadsfeltV7 = (
             sammeVerdiAlleSpråk(pågåendeSøknadFraAnnetEøsLand.svar),
             barn
         ),
-        pågåendeSøknadHvilketLand: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand),
-            verdiCallbackAlleSpråk(locale =>
-                landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)
-            ),
-            barn
-        ),
+        pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(
+                      EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand
+                  ),
+                  verdiCallbackAlleSpråk(locale =>
+                      landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)
+                  ),
+                  barn
+              )
+            : null,
         barnetrygdFraEøs: søknadsfeltBarn(
             språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonBarnetrygd),
             sammeVerdiAlleSpråk(barnetrygdFraEøs.svar),

@@ -9,14 +9,13 @@ import {
     omBarnetSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
-import { AlternativtSvarForInput } from '../../typer/common';
 import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
-import { ISøknadIKontraktBarnV7 } from '../../typer/kontrakt/v7';
+import { ISøknadIKontraktBarnV8 } from '../../typer/kontrakt/v8';
 import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { hentTekster } from '../språk';
-import { andreForelderTilISøknadsfeltV7 } from './andreForelderV7';
+import { andreForelderTilISøknadsfeltV8 } from './andreForelderV8';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
     sammeVerdiAlleSpråk,
@@ -26,14 +25,14 @@ import {
     søknadsfeltBarn,
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
-import { omsorgspersonTilISøknadsfeltV7 } from './omsorgspersonV7';
+import { omsorgspersonTilISøknadsfeltV8 } from './omsorgspersonV8';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
-export const barnISøknadsFormatV7 = (
+export const barnISøknadsFormatV8 = (
     barn: IBarnMedISøknad,
     søker: ISøker,
     valgtSpråk: LocaleType
-): ISøknadIKontraktBarnV7 => {
+): ISøknadIKontraktBarnV8 => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         id,
@@ -96,13 +95,9 @@ export const barnISøknadsFormatV7 = (
             sammeVerdiAlleSpråk(registertBostedVerdi()),
             barn
         ),
-        alder: søknadsfeltBarn(
-            'pdf.barn.alder.label',
-            alder
-                ? hentTekster('felles.år', { alder })
-                : sammeVerdiAlleSpråk(AlternativtSvarForInput.UKJENT),
-            barn
-        ),
+        alder: alder
+            ? søknadsfeltBarn('pdf.barn.alder.label', hentTekster('felles.år', { alder }), barn)
+            : null,
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt(periode, index + 1, barn)
         ),
@@ -124,10 +119,10 @@ export const barnISøknadsFormatV7 = (
             )
         ),
         andreForelder: andreForelder
-            ? andreForelderTilISøknadsfeltV7(andreForelder, barn, valgtSpråk)
+            ? andreForelderTilISøknadsfeltV8(andreForelder, barn, valgtSpråk)
             : null,
 
-        omsorgsperson: omsorgsperson ? omsorgspersonTilISøknadsfeltV7(omsorgsperson, barn) : null,
+        omsorgsperson: omsorgsperson ? omsorgspersonTilISøknadsfeltV8(omsorgsperson, barn) : null,
         spørsmål: {
             ...spørmålISøknadsFormat(typetBarnSpørsmål, {
                 navn: barn.navn,

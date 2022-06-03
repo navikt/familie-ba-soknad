@@ -4,7 +4,7 @@ export const testdata5: TilKontraktTestData = {
     input: {
         søknadstype: 'UTVIDET',
         erEøs: true,
-        kontraktVersjon: '7',
+        kontraktVersjon: '8',
         antallEøsSteg: 2,
         barnInkludertISøknaden: [
             {
@@ -24,6 +24,10 @@ export const testdata5: TilKontraktTestData = {
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        id: 'andre-forelder-kan-ikke-gi-opplysninger',
+                        svar: 'NEI',
+                    },
                     navn: {
                         id: 'andre-forelder-navn',
                         svar: 'aehjsrtjsrtjhfshfbfgb',
@@ -208,6 +212,10 @@ export const testdata5: TilKontraktTestData = {
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        id: 'andre-forelder-kan-ikke-gi-opplysninger',
+                        svar: 'NEI',
+                    },
                     navn: {
                         id: 'andre-forelder-navn',
                         svar: 'gdjhrstjsrthrfgfdgfdgdf',
@@ -614,7 +622,7 @@ export const testdata5: TilKontraktTestData = {
     },
     output: {
         søknadstype: 'UTVIDET',
-        kontraktVersjon: 7,
+        kontraktVersjon: 8,
         antallEøsSteg: 2,
         søker: {
             harEøsSteg: true,
@@ -950,6 +958,14 @@ export const testdata5: TilKontraktTestData = {
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        label: {
+                            en: 'I am unable to provide information about the other parent',
+                            nb: 'Jeg kan ikke gi opplysninger om den andre forelderen',
+                            nn: 'Eg kan ikkje gje opplysningar om den andre forelderen',
+                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                    },
                     navn: {
                         label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                         verdi: {
@@ -1350,6 +1366,14 @@ export const testdata5: TilKontraktTestData = {
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        label: {
+                            en: 'I am unable to provide information about the other parent',
+                            nb: 'Jeg kan ikke gi opplysninger om den andre forelderen',
+                            nn: 'Eg kan ikkje gje opplysningar om den andre forelderen',
+                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                    },
                     navn: {
                         label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                         verdi: {

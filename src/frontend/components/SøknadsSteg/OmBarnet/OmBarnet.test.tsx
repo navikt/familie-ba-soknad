@@ -143,7 +143,10 @@ const mockBarnMedISøknad = {
         svar: ESvar.NEI,
     },
     andreForelder: {
-        kanIkkeGiOpplysninger: false,
+        kanIkkeGiOpplysninger: {
+            id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+            svar: ESvar.NEI,
+        },
         idNummer: [],
         arbeidsperioderNorge: [],
         andreUtbetalingsperioder: [],
