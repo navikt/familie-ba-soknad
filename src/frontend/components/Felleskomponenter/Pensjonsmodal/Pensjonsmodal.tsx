@@ -50,26 +50,20 @@ export const PensjonModal: React.FC<Props> = ({
         onLeggTilPensjonsperiode({
             mottarPensjonNå: {
                 id: PensjonsperiodeSpørsmålId.mottarPensjonNå,
-                svar: skjema.felter.mottarPensjonNå.verdi,
+                svar: mottarPensjonNå.erSynlig ? mottarPensjonNå.verdi : null,
             },
-            ...(skjema.felter.pensjonsland.erSynlig && {
-                pensjonsland: {
-                    id: PensjonsperiodeSpørsmålId.pensjonsland,
-                    svar: skjema.felter.pensjonsland.verdi,
-                },
-            }),
-            ...(skjema.felter.pensjonFraDato.erSynlig && {
-                pensjonFra: {
-                    id: PensjonsperiodeSpørsmålId.fraDatoPensjon,
-                    svar: skjema.felter.pensjonFraDato.verdi,
-                },
-            }),
-            ...(skjema.felter.pensjonTilDato.erSynlig && {
-                pensjonTil: {
-                    id: PensjonsperiodeSpørsmålId.tilDatoPensjon,
-                    svar: skjema.felter.pensjonTilDato.verdi,
-                },
-            }),
+            pensjonsland: {
+                id: PensjonsperiodeSpørsmålId.pensjonsland,
+                svar: pensjonsland.erSynlig ? pensjonsland.verdi : '',
+            },
+            pensjonFra: {
+                id: PensjonsperiodeSpørsmålId.fraDatoPensjon,
+                svar: pensjonFraDato.erSynlig ? pensjonFraDato.verdi : '',
+            },
+            pensjonTil: {
+                id: PensjonsperiodeSpørsmålId.tilDatoPensjon,
+                svar: pensjonTilDato.erSynlig ? pensjonTilDato.verdi : '',
+            },
         });
 
         toggleModal();
@@ -98,10 +92,10 @@ export const PensjonModal: React.FC<Props> = ({
             onAvbrytCallback={nullstillSkjema}
         >
             <KomponentGruppe inline>
-                {skjema.felter.mottarPensjonNå.erSynlig && (
+                {mottarPensjonNå.erSynlig && (
                     <JaNeiSpm
                         skjema={skjema}
-                        felt={skjema.felter.mottarPensjonNå}
+                        felt={mottarPensjonNå}
                         spørsmålTekstId={hentSpørsmålTekstId(
                             PensjonsperiodeSpørsmålId.mottarPensjonNå
                         )}
@@ -110,7 +104,7 @@ export const PensjonModal: React.FC<Props> = ({
                 )}
                 {pensjonsland.erSynlig && (
                     <LandDropdown
-                        felt={skjema.felter.pensjonsland}
+                        felt={pensjonsland}
                         skjema={skjema}
                         label={
                             <SpråkTekst
@@ -125,7 +119,7 @@ export const PensjonModal: React.FC<Props> = ({
 
                 {pensjonFraDato.erSynlig && (
                     <Datovelger
-                        felt={skjema.felter.pensjonFraDato}
+                        felt={pensjonFraDato}
                         label={
                             <SpråkTekst
                                 id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.fraDatoPensjon)}

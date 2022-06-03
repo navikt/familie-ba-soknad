@@ -72,21 +72,15 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
                     søknadsvar={mottarEøsBarnetrygdNå.svar}
                 />
             )}
-            {barnetrygdsland.svar && (
-                <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.barnetrygdsland)}
-                    søknadsvar={landkodeTilSpråk(barnetrygdsland.svar, valgtLocale)}
-                />
-            )}
-            {fraDatoBarnetrygdperiode.svar && (
-                <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(
-                        BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
-                    )}
-                    søknadsvar={formaterDato(fraDatoBarnetrygdperiode.svar)}
-                />
-            )}
-            {tilDatoBarnetrygdperiode?.svar && (
+            <OppsummeringFelt
+                tittel={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.barnetrygdsland)}
+                søknadsvar={landkodeTilSpråk(barnetrygdsland.svar, valgtLocale)}
+            />
+            <OppsummeringFelt
+                tittel={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode)}
+                søknadsvar={formaterDato(fraDatoBarnetrygdperiode.svar)}
+            />
+            {tilDatoBarnetrygdperiode.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(
                         BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
@@ -94,12 +88,10 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
                     søknadsvar={formaterDato(tilDatoBarnetrygdperiode.svar)}
                 />
             )}
-            {månedligBeløp.svar && (
-                <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.månedligBeløp)}
-                    søknadsvar={månedligBeløp.svar}
-                />
-            )}
+            <OppsummeringFelt
+                tittel={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.månedligBeløp)}
+                søknadsvar={månedligBeløp.svar}
+            />
         </PeriodeOppsummering>
     );
 };

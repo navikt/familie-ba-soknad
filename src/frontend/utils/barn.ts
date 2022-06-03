@@ -38,7 +38,12 @@ export const genererInitiellAndreForelder = (
     andreForelderErDød: boolean
 ): IAndreForelder => {
     return {
-        kanIkkeGiOpplysninger: false,
+        kanIkkeGiOpplysninger: {
+            id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+            svar:
+                andreForelder?.[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger].svar ??
+                ESvar.NEI,
+        },
         arbeidsperioderNorge: andreForelder?.arbeidsperioderNorge ?? [],
         arbeidsperioderUtland: andreForelder?.arbeidsperioderUtland ?? [],
         andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
@@ -533,7 +538,7 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
         id: hentUid(),
         navn: barnetsNavnValue(barnRespons, intl),
         ident: barnRespons.ident,
-        alder: barnRespons.fødselsdato && hentAlder(barnRespons.fødselsdato),
+        alder: barnRespons.fødselsdato ? hentAlder(barnRespons.fødselsdato) : null,
         borMedSøker: barnRespons.borMedSøker,
         adressebeskyttelse: barnRespons.adressebeskyttelse,
     }));
@@ -550,7 +555,7 @@ export const barnetsNavnValue = (barn: IBarnRespons, intl: IntlShape): string =>
 
 export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
     return (
-        barn.andreForelder?.kanIkkeGiOpplysninger ||
+        barn.andreForelder?.kanIkkeGiOpplysninger.svar === ESvar.JA ||
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
     );
 };

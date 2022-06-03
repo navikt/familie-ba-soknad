@@ -4,7 +4,7 @@ export const testdata2: TilKontraktTestData = {
     input: {
         søknadstype: 'ORDINÆR',
         erEøs: true,
-        kontraktVersjon: '7',
+        kontraktVersjon: '8',
         antallEøsSteg: 0,
         barnInkludertISøknaden: [
             {
@@ -473,7 +473,10 @@ export const testdata2: TilKontraktTestData = {
                         id: 'arbeidsgiver',
                         svar: 'Jobben',
                     },
-
+                    arbeidsperiodeland: {
+                        id: 'arbeidsperiode-land',
+                        svar: null,
+                    },
                     arbeidsperiodeAvsluttet: {
                         id: 'arbeidsperiode-avluttet',
                         svar: 'JA',
@@ -501,6 +504,10 @@ export const testdata2: TilKontraktTestData = {
                     pensjonTil: {
                         id: 'til-dato-pensjon',
                         svar: '2022-05-18',
+                    },
+                    pensjonsland: {
+                        id: 'land-pensjon',
+                        svar: null,
                     },
                 },
             ],
@@ -619,7 +626,7 @@ export const testdata2: TilKontraktTestData = {
     },
     output: {
         søknadstype: 'ORDINÆR',
-        kontraktVersjon: 7,
+        kontraktVersjon: 8,
         antallEøsSteg: 3,
         søker: {
             harEøsSteg: true,
@@ -1301,14 +1308,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                             },
-                            arbeidsperiodeland: {
-                                label: {
-                                    en: 'Which country did you work in?',
-                                    nb: 'Hvilket land arbeidet du i?',
-                                    nn: 'Kva land arbeidde du i?',
-                                },
-                                verdi: { nb: null, nn: null, en: null },
-                            },
+                            arbeidsperiodeland: null,
                             arbeidsgiver: {
                                 label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
                                 verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
@@ -1339,14 +1339,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                             },
-                            arbeidsperiodeland: {
-                                label: {
-                                    en: 'Which country did you work in?',
-                                    nb: 'Hvilket land arbeidet du i?',
-                                    nn: 'Kva land arbeidde du i?',
-                                },
-                                verdi: { nb: null, nn: null, en: null },
-                            },
+                            arbeidsperiodeland: null,
                             arbeidsgiver: {
                                 label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
                                 verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
@@ -1377,14 +1370,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                             },
-                            arbeidsperiodeland: {
-                                label: {
-                                    en: 'Which country did you work in?',
-                                    nb: 'Hvilket land arbeidet du i?',
-                                    nn: 'Kva land arbeidde du i?',
-                                },
-                                verdi: { nb: null, nn: null, en: null },
-                            },
+                            arbeidsperiodeland: null,
                             arbeidsgiver: {
                                 label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
                                 verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
@@ -1539,14 +1525,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                             },
-                            pensjonsland: {
-                                label: {
-                                    en: 'From which country did you receive a pension?',
-                                    nb: 'Hvilket land fikk du pensjon fra?',
-                                    nn: 'Kva land fekk du pensjon frå?',
-                                },
-                                verdi: { nb: null, nn: null, en: null },
-                            },
+                            pensjonsland: null,
                             pensjonFra: {
                                 label: {
                                     en: 'From when did you receive a pension?',
@@ -1573,14 +1552,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                             },
-                            pensjonsland: {
-                                label: {
-                                    en: 'From which country did you receive a pension?',
-                                    nb: 'Hvilket land fikk du pensjon fra?',
-                                    nn: 'Kva land fekk du pensjon frå?',
-                                },
-                                verdi: { nb: null, nn: null, en: null },
-                            },
+                            pensjonsland: null,
                             pensjonFra: {
                                 label: {
                                     en: 'From when did you receive a pension?',
@@ -1607,14 +1579,7 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                             },
-                            pensjonsland: {
-                                label: {
-                                    en: 'From which country did you receive a pension?',
-                                    nb: 'Hvilket land fikk du pensjon fra?',
-                                    nn: 'Kva land fekk du pensjon frå?',
-                                },
-                                verdi: { nb: null, nn: null, en: null },
-                            },
+                            pensjonsland: null,
                             pensjonFra: {
                                 label: {
                                     en: 'From when did you receive a pension?',

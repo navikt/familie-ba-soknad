@@ -73,7 +73,7 @@ const AndreForelder: React.FC<{
                                 <SkjemaCheckbox
                                     labelSpråkTekstId={
                                         omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.andreForelderNavnUkjent
+                                            OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger
                                         ]
                                     }
                                     felt={skjema.felter.andreForelderNavnUkjent}

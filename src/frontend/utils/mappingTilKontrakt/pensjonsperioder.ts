@@ -6,7 +6,7 @@ import {
 } from '../../components/Felleskomponenter/Pensjonsmodal/språkUtils';
 import { PensjonsperiodeSpørsmålId } from '../../components/Felleskomponenter/Pensjonsmodal/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IPensjonsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { IPensjonsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IPensjonsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
@@ -26,7 +26,7 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
     erDød,
     barn,
 }: PensjonsperiodeIKontraktFormatParams &
-    PeriodePersonTypeMedBarnProps): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV7> => {
+    PeriodePersonTypeMedBarnProps): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV8> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
 
     const periodenErAvsluttet =
@@ -47,24 +47,32 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
             x: periodeNummer,
         }),
         verdi: sammeVerdiAlleSpråk({
-            mottarPensjonNå: {
-                label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.mottarPensjonNå),
-                verdi: sammeVerdiAlleSpråk(mottarPensjonNå?.svar),
-            },
-            pensjonsland: {
-                label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.pensjonsland),
-                verdi: verdiCallbackAlleSpråk(locale =>
-                    pensjonsland ? landkodeTilSpråk(pensjonsland.svar, locale) : null
-                ),
-            },
-            pensjonFra: {
-                label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.fraDatoPensjon),
-                verdi: sammeVerdiAlleSpråk(pensjonFra?.svar ?? null),
-            },
-            pensjonTil: {
-                label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.tilDatoPensjon),
-                verdi: sammeVerdiAlleSpråk(pensjonTil?.svar ?? null),
-            },
+            mottarPensjonNå: mottarPensjonNå.svar
+                ? {
+                      label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.mottarPensjonNå),
+                      verdi: sammeVerdiAlleSpråk(mottarPensjonNå.svar),
+                  }
+                : null,
+            pensjonsland: pensjonsland.svar
+                ? {
+                      label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.pensjonsland),
+                      verdi: verdiCallbackAlleSpråk(locale =>
+                          landkodeTilSpråk(pensjonsland.svar, locale)
+                      ),
+                  }
+                : null,
+            pensjonFra: pensjonFra.svar
+                ? {
+                      label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.fraDatoPensjon),
+                      verdi: sammeVerdiAlleSpråk(pensjonFra.svar),
+                  }
+                : null,
+            pensjonTil: pensjonTil.svar
+                ? {
+                      label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.tilDatoPensjon),
+                      verdi: sammeVerdiAlleSpråk(pensjonTil.svar),
+                  }
+                : null,
         }),
     };
 };

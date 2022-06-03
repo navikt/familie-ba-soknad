@@ -40,7 +40,7 @@ const AndreForelderOppsummering: React.FC<{
                                 ? andreForelder[andreForelderDataKeySpørsmål.navn].svar
                                 : formatMessage({
                                       id: omBarnetSpørsmålSpråkId[
-                                          OmBarnetSpørsmålsId.andreForelderNavnUkjent
+                                          OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger
                                       ],
                                   })
                         }

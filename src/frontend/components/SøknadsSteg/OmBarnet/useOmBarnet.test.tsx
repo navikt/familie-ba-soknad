@@ -24,7 +24,7 @@ describe('useOmBarnet', () => {
         navn: 'Barn Barnessen',
         ident: '1234',
         borMedSøker: true,
-        alder: undefined,
+        alder: null,
         adressebeskyttelse: false,
     };
 

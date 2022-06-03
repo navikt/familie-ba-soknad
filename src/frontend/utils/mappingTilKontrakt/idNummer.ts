@@ -3,7 +3,7 @@ import { getName } from 'i18n-iso-countries';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IIdNummerIKontraktFormat } from '../../typer/kontrakt/v7';
+import { IIdNummerIKontraktFormat } from '../../typer/kontrakt/v8';
 import { IIdNummer } from '../../typer/person';
 import { hentTekster } from '../språk';
 import { sammeVerdiAlleSpråk, sammeVerdiAlleSpråkEllerUkjentSpråktekst } from './hjelpefunksjoner';

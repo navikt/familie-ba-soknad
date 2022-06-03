@@ -16,6 +16,7 @@ import { IBarn, IIdNummer } from './person';
 import { ISøknadSpørsmål } from './spørsmål';
 
 export enum andreForelderDataKeySpørsmål {
+    kanIkkeGiOpplysninger = 'kanIkkeGiOpplysninger',
     navn = 'navn',
     fnr = 'fnr',
     fødselsdato = 'fødselsdato',
@@ -69,8 +70,8 @@ export interface IAndreForelder {
     arbeidsperioderUtland: IArbeidsperiode[];
     pensjonsperioderUtland: IPensjonsperiode[];
     eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
-    kanIkkeGiOpplysninger: boolean;
-    [andreForelderDataKeySpørsmål.navn]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
+    kanIkkeGiOpplysninger: ISøknadSpørsmål<ESvar>;
+    [andreForelderDataKeySpørsmål.navn]: ISøknadSpørsmål<string | ''>;
     [andreForelderDataKeySpørsmål.fnr]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
     [andreForelderDataKeySpørsmål.fødselsdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [andreForelderDataKeySpørsmål.arbeidUtlandet]: ISøknadSpørsmål<ESvar | null>;
