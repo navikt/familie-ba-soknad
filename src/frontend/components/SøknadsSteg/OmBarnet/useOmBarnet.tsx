@@ -295,7 +295,7 @@ export const useOmBarnet = (
 
     const andreForelderNavnUkjent = useFelt<ESvar>({
         verdi: formaterVerdiForCheckbox(andreForelder?.[andreForelderDataKeySpørsmål.navn].svar),
-        feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
+        feltId: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
         avhengigheter: { sammeForelderSomAnnetBarn },
         skalFeltetVises: avhengigheter =>
             !!andreForelder &&
@@ -673,6 +673,7 @@ export const useOmBarnet = (
     const annetBarnMedSammeForelder = (): IBarnMedISøknad | undefined =>
         andreBarnSomErFyltUt.find(barn => barn.id === sammeForelderSomAnnetBarn.verdi);
 
+    //todo: rydd opp i kanIkkeGiOpplysningerOmAndreForelder ting
     const kanIkkeGiOpplysningerOmAndreForelder = (): boolean =>
         (annetBarnMedSammeForelder()?.andreForelder?.navn ??
             trimWhiteSpace(
@@ -694,7 +695,10 @@ export const useOmBarnet = (
         } else if (kanIkkeGiOpplysningerOmAndreForelder()) {
             return {
                 ...genererInitiellAndreForelder(null, andreForelderErDød),
-                kanIkkeGiOpplysninger: true,
+                kanIkkeGiOpplysninger: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger],
+                    svar: ESvar.JA,
+                },
                 navn: {
                     ...andreForelder[andreForelderDataKeySpørsmål.navn],
                     svar: trimWhiteSpace(
@@ -722,7 +726,10 @@ export const useOmBarnet = (
         } else {
             return {
                 ...andreForelder,
-                kanIkkeGiOpplysninger: false,
+                kanIkkeGiOpplysninger: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger],
+                    svar: ESvar.NEI,
+                },
                 idNummer: filtrerteRelevanteIdNummerForAndreForelder(andreForelder),
                 navn: {
                     ...andreForelder[andreForelderDataKeySpørsmål.navn],

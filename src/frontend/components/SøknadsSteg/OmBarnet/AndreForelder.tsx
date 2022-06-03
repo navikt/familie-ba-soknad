@@ -6,6 +6,7 @@ import { ISkjema } from '@navikt/familie-skjema';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { dagensDato } from '../../../utils/dato';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
@@ -72,7 +73,7 @@ const AndreForelder: React.FC<{
                                 <SkjemaCheckbox
                                     labelSpråkTekstId={
                                         omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.andreForelderNavnUkjent
+                                            OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger
                                         ]
                                     }
                                     felt={skjema.felter.andreForelderNavnUkjent}
@@ -151,10 +152,9 @@ const AndreForelder: React.FC<{
                                     leggTilArbeidsperiode={leggTilArbeidsperiode}
                                     fjernArbeidsperiode={fjernArbeidsperiode}
                                     gjelderUtlandet
-                                    andreForelderData={{
-                                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                                        barn: barn,
-                                    }}
+                                    personType={PersonType.AndreForelder}
+                                    barn={barn}
+                                    erDød={barn.andreForelderErDød.svar === ESvar.JA}
                                     registrerteArbeidsperioder={
                                         skjema.felter.andreForelderArbeidsperioderUtland
                                     }
@@ -166,11 +166,10 @@ const AndreForelder: React.FC<{
                                     }
                                     leggTilPensjonsperiode={leggTilPensjonsperiode}
                                     fjernPensjonsperiode={fjernPensjonsperiode}
-                                    gjelderUtlandet
-                                    andreForelderData={{
-                                        erDød: barn.andreForelderErDød.svar === ESvar.JA,
-                                        barn: barn,
-                                    }}
+                                    gjelderUtlandet={true}
+                                    personType={PersonType.AndreForelder}
+                                    erDød={barn.andreForelderErDød.svar === ESvar.JA}
+                                    barn={barn}
                                     registrertePensjonsperioder={
                                         skjema.felter.andreForelderPensjonsperioderUtland
                                     }

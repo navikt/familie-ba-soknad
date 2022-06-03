@@ -53,7 +53,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             barn,
         });
 
-    const intl = useIntl();
+    const { formatMessage } = useIntl();
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -113,12 +113,12 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                             />
                         }
                         skjema={skjema}
-                        placeholder={intl.formatMessage({ id: 'felles.velg-årsak.placeholder' })}
+                        placeholder={formatMessage({ id: 'felles.velg-årsak.placeholder' })}
                         bredde={'fullbredde'}
                     >
                         {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
                             <option key={number} value={årsak}>
-                                {intl.formatMessage(
+                                {formatMessage(
                                     {
                                         id: årsakSpråkId(årsak as EUtenlandsoppholdÅrsak, barn),
                                     },

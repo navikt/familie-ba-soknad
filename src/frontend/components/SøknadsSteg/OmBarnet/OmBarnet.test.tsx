@@ -143,13 +143,29 @@ const mockBarnMedISøknad = {
         svar: ESvar.NEI,
     },
     andreForelder: {
-        kanIkkeGiOpplysninger: false,
+        kanIkkeGiOpplysninger: {
+            id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+            svar: ESvar.NEI,
+        },
         idNummer: [],
         arbeidsperioderNorge: [],
         andreUtbetalingsperioder: [],
         arbeidsperioderUtland: [],
         pensjonsperioderNorge: [],
         pensjonsperioderUtland: [],
+        eøsBarnetrygdsperioder: [],
+        barnetrygdFraEøs: {
+            id: EøsBarnSpørsmålId.andreForelderBarnetrygd,
+            svar: ESvar.NEI,
+        },
+        pågåendeSøknadFraAnnetEøsLand: {
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand,
+            svar: ESvar.NEI,
+        },
+        pågåendeSøknadHvilketLand: {
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand,
+            svar: '' as Alpha3Code,
+        },
         adresse: {
             id: EøsBarnSpørsmålId.andreForelderAdresse,
             svar: AlternativtSvarForInput.UKJENT,
@@ -221,6 +237,44 @@ const mockBarnMedISøknad = {
         adresse: {
             id: EøsBarnSpørsmålId.omsorgspersonAdresse,
             svar: 'Oslogata 1',
+        },
+        arbeidsperioderNorge: [],
+        andreUtbetalingsperioder: [],
+        arbeidsperioderUtland: [],
+        pensjonsperioderNorge: [],
+        pensjonsperioderUtland: [],
+        eøsBarnetrygdsperioder: [],
+        barnetrygdFraEøs: {
+            id: EøsBarnSpørsmålId.omsorgspersonBarnetrygd,
+            svar: ESvar.NEI,
+        },
+        pågåendeSøknadFraAnnetEøsLand: {
+            id: EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadFraAnnetEøsLand,
+            svar: ESvar.NEI,
+        },
+        pågåendeSøknadHvilketLand: {
+            id: EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand,
+            svar: '' as Alpha3Code,
+        },
+        arbeidUtland: {
+            id: EøsBarnSpørsmålId.omsorgspersonArbeidUtland,
+            svar: ESvar.NEI,
+        },
+        arbeidNorge: {
+            id: EøsBarnSpørsmålId.omsorgspersonArbeidNorge,
+            svar: ESvar.JA,
+        },
+        pensjonNorge: {
+            id: EøsBarnSpørsmålId.omsorgspersonPensjonNorge,
+            svar: ESvar.JA,
+        },
+        andreUtbetalinger: {
+            id: EøsBarnSpørsmålId.omsorgspersonAndreUtbetalinger,
+            svar: ESvar.NEI,
+        },
+        pensjonUtland: {
+            id: EøsBarnSpørsmålId.omsorgspersonPensjonUtland,
+            svar: ESvar.VET_IKKE,
         },
     },
     adresse: {

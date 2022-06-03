@@ -11,7 +11,7 @@ export enum OmBarnetSpørsmålsId {
     pågåendeSøknadHvilketLand = 'pågående-søknad-hvilket-land',
     mottarEllerMottokEøsBarnetrygd = 'mottar-eller-mottok-eøs-barnetrygd',
     andreForelderNavn = 'andre-forelder-navn',
-    andreForelderNavnUkjent = 'andre-forelder-navn-ukjent',
+    andreForelderKanIkkeGiOpplysninger = 'andre-forelder-kan-ikke-gi-opplysninger',
     andreForelderFnr = 'andre-forelder-fødsels-/dnummer',
     andreForelderFnrUkjent = 'andre-forelder-fødsels-/dnummer-ukjent',
     andreForelderFødselsdato = 'andre-forelder-fødselsdato',
@@ -46,7 +46,8 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd]:
         'ombarnet.fårellerharsøktbarnetrygdeøs.spm',
     [OmBarnetSpørsmålsId.andreForelderNavn]: 'ombarnet.andre-forelder.navn.spm',
-    [OmBarnetSpørsmålsId.andreForelderNavnUkjent]: 'ombarnet.andre-forelder.navn-ukjent.spm',
+    [OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger]:
+        'ombarnet.andre-forelder.navn-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFnr]: 'felles.fødsels-eller-dnummer.label',
     [OmBarnetSpørsmålsId.andreForelderFnrUkjent]: 'ombarnet.andre-forelder.fnr-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFødselsdato]: 'felles.fødselsdato.label',

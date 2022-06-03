@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { PersonType } from '../../../typer/personType';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
@@ -158,6 +159,7 @@ const DinLivssituasjon: React.FC = () => {
                     gjelderUtlandet={true}
                     arbeiderEllerArbeidetFelt={skjema.felter.jobberPåBåt}
                     registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                    personType={PersonType.Søker}
                 />
 
                 <Pensjonsperiode
@@ -166,7 +168,8 @@ const DinLivssituasjon: React.FC = () => {
                     registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
                     leggTilPensjonsperiode={leggTilPensjonsperiode}
                     fjernPensjonsperiode={fjernPensjonsperiode}
-                    gjelderUtlandet
+                    gjelderUtlandet={true}
+                    personType={PersonType.Søker}
                 />
             </KomponentGruppe>
         </Steg>

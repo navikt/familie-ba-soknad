@@ -13,9 +13,9 @@ import {
     barnDataKeySpørsmål,
     IAndreForelder,
     IBarnMedISøknad,
-    IOmsorgsperson,
 } from '../typer/barn';
 import { tomString } from '../typer/common';
+import { IOmsorgsperson } from '../typer/omsorgsperson';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
@@ -38,12 +38,18 @@ export const genererInitiellAndreForelder = (
     andreForelderErDød: boolean
 ): IAndreForelder => {
     return {
-        kanIkkeGiOpplysninger: false,
+        kanIkkeGiOpplysninger: {
+            id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+            svar:
+                andreForelder?.[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger].svar ??
+                ESvar.NEI,
+        },
         arbeidsperioderNorge: andreForelder?.arbeidsperioderNorge ?? [],
         arbeidsperioderUtland: andreForelder?.arbeidsperioderUtland ?? [],
         andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
         pensjonsperioderNorge: andreForelder?.pensjonsperioderNorge ?? [],
         pensjonsperioderUtland: andreForelder?.pensjonsperioderUtland ?? [],
+        eøsBarnetrygdsperioder: andreForelder?.eøsBarnetrygdsperioder ?? [],
         idNummer: andreForelder?.idNummer ?? [],
         [andreForelderDataKeySpørsmål.navn]: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,
@@ -97,6 +103,29 @@ export const genererInitiellAndreForelder = (
         [andreForelderDataKeySpørsmål.adresse]: {
             svar: andreForelder?.adresse.svar ?? '',
             id: EøsBarnSpørsmålId.andreForelderAdresse,
+        },
+        [andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
+            svar:
+                andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar &&
+                !andreForelderErDød
+                    ? andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]
+                          .svar
+                    : null,
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand,
+        },
+        [andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
+            svar:
+                andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand].svar &&
+                !andreForelderErDød
+                    ? andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand].svar
+                    : '',
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand,
+        },
+        [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: {
+            svar: andreForelder?.[andreForelderDataKeySpørsmål.barnetrygdFraEøs].svar ?? null,
+            id: andreForelderErDød
+                ? EøsBarnSpørsmålId.andreForelderBarnetrygdGjenlevende
+                : EøsBarnSpørsmålId.andreForelderBarnetrygd,
         },
         utvidet: {
             ...andreForelder?.utvidet,
@@ -509,7 +538,7 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
         id: hentUid(),
         navn: barnetsNavnValue(barnRespons, intl),
         ident: barnRespons.ident,
-        alder: barnRespons.fødselsdato && hentAlder(barnRespons.fødselsdato),
+        alder: barnRespons.fødselsdato ? hentAlder(barnRespons.fødselsdato) : null,
         borMedSøker: barnRespons.borMedSøker,
         adressebeskyttelse: barnRespons.adressebeskyttelse,
     }));
@@ -526,7 +555,7 @@ export const barnetsNavnValue = (barn: IBarnRespons, intl: IntlShape): string =>
 
 export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
     return (
-        barn.andreForelder?.kanIkkeGiOpplysninger ||
+        barn.andreForelder?.kanIkkeGiOpplysninger.svar === ESvar.JA ||
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
     );
 };
@@ -579,6 +608,42 @@ export const filtrerteRelevanteIdNummerForBarn = (
     return barn.idNummer.filter(idNummerObj => relevanteLand.includes(idNummerObj.land));
 };
 
+export const nullstilteEøsFelterForAndreForelder = (
+    andreForelder: IAndreForelder
+): IAndreForelder => ({
+    ...andreForelder,
+    idNummer: [],
+    pensjonNorge: {
+        ...andreForelder.pensjonNorge,
+        svar: null,
+    },
+    arbeidNorge: {
+        ...andreForelder.arbeidNorge,
+        svar: null,
+    },
+    andreUtbetalinger: {
+        ...andreForelder.andreUtbetalinger,
+        svar: null,
+    },
+    pågåendeSøknadFraAnnetEøsLand: {
+        ...andreForelder.pågåendeSøknadFraAnnetEøsLand,
+        svar: null,
+    },
+    pågåendeSøknadHvilketLand: {
+        ...andreForelder.pågåendeSøknadHvilketLand,
+        svar: '',
+    },
+    barnetrygdFraEøs: {
+        ...andreForelder.barnetrygdFraEøs,
+        svar: null,
+    },
+    pensjonsperioderNorge: [],
+    arbeidsperioderNorge: [],
+    andreUtbetalingsperioder: [],
+    eøsBarnetrygdsperioder: [],
+    adresse: { ...andreForelder.adresse, svar: '' },
+});
+
 export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
     idNummer: [],
     søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: tomString },
@@ -591,26 +656,7 @@ export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
     omsorgsperson: null,
     adresse: { ...barn.adresse, svar: '' },
     ...(barn.andreForelder && {
-        andreForelder: {
-            ...barn.andreForelder,
-            idNummer: [],
-            pensjonNorge: {
-                ...barn.andreForelder.pensjonNorge,
-                svar: null,
-            },
-            arbeidNorge: {
-                ...barn.andreForelder.arbeidNorge,
-                svar: null,
-            },
-            andreUtbetalinger: {
-                ...barn.andreForelder.andreUtbetalinger,
-                svar: null,
-            },
-            pensjonsperioderNorge: [],
-            arbeidsperioderNorge: [],
-            andreUtbetalingsperioder: [],
-            adresse: { ...barn.andreForelder.adresse, svar: '' },
-        },
+        andreForelder: nullstilteEøsFelterForAndreForelder(barn.andreForelder),
     }),
 });
 

@@ -5,8 +5,8 @@ import { Element } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
+import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import {
     IDinLivssituasjonFeltTyper,
     IEøsForBarnFeltTyper,
@@ -21,11 +21,11 @@ import { PensjonModal } from './Pensjonsmodal';
 import { PensjonsperiodeOppsummering } from './PensjonsperiodeOppsummering';
 import {
     mottarEllerMottattPensjonSpråkId,
-    pensjonsperiodeFeilmelding,
     pensjonFlerePerioderSpmSpråkId,
+    pensjonsperiodeFeilmelding,
     pensjonsperiodeKnappSpråkId,
 } from './språkUtils';
-import { PensjonSpørsmålId } from './spørsmål';
+import { PensjonsperiodeSpørsmålId } from './spørsmål';
 
 interface PensjonsperiodeProps {
     skjema: ISkjema<
@@ -37,26 +37,25 @@ interface PensjonsperiodeProps {
     >;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
-    gjelderUtlandet?: boolean;
-    andreForelderData?: { erDød: boolean; barn: IBarnMedISøknad };
+    gjelderUtlandet: boolean;
     mottarEllerMottattPensjonFelt: Felt<ESvar | null>;
     registrertePensjonsperioder: Felt<IPensjonsperiode[]>;
 }
 
-export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
+type Props = PensjonsperiodeProps & PeriodePersonTypeMedBarnProps;
+
+export const Pensjonsperiode: React.FC<Props> = ({
     skjema,
     leggTilPensjonsperiode,
     fjernPensjonsperiode,
-    gjelderUtlandet = false,
-    andreForelderData,
+    gjelderUtlandet,
     mottarEllerMottattPensjonFelt,
     registrertePensjonsperioder,
+    personType,
+    erDød,
+    barn,
 }) => {
     const { erÅpen: pensjonsmodalErÅpen, toggleModal: togglePensjonsmodal } = useModal();
-
-    const gjelderAndreForelder = !!andreForelderData;
-    const barn = andreForelderData?.barn;
-    const andreForelderErDød = !!andreForelderData?.erDød;
 
     return (
         <>
@@ -65,10 +64,10 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                 felt={mottarEllerMottattPensjonFelt}
                 spørsmålTekstId={mottarEllerMottattPensjonSpråkId(
                     gjelderUtlandet,
-                    gjelderAndreForelder,
-                    andreForelderErDød
+                    personType,
+                    erDød
                 )}
-                inkluderVetIkke={gjelderAndreForelder}
+                inkluderVetIkke={personType !== PersonType.Søker}
                 språkValues={{
                     ...(barn && {
                         navn: barn.navn,
@@ -85,16 +84,15 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                             fjernPeriodeCallback={fjernPensjonsperiode}
                             nummer={index + 1}
                             gjelderUtlandet={gjelderUtlandet}
-                            andreForelderData={andreForelderData}
+                            personType={personType}
+                            erDød={personType === PersonType.AndreForelder && erDød}
+                            barn={personType !== PersonType.Søker ? barn : undefined}
                         />
                     ))}
                     {registrertePensjonsperioder.verdi.length > 0 && (
                         <Element>
                             <SpråkTekst
-                                id={pensjonFlerePerioderSpmSpråkId(
-                                    gjelderUtlandet,
-                                    gjelderAndreForelder
-                                )}
+                                id={pensjonFlerePerioderSpmSpråkId(gjelderUtlandet, personType)}
                                 values={{
                                     ...(barn && { barn: barn.navn }),
                                 }}
@@ -104,7 +102,7 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                     <LeggTilKnapp
                         onClick={togglePensjonsmodal}
                         språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}
-                        id={PensjonSpørsmålId.pensjonsperioder}
+                        id={PensjonsperiodeSpørsmålId.pensjonsperioder}
                         feilmelding={
                             registrertePensjonsperioder.erSynlig &&
                             registrertePensjonsperioder.feilmelding &&
@@ -118,7 +116,9 @@ export const Pensjonsperiode: React.FC<PensjonsperiodeProps> = ({
                         toggleModal={togglePensjonsmodal}
                         onLeggTilPensjonsperiode={leggTilPensjonsperiode}
                         gjelderUtland={gjelderUtlandet}
-                        andreForelderData={andreForelderData}
+                        personType={personType}
+                        erDød={erDød}
+                        barn={barn}
                     />
                 </>
             )}

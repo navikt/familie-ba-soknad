@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { PersonType } from '../../../../typer/personType';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
@@ -57,20 +58,24 @@ const EøsForSøker: React.FC = () => {
                     leggTilArbeidsperiode={leggTilArbeidsperiode}
                     fjernArbeidsperiode={fjernArbeidsperiode}
                     registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                    personType={PersonType.Søker}
                 />
                 <Pensjonsperiode
                     skjema={skjema}
                     mottarEllerMottattPensjonFelt={skjema.felter.pensjonNorge}
+                    gjelderUtlandet={false}
                     leggTilPensjonsperiode={leggTilPensjonsperiode}
                     fjernPensjonsperiode={fjernPensjonsperiode}
                     registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
+                    personType={PersonType.Søker}
                 />
                 <Utbetalingsperiode
                     skjema={skjema}
                     leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
                     fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
-                    mottarEllerMottattUtbetalingFelt={skjema.felter.andreUtbetalinger}
+                    tilhørendeJaNeiSpmFelt={skjema.felter.andreUtbetalinger}
                     registrerteUtbetalingsperioder={skjema.felter.registrerteAndreUtbetalinger}
+                    personType={PersonType.Søker}
                 />
             </KomponentGruppe>
         </Steg>

@@ -38,8 +38,8 @@ export const genererAdresseVisning = (søker: ISøker) => {
             <SpråkTekst
                 id={
                     søker.adressebeskyttelse
-                        ? 'omdeg.personopplysninger.adresse-sperret'
-                        : 'omdeg.personopplysninger.adresse-ukjent'
+                        ? 'omdeg.personopplysninger.adressesperre.alert'
+                        : 'omdeg.personopplysninger.ikke-registrert.alert'
                 }
             />
         </Normaltekst>
