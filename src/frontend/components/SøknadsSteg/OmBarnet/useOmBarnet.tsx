@@ -293,8 +293,9 @@ export const useOmBarnet = (
             andreBarnSomErFyltUt.length > 0,
     });
 
-    const andreForelderNavnUkjent = useFelt<ESvar>({
-        verdi: formaterVerdiForCheckbox(andreForelder?.[andreForelderDataKeySpørsmål.navn].svar),
+    const andreForelderKanIkkeGiOpplysninger = useFelt<ESvar>({
+        verdi:
+            andreForelder?.[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger].svar ?? ESvar.NEI,
         feltId: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
         avhengigheter: { sammeForelderSomAnnetBarn },
         skalFeltetVises: avhengigheter =>
@@ -305,7 +306,7 @@ export const useOmBarnet = (
     });
     const andreForelderNavn = useInputFeltMedUkjent({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.navn] ?? null,
-        avhengighet: andreForelderNavnUkjent,
+        avhengighet: andreForelderKanIkkeGiOpplysninger,
         feilmeldingSpråkId: 'ombarnet.andre-forelder.navn.feilmelding',
         skalVises:
             !!andreForelder &&
@@ -323,11 +324,14 @@ export const useOmBarnet = (
                 (!avhengigheter.sammeForelderSomAnnetBarn.erSynlig ||
                     avhengigheter.sammeForelderSomAnnetBarn.verdi ===
                         AlternativtSvarForInput.ANNEN_FORELDER) &&
-                avhengigheter.andreForelderNavnUkjent &&
-                avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
+                avhengigheter.andreForelderKanIkkeGiOpplysninger &&
+                avhengigheter.andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI
             );
         },
-        avhengigheter: { andreForelderNavnUkjent, sammeForelderSomAnnetBarn },
+        avhengigheter: {
+            andreForelderKanIkkeGiOpplysninger,
+            sammeForelderSomAnnetBarn,
+        },
         nullstillVedAvhengighetEndring: false,
     });
 
@@ -340,7 +344,7 @@ export const useOmBarnet = (
             !!andreForelder &&
             (!sammeForelderSomAnnetBarn.erSynlig ||
                 sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER) &&
-            andreForelderNavnUkjent.verdi === ESvar.NEI,
+            andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI,
     });
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
@@ -354,10 +358,13 @@ export const useOmBarnet = (
                 avhengigheter.andreForelderFnrUkjent &&
                 avhengigheter.andreForelderFnrUkjent.erSynlig &&
                 avhengigheter.andreForelderFnrUkjent.verdi === ESvar.JA &&
-                avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
+                avhengigheter.andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI
             );
         },
-        avhengigheter: { andreForelderFnrUkjent, andreForelderNavnUkjent },
+        avhengigheter: {
+            andreForelderFnrUkjent,
+            andreForelderKanIkkeGiOpplysninger,
+        },
         nullstillVedAvhengighetEndring: false,
     });
     const andreForelderFødselsdato = useDatovelgerFeltMedUkjent({
@@ -370,7 +377,7 @@ export const useOmBarnet = (
         skalFeltetVises:
             andreForelderFnrUkjent.erSynlig &&
             andreForelderFnrUkjent.verdi === ESvar.JA &&
-            andreForelderNavnUkjent.verdi === ESvar.NEI,
+            andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI,
         nullstillVedAvhengighetEndring:
             sammeForelderSomAnnetBarn.verdi === null ||
             sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
@@ -388,14 +395,14 @@ export const useOmBarnet = (
                 hovedSpørsmål: andreForelderNavn,
             },
             andreForelderFnr:
-                andreForelderNavnUkjent.verdi === ESvar.NEI
+                andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI
                     ? {
                           hovedSpørsmål: andreForelderFnr,
                           tilhørendeFelter: [andreForelderFødselsdato],
                       }
                     : undefined,
         },
-        skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
+        skalSkjules: andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA,
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
@@ -426,14 +433,14 @@ export const useOmBarnet = (
                 hovedSpørsmål: andreForelderNavn,
             },
             andreForelderFnr:
-                andreForelderNavnUkjent.verdi === ESvar.NEI
+                andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI
                     ? {
                           hovedSpørsmål: andreForelderFnr,
                           tilhørendeFelter: [andreForelderFødselsdato],
                       }
                     : undefined,
         },
-        skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
+        skalSkjules: andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA,
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
@@ -602,7 +609,7 @@ export const useOmBarnet = (
             mottarEllerMottokEøsBarnetrygd,
             registrerteEøsBarnetrygdsperioder,
             andreForelderNavn,
-            andreForelderNavnUkjent,
+            andreForelderKanIkkeGiOpplysninger,
             andreForelderFnr,
             andreForelderFnrUkjent,
             andreForelderFødselsdato,
@@ -673,13 +680,6 @@ export const useOmBarnet = (
     const annetBarnMedSammeForelder = (): IBarnMedISøknad | undefined =>
         andreBarnSomErFyltUt.find(barn => barn.id === sammeForelderSomAnnetBarn.verdi);
 
-    //todo: rydd opp i kanIkkeGiOpplysningerOmAndreForelder ting
-    const kanIkkeGiOpplysningerOmAndreForelder = (): boolean =>
-        (annetBarnMedSammeForelder()?.andreForelder?.navn ??
-            trimWhiteSpace(
-                svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
-            )) === AlternativtSvarForInput.UKJENT;
-
     const genererOppdatertAndreForelder = (andreForelder: IAndreForelder): IAndreForelder => {
         const barnMedSammeForelder = annetBarnMedSammeForelder();
         const andreForelderErDød = gjeldendeBarn.andreForelderErDød.svar === ESvar.JA;
@@ -692,18 +692,12 @@ export const useOmBarnet = (
                     svar: skriftligAvtaleOmDeltBosted.verdi,
                 },
             };
-        } else if (kanIkkeGiOpplysningerOmAndreForelder()) {
+        } else if (andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA) {
             return {
                 ...genererInitiellAndreForelder(null, andreForelderErDød),
                 kanIkkeGiOpplysninger: {
                     ...andreForelder[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger],
                     svar: ESvar.JA,
-                },
-                navn: {
-                    ...andreForelder[andreForelderDataKeySpørsmål.navn],
-                    svar: trimWhiteSpace(
-                        svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
-                    ),
                 },
                 skriftligAvtaleOmDeltBosted: {
                     ...andreForelder.skriftligAvtaleOmDeltBosted,
@@ -734,7 +728,10 @@ export const useOmBarnet = (
                 navn: {
                     ...andreForelder[andreForelderDataKeySpørsmål.navn],
                     svar: trimWhiteSpace(
-                        svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
+                        svarForSpørsmålMedUkjent(
+                            andreForelderKanIkkeGiOpplysninger,
+                            andreForelderNavn
+                        )
                     ),
                 },
                 fnr: {
@@ -880,7 +877,7 @@ export const useOmBarnet = (
                 svar:
                     barn.erFosterbarn.svar === ESvar.JA ||
                     (barn.borMedAndreForelder.svar === ESvar.JA &&
-                        kanIkkeGiOpplysningerOmAndreForelder())
+                        andreForelderKanIkkeGiOpplysninger.verdi == ESvar.JA)
                         ? barn.adresse.svar
                         : '',
             },

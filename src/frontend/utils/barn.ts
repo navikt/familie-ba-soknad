@@ -8,12 +8,7 @@ import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/s
 import { idNummerLandMedPeriodeType } from '../components/SøknadsSteg/EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import {
-    andreForelderDataKeySpørsmål,
-    barnDataKeySpørsmål,
-    IAndreForelder,
-    IBarnMedISøknad,
-} from '../typer/barn';
+import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../typer/barn';
 import { tomString } from '../typer/common';
 import { IOmsorgsperson } from '../typer/omsorgsperson';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
@@ -40,9 +35,7 @@ export const genererInitiellAndreForelder = (
     return {
         kanIkkeGiOpplysninger: {
             id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
-            svar:
-                andreForelder?.[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger].svar ??
-                ESvar.NEI,
+            svar: andreForelder?.kanIkkeGiOpplysninger.svar ?? ESvar.NEI,
         },
         arbeidsperioderNorge: andreForelder?.arbeidsperioderNorge ?? [],
         arbeidsperioderUtland: andreForelder?.arbeidsperioderUtland ?? [],
@@ -51,98 +44,90 @@ export const genererInitiellAndreForelder = (
         pensjonsperioderUtland: andreForelder?.pensjonsperioderUtland ?? [],
         eøsBarnetrygdsperioder: andreForelder?.eøsBarnetrygdsperioder ?? [],
         idNummer: andreForelder?.idNummer ?? [],
-        [andreForelderDataKeySpørsmål.navn]: {
+        navn: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.navn].svar ?? '',
+            svar: andreForelder?.navn.svar ?? '',
         },
-        [andreForelderDataKeySpørsmål.fnr]: {
+        fnr: {
             id: OmBarnetSpørsmålsId.andreForelderFnr,
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.fnr].svar ?? '',
+            svar: andreForelder?.fnr.svar ?? '',
         },
-        [andreForelderDataKeySpørsmål.fødselsdato]: {
+        fødselsdato: {
             id: OmBarnetSpørsmålsId.andreForelderFødselsdato,
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.fødselsdato].svar ?? '',
+            svar: andreForelder?.fødselsdato.svar ?? '',
         },
-        [andreForelderDataKeySpørsmål.arbeidUtlandet]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandet].svar ?? null,
+        arbeidUtlandet: {
+            svar: andreForelder?.arbeidUtlandet.svar ?? null,
             id: andreForelderErDød
                 ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke
                 : OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
         },
-        [andreForelderDataKeySpørsmål.pensjonUtland]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonUtland].svar ?? null,
+        pensjonUtland: {
+            svar: andreForelder?.pensjonUtland.svar ?? null,
             id: andreForelderErDød
                 ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
                 : OmBarnetSpørsmålsId.andreForelderPensjonUtland,
         },
-        [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
+        skriftligAvtaleOmDeltBosted: {
             id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
             svar:
                 andreForelder && !andreForelderErDød
-                    ? andreForelder[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
+                    ? andreForelder.skriftligAvtaleOmDeltBosted.svar
                     : null,
         },
-        [andreForelderDataKeySpørsmål.arbeidNorge]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.arbeidNorge].svar ?? null,
+        arbeidNorge: {
+            svar: andreForelder?.arbeidNorge.svar ?? null,
             id: andreForelderErDød
                 ? EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke
                 : EøsBarnSpørsmålId.andreForelderArbeidNorge,
         },
-        [andreForelderDataKeySpørsmål.pensjonNorge]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonNorge].svar ?? null,
+        pensjonNorge: {
+            svar: andreForelder?.pensjonNorge.svar ?? null,
             id: andreForelderErDød
                 ? EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke
                 : EøsBarnSpørsmålId.andreForelderPensjonNorge,
         },
-        [andreForelderDataKeySpørsmål.andreUtbetalinger]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.andreUtbetalinger].svar ?? null,
+        andreUtbetalinger: {
+            svar: andreForelder?.andreUtbetalinger.svar ?? null,
             id: andreForelderErDød
                 ? EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke
                 : EøsBarnSpørsmålId.andreForelderAndreUtbetalinger,
         },
-        [andreForelderDataKeySpørsmål.adresse]: {
+        adresse: {
             svar: andreForelder?.adresse.svar ?? '',
             id: EøsBarnSpørsmålId.andreForelderAdresse,
         },
-        [andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
+        pågåendeSøknadFraAnnetEøsLand: {
             svar:
-                andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar &&
-                !andreForelderErDød
-                    ? andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]
-                          .svar
+                andreForelder?.pågåendeSøknadFraAnnetEøsLand.svar && !andreForelderErDød
+                    ? andreForelder?.pågåendeSøknadFraAnnetEøsLand.svar
                     : null,
             id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand,
         },
-        [andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
+        pågåendeSøknadHvilketLand: {
             svar:
-                andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand].svar &&
-                !andreForelderErDød
-                    ? andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand].svar
+                andreForelder?.pågåendeSøknadHvilketLand.svar && !andreForelderErDød
+                    ? andreForelder?.pågåendeSøknadHvilketLand.svar
                     : '',
             id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand,
         },
-        [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.barnetrygdFraEøs].svar ?? null,
+        barnetrygdFraEøs: {
+            svar: andreForelder?.barnetrygdFraEøs.svar ?? null,
             id: andreForelderErDød
                 ? EøsBarnSpørsmålId.andreForelderBarnetrygdGjenlevende
                 : EøsBarnSpørsmålId.andreForelderBarnetrygd,
         },
         utvidet: {
             ...andreForelder?.utvidet,
-            [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: {
+            søkerHarBoddMedAndreForelder: {
                 id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,
-                svar:
-                    andreForelder?.utvidet[
-                        andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder
-                    ].svar ?? null,
+                svar: andreForelder?.utvidet.søkerHarBoddMedAndreForelder.svar ?? null,
             },
-            [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: {
+            søkerFlyttetFraAndreForelderDato: {
                 id: OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato,
                 svar:
                     andreForelder && !andreForelderErDød
-                        ? andreForelder.utvidet[
-                              andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
-                          ].svar
+                        ? andreForelder.utvidet.søkerFlyttetFraAndreForelderDato.svar
                         : '',
             },
         },

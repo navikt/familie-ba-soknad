@@ -76,7 +76,7 @@ export interface IOmBarnetUtvidetFeltTyper {
     mottarEllerMottokEøsBarnetrygd: ESvar | null;
     registrerteEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     andreForelderNavn: string;
-    andreForelderNavnUkjent: ESvar;
+    andreForelderKanIkkeGiOpplysninger: ESvar;
     andreForelderFnr: string;
     andreForelderFnrUkjent: ESvar;
     andreForelderFødselsdatoUkjent: ESvar;

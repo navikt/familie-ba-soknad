@@ -143,15 +143,19 @@ describe('useOmBarnet', () => {
         const {
             current: {
                 skjema: {
-                    felter: { andreForelderNavn, andreForelderNavnUkjent, andreForelderFnr },
+                    felter: {
+                        andreForelderNavn,
+                        andreForelderKanIkkeGiOpplysninger,
+                        andreForelderFnr,
+                    },
                 },
             },
         } = result;
 
         expect(andreForelderNavn.verdi).toEqual('');
         expect(andreForelderNavn.erSynlig).toEqual(true);
-        expect(andreForelderNavnUkjent.erSynlig).toEqual(true);
-        expect(andreForelderNavnUkjent.verdi).toEqual(ESvar.JA);
+        expect(andreForelderKanIkkeGiOpplysninger.erSynlig).toEqual(true);
+        expect(andreForelderKanIkkeGiOpplysninger.verdi).toEqual(ESvar.JA);
         expect(andreForelderFnr.erSynlig).toEqual(false);
 
         await act(async () => {
