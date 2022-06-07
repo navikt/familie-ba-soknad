@@ -9,9 +9,8 @@ import {
     barnDataKeySpørsmål,
     IBarnMedISøknad,
 } from '../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../typer/common';
 import { IBarn } from '../../../typer/person';
-import { genererInitiellAndreForelder, genererInitialBarnMedISøknad } from '../../../utils/barn';
+import { genererInitialBarnMedISøknad, genererInitiellAndreForelder } from '../../../utils/barn';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -120,9 +119,9 @@ describe('useOmBarnet', () => {
             ...genererInitialBarnMedISøknad(barnFraPdl),
             andreForelder: {
                 ...genererInitiellAndreForelder(null, false),
-                [andreForelderDataKeySpørsmål.navn]: {
-                    svar: AlternativtSvarForInput.UKJENT,
-                    id: OmBarnetSpørsmålsId.andreForelderNavn,
+                [andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger]: {
+                    svar: ESvar.JA,
+                    id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
                 },
             },
             [barnDataKeySpørsmål.erFosterbarn]: {
