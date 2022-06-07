@@ -178,18 +178,6 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     barn={barn}
                 />
             ))}
-            {omsorgsperson.barnetrygdFraEøs.svar && (
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.barnetrygdFraEøs.id]}
-                            values={{ barn: barn.navn }}
-                        />
-                    }
-                    søknadsvar={omsorgsperson.barnetrygdFraEøs.svar}
-                />
-            )}
-
             {omsorgsperson.pågåendeSøknadFraAnnetEøsLand.svar && (
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
@@ -225,7 +213,17 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     )}
                 </StyledOppsummeringsFeltGruppe>
             )}
-
+            {omsorgsperson.barnetrygdFraEøs.svar && (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.barnetrygdFraEøs.id]}
+                            values={{ barn: barn.navn }}
+                        />
+                    }
+                    søknadsvar={omsorgsperson.barnetrygdFraEøs.svar}
+                />
+            )}
             {omsorgsperson.eøsBarnetrygdsperioder.map((periode, index) => (
                 <BarnetrygdsperiodeOppsummering
                     key={`barnetrygdperiode-omsorgsperson-${index}`}
