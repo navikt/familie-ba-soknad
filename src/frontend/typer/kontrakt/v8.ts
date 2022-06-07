@@ -85,6 +85,11 @@ export interface IOmsorgspersonIKontraktFormatV8 {
     eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV8>[];
 }
 
+export interface IAndreForelderUtvidetIKontraktFormat {
+    søkerHarBoddMedAndreForelder: ISøknadsfelt<ESvar> | null;
+    søkerFlyttetFraAndreForelderDato: ISøknadsfelt<string> | null;
+}
+
 export interface IAndreForelderIKontraktFormatV8 {
     kanIkkeGiOpplysninger: ISøknadsfelt<ESvar>;
     navn: ISøknadsfelt<string> | null;
@@ -93,10 +98,7 @@ export interface IAndreForelderIKontraktFormatV8 {
     pensjonUtland: ISøknadsfelt<ESvar> | null;
     arbeidUtlandet: ISøknadsfelt<ESvar> | null;
     skriftligAvtaleOmDeltBosted: ISøknadsfelt<ESvar> | null;
-    utvidet: {
-        søkerHarBoddMedAndreForelder: ISøknadsfelt<ESvar> | null;
-        søkerFlyttetFraAndreForelderDato: ISøknadsfelt<string> | null;
-    };
+    utvidet: IAndreForelderUtvidetIKontraktFormat;
 
     //EØS
     pensjonNorge: ISøknadsfelt<ESvar> | null;
