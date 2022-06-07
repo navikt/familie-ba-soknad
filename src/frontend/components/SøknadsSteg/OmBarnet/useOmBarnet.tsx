@@ -727,12 +727,7 @@ export const useOmBarnet = (
                 idNummer: filtrerteRelevanteIdNummerForAndreForelder(andreForelder),
                 navn: {
                     ...andreForelder[andreForelderDataKeySpørsmål.navn],
-                    svar: trimWhiteSpace(
-                        svarForSpørsmålMedUkjent(
-                            andreForelderKanIkkeGiOpplysninger,
-                            andreForelderNavn
-                        )
-                    ),
+                    svar: trimWhiteSpace(andreForelderNavn.verdi),
                 },
                 fnr: {
                     ...andreForelder[andreForelderDataKeySpørsmål.fnr],
