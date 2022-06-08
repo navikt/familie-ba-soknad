@@ -7,6 +7,9 @@ import {
     ISøknadsfelt,
 } from '../typer/kontrakt/generelle';
 import {
+    IAndreForelderIKontraktFormatV8,
+    IAndreForelderUtvidetIKontraktFormat,
+    IOmsorgspersonIKontraktFormatV8,
     ISøknadIKontraktBarnV8,
     ISøknadKontraktSøker,
     ISøknadKontraktV8,
@@ -23,15 +26,13 @@ export const erGyldigNåværendeSamboer = (
     if (harSamboerNå.verdi['nb'] === 'NEI') {
         return true;
     }
-    if (
+
+    return !!(
         harSamboerNå.verdi['nb'] === 'JA' &&
         nåværendeSamboer &&
         nåværendeSamboer.verdi &&
         erGyldigIKontraktNåværendeSamboer(nåværendeSamboer.verdi['nb'])
-    ) {
-        return true;
-    }
-    return false;
+    );
 };
 
 export const erTidligereSamboer = (
@@ -74,6 +75,64 @@ export const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontrakt
     erGyldigTidligereSamboere(input) &&
     erGyldigNåværendeSamboer(input?.spørsmål?.harSamboerNå, input.nåværendeSamboer);
 
+export const erGyldigISøknadKontraktOmsorgsperson = (
+    input
+): input is IOmsorgspersonIKontraktFormatV8 =>
+    input === null ||
+    (input &&
+        'navn' in input &&
+        'slektsforhold' in input &&
+        'slektsforholdSpesifisering' in input &&
+        'idNummer' in input &&
+        'adresse' in input &&
+        'arbeidUtland' in input &&
+        'arbeidsperioderUtland' in input &&
+        'arbeidNorge' in input &&
+        'arbeidsperioderNorge' in input &&
+        'pensjonUtland' in input &&
+        'pensjonsperioderUtland' in input &&
+        'pensjonNorge' in input &&
+        'pensjonsperioderNorge' in input &&
+        'andreUtbetalinger' in input &&
+        'andreUtbetalingsperioder' in input &&
+        'pågåendeSøknadFraAnnetEøsLand' in input &&
+        'pågåendeSøknadHvilketLand' in input &&
+        'barnetrygdFraEøs' in input &&
+        'eøsBarnetrygdsperioder' in input);
+
+export const erGyldigISøknadKontraktAndreForelder = (
+    input
+): input is IAndreForelderIKontraktFormatV8 =>
+    input === null ||
+    (input &&
+        'kanIkkeGiOpplysninger' in input &&
+        'navn' in input &&
+        'fnr' in input &&
+        'fødselsdato' in input &&
+        'pensjonUtland' in input &&
+        'arbeidUtlandet' in input &&
+        'skriftligAvtaleOmDeltBosted' in input &&
+        'pensjonNorge' in input &&
+        'arbeidNorge' in input &&
+        'andreUtbetalinger' in input &&
+        'barnetrygdFraEøs' in input &&
+        'arbeidsperioderUtland' in input &&
+        'pensjonsperioderUtland' in input &&
+        'arbeidsperioderNorge' in input &&
+        'pensjonsperioderNorge' in input &&
+        'pågåendeSøknadFraAnnetEøsLand' in input &&
+        'pågåendeSøknadHvilketLand' in input &&
+        'eøsBarnetrygdsperioder' in input &&
+        'andreUtbetalingsperioder' in input &&
+        'idNummer' in input &&
+        'utvidet' in input &&
+        erGyldigISøknadKontraktAndreForelderUtvidet(input.utvidet));
+
+export const erGyldigISøknadKontraktAndreForelderUtvidet = (
+    input
+): input is IAndreForelderUtvidetIKontraktFormat =>
+    input && 'søkerHarBoddMedAndreForelder' in input && 'søkerFlyttetFraAndreForelderDato' in input;
+
 export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontraktBarnV8 =>
     input &&
     'harEøsSteg' in input &&
@@ -82,11 +141,13 @@ export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontrakt
     'registrertBostedType' in input &&
     'alder' in input &&
     'utenlandsperioder' in input &&
-    'omsorgsperson' in input && //todo lage typegurads for omsorgsperson og andre forelder
-    'andreForelder' in input &&
     'eøsBarnetrygdsperioder' in input &&
     'idNummer' in input &&
-    'spørsmål' in input;
+    'spørsmål' in input &&
+    'omsorgsperson' in input &&
+    'andreForelder' in input &&
+    erGyldigISøknadKontraktOmsorgsperson(input.omsorgsperson) &&
+    erGyldigISøknadKontraktAndreForelder(input.andreForelder);
 
 export const erGyldigISøknadKontraktBarnListe = (input): input is ISøknadIKontraktBarnV8[] =>
     input &&

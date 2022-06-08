@@ -172,7 +172,7 @@ const mockBarnMedISøknad = {
         },
         navn: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,
-            svar: AlternativtSvarForInput.UKJENT,
+            svar: 'Andre forelder',
         },
         fnr: {
             id: OmBarnetSpørsmålsId.andreForelderFnr,
@@ -366,7 +366,7 @@ describe('OmBarnet', () => {
         expect(jensTittel).toBeInTheDocument();
 
         const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
-        act(() => gåVidere.click());
+        await act(() => gåVidere.click());
 
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/oppsummering');
     });
@@ -402,7 +402,7 @@ describe('OmBarnet', () => {
 
         expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
         expect(andreForelderFnrLabel).toBeInTheDocument();
-        act(() => ikkeOppgiOpplysninger.click());
+        await act(() => ikkeOppgiOpplysninger.click());
         expect(andreForelderFnrLabel).not.toBeInTheDocument();
         expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
     });
@@ -443,7 +443,7 @@ describe('OmBarnet', () => {
         expect(queryByText(/ombarnet.søker-for-periode.spm/)).not.toBeInTheDocument();
 
         const jaKnapp = await findByLabelText('felles.svaralternativ.ja');
-        act(() => jaKnapp.click());
+        await act(() => jaKnapp.click());
 
         expect(await findByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
     });
