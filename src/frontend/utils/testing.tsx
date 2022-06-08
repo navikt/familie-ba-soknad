@@ -299,14 +299,17 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     ident: '1234',
                     navn: 'Datter Dattersdottir',
                     adressebeskyttelse: false,
-                    alder: undefined,
+                    alder: null,
                     borMedSøker: true,
                 }),
                 andreForelder: {
-                    kanIkkeGiOpplysninger: false,
+                    kanIkkeGiOpplysninger: {
+                        id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+                        svar: ESvar.NEI,
+                    },
                     adresse: {
                         id: EøsBarnSpørsmålId.andreForelderAdresse,
-                        svar: AlternativtSvarForInput.UKJENT,
+                        svar: 'Heisannveien 15',
                     },
                     andreUtbetalingsperioder: [],
                     arbeidsperioderNorge: [],
@@ -314,9 +317,14 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     arbeidsperioderUtland: [],
                     pensjonsperioderNorge: [],
                     idNummer: [],
+                    eøsBarnetrygdsperioder: [],
+                    [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: {
+                        id: EøsBarnSpørsmålId.andreForelderBarnetrygd,
+                        svar: ESvar.JA,
+                    },
                     [andreForelderDataKeySpørsmål.navn]: {
                         id: OmBarnetSpørsmålsId.andreForelderNavn,
-                        svar: AlternativtSvarForInput.UKJENT,
+                        svar: 'Andre forelder navn',
                     },
                     [andreForelderDataKeySpørsmål.fnr]: {
                         id: OmBarnetSpørsmålsId.andreForelderFnr,
@@ -349,6 +357,14 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
                         id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
                         svar: ESvar.NEI,
+                    },
+                    [andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
+                        id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand,
+                        svar: ESvar.NEI,
+                    },
+                    [andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
+                        id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand,
+                        svar: '',
                     },
                     utvidet: {
                         [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: {
@@ -484,6 +500,44 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                     adresse: {
                         id: EøsBarnSpørsmålId.omsorgspersonAdresse,
                         svar: 'Osloveien 123',
+                    },
+                    arbeidsperioderUtland: [],
+                    arbeidUtland: {
+                        id: EøsBarnSpørsmålId.omsorgspersonArbeidUtland,
+                        svar: ESvar.NEI,
+                    },
+                    arbeidsperioderNorge: [],
+                    arbeidNorge: {
+                        id: EøsBarnSpørsmålId.omsorgspersonArbeidNorge,
+                        svar: ESvar.NEI,
+                    },
+                    pensjonsperioderUtland: [],
+                    pensjonUtland: {
+                        id: EøsBarnSpørsmålId.omsorgspersonPensjonUtland,
+                        svar: ESvar.NEI,
+                    },
+                    pensjonsperioderNorge: [],
+                    pensjonNorge: {
+                        id: EøsBarnSpørsmålId.omsorgspersonPensjonNorge,
+                        svar: ESvar.NEI,
+                    },
+                    andreUtbetalingsperioder: [],
+                    andreUtbetalinger: {
+                        id: EøsBarnSpørsmålId.omsorgspersonAndreUtbetalinger,
+                        svar: ESvar.NEI,
+                    },
+                    pågåendeSøknadFraAnnetEøsLand: {
+                        id: EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadFraAnnetEøsLand,
+                        svar: ESvar.NEI,
+                    },
+                    pågåendeSøknadHvilketLand: {
+                        id: EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand,
+                        svar: '',
+                    },
+                    eøsBarnetrygdsperioder: [],
+                    barnetrygdFraEøs: {
+                        id: EøsBarnSpørsmålId.omsorgspersonBarnetrygd,
+                        svar: ESvar.NEI,
                     },
                 },
             }),

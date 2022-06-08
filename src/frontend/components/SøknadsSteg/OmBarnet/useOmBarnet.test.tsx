@@ -9,9 +9,8 @@ import {
     barnDataKeySpørsmål,
     IBarnMedISøknad,
 } from '../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../typer/common';
 import { IBarn } from '../../../typer/person';
-import { genererInitiellAndreForelder, genererInitialBarnMedISøknad } from '../../../utils/barn';
+import { genererInitialBarnMedISøknad, genererInitiellAndreForelder } from '../../../utils/barn';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -24,7 +23,7 @@ describe('useOmBarnet', () => {
         navn: 'Barn Barnessen',
         ident: '1234',
         borMedSøker: true,
-        alder: undefined,
+        alder: null,
         adressebeskyttelse: false,
     };
 
@@ -120,9 +119,9 @@ describe('useOmBarnet', () => {
             ...genererInitialBarnMedISøknad(barnFraPdl),
             andreForelder: {
                 ...genererInitiellAndreForelder(null, false),
-                [andreForelderDataKeySpørsmål.navn]: {
-                    svar: AlternativtSvarForInput.UKJENT,
-                    id: OmBarnetSpørsmålsId.andreForelderNavn,
+                [andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger]: {
+                    svar: ESvar.JA,
+                    id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
                 },
             },
             [barnDataKeySpørsmål.erFosterbarn]: {
@@ -143,15 +142,19 @@ describe('useOmBarnet', () => {
         const {
             current: {
                 skjema: {
-                    felter: { andreForelderNavn, andreForelderNavnUkjent, andreForelderFnr },
+                    felter: {
+                        andreForelderNavn,
+                        andreForelderKanIkkeGiOpplysninger,
+                        andreForelderFnr,
+                    },
                 },
             },
         } = result;
 
         expect(andreForelderNavn.verdi).toEqual('');
         expect(andreForelderNavn.erSynlig).toEqual(true);
-        expect(andreForelderNavnUkjent.erSynlig).toEqual(true);
-        expect(andreForelderNavnUkjent.verdi).toEqual(ESvar.JA);
+        expect(andreForelderKanIkkeGiOpplysninger.erSynlig).toEqual(true);
+        expect(andreForelderKanIkkeGiOpplysninger.verdi).toEqual(ESvar.JA);
         expect(andreForelderFnr.erSynlig).toEqual(false);
 
         await act(async () => {

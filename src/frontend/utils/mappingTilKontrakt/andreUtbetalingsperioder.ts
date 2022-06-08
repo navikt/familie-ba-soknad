@@ -1,13 +1,11 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import {
-    hentUtbetalingsperiodeSpørsmålIder,
-    UtbetalingerSpørsmålId,
-} from '../../components/Felleskomponenter/UtbetalingerModal/spørsmål';
-import { IBarnMedISøknad } from '../../typer/barn';
+import { utbetalingsperiodeModalSpørsmålSpråkIder } from '../../components/Felleskomponenter/UtbetalingerModal/språkUtils';
+import { UtbetalingerSpørsmålId } from '../../components/Felleskomponenter/UtbetalingerModal/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IUtbetalingsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { IUtbetalingsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IUtbetalingsperiode } from '../../typer/perioder';
+import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import {
     sammeVerdiAlleSpråk,
@@ -15,38 +13,43 @@ import {
     verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 
+interface UtbetalingsperiodeIKontraktFormatParams {
+    periode: IUtbetalingsperiode;
+    periodeNummer: number;
+}
+
 export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
     periode,
     periodeNummer,
-    gjelderAndreForelder,
-    erAndreForelderDød,
+    personType,
+    erDød,
     barn,
-}: {
-    periode: IUtbetalingsperiode;
-    periodeNummer: number;
-    gjelderAndreForelder: boolean;
-    erAndreForelderDød: boolean;
-    barn?: IBarnMedISøknad;
-}): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV7> => {
+}: UtbetalingsperiodeIKontraktFormatParams &
+    PeriodePersonTypeMedBarnProps): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV8> => {
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } = periode;
-    const periodenErAvsluttet = fårUtbetalingNå?.svar === ESvar.NEI || erAndreForelderDød;
+    const periodenErAvsluttet =
+        fårUtbetalingNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);
 
-    const hentSpørsmålstekster = (utbetalingsSpørsmålId: string) =>
-        hentTekster(
-            hentUtbetalingsperiodeSpørsmålIder(gjelderAndreForelder, periodenErAvsluttet)[
-                utbetalingsSpørsmålId
-            ],
-            { ...(barn && { barn: barn.navn }) }
-        );
+    const hentUtbetalingsperiodeSpråkId = utbetalingsperiodeModalSpørsmålSpråkIder(
+        personType,
+        periodenErAvsluttet
+    );
+
+    const hentSpørsmålstekster = (utbetalingsSpørsmålId: UtbetalingerSpørsmålId) =>
+        hentTekster(hentUtbetalingsperiodeSpråkId(utbetalingsSpørsmålId), {
+            ...(barn && { barn: barn.navn }),
+        });
     return {
         label: hentTekster('felles.flereytelser.periode', {
             x: periodeNummer,
         }),
         verdi: sammeVerdiAlleSpråk({
-            fårUtbetalingNå: {
-                label: hentSpørsmålstekster(UtbetalingerSpørsmålId.fårUtbetalingNå),
-                verdi: sammeVerdiAlleSpråk(fårUtbetalingNå?.svar),
-            },
+            fårUtbetalingNå: fårUtbetalingNå.svar
+                ? {
+                      label: hentSpørsmålstekster(UtbetalingerSpørsmålId.fårUtbetalingNå),
+                      verdi: sammeVerdiAlleSpråk(fårUtbetalingNå.svar),
+                  }
+                : null,
             utbetalingLand: {
                 label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingLand),
                 verdi: verdiCallbackAlleSpråk(
@@ -61,9 +64,7 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
                 label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingTilDato),
                 verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                     utbetalingTilDato.svar,
-                    hentUtbetalingsperiodeSpørsmålIder(gjelderAndreForelder, periodenErAvsluttet)[
-                        UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
-                    ]
+                    hentUtbetalingsperiodeSpråkId(UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke)
                 ),
             },
         }),

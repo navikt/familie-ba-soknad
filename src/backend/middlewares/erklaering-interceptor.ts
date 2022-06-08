@@ -6,7 +6,7 @@ import { byggFeiletRessurs } from '@navikt/familie-typer';
 import engelsk from '../../frontend/assets/lang/en.json' assert { type: 'json' };
 import bokmål from '../../frontend/assets/lang/nb.json' assert { type: 'json' };
 import nynorsk from '../../frontend/assets/lang/nn.json' assert { type: 'json' };
-import { ISøknadKontraktV7 } from '../../frontend/typer/kontrakt/v7';
+import { ISøknadKontraktV8 } from '../../frontend/typer/kontrakt/v8';
 
 export const hentSpråkteksterAlleSpråk = (språknøkkel: string): Record<LocaleType, string> => {
     return {
@@ -21,7 +21,7 @@ export const erklaeringInterceptor: RequestHandler = (
     response: Response,
     next
 ) => {
-    const søknad: ISøknadKontraktV7 = request.body;
+    const søknad: ISøknadKontraktV8 = request.body;
     const spmKey = 'lestOgForståttBekreftelse';
     const aksepterteSvarSpråkNøkkel = 'forside.bekreftelsesboks.erklæring.spm';
     const aksepterteSvar = Object.values(hentSpråkteksterAlleSpråk(aksepterteSvarSpråkNøkkel));

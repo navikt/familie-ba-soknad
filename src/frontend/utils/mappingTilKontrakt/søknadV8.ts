@@ -8,8 +8,9 @@ import {
 import { OmBarnaDineSpørsmålId } from '../../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { ESivilstand } from '../../typer/kontrakt/generelle';
-import { ISøknadKontraktV7 } from '../../typer/kontrakt/v7';
+import { ISøknadKontraktV8 } from '../../typer/kontrakt/v8';
 import { ISøker } from '../../typer/person';
+import { PersonType } from '../../typer/personType';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
@@ -22,7 +23,7 @@ import {
 import { jaNeiSvarTilSpråkId } from '../spørsmål';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
-import { barnISøknadsFormatV7 } from './barnV7';
+import { barnISøknadsFormatV8 } from './barnV8';
 import { dokumentasjonISøknadFormat } from './dokumentasjon';
 import {
     sammeVerdiAlleSpråk,
@@ -48,10 +49,10 @@ const antallEøsSteg = (søker: ISøker, barnInkludertISøknaden: IBarnMedISøkn
     }
 };
 
-export const dataISøknadKontraktFormatV7 = (
+export const dataISøknadKontraktFormatV8 = (
     valgtSpråk: LocaleType,
     søknad: ISøknad
-): ISøknadKontraktV7 => {
+): ISøknadKontraktV8 => {
     const { søker } = søknad;
     // Raskeste måte å få tak i alle spørsmål minus de andre feltene på søker
     /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -84,7 +85,7 @@ export const dataISøknadKontraktFormatV7 = (
 
     return {
         søknadstype: søknad.søknadstype,
-        kontraktVersjon: 7,
+        kontraktVersjon: 8,
         antallEøsSteg: antallEøsSteg(søker, barnInkludertISøknaden),
         søker: {
             harEøsSteg:
@@ -101,7 +102,8 @@ export const dataISøknadKontraktFormatV7 = (
                     statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, locale))
                 )
             ),
-            adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse ?? {})),
+            adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse)),
+            adressebeskyttelse: søker.adressebeskyttelse,
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt(periode, index + 1)
             ),
@@ -126,8 +128,7 @@ export const dataISøknadKontraktFormatV7 = (
                     periode,
                     periodeNummer: index + 1,
                     gjelderUtlandet: true,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
             arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -135,38 +136,34 @@ export const dataISøknadKontraktFormatV7 = (
                     periode,
                     periodeNummer: index + 1,
                     gjelderUtlandet: false,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
             pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
                     gjelderUtlandet: true,
+                    personType: PersonType.Søker,
                 })
             ),
             pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
                     gjelderUtlandet: false,
+                    personType: PersonType.Søker,
                 })
             ),
             andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
                 tilIAndreUtbetalingsperioderIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
         },
-        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormatV7(barn, søker, valgtSpråk)),
+        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormatV8(barn, søker, valgtSpråk)),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfelt(
                 språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),
@@ -217,6 +214,8 @@ export const dataISøknadKontraktFormatV7 = (
             'ombarnet.opplystatbarnutlandopphold.info',
             'ombarnet.barnetrygd-eøs',
             'omdeg.annensamboer.spm',
+            'omdeg.personopplysninger.adressesperre.alert',
+            'omdeg.personopplysninger.ikke-registrert.alert',
             'pdf.andreforelder.seksjonstittel',
             'pdf.hvilkebarn.seksjonstittel',
             'pdf.hvilkebarn.registrert-på-adresse',

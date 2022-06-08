@@ -28,7 +28,7 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 
 const Dokumentasjon: React.FC = () => {
     const { søknad, settSøknad, innsendingStatus } = useApp();
-    const { sendInnSkjemaV7 } = useSendInnSkjema();
+    const { sendInnSkjemaV8 } = useSendInnSkjema();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
     const oppdaterDokumentasjon = (
@@ -69,7 +69,7 @@ const Dokumentasjon: React.FC = () => {
         <Steg
             tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
             gåVidereCallback={async () => {
-                const [success, _] = await sendInnSkjemaV7();
+                const [success, _] = await sendInnSkjemaV8();
                 return success;
             }}
         >

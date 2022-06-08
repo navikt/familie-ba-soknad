@@ -143,20 +143,36 @@ const mockBarnMedISøknad = {
         svar: ESvar.NEI,
     },
     andreForelder: {
-        kanIkkeGiOpplysninger: false,
+        kanIkkeGiOpplysninger: {
+            id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+            svar: ESvar.NEI,
+        },
         idNummer: [],
         arbeidsperioderNorge: [],
         andreUtbetalingsperioder: [],
         arbeidsperioderUtland: [],
         pensjonsperioderNorge: [],
         pensjonsperioderUtland: [],
+        eøsBarnetrygdsperioder: [],
+        barnetrygdFraEøs: {
+            id: EøsBarnSpørsmålId.andreForelderBarnetrygd,
+            svar: ESvar.NEI,
+        },
+        pågåendeSøknadFraAnnetEøsLand: {
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand,
+            svar: ESvar.NEI,
+        },
+        pågåendeSøknadHvilketLand: {
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand,
+            svar: '' as Alpha3Code,
+        },
         adresse: {
             id: EøsBarnSpørsmålId.andreForelderAdresse,
             svar: AlternativtSvarForInput.UKJENT,
         },
         navn: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,
-            svar: AlternativtSvarForInput.UKJENT,
+            svar: 'Andre forelder',
         },
         fnr: {
             id: OmBarnetSpørsmålsId.andreForelderFnr,
@@ -221,6 +237,44 @@ const mockBarnMedISøknad = {
         adresse: {
             id: EøsBarnSpørsmålId.omsorgspersonAdresse,
             svar: 'Oslogata 1',
+        },
+        arbeidsperioderNorge: [],
+        andreUtbetalingsperioder: [],
+        arbeidsperioderUtland: [],
+        pensjonsperioderNorge: [],
+        pensjonsperioderUtland: [],
+        eøsBarnetrygdsperioder: [],
+        barnetrygdFraEøs: {
+            id: EøsBarnSpørsmålId.omsorgspersonBarnetrygd,
+            svar: ESvar.NEI,
+        },
+        pågåendeSøknadFraAnnetEøsLand: {
+            id: EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadFraAnnetEøsLand,
+            svar: ESvar.NEI,
+        },
+        pågåendeSøknadHvilketLand: {
+            id: EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand,
+            svar: '' as Alpha3Code,
+        },
+        arbeidUtland: {
+            id: EøsBarnSpørsmålId.omsorgspersonArbeidUtland,
+            svar: ESvar.NEI,
+        },
+        arbeidNorge: {
+            id: EøsBarnSpørsmålId.omsorgspersonArbeidNorge,
+            svar: ESvar.JA,
+        },
+        pensjonNorge: {
+            id: EøsBarnSpørsmålId.omsorgspersonPensjonNorge,
+            svar: ESvar.JA,
+        },
+        andreUtbetalinger: {
+            id: EøsBarnSpørsmålId.omsorgspersonAndreUtbetalinger,
+            svar: ESvar.NEI,
+        },
+        pensjonUtland: {
+            id: EøsBarnSpørsmålId.omsorgspersonPensjonUtland,
+            svar: ESvar.VET_IKKE,
         },
     },
     adresse: {
@@ -312,7 +366,7 @@ describe('OmBarnet', () => {
         expect(jensTittel).toBeInTheDocument();
 
         const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
-        act(() => gåVidere.click());
+        await act(() => gåVidere.click());
 
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/oppsummering');
     });
@@ -348,7 +402,7 @@ describe('OmBarnet', () => {
 
         expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
         expect(andreForelderFnrLabel).toBeInTheDocument();
-        act(() => ikkeOppgiOpplysninger.click());
+        await act(() => ikkeOppgiOpplysninger.click());
         expect(andreForelderFnrLabel).not.toBeInTheDocument();
         expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
     });
@@ -389,7 +443,7 @@ describe('OmBarnet', () => {
         expect(queryByText(/ombarnet.søker-for-periode.spm/)).not.toBeInTheDocument();
 
         const jaKnapp = await findByLabelText('felles.svaralternativ.ja');
-        act(() => jaKnapp.click());
+        await act(() => jaKnapp.click());
 
         expect(await findByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
     });

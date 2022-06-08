@@ -7,6 +7,7 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
@@ -233,9 +234,11 @@ const Oppfølgningsspørsmål: React.FC<{
                         <Barnetrygdperiode
                             skjema={skjema}
                             registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
+                            tilhørendeJaNeiSpmFelt={skjema.felter.mottarEllerMottokEøsBarnetrygd}
                             leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
                             fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
                             barn={barn}
+                            personType={PersonType.Søker}
                         />
                     </KomponentGruppe>
                 </SkjemaFieldset>

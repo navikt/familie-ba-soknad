@@ -4,7 +4,7 @@ export const testdata5: TilKontraktTestData = {
     input: {
         søknadstype: 'UTVIDET',
         erEøs: true,
-        kontraktVersjon: '7',
+        kontraktVersjon: '8',
         antallEøsSteg: 2,
         barnInkludertISøknaden: [
             {
@@ -24,6 +24,10 @@ export const testdata5: TilKontraktTestData = {
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        id: 'andre-forelder-kan-ikke-gi-opplysninger',
+                        svar: 'NEI',
+                    },
                     navn: {
                         id: 'andre-forelder-navn',
                         svar: 'aehjsrtjsrtjhfshfbfgb',
@@ -74,6 +78,19 @@ export const testdata5: TilKontraktTestData = {
                             svar: '2022-01-01',
                         },
                     },
+                    pågåendeSøknadFraAnnetEøsLand: {
+                        id: 'andre-forelder-pågående-søknad',
+                        svar: 'JA',
+                    },
+                    pågåendeSøknadHvilketLand: {
+                        id: 'andre-forelder-pågående-søknad-land',
+                        svar: 'BEL',
+                    },
+                    barnetrygdFraEøs: {
+                        id: 'andre-forelder-barnetrygd',
+                        svar: 'NEI',
+                    },
+                    eøsBarnetrygdsperioder: [],
                     arbeidsperioderUtland: [],
                     pensjonsperioderUtland: [],
                     arbeidsperioderNorge: [],
@@ -195,6 +212,10 @@ export const testdata5: TilKontraktTestData = {
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        id: 'andre-forelder-kan-ikke-gi-opplysninger',
+                        svar: 'NEI',
+                    },
                     navn: {
                         id: 'andre-forelder-navn',
                         svar: 'gdjhrstjsrthrfgfdgfdgdf',
@@ -245,6 +266,19 @@ export const testdata5: TilKontraktTestData = {
                             svar: '2022-01-11',
                         },
                     },
+                    pågåendeSøknadFraAnnetEøsLand: {
+                        id: 'andre-forelder-pågående-søknad',
+                        svar: 'JA',
+                    },
+                    pågåendeSøknadHvilketLand: {
+                        id: 'andre-forelder-pågående-søknad-land',
+                        svar: 'BEL',
+                    },
+                    barnetrygdFraEøs: {
+                        id: 'andre-forelder-barnetrygd',
+                        svar: 'NEI',
+                    },
+                    eøsBarnetrygdsperioder: [],
                     arbeidsperioderUtland: [],
                     pensjonsperioderUtland: [],
                     arbeidsperioderNorge: [],
@@ -588,7 +622,7 @@ export const testdata5: TilKontraktTestData = {
     },
     output: {
         søknadstype: 'UTVIDET',
-        kontraktVersjon: 7,
+        kontraktVersjon: 8,
         antallEøsSteg: 2,
         søker: {
             harEøsSteg: true,
@@ -648,6 +682,7 @@ export const testdata5: TilKontraktTestData = {
                     },
                 },
             },
+            adressebeskyttelse: false,
             utenlandsperioder: [],
             idNummer: [],
             spørsmål: {
@@ -679,7 +714,7 @@ export const testdata5: TilKontraktTestData = {
                     label: {
                         en: "Do you or have you worked outside of Norway, on a foreign ship or on another country's continental shelf?",
                         nb: 'Arbeider eller har du arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                        nn: 'Arbeidar eller har du arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                        nn: 'Arbeider eller har du arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                     },
                     verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                 },
@@ -923,6 +958,14 @@ export const testdata5: TilKontraktTestData = {
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        label: {
+                            en: 'I am unable to provide information about the other parent',
+                            nb: 'Jeg kan ikke gi opplysninger om den andre forelderen',
+                            nn: 'Eg kan ikkje gje opplysningar om den andre forelderen',
+                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                    },
                     navn: {
                         label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                         verdi: {
@@ -963,7 +1006,7 @@ export const testdata5: TilKontraktTestData = {
                         label: {
                             en: "Does Barn 234567 89876's other parent work, or have they worked outside of Norway, on a foreign ship or on a foreign continental shelf?",
                             nb: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                            nn: 'Arbeidar eller har den andre forelderen til Barn 234567 89876 arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                            nn: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                         },
                         verdi: { nb: 'VET_IKKE', nn: 'VET_IKKE', en: 'VET_IKKE' },
                     },
@@ -979,7 +1022,7 @@ export const testdata5: TilKontraktTestData = {
                         label: {
                             en: "Does Barn 234567 89876's other parent work, or have they worked in Norway, on the Norwegian continental shelf or on a ship flying the Norwegian flag?",
                             nb: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidet i Norge, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
-                            nn: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeida i Noreg, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
+                            nn: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidt i Noreg, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
@@ -988,6 +1031,30 @@ export const testdata5: TilKontraktTestData = {
                             en: "Does Barn 234567 89876's other parent receive, or have they received benefits that replace income from Norway and/or another EEA member state?",
                             nb: 'Får eller har Barn 234567 89876 sin andre forelder fått utbetalinger som erstatter arbeidsinntekt fra Norge og/eller andre EØS-land?',
                             nn: 'Får eller har Barn 234567 89876 sin andre forelder fått utbetalingar som erstattar arbeidsinntekt frå Noreg og/eller andre EØS-land?',
+                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                    },
+                    pågåendeSøknadFraAnnetEøsLand: {
+                        label: {
+                            en: "Does Barn 234567 89876's other parent have an active application for child benefit from another EEA country?",
+                            nb: 'Har Barn 234567 89876 sin andre forelder en pågående søknad om barnetrygd fra et annet EU/EØS land?',
+                            nn: 'Har Barn 234567 89876 sin andre forelder ein pågåande søknad om barnetrygd frå eit anna EU/EØS-land?',
+                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                    },
+                    pågåendeSøknadHvilketLand: {
+                        label: {
+                            en: "What country has Barn 234567 89876's other parent applied for child benefit from?",
+                            nb: 'Hvilket land har Barn 234567 89876 sin andre forelder søkt om barnetrygd fra?',
+                            nn: 'Kva land har Barn 234567 89876 sin andre forelder søkt om barnetrygd frå?',
+                        },
+                        verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                    },
+                    barnetrygdFraEøs: {
+                        label: {
+                            en: "Is Barn 234567 89876's other parent receiving or have they received child benefit from another EEA country?",
+                            nb: 'Får eller har Barn 234567 89876 sin andre forelder fått barnetrygd fra et annet EU/EØS land?',
+                            nn: 'Får eller har Barn 234567 89876 sin andre forelder fått barnetrygd frå eit anna EU/EØS-land?',
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
@@ -1034,6 +1101,7 @@ export const testdata5: TilKontraktTestData = {
                     arbeidsperioderNorge: [],
                     pensjonsperioderNorge: [],
                     andreUtbetalingsperioder: [],
+                    eøsBarnetrygdsperioder: [],
                     idNummer: [],
                 },
                 omsorgsperson: null,
@@ -1298,6 +1366,14 @@ export const testdata5: TilKontraktTestData = {
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        label: {
+                            en: 'I am unable to provide information about the other parent',
+                            nb: 'Jeg kan ikke gi opplysninger om den andre forelderen',
+                            nn: 'Eg kan ikkje gje opplysningar om den andre forelderen',
+                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                    },
                     navn: {
                         label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                         verdi: {
@@ -1334,7 +1410,7 @@ export const testdata5: TilKontraktTestData = {
                         label: {
                             en: "Does Barn Barnessen III's other parent work, or have they worked outside of Norway, on a foreign ship or on a foreign continental shelf?",
                             nb: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                            nn: 'Arbeidar eller har den andre forelderen til Barn Barnessen III arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                            nn: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                         },
                         verdi: { nb: 'VET_IKKE', nn: 'VET_IKKE', en: 'VET_IKKE' },
                     },
@@ -1350,7 +1426,7 @@ export const testdata5: TilKontraktTestData = {
                         label: {
                             en: "Does Barn Barnessen III's other parent work, or have they worked in Norway, on the Norwegian continental shelf or on a ship flying the Norwegian flag?",
                             nb: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeidet i Norge, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
-                            nn: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeida i Noreg, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
+                            nn: 'Arbeider eller har den andre forelderen til Barn Barnessen III arbeidt i Noreg, på norsk kontinentalsokkel eller på skip som fører norsk flagg?',
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
@@ -1359,6 +1435,30 @@ export const testdata5: TilKontraktTestData = {
                             en: "Does Barn Barnessen III's other parent receive, or have they received benefits that replace income from Norway and/or another EEA member state?",
                             nb: 'Får eller har Barn Barnessen III sin andre forelder fått utbetalinger som erstatter arbeidsinntekt fra Norge og/eller andre EØS-land?',
                             nn: 'Får eller har Barn Barnessen III sin andre forelder fått utbetalingar som erstattar arbeidsinntekt frå Noreg og/eller andre EØS-land?',
+                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                    },
+                    pågåendeSøknadFraAnnetEøsLand: {
+                        label: {
+                            en: "Does Barn Barnessen III's other parent have an active application for child benefit from another EEA country?",
+                            nb: 'Har Barn Barnessen III sin andre forelder en pågående søknad om barnetrygd fra et annet EU/EØS land?',
+                            nn: 'Har Barn Barnessen III sin andre forelder ein pågåande søknad om barnetrygd frå eit anna EU/EØS-land?',
+                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                    },
+                    pågåendeSøknadHvilketLand: {
+                        label: {
+                            en: "What country has Barn Barnessen III's other parent applied for child benefit from?",
+                            nb: 'Hvilket land har Barn Barnessen III sin andre forelder søkt om barnetrygd fra?',
+                            nn: 'Kva land har Barn Barnessen III sin andre forelder søkt om barnetrygd frå?',
+                        },
+                        verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                    },
+                    barnetrygdFraEøs: {
+                        label: {
+                            en: "Is Barn Barnessen III's other parent receiving or have they received child benefit from another EEA country?",
+                            nb: 'Får eller har Barn Barnessen III sin andre forelder fått barnetrygd fra et annet EU/EØS land?',
+                            nn: 'Får eller har Barn Barnessen III sin andre forelder fått barnetrygd frå eit anna EU/EØS-land?',
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
@@ -1405,6 +1505,7 @@ export const testdata5: TilKontraktTestData = {
                     arbeidsperioderNorge: [],
                     pensjonsperioderNorge: [],
                     andreUtbetalingsperioder: [],
+                    eøsBarnetrygdsperioder: [],
                     idNummer: [],
                 },
                 omsorgsperson: null,
@@ -1674,6 +1775,16 @@ export const testdata5: TilKontraktTestData = {
                 en: 'Have you had a cohabiting partner earlier during the period for which you are applying for child benefit?',
                 nb: 'Har du hatt samboer tidligere i perioden du søker barnetrygd for?',
                 nn: 'Har du hatt sambuar tidlegare i perioden du søker barnetrygd for?',
+            },
+            'omdeg.personopplysninger.adressesperre.alert': {
+                en: 'You are registered with a blocked address',
+                nb: 'Du er registrert med adressesperre',
+                nn: 'Du er registrert med adressesperre',
+            },
+            'omdeg.personopplysninger.ikke-registrert.alert': {
+                en: 'You are not registered with a residential address in Norway',
+                nb: 'Du er ikke registrert med bostedsadresse i Norge',
+                nn: 'Du er ikkje registrert med bustadsadresse i Noreg',
             },
             'pdf.andreforelder.seksjonstittel': {
                 en: "Child's other parent",

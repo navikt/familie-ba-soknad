@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
@@ -17,6 +17,7 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
     avhengighet,
     nullstillVedAvhengighetEndring = true,
     skalFeltetVises = true,
+    feilmeldingSpråkVerdier,
 }: {
     søknadsfelt?: ISøknadSpørsmål<Alpha3Code | ''>;
     feilmeldingSpråkId: string;
@@ -24,6 +25,7 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
     avhengighet: Felt<ESvar | null>;
     nullstillVedAvhengighetEndring?: boolean;
     skalFeltetVises?: boolean;
+    feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) => {
     const skalViseFelt = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
 
@@ -41,7 +43,10 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
         valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>) => {
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
+                : feil(
+                      felt,
+                      <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
+                  );
         },
         nullstillVedAvhengighetEndring,
         avhengigheter: { jaNeiSpm: avhengighet },
