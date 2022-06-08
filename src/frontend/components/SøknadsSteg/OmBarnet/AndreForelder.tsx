@@ -67,7 +67,8 @@ const AndreForelder: React.FC<{
                                         ]
                                     }
                                     disabled={
-                                        skjema.felter.andreForelderNavnUkjent.verdi === ESvar.JA
+                                        skjema.felter.andreForelderKanIkkeGiOpplysninger.verdi ===
+                                        ESvar.JA
                                     }
                                 />
                                 <SkjemaCheckbox
@@ -76,7 +77,7 @@ const AndreForelder: React.FC<{
                                             OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger
                                         ]
                                     }
-                                    felt={skjema.felter.andreForelderNavnUkjent}
+                                    felt={skjema.felter.andreForelderKanIkkeGiOpplysninger}
                                 />
                             </div>
                             {skjema.felter.andreForelderFnr.erSynlig && (

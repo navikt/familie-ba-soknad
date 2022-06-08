@@ -62,30 +62,38 @@ export const andreForelderTilISøknadsfeltV8 = (
             sammeVerdiAlleSpråk(kanIkkeGiOpplysninger.svar),
             barn
         ),
-        navn: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
-            sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                navn.svar,
-                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger]
-            ),
-            barn
-        ),
-        fnr: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
-            sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                fnr.svar,
-                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
-            ),
-            barn
-        ),
-        fødselsdato: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
-            sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                fødselsdato.svar,
-                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]
-            ),
-            barn
-        ),
+        navn: navn.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
+                  sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                      navn.svar,
+                      omBarnetSpørsmålSpråkId[
+                          OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger
+                      ]
+                  ),
+                  barn
+              )
+            : null,
+        fnr: fnr.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
+                  sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                      fnr.svar,
+                      omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
+                  ),
+                  barn
+              )
+            : null,
+        fødselsdato: fødselsdato.svar
+            ? søknadsfeltBarn(
+                  språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
+                  sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                      fødselsdato.svar,
+                      omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]
+                  ),
+                  barn
+              )
+            : null,
         pensjonUtland: pensjonUtland.svar
             ? søknadsfeltBarn(
                   språktekstIdFraSpørsmålId(pensjonUtland.id),
