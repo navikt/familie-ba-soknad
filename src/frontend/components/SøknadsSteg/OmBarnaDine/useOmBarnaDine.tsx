@@ -11,10 +11,10 @@ import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { IOmBarnaDineFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
-import { genererOppdaterteBarn } from '../../../utils/barn';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { OmBarnaDineSpørsmålId } from './spørsmål';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
+import { genererOppdaterteBarn } from './utils';
 
 export const useOmBarnaDine = (): {
     skjema: ISkjema<IOmBarnaDineFeltTyper, string>;
