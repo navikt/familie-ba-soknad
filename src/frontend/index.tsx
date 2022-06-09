@@ -18,6 +18,7 @@ import * as nynorsk from './assets/lang/nn.json' assert { type: 'json' };
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import { logError } from './utils/amplitude';
 import { initSentry } from './utils/sentry';
+import '@navikt/ds-css';
 
 const polyfillLocaledata = async () => {
     // https://github.com/formatjs/formatjs/issues/3066
