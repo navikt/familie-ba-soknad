@@ -38,6 +38,7 @@ const FilopplastningBoks = styled.button`
     padding: 1rem;
     margin: 2rem 0 1rem 0;
     color: ${navFarger.navBla};
+    box-sizing: border-box;
 
     :focus,
     :hover {

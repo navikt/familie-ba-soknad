@@ -18,6 +18,7 @@ const StyledIngress = styled(Ingress)`
 const StyledKnapp = styled(Knapp)`
     margin-top: 1rem;
     width: 100%;
+    box-sizing: border-box;
 `;
 
 export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTilBarn }) => {
