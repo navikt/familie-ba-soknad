@@ -27,7 +27,8 @@ const StyledModal = styled(Modal)`
 const StyledKnappIModal = styled(Knapp)`
     margin-top: 4rem;
     white-space: normal;
-    max-width: 70%;
+    max-width: 100%;
+    box-sizing: border-box;
 `;
 const StyledInnholdstittel = styled(Innholdstittel)`
     text-align: center;
