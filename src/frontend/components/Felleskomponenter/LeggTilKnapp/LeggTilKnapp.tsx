@@ -20,6 +20,8 @@ interface Props {
 const StyledFlatKnapp = styled(Flatknapp)<{ feilmelding }>`
     margin: 0.5rem 0 0.5rem 0;
     && {
+        white-space: normal;
+        text-align: left;
         border: ${props => (props.feilmelding ? `2px solid ${navFarger.redError}` : 'none')};
     }
 `;
