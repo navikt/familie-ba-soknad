@@ -66,11 +66,11 @@ export const barnISøknadsFormatV8 = (
          * 3. Bor med søker "registrert på søkers adresse"
          * 4. Bor ikke med søker "registrert på annen adresse"
          */
-        if (barn.adressebeskyttelse) {
+        if (adressebeskyttelse) {
             return ERegistrertBostedType.ADRESSESPERRE;
         }
 
-        switch (barn.borMedSøker) {
+        switch (borMedSøker) {
             case undefined:
                 return ERegistrertBostedType.IKKE_FYLT_INN;
             case true:
@@ -101,7 +101,7 @@ export const barnISøknadsFormatV8 = (
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt(periode, index + 1, barn)
         ),
-        eøsBarnetrygdsperioder: barn.eøsBarnetrygdsperioder.map((periode, index) =>
+        eøsBarnetrygdsperioder: eøsBarnetrygdsperioder.map((periode, index) =>
             tilIEøsBarnetrygsperiodeIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
@@ -115,7 +115,7 @@ export const barnISøknadsFormatV8 = (
                 eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer],
                 eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent],
                 valgtSpråk,
-                barn.navn
+                navn
             )
         ),
         andreForelder: andreForelder
@@ -125,8 +125,8 @@ export const barnISøknadsFormatV8 = (
         omsorgsperson: omsorgsperson ? omsorgspersonTilISøknadsfeltV8(omsorgsperson, barn) : null,
         spørsmål: {
             ...spørmålISøknadsFormat(typetBarnSpørsmål, {
-                navn: barn.navn,
-                barn: barn.navn,
+                navn: navn,
+                barn: navn,
             }),
             [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfeltBarn(
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),

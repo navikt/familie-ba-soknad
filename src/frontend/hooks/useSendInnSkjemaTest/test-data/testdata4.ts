@@ -1373,18 +1373,8 @@ export const testdata4: TilKontraktTestData = {
                             nn: 'Eg kan ikkje gje opplysningar om den andre forelderen',
                         },
                     },
-                    fnr: {
-                        label: {
-                            en: 'Norwegian National identity number or D number',
-                            nb: 'Fødselsnummer eller d-nummer',
-                            nn: 'Fødselsnummer eller d-nummer',
-                        },
-                        verdi: { nb: '', nn: '', en: '' },
-                    },
-                    fødselsdato: {
-                        label: { en: 'Date of birth', nb: 'Fødselsdato', nn: 'Fødselsdato' },
-                        verdi: { nb: '', nn: '', en: '' },
-                    },
+                    fnr: null,
+                    fødselsdato: null,
                     pensjonUtland: null,
                     arbeidUtlandet: null,
                     pensjonNorge: {

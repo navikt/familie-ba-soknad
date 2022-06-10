@@ -324,7 +324,7 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     },
                     [andreForelderDataKeySpørsmål.navn]: {
                         id: OmBarnetSpørsmålsId.andreForelderNavn,
-                        svar: AlternativtSvarForInput.UKJENT,
+                        svar: 'Andre forelder navn',
                     },
                     [andreForelderDataKeySpørsmål.fnr]: {
                         id: OmBarnetSpørsmålsId.andreForelderFnr,
