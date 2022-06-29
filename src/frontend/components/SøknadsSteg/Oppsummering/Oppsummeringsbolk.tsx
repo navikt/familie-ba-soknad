@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Accordion } from '@navikt/ds-react';
-import AccordionContent from '@navikt/ds-react/esm/accordion/AccordionContent';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
@@ -20,7 +19,7 @@ interface IHookReturn {
     skjema: ISkjema<SkjemaFeltTyper, string>;
 }
 
-const StyledAccordionContent = styled(AccordionContent)`
+const StyledAccordionContent = styled(Accordion.Content)`
     width: 100%;
 `;
 
