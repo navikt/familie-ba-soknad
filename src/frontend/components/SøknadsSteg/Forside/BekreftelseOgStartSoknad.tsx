@@ -4,9 +4,10 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
-import KnappBase from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
+
+import { Button } from '@navikt/ds-react';
 
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -25,8 +26,10 @@ const StyledBekreftCheckboksPanel = styled(BekreftCheckboksPanel)<{ status: Bekr
     }
 `;
 
-const StyledKnappBase = styled(KnappBase)`
-    margin: 2.3rem auto 0 auto;
+const StyledKnapp = styled(Button)`
+    && {
+        margin: 2.3rem auto 0 auto;
+    }
 `;
 
 export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
@@ -66,12 +69,14 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                 </StyledBekreftCheckboksPanel>
             </Informasjonsbolk>
 
-            <StyledKnappBase
-                type={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'hoved' : 'standard'}
+            <StyledKnapp
+                variant={
+                    bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'primary' : 'secondary'
+                }
                 htmlType={'submit'}
             >
                 <SpråkTekst id="forside.start-soknad.knapp" />
-            </StyledKnappBase>
+            </StyledKnapp>
         </FormContainer>
     );
 };

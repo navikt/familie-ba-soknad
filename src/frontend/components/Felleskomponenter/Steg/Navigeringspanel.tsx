@@ -2,9 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
-import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
-
+import { Button } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
@@ -36,21 +34,22 @@ const Container = styled.nav`
     }
 `;
 
-const StyledKnappBase = styled(KnappBase)<{
+const StyledKnapp = styled(Button)<{
     placeself: 'end' | 'start';
     gridarea: 'tilbake' | 'gåVidere';
 }>`
-    grid-area: ${props => props.gridarea};
-    min-width: 10rem;
-    place-self: ${props => props.placeself};
-    font-size: 1.125rem;
-
-    @media all and ${device.mobile} {
-        place-self: center;
+    && {
+        grid-area: ${props => props.gridarea};
+        min-width: 10rem;
+        place-self: ${props => props.placeself};
+        font-size: 1.125rem;
+        @media all and ${device.mobile} {
+            place-self: center;
+        }
     }
 `;
 
-const StyledFlatKnapp = styled(Flatknapp)<{
+const StyledAvbrytKnapp = styled(Button)<{
     gridarea: 'avsluttOgFortsett' | 'avbrytOgSlett';
     color: string;
     margintop: string;
@@ -64,7 +63,7 @@ const StyledFlatKnapp = styled(Flatknapp)<{
     }
 `;
 
-type Knappetype = 'hoved' | 'standard';
+type Knappetype = 'primary' | 'secondary';
 
 const Navigeringspanel: React.FC<{
     onAvbrytCallback: () => void;
@@ -77,27 +76,26 @@ const Navigeringspanel: React.FC<{
 
     const hentKnappetype = (): Knappetype => {
         if (valideringErOk) {
-            return valideringErOk() ? 'hoved' : 'standard';
+            return valideringErOk() ? 'primary' : 'secondary';
         } else {
-            return 'hoved';
+            return 'primary';
         }
     };
 
     return (
         <Container>
-            <StyledKnappBase
-                kompakt={true}
+            <StyledKnapp
+                variant={'secondary'}
                 htmlType={'button'}
                 onClick={onTilbakeCallback}
                 placeself={'end'}
                 gridarea={'tilbake'}
             >
                 <SpråkTekst id={'felles.navigasjon.tilbake'} />
-            </StyledKnappBase>
-            <StyledKnappBase
-                kompakt={true}
+            </StyledKnapp>
+            <StyledKnapp
                 htmlType={'submit'}
-                type={hentKnappetype()}
+                variant={hentKnappetype()}
                 placeself={'start'}
                 gridarea={'gåVidere'}
                 spinner={innsendingStatus.status === RessursStatus.HENTER}
@@ -110,18 +108,17 @@ const Navigeringspanel: React.FC<{
                             : 'felles.navigasjon.gå-videre'
                     }
                 />
-            </StyledKnappBase>
+            </StyledKnapp>
 
-            <StyledFlatKnapp
-                mini
+            <StyledAvbrytKnapp
+                variant={'tertiary'}
                 htmlType={'button'}
                 onClick={onAvbrytCallback}
-                color={navFarger.navMorkGra}
                 gridarea={'avbrytOgSlett'}
                 margintop={'0'}
             >
                 <SpråkTekst id={'felles.navigasjon.avbryt'} />
-            </StyledFlatKnapp>
+            </StyledAvbrytKnapp>
         </Container>
     );
 };

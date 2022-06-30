@@ -3,9 +3,10 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+
+import { Button } from '@navikt/ds-react';
 
 import AlertStripe from '../AlertStripe/AlertStripe';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -23,8 +24,10 @@ export const StyledSideTittel = styled(Sidetittel)`
     }
 `;
 
-const StyledHovedknapp = styled(Hovedknapp)`
-    width: fit-content;
+const StyledHovedknapp = styled(Button)`
+    && {
+        width: fit-content;
+    }
 `;
 
 const ModalInnholdContainer = styled.div`

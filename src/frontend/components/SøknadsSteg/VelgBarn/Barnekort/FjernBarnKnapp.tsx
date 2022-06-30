@@ -8,7 +8,7 @@ import { Button } from '@navikt/ds-react';
 import { BarnetsId } from '../../../../typer/common';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
-const StyledFlatknapp = styled(Button)`
+const StyledFjernBarnKnapp = styled(Button)`
     && {
         margin: 0.5rem 0 -1rem -0.75rem;
     }
@@ -19,13 +19,13 @@ export const FjernBarnKnapp: React.FC<{
     fjernBarnCallback: (ident: string) => void;
 }> = ({ barnId, fjernBarnCallback }) => {
     return (
-        <StyledFlatknapp
+        <StyledFjernBarnKnapp
             htmlType={'button'}
             variant={'tertiary'}
             onClick={() => fjernBarnCallback(barnId)}
         >
             <DeleteFilled aria-hidden />
             <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
-        </StyledFlatknapp>
+        </StyledFjernBarnKnapp>
     );
 };

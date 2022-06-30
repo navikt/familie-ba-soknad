@@ -2,10 +2,10 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Flatknapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { DeleteFilled } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { ITidligereSamboer } from '../../../typer/person';
@@ -31,9 +31,11 @@ const SamboerContainer = styled.div`
     border-bottom: 1px solid #78706a; ;
 `;
 
-const SlettKnapp = styled(Flatknapp)`
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
+const SlettKnapp = styled(Button)`
+    && {
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+    }
 `;
 
 const SamboerOpplysninger: React.FC<{
@@ -71,7 +73,11 @@ const SamboerOpplysninger: React.FC<{
                 <Spørsmål språkId={samboerSpråkIder.samboerTilDato} />
                 <Normaltekst>{formaterDato(samboer.samboerTilDato.svar)}</Normaltekst>
             </Informasjonsbolk>
-            <SlettKnapp htmlType={'button'} kompakt onClick={() => fjernTidligereSamboer(samboer)}>
+            <SlettKnapp
+                htmlType={'button'}
+                variant={'tertiary'}
+                onClick={() => fjernTidligereSamboer(samboer)}
+            >
                 <DeleteFilled />
                 <span>
                     <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />

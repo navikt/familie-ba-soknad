@@ -3,10 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
-import { Flatknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Attachment, DeleteFilled } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 
 import { IVedlegg } from '../../../../typer/dokumentasjon';
 import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
@@ -57,12 +57,12 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
                                 {`${fil.navn} (${formaterFilstørrelse(fil.størrelse)})`}
                             </Normaltekst>
                         </FilTekstWrapper>
-                        <Flatknapp mini kompakt onClick={() => slettVedlegg(fil)}>
+                        <Button variant={'tertiary'} onClick={() => slettVedlegg(fil)}>
                             <span>
                                 <SpråkTekst id={'felles.slett'} />
                             </span>
                             <DeleteFilled focusable={false} />
-                        </Flatknapp>
+                        </Button>
                     </FilRad>
                 );
             })}
