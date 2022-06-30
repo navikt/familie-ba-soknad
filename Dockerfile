@@ -33,7 +33,7 @@ RUN --mount=type=secret,id=sentry_token,mode=0444 SENTRY_AUTH_TOKEN=$(cat /run/s
 
 FROM navikt/node-express:16 as prod-runner
 USER root
-RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/3.15/community/ vips-dev=8.12.1-r0
+RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/3.15/community/ vips-dev=8.13.0-r1
 USER apprunner
 
 COPY --from=runtime-deps-builder /var/server/ /var/server
