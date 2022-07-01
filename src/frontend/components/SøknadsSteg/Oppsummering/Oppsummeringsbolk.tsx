@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { Undertittel } from 'nav-frontend-typografi';
-
+import { Accordion } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
@@ -22,6 +19,10 @@ interface IHookReturn {
     skjema: ISkjema<SkjemaFeltTyper, string>;
 }
 
+const StyledAccordionContent = styled(Accordion.Content)`
+    width: 100%;
+`;
+
 interface Props {
     tittel: string;
     språkValues?: { [key: string]: string };
@@ -29,21 +30,6 @@ interface Props {
     skjemaHook: IHookReturn;
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
 }
-
-const StyledOppsummeringsbolk = styled.div`
-    border-bottom: 2px solid ${navFarger.navGra60};
-`;
-
-const StyledEkspanderbartpanel = styled(Ekspanderbartpanel)`
-    && :hover {
-        box-shadow: none;
-        border-radius: 0;
-        :focus {
-            border: solid 3px ${navFarger.fokusFarge};
-            border-radius: 0.25rem;
-        }
-    }
-`;
 
 const Oppsummeringsbolk: React.FC<Props> = ({
     children,
@@ -80,33 +66,29 @@ const Oppsummeringsbolk: React.FC<Props> = ({
     }, [visFeil]);
 
     return (
-        <StyledOppsummeringsbolk>
-            <StyledEkspanderbartpanel
-                tittel={
-                    <Undertittel>
-                        {steg?.route !== RouteEnum.OmBarnet &&
-                            steg?.route !== RouteEnum.EøsForBarn &&
-                            `${hentStegNummer(steg?.route ?? RouteEnum.OmDeg)}. `}
-                        <SpråkTekst id={tittel} values={språkValues} />
-                    </Undertittel>
-                }
-                border={false}
-                apen={true}
-            >
-                {children}
-
-                {visFeil && (
-                    <SkjemaFeiloppsummering
-                        skjema={skjema}
-                        routeForFeilmeldinger={steg}
-                        id={feilOppsummeringId}
-                    />
-                )}
-                {steg && !visFeil && (
-                    <AppLenke steg={steg} språkTekstId={'oppsummering.endresvar.lenketekst'} />
-                )}
-            </StyledEkspanderbartpanel>
-        </StyledOppsummeringsbolk>
+        <Accordion>
+            <Accordion.Item defaultOpen={true}>
+                <Accordion.Header type="button">
+                    {steg?.route !== RouteEnum.OmBarnet &&
+                        steg?.route !== RouteEnum.EøsForBarn &&
+                        `${hentStegNummer(steg?.route ?? RouteEnum.OmDeg)}. `}
+                    <SpråkTekst id={tittel} values={språkValues} />
+                </Accordion.Header>
+                <StyledAccordionContent>
+                    {children}
+                    {visFeil && (
+                        <SkjemaFeiloppsummering
+                            skjema={skjema}
+                            routeForFeilmeldinger={steg}
+                            id={feilOppsummeringId}
+                        />
+                    )}
+                    {steg && !visFeil && (
+                        <AppLenke steg={steg} språkTekstId={'oppsummering.endresvar.lenketekst'} />
+                    )}
+                </StyledAccordionContent>
+            </Accordion.Item>
+        </Accordion>
     );
 };
 
