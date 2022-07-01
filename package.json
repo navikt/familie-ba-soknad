@@ -81,7 +81,8 @@
     "styled-components": "^5",
     "browserslist": "^4.16.5",
     "ansi-regex": "^5.0.1",
-    "webpack-plugin-ramdisk": "^0.2.0"
+    "webpack-plugin-ramdisk": "^0.2.0",
+    "got": "^11.8.5"
   },
   "browserslist": {
     "production": [
@@ -215,8 +216,6 @@
     "nav-frontend-chevron": "^1.0.30",
     "nav-frontend-chevron-style": "^1.0.4",
     "nav-frontend-core": "^6.0.1",
-    "nav-frontend-ekspanderbartpanel": "^4.0.1",
-    "nav-frontend-ekspanderbartpanel-style": "^2.0.1",
     "nav-frontend-ikoner-assets": "^3.0.1",
     "nav-frontend-js-utils": "^1.0.19",
     "nav-frontend-lenker": "^2.0.1",
@@ -238,7 +237,7 @@
     "nav-frontend-veileder": "^3.0.1",
     "nav-frontend-veileder-style": "^3.0.1",
     "node-fetch": "^3.1.1",
-    "nodemon": "^2.0.12",
+    "nodemon": "^2.0.18",
     "prettier": "^2.6.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
