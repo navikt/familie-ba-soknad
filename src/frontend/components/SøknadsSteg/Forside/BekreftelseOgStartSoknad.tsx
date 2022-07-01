@@ -73,7 +73,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                 variant={
                     bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'primary' : 'secondary'
                 }
-                htmlType={'submit'}
+                htmltype={'submit'}
             >
                 <SpråkTekst id="forside.start-soknad.knapp" />
             </StyledKnapp>

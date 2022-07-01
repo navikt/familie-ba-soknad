@@ -30,7 +30,7 @@ export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTi
             <StyledIngress>
                 <SpråkTekst id={'hvilkebarn.leggtilbarn.kort'} />
             </StyledIngress>
-            <StyledKnapp htmlType={'button'} variant="secondary" onClick={() => onLeggTilBarn()}>
+            <StyledKnapp htmltype={'button'} variant="secondary" onClick={() => onLeggTilBarn()}>
                 <SpråkTekst id={'hvilkebarn.leggtilbarn.kort.knapp'} />
             </StyledKnapp>
         </StyledBarnekort>

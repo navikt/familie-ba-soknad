@@ -80,7 +80,7 @@ test(`Kan legge til barn`, async () => {
     const modal = await waitFor(() => getByLabelText('hvilkebarn.leggtilbarn.modal.tittel'));
     const leggTilKnappIModal = modal.querySelector('button');
     expect(leggTilKnappIModal).toBeInTheDocument();
-    expect(leggTilKnappIModal).toHaveClass('knapp--standard');
+    expect(leggTilKnappIModal).toHaveClass('navds-button--secondary');
 
     const erFødt = getByText('hvilkebarn.leggtilbarn.barnfødt.spm');
     expect(erFødt).toBeInTheDocument();
@@ -105,7 +105,7 @@ test(`Kan legge til barn`, async () => {
         fireEvent.input(idnrInput, { target: { value: '031159123456' } });
     });
 
-    expect(leggTilKnappIModal).toHaveClass('knapp--hoved');
+    expect(leggTilKnappIModal).toHaveClass('navds-button--primary');
 
     // Her skjer det async kall med axios, som vi må vente på i de neste expectene
     act(() => leggTilKnappIModal?.click());
