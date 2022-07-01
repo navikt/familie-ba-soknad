@@ -31,7 +31,7 @@ const SamboerContainer = styled.div`
     border-bottom: 1px solid #78706a; ;
 `;
 
-const SlettKnapp = styled(Button)`
+const StyledButton = styled(Button)`
     && {
         margin-top: 1rem;
         margin-bottom: 1.5rem;
@@ -73,7 +73,7 @@ const SamboerOpplysninger: React.FC<{
                 <Spørsmål språkId={samboerSpråkIder.samboerTilDato} />
                 <Normaltekst>{formaterDato(samboer.samboerTilDato.svar)}</Normaltekst>
             </Informasjonsbolk>
-            <SlettKnapp
+            <StyledButton
                 type={'button'}
                 variant={'tertiary'}
                 onClick={() => fjernTidligereSamboer(samboer)}
@@ -82,7 +82,7 @@ const SamboerOpplysninger: React.FC<{
                 <span>
                     <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />
                 </span>
-            </SlettKnapp>
+            </StyledButton>
         </SamboerContainer>
     );
 };

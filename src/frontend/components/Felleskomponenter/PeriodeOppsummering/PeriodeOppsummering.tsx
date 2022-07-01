@@ -15,7 +15,7 @@ const PeriodeContainer = styled.div<{ bottomBorder: boolean }>`
     border-bottom: ${props => (props.bottomBorder ? `1px solid ${navFarger.navGra60}` : 'none')};
 `;
 
-const SlettKnapp = styled(Button)`
+const StyledButton = styled(Button)`
     && {
         margin-bottom: 1.5rem;
     }
@@ -50,7 +50,7 @@ const PeriodeOppsummering: React.FC<{
             </StyledElement>
             {children}
             {fjernPeriodeCallback !== undefined && (
-                <SlettKnapp
+                <StyledButton
                     type={'button'}
                     variant="tertiary"
                     onClick={() => fjernPeriodeCallback()}
@@ -59,7 +59,7 @@ const PeriodeOppsummering: React.FC<{
                     <span>
                         <SpråkTekst id={fjernKnappSpråkId} />
                     </span>
-                </SlettKnapp>
+                </StyledButton>
             )}
             {vedleggNotis}
         </PeriodeContainer>

@@ -24,7 +24,7 @@ export const StyledSideTittel = styled(Sidetittel)`
     }
 `;
 
-const StyledHovedknapp = styled(Button)`
+const StyledButton = styled(Button)`
     && {
         width: fit-content;
     }
@@ -62,9 +62,9 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
                     <SpråkTekst id={'felles.modal.deployfeil.info'} />
                 </StyledNormalTekst>
 
-                <StyledHovedknapp onClick={refresh}>
+                <StyledButton onClick={refresh}>
                     <SpråkTekst id={'felles.modal.deployfeil.knapp'} />
-                </StyledHovedknapp>
+                </StyledButton>
             </ModalInnholdContainer>
         </Modal>
     );

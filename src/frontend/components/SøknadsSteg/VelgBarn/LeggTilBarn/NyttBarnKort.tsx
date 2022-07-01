@@ -16,7 +16,7 @@ const StyledIngress = styled(Ingress)`
     }
 `;
 
-const StyledKnapp = styled(Button)`
+const StyledButton = styled(Button)`
     && {
         margin-top: 1rem;
         width: 100%;
@@ -30,9 +30,9 @@ export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTi
             <StyledIngress>
                 <SpråkTekst id={'hvilkebarn.leggtilbarn.kort'} />
             </StyledIngress>
-            <StyledKnapp type={'button'} variant="secondary" onClick={() => onLeggTilBarn()}>
+            <StyledButton type={'button'} variant="secondary" onClick={() => onLeggTilBarn()}>
                 <SpråkTekst id={'hvilkebarn.leggtilbarn.kort.knapp'} />
-            </StyledKnapp>
+            </StyledButton>
         </StyledBarnekort>
     );
 };

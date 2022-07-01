@@ -26,7 +26,7 @@ const StyledBekreftCheckboksPanel = styled(BekreftCheckboksPanel)<{ status: Bekr
     }
 `;
 
-const StyledKnapp = styled(Button)`
+const StyledButton = styled(Button)`
     && {
         margin: 2.3rem auto 0 auto;
     }
@@ -69,14 +69,14 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                 </StyledBekreftCheckboksPanel>
             </Informasjonsbolk>
 
-            <StyledKnapp
+            <StyledButton
                 variant={
                     bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'primary' : 'secondary'
                 }
                 type={'submit'}
             >
                 <SpråkTekst id="forside.start-soknad.knapp" />
-            </StyledKnapp>
+            </StyledButton>
         </FormContainer>
     );
 };

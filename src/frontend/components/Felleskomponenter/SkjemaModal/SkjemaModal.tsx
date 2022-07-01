@@ -25,7 +25,7 @@ const StyledModal = styled(Modal)`
     }
 `;
 
-const StyledKnappIModal = styled(Button)`
+const StyledButton = styled(Button)`
     && {
         margin-top: 4rem;
         white-space: normal;
@@ -76,7 +76,7 @@ const SkjemaModal: React.FC<{
                     <SpråkTekst id={modalTittelSpråkId} />
                 </StyledInnholdstittel>
                 {children}
-                <StyledKnappIModal
+                <StyledButton
                     variant={valideringErOk() ? 'primary' : 'secondary'}
                     type={'submit'}
                     loading={!!submitSpinner}
@@ -86,7 +86,7 @@ const SkjemaModal: React.FC<{
                     }}
                 >
                     <SpråkTekst id={submitKnappSpråkId} />
-                </StyledKnappIModal>
+                </StyledButton>
             </form>
         </StyledModal>
     );

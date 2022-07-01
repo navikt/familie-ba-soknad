@@ -14,7 +14,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
-const StyledKnappBase = styled(Button)`
+const StyledButton = styled(Button)`
     && {
         margin: 0 auto 2rem auto;
         padding: 1rem 3rem 1rem 3rem;
@@ -71,12 +71,12 @@ const FortsettPåSøknad: FC = () => {
                     </Normaltekst>
                 </AlertStripeInfo>
             </KomponentGruppe>
-            <StyledKnappBase onClick={fortsettPåSøknaden}>
+            <StyledButton onClick={fortsettPåSøknaden}>
                 <SpråkTekst id={'mellomlagring.knapp.fortsett'} />
-            </StyledKnappBase>
-            <StyledKnappBase variant="secondary" onClick={() => settVisStartPåNyttModal(true)}>
+            </StyledButton>
+            <StyledButton variant="secondary" onClick={() => settVisStartPåNyttModal(true)}>
                 <SpråkTekst id={'mellomlagring.knapp.startpånytt'} />
-            </StyledKnappBase>
+            </StyledButton>
             <Modal
                 isOpen={visStartPåNyttModal}
                 contentLabel={formatMessage({ id: 'felles.startpånytt.modal.startpånyttknapp' })}
