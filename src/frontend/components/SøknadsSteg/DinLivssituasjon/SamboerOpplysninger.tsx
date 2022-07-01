@@ -74,7 +74,7 @@ const SamboerOpplysninger: React.FC<{
                 <Normaltekst>{formaterDato(samboer.samboerTilDato.svar)}</Normaltekst>
             </Informasjonsbolk>
             <SlettKnapp
-                htmlType={'button'}
+                type={'button'}
                 variant={'tertiary'}
                 onClick={() => fjernTidligereSamboer(samboer)}
             >

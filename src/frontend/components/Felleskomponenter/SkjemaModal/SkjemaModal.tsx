@@ -78,9 +78,8 @@ const SkjemaModal: React.FC<{
                 {children}
                 <StyledKnappIModal
                     variant={valideringErOk() ? 'primary' : 'secondary'}
-                    htmlType={'submit'}
-                    spinner={submitSpinner}
-                    autoDisableVedSpinner={true}
+                    type={'submit'}
+                    loading={!!submitSpinner}
                     onClick={event => {
                         event.preventDefault();
                         onSubmitCallback();

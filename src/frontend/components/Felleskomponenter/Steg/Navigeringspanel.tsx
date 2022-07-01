@@ -17,8 +17,7 @@ const Container = styled.nav`
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         ' tilbake gåVidere '
-        ' avsluttOgFortsett avsluttOgFortsett '
-        ' avbrytOgSlett avbrytOgSlett';
+        ' avbryt avbryt';
     grid-template-rows: auto;
     gap: 0.5rem;
     justify-content: center;
@@ -28,38 +27,19 @@ const Container = styled.nav`
         grid-template-areas:
             ' gåVidere '
             ' tilbake '
-            ' avsluttOgFortsett '
-            ' avbrytOgSlett';
+            ' avbryt';
         padding: 2rem 0;
     }
 `;
 
-const StyledKnapp = styled(Button)<{
-    placeself: 'end' | 'start';
-    gridarea: 'tilbake' | 'gåVidere';
-}>`
+const StyledButton = styled(Button)`
     && {
         grid-area: ${props => props.gridarea};
         min-width: 10rem;
         place-self: ${props => props.placeself};
-        font-size: 1.125rem;
         @media all and ${device.mobile} {
             place-self: center;
         }
-    }
-`;
-
-const StyledAvbrytKnapp = styled(Button)<{
-    gridarea: 'avsluttOgFortsett' | 'avbrytOgSlett';
-    color: string;
-    margintop: string;
-}>`
-    grid-area: ${props => props.gridarea};
-    width: fit-content;
-    place-self: center;
-    margin-top: ${props => props.margintop};
-    && {
-        color: ${props => props.color};
     }
 `;
 
@@ -84,22 +64,21 @@ const Navigeringspanel: React.FC<{
 
     return (
         <Container>
-            <StyledKnapp
+            <StyledButton
                 variant={'secondary'}
-                htmlType={'button'}
+                type={'button'}
                 onClick={onTilbakeCallback}
                 placeself={'end'}
                 gridarea={'tilbake'}
             >
                 <SpråkTekst id={'felles.navigasjon.tilbake'} />
-            </StyledKnapp>
-            <StyledKnapp
-                htmlType={'submit'}
+            </StyledButton>
+            <StyledButton
+                type={'submit'}
                 variant={hentKnappetype()}
                 placeself={'start'}
                 gridarea={'gåVidere'}
-                spinner={innsendingStatus.status === RessursStatus.HENTER}
-                autoDisableVedSpinner={true}
+                loading={innsendingStatus.status === RessursStatus.HENTER}
             >
                 <SpråkTekst
                     id={
@@ -108,17 +87,18 @@ const Navigeringspanel: React.FC<{
                             : 'felles.navigasjon.gå-videre'
                     }
                 />
-            </StyledKnapp>
+            </StyledButton>
 
-            <StyledAvbrytKnapp
+            <StyledButton
                 variant={'tertiary'}
-                htmlType={'button'}
+                type={'button'}
                 onClick={onAvbrytCallback}
-                gridarea={'avbrytOgSlett'}
+                gridarea={'avbryt'}
+                placeself={'center'}
                 margintop={'0'}
             >
                 <SpråkTekst id={'felles.navigasjon.avbryt'} />
-            </StyledAvbrytKnapp>
+            </StyledButton>
         </Container>
     );
 };

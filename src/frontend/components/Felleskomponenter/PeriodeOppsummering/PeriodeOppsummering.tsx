@@ -51,7 +51,7 @@ const PeriodeOppsummering: React.FC<{
             {children}
             {fjernPeriodeCallback !== undefined && (
                 <SlettKnapp
-                    htmlType={'button'}
+                    type={'button'}
                     variant="tertiary"
                     onClick={() => fjernPeriodeCallback()}
                 >

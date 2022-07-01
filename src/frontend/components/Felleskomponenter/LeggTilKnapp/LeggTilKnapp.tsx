@@ -17,25 +17,25 @@ interface Props {
     id?: string;
 }
 
-const StyledLeggTilKnapp = styled(Button)<{ feilmelding }>`
+const StyledButton = styled(Button)<{ className }>`
     && {
         margin: 0.5rem 0 0.5rem 0;
-        border: ${props => (props.feilmelding ? `2px solid ${navFarger.redError}` : 'none')};
+        border: ${props => (props.className ? `2px solid ${navFarger.redError}` : 'none')};
     }
 `;
 
 export const LeggTilKnapp: React.FC<Props> = ({ onClick, språkTekst, feilmelding, id }) => (
     <>
-        <StyledLeggTilKnapp
+        <StyledButton
             id={id}
-            variant="tertiary"
-            feilmelding={feilmelding ? feilmelding : undefined}
-            htmlType={'button'}
+            variant={'tertiary'}
+            type={'button'}
             onClick={onClick}
+            className={feilmelding ? feilmelding.toString() : ''}
         >
             <AddCircle />
             <SpråkTekst id={språkTekst} />
-        </StyledLeggTilKnapp>
+        </StyledButton>
         {!!feilmelding && <Feilmelding>{feilmelding}</Feilmelding>}
     </>
 );
