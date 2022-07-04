@@ -79,9 +79,7 @@ const SamboerOpplysninger: React.FC<{
                 onClick={() => fjernTidligereSamboer(samboer)}
             >
                 <DeleteFilled />
-                <span>
-                    <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />
-                </span>
+                <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />
             </StyledButton>
         </SamboerContainer>
     );
