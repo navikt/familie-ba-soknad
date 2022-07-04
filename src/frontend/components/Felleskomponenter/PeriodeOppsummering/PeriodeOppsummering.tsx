@@ -56,9 +56,7 @@ const PeriodeOppsummering: React.FC<{
                     onClick={() => fjernPeriodeCallback()}
                 >
                     <DeleteFilled />
-                    <span>
-                        <SpråkTekst id={fjernKnappSpråkId} />
-                    </span>
+                    <SpråkTekst id={fjernKnappSpråkId} />
                 </StyledButton>
             )}
             {vedleggNotis}
