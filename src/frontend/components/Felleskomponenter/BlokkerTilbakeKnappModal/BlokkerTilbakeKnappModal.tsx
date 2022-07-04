@@ -5,9 +5,10 @@ import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import KnappBase from 'nav-frontend-knapper';
-import Lenke from 'nav-frontend-lenker';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+
+import { Link } from '@navikt/ds-react';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -30,7 +31,7 @@ const Flex = styled.div`
     align-items: center;
     gap: 1rem;
 `;
-const StyledLenke = styled(Lenke)`
+const StyledLink = styled(Link)`
     margin-right: 1rem;
 `;
 
@@ -62,9 +63,14 @@ const BlokkerTilbakeKnappModal = () => {
                         <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tekst'} />
                     </Normaltekst>
                     <Flex>
-                        <StyledLenke href={'https://www.nav.no/person/dittnav/'}>
+                        <StyledLink
+                            href={'https://www.nav.no/person/dittnav/'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'} />
-                        </StyledLenke>
+                        </StyledLink>
+
                         <KnappBase onClick={håndterAvbryt}>
                             <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.avbrytKnapp'} />
                         </KnappBase>
