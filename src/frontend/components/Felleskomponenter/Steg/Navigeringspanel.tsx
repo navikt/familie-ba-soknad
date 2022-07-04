@@ -32,7 +32,10 @@ const Container = styled.nav`
     }
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(Button)<{
+    placeself: 'end' | 'center' | 'start';
+    gridarea: 'tilbake' | 'gåVidere' | 'avbryt';
+}>`
     && {
         grid-area: ${props => props.gridarea};
         min-width: 10rem;
