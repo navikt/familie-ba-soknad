@@ -58,9 +58,7 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
                             </Normaltekst>
                         </FilTekstWrapper>
                         <Button variant={'tertiary'} onClick={() => slettVedlegg(fil)}>
-                            <span>
-                                <SpråkTekst id={'felles.slett'} />
-                            </span>
+                            <SpråkTekst id={'felles.slett'} />
                             <DeleteFilled focusable={false} />
                         </Button>
                     </FilRad>
