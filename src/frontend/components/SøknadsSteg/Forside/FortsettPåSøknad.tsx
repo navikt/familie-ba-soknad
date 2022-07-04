@@ -74,7 +74,7 @@ const FortsettPåSøknad: FC = () => {
             <StyledButton onClick={fortsettPåSøknaden}>
                 <SpråkTekst id={'mellomlagring.knapp.fortsett'} />
             </StyledButton>
-            <StyledButton variant="secondary" onClick={() => settVisStartPåNyttModal(true)}>
+            <StyledButton variant={'secondary'} onClick={() => settVisStartPåNyttModal(true)}>
                 <SpråkTekst id={'mellomlagring.knapp.startpånytt'} />
             </StyledButton>
             <Modal
@@ -92,10 +92,10 @@ const FortsettPåSøknad: FC = () => {
                         <SpråkTekst id={'felles.startpånytt.modal.tekst'} />
                     </Normaltekst>
                     <ModalKnappeContainer>
-                        <Button variant="tertiary" onClick={() => settVisStartPåNyttModal(false)}>
+                        <Button variant={'tertiary'} onClick={() => settVisStartPåNyttModal(false)}>
                             <SpråkTekst id={'felles.startpånytt.modal.avbrytknapp'} />
                         </Button>
-                        <Button variant="secondary" onClick={startPåNytt}>
+                        <Button variant={'secondary'} onClick={startPåNytt}>
                             <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
                         </Button>
                     </ModalKnappeContainer>

@@ -52,7 +52,7 @@ const PeriodeOppsummering: React.FC<{
             {fjernPeriodeCallback !== undefined && (
                 <StyledButton
                     type={'button'}
-                    variant="tertiary"
+                    variant={'tertiary'}
                     onClick={() => fjernPeriodeCallback()}
                 >
                     <DeleteFilled />
