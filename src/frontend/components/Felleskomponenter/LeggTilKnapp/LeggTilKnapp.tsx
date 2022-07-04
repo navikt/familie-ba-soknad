@@ -17,10 +17,10 @@ interface Props {
     id?: string;
 }
 
-const StyledButton = styled(Button)<{ className }>`
+const StyledButton = styled(Button)<{ feilmelding }>`
     && {
         margin: 0.5rem 0 0.5rem 0;
-        border: ${props => (props.className ? `2px solid ${navFarger.redError}` : 'none')};
+        border: ${props => (props.feilmelding ? `2px solid ${navFarger.redError}` : 'none')};
     }
 `;
 
@@ -31,7 +31,7 @@ export const LeggTilKnapp: React.FC<Props> = ({ onClick, språkTekst, feilmeldin
             variant={'tertiary'}
             type={'button'}
             onClick={onClick}
-            className={feilmelding ? feilmelding.toString() : ''}
+            feilmelding={feilmelding ?? ''}
         >
             <AddCircle />
             <SpråkTekst id={språkTekst} />
