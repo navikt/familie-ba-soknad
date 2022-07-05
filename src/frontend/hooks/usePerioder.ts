@@ -3,13 +3,23 @@ import { useEffect, useState } from 'react';
 import { Avhengigheter, useFelt } from '@navikt/familie-skjema';
 import { ValiderFelt } from '@navikt/familie-skjema/dist/typer';
 
-export const usePerioder = <T>(
-    verdi: T[],
-    avhengigheter?: Avhengigheter,
-    skalFeltetVises?: (avhengigheter: Avhengigheter) => boolean,
-    valideringsfunksjon?: ValiderFelt<T[]>
-) => {
+import { SpørsmålId } from '../typer/spørsmål';
+
+export const usePerioder = <T>({
+    feltId,
+    verdi,
+    avhengigheter,
+    skalFeltetVises,
+    valideringsfunksjon,
+}: {
+    feltId: SpørsmålId;
+    verdi: T[];
+    avhengigheter?: Avhengigheter;
+    skalFeltetVises?: (avhengigheter: Avhengigheter) => boolean;
+    valideringsfunksjon?: ValiderFelt<T[]>;
+}) => {
     const [perioder, settPerioder] = useState<T[]>(verdi);
+
     const leggTilPeriode = (periode: T) => {
         settPerioder(prevState => prevState.concat(periode));
     };
@@ -19,6 +29,7 @@ export const usePerioder = <T>(
     };
 
     const registrertePerioder = useFelt<T[]>({
+        feltId,
         verdi: perioder,
         avhengigheter,
         skalFeltetVises,

@@ -16,8 +16,11 @@ import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { valideringAdresse } from '../../../../utils/adresse';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { ArbeidsperiodeSpørsmålsId } from '../../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
+import { PensjonsperiodeSpørsmålId } from '../../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { UtbetalingerSpørsmålId } from '../../../Felleskomponenter/UtbetalingerModal/spørsmål';
 import { idNummerKeyPrefix } from '../idnummerUtils';
 import { EøsSøkerSpørsmålId } from './spørsmål';
 
@@ -61,17 +64,18 @@ export const useEøsForSøker = (): {
         fjernPeriode: fjernArbeidsperiode,
         leggTilPeriode: leggTilArbeidsperiode,
         registrertePerioder: registrerteArbeidsperioder,
-    } = usePerioder<IArbeidsperiode>(
-        søker.arbeidsperioderNorge,
-        { arbeidINorge },
-        avhengigheter => avhengigheter.arbeidINorge.verdi === ESvar.JA,
-        (felt, avhengigheter) => {
+    } = usePerioder<IArbeidsperiode>({
+        feltId: ArbeidsperiodeSpørsmålsId.arbeidsperioder,
+        verdi: søker.arbeidsperioderNorge,
+        avhengigheter: { arbeidINorge },
+        skalFeltetVises: avhengigheter => avhengigheter.arbeidINorge.verdi === ESvar.JA,
+        valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.arbeidINorge.verdi === ESvar.NEI ||
                 (avhengigheter?.arbeidINorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
-        }
-    );
+        },
+    });
 
     const pensjonNorge = useJaNeiSpmFelt({
         søknadsfelt: søker.pensjonNorge,
@@ -81,18 +85,18 @@ export const useEøsForSøker = (): {
         fjernPeriode: fjernPensjonsperiode,
         leggTilPeriode: leggTilPensjonsperiode,
         registrertePerioder: registrertePensjonsperioder,
-    } = usePerioder<IPensjonsperiode>(
-        søker.pensjonsperioderNorge,
-        { pensjonNorge },
-        avhengigheter => avhengigheter.pensjonNorge.verdi === ESvar.JA,
-
-        (felt, avhengigheter) => {
+    } = usePerioder<IPensjonsperiode>({
+        feltId: PensjonsperiodeSpørsmålId.pensjonsperioder,
+        verdi: søker.pensjonsperioderNorge,
+        avhengigheter: { pensjonNorge },
+        skalFeltetVises: avhengigheter => avhengigheter.pensjonNorge.verdi === ESvar.JA,
+        valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.pensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.pensjonNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
-        }
-    );
+        },
+    });
 
     const andreUtbetalinger = useJaNeiSpmFelt({
         søknadsfelt: søker.andreUtbetalinger,
@@ -102,17 +106,18 @@ export const useEøsForSøker = (): {
         fjernPeriode: fjernAndreUtbetalingsperiode,
         leggTilPeriode: leggTilAndreUtbetalingsperiode,
         registrertePerioder: registrerteAndreUtbetalinger,
-    } = usePerioder<IUtbetalingsperiode>(
-        søker.andreUtbetalingsperioder,
-        { andreUtbetalinger },
-        avhengigheter => avhengigheter.andreUtbetalinger.verdi === ESvar.JA,
-        (felt, avhengigheter) => {
+    } = usePerioder<IUtbetalingsperiode>({
+        feltId: UtbetalingerSpørsmålId.utbetalingsperioder,
+        verdi: søker.andreUtbetalingsperioder,
+        avhengigheter: { andreUtbetalinger },
+        skalFeltetVises: avhengigheter => avhengigheter.andreUtbetalinger.verdi === ESvar.JA,
+        valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.andreUtbetalinger.verdi === ESvar.NEI ||
                 (avhengigheter?.andreUtbetalinger.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
-        }
-    );
+        },
+    });
 
     const oppdaterSøknad = () => {
         const oppdatertSøker = genererOppdatertSøker();
