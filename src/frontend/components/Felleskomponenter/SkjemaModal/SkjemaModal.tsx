@@ -3,9 +3,10 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Innholdstittel } from 'nav-frontend-typografi';
+
+import { Button } from '@navikt/ds-react';
 
 import { device } from '../../../Theme';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -24,11 +25,13 @@ const StyledModal = styled(Modal)`
     }
 `;
 
-const StyledKnappIModal = styled(Knapp)`
-    margin-top: 4rem;
-    white-space: normal;
-    max-width: 100%;
-    box-sizing: border-box;
+const StyledButton = styled(Button)`
+    && {
+        margin-top: 4rem;
+        white-space: normal;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
 `;
 const StyledInnholdstittel = styled(Innholdstittel)`
     text-align: center;
@@ -73,18 +76,17 @@ const SkjemaModal: React.FC<{
                     <SpråkTekst id={modalTittelSpråkId} />
                 </StyledInnholdstittel>
                 {children}
-                <StyledKnappIModal
-                    type={valideringErOk() ? 'hoved' : 'standard'}
-                    htmlType={'submit'}
-                    spinner={submitSpinner}
-                    autoDisableVedSpinner={true}
+                <StyledButton
+                    variant={valideringErOk() ? 'primary' : 'secondary'}
+                    type={'submit'}
+                    loading={!!submitSpinner}
                     onClick={event => {
                         event.preventDefault();
                         onSubmitCallback();
                     }}
                 >
                     <SpråkTekst id={submitKnappSpråkId} />
-                </StyledKnappIModal>
+                </StyledButton>
             </form>
         </StyledModal>
     );

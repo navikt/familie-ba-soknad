@@ -3,10 +3,10 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
-import { Flatknapp } from 'nav-frontend-knapper';
 import { Feilmelding } from 'nav-frontend-typografi';
 
 import { AddCircle } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -17,29 +17,25 @@ interface Props {
     id?: string;
 }
 
-const StyledFlatKnapp = styled(Flatknapp)<{ feilmelding }>`
-    margin: 0.5rem 0 0.5rem 0;
+const StyledButton = styled(Button)<{ feilmelding: boolean }>`
     && {
-        white-space: normal;
-        text-align: left;
-        border: ${props => (props.feilmelding ? `2px solid ${navFarger.redError}` : 'none')};
+        margin: 0.5rem 0 0.5rem 0;
+        border: ${props => (props.$feilmelding ? `2px solid ${navFarger.redError}` : 'none')};
     }
 `;
 
 export const LeggTilKnapp: React.FC<Props> = ({ onClick, språkTekst, feilmelding, id }) => (
     <>
-        <StyledFlatKnapp
+        <StyledButton
             id={id}
-            feilmelding={feilmelding ? feilmelding : undefined}
-            htmlType={'button'}
-            kompakt
+            variant={'tertiary'}
+            type={'button'}
             onClick={onClick}
+            $feilmelding={!!feilmelding}
         >
             <AddCircle />
-            <span>
-                <SpråkTekst id={språkTekst} />
-            </span>
-        </StyledFlatKnapp>
+            <SpråkTekst id={språkTekst} />
+        </StyledButton>
         {!!feilmelding && <Feilmelding>{feilmelding}</Feilmelding>}
     </>
 );

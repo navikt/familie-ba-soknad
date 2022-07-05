@@ -4,10 +4,11 @@ import { useIntl } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
-import KnappBase from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+
+import { Button } from '@navikt/ds-react';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -65,9 +66,9 @@ const BlokkerTilbakeKnappModal = () => {
                         <StyledLenke href={'https://www.nav.no/person/dittnav/'}>
                             <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'} />
                         </StyledLenke>
-                        <KnappBase onClick={håndterAvbryt}>
+                        <Button onClick={håndterAvbryt}>
                             <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.avbrytKnapp'} />
-                        </KnappBase>
+                        </Button>
                     </Flex>
                 </Wrapper>
             </StyledModal>

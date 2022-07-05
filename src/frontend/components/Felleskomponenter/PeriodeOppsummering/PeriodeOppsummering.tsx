@@ -3,10 +3,10 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
-import { Flatknapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 
 import { DeleteFilled } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -15,8 +15,10 @@ const PeriodeContainer = styled.div<{ bottomBorder: boolean }>`
     border-bottom: ${props => (props.bottomBorder ? `1px solid ${navFarger.navGra60}` : 'none')};
 `;
 
-const SlettKnapp = styled(Flatknapp)`
-    margin-bottom: 1.5rem;
+const StyledButton = styled(Button)`
+    && {
+        margin-bottom: 1.5rem;
+    }
 `;
 
 const StyledElement = styled(Element)`
@@ -48,12 +50,14 @@ const PeriodeOppsummering: React.FC<{
             </StyledElement>
             {children}
             {fjernPeriodeCallback !== undefined && (
-                <SlettKnapp htmlType={'button'} kompakt onClick={() => fjernPeriodeCallback()}>
+                <StyledButton
+                    type={'button'}
+                    variant={'tertiary'}
+                    onClick={() => fjernPeriodeCallback()}
+                >
                     <DeleteFilled />
-                    <span>
-                        <SpråkTekst id={fjernKnappSpråkId} />
-                    </span>
-                </SlettKnapp>
+                    <SpråkTekst id={fjernKnappSpråkId} />
+                </StyledButton>
             )}
             {vedleggNotis}
         </PeriodeContainer>
