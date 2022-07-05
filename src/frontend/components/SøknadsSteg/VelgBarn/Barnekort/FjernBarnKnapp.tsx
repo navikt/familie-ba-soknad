@@ -2,27 +2,16 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Flatknapp } from 'nav-frontend-knapper';
-
 import { DeleteFilled } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 
 import { BarnetsId } from '../../../../typer/common';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
-const StyledFlatknapp = styled(Flatknapp)`
-    margin: 1rem 0 -1rem -0.75rem; // -0.75 left kompanserer for padding-left fra .knapp--kompakt
-    max-width: 100%;
+const StyledButton = styled(Button)`
     && {
-        white-space: normal;
+        margin: 0.5rem 0 -1rem -0.75rem;
     }
-`;
-
-const StyledDeleteFilled = styled(DeleteFilled)`
-    min-width: 1rem;
-`;
-
-const TekstContainer = styled.span`
-    text-align: left;
 `;
 
 export const FjernBarnKnapp: React.FC<{
@@ -30,16 +19,13 @@ export const FjernBarnKnapp: React.FC<{
     fjernBarnCallback: (ident: string) => void;
 }> = ({ barnId, fjernBarnCallback }) => {
     return (
-        <StyledFlatknapp
-            htmlType={'button'}
-            mini={true}
-            kompakt={true}
+        <StyledButton
+            type={'button'}
+            variant={'tertiary'}
             onClick={() => fjernBarnCallback(barnId)}
         >
-            <StyledDeleteFilled />
-            <TekstContainer>
-                <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
-            </TekstContainer>
-        </StyledFlatknapp>
+            <DeleteFilled aria-hidden />
+            <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
+        </StyledButton>
     );
 };
