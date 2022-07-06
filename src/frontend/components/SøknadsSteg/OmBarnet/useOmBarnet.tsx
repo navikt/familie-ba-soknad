@@ -30,6 +30,7 @@ import {
     IUtenlandsperiode,
 } from '../../../typer/perioder';
 import { IIdNummer } from '../../../typer/person';
+import { PersonType } from '../../../typer/personType';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
@@ -257,7 +258,7 @@ export const useOmBarnet = (
         leggTilPeriode: leggTilBarnetrygdsperiode,
         registrertePerioder: registrerteEøsBarnetrygdsperioder,
     } = usePerioder<IEøsBarnetrygdsperiode>({
-        feltId: BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs,
+        feltId: `${BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs}-${PersonType.Søker}`,
         verdi: gjeldendeBarn.eøsBarnetrygdsperioder,
         avhengigheter: { mottarEllerMottokEøsBarnetrygd },
         skalFeltetVises: avhengigheter =>
@@ -415,7 +416,7 @@ export const useOmBarnet = (
         leggTilPeriode: leggTilArbeidsperiode,
         registrertePerioder: andreForelderArbeidsperioderUtland,
     } = usePerioder<IArbeidsperiode>({
-        feltId: ArbeidsperiodeSpørsmålsId.arbeidsperioder,
+        feltId: `${ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland}-${PersonType.AndreForelder}`,
         verdi: andreForelder?.arbeidsperioderUtland ?? [],
         avhengigheter: { andreForelderArbeidUtlandet },
         skalFeltetVises: avhengigheter =>
@@ -455,7 +456,7 @@ export const useOmBarnet = (
         leggTilPeriode: leggTilPensjonsperiode,
         registrertePerioder: andreForelderPensjonsperioderUtland,
     } = usePerioder<IPensjonsperiode>({
-        feltId: PensjonsperiodeSpørsmålId.pensjonsperioder,
+        feltId: `${PensjonsperiodeSpørsmålId.pensjonsperioderUtland}-${PersonType.AndreForelder}`,
         verdi: andreForelder?.pensjonsperioderUtland ?? [],
         avhengigheter: { andreForelderPensjonUtland },
         skalFeltetVises: avhengigheter =>

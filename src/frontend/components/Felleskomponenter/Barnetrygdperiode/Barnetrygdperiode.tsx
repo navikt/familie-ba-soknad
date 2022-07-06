@@ -83,7 +83,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                     <LeggTilKnapp
                         onClick={toggleBarnetrygdsmodal}
                         språkTekst={'ombarnet.trygdandreperioder.knapp'}
-                        id={BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs}
+                        id={`${BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs}-${personType}`}
                         feilmelding={
                             registrerteEøsBarnetrygdsperioder.erSynlig &&
                             registrerteEøsBarnetrygdsperioder.feilmelding &&

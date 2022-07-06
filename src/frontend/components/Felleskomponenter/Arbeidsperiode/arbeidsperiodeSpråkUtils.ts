@@ -109,7 +109,8 @@ export const arbeidsperiodeSøkerSpørsmålSpråkId = (
     periodenErAvsluttet = false
 ): Record<ArbeidsperiodeSpørsmålsId, string> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland]: 'eøs.arbeidetiutlandet.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge]: 'eøs.arbeidetiutlandet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: periodenErAvsluttet
         ? 'dinlivssituasjon.arbeid-utland.land.spm'
         : 'omdeg.arbeid-utland.land.spm',
@@ -126,7 +127,8 @@ export const arbeidsperiodeAndreForelderSpørsmålSpråkId = (
     periodenErAvsluttet = false
 ): Record<ArbeidsperiodeSpørsmålsId, string> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland]: 'eøs.arbeidetiutlandet.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge]: 'eøs.arbeidetiutlandet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: periodenErAvsluttet
         ? 'enkeenkemann.andreforelder-arbeidutland.land.spm'
         : 'ombarnet.andre-forelder.arbeid-utland.land.spm',
@@ -143,7 +145,8 @@ export const arbeidsperiodeOmsorgspersonSpørsmålSpråkId = (
     periodenErAvsluttet = false
 ): Record<ArbeidsperiodeSpørsmålsId, string> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland]: 'eøs.arbeidetiutlandet.spm',
+    [ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge]: 'eøs.arbeidetiutlandet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: periodenErAvsluttet
         ? 'modal.omsorgsperson-arbeid-utland.land-fortid.spm'
         : 'modal.omsorgsperson-arbeid-utland.land-nåtid.spm',

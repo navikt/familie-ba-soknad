@@ -98,7 +98,11 @@ export const Arbeidsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={toggleArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
-                        id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
+                        id={
+                            gjelderUtlandet
+                                ? `${ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland}-${personType}`
+                                : `${ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge}-${personType}`
+                        }
                         feilmelding={
                             registrerteArbeidsperioder.erSynlig &&
                             registrerteArbeidsperioder.feilmelding &&

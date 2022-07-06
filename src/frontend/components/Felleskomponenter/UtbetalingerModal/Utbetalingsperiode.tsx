@@ -85,7 +85,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={toggleUtbetalingsmodal}
                         språkTekst={'felles.flereytelser.knapp'}
-                        id={UtbetalingerSpørsmålId.utbetalingsperioder}
+                        id={`${UtbetalingerSpørsmålId.utbetalingsperioder}-${personType}`}
                         feilmelding={
                             skjema.visFeilmeldinger && registrerteUtbetalingsperioder.feilmelding
                         }

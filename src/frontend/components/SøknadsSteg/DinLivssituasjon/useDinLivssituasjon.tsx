@@ -17,6 +17,7 @@ import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
+import { PersonType } from '../../../typer/personType';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
@@ -199,7 +200,7 @@ export const useDinLivssituasjon = (): {
         leggTilPeriode: leggTilArbeidsperiode,
         registrertePerioder: registrerteArbeidsperioder,
     } = usePerioder<IArbeidsperiode>({
-        feltId: ArbeidsperiodeSpørsmålsId.arbeidsperioder,
+        feltId: `${ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland}-${PersonType.Søker}`,
         verdi: søker.arbeidsperioderUtland,
         avhengigheter: { jobberPåBåt },
         skalFeltetVises: avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA,
@@ -221,7 +222,7 @@ export const useDinLivssituasjon = (): {
         leggTilPeriode: leggTilPensjonsperiode,
         registrertePerioder: registrertePensjonsperioder,
     } = usePerioder<IPensjonsperiode>({
-        feltId: PensjonsperiodeSpørsmålId.pensjonsperioder,
+        feltId: `${PensjonsperiodeSpørsmålId.pensjonsperioderUtland}-${PersonType.Søker}`,
         verdi: søker.pensjonsperioderUtland,
         avhengigheter: { mottarUtenlandspensjon },
         skalFeltetVises: avhengigheter => avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA,

@@ -12,6 +12,7 @@ import { usePerioder } from '../../../../hooks/usePerioder';
 import { AlternativtSvarForInput } from '../../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { ISøker } from '../../../../typer/person';
+import { PersonType } from '../../../../typer/personType';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { valideringAdresse } from '../../../../utils/adresse';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
@@ -65,7 +66,7 @@ export const useEøsForSøker = (): {
         leggTilPeriode: leggTilArbeidsperiode,
         registrertePerioder: registrerteArbeidsperioder,
     } = usePerioder<IArbeidsperiode>({
-        feltId: ArbeidsperiodeSpørsmålsId.arbeidsperioder,
+        feltId: `${ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge}-${PersonType.Søker}`,
         verdi: søker.arbeidsperioderNorge,
         avhengigheter: { arbeidINorge },
         skalFeltetVises: avhengigheter => avhengigheter.arbeidINorge.verdi === ESvar.JA,
@@ -86,7 +87,7 @@ export const useEøsForSøker = (): {
         leggTilPeriode: leggTilPensjonsperiode,
         registrertePerioder: registrertePensjonsperioder,
     } = usePerioder<IPensjonsperiode>({
-        feltId: PensjonsperiodeSpørsmålId.pensjonsperioder,
+        feltId: `${PensjonsperiodeSpørsmålId.pensjonsperioderNorge}-${PersonType.Søker}`,
         verdi: søker.pensjonsperioderNorge,
         avhengigheter: { pensjonNorge },
         skalFeltetVises: avhengigheter => avhengigheter.pensjonNorge.verdi === ESvar.JA,
@@ -107,7 +108,7 @@ export const useEøsForSøker = (): {
         leggTilPeriode: leggTilAndreUtbetalingsperiode,
         registrertePerioder: registrerteAndreUtbetalinger,
     } = usePerioder<IUtbetalingsperiode>({
-        feltId: UtbetalingerSpørsmålId.utbetalingsperioder,
+        feltId: `${UtbetalingerSpørsmålId.utbetalingsperioder}-${PersonType.Søker}`,
         verdi: søker.andreUtbetalingsperioder,
         avhengigheter: { andreUtbetalinger },
         skalFeltetVises: avhengigheter => avhengigheter.andreUtbetalinger.verdi === ESvar.JA,

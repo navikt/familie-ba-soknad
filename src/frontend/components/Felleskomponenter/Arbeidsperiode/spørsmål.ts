@@ -1,6 +1,7 @@
 export enum ArbeidsperiodeSpørsmålsId {
     arbeidsperiodeAvsluttet = 'arbeidsperiode-avluttet',
-    arbeidsperioder = 'arbeidsperioder',
+    arbeidsperioderUtland = 'arbeidsperioder-utland',
+    arbeidsperioderNorge = 'arbeidsperioder-norge',
     arbeidsperiodeLand = 'arbeidsperiode-land',
     arbeidsgiver = 'arbeidsgiver',
     fraDatoArbeidsperiode = 'fra-dato-arbeidsperiode',

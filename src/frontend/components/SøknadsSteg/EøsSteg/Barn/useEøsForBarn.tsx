@@ -26,6 +26,7 @@ import {
     IPensjonsperiode,
     IUtbetalingsperiode,
 } from '../../../../typer/perioder';
+import { PersonType } from '../../../../typer/personType';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { valideringAdresse } from '../../../../utils/adresse';
 import { skalSkjuleAndreForelderFelt, skalViseBorMedOmsorgsperson } from '../../../../utils/barn';
@@ -264,7 +265,7 @@ export const useEøsForBarn = (
         leggTilPeriode: leggTilArbeidsperiodeUtlandOmsorgsperson,
         registrertePerioder: omsorgspersonArbeidsperioderUtland,
     } = usePerioder<IArbeidsperiode>({
-        feltId: ArbeidsperiodeSpørsmålsId.arbeidsperioder,
+        feltId: `${ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland}-${PersonType.Omsorgsperson}`,
         verdi: omsorgsperson?.arbeidsperioderUtland ?? [],
         avhengigheter: { omsorgspersonArbeidUtland },
         skalFeltetVises: avhengigheter =>
@@ -289,7 +290,7 @@ export const useEøsForBarn = (
         leggTilPeriode: leggTilArbeidsperiodeNorgeOmsorgsperson,
         registrertePerioder: omsorgspersonArbeidsperioderNorge,
     } = usePerioder<IArbeidsperiode>({
-        feltId: ArbeidsperiodeSpørsmålsId.arbeidsperioder,
+        feltId: `${ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge}-${PersonType.Omsorgsperson}`,
         verdi: omsorgsperson?.arbeidsperioderNorge ?? [],
         avhengigheter: { omsorgspersonArbeidNorge },
         skalFeltetVises: avhengigheter => avhengigheter.omsorgspersonArbeidNorge.verdi === ESvar.JA,
@@ -313,7 +314,7 @@ export const useEøsForBarn = (
         leggTilPeriode: leggTilPensjonsperiodeUtlandOmsorgsperson,
         registrertePerioder: omsorgspersonPensjonsperioderUtland,
     } = usePerioder<IPensjonsperiode>({
-        feltId: PensjonsperiodeSpørsmålId.pensjonsperioder,
+        feltId: `${PensjonsperiodeSpørsmålId.pensjonsperioderUtland}-${PersonType.Omsorgsperson}`,
         verdi: omsorgsperson?.pensjonsperioderUtland ?? [],
         avhengigheter: { omsorgspersonPensjonUtland },
         skalFeltetVises: avhengigheter =>
@@ -338,7 +339,7 @@ export const useEøsForBarn = (
         leggTilPeriode: leggTilPensjonsperiodeNorgeOmsorgsperson,
         registrertePerioder: omsorgspersonPensjonsperioderNorge,
     } = usePerioder<IPensjonsperiode>({
-        feltId: PensjonsperiodeSpørsmålId.pensjonsperioder,
+        feltId: `${PensjonsperiodeSpørsmålId.pensjonsperioderNorge}-${PersonType.Omsorgsperson}`,
         verdi: omsorgsperson?.pensjonsperioderNorge ?? [],
         avhengigheter: { omsorgspersonPensjonNorge },
         skalFeltetVises: avhengigheter =>
@@ -363,7 +364,7 @@ export const useEøsForBarn = (
         leggTilPeriode: leggTilAndreUtbetalingsperiodeOmsorgsperson,
         registrertePerioder: omsorgspersonAndreUtbetalingsperioder,
     } = usePerioder<IUtbetalingsperiode>({
-        feltId: UtbetalingerSpørsmålId.utbetalingsperioder,
+        feltId: `${UtbetalingerSpørsmålId.utbetalingsperioder}-${PersonType.Omsorgsperson}`,
         verdi: omsorgsperson?.andreUtbetalingsperioder ?? [],
         avhengigheter: { omsorgspersonAndreUtbetalinger },
         skalFeltetVises: avhengigheter =>
@@ -403,7 +404,7 @@ export const useEøsForBarn = (
         leggTilPeriode: leggTilBarnetrygdsperiodeOmsorgsperson,
         registrertePerioder: omsorgspersonEøsBarnetrygdsperioder,
     } = usePerioder<IEøsBarnetrygdsperiode>({
-        feltId: BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs,
+        feltId: `${BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs}-${PersonType.Omsorgsperson}`,
         verdi: omsorgsperson?.eøsBarnetrygdsperioder ?? [],
         avhengigheter: { omsorgspersonBarnetrygdFraEøs },
         skalFeltetVises: avhengigheter =>
@@ -472,7 +473,7 @@ export const useEøsForBarn = (
         leggTilPeriode: leggTilArbeidsperiodeNorgeAndreForelder,
         registrertePerioder: andreForelderArbeidsperioderNorge,
     } = usePerioder<IArbeidsperiode>({
-        feltId: ArbeidsperiodeSpørsmålsId.arbeidsperioder,
+        feltId: `${ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge}-${PersonType.AndreForelder}`,
         verdi: andreForelder?.arbeidsperioderNorge ?? [],
         avhengigheter: { andreForelderArbeidNorge },
         skalFeltetVises: avhengigheter => avhengigheter.andreForelderArbeidNorge.verdi === ESvar.JA,
@@ -498,7 +499,7 @@ export const useEøsForBarn = (
         leggTilPeriode: leggTilPensjonsperiodeNorgeAndreForelder,
         registrertePerioder: andreForelderPensjonsperioderNorge,
     } = usePerioder<IPensjonsperiode>({
-        feltId: PensjonsperiodeSpørsmålId.pensjonsperioder,
+        feltId: `${PensjonsperiodeSpørsmålId.pensjonsperioderNorge}-${PersonType.AndreForelder}`,
         verdi: andreForelder?.pensjonsperioderNorge ?? [],
         avhengigheter: { andreForelderPensjonNorge },
         skalFeltetVises: avhengigheter =>
@@ -525,7 +526,7 @@ export const useEøsForBarn = (
         leggTilPeriode: leggTilAndreUtbetalingsperiodeAndreForelder,
         registrertePerioder: andreForelderAndreUtbetalingsperioder,
     } = usePerioder<IUtbetalingsperiode>({
-        feltId: UtbetalingerSpørsmålId.utbetalingsperioder,
+        feltId: `${UtbetalingerSpørsmålId.utbetalingsperioder}-${PersonType.AndreForelder}`,
         verdi: andreForelder?.andreUtbetalingsperioder ?? [],
         avhengigheter: { andreForelderAndreUtbetalinger },
         skalFeltetVises: avhengigheter =>
@@ -568,7 +569,7 @@ export const useEøsForBarn = (
         leggTilPeriode: leggTilBarnetrygdsperiodeAndreForelder,
         registrertePerioder: andreForelderEøsBarnetrygdsperioder,
     } = usePerioder<IEøsBarnetrygdsperiode>({
-        feltId: BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs,
+        feltId: `${BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs}-${PersonType.AndreForelder}`,
         verdi: andreForelder?.eøsBarnetrygdsperioder ?? [],
         avhengigheter: { andreForelderBarnetrygdFraEøs },
         skalFeltetVises: avhengigheter =>

@@ -102,7 +102,11 @@ export const Pensjonsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={togglePensjonsmodal}
                         språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}
-                        id={PensjonsperiodeSpørsmålId.pensjonsperioder}
+                        id={
+                            gjelderUtlandet
+                                ? `${PensjonsperiodeSpørsmålId.pensjonsperioderUtland}-${personType}`
+                                : `${PensjonsperiodeSpørsmålId.pensjonsperioderNorge}-${personType}`
+                        }
                         feilmelding={
                             registrertePensjonsperioder.erSynlig &&
                             registrertePensjonsperioder.feilmelding &&
