@@ -153,10 +153,15 @@ export const arbeidsperiodeAndreForelderSpørsmålSpråkId = (
 
 export const arbeidsperiodeOmsorgspersonSpørsmålSpråkId = (
     periodenErAvsluttet = false
-): Record<ArbeidsperiodeSpørsmålsId, string> => ({
+): Record<
+    Exclude<
+        ArbeidsperiodeSpørsmålsId,
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge
+    >,
+    string
+> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland]: 'eøs.arbeidetiutlandet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge]: 'eøs.arbeidetiutlandet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: periodenErAvsluttet
         ? 'modal.omsorgsperson-arbeid-utland.land-fortid.spm'
         : 'modal.omsorgsperson-arbeid-utland.land-nåtid.spm',
