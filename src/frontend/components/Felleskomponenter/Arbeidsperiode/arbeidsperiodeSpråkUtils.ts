@@ -107,10 +107,15 @@ export const arbeidsperiodeSpørsmålSpråkId = (
 
 export const arbeidsperiodeSøkerSpørsmålSpråkId = (
     periodenErAvsluttet = false
-): Record<ArbeidsperiodeSpørsmålsId, string> => ({
+): Record<
+    Exclude<
+        ArbeidsperiodeSpørsmålsId,
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge
+    >,
+    string
+> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland]: 'eøs.arbeidetiutlandet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge]: 'eøs.arbeidetiutlandet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: periodenErAvsluttet
         ? 'dinlivssituasjon.arbeid-utland.land.spm'
         : 'omdeg.arbeid-utland.land.spm',
@@ -125,10 +130,15 @@ export const arbeidsperiodeSøkerSpørsmålSpråkId = (
 
 export const arbeidsperiodeAndreForelderSpørsmålSpråkId = (
     periodenErAvsluttet = false
-): Record<ArbeidsperiodeSpørsmålsId, string> => ({
+): Record<
+    Exclude<
+        ArbeidsperiodeSpørsmålsId,
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge
+    >,
+    string
+> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland]: 'eøs.arbeidetiutlandet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge]: 'eøs.arbeidetiutlandet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: periodenErAvsluttet
         ? 'enkeenkemann.andreforelder-arbeidutland.land.spm'
         : 'ombarnet.andre-forelder.arbeid-utland.land.spm',
