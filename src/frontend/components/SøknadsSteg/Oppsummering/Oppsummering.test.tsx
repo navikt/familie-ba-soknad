@@ -62,7 +62,7 @@ describe('Oppsummering', () => {
         spyOnUseApp(søknad);
         const { mockedHistoryArray } = mockHistory(['/oppsummering']);
 
-        const { findByText, getByText, container, debug } = render(
+        const { findByText, getByText } = render(
             <TestProvidere>
                 <Oppsummering />
             </TestProvidere>
@@ -71,7 +71,6 @@ describe('Oppsummering', () => {
 
         await act(() => gåVidere.click());
 
-        debug(container, 100000000);
         const feilmelding = getByText('omdeg.oppholdtsammenhengende.feilmelding');
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({
             hash: 'omdeg-feil',

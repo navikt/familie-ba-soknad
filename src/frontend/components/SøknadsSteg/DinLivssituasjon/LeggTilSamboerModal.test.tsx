@@ -28,6 +28,9 @@ const søknad = mockDeep<ISøknad>({
     },
 });
 
+//Feilmelding dukker både opp under spørsmålet og i feiloppsummeringen
+const antallFeilmeldingerPerFeil = 2;
+
 describe('LeggTilSamboerModal', () => {
     mockHistory(['/din-livssituasjon']);
 
@@ -54,18 +57,18 @@ describe('LeggTilSamboerModal', () => {
         );
         expect(feiloppsummeringstittel).toBeInTheDocument();
         const navnFeilmelding = getAllByText('Du må oppgi samboerens navn for å gå videre');
-        expect(navnFeilmelding).toHaveLength(2);
+        expect(navnFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
         const fødselsnummerFeilmelding = getAllByText(
             'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
         );
-        expect(fødselsnummerFeilmelding).toHaveLength(2);
+        expect(fødselsnummerFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
         const forholdStartFeilmelding = getAllByText(
             'Du må oppgi når samboerforholdet startet for å gå videre'
         );
-        expect(forholdStartFeilmelding).toHaveLength(2);
+        expect(forholdStartFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
         const forholdSluttFeilmelding = getAllByText(
             'Du må oppgi når samboerforholdet ble avsluttet for å gå videre'
         );
-        expect(forholdSluttFeilmelding).toHaveLength(2);
+        expect(forholdSluttFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
     });
 });

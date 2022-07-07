@@ -42,6 +42,9 @@ const søknad = mockDeep<ISøknad>({
     },
 });
 
+//Feilmelding dukker både opp under spørsmålet og i feiloppsummeringen
+const antallFeilmeldingerPerFeil = 2;
+
 describe('DinLivssituasjon', () => {
     mockHistory(['/din-livssituasjon']);
 
@@ -93,10 +96,10 @@ describe('DinLivssituasjon', () => {
             'Du må rette opp eller svare på følgende spørsmål for å gå videre'
         );
         expect(feiloppsummeringstittel).toBeInTheDocument();
-        const feiloppsummeringspunkt = queryAllByText(
+        const feilmeldingÅrsak = queryAllByText(
             'Du må velge årsak til at du søker om utvidet barnetrygd for å gå videre'
         );
-        expect(feiloppsummeringspunkt).toHaveLength(2);
+        expect(feilmeldingÅrsak).toHaveLength(antallFeilmeldingerPerFeil);
     });
 
     it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', async () => {
@@ -136,12 +139,12 @@ describe('DinLivssituasjon', () => {
         );
         const gåVidere = await findByText('Gå videre');
         act(() => gåVidere.click());
-        const feiloppsummering = getByText(
+        const feiloppsummeringstittel = getByText(
             'Du må rette opp eller svare på følgende spørsmål for å gå videre'
         );
-        expect(feiloppsummering).toBeInTheDocument();
-        const feilmelding = getAllByText('Du må oppgi om du har samboer nå for å gå videre');
-        expect(feilmelding).toHaveLength(2);
+        expect(feiloppsummeringstittel).toBeInTheDocument();
+        const feilmeldingSamboer = getAllByText('Du må oppgi om du har samboer nå for å gå videre');
+        expect(feilmeldingSamboer).toHaveLength(antallFeilmeldingerPerFeil);
     });
 
     it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
@@ -161,21 +164,21 @@ describe('DinLivssituasjon', () => {
         const gåVidereKnapp = await findByText('Gå videre');
         act(() => gåVidereKnapp.click());
 
-        const feiloppsummering = getByText(
+        const feiloppsummeringstittel = getByText(
             'Du må rette opp eller svare på følgende spørsmål for å gå videre'
         );
-        expect(feiloppsummering).toBeInTheDocument();
+        expect(feiloppsummeringstittel).toBeInTheDocument();
 
-        const navnFeilmelding = getAllByText('Du må oppgi samboerens navn for å gå videre');
-        expect(navnFeilmelding).toHaveLength(2);
-        const fødselsnummerFeilmelding = getAllByText(
+        const feilmeldingSamboerNavn = getAllByText('Du må oppgi samboerens navn for å gå videre');
+        expect(feilmeldingSamboerNavn).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingFnr = getAllByText(
             'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
         );
-        expect(fødselsnummerFeilmelding).toHaveLength(2);
-        const forholdStartFeilmelding = getAllByText(
+        expect(feilmeldingFnr).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingForholdStart = getAllByText(
             'Du må oppgi når samboerforholdet startet for å gå videre'
         );
-        expect(forholdStartFeilmelding).toHaveLength(2);
+        expect(feilmeldingForholdStart).toHaveLength(antallFeilmeldingerPerFeil);
     });
 
     it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand annet enn GIFT', async () => {
