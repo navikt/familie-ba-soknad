@@ -62,7 +62,7 @@ describe('Oppsummering', () => {
         spyOnUseApp(søknad);
         const { mockedHistoryArray } = mockHistory(['/oppsummering']);
 
-        const { findByText, getAllByRole } = render(
+        const { findByText, getByText, container, debug } = render(
             <TestProvidere>
                 <Oppsummering />
             </TestProvidere>
@@ -71,12 +71,12 @@ describe('Oppsummering', () => {
 
         await act(() => gåVidere.click());
 
-        const omDegFeil = getAllByRole('alert')[0];
+        debug(container, 100000000);
+        const feilmelding = getByText('omdeg.oppholdtsammenhengende.feilmelding');
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({
             hash: 'omdeg-feil',
         });
-        expect(omDegFeil).toBeInTheDocument();
-        expect(omDegFeil).toBeVisible();
+        expect(feilmelding).toBeInTheDocument();
     }, 10000);
 
     it('går til dokumentasjon med gyldig søknad', async () => {

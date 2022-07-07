@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, within } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
@@ -37,7 +37,7 @@ describe('LeggTilSamboerModal', () => {
     it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', () => {
         spyOnUseApp(søknad);
 
-        const { getByText, getByRole, getAllByText } = render(
+        const { getByText, getAllByText, queryByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -49,23 +49,23 @@ describe('LeggTilSamboerModal', () => {
         const gåVidereKnapp = getAllByText('Legg til samboer');
         act(() => gåVidereKnapp[2].click());
 
-        const feiloppsummering = getByRole('alert');
-
-        const navnFeilmelding = within(feiloppsummering).getByText(
-            'Du må oppgi samboerens navn for å gå videre'
+        const feiloppsummeringstittel = queryByText(
+            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
         );
-        expect(navnFeilmelding).toBeInTheDocument();
-        const fødselsnummerFeilmelding = within(feiloppsummering).getByText(
+        expect(feiloppsummeringstittel).toBeInTheDocument();
+        const navnFeilmelding = getAllByText('Du må oppgi samboerens navn for å gå videre');
+        expect(navnFeilmelding).toHaveLength(2);
+        const fødselsnummerFeilmelding = getAllByText(
             'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
         );
-        expect(fødselsnummerFeilmelding).toBeInTheDocument();
-        const forholdStartFeilmelding = within(feiloppsummering).getByText(
+        expect(fødselsnummerFeilmelding).toHaveLength(2);
+        const forholdStartFeilmelding = getAllByText(
             'Du må oppgi når samboerforholdet startet for å gå videre'
         );
-        expect(forholdStartFeilmelding).toBeInTheDocument();
-        const forholdSluttFeilmelding = within(feiloppsummering).getByText(
+        expect(forholdStartFeilmelding).toHaveLength(2);
+        const forholdSluttFeilmelding = getAllByText(
             'Du må oppgi når samboerforholdet ble avsluttet for å gå videre'
         );
-        expect(forholdSluttFeilmelding).toBeInTheDocument();
+        expect(forholdSluttFeilmelding).toHaveLength(2);
     });
 });
