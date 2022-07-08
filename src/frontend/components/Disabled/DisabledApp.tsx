@@ -32,10 +32,9 @@ export const DisabledApp: React.FC = () => {
                 {
                     // TODO: Dekoratøren språk-handling fra PR: #265
                 }
-                <VeilederSnakkeboble
-                    tekst={<SpråkTekst id={'vedlikehold.veilederhilsen'} />}
-                    posisjon={'høyre'}
-                />
+                <VeilederSnakkeboble>
+                    <SpråkTekst id={'vedlikehold.veilederhilsen'} />
+                </VeilederSnakkeboble>
                 <StyledSidetittel>
                     <SpråkTekst id={'vedlikehold.sidetittel'} />
                 </StyledSidetittel>

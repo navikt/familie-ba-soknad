@@ -56,13 +56,14 @@ const Forside: React.FC = () => {
 
     return (
         <InnholdContainer>
-            <VeilederSnakkeboble
-                tekst={formatMessage(
-                    { id: 'forside.veilederhilsen' },
-                    { navn: navn.toUpperCase() }
-                )}
-                posisjon={'høyre'}
-            />
+            <VeilederSnakkeboble>
+                <SpråkTekst
+                    id={formatMessage(
+                        { id: 'forside.veilederhilsen' },
+                        { navn: navn.toUpperCase() }
+                    )}
+                />
+            </VeilederSnakkeboble>
 
             <StyledSidetittel>
                 <SpråkTekst id={erUtvidet ? 'forside.utvidet.sidetittel' : 'forside.sidetittel'} />
