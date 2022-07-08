@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Avhengigheter, useFelt } from '@navikt/familie-skjema';
 import { ValiderFelt } from '@navikt/familie-skjema/dist/typer';
 
+import { BarnetsId } from '../typer/common';
 import { PersonType } from '../typer/personType';
 import { SpørsmålId } from '../typer/spørsmål';
 
@@ -13,7 +14,11 @@ export const usePerioder = <T>({
     skalFeltetVises,
     valideringsfunksjon,
 }: {
-    feltId: `${SpørsmålId}-${PersonType}`;
+    feltId:
+        | `${SpørsmålId}-${PersonType.Søker}`
+        | `${SpørsmålId}-${PersonType.AndreForelder}-${BarnetsId}`
+        | `${SpørsmålId}-${PersonType.Omsorgsperson}-${BarnetsId}`
+        | `${SpørsmålId}-${BarnetsId}`;
     verdi: T[];
     avhengigheter?: Avhengigheter;
     skalFeltetVises?: (avhengigheter: Avhengigheter) => boolean;

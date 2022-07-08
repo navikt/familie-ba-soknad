@@ -8,6 +8,7 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
+import { hentPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -85,7 +86,11 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={toggleUtbetalingsmodal}
                         språkTekst={'felles.flereytelser.knapp'}
-                        id={`${UtbetalingerSpørsmålId.utbetalingsperioder}-${personType}`}
+                        id={hentPeriodeId({
+                            personType: personType,
+                            spørsmålsId: UtbetalingerSpørsmålId.utbetalingsperioder,
+                            barnetsId: barn?.id,
+                        })}
                         feilmelding={
                             skjema.visFeilmeldinger && registrerteUtbetalingsperioder.feilmelding
                         }
