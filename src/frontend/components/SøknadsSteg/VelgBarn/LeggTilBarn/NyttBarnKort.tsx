@@ -2,8 +2,9 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Knapp } from 'nav-frontend-knapper';
 import { Ingress } from 'nav-frontend-typografi';
+
+import { Button } from '@navikt/ds-react';
 
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { StyledBarnekort } from '../Barnekort/Barnekort';
@@ -15,9 +16,12 @@ const StyledIngress = styled(Ingress)`
     }
 `;
 
-const StyledKnapp = styled(Knapp)`
-    margin-top: 1rem;
-    width: 100%;
+const StyledButton = styled(Button)`
+    && {
+        margin-top: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
 `;
 
 export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTilBarn }) => {
@@ -26,9 +30,9 @@ export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTi
             <StyledIngress>
                 <SpråkTekst id={'hvilkebarn.leggtilbarn.kort'} />
             </StyledIngress>
-            <StyledKnapp htmlType={'button'} onClick={() => onLeggTilBarn()}>
+            <StyledButton type={'button'} variant={'secondary'} onClick={() => onLeggTilBarn()}>
                 <SpråkTekst id={'hvilkebarn.leggtilbarn.kort.knapp'} />
-            </StyledKnapp>
+            </StyledButton>
         </StyledBarnekort>
     );
 };
