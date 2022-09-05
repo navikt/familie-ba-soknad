@@ -1,11 +1,16 @@
-import { IntlShape } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
+import {
+    EøsSøkerSpørsmålId,
+    eøsSøkerSpørsmålSpråkId,
+} from '../../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { IBarnMedISøknad } from '../../typer/barn';
 import { ESivilstand } from '../../typer/kontrakt/generelle';
-import { ISøknadKontraktV7 } from '../../typer/kontrakt/v7';
+import { ISøknadKontraktV8 } from '../../typer/kontrakt/v8';
+import { ISøker } from '../../typer/person';
+import { PersonType } from '../../typer/personType';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
@@ -18,7 +23,7 @@ import {
 import { jaNeiSvarTilSpråkId } from '../spørsmål';
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
-import { barnISøknadsFormatV7 } from './barnV7';
+import { barnISøknadsFormatV8 } from './barnV8';
 import { dokumentasjonISøknadFormat } from './dokumentasjon';
 import {
     sammeVerdiAlleSpråk,
@@ -33,11 +38,21 @@ import { samboerISøknadKontraktFormat } from './samboer';
 import { tidligereSamboerISøknadKontraktFormat } from './tidligereSamboer';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
-export const dataISøknadKontraktFormatV7 = (
-    intl: IntlShape,
+const antallEøsSteg = (søker: ISøker, barnInkludertISøknaden: IBarnMedISøknad[]) => {
+    const barnSomTriggerEøs = barnInkludertISøknaden.filter(barn => barn.triggetEøs);
+    if (søker.triggetEøs) {
+        return barnInkludertISøknaden.length + 1;
+    } else if (barnSomTriggerEøs.length) {
+        return barnSomTriggerEøs.length + 1;
+    } else {
+        return 0;
+    }
+};
+
+export const dataISøknadKontraktFormatV8 = (
     valgtSpråk: LocaleType,
     søknad: ISøknad
-): ISøknadKontraktV7 => {
+): ISøknadKontraktV8 => {
     const { søker } = søknad;
     // Raskeste måte å få tak i alle spørsmål minus de andre feltene på søker
     /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -70,28 +85,36 @@ export const dataISøknadKontraktFormatV7 = (
 
     return {
         søknadstype: søknad.søknadstype,
-        kontraktVersjon: 7,
+        kontraktVersjon: 8,
+        antallEøsSteg: antallEøsSteg(søker, barnInkludertISøknaden),
         søker: {
-            navn: søknadsfelt('pdf.søker.navn.label', sammeVerdiAlleSpråk(søker.navn)),
-            ident: søknadsfelt('pdf.søker.ident.label', sammeVerdiAlleSpråk(søker.ident)),
+            harEøsSteg:
+                triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
+            navn: søknadsfelt('pdf.søker.navn.label', sammeVerdiAlleSpråk(navn)),
+            ident: søknadsfelt('pdf.søker.ident.label', sammeVerdiAlleSpråk(ident)),
             sivilstand: søknadsfelt(
                 'pdf.søker.sivilstand.label',
-                sammeVerdiAlleSpråk(søker.sivilstand.type)
+                sammeVerdiAlleSpråk(sivilstand.type)
             ),
             statsborgerskap: søknadsfelt(
                 'pdf.søker.statsborgerskap.label',
                 verdiCallbackAlleSpråk(locale =>
-                    søker.statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, locale))
+                    statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, locale))
                 )
             ),
-            adresse: søknadsfelt(
-                'pdf.søker.adresse.label',
-                sammeVerdiAlleSpråk(søker.adresse ?? {})
-            ),
+            adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse)),
+            adressebeskyttelse: søker.adressebeskyttelse,
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
-                utenlandsperiodeTilISøknadsfelt(intl, periode, index + 1)
+                utenlandsperiodeTilISøknadsfelt(periode, index + 1)
             ),
-            idNummer: idNummer.map(idnummerObj => idNummerTilISøknadsfelt(idnummerObj, valgtSpråk)),
+            idNummer: idNummer.map(idnummerObj =>
+                idNummerTilISøknadsfelt(
+                    idnummerObj,
+                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer],
+                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent],
+                    valgtSpråk
+                )
+            ),
             spørsmål: {
                 ...spørmålISøknadsFormat(typetSøkerSpørsmål),
                 ...spørmålISøknadsFormat(typetUtvidaSpørsmål),
@@ -105,8 +128,7 @@ export const dataISøknadKontraktFormatV7 = (
                     periode,
                     periodeNummer: index + 1,
                     gjelderUtlandet: true,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
             arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -114,38 +136,34 @@ export const dataISøknadKontraktFormatV7 = (
                     periode,
                     periodeNummer: index + 1,
                     gjelderUtlandet: false,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
             pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
                     gjelderUtlandet: true,
+                    personType: PersonType.Søker,
                 })
             ),
             pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
                 tilIPensjonsperiodeIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
                     gjelderUtlandet: false,
+                    personType: PersonType.Søker,
                 })
             ),
             andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
                 tilIAndreUtbetalingsperioderIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
-                    gjelderAndreForelder: false,
-                    erAndreForelderDød: false,
+                    personType: PersonType.Søker,
                 })
             ),
         },
-        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormatV7(intl, barn)),
+        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormatV8(barn, søker, valgtSpråk)),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfelt(
                 språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),
@@ -196,6 +214,8 @@ export const dataISøknadKontraktFormatV7 = (
             'ombarnet.opplystatbarnutlandopphold.info',
             'ombarnet.barnetrygd-eøs',
             'omdeg.annensamboer.spm',
+            'omdeg.personopplysninger.adressesperre.alert',
+            'omdeg.personopplysninger.ikke-registrert.alert',
             'pdf.andreforelder.seksjonstittel',
             'pdf.hvilkebarn.seksjonstittel',
             'pdf.hvilkebarn.registrert-på-adresse',
@@ -212,6 +232,8 @@ export const dataISøknadKontraktFormatV7 = (
             'dokumentasjon.har-sendt-inn.spm',
             'dinlivssituasjon.sidetittel',
             'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
+            'eøs-om-deg.sidetittel',
+            'eøs-om-barn.sidetittel',
             ...Object.values(ESivilstand).map(hentSivilstatusSpråkId),
             ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
         ].reduce((map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }), {}),

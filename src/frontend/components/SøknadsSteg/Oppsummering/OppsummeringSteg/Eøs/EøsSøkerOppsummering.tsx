@@ -3,16 +3,15 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../../context/AppContext';
-import { useEøs } from '../../../../../context/EøsContext';
 import { useRoutes } from '../../../../../context/RoutesContext';
+import { PersonType } from '../../../../../typer/personType';
 import { RouteEnum } from '../../../../../typer/routes';
 import { ISøknadSpørsmål } from '../../../../../typer/spørsmål';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
-import { IdNummer } from '../../../EøsSteg/IdNummer';
-import { idNummerLandMedPeriodeType } from '../../../EøsSteg/idnummerUtils';
+import IdNummerForSøker from '../../../EøsSteg/Søker/IdNummerForSøker';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from '../../../EøsSteg/Søker/spørsmål';
 import { useEøsForSøker } from '../../../EøsSteg/Søker/useEøsForSøker';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
@@ -26,9 +25,8 @@ interface Props {
 const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const { søknad } = useApp();
-    const søker = søknad.søker;
+    const { søker } = søknad;
     const eøsForSøkerHook = useEøsForSøker();
-    const { erEøsLand } = useEøs();
 
     const jaNeiSpmOppsummering = (søknadSpørsmål: ISøknadSpørsmål<ESvar | null>) => (
         <OppsummeringFelt
@@ -44,27 +42,13 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             skjemaHook={eøsForSøkerHook}
             settFeilAnchors={settFeilAnchors}
         >
-            <StyledOppsummeringsFeltGruppe>
-                {idNummerLandMedPeriodeType(
-                    søker.arbeidsperioderUtland,
-                    søker.pensjonsperioderUtland,
-                    søker.utenlandsperioder,
-                    erEøsLand
-                ).map((landMedPeriodeType, index) => {
-                    return (
-                        !!landMedPeriodeType.land && (
-                            <IdNummer
-                                lesevisning={true}
-                                skjema={eøsForSøkerHook.skjema}
-                                key={index}
-                                settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
-                                landAlphaCode={landMedPeriodeType.land}
-                                periodeType={landMedPeriodeType.periodeType}
-                            />
-                        )
-                    );
-                })}
-                {søker.adresseISøkeperiode.svar && (
+            <IdNummerForSøker
+                skjema={eøsForSøkerHook.skjema}
+                settIdNummerFelter={eøsForSøkerHook.settIdNummerFelter}
+                lesevisning={true}
+            />
+            {søker.adresseISøkeperiode.svar && (
+                <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -73,8 +57,8 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         }
                         søknadsvar={søker.adresseISøkeperiode.svar}
                     />
-                )}
-            </StyledOppsummeringsFeltGruppe>
+                </StyledOppsummeringsFeltGruppe>
+            )}
             <StyledOppsummeringsFeltGruppe>
                 {jaNeiSpmOppsummering(søker.arbeidINorge)}
                 {søker.arbeidsperioderNorge.map((arbeidsperiode, index) => (
@@ -82,6 +66,8 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         key={`arbeidsperiode-søker-norge-${index}`}
                         arbeidsperiode={arbeidsperiode}
                         nummer={index + 1}
+                        personType={PersonType.Søker}
+                        gjelderUtlandet={false}
                     />
                 ))}
 
@@ -91,6 +77,8 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         key={`pensjonsperiode-søker-norge-${index}`}
                         pensjonsperiode={pensjonsperiode}
                         nummer={index + 1}
+                        gjelderUtlandet={false}
+                        personType={PersonType.Søker}
                     />
                 ))}
 
@@ -100,6 +88,7 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         key={`utbetalingsperiode-søker-norge-${index}`}
                         utbetalingsperiode={utbetalingsperiode}
                         nummer={index + 1}
+                        personType={PersonType.Søker}
                     />
                 ))}
             </StyledOppsummeringsFeltGruppe>

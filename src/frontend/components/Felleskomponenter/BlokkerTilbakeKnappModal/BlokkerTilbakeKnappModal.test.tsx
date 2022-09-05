@@ -15,7 +15,6 @@ import {
     TestProvidere,
 } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../../SøknadsSteg/OmBarnet/spørsmål';
 import BlokkerTilbakeKnappModal from './BlokkerTilbakeKnappModal';
 
 const manueltRegistrert: Partial<IBarn> = {
@@ -30,10 +29,6 @@ const fraPdl: Partial<IBarnRespons> = {
 const manueltRegistrertSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
     ...manueltRegistrert,
     id: 'random-id-1',
-    barnetrygdFraEøslandHvilketLand: {
-        id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
-        svar: 'NOR',
-    },
     utenlandsperioder: [],
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
         id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
@@ -43,11 +38,8 @@ const manueltRegistrertSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
 
 const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
     ...fraPdl,
+    navn: fraPdl.navn ?? 'ukjent',
     id: 'random-id-2',
-    barnetrygdFraEøslandHvilketLand: {
-        id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
-        svar: 'NOR',
-    },
     utenlandsperioder: [],
     [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
         id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,

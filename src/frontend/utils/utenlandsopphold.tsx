@@ -9,8 +9,8 @@ export const hentMaxAvgrensningPåFraDato = (
 ): ISODateString | undefined => {
     switch (utenlandsoppÅrsak) {
         case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
-        case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
             return dagensDato();
+        case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
         case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
             return gårsdagensDato();
         default:
@@ -23,6 +23,8 @@ export const hentMinAvgrensningPåTilDato = (
     switch (utenlandsoppÅrsak) {
         case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
             return ettÅrTilbakeDato();
+        case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+            return dagensDato();
         default:
             return undefined;
     }
@@ -43,10 +45,7 @@ export const hentMaxAvgrensningPåTilDato = (
 export const harTilhørendeFomFelt = (
     utenlandsoppholdÅrsak: EUtenlandsoppholdÅrsak | ''
 ): boolean => {
-    return (
-        utenlandsoppholdÅrsak === EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE ||
-        utenlandsoppholdÅrsak === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
-    );
+    return utenlandsoppholdÅrsak === EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE;
 };
 
 export const flyttetPermanentFraNorge = (utenlandsperioder: IUtenlandsperiode[]) =>

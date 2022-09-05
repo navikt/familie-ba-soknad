@@ -1,6 +1,6 @@
 import { ApiRessurs, Ressurs, RessursStatus } from '@navikt/familie-typer';
 
-export const modellVersjon = 33;
+export const modellVersjon = 48;
 
 export const modellVersjonHeaderName = 'Soknad-Modell-Versjon';
 
@@ -14,7 +14,7 @@ export const erModellMismatchResponsRessurs = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ressurs: ApiRessurs<any> | Ressurs<any>
 ): ressurs is ApiRessurs<ModellMismatchRespons> => {
-    if (!('melding' in ressurs)) {
+    if (!(typeof ressurs !== 'object' || 'melding' in ressurs)) {
         return false;
     }
 

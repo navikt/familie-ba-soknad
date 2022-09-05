@@ -2,58 +2,79 @@ import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 import { Alpha3Code, getName } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
+import styled from 'styled-components';
+
+import { guid } from 'nav-frontend-js-utils';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { useApp } from '../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
+import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { IEøsForSøkerFeltTyper } from '../../../typer/skjema';
+import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
-import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './Søker/spørsmål';
+
+export const IdNummerContainer = styled.div<{ lesevisning: boolean }>`
+    margin-bottom: ${props => (props.lesevisning ? '1rem' : '2rem')};
+`;
 
 export const IdNummer: React.FC<{
-    skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
+    skjema: ISkjema<IEøsForSøkerFeltTyper | IEøsForBarnFeltTyper, string>;
     settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
-    landAlphaCode: Alpha3Code;
-    periodeType: PeriodeType;
+    landAlphaCode: Alpha3Code | '';
+    periodeType?: PeriodeType;
+    idNummerVerdiFraSøknad: string | undefined;
+    feilmeldingSpråkId: string;
+    spørsmålSpråkId: string;
+    spørsmålCheckboxSpråkId: string;
     lesevisning?: boolean;
-}> = ({ skjema, settIdNummerFelter, landAlphaCode, periodeType, lesevisning = false }) => {
+    barn?: IBarnMedISøknad;
+}> = ({
+    skjema,
+    settIdNummerFelter,
+    landAlphaCode,
+    periodeType = undefined,
+    idNummerVerdiFraSøknad,
+    feilmeldingSpråkId,
+    spørsmålSpråkId,
+    spørsmålCheckboxSpråkId,
+    barn,
+    lesevisning = false,
+}) => {
     const [valgtLocale] = useSprakContext();
-    const { søknad } = useApp();
-    const { formatMessage } = useIntl();
+    const intl = useIntl();
+    const { formatMessage } = intl;
 
-    const idNummerVerdiFraSøknad = søknad.søker.idNummer.find(
-        verdi => verdi.land === landAlphaCode
-    )?.idnummer;
+    // Bruker skal ha mulighet til å velge at hen ikke kjenner idnummer for: barn, andre forelder og søker (dersom idnummer for søker trigges av et utenlandsopphold).
+    // Barn blir sendt med som prop når vi render Idnummer for andre forelder og barn, derfor kan vi sjekke på den propen.
+    const skalViseVetIkkeCheckbox = !!barn || periodeType === PeriodeType.utenlandsperiode;
 
     const idNummerUkjent = useFelt<ESvar>({
         verdi:
-            periodeType === PeriodeType.utenlandsperiode &&
-            idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
+            skalViseVetIkkeCheckbox && idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
                 ? ESvar.JA
                 : ESvar.NEI,
-        feltId: `idnummer-ukjent-${landAlphaCode}`,
-        skalFeltetVises: () => periodeType === PeriodeType.utenlandsperiode,
+        feltId: `${guid()}idnummer-ukjent-${landAlphaCode}`,
+        skalFeltetVises: () => skalViseVetIkkeCheckbox,
     });
 
     const idNummerFelt = useInputFeltMedUkjent({
         søknadsfelt: {
-            id: `${idNummerKeyPrefix}${landAlphaCode}`,
+            id: `${guid()}${idNummerKeyPrefix}${landAlphaCode}`,
             svar:
                 idNummerVerdiFraSøknad && idNummerVerdiFraSøknad !== AlternativtSvarForInput.UKJENT
                     ? idNummerVerdiFraSøknad
                     : '',
         },
         avhengighet: idNummerUkjent,
-        feilmeldingSpråkId: 'eøs-om-deg.dittidnummer.feilmelding',
+        feilmeldingSpråkId: feilmeldingSpråkId,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
             if (verdi.match(/^[0-9A-Za-z\s\-.\\/]{4,20}$/)) {
@@ -62,6 +83,7 @@ export const IdNummer: React.FC<{
                 return feil(felt, <SpråkTekst id={'felles.idnummer-feilformat.feilmelding'} />);
             }
         },
+        ...(barn && { språkVerdier: { barn: barn.navn } }),
     });
 
     useEffect(() => {
@@ -70,41 +92,51 @@ export const IdNummer: React.FC<{
         );
     }, [idNummerFelt.verdi, idNummerFelt.valideringsstatus]);
 
-    return lesevisning ? (
-        <OppsummeringFelt
-            tittel={
-                <SpråkTekst
-                    id={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
-                    values={{ land: getName(landAlphaCode, valgtLocale) }}
+    return (
+        <IdNummerContainer lesevisning={lesevisning}>
+            {lesevisning ? (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={spørsmålSpråkId}
+                            values={{
+                                land: getName(landAlphaCode, valgtLocale),
+                                ...(barn && { barn: barn.navn }),
+                            }}
+                        />
+                    }
+                    søknadsvar={
+                        idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
+                            ? formatMessage(
+                                  {
+                                      id: spørsmålCheckboxSpråkId,
+                                  },
+                                  { land: getName(landAlphaCode, valgtLocale) }
+                              )
+                            : idNummerVerdiFraSøknad
+                    }
                 />
-            }
-            søknadsvar={
-                idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
-                    ? formatMessage(
-                          {
-                              id: eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent],
-                          },
-                          { land: getName(landAlphaCode, valgtLocale) }
-                      )
-                    : idNummerVerdiFraSøknad
-            }
-        />
-    ) : (
-        <>
-            <SkjemaFeltInput
-                felt={idNummerFelt}
-                visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
-                språkValues={{ land: getName(landAlphaCode, valgtLocale) }}
-                disabled={idNummerUkjent.verdi === ESvar.JA}
-            />
-            {idNummerUkjent.erSynlig && (
-                <SkjemaCheckbox
-                    labelSpråkTekstId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent]}
-                    felt={idNummerUkjent}
-                    språkVerdier={{ land: getName(landAlphaCode, valgtLocale) }}
-                />
+            ) : (
+                <>
+                    <SkjemaFeltInput
+                        felt={idNummerFelt}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={spørsmålSpråkId}
+                        språkValues={{
+                            land: getName(landAlphaCode, valgtLocale),
+                            ...(barn && { barn: barn.navn }),
+                        }}
+                        disabled={idNummerUkjent.verdi === ESvar.JA}
+                    />
+                    {idNummerUkjent.erSynlig && (
+                        <SkjemaCheckbox
+                            labelSpråkTekstId={spørsmålCheckboxSpråkId}
+                            felt={idNummerUkjent}
+                            språkVerdier={{ land: getName(landAlphaCode, valgtLocale) }}
+                        />
+                    )}
+                </>
             )}
-        </>
+        </IdNummerContainer>
     );
 };

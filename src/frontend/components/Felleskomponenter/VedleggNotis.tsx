@@ -6,7 +6,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { FileContent } from '@navikt/ds-icons';
 
-import EksternLenke from './EksternLenke/EksternLenke';
 import SpråkTekst from './SpråkTekst/SpråkTekst';
 
 const NotisWrapper = styled.div`
@@ -33,10 +32,6 @@ const NotisInnhold = styled.div`
     }
 `;
 
-const StyledEksternLenkeWrapper = styled(EksternLenke)`
-    margin: 0.5rem 0 0 2rem;
-`;
-
 export const VedleggNotis: React.FC<{
     språkTekstId: string;
     dynamisk?: boolean;
@@ -51,26 +46,5 @@ export const VedleggNotis: React.FC<{
                 </Normaltekst>
             </NotisInnhold>
         </NotisWrapper>
-    );
-};
-
-export const VedleggNotisTilleggsskjema: React.FC<{
-    språkTekstId: string;
-    dynamisk?: boolean;
-    språkValues?: Record<string, ReactNode>;
-}> = ({ språkTekstId, dynamisk = false, språkValues = {} }) => {
-    return (
-        <>
-            <VedleggNotis
-                språkTekstId={språkTekstId}
-                dynamisk={dynamisk}
-                språkValues={språkValues}
-            />
-            <StyledEksternLenkeWrapper
-                lenkeSpråkId={'eøs.tilleggsskjema.lenke'}
-                lenkeTekstSpråkId={'eøs.tilleggsskjema.lenketekst'}
-                target="_blank"
-            />
-        </>
     );
 };

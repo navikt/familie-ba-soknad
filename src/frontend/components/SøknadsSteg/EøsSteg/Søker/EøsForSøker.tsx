@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { useApp } from '../../../../context/AppContext';
-import { useEøs } from '../../../../context/EøsContext';
+import { PersonType } from '../../../../typer/personType';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
@@ -9,8 +8,7 @@ import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/Skje
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
-import { IdNummer } from '../IdNummer';
-import { idNummerLandMedPeriodeType } from '../idnummerUtils';
+import IdNummerForSøker from './IdNummerForSøker';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './spørsmål';
 import { useEøsForSøker } from './useEøsForSøker';
 
@@ -29,10 +27,6 @@ const EøsForSøker: React.FC = () => {
         settIdNummerFelter,
     } = useEøsForSøker();
 
-    const { erEøsLand } = useEøs();
-    const { søknad } = useApp();
-    const { søker } = søknad;
-
     return (
         <Steg
             tittel={<SpråkTekst id={'eøs-om-deg.sidetittel'} />}
@@ -43,34 +37,19 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <KomponentGruppe>
-                {idNummerLandMedPeriodeType(
-                    søker.arbeidsperioderUtland,
-                    søker.pensjonsperioderUtland,
-                    søker.utenlandsperioder,
-                    erEøsLand
-                ).map((landMedPeriodeType, index) => {
-                    return (
-                        !!landMedPeriodeType.land && (
-                            <IdNummer
-                                skjema={skjema}
-                                key={index}
-                                settIdNummerFelter={settIdNummerFelter}
-                                landAlphaCode={landMedPeriodeType.land}
-                                periodeType={landMedPeriodeType.periodeType}
-                            />
-                        )
-                    );
-                })}
-                <SkjemaFeltInput
-                    felt={skjema.felter.adresseISøkeperiode}
-                    visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]
-                    }
-                    description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
-                />
-            </KomponentGruppe>
+            <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
+            {skjema.felter.adresseISøkeperiode.erSynlig && (
+                <KomponentGruppe>
+                    <SkjemaFeltInput
+                        felt={skjema.felter.adresseISøkeperiode}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        labelSpråkTekstId={
+                            eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]
+                        }
+                        description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
+                    />
+                </KomponentGruppe>
+            )}
 
             <KomponentGruppe>
                 <Arbeidsperiode
@@ -79,20 +58,24 @@ const EøsForSøker: React.FC = () => {
                     leggTilArbeidsperiode={leggTilArbeidsperiode}
                     fjernArbeidsperiode={fjernArbeidsperiode}
                     registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                    personType={PersonType.Søker}
                 />
                 <Pensjonsperiode
                     skjema={skjema}
                     mottarEllerMottattPensjonFelt={skjema.felter.pensjonNorge}
+                    gjelderUtlandet={false}
                     leggTilPensjonsperiode={leggTilPensjonsperiode}
                     fjernPensjonsperiode={fjernPensjonsperiode}
                     registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
+                    personType={PersonType.Søker}
                 />
                 <Utbetalingsperiode
                     skjema={skjema}
                     leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiode}
                     fjernUtbetalingsperiode={fjernAndreUtbetalingsperiode}
-                    mottarEllerMottattUtbetalingFelt={skjema.felter.andreUtbetalinger}
+                    tilhørendeJaNeiSpmFelt={skjema.felter.andreUtbetalinger}
                     registrerteUtbetalingsperioder={skjema.felter.registrerteAndreUtbetalinger}
+                    personType={PersonType.Søker}
                 />
             </KomponentGruppe>
         </Steg>

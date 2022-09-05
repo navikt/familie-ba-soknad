@@ -28,7 +28,7 @@ describe('FjernBarnKnapp', () => {
             ident: '12345',
             navn: 'Test',
             borMedSøker: true,
-            alder: undefined,
+            alder: null,
             adressebeskyttelse: false,
         };
         const pdlBarn: IBarn = {
@@ -36,7 +36,7 @@ describe('FjernBarnKnapp', () => {
             ident: '54321',
             navn: 'Også test',
             borMedSøker: true,
-            alder: undefined,
+            alder: null,
             adressebeskyttelse: false,
         };
 
@@ -68,7 +68,7 @@ describe('FjernBarnKnapp', () => {
             ident: '12345',
             navn: 'Test',
             borMedSøker: true,
-            alder: undefined,
+            alder: null,
             adressebeskyttelse: false,
         };
 
@@ -78,6 +78,7 @@ describe('FjernBarnKnapp', () => {
                 barn: [],
             },
             barnRegistrertManuelt: [registrertBarn],
+            dokumentasjon: [],
         });
         const { getByText } = render(
             <TestProvidere>
@@ -93,6 +94,7 @@ describe('FjernBarnKnapp', () => {
             barnInkludertISøknaden: [],
             barnRegistrertManuelt: [],
             erEøs: false,
+            dokumentasjon: [],
             søker: {
                 ...mekkGyldigSøker(),
                 barn: [],

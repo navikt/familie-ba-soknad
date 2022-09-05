@@ -10,7 +10,6 @@ import { useApp } from '../../../context/AppContext';
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
-import { barnetsNavnValue } from '../../../utils/barn';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Filopplaster from './filopplaster/Filopplaster';
@@ -44,7 +43,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
         );
 
         return barnDokGjelderFor.map((barn, index) => {
-            const visningsNavn = barnetsNavnValue(barn, intl);
+            const visningsNavn = barn.navn;
             if (index === 0) {
                 return visningsNavn;
             } else {
@@ -73,8 +72,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
         søknad.dokumentasjon.forEach(dok => {
             if (
                 dok.gjelderForSøker &&
-                (dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE ||
-                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA)
+                dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE
             ) {
                 antallVedlegg++;
             }
@@ -127,13 +125,6 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
                             ),
                         }}
                     />
-                    {dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA && (
-                        <EksternLenke
-                            lenkeSpråkId={'eøs.tilleggsskjema.lenke'}
-                            lenkeTekstSpråkId={'eøs.tilleggsskjema.lenketekst'}
-                            target="_blank"
-                        />
-                    )}
                 </>
             )}
             {!dokumentasjon.harSendtInn && (

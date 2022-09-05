@@ -3,7 +3,8 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar, ISODateString } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål } from './barn';
-import { BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
+import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
+import { Slektsforhold } from './kontrakt/generelle';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
@@ -29,10 +30,8 @@ export interface IDinLivssituasjonFeltTyper {
     nåværendeSamboerFraDato: ISODateString;
     erAsylsøker: ESvar | null;
     jobberPåBåt: ESvar | null;
-    arbeidsland: Alpha3Code | '';
     registrerteArbeidsperioder: IArbeidsperiode[];
     mottarUtenlandspensjon: ESvar | null;
-    pensjonsland: Alpha3Code | '';
     registrertePensjonsperioder: IPensjonsperiode[];
 }
 
@@ -72,20 +71,19 @@ export interface IOmBarnetUtvidetFeltTyper {
     institusjonOppholdSluttdato: DatoMedUkjent;
     institusjonOppholdSluttVetIkke: ESvar;
     planleggerÅBoINorge12Mnd: ESvar | null;
-    barnetrygdFraEøslandHvilketLand: Alpha3Code | '';
+    pågåendeSøknadFraAnnetEøsLand: ESvar | null;
+    pågåendeSøknadHvilketLand: Alpha3Code | '';
     mottarEllerMottokEøsBarnetrygd: ESvar | null;
     registrerteEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     andreForelderNavn: string;
-    andreForelderNavnUkjent: ESvar;
+    andreForelderKanIkkeGiOpplysninger: ESvar;
     andreForelderFnr: string;
     andreForelderFnrUkjent: ESvar;
     andreForelderFødselsdatoUkjent: ESvar;
     andreForelderFødselsdato: DatoMedUkjent;
     andreForelderArbeidUtlandet: ESvar | null;
-    andreForelderArbeidUtlandetHvilketLand: Alpha3Code | '';
     andreForelderArbeidsperioderUtland: IArbeidsperiode[];
     andreForelderPensjonUtland: ESvar | null;
-    andreForelderPensjonHvilketLand: Alpha3Code | '';
     andreForelderPensjonsperioderUtland: IPensjonsperiode[];
     borFastMedSøker: ESvar | null;
     skriftligAvtaleOmDeltBosted: ESvar | null;
@@ -107,7 +105,7 @@ export interface IOmDegFeltTyper {
     registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 
-export type IdNummerKey = `idnummer-${string}`;
+export type IdNummerKey = `${string}-idnummer-${string}`;
 
 export interface IEøsForSøkerFeltTyper {
     arbeidINorge: ESvar | null;
@@ -127,6 +125,39 @@ export interface IEøsForBarnFeltTyper {
     andreForelderArbeidsperioderNorge: IArbeidsperiode[];
     andreForelderAndreUtbetalinger: ESvar | null;
     andreForelderAndreUtbetalingsperioder: IUtbetalingsperiode[];
+    andreForelderPågåendeSøknadFraAnnetEøsLand: ESvar | null;
+    andreForelderPågåendeSøknadHvilketLand: Alpha3Code | '';
+    andreForelderBarnetrygdFraEøs: ESvar | null;
+    andreForelderEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
+    andreForelderAdresse: string | AlternativtSvarForInput.UKJENT;
+    andreForelderAdresseVetIkke: ESvar;
+    søkersSlektsforhold: Slektsforhold | '';
+    søkersSlektsforholdSpesifisering: string;
+    borMedAndreForelder: ESvar | null;
+    borMedOmsorgsperson: ESvar | null;
+    [key: IdNummerKey]: IIdNummer;
+    omsorgspersonNavn: string;
+    omsorgspersonSlektsforhold: Slektsforhold | '';
+    omsorgpersonSlektsforholdSpesifisering: string;
+    omsorgspersonIdNummer: string;
+    omsorgspersonIdNummerVetIkke: ESvar;
+    omsorgspersonAdresse: string;
+    omsorgspersonArbeidUtland: ESvar | null;
+    omsorgspersonArbeidsperioderUtland: IArbeidsperiode[];
+    omsorgspersonArbeidNorge: ESvar | null;
+    omsorgspersonArbeidsperioderNorge: IArbeidsperiode[];
+    omsorgspersonPensjonUtland: ESvar | null;
+    omsorgspersonPensjonsperioderUtland: IPensjonsperiode[];
+    omsorgspersonPensjonNorge: ESvar | null;
+    omsorgspersonPensjonsperioderNorge: IPensjonsperiode[];
+    omsorgspersonAndreUtbetalinger: ESvar | null;
+    omsorgspersonAndreUtbetalingsperioder: IUtbetalingsperiode[];
+    omsorgspersonPågåendeSøknadFraAnnetEøsLand: ESvar | null;
+    omsorgspersonPågåendeSøknadHvilketLand: Alpha3Code | '';
+    omsorgspersonBarnetrygdFraEøs: ESvar | null;
+    omsorgspersonEøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
+    barnetsAdresse: string | AlternativtSvarForInput.UKJENT;
+    barnetsAdresseVetIkke: ESvar;
 }
 
 export interface IVelgBarnFeltTyper {

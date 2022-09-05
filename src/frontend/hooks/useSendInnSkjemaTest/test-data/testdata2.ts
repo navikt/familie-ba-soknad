@@ -4,13 +4,19 @@ export const testdata2: TilKontraktTestData = {
     input: {
         søknadstype: 'ORDINÆR',
         erEøs: true,
+        kontraktVersjon: '8',
+        antallEøsSteg: 0,
         barnInkludertISøknaden: [
             {
                 id: 'db2afce7-2607-461e-a056-682eab5546e4',
-                navn: null,
+                navn: 'Barn 234567 89876',
                 ident: '23456789876',
                 alder: '13',
                 borMedSøker: false,
+                adresse: {
+                    svar: 'Vei 12',
+                    id: 'barnets-adresse',
+                },
                 adressebeskyttelse: true,
                 barnErFyltUt: true,
                 utenlandsperioder: [
@@ -47,6 +53,9 @@ export const testdata2: TilKontraktTestData = {
                         },
                     },
                 ],
+                eøsBarnetrygdsperioder: [],
+                idNummer: [],
+                harEøsSteg: false,
                 andreForelder: null,
                 triggetEøs: true,
                 sammeForelderSomAnnetBarnMedId: {
@@ -109,10 +118,6 @@ export const testdata2: TilKontraktTestData = {
                     id: 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
                     svar: null,
                 },
-                barnetrygdFraEøslandHvilketLand: {
-                    id: 'barnetrygd-hvilket-eøsland',
-                    svar: 'DNK',
-                },
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
@@ -137,6 +142,10 @@ export const testdata2: TilKontraktTestData = {
                 alder: '12',
                 borMedSøker: true,
                 adressebeskyttelse: false,
+                adresse: {
+                    svar: 'Vei 12',
+                    id: 'barnets-adresse',
+                },
                 barnErFyltUt: true,
                 utenlandsperioder: [
                     {
@@ -158,6 +167,9 @@ export const testdata2: TilKontraktTestData = {
                         },
                     },
                 ],
+                eøsBarnetrygdsperioder: [],
+                idNummer: [],
+                harEøsSteg: false,
                 andreForelder: null,
                 triggetEøs: true,
                 sammeForelderSomAnnetBarnMedId: {
@@ -219,10 +231,6 @@ export const testdata2: TilKontraktTestData = {
                 planleggerÅBoINorge12Mnd: {
                     id: 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
                     svar: 'NEI',
-                },
-                barnetrygdFraEøslandHvilketLand: {
-                    id: 'barnetrygd-hvilket-eøsland',
-                    svar: 'BEL',
                 },
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
@@ -318,15 +326,6 @@ export const testdata2: TilKontraktTestData = {
                 opplastedeVedlegg: [],
             },
             {
-                dokumentasjonsbehov: 'EØS_SKJEMA',
-                tittelSpråkId: 'dokumentasjon.tilleggsskjema.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.tilleggsskjema.informasjon',
-                gjelderForBarnId: [],
-                gjelderForSøker: true,
-                harSendtInn: false,
-                opplastedeVedlegg: [],
-            },
-            {
                 dokumentasjonsbehov: 'ANNEN_DOKUMENTASJON',
                 tittelSpråkId: 'dokumentasjon.annendokumentasjon.vedleggtittel',
                 beskrivelseSpråkId: null,
@@ -337,11 +336,12 @@ export const testdata2: TilKontraktTestData = {
             },
         ],
         søker: {
+            harEøsSteg: false,
             navn: 'Voksen Voksnessen',
             barn: [
                 {
                     id: 'db2afce7-2607-461e-a056-682eab5546e4',
-                    navn: null,
+                    navn: 'Barn 234567 89876',
                     ident: '23456789876',
                     alder: '13',
                     borMedSøker: false,
@@ -443,11 +443,114 @@ export const testdata2: TilKontraktTestData = {
                 id: 'pensjonsland',
                 svar: 'BEL',
             },
-            arbeidsperioderUtland: [],
-            arbeidsperioderNorge: [],
-            pensjonsperioderNorge: [],
-            pensjonsperioderUtland: [],
-            andreUtbetalingsperioder: [],
+            arbeidsperioderUtland: [
+                {
+                    arbeidsgiver: {
+                        id: 'arbeidsgiver',
+                        svar: 'Jobben',
+                    },
+                    arbeidsperiodeAvsluttet: {
+                        id: 'arbeidsperiode-avluttet',
+                        svar: 'JA',
+                    },
+                    arbeidsperiodeland: {
+                        id: 'arbeidsperiode-land',
+                        svar: 'BEL',
+                    },
+                    fraDatoArbeidsperiode: {
+                        id: 'fra-dato-arbeidsperiode',
+                        svar: '2022-05-16',
+                    },
+                    tilDatoArbeidsperiode: {
+                        id: 'til-dato-arbeidsperiode',
+                        svar: '2022-05-20',
+                    },
+                },
+            ],
+            arbeidsperioderNorge: [
+                {
+                    arbeidsgiver: {
+                        id: 'arbeidsgiver',
+                        svar: 'Jobben',
+                    },
+                    arbeidsperiodeland: {
+                        id: 'arbeidsperiode-land',
+                        svar: null,
+                    },
+                    arbeidsperiodeAvsluttet: {
+                        id: 'arbeidsperiode-avluttet',
+                        svar: 'JA',
+                    },
+                    fraDatoArbeidsperiode: {
+                        id: 'fra-dato-arbeidsperiode',
+                        svar: '2022-05-03',
+                    },
+                    tilDatoArbeidsperiode: {
+                        id: 'til-dato-arbeidsperiode',
+                        svar: '2022-05-18',
+                    },
+                },
+            ],
+            pensjonsperioderNorge: [
+                {
+                    mottarPensjonNå: {
+                        id: 'mottar-pensjon-nå',
+                        svar: 'NEI',
+                    },
+                    pensjonFra: {
+                        id: 'fra-dato-pensjon',
+                        svar: '2022-05-02',
+                    },
+                    pensjonTil: {
+                        id: 'til-dato-pensjon',
+                        svar: '2022-05-18',
+                    },
+                    pensjonsland: {
+                        id: 'land-pensjon',
+                        svar: null,
+                    },
+                },
+            ],
+            pensjonsperioderUtland: [
+                {
+                    mottarPensjonNå: {
+                        id: 'mottar-pensjon-nå',
+                        svar: 'NEI',
+                    },
+                    pensjonFra: {
+                        id: 'fra-dato-pensjon',
+                        svar: '2022-05-02',
+                    },
+                    pensjonTil: {
+                        id: 'til-dato-pensjon',
+                        svar: '2022-05-30',
+                    },
+                    pensjonsland: {
+                        id: 'land-pensjon',
+                        svar: 'BEL',
+                    },
+                },
+            ],
+            andreUtbetalingsperioder: [
+                {
+                    fårUtbetalingNå: {
+                        id: 'får-utbetaling-nå',
+                        svar: 'JA',
+                    },
+                    utbetalingFraDato: {
+                        id: 'utbetaling-startdato',
+                        svar: '2022-05-09',
+                    },
+                    utbetalingLand: {
+                        id: 'utbetaling-fra-hvilket-land',
+                        svar: 'ALB',
+                    },
+                    utbetalingTilDato: {
+                        id: 'utbetaling-sluttdato',
+                        svar: 'UKJENT',
+                    },
+                },
+            ],
             harSamboerNå: {
                 id: 'har-samboer-nå-og-gift',
                 svar: 'JA',
@@ -523,13 +626,12 @@ export const testdata2: TilKontraktTestData = {
     },
     output: {
         søknadstype: 'ORDINÆR',
+        kontraktVersjon: 8,
+        antallEøsSteg: 3,
         søker: {
+            harEøsSteg: true,
             navn: {
-                label: {
-                    en: 'Name',
-                    nb: 'Navn',
-                    nn: 'Namn',
-                },
+                label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                 verdi: {
                     nb: 'Voksen Voksnessen',
                     nn: 'Voksen Voksnessen',
@@ -537,35 +639,15 @@ export const testdata2: TilKontraktTestData = {
                 },
             },
             ident: {
-                label: {
-                    en: 'Ident',
-                    nb: 'Ident',
-                    nn: 'Ident',
-                },
-                verdi: {
-                    nb: '23058518298',
-                    nn: '23058518298',
-                    en: '23058518298',
-                },
+                label: { en: 'Ident', nb: 'Ident', nn: 'Ident' },
+                verdi: { nb: '23058518298', nn: '23058518298', en: '23058518298' },
             },
             sivilstand: {
-                label: {
-                    en: 'Marital status',
-                    nb: 'Sivilstatus',
-                    nn: 'Sivilstatus',
-                },
-                verdi: {
-                    nb: 'GIFT',
-                    nn: 'GIFT',
-                    en: 'GIFT',
-                },
+                label: { en: 'Marital status', nb: 'Sivilstatus', nn: 'Sivilstatus' },
+                verdi: { nb: 'GIFT', nn: 'GIFT', en: 'GIFT' },
             },
             statsborgerskap: {
-                label: {
-                    en: 'Citizenship',
-                    nb: 'Statsborgerskap',
-                    nn: 'Statsborgarskap',
-                },
+                label: { en: 'Citizenship', nb: 'Statsborgerskap', nn: 'Statsborgarskap' },
                 verdi: {
                     nb: ['Norge', 'Afghanistan'],
                     nn: ['Noreg', 'Afghanistan'],
@@ -573,11 +655,7 @@ export const testdata2: TilKontraktTestData = {
                 },
             },
             adresse: {
-                label: {
-                    en: 'Address',
-                    nb: 'Adresse',
-                    nn: 'Adresse',
-                },
+                label: { en: 'Address', nb: 'Adresse', nn: 'Adresse' },
                 verdi: {
                     nb: {
                         adressenavn: 'Solveien',
@@ -608,6 +686,7 @@ export const testdata2: TilKontraktTestData = {
                     },
                 },
             },
+            adressebeskyttelse: false,
             utenlandsperioder: [
                 {
                     label: {
@@ -635,11 +714,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Hvilket land flyttet du fra?',
                                     nn: 'Kva land flytta du frå?',
                                 },
-                                verdi: {
-                                    nb: 'Afghanistan',
-                                    nn: 'Afghanistan',
-                                    en: 'Afghanistan',
-                                },
+                                verdi: { nb: 'Afghanistan', nn: 'Afghanistan', en: 'Afghanistan' },
                             },
                             oppholdslandFraDato: {
                                 label: {
@@ -655,11 +730,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Når flyttet du til Norge?',
                                     nn: 'Når flytta du til Noreg?',
                                 },
-                                verdi: {
-                                    nb: '2022-01-01',
-                                    nn: '2022-01-01',
-                                    en: '2022-01-01',
-                                },
+                                verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                             },
                         },
                         nn: {
@@ -681,11 +752,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Hvilket land flyttet du fra?',
                                     nn: 'Kva land flytta du frå?',
                                 },
-                                verdi: {
-                                    nb: 'Afghanistan',
-                                    nn: 'Afghanistan',
-                                    en: 'Afghanistan',
-                                },
+                                verdi: { nb: 'Afghanistan', nn: 'Afghanistan', en: 'Afghanistan' },
                             },
                             oppholdslandFraDato: {
                                 label: {
@@ -701,11 +768,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Når flyttet du til Norge?',
                                     nn: 'Når flytta du til Noreg?',
                                 },
-                                verdi: {
-                                    nb: '2022-01-01',
-                                    nn: '2022-01-01',
-                                    en: '2022-01-01',
-                                },
+                                verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                             },
                         },
                         en: {
@@ -727,11 +790,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Hvilket land flyttet du fra?',
                                     nn: 'Kva land flytta du frå?',
                                 },
-                                verdi: {
-                                    nb: 'Afghanistan',
-                                    nn: 'Afghanistan',
-                                    en: 'Afghanistan',
-                                },
+                                verdi: { nb: 'Afghanistan', nn: 'Afghanistan', en: 'Afghanistan' },
                             },
                             oppholdslandFraDato: {
                                 label: {
@@ -747,11 +806,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Når flyttet du til Norge?',
                                     nn: 'Når flytta du til Noreg?',
                                 },
-                                verdi: {
-                                    nb: '2022-01-01',
-                                    nn: '2022-01-01',
-                                    en: '2022-01-01',
-                                },
+                                verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                             },
                         },
                     },
@@ -782,11 +837,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Hvilket land har du flyttet til?',
                                     nn: 'Kva land har du flytta til?',
                                 },
-                                verdi: {
-                                    nb: 'Belgia',
-                                    nn: 'Belgia',
-                                    en: 'Belgium',
-                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
                             },
                             oppholdslandFraDato: {
                                 label: {
@@ -794,11 +845,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Når flyttet du fra Norge?',
                                     nn: 'Når flytta du frå Noreg?',
                                 },
-                                verdi: {
-                                    nb: '2022-01-01',
-                                    nn: '2022-01-01',
-                                    en: '2022-01-01',
-                                },
+                                verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                             },
                             oppholdslandTilDato: {
                                 label: {
@@ -828,11 +875,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Hvilket land har du flyttet til?',
                                     nn: 'Kva land har du flytta til?',
                                 },
-                                verdi: {
-                                    nb: 'Belgia',
-                                    nn: 'Belgia',
-                                    en: 'Belgium',
-                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
                             },
                             oppholdslandFraDato: {
                                 label: {
@@ -840,11 +883,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Når flyttet du fra Norge?',
                                     nn: 'Når flytta du frå Noreg?',
                                 },
-                                verdi: {
-                                    nb: '2022-01-01',
-                                    nn: '2022-01-01',
-                                    en: '2022-01-01',
-                                },
+                                verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                             },
                             oppholdslandTilDato: {
                                 label: {
@@ -874,11 +913,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Hvilket land har du flyttet til?',
                                     nn: 'Kva land har du flytta til?',
                                 },
-                                verdi: {
-                                    nb: 'Belgia',
-                                    nn: 'Belgia',
-                                    en: 'Belgium',
-                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
                             },
                             oppholdslandFraDato: {
                                 label: {
@@ -886,11 +921,7 @@ export const testdata2: TilKontraktTestData = {
                                     nb: 'Når flyttet du fra Norge?',
                                     nn: 'Når flytta du frå Noreg?',
                                 },
-                                verdi: {
-                                    nb: '2022-01-01',
-                                    nn: '2022-01-01',
-                                    en: '2022-01-01',
-                                },
+                                verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                             },
                             oppholdslandTilDato: {
                                 label: {
@@ -904,6 +935,71 @@ export const testdata2: TilKontraktTestData = {
                     },
                 },
             ],
+            idNummer: [
+                {
+                    label: {
+                        en: 'What is your personal ID-number in Belgia?',
+                        nb: 'Hva er id-nummeret ditt i Belgia?',
+                        nn: 'Kva er id-nummeret ditt i Belgia?',
+                    },
+                    verdi: {
+                        nb: {
+                            idNummer: {
+                                label: {
+                                    en: 'What is your personal ID-number in Belgia?',
+                                    nb: 'Hva er id-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
+                                },
+                                verdi: { nb: '123', nn: '123', en: '123' },
+                            },
+                            land: {
+                                label: {
+                                    en: 'What is your personal ID-number in Belgia?',
+                                    nb: 'Hva er id-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
+                                },
+                                verdi: { nb: 'BEL', nn: 'BEL', en: 'BEL' },
+                            },
+                        },
+                        nn: {
+                            idNummer: {
+                                label: {
+                                    en: 'What is your personal ID-number in Belgia?',
+                                    nb: 'Hva er id-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
+                                },
+                                verdi: { nb: '123', nn: '123', en: '123' },
+                            },
+                            land: {
+                                label: {
+                                    en: 'What is your personal ID-number in Belgia?',
+                                    nb: 'Hva er id-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
+                                },
+                                verdi: { nb: 'BEL', nn: 'BEL', en: 'BEL' },
+                            },
+                        },
+                        en: {
+                            idNummer: {
+                                label: {
+                                    en: 'What is your personal ID-number in Belgia?',
+                                    nb: 'Hva er id-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
+                                },
+                                verdi: { nb: '123', nn: '123', en: '123' },
+                            },
+                            land: {
+                                label: {
+                                    en: 'What is your personal ID-number in Belgia?',
+                                    nb: 'Hva er id-nummeret ditt i Belgia?',
+                                    nn: 'Kva er id-nummeret ditt i Belgia?',
+                                },
+                                verdi: { nb: 'BEL', nn: 'BEL', en: 'BEL' },
+                            },
+                        },
+                    },
+                },
+            ],
             spørsmål: {
                 borPåRegistrertAdresse: {
                     label: {
@@ -911,11 +1007,7 @@ export const testdata2: TilKontraktTestData = {
                         nb: 'Bor du på denne adressen?',
                         nn: 'Bur du på denne adressa?',
                     },
-                    verdi: {
-                        nb: 'JA',
-                        nn: 'JA',
-                        en: 'JA',
-                    },
+                    verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
                 værtINorgeITolvMåneder: {
                     label: {
@@ -923,11 +1015,7 @@ export const testdata2: TilKontraktTestData = {
                         nb: 'Har du oppholdt deg sammenhengende i Norge de siste tolv månedene?',
                         nn: 'Har du opphalde deg samanhengande i Noreg dei siste tolv månadene?',
                     },
-                    verdi: {
-                        nb: 'NEI',
-                        nn: 'NEI',
-                        en: 'NEI',
-                    },
+                    verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                 },
                 erAsylsøker: {
                     label: {
@@ -935,59 +1023,23 @@ export const testdata2: TilKontraktTestData = {
                         nb: 'Er du asylsøker?',
                         nn: 'Er du asylsøkar?',
                     },
-                    verdi: {
-                        nb: 'JA',
-                        nn: 'JA',
-                        en: 'JA',
-                    },
+                    verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
                 jobberPåBåt: {
                     label: {
-                        en: "Do you work outside of Norway, on a foreign ship or on another country's continental shelf?",
-                        nb: 'Arbeider du utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                        nn: 'Arbeidar du utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                        en: "Do you or have you worked outside of Norway, on a foreign ship or on another country's continental shelf?",
+                        nb: 'Arbeider eller har du arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
+                        nn: 'Arbeider eller har du arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                     },
-                    verdi: {
-                        nb: 'JA',
-                        nn: 'JA',
-                        en: 'JA',
-                    },
-                },
-                arbeidsland: {
-                    label: {
-                        en: 'Which country do you work in?',
-                        nb: 'Hvilket land arbeider du i?',
-                        nn: 'Kva land arbeidar du i?',
-                    },
-                    verdi: {
-                        nb: 'Belgia',
-                        nn: 'Belgia',
-                        en: 'Belgium',
-                    },
+                    verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
                 mottarUtenlandspensjon: {
                     label: {
-                        en: 'Do you receive a pension from abroad?',
-                        nb: 'Får du pensjon fra utlandet?',
-                        nn: 'Får du pensjon frå utlandet?',
+                        en: 'Do you or have you received a pension from abroad?',
+                        nb: 'Får eller har du fått pensjon fra utlandet?',
+                        nn: 'Får eller har du fått pensjon frå utlandet?',
                     },
-                    verdi: {
-                        nb: 'JA',
-                        nn: 'JA',
-                        en: 'JA',
-                    },
-                },
-                pensjonsland: {
-                    label: {
-                        en: 'Which country do you receive a pension from?',
-                        nb: 'Hvilket land får du pensjon fra?',
-                        nn: 'Kva land får du pensjon frå?',
-                    },
-                    verdi: {
-                        nb: 'Belgia',
-                        nn: 'Belgia',
-                        en: 'Belgium',
-                    },
+                    verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
                 harSamboerNå: {
                     label: {
@@ -995,20 +1047,20 @@ export const testdata2: TilKontraktTestData = {
                         nb: 'Har du en annen samboer enn din ektefelle nå?',
                         nn: 'Har du ein anna sambuar enn din ektefelle no?',
                     },
-                    verdi: {
-                        nb: 'JA',
-                        nn: 'JA',
-                        en: 'JA',
-                    },
+                    verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                },
+                arbeidsland: {
+                    label: { en: 'ukjent-spørsmål', nb: 'ukjent-spørsmål', nn: 'ukjent-spørsmål' },
+                    verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                },
+                pensjonsland: {
+                    label: { en: 'ukjent-spørsmål', nb: 'ukjent-spørsmål', nn: 'ukjent-spørsmål' },
+                    verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
                 },
             },
             tidligereSamboere: [],
             nåværendeSamboer: {
-                label: {
-                    en: 'Cohabitant',
-                    nb: 'Samboer',
-                    nn: 'Sambuar',
-                },
+                label: { en: 'Cohabitant', nb: 'Samboer', nn: 'Sambuar' },
                 verdi: {
                     nb: {
                         navn: {
@@ -1029,23 +1081,11 @@ export const testdata2: TilKontraktTestData = {
                                 nb: 'Fødselsnummer eller d-nummer',
                                 nn: 'Fødselsnummer eller d-nummer',
                             },
-                            verdi: {
-                                nb: '05039103410',
-                                nn: '05039103410',
-                                en: '05039103410',
-                            },
+                            verdi: { nb: '05039103410', nn: '05039103410', en: '05039103410' },
                         },
                         fødselsdato: {
-                            label: {
-                                en: 'Date of birth',
-                                nb: 'Fødselsdato',
-                                nn: 'Fødselsdato',
-                            },
-                            verdi: {
-                                nb: '',
-                                nn: '',
-                                en: '',
-                            },
+                            label: { en: 'Date of birth', nb: 'Fødselsdato', nn: 'Fødselsdato' },
+                            verdi: { nb: '', nn: '', en: '' },
                         },
                         samboerFraDato: {
                             label: {
@@ -1053,11 +1093,7 @@ export const testdata2: TilKontraktTestData = {
                                 nb: 'Når startet samboerforholdet?',
                                 nn: 'Når starta sambuarforholdet?',
                             },
-                            verdi: {
-                                nb: '2022-01-01',
-                                nn: '2022-01-01',
-                                en: '2022-01-01',
-                            },
+                            verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                         },
                     },
                     nn: {
@@ -1079,23 +1115,11 @@ export const testdata2: TilKontraktTestData = {
                                 nb: 'Fødselsnummer eller d-nummer',
                                 nn: 'Fødselsnummer eller d-nummer',
                             },
-                            verdi: {
-                                nb: '05039103410',
-                                nn: '05039103410',
-                                en: '05039103410',
-                            },
+                            verdi: { nb: '05039103410', nn: '05039103410', en: '05039103410' },
                         },
                         fødselsdato: {
-                            label: {
-                                en: 'Date of birth',
-                                nb: 'Fødselsdato',
-                                nn: 'Fødselsdato',
-                            },
-                            verdi: {
-                                nb: '',
-                                nn: '',
-                                en: '',
-                            },
+                            label: { en: 'Date of birth', nb: 'Fødselsdato', nn: 'Fødselsdato' },
+                            verdi: { nb: '', nn: '', en: '' },
                         },
                         samboerFraDato: {
                             label: {
@@ -1103,11 +1127,7 @@ export const testdata2: TilKontraktTestData = {
                                 nb: 'Når startet samboerforholdet?',
                                 nn: 'Når starta sambuarforholdet?',
                             },
-                            verdi: {
-                                nb: '2022-01-01',
-                                nn: '2022-01-01',
-                                en: '2022-01-01',
-                            },
+                            verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                         },
                     },
                     en: {
@@ -1129,23 +1149,11 @@ export const testdata2: TilKontraktTestData = {
                                 nb: 'Fødselsnummer eller d-nummer',
                                 nn: 'Fødselsnummer eller d-nummer',
                             },
-                            verdi: {
-                                nb: '05039103410',
-                                nn: '05039103410',
-                                en: '05039103410',
-                            },
+                            verdi: { nb: '05039103410', nn: '05039103410', en: '05039103410' },
                         },
                         fødselsdato: {
-                            label: {
-                                en: 'Date of birth',
-                                nb: 'Fødselsdato',
-                                nn: 'Fødselsdato',
-                            },
-                            verdi: {
-                                nb: '',
-                                nn: '',
-                                en: '',
-                            },
+                            label: { en: 'Date of birth', nb: 'Fødselsdato', nn: 'Fødselsdato' },
+                            verdi: { nb: '', nn: '', en: '' },
                         },
                         samboerFraDato: {
                             label: {
@@ -1153,24 +1161,576 @@ export const testdata2: TilKontraktTestData = {
                                 nb: 'Når startet samboerforholdet?',
                                 nn: 'Når starta sambuarforholdet?',
                             },
-                            verdi: {
-                                nb: '2022-01-01',
-                                nn: '2022-01-01',
-                                en: '2022-01-01',
-                            },
+                            verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                         },
                     },
                 },
             },
+            arbeidsperioderUtland: [
+                {
+                    label: {
+                        en: 'Period of work outside of Norway 1',
+                        nb: 'Arbeidsperiode utenfor Norge 1',
+                        nn: 'Arbeidsperiode utanfor Noreg 1',
+                    },
+                    verdi: {
+                        nb: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: {
+                                label: {
+                                    en: 'Which country did you work in?',
+                                    nb: 'Hvilket land arbeidet du i?',
+                                    nn: 'Kva land arbeidde du i?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-16', nn: '2022-05-16', en: '2022-05-16' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-20', nn: '2022-05-20', en: '2022-05-20' },
+                            },
+                        },
+                        nn: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: {
+                                label: {
+                                    en: 'Which country did you work in?',
+                                    nb: 'Hvilket land arbeidet du i?',
+                                    nn: 'Kva land arbeidde du i?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-16', nn: '2022-05-16', en: '2022-05-16' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-20', nn: '2022-05-20', en: '2022-05-20' },
+                            },
+                        },
+                        en: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: {
+                                label: {
+                                    en: 'Which country did you work in?',
+                                    nb: 'Hvilket land arbeidet du i?',
+                                    nn: 'Kva land arbeidde du i?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-16', nn: '2022-05-16', en: '2022-05-16' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-20', nn: '2022-05-20', en: '2022-05-20' },
+                            },
+                        },
+                    },
+                },
+            ],
+            arbeidsperioderNorge: [
+                {
+                    label: {
+                        en: 'Period of work in Norway 1',
+                        nb: 'Arbeidsperiode i Norge 1',
+                        nn: 'Arbeidsperiode i Noreg 1',
+                    },
+                    verdi: {
+                        nb: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: null,
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-03', nn: '2022-05-03', en: '2022-05-03' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                        nn: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: null,
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-03', nn: '2022-05-03', en: '2022-05-03' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                        en: {
+                            arbeidsperiodeAvsluttet: {
+                                label: {
+                                    en: 'Has the period of work ended?',
+                                    nb: 'Er arbeidsperioden avsluttet?',
+                                    nn: 'Er arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            arbeidsperiodeland: null,
+                            arbeidsgiver: {
+                                label: { en: 'Employer', nb: 'Arbeidsgiver', nn: 'Arbeidsgjevar' },
+                                verdi: { nb: 'Jobben', nn: 'Jobben', en: 'Jobben' },
+                            },
+                            fraDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work start?',
+                                    nb: 'Når startet arbeidsperioden?',
+                                    nn: 'Når starta arbeidsperioden?',
+                                },
+                                verdi: { nb: '2022-05-03', nn: '2022-05-03', en: '2022-05-03' },
+                            },
+                            tilDatoArbeidsperiode: {
+                                label: {
+                                    en: 'When did the period of work end?',
+                                    nb: 'Når ble arbeidsperioden avsluttet?',
+                                    nn: 'Når blei arbeidsperioden avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                    },
+                },
+            ],
+            pensjonsperioderUtland: [
+                {
+                    label: {
+                        en: 'Pension period from abroad 1',
+                        nb: 'Pensjonsperiode fra utlandet 1',
+                        nn: 'Pensjonsperiode frå utlandet 1',
+                    },
+                    verdi: {
+                        nb: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: {
+                                label: {
+                                    en: 'From which country did you receive a pension?',
+                                    nb: 'Hvilket land fikk du pensjon fra?',
+                                    nn: 'Kva land fekk du pensjon frå?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-30', nn: '2022-05-30', en: '2022-05-30' },
+                            },
+                        },
+                        nn: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: {
+                                label: {
+                                    en: 'From which country did you receive a pension?',
+                                    nb: 'Hvilket land fikk du pensjon fra?',
+                                    nn: 'Kva land fekk du pensjon frå?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-30', nn: '2022-05-30', en: '2022-05-30' },
+                            },
+                        },
+                        en: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: {
+                                label: {
+                                    en: 'From which country did you receive a pension?',
+                                    nb: 'Hvilket land fikk du pensjon fra?',
+                                    nn: 'Kva land fekk du pensjon frå?',
+                                },
+                                verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
+                            },
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-30', nn: '2022-05-30', en: '2022-05-30' },
+                            },
+                        },
+                    },
+                },
+            ],
+            pensjonsperioderNorge: [
+                {
+                    label: {
+                        en: 'Pension period from Norway 1',
+                        nb: 'Pensjonsperiode fra Norge 1',
+                        nn: 'Pensjonsperiode frå Noreg 1',
+                    },
+                    verdi: {
+                        nb: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: null,
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                        nn: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: null,
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                        en: {
+                            mottarPensjonNå: {
+                                label: {
+                                    en: 'Are you currently receiving a pension?',
+                                    nb: 'Får du pensjon nå?',
+                                    nn: 'Får du pensjon no?',
+                                },
+                                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                            },
+                            pensjonsland: null,
+                            pensjonFra: {
+                                label: {
+                                    en: 'From when did you receive a pension?',
+                                    nb: 'Når fikk du pensjon fra?',
+                                    nn: 'Når fekk du pensjon frå?',
+                                },
+                                verdi: { nb: '2022-05-02', nn: '2022-05-02', en: '2022-05-02' },
+                            },
+                            pensjonTil: {
+                                label: {
+                                    en: 'When did the period of receiving a pension end?',
+                                    nb: 'Når ble pensjonen avsluttet?',
+                                    nn: 'Når vart pensjonen avslutta?',
+                                },
+                                verdi: { nb: '2022-05-18', nn: '2022-05-18', en: '2022-05-18' },
+                            },
+                        },
+                    },
+                },
+            ],
+            andreUtbetalingsperioder: [
+                {
+                    label: {
+                        en: 'Benefit period 1',
+                        nb: 'Utbetalingsperiode 1',
+                        nn: 'Utbetalingsperiode 1',
+                    },
+                    verdi: {
+                        nb: {
+                            fårUtbetalingNå: {
+                                label: {
+                                    en: 'Are you currently receiving benefits?',
+                                    nb: 'Får du utbetalinger nå?',
+                                    nn: 'Får du utbetalingar no?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            utbetalingLand: {
+                                label: {
+                                    en: 'What country are you receiving benefits from?',
+                                    nb: 'Hvilket land får du utbetalinger fra?',
+                                    nn: 'Kva land får du utbetalingar frå?',
+                                },
+                                verdi: { nb: 'Albania', nn: 'Albania', en: 'Albania' },
+                            },
+                            utbetalingFraDato: {
+                                label: {
+                                    en: 'When did the period of receiving benefits start?',
+                                    nb: 'Når startet utbetalingene?',
+                                    nn: 'Når starta utbetalingane?',
+                                },
+                                verdi: { nb: '2022-05-09', nn: '2022-05-09', en: '2022-05-09' },
+                            },
+                            utbetalingTilDato: {
+                                label: {
+                                    en: 'When will the period of receiving benefits end?',
+                                    nb: 'Når stopper utbetalingene?',
+                                    nn: 'Når stoppar utbetalingane?',
+                                },
+                                verdi: {
+                                    en: "I don't know when the period of receiving benefits will end",
+                                    nb: 'Jeg vet ikke når utbetalingene stopper',
+                                    nn: 'Eg veit ikkje når utbetalingane stoppar',
+                                },
+                            },
+                        },
+                        nn: {
+                            fårUtbetalingNå: {
+                                label: {
+                                    en: 'Are you currently receiving benefits?',
+                                    nb: 'Får du utbetalinger nå?',
+                                    nn: 'Får du utbetalingar no?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            utbetalingLand: {
+                                label: {
+                                    en: 'What country are you receiving benefits from?',
+                                    nb: 'Hvilket land får du utbetalinger fra?',
+                                    nn: 'Kva land får du utbetalingar frå?',
+                                },
+                                verdi: { nb: 'Albania', nn: 'Albania', en: 'Albania' },
+                            },
+                            utbetalingFraDato: {
+                                label: {
+                                    en: 'When did the period of receiving benefits start?',
+                                    nb: 'Når startet utbetalingene?',
+                                    nn: 'Når starta utbetalingane?',
+                                },
+                                verdi: { nb: '2022-05-09', nn: '2022-05-09', en: '2022-05-09' },
+                            },
+                            utbetalingTilDato: {
+                                label: {
+                                    en: 'When will the period of receiving benefits end?',
+                                    nb: 'Når stopper utbetalingene?',
+                                    nn: 'Når stoppar utbetalingane?',
+                                },
+                                verdi: {
+                                    en: "I don't know when the period of receiving benefits will end",
+                                    nb: 'Jeg vet ikke når utbetalingene stopper',
+                                    nn: 'Eg veit ikkje når utbetalingane stoppar',
+                                },
+                            },
+                        },
+                        en: {
+                            fårUtbetalingNå: {
+                                label: {
+                                    en: 'Are you currently receiving benefits?',
+                                    nb: 'Får du utbetalinger nå?',
+                                    nn: 'Får du utbetalingar no?',
+                                },
+                                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                            },
+                            utbetalingLand: {
+                                label: {
+                                    en: 'What country are you receiving benefits from?',
+                                    nb: 'Hvilket land får du utbetalinger fra?',
+                                    nn: 'Kva land får du utbetalingar frå?',
+                                },
+                                verdi: { nb: 'Albania', nn: 'Albania', en: 'Albania' },
+                            },
+                            utbetalingFraDato: {
+                                label: {
+                                    en: 'When did the period of receiving benefits start?',
+                                    nb: 'Når startet utbetalingene?',
+                                    nn: 'Når starta utbetalingane?',
+                                },
+                                verdi: { nb: '2022-05-09', nn: '2022-05-09', en: '2022-05-09' },
+                            },
+                            utbetalingTilDato: {
+                                label: {
+                                    en: 'When will the period of receiving benefits end?',
+                                    nb: 'Når stopper utbetalingene?',
+                                    nn: 'Når stoppar utbetalingane?',
+                                },
+                                verdi: {
+                                    en: "I don't know when the period of receiving benefits will end",
+                                    nb: 'Jeg vet ikke når utbetalingene stopper',
+                                    nn: 'Eg veit ikkje når utbetalingane stoppar',
+                                },
+                            },
+                        },
+                    },
+                },
+            ],
         },
         barn: [
             {
+                harEøsSteg: true,
                 navn: {
-                    label: {
-                        en: 'Name',
-                        nb: 'Navn',
-                        nn: 'Namn',
-                    },
+                    label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                     verdi: {
                         nb: 'Barn 234567 89876',
                         nn: 'Barn 234567 89876',
@@ -1178,16 +1738,8 @@ export const testdata2: TilKontraktTestData = {
                     },
                 },
                 ident: {
-                    label: {
-                        en: 'Ident',
-                        nb: 'Ident',
-                        nn: 'Ident',
-                    },
-                    verdi: {
-                        nb: '23456789876',
-                        nn: '23456789876',
-                        en: '23456789876',
-                    },
+                    label: { en: 'Ident', nb: 'Ident', nn: 'Ident' },
+                    verdi: { nb: '23456789876', nn: '23456789876', en: '23456789876' },
                 },
                 registrertBostedType: {
                     label: {
@@ -1195,23 +1747,11 @@ export const testdata2: TilKontraktTestData = {
                         nb: 'Registrert bosted',
                         nn: 'Registrert bustad',
                     },
-                    verdi: {
-                        nb: 'ADRESSESPERRE',
-                        nn: 'ADRESSESPERRE',
-                        en: 'ADRESSESPERRE',
-                    },
+                    verdi: { nb: 'ADRESSESPERRE', nn: 'ADRESSESPERRE', en: 'ADRESSESPERRE' },
                 },
                 alder: {
-                    label: {
-                        en: 'Age',
-                        nb: 'Alder',
-                        nn: 'Alder',
-                    },
-                    verdi: {
-                        en: '13 years',
-                        nb: '13 år',
-                        nn: '13 år',
-                    },
+                    label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
+                    verdi: { en: '13 years', nb: '13 år', nn: '13 år' },
                 },
                 utenlandsperioder: [
                     {
@@ -1224,9 +1764,9 @@ export const testdata2: TilKontraktTestData = {
                             nb: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN 234567 89876 stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN 234567 89876 oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN 234567 89876 har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn 234567 89876 stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn 234567 89876 oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn 234567 89876 har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child has stayed outside of Norway earlier',
@@ -1236,15 +1776,11 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country was BARN 234567 89876 staying in?',
-                                        nb: 'Hvilket land oppholdt BARN 234567 89876 seg i?',
-                                        nn: 'Kva land oppheldt BARN 234567 89876 seg i?',
+                                        en: 'Which country was Barn 234567 89876 staying in?',
+                                        nb: 'Hvilket land oppholdt Barn 234567 89876 seg i?',
+                                        nn: 'Kva land oppheldt Barn 234567 89876 seg i?',
                                     },
-                                    verdi: {
-                                        nb: 'Belgia',
-                                        nn: 'Belgia',
-                                        en: 'Belgium',
-                                    },
+                                    verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
                                 },
                                 oppholdslandFraDato: {
                                     label: {
@@ -1252,11 +1788,7 @@ export const testdata2: TilKontraktTestData = {
                                         nb: 'Når startet oppholdet?',
                                         nn: 'Når starta opphaldet?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-01',
-                                        nn: '2022-01-01',
-                                        en: '2022-01-01',
-                                    },
+                                    verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                                 },
                                 oppholdslandTilDato: {
                                     label: {
@@ -1264,19 +1796,15 @@ export const testdata2: TilKontraktTestData = {
                                         nb: 'Når ble oppholdet avsluttet?',
                                         nn: 'Når blei opphaldet avslutta?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-08',
-                                        nn: '2022-01-08',
-                                        en: '2022-01-08',
-                                    },
+                                    verdi: { nb: '2022-01-08', nn: '2022-01-08', en: '2022-01-08' },
                                 },
                             },
                             nn: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN 234567 89876 stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN 234567 89876 oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN 234567 89876 har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn 234567 89876 stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn 234567 89876 oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn 234567 89876 har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child has stayed outside of Norway earlier',
@@ -1286,15 +1814,11 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country was BARN 234567 89876 staying in?',
-                                        nb: 'Hvilket land oppholdt BARN 234567 89876 seg i?',
-                                        nn: 'Kva land oppheldt BARN 234567 89876 seg i?',
+                                        en: 'Which country was Barn 234567 89876 staying in?',
+                                        nb: 'Hvilket land oppholdt Barn 234567 89876 seg i?',
+                                        nn: 'Kva land oppheldt Barn 234567 89876 seg i?',
                                     },
-                                    verdi: {
-                                        nb: 'Belgia',
-                                        nn: 'Belgia',
-                                        en: 'Belgium',
-                                    },
+                                    verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
                                 },
                                 oppholdslandFraDato: {
                                     label: {
@@ -1302,11 +1826,7 @@ export const testdata2: TilKontraktTestData = {
                                         nb: 'Når startet oppholdet?',
                                         nn: 'Når starta opphaldet?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-01',
-                                        nn: '2022-01-01',
-                                        en: '2022-01-01',
-                                    },
+                                    verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                                 },
                                 oppholdslandTilDato: {
                                     label: {
@@ -1314,19 +1834,15 @@ export const testdata2: TilKontraktTestData = {
                                         nb: 'Når ble oppholdet avsluttet?',
                                         nn: 'Når blei opphaldet avslutta?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-08',
-                                        nn: '2022-01-08',
-                                        en: '2022-01-08',
-                                    },
+                                    verdi: { nb: '2022-01-08', nn: '2022-01-08', en: '2022-01-08' },
                                 },
                             },
                             en: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN 234567 89876 stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN 234567 89876 oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN 234567 89876 har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn 234567 89876 stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn 234567 89876 oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn 234567 89876 har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child has stayed outside of Norway earlier',
@@ -1336,15 +1852,11 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country was BARN 234567 89876 staying in?',
-                                        nb: 'Hvilket land oppholdt BARN 234567 89876 seg i?',
-                                        nn: 'Kva land oppheldt BARN 234567 89876 seg i?',
+                                        en: 'Which country was Barn 234567 89876 staying in?',
+                                        nb: 'Hvilket land oppholdt Barn 234567 89876 seg i?',
+                                        nn: 'Kva land oppheldt Barn 234567 89876 seg i?',
                                     },
-                                    verdi: {
-                                        nb: 'Belgia',
-                                        nn: 'Belgia',
-                                        en: 'Belgium',
-                                    },
+                                    verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
                                 },
                                 oppholdslandFraDato: {
                                     label: {
@@ -1352,11 +1864,7 @@ export const testdata2: TilKontraktTestData = {
                                         nb: 'Når startet oppholdet?',
                                         nn: 'Når starta opphaldet?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-01',
-                                        nn: '2022-01-01',
-                                        en: '2022-01-01',
-                                    },
+                                    verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                                 },
                                 oppholdslandTilDato: {
                                     label: {
@@ -1364,11 +1872,7 @@ export const testdata2: TilKontraktTestData = {
                                         nb: 'Når ble oppholdet avsluttet?',
                                         nn: 'Når blei opphaldet avslutta?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-08',
-                                        nn: '2022-01-08',
-                                        en: '2022-01-08',
-                                    },
+                                    verdi: { nb: '2022-01-08', nn: '2022-01-08', en: '2022-01-08' },
                                 },
                             },
                         },
@@ -1383,9 +1887,9 @@ export const testdata2: TilKontraktTestData = {
                             nb: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN 234567 89876 stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN 234567 89876 oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN 234567 89876 har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn 234567 89876 stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn 234567 89876 oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn 234567 89876 har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child has moved permanently from Norway',
@@ -1395,9 +1899,9 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country has BARN 234567 89876 moved to?',
-                                        nb: 'Hvilket land har BARN 234567 89876 flyttet til?',
-                                        nn: 'Kva land har BARN 234567 89876 flytta til?',
+                                        en: 'Which country has Barn 234567 89876 moved to?',
+                                        nb: 'Hvilket land har Barn 234567 89876 flyttet til?',
+                                        nn: 'Kva land har Barn 234567 89876 flytta til?',
                                     },
                                     verdi: {
                                         nb: 'Afghanistan',
@@ -1407,15 +1911,11 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandFraDato: {
                                     label: {
-                                        en: 'When did BARN 234567 89876 move from Norway?',
-                                        nb: 'Når flyttet BARN 234567 89876 fra Norge?',
-                                        nn: 'Når flytta BARN 234567 89876 frå Noreg?',
+                                        en: 'When did Barn 234567 89876 move from Norway?',
+                                        nb: 'Når flyttet Barn 234567 89876 fra Norge?',
+                                        nn: 'Når flytta Barn 234567 89876 frå Noreg?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-12',
-                                        nn: '2022-01-12',
-                                        en: '2022-01-12',
-                                    },
+                                    verdi: { nb: '2022-01-12', nn: '2022-01-12', en: '2022-01-12' },
                                 },
                                 oppholdslandTilDato: {
                                     label: {
@@ -1429,9 +1929,9 @@ export const testdata2: TilKontraktTestData = {
                             nn: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN 234567 89876 stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN 234567 89876 oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN 234567 89876 har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn 234567 89876 stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn 234567 89876 oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn 234567 89876 har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child has moved permanently from Norway',
@@ -1441,9 +1941,9 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country has BARN 234567 89876 moved to?',
-                                        nb: 'Hvilket land har BARN 234567 89876 flyttet til?',
-                                        nn: 'Kva land har BARN 234567 89876 flytta til?',
+                                        en: 'Which country has Barn 234567 89876 moved to?',
+                                        nb: 'Hvilket land har Barn 234567 89876 flyttet til?',
+                                        nn: 'Kva land har Barn 234567 89876 flytta til?',
                                     },
                                     verdi: {
                                         nb: 'Afghanistan',
@@ -1453,15 +1953,11 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandFraDato: {
                                     label: {
-                                        en: 'When did BARN 234567 89876 move from Norway?',
-                                        nb: 'Når flyttet BARN 234567 89876 fra Norge?',
-                                        nn: 'Når flytta BARN 234567 89876 frå Noreg?',
+                                        en: 'When did Barn 234567 89876 move from Norway?',
+                                        nb: 'Når flyttet Barn 234567 89876 fra Norge?',
+                                        nn: 'Når flytta Barn 234567 89876 frå Noreg?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-12',
-                                        nn: '2022-01-12',
-                                        en: '2022-01-12',
-                                    },
+                                    verdi: { nb: '2022-01-12', nn: '2022-01-12', en: '2022-01-12' },
                                 },
                                 oppholdslandTilDato: {
                                     label: {
@@ -1475,9 +1971,9 @@ export const testdata2: TilKontraktTestData = {
                             en: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN 234567 89876 stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN 234567 89876 oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN 234567 89876 har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn 234567 89876 stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn 234567 89876 oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn 234567 89876 har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child has moved permanently from Norway',
@@ -1487,9 +1983,9 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country has BARN 234567 89876 moved to?',
-                                        nb: 'Hvilket land har BARN 234567 89876 flyttet til?',
-                                        nn: 'Kva land har BARN 234567 89876 flytta til?',
+                                        en: 'Which country has Barn 234567 89876 moved to?',
+                                        nb: 'Hvilket land har Barn 234567 89876 flyttet til?',
+                                        nn: 'Kva land har Barn 234567 89876 flytta til?',
                                     },
                                     verdi: {
                                         nb: 'Afghanistan',
@@ -1499,15 +1995,11 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdslandFraDato: {
                                     label: {
-                                        en: 'When did BARN 234567 89876 move from Norway?',
-                                        nb: 'Når flyttet BARN 234567 89876 fra Norge?',
-                                        nn: 'Når flytta BARN 234567 89876 frå Noreg?',
+                                        en: 'When did Barn 234567 89876 move from Norway?',
+                                        nb: 'Når flyttet Barn 234567 89876 fra Norge?',
+                                        nn: 'Når flytta Barn 234567 89876 frå Noreg?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-12',
-                                        nn: '2022-01-12',
-                                        en: '2022-01-12',
-                                    },
+                                    verdi: { nb: '2022-01-12', nn: '2022-01-12', en: '2022-01-12' },
                                 },
                                 oppholdslandTilDato: {
                                     label: {
@@ -1521,7 +2013,10 @@ export const testdata2: TilKontraktTestData = {
                         },
                     },
                 ],
+                eøsBarnetrygdsperioder: [],
+                idNummer: [],
                 andreForelder: null,
+                omsorgsperson: null,
                 spørsmål: {
                     erFosterbarn: {
                         label: {
@@ -1529,11 +2024,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna er fosterbarn?',
                             nn: 'Kven av barna er fosterbarn?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     erAdoptertFraUtland: {
                         label: {
@@ -1541,11 +2032,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna er adoptert fra utlandet?',
                             nn: 'Kven av barna er adoptert frå utlandet?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     erAsylsøker: {
                         label: {
@@ -1553,23 +2040,15 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna er det søkt om asyl for?',
                             nn: 'Kven av barna er det søkt om asyl for?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     barnetrygdFraAnnetEøsland: {
                         label: {
-                            en: 'For which of the children are you receiving or have applied for child benefit?',
-                            nb: 'Hvem av barna får du eller har du søkt om barnetrygd for?',
-                            nn: 'Kven av barna får du eller har du søkt om barnetrygd for?',
+                            en: 'For which of the children are you receiving, have received or have applied for child benefit?',
+                            nb: 'Hvem av barna får du, har du fått eller har du søkt om barnetrygd for?',
+                            nn: 'Kven av barna får du, har du fått eller har du søkt om barnetrygd for?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     andreForelderErDød: {
                         label: {
@@ -1577,11 +2056,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna er din tidligere ektefelle/samboer forelder til?',
                             nn: 'Kven av barna er din tidlegare ektefelle/sambuar forelder til?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     oppholderSegIInstitusjon: {
                         label: {
@@ -1589,11 +2064,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna er i institusjon?',
                             nn: 'Kven av barna er seg i institusjon?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     institusjonIUtland: {
                         label: {
@@ -1601,11 +2072,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Institusjonen er i utlandet',
                             nn: 'Institusjonen er i utlandet',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     institusjonOppholdStartdato: {
                         label: {
@@ -1613,11 +2080,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Når startet institusjonsoppholdet?',
                             nn: 'Når starta institusjonsopphaldet?',
                         },
-                        verdi: {
-                            nb: '2022-01-01',
-                            nn: '2022-01-01',
-                            en: '2022-01-01',
-                        },
+                        verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                     },
                     boddMindreEnn12MndINorge: {
                         label: {
@@ -1625,71 +2088,31 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna har oppholdt seg utenfor Norge i løpet av de siste tolv månedene?',
                             nn: 'Kven av barna har oppheldt seg utanfor Noreg i løpet av dei siste tolv månadene?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
-                    },
-                    barnetrygdFraEøslandHvilketLand: {
-                        label: {
-                            en: 'From which country are you receiving or have you applied for child benefit?',
-                            nb: 'Hvilket land får eller har du søkt om barnetrygd fra?',
-                            nn: 'Kva land får eller har du søkt barnetrygd frå?',
-                        },
-                        verdi: {
-                            nb: 'Danmark',
-                            nn: 'Danmark',
-                            en: 'Denmark',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     borFastMedSøker: {
                         label: {
-                            en: 'Does BARN 234567 89876 live with you on a permanent basis?',
-                            nb: 'Bor BARN 234567 89876 fast sammen med deg?',
-                            nn: 'Bur BARN 234567 89876 fast saman med deg?',
+                            en: 'Does Barn 234567 89876 live with you on a permanent basis?',
+                            nb: 'Bor Barn 234567 89876 fast sammen med deg?',
+                            nn: 'Bur Barn 234567 89876 fast saman med deg?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     søkerForTidsrom: {
                         label: {
-                            en: 'Are you applying for child benefit for a particular period of time for BARN 234567 89876?',
-                            nb: 'Søker du barnetrygd for et spesielt tidsrom for BARN 234567 89876?',
-                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for BARN 234567 89876?',
+                            en: 'Are you applying for child benefit for a particular period of time for Barn 234567 89876?',
+                            nb: 'Søker du barnetrygd for et spesielt tidsrom for Barn 234567 89876?',
+                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for Barn 234567 89876?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     søkerForTidsromStartdato: {
-                        label: {
-                            en: 'From',
-                            nb: 'Fra og med',
-                            nn: 'Frå og med',
-                        },
-                        verdi: {
-                            nb: '2022-01-01',
-                            nn: '2022-01-01',
-                            en: '2022-01-01',
-                        },
+                        label: { en: 'From', nb: 'Fra og med', nn: 'Frå og med' },
+                        verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                     },
                     søkerForTidsromSluttdato: {
-                        label: {
-                            en: 'Up to and including',
-                            nb: 'Til og med',
-                            nn: 'Til og med',
-                        },
-                        verdi: {
-                            nb: '2022-01-06',
-                            nn: '2022-01-06',
-                            en: '2022-01-06',
-                        },
+                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
+                        verdi: { nb: '2022-01-06', nn: '2022-01-06', en: '2022-01-06' },
                     },
                     institusjonOppholdSluttdato: {
                         label: {
@@ -1697,21 +2120,22 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Når avsluttes institusjonsoppholdet?',
                             nn: 'Når avsluttast institusjonsopphaldet?',
                         },
-                        verdi: {
-                            nb: '2022-01-07',
-                            nn: '2022-01-07',
-                            en: '2022-01-07',
+                        verdi: { nb: '2022-01-07', nn: '2022-01-07', en: '2022-01-07' },
+                    },
+                    adresse: {
+                        label: {
+                            en: "Where is Barn 234567 89876's living during the period for which you are applying for child benefit?",
+                            nb: 'Hvor bor Barn 234567 89876 i perioden det søkes om barnetrygd?',
+                            nn: 'Kor bur Barn 234567 89876 i perioden det vert søkt om barnetrygd?',
                         },
+                        verdi: { nb: 'Vei 12', nn: 'Vei 12', en: 'Vei 12' },
                     },
                 },
             },
             {
+                harEøsSteg: true,
                 navn: {
-                    label: {
-                        en: 'Name',
-                        nb: 'Navn',
-                        nn: 'Namn',
-                    },
+                    label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                     verdi: {
                         nb: 'Barn Barnessen III',
                         nn: 'Barn Barnessen III',
@@ -1719,16 +2143,8 @@ export const testdata2: TilKontraktTestData = {
                     },
                 },
                 ident: {
-                    label: {
-                        en: 'Ident',
-                        nb: 'Ident',
-                        nn: 'Ident',
-                    },
-                    verdi: {
-                        nb: '12345678987',
-                        nn: '12345678987',
-                        en: '12345678987',
-                    },
+                    label: { en: 'Ident', nb: 'Ident', nn: 'Ident' },
+                    verdi: { nb: '12345678987', nn: '12345678987', en: '12345678987' },
                 },
                 registrertBostedType: {
                     label: {
@@ -1743,16 +2159,8 @@ export const testdata2: TilKontraktTestData = {
                     },
                 },
                 alder: {
-                    label: {
-                        en: 'Age',
-                        nb: 'Alder',
-                        nn: 'Alder',
-                    },
-                    verdi: {
-                        en: '12 years',
-                        nb: '12 år',
-                        nn: '12 år',
-                    },
+                    label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
+                    verdi: { en: '12 years', nb: '12 år', nn: '12 år' },
                 },
                 utenlandsperioder: [
                     {
@@ -1765,9 +2173,9 @@ export const testdata2: TilKontraktTestData = {
                             nb: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN BARNESSEN III stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN BARNESSEN III oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN BARNESSEN III har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn Barnessen III stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn Barnessen III oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn Barnessen III har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child is currently staying outside of Norway',
@@ -1777,15 +2185,11 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country is BARN BARNESSEN III currently in?',
-                                        nb: 'Hvilket land oppholder BARN BARNESSEN III seg i?',
-                                        nn: 'Kva land oppheld BARN BARNESSEN III seg i?',
+                                        en: 'Which country is Barn Barnessen III currently in?',
+                                        nb: 'Hvilket land oppholder Barn Barnessen III seg i?',
+                                        nn: 'Kva land oppheld Barn Barnessen III seg i?',
                                     },
-                                    verdi: {
-                                        nb: 'Hellas',
-                                        nn: 'Hellas',
-                                        en: 'Greece',
-                                    },
+                                    verdi: { nb: 'Hellas', nn: 'Hellas', en: 'Greece' },
                                 },
                                 oppholdslandFraDato: {
                                     label: {
@@ -1793,11 +2197,7 @@ export const testdata2: TilKontraktTestData = {
                                         nb: 'Når startet oppholdet?',
                                         nn: 'Når starta opphaldet?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-12',
-                                        nn: '2022-01-12',
-                                        en: '2022-01-12',
-                                    },
+                                    verdi: { nb: '2022-01-12', nn: '2022-01-12', en: '2022-01-12' },
                                 },
                                 oppholdslandTilDato: {
                                     label: {
@@ -1815,9 +2215,9 @@ export const testdata2: TilKontraktTestData = {
                             nn: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN BARNESSEN III stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN BARNESSEN III oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN BARNESSEN III har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn Barnessen III stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn Barnessen III oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn Barnessen III har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child is currently staying outside of Norway',
@@ -1827,15 +2227,11 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country is BARN BARNESSEN III currently in?',
-                                        nb: 'Hvilket land oppholder BARN BARNESSEN III seg i?',
-                                        nn: 'Kva land oppheld BARN BARNESSEN III seg i?',
+                                        en: 'Which country is Barn Barnessen III currently in?',
+                                        nb: 'Hvilket land oppholder Barn Barnessen III seg i?',
+                                        nn: 'Kva land oppheld Barn Barnessen III seg i?',
                                     },
-                                    verdi: {
-                                        nb: 'Hellas',
-                                        nn: 'Hellas',
-                                        en: 'Greece',
-                                    },
+                                    verdi: { nb: 'Hellas', nn: 'Hellas', en: 'Greece' },
                                 },
                                 oppholdslandFraDato: {
                                     label: {
@@ -1843,11 +2239,7 @@ export const testdata2: TilKontraktTestData = {
                                         nb: 'Når startet oppholdet?',
                                         nn: 'Når starta opphaldet?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-12',
-                                        nn: '2022-01-12',
-                                        en: '2022-01-12',
-                                    },
+                                    verdi: { nb: '2022-01-12', nn: '2022-01-12', en: '2022-01-12' },
                                 },
                                 oppholdslandTilDato: {
                                     label: {
@@ -1865,9 +2257,9 @@ export const testdata2: TilKontraktTestData = {
                             en: {
                                 utenlandsoppholdÅrsak: {
                                     label: {
-                                        en: 'What best describes the period BARN BARNESSEN III stayed outside of Norway?',
-                                        nb: 'Hva beskriver perioden BARN BARNESSEN III oppholdt seg utenfor Norge best?',
-                                        nn: 'Kva beskriv perioden BARN BARNESSEN III har opphalde seg utanfor Noreg best',
+                                        en: 'What best describes the period Barn Barnessen III stayed outside of Norway?',
+                                        nb: 'Hva beskriver perioden Barn Barnessen III oppholdt seg utenfor Norge best?',
+                                        nn: 'Kva beskriv perioden Barn Barnessen III har opphalde seg utanfor Noreg best',
                                     },
                                     verdi: {
                                         en: 'The child is currently staying outside of Norway',
@@ -1877,15 +2269,11 @@ export const testdata2: TilKontraktTestData = {
                                 },
                                 oppholdsland: {
                                     label: {
-                                        en: 'Which country is BARN BARNESSEN III currently in?',
-                                        nb: 'Hvilket land oppholder BARN BARNESSEN III seg i?',
-                                        nn: 'Kva land oppheld BARN BARNESSEN III seg i?',
+                                        en: 'Which country is Barn Barnessen III currently in?',
+                                        nb: 'Hvilket land oppholder Barn Barnessen III seg i?',
+                                        nn: 'Kva land oppheld Barn Barnessen III seg i?',
                                     },
-                                    verdi: {
-                                        nb: 'Hellas',
-                                        nn: 'Hellas',
-                                        en: 'Greece',
-                                    },
+                                    verdi: { nb: 'Hellas', nn: 'Hellas', en: 'Greece' },
                                 },
                                 oppholdslandFraDato: {
                                     label: {
@@ -1893,11 +2281,7 @@ export const testdata2: TilKontraktTestData = {
                                         nb: 'Når startet oppholdet?',
                                         nn: 'Når starta opphaldet?',
                                     },
-                                    verdi: {
-                                        nb: '2022-01-12',
-                                        nn: '2022-01-12',
-                                        en: '2022-01-12',
-                                    },
+                                    verdi: { nb: '2022-01-12', nn: '2022-01-12', en: '2022-01-12' },
                                 },
                                 oppholdslandTilDato: {
                                     label: {
@@ -1915,7 +2299,10 @@ export const testdata2: TilKontraktTestData = {
                         },
                     },
                 ],
+                eøsBarnetrygdsperioder: [],
+                idNummer: [],
                 andreForelder: null,
+                omsorgsperson: null,
                 spørsmål: {
                     erFosterbarn: {
                         label: {
@@ -1923,11 +2310,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna er fosterbarn?',
                             nn: 'Kven av barna er fosterbarn?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     erAdoptertFraUtland: {
                         label: {
@@ -1935,11 +2318,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna er adoptert fra utlandet?',
                             nn: 'Kven av barna er adoptert frå utlandet?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     erAsylsøker: {
                         label: {
@@ -1947,23 +2326,15 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna er det søkt om asyl for?',
                             nn: 'Kven av barna er det søkt om asyl for?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     barnetrygdFraAnnetEøsland: {
                         label: {
-                            en: 'For which of the children are you receiving or have applied for child benefit?',
-                            nb: 'Hvem av barna får du eller har du søkt om barnetrygd for?',
-                            nn: 'Kven av barna får du eller har du søkt om barnetrygd for?',
+                            en: 'For which of the children are you receiving, have received or have applied for child benefit?',
+                            nb: 'Hvem av barna får du, har du fått eller har du søkt om barnetrygd for?',
+                            nn: 'Kven av barna får du, har du fått eller har du søkt om barnetrygd for?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     andreForelderErDød: {
                         label: {
@@ -1971,11 +2342,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna er din tidligere ektefelle/samboer forelder til?',
                             nn: 'Kven av barna er din tidlegare ektefelle/sambuar forelder til?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     oppholderSegIInstitusjon: {
                         label: {
@@ -1983,11 +2350,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna er i institusjon?',
                             nn: 'Kven av barna er seg i institusjon?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     institusjonIUtland: {
                         label: {
@@ -1995,11 +2358,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Institusjonen er i utlandet',
                             nn: 'Institusjonen er i utlandet',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     institusjonsnavn: {
                         label: {
@@ -2026,16 +2385,8 @@ export const testdata2: TilKontraktTestData = {
                         },
                     },
                     institusjonspostnummer: {
-                        label: {
-                            en: 'Post code',
-                            nb: 'Postnummer',
-                            nn: 'Postnummer',
-                        },
-                        verdi: {
-                            nb: '4342',
-                            nn: '4342',
-                            en: '4342',
-                        },
+                        label: { en: 'Post code', nb: 'Postnummer', nn: 'Postnummer' },
+                        verdi: { nb: '4342', nn: '4342', en: '4342' },
                     },
                     institusjonOppholdStartdato: {
                         label: {
@@ -2043,11 +2394,7 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Når startet institusjonsoppholdet?',
                             nn: 'Når starta institusjonsopphaldet?',
                         },
-                        verdi: {
-                            nb: '2022-01-06',
-                            nn: '2022-01-06',
-                            en: '2022-01-06',
-                        },
+                        verdi: { nb: '2022-01-06', nn: '2022-01-06', en: '2022-01-06' },
                     },
                     boddMindreEnn12MndINorge: {
                         label: {
@@ -2055,78 +2402,38 @@ export const testdata2: TilKontraktTestData = {
                             nb: 'Hvem av barna har oppholdt seg utenfor Norge i løpet av de siste tolv månedene?',
                             nn: 'Kven av barna har oppheldt seg utanfor Noreg i løpet av dei siste tolv månadene?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     planleggerÅBoINorge12Mnd: {
                         label: {
-                            en: 'Is it planned that BARN BARNESSEN III will live in Norway continuously for more than 12 months?',
-                            nb: 'Er det planlagt at BARN BARNESSEN III skal bo sammenhengende i Norge i mer enn tolv måneder?',
-                            nn: 'Er det planlagd at BARN BARNESSEN III skal bu i Noreg samanhengande i meir enn tolv månadar?',
+                            en: 'Is it planned that Barn Barnessen III will live in Norway continuously for more than 12 months?',
+                            nb: 'Er det planlagt at Barn Barnessen III skal bo sammenhengende i Norge i mer enn tolv måneder?',
+                            nn: 'Er det planlagd at Barn Barnessen III skal bu i Noreg samanhengande i meir enn tolv månadar?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
-                    },
-                    barnetrygdFraEøslandHvilketLand: {
-                        label: {
-                            en: 'From which country are you receiving or have you applied for child benefit?',
-                            nb: 'Hvilket land får eller har du søkt om barnetrygd fra?',
-                            nn: 'Kva land får eller har du søkt barnetrygd frå?',
-                        },
-                        verdi: {
-                            nb: 'Belgia',
-                            nn: 'Belgia',
-                            en: 'Belgium',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     borFastMedSøker: {
                         label: {
-                            en: 'Does BARN BARNESSEN III live with you on a permanent basis?',
-                            nb: 'Bor BARN BARNESSEN III fast sammen med deg?',
-                            nn: 'Bur BARN BARNESSEN III fast saman med deg?',
+                            en: 'Does Barn Barnessen III live with you on a permanent basis?',
+                            nb: 'Bor Barn Barnessen III fast sammen med deg?',
+                            nn: 'Bur Barn Barnessen III fast saman med deg?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     søkerForTidsrom: {
                         label: {
-                            en: 'Are you applying for child benefit for a particular period of time for BARN BARNESSEN III?',
-                            nb: 'Søker du barnetrygd for et spesielt tidsrom for BARN BARNESSEN III?',
-                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for BARN BARNESSEN III?',
+                            en: 'Are you applying for child benefit for a particular period of time for Barn Barnessen III?',
+                            nb: 'Søker du barnetrygd for et spesielt tidsrom for Barn Barnessen III?',
+                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for Barn Barnessen III?',
                         },
-                        verdi: {
-                            nb: 'JA',
-                            nn: 'JA',
-                            en: 'JA',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
                     søkerForTidsromStartdato: {
-                        label: {
-                            en: 'From',
-                            nb: 'Fra og med',
-                            nn: 'Frå og med',
-                        },
-                        verdi: {
-                            nb: '2022-01-01',
-                            nn: '2022-01-01',
-                            en: '2022-01-01',
-                        },
+                        label: { en: 'From', nb: 'Fra og med', nn: 'Frå og med' },
+                        verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
                     },
                     søkerForTidsromSluttdato: {
-                        label: {
-                            en: 'Up to and including',
-                            nb: 'Til og med',
-                            nn: 'Til og med',
-                        },
+                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
                         verdi: {
                             en: 'Period does not have an up to and including date / Up to and including date is in the future',
                             nb: 'Tidsrommet har ikke en til og med dato / Til og med dato er frem i tid.',
@@ -2145,6 +2452,14 @@ export const testdata2: TilKontraktTestData = {
                             nn: 'Eg veit ikkje når institusjonsopphaldet avsluttast',
                         },
                     },
+                    adresse: {
+                        label: {
+                            en: "Where is Barn Barnessen III's living during the period for which you are applying for child benefit?",
+                            nb: 'Hvor bor Barn Barnessen III i perioden det søkes om barnetrygd?',
+                            nn: 'Kor bur Barn Barnessen III i perioden det vert søkt om barnetrygd?',
+                        },
+                        verdi: { nb: 'Vei 12', nn: 'Vei 12', en: 'Vei 12' },
+                    },
                 },
             },
         ],
@@ -2155,11 +2470,7 @@ export const testdata2: TilKontraktTestData = {
                     nb: 'Er noen av barna fosterbarn?',
                     nn: 'Er nokre av barna fosterbarn?',
                 },
-                verdi: {
-                    nb: 'JA',
-                    nn: 'JA',
-                    en: 'JA',
-                },
+                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
             },
             søktAsylForBarn: {
                 label: {
@@ -2167,11 +2478,7 @@ export const testdata2: TilKontraktTestData = {
                     nb: 'Er det søkt om asyl i Norge for noen av barna?',
                     nn: 'Er det søkt om asyl i Noreg for nokre av barna?',
                 },
-                verdi: {
-                    nb: 'JA',
-                    nn: 'JA',
-                    en: 'JA',
-                },
+                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
             },
             oppholderBarnSegIInstitusjon: {
                 label: {
@@ -2179,11 +2486,7 @@ export const testdata2: TilKontraktTestData = {
                     nb: 'Er noen av barna i barnverninstitusjon eller i annen institusjon?',
                     nn: 'Er nokre av barna i barneverninstitusjon eller i anna institusjon?',
                 },
-                verdi: {
-                    nb: 'JA',
-                    nn: 'JA',
-                    en: 'JA',
-                },
+                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
             },
             barnOppholdtSegTolvMndSammenhengendeINorge: {
                 label: {
@@ -2191,11 +2494,7 @@ export const testdata2: TilKontraktTestData = {
                     nb: 'Har barna oppholdt seg sammenhengende i Norge de siste tolv månedene?',
                     nn: 'Har barna oppheldt seg samanhengande i Noreg dei siste tolv månadene?',
                 },
-                verdi: {
-                    nb: 'NEI',
-                    nn: 'NEI',
-                    en: 'NEI',
-                },
+                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
             },
             erBarnAdoptertFraUtland: {
                 label: {
@@ -2203,23 +2502,15 @@ export const testdata2: TilKontraktTestData = {
                     nb: 'Er noen av barna adoptert fra utlandet?',
                     nn: 'Er nokre av barna adoptert frå utlandet?',
                 },
-                verdi: {
-                    nb: 'JA',
-                    nn: 'JA',
-                    en: 'JA',
-                },
+                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
             },
             mottarBarnetrygdForBarnFraAnnetEøsland: {
                 label: {
-                    en: 'Are you receiving or have you applied for child benefit for some of the children from another EEA country?',
-                    nb: 'Får du eller har du søkt om barnetrygd for noen av barna fra et annet EØS land?',
-                    nn: 'Får du eller har du søkt om barnetrygd for nokre av barna frå eit anna EØS land?',
+                    en: 'Are you receiving, have you received or have you applied for child benefit for some of the children from another EEA country?',
+                    nb: 'Får, har du fått eller har du søkt om barnetrygd for noen av barna fra et annet EØS land?',
+                    nn: 'Får du, har du fått eller har du søkt om barnetrygd for nokre av barna frå eit anna EØS land?',
                 },
-                verdi: {
-                    nb: 'JA',
-                    nn: 'JA',
-                    en: 'JA',
-                },
+                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
             },
             erAvdødPartnerForelder: {
                 label: {
@@ -2227,11 +2518,7 @@ export const testdata2: TilKontraktTestData = {
                     nb: 'Du er folkeregistrert som enke/enkemann. Er din tidligere ektefelle forelder til noen av barna du søker barnetrygd for?',
                     nn: 'Du er folkeregistrert som enke/enkemann. Er din tidlegare ektefelle forelder til nokre av barna du søker barnetrygd for?',
                 },
-                verdi: {
-                    nb: null,
-                    nn: null,
-                    en: null,
-                },
+                verdi: { nb: null, nn: null, en: null },
             },
             lestOgForståttBekreftelse: {
                 label: {
@@ -2278,16 +2565,6 @@ export const testdata2: TilKontraktTestData = {
                 },
             },
             {
-                dokumentasjonsbehov: 'EØS_SKJEMA',
-                harSendtInn: false,
-                opplastedeVedlegg: [],
-                dokumentasjonSpråkTittel: {
-                    en: 'Supplementary form for claiming payment of child benefit based on export rules under the EEA agreement',
-                    nb: 'Tilleggsskjema ved krav om utbetaling av barnetrygd og/eller kontantstøtte på grunnlag av regler om eksport etter EØS-avtalen',
-                    nn: 'Tilleggskjema ved krav om utbetaling av barnetrygd og/eller kontantstønad på grunnlag av reglar om eksport etter EØS-avtalen',
-                },
-            },
-            {
                 dokumentasjonsbehov: 'ANNEN_DOKUMENTASJON',
                 harSendtInn: false,
                 opplastedeVedlegg: [],
@@ -2329,6 +2606,16 @@ export const testdata2: TilKontraktTestData = {
                 nb: 'Har du hatt samboer tidligere i perioden du søker barnetrygd for?',
                 nn: 'Har du hatt sambuar tidlegare i perioden du søker barnetrygd for?',
             },
+            'omdeg.personopplysninger.adressesperre.alert': {
+                en: 'You are registered with a blocked address',
+                nb: 'Du er registrert med adressesperre',
+                nn: 'Du er registrert med adressesperre',
+            },
+            'omdeg.personopplysninger.ikke-registrert.alert': {
+                en: 'You are not registered with a residential address in Norway',
+                nb: 'Du er ikke registrert med bostedsadresse i Norge',
+                nn: 'Du er ikkje registrert med bustadsadresse i Noreg',
+            },
             'pdf.andreforelder.seksjonstittel': {
                 en: "Child's other parent",
                 nb: 'Barnets andre forelder',
@@ -2349,21 +2636,9 @@ export const testdata2: TilKontraktTestData = {
                 nb: 'Ikke registrert på søkers adresse',
                 nn: 'Ikkje registrert på søkars adresse',
             },
-            'pdf.ombarnet.seksjonstittel': {
-                en: 'About {navn}',
-                nb: 'Om {navn}',
-                nn: 'Om {navn}',
-            },
-            'pdf.omdeg.seksjonstittel': {
-                en: 'About you',
-                nb: 'Om deg',
-                nn: 'Om deg',
-            },
-            'pdf.bosted.seksjonstittel': {
-                en: 'Place of residence',
-                nb: 'Bosted',
-                nn: 'Bustad',
-            },
+            'pdf.ombarnet.seksjonstittel': { en: 'About {navn}', nb: 'Om {navn}', nn: 'Om {navn}' },
+            'pdf.omdeg.seksjonstittel': { en: 'About you', nb: 'Om deg', nn: 'Om deg' },
+            'pdf.bosted.seksjonstittel': { en: 'Place of residence', nb: 'Bosted', nn: 'Bustad' },
             'pdf.ombarna.seksjonstittel': {
                 en: 'About your children',
                 nb: 'Om barna dine',
@@ -2374,11 +2649,7 @@ export const testdata2: TilKontraktTestData = {
                 nb: 'Søker du barnetrygd for et spesielt tidsrom for {navn}?',
                 nn: 'Søker du barnetrygd for eit spesielt tidsrom for {navn}?',
             },
-            'pdf.søker.seksjonstittel': {
-                en: 'Applicant',
-                nb: 'Søker',
-                nn: 'Søkar',
-            },
+            'pdf.søker.seksjonstittel': { en: 'Applicant', nb: 'Søker', nn: 'Søkar' },
             'pdf.vedlegg.seksjonstittel': {
                 en: 'List of attachments',
                 nb: 'Liste over vedlegg',
@@ -2409,26 +2680,24 @@ export const testdata2: TilKontraktTestData = {
                 nb: 'Tidligere samboer {x}',
                 nn: 'Tidlegare sambuar {x}',
             },
-            'felles.sivilstatus.kode.GIFT': {
-                en: 'Married',
-                nb: 'Gift',
-                nn: 'Gift',
+            'eøs-om-deg.sidetittel': {
+                en: 'Child benefit by the EEA-regulations - About you',
+                nb: 'Barnetrygd etter EØS-reglene - Om deg',
+                nn: 'Barnetrygd etter EØS-reglane - Om deg',
             },
+            'eøs-om-barn.sidetittel': {
+                en: 'Child benefit by the EEA-regulations - About {barn}',
+                nb: 'Barnetrygd etter EØS-reglene - Om {barn}',
+                nn: 'Barnetrygd etter EØS-reglane - Om {barn}',
+            },
+            'felles.sivilstatus.kode.GIFT': { en: 'Married', nb: 'Gift', nn: 'Gift' },
             'felles.sivilstatus.kode.ENKE_ELLER_ENKEMANN': {
                 en: 'Widow(er)',
                 nb: 'Enke/Enkemann',
                 nn: 'Enke/enkemann',
             },
-            'felles.sivilstatus.kode.SKILT': {
-                en: 'Divorced',
-                nb: 'Skilt',
-                nn: 'Skilt',
-            },
-            'felles.sivilstatus.kode.SEPARERT': {
-                en: 'Separated',
-                nb: 'Separert',
-                nn: 'Separert',
-            },
+            'felles.sivilstatus.kode.SKILT': { en: 'Divorced', nb: 'Skilt', nn: 'Skilt' },
+            'felles.sivilstatus.kode.SEPARERT': { en: 'Separated', nb: 'Separert', nn: 'Separert' },
             'felles.sivilstatus.kode.REGISTRERT_PARTNER': {
                 en: 'Registered partner',
                 nb: 'Registrert partner',
@@ -2449,26 +2718,14 @@ export const testdata2: TilKontraktTestData = {
                 nb: 'Gjenlevende partner',
                 nn: 'Attlevande partner',
             },
-            'felles.sivilstatus.kode.UGIFT': {
-                en: 'Unmarried',
-                nb: 'Ugift',
-                nn: 'Ugift',
-            },
+            'felles.sivilstatus.kode.UGIFT': { en: 'Unmarried', nb: 'Ugift', nn: 'Ugift' },
             'felles.sivilstatus.kode.UOPPGITT': {
                 en: 'Not specified',
                 nb: 'Ikke oppgitt',
                 nn: 'Ikkje oppgitt',
             },
-            'felles.svaralternativ.ja': {
-                en: 'Yes',
-                nb: 'Ja',
-                nn: 'Ja',
-            },
-            'felles.svaralternativ.nei': {
-                en: 'No',
-                nb: 'Nei',
-                nn: 'Nei',
-            },
+            'felles.svaralternativ.ja': { en: 'Yes', nb: 'Ja', nn: 'Ja' },
+            'felles.svaralternativ.nei': { en: 'No', nb: 'Nei', nn: 'Nei' },
             'felles.svaralternativ.vetikke': {
                 en: "Don't know",
                 nb: 'Jeg vet ikke',

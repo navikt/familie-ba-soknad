@@ -1,17 +1,18 @@
 import { ReactNode } from 'react';
 
-import { IntlShape } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { IBarnMedISøknad } from '../../typer/barn';
 import { AlternativtSvarForInput } from '../../typer/common';
-import { ISøknadsfelt, SpørsmålMap as KontraktpørsmålMap } from '../../typer/kontrakt/generelle';
+import {
+    ISøknadsfelt,
+    Slektsforhold,
+    SpørsmålMap as KontraktpørsmålMap,
+} from '../../typer/kontrakt/generelle';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { Årsak } from '../../typer/utvidet';
-import { barnetsNavnValue } from '../barn';
-import { hentTekster, landkodeTilSpråk, toÅrsakSpråkId } from '../språk';
+import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId, toÅrsakSpråkId } from '../språk';
 import { språkIndexListe } from '../spørsmål';
 import { isAlpha3Code } from '../typeguards';
 
@@ -70,6 +71,8 @@ export const spørmålISøknadsFormat = (
                         formatertVerdi = sammeVerdiAlleSpråk(verdi);
                     } else if (verdi in Årsak) {
                         formatertVerdi = hentTekster(toÅrsakSpråkId(verdi));
+                    } else if (verdi in Slektsforhold) {
+                        formatertVerdi = hentTekster(toSlektsforholdSpråkId(verdi));
                     } else {
                         formatertVerdi = sammeVerdiAlleSpråk(verdi);
                     }
@@ -98,7 +101,6 @@ export const språktekstIdFraSpørsmålId = (spørsmålId: SpørsmålId): string
 };
 
 export const søknadsfeltBarn = <T>(
-    intl: IntlShape,
     labelTekstId: string,
     value: Record<LocaleType, T>,
     barn?: IBarnMedISøknad,
@@ -107,7 +109,7 @@ export const søknadsfeltBarn = <T>(
     barn
         ? søknadsfelt(labelTekstId, value, {
               ...labelMessageValues,
-              navn: barnetsNavnValue(barn, intl),
-              barn: barnetsNavnValue(barn, intl),
+              navn: barn.navn,
+              barn: barn.navn,
           })
         : søknadsfelt(labelTekstId, value);

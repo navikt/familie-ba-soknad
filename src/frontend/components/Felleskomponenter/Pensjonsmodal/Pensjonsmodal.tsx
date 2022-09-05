@@ -1,12 +1,9 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
-import { barnetsNavnValue } from '../../../utils/barn';
+import { PersonType } from '../../../typer/personType';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
@@ -17,37 +14,33 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import {
-    pensjonAndreForelderSpørsmålSpråkId,
-    PensjonSpørsmålId,
-    pensjonSøkerSpørsmålSpråkId,
-} from './spørsmål';
+import { pensjonsperiodeModalSpørsmålSpråkId } from './språkUtils';
+import { PensjonsperiodeSpørsmålId } from './spørsmål';
 import { IUsePensjonSkjemaParams, usePensjonSkjema } from './usePensjonSkjema';
 
 interface Props extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
     onLeggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
-    gjelderUtland?: boolean;
-    andreForelderData?: { barn: IBarnMedISøknad; erDød: boolean };
+    gjelderUtland: boolean;
 }
 
 export const PensjonModal: React.FC<Props> = ({
     erÅpen,
     toggleModal,
     onLeggTilPensjonsperiode,
-    gjelderUtland = false,
-    andreForelderData,
+    gjelderUtland,
+    personType,
+    barn,
+    erDød,
 }) => {
-    const intl = useIntl();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         usePensjonSkjema({
             gjelderUtland,
-            andreForelderData,
+            personType,
+            barn,
+            erDød,
         });
 
     const { mottarPensjonNå, pensjonTilDato, pensjonFraDato, pensjonsland } = skjema.felter;
-    const gjelderAndreForelder = !!andreForelderData;
-    const barn = andreForelderData?.barn;
-    const erAndreForelderDød = !!andreForelderData?.erDød;
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -56,27 +49,21 @@ export const PensjonModal: React.FC<Props> = ({
 
         onLeggTilPensjonsperiode({
             mottarPensjonNå: {
-                id: PensjonSpørsmålId.mottarPensjonNå,
-                svar: skjema.felter.mottarPensjonNå.verdi,
+                id: PensjonsperiodeSpørsmålId.mottarPensjonNå,
+                svar: mottarPensjonNå.erSynlig ? mottarPensjonNå.verdi : null,
             },
-            ...(skjema.felter.pensjonsland.erSynlig && {
-                pensjonsland: {
-                    id: PensjonSpørsmålId.pensjonsland,
-                    svar: skjema.felter.pensjonsland.verdi,
-                },
-            }),
-            ...(skjema.felter.pensjonFraDato.erSynlig && {
-                pensjonFra: {
-                    id: PensjonSpørsmålId.fraDatoPensjon,
-                    svar: skjema.felter.pensjonFraDato.verdi,
-                },
-            }),
-            ...(skjema.felter.pensjonTilDato.erSynlig && {
-                pensjonTil: {
-                    id: PensjonSpørsmålId.tilDatoPensjon,
-                    svar: skjema.felter.pensjonTilDato.verdi,
-                },
-            }),
+            pensjonsland: {
+                id: PensjonsperiodeSpørsmålId.pensjonsland,
+                svar: pensjonsland.erSynlig ? pensjonsland.verdi : '',
+            },
+            pensjonFra: {
+                id: PensjonsperiodeSpørsmålId.fraDatoPensjon,
+                svar: pensjonFraDato.erSynlig ? pensjonFraDato.verdi : '',
+            },
+            pensjonTil: {
+                id: PensjonsperiodeSpørsmålId.tilDatoPensjon,
+                svar: pensjonTilDato.erSynlig ? pensjonTilDato.verdi : '',
+            },
         });
 
         toggleModal();
@@ -86,7 +73,14 @@ export const PensjonModal: React.FC<Props> = ({
         ? 'felles.leggtilpensjon.utland.modal.tittel'
         : 'felles.leggtilpensjon.norge.modal.tittel';
 
-    const tilbakeITid = mottarPensjonNå.verdi === ESvar.NEI;
+    const periodenErAvsluttet =
+        mottarPensjonNå.verdi === ESvar.NEI || (personType === PersonType.AndreForelder && !!erDød);
+
+    const hentSpørsmålTekstId = pensjonsperiodeModalSpørsmålSpråkId(
+        personType,
+        periodenErAvsluttet
+    );
+
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -98,66 +92,42 @@ export const PensjonModal: React.FC<Props> = ({
             onAvbrytCallback={nullstillSkjema}
         >
             <KomponentGruppe inline>
-                {skjema.felter.mottarPensjonNå.erSynlig && (
+                {mottarPensjonNå.erSynlig && (
                     <JaNeiSpm
                         skjema={skjema}
-                        felt={skjema.felter.mottarPensjonNå}
-                        spørsmålTekstId={
-                            gjelderAndreForelder
-                                ? pensjonAndreForelderSpørsmålSpråkId(
-                                      tilbakeITid,
-                                      erAndreForelderDød
-                                  )[PensjonSpørsmålId.mottarPensjonNå]
-                                : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
-                                      PensjonSpørsmålId.mottarPensjonNå
-                                  ]
-                        }
-                        språkValues={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                        felt={mottarPensjonNå}
+                        spørsmålTekstId={hentSpørsmålTekstId(
+                            PensjonsperiodeSpørsmålId.mottarPensjonNå
+                        )}
+                        språkValues={{ ...(barn && { barn: barn.navn }) }}
                     />
                 )}
                 {pensjonsland.erSynlig && (
                     <LandDropdown
-                        felt={skjema.felter.pensjonsland}
+                        felt={pensjonsland}
                         skjema={skjema}
                         label={
                             <SpråkTekst
-                                id={
-                                    gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(
-                                              tilbakeITid,
-                                              erAndreForelderDød
-                                          )[PensjonSpørsmålId.pensjonsland]
-                                        : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
-                                              PensjonSpørsmålId.pensjonsland
-                                          ]
-                                }
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.pensjonsland)}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
                         dynamisk
+                        ekskluderNorge
                     />
                 )}
 
                 {pensjonFraDato.erSynlig && (
                     <Datovelger
-                        felt={skjema.felter.pensjonFraDato}
+                        felt={pensjonFraDato}
                         label={
                             <SpråkTekst
-                                id={
-                                    gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(
-                                              tilbakeITid,
-                                              erAndreForelderDød
-                                          )[PensjonSpørsmålId.fraDatoPensjon]
-                                        : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
-                                              PensjonSpørsmålId.fraDatoPensjon
-                                          ]
-                                }
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.fraDatoPensjon)}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
                         skjema={skjema}
-                        avgrensMaxDato={tilbakeITid ? gårsdagensDato() : dagensDato()}
+                        avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
                         calendarPosition={'fullscreen'}
                     />
                 )}
@@ -166,17 +136,8 @@ export const PensjonModal: React.FC<Props> = ({
                         felt={pensjonTilDato}
                         label={
                             <SpråkTekst
-                                id={
-                                    gjelderAndreForelder
-                                        ? pensjonAndreForelderSpørsmålSpråkId(
-                                              tilbakeITid,
-                                              erAndreForelderDød
-                                          )[PensjonSpørsmålId.tilDatoPensjon]
-                                        : pensjonSøkerSpørsmålSpråkId(tilbakeITid)[
-                                              PensjonSpørsmålId.tilDatoPensjon
-                                          ]
-                                }
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.tilDatoPensjon)}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
                         skjema={skjema}

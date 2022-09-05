@@ -28,15 +28,15 @@ export interface ISøkerRespons extends IPerson {
     navn: string;
     barn: IBarnRespons[];
     statsborgerskap: { landkode: Alpha3Code }[];
-    adresse?: IAdresse;
+    adresse: IAdresse | null;
     sivilstand: { type: ESivilstand };
 }
 
 export interface IBarn extends IPerson {
     id: BarnetsId;
-    navn: string | null;
+    navn: string;
     borMedSøker: boolean | undefined;
-    alder: string | undefined;
+    alder: string | null;
 }
 
 export interface IIdNummer {
@@ -56,10 +56,8 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     // Steg: Din Livssituasjon
     erAsylsøker: ISøknadSpørsmål<ESvar | null>;
     jobberPåBåt: ISøknadSpørsmål<ESvar | null>;
-    arbeidsland: ISøknadSpørsmål<Alpha3Code | ''>;
     arbeidsperioderUtland: IArbeidsperiode[];
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | null>;
-    pensjonsland: ISøknadSpørsmål<Alpha3Code | ''>;
     pensjonsperioderUtland: IPensjonsperiode[];
     harSamboerNå: ISøknadSpørsmål<ESvar | null>;
     nåværendeSamboer: ISamboer | null;

@@ -1,19 +1,15 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
-import { barnetsNavnValue } from '../../../utils/barn';
-import { dagensDato } from '../../../utils/dato';
+import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
@@ -52,14 +48,7 @@ const Oppfølgningsspørsmål: React.FC<{
     fjernBarnetrygdsperiode,
     registrerteEøsBarnetrygdsperioder,
 }) => {
-    const intl = useIntl();
     const { erÅpen: utenlandsmodalErÅpen, toggleModal: toggleUtenlandsmodal } = useModal();
-    const { erEøsLand } = useEøs();
-    const { toggles } = useFeatureToggles();
-
-    const erFørsteEøsPeriode = (periode: IUtenlandsperiode) => {
-        return periode === utenlandsperioder.find(p => erEøsLand(p.oppholdsland.svar));
-    };
 
     return (
         <>
@@ -67,7 +56,7 @@ const Oppfølgningsspørsmål: React.FC<{
                 <KomponentGruppe>
                     <Informasjonsbolk
                         tittelId={'ombarnet.fosterbarn'}
-                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                        språkValues={{ navn: barn.navn }}
                     >
                         <VedleggNotis språkTekstId={'ombarnet.fosterbarn.vedleggsinfo'} />
                     </Informasjonsbolk>
@@ -75,10 +64,7 @@ const Oppfølgningsspørsmål: React.FC<{
             )}
 
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
-                <SkjemaFieldset
-                    tittelId={'ombarnet.institusjon'}
-                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
-                >
+                <SkjemaFieldset tittelId={'ombarnet.institusjon'} språkValues={{ navn: barn.navn }}>
                     <SkjemaCheckbox
                         labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonIUtland]
@@ -124,7 +110,13 @@ const Oppfølgningsspørsmål: React.FC<{
                     <>
                         <Datovelger
                             felt={skjema.felter.institusjonOppholdSluttdato}
-                            tilhørendeFraOgMedFelt={skjema.felter.institusjonOppholdStartdato}
+                            avgrensMinDato={
+                                erSammeDatoSomDagensDato(
+                                    skjema.felter.institusjonOppholdStartdato.verdi
+                                )
+                                    ? morgendagensDato()
+                                    : dagensDato()
+                            }
                             skjema={skjema}
                             label={
                                 <SpråkTekst
@@ -153,7 +145,7 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
-                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                    språkValues={{ navn: barn.navn }}
                 >
                     {utenlandsperioder.map((periode, index) => (
                         <UtenlandsperiodeOppsummering
@@ -162,14 +154,13 @@ const Oppfølgningsspørsmål: React.FC<{
                             nummer={index + 1}
                             fjernPeriodeCallback={fjernUtenlandsperiode}
                             barn={barn}
-                            erFørsteEøsPeriode={erFørsteEøsPeriode(periode)}
                         />
                     ))}
                     {utenlandsperioder.length > 0 && (
                         <Element>
                             <SpråkTekst
                                 id={'ombarnet.flereopphold.spm'}
-                                values={{ barn: barnetsNavnValue(barn, intl) }}
+                                values={{ barn: barn.navn }}
                             />
                         </Element>
                     )}
@@ -195,7 +186,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                         OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
                                     ]
                                 }
-                                språkValues={{ barn: barnetsNavnValue(barn, intl) }}
+                                språkValues={{ barn: barn.navn }}
                             />
                             {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
                                 <AlertStripe type={'advarsel'} dynamisk>
@@ -211,34 +202,45 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
                 <SkjemaFieldset
                     tittelId={'ombarnet.barnetrygd-eøs'}
-                    språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                    språkValues={{ navn: barn.navn }}
                 >
-                    {toggles.EØS_KOMPLETT ? (
-                        <Barnetrygdperiode
+                    <KomponentGruppe>
+                        <JaNeiSpm
                             skjema={skjema}
-                            registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
-                            leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
-                            fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
-                            barn={barn}
+                            felt={skjema.felter.pågåendeSøknadFraAnnetEøsLand}
+                            spørsmålTekstId={
+                                omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand
+                                ]
+                            }
                         />
-                    ) : (
-                        <>
+                        {skjema.felter.pågåendeSøknadHvilketLand.erSynlig && (
                             <LandDropdown
-                                felt={skjema.felter.barnetrygdFraEøslandHvilketLand}
+                                felt={skjema.felter.pågåendeSøknadHvilketLand}
                                 skjema={skjema}
                                 kunEøs={true}
+                                ekskluderNorge
                                 label={
                                     <SpråkTekst
                                         id={
                                             omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand
+                                                OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
                                             ]
                                         }
                                     />
                                 }
                             />
-                        </>
-                    )}
+                        )}
+                        <Barnetrygdperiode
+                            skjema={skjema}
+                            registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
+                            tilhørendeJaNeiSpmFelt={skjema.felter.mottarEllerMottokEøsBarnetrygd}
+                            leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
+                            fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
+                            barn={barn}
+                            personType={PersonType.Søker}
+                        />
+                    </KomponentGruppe>
                 </SkjemaFieldset>
             )}
             <UtenlandsoppholdModal

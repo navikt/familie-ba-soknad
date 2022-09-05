@@ -1,30 +1,29 @@
-import { IntlShape } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
-import {
-    BarnetrygdperiodeSpørsmålId,
-    barnetrygdperiodeSpørsmålSpråkId,
-} from '../../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
+import { barnetrygdperiodeModalSpørsmålSpråkId } from '../../components/Felleskomponenter/Barnetrygdperiode/barnetrygdperiodeSpråkUtils';
+import { BarnetrygdperiodeSpørsmålId } from '../../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IEøsBarnetrygdsperiodeIKontraktFormatV7 } from '../../typer/kontrakt/v7';
+import { IEøsBarnetrygdsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IEøsBarnetrygdsperiode } from '../../typer/perioder';
-import { barnetsNavnValue } from '../barn';
+import { PeriodePersonTypeProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
-export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
-    intl,
-    periode,
-    periodeNummer,
-    barn,
-}: {
-    intl: IntlShape;
+interface PensjonperiodeIKontraktFormatParams {
     periode: IEøsBarnetrygdsperiode;
     periodeNummer: number;
     barn: IBarnMedISøknad;
-}): ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV7> => {
+}
+
+export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
+    periode,
+    periodeNummer,
+    barn,
+    personType,
+    erDød,
+}: PensjonperiodeIKontraktFormatParams &
+    PeriodePersonTypeProps): ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV8> => {
     const {
         mottarEøsBarnetrygdNå,
         barnetrygdsland,
@@ -32,21 +31,31 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
         tilDatoBarnetrygdperiode,
         månedligBeløp,
     } = periode;
-    const tilbakeITid = mottarEøsBarnetrygdNå.svar === ESvar.NEI;
-    const hentSpørsmålTekstId = (spørsmålId: string) =>
-        hentTekster(barnetrygdperiodeSpørsmålSpråkId(tilbakeITid)[spørsmålId], {
-            ...(barn && intl && { barn: barnetsNavnValue(barn, intl) }),
+    const periodenErAvsluttet =
+        mottarEøsBarnetrygdNå.svar === ESvar.NEI ||
+        (personType === PersonType.AndreForelder && erDød);
+
+    const hentSpørsmålTekstId = (spørsmålId: BarnetrygdperiodeSpørsmålId) => {
+        const barnetrygdperiodeSpørsmålSpråkIder = barnetrygdperiodeModalSpørsmålSpråkId(
+            personType,
+            periodenErAvsluttet
+        );
+        return hentTekster(barnetrygdperiodeSpørsmålSpråkIder(spørsmålId), {
+            ...(barn && { barn: barn.navn }),
         });
+    };
 
     return {
         label: hentTekster('ombarnet.trygdandreperioder.periode', {
             x: periodeNummer,
         }),
         verdi: sammeVerdiAlleSpråk({
-            mottarEøsBarnetrygdNå: {
-                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå),
-                verdi: sammeVerdiAlleSpråk(mottarEøsBarnetrygdNå?.svar),
-            },
+            mottarEøsBarnetrygdNå: mottarEøsBarnetrygdNå.svar
+                ? {
+                      label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå),
+                      verdi: sammeVerdiAlleSpråk(mottarEøsBarnetrygdNå.svar),
+                  }
+                : null,
             barnetrygdsland: {
                 label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.barnetrygdsland),
                 verdi: verdiCallbackAlleSpråk(
@@ -57,12 +66,14 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
                 label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode),
                 verdi: sammeVerdiAlleSpråk(fraDatoBarnetrygdperiode?.svar),
             },
-
-            tilDatoBarnetrygdperiode: {
-                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode),
-                verdi: sammeVerdiAlleSpråk(tilDatoBarnetrygdperiode?.svar ?? null),
-            },
-
+            tilDatoBarnetrygdperiode: tilDatoBarnetrygdperiode.svar
+                ? {
+                      label: hentSpørsmålTekstId(
+                          BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
+                      ),
+                      verdi: sammeVerdiAlleSpråk(tilDatoBarnetrygdperiode?.svar ?? null),
+                  }
+                : null,
             månedligBeløp: {
                 label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.månedligBeløp),
                 verdi: sammeVerdiAlleSpråk(månedligBeløp.svar),

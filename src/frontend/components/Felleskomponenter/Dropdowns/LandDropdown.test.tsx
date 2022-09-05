@@ -17,7 +17,7 @@ describe('LandDropdown', () => {
     });
 
     it('Rendrer alle land i alle dropdowns når eøs er skrudd av', async () => {
-        mockEøs(true);
+        mockEøs();
         const felt = mockDeep<Felt<'' | Alpha3Code>>({
             erSynlig: true,
             id: 'test-id',
@@ -32,18 +32,20 @@ describe('LandDropdown', () => {
 
         let options = await findAllByRole('option');
 
-        expect(options).toHaveLength(251);
+        const antallLand = 251;
+
+        expect(options).toHaveLength(antallLand);
         unmount();
 
         render(
             <TestProvidereMedEkteTekster>
-                <LandDropdown felt={felt} skjema={skjema} kunEøs />
+                <LandDropdown felt={felt} skjema={skjema} />
             </TestProvidereMedEkteTekster>
         );
 
         options = await findAllByRole('option');
 
-        expect(options).toHaveLength(251);
+        expect(options).toHaveLength(antallLand);
     }, /* Denne testen trenger litt ekstra tid pga unmount, vanligvis rundt 6s */ 12000);
 
     it('Rendrer kun EØS-land når EØS er på og kunEøs-prop er true', async () => {

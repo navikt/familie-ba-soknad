@@ -5,7 +5,6 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
-import { useFeatureToggles } from '../../../../../context/FeatureToggleContext';
 import { useSteg } from '../../../../../context/StegContext';
 import {
     andreForelderDataKeySpørsmål,
@@ -13,7 +12,7 @@ import {
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
-import { barnetsNavnValue } from '../../../../../utils/barn';
+import { PersonType } from '../../../../../typer/personType';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
@@ -39,13 +38,12 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
     const { formatMessage } = intl;
     const { hentStegObjektForBarn } = useSteg();
     const [valgtLocale] = useSprakContext();
-    const { toggles } = useFeatureToggles();
     const omBarnetHook = useOmBarnet(barn.id);
 
     return (
         <Oppsummeringsbolk
             tittel={'oppsummering.deltittel.ombarnet'}
-            språkValues={{ nummer, navn: barnetsNavnValue(barn, intl) }}
+            språkValues={{ nummer, navn: barn.navn }}
             key={index}
             steg={hentStegObjektForBarn(barn)}
             skjemaHook={omBarnetHook}
@@ -53,22 +51,14 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
         >
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={'ombarnet.fosterbarn'}
-                            values={{ navn: barnetsNavnValue(barn, intl) }}
-                        />
-                    }
+                    tittel={<SpråkTekst id={'ombarnet.fosterbarn'} values={{ navn: barn.navn }} />}
                 />
             )}
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
                 <StyledOppsummeringsFeltGruppe>
                     <OppsummeringFelt
                         tittel={
-                            <SpråkTekst
-                                id={'ombarnet.institusjon'}
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
-                            />
+                            <SpråkTekst id={'ombarnet.institusjon'} values={{ navn: barn.navn }} />
                         }
                     />
 
@@ -169,7 +159,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         tittel={
                             <SpråkTekst
                                 id={'ombarnet.opplystatbarnutlandopphold.info'}
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
+                                values={{ navn: barn.navn }}
                             />
                         }
                     />
@@ -190,7 +180,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                             OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
                                         ]
                                     }
-                                    values={{ barn: barnetsNavnValue(barn, intl) }}
+                                    values={{ barn: barn.navn }}
                                 />
                             }
                             søknadsvar={barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar}
@@ -205,56 +195,70 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         tittel={
                             <SpråkTekst
                                 id={'ombarnet.barnetrygd-eøs'}
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
+                                values={{ navn: barn.navn }}
                             />
                         }
                     />
-                    {toggles.EØS_KOMPLETT ? (
-                        <>
-                            {barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar && (
-                                <OppsummeringFelt
-                                    tittel={
-                                        <SpråkTekst
-                                            id={
-                                                omBarnetSpørsmålSpråkId[
-                                                    OmBarnetSpørsmålsId
-                                                        .mottarEllerMottokEøsBarnetrygd
-                                                ]
-                                            }
-                                        />
-                                    }
-                                    søknadsvar={
-                                        barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]
-                                            .svar
-                                    }
-                                />
-                            )}
-                            {barn.eøsBarnetrygdsperioder.map((periode, index) => (
-                                <BarnetrygdsperiodeOppsummering
-                                    key={`barnetrygdperiode-${index}`}
-                                    nummer={index + 1}
-                                    barnetrygdsperiode={periode}
-                                    barnetsNavn={barnetsNavnValue(barn, intl)}
-                                />
-                            ))}
-                        </>
-                    ) : (
+
+                    {barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar && (
                         <OppsummeringFelt
                             tittel={
                                 <SpråkTekst
                                     id={
                                         omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand
+                                            OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={
+                                barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar
+                            }
+                        />
+                    )}
+                    {barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar && (
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
                                         ]
                                     }
                                 />
                             }
                             søknadsvar={landkodeTilSpråk(
-                                barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand].svar,
+                                barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar,
                                 valgtLocale
                             )}
                         />
                     )}
+
+                    {barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar && (
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={
+                                barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar
+                            }
+                        />
+                    )}
+                    {barn.eøsBarnetrygdsperioder.map((periode, index) => (
+                        <BarnetrygdsperiodeOppsummering
+                            key={`barnetrygdperiode-søker-${index}`}
+                            nummer={index + 1}
+                            barnetrygdsperiode={periode}
+                            barnetsNavn={barn.navn}
+                            personType={PersonType.Søker}
+                        />
+                    ))}
                 </StyledOppsummeringsFeltGruppe>
             )}
 
@@ -268,7 +272,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     tittel={
                         <SpråkTekst
                             id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.borFastMedSøker]}
-                            values={{ navn: barnetsNavnValue(barn, intl) }}
+                            values={{ navn: barn.navn }}
                         />
                     }
                     søknadsvar={barn[barnDataKeySpørsmål.borFastMedSøker].svar}
@@ -283,7 +287,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                         OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
                                     ]
                                 }
-                                values={{ navn: barnetsNavnValue(barn, intl) }}
+                                values={{ navn: barn.navn }}
                             />
                         }
                         søknadsvar={
@@ -299,7 +303,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     tittel={
                         <SpråkTekst
                             id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerForTidsrom]}
-                            values={{ navn: barnetsNavnValue(barn, intl) }}
+                            values={{ navn: barn.navn }}
                         />
                     }
                     søknadsvar={barn[barnDataKeySpørsmål.søkerForTidsrom].svar}
@@ -332,7 +336,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 />
                             }
                             søknadsvar={(() => {
-                                //TODO refactor
                                 const svar =
                                     barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar;
                                 return svar === AlternativtSvarForInput.UKJENT

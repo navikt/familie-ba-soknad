@@ -1,10 +1,10 @@
 import { RequestHandler } from 'express';
 import xss from 'xss';
 
-import { ISøknadKontrakt } from '../../frontend/typer/kontrakt/v6';
+import { ISøknadKontraktV8 } from '../../frontend/typer/kontrakt/v8';
 
 export const escapeBody: RequestHandler = async (req, _res, next) => {
-    const søknad: ISøknadKontrakt = req.body;
+    const søknad: ISøknadKontraktV8 = req.body;
     req.body = JSON.parse(xss(JSON.stringify(søknad)));
     next();
 };

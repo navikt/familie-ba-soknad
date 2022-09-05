@@ -5,13 +5,11 @@ import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { usePerioder } from '../../../hooks/usePerioder';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
@@ -21,9 +19,11 @@ import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
+import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
+import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -47,7 +47,6 @@ export const useDinLivssituasjon = (): {
 } => {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs, erEøsLand } = useEøs();
-    const { toggles } = useFeatureToggles();
     const søker = søknad.søker;
     const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
         søker.utvidet.tidligereSamboere
@@ -190,15 +189,7 @@ export const useDinLivssituasjon = (): {
 
     const jobberPåBåt = useJaNeiSpmFelt({
         søknadsfelt: søker.jobberPåBåt,
-        feilmeldingSpråkId: 'omdeg.arbeid-utland.feilmelding',
-    });
-
-    const arbeidsland = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt: søker.arbeidsland,
-        feilmeldingSpråkId: 'omdeg.arbeid-utland.land.feilmelding',
-        avhengigSvarCondition: ESvar.JA,
-        avhengighet: jobberPåBåt,
-        skalFeltetVises: !toggles.EØS_KOMPLETT,
+        feilmeldingSpråkId: 'eøs.arbeid-utland.feilmelding',
     });
 
     const {
@@ -208,7 +199,7 @@ export const useDinLivssituasjon = (): {
     } = usePerioder<IArbeidsperiode>(
         søker.arbeidsperioderUtland,
         { jobberPåBåt },
-        avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA,
         (felt, avhengigheter) => {
             return avhengigheter?.jobberPåBåt.verdi === ESvar.NEI ||
                 (avhengigheter?.jobberPåBåt.verdi === ESvar.JA && felt.verdi.length)
@@ -219,15 +210,7 @@ export const useDinLivssituasjon = (): {
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
-        feilmeldingSpråkId: 'omdeg.utenlandspensjon.feilmelding',
-    });
-
-    const pensjonsland = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt: søker.pensjonsland,
-        feilmeldingSpråkId: 'omdeg.utenlandspensjon.land.feilmelding',
-        avhengigSvarCondition: ESvar.JA,
-        avhengighet: mottarUtenlandspensjon,
-        skalFeltetVises: !toggles.EØS_KOMPLETT,
+        feilmeldingSpråkId: 'omdeg.pensjonutland.feilmelding',
     });
 
     const {
@@ -237,8 +220,7 @@ export const useDinLivssituasjon = (): {
     } = usePerioder<IPensjonsperiode>(
         søker.pensjonsperioderUtland,
         { mottarUtenlandspensjon },
-        avhengigheter =>
-            avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
+        avhengigheter => avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA,
         (felt, avhengigheter) => {
             return avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.NEI ||
                 (avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length)
@@ -265,10 +247,8 @@ export const useDinLivssituasjon = (): {
             nåværendeSamboerFraDato,
             erAsylsøker,
             jobberPåBåt,
-            arbeidsland,
             registrerteArbeidsperioder,
             mottarUtenlandspensjon,
-            pensjonsland,
             registrertePensjonsperioder,
         },
         skjemanavn: 'dinlivssituasjon',
@@ -297,6 +277,23 @@ export const useDinLivssituasjon = (): {
         } else {
             return OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder;
         }
+    };
+
+    const filtrerteRelevanteIdNummer = () => {
+        return søknad.søker.idNummer.filter(idNummer => {
+            return idNummerLand(
+                {
+                    arbeidsperioderUtland:
+                        jobberPåBåt.verdi === ESvar.JA ? registrerteArbeidsperioder.verdi : [],
+                    pensjonsperioderUtland:
+                        mottarUtenlandspensjon.verdi === ESvar.JA
+                            ? registrertePensjonsperioder.verdi
+                            : [],
+                    utenlandsperioder: søker.utenlandsperioder,
+                },
+                erEøsLand
+            ).includes(idNummer.land);
+        });
     };
 
     const genererOppdatertSøker = (): ISøker => ({
@@ -341,10 +338,6 @@ export const useDinLivssituasjon = (): {
             ...søknad.søker.jobberPåBåt,
             svar: skjema.felter.jobberPåBåt.verdi,
         },
-        arbeidsland: {
-            ...søknad.søker.arbeidsland,
-            svar: skjema.felter.arbeidsland.verdi,
-        },
         arbeidsperioderUtland:
             skjema.felter.jobberPåBåt.verdi === ESvar.JA
                 ? skjema.felter.registrerteArbeidsperioder.verdi
@@ -353,22 +346,11 @@ export const useDinLivssituasjon = (): {
             ...søknad.søker.mottarUtenlandspensjon,
             svar: skjema.felter.mottarUtenlandspensjon.verdi,
         },
-        pensjonsland: {
-            ...søknad.søker.pensjonsland,
-            svar: skjema.felter.pensjonsland.verdi,
-        },
         pensjonsperioderUtland:
             skjema.felter.mottarUtenlandspensjon.verdi === ESvar.JA
                 ? skjema.felter.registrertePensjonsperioder.verdi
                 : [],
-        idNummer: søknad.søker.idNummer.filter(idNummer => {
-            return idNummerLand(
-                jobberPåBåt.verdi === ESvar.JA ? registrerteArbeidsperioder.verdi : [],
-                mottarUtenlandspensjon.verdi === ESvar.JA ? registrertePensjonsperioder.verdi : [],
-                søker.utenlandsperioder,
-                erEøsLand
-            ).includes(idNummer.land);
-        }),
+        idNummer: filtrerteRelevanteIdNummer(),
         utvidet: {
             ...søknad.søker.utvidet,
             tidligereSamboere,
@@ -398,10 +380,14 @@ export const useDinLivssituasjon = (): {
         const oppdatertSøker = genererOppdatertSøker();
         skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs &&
             settSøkerTriggerEøs(prevState => !prevState);
-    }, [arbeidsland, pensjonsland, jobberPåBåt, mottarUtenlandspensjon]);
+    }, [jobberPåBåt, mottarUtenlandspensjon]);
 
     const oppdaterSøknad = () => {
         const oppdatertSøker = genererOppdatertSøker();
+        const søkerTriggetEøs = skalTriggeEøsForSøker(oppdatertSøker);
+        const harEøsSteg =
+            søkerTriggetEøs || !!søknad.barnInkludertISøknaden.find(barn => barn.triggetEøs);
+
         settSøknad({
             ...søknad,
             erAvdødPartnerForelder: {
@@ -424,7 +410,17 @@ export const useDinLivssituasjon = (): {
                     return { ...dok, gjelderForSøker: erAsylsøker.verdi === ESvar.JA };
                 else return dok;
             }),
-            søker: { ...oppdatertSøker, triggetEøs: skalTriggeEøsForSøker(oppdatertSøker) },
+            søker: {
+                ...oppdatertSøker,
+                triggetEøs: søkerTriggetEøs,
+                ...(!harEøsSteg && nullstilteEøsFelterForSøker(søknad.søker)),
+            },
+            ...(!harEøsSteg && {
+                barnInkludertISøknaden: søknad.barnInkludertISøknaden.map(barn => ({
+                    ...barn,
+                    ...nullstilteEøsFelterForBarn(barn),
+                })),
+            }),
         });
     };
 

@@ -6,7 +6,7 @@ import { IArbeidsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../t
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { mockEøs } from '../../../utils/testing';
 import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
-import { PensjonSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
+import { PensjonsperiodeSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     eøsLandUtenDuplikatHof,
@@ -14,6 +14,33 @@ import {
     idNummerLandMedPeriodeType,
     PeriodeType,
 } from './idnummerUtils';
+
+const arbeidsPeriodeMock = () => ({
+    arbeidsperiodeland: {
+        id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
+        svar: 'NLD',
+    },
+    arbeidsgiver: { id: ArbeidsperiodeSpørsmålsId.arbeidsgiver, svar: '' },
+    arbeidsperiodeAvsluttet: {
+        id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
+        svar: ESvar.NEI,
+    },
+    fraDatoArbeidsperiode: {
+        id: ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode,
+        svar: '',
+    },
+    tilDatoArbeidsperiode: {
+        id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
+        svar: '',
+    },
+});
+
+const pensjonsPeriodeMock = () => ({
+    mottarPensjonNå: { id: PensjonsperiodeSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
+    pensjonsland: { id: PensjonsperiodeSpørsmålId.pensjonsland, svar: 'BGR' as Alpha3Code },
+    pensjonFra: { id: PensjonsperiodeSpørsmålId.fraDatoPensjon, svar: '' },
+    pensjonTil: { id: PensjonsperiodeSpørsmålId.tilDatoPensjon, svar: '' },
+});
 
 describe('idNummerLandMedPeriodeType', () => {
     it('Skal returnere idnummer-landMedPeriode til utenlandsperiode dersom det er flere like land på tvers av perioder', () => {
@@ -31,6 +58,7 @@ describe('idNummerLandMedPeriodeType', () => {
         ];
         const arbeidsperioder: IArbeidsperiode[] = [
             {
+                ...arbeidsPeriodeMock(),
                 arbeidsperiodeland: {
                     id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
                     svar: 'BGR',
@@ -39,16 +67,19 @@ describe('idNummerLandMedPeriodeType', () => {
         ];
         const pensjonsperioder: IPensjonsperiode[] = [
             {
-                mottarPensjonNå: { id: PensjonSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
-                pensjonsland: { id: PensjonSpørsmålId.pensjonsland, svar: 'BGR' },
+                ...pensjonsPeriodeMock(),
+                mottarPensjonNå: { id: PensjonsperiodeSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
+                pensjonsland: { id: PensjonsperiodeSpørsmålId.pensjonsland, svar: 'BGR' },
             },
         ];
 
         expect(
             idNummerLandMedPeriodeType(
-                arbeidsperioder,
-                pensjonsperioder,
-                utenlandsperioder,
+                {
+                    arbeidsperioderUtland: arbeidsperioder,
+                    pensjonsperioderUtland: pensjonsperioder,
+                    utenlandsperioder,
+                },
                 erEøsLand
             )
         ).toEqual([{ land: 'BGR', periodeType: PeriodeType.utenlandsperiode }]);
@@ -61,6 +92,7 @@ describe('idNummerLandMedPeriodeType', () => {
         const utenlandsperioder: IUtenlandsperiode[] = [];
         const arbeidsperioder: IArbeidsperiode[] = [
             {
+                ...arbeidsPeriodeMock(),
                 arbeidsperiodeland: {
                     id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
                     svar: 'BGR',
@@ -69,16 +101,19 @@ describe('idNummerLandMedPeriodeType', () => {
         ];
         const pensjonsperioder: IPensjonsperiode[] = [
             {
-                mottarPensjonNå: { id: PensjonSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
-                pensjonsland: { id: PensjonSpørsmålId.pensjonsland, svar: 'BGR' },
+                ...pensjonsPeriodeMock(),
+                mottarPensjonNå: { id: PensjonsperiodeSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
+                pensjonsland: { id: PensjonsperiodeSpørsmålId.pensjonsland, svar: 'BGR' },
             },
         ];
 
         expect(
             idNummerLandMedPeriodeType(
-                arbeidsperioder,
-                pensjonsperioder,
-                utenlandsperioder,
+                {
+                    arbeidsperioderUtland: arbeidsperioder,
+                    pensjonsperioderUtland: pensjonsperioder,
+                    utenlandsperioder,
+                },
                 erEøsLand
             )
         ).toEqual([{ land: 'BGR', periodeType: PeriodeType.arbeidsperiode }]);
@@ -99,6 +134,7 @@ describe('idNummerLandMedPeriodeType', () => {
         ];
         const arbeidsperioder: IArbeidsperiode[] = [
             {
+                ...arbeidsPeriodeMock(),
                 arbeidsperiodeland: {
                     id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
                     svar: 'NLD',
@@ -107,16 +143,18 @@ describe('idNummerLandMedPeriodeType', () => {
         ];
         const pensjonsperioder: IPensjonsperiode[] = [
             {
-                mottarPensjonNå: { id: PensjonSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
-                pensjonsland: { id: PensjonSpørsmålId.pensjonsland, svar: 'BGR' },
+                ...pensjonsPeriodeMock(),
+                mottarPensjonNå: { id: PensjonsperiodeSpørsmålId.mottarPensjonNå, svar: ESvar.JA },
             },
         ];
 
         expect(
             idNummerLandMedPeriodeType(
-                arbeidsperioder,
-                pensjonsperioder,
-                utenlandsperioder,
+                {
+                    arbeidsperioderUtland: arbeidsperioder,
+                    pensjonsperioderUtland: pensjonsperioder,
+                    utenlandsperioder,
+                },
                 erEøsLand
             )
         ).toEqual([

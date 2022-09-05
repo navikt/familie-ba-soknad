@@ -1,51 +1,92 @@
+import React from 'react';
+
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { feil, FeltState, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
-import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
+import { IBarnMedISøknad } from '../../../typer/barn';
+import { PersonType } from '../../../typer/personType';
 import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
-import { barnetrygdslandFeilmelding } from './barnetrygdperiodeSpråkUtils';
+import { dagenEtterDato, dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import {
+    barnetrygdslandFeilmelding,
+    mottarBarnetrygdNåFeilmelding,
+} from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
-export const useBarnetrygdperiodeSkjema = () => {
+export interface IUsePensjonsperiodeSkjemaParams {
+    personType: PersonType;
+    erDød?: boolean;
+    barn: IBarnMedISøknad;
+}
+
+export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød) => {
     const mottarEøsBarnetrygdNå = useJaNeiSpmFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå, svar: null },
-        feilmeldingSpråkId: 'modal.barnetrygdnå.feilmelding',
+        feilmeldingSpråkId: mottarBarnetrygdNåFeilmelding(personType),
+        feilmeldingSpråkVerdier: { barn: barn.navn },
+        skalSkjules: erDød,
     });
 
-    const tilbakeITid = mottarEøsBarnetrygdNå.verdi === ESvar.NEI;
+    const andreForelderErDød = personType === PersonType.AndreForelder && erDød;
+
+    const periodenErAvsluttet = mottarEøsBarnetrygdNå.verdi === ESvar.NEI || andreForelderErDød;
 
     const barnetrygdsland = useLanddropdownFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.barnetrygdsland, svar: '' },
-        feilmeldingSpråkId: barnetrygdslandFeilmelding(tilbakeITid),
-        skalFeltetVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
+        feilmeldingSpråkId: barnetrygdslandFeilmelding(periodenErAvsluttet, personType),
+        skalFeltetVises:
+            mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         nullstillVedAvhengighetEndring: true,
+        feilmeldingSpråkVerdier: { barn: barn.navn },
     });
 
     const fraDatoBarnetrygdperiode = useDatovelgerFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode, svar: '' },
-        skalFeltetVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
+        skalFeltetVises:
+            mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         feilmeldingSpråkId: 'modal.trygdnårbegynte.feilmelding',
-        sluttdatoAvgrensning: tilbakeITid ? gårsdagensDato() : dagensDato(),
+        sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
         nullstillVedAvhengighetEndring: true,
     });
 
     const tilDatoBarnetrygdperiode = useDatovelgerFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode, svar: '' },
-        skalFeltetVises: tilbakeITid,
+        skalFeltetVises: periodenErAvsluttet || andreForelderErDød,
         feilmeldingSpråkId: 'modal.trygdnåravsluttet.spm',
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: fraDatoBarnetrygdperiode.verdi,
+        startdatoAvgrensning: dagenEtterDato(fraDatoBarnetrygdperiode.verdi),
     });
 
-    //TODO legge inn validering for riktig input her
-    const månedligBeløp = useInputFelt({
-        søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.månedligBeløp, svar: '' },
-        feilmeldingSpråkId: 'ombarnet.trygdbeløp.feilmelding',
-        skalVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK,
+    const månedligBeløp = useFelt<string>({
+        verdi: '',
+        feltId: BarnetrygdperiodeSpørsmålId.månedligBeløp,
+        valideringsfunksjon: (felt: FeltState<string>) => {
+            const verdi = trimWhiteSpace(felt.verdi);
+            if (verdi.match(/^[0-9\s.\\/]{1,7}$/)) {
+                return ok(felt);
+            } else {
+                return feil(
+                    felt,
+                    <SpråkTekst
+                        id={
+                            verdi === ''
+                                ? 'ombarnet.trygdbeløp.feilmelding'
+                                : 'ombarnet.trygdbeløp.format.feilmelding'
+                        }
+                    />
+                );
+            }
+        },
+
+        skalFeltetVises: avhengigheter =>
+            avhengigheter.mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK ||
+            andreForelderErDød,
+        avhengigheter: { mottarEøsBarnetrygdNå },
     });
 
     const skjema = useSkjema<IBarnetrygdperioderFeltTyper, 'string'>({

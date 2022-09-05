@@ -13,6 +13,7 @@ import { AlternativtSvarForInput } from '../../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../../../typer/perioder';
 import { ISøker } from '../../../../typer/person';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
+import { valideringAdresse } from '../../../../utils/adresse';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
@@ -48,6 +49,7 @@ export const useEøsForSøker = (): {
         },
         feilmeldingSpråkId: 'eøs-om-deg.dittoppholdssted.feilmelding',
         skalVises: søker.triggetEøs,
+        customValidering: valideringAdresse,
     });
 
     const arbeidINorge = useJaNeiSpmFelt({

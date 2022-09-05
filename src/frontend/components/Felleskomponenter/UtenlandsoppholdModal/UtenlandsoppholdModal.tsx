@@ -7,7 +7,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import {
@@ -54,7 +53,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             barn,
         });
 
-    const intl = useIntl();
+    const { formatMessage } = useIntl();
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -110,20 +109,20 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         label={
                             <SpråkTekst
                                 id={årsakLabelSpråkId(barn)}
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
                         skjema={skjema}
-                        placeholder={intl.formatMessage({ id: 'felles.velg-årsak.placeholder' })}
+                        placeholder={formatMessage({ id: 'felles.velg-årsak.placeholder' })}
                         bredde={'fullbredde'}
                     >
                         {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
                             <option key={number} value={årsak}>
-                                {intl.formatMessage(
+                                {formatMessage(
                                     {
                                         id: årsakSpråkId(årsak as EUtenlandsoppholdÅrsak, barn),
                                     },
-                                    { ...(barn && { barn: barnetsNavnValue(barn, intl) }) }
+                                    { ...(barn && { barn: barn.navn }) }
                                 )}
                             </option>
                         ))}
@@ -139,11 +138,12 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                     skjema.felter.utenlandsoppholdÅrsak.verdi,
                                     barn
                                 )}
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         )
                     }
                     dynamisk
+                    ekskluderNorge
                 />
 
                 {skjema.felter.oppholdslandFraDato.erSynlig && (
@@ -155,7 +155,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                     skjema.felter.utenlandsoppholdÅrsak.verdi,
                                     barn
                                 )}
-                                values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
                         skjema={skjema}
@@ -175,7 +175,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                         skjema.felter.utenlandsoppholdÅrsak.verdi,
                                         barn
                                     )}
-                                    values={{ ...(barn && { barn: barnetsNavnValue(barn, intl) }) }}
+                                    values={{ ...(barn && { barn: barn.navn }) }}
                                 />
                             }
                             skjema={skjema}

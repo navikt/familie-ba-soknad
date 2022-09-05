@@ -28,7 +28,7 @@ export const StyledBarnekort = styled.div`
     border-radius: 0.3rem;
     max-width: calc(16.3rem - 0.3rem * 2);
     padding: 2rem;
-    margin: 0 auto 0.625rem;
+    margin: 0 0.3125rem 0.625rem;
     background-color: ${navFarger.navLysGra};
     @media all and ${device.mobile} {
         width: 100%;
@@ -112,7 +112,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                         verdi={formaterFnr(barn.ident)}
                     />
                 )}
-                {barn.alder && ( // Barn som søker har lagt inn selv har ikke fødselsdato
+                {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
                     <BarneKortInfo
                         labelId={'hvilkebarn.barn.alder'}
                         verdi={<SpråkTekst id={'felles.år'} values={{ alder: barn.alder }} />}
@@ -126,15 +126,11 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 )}
                 <StyledCheckbox
                     checked={erMedISøknad}
-                    label={
-                        <SpråkTekst
-                            id={
-                                erUtvidet
-                                    ? 'hvilkebarn-utvidet.barn.søk-om.spm'
-                                    : 'hvilkebarn.barn.søk-om.spm'
-                            }
-                        />
-                    }
+                    label={formatMessage({
+                        id: erUtvidet
+                            ? 'hvilkebarn-utvidet.barn.søk-om.spm'
+                            : 'hvilkebarn.barn.søk-om.spm',
+                    })}
                     aria-label={
                         formatMessage({
                             id: erUtvidet

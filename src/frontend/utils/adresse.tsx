@@ -2,9 +2,12 @@ import React from 'react';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
+import { feil, FeltState, ok } from '@navikt/familie-skjema';
+
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IAdresse } from '../typer/kontrakt/generelle';
 import { ISøker } from '../typer/person';
+import { trimWhiteSpace } from './hjelpefunksjoner';
 import { uppercaseFørsteBokstav } from './visning';
 
 export const erNorskPostnummer = (verdi: string) =>
@@ -35,10 +38,17 @@ export const genererAdresseVisning = (søker: ISøker) => {
             <SpråkTekst
                 id={
                     søker.adressebeskyttelse
-                        ? 'omdeg.personopplysninger.adresse-sperret'
-                        : 'omdeg.personopplysninger.adresse-ukjent'
+                        ? 'omdeg.personopplysninger.adressesperre.alert'
+                        : 'omdeg.personopplysninger.ikke-registrert.alert'
                 }
             />
         </Normaltekst>
     );
+};
+
+export const valideringAdresse = (felt: FeltState<string>) => {
+    const verdi = trimWhiteSpace(felt.verdi);
+    return verdi.length < 100
+        ? ok(felt)
+        : feil(felt, <SpråkTekst id={'felles.fulladresse.format.feilmelding'} />);
 };

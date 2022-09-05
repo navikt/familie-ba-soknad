@@ -3,8 +3,10 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IArbeidsperiode } from '../../../typer/perioder';
+import { PersonType } from '../../../typer/personType';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
-import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -16,24 +18,27 @@ import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import { arbeidsperiodeSpørsmålSpråkId, ArbeidsperiodeSpørsmålsId } from './spørsmål';
+import { arbeidsperiodeModalSpørsmålSpråkId } from './arbeidsperiodeSpråkUtils';
+import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
-interface Props extends ReturnType<typeof useModal>, IUseArbeidsperiodeSkjemaParams {
+interface ArbeidsperiodeModalProps
+    extends ReturnType<typeof useModal>,
+        IUseArbeidsperiodeSkjemaParams {
     onLeggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet: boolean;
-    andreForelderData?: { erDød: boolean };
 }
 
-export const ArbeidsperiodeModal: React.FC<Props> = ({
+export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
     erÅpen,
     toggleModal,
     onLeggTilArbeidsperiode,
     gjelderUtlandet = false,
-    andreForelderData,
+    personType,
+    erDød = false,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useArbeidsperiodeSkjema(gjelderUtlandet, andreForelderData);
+        useArbeidsperiodeSkjema(gjelderUtlandet, personType, erDød);
 
     const {
         arbeidsperiodeAvsluttet,
@@ -44,47 +49,35 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
         tilDatoArbeidsperiodeUkjent,
     } = skjema.felter;
 
-    const gjelderAndreForelder = !!andreForelderData;
-    const erAndreForelderDød = !!andreForelderData?.erDød;
-
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
         onLeggTilArbeidsperiode({
-            ...(arbeidsperiodeAvsluttet.erSynlig && {
-                arbeidsperiodeAvsluttet: {
-                    id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
-                    svar: arbeidsperiodeAvsluttet.verdi as ESvar,
-                },
-            }),
-            ...(skjema.felter.arbeidsperiodeLand.erSynlig && {
-                arbeidsperiodeland: {
-                    id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
-                    svar: arbeidsperiodeLand.verdi,
-                },
-            }),
-            ...(arbeidsgiver.erSynlig && {
-                arbeidsgiver: {
-                    id: ArbeidsperiodeSpørsmålsId.arbeidsgiver,
-                    svar: arbeidsgiver.verdi,
-                },
-            }),
-            ...(fraDatoArbeidsperiode.erSynlig && {
-                fraDatoArbeidsperiode: {
-                    id: ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode,
-                    svar: fraDatoArbeidsperiode.verdi,
-                },
-            }),
-            ...(tilDatoArbeidsperiode.erSynlig && {
-                tilDatoArbeidsperiode: {
-                    id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
-                    svar: svarForSpørsmålMedUkjent(
-                        tilDatoArbeidsperiodeUkjent,
-                        tilDatoArbeidsperiode
-                    ),
-                },
-            }),
+            arbeidsperiodeAvsluttet: {
+                id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
+                svar: arbeidsperiodeAvsluttet.erSynlig
+                    ? (arbeidsperiodeAvsluttet.verdi as ESvar)
+                    : null,
+            },
+            arbeidsperiodeland: {
+                id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
+                svar: arbeidsperiodeLand.erSynlig ? arbeidsperiodeLand.verdi : '',
+            },
+            arbeidsgiver: {
+                id: ArbeidsperiodeSpørsmålsId.arbeidsgiver,
+                svar: arbeidsgiver.erSynlig ? trimWhiteSpace(arbeidsgiver.verdi) : '',
+            },
+            fraDatoArbeidsperiode: {
+                id: ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode,
+                svar: fraDatoArbeidsperiode.erSynlig ? fraDatoArbeidsperiode.verdi : '',
+            },
+            tilDatoArbeidsperiode: {
+                id: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
+                svar: tilDatoArbeidsperiode.erSynlig
+                    ? svarForSpørsmålMedUkjent(tilDatoArbeidsperiodeUkjent, tilDatoArbeidsperiode)
+                    : '',
+            },
         });
 
         toggleModal();
@@ -95,13 +88,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
         ? 'felles.flerearbeidsperioderutland.tittel'
         : 'felles.flerearbeidsperiodernorge.tittel';
 
-    const tilbakeITid = arbeidsperiodeAvsluttet.verdi === ESvar.JA;
+    const periodenErAvsluttet =
+        arbeidsperiodeAvsluttet.verdi === ESvar.JA ||
+        (personType === PersonType.AndreForelder && erDød);
 
-    const hentSpørsmålTekstId = arbeidsperiodeSpørsmålSpråkId(
-        gjelderAndreForelder,
-        tilbakeITid,
-        erAndreForelderDød
-    );
+    const hentSpørsmålTekstId = arbeidsperiodeModalSpørsmålSpråkId(personType, periodenErAvsluttet);
 
     return (
         <SkjemaModal
@@ -136,6 +127,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                                 />
                             }
                             dynamisk
+                            ekskluderNorge
                         />
                     </KomponentGruppe>
                 )}
@@ -160,11 +152,7 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                             />
                         }
                         calendarPosition={'fullscreen'}
-                        avgrensMaxDato={
-                            skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
-                                ? gårsdagensDato()
-                                : dagensDato()
-                        }
+                        avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
                     />
                 )}
                 {tilDatoArbeidsperiode.erSynlig && (
@@ -179,16 +167,11 @@ export const ArbeidsperiodeModal: React.FC<Props> = ({
                                     )}
                                 />
                             }
-                            avgrensMinDato={
-                                skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
-                                    ? skjema.felter.fraDatoArbeidsperiode.verdi
-                                    : gårsdagensDato()
-                            }
-                            avgrensMaxDato={
-                                skjema.felter.arbeidsperiodeAvsluttet.verdi === ESvar.JA
-                                    ? dagensDato()
-                                    : undefined
-                            }
+                            avgrensMinDato={minTilDatoForUtbetalingEllerArbeidsperiode(
+                                periodenErAvsluttet,
+                                skjema.felter.fraDatoArbeidsperiode.verdi
+                            )}
+                            avgrensMaxDato={periodenErAvsluttet ? dagensDato() : undefined}
                             disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
                             calendarPosition={'fullscreen'}
                         />

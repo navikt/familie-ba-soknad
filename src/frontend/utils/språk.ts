@@ -6,12 +6,12 @@ import { createIntl, createIntlCache } from 'react-intl';
 
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
-import * as engelsk from '../assets/lang/en.json';
-import * as bokmål from '../assets/lang/nb.json';
-import * as nynorsk from '../assets/lang/nn.json';
+import * as engelsk from '../assets/lang/en.json' assert { type: 'json' };
+import * as bokmål from '../assets/lang/nb.json' assert { type: 'json' };
+import * as nynorsk from '../assets/lang/nn.json' assert { type: 'json' };
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { AlternativtSvarForInput } from '../typer/common';
-import { ESivilstand } from '../typer/kontrakt/generelle';
+import { ESivilstand, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IBarn } from '../typer/person';
 import { Årsak } from '../typer/utvidet';
 
@@ -37,6 +37,21 @@ export const toÅrsakSpråkId = (årsak: Årsak): string => {
             return 'omdeg.velgårsak.forvaring';
         case Årsak.PSYKISK_HELSEVERN:
             return 'omdeg.velgårsak.psykiskhelsevern';
+    }
+};
+
+export const toSlektsforholdSpråkId = (slektsforhold: Slektsforhold): string => {
+    switch (slektsforhold) {
+        case Slektsforhold.FORELDER:
+            return 'felles.velgslektsforhold.forelder';
+        case Slektsforhold.BESTEFORELDER:
+            return 'felles.velgslektsforhold.besteforelder';
+        case Slektsforhold.ONKEL_ELLER_TANTE:
+            return 'felles.velgslektsforhold.onkeltante';
+        case Slektsforhold.ANNEN_FAMILIERELASJON:
+            return 'felles.velgslektsforhold.annenfamilie';
+        case Slektsforhold.ANNEN_RELASJON:
+            return 'felles.velgslektsforhold.annenrelasjon';
     }
 };
 
@@ -67,13 +82,15 @@ export const hentTekster = (
 
     for (const locale in LocaleType) {
         const { formatMessage } = createIntl({ locale, messages: texts[locale] }, cache);
-        const message = formatMessage(
-            { id: tekstId },
-            // Fjerner bokmål-tagen, skapte problemer og trenger ikke være med til pdf-gen
-            { ...formatValues, ...innebygdeFormatterere, bokmål: msg => msg }
-        );
+        const message = tekstId
+            ? formatMessage(
+                  { id: tekstId },
+                  // Fjerner bokmål-tagen, skapte problemer og trenger ikke være med til pdf-gen
+                  { ...formatValues, ...innebygdeFormatterere, bokmål: msg => msg }
+              )
+            : '';
 
-        map[locale] = reactElementToJSXString(message as ReactElement);
+        map[locale] = message && reactElementToJSXString(message as ReactElement);
     }
 
     // Typescript er ikke smart nok til å se at alle locales er satt

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -11,7 +10,6 @@ import { useApp } from '../../../context/AppContext';
 import { BarnetsId } from '../../../typer/common';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { Årsak } from '../../../typer/utvidet';
-import { barnetsNavnValue } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
@@ -52,16 +50,10 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         leggTilBarnetrygdsperiode,
         fjernBarnetrygdsperiode,
     } = useOmBarnet(barnetsId);
-    const intl = useIntl();
 
     return barn ? (
         <Steg
-            tittel={
-                <SpråkTekst
-                    id={'ombarnet.sidetittel'}
-                    values={{ navn: barnetsNavnValue(barn, intl) }}
-                />
-            }
+            tittel={<SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
@@ -85,7 +77,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     barn={barn}
                     skjema={skjema}
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
-                    andreForelder={barn.andreForelder}
                     leggTilArbeidsperiode={leggTilArbeidsperiode}
                     fjernArbeidsperiode={fjernArbeidsperiode}
                     leggTilPensjonsperiode={leggTilPensjonsperiode}
@@ -117,7 +108,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         spørsmålTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.borFastMedSøker]
                         }
-                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                        språkValues={{ navn: barn.navn }}
                     />
                     {skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker && (
                         <VedleggNotis språkTekstId={'ombarnet.bor-fast.vedleggsinfo'} dynamisk />
@@ -133,7 +124,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
                                     ]
                                 }
-                                språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                                språkValues={{ navn: barn.navn }}
                             />
                             {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
                                 <VedleggNotis
@@ -151,7 +142,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         skjema={skjema}
                         felt={skjema.felter.søkerForTidsrom}
                         spørsmålTekstId={'ombarnet.søker-for-periode.spm'}
-                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                        språkValues={{ navn: barn.navn }}
                         tilleggsinfo={
                             <AlertStripe>
                                 <SpråkTekst id={'ombarnet.søker-for-periode.alert'} />
@@ -227,7 +218,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
                             ]
                         }
-                        språkValues={{ navn: barnetsNavnValue(barn, intl) }}
+                        språkValues={{ navn: barn.navn }}
                     />
                     {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
                         <KomponentGruppe inline dynamisk>

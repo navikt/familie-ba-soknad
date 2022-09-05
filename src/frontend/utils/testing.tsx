@@ -9,7 +9,7 @@ import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
-import norskeTekster from '../assets/lang/nb.json';
+import norskeTekster from '../assets/lang/nb.json' assert { type: 'json' };
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
@@ -34,8 +34,7 @@ import { getRoutes, RoutesProvider } from '../context/RoutesContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
-import { EFeatureToggle } from '../typer/feature-toggles';
-import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
+import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { ISøker, ISøkerRespons } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
@@ -74,6 +73,10 @@ export const spyOnUseApp = søknad => {
         ...mekkGyldigSøker(),
         ...søknad.søker,
     };
+    søknad.dokumentasjon = søknad.dokumentasjon ?? [];
+
+    const settEøsLand = jest.fn();
+    const eøsLand = { status: RessursStatus.SUKSESS, data: ['BEL', 'AFG', 'NLD', 'NOR'] };
 
     const useAppMock = jest.fn().mockReturnValue({
         søknad,
@@ -89,6 +92,8 @@ export const spyOnUseApp = søknad => {
         settNåværendeRoute,
         mellomlagre,
         sluttbruker,
+        settEøsLand,
+        eøsLand,
         systemetLaster: jest.fn().mockReturnValue(false),
         systemetOK: () => jest.fn().mockReturnValue(true),
         systemetFeiler: jest.fn().mockReturnValue(false),
@@ -106,13 +111,12 @@ export const spyOnUseApp = søknad => {
     };
 };
 
-export const mockEøs = (eøsSkruddAv = false, barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
+export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
     const erEøsLand = jest.fn();
 
     const useEøs = jest.spyOn(eøsContext, 'useEøs').mockImplementation(
         jest.fn().mockReturnValue({
             erEøsLand,
-            eøsSkruddAv,
             barnSomTriggerEøs,
             settBarnSomTriggerEøs: jest.fn(),
             settSøkerTriggerEøs: jest.fn(),
@@ -127,7 +131,7 @@ export const mockEøs = (eøsSkruddAv = false, barnSomTriggerEøs = [], søkerTr
 export const mockRoutes = () => {
     const useRoutes = jest.spyOn(routesContext, 'useRoutes').mockImplementation(
         jest.fn().mockReturnValue({
-            routes: getRoutes(false),
+            routes: getRoutes(),
             hentRouteObjektForRouteEnum: jest.fn(),
         })
     );
@@ -139,7 +143,7 @@ export const mockFeatureToggle = () => {
         .spyOn(featureToggleContext, 'useFeatureToggles')
         .mockImplementation(
             jest.fn().mockReturnValue({
-                toggles: { [EFeatureToggle.EØS_KOMPLETT]: false },
+                // toggles: { [EFeatureToggle.EXAMPLE]: false },
             })
         );
     return { useFeatureToggle };
@@ -295,18 +299,32 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     ident: '1234',
                     navn: 'Datter Dattersdottir',
                     adressebeskyttelse: false,
-                    alder: undefined,
+                    alder: null,
                     borMedSøker: true,
                 }),
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+                        svar: ESvar.NEI,
+                    },
+                    adresse: {
+                        id: EøsBarnSpørsmålId.andreForelderAdresse,
+                        svar: 'Heisannveien 15',
+                    },
                     andreUtbetalingsperioder: [],
                     arbeidsperioderNorge: [],
                     pensjonsperioderUtland: [],
                     arbeidsperioderUtland: [],
                     pensjonsperioderNorge: [],
+                    idNummer: [],
+                    eøsBarnetrygdsperioder: [],
+                    [andreForelderDataKeySpørsmål.barnetrygdFraEøs]: {
+                        id: EøsBarnSpørsmålId.andreForelderBarnetrygd,
+                        svar: ESvar.JA,
+                    },
                     [andreForelderDataKeySpørsmål.navn]: {
                         id: OmBarnetSpørsmålsId.andreForelderNavn,
-                        svar: AlternativtSvarForInput.UKJENT,
+                        svar: 'Andre forelder navn',
                     },
                     [andreForelderDataKeySpørsmål.fnr]: {
                         id: OmBarnetSpørsmålsId.andreForelderFnr,
@@ -336,17 +354,17 @@ export const mekkGyldigSøknad = (): ISøknad => {
                         id: EøsBarnSpørsmålId.andreForelderAndreUtbetalinger,
                         svar: ESvar.NEI,
                     },
-                    [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
-                        id: OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
-                        svar: '',
-                    },
-                    [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
-                        id: OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
-                        svar: '',
-                    },
                     [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
                         id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
                         svar: ESvar.NEI,
+                    },
+                    [andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
+                        id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand,
+                        svar: ESvar.NEI,
+                    },
+                    [andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
+                        id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand,
+                        svar: '',
                     },
                     utvidet: {
                         [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: {
@@ -359,6 +377,7 @@ export const mekkGyldigSøknad = (): ISøknad => {
                         },
                     },
                 },
+                omsorgsperson: null,
                 [barnDataKeySpørsmål.borFastMedSøker]: {
                     id: OmBarnetSpørsmålsId.borFastMedSøker,
                     svar: ESvar.JA,
@@ -380,6 +399,10 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     svar: ESvar.NEI,
                 },
                 eøsBarnetrygdsperioder: [],
+                [barnDataKeySpørsmål.adresse]: {
+                    id: EøsBarnSpørsmålId.barnetsAdresse,
+                    svar: '',
+                },
             },
         ],
     };
@@ -449,6 +472,72 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                             id: OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato,
                             svar: AlternativtSvarForInput.UKJENT,
                         },
+                    },
+                },
+            }),
+            ...(barn.omsorgsperson && {
+                omsorgsperson: {
+                    navn: {
+                        id: EøsBarnSpørsmålId.omsorgspersonNavn,
+                        svar: 'Testnavn',
+                    },
+                    slektsforhold: {
+                        id: EøsBarnSpørsmålId.omsorgspersonSlektsforhold,
+                        svar: Slektsforhold.ANNEN_RELASJON,
+                    },
+                    slektsforholdSpesifisering: {
+                        id: EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering,
+                        svar: 'Tantebarnebarn',
+                    },
+                    idNummer: {
+                        id: EøsBarnSpørsmålId.omsorgspersonIdNummer,
+                        svar: '12345',
+                    },
+                    idNummerVetIkke: {
+                        id: EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke,
+                        svar: ESvar.NEI,
+                    },
+                    adresse: {
+                        id: EøsBarnSpørsmålId.omsorgspersonAdresse,
+                        svar: 'Osloveien 123',
+                    },
+                    arbeidsperioderUtland: [],
+                    arbeidUtland: {
+                        id: EøsBarnSpørsmålId.omsorgspersonArbeidUtland,
+                        svar: ESvar.NEI,
+                    },
+                    arbeidsperioderNorge: [],
+                    arbeidNorge: {
+                        id: EøsBarnSpørsmålId.omsorgspersonArbeidNorge,
+                        svar: ESvar.NEI,
+                    },
+                    pensjonsperioderUtland: [],
+                    pensjonUtland: {
+                        id: EøsBarnSpørsmålId.omsorgspersonPensjonUtland,
+                        svar: ESvar.NEI,
+                    },
+                    pensjonsperioderNorge: [],
+                    pensjonNorge: {
+                        id: EøsBarnSpørsmålId.omsorgspersonPensjonNorge,
+                        svar: ESvar.NEI,
+                    },
+                    andreUtbetalingsperioder: [],
+                    andreUtbetalinger: {
+                        id: EøsBarnSpørsmålId.omsorgspersonAndreUtbetalinger,
+                        svar: ESvar.NEI,
+                    },
+                    pågåendeSøknadFraAnnetEøsLand: {
+                        id: EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadFraAnnetEøsLand,
+                        svar: ESvar.NEI,
+                    },
+                    pågåendeSøknadHvilketLand: {
+                        id: EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand,
+                        svar: '',
+                    },
+                    eøsBarnetrygdsperioder: [],
+                    barnetrygdFraEøs: {
+                        id: EøsBarnSpørsmålId.omsorgspersonBarnetrygd,
+                        svar: ESvar.NEI,
                     },
                 },
             }),

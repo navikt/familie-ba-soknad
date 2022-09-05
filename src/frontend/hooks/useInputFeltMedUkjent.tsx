@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 
 import { guid } from 'nav-frontend-js-utils';
 
@@ -20,6 +20,8 @@ const useInputFeltMedUkjent = ({
     erFnrInput = false,
     skalVises = true,
     customValidering = undefined,
+    språkVerdier = {},
+    nullstillVedAvhengighetEndring = true,
 }: {
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | { id: IdNummerKey; svar: string } | null;
     avhengighet: Felt<ESvar>;
@@ -27,6 +29,8 @@ const useInputFeltMedUkjent = ({
     erFnrInput?: boolean;
     skalVises?: boolean;
     customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
+    språkVerdier?: Record<string, ReactNode>;
+    nullstillVedAvhengighetEndring?: boolean;
 }) => {
     const inputFelt = useFelt<string>({
         feltId: søknadsfelt ? søknadsfelt.id : guid(),
@@ -52,11 +56,12 @@ const useInputFeltMedUkjent = ({
                     ? customValidering
                         ? customValidering(felt)
                         : ok(felt)
-                    : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
+                    : feil(felt, <SpråkTekst id={feilmeldingSpråkId} values={språkVerdier} />);
             }
         },
         avhengigheter: { vetIkkeCheckbox: avhengighet, skalVises },
         skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalVises,
+        nullstillVedAvhengighetEndring,
     });
     useEffect(() => {
         if (avhengighet.verdi === ESvar.JA) {
