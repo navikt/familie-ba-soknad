@@ -258,7 +258,7 @@ export const useOmBarnet = (
         leggTilPeriode: leggTilBarnetrygdsperiode,
         registrertePerioder: registrerteEøsBarnetrygdsperioder,
     } = usePerioder<IEøsBarnetrygdsperiode>({
-        feltId: `${BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs}-${barnetsUuid}`,
+        feltId: `${BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs}-${PersonType.Søker}-${barnetsUuid}`,
         verdi: gjeldendeBarn.eøsBarnetrygdsperioder,
         avhengigheter: { mottarEllerMottokEøsBarnetrygd },
         skalFeltetVises: avhengigheter =>
