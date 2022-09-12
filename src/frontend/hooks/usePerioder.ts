@@ -16,6 +16,7 @@ export const usePerioder = <T>({
 }: {
     feltId:
         | `${SpørsmålId}-${PersonType.Søker}`
+        | `${SpørsmålId}-${PersonType.Søker}-${BarnetsId}`
         | `${SpørsmålId}-${PersonType.AndreForelder}-${BarnetsId}`
         | `${SpørsmålId}-${PersonType.Omsorgsperson}-${BarnetsId}`
         | `${SpørsmålId}-${BarnetsId}`;
