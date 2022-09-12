@@ -8,8 +8,8 @@ import Modal from 'nav-frontend-modal';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import { Button } from '@navikt/ds-react';
-import { Link } from '@navikt/ds-react';
 
+import EksternLenke from '../EksternLenke/EksternLenke';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const StyledModal = styled(Modal)`
@@ -31,7 +31,7 @@ const Flex = styled.div`
     align-items: center;
     gap: 1rem;
 `;
-const StyledLink = styled(Link)`
+const StyledLink = styled(EksternLenke)`
     margin-right: 1rem;
 `;
 
@@ -64,12 +64,10 @@ const BlokkerTilbakeKnappModal = () => {
                     </Normaltekst>
                     <Flex>
                         <StyledLink
-                            href={'https://www.nav.no/person/dittnav/'}
+                            lenkeSpråkId={'kvittering.dinesaker.lenke'}
+                            lenkeTekstSpråkId={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'}
                             target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'} />
-                        </StyledLink>
+                        />
                         <Button onClick={håndterAvbryt}>
                             <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.avbrytKnapp'} />
                         </Button>
