@@ -31,7 +31,7 @@ const Flex = styled.div`
     align-items: center;
     gap: 1rem;
 `;
-const StyledLink = styled(EksternLenke)`
+const StyledEksternLenke = styled(EksternLenke)`
     margin-right: 1rem;
 `;
 
@@ -63,7 +63,7 @@ const BlokkerTilbakeKnappModal = () => {
                         <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tekst'} />
                     </Normaltekst>
                     <Flex>
-                        <StyledLink
+                        <StyledEksternLenke
                             lenkeSpråkId={'kvittering.dinesaker.lenke'}
                             lenkeTekstSpråkId={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'}
                             target="_blank"
