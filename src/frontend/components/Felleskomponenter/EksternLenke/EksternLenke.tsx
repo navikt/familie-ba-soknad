@@ -3,13 +3,15 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import Lenke from 'nav-frontend-lenker';
+import { Link } from '@navikt/ds-react';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-const StyledLenke = styled(Lenke)`
-    display: inline-block;
-    margin-top: 0.5rem;
+const StyledLink = styled(Link)`
+    && {
+        display: inline-block;
+        margin-top: 0.5rem;
+    }
 `;
 
 const StyledLenkeTekst = styled.span`
@@ -24,7 +26,7 @@ const EksternLenke: React.FC<{
 }> = ({ lenkeTekstSpråkId, lenkeSpråkId, target, className }) => {
     const intl = useIntl();
     return (
-        <StyledLenke
+        <StyledLink
             href={intl.formatMessage({ id: lenkeSpråkId })}
             target={target}
             rel="noopener noreferrer"
@@ -33,7 +35,7 @@ const EksternLenke: React.FC<{
             <StyledLenkeTekst>
                 <SpråkTekst id={lenkeTekstSpråkId} />
             </StyledLenkeTekst>
-        </StyledLenke>
+        </StyledLink>
     );
 };
 
