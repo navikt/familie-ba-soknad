@@ -1,15 +1,14 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import { DekoratørenSpråkHandler } from '../Felleskomponenter/Dekoratøren/DekoratørenSpråkHandler';
+import EksternLenke from '../Felleskomponenter/EksternLenke/EksternLenke';
 import InnholdContainer from '../Felleskomponenter/InnholdContainer/InnholdContainer';
 import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -24,7 +23,6 @@ const StyledSidetittel = styled(Sidetittel)`
 `;
 
 export const DisabledApp: React.FC = () => {
-    const { formatMessage } = useIntl();
     return (
         <main>
             <DekoratørenSpråkHandler />
@@ -43,9 +41,11 @@ export const DisabledApp: React.FC = () => {
                 <Normaltekst>
                     <SpråkTekst id={'vedlikehold.brødtekst'} />
                 </Normaltekst>
-                <Lenke href={formatMessage({ id: 'felles.bruk-pdfskjema.lenke' })}>
-                    <SpråkTekst id={'felles.bruk-pdfskjema.lenketekst'} />
-                </Lenke>
+                <EksternLenke
+                    lenkeSpråkId={'felles.bruk-pdfskjema.lenke'}
+                    lenkeTekstSpråkId={'felles.bruk-pdfskjema.lenketekst'}
+                    target="_blank"
+                />
             </InnholdContainer>
         </main>
     );

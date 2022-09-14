@@ -3,9 +3,9 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import Lenke from 'nav-frontend-lenker';
 import { Undertittel } from 'nav-frontend-typografi';
 
+import EksternLenke from '../EksternLenke/EksternLenke';
 import ExpandableInfo from '../expandableContent/ExpandableInfo';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import PictureScanningExample from './PictureScanningExample';
@@ -122,9 +122,12 @@ const PictureScanningGuide = () => {
                             />
                         </BildeContainer>
                     </EksempelBilderWrapper>
-                    <Lenke target="_blank" href={formatMessage({ id: 'psg.lenkepanel.url' })}>
-                        <SpråkTekst id="psg.lenkepanel.text" />
-                    </Lenke>
+
+                    <EksternLenke
+                        target="_blank"
+                        lenkeSpråkId={'psg.lenkepanel.url'}
+                        lenkeTekstSpråkId={'psg.lenkepanel.text'}
+                    />
                 </div>
             </Container>
         </ExpandableInfo>
