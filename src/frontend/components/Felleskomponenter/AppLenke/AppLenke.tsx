@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import Lenke from 'nav-frontend-lenker';
+import { Link } from '@navikt/ds-react';
 
 import { unslash } from '../../../../shared-utils/unslash';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
@@ -31,12 +31,12 @@ export const AppLenke: React.FC<Props> = ({ steg, hash, språkTekstId, returnTo,
     };
 
     return (
-        <Lenke
+        <Link
             href={basePath + unslash(steg.path) + (hash ? '#' + hash : '')}
             rel="noopener noreferrer"
             onClick={clickHandler}
         >
             {språkTekstId ? <SpråkTekst id={språkTekstId} /> : children}
-        </Lenke>
+        </Link>
     );
 };
