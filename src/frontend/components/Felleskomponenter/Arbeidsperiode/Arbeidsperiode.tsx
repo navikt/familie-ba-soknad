@@ -13,7 +13,7 @@ import {
     IEøsForSøkerFeltTyper,
     IOmBarnetUtvidetFeltTyper,
 } from '../../../typer/skjema';
-import { hentPeriodeId } from '../../../utils/perioder';
+import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -58,7 +58,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
 }) => {
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
     const barnetsNavn = !!barn && barn.navn;
-    const arbeidsperiodeSted = gjelderUtlandet
+    const arbeidsperiodeSpørsmålId = gjelderUtlandet
         ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
         : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
@@ -102,9 +102,9 @@ export const Arbeidsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={toggleArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
-                        id={hentPeriodeId({
+                        id={genererPeriodeId({
                             personType,
-                            spørsmålsId: arbeidsperiodeSted,
+                            spørsmålsId: arbeidsperiodeSpørsmålId,
                             barnetsId: barn?.id,
                         })}
                         feilmelding={

@@ -21,7 +21,7 @@ export const minTilDatoForUtbetalingEllerArbeidsperiode = (
     }
 };
 
-export const hentPeriodeId = ({
+export const genererPeriodeId = ({
     personType,
     spørsmålsId,
     barnetsId,
