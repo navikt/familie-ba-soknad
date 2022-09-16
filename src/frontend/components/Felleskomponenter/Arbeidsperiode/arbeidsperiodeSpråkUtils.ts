@@ -107,9 +107,15 @@ export const arbeidsperiodeSpørsmålSpråkId = (
 
 export const arbeidsperiodeSøkerSpørsmålSpråkId = (
     periodenErAvsluttet = false
-): Record<ArbeidsperiodeSpørsmålsId, string> => ({
+): Record<
+    Exclude<
+        ArbeidsperiodeSpørsmålsId,
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge
+    >,
+    string
+> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: periodenErAvsluttet
         ? 'dinlivssituasjon.arbeid-utland.land.spm'
         : 'omdeg.arbeid-utland.land.spm',
@@ -124,9 +130,15 @@ export const arbeidsperiodeSøkerSpørsmålSpråkId = (
 
 export const arbeidsperiodeAndreForelderSpørsmålSpråkId = (
     periodenErAvsluttet = false
-): Record<ArbeidsperiodeSpørsmålsId, string> => ({
+): Record<
+    Exclude<
+        ArbeidsperiodeSpørsmålsId,
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge
+    >,
+    string
+> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: periodenErAvsluttet
         ? 'enkeenkemann.andreforelder-arbeidutland.land.spm'
         : 'ombarnet.andre-forelder.arbeid-utland.land.spm',
@@ -141,9 +153,15 @@ export const arbeidsperiodeAndreForelderSpørsmålSpråkId = (
 
 export const arbeidsperiodeOmsorgspersonSpørsmålSpråkId = (
     periodenErAvsluttet = false
-): Record<ArbeidsperiodeSpørsmålsId, string> => ({
+): Record<
+    Exclude<
+        ArbeidsperiodeSpørsmålsId,
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
+        | ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge
+    >,
+    string
+> => ({
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet]: 'felles.erarbeidsperiodenavsluttet.spm',
-    [ArbeidsperiodeSpørsmålsId.arbeidsperioder]: 'eøs.arbeidetiutlandet.spm',
     [ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand]: periodenErAvsluttet
         ? 'modal.omsorgsperson-arbeid-utland.land-fortid.spm'
         : 'modal.omsorgsperson-arbeid-utland.land-nåtid.spm',

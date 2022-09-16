@@ -17,6 +17,7 @@ import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
+import { PersonType } from '../../../typer/personType';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
@@ -25,7 +26,9 @@ import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
+import { PensjonsperiodeSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { idNummerLand } from '../EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
@@ -196,17 +199,18 @@ export const useDinLivssituasjon = (): {
         fjernPeriode: fjernArbeidsperiode,
         leggTilPeriode: leggTilArbeidsperiode,
         registrertePerioder: registrerteArbeidsperioder,
-    } = usePerioder<IArbeidsperiode>(
-        søker.arbeidsperioderUtland,
-        { jobberPåBåt },
-        avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA,
-        (felt, avhengigheter) => {
+    } = usePerioder<IArbeidsperiode>({
+        feltId: `${ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland}-${PersonType.Søker}`,
+        verdi: søker.arbeidsperioderUtland,
+        avhengigheter: { jobberPåBåt },
+        skalFeltetVises: avhengigheter => avhengigheter.jobberPåBåt.verdi === ESvar.JA,
+        valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.jobberPåBåt.verdi === ESvar.NEI ||
                 (avhengigheter?.jobberPåBåt.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
-        }
-    );
+        },
+    });
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
@@ -217,17 +221,18 @@ export const useDinLivssituasjon = (): {
         fjernPeriode: fjernPensjonsperiode,
         leggTilPeriode: leggTilPensjonsperiode,
         registrertePerioder: registrertePensjonsperioder,
-    } = usePerioder<IPensjonsperiode>(
-        søker.pensjonsperioderUtland,
-        { mottarUtenlandspensjon },
-        avhengigheter => avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA,
-        (felt, avhengigheter) => {
+    } = usePerioder<IPensjonsperiode>({
+        feltId: `${PensjonsperiodeSpørsmålId.pensjonsperioderUtland}-${PersonType.Søker}`,
+        verdi: søker.pensjonsperioderUtland,
+        avhengigheter: { mottarUtenlandspensjon },
+        skalFeltetVises: avhengigheter => avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA,
+        valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.NEI ||
                 (avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
-        }
-    );
+        },
+    });
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
         IDinLivssituasjonFeltTyper,

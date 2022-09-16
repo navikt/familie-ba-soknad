@@ -135,7 +135,11 @@ export const pensjonsperiodeOppsummeringOverskrift = (gjelderUtlandet: boolean):
 export const pensjonSøkerSpørsmålSpråkId = (
     periodenErAvsluttet = false
 ): Record<
-    Exclude<PensjonsperiodeSpørsmålId, PensjonsperiodeSpørsmålId.pensjonsperioder>,
+    Exclude<
+        PensjonsperiodeSpørsmålId,
+        | PensjonsperiodeSpørsmålId.pensjonsperioderUtland
+        | PensjonsperiodeSpørsmålId.pensjonsperioderNorge
+    >,
     string
 > => ({
     [PensjonsperiodeSpørsmålId.mottarPensjonNå]: 'modal.fårdupensjonnå.spm',
@@ -151,7 +155,11 @@ export const pensjonSøkerSpørsmålSpråkId = (
 export const pensjonAndreForelderSpørsmålSpråkId = (
     periodenErAvsluttet = false
 ): Record<
-    Exclude<PensjonsperiodeSpørsmålId, PensjonsperiodeSpørsmålId.pensjonsperioder>,
+    Exclude<
+        PensjonsperiodeSpørsmålId,
+        | PensjonsperiodeSpørsmålId.pensjonsperioderUtland
+        | PensjonsperiodeSpørsmålId.pensjonsperioderNorge
+    >,
     string
 > => ({
     [PensjonsperiodeSpørsmålId.mottarPensjonNå]: 'ombarnet.andre-forelder.pensjonnå.spm',
@@ -167,7 +175,11 @@ export const pensjonAndreForelderSpørsmålSpråkId = (
 export const pensjonOmsorgspersonSpørsmålSpråkId = (
     periodenErAvsluttet = false
 ): Record<
-    Exclude<PensjonsperiodeSpørsmålId, PensjonsperiodeSpørsmålId.pensjonsperioder>,
+    Exclude<
+        PensjonsperiodeSpørsmålId,
+        | PensjonsperiodeSpørsmålId.pensjonsperioderUtland
+        | PensjonsperiodeSpørsmålId.pensjonsperioderNorge
+    >,
     string
 > => ({
     [PensjonsperiodeSpørsmålId.mottarPensjonNå]: 'modal.omsorgsperson.pensjonnå.spm',

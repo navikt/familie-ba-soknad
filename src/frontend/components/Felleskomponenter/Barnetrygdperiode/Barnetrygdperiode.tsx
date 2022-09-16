@@ -9,6 +9,7 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -83,7 +84,11 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                     <LeggTilKnapp
                         onClick={toggleBarnetrygdsmodal}
                         språkTekst={'ombarnet.trygdandreperioder.knapp'}
-                        id={BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs}
+                        id={genererPeriodeId({
+                            personType,
+                            spørsmålsId: BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs,
+                            barnetsId: barn.id,
+                        })}
                         feilmelding={
                             registrerteEøsBarnetrygdsperioder.erSynlig &&
                             registrerteEøsBarnetrygdsperioder.feilmelding &&
