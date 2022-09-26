@@ -3,5 +3,6 @@ export enum PensjonsperiodeSpørsmålId {
     pensjonsland = 'land-pensjon',
     fraDatoPensjon = 'fra-dato-pensjon',
     tilDatoPensjon = 'til-dato-pensjon',
-    pensjonsperioder = 'pensjonsperioder',
+    pensjonsperioderUtland = 'pensjonsperioder-utland',
+    pensjonsperioderNorge = 'pensjonsperioder-norge',
 }

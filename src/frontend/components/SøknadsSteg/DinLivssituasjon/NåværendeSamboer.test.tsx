@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, getByRole, getByText, queryByText, render } from '@testing-library/react';
+import { act, getAllByText, getByText, render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -127,12 +127,12 @@ describe('Test av nåværende samboer skjema', () => {
 
         act(() => gåVidere.click());
 
-        const feilOppsummering: HTMLElement = getByRole(container, 'alert');
-        const fnrFeil: HTMLElement | null = queryByText(
-            feilOppsummering,
+        //Feilmelding dukker både opp under spørsmålet og i feiloppsummeringen
+        const antallFeilmeldingerPerFeil = 2;
+        const fnrFeil: HTMLElement[] | null = getAllByText(
+            container,
             'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
         );
-
-        expect(fnrFeil).toBeInTheDocument();
+        expect(fnrFeil).toHaveLength(antallFeilmeldingerPerFeil);
     });
 });
