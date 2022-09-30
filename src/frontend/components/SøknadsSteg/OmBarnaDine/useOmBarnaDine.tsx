@@ -92,7 +92,7 @@ export const useOmBarnaDine = (): {
 
     const barnOppholdtSegTolvMndSammenhengendeINorge = useJaNeiSpmFelt({
         søknadsfelt: søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
-        feilmeldingSpråkId: 'ombarna.sammenhengende-opphold.feilmelding',
+        feilmeldingSpråkId: 'ombarna.oppholdtsammenhengende.feilmelding',
         avhengigheter: {
             erBarnAdoptertFraUtland: {
                 hovedSpørsmål: erBarnAdoptertFraUtland,
@@ -107,7 +107,7 @@ export const useOmBarnaDine = (): {
 
     const hvemTolvMndSammenhengendeINorge = useBarnCheckboxFelt(
         barnDataKeySpørsmål.boddMindreEnn12MndINorge,
-        'ombarna.sammenhengende-opphold.hvem.feilmelding',
+        'ombarna.hvemavbarnaoppholdt.feilmelding',
         barnOppholdtSegTolvMndSammenhengendeINorge,
         ESvar.NEI
     );
