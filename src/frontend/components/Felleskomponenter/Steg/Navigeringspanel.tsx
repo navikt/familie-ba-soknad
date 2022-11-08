@@ -2,9 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
-import KnappBase, { Flatknapp } from 'nav-frontend-knapper';
-
+import { Button } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
@@ -19,8 +17,7 @@ const Container = styled.nav`
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         ' tilbake gåVidere '
-        ' avsluttOgFortsett avsluttOgFortsett '
-        ' avbrytOgSlett avbrytOgSlett';
+        ' avbryt avbryt';
     grid-template-rows: auto;
     gap: 0.5rem;
     justify-content: center;
@@ -30,41 +27,26 @@ const Container = styled.nav`
         grid-template-areas:
             ' gåVidere '
             ' tilbake '
-            ' avsluttOgFortsett '
-            ' avbrytOgSlett';
+            ' avbryt';
         padding: 2rem 0;
     }
 `;
 
-const StyledKnappBase = styled(KnappBase)<{
-    placeself: 'end' | 'start';
-    gridarea: 'tilbake' | 'gåVidere';
+const StyledButton = styled(Button)<{
+    placeself: 'end' | 'center' | 'start';
+    gridarea: 'tilbake' | 'gåVidere' | 'avbryt';
 }>`
-    grid-area: ${props => props.gridarea};
-    min-width: 10rem;
-    place-self: ${props => props.placeself};
-    font-size: 1.125rem;
-
-    @media all and ${device.mobile} {
-        place-self: center;
-    }
-`;
-
-const StyledFlatKnapp = styled(Flatknapp)<{
-    gridarea: 'avsluttOgFortsett' | 'avbrytOgSlett';
-    color: string;
-    margintop: string;
-}>`
-    grid-area: ${props => props.gridarea};
-    width: fit-content;
-    place-self: center;
-    margin-top: ${props => props.margintop};
     && {
-        color: ${props => props.color};
+        grid-area: ${props => props.gridarea};
+        min-width: 10rem;
+        place-self: ${props => props.placeself};
+        @media all and ${device.mobile} {
+            place-self: center;
+        }
     }
 `;
 
-type Knappetype = 'hoved' | 'standard';
+type Knappetype = 'primary' | 'secondary';
 
 const Navigeringspanel: React.FC<{
     onAvbrytCallback: () => void;
@@ -77,31 +59,29 @@ const Navigeringspanel: React.FC<{
 
     const hentKnappetype = (): Knappetype => {
         if (valideringErOk) {
-            return valideringErOk() ? 'hoved' : 'standard';
+            return valideringErOk() ? 'primary' : 'secondary';
         } else {
-            return 'hoved';
+            return 'primary';
         }
     };
 
     return (
         <Container>
-            <StyledKnappBase
-                kompakt={true}
-                htmlType={'button'}
+            <StyledButton
+                variant={'secondary'}
+                type={'button'}
                 onClick={onTilbakeCallback}
                 placeself={'end'}
                 gridarea={'tilbake'}
             >
                 <SpråkTekst id={'felles.navigasjon.tilbake'} />
-            </StyledKnappBase>
-            <StyledKnappBase
-                kompakt={true}
-                htmlType={'submit'}
-                type={hentKnappetype()}
+            </StyledButton>
+            <StyledButton
+                type={'submit'}
+                variant={hentKnappetype()}
                 placeself={'start'}
                 gridarea={'gåVidere'}
-                spinner={innsendingStatus.status === RessursStatus.HENTER}
-                autoDisableVedSpinner={true}
+                loading={innsendingStatus.status === RessursStatus.HENTER}
             >
                 <SpråkTekst
                     id={
@@ -110,18 +90,18 @@ const Navigeringspanel: React.FC<{
                             : 'felles.navigasjon.gå-videre'
                     }
                 />
-            </StyledKnappBase>
+            </StyledButton>
 
-            <StyledFlatKnapp
-                mini
-                htmlType={'button'}
+            <StyledButton
+                variant={'tertiary'}
+                type={'button'}
                 onClick={onAvbrytCallback}
-                color={navFarger.navMorkGra}
-                gridarea={'avbrytOgSlett'}
+                gridarea={'avbryt'}
+                placeself={'center'}
                 margintop={'0'}
             >
                 <SpråkTekst id={'felles.navigasjon.avbryt'} />
-            </StyledFlatKnapp>
+            </StyledButton>
         </Container>
     );
 };

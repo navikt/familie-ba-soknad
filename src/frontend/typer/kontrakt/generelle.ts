@@ -1,4 +1,4 @@
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ISODateString } from '@navikt/familie-form-elements';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -23,21 +23,6 @@ export interface IUtenlandsperiodeIKontraktFormat {
     oppholdsland: ISøknadsfelt<string>;
     oppholdslandTilDato: ISøknadsfelt<string | undefined>;
     oppholdslandFraDato: ISøknadsfelt<string | undefined>;
-}
-
-export interface IAndreForelderIKontraktFormat {
-    navn: ISøknadsfelt<string>;
-    fnr: ISøknadsfelt<string>;
-    fødselsdato: ISøknadsfelt<string>;
-    pensjonUtland: ISøknadsfelt<ESvar | null>;
-    pensjonHvilketLand: ISøknadsfelt<string>;
-    arbeidUtlandet: ISøknadsfelt<ESvar | null>;
-    arbeidUtlandetHvilketLand: ISøknadsfelt<string>;
-    skriftligAvtaleOmDeltBosted: ISøknadsfelt<ESvar | null>;
-    utvidet: {
-        søkerHarBoddMedAndreForelder: ISøknadsfelt<ESvar | null>;
-        søkerFlyttetFraAndreForelderDato: ISøknadsfelt<string>;
-    };
 }
 
 export enum ESivilstand {
@@ -74,4 +59,12 @@ export interface IKontraktNåværendeSamboer {
     ident: ISøknadsfelt<string>;
     fødselsdato: ISøknadsfelt<string>;
     samboerFraDato: ISøknadsfelt<ISODateString>;
+}
+
+export enum Slektsforhold {
+    FORELDER = 'FORELDER',
+    ONKEL_ELLER_TANTE = 'ONKEL_ELLER_TANTE',
+    BESTEFORELDER = 'BESTEFORELDER',
+    ANNEN_FAMILIERELASJON = 'ANNEN_FAMILIERELASJON',
+    ANNEN_RELASJON = 'ANNEN_RELASJON',
 }

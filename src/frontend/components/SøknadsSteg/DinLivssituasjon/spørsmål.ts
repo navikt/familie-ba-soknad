@@ -9,9 +9,7 @@ export enum DinLivssituasjonSpørsmålId {
     hattFlereSamboereForSøktPeriode = 'hatt-flere-samboere-i-perioden',
     erAsylsøker = 'er-asylsøker',
     jobberPåBåt = 'jobber-på-båt',
-    arbeidsland = 'arbeidsland',
     mottarUtenlandspensjon = 'mottar-utenlandspensjon',
-    pensjonsland = 'pensjonsland',
 }
 
 export const dinLivssituasjonSpørsmålSpråkId: Record<DinLivssituasjonSpørsmålId, string> = {
@@ -25,9 +23,7 @@ export const dinLivssituasjonSpørsmålSpråkId: Record<DinLivssituasjonSpørsm�
     [DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode]: 'omdeg.leggtilfleresamboere.spm',
     [DinLivssituasjonSpørsmålId.erAsylsøker]: 'omdeg.asylsøker.spm',
     [DinLivssituasjonSpørsmålId.jobberPåBåt]: 'eøs.arbeid-utland.spm',
-    [DinLivssituasjonSpørsmålId.arbeidsland]: 'omdeg.arbeid-utland.land.spm',
     [DinLivssituasjonSpørsmålId.mottarUtenlandspensjon]: 'omdeg.pensjonutland.spm',
-    [DinLivssituasjonSpørsmålId.pensjonsland]: 'omdeg.utenlandspensjon.land.spm',
 };
 
 export const samboerSpråkIder = {

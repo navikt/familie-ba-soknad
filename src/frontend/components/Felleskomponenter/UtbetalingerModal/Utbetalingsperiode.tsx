@@ -5,9 +5,10 @@ import { Element } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
+import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
+import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -25,36 +26,33 @@ interface UtbetalingsperiodeProps {
     leggTilUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     fjernUtbetalingsperiode: (periode: IUtbetalingsperiode) => void;
     gjelderUtlandet?: boolean;
-    andreForelderData?: { erDød: boolean; barn: IBarnMedISøknad };
-    mottarEllerMottattUtbetalingFelt: Felt<ESvar | null>;
+    tilhørendeJaNeiSpmFelt: Felt<ESvar | null>;
     registrerteUtbetalingsperioder: Felt<IUtbetalingsperiode[]>;
 }
 
-export const Utbetalingsperiode: React.FC<UtbetalingsperiodeProps> = ({
+type Props = UtbetalingsperiodeProps & PeriodePersonTypeMedBarnProps;
+
+export const Utbetalingsperiode: React.FC<Props> = ({
     skjema,
     leggTilUtbetalingsperiode,
     fjernUtbetalingsperiode,
-    andreForelderData,
-    mottarEllerMottattUtbetalingFelt,
+    tilhørendeJaNeiSpmFelt,
     registrerteUtbetalingsperioder,
+    personType,
+    erDød,
+    barn,
 }) => {
     const { erÅpen: utbetalingermodalErÅpen, toggleModal: toggleUtbetalingsmodal } = useModal();
 
-    const gjelderAndreForelder = !!andreForelderData;
-    const barn = andreForelderData?.barn;
-    const andreForelderErDød = !!andreForelderData?.erDød;
     const barnetsNavn = barn && barn.navn;
 
     return (
         <>
             <JaNeiSpm
                 skjema={skjema}
-                felt={mottarEllerMottattUtbetalingFelt}
-                spørsmålTekstId={mottarEllerMottattUtbetalingSpråkId(
-                    gjelderAndreForelder,
-                    andreForelderErDød
-                )}
-                inkluderVetIkke={gjelderAndreForelder}
+                felt={tilhørendeJaNeiSpmFelt}
+                spørsmålTekstId={mottarEllerMottattUtbetalingSpråkId(personType, erDød)}
+                inkluderVetIkke={personType !== PersonType.Søker}
                 språkValues={{
                     ...(barn && {
                         navn: barnetsNavn,
@@ -62,7 +60,7 @@ export const Utbetalingsperiode: React.FC<UtbetalingsperiodeProps> = ({
                     }),
                 }}
             />
-            {mottarEllerMottattUtbetalingFelt.verdi === ESvar.JA && (
+            {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
                 <>
                     {registrerteUtbetalingsperioder.verdi.map((utbetalingsperiode, index) => (
                         <UtbetalingsperiodeOppsummering
@@ -70,13 +68,15 @@ export const Utbetalingsperiode: React.FC<UtbetalingsperiodeProps> = ({
                             utbetalingsperiode={utbetalingsperiode}
                             fjernPeriodeCallback={fjernUtbetalingsperiode}
                             nummer={index + 1}
-                            andreForelderData={andreForelderData}
+                            personType={personType}
+                            erDød={personType === PersonType.AndreForelder && erDød}
+                            barn={barn}
                         />
                     ))}
                     {registrerteUtbetalingsperioder.verdi.length > 0 && (
                         <Element>
                             <SpråkTekst
-                                id={utbetalingerFlerePerioderSpmSpråkId(gjelderAndreForelder)}
+                                id={utbetalingerFlerePerioderSpmSpråkId(personType)}
                                 values={{
                                     ...(barn && { barn: barnetsNavn }),
                                 }}
@@ -86,7 +86,11 @@ export const Utbetalingsperiode: React.FC<UtbetalingsperiodeProps> = ({
                     <LeggTilKnapp
                         onClick={toggleUtbetalingsmodal}
                         språkTekst={'felles.flereytelser.knapp'}
-                        id={UtbetalingerSpørsmålId.utbetalingsperioder}
+                        id={genererPeriodeId({
+                            personType: personType,
+                            spørsmålsId: UtbetalingerSpørsmålId.utbetalingsperioder,
+                            barnetsId: barn?.id,
+                        })}
                         feilmelding={
                             skjema.visFeilmeldinger && registrerteUtbetalingsperioder.feilmelding
                         }
@@ -95,7 +99,9 @@ export const Utbetalingsperiode: React.FC<UtbetalingsperiodeProps> = ({
                         erÅpen={utbetalingermodalErÅpen}
                         toggleModal={toggleUtbetalingsmodal}
                         onLeggTilUtbetalinger={leggTilUtbetalingsperiode}
-                        andreForelderData={andreForelderData}
+                        personType={personType}
+                        barn={barn}
+                        erDød={erDød}
                     />
                 </>
             )}

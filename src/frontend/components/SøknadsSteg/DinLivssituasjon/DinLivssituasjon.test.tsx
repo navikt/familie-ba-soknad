@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { queryByText, render, within } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
@@ -42,6 +42,9 @@ const søknad = mockDeep<ISøknad>({
     },
 });
 
+//Feilmelding dukker både opp under spørsmålet og i feiloppsummeringen
+const antallFeilmeldingerPerFeil = 2;
+
 describe('DinLivssituasjon', () => {
     mockHistory(['/din-livssituasjon']);
 
@@ -80,19 +83,23 @@ describe('DinLivssituasjon', () => {
     it('Stopper fra å gå videre hvis årsak ikke er valgt', async () => {
         spyOnUseApp(søknad);
 
-        const { findByText, findByRole } = render(
+        const { findByText, queryAllByText, getByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
         const gåVidere = await findByText('Gå videre');
+
         act(() => gåVidere.click());
-        const alerts: HTMLElement = await findByRole('alert');
-        const result: HTMLElement | null = queryByText(
-            alerts,
+
+        const feiloppsummeringstittel = getByText(
+            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
+        );
+        expect(feiloppsummeringstittel).toBeInTheDocument();
+        const feilmeldingÅrsak = queryAllByText(
             'Du må velge årsak til at du søker om utvidet barnetrygd for å gå videre'
         );
-        expect(result).not.toBeNull();
+        expect(feilmeldingÅrsak).toHaveLength(antallFeilmeldingerPerFeil);
     });
 
     it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', async () => {
@@ -125,25 +132,25 @@ describe('DinLivssituasjon', () => {
     it('Viser feilmelding med spørsmål tittel når ikke utfylt', async () => {
         spyOnUseApp(søknad);
 
-        const { findByText, findByRole } = render(
+        const { findByText, getByText, getAllByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
         const gåVidere = await findByText('Gå videre');
         act(() => gåVidere.click());
-        const alerts: HTMLElement = await findByRole('alert');
-        const result: HTMLElement | null = queryByText(
-            alerts,
-            'Du må oppgi om du har samboer nå for å gå videre'
+        const feiloppsummeringstittel = getByText(
+            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
         );
-        expect(result).not.toBeNull();
+        expect(feiloppsummeringstittel).toBeInTheDocument();
+        const feilmeldingSamboer = getAllByText('Du må oppgi om du har samboer nå for å gå videre');
+        expect(feilmeldingSamboer).toHaveLength(antallFeilmeldingerPerFeil);
     });
 
     it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { findByText, findByRole } = render(
+        const { findByText, findByRole, getAllByText, getByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -157,20 +164,21 @@ describe('DinLivssituasjon', () => {
         const gåVidereKnapp = await findByText('Gå videre');
         act(() => gåVidereKnapp.click());
 
-        const feiloppsummering = await findByRole('alert');
-
-        const navnFeilmelding = within(feiloppsummering).getByText(
-            'Du må oppgi samboerens navn for å gå videre'
+        const feiloppsummeringstittel = getByText(
+            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
         );
-        expect(navnFeilmelding).toBeInTheDocument();
-        const fødselsnummerFeilmelding = within(feiloppsummering).getByText(
+        expect(feiloppsummeringstittel).toBeInTheDocument();
+
+        const feilmeldingSamboerNavn = getAllByText('Du må oppgi samboerens navn for å gå videre');
+        expect(feilmeldingSamboerNavn).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingFnr = getAllByText(
             'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
         );
-        expect(fødselsnummerFeilmelding).toBeInTheDocument();
-        const forholdStartFeilmelding = within(feiloppsummering).getByText(
+        expect(feilmeldingFnr).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingForholdStart = getAllByText(
             'Du må oppgi når samboerforholdet startet for å gå videre'
         );
-        expect(forholdStartFeilmelding).toBeInTheDocument();
+        expect(feilmeldingForholdStart).toHaveLength(antallFeilmeldingerPerFeil);
     });
 
     it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand annet enn GIFT', async () => {

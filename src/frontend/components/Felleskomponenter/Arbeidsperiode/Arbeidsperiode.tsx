@@ -5,14 +5,15 @@ import { Element } from 'nav-frontend-typografi';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { IBarnMedISøknad } from '../../../typer/barn';
 import { IArbeidsperiode } from '../../../typer/perioder';
+import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import {
     IDinLivssituasjonFeltTyper,
     IEøsForBarnFeltTyper,
     IEøsForSøkerFeltTyper,
     IOmBarnetUtvidetFeltTyper,
 } from '../../../typer/skjema';
+import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
@@ -38,37 +39,36 @@ interface ArbeidsperiodeProps {
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet?: boolean;
-    andreForelderData?: { erDød: boolean; barn: IBarnMedISøknad };
     arbeiderEllerArbeidetFelt: Felt<ESvar | null>;
     registrerteArbeidsperioder: Felt<IArbeidsperiode[]>;
 }
 
-export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
+type Props = ArbeidsperiodeProps & PeriodePersonTypeMedBarnProps;
+
+export const Arbeidsperiode: React.FC<Props> = ({
     skjema,
     leggTilArbeidsperiode,
     fjernArbeidsperiode,
     gjelderUtlandet = false,
-    andreForelderData,
     arbeiderEllerArbeidetFelt,
     registrerteArbeidsperioder,
+    personType,
+    erDød,
+    barn,
 }) => {
     const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
-    const gjelderAndreForelder = !!andreForelderData;
-    const andreForelderErDød = !!andreForelderData?.erDød;
-    const barn = andreForelderData?.barn;
     const barnetsNavn = !!barn && barn.navn;
+    const arbeidsperiodeSpørsmålId = gjelderUtlandet
+        ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
+        : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
     return (
         <>
             <JaNeiSpm
                 skjema={skjema}
                 felt={arbeiderEllerArbeidetFelt}
-                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(
-                    gjelderUtlandet,
-                    gjelderAndreForelder,
-                    andreForelderErDød
-                )}
-                inkluderVetIkke={gjelderAndreForelder}
+                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(gjelderUtlandet, personType, erDød)}
+                inkluderVetIkke={personType !== PersonType.Søker}
                 språkValues={{
                     ...(barnetsNavn && {
                         navn: barnetsNavn,
@@ -85,16 +85,14 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                             fjernPeriodeCallback={fjernArbeidsperiode}
                             nummer={index + 1}
                             gjelderUtlandet={gjelderUtlandet}
-                            andreForelderData={andreForelderData}
+                            personType={personType}
+                            erDød={personType === PersonType.AndreForelder && erDød}
                         />
                     ))}
                     {registrerteArbeidsperioder.verdi.length > 0 && (
                         <Element>
                             <SpråkTekst
-                                id={arbeidsperiodeFlereSpørsmål(
-                                    gjelderUtlandet,
-                                    gjelderAndreForelder
-                                )}
+                                id={arbeidsperiodeFlereSpørsmål(gjelderUtlandet, personType)}
                                 values={{
                                     ...(barnetsNavn && { barn: barnetsNavn }),
                                 }}
@@ -104,7 +102,11 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                     <LeggTilKnapp
                         onClick={toggleArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
-                        id={ArbeidsperiodeSpørsmålsId.arbeidsperioder}
+                        id={genererPeriodeId({
+                            personType,
+                            spørsmålsId: arbeidsperiodeSpørsmålId,
+                            barnetsId: barn?.id,
+                        })}
                         feilmelding={
                             registrerteArbeidsperioder.erSynlig &&
                             registrerteArbeidsperioder.feilmelding &&
@@ -118,7 +120,8 @@ export const Arbeidsperiode: React.FC<ArbeidsperiodeProps> = ({
                         toggleModal={toggleArbeidsmodal}
                         onLeggTilArbeidsperiode={leggTilArbeidsperiode}
                         gjelderUtlandet={gjelderUtlandet}
-                        andreForelderData={andreForelderData}
+                        personType={personType}
+                        erDød={erDød}
                     />
                 </>
             )}

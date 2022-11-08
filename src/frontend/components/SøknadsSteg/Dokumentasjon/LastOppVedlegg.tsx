@@ -72,8 +72,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
         søknad.dokumentasjon.forEach(dok => {
             if (
                 dok.gjelderForSøker &&
-                (dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE ||
-                    dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA)
+                dok.dokumentasjonsbehov === Dokumentasjonsbehov.SEPARERT_SKILT_ENKE
             ) {
                 antallVedlegg++;
             }
@@ -126,13 +125,6 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
                             ),
                         }}
                     />
-                    {dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA && (
-                        <EksternLenke
-                            lenkeSpråkId={'eøs.tilleggsskjema.lenke'}
-                            lenkeTekstSpråkId={'eøs.tilleggsskjema.lenketekst'}
-                            target="_blank"
-                        />
-                    )}
                 </>
             )}
             {!dokumentasjon.harSendtInn && (

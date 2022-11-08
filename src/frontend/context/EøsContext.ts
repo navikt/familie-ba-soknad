@@ -7,13 +7,10 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { byggHenterRessurs, hentDataFraRessurs } from '@navikt/familie-typer';
 
 import Miljø from '../Miljø';
-import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
+import { barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
 import { BarnetsId } from '../typer/common';
-import { IDokumentasjon } from '../typer/dokumentasjon';
-import { Dokumentasjonsbehov } from '../typer/kontrakt/dokumentasjon';
 import { ISøker } from '../typer/person';
 import { useApp } from './AppContext';
-import { useFeatureToggles } from './FeatureToggleContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 
 const [EøsProvider, useEøs] = createUseContext(() => {
@@ -24,32 +21,8 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     const [barnSomTriggerEøs, settBarnSomTriggerEøs] = useState<BarnetsId[]>(
         søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs).map(barn => barn.id)
     );
-    const { toggles } = useFeatureToggles();
 
     const { soknadApi } = Miljø();
-
-    useEffect(() => {
-        if (!toggles.EØS_KOMPLETT) {
-            const erEøs = søknad.erEøs;
-            const dokumentasjon = søknad.dokumentasjon.map((dok: IDokumentasjon) =>
-                dok.dokumentasjonsbehov === Dokumentasjonsbehov.EØS_SKJEMA
-                    ? {
-                          ...dok,
-                          gjelderForSøker: erEøs,
-                          opplastedeVedlegg: erEøs ? dok.opplastedeVedlegg : [],
-                          harSendtInn: erEøs ? dok.harSendtInn : false,
-                      }
-                    : dok
-            );
-
-            if (JSON.stringify(dokumentasjon) !== JSON.stringify(søknad.dokumentasjon)) {
-                settSøknad({
-                    ...søknad,
-                    dokumentasjon,
-                });
-            }
-        }
-    }, [søknad.erEøs]);
 
     useEffect(() => {
         settEøsLand(byggHenterRessurs());
@@ -81,14 +54,8 @@ const [EøsProvider, useEøs] = createUseContext(() => {
     const skalTriggeEøsForSøker = (søker: ISøker): boolean => {
         const landSvarSomKanTrigge = [
             søker.utenlandsperioder.map(periode => periode.oppholdsland.svar),
-            ...(toggles.EØS_KOMPLETT
-                ? [
-                      søker.arbeidsperioderUtland.map(
-                          periode => periode.arbeidsperiodeland?.svar ?? ''
-                      ),
-                      søker.pensjonsperioderUtland.map(periode => periode.pensjonsland?.svar ?? ''),
-                  ]
-                : [søker.arbeidsland.svar, søker.pensjonsland.svar]),
+            søker.arbeidsperioderUtland.map(periode => periode.arbeidsperiodeland?.svar ?? ''),
+            søker.pensjonsperioderUtland.map(periode => periode.pensjonsland?.svar ?? ''),
         ].flat();
 
         return !!landSvarSomKanTrigge.find(land => erEøsLand(land));
@@ -98,22 +65,12 @@ const [EøsProvider, useEøs] = createUseContext(() => {
         const landSvarSomKanTriggeEøs = [
             ...(barn.andreForelder
                 ? [
-                      ...(toggles.EØS_KOMPLETT
-                          ? [
-                                barn.andreForelder.arbeidsperioderUtland.map(
-                                    periode => periode.arbeidsperiodeland?.svar ?? ''
-                                ),
-                                barn.andreForelder.pensjonsperioderUtland.map(
-                                    periode => periode.pensjonsland?.svar ?? ''
-                                ),
-                            ]
-                          : [
-                                barn.andreForelder[
-                                    andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand
-                                ].svar,
-                                barn.andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand]
-                                    .svar,
-                            ]),
+                      barn.andreForelder.arbeidsperioderUtland.map(
+                          periode => periode.arbeidsperiodeland?.svar ?? ''
+                      ),
+                      barn.andreForelder.pensjonsperioderUtland.map(
+                          periode => periode.pensjonsland?.svar ?? ''
+                      ),
                   ]
                 : []),
             barn.utenlandsperioder.map(periode => periode.oppholdsland.svar),

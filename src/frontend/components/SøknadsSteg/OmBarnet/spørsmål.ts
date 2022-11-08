@@ -9,22 +9,17 @@ export enum OmBarnetSpørsmålsId {
     planleggerÅBoINorge12Mnd = 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
     pågåendeSøknadFraAnnetEøsLand = 'pågående-søknad-fra-annet-eøsland',
     pågåendeSøknadHvilketLand = 'pågående-søknad-hvilket-land',
-    barnetrygdFraEøslandHvilketLand = 'barnetrygd-hvilket-eøsland',
     mottarEllerMottokEøsBarnetrygd = 'mottar-eller-mottok-eøs-barnetrygd',
     andreForelderNavn = 'andre-forelder-navn',
-    andreForelderNavnUkjent = 'andre-forelder-navn-ukjent',
+    andreForelderKanIkkeGiOpplysninger = 'andre-forelder-kan-ikke-gi-opplysninger',
     andreForelderFnr = 'andre-forelder-fødsels-/dnummer',
     andreForelderFnrUkjent = 'andre-forelder-fødsels-/dnummer-ukjent',
     andreForelderFødselsdato = 'andre-forelder-fødselsdato',
     andreForelderFødselsdatoUkjent = 'andre-forelder-fødselsdato-ukjent',
     andreForelderArbeidUtlandet = 'andre-forelder-arbeid',
     andreForelderArbeidUtlandetEnke = 'andre-forelder-arbeid-enke',
-    andreForelderArbeidUtlandetHvilketLand = 'andre-forelder-arbeid-hvilket-land',
-    andreForelderArbeidUtlandetHvilketLandEnke = 'andre-forelder-arbeid-hvilket-land-enke',
     andreForelderPensjonUtland = 'andre-forelder-pensjon-utland',
     andreForelderPensjonUtlandEnke = 'andre-forelder-pensjon-utland-enke',
-    andreForelderPensjonHvilketLand = 'andre-forelder-pensjon-hvilket-land',
-    andreForelderPensjonHvilketLandEnke = 'andre-forelder-pensjon-hvilket-land-enke',
     borFastMedSøker = 'bor-barnet-fast-med-deg',
     skriftligAvtaleOmDeltBosted = 'skriftlig-avtale-om-delt-bosted',
     søkerForTidsrom = 'søker-for-tidsrom',
@@ -48,11 +43,11 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]: 'ombarnet.oppholdtsammenhengende.spm',
     [OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand]: 'ombarnet.pågåendesøknad.spm',
     [OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand]: 'ombarnet.hvilketlandsøkt.spm',
-    [OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand]: 'ombarnet.barnetrygd-eøs.land.spm',
     [OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd]:
         'ombarnet.fårellerharsøktbarnetrygdeøs.spm',
     [OmBarnetSpørsmålsId.andreForelderNavn]: 'ombarnet.andre-forelder.navn.spm',
-    [OmBarnetSpørsmålsId.andreForelderNavnUkjent]: 'ombarnet.andre-forelder.navn-ukjent.spm',
+    [OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger]:
+        'ombarnet.andre-forelder.navn-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFnr]: 'felles.fødsels-eller-dnummer.label',
     [OmBarnetSpørsmålsId.andreForelderFnrUkjent]: 'ombarnet.andre-forelder.fnr-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFødselsdato]: 'felles.fødselsdato.label',
@@ -60,17 +55,9 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]: 'eøs.andre-forelder.arbeid-utland.spm',
     [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke]:
         'enkeenkemann.andreforelder-arbeidutland.spm',
-    [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand]:
-        'ombarnet.andre-forelder.arbeid-utland.land.spm',
-    [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke]:
-        'enkeenkemann.andreforelder-arbeidutland.land.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonUtland]: 'ombarnet.andreforelderpensjonutland.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke]:
         'enkeenkemann.andre-forelder.utenlandspensjon.spm',
-    [OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand]:
-        'ombarnet.andre-forelder.utenlandspensjon.land.spm',
-    [OmBarnetSpørsmålsId.andreForelderPensjonHvilketLandEnke]:
-        'enkeenkemann.andre-forelder.utenlandspensjon.land.spm',
     [OmBarnetSpørsmålsId.borFastMedSøker]: 'ombarnet.bor-fast.spm',
     [OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted]: 'ombarnet.delt-bosted.spm',
     [OmBarnetSpørsmålsId.søkerForTidsrom]: 'ombarnet.søker-for-periode.spm',

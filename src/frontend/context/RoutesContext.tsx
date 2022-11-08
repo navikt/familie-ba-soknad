@@ -1,13 +1,11 @@
 import createUseContext from 'constate';
 
-import { EFeatureToggle } from '../typer/feature-toggles';
 import { RouteEnum } from '../typer/routes';
-import { useFeatureToggles } from './FeatureToggleContext';
 
 export const omBarnetBasePath = 'om-barnet';
 export const eøsBarnBasePath = 'eøs-barn';
 
-export const getRoutes = (brukEøsKomplett: boolean | undefined) => {
+export const getRoutes = () => {
     return [
         { path: '/', label: 'Forside', route: RouteEnum.Forside },
         { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg },
@@ -23,24 +21,16 @@ export const getRoutes = (brukEøsKomplett: boolean | undefined) => {
             label: `Om barnet`,
             route: RouteEnum.OmBarnet,
         },
-        ...(brukEøsKomplett
-            ? [
-                  {
-                      path: '/eøs-søker',
-                      label: 'Eøs søker',
-                      route: RouteEnum.EøsForSøker,
-                  },
-              ]
-            : []),
-        ...(brukEøsKomplett
-            ? [
-                  {
-                      path: `/${eøsBarnBasePath}/barn-:number`,
-                      label: `Om EØS barn`,
-                      route: RouteEnum.EøsForBarn,
-                  },
-              ]
-            : []),
+        {
+            path: '/eøs-søker',
+            label: 'Eøs søker',
+            route: RouteEnum.EøsForSøker,
+        },
+        {
+            path: `/${eøsBarnBasePath}/barn-:number`,
+            label: `Om EØS barn`,
+            route: RouteEnum.EøsForBarn,
+        },
         {
             path: '/oppsummering',
             label: 'Oppsummering',
@@ -60,9 +50,7 @@ export const getRoutes = (brukEøsKomplett: boolean | undefined) => {
 };
 
 const [RoutesProvider, useRoutes] = createUseContext(() => {
-    const { toggles } = useFeatureToggles();
-
-    const routes = getRoutes(toggles[EFeatureToggle.EØS_KOMPLETT]);
+    const routes = getRoutes();
     const hentRouteObjektForRouteEnum = (routeEnum: RouteEnum) =>
         routes.find(route => route.route === routeEnum) ?? routes[0];
 

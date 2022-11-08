@@ -4,6 +4,8 @@ export const testdata1: TilKontraktTestData = {
     input: {
         søknadstype: 'ORDINÆR',
         erEøs: false,
+        kontraktVersjon: '8',
+        antallEøsSteg: 0,
         barnInkludertISøknaden: [
             {
                 id: '136f8dd4-e4f0-42b6-aa77-403de54a1650',
@@ -11,15 +13,40 @@ export const testdata1: TilKontraktTestData = {
                 ident: '23456789876',
                 alder: '13',
                 borMedSøker: false,
+                adresse: {
+                    svar: 'Vei 12',
+                    id: 'barnets-adresse',
+                },
                 adressebeskyttelse: true,
                 barnErFyltUt: true,
                 utenlandsperioder: [],
+                eøsBarnetrygdsperioder: [],
+                idNummer: [],
+                harEøsSteg: false,
                 andreForelder: {
+                    kanIkkeGiOpplysninger: {
+                        id: 'andre-forelder-kan-ikke-gi-opplysninger',
+                        svar: 'NEI',
+                    },
+                    pågåendeSøknadFraAnnetEøsLand: {
+                        id: 'andre-forelder-pågående-søknad',
+                        svar: 'JA',
+                    },
+                    pågåendeSøknadHvilketLand: {
+                        id: 'andre-forelder-pågående-søknad-land',
+                        svar: 'BEL',
+                    },
+                    barnetrygdFraEøs: {
+                        id: 'andre-forelder-barnetrygd',
+                        svar: 'NEI',
+                    },
+                    eøsBarnetrygdsperioder: [],
                     arbeidsperioderNorge: [],
                     arbeidsperioderUtland: [],
                     andreUtbetalingsperioder: [],
                     pensjonsperioderNorge: [],
                     pensjonsperioderUtland: [],
+                    idNummer: [],
                     navn: {
                         id: 'andre-forelder-navn',
                         svar: 'UKJENT',
@@ -32,25 +59,33 @@ export const testdata1: TilKontraktTestData = {
                         id: 'andre-forelder-fødselsdato',
                         svar: '',
                     },
+                    adresse: {
+                        svar: 'Heisannveien 14',
+                        id: 'andre-forelder-adresse',
+                    },
                     arbeidUtlandet: {
                         svar: null,
                         id: 'andre-forelder-arbeid',
-                    },
-                    arbeidUtlandetHvilketLand: {
-                        svar: '',
-                        id: 'andre-forelder-arbeid-hvilket-land',
                     },
                     pensjonUtland: {
                         svar: null,
                         id: 'andre-forelder-pensjon-utland',
                     },
-                    pensjonHvilketLand: {
-                        svar: '',
-                        id: 'andre-forelder-pensjon-hvilket-land',
+                    pensjonNorge: {
+                        svar: null,
+                        id: 'andre-forelder-pensjon-norge',
+                    },
+                    andreUtbetalinger: {
+                        svar: null,
+                        id: 'andre-forelder-andre-utbetalinger',
                     },
                     skriftligAvtaleOmDeltBosted: {
                         id: 'skriftlig-avtale-om-delt-bosted',
                         svar: 'NEI',
+                    },
+                    arbeidNorge: {
+                        svar: null,
+                        id: 'andre-forelder-arbeid-norge',
                     },
                     utvidet: {
                         søkerHarBoddMedAndreForelder: {
@@ -123,10 +158,6 @@ export const testdata1: TilKontraktTestData = {
                 planleggerÅBoINorge12Mnd: {
                     id: 'barn-planlegger-å-bo-sammenhengende-i-norge-12mnd',
                     svar: null,
-                },
-                barnetrygdFraEøslandHvilketLand: {
-                    id: 'barnetrygd-hvilket-eøsland',
-                    svar: '',
                 },
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
@@ -213,15 +244,6 @@ export const testdata1: TilKontraktTestData = {
                 opplastedeVedlegg: [],
             },
             {
-                dokumentasjonsbehov: 'EØS_SKJEMA',
-                tittelSpråkId: 'dokumentasjon.tilleggsskjema.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.tilleggsskjema.informasjon',
-                gjelderForBarnId: [],
-                gjelderForSøker: false,
-                harSendtInn: false,
-                opplastedeVedlegg: [],
-            },
-            {
                 dokumentasjonsbehov: 'ANNEN_DOKUMENTASJON',
                 tittelSpråkId: 'dokumentasjon.annendokumentasjon.vedleggtittel',
                 beskrivelseSpråkId: null,
@@ -233,6 +255,7 @@ export const testdata1: TilKontraktTestData = {
         ],
         søker: {
             navn: 'Voksen Voksnessen',
+            harEøsSteg: false,
             barn: [
                 {
                     id: '136f8dd4-e4f0-42b6-aa77-403de54a1650',
@@ -372,13 +395,12 @@ export const testdata1: TilKontraktTestData = {
     },
     output: {
         søknadstype: 'ORDINÆR',
+        kontraktVersjon: 8,
+        antallEøsSteg: 0,
         søker: {
+            harEøsSteg: false,
             navn: {
-                label: {
-                    en: 'Name',
-                    nb: 'Navn',
-                    nn: 'Namn',
-                },
+                label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                 verdi: {
                     nb: 'Voksen Voksnessen',
                     nn: 'Voksen Voksnessen',
@@ -386,35 +408,15 @@ export const testdata1: TilKontraktTestData = {
                 },
             },
             ident: {
-                label: {
-                    en: 'Ident',
-                    nb: 'Ident',
-                    nn: 'Ident',
-                },
-                verdi: {
-                    nb: '23058518298',
-                    nn: '23058518298',
-                    en: '23058518298',
-                },
+                label: { en: 'Ident', nb: 'Ident', nn: 'Ident' },
+                verdi: { nb: '23058518298', nn: '23058518298', en: '23058518298' },
             },
             sivilstand: {
-                label: {
-                    en: 'Marital status',
-                    nb: 'Sivilstatus',
-                    nn: 'Sivilstatus',
-                },
-                verdi: {
-                    nb: 'GIFT',
-                    nn: 'GIFT',
-                    en: 'GIFT',
-                },
+                label: { en: 'Marital status', nb: 'Sivilstatus', nn: 'Sivilstatus' },
+                verdi: { nb: 'GIFT', nn: 'GIFT', en: 'GIFT' },
             },
             statsborgerskap: {
-                label: {
-                    en: 'Citizenship',
-                    nb: 'Statsborgerskap',
-                    nn: 'Statsborgarskap',
-                },
+                label: { en: 'Citizenship', nb: 'Statsborgerskap', nn: 'Statsborgarskap' },
                 verdi: {
                     nb: ['Norge', 'Afghanistan'],
                     nn: ['Noreg', 'Afghanistan'],
@@ -422,11 +424,7 @@ export const testdata1: TilKontraktTestData = {
                 },
             },
             adresse: {
-                label: {
-                    en: 'Address',
-                    nb: 'Adresse',
-                    nn: 'Adresse',
-                },
+                label: { en: 'Address', nb: 'Adresse', nn: 'Adresse' },
                 verdi: {
                     nb: {
                         adressenavn: 'Solveien',
@@ -457,7 +455,9 @@ export const testdata1: TilKontraktTestData = {
                     },
                 },
             },
+            adressebeskyttelse: false,
             utenlandsperioder: [],
+            idNummer: [],
             spørsmål: {
                 borPåRegistrertAdresse: {
                     label: {
@@ -465,11 +465,7 @@ export const testdata1: TilKontraktTestData = {
                         nb: 'Bor du på denne adressen?',
                         nn: 'Bur du på denne adressa?',
                     },
-                    verdi: {
-                        nb: 'JA',
-                        nn: 'JA',
-                        en: 'JA',
-                    },
+                    verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
                 værtINorgeITolvMåneder: {
                     label: {
@@ -477,11 +473,7 @@ export const testdata1: TilKontraktTestData = {
                         nb: 'Har du oppholdt deg sammenhengende i Norge de siste tolv månedene?',
                         nn: 'Har du opphalde deg samanhengande i Noreg dei siste tolv månadene?',
                     },
-                    verdi: {
-                        nb: 'JA',
-                        nn: 'JA',
-                        en: 'JA',
-                    },
+                    verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
                 erAsylsøker: {
                     label: {
@@ -489,23 +481,15 @@ export const testdata1: TilKontraktTestData = {
                         nb: 'Er du asylsøker?',
                         nn: 'Er du asylsøkar?',
                     },
-                    verdi: {
-                        nb: 'NEI',
-                        nn: 'NEI',
-                        en: 'NEI',
-                    },
+                    verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                 },
                 jobberPåBåt: {
                     label: {
                         en: "Do you or have you worked outside of Norway, on a foreign ship or on another country's continental shelf?",
                         nb: 'Arbeider eller har du arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                        nn: 'Arbeidar eller har du arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
+                        nn: 'Arbeider eller har du arbeidt utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
                     },
-                    verdi: {
-                        nb: 'NEI',
-                        nn: 'NEI',
-                        en: 'NEI',
-                    },
+                    verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                 },
                 mottarUtenlandspensjon: {
                     label: {
@@ -513,11 +497,7 @@ export const testdata1: TilKontraktTestData = {
                         nb: 'Får eller har du fått pensjon fra utlandet?',
                         nn: 'Får eller har du fått pensjon frå utlandet?',
                     },
-                    verdi: {
-                        nb: 'NEI',
-                        nn: 'NEI',
-                        en: 'NEI',
-                    },
+                    verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                 },
                 harSamboerNå: {
                     label: {
@@ -525,24 +505,22 @@ export const testdata1: TilKontraktTestData = {
                         nb: 'Har du en annen samboer enn din ektefelle nå?',
                         nn: 'Har du ein anna sambuar enn din ektefelle no?',
                     },
-                    verdi: {
-                        nb: 'NEI',
-                        nn: 'NEI',
-                        en: 'NEI',
-                    },
+                    verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                 },
             },
             tidligereSamboere: [],
             nåværendeSamboer: null,
+            arbeidsperioderUtland: [],
+            arbeidsperioderNorge: [],
+            pensjonsperioderUtland: [],
+            pensjonsperioderNorge: [],
+            andreUtbetalingsperioder: [],
         },
         barn: [
             {
+                harEøsSteg: false,
                 navn: {
-                    label: {
-                        en: 'Name',
-                        nb: 'Navn',
-                        nn: 'Namn',
-                    },
+                    label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                     verdi: {
                         nb: 'Barn 234567 89876',
                         nn: 'Barn 234567 89876',
@@ -550,16 +528,8 @@ export const testdata1: TilKontraktTestData = {
                     },
                 },
                 ident: {
-                    label: {
-                        en: 'Ident',
-                        nb: 'Ident',
-                        nn: 'Ident',
-                    },
-                    verdi: {
-                        nb: '23456789876',
-                        nn: '23456789876',
-                        en: '23456789876',
-                    },
+                    label: { en: 'Ident', nb: 'Ident', nn: 'Ident' },
+                    verdi: { nb: '23456789876', nn: '23456789876', en: '23456789876' },
                 },
                 registrertBostedType: {
                     label: {
@@ -567,109 +537,62 @@ export const testdata1: TilKontraktTestData = {
                         nb: 'Registrert bosted',
                         nn: 'Registrert bustad',
                     },
-                    verdi: {
-                        nb: 'ADRESSESPERRE',
-                        nn: 'ADRESSESPERRE',
-                        en: 'ADRESSESPERRE',
-                    },
+                    verdi: { nb: 'ADRESSESPERRE', nn: 'ADRESSESPERRE', en: 'ADRESSESPERRE' },
                 },
                 alder: {
-                    label: {
-                        en: 'Age',
-                        nb: 'Alder',
-                        nn: 'Alder',
-                    },
-                    verdi: {
-                        en: '13 years',
-                        nb: '13 år',
-                        nn: '13 år',
-                    },
+                    label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
+                    verdi: { en: '13 years', nb: '13 år', nn: '13 år' },
                 },
                 utenlandsperioder: [],
+                eøsBarnetrygdsperioder: [],
+                idNummer: [],
                 andreForelder: {
-                    navn: {
+                    kanIkkeGiOpplysninger: {
                         label: {
-                            en: 'Name',
-                            nb: 'Navn',
-                            nn: 'Namn',
+                            en: 'I am unable to provide information about the other parent',
+                            nb: 'Jeg kan ikke gi opplysninger om den andre forelderen',
+                            nn: 'Eg kan ikkje gje opplysningar om den andre forelderen',
                         },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                    },
+                    navn: {
+                        label: { en: 'Name', nb: 'Navn', nn: 'Namn' },
                         verdi: {
                             en: 'I am unable to provide information about the other parent',
                             nb: 'Jeg kan ikke gi opplysninger om den andre forelderen',
                             nn: 'Eg kan ikkje gje opplysningar om den andre forelderen',
                         },
                     },
-                    fnr: {
+                    fnr: null,
+                    fødselsdato: null,
+                    pensjonUtland: null,
+                    arbeidUtlandet: null,
+                    pensjonNorge: null,
+                    arbeidNorge: null,
+                    andreUtbetalinger: null,
+                    pågåendeSøknadFraAnnetEøsLand: {
                         label: {
-                            en: 'Norwegian National identity number or D number',
-                            nb: 'Fødselsnummer eller d-nummer',
-                            nn: 'Fødselsnummer eller d-nummer',
+                            en: "Does Barn 234567 89876's other parent have an active application for child benefit from another EEA country?",
+                            nb: 'Har Barn 234567 89876 sin andre forelder en pågående søknad om barnetrygd fra et annet EU/EØS land?',
+                            nn: 'Har Barn 234567 89876 sin andre forelder ein pågåande søknad om barnetrygd frå eit anna EU/EØS-land?',
                         },
-                        verdi: {
-                            nb: '',
-                            nn: '',
-                            en: '',
-                        },
+                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                     },
-                    fødselsdato: {
+                    pågåendeSøknadHvilketLand: {
                         label: {
-                            en: 'Date of birth',
-                            nb: 'Fødselsdato',
-                            nn: 'Fødselsdato',
+                            en: "What country has Barn 234567 89876's other parent applied for child benefit from?",
+                            nb: 'Hvilket land har Barn 234567 89876 sin andre forelder søkt om barnetrygd fra?',
+                            nn: 'Kva land har Barn 234567 89876 sin andre forelder søkt om barnetrygd frå?',
                         },
-                        verdi: {
-                            nb: '',
-                            nn: '',
-                            en: '',
-                        },
+                        verdi: { nb: 'Belgia', nn: 'Belgia', en: 'Belgium' },
                     },
-                    pensjonUtland: {
+                    barnetrygdFraEøs: {
                         label: {
-                            en: "Does Barn 234567 89876's other parent receive, or have they received a pension from abroad?",
-                            nb: 'Får eller har den andre forelderen til Barn 234567 89876 fått pensjon fra utlandet?',
-                            nn: 'Får eller har den andre forelderen til Barn 234567 89876 fått pensjon frå utlandet?',
+                            en: "Is Barn 234567 89876's other parent receiving or have they received child benefit from another EEA country?",
+                            nb: 'Får eller har Barn 234567 89876 sin andre forelder fått barnetrygd fra et annet EU/EØS land?',
+                            nn: 'Får eller har Barn 234567 89876 sin andre forelder fått barnetrygd frå eit anna EU/EØS-land?',
                         },
-                        verdi: {
-                            nb: null,
-                            nn: null,
-                            en: null,
-                        },
-                    },
-                    pensjonHvilketLand: {
-                        label: {
-                            en: "What country does Barn 234567 89876's other parent receive a pension from?",
-                            nb: 'Hvilket land får den andre forelderen til Barn 234567 89876 pensjon fra?',
-                            nn: 'Kva land får den andre forelderen til Barn 234567 89876 pensjon frå?',
-                        },
-                        verdi: {
-                            nb: 'UKJENT',
-                            nn: 'UKJENT',
-                            en: 'UKJENT',
-                        },
-                    },
-                    arbeidUtlandet: {
-                        label: {
-                            en: "Does Barn 234567 89876's other parent work, or have they worked outside of Norway, on a foreign ship or on a foreign continental shelf?",
-                            nb: 'Arbeider eller har den andre forelderen til Barn 234567 89876 arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
-                            nn: 'Arbeidar eller har den andre forelderen til Barn 234567 89876 arbeida utanfor Noreg, på utanlandsk skip eller på utanlandsk kontinentalsokkel?',
-                        },
-                        verdi: {
-                            nb: null,
-                            nn: null,
-                            en: null,
-                        },
-                    },
-                    arbeidUtlandetHvilketLand: {
-                        label: {
-                            en: 'What country does the other parent work in?',
-                            nb: 'Hvilket land arbeider den andre forelderen i?',
-                            nn: 'Kva land arbeidar den andre forelderen i?',
-                        },
-                        verdi: {
-                            nb: 'UKJENT',
-                            nn: 'UKJENT',
-                            en: 'UKJENT',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     skriftligAvtaleOmDeltBosted: {
                         label: {
@@ -677,39 +600,33 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Har du og den andre forelderen skriftlig avtale om delt bosted for Barn 234567 89876?',
                             nn: 'Har du og den andre forelderen skriftleg avtale om delt bustad for Barn 234567 89876?',
                         },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                    },
+                    adresse: {
+                        label: {
+                            en: "Where is Barn 234567 89876's other parent living during the period for which you are applying for child benefit?",
+                            nb: 'Hvor bor Barn 234567 89876 sin andre forelder i perioden det søkes om barnetrygd?',
+                            nn: 'Kor bur Barn 234567 89876 sin andre forelder i perioden det vert søkt om barnetrygd?',
+                        },
                         verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
+                            nb: 'Heisannveien 14',
+                            nn: 'Heisannveien 14',
+                            en: 'Heisannveien 14',
                         },
                     },
                     utvidet: {
-                        søkerHarBoddMedAndreForelder: {
-                            label: {
-                                en: "Have you ever lived with Barn 234567 89876's other parent?",
-                                nb: 'Har du bodd sammen med Barn 234567 89876 sin andre forelder?',
-                                nn: 'Har du budd saman med Barn 234567 89876 sin andre forelder?',
-                            },
-                            verdi: {
-                                nb: null,
-                                nn: null,
-                                en: null,
-                            },
-                        },
-                        søkerFlyttetFraAndreForelderDato: {
-                            label: {
-                                en: 'When did you move apart?',
-                                nb: 'Når flyttet dere fra hverandre?',
-                                nn: 'Når flytta de frå kvarandre?',
-                            },
-                            verdi: {
-                                nb: '',
-                                nn: '',
-                                en: '',
-                            },
-                        },
+                        søkerHarBoddMedAndreForelder: null,
+                        søkerFlyttetFraAndreForelderDato: null,
                     },
+                    arbeidsperioderUtland: [],
+                    pensjonsperioderUtland: [],
+                    arbeidsperioderNorge: [],
+                    pensjonsperioderNorge: [],
+                    andreUtbetalingsperioder: [],
+                    eøsBarnetrygdsperioder: [],
+                    idNummer: [],
                 },
+                omsorgsperson: null,
                 spørsmål: {
                     erFosterbarn: {
                         label: {
@@ -717,11 +634,7 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Hvem av barna er fosterbarn?',
                             nn: 'Kven av barna er fosterbarn?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     erAdoptertFraUtland: {
                         label: {
@@ -729,11 +642,7 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Hvem av barna er adoptert fra utlandet?',
                             nn: 'Kven av barna er adoptert frå utlandet?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     erAsylsøker: {
                         label: {
@@ -741,11 +650,7 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Hvem av barna er det søkt om asyl for?',
                             nn: 'Kven av barna er det søkt om asyl for?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     barnetrygdFraAnnetEøsland: {
                         label: {
@@ -753,11 +658,7 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Hvem av barna får du, har du fått eller har du søkt om barnetrygd for?',
                             nn: 'Kven av barna får du, har du fått eller har du søkt om barnetrygd for?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     andreForelderErDød: {
                         label: {
@@ -765,11 +666,7 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Hvem av barna er din tidligere ektefelle/samboer forelder til?',
                             nn: 'Kven av barna er din tidlegare ektefelle/sambuar forelder til?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     oppholderSegIInstitusjon: {
                         label: {
@@ -777,11 +674,7 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Hvem av barna er i institusjon?',
                             nn: 'Kven av barna er seg i institusjon?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     institusjonIUtland: {
                         label: {
@@ -789,11 +682,7 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Institusjonen er i utlandet',
                             nn: 'Institusjonen er i utlandet',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     boddMindreEnn12MndINorge: {
                         label: {
@@ -801,11 +690,7 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Hvem av barna har oppholdt seg utenfor Norge i løpet av de siste tolv månedene?',
                             nn: 'Kven av barna har oppheldt seg utanfor Noreg i løpet av dei siste tolv månadene?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     borFastMedSøker: {
                         label: {
@@ -813,11 +698,7 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Bor Barn 234567 89876 fast sammen med deg?',
                             nn: 'Bur Barn 234567 89876 fast saman med deg?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     søkerForTidsrom: {
                         label: {
@@ -825,23 +706,11 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Søker du barnetrygd for et spesielt tidsrom for Barn 234567 89876?',
                             nn: 'Søker du barnetrygd for eit spesielt tidsrom for Barn 234567 89876?',
                         },
-                        verdi: {
-                            nb: 'NEI',
-                            nn: 'NEI',
-                            en: 'NEI',
-                        },
+                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
                     søkerForTidsromSluttdato: {
-                        label: {
-                            en: 'Up to and including',
-                            nb: 'Til og med',
-                            nn: 'Til og med',
-                        },
-                        verdi: {
-                            nb: '',
-                            nn: '',
-                            en: '',
-                        },
+                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
+                        verdi: { nb: '', nn: '', en: '' },
                     },
                     institusjonOppholdSluttdato: {
                         label: {
@@ -849,11 +718,15 @@ export const testdata1: TilKontraktTestData = {
                             nb: 'Når avsluttes institusjonsoppholdet?',
                             nn: 'Når avsluttast institusjonsopphaldet?',
                         },
-                        verdi: {
-                            nb: '',
-                            nn: '',
-                            en: '',
+                        verdi: { nb: '', nn: '', en: '' },
+                    },
+                    adresse: {
+                        label: {
+                            en: "Where is Barn 234567 89876's living during the period for which you are applying for child benefit?",
+                            nb: 'Hvor bor Barn 234567 89876 i perioden det søkes om barnetrygd?',
+                            nn: 'Kor bur Barn 234567 89876 i perioden det vert søkt om barnetrygd?',
                         },
+                        verdi: { nb: 'Vei 12', nn: 'Vei 12', en: 'Vei 12' },
                     },
                 },
             },
@@ -865,11 +738,7 @@ export const testdata1: TilKontraktTestData = {
                     nb: 'Er noen av barna fosterbarn?',
                     nn: 'Er nokre av barna fosterbarn?',
                 },
-                verdi: {
-                    nb: 'NEI',
-                    nn: 'NEI',
-                    en: 'NEI',
-                },
+                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
             },
             søktAsylForBarn: {
                 label: {
@@ -877,11 +746,7 @@ export const testdata1: TilKontraktTestData = {
                     nb: 'Er det søkt om asyl i Norge for noen av barna?',
                     nn: 'Er det søkt om asyl i Noreg for nokre av barna?',
                 },
-                verdi: {
-                    nb: 'NEI',
-                    nn: 'NEI',
-                    en: 'NEI',
-                },
+                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
             },
             oppholderBarnSegIInstitusjon: {
                 label: {
@@ -889,11 +754,7 @@ export const testdata1: TilKontraktTestData = {
                     nb: 'Er noen av barna i barnverninstitusjon eller i annen institusjon?',
                     nn: 'Er nokre av barna i barneverninstitusjon eller i anna institusjon?',
                 },
-                verdi: {
-                    nb: 'NEI',
-                    nn: 'NEI',
-                    en: 'NEI',
-                },
+                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
             },
             barnOppholdtSegTolvMndSammenhengendeINorge: {
                 label: {
@@ -901,11 +762,7 @@ export const testdata1: TilKontraktTestData = {
                     nb: 'Har barna oppholdt seg sammenhengende i Norge de siste tolv månedene?',
                     nn: 'Har barna oppheldt seg samanhengande i Noreg dei siste tolv månadene?',
                 },
-                verdi: {
-                    nb: 'JA',
-                    nn: 'JA',
-                    en: 'JA',
-                },
+                verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
             },
             erBarnAdoptertFraUtland: {
                 label: {
@@ -913,11 +770,7 @@ export const testdata1: TilKontraktTestData = {
                     nb: 'Er noen av barna adoptert fra utlandet?',
                     nn: 'Er nokre av barna adoptert frå utlandet?',
                 },
-                verdi: {
-                    nb: 'NEI',
-                    nn: 'NEI',
-                    en: 'NEI',
-                },
+                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
             },
             mottarBarnetrygdForBarnFraAnnetEøsland: {
                 label: {
@@ -925,11 +778,7 @@ export const testdata1: TilKontraktTestData = {
                     nb: 'Får, har du fått eller har du søkt om barnetrygd for noen av barna fra et annet EØS land?',
                     nn: 'Får du, har du fått eller har du søkt om barnetrygd for nokre av barna frå eit anna EØS land?',
                 },
-                verdi: {
-                    nb: 'NEI',
-                    nn: 'NEI',
-                    en: 'NEI',
-                },
+                verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
             },
             erAvdødPartnerForelder: {
                 label: {
@@ -937,11 +786,7 @@ export const testdata1: TilKontraktTestData = {
                     nb: 'Du er folkeregistrert som enke/enkemann. Er din tidligere ektefelle forelder til noen av barna du søker barnetrygd for?',
                     nn: 'Du er folkeregistrert som enke/enkemann. Er din tidlegare ektefelle forelder til nokre av barna du søker barnetrygd for?',
                 },
-                verdi: {
-                    nb: null,
-                    nn: null,
-                    en: null,
-                },
+                verdi: { nb: null, nn: null, en: null },
             },
             lestOgForståttBekreftelse: {
                 label: {
@@ -999,6 +844,16 @@ export const testdata1: TilKontraktTestData = {
                 nb: 'Har du hatt samboer tidligere i perioden du søker barnetrygd for?',
                 nn: 'Har du hatt sambuar tidlegare i perioden du søker barnetrygd for?',
             },
+            'omdeg.personopplysninger.adressesperre.alert': {
+                en: 'You are registered with a blocked address',
+                nb: 'Du er registrert med adressesperre',
+                nn: 'Du er registrert med adressesperre',
+            },
+            'omdeg.personopplysninger.ikke-registrert.alert': {
+                en: 'You are not registered with a residential address in Norway',
+                nb: 'Du er ikke registrert med bostedsadresse i Norge',
+                nn: 'Du er ikkje registrert med bustadsadresse i Noreg',
+            },
             'pdf.andreforelder.seksjonstittel': {
                 en: "Child's other parent",
                 nb: 'Barnets andre forelder',
@@ -1019,21 +874,9 @@ export const testdata1: TilKontraktTestData = {
                 nb: 'Ikke registrert på søkers adresse',
                 nn: 'Ikkje registrert på søkars adresse',
             },
-            'pdf.ombarnet.seksjonstittel': {
-                en: 'About {navn}',
-                nb: 'Om {navn}',
-                nn: 'Om {navn}',
-            },
-            'pdf.omdeg.seksjonstittel': {
-                en: 'About you',
-                nb: 'Om deg',
-                nn: 'Om deg',
-            },
-            'pdf.bosted.seksjonstittel': {
-                en: 'Place of residence',
-                nb: 'Bosted',
-                nn: 'Bustad',
-            },
+            'pdf.ombarnet.seksjonstittel': { en: 'About {navn}', nb: 'Om {navn}', nn: 'Om {navn}' },
+            'pdf.omdeg.seksjonstittel': { en: 'About you', nb: 'Om deg', nn: 'Om deg' },
+            'pdf.bosted.seksjonstittel': { en: 'Place of residence', nb: 'Bosted', nn: 'Bustad' },
             'pdf.ombarna.seksjonstittel': {
                 en: 'About your children',
                 nb: 'Om barna dine',
@@ -1044,11 +887,7 @@ export const testdata1: TilKontraktTestData = {
                 nb: 'Søker du barnetrygd for et spesielt tidsrom for {navn}?',
                 nn: 'Søker du barnetrygd for eit spesielt tidsrom for {navn}?',
             },
-            'pdf.søker.seksjonstittel': {
-                en: 'Applicant',
-                nb: 'Søker',
-                nn: 'Søkar',
-            },
+            'pdf.søker.seksjonstittel': { en: 'Applicant', nb: 'Søker', nn: 'Søkar' },
             'pdf.vedlegg.seksjonstittel': {
                 en: 'List of attachments',
                 nb: 'Liste over vedlegg',
@@ -1079,26 +918,24 @@ export const testdata1: TilKontraktTestData = {
                 nb: 'Tidligere samboer {x}',
                 nn: 'Tidlegare sambuar {x}',
             },
-            'felles.sivilstatus.kode.GIFT': {
-                en: 'Married',
-                nb: 'Gift',
-                nn: 'Gift',
+            'eøs-om-deg.sidetittel': {
+                en: 'Child benefit by the EEA-regulations - About you',
+                nb: 'Barnetrygd etter EØS-reglene - Om deg',
+                nn: 'Barnetrygd etter EØS-reglane - Om deg',
             },
+            'eøs-om-barn.sidetittel': {
+                en: 'Child benefit by the EEA-regulations - About {barn}',
+                nb: 'Barnetrygd etter EØS-reglene - Om {barn}',
+                nn: 'Barnetrygd etter EØS-reglane - Om {barn}',
+            },
+            'felles.sivilstatus.kode.GIFT': { en: 'Married', nb: 'Gift', nn: 'Gift' },
             'felles.sivilstatus.kode.ENKE_ELLER_ENKEMANN': {
                 en: 'Widow(er)',
                 nb: 'Enke/Enkemann',
                 nn: 'Enke/enkemann',
             },
-            'felles.sivilstatus.kode.SKILT': {
-                en: 'Divorced',
-                nb: 'Skilt',
-                nn: 'Skilt',
-            },
-            'felles.sivilstatus.kode.SEPARERT': {
-                en: 'Separated',
-                nb: 'Separert',
-                nn: 'Separert',
-            },
+            'felles.sivilstatus.kode.SKILT': { en: 'Divorced', nb: 'Skilt', nn: 'Skilt' },
+            'felles.sivilstatus.kode.SEPARERT': { en: 'Separated', nb: 'Separert', nn: 'Separert' },
             'felles.sivilstatus.kode.REGISTRERT_PARTNER': {
                 en: 'Registered partner',
                 nb: 'Registrert partner',
@@ -1119,26 +956,14 @@ export const testdata1: TilKontraktTestData = {
                 nb: 'Gjenlevende partner',
                 nn: 'Attlevande partner',
             },
-            'felles.sivilstatus.kode.UGIFT': {
-                en: 'Unmarried',
-                nb: 'Ugift',
-                nn: 'Ugift',
-            },
+            'felles.sivilstatus.kode.UGIFT': { en: 'Unmarried', nb: 'Ugift', nn: 'Ugift' },
             'felles.sivilstatus.kode.UOPPGITT': {
                 en: 'Not specified',
                 nb: 'Ikke oppgitt',
                 nn: 'Ikkje oppgitt',
             },
-            'felles.svaralternativ.ja': {
-                en: 'Yes',
-                nb: 'Ja',
-                nn: 'Ja',
-            },
-            'felles.svaralternativ.nei': {
-                en: 'No',
-                nb: 'Nei',
-                nn: 'Nei',
-            },
+            'felles.svaralternativ.ja': { en: 'Yes', nb: 'Ja', nn: 'Ja' },
+            'felles.svaralternativ.nei': { en: 'No', nb: 'Nei', nn: 'Nei' },
             'felles.svaralternativ.vetikke': {
                 en: "Don't know",
                 nb: 'Jeg vet ikke',

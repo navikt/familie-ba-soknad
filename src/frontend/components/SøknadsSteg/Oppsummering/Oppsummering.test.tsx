@@ -55,27 +55,27 @@ describe('Oppsummering', () => {
                     erFosterbarn: { id: OmBarnaDineSpørsmålId.hvemErFosterbarn, svar: ESvar.JA },
                     andreForelder: null,
                     utenlandsperioder: [],
+                    triggetEøs: false,
                 },
             ],
         });
         spyOnUseApp(søknad);
         const { mockedHistoryArray } = mockHistory(['/oppsummering']);
 
-        const { findByText, getAllByRole } = render(
+        const { findByText, getByText } = render(
             <TestProvidere>
                 <Oppsummering />
             </TestProvidere>
         );
         const gåVidere = await findByText('felles.navigasjon.gå-videre');
 
-        act(() => gåVidere.click());
+        await act(() => gåVidere.click());
 
-        const omDegFeil = getAllByRole('alert')[0];
+        const feilmelding = getByText('omdeg.oppholdtsammenhengende.feilmelding');
         expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({
             hash: 'omdeg-feil',
         });
-        expect(omDegFeil).toBeInTheDocument();
-        expect(omDegFeil).toBeVisible();
+        expect(feilmelding).toBeInTheDocument();
     }, 10000);
 
     it('går til dokumentasjon med gyldig søknad', async () => {
@@ -90,10 +90,10 @@ describe('Oppsummering', () => {
         );
         const gåVidere = await findByText('felles.navigasjon.gå-videre');
 
-        act(() => gåVidere.click());
+        await act(() => gåVidere.click());
 
         expect(queryAllByRole('alert').length).toBe(0);
-        waitFor(() =>
+        await waitFor(() =>
             expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/dokumentasjon')
         );
     });

@@ -1,12 +1,12 @@
 import { RequestHandler } from 'express';
-import { createRemoteJWKSet } from 'jose/jwks/remote';
-import { jwtVerify } from 'jose/jwt/verify';
 import {
+    jwtVerify,
     FlattenedJWSInput,
-    GetKeyFunction,
     JWSHeaderParameters,
     JWTVerifyResult,
-} from 'jose/types';
+    createRemoteJWKSet,
+} from 'jose';
+import { GetKeyFunction } from 'jose/dist/types/types';
 import { Client, Issuer } from 'openid-client';
 
 let issuer: Issuer<Client>;

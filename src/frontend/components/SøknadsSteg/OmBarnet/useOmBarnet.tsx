@@ -5,14 +5,12 @@ import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/famili
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
 import { usePerioder } from '../../../hooks/usePerioder';
 import {
@@ -32,6 +30,7 @@ import {
     IUtenlandsperiode,
 } from '../../../typer/perioder';
 import { IIdNummer } from '../../../typer/person';
+import { PersonType } from '../../../typer/personType';
 import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
@@ -53,7 +52,10 @@ import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
+import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
+import { BarnetrygdperiodeSpørsmålId } from '../../Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
+import { PensjonsperiodeSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { idNummerLand } from '../EøsSteg/idnummerUtils';
@@ -82,7 +84,6 @@ export const useOmBarnet = (
     const { søknad, settSøknad, erUtvidet } = useApp();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
 
-    const { toggles } = useFeatureToggles();
     const gjeldendeBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
 
     if (!gjeldendeBarn) {
@@ -234,9 +235,7 @@ export const useOmBarnet = (
     const pågåendeSøknadFraAnnetEøsLand = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
         feilmeldingSpråkId: 'ombarnet.pågåendesøknad.feilmelding',
-        skalSkjules:
-            !toggles.EØS_KOMPLETT ||
-            !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
+        skalSkjules: !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });
 
     const pågåendeSøknadHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
@@ -244,16 +243,6 @@ export const useOmBarnet = (
         feilmeldingSpråkId: 'ombarnet.hvilketlandsøkt.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: pågåendeSøknadFraAnnetEøsLand,
-        skalFeltetVises: toggles.EØS_KOMPLETT,
-    });
-
-    /*--- MOTTAR BARNETRYGD FRA ANNET EØSLAND ---*/
-
-    const barnetrygdFraEøslandHvilketLand = useLanddropdownFelt({
-        søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
-        feilmeldingSpråkId: 'ombarnet.barnetrygd-eøs.land.feilmelding',
-        skalFeltetVises:
-            skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland) && !toggles.EØS_KOMPLETT,
     });
 
     /*--- EØS SPØRSMÅL MOTTAR BARNETRYGD ---*/
@@ -261,29 +250,27 @@ export const useOmBarnet = (
     const mottarEllerMottokEøsBarnetrygd = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
         feilmeldingSpråkId: 'ombarnet.fårellerharsøktbarnetrygdeøs.feilmelding',
-        skalSkjules:
-            !toggles.EØS_KOMPLETT ||
-            !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
+        skalSkjules: !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });
 
     const {
         fjernPeriode: fjernBarnetrygdsperiode,
         leggTilPeriode: leggTilBarnetrygdsperiode,
         registrertePerioder: registrerteEøsBarnetrygdsperioder,
-    } = usePerioder<IEøsBarnetrygdsperiode>(
-        gjeldendeBarn.eøsBarnetrygdsperioder,
-        { mottarEllerMottokEøsBarnetrygd },
-        avhengigheter =>
-            avhengigheter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-
-        (felt, avhengigheter) => {
+    } = usePerioder<IEøsBarnetrygdsperiode>({
+        feltId: `${BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs}-${barnetsUuid}`,
+        verdi: gjeldendeBarn.eøsBarnetrygdsperioder,
+        avhengigheter: { mottarEllerMottokEøsBarnetrygd },
+        skalFeltetVises: avhengigheter =>
+            avhengigheter.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA,
+        valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.NEI ||
                 (avhengigheter?.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />);
-        }
-    );
+        },
+    });
 
     /*--- ANDRE FORELDER ---*/
     const andreForelder = gjeldendeBarn.andreForelder;
@@ -311,9 +298,10 @@ export const useOmBarnet = (
             andreBarnSomErFyltUt.length > 0,
     });
 
-    const andreForelderNavnUkjent = useFelt<ESvar>({
-        verdi: formaterVerdiForCheckbox(andreForelder?.[andreForelderDataKeySpørsmål.navn].svar),
-        feltId: OmBarnetSpørsmålsId.andreForelderNavnUkjent,
+    const andreForelderKanIkkeGiOpplysninger = useFelt<ESvar>({
+        verdi:
+            andreForelder?.[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger].svar ?? ESvar.NEI,
+        feltId: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
         avhengigheter: { sammeForelderSomAnnetBarn },
         skalFeltetVises: avhengigheter =>
             !!andreForelder &&
@@ -323,7 +311,7 @@ export const useOmBarnet = (
     });
     const andreForelderNavn = useInputFeltMedUkjent({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.navn] ?? null,
-        avhengighet: andreForelderNavnUkjent,
+        avhengighet: andreForelderKanIkkeGiOpplysninger,
         feilmeldingSpråkId: 'ombarnet.andre-forelder.navn.feilmelding',
         skalVises:
             !!andreForelder &&
@@ -341,11 +329,14 @@ export const useOmBarnet = (
                 (!avhengigheter.sammeForelderSomAnnetBarn.erSynlig ||
                     avhengigheter.sammeForelderSomAnnetBarn.verdi ===
                         AlternativtSvarForInput.ANNEN_FORELDER) &&
-                avhengigheter.andreForelderNavnUkjent &&
-                avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
+                avhengigheter.andreForelderKanIkkeGiOpplysninger &&
+                avhengigheter.andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI
             );
         },
-        avhengigheter: { andreForelderNavnUkjent, sammeForelderSomAnnetBarn },
+        avhengigheter: {
+            andreForelderKanIkkeGiOpplysninger,
+            sammeForelderSomAnnetBarn,
+        },
         nullstillVedAvhengighetEndring: false,
     });
 
@@ -358,7 +349,7 @@ export const useOmBarnet = (
             !!andreForelder &&
             (!sammeForelderSomAnnetBarn.erSynlig ||
                 sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER) &&
-            andreForelderNavnUkjent.verdi === ESvar.NEI,
+            andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI,
     });
 
     const andreForelderFødselsdatoUkjent = useFelt<ESvar>({
@@ -372,10 +363,13 @@ export const useOmBarnet = (
                 avhengigheter.andreForelderFnrUkjent &&
                 avhengigheter.andreForelderFnrUkjent.erSynlig &&
                 avhengigheter.andreForelderFnrUkjent.verdi === ESvar.JA &&
-                avhengigheter.andreForelderNavnUkjent.verdi === ESvar.NEI
+                avhengigheter.andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI
             );
         },
-        avhengigheter: { andreForelderFnrUkjent, andreForelderNavnUkjent },
+        avhengigheter: {
+            andreForelderFnrUkjent,
+            andreForelderKanIkkeGiOpplysninger,
+        },
         nullstillVedAvhengighetEndring: false,
     });
     const andreForelderFødselsdato = useDatovelgerFeltMedUkjent({
@@ -388,7 +382,7 @@ export const useOmBarnet = (
         skalFeltetVises:
             andreForelderFnrUkjent.erSynlig &&
             andreForelderFnrUkjent.verdi === ESvar.JA &&
-            andreForelderNavnUkjent.verdi === ESvar.NEI,
+            andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI,
         nullstillVedAvhengighetEndring:
             sammeForelderSomAnnetBarn.verdi === null ||
             sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
@@ -406,47 +400,34 @@ export const useOmBarnet = (
                 hovedSpørsmål: andreForelderNavn,
             },
             andreForelderFnr:
-                andreForelderNavnUkjent.verdi === ESvar.NEI
+                andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI
                     ? {
                           hovedSpørsmål: andreForelderFnr,
                           tilhørendeFelter: [andreForelderFødselsdato],
                       }
                     : undefined,
         },
-        skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
+        skalSkjules: andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA,
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
-    });
-
-    const andreForelderArbeidUtlandetHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand],
-        feilmeldingSpråkId:
-            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
-                ? 'enkeenkemann.andreforelder-arbeidutland.land.feilmelding'
-                : 'ombarnet.andre-forelder.arbeid-utland.land.feilmelding',
-        avhengigSvarCondition: ESvar.JA,
-        avhengighet: andreForelderArbeidUtlandet,
-        nullstillVedAvhengighetEndring:
-            sammeForelderSomAnnetBarn.verdi === null ||
-            sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
-        skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
     const {
         fjernPeriode: fjernArbeidsperiode,
         leggTilPeriode: leggTilArbeidsperiode,
         registrertePerioder: andreForelderArbeidsperioderUtland,
-    } = usePerioder<IArbeidsperiode>(
-        andreForelder?.arbeidsperioderUtland ?? [],
-        { andreForelderArbeidUtlandet },
-        avhengigheter =>
-            avhengigheter.andreForelderArbeidUtlandet.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-        (felt, avhengigheter) => {
+    } = usePerioder<IArbeidsperiode>({
+        feltId: `${ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland}-${PersonType.AndreForelder}-${barnetsUuid}`,
+        verdi: andreForelder?.arbeidsperioderUtland ?? [],
+        avhengigheter: { andreForelderArbeidUtlandet },
+        skalFeltetVises: avhengigheter =>
+            avhengigheter.andreForelderArbeidUtlandet.verdi === ESvar.JA,
+        valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
-        }
-    );
+        },
+    });
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonUtland],
@@ -459,48 +440,34 @@ export const useOmBarnet = (
                 hovedSpørsmål: andreForelderNavn,
             },
             andreForelderFnr:
-                andreForelderNavnUkjent.verdi === ESvar.NEI
+                andreForelderKanIkkeGiOpplysninger.verdi === ESvar.NEI
                     ? {
                           hovedSpørsmål: andreForelderFnr,
                           tilhørendeFelter: [andreForelderFødselsdato],
                       }
                     : undefined,
         },
-        skalSkjules: andreForelderNavnUkjent.verdi === ESvar.JA,
+        skalSkjules: andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA,
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
-    });
-
-    const andreForelderPensjonHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
-        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand],
-        feilmeldingSpråkId:
-            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
-                ? 'enkeenkemann.andre-forelder.utenlandspensjon.land.feilmelding'
-                : 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding',
-        avhengigSvarCondition: ESvar.JA,
-        avhengighet: andreForelderPensjonUtland,
-        nullstillVedAvhengighetEndring:
-            sammeForelderSomAnnetBarn.verdi === null ||
-            sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER,
-        skalFeltetVises: !toggles.EØS_KOMPLETT,
     });
 
     const {
         fjernPeriode: fjernPensjonsperiode,
         leggTilPeriode: leggTilPensjonsperiode,
         registrertePerioder: andreForelderPensjonsperioderUtland,
-    } = usePerioder<IPensjonsperiode>(
-        andreForelder?.pensjonsperioderUtland ?? [],
-        { andreForelderPensjonUtland },
-        avhengigheter =>
-            avhengigheter.andreForelderPensjonUtland.verdi === ESvar.JA && toggles.EØS_KOMPLETT,
-
-        (felt, avhengigheter) => {
+    } = usePerioder<IPensjonsperiode>({
+        feltId: `${PensjonsperiodeSpørsmålId.pensjonsperioderUtland}-${PersonType.AndreForelder}-${barnetsUuid}`,
+        verdi: andreForelder?.pensjonsperioderUtland ?? [],
+        avhengigheter: { andreForelderPensjonUtland },
+        skalFeltetVises: avhengigheter =>
+            avhengigheter.andreForelderPensjonUtland.verdi === ESvar.JA,
+        valideringsfunksjon: (felt, avhengigheter) => {
             return avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
-        }
-    );
+        },
+    });
 
     /*--- BOSTED ---*/
     const borFastMedSøker = useJaNeiSpmFelt({
@@ -647,20 +614,17 @@ export const useOmBarnet = (
             planleggerÅBoINorge12Mnd,
             pågåendeSøknadFraAnnetEøsLand,
             pågåendeSøknadHvilketLand,
-            barnetrygdFraEøslandHvilketLand,
             mottarEllerMottokEøsBarnetrygd,
             registrerteEøsBarnetrygdsperioder,
             andreForelderNavn,
-            andreForelderNavnUkjent,
+            andreForelderKanIkkeGiOpplysninger,
             andreForelderFnr,
             andreForelderFnrUkjent,
             andreForelderFødselsdato,
             andreForelderFødselsdatoUkjent,
             andreForelderArbeidUtlandet,
-            andreForelderArbeidUtlandetHvilketLand,
             andreForelderArbeidsperioderUtland,
             andreForelderPensjonUtland,
-            andreForelderPensjonHvilketLand,
             andreForelderPensjonsperioderUtland,
             borFastMedSøker,
             skriftligAvtaleOmDeltBosted,
@@ -724,12 +688,6 @@ export const useOmBarnet = (
     const annetBarnMedSammeForelder = (): IBarnMedISøknad | undefined =>
         andreBarnSomErFyltUt.find(barn => barn.id === sammeForelderSomAnnetBarn.verdi);
 
-    const kanIkkeGiOpplysningerOmAndreForelder = (): boolean =>
-        (annetBarnMedSammeForelder()?.andreForelder?.navn ??
-            trimWhiteSpace(
-                svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
-            )) === AlternativtSvarForInput.UKJENT;
-
     const genererOppdatertAndreForelder = (andreForelder: IAndreForelder): IAndreForelder => {
         const barnMedSammeForelder = annetBarnMedSammeForelder();
         const andreForelderErDød = gjeldendeBarn.andreForelderErDød.svar === ESvar.JA;
@@ -742,15 +700,12 @@ export const useOmBarnet = (
                     svar: skriftligAvtaleOmDeltBosted.verdi,
                 },
             };
-        } else if (kanIkkeGiOpplysningerOmAndreForelder()) {
+        } else if (andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA) {
             return {
                 ...genererInitiellAndreForelder(null, andreForelderErDød),
-                kanIkkeGiOpplysninger: true,
-                navn: {
-                    ...andreForelder[andreForelderDataKeySpørsmål.navn],
-                    svar: trimWhiteSpace(
-                        svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
-                    ),
+                kanIkkeGiOpplysninger: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger],
+                    svar: ESvar.JA,
                 },
                 skriftligAvtaleOmDeltBosted: {
                     ...andreForelder.skriftligAvtaleOmDeltBosted,
@@ -773,13 +728,14 @@ export const useOmBarnet = (
         } else {
             return {
                 ...andreForelder,
-                kanIkkeGiOpplysninger: false,
+                kanIkkeGiOpplysninger: {
+                    ...andreForelder[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger],
+                    svar: ESvar.NEI,
+                },
                 idNummer: filtrerteRelevanteIdNummerForAndreForelder(andreForelder),
                 navn: {
                     ...andreForelder[andreForelderDataKeySpørsmål.navn],
-                    svar: trimWhiteSpace(
-                        svarForSpørsmålMedUkjent(andreForelderNavnUkjent, andreForelderNavn)
-                    ),
+                    svar: trimWhiteSpace(andreForelderNavn.verdi),
                 },
                 fnr: {
                     ...andreForelder[andreForelderDataKeySpørsmål.fnr],
@@ -796,10 +752,6 @@ export const useOmBarnet = (
                     ...andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet],
                     svar: andreForelderArbeidUtlandet.verdi,
                 },
-                arbeidUtlandetHvilketLand: {
-                    ...andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand],
-                    svar: andreForelderArbeidUtlandetHvilketLand.verdi,
-                },
                 arbeidsperioderUtland:
                     andreForelderArbeidUtlandet.verdi === ESvar.JA
                         ? andreForelderArbeidsperioderUtland.verdi
@@ -807,10 +759,6 @@ export const useOmBarnet = (
                 pensjonUtland: {
                     ...andreForelder[andreForelderDataKeySpørsmål.pensjonUtland],
                     svar: andreForelderPensjonUtland.verdi,
-                },
-                pensjonHvilketLand: {
-                    ...andreForelder[andreForelderDataKeySpørsmål.pensjonHvilketLand],
-                    svar: andreForelderPensjonHvilketLand.verdi,
                 },
                 pensjonsperioderUtland:
                     andreForelderPensjonUtland.verdi === ESvar.JA
@@ -913,10 +861,6 @@ export const useOmBarnet = (
                 ...barn.pågåendeSøknadHvilketLand,
                 svar: pågåendeSøknadHvilketLand.verdi,
             },
-            barnetrygdFraEøslandHvilketLand: {
-                ...barn.barnetrygdFraEøslandHvilketLand,
-                svar: barnetrygdFraEøslandHvilketLand.verdi,
-            },
             mottarEllerMottokEøsBarnetrygd: {
                 ...barn.mottarEllerMottokEøsBarnetrygd,
                 svar: mottarEllerMottokEøsBarnetrygd.verdi,
@@ -936,7 +880,7 @@ export const useOmBarnet = (
                 svar:
                     barn.erFosterbarn.svar === ESvar.JA ||
                     (barn.borMedAndreForelder.svar === ESvar.JA &&
-                        kanIkkeGiOpplysningerOmAndreForelder())
+                        andreForelderKanIkkeGiOpplysninger.verdi == ESvar.JA)
                         ? barn.adresse.svar
                         : '',
             },
@@ -982,13 +926,7 @@ export const useOmBarnet = (
                 }
             });
         }
-    }, [
-        andreForelderArbeidUtlandet,
-        andreForelderArbeidUtlandetHvilketLand,
-        andreForelderPensjonUtland,
-        andreForelderPensjonHvilketLand,
-        utenlandsperioder,
-    ]);
+    }, [andreForelderArbeidUtlandet, andreForelderPensjonUtland, utenlandsperioder]);
 
     const oppdaterSøknad = () => {
         const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] =

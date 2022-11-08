@@ -6,6 +6,5 @@ export interface IMellomlagretBarnetrygd {
     søknad: ISøknad;
     sisteUtfylteStegIndex: number;
     modellVersjon: number;
-    eøsToggleErPå: boolean;
     locale: LocaleType;
 }

@@ -4,11 +4,12 @@ import { useIntl } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
-import KnappBase from 'nav-frontend-knapper';
-import Lenke from 'nav-frontend-lenker';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
+import { Button } from '@navikt/ds-react';
+
+import EksternLenke from '../EksternLenke/EksternLenke';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const StyledModal = styled(Modal)`
@@ -30,7 +31,7 @@ const Flex = styled.div`
     align-items: center;
     gap: 1rem;
 `;
-const StyledLenke = styled(Lenke)`
+const StyledEksternLenke = styled(EksternLenke)`
     margin-right: 1rem;
 `;
 
@@ -62,12 +63,14 @@ const BlokkerTilbakeKnappModal = () => {
                         <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tekst'} />
                     </Normaltekst>
                     <Flex>
-                        <StyledLenke href={'https://www.nav.no/person/dittnav/'}>
-                            <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'} />
-                        </StyledLenke>
-                        <KnappBase onClick={håndterAvbryt}>
+                        <StyledEksternLenke
+                            lenkeSpråkId={'kvittering.dinesaker.lenke'}
+                            lenkeTekstSpråkId={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'}
+                            target="_blank"
+                        />
+                        <Button onClick={håndterAvbryt}>
                             <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.avbrytKnapp'} />
-                        </KnappBase>
+                        </Button>
                     </Flex>
                 </Wrapper>
             </StyledModal>

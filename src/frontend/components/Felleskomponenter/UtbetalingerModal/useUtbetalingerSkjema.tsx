@@ -6,44 +6,34 @@ import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjen
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { PersonType } from '../../../typer/personType';
 import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
 import { dagensDato, erSammeDatoSomDagensDato, gårsdagensDato } from '../../../utils/dato';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
-import { utbetalingerFeilmelding } from './språkUtils';
+import { fårUtbetalingNåFeilmelding, utbetalingslandFeilmelding } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 
-export const useUtbetalingerSkjema = (andreForelderData?: {
-    barn: IBarnMedISøknad;
-    erDød: boolean;
-}) => {
-    const gjelderAndreForelder = !!andreForelderData;
-    const barn = andreForelderData?.barn;
-    const andreForelderErDød = !!andreForelderData?.erDød;
+export interface IUseUtbetalingerSkjemaParams {
+    personType: PersonType;
+    barn?: IBarnMedISøknad;
+    erDød?: boolean;
+}
+
+export const useUtbetalingerSkjema = (personType, barn, erDød) => {
+    const andreForelderErDød = personType === PersonType.AndreForelder && erDød;
 
     const fårUtbetalingNå = useJaNeiSpmFelt({
         søknadsfelt: { id: UtbetalingerSpørsmålId.fårUtbetalingNå, svar: null },
-        feilmeldingSpråkId: utbetalingerFeilmelding(gjelderAndreForelder),
+        feilmeldingSpråkId: fårUtbetalingNåFeilmelding(personType),
         skalSkjules: andreForelderErDød,
         feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
     });
 
     const periodenErAvsluttet = fårUtbetalingNå.verdi === ESvar.NEI || andreForelderErDød;
 
-    const feilmeldingForLand = () => {
-        if (periodenErAvsluttet) {
-            return gjelderAndreForelder
-                ? 'modal.andreforelder-utbetalingerland-fikk.feilmelding'
-                : 'modal.utbetalingsland-fikk-søker.feilmeldinger';
-        } else {
-            return gjelderAndreForelder
-                ? 'modal.andreforelder-utbetalingerland-får.feilmelding'
-                : 'modal.utbetalingsland-får-søker.feilmelding';
-        }
-    };
-
     const utbetalingLand = useLanddropdownFelt({
         søknadsfelt: { id: UtbetalingerSpørsmålId.utbetalingLand, svar: '' },
-        feilmeldingSpråkId: feilmeldingForLand(),
+        feilmeldingSpråkId: utbetalingslandFeilmelding(personType, periodenErAvsluttet),
         skalFeltetVises:
             fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         nullstillVedAvhengighetEndring: true,

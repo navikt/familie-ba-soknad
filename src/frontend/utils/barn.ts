@@ -2,381 +2,122 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { IntlShape } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { idNummerLandMedPeriodeType } from '../components/SøknadsSteg/EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import {
-    andreForelderDataKeySpørsmål,
-    barnDataKeySpørsmål,
-    IAndreForelder,
-    IBarnMedISøknad,
-    IOmsorgsperson,
-} from '../typer/barn';
+import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../typer/barn';
 import { tomString } from '../typer/common';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
-import { IOmBarnaDineFeltTyper } from '../typer/skjema';
 import { ISøknad } from '../typer/søknad';
 import { formaterFnr } from './visning';
-
-export const genererSvarForSpørsmålBarn = (barn: IBarnMedISøknad, felt: Felt<string[]>): ESvar =>
-    felt.verdi.includes(barn.id) ? ESvar.JA : ESvar.NEI;
-
-export const genererSvarForOppfølgningspørsmålBarn = (
-    svarPåGrunnSpørsmål,
-    søknadsfelt,
-    nullstillingsVerdi
-) => {
-    return svarPåGrunnSpørsmål === ESvar.JA ? søknadsfelt.svar : nullstillingsVerdi;
-};
 
 export const genererInitiellAndreForelder = (
     andreForelder: IAndreForelder | null,
     andreForelderErDød: boolean
 ): IAndreForelder => {
     return {
-        kanIkkeGiOpplysninger: false,
+        kanIkkeGiOpplysninger: {
+            id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
+            svar: andreForelder?.kanIkkeGiOpplysninger.svar ?? ESvar.NEI,
+        },
         arbeidsperioderNorge: andreForelder?.arbeidsperioderNorge ?? [],
         arbeidsperioderUtland: andreForelder?.arbeidsperioderUtland ?? [],
         andreUtbetalingsperioder: andreForelder?.andreUtbetalingsperioder ?? [],
         pensjonsperioderNorge: andreForelder?.pensjonsperioderNorge ?? [],
         pensjonsperioderUtland: andreForelder?.pensjonsperioderUtland ?? [],
+        eøsBarnetrygdsperioder: andreForelder?.eøsBarnetrygdsperioder ?? [],
         idNummer: andreForelder?.idNummer ?? [],
-        [andreForelderDataKeySpørsmål.navn]: {
+        navn: {
             id: OmBarnetSpørsmålsId.andreForelderNavn,
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.navn].svar ?? '',
+            svar: andreForelder?.navn.svar ?? '',
         },
-        [andreForelderDataKeySpørsmål.fnr]: {
+        fnr: {
             id: OmBarnetSpørsmålsId.andreForelderFnr,
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.fnr].svar ?? '',
+            svar: andreForelder?.fnr.svar ?? '',
         },
-        [andreForelderDataKeySpørsmål.fødselsdato]: {
+        fødselsdato: {
             id: OmBarnetSpørsmålsId.andreForelderFødselsdato,
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.fødselsdato].svar ?? '',
+            svar: andreForelder?.fødselsdato.svar ?? '',
         },
-        [andreForelderDataKeySpørsmål.arbeidUtlandet]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandet].svar ?? null,
+        arbeidUtlandet: {
+            svar: andreForelder?.arbeidUtlandet.svar ?? null,
             id: andreForelderErDød
                 ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke
                 : OmBarnetSpørsmålsId.andreForelderArbeidUtlandet,
         },
-        [andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand]: {
-            svar:
-                andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandetHvilketLand].svar ?? '',
-            id: andreForelderErDød
-                ? OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLandEnke
-                : OmBarnetSpørsmålsId.andreForelderArbeidUtlandetHvilketLand,
-        },
-        [andreForelderDataKeySpørsmål.pensjonUtland]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonUtland].svar ?? null,
+        pensjonUtland: {
+            svar: andreForelder?.pensjonUtland.svar ?? null,
             id: andreForelderErDød
                 ? OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke
                 : OmBarnetSpørsmålsId.andreForelderPensjonUtland,
         },
-        [andreForelderDataKeySpørsmål.pensjonHvilketLand]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonHvilketLand].svar ?? '',
-            id: andreForelderErDød
-                ? OmBarnetSpørsmålsId.andreForelderPensjonHvilketLandEnke
-                : OmBarnetSpørsmålsId.andreForelderPensjonHvilketLand,
-        },
-        [andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]: {
+        skriftligAvtaleOmDeltBosted: {
             id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
             svar:
                 andreForelder && !andreForelderErDød
-                    ? andreForelder[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar
+                    ? andreForelder.skriftligAvtaleOmDeltBosted.svar
                     : null,
         },
-        [andreForelderDataKeySpørsmål.arbeidNorge]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.arbeidNorge].svar ?? null,
+        arbeidNorge: {
+            svar: andreForelder?.arbeidNorge.svar ?? null,
             id: andreForelderErDød
                 ? EøsBarnSpørsmålId.andreForelderArbeidNorgeEnke
                 : EøsBarnSpørsmålId.andreForelderArbeidNorge,
         },
-        [andreForelderDataKeySpørsmål.pensjonNorge]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.pensjonNorge].svar ?? null,
+        pensjonNorge: {
+            svar: andreForelder?.pensjonNorge.svar ?? null,
             id: andreForelderErDød
                 ? EøsBarnSpørsmålId.andreForelderPensjonNorgeEnke
                 : EøsBarnSpørsmålId.andreForelderPensjonNorge,
         },
-        [andreForelderDataKeySpørsmål.andreUtbetalinger]: {
-            svar: andreForelder?.[andreForelderDataKeySpørsmål.andreUtbetalinger].svar ?? null,
+        andreUtbetalinger: {
+            svar: andreForelder?.andreUtbetalinger.svar ?? null,
             id: andreForelderErDød
                 ? EøsBarnSpørsmålId.andreForelderAndreUtbetalingerEnke
                 : EøsBarnSpørsmålId.andreForelderAndreUtbetalinger,
         },
-        [andreForelderDataKeySpørsmål.adresse]: {
+        adresse: {
             svar: andreForelder?.adresse.svar ?? '',
             id: EøsBarnSpørsmålId.andreForelderAdresse,
         },
+        pågåendeSøknadFraAnnetEøsLand: {
+            svar:
+                andreForelder?.pågåendeSøknadFraAnnetEøsLand.svar && !andreForelderErDød
+                    ? andreForelder?.pågåendeSøknadFraAnnetEøsLand.svar
+                    : null,
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand,
+        },
+        pågåendeSøknadHvilketLand: {
+            svar:
+                andreForelder?.pågåendeSøknadHvilketLand.svar && !andreForelderErDød
+                    ? andreForelder?.pågåendeSøknadHvilketLand.svar
+                    : '',
+            id: EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand,
+        },
+        barnetrygdFraEøs: {
+            svar: andreForelder?.barnetrygdFraEøs.svar ?? null,
+            id: andreForelderErDød
+                ? EøsBarnSpørsmålId.andreForelderBarnetrygdGjenlevende
+                : EøsBarnSpørsmålId.andreForelderBarnetrygd,
+        },
         utvidet: {
             ...andreForelder?.utvidet,
-            [andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder]: {
+            søkerHarBoddMedAndreForelder: {
                 id: OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder,
-                svar:
-                    andreForelder?.utvidet[
-                        andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder
-                    ].svar ?? null,
+                svar: andreForelder?.utvidet.søkerHarBoddMedAndreForelder.svar ?? null,
             },
-            [andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]: {
+            søkerFlyttetFraAndreForelderDato: {
                 id: OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato,
                 svar:
                     andreForelder && !andreForelderErDød
-                        ? andreForelder.utvidet[
-                              andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
-                          ].svar
+                        ? andreForelder.utvidet.søkerFlyttetFraAndreForelderDato.svar
                         : '',
             },
         },
     };
-};
-
-export const genererOppdaterteBarn = (
-    søknad: ISøknad,
-    skjema: ISkjema<IOmBarnaDineFeltTyper, string>,
-    skalTriggeEøsForBarn: (barn: IBarnMedISøknad) => boolean,
-    erEøsLand: (land: Alpha3Code | '') => boolean
-): IBarnMedISøknad[] => {
-    return søknad.barnInkludertISøknaden.map((barn): IBarnMedISøknad => {
-        const oppholderSegIInstitusjon: ESvar = genererSvarForSpørsmålBarn(
-            barn,
-            skjema.felter.hvemOppholderSegIInstitusjon
-        );
-
-        const boddMindreEnn12MndINorge: ESvar = genererSvarForSpørsmålBarn(
-            barn,
-            skjema.felter.hvemTolvMndSammenhengendeINorge
-        );
-
-        const mottarBarnetrygdFraAnnetEøsland: ESvar = genererSvarForSpørsmålBarn(
-            barn,
-            skjema.felter.hvemBarnetrygdFraAnnetEøsland
-        );
-        const andreForelderErDød: ESvar = genererSvarForSpørsmålBarn(
-            barn,
-            skjema.felter.hvemAvdødPartner
-        );
-
-        const erFosterbarn: ESvar = genererSvarForSpørsmålBarn(
-            barn,
-            skjema.felter.hvemErFosterbarn
-        );
-
-        const utenlandsperioder =
-            boddMindreEnn12MndINorge === ESvar.JA ? barn.utenlandsperioder : [];
-        const eøsBarnetrygdsperioder =
-            mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [];
-
-        const pågåendeSøknadFraAnnetEøsLand: ESvar | null = genererSvarForOppfølgningspørsmålBarn(
-            mottarBarnetrygdFraAnnetEøsland,
-            barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
-            null
-        );
-
-        const pågåendeSøknadHvilketLand: Alpha3Code | '' = genererSvarForOppfølgningspørsmålBarn(
-            mottarBarnetrygdFraAnnetEøsland,
-            barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
-            ''
-        );
-
-        const borMedAnnenForelderErIkkeRelevant = () =>
-            erFosterbarn === ESvar.JA ||
-            oppholderSegIInstitusjon === ESvar.JA ||
-            andreForelderErDød === ESvar.JA;
-
-        const borMedAndreForelder = borMedAnnenForelderErIkkeRelevant()
-            ? null
-            : barn.borMedAndreForelder.svar;
-
-        const borMedOmsorgsperson: ESvar | null = skalViseBorMedOmsorgsperson(
-            borMedAndreForelder,
-            barn.borFastMedSøker.svar,
-            oppholderSegIInstitusjon,
-            andreForelderErDød,
-            erFosterbarn
-        )
-            ? barn[barnDataKeySpørsmål.borMedOmsorgsperson].svar
-            : null;
-
-        const omsorgsperson: IOmsorgsperson | null =
-            barn.omsorgsperson && borMedOmsorgsperson === ESvar.JA
-                ? {
-                      ...barn.omsorgsperson,
-                      ...(erFosterbarn === ESvar.JA && {
-                          slektsforhold: { ...barn.omsorgsperson?.slektsforhold, svar: '' },
-                          slektsforholdSpesifisering: {
-                              ...barn.omsorgsperson?.slektsforholdSpesifisering,
-                              svar: '',
-                          },
-                      }),
-                  }
-                : null;
-
-        const oppdatertBarn = {
-            ...barn,
-            idNummer: filtrerteRelevanteIdNummerForBarn(
-                { eøsBarnetrygdsperioder, utenlandsperioder },
-                pågåendeSøknadFraAnnetEøsLand,
-                pågåendeSøknadHvilketLand,
-                barn,
-                erEøsLand
-            ),
-            utenlandsperioder,
-            eøsBarnetrygdsperioder,
-            andreForelder:
-                erFosterbarn === ESvar.JA
-                    ? null
-                    : genererInitiellAndreForelder(
-                          barn.andreForelder,
-                          andreForelderErDød === ESvar.JA
-                      ),
-            omsorgsperson,
-            [barnDataKeySpørsmål.borMedAndreForelder]: {
-                ...barn[barnDataKeySpørsmål.borMedAndreForelder],
-                svar: borMedAndreForelder,
-            },
-            [barnDataKeySpørsmål.søkersSlektsforhold]: {
-                id: EøsBarnSpørsmålId.søkersSlektsforhold,
-                svar: erFosterbarn === ESvar.JA ? '' : barn.søkersSlektsforhold.svar,
-            },
-            [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: {
-                id: EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering,
-                svar: erFosterbarn === ESvar.JA ? '' : barn.søkersSlektsforholdSpesifisering.svar,
-            },
-            [barnDataKeySpørsmål.borMedOmsorgsperson]: {
-                ...barn[barnDataKeySpørsmål.borMedOmsorgsperson],
-                svar: borMedOmsorgsperson,
-            },
-            [barnDataKeySpørsmål.erFosterbarn]: {
-                ...barn[barnDataKeySpørsmål.erFosterbarn],
-                svar: erFosterbarn,
-            },
-            [barnDataKeySpørsmål.erAsylsøker]: {
-                ...barn[barnDataKeySpørsmål.erAsylsøker],
-                svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErSøktAsylFor),
-            },
-            [barnDataKeySpørsmål.erAdoptertFraUtland]: {
-                ...barn[barnDataKeySpørsmål.erAdoptertFraUtland],
-                svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErAdoptertFraUtland),
-            },
-            [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
-                ...barn[barnDataKeySpørsmål.oppholderSegIInstitusjon],
-                svar: oppholderSegIInstitusjon,
-            },
-            [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: {
-                ...barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge],
-                svar: boddMindreEnn12MndINorge,
-            },
-            [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
-                ...barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland],
-                svar: mottarBarnetrygdFraAnnetEøsland,
-            },
-            [barnDataKeySpørsmål.andreForelderErDød]: {
-                ...barn[barnDataKeySpørsmål.andreForelderErDød],
-                svar: andreForelderErDød,
-            },
-            [barnDataKeySpørsmål.institusjonIUtland]: {
-                ...barn[barnDataKeySpørsmål.institusjonIUtland],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    oppholderSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonIUtland],
-                    ESvar.NEI
-                ),
-            },
-            [barnDataKeySpørsmål.institusjonsnavn]: {
-                ...barn[barnDataKeySpørsmål.institusjonsnavn],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    oppholderSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonsnavn],
-                    ''
-                ),
-            },
-            [barnDataKeySpørsmål.institusjonsadresse]: {
-                ...barn[barnDataKeySpørsmål.institusjonsadresse],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    oppholderSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonsadresse],
-                    ''
-                ),
-            },
-            [barnDataKeySpørsmål.institusjonspostnummer]: {
-                ...barn[barnDataKeySpørsmål.institusjonspostnummer],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    oppholderSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonspostnummer],
-                    ''
-                ),
-            },
-            [barnDataKeySpørsmål.institusjonOppholdStartdato]: {
-                ...barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    oppholderSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonOppholdStartdato],
-                    ''
-                ),
-            },
-            [barnDataKeySpørsmål.institusjonOppholdSluttdato]: {
-                ...barn[barnDataKeySpørsmål.institusjonOppholdSluttdato],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    oppholderSegIInstitusjon,
-                    barn[barnDataKeySpørsmål.institusjonOppholdSluttdato],
-                    ''
-                ),
-            },
-            [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: {
-                ...barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    boddMindreEnn12MndINorge,
-                    barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
-                    null
-                ),
-            },
-            [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
-                ...barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    mottarBarnetrygdFraAnnetEøsland,
-                    barn[barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand],
-                    ''
-                ),
-            },
-            [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
-                ...barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
-                svar: genererSvarForOppfølgningspørsmålBarn(
-                    mottarBarnetrygdFraAnnetEøsland,
-                    barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
-                    null
-                ),
-            },
-            [barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: {
-                ...barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
-                svar: pågåendeSøknadFraAnnetEøsLand,
-            },
-            [barnDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
-                ...barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
-                svar: pågåendeSøknadHvilketLand,
-            },
-            [barnDataKeySpørsmål.adresse]: {
-                ...barn[barnDataKeySpørsmål.adresse],
-                svar:
-                    erFosterbarn === ESvar.JA ||
-                    (barn.andreForelder?.kanIkkeGiOpplysninger &&
-                        barn.borMedAndreForelder.svar === ESvar.JA)
-                        ? barn.adresse.svar
-                        : '',
-            },
-        };
-
-        const barnTriggetEøs = skalTriggeEøsForBarn(oppdatertBarn);
-        const harEøsSteg = barnTriggetEøs || søknad.søker.triggetEøs;
-
-        return {
-            ...oppdatertBarn,
-            triggetEøs: barnTriggetEøs,
-            ...(!harEøsSteg && nullstilteEøsFelterForBarn(oppdatertBarn)),
-        };
-    });
 };
 
 export const hentAlder = (dato: string): string => {
@@ -474,10 +215,6 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand,
             svar: '',
         },
-        [barnDataKeySpørsmål.barnetrygdFraEøslandHvilketLand]: {
-            id: OmBarnetSpørsmålsId.barnetrygdFraEøslandHvilketLand,
-            svar: '',
-        },
         [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
             id: OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd,
             svar: null,
@@ -534,7 +271,7 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
         id: hentUid(),
         navn: barnetsNavnValue(barnRespons, intl),
         ident: barnRespons.ident,
-        alder: barnRespons.fødselsdato && hentAlder(barnRespons.fødselsdato),
+        alder: barnRespons.fødselsdato ? hentAlder(barnRespons.fødselsdato) : null,
         borMedSøker: barnRespons.borMedSøker,
         adressebeskyttelse: barnRespons.adressebeskyttelse,
     }));
@@ -551,7 +288,7 @@ export const barnetsNavnValue = (barn: IBarnRespons, intl: IntlShape): string =>
 
 export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
     return (
-        barn.andreForelder?.kanIkkeGiOpplysninger ||
+        barn.andreForelder?.kanIkkeGiOpplysninger.svar === ESvar.JA ||
         barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
     );
 };
@@ -604,6 +341,42 @@ export const filtrerteRelevanteIdNummerForBarn = (
     return barn.idNummer.filter(idNummerObj => relevanteLand.includes(idNummerObj.land));
 };
 
+export const nullstilteEøsFelterForAndreForelder = (
+    andreForelder: IAndreForelder
+): IAndreForelder => ({
+    ...andreForelder,
+    idNummer: [],
+    pensjonNorge: {
+        ...andreForelder.pensjonNorge,
+        svar: null,
+    },
+    arbeidNorge: {
+        ...andreForelder.arbeidNorge,
+        svar: null,
+    },
+    andreUtbetalinger: {
+        ...andreForelder.andreUtbetalinger,
+        svar: null,
+    },
+    pågåendeSøknadFraAnnetEøsLand: {
+        ...andreForelder.pågåendeSøknadFraAnnetEøsLand,
+        svar: null,
+    },
+    pågåendeSøknadHvilketLand: {
+        ...andreForelder.pågåendeSøknadHvilketLand,
+        svar: '',
+    },
+    barnetrygdFraEøs: {
+        ...andreForelder.barnetrygdFraEøs,
+        svar: null,
+    },
+    pensjonsperioderNorge: [],
+    arbeidsperioderNorge: [],
+    andreUtbetalingsperioder: [],
+    eøsBarnetrygdsperioder: [],
+    adresse: { ...andreForelder.adresse, svar: '' },
+});
+
 export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
     idNummer: [],
     søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: tomString },
@@ -616,26 +389,7 @@ export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
     omsorgsperson: null,
     adresse: { ...barn.adresse, svar: '' },
     ...(barn.andreForelder && {
-        andreForelder: {
-            ...barn.andreForelder,
-            idNummer: [],
-            pensjonNorge: {
-                ...barn.andreForelder.pensjonNorge,
-                svar: null,
-            },
-            arbeidNorge: {
-                ...barn.andreForelder.arbeidNorge,
-                svar: null,
-            },
-            andreUtbetalinger: {
-                ...barn.andreForelder.andreUtbetalinger,
-                svar: null,
-            },
-            pensjonsperioderNorge: [],
-            arbeidsperioderNorge: [],
-            andreUtbetalingsperioder: [],
-            adresse: { ...barn.andreForelder.adresse, svar: '' },
-        },
+        andreForelder: nullstilteEøsFelterForAndreForelder(barn.andreForelder),
     }),
 });
 
