@@ -60,74 +60,70 @@ const OmDeg: React.FC = () => {
                     </AlertStripe>
                 )}
             </KomponentGruppe>
-            {skjema.felter.værtINorgeITolvMåneder.erSynlig && (
-                <KomponentGruppe dynamisk>
-                    <>
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.værtINorgeITolvMåneder}
-                            spørsmålTekstId={
-                                omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
-                            }
-                            tilleggsinfo={
-                                <AlertStripe>
-                                    <SpråkTekst id={'felles.korteopphold.info'} />
-                                </AlertStripe>
-                            }
-                        />
-                        {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
-                            <>
-                                {utenlandsperioder.map((periode, index) => (
-                                    <UtenlandsperiodeOppsummering
-                                        key={index}
-                                        periode={periode}
-                                        nummer={index + 1}
-                                        fjernPeriodeCallback={fjernUtenlandsperiode}
-                                    />
-                                ))}
-                                {utenlandsperioder.length > 0 && (
-                                    <Element>
-                                        <SpråkTekst id={'omdeg.flereopphold.spm'} />
-                                    </Element>
-                                )}
-                                <LeggTilKnapp
-                                    språkTekst={'felles.leggtilutenlands.knapp'}
-                                    onClick={toggleModal}
-                                    id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
-                                    feilmelding={
-                                        skjema.felter.registrerteUtenlandsperioder.erSynlig &&
-                                        skjema.felter.registrerteUtenlandsperioder.feilmelding &&
-                                        skjema.visFeilmeldinger && (
-                                            <SpråkTekst
-                                                id={'felles.leggtilutenlands.feilmelding'}
-                                            />
-                                        )
-                                    }
+            <KomponentGruppe>
+                <>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.værtINorgeITolvMåneder}
+                        spørsmålTekstId={
+                            omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
+                        }
+                        tilleggsinfo={
+                            <AlertStripe>
+                                <SpråkTekst id={'felles.korteopphold.info'} />
+                            </AlertStripe>
+                        }
+                    />
+                    {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
+                        <>
+                            {utenlandsperioder.map((periode, index) => (
+                                <UtenlandsperiodeOppsummering
+                                    key={index}
+                                    periode={periode}
+                                    nummer={index + 1}
+                                    fjernPeriodeCallback={fjernUtenlandsperiode}
                                 />
-                            </>
-                        )}
-                    </>
-                    {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
-                        <KomponentGruppe inline dynamisk>
-                            <JaNeiSpm
-                                skjema={skjema}
-                                felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
-                                spørsmålTekstId={
-                                    omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
+                            ))}
+                            {utenlandsperioder.length > 0 && (
+                                <Element>
+                                    <SpråkTekst id={'omdeg.flereopphold.spm'} />
+                                </Element>
+                            )}
+                            <LeggTilKnapp
+                                språkTekst={'felles.leggtilutenlands.knapp'}
+                                onClick={toggleModal}
+                                id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
+                                feilmelding={
+                                    skjema.felter.registrerteUtenlandsperioder.erSynlig &&
+                                    skjema.felter.registrerteUtenlandsperioder.feilmelding &&
+                                    skjema.visFeilmeldinger && (
+                                        <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
+                                    )
                                 }
                             />
-                            {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig &&
-                                skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                                    <AlertStripe type={'advarsel'} dynamisk>
-                                        <SpråkTekst
-                                            id={'omdeg.planlagt-opphold-sammenhengende.alert'}
-                                        />
-                                    </AlertStripe>
-                                )}
-                        </KomponentGruppe>
+                        </>
                     )}
-                </KomponentGruppe>
-            )}
+                </>
+                {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
+                    <KomponentGruppe inline dynamisk>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
+                            spørsmålTekstId={
+                                omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
+                            }
+                        />
+                        {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig &&
+                            skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
+                                <AlertStripe type={'advarsel'} dynamisk>
+                                    <SpråkTekst
+                                        id={'omdeg.planlagt-opphold-sammenhengende.alert'}
+                                    />
+                                </AlertStripe>
+                            )}
+                    </KomponentGruppe>
+                )}
+            </KomponentGruppe>
             <UtenlandsoppholdModal
                 erÅpen={erÅpen}
                 toggleModal={toggleModal}
