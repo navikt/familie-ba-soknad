@@ -5,7 +5,7 @@ ARG git_commit
 
 RUN apk add git maven
 
-RUN git clone https://github.com/navikt/familie-ba-soknad-api.git /app \
+RUN git clone https://github.com/navikt/familie-baks-soknad-api.git /app \
     && cd /app \
     && git checkout $git_commit
 WORKDIR /app

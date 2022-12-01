@@ -20,7 +20,7 @@ index 00b9464..d26ac06 100644
 --- a/src/main/resources/application-lokal.yaml
 +++ b/src/main/resources/application-lokal.yaml
 @@ -24,15 +24,11 @@ TOKEN_X_PRIVATE_JWK: '{
- TOKEN_X_CLIENT_ID: dev-local:teamfamilie:familie-ba-soknad-api
+ TOKEN_X_CLIENT_ID: dev-local:teamfamilie:familie-baks-soknad-api
 
  no.nav.security.jwt:
 -  issuer.selvbetjening:
