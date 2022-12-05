@@ -75,7 +75,7 @@ services:
 #    ports:
 #      - "3000:3000"
 
-  # familie-ba-soknad-api, henter bl.a. data fra PDL og forwarder søknader til mottak
+  # familie-baks-soknad-api, henter bl.a. data fra PDL og forwarder søknader til mottak
   api:
     logging: *common-log-config
     container_name: "soknad-api"
@@ -92,8 +92,8 @@ services:
       - keys:/keys
     environment:
       <<: *common-token-environment
-      TOKEN_X_PRIVATE_JWK: '/keys/familie-ba-soknad-api.json'
-      TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-ba-soknad-api'
+      TOKEN_X_PRIVATE_JWK: '/keys/familie-baks-soknad-api.json'
+      TOKEN_X_CLIENT_ID: 'dev-local:teamfamilie:familie-baks-soknad-api'
       FAMILIE_BA_MOTTAK_URL: 'http://mottak:8090'
 
   # familie-ba-mottak, tar imot søknader, lagrer dem, genererer PDFer via dokgen, sender til journalføring.
@@ -208,7 +208,7 @@ services:
       args:
         git_commit: 850963d98bfd4e04836212fcb2efb218d56db7f5
     environment:
-      APPS: "familie-ba-soknad-api,familie-ba-mottak,familie-dokument"
+      APPS: "familie-baks-soknad-api,familie-ba-mottak,familie-dokument"
       KEY_OUTPUT_DIRECTORY: /keys
     volumes:
       - keys:/keys
