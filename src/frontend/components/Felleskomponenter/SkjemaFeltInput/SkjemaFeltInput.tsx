@@ -27,6 +27,7 @@ export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
         språkValues,
         tilleggsinfo,
         bredde,
+        autoComplete = 'off',
         ...øvrigePropsStøttetAvNavInput
     } = props;
     const navInputPropsFraFeltHook = felt.hentNavInputProps(visFeilmeldinger);
@@ -40,6 +41,7 @@ export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
                 {...øvrigePropsStøttetAvNavInput}
                 maxLength={500}
                 bredde={bredde}
+                autoComplete={autoComplete}
             />
         </div>
     ) : null;

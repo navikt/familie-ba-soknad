@@ -24,9 +24,8 @@ const Container = styled.div`
 
 export const SkjemaFeiloppsummering: React.FC<Props> = ({ skjema, routeForFeilmeldinger, id }) => {
     return (
-        <Container>
+        <Container role={'alert'}>
             <ErrorSummary
-                role={'alert'}
                 id={id}
                 heading={
                     <Element>
