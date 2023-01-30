@@ -7,6 +7,7 @@ metadata:
     team: teamfamilie
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "25M"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
 spec:
   image: {{ image }}
   team: teamfamilie
@@ -28,6 +29,7 @@ spec:
     outbound:
       rules:
         - application: familie-baks-soknad-api
+        - application: familie-dokument
       external:
         - host: "www-q1.nav.no"
   resources:
@@ -36,9 +38,17 @@ spec:
       memory: 1024Mi
     requests:
       memory: 512Mi
-  envFrom:
-    - secret: ba-soknad
-    - configmap: loginservice-idporten
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      autoLogin: true
+      level: Level4
+      autoLoginIgnorePaths:
+        - /familie/kontantstotte/soknad/**/*.css
+        - /familie/kontantstotte/soknad/**/manifest.json
+  tokenx:
+    enabled: true
   env:
     - name: BASE_PATH
       value: {{base_path}}
