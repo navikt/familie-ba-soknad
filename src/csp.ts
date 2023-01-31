@@ -12,6 +12,7 @@ export const cspMap = (dekoratorenUrl: string): Record<string, string[]> => {
             '*.psplugin.com',
             '*.taskanalytics.com',
             '*.hotjar.com',
+            'https://cdn.polyfill.io/', // Trengs for bruk av intl
         ],
         // Hvor vi kan hente .css filer fra.
         'style-src': [
@@ -25,7 +26,6 @@ export const cspMap = (dekoratorenUrl: string): Record<string, string[]> => {
         'connect-src': [
             "'self'",
             '*.nav.no',
-            'by26nl8j.apicdn.sanity.io',
             'amplitude.nav.no',
             '*.psplugin.com',
             'familie-dokument.dev.nav.no',
