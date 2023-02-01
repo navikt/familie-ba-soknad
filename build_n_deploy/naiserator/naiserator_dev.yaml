@@ -23,15 +23,14 @@ spec:
     path: /internal/isReady
     initialDelay: 5
   ingresses:
-    - "https://familie-ba-soknad.dev.nav.no/familie/barnetrygd/soknad/ordinaer"
-    - "https://familie-ba-soknad.dev.nav.no/familie/barnetrygd/soknad/utvidet"
+    - "https://familie-ks-soknad.dev.nav.no/familie/barnetrygd/soknad"
   accessPolicy:
     outbound:
       rules:
         - application: familie-baks-soknad-api
         - application: familie-dokument
       external:
-        - host: "www-q1.nav.no"
+        - host: www.nav.no
   resources:
     limits:
       cpu: 2000m
@@ -45,12 +44,16 @@ spec:
       autoLogin: true
       level: Level4
       autoLoginIgnorePaths:
-        - {{base_path}}/**/*.css
-        - {{base_path}}/**/manifest.json
+        - /familie/barnetrygd/soknad/ordinaer/**/*.css
+        - /familie/barnetrygd/soknad/ordinaer/**/manifest.json
+        - /familie/barnetrygd/soknad/utvidet/**/*.css
+        - /familie/barnetrygd/soknad/utvidet/**/manifest.json
   tokenx:
     enabled: true
   env:
     - name: BASE_PATH
       value: {{base_path}}
+    - name: ENV
+      value: dev
   secureLogs:
     enabled: true

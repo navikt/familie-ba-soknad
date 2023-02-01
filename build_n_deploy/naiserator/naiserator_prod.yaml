@@ -26,8 +26,7 @@ spec:
     enabled: true
     path: /metrics
   ingresses:
-    - "https://www.nav.no/familie/barnetrygd/soknad/ordinaer"
-    - "https://www.nav.no/familie/barnetrygd/soknad/utvidet"
+    - https://www.nav.no/familie/barnetrygd/soknad
   accessPolicy:
     outbound:
       rules:
@@ -48,8 +47,10 @@ spec:
       autoLogin: true
       level: Level4
       autoLoginIgnorePaths:
-        - {{base_path}}/**/*.css
-        - {{base_path}}/**/manifest.json
+        - /familie/barnetrygd/soknad/ordinaer/**/*.css
+        - /familie/barnetrygd/soknad/ordinaer/**/manifest.json
+        - /familie/barnetrygd/soknad/utvidet/**/*.css
+        - /familie/barnetrygd/soknad/utvidet/**/manifest.json
   tokenx:
     enabled: true
   env:
