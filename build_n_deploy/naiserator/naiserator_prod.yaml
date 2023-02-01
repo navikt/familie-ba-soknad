@@ -48,8 +48,8 @@ spec:
       autoLogin: true
       level: Level4
       autoLoginIgnorePaths:
-        - /familie/kontantstotte/soknad/**/*.css
-        - /familie/kontantstotte/soknad/**/manifest.json
+        - {{base_path}}/**/*.css
+        - {{base_path}}/**/manifest.json
   tokenx:
     enabled: true
   env:
