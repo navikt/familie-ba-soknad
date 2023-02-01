@@ -1,11 +1,10 @@
 import { ClientRequest } from 'http';
 
-import { Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import { v4 as uuid } from 'uuid';
 
 import { logError, logSecure } from '@navikt/familie-logging';
-
-import environment from '../environment';
 
 const restream = (proxyReq: ClientRequest, req: Request, _res: Response) => {
     if (req.body) {
@@ -18,19 +17,26 @@ const restream = (proxyReq: ClientRequest, req: Request, _res: Response) => {
 
 const apiPath = `^${process.env.BASE_PATH ?? '/'}api`;
 
-export const createApiForwardingFunction = () => {
+export const doProxy = (targetUrl: string, context: string): RequestHandler => {
     return createProxyMiddleware(apiPath.replace('^', ''), {
-        target: environment().apiUrl,
         changeOrigin: true,
-        logLevel: process.env.ENV === 'prod' ? 'silent' : 'debug',
+        logLevel: 'info',
+        target: targetUrl,
         secure: true,
         onProxyReq: restream,
+        pathRewrite: (path: string) => {
+            return path.replace(context, '');
+        },
         onError: (err: Error, req: Request, res: Response) => {
             logError('Feil under proxy til apiet, se i securelog');
             logSecure('Feil under proxy til apiet', { err, req, res });
         },
-        pathRewrite: {
-            [apiPath]: '/api',
-        },
     });
+};
+
+export const addCallId = (): RequestHandler => {
+    return (req: Request, _res: Response, next: NextFunction) => {
+        req.headers['nav-call-id'] = req.headers['x-correlation-id'] ?? uuid();
+        next();
+    };
 };

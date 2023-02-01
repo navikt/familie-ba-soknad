@@ -4,7 +4,7 @@ import createUseContext from 'constate';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
-import Miljø from '../Miljø';
+import Miljø from '../../shared-utils/Miljø';
 import { hentSøknadstype } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 import { useLastRessurserContext } from './LastRessurserContext';
@@ -16,7 +16,7 @@ const [InnloggetProvider, useInnloggetContext] = createUseContext(() => {
         InnloggetStatus.IKKE_VERIFISERT
     );
 
-    const { soknadApi } = Miljø();
+    const { soknadApiProxyUrl } = Miljø();
 
     autentiseringsInterceptor();
 
@@ -30,7 +30,7 @@ const [InnloggetProvider, useInnloggetContext] = createUseContext(() => {
         settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
     ) => {
         return axiosRequest({
-            url: `${soknadApi}/innlogget`,
+            url: `${soknadApiProxyUrl}/innlogget`, //todo: legge på url: `${soknadApiProxyUrl}/innlogget/barnetrygd`,
             method: 'GET',
             params: { søknadstype: hentSøknadstype() },
             withCredentials: true,

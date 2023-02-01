@@ -4,8 +4,8 @@ import createUseContext from 'constate';
 
 import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
+import { basePath } from '../../shared-utils/Miljø';
 import useFørsteRender from '../hooks/useFørsteRender';
-import { basePath } from '../Miljø';
 import { EAllFeatureToggles } from '../typer/feature-toggles';
 import { useLastRessurserContext } from './LastRessurserContext';
 

@@ -4,7 +4,7 @@ import { ParamsDictionary } from 'express-serve-static-core';
 import { byggFeiletRessurs, byggSuksessRessurs, Ressurs } from '@navikt/familie-typer';
 
 import { EAllFeatureToggles } from '../../frontend/typer/feature-toggles';
-import { basePath } from '../environment';
+import { basePath } from '../../shared-utils/Miljø';
 import { isEnabled } from '../utils/unleash';
 
 const toggleFetchHandler: RequestHandler = (req, res) => {
