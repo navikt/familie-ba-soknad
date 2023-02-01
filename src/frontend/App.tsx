@@ -4,7 +4,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import AlertStripe from 'nav-frontend-alertstriper';
 
-import { routerBasePath } from '../shared-utils/Miljø';
 import AppContainer from './AppContainer';
 import { AppProvider } from './context/AppContext';
 import { AppNavigationProvider } from './context/AppNavigationContext';
@@ -15,6 +14,7 @@ import { LastRessurserProvider } from './context/LastRessurserContext';
 import { RoutesProvider } from './context/RoutesContext';
 import { StegProvider } from './context/StegContext';
 import { GlobalStyle } from './Theme';
+import { routerBasePath } from './utils/hjelpefunksjoner';
 
 function App() {
     return (
