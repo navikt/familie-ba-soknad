@@ -49,10 +49,8 @@ spec:
       autoLogin: true
       level: Level4
       autoLoginIgnorePaths:
-        - /familie/barnetrygd/soknad/ordinaer/**/*.css
-        - /familie/barnetrygd/soknad/ordinaer/**/manifest.json
-        - /familie/barnetrygd/soknad/utvidet/**/*.css
-        - /familie/barnetrygd/soknad/utvidet/**/manifest.json
+        - /familie/barnetrygd/soknad/**/*.css
+        - /familie/barnetrygd/soknad/**/manifest.json
   tokenx:
     enabled: true
   env:
