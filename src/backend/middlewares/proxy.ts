@@ -15,10 +15,8 @@ const restream = (proxyReq: ClientRequest, req: Request, _res: Response) => {
     }
 };
 
-const apiPath = `^${process.env.BASE_PATH ?? '/'}api`;
-
 export const doProxy = (targetUrl: string, context: string): RequestHandler => {
-    return createProxyMiddleware(apiPath.replace('^', ''), {
+    return createProxyMiddleware(context, {
         changeOrigin: true,
         logLevel: 'info',
         target: targetUrl,
