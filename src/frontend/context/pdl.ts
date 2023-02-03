@@ -7,7 +7,7 @@ export const hentSluttbrukerFraPdl = (axiosRequest): Promise<Ressurs<ISøkerResp
     const { soknadApi } = Miljø();
     return axiosRequest({
         url: `${soknadApi}/personopplysning?ytelse=BARNETRYGD`,
-        method: 'POST',
+        method: 'GET',
         withCredentials: true,
         påvirkerSystemLaster: true,
     });
