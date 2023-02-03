@@ -30,7 +30,7 @@ const [InnloggetProvider, useInnloggetContext] = createUseContext(() => {
         settInnloggetStatus: (innloggetStatus: InnloggetStatus) => void
     ) => {
         return axiosRequest({
-            url: `${soknadApi}/innlogget`,
+            url: `${soknadApi}/innlogget/barnetrygd`,
             method: 'GET',
             params: { søknadstype: hentSøknadstype() },
             withCredentials: true,
