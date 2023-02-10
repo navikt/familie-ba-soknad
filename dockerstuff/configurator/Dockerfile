@@ -1,4 +1,4 @@
-FROM python:3.9-alpine
+FROM python:3.12.0a5-alpine
 
 ENV PIPENV_VENV_IN_PROJECT=1
 WORKDIR /app
