@@ -1,6 +1,7 @@
 import React, { ReactNode, useCallback, useState } from 'react';
 
 import axios from 'axios';
+import { FileRejection } from 'react-dropzone';
 
 import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
 import Miljø from '../../../../Miljø';
@@ -8,7 +9,6 @@ import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { konverter } from './konverteringService';
 
 interface OpplastetVedlegg {
     dokumentId: string;
@@ -17,7 +17,6 @@ interface OpplastetVedlegg {
 
 export const useFilopplaster = (
     maxFilstørrelse: number,
-    tillatteFiltyper: string[],
     dokumentasjon: IDokumentasjon,
     oppdaterDokumentasjon: (
         dokumentasjonsBehov: Dokumentasjonsbehov,
@@ -35,49 +34,31 @@ export const useFilopplaster = (
     const dagensDatoStreng = datoTilStreng(new Date());
 
     const onDrop = useCallback(
-        async filer => {
+        async (filer: File[], filRejections: FileRejection[]) => {
             const feilmeldingsliste: ReactNode[] = [];
             const nyeVedlegg: IVedlegg[] = [];
 
-            const håndterFeilType = (fil: File) => {
-                feilmeldingsliste.push(
-                    <SpråkTekst
-                        id={'dokumentasjon.last-opp-dokumentasjon.feilmeldingtype'}
-                        values={{ filnavn: fil.name }}
-                    />
-                );
-                settFeilmeldinger(feilmeldingsliste);
-                settÅpenModal(true);
+            const pushFeilmelding = (tekstId: string, values: Record<string, ReactNode>) => {
+                feilmeldingsliste.push(<SpråkTekst id={tekstId} values={values} />);
             };
+
+            if (filRejections.length > 0) {
+                filRejections.map(filRejection =>
+                    pushFeilmelding('dokumentasjon.last-opp-dokumentasjon.feilmeldingtype', {
+                        filnavn: filRejection.file.name,
+                    })
+                );
+            }
 
             await Promise.all(
                 filer.map((fil: File) =>
                     wrapMedSystemetLaster(async () => {
-                        if (!tillatteFiltyper.includes(fil.type)) {
-                            if (fil.type?.match(/^image\//)) {
-                                try {
-                                    fil = await konverter(fil);
-                                } catch (e) {
-                                    håndterFeilType(fil);
-                                    return;
-                                }
-                            } else {
-                                håndterFeilType(fil);
-                                return;
-                            }
-                        }
-
                         if (maxFilstørrelse && fil.size > maxFilstørrelse) {
                             const maks = formaterFilstørrelse(maxFilstørrelse);
-                            feilmeldingsliste.push(
-                                <SpråkTekst
-                                    id={'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor'}
-                                    values={{ maks, filnavn: fil.name }}
-                                />
+                            pushFeilmelding(
+                                'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
+                                { maks, filnavn: fil.name }
                             );
-
-                            settFeilmeldinger(feilmeldingsliste);
-                            settÅpenModal(true);
                             return;
                         }
 
@@ -102,21 +83,19 @@ export const useFilopplaster = (
                                 });
                             })
                             .catch(_error => {
-                                feilmeldingsliste.push(
-                                    <SpråkTekst
-                                        id={
-                                            'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk'
-                                        }
-                                        values={{ filnavn: fil.name }}
-                                    />
+                                pushFeilmelding(
+                                    'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk',
+                                    { filnavn: fil.name }
                                 );
-
-                                settFeilmeldinger(feilmeldingsliste);
-                                settÅpenModal(true);
                             });
                     })
                 )
             );
+
+            if (feilmeldingsliste.length > 0) {
+                settFeilmeldinger(feilmeldingsliste);
+                settÅpenModal(true);
+            }
 
             oppdaterDokumentasjon(
                 dokumentasjon.dokumentasjonsbehov,
