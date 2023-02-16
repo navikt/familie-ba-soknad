@@ -11,10 +11,7 @@ import environment, { basePath } from './environment';
 import { expressToggleInterceptor } from './middlewares/feature-toggles';
 import { konfigurerIndex, konfigurerIndexFallback } from './routes';
 import { konfigurerApi } from './routes/api';
-import {
-    konfigurerAllFeatureTogglesEndpoint,
-    konfigurerFeatureTogglesEndpoint,
-} from './routes/feature-toggles';
+import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles';
 import { konfigurerModellVersjonEndpoint } from './routes/modellversjon';
 import { konfigurerNais } from './routes/nais';
 import { konfigurerStatic } from './routes/static';
@@ -55,7 +52,6 @@ app.use((_req, res, next) => {
 konfigurerIndex(app);
 konfigurerNais(app);
 konfigurerApi(app);
-konfigurerFeatureTogglesEndpoint(app);
 konfigurerAllFeatureTogglesEndpoint(app);
 konfigurerModellVersjonEndpoint(app);
 
