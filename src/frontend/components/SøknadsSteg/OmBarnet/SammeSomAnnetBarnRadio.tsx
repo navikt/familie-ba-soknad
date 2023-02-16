@@ -9,7 +9,7 @@ import { ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
@@ -21,7 +21,7 @@ const StyledRadioPanelGruppe = styled(RadioPanelGruppe)`
 
 const SammeSomAnnetBarnRadio: React.FC<{
     andreBarnSomErFyltUt: IBarnMedISøknad[];
-    skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
+    skjema: ISkjema<IOmBarnetFeltTyper, string>;
     barnetsNavn: string;
 }> = ({ andreBarnSomErFyltUt, skjema, barnetsNavn }) => {
     const felt = skjema.felter.sammeForelderSomAnnetBarn;

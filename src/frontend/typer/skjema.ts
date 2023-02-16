@@ -29,7 +29,7 @@ export interface IDinLivssituasjonFeltTyper {
     nåværendeSamboerFødselsdatoUkjent: ESvar;
     nåværendeSamboerFraDato: ISODateString;
     erAsylsøker: ESvar | null;
-    jobberPåBåt: ESvar | null;
+    arbeidIUtlandet: ESvar | null;
     registrerteArbeidsperioder: IArbeidsperiode[];
     mottarUtenlandspensjon: ESvar | null;
     registrertePensjonsperioder: IPensjonsperiode[];
@@ -62,7 +62,7 @@ export interface IOmBarnaDineFeltTyper {
     hvemAvdødPartner: BarnetsId[];
 }
 
-export interface IOmBarnetUtvidetFeltTyper {
+export interface IOmBarnetFeltTyper {
     institusjonIUtlandCheckbox: ESvar;
     institusjonsnavn: string;
     institusjonsadresse: string;
@@ -220,7 +220,7 @@ export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
     | ILeggTilBarnTyper
-    | IOmBarnetUtvidetFeltTyper
+    | IOmBarnetFeltTyper
     | IOmBarnaDineFeltTyper
     | IDinLivssituasjonFeltTyper
     | IUtenlandsoppholdFeltTyper

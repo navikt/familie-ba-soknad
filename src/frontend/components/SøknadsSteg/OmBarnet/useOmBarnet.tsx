@@ -31,7 +31,7 @@ import {
 } from '../../../typer/perioder';
 import { IIdNummer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
-import { IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
 import {
@@ -64,7 +64,7 @@ import { OmBarnetSpørsmålsId } from './spørsmål';
 export const useOmBarnet = (
     barnetsUuid: BarnetsId
 ): {
-    skjema: ISkjema<IOmBarnetUtvidetFeltTyper, string>;
+    skjema: ISkjema<IOmBarnetFeltTyper, string>;
     barn: IBarnMedISøknad | undefined;
     validerFelterOgVisFeilmelding: () => boolean;
     valideringErOk: () => boolean;
@@ -599,7 +599,7 @@ export const useOmBarnet = (
     });
 
     const { kanSendeSkjema, skjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
-        IOmBarnetUtvidetFeltTyper,
+        IOmBarnetFeltTyper,
         string
     >({
         felter: {
