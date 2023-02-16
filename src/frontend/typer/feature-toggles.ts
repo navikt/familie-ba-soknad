@@ -4,14 +4,14 @@ export enum EToggle {
 }
 
 export enum EFeatureToggle {}
-/**
- * true -> fullt EØS skjema
- * false -> eøs dekkes ved opplasting av utfylt pdf
- */
-//EXAMPLE = 'EXAMPLE',
 
-export const ToggleKeys: Record<EFeatureToggle, string> = {
-    // [EFeatureToggle.EXAMPLE]: 'familie-ba-soknad.example',
-};
+export const ToggleKeys: Record<EFeatureToggle, string> = {};
 
 export type EAllFeatureToggles = Record<EFeatureToggle, boolean>;
+
+export const defaultFeatureToggleValues: EAllFeatureToggles = {
+    ...Object.values(EFeatureToggle).reduce((acc, featureToggle) => {
+        acc[featureToggle] = false;
+        return acc;
+    }, {} as EAllFeatureToggles),
+};
