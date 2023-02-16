@@ -67,7 +67,7 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
         feltId: BarnetrygdperiodeSpørsmålId.månedligBeløp,
         valideringsfunksjon: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
-            if (verdi.match(/^[0-9\s.\\/]{1,7}$/)) {
+            if (verdi.match(/^[0-9\s.\\/]{1,20}$/)) {
                 return ok(felt);
             } else {
                 return feil(
