@@ -15,6 +15,20 @@ interface OpplastetVedlegg {
     filnavn: string;
 }
 
+enum BadRequestCode {
+    IMAGE_TOO_LARGE = 'IMAGE_TOO_LARGE',
+    IMAGE_DIMENSIONS_TOO_SMALL = 'IMAGE_DIMENSIONS_TOO_SMALL',
+}
+
+// Meldingsfeltet på respons ved BadRequest inneholder tekst på følgende format: CODE=ENUM_NAVN
+const badRequestCodeFraError = (_error): BadRequestCode | undefined => {
+    const melding = _error.response?.data?.melding;
+    if (melding) {
+        return BadRequestCode[melding.split('=')[1]];
+    }
+    return;
+};
+
 export const useFilopplaster = (
     maxFilstørrelse: number,
     dokumentasjon: IDokumentasjon,
@@ -83,10 +97,26 @@ export const useFilopplaster = (
                                 });
                             })
                             .catch(_error => {
-                                pushFeilmelding(
-                                    'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk',
-                                    { filnavn: fil.name }
-                                );
+                                const badRequestCode = badRequestCodeFraError(_error);
+                                switch (badRequestCode) {
+                                    case BadRequestCode.IMAGE_TOO_LARGE:
+                                        const maks = formaterFilstørrelse(maxFilstørrelse);
+                                        pushFeilmelding(
+                                            'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
+                                            { maks, filnavn: fil.name }
+                                        );
+                                        break;
+                                    case BadRequestCode.IMAGE_DIMENSIONS_TOO_SMALL:
+                                        pushFeilmelding('dokumentasjon.forliten.feilmelding', {
+                                            filnavn: fil.name,
+                                        });
+                                        break;
+                                    default:
+                                        pushFeilmelding(
+                                            'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk',
+                                            { filnavn: fil.name }
+                                        );
+                                }
                             });
                     })
                 )
