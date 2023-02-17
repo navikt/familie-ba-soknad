@@ -6,7 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagenEtterDato, dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import AlertStripe from '../AlertStripe/AlertStripe';
 import Datovelger from '../Datovelger/Datovelger';
@@ -143,7 +143,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         label={spørsmålSpråkTekst(
                             BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
                         )}
-                        avgrensMinDato={skjema.felter.fraDatoBarnetrygdperiode.verdi}
+                        avgrensMinDato={dagenEtterDato(
+                            skjema.felter.fraDatoBarnetrygdperiode.verdi
+                        )}
                         avgrensMaxDato={dagensDato()}
                         calendarPosition={'fullscreen'}
                     />
