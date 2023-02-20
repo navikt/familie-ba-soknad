@@ -4,14 +4,15 @@ import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
 import navFarger from 'nav-frontend-core';
-import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Upload } from '@navikt/ds-icons';
+import { Modal } from '@navikt/ds-react';
 
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 import AlertStripe from '../../../Felleskomponenter/AlertStripe/AlertStripe';
+import ModalContent from '../../../Felleskomponenter/ModalContent';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import OpplastedeFiler from './OpplastedeFiler';
 import { useFilopplaster } from './useFilopplaster';
@@ -75,18 +76,20 @@ const Filopplaster: React.FC<Props> = ({
     return (
         <>
             <Modal
-                isOpen={åpenModal}
-                onRequestClose={() => lukkModal()}
+                open={åpenModal}
+                onClose={() => lukkModal()}
                 closeButton={true}
-                contentLabel="Modal"
+                aria-label="Modal"
             >
-                <FeilmeldingWrapper>
-                    {feilmeldinger.map((feilmelding, index) => (
-                        <AlertStripe type={'feil'} form={'default'} key={index}>
-                            {feilmelding}
-                        </AlertStripe>
-                    ))}
-                </FeilmeldingWrapper>
+                <ModalContent>
+                    <FeilmeldingWrapper>
+                        {feilmeldinger.map((feilmelding, index) => (
+                            <AlertStripe type={'feil'} form={'default'} key={index}>
+                                {feilmelding}
+                            </AlertStripe>
+                        ))}
+                    </FeilmeldingWrapper>
+                </ModalContent>
             </Modal>
             <FilopplastningBoks type={'button'} {...getRootProps()}>
                 <input {...getInputProps()} />
