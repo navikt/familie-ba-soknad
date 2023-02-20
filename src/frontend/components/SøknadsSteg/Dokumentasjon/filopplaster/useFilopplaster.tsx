@@ -96,8 +96,8 @@ export const useFilopplaster = (
                                     tidspunkt: dagensDatoStreng,
                                 });
                             })
-                            .catch(_error => {
-                                const badRequestCode = badRequestCodeFraError(_error);
+                            .catch(error => {
+                                const badRequestCode = badRequestCodeFraError(error);
                                 switch (badRequestCode) {
                                     case BadRequestCode.IMAGE_TOO_LARGE:
                                         const maks = formaterFilstørrelse(maxFilstørrelse);
