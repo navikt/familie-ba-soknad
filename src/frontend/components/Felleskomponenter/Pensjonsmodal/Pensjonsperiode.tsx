@@ -11,7 +11,7 @@ import {
     IDinLivssituasjonFeltTyper,
     IEøsForBarnFeltTyper,
     IEøsForSøkerFeltTyper,
-    IOmBarnetUtvidetFeltTyper,
+    IOmBarnetFeltTyper,
 } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
@@ -31,7 +31,7 @@ import { PensjonsperiodeSpørsmålId } from './spørsmål';
 interface PensjonsperiodeProps {
     skjema: ISkjema<
         | IDinLivssituasjonFeltTyper
-        | IOmBarnetUtvidetFeltTyper
+        | IOmBarnetFeltTyper
         | IEøsForSøkerFeltTyper
         | IEøsForBarnFeltTyper,
         string
