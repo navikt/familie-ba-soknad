@@ -251,7 +251,7 @@ export const useDinLivssituasjon = (): {
             nåværendeSamboerFødselsdatoUkjent,
             nåværendeSamboerFraDato,
             erAsylsøker,
-            arbeidIUtlandet: arbeidIUtlandet,
+            arbeidIUtlandet,
             registrerteArbeidsperioder,
             mottarUtenlandspensjon,
             registrertePensjonsperioder,
