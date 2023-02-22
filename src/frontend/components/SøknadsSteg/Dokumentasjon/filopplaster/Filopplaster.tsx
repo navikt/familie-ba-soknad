@@ -7,12 +7,9 @@ import navFarger from 'nav-frontend-core';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Upload } from '@navikt/ds-icons';
-import { Modal } from '@navikt/ds-react';
 
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
-import AlertStripe from '../../../Felleskomponenter/AlertStripe/AlertStripe';
-import ModalContent from '../../../Felleskomponenter/ModalContent';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import OpplastedeFiler from './OpplastedeFiler';
 import { useFilopplaster } from './useFilopplaster';
@@ -28,11 +25,15 @@ interface Props {
     maxFilstørrelse: number;
 }
 
-const FilopplastningBoks = styled.button`
+interface FilopplastningBoksProps {
+    harFeil: boolean;
+}
+
+const FilopplastningBoks = styled.button<FilopplastningBoksProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px dashed ${navFarger.navGra80};
+    border: 2px dashed ${props => (props.harFeil ? '#ba3a26' : navFarger.navGra80)};
     border-radius: 4px;
     background-color: rgba(204, 222, 230, 0.5);
     width: 100%;
@@ -43,7 +44,7 @@ const FilopplastningBoks = styled.button`
 
     :focus,
     :hover {
-        border: 2px solid ${navFarger.navBla};
+        border: 2px solid ${props => (props.harFeil ? '#ba3a26' : navFarger.navBla)};
         cursor: pointer;
     }
 `;
@@ -53,8 +54,12 @@ const StyledUpload = styled(Upload)`
     min-width: 1rem;
 `;
 
-const FeilmeldingWrapper = styled.div`
-    margin-right: 3rem;
+const StyledFeilmeldingList = styled.ul`
+    padding-inline-start: 1.25rem;
+    > li {
+        font-weight: 600;
+        color: #ba3a26;
+    }
 `;
 
 const Filopplaster: React.FC<Props> = ({
@@ -63,7 +68,7 @@ const Filopplaster: React.FC<Props> = ({
     tillatteFiltyper,
     maxFilstørrelse,
 }) => {
-    const { onDrop, åpenModal, lukkModal, feilmeldinger, slettVedlegg } = useFilopplaster(
+    const { onDrop, harFeil, feilmeldinger, slettVedlegg } = useFilopplaster(
         maxFilstørrelse,
         dokumentasjon,
         oppdaterDokumentasjon
@@ -75,23 +80,7 @@ const Filopplaster: React.FC<Props> = ({
 
     return (
         <>
-            <Modal
-                open={åpenModal}
-                onClose={() => lukkModal()}
-                closeButton={true}
-                aria-label="Modal"
-            >
-                <ModalContent>
-                    <FeilmeldingWrapper>
-                        {feilmeldinger.map((feilmelding, index) => (
-                            <AlertStripe type={'feil'} form={'default'} key={index}>
-                                {feilmelding}
-                            </AlertStripe>
-                        ))}
-                    </FeilmeldingWrapper>
-                </ModalContent>
-            </Modal>
-            <FilopplastningBoks type={'button'} {...getRootProps()}>
+            <FilopplastningBoks type={'button'} {...getRootProps()} harFeil={harFeil}>
                 <input {...getInputProps()} />
                 <StyledUpload focusable={false} />
                 <Normaltekst>
@@ -108,6 +97,22 @@ const Filopplaster: React.FC<Props> = ({
                 filliste={dokumentasjon.opplastedeVedlegg}
                 slettVedlegg={slettVedlegg}
             />
+            {harFeil && (
+                <StyledFeilmeldingList>
+                    {Array.from(feilmeldinger).map(([key, value], index) => (
+                        <li key={index}>
+                            <SpråkTekst id={key} />
+                            {
+                                <StyledFeilmeldingList>
+                                    {value.map((fil, index) => (
+                                        <li key={index}>{fil.name}</li>
+                                    ))}
+                                </StyledFeilmeldingList>
+                            }
+                        </li>
+                    ))}
+                </StyledFeilmeldingList>
+            )}
         </>
     );
 };
