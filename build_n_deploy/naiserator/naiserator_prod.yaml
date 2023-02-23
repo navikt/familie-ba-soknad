@@ -54,5 +54,7 @@ spec:
   env:
     - name: BASE_PATH
       value: {{base_path}}
+    - name: ENV
+      value: prod
   secureLogs:
     enabled: true
