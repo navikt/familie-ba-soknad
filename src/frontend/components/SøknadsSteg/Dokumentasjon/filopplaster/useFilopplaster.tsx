@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import axios from 'axios';
 import { FileRejection } from 'react-dropzone';
@@ -7,8 +7,6 @@ import { useLastRessurserContext } from '../../../../context/LastRessurserContex
 import Miljø from '../../../../Miljø';
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
-import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface OpplastetVedlegg {
     dokumentId: string;
@@ -39,8 +37,8 @@ export const useFilopplaster = (
     ) => void
 ) => {
     const { wrapMedSystemetLaster } = useLastRessurserContext();
-    const [feilmeldinger, settFeilmeldinger] = useState<ReactNode[]>([]);
-    const [åpenModal, settÅpenModal] = useState<boolean>(false);
+    const [feilmeldinger, settFeilmeldinger] = useState<Map<string, File[]>>(new Map());
+    const [harFeil, settHarFeil] = useState<boolean>(false);
 
     const datoTilStreng = (date: Date): string => {
         return date.toISOString();
@@ -49,18 +47,28 @@ export const useFilopplaster = (
 
     const onDrop = useCallback(
         async (filer: File[], filRejections: FileRejection[]) => {
-            const feilmeldingsliste: ReactNode[] = [];
+            const feilmeldingMap: Map<string, File[]> = new Map();
             const nyeVedlegg: IVedlegg[] = [];
+            settFeilmeldinger(new Map());
+            settHarFeil(false);
 
-            const pushFeilmelding = (tekstId: string, values: Record<string, ReactNode>) => {
-                feilmeldingsliste.push(<SpråkTekst id={tekstId} values={values} />);
+            const pushFeilmelding = (tekstId: string, fil: File) => {
+                if (!feilmeldingMap.has(tekstId)) {
+                    feilmeldingMap.set(tekstId, []);
+                }
+                const filer = feilmeldingMap.get(tekstId);
+                if (filer) {
+                    filer.push(fil);
+                    feilmeldingMap.set(tekstId, filer);
+                }
             };
 
             if (filRejections.length > 0) {
                 filRejections.map(filRejection =>
-                    pushFeilmelding('dokumentasjon.last-opp-dokumentasjon.feilmeldingtype', {
-                        filnavn: filRejection.file.name,
-                    })
+                    pushFeilmelding(
+                        'dokumentasjon.last-opp-dokumentasjon.feilmeldingtype',
+                        filRejection.file
+                    )
                 );
             }
 
@@ -68,10 +76,9 @@ export const useFilopplaster = (
                 filer.map((fil: File) =>
                     wrapMedSystemetLaster(async () => {
                         if (maxFilstørrelse && fil.size > maxFilstørrelse) {
-                            const maks = formaterFilstørrelse(maxFilstørrelse);
                             pushFeilmelding(
                                 'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
-                                { maks, filnavn: fil.name }
+                                fil
                             );
                             return;
                         }
@@ -100,21 +107,18 @@ export const useFilopplaster = (
                                 const badRequestCode = badRequestCodeFraError(error);
                                 switch (badRequestCode) {
                                     case BadRequestCode.IMAGE_TOO_LARGE:
-                                        const maks = formaterFilstørrelse(maxFilstørrelse);
                                         pushFeilmelding(
                                             'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
-                                            { maks, filnavn: fil.name }
+                                            fil
                                         );
                                         break;
                                     case BadRequestCode.IMAGE_DIMENSIONS_TOO_SMALL:
-                                        pushFeilmelding('dokumentasjon.forliten.feilmelding', {
-                                            filnavn: fil.name,
-                                        });
+                                        pushFeilmelding('dokumentasjon.forliten.feilmelding', fil);
                                         break;
                                     default:
                                         pushFeilmelding(
                                             'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk',
-                                            { filnavn: fil.name }
+                                            fil
                                         );
                                 }
                             });
@@ -122,9 +126,9 @@ export const useFilopplaster = (
                 )
             );
 
-            if (feilmeldingsliste.length > 0) {
-                settFeilmeldinger(feilmeldingsliste);
-                settÅpenModal(true);
+            if (feilmeldingMap.size > 0) {
+                settFeilmeldinger(feilmeldingMap);
+                settHarFeil(true);
             }
 
             oppdaterDokumentasjon(
@@ -147,16 +151,10 @@ export const useFilopplaster = (
         );
     };
 
-    const lukkModal = () => {
-        settÅpenModal(false);
-    };
-
     return {
         onDrop,
-        åpenModal,
-        settÅpenModal,
+        harFeil,
         feilmeldinger,
         slettVedlegg,
-        lukkModal,
     };
 };
