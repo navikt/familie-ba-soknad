@@ -4,13 +4,13 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import Modal from 'nav-frontend-modal';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 
-import { Button } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 
 import { device } from '../../../Theme';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import ModalContent from '../../Felleskomponenter/ModalContent';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
@@ -26,13 +26,6 @@ const StyledFortsettPåSøknad = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-`;
-
-const ModalInnholdContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 2rem;
-    max-width: 35rem;
 `;
 
 const ModalKnappeContainer = styled.div`
@@ -78,13 +71,13 @@ const FortsettPåSøknad: FC = () => {
                 <SpråkTekst id={'mellomlagring.knapp.startpånytt'} />
             </StyledButton>
             <Modal
-                isOpen={visStartPåNyttModal}
-                contentLabel={formatMessage({ id: 'felles.startpånytt.modal.startpånyttknapp' })}
-                onRequestClose={() => {
+                open={visStartPåNyttModal}
+                aria-label={formatMessage({ id: 'felles.startpånytt.modal.startpånyttknapp' })}
+                onClose={() => {
                     settVisStartPåNyttModal(false);
                 }}
             >
-                <ModalInnholdContainer>
+                <ModalContent>
                     <StyledSideTittel>
                         <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
                     </StyledSideTittel>
@@ -99,7 +92,7 @@ const FortsettPåSøknad: FC = () => {
                             <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
                         </Button>
                     </ModalKnappeContainer>
-                </ModalInnholdContainer>
+                </ModalContent>
             </Modal>
         </StyledFortsettPåSøknad>
     );

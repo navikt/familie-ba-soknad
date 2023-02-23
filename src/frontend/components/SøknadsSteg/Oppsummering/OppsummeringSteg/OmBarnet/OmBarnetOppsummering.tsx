@@ -263,7 +263,10 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
             )}
 
             {barn.andreForelder && (
-                <AndreForelderOppsummering andreForelder={barn.andreForelder} barn={barn} />
+                <>
+                    <OppsummeringFelt tittel={<SpråkTekst id={'ombarnet.andre-forelder'} />} />
+                    <AndreForelderOppsummering andreForelder={barn.andreForelder} barn={barn} />
+                </>
             )}
             <StyledOppsummeringsFeltGruppe>
                 <OppsummeringFelt tittel={<SpråkTekst id={'ombarnet.bosted'} />} />

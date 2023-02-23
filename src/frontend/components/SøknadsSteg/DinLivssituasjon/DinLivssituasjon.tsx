@@ -157,7 +157,7 @@ const DinLivssituasjon: React.FC = () => {
                     leggTilArbeidsperiode={leggTilArbeidsperiode}
                     fjernArbeidsperiode={fjernArbeidsperiode}
                     gjelderUtlandet={true}
-                    arbeiderEllerArbeidetFelt={skjema.felter.jobberPåBåt}
+                    arbeiderEllerArbeidetFelt={skjema.felter.arbeidIUtlandet}
                     registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
                     personType={PersonType.Søker}
                 />

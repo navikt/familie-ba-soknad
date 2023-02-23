@@ -8,7 +8,7 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
-import { IEøsForBarnFeltTyper, IOmBarnetUtvidetFeltTyper } from '../../../typer/skjema';
+import { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -23,7 +23,7 @@ import {
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 interface Props {
-    skjema: ISkjema<IOmBarnetUtvidetFeltTyper | IEøsForBarnFeltTyper, string>;
+    skjema: ISkjema<IOmBarnetFeltTyper | IEøsForBarnFeltTyper, string>;
     registrerteEøsBarnetrygdsperioder: Felt<IEøsBarnetrygdsperiode[]>;
     leggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
