@@ -48,8 +48,8 @@ const Miljø = (): MiljøProps => {
             dokumentProxyUrl: `https://www.nav.no${basePath}dokument`,
             dokumentUrl: 'http://familie-dokument/familie/dokument/api', //Vil uansett gå til bucket "familievedlegg" enn så lenge,
             modellVersjon: modellVersjon,
-            wonderwallUrl: '',
-            oauthCallbackUri: '',
+            wonderwallUrl: 'https://www.nav.no/oauth2/login?redirect=',
+            oauthCallbackUri: 'https://www.nav.no/oauth2/callback',
             port: 9000,
         };
     } else {
