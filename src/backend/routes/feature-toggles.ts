@@ -8,7 +8,7 @@ import {
     EAllFeatureToggles,
     ToggleKeys,
 } from '../../frontend/typer/feature-toggles';
-import { basePath } from '../environment';
+import { basePath } from '../../shared-utils/Miljø';
 import { isEnabled } from '../utils/unleash';
 
 const fetchAllFeatureTogglesHandler: RequestHandler<

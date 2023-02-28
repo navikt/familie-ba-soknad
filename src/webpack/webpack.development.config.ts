@@ -37,6 +37,7 @@ const devConfig: webpack.Configuration = mergeWithRules({
         proxy: {
             [`${basePath}modellversjon`]: `http://localhost:55554`,
             [`${basePath}api`]: `http://localhost:55554`,
+            [`${basePath}dokument`]: `http://localhost:55554`,
             [`${basePath}toggles`]: `http://localhost:55554`,
             [`${basePath}konverter`]: `http://localhost:55554`,
             // Hvis vi kjører uten en basepath som inneholder ordinaer vil denne og neste regel loope

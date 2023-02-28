@@ -20,12 +20,16 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import { KontonummerInfo } from './KontonummerInfo';
 
 const Kvittering: React.FC = () => {
-    const { avbrytOgSlettSøknad, sisteUtfylteStegIndex, settFåttGyldigKvittering, søknad } =
-        useApp();
+    const {
+        avbrytOgSlettSøknad,
+        sisteUtfylteStegIndex,
+        settFåttGyldigKvittering,
+        søknad,
+        innsendingStatus,
+    } = useApp();
     const { barnInkludertISøknaden, erEøs } = søknad;
     const { hentStegNummer } = useSteg();
 
-    const { innsendingStatus } = useApp();
     const innsendtDato: Dayjs =
         innsendingStatus.status === RessursStatus.SUKSESS
             ? dayjs(innsendingStatus.data.mottattDato)
