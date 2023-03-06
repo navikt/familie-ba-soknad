@@ -49,7 +49,6 @@
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/src/mockStyle.js",
       "nav-(.*)-style": "<rootDir>/src/mockStyle.js",
-      "nav-frontend-core": "<rootDir>/src/mockStyle.js",
       "styled-components/macro": "styled-components"
     },
     "watchPlugins": [
@@ -216,7 +215,6 @@
     "nav-frontend-alertstriper-style": "^3.0.1",
     "nav-frontend-chevron": "^1.0.30",
     "nav-frontend-chevron-style": "^1.0.4",
-    "nav-frontend-core": "^6.0.1",
     "nav-frontend-ikoner-assets": "^3.0.1",
     "nav-frontend-js-utils": "^1.0.19",
     "nav-frontend-lukknapp": "^2.0.1",

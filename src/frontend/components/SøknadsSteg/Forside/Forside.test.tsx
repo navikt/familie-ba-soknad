@@ -1,4 +1,4 @@
-import navFarger from 'nav-frontend-core';
+import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
 import { mockEøs, mockHistory, spyOnUseApp } from '../../../utils/testing';
 import { bekreftelseBoksBorderFarge } from './BekreftelseOgStartSoknad';
@@ -13,8 +13,8 @@ describe('Forside', () => {
     });
 
     test('Return riktig borderfarge basert på status', () => {
-        expect(bekreftelseBoksBorderFarge(BekreftelseStatus.FEIL)).toEqual(navFarger.navRod);
-        expect(bekreftelseBoksBorderFarge(BekreftelseStatus.BEKREFTET)).toEqual(navFarger.navGronn);
-        expect(bekreftelseBoksBorderFarge(BekreftelseStatus.NORMAL)).toEqual(navFarger.navOransje);
+        expect(bekreftelseBoksBorderFarge(BekreftelseStatus.FEIL)).toEqual(ANavRed);
+        expect(bekreftelseBoksBorderFarge(BekreftelseStatus.BEKREFTET)).toEqual(AGreen500);
+        expect(bekreftelseBoksBorderFarge(BekreftelseStatus.NORMAL)).toEqual(AOrange500);
     });
 });
