@@ -52,6 +52,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
                 initiellVerdi={felt.verdi}
                 name={guid()}
                 size={'medium'}
+                error={felt.hentNavInputProps(skjema.visFeilmeldinger).feil}
                 legend={
                     <>
                         <Element>
