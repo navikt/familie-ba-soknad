@@ -1,4 +1,4 @@
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 
 export interface IPar {
     id: number;
@@ -21,3 +21,5 @@ export type BarnetsId = string;
 
 export type TomString = '';
 export const tomString: TomString = '';
+
+export type ISODateString = string;
