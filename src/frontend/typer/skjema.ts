@@ -93,10 +93,6 @@ export interface IOmBarnetFeltTyper {
     andreForelderPensjonsperioderUtland: IPensjonsperiode[];
     borFastMedSøker: ESvar | null;
     skriftligAvtaleOmDeltBosted: ESvar | null;
-    søkerForTidsrom: ESvar | null;
-    søkerForTidsromStartdato: ISODateString;
-    søkerForTidsromSluttdato: DatoMedUkjent;
-    søkerForTidsromSluttdatoVetIkke: ESvar;
     sammeForelderSomAnnetBarn: string | null;
     søkerHarBoddMedAndreForelder: ESvar | null;
     borMedAndreForelderCheckbox: ESvar;

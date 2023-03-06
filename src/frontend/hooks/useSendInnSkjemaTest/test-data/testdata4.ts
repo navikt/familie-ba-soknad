@@ -87,18 +87,6 @@ export const testdata4: TilKontraktTestData = {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
                 },
-                søkerForTidsrom: {
-                    id: 'søker-for-tidsrom',
-                    svar: 'JA',
-                },
-                søkerForTidsromStartdato: {
-                    id: 'søker-for-tidsrom-startdato',
-                    svar: '2022-01-14',
-                },
-                søkerForTidsromSluttdato: {
-                    id: 'søker-for-tidsrom-sluttdato',
-                    svar: 'UKJENT',
-                },
             },
             {
                 id: 'c766c4f4-f319-482b-aba3-7e732d518a39',
@@ -274,18 +262,6 @@ export const testdata4: TilKontraktTestData = {
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
-                },
-                søkerForTidsrom: {
-                    id: 'søker-for-tidsrom',
-                    svar: 'NEI',
-                },
-                søkerForTidsromStartdato: {
-                    id: 'søker-for-tidsrom-startdato',
-                    svar: '',
-                },
-                søkerForTidsromSluttdato: {
-                    id: 'søker-for-tidsrom-sluttdato',
-                    svar: '',
                 },
             },
         ],
@@ -1161,26 +1137,6 @@ export const testdata4: TilKontraktTestData = {
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
-                    søkerForTidsrom: {
-                        label: {
-                            en: 'Are you applying for child benefit for a particular period of time for Barn 234567 89876?',
-                            nb: 'Søker du barnetrygd for et spesielt tidsrom for Barn 234567 89876?',
-                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for Barn 234567 89876?',
-                        },
-                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
-                    },
-                    søkerForTidsromStartdato: {
-                        label: { en: 'From', nb: 'Fra og med', nn: 'Frå og med' },
-                        verdi: { nb: '2022-01-14', nn: '2022-01-14', en: '2022-01-14' },
-                    },
-                    søkerForTidsromSluttdato: {
-                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
-                        verdi: {
-                            en: 'Period does not have an up to and including date / Up to and including date is in the future',
-                            nb: 'Tidsrommet har ikke en til og med dato / Til og med dato er frem i tid.',
-                            nn: 'Tidsrommet har ikkje ein til og med dato / Til og med dato er fram i tid',
-                        },
-                    },
                     institusjonOppholdSluttdato: {
                         label: {
                             en: 'When is the stay at the institution ending?',
@@ -1592,18 +1548,6 @@ export const testdata4: TilKontraktTestData = {
                             nn: 'Bur Barn Barnessen III fast saman med deg?',
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
-                    },
-                    søkerForTidsrom: {
-                        label: {
-                            en: 'Are you applying for child benefit for a particular period of time for Barn Barnessen III?',
-                            nb: 'Søker du barnetrygd for et spesielt tidsrom for Barn Barnessen III?',
-                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for Barn Barnessen III?',
-                        },
-                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
-                    },
-                    søkerForTidsromSluttdato: {
-                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
-                        verdi: { nb: '', nn: '', en: '' },
                     },
                     institusjonOppholdSluttdato: {
                         label: {

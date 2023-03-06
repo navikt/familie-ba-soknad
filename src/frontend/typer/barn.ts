@@ -55,9 +55,6 @@ export enum barnDataKeySpørsmål {
     boddMindreEnn12MndINorge = 'boddMindreEnn12MndINorge',
     planleggerÅBoINorge12Mnd = 'planleggerÅBoINorge12Mnd',
     borFastMedSøker = 'borFastMedSøker',
-    søkerForTidsrom = 'søkerForTidsrom',
-    søkerForTidsromStartdato = 'søkerForTidsromStartdato',
-    søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
     sammeForelderSomAnnetBarnMedId = 'sammeForelderSomAnnetBarnMedId',
     søkersSlektsforhold = 'søkersSlektsforhold',
     søkersSlektsforholdSpesifisering = 'søkersSlektsforholdSpesifisering',
@@ -125,9 +122,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.borFastMedSøker]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.søkerForTidsrom]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.søkerForTidsromStartdato]: ISøknadSpørsmål<ISODateString>;
-    [barnDataKeySpørsmål.søkerForTidsromSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: ISøknadSpørsmål<
         BarnetsId | AlternativtSvarForInput.ANNEN_FORELDER | null
     >;

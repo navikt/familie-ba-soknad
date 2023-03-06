@@ -11,7 +11,6 @@ import {
     barnDataKeySpørsmål,
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { PersonType } from '../../../../../typer/personType';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
@@ -299,58 +298,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             ].svar
                         }
                     />
-                )}
-            </StyledOppsummeringsFeltGruppe>
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerForTidsrom]}
-                            values={{ navn: barn.navn }}
-                        />
-                    }
-                    søknadsvar={barn[barnDataKeySpørsmål.søkerForTidsrom].svar}
-                />
-
-                {barn[barnDataKeySpørsmål.søkerForTidsrom].svar === ESvar.JA && (
-                    <>
-                        <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerForTidsromStartdato
-                                        ]
-                                    }
-                                />
-                            }
-                            søknadsvar={formaterDato(
-                                barn[barnDataKeySpørsmål.søkerForTidsromStartdato].svar
-                            )}
-                        />
-                        <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerForTidsromSluttdato
-                                        ]
-                                    }
-                                />
-                            }
-                            søknadsvar={(() => {
-                                const svar =
-                                    barn[barnDataKeySpørsmål.søkerForTidsromSluttdato].svar;
-                                return svar === AlternativtSvarForInput.UKJENT
-                                    ? formatMessage({
-                                          id: omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke
-                                          ],
-                                      })
-                                    : formaterDato(svar);
-                            })()}
-                        />
-                    </>
                 )}
             </StyledOppsummeringsFeltGruppe>
         </Oppsummeringsbolk>
