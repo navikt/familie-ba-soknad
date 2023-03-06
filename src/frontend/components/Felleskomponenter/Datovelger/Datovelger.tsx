@@ -97,12 +97,12 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 allowInvalidDateSelection={false}
                 limitations={hentBegrensninger()}
                 placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}
-                valgtDato={disabled ? '' : felt.verdi}
                 label={label}
                 {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}
                 onChange={dato => {
                     felt.hentNavInputProps(false).onChange(dato);
                 }}
+                value={disabled ? '' : felt.verdi}
                 feil={!!(felt.feilmelding && skjema.visFeilmeldinger)}
                 disabled={disabled}
                 locale={valgtLocale}

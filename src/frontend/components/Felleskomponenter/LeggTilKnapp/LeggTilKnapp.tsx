@@ -2,11 +2,9 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
-import { Feilmelding } from 'nav-frontend-typografi';
-
 import { AddCircle } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { Button, ErrorMessage } from '@navikt/ds-react';
+import { ARed500 } from '@navikt/ds-tokens/dist/tokens';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -17,10 +15,10 @@ interface Props {
     id?: string;
 }
 
-const StyledButton = styled(Button)<{ feilmelding: boolean }>`
+const StyledButton = styled(Button)`
     && {
         margin: 0.5rem 0 0.5rem 0;
-        border: ${props => (props.$feilmelding ? `2px solid ${navFarger.redError}` : 'none')};
+        border: ${props => (props.$feilmelding ? `2px solid ${ARed500}` : 'none')};
     }
 `;
 
@@ -32,10 +30,10 @@ export const LeggTilKnapp: React.FC<Props> = ({ onClick, språkTekst, feilmeldin
             type={'button'}
             onClick={onClick}
             $feilmelding={!!feilmelding}
+            icon={<AddCircle />}
         >
-            <AddCircle />
             <SpråkTekst id={språkTekst} />
         </StyledButton>
-        {!!feilmelding && <Feilmelding>{feilmelding}</Feilmelding>}
+        {!!feilmelding && <ErrorMessage>{feilmelding}</ErrorMessage>}
     </>
 );
