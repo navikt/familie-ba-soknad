@@ -5,9 +5,9 @@ import { renderHook } from '@testing-library/react-hooks';
 import { mockDeep } from 'jest-mock-extended';
 import { IntlProvider } from 'react-intl';
 
-import { ISODateString } from '@navikt/familie-form-elements';
 import { ISkjema, useFelt } from '@navikt/familie-skjema';
 
+import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { dagensDato } from '../../../utils/dato';
 import { silenceConsoleErrors, TestProvidere } from '../../../utils/testing';

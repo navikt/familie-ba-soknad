@@ -8,14 +8,11 @@ import styled from 'styled-components';
 import { Feilmelding, Normaltekst } from 'nav-frontend-typografi';
 
 import { ARed500 } from '@navikt/ds-tokens/dist/tokens';
-import {
-    DatepickerLimitations,
-    FamilieDatovelger,
-    ISODateString,
-} from '@navikt/familie-form-elements';
+import { DatepickerLimitations, FamilieDatovelger } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { dagensDato } from '../../../utils/dato';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';

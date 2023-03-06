@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 import { Avhengigheter, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
+import { ISODateString } from '../typer/common';
 import { validerDato } from '../utils/dato';
 
 const useDatovelgerFeltMedUkjent = ({
