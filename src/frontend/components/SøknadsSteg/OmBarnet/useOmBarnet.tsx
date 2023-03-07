@@ -78,6 +78,7 @@ export const useOmBarnet = (
     const { søknad, settSøknad, erUtvidet } = useApp();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
 
+    const søker = søknad.søker;
     const gjeldendeBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
 
     if (!gjeldendeBarn) {
@@ -867,7 +868,7 @@ export const useOmBarnet = (
                     oppdatertBarn = barn;
                 }
                 const barnTriggetEøs = skalTriggeEøsForBarn(oppdatertBarn);
-                const harEøsSteg = barnTriggetEøs || søknad.søker.triggetEøs;
+                const harEøsSteg = barnTriggetEøs || søker.triggetEøs;
 
                 return {
                     ...oppdatertBarn,
@@ -877,14 +878,21 @@ export const useOmBarnet = (
             });
 
         const skalNullstilleEøsForSøker =
-            !søknad.søker.triggetEøs &&
-            !oppdatertBarnInkludertISøknaden.find(barn => barn.triggetEøs);
+            !søker.triggetEøs && !oppdatertBarnInkludertISøknaden.find(barn => barn.triggetEøs);
+
+        const oppgittUtvidetÅrsak = søker.utvidet.spørsmål.årsak.svar;
+        const søkersSivilstand = søker.sivilstand.type;
+        const skiltSeparertEnkeMenIkkeRegistrert =
+            (oppgittUtvidetÅrsak === Årsak.SKILT && søkersSivilstand !== ESivilstand.SKILT) ||
+            (oppgittUtvidetÅrsak === Årsak.SEPARERT && søkersSivilstand !== ESivilstand.SEPARERT) ||
+            (oppgittUtvidetÅrsak === Årsak.ENKE_ENKEMANN &&
+                søkersSivilstand !== ESivilstand.ENKE_ELLER_ENKEMANN);
 
         settSøknad({
             ...søknad,
             søker: skalNullstilleEøsForSøker
-                ? { ...søknad.søker, ...nullstilteEøsFelterForSøker(søknad.søker) }
-                : søknad.søker,
+                ? { ...søker, ...nullstilteEøsFelterForSøker(søker) }
+                : søker,
             barnInkludertISøknaden: oppdatertBarnInkludertISøknaden,
             dokumentasjon: søknad.dokumentasjon.map(dok => {
                 switch (dok.dokumentasjonsbehov) {
@@ -912,8 +920,7 @@ export const useOmBarnet = (
                     case Dokumentasjonsbehov.SEPARERT_SKILT_ENKE:
                         return genererOppdatertDokumentasjon(
                             dok,
-                            (søknad.søker.sivilstand.type === ESivilstand.SKILT ||
-                                søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.SKILT) &&
+                            skiltSeparertEnkeMenIkkeRegistrert &&
                                 søknad.søknadstype === ESøknadstype.UTVIDET,
                             gjeldendeBarn.id
                         );
