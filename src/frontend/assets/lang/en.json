@@ -552,7 +552,7 @@
   "ombarnet.institusjon.startdato.feilmelding": "You must state when the stay at the institution started in order to be able to proceed",
   "ombarnet.institusjon.startdato.spm": "When did the stay at the institution start?",
   "ombarnet.institusjon.ukjent-sluttdato.spm": "I don't know when the stay at the institution is ending",
-  "ombarnet.les-mer-om-bosted.lenke": "https://www.nav.no/familie/alene-med-barn/hva-naa",
+  "ombarnet.les-mer-om-bosted.lenke": "https://www.nav.no/alene-med-barn",
   "ombarnet.les-mer-om-bosted.lenketekst": "Read more about dual residence and permanent residence (opens in a new window)",
   "ombarnet.nårflyttetfra.borsammencheck": "We are currently living together",
   "ombarnet.nårflyttetfra.feilmelding": "You must state when you moved apart in order to be able to proceed",
