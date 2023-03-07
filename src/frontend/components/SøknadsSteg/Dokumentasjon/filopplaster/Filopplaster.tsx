@@ -3,10 +3,10 @@ import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Upload } from '@navikt/ds-icons';
+import { ABlue500, ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
@@ -33,18 +33,18 @@ const FilopplastningBoks = styled.button<FilopplastningBoksProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px dashed ${props => (props.harFeil ? '#ba3a26' : navFarger.navGra80)};
+    border: 2px dashed ${props => (props.harFeil ? '#ba3a26' : ABorderDefault)};
     border-radius: 4px;
     background-color: rgba(204, 222, 230, 0.5);
     width: 100%;
     padding: 1rem;
     margin: 2rem 0 1rem 0;
-    color: ${navFarger.navBla};
+    color: ${ABlue500};
     box-sizing: border-box;
 
     :focus,
     :hover {
-        border: 2px solid ${props => (props.harFeil ? '#ba3a26' : navFarger.navBla)};
+        border: 2px solid ${props => (props.harFeil ? '#ba3a26' : ABlue500)};
         cursor: pointer;
     }
 `;

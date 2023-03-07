@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, useFelt } from '@navikt/familie-skjema';
 
+import { ISODateString } from '../typer/common';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { validerDato } from '../utils/dato';
 

@@ -2,11 +2,10 @@ import React from 'react';
 
 import dayjs from 'dayjs';
 
-import { ISODateString } from '@navikt/familie-form-elements';
 import { feil, FeltState, ok } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { AlternativtSvarForInput } from '../typer/common';
+import { AlternativtSvarForInput, ISODateString } from '../typer/common';
 
 export const erDatoFormatGodkjent = (verdi: string) => {
     /*FamilieDatoVelger har allerede sin egen validering.

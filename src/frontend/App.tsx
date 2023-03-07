@@ -13,8 +13,8 @@ import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 import { RoutesProvider } from './context/RoutesContext';
 import { StegProvider } from './context/StegContext';
-import { routerBasePath } from './Miljø';
 import { GlobalStyle } from './Theme';
+import { routerBasePath } from './utils/hjelpefunksjoner';
 
 function App() {
     return (

@@ -1,10 +1,11 @@
 import express, { Express, RequestHandler } from 'express';
 
-import { basePath } from '../environment';
+import Miljø, { erLokalt, basePath } from '../../shared-utils/Miljø';
 import { erklaeringInterceptor } from '../middlewares/erklaering-interceptor';
 import { escapeBody } from '../middlewares/escape';
 import { modellVersjonInterceptor } from '../middlewares/modell-versjon-interceptor';
-import { createApiForwardingFunction } from '../middlewares/proxy';
+import { addCallId, doProxy } from '../middlewares/proxy';
+import attachToken from '../middlewares/tokenProxy';
 
 export const konfigurerApi = (app: Express): Express => {
     // Sett opp middleware for input-sanitering
@@ -12,7 +13,24 @@ export const konfigurerApi = (app: Express): Express => {
     app.use(`${basePath}api/soknad`, express.json({ limit: '5mb' }) as RequestHandler);
     app.use(`${basePath}api/soknad`, erklaeringInterceptor);
     app.use(`${basePath}api/soknad`, escapeBody);
-    app.use(`${basePath}api`, createApiForwardingFunction());
+    if (!erLokalt()) {
+        app.use(
+            `${basePath}api`,
+            addCallId(),
+            attachToken('familie-baks-soknad-api'),
+            doProxy(Miljø().soknadApiUrl, `${basePath}api`)
+        );
+
+        app.use(
+            `${basePath}dokument`,
+            addCallId(),
+            attachToken('familie-dokument'),
+            doProxy(Miljø().dokumentUrl, `${basePath}dokument`)
+        );
+    } else {
+        app.use(`${basePath}api`, doProxy(Miljø().soknadApiUrl, `${basePath}api`));
+        app.use(`${basePath}dokument`, doProxy(Miljø().dokumentUrl, `${basePath}dokument`));
+    }
 
     return app;
 };

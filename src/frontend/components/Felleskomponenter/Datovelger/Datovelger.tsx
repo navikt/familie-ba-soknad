@@ -5,17 +5,14 @@ import { useIntl } from 'react-intl';
 import { css } from 'styled-components';
 import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
 import { Feilmelding, Normaltekst } from 'nav-frontend-typografi';
 
-import {
-    DatepickerLimitations,
-    FamilieDatovelger,
-    ISODateString,
-} from '@navikt/familie-form-elements';
+import { ARed500 } from '@navikt/ds-tokens/dist/tokens';
+import { DatepickerLimitations, FamilieDatovelger } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { dagensDato } from '../../../utils/dato';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -40,10 +37,10 @@ const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
             .nav-datovelger:not(:hover) {
                 input:not(:focus, :active),
                 input:not(:focus, :active) + button {
-                    border-color: ${navFarger.redError};
+                    border-color: ${ARed500};
                 }
                 input:not(:focus, :active) {
-                    box-shadow: 0 0 0 1px ${navFarger.redError};
+                    box-shadow: 0 0 0 1px ${ARed500};
                 }
             }
         `}
@@ -97,12 +94,12 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 allowInvalidDateSelection={false}
                 limitations={hentBegrensninger()}
                 placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}
-                valgtDato={disabled ? '' : felt.verdi}
                 label={label}
                 {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}
                 onChange={dato => {
                     felt.hentNavInputProps(false).onChange(dato);
                 }}
+                value={disabled ? '' : felt.verdi}
                 feil={!!(felt.feilmelding && skjema.visFeilmeldinger)}
                 disabled={disabled}
                 locale={valgtLocale}

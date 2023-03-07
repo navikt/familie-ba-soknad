@@ -1,12 +1,12 @@
 import { Ressurs } from '@navikt/familie-typer';
 
-import Miljø from '../Miljø';
+import Miljø from '../../shared-utils/Miljø';
 import { ISøkerRespons } from '../typer/person';
 
 export const hentSluttbrukerFraPdl = (axiosRequest): Promise<Ressurs<ISøkerRespons>> => {
-    const { soknadApi } = Miljø();
+    const { soknadApiProxyUrl } = Miljø();
     return axiosRequest({
-        url: `${soknadApi}/personopplysning?ytelse=BARNETRYGD`,
+        url: `${soknadApiProxyUrl}/personopplysning?ytelse=BARNETRYGD`,
         method: 'GET',
         withCredentials: true,
         påvirkerSystemLaster: true,

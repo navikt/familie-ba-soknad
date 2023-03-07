@@ -8,10 +8,10 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
+import Miljø from '../../../../shared-utils/Miljø';
 import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
 import { useApp } from '../../../context/AppContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
-import Miljø from '../../../Miljø';
 import { RouteEnum } from '../../../typer/routes';
 import { logSidevisningBarnetrygd } from '../../../utils/amplitude';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';

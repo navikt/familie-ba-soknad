@@ -3,8 +3,8 @@ import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { FileRejection } from 'react-dropzone';
 
+import Miljø from '../../../../../shared-utils/Miljø';
 import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
-import Miljø from '../../../../Miljø';
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 
@@ -87,13 +87,17 @@ export const useFilopplaster = (
                         requestData.append('file', fil);
 
                         await axios
-                            .post<OpplastetVedlegg>(`${Miljø().dokumentUrl}`, requestData, {
-                                withCredentials: true,
-                                headers: {
-                                    'content-type': 'multipart/form-data',
-                                    accept: 'application/json',
-                                },
-                            })
+                            .post<OpplastetVedlegg>(
+                                `${Miljø().dokumentProxyUrl}/mapper/familievedlegg`,
+                                requestData,
+                                {
+                                    withCredentials: true,
+                                    headers: {
+                                        'content-type': 'multipart/form-data',
+                                        accept: 'application/json',
+                                    },
+                                }
+                            )
                             .then((response: { data: OpplastetVedlegg }) => {
                                 const { data } = response;
                                 nyeVedlegg.push({

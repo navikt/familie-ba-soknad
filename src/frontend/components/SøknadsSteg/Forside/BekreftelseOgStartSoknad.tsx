@@ -3,11 +3,11 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Button } from '@navikt/ds-react';
+import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -35,11 +35,11 @@ const StyledButton = styled(Button)`
 export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
     switch (status) {
         case BekreftelseStatus.BEKREFTET:
-            return navFarger.navGronn;
+            return AGreen500;
         case BekreftelseStatus.FEIL:
-            return navFarger.navRod;
+            return ANavRed;
         default:
-            return navFarger.navOransje;
+            return AOrange500;
     }
 };
 
