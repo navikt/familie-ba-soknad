@@ -163,18 +163,6 @@ export const testdata1: TilKontraktTestData = {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
                 },
-                søkerForTidsrom: {
-                    id: 'søker-for-tidsrom',
-                    svar: 'NEI',
-                },
-                søkerForTidsromStartdato: {
-                    id: 'søker-for-tidsrom-startdato',
-                    svar: '',
-                },
-                søkerForTidsromSluttdato: {
-                    id: 'søker-for-tidsrom-sluttdato',
-                    svar: '',
-                },
             },
         ],
         lestOgForståttBekreftelse: true,
@@ -699,18 +687,6 @@ export const testdata1: TilKontraktTestData = {
                             nn: 'Bur Barn 234567 89876 fast saman med deg?',
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
-                    },
-                    søkerForTidsrom: {
-                        label: {
-                            en: 'Are you applying for child benefit for a particular period of time for Barn 234567 89876?',
-                            nb: 'Søker du barnetrygd for et spesielt tidsrom for Barn 234567 89876?',
-                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for Barn 234567 89876?',
-                        },
-                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
-                    },
-                    søkerForTidsromSluttdato: {
-                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
-                        verdi: { nb: '', nn: '', en: '' },
                     },
                     institusjonOppholdSluttdato: {
                         label: {

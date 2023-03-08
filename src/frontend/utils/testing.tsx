@@ -382,18 +382,6 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     id: OmBarnetSpørsmålsId.borFastMedSøker,
                     svar: ESvar.JA,
                 },
-                [barnDataKeySpørsmål.søkerForTidsrom]: {
-                    id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
-                    svar: ESvar.NEI,
-                },
-                [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
-                    id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
-                    svar: AlternativtSvarForInput.UKJENT,
-                },
-                [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
-                    id: OmBarnetSpørsmålsId.søkerForTidsromSluttdato,
-                    svar: AlternativtSvarForInput.UKJENT,
-                },
                 [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
                     id: OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd,
                     svar: ESvar.NEI,

@@ -30,7 +30,7 @@
   "dokumentasjon.oppholdstillatelse.informasjon": "<p>Du må legge ved vedtak frå UDI om opphaldsløyve fordi du har opplyst om at det er søkt om asyl for deg og/eller nokon av barna dine. {linjeskift} {linjeskift} Vedtaket må innehalde:</p> <punktliste> <punkt> Kva dato vedtaket var gjort </punkt> <punkt> Kven vedtaket gjeld </punkt> <punkt> Kor lenge opphaldsløyvet gjeld </punkt> </punktliste>",
   "dokumentasjon.oppholdstillatelse.vedleggtittel": "Vedtak om opphaldsløyve",
   "dokumentasjon.send-søknad.knapp": "Send søknad",
-  "dokumentasjon.separasjonskilsmissedødsfall.informasjon": "<p>Du må legge ved dokumentasjon på separasjon, skilsmisse eller dødsfall fordi du enten <punktliste> <punkt>har opplyst at du er separert, skilt eller enke/enkemann utan at dette er registrert i folkeregisteret i Noreg, eller</punkt> <punkt>du er skilt og søker om utvida barnetrygd for tida før skilsmissen.</punkt> Dokumentasjonen må vise frå kva dato, og i kva land du er separert, skilt eller enke/enkemann<./p>",
+  "dokumentasjon.separasjonskilsmissedødsfall.informasjon": "<p>Du må legge ved dokumentasjon på separasjon, skilsmisse eller dødsfall fordi du har opplyst at du er separert, skilt eller enke/enkemann utan at dette er registrert i folkeregisteret i Noreg. Dokumentasjonen må vise frå kva dato, og i kva land du er separert, skilt eller enke/enkemann<./p>",
   "dokumentasjon.separasjonskilsmissedødsfall.vedleggtittel": "Dokumentasjon på separasjon, skilsmisse eller dødsfall",
   "dokumentasjon.sidetittel": "Last opp dokumentasjon",
   "dokumentasjon.tilleggsskjema.informasjon": "<p>Du må legge ved tilleggsskjema fordi du har gjeve opplysningar som gjer at du kan ha rett til barnetrygd etter EØS-regelverket.</p>",
