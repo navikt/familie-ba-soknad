@@ -6,12 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
 import { BarnetsId } from '../../../typer/common';
-import { ESivilstand } from '../../../typer/kontrakt/generelle';
-import { Årsak } from '../../../typer/utvidet';
-import { dagensDato } from '../../../utils/dato';
-import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -32,7 +27,6 @@ const EksternLenkeContainer = styled.div`
 `;
 
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
-    const { erUtvidet, søknad } = useApp();
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -135,78 +129,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         </>
                     )}
                 </SkjemaFieldset>
-            )}
-            {skjema.felter.søkerForTidsrom.erSynlig && (
-                <KomponentGruppe dynamisk>
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.søkerForTidsrom}
-                        spørsmålTekstId={'ombarnet.søker-for-periode.spm'}
-                        språkValues={{ navn: barn.navn }}
-                        tilleggsinfo={
-                            <AlertStripe>
-                                <SpråkTekst id={'ombarnet.søker-for-periode.alert'} />
-                            </AlertStripe>
-                        }
-                    />
-                    {skjema.felter.søkerForTidsromStartdato.erSynlig && (
-                        <KomponentGruppe dynamisk>
-                            <Datovelger
-                                felt={skjema.felter.søkerForTidsromStartdato}
-                                skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.søkerForTidsromStartdato
-                                            ]
-                                        }
-                                    />
-                                }
-                                avgrensMaxDato={dagensDato()}
-                            />
-                            {erUtvidet &&
-                                (søknad.søker.sivilstand.type === ESivilstand.SKILT ||
-                                    søknad.søker.utvidet.spørsmål.årsak.svar === Årsak.SKILT) && (
-                                    <VedleggNotis
-                                        språkTekstId={'ombarnet.barnetrygdtilbakeitid.info'}
-                                    />
-                                )}
-                            <>
-                                <Datovelger
-                                    felt={skjema.felter.søkerForTidsromSluttdato}
-                                    tilhørendeFraOgMedFelt={skjema.felter.søkerForTidsromStartdato}
-                                    skjema={skjema}
-                                    label={
-                                        <SpråkTekst
-                                            id={
-                                                omBarnetSpørsmålSpråkId[
-                                                    OmBarnetSpørsmålsId.søkerForTidsromSluttdato
-                                                ]
-                                            }
-                                        />
-                                    }
-                                    disabled={
-                                        skjema.felter.søkerForTidsromSluttdatoVetIkke.verdi ===
-                                        ESvar.JA
-                                    }
-                                    avgrensDatoFremITid
-                                />
-                                <SkjemaCheckbox
-                                    labelSpråkTekstId={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke
-                                        ]
-                                    }
-                                    felt={skjema.felter.søkerForTidsromSluttdatoVetIkke}
-                                />
-                            </>
-                            <AlertStripe>
-                                <SpråkTekst id={'ombarnet.søker-for-periode.sluttdato.info'} />
-                            </AlertStripe>
-                        </KomponentGruppe>
-                    )}
-                </KomponentGruppe>
             )}
             {skjema.felter.søkerHarBoddMedAndreForelder.erSynlig && (
                 <KomponentGruppe dynamisk>

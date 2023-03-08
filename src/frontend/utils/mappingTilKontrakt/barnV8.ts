@@ -44,7 +44,6 @@ export const barnISøknadsFormatV8 = (
         adressebeskyttelse,
         andreForelder,
         omsorgsperson,
-        søkerForTidsromSluttdato,
         institusjonOppholdSluttdato,
         utenlandsperioder,
         // Nye felter under utvikling av EØS full
@@ -128,14 +127,6 @@ export const barnISøknadsFormatV8 = (
                 navn: navn,
                 barn: navn,
             }),
-            [barnDataKeySpørsmål.søkerForTidsromSluttdato]: søknadsfeltBarn(
-                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerForTidsromSluttdato),
-                sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    søkerForTidsromSluttdato.svar,
-                    omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerForTidsromSluttdatoVetIkke]
-                ),
-                barn
-            ),
             [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(

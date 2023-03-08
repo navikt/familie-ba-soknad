@@ -32,9 +32,9 @@ export const erLokalt = () => !erProd() && !erDev();
 const Miljø = (): MiljøProps => {
     if (erDev()) {
         return {
-            soknadApiProxyUrl: `https://familie-ba-soknad.dev.nav.no${basePath}api`,
+            soknadApiProxyUrl: `https://familie-ba-soknad.intern.dev.nav.no${basePath}api`,
             soknadApiUrl: `http://familie-baks-soknad-api/api`,
-            dokumentProxyUrl: `https://familie-ba-soknad.dev.nav.no${basePath}dokument`,
+            dokumentProxyUrl: `https://familie-ba-soknad.intern.dev.nav.no${basePath}dokument`,
             dokumentUrl: 'http://familie-dokument/familie/dokument/api', //Vil uansett gå til bucket "familievedlegg" enn så lenge
             modellVersjon: modellVersjon,
             wonderwallUrl:
