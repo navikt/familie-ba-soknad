@@ -55,6 +55,21 @@ const Oppfølgningsspørsmål: React.FC<{
 }) => {
     const { erÅpen: utenlandsmodalErÅpen, toggleModal: toggleUtenlandsmodal } = useModal();
 
+    const {
+        institusjonIUtlandCheckbox,
+        institusjonOppholdStartdato,
+        institusjonOppholdSluttdato,
+        institusjonOppholdSluttVetIkke,
+        institusjonspostnummer,
+        institusjonsadresse,
+        institusjonsnavn,
+        registrerteUtenlandsperioder,
+        mottarEllerMottokEøsBarnetrygd,
+        planleggerÅBoINorge12Mnd,
+        pågåendeSøknadHvilketLand,
+        pågåendeSøknadFraAnnetEøsLand,
+    } = skjema.felter;
+
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
@@ -74,24 +89,24 @@ const Oppfølgningsspørsmål: React.FC<{
                         labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonIUtland]
                         }
-                        felt={skjema.felter.institusjonIUtlandCheckbox}
+                        felt={institusjonIUtlandCheckbox}
                     />
                     <SkjemaFeltInput
-                        felt={skjema.felter.institusjonsnavn}
+                        felt={institusjonsnavn}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonsnavn]
                         }
                     />
                     <SkjemaFeltInput
-                        felt={skjema.felter.institusjonsadresse}
+                        felt={institusjonsadresse}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonsadresse]
                         }
                     />
                     <SkjemaFeltInput
-                        felt={skjema.felter.institusjonspostnummer}
+                        felt={institusjonspostnummer}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonspostnummer]
@@ -99,7 +114,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         bredde={'S'}
                     />
                     <Datovelger
-                        felt={skjema.felter.institusjonOppholdStartdato}
+                        felt={institusjonOppholdStartdato}
                         skjema={skjema}
                         avgrensMaxDato={dagensDato()}
                         label={
@@ -114,10 +129,10 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                     <>
                         <Datovelger
-                            felt={skjema.felter.institusjonOppholdSluttdato}
+                            felt={institusjonOppholdSluttdato}
                             avgrensMinDato={
                                 erSammeDatoSomDagensDato(
-                                    stringTilDate(skjema.felter.institusjonOppholdStartdato.verdi)
+                                    stringTilDate(institusjonOppholdStartdato.verdi)
                                 )
                                     ? morgendagensDato()
                                     : dagensDato()
@@ -132,9 +147,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                     }
                                 />
                             }
-                            disabled={
-                                skjema.felter.institusjonOppholdSluttVetIkke.verdi === ESvar.JA
-                            }
+                            disabled={institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
                         />
                         <SkjemaCheckbox
                             labelSpråkTekstId={
@@ -142,7 +155,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                     OmBarnetSpørsmålsId.institusjonOppholdVetIkke
                                 ]
                             }
-                            felt={skjema.felter.institusjonOppholdSluttVetIkke}
+                            felt={institusjonOppholdSluttVetIkke}
                         />
                     </>
                 </SkjemaFieldset>
@@ -174,18 +187,18 @@ const Oppfølgningsspørsmål: React.FC<{
                         språkTekst={'felles.leggtilutenlands.knapp'}
                         onClick={toggleUtenlandsmodal}
                         feilmelding={
-                            skjema.felter.registrerteUtenlandsperioder.erSynlig &&
-                            skjema.felter.registrerteUtenlandsperioder.feilmelding &&
+                            registrerteUtenlandsperioder.erSynlig &&
+                            registrerteUtenlandsperioder.feilmelding &&
                             skjema.visFeilmeldinger && (
                                 <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
                             )
                         }
                     />
-                    {skjema.felter.planleggerÅBoINorge12Mnd.erSynlig && (
+                    {planleggerÅBoINorge12Mnd.erSynlig && (
                         <KomponentGruppe inline dynamisk>
                             <JaNeiSpm
                                 skjema={skjema}
-                                felt={skjema.felter.planleggerÅBoINorge12Mnd}
+                                felt={planleggerÅBoINorge12Mnd}
                                 spørsmålTekstId={
                                     omBarnetSpørsmålSpråkId[
                                         OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
@@ -193,7 +206,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                 }
                                 språkValues={{ barn: barn.navn }}
                             />
-                            {skjema.felter.planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
+                            {planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
                                 <AlertStripe type={'advarsel'} dynamisk>
                                     <SpråkTekst
                                         id={'ombarnet.planlagt-sammenhengende-opphold.alert'}
@@ -212,16 +225,16 @@ const Oppfølgningsspørsmål: React.FC<{
                     <KomponentGruppe>
                         <JaNeiSpm
                             skjema={skjema}
-                            felt={skjema.felter.pågåendeSøknadFraAnnetEøsLand}
+                            felt={pågåendeSøknadFraAnnetEøsLand}
                             spørsmålTekstId={
                                 omBarnetSpørsmålSpråkId[
                                     OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand
                                 ]
                             }
                         />
-                        {skjema.felter.pågåendeSøknadHvilketLand.erSynlig && (
+                        {pågåendeSøknadHvilketLand.erSynlig && (
                             <LandDropdown
-                                felt={skjema.felter.pågåendeSøknadHvilketLand}
+                                felt={pågåendeSøknadHvilketLand}
                                 skjema={skjema}
                                 kunEøs={true}
                                 ekskluderNorge
@@ -239,7 +252,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         <Barnetrygdperiode
                             skjema={skjema}
                             registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
-                            tilhørendeJaNeiSpmFelt={skjema.felter.mottarEllerMottokEøsBarnetrygd}
+                            tilhørendeJaNeiSpmFelt={mottarEllerMottokEøsBarnetrygd}
                             leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
                             fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
                             barn={barn}

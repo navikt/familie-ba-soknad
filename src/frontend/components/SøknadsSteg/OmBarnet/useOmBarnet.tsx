@@ -178,15 +178,12 @@ export const useOmBarnet = (
 
     const institusjonOppholdSluttdato = useDatovelgerFeltMedUkjent({
         feltId: gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].id,
-        initiellVerdi:
-            gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar !==
-            AlternativtSvarForInput.UKJENT
-                ? gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
-                : '',
+        initiellVerdi: formaterInitVerdiForInputMedUkjent(
+            gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
+        ),
         vetIkkeCheckbox: institusjonOppholdSluttVetIkke,
         feilmeldingSpråkId: 'ombarnet.institusjon.sluttdato.feilmelding',
         skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
-        nullstillVedAvhengighetEndring: false,
         startdatoAvgrensning: erSammeDatoSomDagensDato(
             stringTilDate(institusjonOppholdStartdato.verdi)
         )
@@ -197,6 +194,7 @@ export const useOmBarnet = (
         )
             ? undefined
             : 'felles.dato.tilbake-i-tid.feilmelding',
+        avhengigheter: { institusjonOppholdStartdato },
     });
 
     /*---UTENLANDSOPPHOLD---*/
