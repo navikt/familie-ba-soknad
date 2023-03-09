@@ -2,6 +2,7 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
+import { formatISO } from 'date-fns';
 import { mockDeep } from 'jest-mock-extended';
 import { IntlProvider } from 'react-intl';
 
@@ -66,7 +67,7 @@ describe('Datovelger', () => {
         } = renderHook(
             () => {
                 const tilOgMed = useFelt<ISODateString>({
-                    verdi: dagensDato(),
+                    verdi: formatISO(dagensDato()),
                     feltId: 'til-og-med',
                 });
                 return {

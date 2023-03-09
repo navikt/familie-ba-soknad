@@ -2,17 +2,25 @@ import { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arb
 import { BarnetrygdperiodeSpørsmålId } from '../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { PensjonsperiodeSpørsmålId } from '../components/Felleskomponenter/Pensjonsmodal/spørsmål';
 import { UtbetalingerSpørsmålId } from '../components/Felleskomponenter/UtbetalingerModal/spørsmål';
-import { BarnetsId, ISODateString } from '../typer/common';
+import { BarnetsId } from '../typer/common';
 import { PersonType } from '../typer/personType';
-import { dagenEtterDato, dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from './dato';
+import {
+    dagenEtterDato,
+    dagensDato,
+    erDatoFormatGodkjent,
+    erSammeDatoSomDagensDato,
+    morgendagensDato,
+    stringTilDate,
+} from './dato';
 
 export const minTilDatoForUtbetalingEllerArbeidsperiode = (
     periodenErAvsluttet: boolean,
-    fraDato: ISODateString
+    fraDato: string
 ) => {
+    const gyldigFraDato = fraDato !== '' && erDatoFormatGodkjent(stringTilDate(fraDato));
     if (periodenErAvsluttet) {
-        return dagenEtterDato(fraDato);
-    } else if (erSammeDatoSomDagensDato(fraDato)) {
+        return gyldigFraDato ? dagenEtterDato(stringTilDate(fraDato)) : undefined;
+    } else if (gyldigFraDato && erSammeDatoSomDagensDato(stringTilDate(fraDato))) {
         return morgendagensDato();
     } else {
         return dagensDato();

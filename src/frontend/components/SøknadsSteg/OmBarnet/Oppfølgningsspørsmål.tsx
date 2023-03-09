@@ -9,7 +9,12 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
-import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from '../../../utils/dato';
+import {
+    dagensDato,
+    erSammeDatoSomDagensDato,
+    morgendagensDato,
+    stringTilDate,
+} from '../../../utils/dato';
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
@@ -112,7 +117,7 @@ const Oppfølgningsspørsmål: React.FC<{
                             felt={skjema.felter.institusjonOppholdSluttdato}
                             avgrensMinDato={
                                 erSammeDatoSomDagensDato(
-                                    skjema.felter.institusjonOppholdStartdato.verdi
+                                    stringTilDate(skjema.felter.institusjonOppholdStartdato.verdi)
                                 )
                                     ? morgendagensDato()
                                     : dagensDato()

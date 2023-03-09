@@ -9,7 +9,12 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { PersonType } from '../../../typer/personType';
 import { IArbeidsperioderFeltTyper } from '../../../typer/skjema';
-import { dagensDato, erSammeDatoSomDagensDato, gårsdagensDato } from '../../../utils/dato';
+import {
+    dagensDato,
+    erSammeDatoSomDagensDato,
+    gårsdagensDato,
+    stringTilDate,
+} from '../../../utils/dato';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import {
     arbeidslandFeilmelding,
@@ -67,7 +72,6 @@ export const useArbeidsperiodeSkjema = (
               andreForelderErDød,
         feilmeldingSpråkId: 'felles.nårbegyntearbeidsperiode.feilmelding',
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
-        nullstillVedAvhengighetEndring: true,
     });
 
     const tilDatoArbeidsperiodeUkjent = useFelt<ESvar>({
@@ -95,9 +99,11 @@ export const useArbeidsperiodeSkjema = (
             fraDatoArbeidsperiode.verdi
         ),
         customStartdatoFeilmelding:
-            erSammeDatoSomDagensDato(fraDatoArbeidsperiode.verdi) || periodenErAvsluttet
+            erSammeDatoSomDagensDato(stringTilDate(fraDatoArbeidsperiode.verdi)) ||
+            periodenErAvsluttet
                 ? undefined
                 : 'felles.dato.tilbake-i-tid.feilmelding',
+        avhengigheter: { fraDatoArbeidsperiode },
     });
 
     const skjema = useSkjema<IArbeidsperioderFeltTyper, 'string'>({

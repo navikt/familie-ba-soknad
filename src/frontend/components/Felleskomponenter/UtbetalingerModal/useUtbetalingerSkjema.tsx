@@ -8,7 +8,12 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
 import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
-import { dagensDato, erSammeDatoSomDagensDato, gårsdagensDato } from '../../../utils/dato';
+import {
+    dagensDato,
+    erSammeDatoSomDagensDato,
+    gårsdagensDato,
+    stringTilDate,
+} from '../../../utils/dato';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import { fårUtbetalingNåFeilmelding, utbetalingslandFeilmelding } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
@@ -49,7 +54,6 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         feilmeldingSpråkId: 'felles.nårbegynteutbetalingene.feilmelding',
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
-        nullstillVedAvhengighetEndring: true,
     });
 
     const utbetalingTilDatoUkjent = useFelt<ESvar>({
@@ -74,9 +78,10 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
             utbetalingFraDato.verdi
         ),
         customStartdatoFeilmelding:
-            erSammeDatoSomDagensDato(utbetalingFraDato.verdi) || periodenErAvsluttet
+            erSammeDatoSomDagensDato(stringTilDate(utbetalingFraDato.verdi)) || periodenErAvsluttet
                 ? undefined
                 : 'felles.dato.tilbake-i-tid.feilmelding',
+        avhengigheter: { utbetalingFraDato },
     });
 
     const skjema = useSkjema<IUtbetalingerFeltTyper, 'string'>({
