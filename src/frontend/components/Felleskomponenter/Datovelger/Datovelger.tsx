@@ -108,6 +108,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
             <UNSAFE_DatePicker dropdownCaption strategy={strategy} {...datepickerProps}>
                 <UNSAFE_DatePicker.Input
                     {...inputProps}
+                    id={felt.id}
                     disabled={disabled}
                     size={'medium'}
                     label={label}

@@ -10,12 +10,26 @@ import { ISkjema, useFelt } from '@navikt/familie-skjema';
 
 import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import * as datoUtils from '../../../utils/dato';
 import { dagensDato } from '../../../utils/dato';
 import { silenceConsoleErrors, TestProvidere } from '../../../utils/testing';
 import Datovelger from './Datovelger';
 
 describe('Datovelger', () => {
+    class ResizeObserver {
+        observe() {
+            // do nothing
+        }
+        unobserve() {
+            // do nothing
+        }
+        disconnect() {
+            // do nothing
+        }
+    }
+
     silenceConsoleErrors();
+    window.ResizeObserver = ResizeObserver;
     test('Datovelger kan begrenses av annen fra om med datovelger', () => {
         const {
             result: { current },
@@ -55,13 +69,13 @@ describe('Datovelger', () => {
 
         const tilOgMedÅpneknapp = getAllByRole('button')[1];
         act(() => tilOgMedÅpneknapp.click());
-        const forrigeDag =
-            container.querySelector('[aria-selected="true"]')?.previousElementSibling;
+        const forrigeDag = container.querySelector('[aria-label="torsdag 9"]');
 
-        expect(forrigeDag?.getAttribute('aria-disabled')).toEqual('true');
+        expect(forrigeDag?.getAttribute('disabled')).not.toBeNull();
     });
 
     it('kan avgrenses frem i tid', () => {
+        jest.spyOn(datoUtils, 'dagensDato').mockReturnValue(new Date('2021-09-10'));
         const {
             result: { current },
         } = renderHook(
@@ -95,94 +109,7 @@ describe('Datovelger', () => {
         const datovelgerÅpneKnapp = getByRole('button');
 
         act(() => datovelgerÅpneKnapp.click());
-        const nesteDag = container.querySelector('[aria-selected="true"]')?.nextElementSibling;
-        expect(nesteDag?.getAttribute('aria-disabled')).toEqual('true');
+        const nesteDag = container.querySelector('[aria-label="lørdag 11"]');
+        expect(nesteDag?.getAttribute('disabled')).not.toBeNull();
     });
 });
-
-// TODO: Endre testene til å ikke bruke OmDeg for å teste Datovelger-komponenten
-
-// describe('Test ulike caser for feilmelding hos datovelger', () => {
-//     mockHistory(['/om-deg']);
-//     const søknad = mekkGyldigSøknad();
-//     const søknadMock = {
-//         ...søknad,
-//         søker: {
-//             ...søknad.søker,
-//             adressebeskyttelse: true,
-//             statsborgerskap: [{ landkode: 'NOR' }],
-//             oppholderSegINorge: {
-//                 id: OmDegSpørsmålId.oppholderSegINorge,
-//                 svar: ESvar.NEI,
-//             },
-//         },
-//     };
-
-//     it('Datovelger viser spesifikk feilmelding for felt dersom verdien er tom', () => {
-//         spyOnUseApp({
-//             ...søknadMock,
-//             søker: {
-//                 ...søknadMock.søker,
-//                 oppholdslandDato: { id: OmDegSpørsmålId.oppholdslandDato, svar: '' },
-//             },
-//         });
-
-//         const { getAllByText, getByText } = render(
-//             <TestProvidereMedEkteTekster>
-//                 <OmDeg />
-//             </TestProvidereMedEkteTekster>
-//         );
-//         const gåVidere = getByText('Gå videre');
-//         act(() => gåVidere.click());
-//         const feilmelding = getAllByText(
-//             'Du må oppgi når utenlandsoppholdet startet for å gå videre'
-//         );
-//         expect(feilmelding).toHaveLength(2);
-//     });
-
-//     it('Datovelger viser feilmelding for ugyldig valg av dato frem i tid', () => {
-//         spyOnUseApp({
-//             ...søknadMock,
-//             søker: {
-//                 ...søknadMock.søker,
-//                 oppholdslandDato: {
-//                     id: OmDegSpørsmålId.oppholdslandDato,
-//                     svar: dayjs().add(1, 'day').format('YYYY-MM-DD'),
-//                 },
-//             },
-//         });
-
-//         const { getAllByText, getByText } = render(
-//             <TestProvidereMedEkteTekster>
-//                 <OmDeg />
-//             </TestProvidereMedEkteTekster>
-//         );
-//         const gåVidere = getByText('Gå videre');
-//         act(() => gåVidere.click());
-//         const feilmelding = getAllByText('Dato kan ikke være frem i tid');
-//         expect(feilmelding).toHaveLength(2);
-//     });
-
-//     it('Datovelger viser feilmelding for ugyldig format', () => {
-//         spyOnUseApp({
-//             ...søknadMock,
-//             søker: {
-//                 ...søknadMock.søker,
-//                 oppholdslandDato: {
-//                     id: OmDegSpørsmålId.oppholdslandDato,
-//                     svar: 'abc',
-//                 },
-//             },
-//         });
-
-//         const { getAllByText, getByText } = render(
-//             <TestProvidereMedEkteTekster>
-//                 <OmDeg />
-//             </TestProvidereMedEkteTekster>
-//         );
-//         const gåVidere = getByText('Gå videre');
-//         act(() => gåVidere.click());
-//         const feilmelding = getAllByText('Dato må være en gyldig dato i formatet dd.mm.åååå');
-//         expect(feilmelding).toHaveLength(2);
-//     });
-// });
