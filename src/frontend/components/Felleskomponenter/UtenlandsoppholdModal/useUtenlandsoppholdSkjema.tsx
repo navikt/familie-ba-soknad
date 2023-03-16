@@ -91,6 +91,7 @@ export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaPa
                 : 'modal.nårflyttettilnorge.mer-enn-ett-år.feilmelding'
             : undefined,
         avhengigheter: { utenlandsoppholdÅrsak, oppholdslandFraDato },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const skjema = useSkjema<IUtenlandsoppholdFeltTyper, 'string'>({

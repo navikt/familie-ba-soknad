@@ -104,6 +104,7 @@ export const useArbeidsperiodeSkjema = (
                 ? undefined
                 : 'felles.dato.tilbake-i-tid.feilmelding',
         avhengigheter: { fraDatoArbeidsperiode },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const skjema = useSkjema<IArbeidsperioderFeltTyper, 'string'>({

@@ -195,6 +195,7 @@ export const useOmBarnet = (
             ? undefined
             : 'felles.dato.tilbake-i-tid.feilmelding',
         avhengigheter: { institusjonOppholdStartdato },
+        nullstillVedAvhengighetEndring: false,
     });
 
     /*---UTENLANDSOPPHOLD---*/

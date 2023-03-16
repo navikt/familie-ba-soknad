@@ -62,6 +62,7 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
             ? dagenEtterDato(stringTilDate(fraDatoBarnetrygdperiode.verdi))
             : undefined,
         avhengigheter: { fraDatoBarnetrygdperiode },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const månedligBeløp = useFelt<string>({

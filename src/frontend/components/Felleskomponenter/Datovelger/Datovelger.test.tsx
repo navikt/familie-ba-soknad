@@ -15,19 +15,19 @@ import { dagensDato } from '../../../utils/dato';
 import { silenceConsoleErrors, TestProvidere } from '../../../utils/testing';
 import Datovelger from './Datovelger';
 
-describe('Datovelger', () => {
-    class ResizeObserver {
-        observe() {
-            // do nothing
-        }
-        unobserve() {
-            // do nothing
-        }
-        disconnect() {
-            // do nothing
-        }
+class ResizeObserver {
+    observe() {
+        // do nothing
     }
+    unobserve() {
+        // do nothing
+    }
+    disconnect() {
+        // do nothing
+    }
+}
 
+describe('Datovelger', () => {
     silenceConsoleErrors();
     window.ResizeObserver = ResizeObserver;
     test('Datovelger kan begrenses av annen fra om med datovelger', () => {

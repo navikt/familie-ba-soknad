@@ -82,6 +82,7 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
                 ? undefined
                 : 'felles.dato.tilbake-i-tid.feilmelding',
         avhengigheter: { utbetalingFraDato },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const skjema = useSkjema<IUtbetalingerFeltTyper, 'string'>({

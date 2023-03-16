@@ -74,6 +74,8 @@ export const useTidligereSamboer = (): {
         feilmeldingSpråkId: 'omdeg.nårsamboerforholdavsluttet.feilmelding',
         sluttdatoAvgrensning: dagensDato(),
         startdatoAvgrensning: dagenEtterDato(stringTilDate(tidligereSamboerFraDato.verdi)),
+        avhengigheter: { tidligereSamboerFraDato },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<

@@ -82,6 +82,7 @@ export const usePensjonSkjema = ({
         sluttdatoAvgrensning: dagensDato(),
         startdatoAvgrensning: dagenEtterDato(stringTilDate(pensjonFraDato.verdi)),
         avhengigheter: { mottarPensjonNå, pensjonFraDato },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const skjema = useSkjema<IPensjonsperiodeFeltTyper, 'string'>({
