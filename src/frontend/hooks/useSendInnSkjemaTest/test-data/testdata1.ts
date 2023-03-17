@@ -858,11 +858,6 @@ export const testdata1: TilKontraktTestData = {
                 nb: 'Om barna dine',
                 nn: 'Om barna dine',
             },
-            'pdf.søker-for-tidsrom.seksjonstittel': {
-                en: 'Are you applying for a specific time period for {navn}?',
-                nb: 'Søker du barnetrygd for et spesielt tidsrom for {navn}?',
-                nn: 'Søker du barnetrygd for eit spesielt tidsrom for {navn}?',
-            },
             'pdf.søker.seksjonstittel': { en: 'Applicant', nb: 'Søker', nn: 'Søkar' },
             'pdf.vedlegg.seksjonstittel': {
                 en: 'List of attachments',
