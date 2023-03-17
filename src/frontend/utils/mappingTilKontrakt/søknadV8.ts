@@ -224,7 +224,6 @@ export const dataISøknadKontraktFormatV8 = (
             'pdf.omdeg.seksjonstittel',
             'pdf.bosted.seksjonstittel',
             'pdf.ombarna.seksjonstittel',
-            'pdf.søker-for-tidsrom.seksjonstittel',
             'pdf.søker.seksjonstittel',
             'pdf.vedlegg.seksjonstittel',
             'pdf.vedlegg.lastet-opp-antall',
