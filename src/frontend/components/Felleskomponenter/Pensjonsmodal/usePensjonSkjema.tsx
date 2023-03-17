@@ -10,7 +10,7 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
-import { dagenEtterDato, dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
 import {
     mottarPensjonNåFeilmeldingSpråkId,
     pensjonFraDatoFeilmeldingSpråkId,
@@ -68,7 +68,6 @@ export const usePensjonSkjema = ({
         feilmeldingSpråkId: pensjonFraDatoFeilmeldingSpråkId(personType, periodenErAvsluttet),
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
         avhengigheter: { mottarPensjonNå },
-        nullstillVedAvhengighetEndring: true,
     });
 
     const pensjonTilDato = useDatovelgerFelt({
@@ -81,9 +80,9 @@ export const usePensjonSkjema = ({
             (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
         feilmeldingSpråkId: 'felles.nåravsluttetpensjon.feilmelding',
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: dagenEtterDato(pensjonFraDato.verdi),
+        startdatoAvgrensning: dagenEtterDato(stringTilDate(pensjonFraDato.verdi)),
         avhengigheter: { mottarPensjonNå, pensjonFraDato },
-        nullstillVedAvhengighetEndring: true,
+        nullstillVedAvhengighetEndring: false,
     });
 
     const skjema = useSkjema<IPensjonsperiodeFeltTyper, 'string'>({

@@ -13,19 +13,19 @@ const useDatovelgerFeltMedUkjent = ({
     feilmeldingSpråkId,
     skalFeltetVises,
     nullstillVedAvhengighetEndring = true,
-    sluttdatoAvgrensning = '',
-    startdatoAvgrensning = '',
+    sluttdatoAvgrensning = undefined,
+    startdatoAvgrensning = undefined,
     customStartdatoFeilmelding = '',
     avhengigheter,
 }: {
     feltId;
-    initiellVerdi;
+    initiellVerdi: ISODateString;
     vetIkkeCheckbox: Felt<ESvar>;
     feilmeldingSpråkId: string;
     skalFeltetVises: boolean;
     nullstillVedAvhengighetEndring?: boolean;
-    sluttdatoAvgrensning?: ISODateString;
-    startdatoAvgrensning?: ISODateString;
+    sluttdatoAvgrensning?: Date;
+    startdatoAvgrensning?: Date;
     customStartdatoFeilmelding?: string;
     avhengigheter?: Avhengigheter;
 }) => {
@@ -41,8 +41,6 @@ const useDatovelgerFeltMedUkjent = ({
                 return ok(felt);
             }
 
-            const startdatoAvgrensning = avhengigheter && avhengigheter.startdatoAvgrensning;
-            const sluttdatoAvgrensning = avhengigheter && avhengigheter.sluttdatoAvgrensning;
             const feilmeldingSpråkId = avhengigheter && avhengigheter.feilmeldingSpråkId;
             const customStartdatoFeilmelding =
                 avhengigheter && avhengigheter.customStartdatoFeilmelding;
@@ -58,8 +56,6 @@ const useDatovelgerFeltMedUkjent = ({
         avhengigheter: {
             vetIkkeCheckbox,
             skalFeltetVises,
-            startdatoAvgrensning,
-            sluttdatoAvgrensning,
             customStartdatoFeilmelding,
             feilmeldingSpråkId,
             ...avhengigheter,
