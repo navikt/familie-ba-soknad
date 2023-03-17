@@ -54,8 +54,8 @@ const PeriodeOppsummering: React.FC<{
                     type={'button'}
                     variant={'tertiary'}
                     onClick={() => fjernPeriodeCallback()}
+                    icon={<DeleteFilled />}
                 >
-                    <DeleteFilled />
                     <SpråkTekst id={fjernKnappSpråkId} />
                 </StyledButton>
             )}
