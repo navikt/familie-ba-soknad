@@ -11,6 +11,7 @@ import {
     mockEøs,
     mockHistory,
     silenceConsoleErrors,
+    spyOnModal,
     spyOnUseApp,
     TestProvidere,
     TestProvidereMedEkteTekster,
@@ -39,6 +40,7 @@ describe('OmDeg', () => {
         silenceConsoleErrors();
         mockEøs();
         mockHistory(['/om-deg']);
+        spyOnModal();
     });
 
     test('Alle tekster finnes i språkfil', async () => {

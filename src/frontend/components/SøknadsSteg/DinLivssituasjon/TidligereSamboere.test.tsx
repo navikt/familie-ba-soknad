@@ -7,7 +7,12 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
-import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import {
+    silenceConsoleErrors,
+    spyOnModal,
+    spyOnUseApp,
+    TestProvidere,
+} from '../../../utils/testing';
 import DinLivssituasjon from './DinLivssituasjon';
 import {
     DinLivssituasjonSpørsmålId,
@@ -57,6 +62,7 @@ const søknad = mockDeep<ISøknad>({
 describe('TidligereSamboere', () => {
     beforeEach(() => {
         silenceConsoleErrors();
+        spyOnModal();
     });
     it('"Når ble samboerforholdet avsluttet?" skal ikke vises dersom man ikke har tidligere samboere', () => {
         spyOnUseApp(søknad);

@@ -9,6 +9,7 @@ import { ISøknad } from '../../../typer/søknad';
 import {
     mockHistory,
     silenceConsoleErrors,
+    spyOnModal,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
@@ -36,6 +37,7 @@ describe('LeggTilSamboerModal', () => {
 
     beforeEach(() => {
         silenceConsoleErrors();
+        spyOnModal();
     });
     it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', () => {
         spyOnUseApp(søknad);

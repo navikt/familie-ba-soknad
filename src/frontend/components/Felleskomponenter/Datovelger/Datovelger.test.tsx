@@ -12,7 +12,7 @@ import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import * as datoUtils from '../../../utils/dato';
 import { dagensDato } from '../../../utils/dato';
-import { silenceConsoleErrors, TestProvidere } from '../../../utils/testing';
+import { silenceConsoleErrors, spyOnModal, TestProvidere } from '../../../utils/testing';
 import Datovelger from './Datovelger';
 
 class ResizeObserver {
@@ -29,6 +29,7 @@ class ResizeObserver {
 
 describe('Datovelger', () => {
     silenceConsoleErrors();
+    spyOnModal();
     window.ResizeObserver = ResizeObserver;
     test('Datovelger kan begrenses av annen fra om med datovelger', () => {
         const {
