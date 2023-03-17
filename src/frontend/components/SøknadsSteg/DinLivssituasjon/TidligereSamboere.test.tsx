@@ -81,23 +81,23 @@ describe('TidligereSamboere', () => {
                         {
                             navn: {
                                 id: TidligereSamboerSpørsmålId.tidligereSamboerNavn,
-                                svar: '',
+                                svar: 'Donald Duck',
                             },
                             ident: {
                                 id: TidligereSamboerSpørsmålId.tidligereSamboerFnr,
-                                svar: '',
+                                svar: '12345678910',
                             },
                             fødselsdato: {
                                 id: TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato,
-                                svar: '',
+                                svar: '2000-01-01',
                             },
                             samboerFraDato: {
                                 id: TidligereSamboerSpørsmålId.tidligereSamboerFraDato,
-                                svar: '',
+                                svar: '2000-01-01',
                             },
                             samboerTilDato: {
                                 id: TidligereSamboerSpørsmålId.tidligereSamboerTilDato,
-                                svar: '',
+                                svar: '2000-01-01',
                             },
                         },
                     ],

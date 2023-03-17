@@ -121,7 +121,6 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             />
                         }
                         avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                        calendarPosition={'fullscreen'}
                     />
                     <>
                         <Datovelger
@@ -140,7 +139,6 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                 utbetalingFraDato.verdi
                             )}
                             disabled={utbetalingTilDatoUkjent.verdi === ESvar.JA}
-                            calendarPosition={'fullscreen'}
                         />
                         <SkjemaCheckbox
                             labelSpråkTekstId={hentSpørsmålTekstId(
