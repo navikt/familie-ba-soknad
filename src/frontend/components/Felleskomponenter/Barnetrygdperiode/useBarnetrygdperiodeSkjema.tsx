@@ -9,7 +9,7 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
 import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
-import { dagenEtterDato, dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import {
@@ -51,7 +51,6 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
             mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         feilmeldingSpråkId: 'modal.trygdnårbegynte.feilmelding',
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
-        nullstillVedAvhengighetEndring: true,
     });
 
     const tilDatoBarnetrygdperiode = useDatovelgerFelt({
@@ -59,7 +58,11 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
         skalFeltetVises: periodenErAvsluttet || andreForelderErDød,
         feilmeldingSpråkId: 'modal.trygdnåravsluttet.spm',
         sluttdatoAvgrensning: dagensDato(),
-        startdatoAvgrensning: dagenEtterDato(fraDatoBarnetrygdperiode.verdi),
+        startdatoAvgrensning: fraDatoBarnetrygdperiode.verdi
+            ? dagenEtterDato(stringTilDate(fraDatoBarnetrygdperiode.verdi))
+            : undefined,
+        avhengigheter: { fraDatoBarnetrygdperiode },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const månedligBeløp = useFelt<string>({

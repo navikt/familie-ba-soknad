@@ -39,7 +39,12 @@ import {
     nullstilteEøsFelterForBarn,
     skalViseBorMedOmsorgsperson,
 } from '../../../utils/barn';
-import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato } from '../../../utils/dato';
+import {
+    dagensDato,
+    erSammeDatoSomDagensDato,
+    morgendagensDato,
+    stringTilDate,
+} from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -173,21 +178,24 @@ export const useOmBarnet = (
 
     const institusjonOppholdSluttdato = useDatovelgerFeltMedUkjent({
         feltId: gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].id,
-        initiellVerdi:
-            gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar !==
-            AlternativtSvarForInput.UKJENT
-                ? gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
-                : '',
+        initiellVerdi: formaterInitVerdiForInputMedUkjent(
+            gjeldendeBarn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar
+        ),
         vetIkkeCheckbox: institusjonOppholdSluttVetIkke,
         feilmeldingSpråkId: 'ombarnet.institusjon.sluttdato.feilmelding',
         skalFeltetVises: skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon),
-        nullstillVedAvhengighetEndring: false,
-        startdatoAvgrensning: erSammeDatoSomDagensDato(institusjonOppholdStartdato.verdi)
+        startdatoAvgrensning: erSammeDatoSomDagensDato(
+            stringTilDate(institusjonOppholdStartdato.verdi)
+        )
             ? morgendagensDato()
             : dagensDato(),
-        customStartdatoFeilmelding: erSammeDatoSomDagensDato(institusjonOppholdStartdato.verdi)
+        customStartdatoFeilmelding: erSammeDatoSomDagensDato(
+            stringTilDate(institusjonOppholdStartdato.verdi)
+        )
             ? undefined
             : 'felles.dato.tilbake-i-tid.feilmelding',
+        avhengigheter: { institusjonOppholdStartdato },
+        nullstillVedAvhengighetEndring: false,
     });
 
     /*---UTENLANDSOPPHOLD---*/
@@ -522,13 +530,10 @@ export const useOmBarnet = (
         feltId: andreForelder?.utvidet[
             andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
         ].id,
-        initiellVerdi:
+        initiellVerdi: formaterInitVerdiForInputMedUkjent(
             andreForelder?.utvidet[andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]
-                .svar === AlternativtSvarForInput.UKJENT
-                ? ''
-                : andreForelder?.utvidet[
-                      andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
-                  ].svar,
+                .svar
+        ),
         vetIkkeCheckbox: borMedAndreForelderCheckbox,
         feilmeldingSpråkId: 'ombarnet.nårflyttetfra.feilmelding',
         skalFeltetVises:

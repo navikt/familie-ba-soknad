@@ -9,7 +9,7 @@ import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
-import { dagenEtterDato } from '../../../utils/dato';
+import { dagenEtterDato, stringTilDate } from '../../../utils/dato';
 import {
     harTilhørendeFomFelt,
     hentMinAvgrensningPåTilDato,
@@ -61,7 +61,6 @@ export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaPa
         feilmeldingSpråkId: fraDatoFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
         sluttdatoAvgrensning: hentMaxAvgrensningPåFraDato(utenlandsoppholdÅrsak.verdi),
         avhengigheter: { utenlandsoppholdÅrsak },
-        nullstillVedAvhengighetEndring: true,
     });
 
     const oppholdslandTilDatoUkjent = useFelt<ESvar>({
@@ -84,14 +83,15 @@ export const useUtenlandsoppholdSkjema = ({ barn }: IUseUtenlandsoppholdSkjemaPa
             utenlandsoppholdÅrsak.verdi !== EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE,
         sluttdatoAvgrensning: hentMaxAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
         startdatoAvgrensning: harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
-            ? dagenEtterDato(oppholdslandFraDato.verdi)
+            ? dagenEtterDato(stringTilDate(oppholdslandFraDato.verdi))
             : hentMinAvgrensningPåTilDato(utenlandsoppholdÅrsak.verdi),
         customStartdatoFeilmelding: !harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
             ? utenlandsoppholdÅrsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
                 ? 'felles.dato.tilbake-i-tid.feilmelding'
                 : 'modal.nårflyttettilnorge.mer-enn-ett-år.feilmelding'
             : undefined,
-        avhengigheter: { utenlandsoppholdÅrsak },
+        avhengigheter: { utenlandsoppholdÅrsak, oppholdslandFraDato },
+        nullstillVedAvhengighetEndring: false,
     });
 
     const skjema = useSkjema<IUtenlandsoppholdFeltTyper, 'string'>({

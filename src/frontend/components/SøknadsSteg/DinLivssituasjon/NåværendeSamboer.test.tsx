@@ -73,7 +73,7 @@ const søknadGyldigNåværendeSamboerBase = {
             },
             samboerFraDato: {
                 id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-                svar: '01.01.2000',
+                svar: '2000-01-01',
             },
         },
     },
