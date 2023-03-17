@@ -78,8 +78,8 @@ const SamboerOpplysninger: React.FC<{
                 type={'button'}
                 variant={'tertiary'}
                 onClick={() => fjernTidligereSamboer(samboer)}
+                icon={<DeleteFilled />}
             >
-                <DeleteFilled />
                 <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />
             </StyledButton>
         </SamboerContainer>
