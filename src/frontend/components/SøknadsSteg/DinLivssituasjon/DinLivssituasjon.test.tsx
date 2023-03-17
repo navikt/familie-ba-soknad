@@ -10,6 +10,7 @@ import {
     mockEøs,
     mockHistory,
     silenceConsoleErrors,
+    spyOnModal,
     spyOnUseApp,
     TestProvidere,
     TestProvidereMedEkteTekster,
@@ -51,6 +52,7 @@ describe('DinLivssituasjon', () => {
     beforeEach(() => {
         silenceConsoleErrors();
         mockEøs();
+        spyOnModal();
         jest.useFakeTimers('modern');
     });
 

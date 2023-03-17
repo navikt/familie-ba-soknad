@@ -2,12 +2,14 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 
-import { silenceConsoleErrors, TestProvidere } from '../../../../utils/testing';
+import { silenceConsoleErrors, spyOnModal, TestProvidere } from '../../../../utils/testing';
 import LeggTilBarnModal from './LeggTilBarnModal';
 
 describe('LeggTilBarnModal', function () {
     test('Test at advarsel om fnr vises hvis man huker av for at barnet ikke har fått fnr enda', () => {
         silenceConsoleErrors();
+        spyOnModal();
+
         const { getByText } = render(
             <TestProvidere>
                 <LeggTilBarnModal erÅpen={true} toggleModal={jest.fn()} />

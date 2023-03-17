@@ -6,6 +6,7 @@ import { Router } from 'react-router';
 import {
     mockHistory,
     silenceConsoleErrors,
+    spyOnModal,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import Kvittering from './Kvittering';
@@ -13,6 +14,8 @@ import Kvittering from './Kvittering';
 describe('Kvittering', () => {
     test('Alle tekster finnes i språkfil', () => {
         silenceConsoleErrors();
+        spyOnModal();
+
         const historyMock = mockHistory(['/kvittering']);
 
         render(

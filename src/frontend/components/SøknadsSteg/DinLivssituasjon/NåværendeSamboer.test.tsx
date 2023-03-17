@@ -10,6 +10,7 @@ import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
     silenceConsoleErrors,
+    spyOnModal,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
@@ -73,7 +74,7 @@ const søknadGyldigNåværendeSamboerBase = {
             },
             samboerFraDato: {
                 id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-                svar: '01.01.2000',
+                svar: '2000-01-01',
             },
         },
     },
@@ -82,6 +83,7 @@ const søknadGyldigNåværendeSamboerBase = {
 describe('Test av nåværende samboer skjema', () => {
     beforeEach(() => {
         silenceConsoleErrors();
+        spyOnModal();
     });
 
     it('nåværende samboer null initiell verdi', () => {

@@ -2,7 +2,11 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
-import { silenceConsoleErrors, TestProvidereMedEkteTekster } from '../../../utils/testing';
+import {
+    silenceConsoleErrors,
+    spyOnModal,
+    TestProvidereMedEkteTekster,
+} from '../../../utils/testing';
 import Dokumentasjon from './Dokumentasjon';
 
 jest.mock('react-router-dom', () => ({
@@ -18,6 +22,7 @@ jest.mock('react-router-dom', () => ({
 
 describe('Dokumentasjon', () => {
     silenceConsoleErrors();
+    spyOnModal();
     test('Alle tekster finnes i språkfil', () => {
         render(
             <TestProvidereMedEkteTekster>

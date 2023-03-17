@@ -17,6 +17,7 @@ import {
     mockEøs,
     mockHistory,
     silenceConsoleErrors,
+    spyOnModal,
     spyOnUseApp,
     TestProvidere,
     TestProvidereMedEkteTekster,
@@ -287,6 +288,7 @@ const line: IBarnMedISøknad = {
 describe('OmBarnet', () => {
     beforeEach(() => {
         mockEøs();
+        spyOnModal();
     });
 
     test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, async () => {
