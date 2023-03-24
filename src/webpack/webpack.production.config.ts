@@ -1,4 +1,4 @@
-import SentryCliPlugin from '@sentry/webpack-plugin';
+import SentryWebpackPlugin from '@sentry/webpack-plugin';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserWebpackPlugin from 'terser-webpack-plugin';
@@ -23,8 +23,8 @@ const prodConfig: webpack.Configuration = mergeWithRules({
         }),
         new CssMinimizerWebpackPlugin(),
         process.env.SENTRY_AUTH_TOKEN
-            ? new SentryCliPlugin({
-                  include: 'dist',
+            ? new SentryWebpackPlugin({
+                  include: './dist',
                   org: 'nav',
                   project: 'familie-ba-soknad',
                   authToken: process.env.SENTRY_AUTH_TOKEN,
@@ -33,7 +33,7 @@ const prodConfig: webpack.Configuration = mergeWithRules({
                   urlPrefix: `~${process.env.BASE_PATH}`,
               })
             : undefined,
-    ].filter(val => !!val),
+    ],
     output: {
         filename: '[name].[contenthash].js',
     },
