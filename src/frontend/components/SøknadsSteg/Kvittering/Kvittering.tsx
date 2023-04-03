@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import dayjs, { Dayjs } from 'dayjs';
+import { format } from 'date-fns';
 
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -30,13 +30,13 @@ const Kvittering: React.FC = () => {
     const { barnInkludertISøknaden, erEøs } = søknad;
     const { hentStegNummer } = useSteg();
 
-    const innsendtDato: Dayjs =
+    const innsendtDato: Date =
         innsendingStatus.status === RessursStatus.SUKSESS
-            ? dayjs(innsendingStatus.data.mottattDato)
-            : dayjs();
+            ? new Date(innsendingStatus.data.mottattDato)
+            : new Date();
 
-    const klokkeslett = innsendtDato.format('HH:mm');
-    const dato = innsendtDato.format('DD.MM.YY');
+    const klokkeslett = format(innsendtDato, 'HH:mm');
+    const dato = format(innsendtDato, 'dd.MM.yy');
     const [varEøsSøknad] = useState(erEøs);
 
     useEffect(() => {
