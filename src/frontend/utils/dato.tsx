@@ -65,9 +65,9 @@ export const validerDato = (
         return feil(feltState, feilmeldingSpråkId ? <SpråkTekst id={feilmeldingSpråkId} /> : '');
     }
 
-    const dato = stringTilDate(feltState.verdi);
+    const dato = parseTilGyldigDato(feltState.verdi, 'yyyy-MM-dd');
 
-    if (!erDatoFormatGodkjent(dato)) {
+    if (!dato) {
         return feil(feltState, <SpråkTekst id={'felles.dato-format.feilmelding'} />);
     }
 
