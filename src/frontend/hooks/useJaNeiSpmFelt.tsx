@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 
-import { guid } from 'nav-frontend-js-utils';
+import { v4 as uuidv4 } from 'uuid';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ok, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
@@ -56,7 +56,7 @@ const useJaNeiSpmFelt = ({
     const [harBlittVist, settHarBlittVist] = useState<boolean>(!avhengigheter);
 
     return useFelt<ESvar | null>({
-        feltId: søknadsfelt ? søknadsfelt.id : guid(),
+        feltId: søknadsfelt ? søknadsfelt.id : uuidv4(),
         nullstillVedAvhengighetEndring,
         verdi: søknadsfelt?.svar ?? null,
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
