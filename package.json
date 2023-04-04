@@ -125,7 +125,7 @@
     "xss": "^1.0.10"
   },
   "devDependencies": {
-    "@axe-core/react": "^4.2.2",
+    "@axe-core/react": "^4.6.1",
     "@babel/plugin-syntax-import-assertions": "^7.16.7",
     "@navikt/ds-icons": "^2.6.0",
     "@navikt/familie-form-elements": "^10.1.0",
