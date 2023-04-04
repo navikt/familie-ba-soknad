@@ -9,9 +9,9 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-      time: "11:40"
+      time: "13:45"
       timezone: "Europe/Oslo"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 20
     ignore:
     - dependency-name: "*"
       update-types: ["version-update:semver-patch"]

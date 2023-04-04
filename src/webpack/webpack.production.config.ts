@@ -47,7 +47,7 @@ const prodConfig: webpack.Configuration = mergeWithRules({
                         loader: 'css-loader',
                         options: {
                             modules: {
-                                compileType: 'icss',
+                                mode: 'icss',
                             },
                         },
                     },
