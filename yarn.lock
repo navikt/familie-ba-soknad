@@ -1520,10 +1520,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@discoveryjs/json-ext@^0.5.0":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
-  integrity sha512-HyYEUDeIj5rRQU2Hk5HTB2uHsbRQpF70nvMhVzi+VJR0X+xNEhjPui4/kBf3VeH/wqD28PT4sVOm8qqLjBrSZg==
+"@discoveryjs/json-ext@0.5.7", "@discoveryjs/json-ext@^0.5.0":
+  version "0.5.7"
+  resolved "https://registry.npmjs.org/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
+  integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
 "@emotion/babel-plugin@^11.10.6":
   version "11.10.6"
@@ -12694,11 +12694,12 @@ webidl-conversions@^7.0.0:
   resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-7.0.0.tgz#256b4e1882be7debbf01d05f0aa2039778ea080a"
   integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
 
-webpack-bundle-analyzer@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-4.5.0.tgz#1b0eea2947e73528754a6f9af3e91b2b6e0f79d5"
-  integrity sha512-GUMZlM3SKwS8Z+CKeIFx7CVoHn3dXFcUAjT/dcZQQmfSZGvitPfMob2ipjai7ovFFqPvTqkEZ/leL4O0YOdAYQ==
+webpack-bundle-analyzer@^4.8.0:
+  version "4.8.0"
+  resolved "https://registry.npmjs.org/webpack-bundle-analyzer/-/webpack-bundle-analyzer-4.8.0.tgz#951b8aaf491f665d2ae325d8b84da229157b1d04"
+  integrity sha512-ZzoSBePshOKhr+hd8u6oCkZVwpVaXgpw23ScGLFpR6SjYI7+7iIWYarjN6OEYOfRt8o7ZyZZQk0DuMizJ+LEIg==
   dependencies:
+    "@discoveryjs/json-ext" "0.5.7"
     acorn "^8.0.4"
     acorn-walk "^8.0.0"
     chalk "^4.1.0"
@@ -13059,25 +13060,15 @@ write-file-atomic@^3.0.0:
     signal-exit "^3.0.2"
     typedarray-to-buffer "^3.1.5"
 
-ws@^7.3.1, ws@^7.5.3:
-  version "7.5.3"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.3.tgz#160835b63c7d97bfab418fc1b8a9fced2ac01a74"
-  integrity sha512-kQ/dHIzuLrS6Je9+uv81ueZomEwH0qVYstcAQ4/Z93K8zeko9gtAbttJWzoC5ukqXY1PpoouV3+VSOqEAFt5wg==
-
-ws@^7.4.6:
+ws@^7.3.1, ws@^7.4.6, ws@^7.5.3:
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.5.tgz#8b4bc4af518cfabd0473ae4f99144287b33eb881"
   integrity sha512-BAkMFcAzl8as1G/hArkxOxq3G7pjUqQ3gzYbLL0/5zNkph70e+lCoxBGnm6AW1+/aiNeV4fnKqZ8m4GZewmH2w==
 
-ws@^8.11.0:
+ws@^8.11.0, ws@^8.4.2:
   version "8.12.1"
   resolved "https://registry.npmjs.org/ws/-/ws-8.12.1.tgz#c51e583d79140b5e42e39be48c934131942d4a8f"
   integrity sha512-1qo+M9Ba+xNhPB+YTWUlK6M17brTut5EXbcBaMRN5pH5dFrXz7lzz1ChFSUq3bOUl8yEvSenhHmYUNJxFzdJew==
-
-ws@^8.4.2:
-  version "8.4.2"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.4.2.tgz#18e749868d8439f2268368829042894b6907aa0b"
-  integrity sha512-Kbk4Nxyq7/ZWqr/tarI9yIt/+iNNFOjBXEWgTb4ydaNHBNGgvf2QHbS9fdfsndfjFlFwEd4Al+mw83YkaD10ZA==
 
 xdg-basedir@^4.0.0:
   version "4.0.0"
