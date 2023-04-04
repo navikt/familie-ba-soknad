@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { css } from 'styled-components';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { guid } from 'nav-frontend-js-utils';
 
 import { BodyShort } from '@navikt/ds-react';
 
@@ -53,7 +53,7 @@ const ExpandableInfo = ({
     filledBackground = true,
 }: Props) => {
     const [isOpen, setIsOpen] = useState<boolean>(initialOpen || false);
-    const [toggleContentId] = useState(guid());
+    const [toggleContentId] = useState(uuidv4());
 
     return (
         <Container>

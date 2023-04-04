@@ -1,8 +1,8 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
-import { guid } from 'nav-frontend-js-utils';
 import { Element } from 'nav-frontend-typografi';
 
 import { BodyShort } from '@navikt/ds-react';
@@ -51,7 +51,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
             <JaNeiSpørsmål
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                 initiellVerdi={felt.verdi}
-                name={guid()}
+                name={uuidv4()}
                 size={'medium'}
                 error={felt.hentNavInputProps(skjema.visFeilmeldinger).feil}
                 legend={
