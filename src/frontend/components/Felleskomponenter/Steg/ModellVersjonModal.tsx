@@ -3,15 +3,15 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+import { Sidetittel } from 'nav-frontend-typografi';
 
-import { Button, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 
 import AlertStripe from '../AlertStripe/AlertStripe';
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-const StyledNormalTekst = styled(Normaltekst)`
+const StyledBodyLong = styled(BodyLong)`
     && {
         margin: 2.5rem 0;
     }
@@ -51,9 +51,9 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
                     type={'feil'}
                     children={<SpråkTekst id={'felles.modal.deployfeil.error'} />}
                 />
-                <StyledNormalTekst>
+                <StyledBodyLong>
                     <SpråkTekst id={'felles.modal.deployfeil.info'} />
-                </StyledNormalTekst>
+                </StyledBodyLong>
 
                 <StyledButton onClick={refresh}>
                     <SpråkTekst id={'felles.modal.deployfeil.knapp'} />

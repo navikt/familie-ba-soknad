@@ -4,9 +4,9 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+import { Sidetittel } from 'nav-frontend-typografi';
 
-import { Button, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 
 import { device } from '../../../Theme';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -59,9 +59,9 @@ const FortsettPåSøknad: FC = () => {
         <StyledFortsettPåSøknad role={'navigation'}>
             <KomponentGruppe>
                 <AlertStripeInfo>
-                    <Normaltekst>
+                    <BodyLong>
                         <SpråkTekst id={'mellomlagring.info'} />
-                    </Normaltekst>
+                    </BodyLong>
                 </AlertStripeInfo>
             </KomponentGruppe>
             <StyledButton onClick={fortsettPåSøknaden}>
@@ -81,9 +81,9 @@ const FortsettPåSøknad: FC = () => {
                     <StyledSideTittel>
                         <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
                     </StyledSideTittel>
-                    <Normaltekst>
+                    <BodyLong>
                         <SpråkTekst id={'felles.startpånytt.modal.tekst'} />
-                    </Normaltekst>
+                    </BodyLong>
                     <ModalKnappeContainer>
                         <Button variant={'tertiary'} onClick={() => settVisStartPåNyttModal(false)}>
                             <SpråkTekst id={'felles.startpånytt.modal.avbrytknapp'} />

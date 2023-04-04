@@ -2,8 +2,9 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 
+import { BodyShort } from '@navikt/ds-react';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
@@ -36,29 +37,29 @@ export const Personopplysninger: React.FC = () => {
                 <Element>
                     <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
                 </Element>
-                <Normaltekst>{søker.ident}</Normaltekst>
+                <BodyShort>{søker.ident}</BodyShort>
             </Informasjonsbolk>
 
             <Informasjonsbolk>
                 <Element>
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />
                 </Element>
-                <Normaltekst>
+                <BodyShort>
                     {søker.statsborgerskap
                         .map((statsborgerskap: { landkode: Alpha3Code }) =>
                             landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
                         )
                         .join(', ')}
-                </Normaltekst>
+                </BodyShort>
             </Informasjonsbolk>
 
             <Informasjonsbolk>
                 <Element>
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />
                 </Element>
-                <Normaltekst>
+                <BodyShort>
                     <SpråkTekst id={hentSivilstatusSpråkId(søker.sivilstand.type)} />
-                </Normaltekst>
+                </BodyShort>
             </Informasjonsbolk>
 
             <Informasjonsbolk>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyLong } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
@@ -20,7 +20,7 @@ import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummeri
 import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
 import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
-const StyledNormaltekst = styled(Normaltekst)`
+const StyledBodyLong = styled(BodyLong)`
     padding-bottom: 4rem;
 `;
 
@@ -52,9 +52,9 @@ const Oppsummering: React.FC = () => {
             tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}
             gåVidereCallback={gåVidereCallback}
         >
-            <StyledNormaltekst>
+            <StyledBodyLong>
                 <SpråkTekst id={'oppsummering.info'} />
-            </StyledNormaltekst>
+            </StyledBodyLong>
 
             <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
             <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />

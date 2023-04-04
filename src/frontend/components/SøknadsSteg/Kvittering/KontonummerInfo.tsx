@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -9,7 +9,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 export const KontonummerInfo: React.FC = () => {
     return (
         <Informasjonsbolk tittelId="kvittering.kontonummer">
-            <Normaltekst>
+            <BodyShort>
                 <SpråkTekst
                     id={'kvittering.kontonummer.innhold'}
                     values={{
@@ -21,7 +21,7 @@ export const KontonummerInfo: React.FC = () => {
                         ),
                     }}
                 />
-            </Normaltekst>
+            </BodyShort>
         </Informasjonsbolk>
     );
 };

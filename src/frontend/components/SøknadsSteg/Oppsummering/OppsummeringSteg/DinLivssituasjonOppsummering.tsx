@@ -2,8 +2,7 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { Normaltekst } from 'nav-frontend-typografi';
-
+import { BodyShort } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
@@ -201,9 +200,9 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                 </StyledOppsummeringsFeltGruppe>
                             ))
                         ) : (
-                            <Normaltekst>
+                            <BodyShort>
                                 <SpråkTekst id={jaNeiSvarTilSpråkId(ESvar.NEI)} />
-                            </Normaltekst>
+                            </BodyShort>
                         )}
                     </StyledOppsummeringsFeltGruppe>
                 </>

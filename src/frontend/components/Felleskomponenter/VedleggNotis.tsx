@@ -2,9 +2,8 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Normaltekst } from 'nav-frontend-typografi';
-
 import { FileContent } from '@navikt/ds-icons';
+import { BodyLong } from '@navikt/ds-react';
 
 import SpråkTekst from './SpråkTekst/SpråkTekst';
 
@@ -41,9 +40,9 @@ export const VedleggNotis: React.FC<{
         <NotisWrapper aria-live={dynamisk ? 'polite' : 'off'}>
             <StyledFileContent role={'img'} focusable={false} aria-label={'vedleggsikon'} />
             <NotisInnhold>
-                <Normaltekst>
+                <BodyLong>
                     <SpråkTekst id={språkTekstId} values={språkValues} />
-                </Normaltekst>
+                </BodyLong>
             </NotisInnhold>
         </NotisWrapper>
     );

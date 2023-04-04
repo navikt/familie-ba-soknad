@@ -3,8 +3,9 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { guid } from 'nav-frontend-js-utils';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 
+import { BodyShort } from '@navikt/ds-react';
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -59,9 +60,9 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
                             <SpråkTekst id={spørsmålTekstId} values={språkValues} />
                         </Element>
                         {tilleggsinfoTekstId && (
-                            <Normaltekst>
+                            <BodyShort>
                                 <SpråkTekst id={tilleggsinfoTekstId} />
-                            </Normaltekst>
+                            </BodyShort>
                         )}
                         <TilleggsinfoWrapper>{tilleggsinfo}</TilleggsinfoWrapper>
                     </>

@@ -3,8 +3,7 @@ import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Sidetittel } from 'nav-frontend-typografi';
-
+import { Heading } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -22,7 +21,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
 import FortsettPåSøknad from './FortsettPåSøknad';
 
-const StyledSidetittel = styled(Sidetittel)`
+const StyledHeading = styled(Heading)`
     && {
         margin: 4rem 0 2.3rem 0;
     }
@@ -64,9 +63,9 @@ const Forside: React.FC = () => {
                 posisjon={'høyre'}
             />
 
-            <StyledSidetittel>
+            <StyledHeading>
                 <SpråkTekst id={erUtvidet ? 'forside.utvidet.sidetittel' : 'forside.sidetittel'} />
-            </StyledSidetittel>
+            </StyledHeading>
 
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
 

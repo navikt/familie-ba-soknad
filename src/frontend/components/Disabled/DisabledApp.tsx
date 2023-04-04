@@ -2,8 +2,9 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+import { Sidetittel } from 'nav-frontend-typografi';
 
+import { BodyLong } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
@@ -38,9 +39,9 @@ export const DisabledApp: React.FC = () => {
                     <SpråkTekst id={'vedlikehold.sidetittel'} />
                 </StyledSidetittel>
                 <StyledSpråkvelger støttedeSprak={[LocaleType.nb, LocaleType.nn, LocaleType.en]} />
-                <Normaltekst>
+                <BodyLong>
                     <SpråkTekst id={'vedlikehold.brødtekst'} />
-                </Normaltekst>
+                </BodyLong>
                 <EksternLenke
                     lenkeSpråkId={'felles.bruk-pdfskjema.lenke'}
                     lenkeTekstSpråkId={'felles.bruk-pdfskjema.lenketekst'}

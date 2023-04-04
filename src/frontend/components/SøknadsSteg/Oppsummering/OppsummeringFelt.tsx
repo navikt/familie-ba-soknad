@@ -2,8 +2,9 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 
+import { BodyShort } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
@@ -41,9 +42,9 @@ export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
         <StyledOppsummeringsFelt>
             {tittel && <StyledElement>{tittel}</StyledElement>}
             {søknadsvar ? (
-                <Normaltekst>
+                <BodyShort>
                     {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
-                </Normaltekst>
+                </BodyShort>
             ) : (
                 children
             )}

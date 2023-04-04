@@ -2,8 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Normaltekst } from 'nav-frontend-typografi';
-
+import { BodyLong } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { BarnetsId } from '../../../typer/common';
@@ -83,9 +82,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     {barn.andreForelderErDød?.svar !== ESvar.JA && (
                         <>
                             <div>
-                                <Normaltekst>
+                                <BodyLong>
                                     <SpråkTekst id={'ombarnet.bosted-info'} />
-                                </Normaltekst>
+                                </BodyLong>
                             </div>
                             <EksternLenkeContainer>
                                 <EksternLenke

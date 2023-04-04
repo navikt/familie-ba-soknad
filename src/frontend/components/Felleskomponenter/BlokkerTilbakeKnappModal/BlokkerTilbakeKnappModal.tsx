@@ -4,9 +4,9 @@ import { useIntl } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 
-import { Button, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 
 import EksternLenke from '../EksternLenke/EksternLenke';
 import ModalContent from '../ModalContent';
@@ -51,9 +51,9 @@ const BlokkerTilbakeKnappModal = () => {
                     <StyledUndertittel>
                         <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tittel'} />
                     </StyledUndertittel>
-                    <Normaltekst>
+                    <BodyLong>
                         <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tekst'} />
-                    </Normaltekst>
+                    </BodyLong>
                     <Flex>
                         <StyledEksternLenke
                             lenkeSpråkId={'kvittering.dinesaker.lenke'}

@@ -4,9 +4,8 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
-import { Normaltekst } from 'nav-frontend-typografi';
 
-import { Button } from '@navikt/ds-react';
+import { BodyLong, Button } from '@navikt/ds-react';
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -63,9 +62,9 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                     }
                     status={bekreftelseStatus}
                 >
-                    <Normaltekst>
+                    <BodyLong>
                         <SpråkTekst id="forside.bekreftelsesboks.brødtekst" />
-                    </Normaltekst>
+                    </BodyLong>
                 </StyledBekreftCheckboksPanel>
             </Informasjonsbolk>
 

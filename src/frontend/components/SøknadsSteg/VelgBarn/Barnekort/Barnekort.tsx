@@ -4,8 +4,9 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { Checkbox } from 'nav-frontend-skjema';
-import { Ingress, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Ingress, Undertittel } from 'nav-frontend-typografi';
 
+import { BodyShort } from '@navikt/ds-react';
 import { AGray100, APurple400, APurple800 } from '@navikt/ds-tokens/dist/tokens';
 
 import { useApp } from '../../../../context/AppContext';
@@ -155,7 +156,7 @@ const BarneKortInfo: React.FC<{ labelId: string; verdi: ReactNode }> = ({ labelI
             <StyledIngress>
                 <SpråkTekst id={labelId} />
             </StyledIngress>
-            <Normaltekst>{verdi}</Normaltekst>
+            <BodyShort>{verdi}</BodyShort>
         </div>
     );
 };

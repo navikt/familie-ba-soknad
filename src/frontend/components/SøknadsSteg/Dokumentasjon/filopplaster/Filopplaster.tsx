@@ -3,9 +3,8 @@ import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
-import { Normaltekst } from 'nav-frontend-typografi';
-
 import { Upload } from '@navikt/ds-icons';
+import { BodyShort } from '@navikt/ds-react';
 import { ABlue500, ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
@@ -83,7 +82,7 @@ const Filopplaster: React.FC<Props> = ({
             <FilopplastningBoks type={'button'} {...getRootProps()} harFeil={harFeil}>
                 <input {...getInputProps()} />
                 <StyledUpload focusable={false} />
-                <Normaltekst>
+                <BodyShort>
                     <SpråkTekst
                         id={
                             isDragActive
@@ -91,7 +90,7 @@ const Filopplaster: React.FC<Props> = ({
                                 : 'dokumentasjon.last-opp-dokumentasjon.knapp'
                         }
                     />
-                </Normaltekst>
+                </BodyShort>
             </FilopplastningBoks>
             <OpplastedeFiler
                 filliste={dokumentasjon.opplastedeVedlegg}

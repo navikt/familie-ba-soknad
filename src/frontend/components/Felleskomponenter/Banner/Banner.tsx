@@ -2,8 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Innholdstittel } from 'nav-frontend-typografi';
-
+import { Heading } from '@navikt/ds-react';
 import { APurple200, APurple400 } from '@navikt/ds-tokens/dist/tokens';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -21,9 +20,9 @@ const Section = styled.section`
 const Banner: React.FC<{ språkTekstId: string }> = ({ språkTekstId }) => {
     return (
         <Section>
-            <Innholdstittel>
+            <Heading size="large">
                 <SpråkTekst id={språkTekstId} />
-            </Innholdstittel>
+            </Heading>
         </Section>
     );
 };
