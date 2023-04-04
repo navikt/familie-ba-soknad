@@ -1678,14 +1678,6 @@
     aria-hidden "^1.1.3"
     tabbable "^6.0.1"
 
-"@formatjs/ecma402-abstract@1.11.4":
-  version "1.11.4"
-  resolved "https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-1.11.4.tgz#b962dfc4ae84361f9f08fbce411b4e4340930eda"
-  integrity sha512-EBikYFp2JCdIfGEb5G9dyCkTGDmC57KSHhRQOC3aYxoPWVZvfWCDjZwkGYHN7Lis/fmuWl906bnNTJifDQ3sXw==
-  dependencies:
-    "@formatjs/intl-localematcher" "0.2.25"
-    tslib "^2.1.0"
-
 "@formatjs/ecma402-abstract@1.14.3":
   version "1.14.3"
   resolved "https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-1.14.3.tgz#6428f243538a11126180d121ce8d4b2f17465738"
@@ -1726,14 +1718,14 @@
     "@formatjs/ecma402-abstract" "1.9.9"
     tslib "^2.1.0"
 
-"@formatjs/intl-datetimeformat@^5.0.2":
-  version "5.0.2"
-  resolved "https://registry.npmjs.org/@formatjs/intl-datetimeformat/-/intl-datetimeformat-5.0.2.tgz#11bf5814416c03f544e0b118789fb1497b815566"
-  integrity sha512-yk7CItBMgtUsub123+iqOfXoqG6JHJIl3Pke7eOYb7QFAPsOZliAJb2i0+Tr1FXWcm1PdWZVHEv6C2l4nEmQdw==
+"@formatjs/intl-datetimeformat@^6.5.1":
+  version "6.5.1"
+  resolved "https://registry.npmjs.org/@formatjs/intl-datetimeformat/-/intl-datetimeformat-6.5.1.tgz#db1fbfe2a5775c72fe9c6c9314129e43976732d3"
+  integrity sha512-Oc2iAvk++pf9HgK20nuf3v4AhSrHbqEur0zdvRv4NL4hPpY3Ucz9ZH5WSfui9Rl29lwa7cYkdudx0FN51NS8/A==
   dependencies:
-    "@formatjs/ecma402-abstract" "1.11.4"
-    "@formatjs/intl-localematcher" "0.2.25"
-    tslib "^2.1.0"
+    "@formatjs/ecma402-abstract" "1.14.3"
+    "@formatjs/intl-localematcher" "0.2.32"
+    tslib "^2.4.0"
 
 "@formatjs/intl-displaynames@5.2.4":
   version "5.2.4"
@@ -1757,13 +1749,6 @@
   version "0.2.21"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-localematcher/-/intl-localematcher-0.2.21.tgz#39ef33d701fe8084f3d693cd3ff7cbe03cdd3a49"
   integrity sha512-JTJeLiNwexN4Gy0cMxoUPvJbKhXdnSuo5jPrDafEZpnDWlJ5VDYta8zUVVozO/pwzEmFVHEUpgiEDj+39L4oMg==
-  dependencies:
-    tslib "^2.1.0"
-
-"@formatjs/intl-localematcher@0.2.25":
-  version "0.2.25"
-  resolved "https://registry.npmjs.org/@formatjs/intl-localematcher/-/intl-localematcher-0.2.25.tgz#60892fe1b271ec35ba07a2eb018a2dd7bca6ea3a"
-  integrity sha512-YmLcX70BxoSopLFdLr1Ds99NdlTI2oWoLbaUW2M406lxOIPzE1KQhRz2fPUkq34xVZQaihCoU29h0KK7An3bhA==
   dependencies:
     tslib "^2.1.0"
 

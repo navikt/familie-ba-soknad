@@ -95,7 +95,7 @@
     ]
   },
   "dependencies": {
-    "@formatjs/intl-datetimeformat": "^5.0.2",
+    "@formatjs/intl-datetimeformat": "^6.5.1",
     "@formatjs/intl-numberformat": "^8.3.5",
     "@navikt/ds-css": "^2.6.0",
     "@navikt/ds-react": "^2.6.0",
