@@ -1,5 +1,6 @@
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
+import { basePath } from '../../shared-utils/Miljø';
 import { SkjemaFeltTyper } from '../typer/skjema';
 
 export const randomIntFraIntervall = (min, max) => {
@@ -17,3 +18,12 @@ export const visFeiloppsummering = (skjema: ISkjema<SkjemaFeltTyper, string>): b
     );
     return skjema.visFeilmeldinger && !!feil;
 };
+
+/**
+ * Vi må fortsatt hente scripts og ressurser fra /ordinaer med mindre vi ønsker å gjøre endringer på
+ * express-appen, og vi kan forwarde requests til APIet via /ordinaer, det eneste som må endres for
+ * å støtte utvidet søknad er basepath for react-routeren og login-redirect, derfor gjør vi dette her.
+ */
+export const routerBasePath = window.location.pathname.includes('utvidet')
+    ? basePath.replace('ordinaer', 'utvidet')
+    : basePath;

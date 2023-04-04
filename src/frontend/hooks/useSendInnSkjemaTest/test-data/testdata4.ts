@@ -87,18 +87,6 @@ export const testdata4: TilKontraktTestData = {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
                 },
-                søkerForTidsrom: {
-                    id: 'søker-for-tidsrom',
-                    svar: 'JA',
-                },
-                søkerForTidsromStartdato: {
-                    id: 'søker-for-tidsrom-startdato',
-                    svar: '2022-01-14',
-                },
-                søkerForTidsromSluttdato: {
-                    id: 'søker-for-tidsrom-sluttdato',
-                    svar: 'UKJENT',
-                },
             },
             {
                 id: 'c766c4f4-f319-482b-aba3-7e732d518a39',
@@ -275,18 +263,6 @@ export const testdata4: TilKontraktTestData = {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
                 },
-                søkerForTidsrom: {
-                    id: 'søker-for-tidsrom',
-                    svar: 'NEI',
-                },
-                søkerForTidsromStartdato: {
-                    id: 'søker-for-tidsrom-startdato',
-                    svar: '',
-                },
-                søkerForTidsromSluttdato: {
-                    id: 'søker-for-tidsrom-sluttdato',
-                    svar: '',
-                },
             },
         ],
         lestOgForståttBekreftelse: true,
@@ -434,8 +410,8 @@ export const testdata4: TilKontraktTestData = {
                 id: 'er-asylsøker',
                 svar: 'JA',
             },
-            jobberPåBåt: {
-                id: 'jobber-på-båt',
+            arbeidIUtlandet: {
+                id: 'arbeid-i-utlandet',
                 svar: 'JA',
             },
             arbeidsland: {
@@ -705,7 +681,7 @@ export const testdata4: TilKontraktTestData = {
                     },
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
-                jobberPåBåt: {
+                arbeidIUtlandet: {
                     label: {
                         en: "Do you or have you worked outside of Norway, on a foreign ship or on another country's continental shelf?",
                         nb: 'Arbeider eller har du arbeidet utenfor Norge, på utenlandsk skip eller på utenlandsk kontinentalsokkel?',
@@ -1161,26 +1137,6 @@ export const testdata4: TilKontraktTestData = {
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
-                    søkerForTidsrom: {
-                        label: {
-                            en: 'Are you applying for child benefit for a particular period of time for Barn 234567 89876?',
-                            nb: 'Søker du barnetrygd for et spesielt tidsrom for Barn 234567 89876?',
-                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for Barn 234567 89876?',
-                        },
-                        verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
-                    },
-                    søkerForTidsromStartdato: {
-                        label: { en: 'From', nb: 'Fra og med', nn: 'Frå og med' },
-                        verdi: { nb: '2022-01-14', nn: '2022-01-14', en: '2022-01-14' },
-                    },
-                    søkerForTidsromSluttdato: {
-                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
-                        verdi: {
-                            en: 'Period does not have an up to and including date / Up to and including date is in the future',
-                            nb: 'Tidsrommet har ikke en til og med dato / Til og med dato er frem i tid.',
-                            nn: 'Tidsrommet har ikkje ein til og med dato / Til og med dato er fram i tid',
-                        },
-                    },
                     institusjonOppholdSluttdato: {
                         label: {
                             en: 'When is the stay at the institution ending?',
@@ -1593,18 +1549,6 @@ export const testdata4: TilKontraktTestData = {
                         },
                         verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                     },
-                    søkerForTidsrom: {
-                        label: {
-                            en: 'Are you applying for child benefit for a particular period of time for Barn Barnessen III?',
-                            nb: 'Søker du barnetrygd for et spesielt tidsrom for Barn Barnessen III?',
-                            nn: 'Søker du barnetrygd for eit spesielt tidsrom for Barn Barnessen III?',
-                        },
-                        verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
-                    },
-                    søkerForTidsromSluttdato: {
-                        label: { en: 'Up to and including', nb: 'Til og med', nn: 'Til og med' },
-                        verdi: { nb: '', nn: '', en: '' },
-                    },
                     institusjonOppholdSluttdato: {
                         label: {
                             en: 'When is the stay at the institution ending?',
@@ -1834,11 +1778,6 @@ export const testdata4: TilKontraktTestData = {
                 en: 'About your children',
                 nb: 'Om barna dine',
                 nn: 'Om barna dine',
-            },
-            'pdf.søker-for-tidsrom.seksjonstittel': {
-                en: 'Are you applying for a specific time period for {navn}?',
-                nb: 'Søker du barnetrygd for et spesielt tidsrom for {navn}?',
-                nn: 'Søker du barnetrygd for eit spesielt tidsrom for {navn}?',
             },
             'pdf.søker.seksjonstittel': { en: 'Applicant', nb: 'Søker', nn: 'Søkar' },
             'pdf.vedlegg.seksjonstittel': {

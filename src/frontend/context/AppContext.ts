@@ -4,6 +4,7 @@ import createUseContext from 'constate';
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
+import { Modal } from '@navikt/ds-react';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 import {
     byggHenterRessurs,
@@ -12,8 +13,8 @@ import {
     RessursStatus,
 } from '@navikt/familie-typer';
 
+import Miljø, { basePath } from '../../shared-utils/Miljø';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import Miljø, { basePath } from '../Miljø';
 import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
@@ -43,6 +44,10 @@ const [AppProvider, useApp] = createUseContext(() => {
     const { modellVersjon } = Miljø();
     const [sisteModellVersjon, settSisteModellVersjon] = useState(modellVersjon);
     const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
+
+    useEffect(() => {
+        Modal.setAppElement && Modal.setAppElement('#root');
+    }, []);
 
     useEffect(() => {
         if (nåværendeRoute === RouteEnum.Kvittering) {
@@ -112,7 +117,7 @@ const [AppProvider, useApp] = createUseContext(() => {
             locale: valgtLocale,
         };
         axiosRequest<IMellomlagretBarnetrygd, IMellomlagretBarnetrygd>({
-            url: Miljø().mellomlagerUrl,
+            url: `${Miljø().dokumentProxyUrl}/soknad/barnetrygd`,
             method: 'post',
             withCredentials: true,
             påvirkerSystemLaster: false,
@@ -131,7 +136,7 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     const hentOgSettMellomlagretData = () => {
         preferredAxios
-            .get(Miljø().mellomlagerUrl, {
+            .get(`${Miljø().dokumentProxyUrl}/soknad/barnetrygd`, {
                 withCredentials: true,
             })
             .then((response: { data?: IMellomlagretBarnetrygd }) => {
@@ -153,7 +158,7 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     const nullstillMellomlagretVerdi = () => {
         axiosRequest<void, void>({
-            url: Miljø().mellomlagerUrl,
+            url: `${Miljø().dokumentProxyUrl}/soknad/barnetrygd`,
             method: 'delete',
             withCredentials: true,
             påvirkerSystemLaster: false,

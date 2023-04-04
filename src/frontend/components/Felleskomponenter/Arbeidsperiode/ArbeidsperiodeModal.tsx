@@ -151,7 +151,6 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                                 )}
                             />
                         }
-                        calendarPosition={'fullscreen'}
                         avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
                     />
                 )}
@@ -173,7 +172,6 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                             )}
                             avgrensMaxDato={periodenErAvsluttet ? dagensDato() : undefined}
                             disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
-                            calendarPosition={'fullscreen'}
                         />
 
                         <SkjemaCheckbox

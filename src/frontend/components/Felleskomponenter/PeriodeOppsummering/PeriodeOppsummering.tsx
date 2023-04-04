@@ -2,17 +2,17 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
 import { Element } from 'nav-frontend-typografi';
 
 import { DeleteFilled } from '@navikt/ds-icons';
 import { Button } from '@navikt/ds-react';
+import { ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const PeriodeContainer = styled.div<{ bottomBorder: boolean }>`
     margin: 2rem 0;
-    border-bottom: ${props => (props.bottomBorder ? `1px solid ${navFarger.navGra60}` : 'none')};
+    border-bottom: ${props => (props.bottomBorder ? `1px solid ${ABorderDefault}` : 'none')};
 `;
 
 const StyledButton = styled(Button)`
@@ -54,8 +54,8 @@ const PeriodeOppsummering: React.FC<{
                     type={'button'}
                     variant={'tertiary'}
                     onClick={() => fjernPeriodeCallback()}
+                    icon={<DeleteFilled />}
                 >
-                    <DeleteFilled />
                     <SpråkTekst id={fjernKnappSpråkId} />
                 </StyledButton>
             )}

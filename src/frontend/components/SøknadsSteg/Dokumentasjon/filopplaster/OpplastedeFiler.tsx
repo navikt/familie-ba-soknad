@@ -2,11 +2,11 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Attachment, DeleteFilled } from '@navikt/ds-icons';
 import { Button } from '@navikt/ds-react';
+import { ABorderDivider } from '@navikt/ds-tokens/dist/tokens';
 
 import { IVedlegg } from '../../../../typer/dokumentasjon';
 import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
@@ -25,7 +25,7 @@ const FilRad = styled.li<{ skillelinje: boolean }>`
     display: flex;
     justify-content: space-between;
     padding: 1rem 0;
-    border-bottom: ${props => (props.skillelinje ? `1px solid ${navFarger.navGra20}` : 'none')};
+    border-bottom: ${props => (props.skillelinje ? `1px solid ${ABorderDivider}` : 'none')};
 `;
 
 const FilTekstWrapper = styled.div`
@@ -57,9 +57,12 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
                                 {`${fil.navn} (${formaterFilstørrelse(fil.størrelse)})`}
                             </Normaltekst>
                         </FilTekstWrapper>
-                        <Button variant={'tertiary'} onClick={() => slettVedlegg(fil)}>
+                        <Button
+                            variant={'tertiary'}
+                            onClick={() => slettVedlegg(fil)}
+                            icon={<DeleteFilled focusable={false} />}
+                        >
                             <SpråkTekst id={'felles.slett'} />
-                            <DeleteFilled focusable={false} />
                         </Button>
                     </FilRad>
                 );

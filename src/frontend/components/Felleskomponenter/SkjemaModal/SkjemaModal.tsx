@@ -3,27 +3,12 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import Modal from 'nav-frontend-modal';
 import { Innholdstittel } from 'nav-frontend-typografi';
 
-import { Button } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 
-import { device } from '../../../Theme';
+import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-
-const StyledModal = styled(Modal)`
-    && {
-        padding: 2rem;
-    }
-
-    width: 45rem;
-    @media all and ${device.mobile} {
-        width: 95%;
-        && {
-            padding: 2rem -100% 2rem -100%;
-        }
-    }
-`;
 
 const StyledButton = styled(Button)`
     && {
@@ -61,34 +46,36 @@ const SkjemaModal: React.FC<{
     const { formatMessage } = useIntl();
 
     return (
-        <StyledModal
-            isOpen={erÅpen}
-            contentLabel={formatMessage({ id: modalTittelSpråkId })}
-            onRequestClose={() => {
+        <Modal
+            open={erÅpen}
+            onClose={() => {
                 toggleModal();
                 onAvbrytCallback && onAvbrytCallback();
             }}
-            /* aria-modal blir satt til true så vi trenger ikke å gjøre aria-hidden på appen */
-            ariaHideApp={false}
+            aria-label={formatMessage({ id: modalTittelSpråkId })}
         >
-            <form>
-                <StyledInnholdstittel>
-                    <SpråkTekst id={modalTittelSpråkId} />
-                </StyledInnholdstittel>
-                {children}
-                <StyledButton
-                    variant={valideringErOk() ? 'primary' : 'secondary'}
-                    type={'submit'}
-                    loading={!!submitSpinner}
-                    onClick={event => {
-                        event.preventDefault();
-                        onSubmitCallback();
-                    }}
-                >
-                    <SpråkTekst id={submitKnappSpråkId} />
-                </StyledButton>
-            </form>
-        </StyledModal>
+            <ModalContent>
+                {modalTittelSpråkId && (
+                    <StyledInnholdstittel>
+                        <SpråkTekst id={modalTittelSpråkId} />
+                    </StyledInnholdstittel>
+                )}
+                <form>
+                    {children}
+                    <StyledButton
+                        variant={valideringErOk() ? 'primary' : 'secondary'}
+                        type={'submit'}
+                        loading={!!submitSpinner}
+                        onClick={event => {
+                            event.preventDefault();
+                            onSubmitCallback();
+                        }}
+                    >
+                        <SpråkTekst id={submitKnappSpråkId} />
+                    </StyledButton>
+                </form>
+            </ModalContent>
+        </Modal>
     );
 };
 

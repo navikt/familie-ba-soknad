@@ -3,15 +3,13 @@ import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
-import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Upload } from '@navikt/ds-icons';
+import { ABlue500, ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
-import AlertStripe from '../../../Felleskomponenter/AlertStripe/AlertStripe';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import OpplastedeFiler from './OpplastedeFiler';
 import { useFilopplaster } from './useFilopplaster';
@@ -27,22 +25,26 @@ interface Props {
     maxFilstørrelse: number;
 }
 
-const FilopplastningBoks = styled.button`
+interface FilopplastningBoksProps {
+    harFeil: boolean;
+}
+
+const FilopplastningBoks = styled.button<FilopplastningBoksProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px dashed ${navFarger.navGra80};
+    border: 2px dashed ${props => (props.harFeil ? '#ba3a26' : ABorderDefault)};
     border-radius: 4px;
     background-color: rgba(204, 222, 230, 0.5);
     width: 100%;
     padding: 1rem;
     margin: 2rem 0 1rem 0;
-    color: ${navFarger.navBla};
+    color: ${ABlue500};
     box-sizing: border-box;
 
     :focus,
     :hover {
-        border: 2px solid ${navFarger.navBla};
+        border: 2px solid ${props => (props.harFeil ? '#ba3a26' : ABlue500)};
         cursor: pointer;
     }
 `;
@@ -52,8 +54,12 @@ const StyledUpload = styled(Upload)`
     min-width: 1rem;
 `;
 
-const FeilmeldingWrapper = styled.div`
-    margin-right: 3rem;
+const StyledFeilmeldingList = styled.ul`
+    padding-inline-start: 1.25rem;
+    > li {
+        font-weight: 600;
+        color: #ba3a26;
+    }
 `;
 
 const Filopplaster: React.FC<Props> = ({
@@ -62,31 +68,19 @@ const Filopplaster: React.FC<Props> = ({
     tillatteFiltyper,
     maxFilstørrelse,
 }) => {
-    const { onDrop, åpenModal, lukkModal, feilmeldinger, slettVedlegg } = useFilopplaster(
+    const { onDrop, harFeil, feilmeldinger, slettVedlegg } = useFilopplaster(
         maxFilstørrelse,
-        tillatteFiltyper,
         dokumentasjon,
         oppdaterDokumentasjon
     );
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+        accept: tillatteFiltyper,
+    });
 
     return (
         <>
-            <Modal
-                isOpen={åpenModal}
-                onRequestClose={() => lukkModal()}
-                closeButton={true}
-                contentLabel="Modal"
-            >
-                <FeilmeldingWrapper>
-                    {feilmeldinger.map((feilmelding, index) => (
-                        <AlertStripe type={'feil'} form={'default'} key={index}>
-                            {feilmelding}
-                        </AlertStripe>
-                    ))}
-                </FeilmeldingWrapper>
-            </Modal>
-            <FilopplastningBoks type={'button'} {...getRootProps()}>
+            <FilopplastningBoks type={'button'} {...getRootProps()} harFeil={harFeil}>
                 <input {...getInputProps()} />
                 <StyledUpload focusable={false} />
                 <Normaltekst>
@@ -103,6 +97,22 @@ const Filopplaster: React.FC<Props> = ({
                 filliste={dokumentasjon.opplastedeVedlegg}
                 slettVedlegg={slettVedlegg}
             />
+            {harFeil && (
+                <StyledFeilmeldingList>
+                    {Array.from(feilmeldinger).map(([key, value], index) => (
+                        <li key={index}>
+                            <SpråkTekst id={key} />
+                            {
+                                <StyledFeilmeldingList>
+                                    {value.map((fil, index) => (
+                                        <li key={index}>{fil.name}</li>
+                                    ))}
+                                </StyledFeilmeldingList>
+                            }
+                        </li>
+                    ))}
+                </StyledFeilmeldingList>
+            )}
         </>
     );
 };

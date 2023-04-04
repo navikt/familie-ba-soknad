@@ -11,6 +11,7 @@ import {
     mekkGyldigSøknad,
     mockHistory,
     silenceConsoleErrors,
+    spyOnModal,
     spyOnUseApp,
     TestProvidere,
     TestProvidereMedEkteTekster,
@@ -21,7 +22,10 @@ import { OmDegSpørsmålId } from '../OmDeg/spørsmål';
 import Oppsummering from './Oppsummering';
 
 describe('Oppsummering', () => {
-    beforeEach(silenceConsoleErrors);
+    beforeEach(() => {
+        silenceConsoleErrors();
+        spyOnModal();
+    });
 
     it('Alle tekster finnes i språkfil', async () => {
         mockHistory(['/oppsummering']);

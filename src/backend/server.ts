@@ -7,15 +7,11 @@ import express from 'express';
 import { logInfo } from '@navikt/familie-logging';
 
 import { cspString } from '../csp';
-import environment, { basePath } from './environment';
+import Miljø, { basePath } from '../shared-utils/Miljø';
 import { expressToggleInterceptor } from './middlewares/feature-toggles';
 import { konfigurerIndex, konfigurerIndexFallback } from './routes';
 import { konfigurerApi } from './routes/api';
-import {
-    konfigurerAllFeatureTogglesEndpoint,
-    konfigurerFeatureTogglesEndpoint,
-} from './routes/feature-toggles';
-import { konfigurerBildeProsessering } from './routes/imageprocessor';
+import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles';
 import { konfigurerModellVersjonEndpoint } from './routes/modellversjon';
 import { konfigurerNais } from './routes/nais';
 import { konfigurerStatic } from './routes/static';
@@ -56,13 +52,11 @@ app.use((_req, res, next) => {
 konfigurerIndex(app);
 konfigurerNais(app);
 konfigurerApi(app);
-konfigurerBildeProsessering(app);
-konfigurerFeatureTogglesEndpoint(app);
 konfigurerAllFeatureTogglesEndpoint(app);
 konfigurerModellVersjonEndpoint(app);
 
 konfigurerIndexFallback(app);
 
-logInfo(`Starting server on localhost: http://localhost:${environment().port}${basePath}`);
+logInfo(`Starting server on localhost: http://localhost:${Miljø().port}${basePath}`);
 
-app.listen(environment().port);
+app.listen(Miljø().port);

@@ -2,7 +2,6 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 import { Alpha3Code } from 'i18n-iso-countries';
-import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -18,6 +17,7 @@ import {
     mockEøs,
     mockHistory,
     silenceConsoleErrors,
+    spyOnModal,
     spyOnUseApp,
     TestProvidere,
     TestProvidereMedEkteTekster,
@@ -113,18 +113,6 @@ const mockBarnMedISøknad = {
     [barnDataKeySpørsmål.borFastMedSøker]: {
         id: OmBarnetSpørsmålsId.borFastMedSøker,
         svar: ESvar.NEI,
-    },
-    [barnDataKeySpørsmål.søkerForTidsrom]: {
-        id: OmBarnetSpørsmålsId.søkerForTidsrom,
-        svar: ESvar.JA,
-    },
-    [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
-        id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
-        svar: '2021-09-02',
-    },
-    [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
-        id: OmBarnetSpørsmålsId.søkerForTidsromSluttdato,
-        svar: '2021-09-03',
     },
     [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: {
         id: OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn,
@@ -300,6 +288,7 @@ const line: IBarnMedISøknad = {
 describe('OmBarnet', () => {
     beforeEach(() => {
         mockEøs();
+        spyOnModal();
     });
 
     test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, async () => {
@@ -405,47 +394,6 @@ describe('OmBarnet', () => {
         await act(() => ikkeOppgiOpplysninger.click());
         expect(andreForelderFnrLabel).not.toBeInTheDocument();
         expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
-    });
-
-    test('Rendrer tidsrom hvis bor fast med søker er satt', async () => {
-        mockHistory(['/om-barnet/barn-1']);
-        const fakeBarn = mockDeep<IBarnMedISøknad>({
-            id: 'random-id',
-            borFastMedSøker: {
-                svar: null,
-            },
-            søkerForTidsrom: {
-                svar: ESvar.JA,
-            },
-            søkerForTidsromStartdato: {
-                svar: '',
-            },
-            søkerForTidsromSluttdato: {
-                svar: '',
-            },
-            andreForelder: null,
-            institusjonsnavn: { svar: '' },
-            institusjonsadresse: { svar: '' },
-            utenlandsperioder: [],
-        });
-
-        const { erStegUtfyltFrafør } = spyOnUseApp({
-            barnInkludertISøknaden: [fakeBarn],
-        });
-        erStegUtfyltFrafør.mockReturnValue(false);
-
-        const { findByLabelText, findByText, queryByText } = render(
-            <TestProvidere>
-                <OmBarnet barnetsId={'random-id'} />
-            </TestProvidere>
-        );
-
-        expect(queryByText(/ombarnet.søker-for-periode.spm/)).not.toBeInTheDocument();
-
-        const jaKnapp = await findByLabelText('felles.svaralternativ.ja');
-        await act(() => jaKnapp.click());
-
-        expect(await findByText(/ombarnet.søker-for-periode.spm/)).toBeInTheDocument();
     });
 
     test('Får opp feilmelding ved feil postnummer', async () => {

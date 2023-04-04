@@ -4,6 +4,7 @@ import * as history from 'history';
 import { History } from 'history';
 import { mockDeep } from 'jest-mock-extended';
 
+import { Modal } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
@@ -160,6 +161,9 @@ export const silenceConsoleErrors = () => {
     });
 };
 
+export const spyOnModal = () =>
+    jest.spyOn(Modal, 'setAppElement').mockImplementation(() => jest.fn());
+
 export const wrapMedProvidere = (
     // eslint-disable-next-line
     providerComponents: React.FC<any>[],
@@ -251,8 +255,8 @@ export const mekkGyldigSøker = (): ISøker => {
             id: DinLivssituasjonSpørsmålId.erAsylsøker,
             svar: ESvar.NEI,
         },
-        jobberPåBåt: {
-            id: DinLivssituasjonSpørsmålId.jobberPåBåt,
+        arbeidIUtlandet: {
+            id: DinLivssituasjonSpørsmålId.arbeidIUtlandet,
             svar: ESvar.NEI,
         },
         mottarUtenlandspensjon: {
@@ -381,18 +385,6 @@ export const mekkGyldigSøknad = (): ISøknad => {
                 [barnDataKeySpørsmål.borFastMedSøker]: {
                     id: OmBarnetSpørsmålsId.borFastMedSøker,
                     svar: ESvar.JA,
-                },
-                [barnDataKeySpørsmål.søkerForTidsrom]: {
-                    id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
-                    svar: ESvar.NEI,
-                },
-                [barnDataKeySpørsmål.søkerForTidsromStartdato]: {
-                    id: OmBarnetSpørsmålsId.søkerForTidsromStartdato,
-                    svar: AlternativtSvarForInput.UKJENT,
-                },
-                [barnDataKeySpørsmål.søkerForTidsromSluttdato]: {
-                    id: OmBarnetSpørsmålsId.søkerForTidsromSluttdato,
-                    svar: AlternativtSvarForInput.UKJENT,
                 },
                 [barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd]: {
                     id: OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd,

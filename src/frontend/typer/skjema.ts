@@ -1,9 +1,15 @@
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål } from './barn';
-import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, ESvarMedUbesvart } from './common';
+import {
+    AlternativtSvarForInput,
+    BarnetsId,
+    DatoMedUkjent,
+    ESvarMedUbesvart,
+    ISODateString,
+} from './common';
 import { Slektsforhold } from './kontrakt/generelle';
 import {
     IArbeidsperiode,
@@ -29,7 +35,7 @@ export interface IDinLivssituasjonFeltTyper {
     nåværendeSamboerFødselsdatoUkjent: ESvar;
     nåværendeSamboerFraDato: ISODateString;
     erAsylsøker: ESvar | null;
-    jobberPåBåt: ESvar | null;
+    arbeidIUtlandet: ESvar | null;
     registrerteArbeidsperioder: IArbeidsperiode[];
     mottarUtenlandspensjon: ESvar | null;
     registrertePensjonsperioder: IPensjonsperiode[];
@@ -62,7 +68,7 @@ export interface IOmBarnaDineFeltTyper {
     hvemAvdødPartner: BarnetsId[];
 }
 
-export interface IOmBarnetUtvidetFeltTyper {
+export interface IOmBarnetFeltTyper {
     institusjonIUtlandCheckbox: ESvar;
     institusjonsnavn: string;
     institusjonsadresse: string;
@@ -87,10 +93,6 @@ export interface IOmBarnetUtvidetFeltTyper {
     andreForelderPensjonsperioderUtland: IPensjonsperiode[];
     borFastMedSøker: ESvar | null;
     skriftligAvtaleOmDeltBosted: ESvar | null;
-    søkerForTidsrom: ESvar | null;
-    søkerForTidsromStartdato: ISODateString;
-    søkerForTidsromSluttdato: DatoMedUkjent;
-    søkerForTidsromSluttdatoVetIkke: ESvar;
     sammeForelderSomAnnetBarn: string | null;
     søkerHarBoddMedAndreForelder: ESvar | null;
     borMedAndreForelderCheckbox: ESvar;
@@ -220,7 +222,7 @@ export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
     | ILeggTilBarnTyper
-    | IOmBarnetUtvidetFeltTyper
+    | IOmBarnetFeltTyper
     | IOmBarnaDineFeltTyper
     | IDinLivssituasjonFeltTyper
     | IUtenlandsoppholdFeltTyper

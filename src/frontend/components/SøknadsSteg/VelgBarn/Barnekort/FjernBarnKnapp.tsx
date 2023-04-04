@@ -23,8 +23,8 @@ export const FjernBarnKnapp: React.FC<{
             type={'button'}
             variant={'tertiary'}
             onClick={() => fjernBarnCallback(barnId)}
+            icon={<DeleteFilled aria-hidden />}
         >
-            <DeleteFilled aria-hidden />
             <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
         </StyledButton>
     );

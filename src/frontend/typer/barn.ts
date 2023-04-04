@@ -1,8 +1,8 @@
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 
-import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
+import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, ISODateString } from './common';
 import { Slektsforhold } from './kontrakt/generelle';
 import { IOmsorgsperson } from './omsorgsperson';
 import {
@@ -55,9 +55,6 @@ export enum barnDataKeySpørsmål {
     boddMindreEnn12MndINorge = 'boddMindreEnn12MndINorge',
     planleggerÅBoINorge12Mnd = 'planleggerÅBoINorge12Mnd',
     borFastMedSøker = 'borFastMedSøker',
-    søkerForTidsrom = 'søkerForTidsrom',
-    søkerForTidsromStartdato = 'søkerForTidsromStartdato',
-    søkerForTidsromSluttdato = 'søkerForTidsromSluttdato',
     sammeForelderSomAnnetBarnMedId = 'sammeForelderSomAnnetBarnMedId',
     søkersSlektsforhold = 'søkersSlektsforhold',
     søkersSlektsforholdSpesifisering = 'søkersSlektsforholdSpesifisering',
@@ -125,9 +122,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.boddMindreEnn12MndINorge]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.planleggerÅBoINorge12Mnd]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.borFastMedSøker]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.søkerForTidsrom]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.søkerForTidsromStartdato]: ISøknadSpørsmål<ISODateString>;
-    [barnDataKeySpørsmål.søkerForTidsromSluttdato]: ISøknadSpørsmål<DatoMedUkjent>;
     [barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId]: ISøknadSpørsmål<
         BarnetsId | AlternativtSvarForInput.ANNEN_FORELDER | null
     >;

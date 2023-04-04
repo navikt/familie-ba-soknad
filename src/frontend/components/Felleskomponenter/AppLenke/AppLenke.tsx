@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 
 import { Link } from '@navikt/ds-react';
 
+import { basePath } from '../../../../shared-utils/Miljø';
 import { unslash } from '../../../../shared-utils/unslash';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
-import { basePath } from '../../../Miljø';
 import { ISteg } from '../../../typer/routes';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 

@@ -1,53 +1,38 @@
 import React, { ReactNode, useEffect } from 'react';
 
-import dayjs from 'dayjs';
+import { formatISO, isAfter, startOfDay } from 'date-fns';
 import { useIntl } from 'react-intl';
-import { css } from 'styled-components';
-import styled from 'styled-components';
 
-import navFarger from 'nav-frontend-core';
-import { Feilmelding, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 
-import {
-    DatepickerLimitations,
-    FamilieDatovelger,
-    ISODateString,
-} from '@navikt/familie-form-elements';
+import { ErrorMessage, UNSAFE_DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { dagensDato } from '../../../utils/dato';
+import {
+    dagenEtterDato,
+    dagensDato,
+    parseTilGyldigDato,
+    stringTilDate,
+    tidenesEnde,
+    tidenesMorgen,
+} from '../../../utils/dato';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface DatoVelgerProps {
     felt: Felt<ISODateString>;
     avgrensDatoFremITid?: boolean;
-    avgrensMaxDato?: ISODateString;
-    avgrensMinDato?: ISODateString;
+    avgrensMaxDato?: Date;
+    avgrensMinDato?: Date;
     tilhørendeFraOgMedFelt?: Felt<ISODateString>;
     skjema: ISkjema<SkjemaFeltTyper, string>;
     label: ReactNode;
     disabled?: boolean;
     dynamisk?: boolean;
-    calendarPosition?: '' | 'fullscreen' | 'responsive';
+    strategy?: 'absolute' | 'fixed';
 }
-
-const StyledFamilieDatovelger = styled(FamilieDatovelger)<{ feil: boolean }>`
-    ${props =>
-        props.feil &&
-        css`
-            .nav-datovelger:not(:hover) {
-                input:not(:focus, :active),
-                input:not(:focus, :active) + button {
-                    border-color: ${navFarger.redError};
-                }
-                input:not(:focus, :active) {
-                    box-shadow: 0 0 0 1px ${navFarger.redError};
-                }
-            }
-        `}
-`;
 
 const Datovelger: React.FC<DatoVelgerProps> = ({
     felt,
@@ -59,57 +44,84 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     label,
     disabled = false,
     dynamisk = false,
-    calendarPosition = '',
+    strategy = 'fixed',
 }) => {
     const { formatMessage } = useIntl();
     const [valgtLocale] = useSprakContext();
 
-    const hentBegrensninger = () => {
-        const limitations: DatepickerLimitations = {};
+    const minDatoErIFremtiden = () =>
+        tilhørendeFraOgMedFelt?.verdi &&
+        hentFromDate() !== undefined &&
+        isAfter(hentFromDate() as Date, dagensDato());
+
+    const hentFromDate = (): Date | undefined => {
+        let minDato = tidenesMorgen();
 
         if (avgrensMinDato) {
-            limitations.minDate = avgrensMinDato;
-        } else if (tilhørendeFraOgMedFelt) {
-            limitations.minDate = dayjs(tilhørendeFraOgMedFelt.verdi)
-                .add(1, 'day')
-                .format('YYYY-MM-DD');
+            minDato = avgrensMinDato;
+        } else if (tilhørendeFraOgMedFelt?.verdi) {
+            minDato = dagenEtterDato(stringTilDate(tilhørendeFraOgMedFelt.verdi));
         }
-
-        if (avgrensDatoFremITid || avgrensMaxDato) {
-            limitations.maxDate = avgrensMaxDato ? avgrensMaxDato : dagensDato();
-        }
-
-        return limitations;
+        return minDato;
     };
 
+    const hentToDate = (): Date => {
+        let maxDato = tidenesEnde();
+
+        if (avgrensDatoFremITid || avgrensMaxDato) {
+            maxDato = avgrensMaxDato ? avgrensMaxDato : dagensDato();
+        }
+
+        return maxDato;
+    };
+
+    const { datepickerProps, inputProps, reset } = UNSAFE_useDatepicker({
+        locale: valgtLocale,
+        fromDate: hentFromDate(),
+        toDate: hentToDate(),
+        today: minDatoErIFremtiden() ? hentFromDate() : dagensDato(),
+        defaultSelected: parseTilGyldigDato(felt.verdi, 'yyyy-MM-dd'),
+        onDateChange: (dato: Date | undefined) => {
+            if (dato) {
+                felt.validerOgSettFelt(formatISO(dato, { representation: 'date' }));
+            }
+        },
+    });
+
     useEffect(() => {
-        felt.validerOgSettFelt(felt.verdi);
-    }, [tilhørendeFraOgMedFelt?.verdi, avgrensMaxDato]);
+        minDatoErIFremtiden() && reset();
+    }, [tilhørendeFraOgMedFelt?.verdi]);
+
+    useEffect(() => {
+        if (inputProps.value && inputProps.value !== '' && !disabled) {
+            const parsetDato = parseTilGyldigDato(inputProps.value.toString(), 'dd.MM.yyyy');
+            felt.validerOgSettFelt(
+                parsetDato
+                    ? formatISO(startOfDay(parsetDato), { representation: 'date' })
+                    : inputProps.value.toString()
+            );
+        }
+    }, [inputProps.value, disabled]);
 
     return felt.erSynlig ? (
         <div aria-live={dynamisk ? 'polite' : 'off'}>
-            <StyledFamilieDatovelger
-                description={
-                    <Normaltekst>
-                        <SpråkTekst id={'felles.velg-dato.hjelpetekst'} />
-                    </Normaltekst>
-                }
-                allowInvalidDateSelection={false}
-                limitations={hentBegrensninger()}
-                placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}
-                valgtDato={disabled ? '' : felt.verdi}
-                label={label}
-                {...felt.hentNavBaseSkjemaProps(skjema.visFeilmeldinger)}
-                onChange={dato => {
-                    felt.hentNavInputProps(false).onChange(dato);
-                }}
-                feil={!!(felt.feilmelding && skjema.visFeilmeldinger)}
-                disabled={disabled}
-                locale={valgtLocale}
-                allowNavigationToDisabledMonths={false}
-                calendarSettings={{ position: calendarPosition }}
-            />
-            {skjema.visFeilmeldinger && <Feilmelding>{felt.feilmelding}</Feilmelding>}
+            <UNSAFE_DatePicker dropdownCaption strategy={strategy} {...datepickerProps}>
+                <UNSAFE_DatePicker.Input
+                    {...inputProps}
+                    id={felt.id}
+                    disabled={disabled}
+                    size={'medium'}
+                    label={label}
+                    description={
+                        <Normaltekst>
+                            <SpråkTekst id={'felles.velg-dato.hjelpetekst'} />
+                        </Normaltekst>
+                    }
+                    placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}
+                    error={!!(felt.feilmelding && skjema.visFeilmeldinger)}
+                />
+            </UNSAFE_DatePicker>
+            {skjema.visFeilmeldinger && <ErrorMessage>{felt.feilmelding}</ErrorMessage>}
         </div>
     ) : null;
 };

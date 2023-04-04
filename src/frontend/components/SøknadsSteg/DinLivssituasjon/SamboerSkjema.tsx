@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { DatoMedUkjent } from '../../../typer/common';
+import { DatoMedUkjent, ISODateString } from '../../../typer/common';
 import { IDinLivssituasjonFeltTyper, ITidligereSamboerFeltTyper } from '../../../typer/skjema';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
@@ -55,7 +55,7 @@ const SamboerSkjema: React.FC<{
                             label={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}
                             avgrensMaxDato={dagensDato()}
                             disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
-                            calendarPosition={erIModal ? 'fullscreen' : ''}
+                            strategy={erIModal ? 'absolute' : 'fixed'}
                         />
                         <SkjemaCheckbox
                             labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
@@ -69,7 +69,7 @@ const SamboerSkjema: React.FC<{
                 felt={samboerFelter.samboerFraDato}
                 label={<SpråkTekst id={samboerSpråkIder.samboerFraDato} />}
                 avgrensMaxDato={samboerFelter.samboerTilDato ? gårsdagensDato() : dagensDato()}
-                calendarPosition={erIModal ? 'fullscreen' : ''}
+                strategy={erIModal ? 'absolute' : 'fixed'}
             />
             {samboerFelter.samboerTilDato && (
                 <Datovelger
@@ -78,7 +78,7 @@ const SamboerSkjema: React.FC<{
                     label={<SpråkTekst id={samboerSpråkIder.samboerTilDato} />}
                     tilhørendeFraOgMedFelt={samboerFelter.samboerFraDato}
                     avgrensDatoFremITid={true}
-                    calendarPosition={erIModal ? 'fullscreen' : ''}
+                    strategy={erIModal ? 'absolute' : 'fixed'}
                 />
             )}
         </KomponentGruppe>

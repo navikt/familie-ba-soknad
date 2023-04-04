@@ -1,8 +1,8 @@
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { ESvar, ISODateString } from '@navikt/familie-form-elements';
+import { ESvar } from '@navikt/familie-form-elements';
 
-import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
+import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, ISODateString } from './common';
 import { ESivilstand, IAdresse } from './kontrakt/generelle';
 import {
     IArbeidsperiode,
@@ -55,7 +55,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
 
     // Steg: Din Livssituasjon
     erAsylsøker: ISøknadSpørsmål<ESvar | null>;
-    jobberPåBåt: ISøknadSpørsmål<ESvar | null>;
+    arbeidIUtlandet: ISøknadSpørsmål<ESvar | null>;
     arbeidsperioderUtland: IArbeidsperiode[];
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | null>;
     pensjonsperioderUtland: IPensjonsperiode[];

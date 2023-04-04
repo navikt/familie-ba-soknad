@@ -6,7 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import AlertStripe from '../AlertStripe/AlertStripe';
 import Datovelger from '../Datovelger/Datovelger';
@@ -132,7 +132,6 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         label={spørsmålSpråkTekst(
                             BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
                         )}
-                        calendarPosition={'fullscreen'}
                         avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
                     />
                 )}
@@ -143,9 +142,14 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         label={spørsmålSpråkTekst(
                             BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
                         )}
-                        avgrensMinDato={skjema.felter.fraDatoBarnetrygdperiode.verdi}
+                        avgrensMinDato={
+                            skjema.felter.fraDatoBarnetrygdperiode.verdi
+                                ? dagenEtterDato(
+                                      stringTilDate(skjema.felter.fraDatoBarnetrygdperiode.verdi)
+                                  )
+                                : undefined
+                        }
                         avgrensMaxDato={dagensDato()}
-                        calendarPosition={'fullscreen'}
                     />
                 )}
                 {månedligBeløp.erSynlig && (
