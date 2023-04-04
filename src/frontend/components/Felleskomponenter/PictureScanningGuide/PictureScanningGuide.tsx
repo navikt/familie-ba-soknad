@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Undertittel } from 'nav-frontend-typografi';
+import { Label } from '@navikt/ds-react';
 
 import EksternLenke from '../EksternLenke/EksternLenke';
 import ExpandableInfo from '../expandableContent/ExpandableInfo';
@@ -24,7 +24,7 @@ const Container = styled.div`
     }
 `;
 
-const StyledUndertittel = styled(Undertittel)`
+const StyledLabel = styled(Label)`
     padding-bottom: 1rem;
 `;
 
@@ -55,9 +55,9 @@ const PictureScanningGuide = () => {
     return (
         <ExpandableInfo title={formatMessage({ id: 'psg.expandable.tittel' })}>
             <Container>
-                <StyledUndertittel>
+                <StyledLabel size={'small'}>
                     <SpråkTekst id="psg.section1.tittel" />
-                </StyledUndertittel>
+                </StyledLabel>
                 <ul>
                     <li>
                         <SpråkTekst id="psg.section1.liste.1" />
@@ -70,9 +70,9 @@ const PictureScanningGuide = () => {
                     </li>
                 </ul>
 
-                <StyledUndertittel tag="h3">
+                <StyledLabel tag="h3">
                     <SpråkTekst id="psg.section2.tittel" />
-                </StyledUndertittel>
+                </StyledLabel>
                 <ul>
                     <li>
                         <SpråkTekst id="psg.section2.liste.1" />
@@ -85,9 +85,9 @@ const PictureScanningGuide = () => {
                     </li>
                 </ul>
                 <div>
-                    <StyledUndertittel tag="h3">
+                    <StyledLabel tag="h3">
                         <SpråkTekst id="psg.icon.heading" />
-                    </StyledUndertittel>
+                    </StyledLabel>
                     <EksempelBilderWrapper>
                         <BildeContainer>
                             <PictureScanningExample

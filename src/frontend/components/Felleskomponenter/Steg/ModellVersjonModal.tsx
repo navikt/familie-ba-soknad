@@ -3,9 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Sidetittel } from 'nav-frontend-typografi';
-
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 
 import AlertStripe from '../AlertStripe/AlertStripe';
 import ModalContent from '../ModalContent';
@@ -14,13 +12,6 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 const StyledBodyLong = styled(BodyLong)`
     && {
         margin: 2.5rem 0;
-    }
-`;
-
-export const StyledSideTittel = styled(Sidetittel)`
-    && {
-        font-size: 1.25rem;
-        margin: 1rem auto;
     }
 `;
 
@@ -42,9 +33,9 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
             onClose={refresh}
         >
             <ModalContent>
-                <StyledSideTittel>
+                <Heading level={'1'} size={'large'}>
                     <SpråkTekst id={'felles.modal.deployfeil.tittel'} />
-                </StyledSideTittel>
+                </Heading>
 
                 <AlertStripe
                     form={'default'}

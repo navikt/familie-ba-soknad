@@ -4,9 +4,8 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { Sidetittel } from 'nav-frontend-typografi';
 
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 
 import { device } from '../../../Theme';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -44,13 +43,6 @@ const ModalKnappeContainer = styled.div`
     }
 `;
 
-const StyledSideTittel = styled(Sidetittel)`
-    && {
-        font-size: 1.25rem;
-        margin-bottom: 1rem;
-    }
-`;
-
 const FortsettPåSøknad: FC = () => {
     const { fortsettPåSøknaden, startPåNytt, visStartPåNyttModal, settVisStartPåNyttModal } =
         useBekreftelseOgStartSoknad();
@@ -78,9 +70,9 @@ const FortsettPåSøknad: FC = () => {
                 }}
             >
                 <ModalContent>
-                    <StyledSideTittel>
+                    <Heading level={'1'} size={'large'}>
                         <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
-                    </StyledSideTittel>
+                    </Heading>
                     <BodyLong>
                         <SpråkTekst id={'felles.startpånytt.modal.tekst'} />
                     </BodyLong>

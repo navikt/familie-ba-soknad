@@ -4,9 +4,8 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { Checkbox } from 'nav-frontend-skjema';
-import { Ingress, Undertittel } from 'nav-frontend-typografi';
 
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Ingress, Label } from '@navikt/ds-react';
 import { AGray100, APurple400, APurple800 } from '@navikt/ds-tokens/dist/tokens';
 
 import { useApp } from '../../../../context/AppContext';
@@ -62,7 +61,7 @@ const BarnekortHeader = styled.div`
     width: 100%;
 `;
 
-const StyledUndertittel = styled(Undertittel)`
+const StyledLabel = styled(Label)`
     text-transform: uppercase;
     && {
         font-weight: 700;
@@ -101,13 +100,13 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 <TilfeldigBarnIkon />
             </BarnekortHeader>
             <InformasjonsboksInnhold>
-                <StyledUndertittel>
+                <StyledLabel>
                     {barn.adressebeskyttelse ? (
                         <SpråkTekst id={'hvilkebarn.barn.anonym'} />
                     ) : (
                         barn.navn
                     )}
-                </StyledUndertittel>
+                </StyledLabel>
                 {!barn.adressebeskyttelse && (
                     <BarneKortInfo
                         labelId={'hvilkebarn.barn.fødselsnummer'}

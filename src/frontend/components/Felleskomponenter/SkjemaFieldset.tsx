@@ -2,8 +2,6 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Undertittel } from 'nav-frontend-typografi';
-
 import SpråkTekst from './SpråkTekst/SpråkTekst';
 
 const Container = styled.fieldset`
@@ -32,9 +30,7 @@ const SkjemaFieldset: React.FC<{
     return (
         <Container aria-live={dynamisk ? 'polite' : 'off'}>
             <StyledLegend id={id}>
-                <Undertittel>
-                    <SpråkTekst id={tittelId} values={språkValues} />
-                </Undertittel>
+                <SpråkTekst id={tittelId} values={språkValues} />
             </StyledLegend>
             {React.Children.map(children, child => {
                 return child && <div>{child}</div>;

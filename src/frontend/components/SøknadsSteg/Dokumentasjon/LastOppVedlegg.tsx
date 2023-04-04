@@ -4,7 +4,8 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { Checkbox } from 'nav-frontend-skjema';
-import { Undertittel } from 'nav-frontend-typografi';
+
+import { Heading } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
@@ -95,7 +96,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
 
     return (
         <Container>
-            <Undertittel>
+            <Heading level={'2'} size={'small'}>
                 {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
                     <>
                         <SpråkTekst
@@ -109,7 +110,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
                     </>
                 )}
                 {dokTittel}
-            </Undertittel>
+            </Heading>
             {dokumentasjon.beskrivelseSpråkId && skalViseAnnenDokumentasjonsBeskrivelse() && (
                 <>
                     <SpråkTekst

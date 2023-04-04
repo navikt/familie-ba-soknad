@@ -4,17 +4,11 @@ import { useIntl } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Undertittel } from 'nav-frontend-typografi';
-
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 
 import EksternLenke from '../EksternLenke/EksternLenke';
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-
-const StyledUndertittel = styled(Undertittel)`
-    padding-bottom: 1rem;
-`;
 
 const Flex = styled.div`
     padding-top: 1rem;
@@ -48,9 +42,9 @@ const BlokkerTilbakeKnappModal = () => {
                 aria-label={formatMessage({ id: 'felles.blokkerTilbakeKnapp.modal.tittel' })}
             >
                 <ModalContent>
-                    <StyledUndertittel>
+                    <Heading level={'1'} size={'large'}>
                         <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tittel'} />
-                    </StyledUndertittel>
+                    </Heading>
                     <BodyLong>
                         <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tekst'} />
                     </BodyLong>

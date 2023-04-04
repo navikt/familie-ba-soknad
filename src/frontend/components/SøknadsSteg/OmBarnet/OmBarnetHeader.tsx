@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
@@ -36,7 +36,7 @@ export const OmBarnetHeader: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) =
             <TilfeldigBarnIkon byttVedRerender={false} />
             <HorisontalLinje />
             <BarnCounterWrapper>
-                <Systemtittel>
+                <Heading size={'xsmall'} level={'1'}>
                     <SpråkTekst
                         id={'ombarnet.undertittel'}
                         values={{
@@ -44,7 +44,7 @@ export const OmBarnetHeader: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) =
                             antall: barnInkludertISøknaden.length,
                         }}
                     />
-                </Systemtittel>
+                </Heading>
             </BarnCounterWrapper>
         </HeaderWrapper>
     );
