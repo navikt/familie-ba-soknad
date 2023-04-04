@@ -202,7 +202,7 @@
     "intl": "^1.2.5",
     "jest": "^27.3.0",
     "jest-circus": "^27.3.0",
-    "jest-mock-extended": "^2.0.4",
+    "jest-mock-extended": "^3.0.4",
     "jest-mock-promise": "^2.0.2",
     "jest-resolve": "27.3.1",
     "jest-watch-typeahead": "^1.0.0",
