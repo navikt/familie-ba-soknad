@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
@@ -61,11 +60,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
         <>
             <CheckboxGruppe
                 aria-live={'polite'}
-                legend={
-                    <Element>
-                        <SpråkTekst id={legendSpråkId} />
-                    </Element>
-                }
+                legend={<SpråkTekst id={legendSpråkId} />}
                 {...skjemafelt.hentNavBaseSkjemaProps(visFeilmelding)}
                 utenFeilPropagering
             >

@@ -2,8 +2,6 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Element } from 'nav-frontend-typografi';
-
 import { ErrorSummary } from '@navikt/ds-react';
 import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -25,14 +23,7 @@ const Container = styled.div`
 export const SkjemaFeiloppsummering: React.FC<Props> = ({ skjema, routeForFeilmeldinger, id }) => {
     return (
         <Container role={'alert'}>
-            <ErrorSummary
-                id={id}
-                heading={
-                    <Element>
-                        <SpråkTekst id={'felles.feiloppsummering.tittel'} />
-                    </Element>
-                }
-            >
+            <ErrorSummary id={id} heading={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}>
                 {Object.values(skjema.felter)
                     .filter(felt => {
                         return felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL;

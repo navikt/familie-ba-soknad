@@ -2,9 +2,7 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Element } from 'nav-frontend-typografi';
-
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
@@ -20,7 +18,7 @@ interface IOppsummeringsFeltProps {
     søknadsvar?: string | null;
 }
 
-const StyledElement = styled(Element)`
+const StyledLabel = styled(Label)`
     && {
         margin-bottom: 0.3rem;
     }
@@ -40,7 +38,7 @@ export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
 
     return (
         <StyledOppsummeringsFelt>
-            {tittel && <StyledElement>{tittel}</StyledElement>}
+            {tittel && <StyledLabel>{tittel}</StyledLabel>}
             {søknadsvar ? (
                 <BodyShort>
                     {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}

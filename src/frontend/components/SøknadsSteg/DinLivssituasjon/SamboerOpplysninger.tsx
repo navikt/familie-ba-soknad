@@ -2,10 +2,8 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Element } from 'nav-frontend-typografi';
-
 import { DeleteFilled } from '@navikt/ds-icons';
-import { BodyShort, Button } from '@navikt/ds-react';
+import { BodyShort, Button, Label } from '@navikt/ds-react';
 
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { ITidligereSamboer } from '../../../typer/person';
@@ -14,16 +12,16 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { samboerSpråkIder } from './spørsmål';
 
-const StyledElement = styled(Element)`
+const StyledLabel = styled(Label)`
     && {
         margin-bottom: 0.5rem;
     }
 `;
 
 const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
-    <StyledElement>
+    <StyledLabel>
         <SpråkTekst id={språkId} />
-    </StyledElement>
+    </StyledLabel>
 );
 
 const SamboerContainer = styled.div`
@@ -47,7 +45,7 @@ const SamboerOpplysninger: React.FC<{
 
     return (
         <SamboerContainer>
-            <Element>{samboer.navn.svar.toUpperCase()}</Element>
+            <Label>{samboer.navn.svar.toUpperCase()}</Label>
             <Informasjonsbolk>
                 <Spørsmål språkId={samboerSpråkIder.fnr} />
                 <BodyShort>

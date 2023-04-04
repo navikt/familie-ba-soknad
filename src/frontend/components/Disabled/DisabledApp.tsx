@@ -2,9 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Sidetittel } from 'nav-frontend-typografi';
-
-import { BodyLong } from '@navikt/ds-react';
+import { BodyLong, Heading } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 
 import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
@@ -17,7 +15,7 @@ const StyledSpråkvelger = styled(Sprakvelger)`
     margin: auto auto 2rem auto;
 `;
 
-const StyledSidetittel = styled(Sidetittel)`
+const StyledHeading = styled(Heading)`
     && {
         margin: 4rem 0 2.3rem 0;
     }
@@ -35,9 +33,9 @@ export const DisabledApp: React.FC = () => {
                     tekst={<SpråkTekst id={'vedlikehold.veilederhilsen'} />}
                     posisjon={'høyre'}
                 />
-                <StyledSidetittel>
+                <StyledHeading>
                     <SpråkTekst id={'vedlikehold.sidetittel'} />
-                </StyledSidetittel>
+                </StyledHeading>
                 <StyledSpråkvelger støttedeSprak={[LocaleType.nb, LocaleType.nn, LocaleType.en]} />
                 <BodyLong>
                     <SpråkTekst id={'vedlikehold.brødtekst'} />

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { Undertittel } from 'nav-frontend-typografi';
 
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import {
     Ressurs,
     RessursStatus,
@@ -64,7 +63,9 @@ const Helse: React.FC = () => {
 
     return (
         <div className={'helse'}>
-            <Undertittel>Helse</Undertittel>
+            <Heading level={'2'} size={'large'}>
+                Helse
+            </Heading>
             {renderHelse(helseApi, 'søknad api')}
             {renderHelse(helseMottak, 'mottak')}
             {renderHelse(helsePdl, 'pdl')}

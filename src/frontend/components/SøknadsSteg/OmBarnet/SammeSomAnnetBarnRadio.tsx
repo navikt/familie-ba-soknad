@@ -2,8 +2,6 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Element } from 'nav-frontend-typografi';
-
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 
@@ -45,12 +43,10 @@ const SammeSomAnnetBarnRadio: React.FC<{
         <StyledRadioGroup
             {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
             legend={
-                <Element>
-                    <SpråkTekst
-                        id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn]}
-                        values={{ barn: barnetsNavn }}
-                    />
-                </Element>
+                <SpråkTekst
+                    id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn]}
+                    values={{ barn: barnetsNavn }}
+                />
             }
             name={OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn}
             onChange={value => {

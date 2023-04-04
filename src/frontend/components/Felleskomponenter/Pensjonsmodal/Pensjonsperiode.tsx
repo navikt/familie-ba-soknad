@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Element } from 'nav-frontend-typografi';
-
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -93,14 +92,14 @@ export const Pensjonsperiode: React.FC<Props> = ({
                         />
                     ))}
                     {registrertePensjonsperioder.verdi.length > 0 && (
-                        <Element>
+                        <Label>
                             <SpråkTekst
                                 id={pensjonFlerePerioderSpmSpråkId(gjelderUtlandet, personType)}
                                 values={{
                                     ...(barn && { barn: barn.navn }),
                                 }}
                             />
-                        </Element>
+                        </Label>
                     )}
                     <LeggTilKnapp
                         onClick={togglePensjonsmodal}

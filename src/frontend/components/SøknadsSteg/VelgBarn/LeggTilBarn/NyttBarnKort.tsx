@@ -2,9 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Ingress } from 'nav-frontend-typografi';
-
-import { Button } from '@navikt/ds-react';
+import { Button, Ingress } from '@navikt/ds-react';
 
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { StyledBarnekort } from '../Barnekort/Barnekort';

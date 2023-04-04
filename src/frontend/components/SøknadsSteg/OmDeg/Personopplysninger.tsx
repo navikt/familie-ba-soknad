@@ -2,9 +2,7 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { Element } from 'nav-frontend-typografi';
-
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Label } from '@navikt/ds-react';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
@@ -34,16 +32,16 @@ export const Personopplysninger: React.FC = () => {
             </AlertStripe>
 
             <Informasjonsbolk>
-                <Element>
+                <Label>
                     <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
-                </Element>
+                </Label>
                 <BodyShort>{søker.ident}</BodyShort>
             </Informasjonsbolk>
 
             <Informasjonsbolk>
-                <Element>
+                <Label>
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />
-                </Element>
+                </Label>
                 <BodyShort>
                     {søker.statsborgerskap
                         .map((statsborgerskap: { landkode: Alpha3Code }) =>
@@ -54,18 +52,18 @@ export const Personopplysninger: React.FC = () => {
             </Informasjonsbolk>
 
             <Informasjonsbolk>
-                <Element>
+                <Label>
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />
-                </Element>
+                </Label>
                 <BodyShort>
                     <SpråkTekst id={hentSivilstatusSpråkId(søker.sivilstand.type)} />
                 </BodyShort>
             </Informasjonsbolk>
 
             <Informasjonsbolk>
-                <Element>
+                <Label>
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />
-                </Element>
+                </Label>
                 {genererAdresseVisning(søker)}
             </Informasjonsbolk>
         </>

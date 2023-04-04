@@ -2,7 +2,6 @@ import React from 'react';
 
 import AlertStripe from 'nav-frontend-alertstriper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
@@ -60,11 +59,9 @@ const LeggTilBarnModal: React.FC<{
                 <KomponentGruppe dynamisk>
                     <SkjemaGruppe
                         legend={
-                            <Element>
-                                <SpråkTekst
-                                    id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.barnetsNavn]}
-                                />
-                            </Element>
+                            <SpråkTekst
+                                id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.barnetsNavn]}
+                            />
                         }
                     >
                         <SkjemaFeltInput
