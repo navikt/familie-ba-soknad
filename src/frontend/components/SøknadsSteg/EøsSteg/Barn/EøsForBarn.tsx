@@ -162,7 +162,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             )}
 
             {skjema.felter.barnetsAdresse.erSynlig && (
-                <KomponentGruppe>
+                <>
                     <SkjemaFeltInput
                         felt={skjema.felter.barnetsAdresse}
                         visFeilmeldinger={skjema.visFeilmeldinger}
@@ -178,7 +178,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
                         }
                     />
-                </KomponentGruppe>
+                </>
             )}
 
             {!skalSkjuleAndreForelderFelt(barn) && (

@@ -3,6 +3,7 @@ import React from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 
+import { Fieldset } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -43,7 +44,7 @@ const LeggTilBarnModal: React.FC<{
             onSubmitCallback={submitOgLukk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <SkjemaGruppe>
+            <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erFødt}
@@ -54,44 +55,46 @@ const LeggTilBarnModal: React.FC<{
                         <SpråkTekst id={'hvilkebarn.leggtilbarn.barn-ikke-født.alert'} />
                     </AlertStripe>
                 )}
-            </SkjemaGruppe>
+            </KomponentGruppe>
             {skjema.felter.erFødt.valideringsstatus === Valideringsstatus.OK && (
                 <KomponentGruppe dynamisk>
-                    <SkjemaGruppe
+                    <Fieldset
                         legend={
                             <SpråkTekst
                                 id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.barnetsNavn]}
                             />
                         }
                     >
-                        <SkjemaFeltInput
-                            felt={skjema.felter.fornavn}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={
-                                velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnFornavn]
-                            }
-                            disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
-                        />
+                        <KomponentGruppe>
+                            <SkjemaFeltInput
+                                felt={skjema.felter.fornavn}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={
+                                    velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnFornavn]
+                                }
+                                disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
+                            />
 
-                        <SkjemaFeltInput
-                            felt={skjema.felter.etternavn}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={
-                                velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnEtternavn]
-                            }
-                            disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
-                        />
+                            <SkjemaFeltInput
+                                felt={skjema.felter.etternavn}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={
+                                    velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnEtternavn]
+                                }
+                                disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
+                            />
 
-                        <SkjemaCheckbox
-                            felt={skjema.felter.navnetErUbestemt}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={
-                                velgBarnSpørsmålSpråkId[
-                                    VelgBarnSpørsmålId.leggTilBarnNavnIkkeBestemt
-                                ]
-                            }
-                        />
-                    </SkjemaGruppe>
+                            <SkjemaCheckbox
+                                felt={skjema.felter.navnetErUbestemt}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                labelSpråkTekstId={
+                                    velgBarnSpørsmålSpråkId[
+                                        VelgBarnSpørsmålId.leggTilBarnNavnIkkeBestemt
+                                    ]
+                                }
+                            />
+                        </KomponentGruppe>
+                    </Fieldset>
 
                     <SkjemaGruppe>
                         <SkjemaFeltInput

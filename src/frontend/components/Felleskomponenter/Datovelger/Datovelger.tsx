@@ -119,7 +119,9 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                     error={!!(felt.feilmelding && skjema.visFeilmeldinger)}
                 />
             </UNSAFE_DatePicker>
-            {skjema.visFeilmeldinger && <ErrorMessage>{felt.feilmelding}</ErrorMessage>}
+            {skjema.visFeilmeldinger && felt.feilmelding && (
+                <ErrorMessage>{felt.feilmelding}</ErrorMessage>
+            )}
         </div>
     ) : null;
 };
