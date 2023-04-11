@@ -31,6 +31,7 @@ const søknad = mockDeep<ISøknad>({
         {
             ident: '1234',
             navn: 'Jens',
+            id: '123',
         },
     ],
     erNoenAvBarnaFosterbarn: {
