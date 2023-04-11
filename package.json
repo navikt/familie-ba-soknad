@@ -249,7 +249,7 @@
     "react-modal": "^3.14.2",
     "react-refresh": "^0.10.0",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^6.10.0",
     "set-value": "^4.1.0",
     "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.0",
