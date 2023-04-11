@@ -2,11 +2,11 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Undertittel } from 'nav-frontend-typografi';
+import { Fieldset } from '@navikt/ds-react';
 
 import SpråkTekst from './SpråkTekst/SpråkTekst';
 
-const Container = styled.fieldset`
+const Container = styled(Fieldset)`
     border: none;
     padding: 0;
 
@@ -19,23 +19,16 @@ const Container = styled.fieldset`
     }
 `;
 
-const StyledLegend = styled.legend`
-    margin-bottom: 1.5rem;
-`;
-
 const SkjemaFieldset: React.FC<{
     tittelId: string;
     språkValues?: { [key: string]: ReactNode };
     dynamisk?: boolean;
-    id?: string;
-}> = ({ tittelId, språkValues, dynamisk = false, id, children }) => {
+}> = ({ tittelId, språkValues, dynamisk = false, children }) => {
     return (
-        <Container aria-live={dynamisk ? 'polite' : 'off'}>
-            <StyledLegend id={id}>
-                <Undertittel>
-                    <SpråkTekst id={tittelId} values={språkValues} />
-                </Undertittel>
-            </StyledLegend>
+        <Container
+            aria-live={dynamisk ? 'polite' : 'off'}
+            legend={<SpråkTekst id={tittelId} values={språkValues} />}
+        >
             {React.Children.map(children, child => {
                 return child && <div>{child}</div>;
             })}

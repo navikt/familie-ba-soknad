@@ -3,8 +3,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-
+import { BodyShort } from '@navikt/ds-react';
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -55,15 +54,13 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
                 error={felt.hentNavInputProps(skjema.visFeilmeldinger).feil}
                 legend={
                     <>
-                        <Element>
-                            <SpråkTekst id={spørsmålTekstId} values={språkValues} />
-                        </Element>
+                        <SpråkTekst id={spørsmålTekstId} values={språkValues} />
                         {tilleggsinfoTekstId && (
-                            <Normaltekst>
+                            <BodyShort>
                                 <SpråkTekst id={tilleggsinfoTekstId} />
-                            </Normaltekst>
+                            </BodyShort>
                         )}
-                        <TilleggsinfoWrapper>{tilleggsinfo}</TilleggsinfoWrapper>
+                        {tilleggsinfo && <TilleggsinfoWrapper>{tilleggsinfo}</TilleggsinfoWrapper>}
                     </>
                 }
                 labelTekstForRadios={{

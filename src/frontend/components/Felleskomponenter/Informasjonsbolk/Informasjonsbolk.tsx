@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Undertittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -28,9 +28,9 @@ const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({
     return (
         <InformasjonsbolkContainer {...props}>
             {tittelId && (
-                <Undertittel>
+                <Heading level={'2'} size={'xsmall'}>
                     <SpråkTekst id={tittelId} values={språkValues} />
-                </Undertittel>
+                </Heading>
             )}
             <InformasjonsbolkChildrenWrapper>{children}</InformasjonsbolkChildrenWrapper>
         </InformasjonsbolkContainer>

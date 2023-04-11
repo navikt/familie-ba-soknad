@@ -2,8 +2,7 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { Normaltekst } from 'nav-frontend-typografi';
-
+import { BodyShort } from '@navikt/ds-react';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
@@ -52,12 +51,12 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                         />
                     }
                 >
-                    <Normaltekst>
+                    <BodyShort>
                         <SpråkTekst
                             id={årsakSpråkId(årsak, barn)}
                             values={{ barn: barn ? barn.navn : undefined }}
                         />
-                    </Normaltekst>
+                    </BodyShort>
                 </OppsummeringFelt>
 
                 <OppsummeringFelt

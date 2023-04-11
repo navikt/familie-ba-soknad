@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import styled from 'styled-components';
 
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort, Label } from '@navikt/ds-react';
 
 import AlertStripe from './AlertStripe/AlertStripe';
 import EksternLenke from './EksternLenke/EksternLenke';
@@ -26,9 +26,9 @@ export const SøkerMåBrukePDF: FC<Props> = ({ advarselTekstId, utfyllendeAdvars
             </AlertStripe>
             {utfyllendeAdvarselInfoId && (
                 <Informasjonsbolk>
-                    <Element>
+                    <Label>
                         <SpråkTekst id={utfyllendeAdvarselInfoId} />
-                    </Element>
+                    </Label>
                 </Informasjonsbolk>
             )}
             <LenkeContainer>
@@ -37,9 +37,9 @@ export const SøkerMåBrukePDF: FC<Props> = ({ advarselTekstId, utfyllendeAdvars
                     lenkeTekstSpråkId={'felles.bruk-pdfskjema.lenketekst'}
                 />
             </LenkeContainer>
-            <Normaltekst>
+            <BodyShort>
                 <SpråkTekst id={'felles.sende-skjema.info'} />
-            </Normaltekst>
+            </BodyShort>
         </Informasjonsbolk>
     );
 };

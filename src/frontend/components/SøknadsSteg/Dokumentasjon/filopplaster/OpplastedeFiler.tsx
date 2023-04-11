@@ -2,10 +2,8 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Normaltekst } from 'nav-frontend-typografi';
-
 import { Attachment, DeleteFilled } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { BodyShort, Button } from '@navikt/ds-react';
 import { ABorderDivider } from '@navikt/ds-tokens/dist/tokens';
 
 import { IVedlegg } from '../../../../typer/dokumentasjon';
@@ -53,9 +51,9 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
                                 aria-hidden={true}
                                 aria-label={''}
                             />
-                            <Normaltekst>
+                            <BodyShort>
                                 {`${fil.navn} (${formaterFilstørrelse(fil.størrelse)})`}
-                            </Normaltekst>
+                            </BodyShort>
                         </FilTekstWrapper>
                         <Button
                             variant={'tertiary'}

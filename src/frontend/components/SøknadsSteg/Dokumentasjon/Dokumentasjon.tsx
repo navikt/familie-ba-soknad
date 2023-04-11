@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { add, isBefore } from 'date-fns';
 
 import AlertStripe, { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Normaltekst } from 'nav-frontend-typografi';
 
+import { BodyLong, BodyShort } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
@@ -76,13 +76,13 @@ const Dokumentasjon: React.FC = () => {
             {slettaVedlegg.length > 0 && (
                 <KomponentGruppe>
                     <AlertStripeAdvarsel>
-                        <Normaltekst>
+                        <BodyShort>
                             <SpråkTekst id={'dokumentasjon.forlangtid.info'} />
-                        </Normaltekst>
+                        </BodyShort>
                         <ul>
                             {slettaVedlegg.map(vedlegg => (
                                 <li key={vedlegg.dokumentId}>
-                                    <Normaltekst>{vedlegg.navn}</Normaltekst>
+                                    <BodyShort>{vedlegg.navn}</BodyShort>
                                 </li>
                             ))}
                         </ul>
@@ -94,9 +94,9 @@ const Dokumentasjon: React.FC = () => {
                     <SpråkTekst id={'dokumentasjon.nudge'} />
                 </AlertStripe>
 
-                <Normaltekst>
+                <BodyLong>
                     <SpråkTekst id={'dokumentasjon.info'} />
-                </Normaltekst>
+                </BodyLong>
                 <PictureScanningGuide />
             </KomponentGruppe>
             {søknad.dokumentasjon

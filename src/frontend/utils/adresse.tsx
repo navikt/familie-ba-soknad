@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Normaltekst } from 'nav-frontend-typografi';
-
+import { BodyShort } from '@navikt/ds-react';
 import { feil, FeltState, ok } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -29,12 +28,12 @@ export const hentAdressefelterSortert = (adresse: IAdresse): string[] => {
 export const genererAdresseVisning = (søker: ISøker) => {
     if (søker.adresse) {
         return hentAdressefelterSortert(søker.adresse).map((adresseFelt, index) => (
-            <Normaltekst key={index}>{adresseFelt}</Normaltekst>
+            <BodyShort key={index}>{adresseFelt}</BodyShort>
         ));
     }
 
     return (
-        <Normaltekst>
+        <BodyShort>
             <SpråkTekst
                 id={
                     søker.adressebeskyttelse
@@ -42,7 +41,7 @@ export const genererAdresseVisning = (søker: ISøker) => {
                         : 'omdeg.personopplysninger.ikke-registrert.alert'
                 }
             />
-        </Normaltekst>
+        </BodyShort>
     );
 };
 

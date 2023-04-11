@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { Normaltekst } from 'nav-frontend-typografi';
+
+import { BodyShort } from '@navikt/ds-react';
 
 import CollapsableContainer from './CollapsableContainer';
 import InfoToggleButton from './InfoToggleButton';
@@ -62,7 +63,7 @@ const ExpandableInfo = ({
                     isOpen={isOpen}
                     controlsId={toggleContentId}
                 >
-                    <Normaltekst>{isOpen ? closeTitle || title : title}</Normaltekst>
+                    <BodyShort>{isOpen ? closeTitle || title : title}</BodyShort>
                 </InfoToggleButton>
             </ButtonContainer>
             <InnholdContainer id={toggleContentId}>

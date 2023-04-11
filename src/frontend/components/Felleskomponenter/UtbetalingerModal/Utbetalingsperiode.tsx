@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Element } from 'nav-frontend-typografi';
-
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -74,14 +73,14 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                         />
                     ))}
                     {registrerteUtbetalingsperioder.verdi.length > 0 && (
-                        <Element>
+                        <Label>
                             <SpråkTekst
                                 id={utbetalingerFlerePerioderSpmSpråkId(personType)}
                                 values={{
                                     ...(barn && { barn: barnetsNavn }),
                                 }}
                             />
-                        </Element>
+                        </Label>
                     )}
                     <LeggTilKnapp
                         onClick={toggleUtbetalingsmodal}

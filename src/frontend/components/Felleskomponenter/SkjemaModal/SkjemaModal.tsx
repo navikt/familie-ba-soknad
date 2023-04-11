@@ -3,9 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Innholdstittel } from 'nav-frontend-typografi';
-
-import { Button, Modal } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -17,10 +15,6 @@ const StyledButton = styled(Button)`
         max-width: 100%;
         box-sizing: border-box;
     }
-`;
-const StyledInnholdstittel = styled(Innholdstittel)`
-    text-align: center;
-    padding: 2rem 0;
 `;
 
 const SkjemaModal: React.FC<{
@@ -56,9 +50,9 @@ const SkjemaModal: React.FC<{
         >
             <ModalContent>
                 {modalTittelSpråkId && (
-                    <StyledInnholdstittel>
+                    <Heading level={'1'} size={'large'}>
                         <SpråkTekst id={modalTittelSpråkId} />
-                    </StyledInnholdstittel>
+                    </Heading>
                 )}
                 <form>
                     {children}

@@ -3,7 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { Systemtittel } from 'nav-frontend-typografi';
+
+import { Heading } from '@navikt/ds-react';
 
 const StyledSpinner = styled(NavFrontendSpinner)`
     margin-top: 3rem;
@@ -15,7 +16,8 @@ const SystemetLaster = () => {
     return (
         <main className={'systemet-laster'}>
             <div className={'systemet-laster__content'}>
-                <Systemtittel
+                <Heading
+                    size={'medium'}
                     className={'systemet-laster__content--tekst'}
                     children={'Søknaden laster'}
                 />

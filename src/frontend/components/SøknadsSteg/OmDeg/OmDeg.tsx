@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Element } from 'nav-frontend-typografi';
-
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
@@ -85,9 +84,9 @@ const OmDeg: React.FC = () => {
                                 />
                             ))}
                             {utenlandsperioder.length > 0 && (
-                                <Element>
+                                <Label>
                                     <SpråkTekst id={'omdeg.flereopphold.spm'} />
-                                </Element>
+                                </Label>
                             )}
                             <LeggTilKnapp
                                 språkTekst={'felles.leggtilutenlands.knapp'}

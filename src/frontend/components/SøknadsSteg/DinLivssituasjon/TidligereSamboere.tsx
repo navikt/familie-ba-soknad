@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Element } from 'nav-frontend-typografi';
+import { Label } from '@navikt/ds-react';
 
 import { ITidligereSamboer } from '../../../typer/person';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
@@ -18,16 +18,16 @@ interface Props {
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
 }
 
-const StyledElement = styled(Element)`
+const StyledLabel = styled(Label)`
     && {
         margin-bottom: 0.5rem;
     }
 `;
 
 const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
-    <StyledElement>
+    <StyledLabel>
         <SpråkTekst id={språkId} />
-    </StyledElement>
+    </StyledLabel>
 );
 
 const TidligereSamboere: React.FC<Props> = ({

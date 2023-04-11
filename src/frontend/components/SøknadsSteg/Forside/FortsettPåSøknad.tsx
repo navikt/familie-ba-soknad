@@ -4,9 +4,8 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 
-import { Button, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 
 import { device } from '../../../Theme';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -44,13 +43,6 @@ const ModalKnappeContainer = styled.div`
     }
 `;
 
-const StyledSideTittel = styled(Sidetittel)`
-    && {
-        font-size: 1.25rem;
-        margin-bottom: 1rem;
-    }
-`;
-
 const FortsettPåSøknad: FC = () => {
     const { fortsettPåSøknaden, startPåNytt, visStartPåNyttModal, settVisStartPåNyttModal } =
         useBekreftelseOgStartSoknad();
@@ -59,9 +51,9 @@ const FortsettPåSøknad: FC = () => {
         <StyledFortsettPåSøknad role={'navigation'}>
             <KomponentGruppe>
                 <AlertStripeInfo>
-                    <Normaltekst>
+                    <BodyLong>
                         <SpråkTekst id={'mellomlagring.info'} />
-                    </Normaltekst>
+                    </BodyLong>
                 </AlertStripeInfo>
             </KomponentGruppe>
             <StyledButton onClick={fortsettPåSøknaden}>
@@ -78,12 +70,12 @@ const FortsettPåSøknad: FC = () => {
                 }}
             >
                 <ModalContent>
-                    <StyledSideTittel>
+                    <Heading level={'1'} size={'large'}>
                         <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
-                    </StyledSideTittel>
-                    <Normaltekst>
+                    </Heading>
+                    <BodyLong>
                         <SpråkTekst id={'felles.startpånytt.modal.tekst'} />
-                    </Normaltekst>
+                    </BodyLong>
                     <ModalKnappeContainer>
                         <Button variant={'tertiary'} onClick={() => settVisStartPåNyttModal(false)}>
                             <SpråkTekst id={'felles.startpånytt.modal.avbrytknapp'} />

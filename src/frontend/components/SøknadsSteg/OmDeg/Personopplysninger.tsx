@@ -2,8 +2,7 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-
+import { BodyShort, Label } from '@navikt/ds-react';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
@@ -33,38 +32,38 @@ export const Personopplysninger: React.FC = () => {
             </AlertStripe>
 
             <Informasjonsbolk>
-                <Element>
+                <Label>
                     <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
-                </Element>
-                <Normaltekst>{søker.ident}</Normaltekst>
+                </Label>
+                <BodyShort>{søker.ident}</BodyShort>
             </Informasjonsbolk>
 
             <Informasjonsbolk>
-                <Element>
+                <Label>
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />
-                </Element>
-                <Normaltekst>
+                </Label>
+                <BodyShort>
                     {søker.statsborgerskap
                         .map((statsborgerskap: { landkode: Alpha3Code }) =>
                             landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
                         )
                         .join(', ')}
-                </Normaltekst>
+                </BodyShort>
             </Informasjonsbolk>
 
             <Informasjonsbolk>
-                <Element>
+                <Label>
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />
-                </Element>
-                <Normaltekst>
+                </Label>
+                <BodyShort>
                     <SpråkTekst id={hentSivilstatusSpråkId(søker.sivilstand.type)} />
-                </Normaltekst>
+                </BodyShort>
             </Informasjonsbolk>
 
             <Informasjonsbolk>
-                <Element>
+                <Label>
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />
-                </Element>
+                </Label>
                 {genererAdresseVisning(søker)}
             </Informasjonsbolk>
         </>

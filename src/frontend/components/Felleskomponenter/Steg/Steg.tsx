@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Stegindikator from 'nav-frontend-stegindikator';
-import { Systemtittel } from 'nav-frontend-typografi';
 
+import { Heading } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
@@ -43,10 +43,9 @@ const ChildrenContainer = styled.div`
     margin-bottom: 2rem;
 `;
 
-const StyledSystemtittel = styled(Systemtittel)`
+const TittelContainer = styled.div`
     && {
         margin: 4rem auto 3rem auto;
-        font-size: 1.125rem;
 
         :focus-visible {
             outline: none;
@@ -157,9 +156,11 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
                 )}
             </header>
             <InnholdContainer>
-                <StyledSystemtittel tag={'h1'} id={'stegHovedtittel'} tabIndex={-1}>
-                    {tittel}
-                </StyledSystemtittel>
+                <TittelContainer id={'stegHovedtittel'} tabIndex={-1}>
+                    <Heading level={'1'} size={'xsmall'}>
+                        {tittel}
+                    </Heading>
+                </TittelContainer>
                 <Form onSubmit={event => håndterGåVidere(event)} autoComplete="off">
                     <ChildrenContainer>{children}</ChildrenContainer>
                     {skjema && visFeiloppsummering(skjema.skjema) && (

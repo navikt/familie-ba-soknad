@@ -2,10 +2,8 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Element } from 'nav-frontend-typografi';
-
 import { DeleteFilled } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import { ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -21,7 +19,7 @@ const StyledButton = styled(Button)`
     }
 `;
 
-const StyledElement = styled(Element)`
+const StyledHeading = styled(Heading)`
     && {
         margin-bottom: 1.125rem;
     }
@@ -45,9 +43,9 @@ const PeriodeOppsummering: React.FC<{
 
     return (
         <PeriodeContainer bottomBorder={skalHaBottomBorder}>
-            <StyledElement>
+            <StyledHeading level={'2'} size={'xsmall'}>
                 <SpråkTekst id={tittelSpråkId} values={{ x: nummer }} />
-            </StyledElement>
+            </StyledHeading>
             {children}
             {fjernPeriodeCallback !== undefined && (
                 <StyledButton

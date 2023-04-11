@@ -1,10 +1,12 @@
 import '@testing-library/jest-dom';
-import MockAdapter from 'axios-mock-adapter';
 import IntlPolyfill from 'intl';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { preferredAxios } from './frontend/context/axios';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const MockAdapter = require('axios-mock-adapter');
 
 window.scrollTo = () => {
     // Ikke implementert

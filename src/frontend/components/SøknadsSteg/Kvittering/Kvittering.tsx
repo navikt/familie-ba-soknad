@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Normaltekst } from 'nav-frontend-typografi';
 
+import { BodyLong } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
@@ -64,7 +64,7 @@ const Kvittering: React.FC = () => {
                 </AlertStripe>
             </KomponentGruppe>
             <KomponentGruppe>
-                <Normaltekst>
+                <BodyLong>
                     <SpråkTekst
                         id={'kvittering.info'}
                         values={{
@@ -82,7 +82,7 @@ const Kvittering: React.FC = () => {
                             ),
                         }}
                     />
-                </Normaltekst>
+                </BodyLong>
             </KomponentGruppe>
 
             {varEøsSøknad && (
@@ -92,9 +92,9 @@ const Kvittering: React.FC = () => {
             )}
 
             <Informasjonsbolk tittelId={'kvittering.ikke-lastet-opp'}>
-                <Normaltekst>
+                <BodyLong>
                     <SpråkTekst id={'kvittering.ettersend-dokumentasjon.info'} />
-                </Normaltekst>
+                </BodyLong>
             </Informasjonsbolk>
             <EksternLenke
                 lenkeTekstSpråkId={'kvittering.ettersend-dokumentasjon.lenketekst'}

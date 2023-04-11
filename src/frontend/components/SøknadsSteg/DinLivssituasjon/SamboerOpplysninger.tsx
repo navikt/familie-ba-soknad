@@ -2,10 +2,8 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-
 import { DeleteFilled } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { BodyShort, Button, Label } from '@navikt/ds-react';
 
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { ITidligereSamboer } from '../../../typer/person';
@@ -14,16 +12,16 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { samboerSpråkIder } from './spørsmål';
 
-const StyledElement = styled(Element)`
+const StyledLabel = styled(Label)`
     && {
         margin-bottom: 0.5rem;
     }
 `;
 
 const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
-    <StyledElement>
+    <StyledLabel>
         <SpråkTekst id={språkId} />
-    </StyledElement>
+    </StyledLabel>
 );
 
 const SamboerContainer = styled.div`
@@ -47,32 +45,32 @@ const SamboerOpplysninger: React.FC<{
 
     return (
         <SamboerContainer>
-            <Element>{samboer.navn.svar.toUpperCase()}</Element>
+            <Label>{samboer.navn.svar.toUpperCase()}</Label>
             <Informasjonsbolk>
                 <Spørsmål språkId={samboerSpråkIder.fnr} />
-                <Normaltekst>
+                <BodyShort>
                     {svarSomKanVæreUkjent(samboer.ident.svar, samboerSpråkIder.fnrUkjent)}
-                </Normaltekst>
+                </BodyShort>
             </Informasjonsbolk>
             {samboer.fødselsdato.svar && (
                 <Informasjonsbolk>
                     <Spørsmål språkId={samboerSpråkIder.fødselsdato} />
-                    <Normaltekst>
+                    <BodyShort>
                         {samboer.fødselsdato.svar === AlternativtSvarForInput.UKJENT ? (
                             <SpråkTekst id={samboerSpråkIder.fødselsdatoUkjent} />
                         ) : (
                             formaterDato(samboer.fødselsdato.svar)
                         )}
-                    </Normaltekst>
+                    </BodyShort>
                 </Informasjonsbolk>
             )}
             <Informasjonsbolk>
                 <Spørsmål språkId={samboerSpråkIder.samboerFraDato} />
-                <Normaltekst>{formaterDato(samboer.samboerFraDato.svar)}</Normaltekst>
+                <BodyShort>{formaterDato(samboer.samboerFraDato.svar)}</BodyShort>
             </Informasjonsbolk>
             <Informasjonsbolk>
                 <Spørsmål språkId={samboerSpråkIder.samboerTilDato} />
-                <Normaltekst>{formaterDato(samboer.samboerTilDato.svar)}</Normaltekst>
+                <BodyShort>{formaterDato(samboer.samboerTilDato.svar)}</BodyShort>
             </Informasjonsbolk>
             <StyledButton
                 type={'button'}

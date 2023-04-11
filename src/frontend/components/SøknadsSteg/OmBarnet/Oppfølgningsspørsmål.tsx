@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Element } from 'nav-frontend-typografi';
-
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -175,12 +174,12 @@ const Oppfølgningsspørsmål: React.FC<{
                         />
                     ))}
                     {utenlandsperioder.length > 0 && (
-                        <Element>
+                        <Label>
                             <SpråkTekst
                                 id={'ombarnet.flereopphold.spm'}
                                 values={{ barn: barn.navn }}
                             />
-                        </Element>
+                        </Label>
                     )}
                     <LeggTilKnapp
                         id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
