@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { BodyShort } from '@navikt/ds-react';
 
-import AlertStripe from '../AlertStripe/AlertStripe';
+import FamilieAlert from '../FamilieAlert/FamilieAlert';
 import CollapsableContainer from './CollapsableContainer';
 import InfoToggleButton from './InfoToggleButton';
 
@@ -68,9 +68,9 @@ const ExpandableInfo = ({
             <InnholdContainer id={toggleContentId}>
                 <CollapsableContainer isOpen={isOpen} animated={true} ariaLive="polite">
                     {filledBackground ? (
-                        <AlertStripe variant={'info'} inline={false}>
+                        <FamilieAlert variant={'info'} inline={false}>
                             {children}
-                        </AlertStripe>
+                        </FamilieAlert>
                     ) : (
                         children
                     )}

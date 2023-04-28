@@ -7,7 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
-import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
+import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -70,9 +70,9 @@ const OmBarnaDine: React.FC = () => {
                         ]
                     }
                     tilleggsinfo={
-                        <AlertStripe variant={'info'}>
+                        <FamilieAlert variant={'info'}>
                             <SpråkTekst id={'ombarna.institusjon.info'} />
-                        </AlertStripe>
+                        </FamilieAlert>
                     }
                 />
 
@@ -102,9 +102,9 @@ const OmBarnaDine: React.FC = () => {
                             ]
                         }
                         tilleggsinfo={
-                            <AlertStripe variant={'info'}>
+                            <FamilieAlert variant={'info'}>
                                 <SpråkTekst id={'ombarna.adoptert.info'} />
-                            </AlertStripe>
+                            </FamilieAlert>
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
@@ -159,9 +159,9 @@ const OmBarnaDine: React.FC = () => {
                             ]
                         }
                         tilleggsinfo={
-                            <AlertStripe variant={'info'}>
+                            <FamilieAlert variant={'info'}>
                                 <SpråkTekst id={'felles.korteopphold.info'} />
-                            </AlertStripe>
+                            </FamilieAlert>
                         }
                     />
                     <HvilkeBarnCheckboxGruppe

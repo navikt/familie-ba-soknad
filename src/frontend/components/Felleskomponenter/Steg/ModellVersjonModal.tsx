@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 
-import AlertStripe from '../AlertStripe/AlertStripe';
+import FamilieAlert from '../FamilieAlert/FamilieAlert';
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -37,7 +37,7 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
                     <SpråkTekst id={'felles.modal.deployfeil.tittel'} />
                 </Heading>
 
-                <AlertStripe
+                <FamilieAlert
                     inline={false}
                     variant={'error'}
                     children={<SpråkTekst id={'felles.modal.deployfeil.error'} />}

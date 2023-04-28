@@ -2,9 +2,8 @@ import React from 'react';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Alert } from '@navikt/ds-react';
-
 import AppContainer from './AppContainer';
+import FamilieAlert from './components/Felleskomponenter/FamilieAlert/FamilieAlert';
 import { AppProvider } from './context/AppContext';
 import { AppNavigationProvider } from './context/AppNavigationContext';
 import { EøsProvider } from './context/EøsContext';
@@ -28,12 +27,12 @@ function App() {
                                     <StegProvider>
                                         <GlobalStyle />
                                         {process.env.NODE_ENV !== 'production' && (
-                                            <Alert variant={'warning'}>
+                                            <FamilieAlert variant={'warning'}>
                                                 {`Denne siden er under utvikling. `}
                                                 <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
                                                     Klikk her for å gå til våre sider for barnetrygd
                                                 </a>
-                                            </Alert>
+                                            </FamilieAlert>
                                         )}
                                         <AppNavigationProvider>
                                             <AppContainer />

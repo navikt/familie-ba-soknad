@@ -9,9 +9,9 @@ import { useApp } from '../../../context/AppContext';
 import { useSteg } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
-import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
+import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -52,7 +52,7 @@ const Kvittering: React.FC = () => {
     return (
         <Steg tittel={<SpråkTekst id={'kvittering.sidetittel'} />}>
             <KomponentGruppe>
-                <AlertStripe variant={'success'} inline={false}>
+                <FamilieAlert variant={'success'} inline={false}>
                     <SpråkTekst
                         id={'kvittering.mottatt'}
                         values={{
@@ -60,7 +60,7 @@ const Kvittering: React.FC = () => {
                             dato: dato,
                         }}
                     />
-                </AlertStripe>
+                </FamilieAlert>
             </KomponentGruppe>
             <KomponentGruppe>
                 <BodyLong>

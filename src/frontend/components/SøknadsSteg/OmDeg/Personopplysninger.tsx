@@ -8,8 +8,8 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 import { useApp } from '../../../context/AppContext';
 import { genererAdresseVisning } from '../../../utils/adresse';
 import { hentSivilstatusSpråkId, landkodeTilSpråk } from '../../../utils/språk';
-import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
+import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { omDegPersonopplysningerSpråkId } from './spørsmål';
@@ -22,14 +22,14 @@ export const Personopplysninger: React.FC = () => {
 
     return (
         <>
-            <AlertStripe variant={'info'}>
+            <FamilieAlert variant={'info'}>
                 <SpråkTekst id={'omdeg.personopplysninger.info.alert'} />
                 <EksternLenke
                     lenkeTekstSpråkId={'omdeg.endre-opplysninger.lenketekst'}
                     lenkeSpråkId={'omdeg.endre-opplysninger.lenke'}
                     target="_blank"
                 />
-            </AlertStripe>
+            </FamilieAlert>
 
             <Informasjonsbolk>
                 <Label>

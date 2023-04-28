@@ -4,8 +4,8 @@ import Masonry from 'react-masonry-css';
 import styled from 'styled-components';
 
 import { useApp } from '../../../context/AppContext';
-import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
+import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -58,14 +58,14 @@ const VelgBarn: React.FC = () => {
                     },
                 }}
             >
-                <AlertStripe variant={'info'}>
+                <FamilieAlert variant={'info'}>
                     <SpråkTekst id={'hvilkebarn.info.alert'} />
                     <EksternLenke
                         lenkeSpråkId={'hvilkebarn.endre-opplysninger.lenke'}
                         lenkeTekstSpråkId={'hvilkebarn.endre-opplysninger.lenketekst'}
                         target="_blank"
                     />
-                </AlertStripe>
+                </FamilieAlert>
 
                 <BarnekortContainer
                     id={VelgBarnSpørsmålId.velgBarn}

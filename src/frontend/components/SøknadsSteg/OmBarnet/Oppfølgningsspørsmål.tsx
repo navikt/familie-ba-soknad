@@ -14,10 +14,10 @@ import {
     morgendagensDato,
     stringTilDate,
 } from '../../../utils/dato';
-import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
+import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -206,11 +206,11 @@ const Oppfølgningsspørsmål: React.FC<{
                                 språkValues={{ barn: barn.navn }}
                             />
                             {planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
-                                <AlertStripe variant={'warning'} dynamisk>
+                                <FamilieAlert variant={'warning'} dynamisk>
                                     <SpråkTekst
                                         id={'ombarnet.planlagt-sammenhengende-opphold.alert'}
                                     />
-                                </AlertStripe>
+                                </FamilieAlert>
                             )}
                         </KomponentGruppe>
                     )}

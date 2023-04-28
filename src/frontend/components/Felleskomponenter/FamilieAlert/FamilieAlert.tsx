@@ -2,20 +2,20 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Alert as NavAlert, AlertProps } from '@navikt/ds-react';
+import { Alert, AlertProps } from '@navikt/ds-react';
 
 interface AlertStripeProps extends AlertProps {
     dynamisk?: boolean;
     className?: '';
 }
 
-const StyledAlert = styled(NavAlert)`
+const StyledAlert = styled(Alert)`
     p {
         margin: 0;
     }
 `;
 
-const AlertStripe: React.FC<AlertStripeProps> = ({
+const FamilieAlert: React.FC<AlertStripeProps> = ({
     variant,
     inline = true,
     size = 'medium',
@@ -39,4 +39,4 @@ const AlertStripe: React.FC<AlertStripeProps> = ({
     );
 };
 
-export default AlertStripe;
+export default FamilieAlert;

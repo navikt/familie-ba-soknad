@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 
 import { device } from '../../../Theme';
-import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
+import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import ModalContent from '../../Felleskomponenter/ModalContent';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -49,11 +49,11 @@ const FortsettPåSøknad: FC = () => {
     return (
         <StyledFortsettPåSøknad role={'navigation'}>
             <KomponentGruppe>
-                <AlertStripe variant={'info'} inline={false}>
+                <FamilieAlert variant={'info'} inline={false}>
                     <BodyLong>
                         <SpråkTekst id={'mellomlagring.info'} />
                     </BodyLong>
-                </AlertStripe>
+                </FamilieAlert>
             </KomponentGruppe>
             <StyledButton onClick={fortsettPåSøknaden}>
                 <SpråkTekst id={'mellomlagring.knapp.fortsett'} />

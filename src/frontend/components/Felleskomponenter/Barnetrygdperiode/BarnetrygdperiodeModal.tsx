@@ -6,9 +6,9 @@ import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import AlertStripe from '../AlertStripe/AlertStripe';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
+import FamilieAlert from '../FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -160,9 +160,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                             }),
                         }}
                         tilleggsinfo={
-                            <AlertStripe variant={'info'}>
+                            <FamilieAlert variant={'info'}>
                                 <SpråkTekst id={'ombarnet.trygdbeløp.info'} />
-                            </AlertStripe>
+                            </FamilieAlert>
                         }
                         bredde={'S'}
                     />
