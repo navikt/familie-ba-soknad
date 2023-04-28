@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { format } from 'date-fns';
 
-import AlertStripe from 'nav-frontend-alertstriper';
-
 import { BodyLong } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -11,6 +9,7 @@ import { useApp } from '../../../context/AppContext';
 import { useSteg } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
+import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -53,7 +52,7 @@ const Kvittering: React.FC = () => {
     return (
         <Steg tittel={<SpråkTekst id={'kvittering.sidetittel'} />}>
             <KomponentGruppe>
-                <AlertStripe type="suksess">
+                <AlertStripe variant={'success'} inline={false}>
                     <SpråkTekst
                         id={'kvittering.mottatt'}
                         values={{

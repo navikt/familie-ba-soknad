@@ -38,8 +38,8 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
                 </Heading>
 
                 <AlertStripe
-                    form={'default'}
-                    type={'feil'}
+                    inline={false}
+                    variant={'error'}
                     children={<SpråkTekst id={'felles.modal.deployfeil.error'} />}
                 />
                 <StyledBodyLong>

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
@@ -28,9 +26,6 @@ import {
 interface Props extends ReturnType<typeof useModal>, IUsePensjonsperiodeSkjemaParams {
     onLeggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
 }
-const StyledAlertStripe = styled(AlertStripe)`
-    margin: 1rem 0 1rem 0;
-`;
 
 export const BarnetrygdperiodeModal: React.FC<Props> = ({
     erÅpen,
@@ -165,9 +160,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                             }),
                         }}
                         tilleggsinfo={
-                            <StyledAlertStripe>
+                            <AlertStripe variant={'info'}>
                                 <SpråkTekst id={'ombarnet.trygdbeløp.info'} />
-                            </StyledAlertStripe>
+                            </AlertStripe>
                         }
                         bredde={'S'}
                     />

@@ -70,7 +70,7 @@ const Forside: React.FC = () => {
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
 
             {!erUtvidet && (
-                <StyledAlertStripeUtvidetInfo type={'info'} form={'default'}>
+                <StyledAlertStripeUtvidetInfo variant={'info'} inline={false}>
                     <SpråkTekst id={'forside.utvidetinfo.info'} />
                     <EksternLenke
                         lenkeSpråkId={'forside.utvidetinfo.lenke'}
