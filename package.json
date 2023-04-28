@@ -213,8 +213,6 @@
     "lint-staged": "^13.2.0",
     "lodash.throttle": "^4.1.1",
     "mini-css-extract-plugin": "^2.4.1",
-    "nav-frontend-alertstriper": "^4.0.1",
-    "nav-frontend-alertstriper-style": "^3.0.1",
     "nav-frontend-chevron": "^1.0.30",
     "nav-frontend-chevron-style": "^1.0.4",
     "nav-frontend-ikoner-assets": "^3.0.1",
