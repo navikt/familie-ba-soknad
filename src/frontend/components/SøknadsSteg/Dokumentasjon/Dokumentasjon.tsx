@@ -89,7 +89,7 @@ const Dokumentasjon: React.FC = () => {
                 </KomponentGruppe>
             )}
             <KomponentGruppe>
-                <FamilieAlert variant={'info'}>
+                <FamilieAlert variant={'info'} inline={false}>
                     <SpråkTekst id={'dokumentasjon.nudge'} />
                 </FamilieAlert>
 
