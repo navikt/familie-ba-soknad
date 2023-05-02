@@ -171,7 +171,7 @@
     "axios-mock-adapter": "^1.21.4",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^29.5.0",
-    "babel-loader": "8.1.0",
+    "babel-loader": "9.1.2",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-styled-components": "^1.13.2",
