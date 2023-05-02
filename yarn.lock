@@ -2292,23 +2292,29 @@
   resolved "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@navikt/ds-css@^2.6.0":
-  version "2.6.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-css/2.6.0/6398a31d3a289deef89608262ba0ee5d18b719cf#6398a31d3a289deef89608262ba0ee5d18b719cf"
-  integrity sha512-6TOGywogGNJgpmlY4GoQZ/UngUxdKq927uWYeIwrFBRZufU0xFhZlxWbEJRQB9UcWp1ARs4Sr9swkFxRxp717w==
+"@navikt/aksel-icons@^2.9.2":
+  version "2.9.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/aksel-icons/2.9.2/8b1dac941cac93dd8ba6f7e7d377a2336e275364#8b1dac941cac93dd8ba6f7e7d377a2336e275364"
+  integrity sha512-+n2m0sQU+FE63FkS6W5erwHJevBsgLPe3yn9BhVUZeq/oQyTMAExKOnGAsCm/EiJdDKVFuvFCZvoHBkMpCd56g==
 
-"@navikt/ds-icons@^2.6.0":
-  version "2.6.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/2.6.0/0b6155d61669d9817708bfb703c4b57b23e1754b#0b6155d61669d9817708bfb703c4b57b23e1754b"
-  integrity sha512-//0sXWPL8TmjP4pcfcPn+tzm4t0gafLhUqs0WRGf/jCQTWO16yHod4PPEc7jXTJeisZpWkcjjsGlasIU5wMMdg==
+"@navikt/ds-css@^2.9.2":
+  version "2.9.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-css/2.9.2/7a71f76f3a4b251308d5c260b0ecb19a0415e486#7a71f76f3a4b251308d5c260b0ecb19a0415e486"
+  integrity sha512-p9myBj9Y7zJd0u0aj8T/iMDHlfmX/1I0H+QGNvCQj+30YjBwWfqIA86nqVjHneG8vgWef2q/wGXGaHQcpMZSJA==
 
-"@navikt/ds-react@^2.6.0":
-  version "2.6.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/2.6.0/e086a6763da9890fc99c69f14b9b80e1c964bf42#e086a6763da9890fc99c69f14b9b80e1c964bf42"
-  integrity sha512-wRf8SzP2b84FM8nZmsQJWWpclG0EVH4m6YaptUoU+KurAuVkLnIPMf0PYL+NqUVxG+9Q08WInzy2tn46f7NJ/A==
+"@navikt/ds-icons@^2.9.2":
+  version "2.9.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/2.9.2/70e4b5a43a7e5c6447c0e7bac77f80ddf622ceb7#70e4b5a43a7e5c6447c0e7bac77f80ddf622ceb7"
+  integrity sha512-bbRlAPJN6nL0zYF/HDRGHGkXh4m9/4ErMXllZJyKzGymQ1p9dsvht4AsNi68RpNcYfx7BXxde1H1tj9E/pQgwA==
+
+"@navikt/ds-react@^2.9.2":
+  version "2.9.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/2.9.2/8020187ca495c862d5524d7d92493d02a079f314#8020187ca495c862d5524d7d92493d02a079f314"
+  integrity sha512-ZCZEGo9VeWv5sO0lnpKHGACriWSGy4HJ8t/mKYq/Sn7CRuC6VkEMN3s7AUJv35wV4wkcDcQR3NxKAzv8UKqYDQ==
   dependencies:
     "@floating-ui/react" "0.17.0"
-    "@navikt/ds-icons" "^2.6.0"
+    "@navikt/aksel-icons" "^2.9.2"
+    "@navikt/ds-icons" "^2.9.2"
     "@radix-ui/react-tabs" "1.0.0"
     "@radix-ui/react-toggle-group" "1.0.0"
     clsx "^1.2.1"
@@ -2316,10 +2322,10 @@
     react-day-picker "8.3.4"
     react-modal "3.15.1"
 
-"@navikt/ds-tokens@^2.6.0":
-  version "2.6.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-tokens/2.6.0/680f42f3c4fee3d7119140daf95053cd626783ab#680f42f3c4fee3d7119140daf95053cd626783ab"
-  integrity sha512-VcSU8GwRrODLtp7/fsqk3NI2q6GPJQDN3j8I9Me4BT2GI6b0NKaNw1Yqt1L7/a+RntUcfSn367NP4qGYwA6EMA==
+"@navikt/ds-tokens@^2.9.2":
+  version "2.9.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-tokens/2.9.2/056d822dbec03a2ab1dca260990c4cc73267e568#056d822dbec03a2ab1dca260990c4cc73267e568"
+  integrity sha512-taE+kAT9A/MX2v314rDINxYyHziUMe/u5HzBYZHayRZENbjmyNE2P724qVJb7kkON6WQkwUvhOHUc0/LMXkV9g==
 
 "@navikt/familie-form-elements@^10.1.0":
   version "10.1.0"
@@ -9826,16 +9832,6 @@ nav-datovelger@^12.6.0:
   integrity sha512-z7hmVcPSqZAoOX40hG/a7E9QQNZoPjRfL2Qn+ylYIYLv5Nx0lzFVZPHnubzdUFTYBf5SFJ6EGWcv9u6ISn2FDA==
   dependencies:
     focus-trap-react "^8.6.0"
-
-nav-frontend-alertstriper-style@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-3.0.1.tgz#a5b6adf1cbe8adff0714fd162f33ed8a551ae190"
-  integrity sha512-kbeepa7BBhhRcwbdkwFNeL4JsnVKJZmREOxN4T7QkPtzhhIdsngZTtGfxcmJE2YHyuyAQeNF3rgFlAtxaxgQow==
-
-nav-frontend-alertstriper@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper/-/nav-frontend-alertstriper-4.0.1.tgz#e725ad099d9a26283e6ff3302ba9abe9e8602bdc"
-  integrity sha512-b+IWJsiyumtZPcxkQt+luwAUYC5i3f/MRVvDZsxn7l554PTXGLguW0j5ruOozlZSIzXBe/xnGskh5iyw3J5rew==
 
 nav-frontend-chevron-style@^1.0.4:
   version "1.0.4"

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 
 import { add, isBefore } from 'date-fns';
 
-import AlertStripe, { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-
 import { BodyLong, BodyShort } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -13,6 +11,7 @@ import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
+import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
@@ -75,7 +74,7 @@ const Dokumentasjon: React.FC = () => {
         >
             {slettaVedlegg.length > 0 && (
                 <KomponentGruppe>
-                    <AlertStripeAdvarsel>
+                    <FamilieAlert variant={'warning'} inline={false}>
                         <BodyShort>
                             <SpråkTekst id={'dokumentasjon.forlangtid.info'} />
                         </BodyShort>
@@ -86,13 +85,13 @@ const Dokumentasjon: React.FC = () => {
                                 </li>
                             ))}
                         </ul>
-                    </AlertStripeAdvarsel>
+                    </FamilieAlert>
                 </KomponentGruppe>
             )}
             <KomponentGruppe>
-                <AlertStripe type={'info'}>
+                <FamilieAlert variant={'info'} inline={false}>
                     <SpråkTekst id={'dokumentasjon.nudge'} />
-                </AlertStripe>
+                </FamilieAlert>
 
                 <BodyLong>
                     <SpråkTekst id={'dokumentasjon.info'} />

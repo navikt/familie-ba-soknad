@@ -19,10 +19,6 @@ import {
 import OmDeg from './OmDeg';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 
-jest.mock('nav-frontend-alertstriper', () => ({ children }) => (
-    <div data-testid="alertstripe">{children}</div>
-));
-
 const TestKomponent = () => (
     <TestProvidere>
         <OmDeg />

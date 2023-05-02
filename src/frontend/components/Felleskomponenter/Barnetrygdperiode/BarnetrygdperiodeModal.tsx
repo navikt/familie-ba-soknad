@@ -1,16 +1,14 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import AlertStripe from '../AlertStripe/AlertStripe';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
+import FamilieAlert from '../FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -28,9 +26,6 @@ import {
 interface Props extends ReturnType<typeof useModal>, IUsePensjonsperiodeSkjemaParams {
     onLeggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
 }
-const StyledAlertStripe = styled(AlertStripe)`
-    margin: 1rem 0 1rem 0;
-`;
 
 export const BarnetrygdperiodeModal: React.FC<Props> = ({
     erÅpen,
@@ -165,9 +160,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                             }),
                         }}
                         tilleggsinfo={
-                            <StyledAlertStripe>
+                            <FamilieAlert variant={'info'}>
                                 <SpråkTekst id={'ombarnet.trygdbeløp.info'} />
-                            </StyledAlertStripe>
+                            </FamilieAlert>
                         }
                         bredde={'S'}
                     />

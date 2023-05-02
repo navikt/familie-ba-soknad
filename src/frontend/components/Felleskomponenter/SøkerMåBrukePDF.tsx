@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import { BodyShort, Label } from '@navikt/ds-react';
 
-import AlertStripe from './AlertStripe/AlertStripe';
 import EksternLenke from './EksternLenke/EksternLenke';
+import FamilieAlert from './FamilieAlert/FamilieAlert';
 import Informasjonsbolk from './Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from './SpråkTekst/SpråkTekst';
 
@@ -21,9 +21,9 @@ const LenkeContainer = styled.div`
 export const SøkerMåBrukePDF: FC<Props> = ({ advarselTekstId, utfyllendeAdvarselInfoId }) => {
     return (
         <Informasjonsbolk aria-live={'polite'}>
-            <AlertStripe type={'advarsel'}>
+            <FamilieAlert variant={'warning'}>
                 <SpråkTekst id={advarselTekstId} />
-            </AlertStripe>
+            </FamilieAlert>
             {utfyllendeAdvarselInfoId && (
                 <Informasjonsbolk>
                     <Label>

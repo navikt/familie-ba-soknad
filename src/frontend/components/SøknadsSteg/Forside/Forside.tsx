@@ -13,8 +13,8 @@ import { useApp } from '../../../context/AppContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { RouteEnum } from '../../../typer/routes';
 import { logSidevisningBarnetrygd } from '../../../utils/amplitude';
-import AlertStripe from '../../Felleskomponenter/AlertStripe/AlertStripe';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
+import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -31,7 +31,7 @@ const StyledSpråkvelger = styled(Sprakvelger)`
     margin: auto;
 `;
 
-const StyledAlertStripeUtvidetInfo = styled(AlertStripe)`
+const StyledAlertStripeUtvidetInfo = styled(FamilieAlert)`
     margin-top: 3rem;
 `;
 
@@ -70,7 +70,7 @@ const Forside: React.FC = () => {
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
 
             {!erUtvidet && (
-                <StyledAlertStripeUtvidetInfo type={'info'} form={'default'}>
+                <StyledAlertStripeUtvidetInfo variant={'info'} inline={false}>
                     <SpråkTekst id={'forside.utvidetinfo.info'} />
                     <EksternLenke
                         lenkeSpråkId={'forside.utvidetinfo.lenke'}

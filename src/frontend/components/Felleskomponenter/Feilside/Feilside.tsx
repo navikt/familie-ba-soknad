@@ -1,15 +1,14 @@
 import React from 'react';
 
-import Alertstripe from 'nav-frontend-alertstriper';
-
+import FamilieAlert from '../FamilieAlert/FamilieAlert';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 export const Feilside: React.FC = () => {
     return (
         <div>
-            <Alertstripe type="feil" aria-live={'polite'}>
+            <FamilieAlert variant={'error'} dynamisk>
                 <SpråkTekst id={'felles.crashmelding'} />
-            </Alertstripe>
+            </FamilieAlert>
         </div>
     );
 };
