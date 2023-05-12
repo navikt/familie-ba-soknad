@@ -139,7 +139,7 @@
     "@sentry/browser": "^7.46.0",
     "@sentry/react": "^6.13.3",
     "@sentry/webpack-plugin": "^1.17.3",
-    "@testing-library/dom": "^8.13.0",
+    "@testing-library/dom": "^9.3.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.2.3",
     "@testing-library/react-hooks": "^8.0.0",
