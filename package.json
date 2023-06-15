@@ -137,7 +137,7 @@
     "@navikt/nav-dekoratoren-moduler": "^1.6.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
     "@sentry/browser": "^7.46.0",
-    "@sentry/react": "^6.13.3",
+    "@sentry/react": "^7.55.2",
     "@sentry/webpack-plugin": "^1.17.3",
     "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "^5.16.4",
