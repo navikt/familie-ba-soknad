@@ -5,6 +5,7 @@ import { EøsSøkerSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Søk
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
+
 import { IBarnMedISøknad } from './barn';
 import { INøkkelPar } from './common';
 import { dokumentasjonsbehovTilSpråkId, IDokumentasjon } from './dokumentasjon';

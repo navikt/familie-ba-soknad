@@ -12,6 +12,7 @@ import {
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
+
 import OmBarnaDine from './OmBarnaDine';
 import { OmBarnaDineSpørsmålId } from './spørsmål';
 

@@ -8,6 +8,7 @@ import { IOmsorgspersonIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IOmsorgsperson } from '../../typer/omsorgsperson';
 import { PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId } from '../språk';
+
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';

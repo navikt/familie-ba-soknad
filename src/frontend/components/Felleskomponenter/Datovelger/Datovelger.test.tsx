@@ -13,6 +13,7 @@ import { SkjemaFeltTyper } from '../../../typer/skjema';
 import * as datoUtils from '../../../utils/dato';
 import { dagensDato } from '../../../utils/dato';
 import { silenceConsoleErrors, spyOnModal, TestProvidere } from '../../../utils/testing';
+
 import Datovelger from './Datovelger';
 
 class ResizeObserver {

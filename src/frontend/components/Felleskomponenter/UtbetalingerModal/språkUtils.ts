@@ -4,6 +4,7 @@ import {
     EøsSøkerSpørsmålId,
     eøsSøkerSpørsmålSpråkId,
 } from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
+
 import { UtbetalingerSpørsmålId } from './spørsmål';
 
 export const mottarEllerMottattUtbetalingSpråkId = (

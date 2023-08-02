@@ -7,6 +7,7 @@ import { useEøs } from '../../../../context/EøsContext';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType } from '../idnummerUtils';
+
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './spørsmål';
 
 interface Props {

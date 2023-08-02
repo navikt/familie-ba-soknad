@@ -21,6 +21,7 @@ import {
     landkodeTilSpråk,
 } from '../språk';
 import { jaNeiSvarTilSpråkId } from '../spørsmål';
+
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import { barnISøknadsFormatV8 } from './barnV8';

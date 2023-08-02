@@ -10,6 +10,7 @@ import { ITidligereSamboer } from '../../../typer/person';
 import { formaterDato } from '../../../utils/dato';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+
 import { samboerSpråkIder } from './spørsmål';
 
 const StyledLabel = styled(Label)`
@@ -26,7 +27,7 @@ const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
 
 const SamboerContainer = styled.div`
     margin: 2rem 0;
-    border-bottom: 1px solid #78706a; ;
+    border-bottom: 1px solid #78706a;
 `;
 
 const StyledButton = styled(Button)`

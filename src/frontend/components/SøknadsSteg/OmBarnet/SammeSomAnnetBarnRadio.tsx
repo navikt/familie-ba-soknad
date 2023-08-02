@@ -9,6 +9,7 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const StyledRadioGroup = styled(RadioGroup)`

@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { muligeÅrsaker } from '../../../typer/søknad';
 import { Årsak } from '../../../typer/utvidet';
 import { toÅrsakSpråkId } from '../../../utils/språk';
+
 import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 
 const ÅrsakDropdown: React.FC<StyledDropdownProps<Årsak | ''>> = props => {

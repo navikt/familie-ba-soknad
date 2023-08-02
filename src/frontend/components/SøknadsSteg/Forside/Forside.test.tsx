@@ -1,6 +1,7 @@
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
 import { mockEøs, mockHistory, spyOnUseApp } from '../../../utils/testing';
+
 import { bekreftelseBoksBorderFarge } from './BekreftelseOgStartSoknad';
 import { BekreftelseStatus } from './useBekreftelseOgStartSoknad';
 

@@ -8,6 +8,7 @@ import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType } from '../idnummerUtils';
+
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 
 const IdNummerForAndreForelder: React.FC<{

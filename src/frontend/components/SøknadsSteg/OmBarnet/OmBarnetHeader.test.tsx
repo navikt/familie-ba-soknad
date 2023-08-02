@@ -11,6 +11,7 @@ import {
     spyOnUseApp,
     TestProvidere,
 } from '../../../utils/testing';
+
 import { OmBarnetHeader } from './OmBarnetHeader';
 
 describe('OmBarnetHeader', () => {

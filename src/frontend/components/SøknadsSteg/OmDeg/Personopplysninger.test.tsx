@@ -14,6 +14,7 @@ import {
     spyOnUseApp,
     TestProvidere,
 } from '../../../utils/testing';
+
 import { Personopplysninger } from './Personopplysninger';
 
 const mockedSivilstand = ESivilstand.GIFT;

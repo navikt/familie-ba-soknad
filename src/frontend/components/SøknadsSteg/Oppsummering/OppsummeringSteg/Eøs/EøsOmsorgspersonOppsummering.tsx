@@ -17,6 +17,7 @@ import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/Ut
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
+
 import { tittelSpmEøsBarnOppsummering } from './utils';
 
 const EøsOmsorgspersonOppsummering: React.FC<{

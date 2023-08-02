@@ -1,6 +1,7 @@
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { ESivilstand } from '../typer/kontrakt/generelle';
+
 import { hentSivilstatusSpråkId, hentTekster, landkodeTilSpråk } from './språk';
 
 describe('hentTekster', () => {

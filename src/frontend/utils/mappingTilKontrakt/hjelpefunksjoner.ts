@@ -57,7 +57,7 @@ export const spørmålISøknadsFormat = (
                     entry: [string, ISøknadSpørsmål<any>]
                 ): [
                     string,
-                    { label: Record<LocaleType, string>; verdi: Record<LocaleType, any> }
+                    { label: Record<LocaleType, string>; verdi: Record<LocaleType, any> },
                 ] => {
                     const verdi = entry[1].svar;
                     let formatertVerdi: Record<LocaleType, string>;

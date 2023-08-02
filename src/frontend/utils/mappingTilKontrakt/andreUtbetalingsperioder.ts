@@ -7,6 +7,7 @@ import { IUtbetalingsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IUtbetalingsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
+
 import {
     sammeVerdiAlleSpråk,
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,

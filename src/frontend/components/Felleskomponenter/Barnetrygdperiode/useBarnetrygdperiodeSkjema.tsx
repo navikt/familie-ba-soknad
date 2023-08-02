@@ -12,6 +12,7 @@ import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+
 import {
     barnetrygdslandFeilmelding,
     mottarBarnetrygdNåFeilmelding,

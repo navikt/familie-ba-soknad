@@ -10,6 +10,7 @@ import { ABlue500, ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+
 import OpplastedeFiler from './OpplastedeFiler';
 import { useFilopplaster } from './useFilopplaster';
 

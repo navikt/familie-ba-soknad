@@ -9,6 +9,7 @@ import {
     eøsSøkerSpørsmålSpråkId,
 } from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
+
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 export const arbeidslandFeilmelding = (

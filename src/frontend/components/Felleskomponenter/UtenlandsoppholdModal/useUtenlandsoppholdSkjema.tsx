@@ -17,6 +17,7 @@ import {
     hentMaxAvgrensningPåTilDato,
 } from '../../../utils/utenlandsopphold';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+
 import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 import {
     fraDatoFeilmeldingSpråkId,

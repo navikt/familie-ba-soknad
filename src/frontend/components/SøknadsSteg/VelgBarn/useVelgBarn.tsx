@@ -12,6 +12,7 @@ import { IVelgBarnFeltTyper } from '../../../typer/skjema';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import { genererInitialBarnMedISøknad } from '../../../utils/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+
 import { VelgBarnSpørsmålId } from './spørsmål';
 
 export const useVelgBarn = (): {

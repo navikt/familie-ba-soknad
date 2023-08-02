@@ -19,6 +19,7 @@ import {
     TestProvidere,
 } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
+
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import { useOmBarnet } from './useOmBarnet';
 

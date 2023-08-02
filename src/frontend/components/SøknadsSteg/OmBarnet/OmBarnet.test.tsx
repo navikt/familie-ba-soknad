@@ -24,6 +24,7 @@ import {
 } from '../../../utils/testing';
 import { EøsBarnSpørsmålId } from '../EøsSteg/Barn/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
+
 import OmBarnet from './OmBarnet';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 

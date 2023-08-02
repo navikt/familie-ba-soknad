@@ -4,6 +4,7 @@ import { PensjonsperiodeSpørsmålId } from '../components/Felleskomponenter/Pen
 import { UtbetalingerSpørsmålId } from '../components/Felleskomponenter/UtbetalingerModal/spørsmål';
 import { BarnetsId } from '../typer/common';
 import { PersonType } from '../typer/personType';
+
 import {
     dagenEtterDato,
     dagensDato,

@@ -11,6 +11,7 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
+
 import {
     mottarPensjonNåFeilmeldingSpråkId,
     pensjonFraDatoFeilmeldingSpråkId,

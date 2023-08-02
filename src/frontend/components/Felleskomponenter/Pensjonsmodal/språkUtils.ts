@@ -9,6 +9,7 @@ import {
     eøsSøkerSpørsmålSpråkId,
 } from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
+
 import { PensjonsperiodeSpørsmålId } from './spørsmål';
 
 export const mottarPensjonNåFeilmeldingSpråkId = (personType: PersonType): string => {

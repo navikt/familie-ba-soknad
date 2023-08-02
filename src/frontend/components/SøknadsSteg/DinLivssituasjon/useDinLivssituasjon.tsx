@@ -32,6 +32,7 @@ import { PensjonsperiodeSpørsmålId } from '../../Felleskomponenter/Pensjonsmod
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { idNummerLand } from '../EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
+
 import { SamboerSpørsmålId } from './spørsmål';
 
 export const useDinLivssituasjon = (): {

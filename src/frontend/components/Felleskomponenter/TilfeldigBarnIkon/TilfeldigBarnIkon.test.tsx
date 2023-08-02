@@ -11,6 +11,7 @@ import {
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
+
 import { TilfeldigBarnIkon } from './TilfeldigBarnIkon';
 
 describe('TilfeldigBarnIkon', () => {

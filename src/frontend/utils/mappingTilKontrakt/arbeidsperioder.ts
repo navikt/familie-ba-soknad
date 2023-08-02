@@ -10,6 +10,7 @@ import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/v8';
 import { IArbeidsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
+
 import {
     sammeVerdiAlleSpråk,
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,

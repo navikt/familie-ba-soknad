@@ -7,6 +7,7 @@ import {
     spyOnModal,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
+
 import Dokumentasjon from './Dokumentasjon';
 
 jest.mock('react-router-dom', () => ({

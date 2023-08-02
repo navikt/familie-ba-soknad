@@ -13,6 +13,7 @@ import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../../t
 import { IAndreForelderIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { PersonType } from '../../typer/personType';
 import { landkodeTilSpråk } from '../språk';
+
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';

@@ -12,6 +12,7 @@ import { tomString } from '../typer/common';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { ISøknad } from '../typer/søknad';
+
 import { formaterFnr } from './visning';
 
 export const genererInitiellAndreForelder = (

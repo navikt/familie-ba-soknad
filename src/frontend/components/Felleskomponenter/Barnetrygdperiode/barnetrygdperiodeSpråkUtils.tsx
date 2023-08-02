@@ -1,6 +1,7 @@
 import { PersonType } from '../../../typer/personType';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../SøknadsSteg/OmBarnet/spørsmål';
+
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 export const barnetrygdslandFeilmelding = (

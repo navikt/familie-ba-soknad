@@ -14,6 +14,7 @@ import {
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
+
 import DinLivssituasjon from './DinLivssituasjon';
 import { getAllNåværendeSamboerFields } from './NåværendeSamboerTestUtils';
 import { DinLivssituasjonSpørsmålId, SamboerSpørsmålId } from './spørsmål';
