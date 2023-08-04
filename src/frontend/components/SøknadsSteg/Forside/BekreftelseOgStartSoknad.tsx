@@ -3,9 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
-
-import { BodyLong, Button } from '@navikt/ds-react';
+import { BodyLong, Button, ConfirmationPanel } from '@navikt/ds-react';
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -16,14 +14,6 @@ import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelse
 const FormContainer = styled.form`
     display: flex;
     flex-direction: column;
-`;
-
-const StyledBekreftCheckboksPanel = styled(BekreftCheckboksPanel)<{ status: BekreftelseStatus }>`
-    && {
-        border: 1px solid ${props => bekreftelseBoksBorderFarge(props.status)};
-        padding: 1.5rem;
-        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    }
 `;
 
 const StyledButton = styled(Button)`
@@ -50,23 +40,22 @@ const BekreftelseOgStartSoknad: React.FC = () => {
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
             <Informasjonsbolk tittelId="forside.bekreftelsesboks.tittel">
-                <StyledBekreftCheckboksPanel
+                <ConfirmationPanel
                     label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
                     onChange={bekreftelseOnChange}
                     checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
-                    feil={
+                    error={
                         bekreftelseStatus === BekreftelseStatus.FEIL && (
                             <span role={'alert'}>
                                 <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
                             </span>
                         )
                     }
-                    status={bekreftelseStatus}
                 >
                     <BodyLong>
                         <SpråkTekst id="forside.bekreftelsesboks.brødtekst" />
                     </BodyLong>
-                </StyledBekreftCheckboksPanel>
+                </ConfirmationPanel>
             </Informasjonsbolk>
 
             <StyledButton
