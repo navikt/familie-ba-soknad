@@ -21,7 +21,7 @@ const SlektsforholdDropdown: React.FC<SlektsforholdDropdownProps> = ({
         ? muligeSlektsforhold
         : muligeSlektsforhold.filter(slektsforhold => slektsforhold !== Slektsforhold.FORELDER);
     return (
-        <StyledDropdown<Slektsforhold | ''> {...props} bredde={'fullbredde'}>
+        <StyledDropdown<Slektsforhold | ''> {...props}>
             {aktuelleSlektsforhold.map(
                 (slektsforhold): ReactNode => (
                     <option value={slektsforhold} key={slektsforhold}>

@@ -2,8 +2,7 @@ import React, { PropsWithChildren, ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { Select } from 'nav-frontend-skjema';
-
+import { Select } from '@navikt/ds-react';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -14,7 +13,6 @@ export interface StyledDropdownProps<ConstrainedString extends string> {
     placeholder: string;
     label?: ReactNode;
     dynamisk?: boolean;
-    bredde?: 'fullbredde' | 'xxl' | 'xl' | 'l' | 'm' | 's' | 'xs';
 }
 
 const StyledSelect = styled(Select)`
@@ -30,7 +28,6 @@ const StyledDropdown = <ConstrainedString extends string>({
     placeholder,
     label,
     dynamisk = false,
-    bredde,
 }: PropsWithChildren<StyledDropdownProps<ConstrainedString>>) =>
     felt.erSynlig ? (
         <div id={felt.id} aria-live={dynamisk ? 'polite' : 'off'}>
@@ -38,7 +35,6 @@ const StyledDropdown = <ConstrainedString extends string>({
                 label={label}
                 {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
                 id={undefined}
-                bredde={bredde || 'l'}
             >
                 <option disabled={true} value={''}>
                     {placeholder}
