@@ -17,6 +17,7 @@ import SkjemaModal from '../../../Felleskomponenter/SkjemaModal/SkjemaModal';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { SøkerMåBrukePDF } from '../../../Felleskomponenter/SøkerMåBrukePDF';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../spørsmål';
+
 import { useLeggTilBarn } from './useLeggTilBarn';
 
 const LeggTilBarnModal: React.FC<{

@@ -6,6 +6,7 @@ import { feil, FeltState, ok } from '@navikt/familie-skjema';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IAdresse } from '../typer/kontrakt/generelle';
 import { ISøker } from '../typer/person';
+
 import { trimWhiteSpace } from './hjelpefunksjoner';
 import { uppercaseFørsteBokstav } from './visning';
 

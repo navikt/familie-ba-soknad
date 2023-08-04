@@ -9,6 +9,7 @@ import {
     spyOnModal,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
+
 import Kvittering from './Kvittering';
 
 describe('Kvittering', () => {

@@ -16,6 +16,7 @@ import {
     stringTilDate,
 } from '../../../utils/dato';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
+
 import {
     arbeidslandFeilmelding,
     tilDatoArbeidsperiodeFeilmelding,

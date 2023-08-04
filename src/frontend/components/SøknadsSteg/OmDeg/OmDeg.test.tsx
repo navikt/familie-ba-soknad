@@ -16,6 +16,7 @@ import {
     TestProvidere,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
+
 import OmDeg from './OmDeg';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 

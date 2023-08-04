@@ -11,6 +11,7 @@ import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+
 import {
     pensjonsperiodeModalSpørsmålSpråkId,
     pensjonsperiodeOppsummeringOverskrift,

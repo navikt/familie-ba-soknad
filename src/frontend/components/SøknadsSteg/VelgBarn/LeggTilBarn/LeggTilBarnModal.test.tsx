@@ -3,6 +3,7 @@ import React from 'react';
 import { act, render } from '@testing-library/react';
 
 import { silenceConsoleErrors, spyOnModal, TestProvidere } from '../../../../utils/testing';
+
 import LeggTilBarnModal from './LeggTilBarnModal';
 
 describe('LeggTilBarnModal', function () {

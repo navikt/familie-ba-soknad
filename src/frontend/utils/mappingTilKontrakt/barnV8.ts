@@ -15,6 +15,7 @@ import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { hentTekster } from '../språk';
+
 import { andreForelderTilISøknadsfeltV8 } from './andreForelderV8';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {

@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 
 import Miljø from '../../shared-utils/Miljø';
 import { preferredAxios as axios } from '../context/axios';
+
 import { routerBasePath } from './hjelpefunksjoner';
 
 const er401Feil = (error: AxiosError) => error && error.response && error.response.status === 401;

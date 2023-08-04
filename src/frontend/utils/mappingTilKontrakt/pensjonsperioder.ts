@@ -10,6 +10,7 @@ import { IPensjonsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IPensjonsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
+
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
 interface PensjonsperiodeIKontraktFormatParams {

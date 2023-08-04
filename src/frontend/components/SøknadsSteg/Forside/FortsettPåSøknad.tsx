@@ -10,6 +10,7 @@ import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import ModalContent from '../../Felleskomponenter/ModalContent';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+
 import { useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
 const StyledButton = styled(Button)`

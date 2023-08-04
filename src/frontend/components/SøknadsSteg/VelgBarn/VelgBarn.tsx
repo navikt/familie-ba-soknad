@@ -9,6 +9,7 @@ import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+
 import Barnekort from './Barnekort/Barnekort';
 import LeggTilBarnModal from './LeggTilBarn/LeggTilBarnModal';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';

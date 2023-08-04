@@ -40,6 +40,7 @@ import { IKvittering } from '../typer/kvittering';
 import { ISøker, ISøkerRespons } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
+
 import { genererInitialBarnMedISøknad } from './barn';
 
 jest.mock('../context/pdl');

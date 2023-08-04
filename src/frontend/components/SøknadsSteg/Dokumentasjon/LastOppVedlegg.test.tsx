@@ -14,6 +14,7 @@ import {
     spyOnUseApp,
     TestProvidere,
 } from '../../../utils/testing';
+
 import LastOppVedlegg from './LastOppVedlegg';
 
 const hentAnnenDokumentasjon = (): IDokumentasjon => {

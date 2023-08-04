@@ -8,6 +8,7 @@ import { Label } from '@navikt/ds-react';
 import EksternLenke from '../EksternLenke/EksternLenke';
 import ExpandableInfo from '../expandableContent/ExpandableInfo';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+
 import PictureScanningExample from './PictureScanningExample';
 import ScanningIcon from './ScanningIcon';
 

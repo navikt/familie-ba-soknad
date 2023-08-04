@@ -5,6 +5,7 @@ import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksj
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
+
 import SamboerSkjema from './SamboerSkjema';
 import { TidligereSamboerSpørsmålId } from './spørsmål';
 import { useTidligereSamboer } from './useTidligereSamboer';

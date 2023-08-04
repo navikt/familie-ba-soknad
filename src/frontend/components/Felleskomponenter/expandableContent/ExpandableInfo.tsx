@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { BodyShort } from '@navikt/ds-react';
 
 import FamilieAlert from '../FamilieAlert/FamilieAlert';
+
 import CollapsableContainer from './CollapsableContainer';
 import InfoToggleButton from './InfoToggleButton';
 

@@ -15,6 +15,7 @@ import {
     TestProvidere,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
+
 import DinLivssituasjon from './DinLivssituasjon';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 

@@ -41,6 +41,7 @@ import { PensjonsperiodeSpørsmålId } from '../../../Felleskomponenter/Pensjons
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingerSpørsmålId } from '../../../Felleskomponenter/UtbetalingerModal/spørsmål';
 import { idNummerKeyPrefix } from '../idnummerUtils';
+
 import { EøsBarnSpørsmålId } from './spørsmål';
 
 export const useEøsForBarn = (

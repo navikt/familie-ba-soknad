@@ -19,6 +19,7 @@ import {
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../OmDeg/spørsmål';
+
 import Oppsummering from './Oppsummering';
 
 describe('Oppsummering', () => {

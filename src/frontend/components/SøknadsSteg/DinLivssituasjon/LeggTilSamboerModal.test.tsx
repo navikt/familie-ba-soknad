@@ -13,6 +13,7 @@ import {
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
+
 import DinLivssituasjon from './DinLivssituasjon';
 import { DinLivssituasjonSpørsmålId } from './spørsmål';
 

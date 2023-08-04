@@ -3,6 +3,7 @@ import { LocaleType } from '@navikt/familie-sprakvelger';
 import { TidligereSamboerSpørsmålId } from '../../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { IKontraktTidligereSamboer, ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { ITidligereSamboer } from '../../typer/person';
+
 import { sammeVerdiAlleSpråk, språktekstIdFraSpørsmålId, søknadsfelt } from './hjelpefunksjoner';
 import { samboerISøknadKontraktFormat } from './samboer';
 

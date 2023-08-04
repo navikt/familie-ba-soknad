@@ -18,6 +18,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+
 import { utbetalingsperiodeModalSpørsmålSpråkIder } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 import { IUseUtbetalingerSkjemaParams, useUtbetalingerSkjema } from './useUtbetalingerSkjema';

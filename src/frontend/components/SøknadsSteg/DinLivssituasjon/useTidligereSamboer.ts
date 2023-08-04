@@ -7,6 +7,7 @@ import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import { ITidligereSamboerFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
+
 import { TidligereSamboerSpørsmålId } from './spørsmål';
 
 export const useTidligereSamboer = (): {

@@ -8,6 +8,7 @@ import { IEøsBarnetrygdsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v
 import { IEøsBarnetrygdsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
+
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
 interface PensjonperiodeIKontraktFormatParams {

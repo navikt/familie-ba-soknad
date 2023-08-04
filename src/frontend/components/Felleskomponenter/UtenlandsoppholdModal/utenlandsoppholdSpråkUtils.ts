@@ -1,5 +1,6 @@
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
+
 import {
     landFeilmeldingSpråkIdsSøker,
     landLabelSpråkIdsBarn,

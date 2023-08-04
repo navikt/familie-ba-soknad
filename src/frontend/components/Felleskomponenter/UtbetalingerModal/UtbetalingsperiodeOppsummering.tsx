@@ -12,6 +12,7 @@ import { formaterDatoMedUkjent } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+
 import { utbetalingsperiodeModalSpørsmålSpråkIder } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 

@@ -6,6 +6,7 @@ import {
 import { IKontraktNåværendeSamboer, ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { ISamboer } from '../../typer/person';
 import { erTidligereSamboer } from '../typeguards';
+
 import {
     sammeVerdiAlleSpråk,
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,

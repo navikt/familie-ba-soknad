@@ -9,6 +9,7 @@ import * as fnrvalidator from '@navikt/fnrvalidator';
 
 import * as appContext from '../../../../context/AppContext';
 import { silenceConsoleErrors } from '../../../../utils/testing';
+
 import LeggTilBarnModal from './LeggTilBarnModal';
 import { NyttBarnKort } from './NyttBarnKort';
 
