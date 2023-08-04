@@ -2,11 +2,9 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Heading, Loader } from '@navikt/ds-react';
 
-import { Heading } from '@navikt/ds-react';
-
-const StyledSpinner = styled(NavFrontendSpinner)`
+const StyledLoader = styled(Loader)`
     margin-top: 3rem;
     height: 10rem;
     width: 10rem;
@@ -21,7 +19,7 @@ const SystemetLaster = () => {
                     className={'systemet-laster__content--tekst'}
                     children={'Søknaden laster'}
                 />
-                <StyledSpinner transparent={true} />
+                <StyledLoader transparent={true} size={'2xlarge'} />
             </div>
         </main>
     );

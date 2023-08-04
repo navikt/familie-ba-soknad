@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import NavFrontendChevron from 'nav-frontend-chevron';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 
 interface Props {
     controlsId: string;
@@ -70,7 +70,11 @@ const InfoToggleButton = (props: Props) => {
             <ButtonInnholdWrapper>
                 <LabelContainer>{children}</LabelContainer>
                 <ChevronContainer>
-                    <NavFrontendChevron type={isOpen ? 'opp' : 'ned'} />
+                    {isOpen ? (
+                        <ChevronUpIcon fontSize={'1.5rem'} />
+                    ) : (
+                        <ChevronDownIcon fontSize={'1.5rem'} />
+                    )}
                 </ChevronContainer>
             </ButtonInnholdWrapper>
         </StyledButton>
