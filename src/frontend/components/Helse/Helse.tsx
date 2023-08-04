@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import NavFrontendSpinner from 'nav-frontend-spinner';
-
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { BodyShort, Heading, Loader } from '@navikt/ds-react';
 import {
     Ressurs,
     RessursStatus,
@@ -80,7 +78,7 @@ const renderHelse = (ressurs: Ressurs<string>, tjeneste: string) => {
             {ressurs.status === RessursStatus.SUKSESS && (
                 <BodyShort children={`suksess (${ressurs.data})`} />
             )}
-            {ressurs.status === RessursStatus.HENTER && <NavFrontendSpinner />}
+            {ressurs.status === RessursStatus.HENTER && <Loader />}
             {ressurs.status === RessursStatus.FEILET && (
                 <BodyShort children={`feilet (${ressurs.frontendFeilmelding})`} />
             )}
