@@ -3,9 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Checkbox } from 'nav-frontend-skjema';
-
-import { Heading } from '@navikt/ds-react';
+import { Checkbox, Heading } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
@@ -140,13 +138,14 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
             <br />
             {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
                 <Checkbox
-                    label={<SpråkTekst id={'dokumentasjon.har-sendt-inn.spm'} />}
                     aria-label={`${intl.formatMessage({
                         id: 'dokumentasjon.har-sendt-inn.spm',
                     })} (${dokTittel})`}
                     checked={dokumentasjon.harSendtInn}
                     onChange={settHarSendtInnTidligere}
-                />
+                >
+                    <SpråkTekst id={'dokumentasjon.har-sendt-inn.spm'} />
+                </Checkbox>
             )}
         </Container>
     );
