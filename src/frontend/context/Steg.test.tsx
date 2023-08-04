@@ -29,7 +29,7 @@ describe('Steg', () => {
         expect(result.current.steg.length).toEqual(9);
     });
 
-    test(`hentStegObjekterForStegIndikator skal returnere en liste uten forside`, () => {
+    test(`stepperObjekter skal returnere en liste uten forside`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [],
         });
@@ -39,7 +39,7 @@ describe('Steg', () => {
             </RoutesProvider>
         );
         const { result } = renderHook(() => useSteg(), { wrapper });
-        expect(result.current.stegIndikatorObjekter.length).toEqual(8);
+        expect(result.current.stepperObjekter.length).toEqual(8);
     });
 
     test(`Kan hente neste steg fra forsiden`, () => {
