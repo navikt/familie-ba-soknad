@@ -3,9 +3,7 @@ import React, { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Checkbox } from 'nav-frontend-skjema';
-
-import { BodyShort, Ingress, Label } from '@navikt/ds-react';
+import { BodyShort, Ingress, Label, Checkbox } from '@navikt/ds-react';
 import { AGray100, APurple400, APurple800 } from '@navikt/ds-tokens/dist/tokens';
 
 import { useApp } from '../../../../context/AppContext';
@@ -128,11 +126,6 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 )}
                 <StyledCheckbox
                     checked={erMedISøknad}
-                    label={formatMessage({
-                        id: erUtvidet
-                            ? 'hvilkebarn-utvidet.barn.søk-om.spm'
-                            : 'hvilkebarn.barn.søk-om.spm',
-                    })}
                     aria-label={
                         formatMessage({
                             id: erUtvidet
@@ -141,7 +134,13 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                         }) + ` (${barn.navn})`
                     }
                     onChange={() => velgBarnCallback(barn, erMedISøknad)}
-                />
+                >
+                    {formatMessage({
+                        id: erUtvidet
+                            ? 'hvilkebarn-utvidet.barn.søk-om.spm'
+                            : 'hvilkebarn.barn.søk-om.spm',
+                    })}
+                </StyledCheckbox>
             </InformasjonsboksInnhold>
             {erRegistrertManuelt && (
                 <FjernBarnKnapp barnId={barn.id} fjernBarnCallback={fjernBarnCallback} />
