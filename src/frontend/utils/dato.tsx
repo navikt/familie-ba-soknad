@@ -6,7 +6,6 @@ import {
     isAfter,
     isBefore,
     isFuture,
-    isSameDay,
     isToday,
     isValid,
     parse,
@@ -76,7 +75,7 @@ export const validerDato = (
             feltState,
             <SpråkTekst
                 id={
-                    erSammeDatoSomDagensDato(sluttdatoAvgrensning)
+                    sluttdatoAvgrensning === dagensDato()
                         ? 'felles.dato-frem-i-tid.feilmelding'
                         : 'felles.dato-frem-i-tid-eller-i-idag.feilmelding'
                 }
@@ -84,11 +83,7 @@ export const validerDato = (
         );
     }
 
-    if (
-        !!startdatoAvgrensning &&
-        (erDatoFørStartDatoAvgrensning(dato, startdatoAvgrensning) ||
-            isSameDay(dato, startdatoAvgrensning))
-    ) {
+    if (!!startdatoAvgrensning && erDatoFørStartDatoAvgrensning(dato, startdatoAvgrensning)) {
         return feil(
             feltState,
             <SpråkTekst
