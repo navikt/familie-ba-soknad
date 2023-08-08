@@ -111,7 +111,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonspostnummer]
                         }
-                        bredde={'S'}
+                        fullbredde={false}
                     />
                     <Datovelger
                         felt={institusjonOppholdStartdato}
