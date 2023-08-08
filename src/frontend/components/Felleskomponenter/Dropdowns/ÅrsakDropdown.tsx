@@ -11,7 +11,7 @@ import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 const ÅrsakDropdown: React.FC<StyledDropdownProps<Årsak | ''>> = props => {
     const intl = useIntl();
     return (
-        <StyledDropdown<Årsak | ''> {...props} bredde={'fullbredde'}>
+        <StyledDropdown<Årsak | ''> {...props}>
             {muligeÅrsaker.map(
                 (årsak): ReactNode => (
                     <option value={årsak} key={årsak}>

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-
 import { Fieldset } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
@@ -97,7 +95,7 @@ const LeggTilBarnModal: React.FC<{
                         </KomponentGruppe>
                     </Fieldset>
 
-                    <SkjemaGruppe>
+                    <div>
                         <SkjemaFeltInput
                             felt={skjema.felter.ident}
                             visFeilmeldinger={skjema.visFeilmeldinger}
@@ -119,7 +117,7 @@ const LeggTilBarnModal: React.FC<{
                                 advarselTekstId={'hvilkebarn.leggtilbarn.ikke-fått-fnr.alert'}
                             />
                         )}
-                    </SkjemaGruppe>
+                    </div>
                 </KomponentGruppe>
             )}
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}

@@ -94,7 +94,7 @@ describe('Test av nåværende samboer skjema', () => {
 
         expect(navn.value).toBe('');
         expect(fnr.value).toBe('');
-        expect(fnrUkjent.value).toBe(ESvar.NEI);
+        expect(fnrUkjent.checked).toBe(false);
         expect(fødselsdato).not.toBeInTheDocument();
         expect(fødselsdatoUkjent).not.toBeInTheDocument();
         expect(samboerFraDato.value).toBe('');
@@ -114,10 +114,10 @@ describe('Test av nåværende samboer skjema', () => {
         expect(navn.value).toBe('Initial verdi for samboer sitt navn');
         expect(fnr.value).toBe('');
         expect(fnr.disabled).toBe(true);
-        expect(fnrUkjent.value).toBe(ESvar.JA);
+        expect(fnrUkjent.checked).toBe(true);
         expect(fødselsdato.value).toBe('');
         expect(fødselsdato.disabled).toBe(true);
-        expect(fødselsdatoUkjent.value).toBe(ESvar.JA);
+        expect(fødselsdatoUkjent.checked).toBe(true);
         expect(samboerFraDato.value).toBe('01.01.2000');
 
         act(() => {
