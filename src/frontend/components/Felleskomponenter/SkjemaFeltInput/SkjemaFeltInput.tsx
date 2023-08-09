@@ -19,8 +19,8 @@ interface SkjemaFeltInputProps {
     fullbredde?: boolean;
 }
 
-const StyledTextField = styled(TextField)<{ fullbredde: boolean }>`
-    width: ${props => (props.fullbredde ? '100%' : 'fit-content')};
+const StyledTextField = styled(TextField)<{ $fullbredde: boolean }>`
+    width: ${props => (props.$fullbredde ? '100%' : 'fit-content')};
 `;
 
 /**
@@ -47,7 +47,7 @@ export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
             maxLength={500}
             autoComplete={autoComplete}
             disabled={disabled}
-            fullbredde={fullbredde}
+            $fullbredde={fullbredde}
         />
     ) : null;
 };
