@@ -2,10 +2,9 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { BodyLong, Heading } from '@navikt/ds-react';
+import { BodyLong, GuidePanel, Heading } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 
-import VeilederSnakkeboble from '../../assets/VeilederSnakkeboble';
 import { DekoratørenSpråkHandler } from '../Felleskomponenter/Dekoratøren/DekoratørenSpråkHandler';
 import EksternLenke from '../Felleskomponenter/EksternLenke/EksternLenke';
 import InnholdContainer from '../Felleskomponenter/InnholdContainer/InnholdContainer';
@@ -29,10 +28,9 @@ export const DisabledApp: React.FC = () => {
                 {
                     // TODO: Dekoratøren språk-handling fra PR: #265
                 }
-                <VeilederSnakkeboble
-                    tekst={<SpråkTekst id={'vedlikehold.veilederhilsen'} />}
-                    posisjon={'høyre'}
-                />
+                <GuidePanel>
+                    <SpråkTekst id={'vedlikehold.veilederhilsen'} />
+                </GuidePanel>
                 <StyledHeading>
                     <SpråkTekst id={'vedlikehold.sidetittel'} />
                 </StyledHeading>

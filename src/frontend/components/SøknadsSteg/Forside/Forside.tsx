@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Heading } from '@navikt/ds-react';
+import { GuidePanel, Heading } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø from '../../../../shared-utils/Miljø';
-import VeilederSnakkeboble from '../../../assets/VeilederSnakkeboble';
 import { useApp } from '../../../context/AppContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { RouteEnum } from '../../../typer/routes';
@@ -37,8 +35,6 @@ const StyledAlertStripeUtvidetInfo = styled(FamilieAlert)`
 `;
 
 const Forside: React.FC = () => {
-    const { formatMessage } = useIntl();
-
     const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad, settNåværendeRoute } = useApp();
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
@@ -56,14 +52,9 @@ const Forside: React.FC = () => {
 
     return (
         <InnholdContainer>
-            <VeilederSnakkeboble
-                tekst={formatMessage(
-                    { id: 'forside.veilederhilsen' },
-                    { navn: navn.toUpperCase() }
-                )}
-                posisjon={'høyre'}
-            />
-
+            <GuidePanel>
+                <SpråkTekst id={'forside.veilederhilsen'} values={{ navn: navn.toUpperCase() }} />
+            </GuidePanel>
             <StyledHeading>
                 <SpråkTekst id={erUtvidet ? 'forside.utvidet.sidetittel' : 'forside.sidetittel'} />
             </StyledHeading>
