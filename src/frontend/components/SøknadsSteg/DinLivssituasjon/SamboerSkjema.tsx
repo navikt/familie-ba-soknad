@@ -40,7 +40,6 @@ const SamboerSkjema: React.FC<{
                     visFeilmeldinger={skjema.visFeilmeldinger}
                     labelSpråkTekstId={samboerSpråkIder.fnr}
                     disabled={samboerFelter.fnrUkjent.verdi === ESvar.JA}
-                    bredde={'XL'}
                 />
                 <SkjemaCheckbox
                     labelSpråkTekstId={samboerSpråkIder.fnrUkjent}

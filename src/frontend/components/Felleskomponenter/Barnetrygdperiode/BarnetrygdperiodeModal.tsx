@@ -160,12 +160,12 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                                 barn: barn.navn,
                             }),
                         }}
-                        tilleggsinfo={
+                        description={
                             <FamilieAlert variant={'info'}>
                                 <SpråkTekst id={'ombarnet.trygdbeløp.info'} />
                             </FamilieAlert>
                         }
-                        bredde={'S'}
+                        fullbredde={false}
                     />
                 )}
             </KomponentGruppe>
