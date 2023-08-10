@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { act, render } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, render, renderHook } from '@testing-library/react';
 import { formatISO } from 'date-fns';
 import { mockDeep } from 'jest-mock-extended';
 import { IntlProvider } from 'react-intl';
