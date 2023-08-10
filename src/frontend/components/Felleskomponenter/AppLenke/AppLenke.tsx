@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, ReactNode } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Link } from '@navikt/ds-react';
 
@@ -19,13 +19,13 @@ interface Props {
 }
 
 export const AppLenke: React.FC<Props> = ({ steg, hash, språkTekstId, returnTo, children }) => {
-    const { push: pushHistory } = useHistory();
+    const navigate = useNavigate();
     const { settKomFra } = useAppNavigation();
 
     const clickHandler: MouseEventHandler = event => {
         event.preventDefault();
         returnTo && settKomFra(returnTo);
-        pushHistory({
+        navigate({
             pathname: steg.path,
             hash,
         });

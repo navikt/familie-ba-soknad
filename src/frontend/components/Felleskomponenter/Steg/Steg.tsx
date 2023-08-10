@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { Heading, Stepper } from '@navikt/ds-react';
@@ -87,7 +87,7 @@ const StepperContainer = styled.div<{ antallSteg: number }>`
 }`;
 
 const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { erÅpen: erModellVersjonModalÅpen, toggleModal: toggleModellVersjonModal } = useModal();
     const {
         settSisteUtfylteStegIndex,
@@ -131,7 +131,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
 
     const håndterAvbryt = () => {
         gåTilbakeTilStart();
-        history.push('/');
+        navigate('/');
     };
 
     const gåVidere = () => {
@@ -141,7 +141,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
         const målPath = komFra?.path ?? nesteRoute.path;
         komFra && settKomFra(undefined);
         logSkjemaStegFullført(hentNåværendeStegIndex() + 1);
-        history.push(målPath);
+        navigate(målPath);
     };
 
     const håndterGåVidere = event => {
@@ -160,7 +160,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
     };
 
     const håndterTilbake = () => {
-        history.push(forrigeRoute.path);
+        navigate(forrigeRoute.path);
     };
 
     return (

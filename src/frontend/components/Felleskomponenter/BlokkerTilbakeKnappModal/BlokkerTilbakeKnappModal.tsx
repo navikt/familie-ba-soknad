@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
-import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 
+import { useAppNavigation } from '../../../context/AppNavigationContext';
 import EksternLenke from '../EksternLenke/EksternLenke';
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -22,45 +22,38 @@ const StyledEksternLenke = styled(EksternLenke)`
 `;
 
 const BlokkerTilbakeKnappModal = () => {
-    const [show, setShow] = useState(false);
+    const { visBlokkerTilbakeKnappModal, settVisBlokkerTilbakeKnappModal } = useAppNavigation();
     const { formatMessage } = useIntl();
 
-    const håndterNavigasjon = () => {
-        setShow(true);
-        return false;
-    };
     const håndterAvbryt = () => {
-        setShow(false);
+        settVisBlokkerTilbakeKnappModal(false);
     };
 
     return (
-        <>
-            <Prompt message={håndterNavigasjon} />
-            <Modal
-                onClose={() => setShow(false)}
-                open={show}
-                aria-label={formatMessage({ id: 'felles.blokkerTilbakeKnapp.modal.tittel' })}
-            >
-                <ModalContent>
-                    <Heading level={'1'} size={'large'}>
-                        <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tittel'} />
-                    </Heading>
-                    <BodyLong>
-                        <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tekst'} />
-                    </BodyLong>
-                    <Flex>
-                        <StyledEksternLenke
-                            lenkeSpråkId={'kvittering.dinesaker.lenke'}
-                            lenkeTekstSpråkId={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'}
-                            target="_blank"
-                        />
-                        <Button onClick={håndterAvbryt}>
-                            <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.avbrytKnapp'} />
-                        </Button>
-                    </Flex>
-                </ModalContent>
-            </Modal>
-        </>
+        <Modal
+            onClose={() => settVisBlokkerTilbakeKnappModal(false)}
+            open={visBlokkerTilbakeKnappModal}
+            aria-label={formatMessage({ id: 'felles.blokkerTilbakeKnapp.modal.tittel' })}
+        >
+            <ModalContent>
+                <Heading level={'1'} size={'large'}>
+                    <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tittel'} />
+                </Heading>
+                <BodyLong>
+                    <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tekst'} />
+                </BodyLong>
+                <Flex>
+                    <StyledEksternLenke
+                        lenkeSpråkId={'kvittering.dinesaker.lenke'}
+                        lenkeTekstSpråkId={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'}
+                        target="_blank"
+                    />
+                    <Button onClick={håndterAvbryt}>
+                        <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.avbrytKnapp'} />
+                    </Button>
+                </Flex>
+            </ModalContent>
+        </Modal>
     );
 };
 
