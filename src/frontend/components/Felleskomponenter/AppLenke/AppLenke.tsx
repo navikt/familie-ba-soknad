@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, ReactNode } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ interface Props {
     hash?: string;
     språkTekstId?: string;
     returnTo?: ISteg;
+    children?: ReactNode;
 }
 
 export const AppLenke: React.FC<Props> = ({ steg, hash, språkTekstId, returnTo, children }) => {

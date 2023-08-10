@@ -202,13 +202,13 @@ const wrapMedDefaultProvidere = (children: ReactNode, språkTekster: Record<stri
         språkTekster
     );
 
-export const TestProvidere: React.FC<{ tekster?: Record<string, string> }> = ({
-    tekster,
-    children,
-}) => wrapMedDefaultProvidere(children, tekster ?? {});
+export const TestProvidere: React.FC<{
+    tekster?: Record<string, string>;
+    children?: ReactNode;
+}> = ({ tekster, children }) => wrapMedDefaultProvidere(children, tekster ?? {});
 
-export const TestProvidereMedEkteTekster: React.FC = ({ children }) => (
-    <TestProvidere tekster={norskeTekster}>{children}</TestProvidere>
+export const TestProvidereMedEkteTekster: React.FC<{ children?: ReactNode }> = ({ children }) => (
+    <TestProvidere tekster={norskeTekster} children={children} />
 );
 
 export const mockHistory = (

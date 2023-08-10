@@ -37,6 +37,7 @@ interface ISteg {
         settSøknadsdataCallback: () => void;
     };
     gåVidereCallback?: () => Promise<boolean>;
+    children?: ReactNode;
 }
 
 const ChildrenContainer = styled.div`

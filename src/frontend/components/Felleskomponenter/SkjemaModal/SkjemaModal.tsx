@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
@@ -26,6 +26,7 @@ const SkjemaModal: React.FC<{
     onAvbrytCallback?: () => void;
     submitKnappSpråkId: string;
     onSubmitCallback: () => void;
+    children?: ReactNode;
 }> = ({
     erÅpen,
     toggleModal,

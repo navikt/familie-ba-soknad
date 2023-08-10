@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
@@ -16,6 +16,7 @@ const KomponentGruppe: React.FC<{
     className?: string;
     inline?: boolean;
     dynamisk?: boolean;
+    children?: ReactNode;
 }> = ({ className, inline = false, dynamisk = false, children }) => {
     return (
         <Container inline={inline} className={className} aria-live={dynamisk ? 'polite' : 'off'}>

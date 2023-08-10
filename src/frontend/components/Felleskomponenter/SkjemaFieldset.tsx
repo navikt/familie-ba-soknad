@@ -23,6 +23,7 @@ const SkjemaFieldset: React.FC<{
     tittelId: string;
     språkValues?: { [key: string]: ReactNode };
     dynamisk?: boolean;
+    children?: ReactNode;
 }> = ({ tittelId, språkValues, dynamisk = false, children }) => {
     return (
         <Container

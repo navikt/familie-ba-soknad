@@ -16,6 +16,7 @@ const StyledOppsummeringsFelt = styled.div`
 interface IOppsummeringsFeltProps {
     tittel?: ReactNode;
     søknadsvar?: string | null;
+    children?: ReactNode;
 }
 
 const StyledLabel = styled(Label)`

@@ -31,6 +31,7 @@ const PeriodeOppsummering: React.FC<{
     fjernKnappSpråkId?: string;
     tittelSpråkId: string;
     vedleggNotis?: ReactNode;
+    children?: ReactNode;
 }> = ({
     nummer,
     fjernPeriodeCallback = undefined,

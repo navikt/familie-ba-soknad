@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
@@ -23,7 +23,7 @@ const StyledModalContent = styled(Modal.Content)`
     }
 `;
 
-const ModalContent: React.FC = ({ children }) => {
+const ModalContent: React.FC<{ children?: ReactNode }> = ({ children }) => {
     return <StyledModalContent>{children}</StyledModalContent>;
 };
 

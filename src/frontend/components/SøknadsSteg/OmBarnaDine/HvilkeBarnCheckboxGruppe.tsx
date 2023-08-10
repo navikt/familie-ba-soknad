@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
@@ -15,6 +15,7 @@ interface Props {
     visFeilmelding: boolean;
     søknadsdatafelt: barnDataKeySpørsmål;
     nullstillValgteBarn: boolean;
+    children?: ReactNode;
 }
 
 const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
