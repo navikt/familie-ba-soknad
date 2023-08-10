@@ -60,7 +60,7 @@ const SkjemaModal: React.FC<{
                     <StyledButton
                         variant={valideringErOk() ? 'primary' : 'secondary'}
                         type={'submit'}
-                        loading={!!submitSpinner}
+                        loading={submitSpinner}
                         onClick={event => {
                             event.preventDefault();
                             onSubmitCallback();
