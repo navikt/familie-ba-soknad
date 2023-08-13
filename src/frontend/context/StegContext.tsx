@@ -18,7 +18,8 @@ interface StepperStegProps {
 const [StegProvider, useSteg] = createUseContext(() => {
     const { søknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
-    const { pathname } = useLocation();
+    const location = useLocation();
+
     const { routes } = useRoutes();
 
     const [barnForSteg, settBarnForSteg] = useState<IBarnMedISøknad[]>([]);
@@ -96,17 +97,17 @@ const [StegProvider, useSteg] = createUseContext(() => {
     };
 
     const hentNåværendeSteg = (): ISteg => {
-        return hentSteg(pathname);
+        return hentSteg(location.pathname);
     };
 
     const hentNesteSteg = (): ISteg => {
-        const nåværendeSteg = hentSteg(pathname);
+        const nåværendeSteg = hentSteg(location.pathname);
         const nåværendeIndex = steg.findIndex(steg => steg === nåværendeSteg);
         return steg[Math.min(nåværendeIndex + 1, steg.length - 1)];
     };
 
     const hentForrigeSteg = (): ISteg => {
-        const nåværendeSteg = hentSteg(pathname);
+        const nåværendeSteg = hentSteg(location.pathname);
         const nåværendeIndex = steg.findIndex(steg => steg === nåværendeSteg);
         return steg[Math.max(nåværendeIndex - 1, 0)];
     };
