@@ -3,11 +3,11 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
+import { MemoryRouter } from 'react-router-dom';
 
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
-    mockHistory,
     silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
@@ -34,8 +34,6 @@ const søknad = mockDeep<ISøknad>({
 const antallFeilmeldingerPerFeil = 2;
 
 describe('LeggTilSamboerModal', () => {
-    mockHistory(['/din-livssituasjon']);
-
     beforeEach(() => {
         silenceConsoleErrors();
         spyOnModal();
@@ -45,7 +43,9 @@ describe('LeggTilSamboerModal', () => {
 
         const { getByText, getAllByText, queryByText } = render(
             <TestProvidereMedEkteTekster>
-                <DinLivssituasjon />
+                <MemoryRouter initialEntries={['/din-livssituasjon']}>
+                    <DinLivssituasjon />
+                </MemoryRouter>
             </TestProvidereMedEkteTekster>
         );
 

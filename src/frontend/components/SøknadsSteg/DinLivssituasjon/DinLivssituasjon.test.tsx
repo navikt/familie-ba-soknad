@@ -3,12 +3,12 @@ import React from 'react';
 import { render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
+import { MemoryRouter } from 'react-router-dom';
 
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
     mockEøs,
-    mockHistory,
     silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
@@ -48,13 +48,11 @@ const søknad = mockDeep<ISøknad>({
 const antallFeilmeldingerPerFeil = 2;
 
 describe('DinLivssituasjon', () => {
-    mockHistory(['/din-livssituasjon']);
-
     beforeEach(() => {
         silenceConsoleErrors();
         mockEøs();
         spyOnModal();
-        jest.useFakeTimers('modern');
+        jest.useFakeTimers();
     });
 
     it('Alle tekster finnes i språkfil', async () => {
@@ -62,7 +60,9 @@ describe('DinLivssituasjon', () => {
 
         render(
             <TestProvidereMedEkteTekster>
-                <DinLivssituasjon />
+                <MemoryRouter initialEntries={['/din-livssituasjon']}>
+                    <DinLivssituasjon />
+                </MemoryRouter>
             </TestProvidereMedEkteTekster>
         );
         expect(console.error).toHaveBeenCalledTimes(0);
