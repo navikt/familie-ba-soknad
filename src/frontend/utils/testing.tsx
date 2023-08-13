@@ -1,7 +1,5 @@
 import React, { ReactNode } from 'react';
 
-import * as history from 'history';
-import { History } from 'history';
 import { mockDeep } from 'jest-mock-extended';
 
 import { Modal } from '@navikt/ds-react';
@@ -85,7 +83,7 @@ export const spyOnUseApp = søknad => {
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
         settSøknad,
-        sisteUtfylteStegIndex: 2,
+        sisteUtfylteStegIndex: søknad.sisteUtfylteStegIndex || 2,
         erPåKvitteringsside,
         innsendingStatus,
         settInnsendingStatus,
@@ -176,7 +174,11 @@ export const wrapMedProvidere = (
     return (
         <Første
             {...(erSpråkprovider
-                ? { tekster: { [LocaleType.nb]: språkTekster }, defaultLocale: LocaleType.nb }
+                ? {
+                      tekster: { [LocaleType.nb]: språkTekster },
+                      defaultLocale: LocaleType.nb,
+                      locale: LocaleType.nb,
+                  }
                 : {})}
         >
             {resten.length ? wrapMedProvidere(resten, children) : children}
@@ -194,7 +196,7 @@ const wrapMedDefaultProvidere = (children: ReactNode, språkTekster: Record<stri
             FeatureTogglesProvider,
             AppProvider,
             EøsProvider,
-            RoutesProvider,
+            //RoutesProvider,
             StegProvider,
             AppNavigationProvider,
         ],
@@ -210,14 +212,6 @@ export const TestProvidere: React.FC<{
 export const TestProvidereMedEkteTekster: React.FC<{ children?: ReactNode }> = ({ children }) => (
     <TestProvidere tekster={norskeTekster} children={children} />
 );
-
-export const mockHistory = (
-    newHistory: string[]
-): { mockedHistory: History; mockedHistoryArray: string[] } => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore denne har vi definert i __mocks__/history
-    return history.__setHistory(newHistory);
-};
 
 export const mekkGyldigSøker = (): ISøker => {
     return {

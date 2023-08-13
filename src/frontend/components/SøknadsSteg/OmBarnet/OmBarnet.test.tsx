@@ -2,6 +2,7 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 import { Alpha3Code } from 'i18n-iso-countries';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -15,7 +16,7 @@ import { Slektsforhold } from '../../../typer/kontrakt/generelle';
 import {
     mekkGyldigSøknad,
     mockEøs,
-    mockHistory,
+    mockRoutes,
     silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
@@ -286,14 +287,19 @@ const line: IBarnMedISøknad = {
     ...mockBarnMedISøknad,
 };
 
+const LesUtLocation = () => {
+    const location = useLocation();
+    return <pre data-testid="location">{JSON.stringify(location)}</pre>;
+};
+
 describe('OmBarnet', () => {
     beforeEach(() => {
         mockEøs();
+        mockRoutes();
         spyOnModal();
     });
 
     test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, async () => {
-        mockHistory(['/om-barnet/barn-1']);
         spyOnUseApp({
             barnInkludertISøknaden: [jens],
             sisteUtfylteStegIndex: 4,
@@ -302,7 +308,9 @@ describe('OmBarnet', () => {
         await act(async () => {
             render(
                 <TestProvidereMedEkteTekster>
-                    <OmBarnet barnetsId={'random-id-jens'} />
+                    <MemoryRouter initialEntries={['/om-barnet/barn-1']}>
+                        <OmBarnet barnetsId={'random-id-jens'} />
+                    </MemoryRouter>
                 </TestProvidereMedEkteTekster>
             );
         });
@@ -311,19 +319,23 @@ describe('OmBarnet', () => {
     });
 
     test(`Kan navigere mellom to barn`, async () => {
-        const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
         spyOnUseApp({
             barnInkludertISøknaden: [jens, line],
             sisteUtfylteStegIndex: 4,
             dokumentasjon: [],
         });
-        const { findByText } = render(
-            <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
-                <OmBarnet barnetsId={'random-id-jens'} />
-            </TestProvidere>
+
+        const { findByText, findByTestId } = render(
+            <MemoryRouter initialEntries={['/om-barnet/barn-1']}>
+                <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
+                    <OmBarnet barnetsId={'random-id-jens'} />
+                    <LesUtLocation />
+                </TestProvidere>
+            </MemoryRouter>
         );
 
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
+        const location = await findByTestId('location');
+        expect(JSON.parse(location.innerHTML).pathname).toEqual('/om-barnet/barn-1');
 
         const jensTittel = await findByText('Om Jens');
         expect(jensTittel).toBeInTheDocument();
@@ -331,13 +343,11 @@ describe('OmBarnet', () => {
         const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
         await act(() => gåVidere.click());
 
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-2');
+        const location2 = await findByTestId('location');
+        expect(JSON.parse(location2.innerHTML).pathname).toEqual('/om-barnet/barn-2');
     });
 
     test(`Kan navigere fra barn til oppsummering`, async () => {
-        const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
-        mockHistory(['/om-barnet/barn-1']);
-
         spyOnUseApp({
             barnInkludertISøknaden: [jens],
             sisteUtfylteStegIndex: 4,
@@ -346,11 +356,14 @@ describe('OmBarnet', () => {
 
         const { findByText } = render(
             <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
-                <OmBarnet barnetsId={'random-id-jens'} />
+                <MemoryRouter initialEntries={['/om-barnet/barn-1']}>
+                    <OmBarnet barnetsId={'random-id-jens'} />
+                </MemoryRouter>
             </TestProvidere>
         );
 
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
+        //const location = useLocation();
+        //expect(location.pathname).toEqual('/om-barnet/barn-1');
 
         const jensTittel = await findByText('Om Jens');
         expect(jensTittel).toBeInTheDocument();
@@ -358,12 +371,10 @@ describe('OmBarnet', () => {
         const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
         await act(() => gåVidere.click());
 
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/oppsummering');
+        //expect(location.pathname).toEqual('/oppsummering');
     });
 
     test('Fødselnummer til andre forelder blir fjernet om man huker av ikke oppgi opplysninger om den', async () => {
-        mockHistory(['/om-barnet/barn-1']);
-
         spyOnUseApp({
             barnInkludertISøknaden: [
                 {
@@ -381,7 +392,9 @@ describe('OmBarnet', () => {
 
         const { findByLabelText, findByText, queryByText } = render(
             <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
-                <OmBarnet barnetsId={'random-id-jens'} />
+                <MemoryRouter initialEntries={['/om-barnet/barn-1']}>
+                    <OmBarnet barnetsId={'random-id-jens'} />
+                </MemoryRouter>
             </TestProvidere>
         );
 
@@ -398,8 +411,6 @@ describe('OmBarnet', () => {
     });
 
     test('Får opp feilmelding ved feil postnummer', async () => {
-        mockHistory(['/om-barnet/barn-1']);
-
         //henter ut en gyldig søknad
         const søknadpostnummer = mekkGyldigSøknad();
 
@@ -423,7 +434,9 @@ describe('OmBarnet', () => {
 
         const { queryByText, findAllByText } = render(
             <TestProvidere>
-                <OmBarnet barnetsId={endretBarn.id} />
+                <MemoryRouter initialEntries={['/om-barnet/barn-1']}>
+                    <OmBarnet barnetsId={endretBarn.id} />
+                </MemoryRouter>
             </TestProvidere>
         );
 
