@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 
 import { mockDeep } from 'jest-mock-extended';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import { Modal } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
@@ -155,7 +156,8 @@ export const mockFeatureToggle = () => {
  * oversettelsesfeil igjen. Mulig vi heller burde mocke noe i intl.
  */
 export const silenceConsoleErrors = () => {
-    return jest.spyOn(global.console, 'error').mockImplementation(() => {
+    jest.spyOn(console, 'error');
+    jest.spyOn(global.console, 'error').mockImplementation(() => {
         // Shut up about the missing translations;
     });
 };
@@ -166,11 +168,14 @@ export const spyOnModal = () =>
 export const wrapMedProvidere = (
     // eslint-disable-next-line
     providerComponents: React.FC<any>[],
+    mocketNettleserHistorikk: string[],
     children?: ReactNode,
     språkTekster?: Record<string, string>
 ) => {
     const [Første, ...resten] = providerComponents;
     const erSpråkprovider = Første === SprakProvider;
+    const erMemoryRouter = Første === MemoryRouter;
+
     return (
         <Første
             {...(erSpråkprovider
@@ -180,13 +185,20 @@ export const wrapMedProvidere = (
                       locale: LocaleType.nb,
                   }
                 : {})}
+            {...(erMemoryRouter ? { initialEntries: mocketNettleserHistorikk } : {})}
         >
-            {resten.length ? wrapMedProvidere(resten, children) : children}
+            {resten.length
+                ? wrapMedProvidere(resten, mocketNettleserHistorikk, children)
+                : children}
         </Første>
     );
 };
 
-const wrapMedDefaultProvidere = (children: ReactNode, språkTekster: Record<string, string>) =>
+const wrapMedDefaultProvidere = (
+    children: ReactNode,
+    språkTekster: Record<string, string>,
+    mocketNettleserHistorikk: string[]
+) =>
     wrapMedProvidere(
         [
             SprakProvider,
@@ -196,22 +208,38 @@ const wrapMedDefaultProvidere = (children: ReactNode, språkTekster: Record<stri
             FeatureTogglesProvider,
             AppProvider,
             EøsProvider,
-            //RoutesProvider,
+            RoutesProvider,
+            MemoryRouter,
             StegProvider,
             AppNavigationProvider,
         ],
+        mocketNettleserHistorikk,
         children,
         språkTekster
     );
 
 export const TestProvidere: React.FC<{
     tekster?: Record<string, string>;
+    mocketNettleserHistorikk?: string[];
     children?: ReactNode;
-}> = ({ tekster, children }) => wrapMedDefaultProvidere(children, tekster ?? {});
+}> = ({ tekster, mocketNettleserHistorikk = ['/'], children }) =>
+    wrapMedDefaultProvidere(children, tekster ?? {}, mocketNettleserHistorikk);
 
-export const TestProvidereMedEkteTekster: React.FC<{ children?: ReactNode }> = ({ children }) => (
-    <TestProvidere tekster={norskeTekster} children={children} />
+export const TestProvidereMedEkteTekster: React.FC<{
+    mocketNettleserHistorikk?: string[];
+    children?: ReactNode;
+}> = ({ mocketNettleserHistorikk, children }) => (
+    <TestProvidere
+        tekster={norskeTekster}
+        children={children}
+        mocketNettleserHistorikk={mocketNettleserHistorikk}
+    />
 );
+
+export const LesUtLocation = () => {
+    const location = useLocation();
+    return <pre data-testid="location">{JSON.stringify(location)}</pre>;
+};
 
 export const mekkGyldigSøker = (): ISøker => {
     return {

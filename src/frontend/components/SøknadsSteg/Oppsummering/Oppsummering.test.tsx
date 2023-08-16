@@ -8,9 +8,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { ISøknad } from '../../../typer/søknad';
 import {
+    LesUtLocation,
     mekkGyldigSøknad,
-    mockHistory,
-    silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
     TestProvidere,
@@ -29,8 +28,8 @@ describe('Oppsummering', () => {
     });
 
     it('Alle tekster finnes i språkfil', async () => {
-        mockHistory(['/oppsummering']);
         spyOnUseApp(mekkGyldigSøknad());
+        jest.spyOn(console, 'error');
 
         const { findAllByRole } = render(
             <TestProvidereMedEkteTekster>
@@ -65,11 +64,11 @@ describe('Oppsummering', () => {
             ],
         });
         spyOnUseApp(søknad);
-        const { mockedHistoryArray } = mockHistory(['/oppsummering']);
 
-        const { findByText, getByText } = render(
-            <TestProvidere>
+        const { findByText, getByText, findByTestId } = render(
+            <TestProvidere mocketNettleserHistorikk={['/oppsummering']}>
                 <Oppsummering />
+                <LesUtLocation />
             </TestProvidere>
         );
         const gåVidere = await findByText('felles.navigasjon.gå-videre');
@@ -77,20 +76,21 @@ describe('Oppsummering', () => {
         await act(() => gåVidere.click());
 
         const feilmelding = getByText('omdeg.oppholdtsammenhengende.feilmelding');
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual({
-            hash: 'omdeg-feil',
-        });
+
+        const location = await findByTestId('location');
+        expect(JSON.parse(location.innerHTML).hash).toEqual('#omdeg-feil');
+
         expect(feilmelding).toBeInTheDocument();
     }, 10000);
 
     it('går til dokumentasjon med gyldig søknad', async () => {
         const søknad = mekkGyldigSøknad();
         spyOnUseApp(søknad);
-        const { mockedHistoryArray } = mockHistory(['/oppsummering']);
 
-        const { findByText, queryAllByRole } = render(
-            <TestProvidere>
+        const { findByText, queryAllByRole, findByTestId } = render(
+            <TestProvidere mocketNettleserHistorikk={['/oppsummering']}>
                 <Oppsummering />
+                <LesUtLocation />
             </TestProvidere>
         );
         const gåVidere = await findByText('felles.navigasjon.gå-videre');
@@ -98,8 +98,9 @@ describe('Oppsummering', () => {
         await act(() => gåVidere.click());
 
         expect(queryAllByRole('alert').length).toBe(0);
-        await waitFor(() =>
-            expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/dokumentasjon')
-        );
+        const location = await findByTestId('location');
+        await waitFor(() => {
+            expect(JSON.parse(location.innerHTML).pathname).toEqual('/dokumentasjon');
+        });
     });
 });
