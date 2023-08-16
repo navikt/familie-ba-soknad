@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { act, render, waitFor } from '@testing-library/react';
-import { MemoryRouter, Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -60,6 +60,7 @@ describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
             barnInkludertISøknaden: [manueltRegistrertSomIBarnMedISøknad, fraPdlSomIBarnMedISøknad],
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
+            fåttGyldigKvittering: true,
         };
         const { settSøknad } = spyOnUseApp(søknad);
 
@@ -68,17 +69,26 @@ describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const { getByText } = render(
-            <TestProvidere>
-                <MemoryRouter initialEntries={['dokumentasjon', 'kvittering']}>
-                    <Route path={'*'} element={<BlokkerTilbakeKnappModal />} />
-                </MemoryRouter>
+        const Tilbakeknapp = () => {
+            const navigate = useNavigate();
+
+            return (
+                <button data-testid="tilbakeknapp" onClick={() => navigate(-1)}>
+                    Tilbake
+                </button>
+            );
+        };
+
+        const { getByText, findByTestId } = render(
+            <TestProvidere mocketNettleserHistorikk={['/dokumentasjon', '/kvittering']}>
+                <BlokkerTilbakeKnappModal />
+                <Tilbakeknapp />
             </TestProvidere>
         );
 
+        const tilbakeknapp = await findByTestId('tilbakeknapp');
         act(() => {
-            const navigate = useNavigate();
-            navigate(-1);
+            tilbakeknapp.click();
         });
 
         const infoTekst = await waitFor(() => getByText(/felles.blokkerTilbakeKnapp.modal.tekst/));

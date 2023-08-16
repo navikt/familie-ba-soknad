@@ -98,6 +98,7 @@ export const spyOnUseApp = søknad => {
         systemetLaster: jest.fn().mockReturnValue(false),
         systemetOK: () => jest.fn().mockReturnValue(true),
         systemetFeiler: jest.fn().mockReturnValue(false),
+        fåttGyldigKvittering: søknad.fåttGyldigKvittering,
     });
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
 
