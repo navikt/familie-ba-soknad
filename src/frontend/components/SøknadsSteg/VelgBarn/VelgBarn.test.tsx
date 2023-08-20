@@ -18,7 +18,6 @@ import {
     mekkGyldigSøker,
     mockEøs,
     mockFeatureToggle,
-    mockHistory,
     mockRoutes,
     silenceConsoleErrors,
     spyOnModal,
@@ -59,7 +58,6 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
 
 describe('VelgBarn', () => {
     beforeEach(() => {
-        mockHistory(['/velg-barn']);
         jest.spyOn(eøsContext, 'useEøs').mockImplementation(jest.fn());
         jest.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
             status: RessursStatus.SUKSESS,
@@ -90,7 +88,7 @@ describe('VelgBarn', () => {
         });
 
         const { getByText } = render(
-            <TestProvidere>
+            <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
@@ -142,7 +140,7 @@ describe('VelgBarn', () => {
         spyOnUseApp(søknad);
 
         const { queryByText } = render(
-            <TestProvidere>
+            <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
@@ -171,7 +169,7 @@ describe('VelgBarn', () => {
         });
 
         const { getByText, getByLabelText } = render(
-            <TestProvidere>
+            <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
@@ -229,7 +227,7 @@ describe('VelgBarn', () => {
         spyOnUseApp(søknad);
 
         const { getByLabelText } = render(
-            <TestProvidere>
+            <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
