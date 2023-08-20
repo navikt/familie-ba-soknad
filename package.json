@@ -164,7 +164,6 @@
     "@types/react": "^18.2.19",
     "@types/react-collapse": "^5.0.1",
     "@types/react-modal": "^3.16.0",
-    "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
     "@types/webpack-env": "^1.16.0",
     "@types/webpack-plugin-serve": "^1.4.1",
