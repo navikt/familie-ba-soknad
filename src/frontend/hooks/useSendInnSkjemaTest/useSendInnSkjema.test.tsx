@@ -18,7 +18,7 @@ silenceConsoleErrors();
 
 describe('useSendInnSkjema', () => {
     beforeEach(() => {
-        jest.useFakeTimers('modern');
+        jest.useFakeTimers();
         spyOnModal();
     });
 
