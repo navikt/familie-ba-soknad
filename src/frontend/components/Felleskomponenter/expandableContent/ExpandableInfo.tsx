@@ -27,11 +27,11 @@ const Container = styled.div`
     margin-bottom: 1rem;
 `;
 
-const ButtonContainer = styled.div<{ isOpen }>`
+const ButtonContainer = styled.div<{ $isOpen }>`
     width: 100%;
 
     ${props =>
-        props.isOpen &&
+        props.$isOpen &&
         css`
             margin-bottom: 0.5rem;
         `}
@@ -57,7 +57,7 @@ const ExpandableInfo = ({
 
     return (
         <Container>
-            <ButtonContainer isOpen={isOpen}>
+            <ButtonContainer $isOpen={isOpen}>
                 <InfoToggleButton
                     onToggle={() => setIsOpen(!isOpen)}
                     isOpen={isOpen}

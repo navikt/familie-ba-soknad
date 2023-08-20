@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 
 import {
     silenceConsoleErrors,
     spyOnModal,
+    spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 
@@ -22,14 +23,18 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('Dokumentasjon', () => {
-    silenceConsoleErrors();
-    spyOnModal();
-    test('Alle tekster finnes i språkfil', () => {
-        render(
-            <TestProvidereMedEkteTekster>
-                <Dokumentasjon />
-            </TestProvidereMedEkteTekster>
-        );
+    test('Alle tekster finnes i språkfil', async () => {
+        silenceConsoleErrors();
+        spyOnUseApp({});
+        spyOnModal();
+
+        await act(() => {
+            render(
+                <TestProvidereMedEkteTekster>
+                    <Dokumentasjon />
+                </TestProvidereMedEkteTekster>
+            );
+        });
         expect(console.error).toHaveBeenCalledTimes(0);
     });
 });
