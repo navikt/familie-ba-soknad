@@ -3,7 +3,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
-import { MemoryRouter } from 'react-router-dom';
 
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
@@ -42,10 +41,8 @@ describe('LeggTilSamboerModal', () => {
         spyOnUseApp(søknad);
 
         const { getByText, getAllByText, queryByText } = render(
-            <TestProvidereMedEkteTekster>
-                <MemoryRouter initialEntries={['/din-livssituasjon']}>
-                    <DinLivssituasjon />
-                </MemoryRouter>
+            <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
+                <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
 
