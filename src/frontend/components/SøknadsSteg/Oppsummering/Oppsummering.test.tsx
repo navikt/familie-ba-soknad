@@ -10,6 +10,7 @@ import { ISøknad } from '../../../typer/søknad';
 import {
     LesUtLocation,
     mekkGyldigSøknad,
+    silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
     TestProvidere,
@@ -29,7 +30,6 @@ describe('Oppsummering', () => {
 
     it('Alle tekster finnes i språkfil', async () => {
         spyOnUseApp(mekkGyldigSøknad());
-        jest.spyOn(console, 'error');
 
         const { findAllByRole } = render(
             <TestProvidereMedEkteTekster>
