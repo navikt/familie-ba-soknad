@@ -31,7 +31,7 @@ export const DisabledApp: React.FC = () => {
                 <GuidePanel>
                     <SpråkTekst id={'vedlikehold.veilederhilsen'} />
                 </GuidePanel>
-                <StyledHeading size={'xlarge'}>
+                <StyledHeading>
                     <SpråkTekst id={'vedlikehold.sidetittel'} />
                 </StyledHeading>
                 <StyledSpråkvelger støttedeSprak={[LocaleType.nb, LocaleType.nn, LocaleType.en]} />
