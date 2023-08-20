@@ -164,8 +164,11 @@ export const silenceConsoleErrors = () => {
     });
 };
 
-export const spyOnModal = () =>
-    jest.spyOn(Modal, 'setAppElement').mockImplementation(() => jest.fn());
+export const spyOnModal = () => {
+    jest.spyOn(Modal, 'setAppElement').mockImplementation(() => {
+        // ikke bry deg om at root ikke finnes
+    });
+};
 
 export const wrapMedProvidere = (
     // eslint-disable-next-line
