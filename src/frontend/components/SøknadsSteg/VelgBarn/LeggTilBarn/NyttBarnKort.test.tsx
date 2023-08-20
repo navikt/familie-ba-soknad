@@ -13,8 +13,6 @@ import { silenceConsoleErrors } from '../../../../utils/testing';
 import LeggTilBarnModal from './LeggTilBarnModal';
 import { NyttBarnKort } from './NyttBarnKort';
 
-silenceConsoleErrors();
-
 jest.mock('../../../../context/AppContext');
 jest.mock('@navikt/fnrvalidator');
 
@@ -26,6 +24,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 test(`Kan legge til barn`, async () => {
+    silenceConsoleErrors();
     const submitMock = jest.fn();
     jest.spyOn(appContext, 'useApp').mockImplementation(
         jest.fn().mockReturnValue({
