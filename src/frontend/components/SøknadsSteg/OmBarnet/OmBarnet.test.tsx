@@ -2,7 +2,6 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 import { Alpha3Code } from 'i18n-iso-countries';
-import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -14,6 +13,7 @@ import {
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { Slektsforhold } from '../../../typer/kontrakt/generelle';
 import {
+    LesUtLocation,
     mekkGyldigSøknad,
     mockEøs,
     mockRoutes,
@@ -28,8 +28,6 @@ import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 import OmBarnet from './OmBarnet';
 import { OmBarnetSpørsmålsId } from './spørsmål';
-
-silenceConsoleErrors();
 
 const mockBarnMedISøknad = {
     barnErFyltUt: true,
@@ -287,16 +285,12 @@ const line: IBarnMedISøknad = {
     ...mockBarnMedISøknad,
 };
 
-const LesUtLocation = () => {
-    const location = useLocation();
-    return <pre data-testid="location">{JSON.stringify(location)}</pre>;
-};
-
 describe('OmBarnet', () => {
     beforeEach(() => {
         mockEøs();
         mockRoutes();
         spyOnModal();
+        silenceConsoleErrors();
     });
 
     test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, async () => {
@@ -307,10 +301,8 @@ describe('OmBarnet', () => {
 
         await act(async () => {
             render(
-                <TestProvidereMedEkteTekster>
-                    <MemoryRouter initialEntries={['/om-barnet/barn-1']}>
-                        <OmBarnet barnetsId={'random-id-jens'} />
-                    </MemoryRouter>
+                <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/om-barnet/barn/1']}>
+                    <OmBarnet barnetsId={'random-id-jens'} />
                 </TestProvidereMedEkteTekster>
             );
         });
@@ -326,16 +318,17 @@ describe('OmBarnet', () => {
         });
 
         const { findByText, findByTestId } = render(
-            <MemoryRouter initialEntries={['/om-barnet/barn-1']}>
-                <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
-                    <OmBarnet barnetsId={'random-id-jens'} />
-                    <LesUtLocation />
-                </TestProvidere>
-            </MemoryRouter>
+            <TestProvidere
+                tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}
+                mocketNettleserHistorikk={['/om-barnet/barn/1']}
+            >
+                <OmBarnet barnetsId={'random-id-jens'} />
+                <LesUtLocation />
+            </TestProvidere>
         );
 
         const location = await findByTestId('location');
-        expect(JSON.parse(location.innerHTML).pathname).toEqual('/om-barnet/barn-1');
+        expect(JSON.parse(location.innerHTML).pathname).toEqual('/om-barnet/barn/1');
 
         const jensTittel = await findByText('Om Jens');
         expect(jensTittel).toBeInTheDocument();
@@ -344,7 +337,7 @@ describe('OmBarnet', () => {
         await act(() => gåVidere.click());
 
         const location2 = await findByTestId('location');
-        expect(JSON.parse(location2.innerHTML).pathname).toEqual('/om-barnet/barn-2');
+        expect(JSON.parse(location2.innerHTML).pathname).toEqual('/om-barnet/barn/2');
     });
 
     test(`Kan navigere fra barn til oppsummering`, async () => {
@@ -354,16 +347,18 @@ describe('OmBarnet', () => {
             dokumentasjon: [],
         });
 
-        const { findByText } = render(
-            <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
-                <MemoryRouter initialEntries={['/om-barnet/barn-1']}>
-                    <OmBarnet barnetsId={'random-id-jens'} />
-                </MemoryRouter>
+        const { findByText, findByTestId } = render(
+            <TestProvidere
+                tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}
+                mocketNettleserHistorikk={['/om-barnet/barn/1']}
+            >
+                <OmBarnet barnetsId={'random-id-jens'} />
+                <LesUtLocation />
             </TestProvidere>
         );
 
-        //const location = useLocation();
-        //expect(location.pathname).toEqual('/om-barnet/barn-1');
+        const location = await findByTestId('location');
+        expect(JSON.parse(location.innerHTML).pathname).toEqual('/om-barnet/barn/1');
 
         const jensTittel = await findByText('Om Jens');
         expect(jensTittel).toBeInTheDocument();
@@ -371,7 +366,8 @@ describe('OmBarnet', () => {
         const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
         await act(() => gåVidere.click());
 
-        //expect(location.pathname).toEqual('/oppsummering');
+        const nyLocation = await findByTestId('location');
+        expect(JSON.parse(nyLocation.innerHTML).pathname).toEqual('/oppsummering');
     });
 
     test('Fødselnummer til andre forelder blir fjernet om man huker av ikke oppgi opplysninger om den', async () => {
@@ -391,10 +387,11 @@ describe('OmBarnet', () => {
         });
 
         const { findByLabelText, findByText, queryByText } = render(
-            <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
-                <MemoryRouter initialEntries={['/om-barnet/barn-1']}>
-                    <OmBarnet barnetsId={'random-id-jens'} />
-                </MemoryRouter>
+            <TestProvidere
+                tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}
+                mocketNettleserHistorikk={['/om-barnet/barn/1']}
+            >
+                <OmBarnet barnetsId={'random-id-jens'} />
             </TestProvidere>
         );
 
@@ -433,10 +430,8 @@ describe('OmBarnet', () => {
         erStegUtfyltFrafør.mockReturnValue(false);
 
         const { queryByText, findAllByText } = render(
-            <TestProvidere>
-                <MemoryRouter initialEntries={['/om-barnet/barn-1']}>
-                    <OmBarnet barnetsId={endretBarn.id} />
-                </MemoryRouter>
+            <TestProvidere mocketNettleserHistorikk={['/om-barnet/barn/1']}>
+                <OmBarnet barnetsId={endretBarn.id} />
             </TestProvidere>
         );
 
