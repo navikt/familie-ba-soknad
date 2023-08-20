@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -16,16 +16,16 @@ import {
 import OmBarnaDine from './OmBarnaDine';
 import { OmBarnaDineSpørsmålId } from './spørsmål';
 
-jest.mock('react-router-dom', () => ({
+/*jest.mock('react-router-dom', () => ({
     ...(jest.requireActual('react-router-dom') as object),
     useLocation: () => ({
         pathname: '/om-barna',
     }),
-    useHistory: () => ({
+    useNavigate: () => ({
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         push: () => {},
     }),
-}));
+}));*/
 
 const søknad = mockDeep<ISøknad>({
     barnInkludertISøknaden: [
@@ -43,14 +43,16 @@ const søknad = mockDeep<ISøknad>({
 
 describe('OmBarnaDine', () => {
     silenceConsoleErrors();
-    test('Alle tekster finnes i språkfil', () => {
+    test('Alle tekster finnes i språkfil', async () => {
         spyOnUseApp(søknad);
         spyOnModal();
-        render(
-            <TestProvidereMedEkteTekster>
-                <OmBarnaDine />
-            </TestProvidereMedEkteTekster>
-        );
+        await act(async () => {
+            render(
+                <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/om-barna']}>
+                    <OmBarnaDine />
+                </TestProvidereMedEkteTekster>
+            );
+        });
         expect(console.error).toHaveBeenCalledTimes(0);
     });
 });
