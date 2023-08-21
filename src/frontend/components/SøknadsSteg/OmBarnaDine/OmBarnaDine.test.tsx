@@ -16,17 +16,6 @@ import {
 import OmBarnaDine from './OmBarnaDine';
 import { OmBarnaDineSpørsmålId } from './spørsmål';
 
-/*jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => ({
-        pathname: '/om-barna',
-    }),
-    useNavigate: () => ({
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        push: () => {},
-    }),
-}));*/
-
 const søknad = mockDeep<ISøknad>({
     barnInkludertISøknaden: [
         {
