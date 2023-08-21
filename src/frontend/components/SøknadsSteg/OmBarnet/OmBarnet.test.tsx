@@ -16,7 +16,6 @@ import {
     LesUtLocation,
     mekkGyldigSøknad,
     mockEøs,
-    mockRoutes,
     silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
@@ -288,7 +287,6 @@ const line: IBarnMedISøknad = {
 describe('OmBarnet', () => {
     beforeEach(() => {
         mockEøs();
-        mockRoutes();
         spyOnModal();
         silenceConsoleErrors();
     });
