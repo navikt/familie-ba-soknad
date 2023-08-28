@@ -6,10 +6,10 @@ const Container = styled.div<{ $inline: boolean }>`
     && {
         margin-bottom: ${props => (props.$inline ? '2rem' : '4rem')};
     }
+`;
 
-    > div :not(:last-child) {
-        margin-bottom: 2rem;
-    }
+const ChildContainer = styled.div`
+    margin-bottom: 2rem;
 `;
 
 const KomponentGruppe: React.FC<{
@@ -18,10 +18,19 @@ const KomponentGruppe: React.FC<{
     dynamisk?: boolean;
     children?: ReactNode;
 }> = ({ className, inline = false, dynamisk = false, children }) => {
+    const childrenLengde = React.Children.count(children);
+
     return (
         <Container $inline={inline} className={className} aria-live={dynamisk ? 'polite' : 'off'}>
-            {React.Children.map(children, child => {
-                return child && <div>{child}</div>;
+            {React.Children.map(children, (child, index) => {
+                return (
+                    child &&
+                    (index + 1 !== childrenLengde ? (
+                        <ChildContainer>{child}</ChildContainer>
+                    ) : (
+                        <div>{child}</div>
+                    ))
+                );
             })}
         </Container>
     );
