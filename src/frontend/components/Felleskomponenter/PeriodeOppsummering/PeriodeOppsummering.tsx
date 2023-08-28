@@ -8,9 +8,9 @@ import { ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-const PeriodeContainer = styled.div<{ bottomBorder: boolean }>`
+const PeriodeContainer = styled.div<{ $bottomBorder: boolean }>`
     margin: 2rem 0;
-    border-bottom: ${props => (props.bottomBorder ? `1px solid ${ABorderDefault}` : 'none')};
+    border-bottom: ${props => (props.$bottomBorder ? `1px solid ${ABorderDefault}` : 'none')};
 `;
 
 const StyledButton = styled(Button)`
@@ -43,7 +43,7 @@ const PeriodeOppsummering: React.FC<{
     const skalHaBottomBorder = !!fjernPeriodeCallback;
 
     return (
-        <PeriodeContainer bottomBorder={skalHaBottomBorder}>
+        <PeriodeContainer $bottomBorder={skalHaBottomBorder}>
             <StyledHeading level={'2'} size={'xsmall'}>
                 <SpråkTekst id={tittelSpråkId} values={{ x: nummer }} />
             </StyledHeading>

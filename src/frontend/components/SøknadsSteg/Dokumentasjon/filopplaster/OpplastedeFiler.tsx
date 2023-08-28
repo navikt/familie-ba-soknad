@@ -19,11 +19,11 @@ const FilListe = styled.ul`
     padding: 0;
 `;
 
-const FilRad = styled.li<{ skillelinje: boolean }>`
+const FilRad = styled.li<{ $skillelinje: boolean }>`
     display: flex;
     justify-content: space-between;
     padding: 1rem 0;
-    border-bottom: ${props => (props.skillelinje ? `1px solid ${ABorderDivider}` : 'none')};
+    border-bottom: ${props => (props.$skillelinje ? `1px solid ${ABorderDivider}` : 'none')};
 `;
 
 const FilTekstWrapper = styled.div`
@@ -43,7 +43,7 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
         <FilListe>
             {filliste.map((fil: IVedlegg, index: number) => {
                 return (
-                    <FilRad key={fil.dokumentId} skillelinje={index !== filliste.length - 1}>
+                    <FilRad key={fil.dokumentId} $skillelinje={index !== filliste.length - 1}>
                         <FilTekstWrapper>
                             <StyledAttachment
                                 focusable={false}

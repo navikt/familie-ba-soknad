@@ -47,8 +47,8 @@ const IdNummerForBarn: React.FC<{
     );
 };
 
-const SamleIdNummerContainer = styled.div<{ lesevisning: boolean }>`
-    margin-bottom: ${props => (props.lesevisning ? '2.5rem' : '4rem')};
+const SamleIdNummerContainer = styled.div<{ $lesevisning: boolean }>`
+    margin-bottom: ${props => (props.$lesevisning ? '2.5rem' : '4rem')};
 `;
 
 const SamletIdNummerForBarn: React.FC<{
@@ -72,7 +72,7 @@ const SamletIdNummerForBarn: React.FC<{
     );
 
     return skalSpørreOmIdNummerForPågåendeSøknad || idNummerSomMåOppgisFraPerioder.length ? (
-        <SamleIdNummerContainer lesevisning={lesevisning}>
+        <SamleIdNummerContainer $lesevisning={lesevisning}>
             {idNummerSomMåOppgisFraPerioder.map((landMedPeriodeType, index) => {
                 return (
                     !!landMedPeriodeType.land && (
