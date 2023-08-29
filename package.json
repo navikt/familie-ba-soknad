@@ -229,7 +229,7 @@
     "react-masonry-css": "^1.0.16",
     "react-modal": "^3.16.1",
     "react-refresh": "^0.14.0",
-    "react-router-dom": "^6.14.2",
+    "react-router-dom": "^6.15.0",
     "set-value": "^4.1.0",
     "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.0",
