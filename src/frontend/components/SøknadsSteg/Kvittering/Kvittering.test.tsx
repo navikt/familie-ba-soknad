@@ -1,10 +1,8 @@
 import React from 'react';
 
 import { render } from '@testing-library/react';
-import { Router } from 'react-router';
 
 import {
-    mockHistory,
     silenceConsoleErrors,
     spyOnModal,
     TestProvidereMedEkteTekster,
@@ -17,13 +15,9 @@ describe('Kvittering', () => {
         silenceConsoleErrors();
         spyOnModal();
 
-        const historyMock = mockHistory(['/kvittering']);
-
         render(
-            <TestProvidereMedEkteTekster>
-                <Router history={historyMock.mockedHistory}>
-                    <Kvittering />
-                </Router>
+            <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/kvittering']}>
+                <Kvittering />
             </TestProvidereMedEkteTekster>
         );
 

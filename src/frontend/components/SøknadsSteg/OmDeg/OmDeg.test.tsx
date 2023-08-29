@@ -9,7 +9,6 @@ import { ISøker } from '../../../typer/person';
 import {
     mekkGyldigSøknad,
     mockEøs,
-    mockHistory,
     silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
@@ -21,13 +20,13 @@ import OmDeg from './OmDeg';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 
 const TestKomponent = () => (
-    <TestProvidere>
+    <TestProvidere mocketNettleserHistorikk={['/om-deg']}>
         <OmDeg />
     </TestProvidere>
 );
 
 const TestKomponentMedEkteTekster = () => (
-    <TestProvidereMedEkteTekster>
+    <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/om-deg']}>
         <OmDeg />
     </TestProvidereMedEkteTekster>
 );
@@ -36,7 +35,6 @@ describe('OmDeg', () => {
     beforeEach(() => {
         silenceConsoleErrors();
         mockEøs();
-        mockHistory(['/om-deg']);
         spyOnModal();
     });
 

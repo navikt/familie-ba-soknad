@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
@@ -17,7 +17,10 @@ const Container = styled.div`
     }
 `;
 
-const InnholdContainer: React.FC<{ className?: string }> = ({ children, className }) => {
+const InnholdContainer: React.FC<{ className?: string; children?: ReactNode }> = ({
+    children,
+    className,
+}) => {
     return <Container className={className}>{children}</Container>;
 };
 

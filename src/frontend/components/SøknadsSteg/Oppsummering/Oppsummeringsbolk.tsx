@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -29,6 +29,7 @@ interface Props {
     steg?: ISteg;
     skjemaHook: IHookReturn;
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
+    children?: ReactNode;
 }
 
 const Oppsummeringsbolk: React.FC<Props> = ({

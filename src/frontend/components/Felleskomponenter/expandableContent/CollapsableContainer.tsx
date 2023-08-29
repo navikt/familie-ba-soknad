@@ -11,7 +11,7 @@ export interface Props {
     animated?: boolean;
 }
 
-const StyledCollapse = styled(Collapse)<{ isOpened }>`
+const StyledCollapse = styled(Collapse)<{ isOpened?: boolean }>`
     opacity: 0;
     transition: opacity 0.5s ease;
 

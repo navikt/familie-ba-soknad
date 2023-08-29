@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -26,12 +26,12 @@ const OmBarnaDine: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
         useOmBarnaDine();
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const { søknad } = useApp();
     const { barnInkludertISøknaden } = søknad;
 
     if (!barnInkludertISøknaden.length) {
-        history.push('/velg-barn');
+        navigate('/velg-barn');
         return null;
     }
     return (

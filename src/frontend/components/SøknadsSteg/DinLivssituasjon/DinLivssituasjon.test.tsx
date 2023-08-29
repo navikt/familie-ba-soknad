@@ -8,7 +8,6 @@ import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
     mockEøs,
-    mockHistory,
     silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
@@ -48,20 +47,18 @@ const søknad = mockDeep<ISøknad>({
 const antallFeilmeldingerPerFeil = 2;
 
 describe('DinLivssituasjon', () => {
-    mockHistory(['/din-livssituasjon']);
-
     beforeEach(() => {
         silenceConsoleErrors();
         mockEøs();
         spyOnModal();
-        jest.useFakeTimers('modern');
+        jest.useFakeTimers();
     });
 
     it('Alle tekster finnes i språkfil', async () => {
         spyOnUseApp(søknad);
 
         render(
-            <TestProvidereMedEkteTekster>
+            <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );

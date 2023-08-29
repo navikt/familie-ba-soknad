@@ -13,24 +13,33 @@ const Container = styled(Fieldset)`
     && {
         margin-bottom: 4rem;
     }
+`;
 
-    > div :not(:last-child) {
-        margin-bottom: 1.5rem;
-    }
+const ChildContainer = styled.div`
+    margin-bottom: 1.5rem;
 `;
 
 const SkjemaFieldset: React.FC<{
     tittelId: string;
     språkValues?: { [key: string]: ReactNode };
     dynamisk?: boolean;
+    children?: ReactNode;
 }> = ({ tittelId, språkValues, dynamisk = false, children }) => {
+    const childrenLengde = React.Children.count(children);
     return (
         <Container
             aria-live={dynamisk ? 'polite' : 'off'}
             legend={<SpråkTekst id={tittelId} values={språkValues} />}
         >
-            {React.Children.map(children, child => {
-                return child && <div>{child}</div>;
+            {React.Children.map(children, (child, index) => {
+                return (
+                    child &&
+                    (index + 1 !== childrenLengde ? (
+                        <ChildContainer>{child}</ChildContainer>
+                    ) : (
+                        <div>{child}</div>
+                    ))
+                );
             })}
         </Container>
     );

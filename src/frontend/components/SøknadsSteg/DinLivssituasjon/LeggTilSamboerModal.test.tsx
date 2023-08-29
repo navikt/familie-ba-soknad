@@ -7,7 +7,6 @@ import { act } from 'react-dom/test-utils';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
-    mockHistory,
     silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
@@ -34,8 +33,6 @@ const søknad = mockDeep<ISøknad>({
 const antallFeilmeldingerPerFeil = 2;
 
 describe('LeggTilSamboerModal', () => {
-    mockHistory(['/din-livssituasjon']);
-
     beforeEach(() => {
         silenceConsoleErrors();
         spyOnModal();
@@ -44,7 +41,7 @@ describe('LeggTilSamboerModal', () => {
         spyOnUseApp(søknad);
 
         const { getByText, getAllByText, queryByText } = render(
-            <TestProvidereMedEkteTekster>
+            <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );

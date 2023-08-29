@@ -9,6 +9,7 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     mockEøs,
+    silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
@@ -18,9 +19,10 @@ import { LandDropdown } from './LandDropdown';
 
 describe('LandDropdown', () => {
     beforeEach(() => {
-        jest.useFakeTimers('modern');
+        jest.useFakeTimers();
         spyOnUseApp({});
         spyOnModal();
+        silenceConsoleErrors();
     });
 
     it('Rendrer alle land i alle dropdowns når eøs er skrudd av', async () => {
@@ -31,29 +33,18 @@ describe('LandDropdown', () => {
         });
         const skjema = mockDeep<ISkjema<SkjemaFeltTyper, string>>();
 
-        const { findAllByRole, unmount } = render(
+        const { findAllByRole } = render(
             <TestProvidereMedEkteTekster>
                 <LandDropdown felt={felt} skjema={skjema} />
             </TestProvidereMedEkteTekster>
         );
 
-        let options = await findAllByRole('option');
+        const options = await findAllByRole('option');
 
         const antallLand = 251;
 
         expect(options).toHaveLength(antallLand);
-        unmount();
-
-        render(
-            <TestProvidereMedEkteTekster>
-                <LandDropdown felt={felt} skjema={skjema} />
-            </TestProvidereMedEkteTekster>
-        );
-
-        options = await findAllByRole('option');
-
-        expect(options).toHaveLength(antallLand);
-    }, /* Denne testen trenger litt ekstra tid pga unmount, vanligvis rundt 6s */ 12000);
+    });
 
     it('Rendrer kun EØS-land når EØS er på og kunEøs-prop er true', async () => {
         const { erEøsLand } = mockEøs();

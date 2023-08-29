@@ -4,6 +4,7 @@ import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill';
 import * as Sentry from '@sentry/react';
 import { registerLocale } from 'i18n-iso-countries';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
@@ -58,7 +59,10 @@ polyfillLocaledata().then(() => {
         });
     }
 
-    ReactDOM.render(
+    const container = document.getElementById('root');
+    const root = createRoot(container!);
+
+    root.render(
         <React.StrictMode>
             <SprakProvider
                 tekster={{
@@ -78,7 +82,6 @@ polyfillLocaledata().then(() => {
                     </Sentry.ErrorBoundary>
                 </HttpProvider>
             </SprakProvider>
-        </React.StrictMode>,
-        document.getElementById('root')
+        </React.StrictMode>
     );
 });

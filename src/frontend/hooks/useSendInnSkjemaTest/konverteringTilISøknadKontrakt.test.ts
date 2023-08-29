@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 
 import { ISøknadKontraktV8 } from '../../typer/kontrakt/v8';
 import {

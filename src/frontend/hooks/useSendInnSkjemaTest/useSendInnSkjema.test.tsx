@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 import { ESivilstand } from '../../typer/kontrakt/generelle';
@@ -18,7 +18,7 @@ silenceConsoleErrors();
 
 describe('useSendInnSkjema', () => {
     beforeEach(() => {
-        jest.useFakeTimers('modern');
+        jest.useFakeTimers();
         spyOnModal();
     });
 

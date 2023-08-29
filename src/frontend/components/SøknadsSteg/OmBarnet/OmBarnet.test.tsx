@@ -13,9 +13,9 @@ import {
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { Slektsforhold } from '../../../typer/kontrakt/generelle';
 import {
+    LesUtLocation,
     mekkGyldigSøknad,
     mockEøs,
-    mockHistory,
     silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
@@ -27,8 +27,6 @@ import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 import OmBarnet from './OmBarnet';
 import { OmBarnetSpørsmålsId } from './spørsmål';
-
-silenceConsoleErrors();
 
 const mockBarnMedISøknad = {
     barnErFyltUt: true,
@@ -290,10 +288,10 @@ describe('OmBarnet', () => {
     beforeEach(() => {
         mockEøs();
         spyOnModal();
+        silenceConsoleErrors();
     });
 
     test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, async () => {
-        mockHistory(['/om-barnet/barn-1']);
         spyOnUseApp({
             barnInkludertISøknaden: [jens],
             sisteUtfylteStegIndex: 4,
@@ -301,7 +299,7 @@ describe('OmBarnet', () => {
 
         await act(async () => {
             render(
-                <TestProvidereMedEkteTekster>
+                <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/om-barnet/barn/1']}>
                     <OmBarnet barnetsId={'random-id-jens'} />
                 </TestProvidereMedEkteTekster>
             );
@@ -311,19 +309,24 @@ describe('OmBarnet', () => {
     });
 
     test(`Kan navigere mellom to barn`, async () => {
-        const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
         spyOnUseApp({
             barnInkludertISøknaden: [jens, line],
             sisteUtfylteStegIndex: 4,
             dokumentasjon: [],
         });
-        const { findByText } = render(
-            <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
+
+        const { findByText, findByTestId } = render(
+            <TestProvidere
+                tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}
+                mocketNettleserHistorikk={['/om-barnet/barn/1']}
+            >
                 <OmBarnet barnetsId={'random-id-jens'} />
+                <LesUtLocation />
             </TestProvidere>
         );
 
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
+        const location = await findByTestId('location');
+        expect(JSON.parse(location.innerHTML).pathname).toEqual('/om-barnet/barn/1');
 
         const jensTittel = await findByText('Om Jens');
         expect(jensTittel).toBeInTheDocument();
@@ -331,26 +334,29 @@ describe('OmBarnet', () => {
         const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
         await act(() => gåVidere.click());
 
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-2');
+        const location2 = await findByTestId('location');
+        expect(JSON.parse(location2.innerHTML).pathname).toEqual('/om-barnet/barn/2');
     });
 
     test(`Kan navigere fra barn til oppsummering`, async () => {
-        const { mockedHistoryArray } = mockHistory(['/om-barnet/barn-1']);
-        mockHistory(['/om-barnet/barn-1']);
-
         spyOnUseApp({
             barnInkludertISøknaden: [jens],
             sisteUtfylteStegIndex: 4,
             dokumentasjon: [],
         });
 
-        const { findByText } = render(
-            <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
+        const { findByText, findByTestId } = render(
+            <TestProvidere
+                tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}
+                mocketNettleserHistorikk={['/om-barnet/barn/1']}
+            >
                 <OmBarnet barnetsId={'random-id-jens'} />
+                <LesUtLocation />
             </TestProvidere>
         );
 
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/om-barnet/barn-1');
+        const location = await findByTestId('location');
+        expect(JSON.parse(location.innerHTML).pathname).toEqual('/om-barnet/barn/1');
 
         const jensTittel = await findByText('Om Jens');
         expect(jensTittel).toBeInTheDocument();
@@ -358,12 +364,11 @@ describe('OmBarnet', () => {
         const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
         await act(() => gåVidere.click());
 
-        expect(mockedHistoryArray[mockedHistoryArray.length - 1]).toEqual('/oppsummering');
+        const nyLocation = await findByTestId('location');
+        expect(JSON.parse(nyLocation.innerHTML).pathname).toEqual('/oppsummering');
     });
 
     test('Fødselnummer til andre forelder blir fjernet om man huker av ikke oppgi opplysninger om den', async () => {
-        mockHistory(['/om-barnet/barn-1']);
-
         spyOnUseApp({
             barnInkludertISøknaden: [
                 {
@@ -380,7 +385,10 @@ describe('OmBarnet', () => {
         });
 
         const { findByLabelText, findByText, queryByText } = render(
-            <TestProvidere tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}>
+            <TestProvidere
+                tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}
+                mocketNettleserHistorikk={['/om-barnet/barn/1']}
+            >
                 <OmBarnet barnetsId={'random-id-jens'} />
             </TestProvidere>
         );
@@ -398,8 +406,6 @@ describe('OmBarnet', () => {
     });
 
     test('Får opp feilmelding ved feil postnummer', async () => {
-        mockHistory(['/om-barnet/barn-1']);
-
         //henter ut en gyldig søknad
         const søknadpostnummer = mekkGyldigSøknad();
 
@@ -422,7 +428,7 @@ describe('OmBarnet', () => {
         erStegUtfyltFrafør.mockReturnValue(false);
 
         const { queryByText, findAllByText } = render(
-            <TestProvidere>
+            <TestProvidere mocketNettleserHistorikk={['/om-barnet/barn/1']}>
                 <OmBarnet barnetsId={endretBarn.id} />
             </TestProvidere>
         );

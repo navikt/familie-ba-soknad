@@ -7,7 +7,6 @@ import { IBarn } from '../../../../typer/person';
 import {
     mekkGyldigSøker,
     mockEøs,
-    mockHistory,
     silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
@@ -17,7 +16,6 @@ import VelgBarn from '../VelgBarn';
 
 describe('FjernBarnKnapp', () => {
     beforeEach(() => {
-        mockHistory(['/velg-barn']);
         mockEøs();
         spyOnModal();
     });
@@ -50,7 +48,7 @@ describe('FjernBarnKnapp', () => {
             barnRegistrertManuelt: [registrertBarn],
         });
         const { getAllByText } = render(
-            <TestProvidere>
+            <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
@@ -83,7 +81,7 @@ describe('FjernBarnKnapp', () => {
             dokumentasjon: [],
         });
         const { getByText } = render(
-            <TestProvidere>
+            <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );

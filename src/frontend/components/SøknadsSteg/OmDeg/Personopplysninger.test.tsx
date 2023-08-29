@@ -19,12 +19,11 @@ import { Personopplysninger } from './Personopplysninger';
 
 const mockedSivilstand = ESivilstand.GIFT;
 
-silenceConsoleErrors();
-
 describe('Personopplysninger', () => {
     beforeEach(() => {
         mockEøs();
         spyOnModal();
+        silenceConsoleErrors();
     });
     test('Rendrer adresse i personopplysninger', async () => {
         const søker: Partial<ISøker> = {

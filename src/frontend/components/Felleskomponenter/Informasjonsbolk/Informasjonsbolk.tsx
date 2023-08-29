@@ -9,6 +9,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 export interface IInformasjonsbolkProps {
     tittelId?: string;
     språkValues?: { [key: string]: ReactNode };
+    children?: ReactNode;
 }
 
 const InformasjonsbolkContainer = styled.div`

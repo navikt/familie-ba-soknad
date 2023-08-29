@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { act, render, waitFor } from '@testing-library/react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -9,7 +9,6 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IBarn, IBarnRespons } from '../../../typer/person';
 import {
     mockEøs,
-    mockHistory,
     silenceConsoleErrors,
     spyOnModal,
     spyOnUseApp,
@@ -55,13 +54,13 @@ describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
         spyOnModal();
     });
     test(`Render BlokkerTilbakeKnappModal og sjekk at den virker`, async () => {
-        const { mockedHistory } = mockHistory(['dokumentasjon', 'kvittering']);
         silenceConsoleErrors();
         const søknad = {
             barnRegistrertManuelt: [manueltRegistrert],
             barnInkludertISøknaden: [manueltRegistrertSomIBarnMedISøknad, fraPdlSomIBarnMedISøknad],
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
+            fåttGyldigKvittering: true,
         };
         const { settSøknad } = spyOnUseApp(søknad);
 
@@ -70,16 +69,26 @@ describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const { getByText } = render(
-            <TestProvidere>
-                <BrowserRouter>
-                    <Route path={'*'} component={BlokkerTilbakeKnappModal} />
-                </BrowserRouter>
+        const Tilbakeknapp = () => {
+            const navigate = useNavigate();
+
+            return (
+                <button data-testid="tilbakeknapp" onClick={() => navigate(-1)}>
+                    Tilbake
+                </button>
+            );
+        };
+
+        const { getByText, findByTestId } = render(
+            <TestProvidere mocketNettleserHistorikk={['/dokumentasjon', '/kvittering']}>
+                <BlokkerTilbakeKnappModal />
+                <Tilbakeknapp />
             </TestProvidere>
         );
 
+        const tilbakeknapp = await findByTestId('tilbakeknapp');
         act(() => {
-            mockedHistory.goBack();
+            tilbakeknapp.click();
         });
 
         const infoTekst = await waitFor(() => getByText(/felles.blokkerTilbakeKnapp.modal.tekst/));

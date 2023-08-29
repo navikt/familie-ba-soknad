@@ -55,7 +55,7 @@ const Forside: React.FC = () => {
             <GuidePanel>
                 <SpråkTekst id={'forside.veilederhilsen'} values={{ navn: navn.toUpperCase() }} />
             </GuidePanel>
-            <StyledHeading>
+            <StyledHeading size="xlarge">
                 <SpråkTekst id={erUtvidet ? 'forside.utvidet.sidetittel' : 'forside.sidetittel'} />
             </StyledHeading>
 

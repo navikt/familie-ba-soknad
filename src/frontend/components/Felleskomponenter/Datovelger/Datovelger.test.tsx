@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { act, render } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, render, renderHook } from '@testing-library/react';
 import { formatISO } from 'date-fns';
 import { mockDeep } from 'jest-mock-extended';
 import { IntlProvider } from 'react-intl';
@@ -28,10 +27,14 @@ class ResizeObserver {
     }
 }
 
+const IntlProviderMedLocale = ({ children }) => <IntlProvider locale="nb">{children}</IntlProvider>;
+
 describe('Datovelger', () => {
-    silenceConsoleErrors();
-    spyOnModal();
-    window.ResizeObserver = ResizeObserver;
+    beforeEach(() => {
+        silenceConsoleErrors();
+        spyOnModal();
+        window.ResizeObserver = ResizeObserver;
+    });
     test('Datovelger kan begrenses av annen fra om med datovelger', () => {
         const {
             result: { current },
@@ -50,7 +53,7 @@ describe('Datovelger', () => {
                     tilOgMed,
                 };
             },
-            { wrapper: IntlProvider, initialProps: { locale: 'nb' } }
+            { wrapper: IntlProviderMedLocale }
         );
 
         const skjemaMock = mockDeep<ISkjema<SkjemaFeltTyper, string>>({
@@ -90,7 +93,7 @@ describe('Datovelger', () => {
                     tilOgMed,
                 };
             },
-            { wrapper: IntlProvider, initialProps: { locale: 'nb' } }
+            { wrapper: IntlProviderMedLocale }
         );
 
         const skjemaMock = mockDeep<ISkjema<SkjemaFeltTyper, string>>({

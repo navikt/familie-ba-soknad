@@ -21,8 +21,8 @@ import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 
 import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
 
-export const IdNummerContainer = styled.div<{ lesevisning: boolean }>`
-    margin-bottom: ${props => (props.lesevisning ? '1rem' : '2rem')};
+export const IdNummerContainer = styled.div<{ $lesevisning: boolean }>`
+    margin-bottom: ${props => (props.$lesevisning ? '1rem' : '2rem')};
 `;
 
 export const IdNummer: React.FC<{
@@ -93,7 +93,7 @@ export const IdNummer: React.FC<{
     }, [idNummerFelt.verdi, idNummerFelt.valideringsstatus]);
 
     return (
-        <IdNummerContainer lesevisning={lesevisning}>
+        <IdNummerContainer $lesevisning={lesevisning}>
             {lesevisning ? (
                 <OppsummeringFelt
                     tittel={

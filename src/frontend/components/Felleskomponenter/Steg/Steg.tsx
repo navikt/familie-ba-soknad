@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { Heading, Stepper } from '@navikt/ds-react';
@@ -37,6 +37,7 @@ interface ISteg {
         settSøknadsdataCallback: () => void;
     };
     gåVidereCallback?: () => Promise<boolean>;
+    children?: ReactNode;
 }
 
 const ChildrenContainer = styled.div`
@@ -68,7 +69,7 @@ const kompaktStepper = () => css`
     }
 `;
 
-const StepperContainer = styled.div<{ antallSteg: number }>`
+const StepperContainer = styled.div<{ $antallSteg: number }>`
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -77,7 +78,7 @@ const StepperContainer = styled.div<{ antallSteg: number }>`
        ${kompaktStepper};
     }
   ${props =>
-      props.antallSteg > 12 &&
+      props.$antallSteg > 12 &&
       css`
           @media all and ${device.tablet} {
               ${kompaktStepper};
@@ -86,7 +87,7 @@ const StepperContainer = styled.div<{ antallSteg: number }>`
 }`;
 
 const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { erÅpen: erModellVersjonModalÅpen, toggleModal: toggleModellVersjonModal } = useModal();
     const {
         settSisteUtfylteStegIndex,
@@ -130,7 +131,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
 
     const håndterAvbryt = () => {
         gåTilbakeTilStart();
-        history.push('/');
+        navigate('/');
     };
 
     const gåVidere = () => {
@@ -140,7 +141,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
         const målPath = komFra?.path ?? nesteRoute.path;
         komFra && settKomFra(undefined);
         logSkjemaStegFullført(hentNåværendeStegIndex() + 1);
-        history.push(målPath);
+        navigate(målPath);
     };
 
     const håndterGåVidere = event => {
@@ -159,7 +160,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
     };
 
     const håndterTilbake = () => {
-        history.push(forrigeRoute.path);
+        navigate(forrigeRoute.path);
     };
 
     return (
@@ -168,7 +169,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
             <header>
                 <Banner språkTekstId={erUtvidet ? 'felles.banner.utvidet' : 'felles.banner'} />
                 {nyesteNåværendeRoute !== RouteEnum.Kvittering && (
-                    <StepperContainer antallSteg={stepperObjekter.length}>
+                    <StepperContainer $antallSteg={stepperObjekter.length}>
                         <Stepper
                             aria-label={'Søknadssteg'}
                             activeStep={hentNåværendeStegIndex()}
