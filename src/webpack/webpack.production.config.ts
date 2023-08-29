@@ -1,4 +1,4 @@
-import SentryCliPlugin from '@sentry/webpack-plugin';
+import { sentryWebpackPlugin } from '@sentry/webpack-plugin';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserWebpackPlugin from 'terser-webpack-plugin';
@@ -23,14 +23,13 @@ const prodConfig: webpack.Configuration = mergeWithRules({
         }),
         new CssMinimizerWebpackPlugin(),
         process.env.SENTRY_AUTH_TOKEN
-            ? new SentryCliPlugin({
-                  include: 'dist',
+            ? sentryWebpackPlugin({
+                  sourcemaps: { assets: 'dist' },
                   org: 'nav',
                   project: 'familie-ba-soknad',
                   authToken: process.env.SENTRY_AUTH_TOKEN,
                   url: 'https://sentry.gc.nav.no/',
-                  release: process.env.SENTRY_RELEASE,
-                  urlPrefix: `~${process.env.BASE_PATH}`,
+                  release: { name: process.env.SENTRY_RELEASE },
               })
             : undefined,
     ].filter(val => !!val),
