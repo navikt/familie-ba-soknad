@@ -47,7 +47,7 @@
       "<rootDir>/src"
     ],
     "moduleNameMapper": {
-      "\\.(css|less)$": "<rootDir>/src/mockStyle.js",
+      "\\.(css)$": "<rootDir>/src/mockStyle.js",
       "nav-(.*)-style": "<rootDir>/src/mockStyle.js",
       "styled-components/macro": "styled-components",
       "^uuid$": "uuid"
@@ -205,8 +205,6 @@
     "jest-mock-promise": "^2.0.2",
     "jest-resolve": "29.6.4",
     "jest-watch-typeahead": "^2.2.2",
-    "less": "^4.1.1",
-    "less-loader": "^7.3.0",
     "lint-staged": "^14.0.1",
     "mini-css-extract-plugin": "^2.7.6",
     "nodemon": "^3.0.1",

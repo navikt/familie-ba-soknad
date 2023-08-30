@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Heading, Loader } from '@navikt/ds-react';
+import { BodyShort, Loader } from '@navikt/ds-react';
 
 const StyledLoader = styled(Loader)`
     margin-top: 3rem;
@@ -10,18 +10,21 @@ const StyledLoader = styled(Loader)`
     width: 10rem;
 `;
 
+const StyledMain = styled.main`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+`;
+
 const SystemetLaster = () => {
     return (
-        <main className={'systemet-laster'}>
-            <div className={'systemet-laster__content'}>
-                <Heading
-                    size={'medium'}
-                    className={'systemet-laster__content--tekst'}
-                    children={'Søknaden laster'}
-                />
-                <StyledLoader transparent={true} size={'2xlarge'} />
-            </div>
-        </main>
+        <StyledMain>
+            <BodyShort>Søknaden laster</BodyShort>
+            <StyledLoader transparent size={'2xlarge'} />
+        </StyledMain>
     );
 };
 

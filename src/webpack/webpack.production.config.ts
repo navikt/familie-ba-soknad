@@ -40,7 +40,7 @@ const prodConfig: webpack.Configuration = mergeWithRules({
     module: {
         rules: [
             {
-                test: /\.(less|css)$/,
+                test: /\.(css)$/,
                 use: [
                     { loader: MiniCssExtractPlugin.loader },
                     {
@@ -51,7 +51,6 @@ const prodConfig: webpack.Configuration = mergeWithRules({
                             },
                         },
                     },
-                    { loader: 'less-loader' },
                 ],
             },
         ],

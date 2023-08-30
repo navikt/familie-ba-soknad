@@ -10,7 +10,6 @@ import * as nynorsk from './assets/lang/nn.json' assert { type: 'json' };
 import { DisabledApp } from './components/Disabled/DisabledApp';
 import InnholdContainer from './components/Felleskomponenter/InnholdContainer/InnholdContainer';
 import { GlobalStyle } from './Theme';
-import './index.less';
 
 ReactDOM.render(
     <React.StrictMode>
