@@ -36,7 +36,6 @@ const StyledAlertStripeUtvidetInfo = styled(FamilieAlert)`
 
 const Forside: React.FC = () => {
     const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad, settNåværendeRoute } = useApp();
-    const sentryTest = {} as any;
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
 
@@ -57,7 +56,6 @@ const Forside: React.FC = () => {
                 <SpråkTekst id={'forside.veilederhilsen'} values={{ navn: navn.toUpperCase() }} />
             </GuidePanel>
             <StyledHeading size="xlarge">
-                <p>{sentryTest.test.test}</p>
                 <SpråkTekst id={erUtvidet ? 'forside.utvidet.sidetittel' : 'forside.sidetittel'} />
             </StyledHeading>
 
