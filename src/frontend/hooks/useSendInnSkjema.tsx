@@ -1,11 +1,12 @@
+import { AxiosError } from 'axios';
+
 import { useSprakContext } from '@navikt/familie-sprakvelger';
-import { Ressurs, RessursStatus } from '@navikt/familie-typer';
+import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø from '../../shared-utils/Miljø';
 import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
 import { useApp } from '../context/AppContext';
 import { ISøknadKontraktV8 } from '../typer/kontrakt/v8';
-import { IKvittering } from '../typer/kvittering';
 import { dataISøknadKontraktFormatV8 } from '../utils/mappingTilKontrakt/søknadV8';
 import { sendInn } from '../utils/sendInnSkjema';
 
@@ -24,8 +25,8 @@ export const useSendInnSkjema = (): {
             formatert,
             axiosRequest,
             `${soknadApiProxyUrl}/soknad/v8`,
-            res => {
-                const responseData = res.response?.data as Ressurs<IKvittering>;
+            (res: AxiosError) => {
+                const responseData = res.response?.data;
                 if (responseData && erModellMismatchResponsRessurs(responseData)) {
                     settSisteModellVersjon(responseData.data.modellVersjon);
                 }
