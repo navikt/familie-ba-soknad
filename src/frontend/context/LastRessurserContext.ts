@@ -42,8 +42,7 @@ const [LastRessurserProvider, useLastRessurserContext] = createUseContext(() => 
                 config.påvirkerSystemLaster && fjernRessursSomLaster(ressursId);
                 config.rejectCallback && config.rejectCallback(error);
                 loggFeil(error);
-
-                return error.response
+                return error.response?.data
                     ? håndterApiRessurs(error.response.data)
                     : {
                           frontendFeilmelding: 'En feil har oppstått!',
