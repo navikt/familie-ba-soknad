@@ -9,7 +9,6 @@ import { createRoot } from 'react-dom/client';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
-import './index.less';
 import App from './App';
 import * as engelsk from './assets/lang/en.json' assert { type: 'json' };
 import * as bokmål from './assets/lang/nb.json' assert { type: 'json' };
