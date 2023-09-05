@@ -44,7 +44,7 @@ jobs:
       id-token: "write"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
@@ -58,7 +58,6 @@ jobs:
           team: teamfamilie
           build_args: |
             base_path=${{ env.BASE_PATH }}
-            sentry_auth_token=${{ secrets.SENTRY_AUTH_TOKEN }}
             sentry_release=${{ github.sha }}
             NPM_TOKEN=${{ secrets.READER_TOKEN }}
           build_secrets:
