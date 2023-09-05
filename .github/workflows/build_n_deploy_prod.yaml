@@ -57,6 +57,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         with:
           team: teamfamilie
+          tag: latest
           build_args: |
             base_path=${{ env.BASE_PATH }}
             sentry_release=${{ github.sha }}
