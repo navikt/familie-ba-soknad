@@ -88,8 +88,6 @@ jobs:
           RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
           VAR: base_path=${{ env.BASE_PATH }}
           IMAGE: ${{ needs.bygg.outputs.image }}
-    outputs:
-      image: ${{ needs.bygg.outputs.image }}
 
   deploy-prod:
     name: Deploy til prod-gcp
@@ -100,7 +98,6 @@ jobs:
     needs:
       - bygg
       - test
-      - deploy-preprod
     steps:
       - uses: actions/checkout@v4
       - uses: nais/deploy/actions/deploy@v1
@@ -109,4 +106,4 @@ jobs:
           CLUSTER: prod-gcp
           RESOURCE: build_n_deploy/naiserator/naiserator_prod.yaml
           VAR: base_path=${{ env.BASE_PATH }}
-          IMAGE: ${{ needs.deploy-preprod.outputs.image }}
+          IMAGE: ${{ needs.bygg.outputs.image }}
