@@ -100,6 +100,7 @@ jobs:
     needs:
       - bygg
       - test
+      - deploy-preprod
     steps:
       - uses: actions/checkout@v4
       - uses: nais/deploy/actions/deploy@v1
