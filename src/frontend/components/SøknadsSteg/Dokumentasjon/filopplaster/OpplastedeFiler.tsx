@@ -36,7 +36,7 @@ const FilTekstWrapper = styled.div`
 const StyledAttachment = styled(PaperclipIcon)`
     margin-right: 1rem;
     min-width: 1rem;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
 `;
 
 const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
