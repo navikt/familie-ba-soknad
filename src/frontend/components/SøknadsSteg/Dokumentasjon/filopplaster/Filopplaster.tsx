@@ -3,7 +3,7 @@ import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
-import { Upload } from '@navikt/ds-icons';
+import { UploadIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import { ABlue500, ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
@@ -49,9 +49,10 @@ const FilopplastningBoks = styled.button<FilopplastningBoksProps>`
     }
 `;
 
-const StyledUpload = styled(Upload)`
+const StyledUpload = styled(UploadIcon)`
     margin-right: 1rem;
     min-width: 1rem;
+    font-size: 1.5rem;
 `;
 
 const StyledFeilmeldingList = styled.ul`

@@ -101,7 +101,6 @@
     "@formatjs/intl-numberformat": "^8.7.0",
     "@navikt/aksel-icons": "^4.7.3",
     "@navikt/ds-css": "^2.9.2",
-    "@navikt/ds-icons": "^3.4.3",
     "@navikt/ds-react": "^2.9.2",
     "@navikt/ds-tokens": "^2.9.2",
     "@navikt/familie-form-elements": "^12.0.0",

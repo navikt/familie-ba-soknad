@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { DeleteFilled } from '@navikt/ds-icons';
+import { TrashFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 
 import { AlternativtSvarForInput } from '../../../typer/common';
@@ -77,7 +77,7 @@ const SamboerOpplysninger: React.FC<{
                 type={'button'}
                 variant={'tertiary'}
                 onClick={() => fjernTidligereSamboer(samboer)}
-                icon={<DeleteFilled />}
+                icon={<TrashFillIcon />}
             >
                 <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />
             </StyledButton>
