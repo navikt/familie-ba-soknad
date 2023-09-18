@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Attachment, DeleteFilled } from '@navikt/ds-icons';
+import { PaperclipIcon, TrashFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button } from '@navikt/ds-react';
 import { ABorderDivider } from '@navikt/ds-tokens/dist/tokens';
 
@@ -33,9 +33,10 @@ const FilTekstWrapper = styled.div`
     margin-right: 1rem;
 `;
 
-const StyledAttachment = styled(Attachment)`
+const StyledAttachment = styled(PaperclipIcon)`
     margin-right: 1rem;
     min-width: 1rem;
+    font-size: 1.5rem;
 `;
 
 const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
@@ -58,7 +59,7 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => {
                         <Button
                             variant={'tertiary'}
                             onClick={() => slettVedlegg(fil)}
-                            icon={<DeleteFilled focusable={false} />}
+                            icon={<TrashFillIcon focusable={false} />}
                         >
                             <SpråkTekst id={'felles.slett'} />
                         </Button>

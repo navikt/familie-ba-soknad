@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { AddCircle } from '@navikt/ds-icons';
+import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Button, ErrorMessage } from '@navikt/ds-react';
 import { ARed500 } from '@navikt/ds-tokens/dist/tokens';
 
@@ -30,7 +30,7 @@ export const LeggTilKnapp: React.FC<Props> = ({ onClick, språkTekst, feilmeldin
             type={'button'}
             onClick={onClick}
             $feilmelding={!!feilmelding}
-            icon={<AddCircle />}
+            icon={<PlusCircleIcon />}
         >
             <SpråkTekst id={språkTekst} />
         </StyledButton>

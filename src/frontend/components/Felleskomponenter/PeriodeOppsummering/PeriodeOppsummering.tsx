@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 
-import { DeleteFilled } from '@navikt/ds-icons';
+import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, Heading } from '@navikt/ds-react';
 import { ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
@@ -53,7 +53,7 @@ const PeriodeOppsummering: React.FC<{
                     type={'button'}
                     variant={'tertiary'}
                     onClick={() => fjernPeriodeCallback()}
-                    icon={<DeleteFilled />}
+                    icon={<TrashFillIcon />}
                 >
                     <SpråkTekst id={fjernKnappSpråkId} />
                 </StyledButton>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { DeleteFilled } from '@navikt/ds-icons';
+import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 
 import { BarnetsId } from '../../../../typer/common';
@@ -23,7 +23,7 @@ export const FjernBarnKnapp: React.FC<{
             type={'button'}
             variant={'tertiary'}
             onClick={() => fjernBarnCallback(barnId)}
-            icon={<DeleteFilled aria-hidden />}
+            icon={<TrashFillIcon aria-hidden />}
         >
             <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
         </StyledButton>
