@@ -5,19 +5,13 @@ import { mockDeep } from 'jest-mock-extended';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { ISøknad } from '../../../typer/søknad';
-import {
-    silenceConsoleErrors,
-    spyOnModal,
-    spyOnUseApp,
-    TestProvidere,
-} from '../../../utils/testing';
+import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import { OmBarnetHeader } from './OmBarnetHeader';
 
 describe('OmBarnetHeader', () => {
     beforeEach(() => {
         silenceConsoleErrors();
-        spyOnModal();
     });
 
     it(`rendrer 1 av 2 og 2 av 2 i den rekkefølgen`, () => {

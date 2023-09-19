@@ -8,7 +8,6 @@ import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
@@ -35,7 +34,6 @@ const antallFeilmeldingerPerFeil = 2;
 describe('LeggTilSamboerModal', () => {
     beforeEach(() => {
         silenceConsoleErrors();
-        spyOnModal();
     });
     it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', () => {
         spyOnUseApp(søknad);

@@ -17,7 +17,6 @@ import {
     mekkGyldigSøknad,
     mockEøs,
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidere,
     TestProvidereMedEkteTekster,
@@ -287,7 +286,6 @@ const line: IBarnMedISøknad = {
 describe('OmBarnet', () => {
     beforeEach(() => {
         mockEøs();
-        spyOnModal();
         silenceConsoleErrors();
     });
 

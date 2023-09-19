@@ -10,7 +10,6 @@ import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     mockEøs,
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
@@ -21,7 +20,6 @@ describe('LandDropdown', () => {
     beforeEach(() => {
         jest.useFakeTimers();
         spyOnUseApp({});
-        spyOnModal();
         silenceConsoleErrors();
     });
 

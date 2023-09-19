@@ -8,7 +8,6 @@ import {
     mekkGyldigSøker,
     mockEøs,
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidere,
 } from '../../../../utils/testing';
@@ -17,7 +16,6 @@ import VelgBarn from '../VelgBarn';
 describe('FjernBarnKnapp', () => {
     beforeEach(() => {
         mockEøs();
-        spyOnModal();
     });
 
     test(`Kan fjern-knapp dukker kun opp på manuelt registrerte barn`, () => {

@@ -8,7 +8,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISøknad } from '../../../typer/søknad';
 import {
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
@@ -34,7 +33,6 @@ describe('OmBarnaDine', () => {
     silenceConsoleErrors();
     test('Alle tekster finnes i språkfil', async () => {
         spyOnUseApp(søknad);
-        spyOnModal();
         await act(async () => {
             render(
                 <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/om-barna']}>
