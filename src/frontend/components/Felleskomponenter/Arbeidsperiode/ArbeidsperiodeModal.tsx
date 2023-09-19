@@ -16,23 +16,22 @@ import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
-import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { arbeidsperiodeModalSpørsmålSpråkId } from './arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
-interface ArbeidsperiodeModalProps
-    extends ReturnType<typeof useModal>,
-        IUseArbeidsperiodeSkjemaParams {
+interface ArbeidsperiodeModalProps extends IUseArbeidsperiodeSkjemaParams {
+    erÅpen: boolean;
+    lukkModal: () => void;
     onLeggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet: boolean;
 }
 
 export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
     erÅpen,
-    toggleModal,
+    lukkModal,
     onLeggTilArbeidsperiode,
     gjelderUtlandet = false,
     personType,
@@ -81,7 +80,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
             },
         });
 
-        toggleModal();
+        lukkModal();
         nullstillSkjema();
     };
 
@@ -101,7 +100,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
             modalTittelSpråkId={modalTittel}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilarbeidsperiode.knapp'}
-            toggleModal={toggleModal}
+            lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >

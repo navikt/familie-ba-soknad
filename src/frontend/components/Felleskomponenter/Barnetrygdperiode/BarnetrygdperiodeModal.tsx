@@ -14,7 +14,6 @@ import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
-import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { barnetrygdperiodeModalSpørsmålSpråkId } from './barnetrygdperiodeSpråkUtils';
@@ -24,13 +23,15 @@ import {
     useBarnetrygdperiodeSkjema,
 } from './useBarnetrygdperiodeSkjema';
 
-interface Props extends ReturnType<typeof useModal>, IUsePensjonsperiodeSkjemaParams {
+interface Props extends IUsePensjonsperiodeSkjemaParams {
+    erÅpen: boolean;
+    lukkModal: () => void;
     onLeggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
 }
 
 export const BarnetrygdperiodeModal: React.FC<Props> = ({
     erÅpen,
-    toggleModal,
+    lukkModal,
     onLeggTilBarnetrygdsperiode,
     barn,
     personType,
@@ -74,7 +75,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
             },
         });
 
-        toggleModal();
+        lukkModal();
         nullstillSkjema();
     };
 
@@ -97,7 +98,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
             modalTittelSpråkId={'modal.trygdandreperioder.tittel'}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'modal.trygdandreperioder.tittel'}
-            toggleModal={toggleModal}
+            lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >

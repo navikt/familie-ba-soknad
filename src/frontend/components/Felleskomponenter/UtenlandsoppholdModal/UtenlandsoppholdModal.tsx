@@ -22,7 +22,6 @@ import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
-import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { tilDatoUkjentLabelSpråkId, UtenlandsoppholdSpørsmålId } from './spørsmål';
@@ -38,14 +37,16 @@ import {
     årsakSpråkId,
 } from './utenlandsoppholdSpråkUtils';
 
-interface Props extends ReturnType<typeof useModal>, IUseUtenlandsoppholdSkjemaParams {
+interface Props extends IUseUtenlandsoppholdSkjemaParams {
+    erÅpen: boolean;
+    lukkModal: () => void;
     onLeggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     barn?: IBarnMedISøknad;
 }
 
 export const UtenlandsoppholdModal: React.FC<Props> = ({
     erÅpen,
-    toggleModal,
+    lukkModal,
     onLeggTilUtenlandsperiode,
     barn,
 }) => {
@@ -86,7 +87,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             }),
         });
 
-        toggleModal();
+        lukkModal();
         nullstillSkjema();
     };
 
@@ -96,7 +97,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             modalTittelSpråkId={'modal.utenlandsopphold.tittel'}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilutenlands.knapp'}
-            toggleModal={toggleModal}
+            lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >

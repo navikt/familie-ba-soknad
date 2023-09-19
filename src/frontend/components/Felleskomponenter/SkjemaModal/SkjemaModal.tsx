@@ -19,7 +19,7 @@ const StyledButton = styled(Button)`
 
 const SkjemaModal: React.FC<{
     erÅpen: boolean;
-    toggleModal: () => void;
+    lukkModal: () => void;
     modalTittelSpråkId: string;
     submitSpinner?: boolean;
     valideringErOk: () => boolean;
@@ -29,7 +29,7 @@ const SkjemaModal: React.FC<{
     children?: ReactNode;
 }> = ({
     erÅpen,
-    toggleModal,
+    lukkModal,
     modalTittelSpråkId,
     submitSpinner = false,
     valideringErOk,
@@ -44,17 +44,21 @@ const SkjemaModal: React.FC<{
         <Modal
             open={erÅpen}
             onClose={() => {
-                toggleModal();
+                lukkModal();
                 onAvbrytCallback && onAvbrytCallback();
             }}
             aria-label={formatMessage({ id: modalTittelSpråkId })}
+            width={'medium'}
+            portal={true}
         >
-            <ModalContent>
+            <Modal.Header>
                 {modalTittelSpråkId && (
                     <Heading level={'1'} size={'large'}>
                         <SpråkTekst id={modalTittelSpråkId} />
                     </Heading>
                 )}
+            </Modal.Header>
+            <ModalContent>
                 <form>
                     {children}
                     <StyledButton

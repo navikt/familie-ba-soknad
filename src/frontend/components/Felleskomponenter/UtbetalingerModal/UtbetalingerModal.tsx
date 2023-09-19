@@ -16,20 +16,21 @@ import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
-import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { utbetalingsperiodeModalSpørsmålSpråkIder } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 import { IUseUtbetalingerSkjemaParams, useUtbetalingerSkjema } from './useUtbetalingerSkjema';
 
-interface UtbetalingerModalProps extends ReturnType<typeof useModal>, IUseUtbetalingerSkjemaParams {
+interface UtbetalingerModalProps extends IUseUtbetalingerSkjemaParams {
+    erÅpen: boolean;
+    lukkModal: () => void;
     onLeggTilUtbetalinger: (utbetalingsperiode: IUtbetalingsperiode) => void;
 }
 
 export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     erÅpen,
-    toggleModal,
+    lukkModal,
     onLeggTilUtbetalinger,
     personType,
     barn,
@@ -73,7 +74,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
             },
         });
 
-        toggleModal();
+        lukkModal();
         nullstillSkjema();
     };
 
@@ -88,7 +89,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
             modalTittelSpråkId={'felles.flereytelser.knapp'}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.flereytelser.knapp'}
-            toggleModal={toggleModal}
+            lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
