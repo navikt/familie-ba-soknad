@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 
-import { device } from '../../../Theme';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import ModalContent from '../../Felleskomponenter/ModalContent';
@@ -25,22 +24,6 @@ const StyledFortsettPåSøknad = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-`;
-
-const ModalKnappeContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-
-    @media all and ${device.mobile} {
-        justify-content: center;
-        flex-direction: column-reverse;
-        max-width: fit-content;
-        margin-left: auto;
-        margin-right: auto;
-    }
 `;
 
 const FortsettPåSøknad: FC = () => {
@@ -69,22 +52,24 @@ const FortsettPåSøknad: FC = () => {
                     settVisStartPåNyttModal(false);
                 }}
             >
-                <ModalContent>
+                <Modal.Header>
                     <Heading level={'1'} size={'large'}>
                         <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
                     </Heading>
+                </Modal.Header>
+                <ModalContent>
                     <BodyLong>
                         <SpråkTekst id={'felles.startpånytt.modal.tekst'} />
                     </BodyLong>
-                    <ModalKnappeContainer>
-                        <Button variant={'tertiary'} onClick={() => settVisStartPåNyttModal(false)}>
-                            <SpråkTekst id={'felles.startpånytt.modal.avbrytknapp'} />
-                        </Button>
-                        <Button variant={'secondary'} onClick={startPåNytt}>
-                            <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
-                        </Button>
-                    </ModalKnappeContainer>
                 </ModalContent>
+                <Modal.Footer>
+                    <Button variant={'secondary'} onClick={startPåNytt}>
+                        <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
+                    </Button>
+                    <Button variant={'tertiary'} onClick={() => settVisStartPåNyttModal(false)}>
+                        <SpråkTekst id={'felles.startpånytt.modal.avbrytknapp'} />
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </StyledFortsettPåSøknad>
     );
