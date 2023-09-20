@@ -10,13 +10,6 @@ import EksternLenke from '../EksternLenke/EksternLenke';
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-const Flex = styled.div`
-    padding-top: 1rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 1rem;
-`;
 const StyledEksternLenke = styled(EksternLenke)`
     margin-right: 1rem;
 `;
@@ -46,16 +39,14 @@ const BlokkerTilbakeKnappModal = () => {
                 </BodyLong>
             </ModalContent>
             <Modal.Footer>
-                <Flex>
-                    <StyledEksternLenke
-                        lenkeSpråkId={'kvittering.dinesaker.lenke'}
-                        lenkeTekstSpråkId={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'}
-                        target="_blank"
-                    />
-                    <Button onClick={håndterAvbryt}>
-                        <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.avbrytKnapp'} />
-                    </Button>
-                </Flex>
+                <Button onClick={håndterAvbryt}>
+                    <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.avbrytKnapp'} />
+                </Button>
+                <StyledEksternLenke
+                    lenkeSpråkId={'kvittering.dinesaker.lenke'}
+                    lenkeTekstSpråkId={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'}
+                    target="_blank"
+                />
             </Modal.Footer>
         </Modal>
     );
