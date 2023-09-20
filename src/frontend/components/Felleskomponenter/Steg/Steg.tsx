@@ -207,7 +207,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
                         />
                     )}
                 </Form>
-                <ModellVersjonModal erÅpen={true} />
+                <ModellVersjonModal erÅpen={erModellVersjonModalÅpen} />
             </InnholdContainer>
         </>
     );
