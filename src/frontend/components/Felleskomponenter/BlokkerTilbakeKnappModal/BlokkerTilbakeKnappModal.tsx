@@ -35,13 +35,17 @@ const BlokkerTilbakeKnappModal = () => {
             open={visBlokkerTilbakeKnappModal}
             aria-label={formatMessage({ id: 'felles.blokkerTilbakeKnapp.modal.tittel' })}
         >
-            <ModalContent>
+            <Modal.Header>
                 <Heading level={'1'} size={'large'}>
                     <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tittel'} />
                 </Heading>
+            </Modal.Header>
+            <ModalContent>
                 <BodyLong>
                     <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tekst'} />
                 </BodyLong>
+            </ModalContent>
+            <Modal.Footer>
                 <Flex>
                     <StyledEksternLenke
                         lenkeSpråkId={'kvittering.dinesaker.lenke'}
@@ -52,7 +56,7 @@ const BlokkerTilbakeKnappModal = () => {
                         <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.avbrytKnapp'} />
                     </Button>
                 </Flex>
-            </ModalContent>
+            </Modal.Footer>
         </Modal>
     );
 };
