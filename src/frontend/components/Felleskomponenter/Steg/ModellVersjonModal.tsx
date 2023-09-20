@@ -11,13 +11,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const StyledBodyLong = styled(BodyLong)`
     && {
-        margin: 2.5rem 0;
-    }
-`;
-
-const StyledButton = styled(Button)`
-    && {
-        width: fit-content;
+        margin-top: 2.5rem;
     }
 `;
 
@@ -32,11 +26,12 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
             aria-label={formatMessage({ id: 'felles.modal.deployfeil.tittel' })}
             onClose={refresh}
         >
-            <ModalContent>
+            <Modal.Header>
                 <Heading level={'1'} size={'large'}>
                     <SpråkTekst id={'felles.modal.deployfeil.tittel'} />
                 </Heading>
-
+            </Modal.Header>
+            <ModalContent>
                 <FamilieAlert
                     inline={false}
                     variant={'error'}
@@ -45,11 +40,12 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
                 <StyledBodyLong>
                     <SpråkTekst id={'felles.modal.deployfeil.info'} />
                 </StyledBodyLong>
-
-                <StyledButton onClick={refresh}>
-                    <SpråkTekst id={'felles.modal.deployfeil.knapp'} />
-                </StyledButton>
             </ModalContent>
+            <Modal.Footer>
+                <Button onClick={refresh}>
+                    <SpråkTekst id={'felles.modal.deployfeil.knapp'} />
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 };
