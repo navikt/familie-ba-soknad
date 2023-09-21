@@ -53,6 +53,7 @@ const SkjemaModal: React.FC<{
             </ModalContent>
             <Modal.Footer>
                 <Button
+                    data-testid={submitKnappSpråkId}
                     form="skjema"
                     variant={valideringErOk() ? 'primary' : 'secondary'}
                     loading={submitSpinner}
