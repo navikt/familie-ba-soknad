@@ -24,6 +24,7 @@ const StyledFortsettPåSøknad = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
 `;
 
 const FortsettPåSøknad: FC = () => {
@@ -63,10 +64,10 @@ const FortsettPåSøknad: FC = () => {
                     </BodyLong>
                 </ModalContent>
                 <Modal.Footer>
-                    <Button variant={'secondary'} onClick={startPåNytt}>
+                    <Button variant={'primary'} onClick={startPåNytt}>
                         <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
                     </Button>
-                    <Button variant={'tertiary'} onClick={() => settVisStartPåNyttModal(false)}>
+                    <Button variant={'secondary'} onClick={() => settVisStartPåNyttModal(false)}>
                         <SpråkTekst id={'felles.startpånytt.modal.avbrytknapp'} />
                     </Button>
                 </Modal.Footer>
