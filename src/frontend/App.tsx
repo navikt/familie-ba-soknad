@@ -27,7 +27,7 @@ function App() {
                                     <StegProvider>
                                         <GlobalStyle />
                                         {process.env.NODE_ENV !== 'production' && (
-                                            <FamilieAlert variant={'warning'}>
+                                            <FamilieAlert variant={'warning'} inline={false}>
                                                 {`Denne siden er under utvikling. `}
                                                 <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
                                                     Klikk her for å gå til våre sider for barnetrygd
