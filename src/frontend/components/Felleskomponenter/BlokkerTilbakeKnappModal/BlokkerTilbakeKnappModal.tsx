@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 
 import { useAppNavigation } from '../../../context/AppNavigationContext';
 import EksternLenke from '../EksternLenke/EksternLenke';
@@ -26,13 +26,11 @@ const BlokkerTilbakeKnappModal = () => {
         <Modal
             onClose={() => settVisBlokkerTilbakeKnappModal(false)}
             open={visBlokkerTilbakeKnappModal}
-            aria-label={formatMessage({ id: 'felles.blokkerTilbakeKnapp.modal.tittel' })}
+            header={{
+                heading: formatMessage({ id: 'felles.blokkerTilbakeKnapp.modal.tittel' }),
+                size: 'medium',
+            }}
         >
-            <Modal.Header>
-                <Heading level={'1'} size={'large'}>
-                    <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tittel'} />
-                </Heading>
-            </Modal.Header>
             <ModalContent>
                 <BodyLong>
                     <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tekst'} />

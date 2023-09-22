@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { Button, Heading, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -37,17 +37,13 @@ const SkjemaModal: React.FC<{
                 lukkModal();
                 onAvbrytCallback && onAvbrytCallback();
             }}
-            aria-label={formatMessage({ id: modalTittelSpråkId })}
             width={'medium'}
             portal={true}
+            header={{
+                heading: formatMessage({ id: modalTittelSpråkId }),
+                size: 'medium',
+            }}
         >
-            <Modal.Header>
-                {modalTittelSpråkId && (
-                    <Heading level={'1'} size={'large'}>
-                        <SpråkTekst id={modalTittelSpråkId} />
-                    </Heading>
-                )}
-            </Modal.Header>
             <ModalContent>
                 <form id="skjema">{children}</form>
             </ModalContent>

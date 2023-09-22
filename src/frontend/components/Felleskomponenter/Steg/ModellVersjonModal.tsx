@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 
 import FamilieAlert from '../FamilieAlert/FamilieAlert';
 import ModalContent from '../ModalContent';
@@ -23,14 +23,12 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
     return (
         <Modal
             open={erÅpen}
-            aria-label={formatMessage({ id: 'felles.modal.deployfeil.tittel' })}
             onClose={refresh}
+            header={{
+                heading: formatMessage({ id: 'felles.modal.deployfeil.tittel' }),
+                size: 'medium',
+            }}
         >
-            <Modal.Header>
-                <Heading level={'1'} size={'large'}>
-                    <SpråkTekst id={'felles.modal.deployfeil.tittel'} />
-                </Heading>
-            </Modal.Header>
             <ModalContent>
                 <FamilieAlert
                     inline={false}

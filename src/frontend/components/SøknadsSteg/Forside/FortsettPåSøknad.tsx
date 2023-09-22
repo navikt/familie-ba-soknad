@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -48,16 +48,14 @@ const FortsettPåSøknad: FC = () => {
             </StyledButton>
             <Modal
                 open={visStartPåNyttModal}
-                aria-label={formatMessage({ id: 'felles.startpånytt.modal.startpånyttknapp' })}
                 onClose={() => {
                     settVisStartPåNyttModal(false);
                 }}
+                header={{
+                    heading: formatMessage({ id: 'felles.startpånytt.modal.startpånyttknapp' }),
+                    size: 'medium',
+                }}
             >
-                <Modal.Header>
-                    <Heading level={'1'} size={'large'}>
-                        <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
-                    </Heading>
-                </Modal.Header>
                 <ModalContent>
                     <BodyLong>
                         <SpråkTekst id={'felles.startpånytt.modal.tekst'} />
