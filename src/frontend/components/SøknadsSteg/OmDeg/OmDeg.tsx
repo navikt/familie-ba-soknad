@@ -19,7 +19,11 @@ import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
-    const { erÅpen, lukkModal, åpneModal } = useModal();
+    const {
+        erÅpen: utenlandsoppholdmodalErÅpen,
+        lukkModal: lukkUtenlandsoppholdmodal,
+        åpneModal: åpneUtenlandsoppholdmodal,
+    } = useModal();
 
     const {
         skjema,
@@ -91,7 +95,7 @@ const OmDeg: React.FC = () => {
                             )}
                             <LeggTilKnapp
                                 språkTekst={'felles.leggtilutenlands.knapp'}
-                                onClick={åpneModal}
+                                onClick={åpneUtenlandsoppholdmodal}
                                 id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                                 feilmelding={
                                     skjema.felter.registrerteUtenlandsperioder.erSynlig &&
@@ -124,10 +128,10 @@ const OmDeg: React.FC = () => {
                     </KomponentGruppe>
                 )}
             </KomponentGruppe>
-            {erÅpen && (
+            {utenlandsoppholdmodalErÅpen && (
                 <UtenlandsoppholdModal
-                    erÅpen={erÅpen}
-                    lukkModal={lukkModal}
+                    erÅpen={utenlandsoppholdmodalErÅpen}
+                    lukkModal={lukkUtenlandsoppholdmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
                 />
             )}
