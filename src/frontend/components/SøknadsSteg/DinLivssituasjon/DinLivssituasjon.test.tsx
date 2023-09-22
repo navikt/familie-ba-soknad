@@ -9,7 +9,6 @@ import { ISøknad } from '../../../typer/søknad';
 import {
     mockEøs,
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidere,
     TestProvidereMedEkteTekster,
@@ -50,7 +49,6 @@ describe('DinLivssituasjon', () => {
     beforeEach(() => {
         silenceConsoleErrors();
         mockEøs();
-        spyOnModal();
         jest.useFakeTimers();
     });
 

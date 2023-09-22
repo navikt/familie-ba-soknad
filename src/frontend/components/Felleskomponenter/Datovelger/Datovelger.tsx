@@ -3,7 +3,7 @@ import React, { ReactNode, useEffect } from 'react';
 import { formatISO, isAfter, startOfDay } from 'date-fns';
 import { useIntl } from 'react-intl';
 
-import { BodyShort, ErrorMessage, UNSAFE_DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
+import { BodyShort, ErrorMessage, DatePicker, useDatepicker } from '@navikt/ds-react';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
@@ -73,7 +73,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
         return maxDato;
     };
 
-    const { datepickerProps, inputProps, reset } = UNSAFE_useDatepicker({
+    const { datepickerProps, inputProps, reset } = useDatepicker({
         locale: valgtLocale,
         fromDate: hentFromDate(),
         toDate: hentToDate(),
@@ -103,8 +103,8 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
 
     return felt.erSynlig ? (
         <div aria-live={dynamisk ? 'polite' : 'off'}>
-            <UNSAFE_DatePicker dropdownCaption strategy={strategy} {...datepickerProps}>
-                <UNSAFE_DatePicker.Input
+            <DatePicker dropdownCaption strategy={strategy} {...datepickerProps}>
+                <DatePicker.Input
                     {...inputProps}
                     id={felt.id}
                     disabled={disabled}
@@ -118,7 +118,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                     placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}
                     error={!!(felt.feilmelding && skjema.visFeilmeldinger)}
                 />
-            </UNSAFE_DatePicker>
+            </DatePicker>
             {skjema.visFeilmeldinger && felt.feilmelding && (
                 <ErrorMessage>{felt.feilmelding}</ErrorMessage>
             )}

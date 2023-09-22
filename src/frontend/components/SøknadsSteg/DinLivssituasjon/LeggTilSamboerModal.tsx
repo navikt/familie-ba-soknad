@@ -12,11 +12,11 @@ import { useTidligereSamboer } from './useTidligereSamboer';
 
 interface Props {
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
-    toggleModal: () => void;
+    lukkModal: () => void;
     erÅpen: boolean;
 }
 
-const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleModal, erÅpen }) => {
+const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, lukkModal, erÅpen }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useTidligereSamboer();
 
@@ -52,7 +52,7 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
                 svar: skjema.felter.tidligereSamboerTilDato.verdi,
             },
         });
-        toggleModal();
+        lukkModal();
         nullstillSkjema();
     };
 
@@ -61,7 +61,7 @@ const LeggTilSamboerModal: React.FC<Props> = ({ leggTilTidligereSamboer, toggleM
             modalTittelSpråkId={'omdeg.leggtilfleresamboere.leggtil'}
             submitKnappSpråkId={'omdeg.leggtilfleresamboere.leggtil'}
             erÅpen={erÅpen}
-            toggleModal={toggleModal}
+            lukkModal={lukkModal}
             onSubmitCallback={onLeggTil}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}

@@ -3,7 +3,6 @@ import React, { ReactNode } from 'react';
 import { mockDeep } from 'jest-mock-extended';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 
-import { Modal } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
@@ -161,12 +160,6 @@ export const silenceConsoleErrors = () => {
     jest.spyOn(console, 'error');
     jest.spyOn(global.console, 'error').mockImplementation(() => {
         // Shut up about the missing translations;
-    });
-};
-
-export const spyOnModal = () => {
-    jest.spyOn(Modal, 'setAppElement').mockImplementation(() => {
-        // ikke bry deg om at root ikke finnes
     });
 };
 

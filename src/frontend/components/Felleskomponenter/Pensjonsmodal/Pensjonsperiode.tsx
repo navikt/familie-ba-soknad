@@ -56,7 +56,11 @@ export const Pensjonsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
-    const { erÅpen: pensjonsmodalErÅpen, toggleModal: togglePensjonsmodal } = useModal();
+    const {
+        erÅpen: pensjonsmodalErÅpen,
+        lukkModal: lukkPensjonsmodal,
+        åpneModal: åpnePensjonsmodal,
+    } = useModal();
     const pensjonsperiodeSpørsmålId = gjelderUtlandet
         ? PensjonsperiodeSpørsmålId.pensjonsperioderUtland
         : PensjonsperiodeSpørsmålId.pensjonsperioderNorge;
@@ -103,7 +107,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                         </Label>
                     )}
                     <LeggTilKnapp
-                        onClick={togglePensjonsmodal}
+                        onClick={åpnePensjonsmodal}
                         språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}
                         id={genererPeriodeId({
                             personType,
@@ -118,15 +122,17 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             )
                         }
                     />
-                    <PensjonModal
-                        erÅpen={pensjonsmodalErÅpen}
-                        toggleModal={togglePensjonsmodal}
-                        onLeggTilPensjonsperiode={leggTilPensjonsperiode}
-                        gjelderUtland={gjelderUtlandet}
-                        personType={personType}
-                        erDød={erDød}
-                        barn={barn}
-                    />
+                    {pensjonsmodalErÅpen && (
+                        <PensjonModal
+                            erÅpen={pensjonsmodalErÅpen}
+                            lukkModal={lukkPensjonsmodal}
+                            onLeggTilPensjonsperiode={leggTilPensjonsperiode}
+                            gjelderUtland={gjelderUtlandet}
+                            personType={personType}
+                            erDød={erDød}
+                            barn={barn}
+                        />
+                    )}
                 </>
             )}
         </>

@@ -53,7 +53,11 @@ const Oppfølgningsspørsmål: React.FC<{
     fjernBarnetrygdsperiode,
     registrerteEøsBarnetrygdsperioder,
 }) => {
-    const { erÅpen: utenlandsmodalErÅpen, toggleModal: toggleUtenlandsmodal } = useModal();
+    const {
+        erÅpen: utenlandsmodalErÅpen,
+        lukkModal: lukkUtenlandsmodal,
+        åpneModal: åpneUtenlandsmodal,
+    } = useModal();
 
     const {
         institusjonIUtlandCheckbox,
@@ -185,7 +189,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     <LeggTilKnapp
                         id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                         språkTekst={'felles.leggtilutenlands.knapp'}
-                        onClick={toggleUtenlandsmodal}
+                        onClick={åpneUtenlandsmodal}
                         feilmelding={
                             registrerteUtenlandsperioder.erSynlig &&
                             registrerteUtenlandsperioder.feilmelding &&
@@ -261,12 +265,14 @@ const Oppfølgningsspørsmål: React.FC<{
                     </KomponentGruppe>
                 </SkjemaFieldset>
             )}
-            <UtenlandsoppholdModal
-                erÅpen={utenlandsmodalErÅpen}
-                toggleModal={toggleUtenlandsmodal}
-                onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
-                barn={barn}
-            />
+            {utenlandsmodalErÅpen && (
+                <UtenlandsoppholdModal
+                    erÅpen={utenlandsmodalErÅpen}
+                    lukkModal={lukkUtenlandsmodal}
+                    onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
+                    barn={barn}
+                />
+            )}
         </>
     );
 };

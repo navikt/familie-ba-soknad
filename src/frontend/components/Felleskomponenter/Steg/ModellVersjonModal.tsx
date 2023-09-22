@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 
 import FamilieAlert from '../FamilieAlert/FamilieAlert';
 import ModalContent from '../ModalContent';
@@ -11,13 +11,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const StyledBodyLong = styled(BodyLong)`
     && {
-        margin: 2.5rem 0;
-    }
-`;
-
-const StyledButton = styled(Button)`
-    && {
-        width: fit-content;
+        margin-top: 2.5rem;
     }
 `;
 
@@ -29,14 +23,13 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
     return (
         <Modal
             open={erÅpen}
-            aria-label={formatMessage({ id: 'felles.modal.deployfeil.tittel' })}
             onClose={refresh}
+            header={{
+                heading: formatMessage({ id: 'felles.modal.deployfeil.tittel' }),
+                size: 'medium',
+            }}
         >
             <ModalContent>
-                <Heading level={'1'} size={'large'}>
-                    <SpråkTekst id={'felles.modal.deployfeil.tittel'} />
-                </Heading>
-
                 <FamilieAlert
                     inline={false}
                     variant={'error'}
@@ -45,11 +38,12 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
                 <StyledBodyLong>
                     <SpråkTekst id={'felles.modal.deployfeil.info'} />
                 </StyledBodyLong>
-
-                <StyledButton onClick={refresh}>
-                    <SpråkTekst id={'felles.modal.deployfeil.knapp'} />
-                </StyledButton>
             </ModalContent>
+            <Modal.Footer>
+                <Button onClick={refresh}>
+                    <SpråkTekst id={'felles.modal.deployfeil.knapp'} />
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 };

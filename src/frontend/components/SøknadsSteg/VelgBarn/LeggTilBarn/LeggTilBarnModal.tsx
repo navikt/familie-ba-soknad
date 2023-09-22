@@ -20,8 +20,8 @@ import { useLeggTilBarn } from './useLeggTilBarn';
 
 const LeggTilBarnModal: React.FC<{
     erÅpen: boolean;
-    toggleModal: () => void;
-}> = ({ erÅpen, toggleModal }) => {
+    lukkModal: () => void;
+}> = ({ erÅpen, lukkModal }) => {
     const { skjema, nullstillSkjema, valideringErOk, leggTilBarn, validerFelterOgVisFeilmelding } =
         useLeggTilBarn();
 
@@ -30,7 +30,7 @@ const LeggTilBarnModal: React.FC<{
             return;
         }
         leggTilBarn();
-        toggleModal();
+        lukkModal();
     };
 
     return (
@@ -38,7 +38,7 @@ const LeggTilBarnModal: React.FC<{
             modalTittelSpråkId={'hvilkebarn.leggtilbarn.modal.tittel'}
             submitKnappSpråkId={'hvilkebarn.leggtilbarn.kort.knapp'}
             erÅpen={erÅpen}
-            toggleModal={toggleModal}
+            lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onSubmitCallback={submitOgLukk}
             onAvbrytCallback={nullstillSkjema}

@@ -7,13 +7,7 @@ import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { ISøker } from '../../../typer/person';
-import {
-    mockEøs,
-    silenceConsoleErrors,
-    spyOnModal,
-    spyOnUseApp,
-    TestProvidere,
-} from '../../../utils/testing';
+import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import { Personopplysninger } from './Personopplysninger';
 
@@ -22,7 +16,6 @@ const mockedSivilstand = ESivilstand.GIFT;
 describe('Personopplysninger', () => {
     beforeEach(() => {
         mockEøs();
-        spyOnModal();
         silenceConsoleErrors();
     });
     test('Rendrer adresse i personopplysninger', async () => {

@@ -20,7 +20,6 @@ import {
     mockFeatureToggle,
     mockRoutes,
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidere,
 } from '../../../utils/testing';
@@ -69,7 +68,6 @@ describe('VelgBarn', () => {
         mockRoutes();
         mockFeatureToggle();
         silenceConsoleErrors();
-        spyOnModal();
     });
 
     test('Kan fjerne manuelt registrerte barn', () => {
@@ -168,7 +166,7 @@ describe('VelgBarn', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const { getByText, getByLabelText } = render(
+        const { getByText, getByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
@@ -180,8 +178,7 @@ describe('VelgBarn', () => {
         const leggTilBarnKnapp = getByText(/hvilkebarn.leggtilbarn.kort.knapp/);
         act(() => leggTilBarnKnapp.click());
 
-        const modal = getByLabelText('hvilkebarn.leggtilbarn.modal.tittel');
-        const leggTilKnappIModal = modal.querySelector('button');
+        const leggTilKnappIModal = getByTestId('hvilkebarn.leggtilbarn.kort.knapp');
 
         const jaKnapp = getByText('felles.svaralternativ.ja');
         act(() => jaKnapp.click());

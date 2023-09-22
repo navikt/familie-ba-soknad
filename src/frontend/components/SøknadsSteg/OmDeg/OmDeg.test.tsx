@@ -10,7 +10,6 @@ import {
     mekkGyldigSøknad,
     mockEøs,
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidere,
     TestProvidereMedEkteTekster,
@@ -35,7 +34,6 @@ describe('OmDeg', () => {
     beforeEach(() => {
         silenceConsoleErrors();
         mockEøs();
-        spyOnModal();
     });
 
     test('Alle tekster finnes i språkfil', async () => {

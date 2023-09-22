@@ -12,21 +12,22 @@ import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
-import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { pensjonsperiodeModalSpørsmålSpråkId } from './språkUtils';
 import { PensjonsperiodeSpørsmålId } from './spørsmål';
 import { IUsePensjonSkjemaParams, usePensjonSkjema } from './usePensjonSkjema';
 
-interface Props extends ReturnType<typeof useModal>, IUsePensjonSkjemaParams {
+interface Props extends IUsePensjonSkjemaParams {
+    erÅpen: boolean;
+    lukkModal: () => void;
     onLeggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     gjelderUtland: boolean;
 }
 
 export const PensjonModal: React.FC<Props> = ({
     erÅpen,
-    toggleModal,
+    lukkModal,
     onLeggTilPensjonsperiode,
     gjelderUtland,
     personType,
@@ -67,7 +68,7 @@ export const PensjonModal: React.FC<Props> = ({
             },
         });
 
-        toggleModal();
+        lukkModal();
         nullstillSkjema();
     };
     const modalTittel = gjelderUtland
@@ -88,7 +89,7 @@ export const PensjonModal: React.FC<Props> = ({
             modalTittelSpråkId={modalTittel}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilpensjon.knapp'}
-            toggleModal={toggleModal}
+            lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >

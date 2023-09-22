@@ -56,7 +56,11 @@ export const Arbeidsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
-    const { erÅpen: arbeidsmodalErÅpen, toggleModal: toggleArbeidsmodal } = useModal();
+    const {
+        erÅpen: arbeidsmodalErÅpen,
+        lukkModal: lukkArbeidsmodal,
+        åpneModal: åpneArbeidsmodal,
+    } = useModal();
     const barnetsNavn = !!barn && barn.navn;
     const arbeidsperiodeSpørsmålId = gjelderUtlandet
         ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
@@ -100,7 +104,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                         </Label>
                     )}
                     <LeggTilKnapp
-                        onClick={toggleArbeidsmodal}
+                        onClick={åpneArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
                         id={genererPeriodeId({
                             personType,
@@ -115,14 +119,16 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             )
                         }
                     />
-                    <ArbeidsperiodeModal
-                        erÅpen={arbeidsmodalErÅpen}
-                        toggleModal={toggleArbeidsmodal}
-                        onLeggTilArbeidsperiode={leggTilArbeidsperiode}
-                        gjelderUtlandet={gjelderUtlandet}
-                        personType={personType}
-                        erDød={erDød}
-                    />
+                    {arbeidsmodalErÅpen && (
+                        <ArbeidsperiodeModal
+                            erÅpen={arbeidsmodalErÅpen}
+                            lukkModal={lukkArbeidsmodal}
+                            onLeggTilArbeidsperiode={leggTilArbeidsperiode}
+                            gjelderUtlandet={gjelderUtlandet}
+                            personType={personType}
+                            erDød={erDød}
+                        />
+                    )}
                 </>
             )}
         </>

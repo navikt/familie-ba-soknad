@@ -11,7 +11,6 @@ import {
     LesUtLocation,
     mekkGyldigSøknad,
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidere,
     TestProvidereMedEkteTekster,
@@ -25,7 +24,6 @@ import Oppsummering from './Oppsummering';
 describe('Oppsummering', () => {
     beforeEach(() => {
         silenceConsoleErrors();
-        spyOnModal();
     });
 
     it('Alle tekster finnes i språkfil', async () => {

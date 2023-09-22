@@ -4,7 +4,6 @@ import { act, render } from '@testing-library/react';
 
 import {
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
@@ -26,7 +25,6 @@ describe('Dokumentasjon', () => {
     test('Alle tekster finnes i språkfil', async () => {
         silenceConsoleErrors();
         spyOnUseApp({});
-        spyOnModal();
 
         await act(() => {
             render(

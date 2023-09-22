@@ -31,7 +31,7 @@ const LenkeContainer = styled.div`
 
 const VelgBarn: React.FC = () => {
     const { søknad } = useApp();
-    const { toggleModal, erÅpen } = useModal();
+    const { lukkModal, åpneModal, erÅpen } = useModal();
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -85,7 +85,7 @@ const VelgBarn: React.FC = () => {
                             fjernBarnCallback={fjernBarn}
                         />
                     ))}
-                    <NyttBarnKort onLeggTilBarn={toggleModal} />
+                    <NyttBarnKort onLeggTilBarn={åpneModal} />
                 </BarnekortContainer>
                 <LenkeContainer>
                     <EksternLenke
@@ -95,7 +95,7 @@ const VelgBarn: React.FC = () => {
                     />
                 </LenkeContainer>
             </Steg>
-            <LeggTilBarnModal erÅpen={erÅpen} toggleModal={toggleModal} />
+            {erÅpen && <LeggTilBarnModal erÅpen={erÅpen} lukkModal={lukkModal} />}
         </>
     );
 };

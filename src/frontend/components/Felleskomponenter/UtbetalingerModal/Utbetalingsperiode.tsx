@@ -42,7 +42,11 @@ export const Utbetalingsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
-    const { erÅpen: utbetalingermodalErÅpen, toggleModal: toggleUtbetalingsmodal } = useModal();
+    const {
+        erÅpen: erUtbetalingerModalÅpen,
+        lukkModal: lukkUtbetalingerModal,
+        åpneModal: åpneUtbetalingerModal,
+    } = useModal();
 
     const barnetsNavn = barn && barn.navn;
 
@@ -84,7 +88,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                         </Label>
                     )}
                     <LeggTilKnapp
-                        onClick={toggleUtbetalingsmodal}
+                        onClick={åpneUtbetalingerModal}
                         språkTekst={'felles.flereytelser.knapp'}
                         id={genererPeriodeId({
                             personType: personType,
@@ -95,14 +99,16 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             skjema.visFeilmeldinger && registrerteUtbetalingsperioder.feilmelding
                         }
                     />
-                    <UtbetalingerModal
-                        erÅpen={utbetalingermodalErÅpen}
-                        toggleModal={toggleUtbetalingsmodal}
-                        onLeggTilUtbetalinger={leggTilUtbetalingsperiode}
-                        personType={personType}
-                        barn={barn}
-                        erDød={erDød}
-                    />
+                    {erUtbetalingerModalÅpen && (
+                        <UtbetalingerModal
+                            erÅpen={erUtbetalingerModalÅpen}
+                            lukkModal={lukkUtbetalingerModal}
+                            onLeggTilUtbetalinger={leggTilUtbetalingsperiode}
+                            personType={personType}
+                            barn={barn}
+                            erDød={erDød}
+                        />
+                    )}
                 </>
             )}
         </>

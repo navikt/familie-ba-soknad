@@ -43,7 +43,11 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     barn,
     tilhørendeJaNeiSpmFelt,
 }) => {
-    const { erÅpen: barnetrygdsmodalErÅpen, toggleModal: toggleBarnetrygdsmodal } = useModal();
+    const {
+        erÅpen: barnetrygdsmodalErÅpen,
+        lukkModal: lukkBarnetrygdsmodal,
+        åpneModal: åpneBarnetrygdsmodal,
+    } = useModal();
 
     return (
         <>
@@ -82,7 +86,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                     )}
 
                     <LeggTilKnapp
-                        onClick={toggleBarnetrygdsmodal}
+                        onClick={åpneBarnetrygdsmodal}
                         språkTekst={'ombarnet.trygdandreperioder.knapp'}
                         id={genererPeriodeId({
                             personType,
@@ -97,14 +101,16 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             )
                         }
                     />
-                    <BarnetrygdperiodeModal
-                        erÅpen={barnetrygdsmodalErÅpen}
-                        toggleModal={toggleBarnetrygdsmodal}
-                        onLeggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
-                        barn={barn}
-                        personType={personType}
-                        erDød={erDød}
-                    />
+                    {barnetrygdsmodalErÅpen && (
+                        <BarnetrygdperiodeModal
+                            erÅpen={barnetrygdsmodalErÅpen}
+                            lukkModal={lukkBarnetrygdsmodal}
+                            onLeggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
+                            barn={barn}
+                            personType={personType}
+                            erDød={erDød}
+                        />
+                    )}
                 </>
             )}
         </>

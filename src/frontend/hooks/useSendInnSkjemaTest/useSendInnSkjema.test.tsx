@@ -7,7 +7,6 @@ import { hentSivilstatusSpråkId } from '../../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,
     silenceConsoleErrors,
-    spyOnModal,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../utils/testing';
@@ -19,7 +18,6 @@ silenceConsoleErrors();
 describe('useSendInnSkjema', () => {
     beforeEach(() => {
         jest.useFakeTimers();
-        spyOnModal();
     });
 
     it('mapper til gyldig utvidet kontrakt', async () => {
