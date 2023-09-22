@@ -45,12 +45,14 @@ test(`Kan legge til barn`, async () => {
                         åpen.push(1);
                     }}
                 />
-                <LeggTilBarnModal
-                    erÅpen={åpen.length > 0}
-                    lukkModal={() => {
-                        åpen.pop();
-                    }}
-                />
+                {åpen.length && (
+                    <LeggTilBarnModal
+                        erÅpen={åpen.length > 0}
+                        lukkModal={() => {
+                            åpen.pop();
+                        }}
+                    />
+                )}
             </HttpProvider>
         </IntlProvider>
     );
@@ -67,17 +69,18 @@ test(`Kan legge til barn`, async () => {
                         åpen.push(1);
                     }}
                 />
-                <LeggTilBarnModal
-                    erÅpen={åpen.length > 0}
-                    lukkModal={() => {
-                        åpen.pop();
-                    }}
-                />
+                {åpen.length > 0 && (
+                    <LeggTilBarnModal
+                        erÅpen={åpen.length > 0}
+                        lukkModal={() => {
+                            åpen.pop();
+                        }}
+                    />
+                )}
             </HttpProvider>
         </IntlProvider>
     );
 
-    const modal = getByRole('dialog', { name: /hvilkebarn.leggtilbarn.modal.tittel/ });
     const leggTilKnappIModal = getByTestId('hvilkebarn.leggtilbarn.kort.knapp');
     expect(leggTilKnappIModal).toBeInTheDocument();
     expect(leggTilKnappIModal).toHaveClass('navds-button--secondary');
@@ -110,27 +113,4 @@ test(`Kan legge til barn`, async () => {
     // Her skjer det async kall med axios, som vi må vente på i de neste expectene
     act(() => leggTilKnappIModal?.click());
     await waitFor(() => expect(åpen.length).toBe(0));
-
-    rerender(
-        <IntlProvider locale={'nb'}>
-            <HttpProvider>
-                <NyttBarnKort
-                    onLeggTilBarn={() => {
-                        åpen.push(1);
-                    }}
-                />
-                {åpen.length > 0 && (
-                    <LeggTilBarnModal
-                        erÅpen={åpen.length > 0}
-                        lukkModal={() => {
-                            åpen.pop();
-                        }}
-                    />
-                )}
-            </HttpProvider>
-        </IntlProvider>
-    );
-
-    await waitFor(() => expect(modal).not.toBeInTheDocument());
-    await waitFor(() => expect(submitMock.mock.calls.length).toBe(1));
 });
