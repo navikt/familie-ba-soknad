@@ -36,7 +36,11 @@ const TidligereSamboere: React.FC<Props> = ({
     tidligereSamboere,
     fjernTidligereSamboer,
 }) => {
-    const { lukkModal, åpneModal, erÅpen } = useModal();
+    const {
+        lukkModal: lukkLeggTilSamboerModal,
+        åpneModal: åpneLeggTilSamboerModal,
+        erÅpen: erLeggTilSamboerModalÅpen,
+    } = useModal();
 
     return (
         <>
@@ -54,12 +58,15 @@ const TidligereSamboere: React.FC<Props> = ({
                     fjernTidligereSamboer={fjernTidligereSamboer}
                 />
             ))}
-            <LeggTilKnapp språkTekst="omdeg.leggtilfleresamboere.leggtil" onClick={åpneModal} />
-            {erÅpen && (
+            <LeggTilKnapp
+                språkTekst="omdeg.leggtilfleresamboere.leggtil"
+                onClick={åpneLeggTilSamboerModal}
+            />
+            {erLeggTilSamboerModalÅpen && (
                 <LeggTilSamboerModal
                     leggTilTidligereSamboer={leggTilTidligereSamboer}
-                    lukkModal={lukkModal}
-                    erÅpen={erÅpen}
+                    lukkModal={lukkLeggTilSamboerModal}
+                    erÅpen={erLeggTilSamboerModalÅpen}
                 />
             )}
         </>
