@@ -6,7 +6,7 @@ import { Modal } from '@navikt/ds-react';
 
 const StyledModalContent = styled(Modal.Body)`
     && {
-        padding: 2rem;
+        margin-top: 1rem;
     }
 `;
 
