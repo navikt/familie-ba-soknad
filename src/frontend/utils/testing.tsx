@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 
 import { mockDeep } from 'jest-mock-extended';
+import { IntlProvider } from 'react-intl';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -178,16 +179,22 @@ export const wrapMedProvidere = (
         <Første
             {...(erSpråkprovider
                 ? {
-                      tekster: { [LocaleType.nb]: språkTekster },
                       defaultLocale: LocaleType.nb,
-                      locale: LocaleType.nb,
                   }
                 : {})}
             {...(erMemoryRouter ? { initialEntries: mocketNettleserHistorikk } : {})}
         >
-            {resten.length
-                ? wrapMedProvidere(resten, mocketNettleserHistorikk, children)
-                : children}
+            {språkTekster ? (
+                <IntlProvider locale={LocaleType.nb} messages={språkTekster}>
+                    {resten.length
+                        ? wrapMedProvidere(resten, mocketNettleserHistorikk, children)
+                        : children}
+                </IntlProvider>
+            ) : resten.length ? (
+                wrapMedProvidere(resten, mocketNettleserHistorikk, children)
+            ) : (
+                children
+            )}
         </Første>
     );
 };

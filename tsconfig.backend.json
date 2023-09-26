@@ -6,7 +6,6 @@
     "module": "ESNext",
     "outDir": "./build",
     "rootDir": "./src",
-    "resolveJsonModule": true
   },
   "include": [
     "./src/backend",
