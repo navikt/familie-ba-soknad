@@ -53,4 +53,5 @@ COPY dist ./dist
 COPY node_modules ./node_modules
 COPY package.json .
 
+EXPOSE 9000
 CMD ["--es-module-specifier-resolution=node", "build/backend/server.js"]
