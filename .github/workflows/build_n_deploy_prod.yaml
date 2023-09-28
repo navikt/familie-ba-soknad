@@ -101,7 +101,7 @@ jobs:
       id-token: "write"
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy til dev-gcp team namespace
+      - name: Deploy til prod-gcp team namespace
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
