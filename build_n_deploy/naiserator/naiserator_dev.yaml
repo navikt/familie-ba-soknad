@@ -49,10 +49,8 @@ spec:
   tokenx:
     enabled: true
   env:
-    - name: NODE_ENV
-      value: production
     - name: BASE_PATH
-      value: ${{ env.BASE_PATH }}
+      value: {{base_path}}
     - name: ENV
       value: dev
   secureLogs:
