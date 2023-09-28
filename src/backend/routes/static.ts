@@ -16,7 +16,7 @@ export const konfigurerStatic = (app: Express): Express => {
     process.env.NODE_ENV !== 'production' && app.set('view cache', false);
 
     console.log('NODE_ENV = ' + process.env.NODE_ENV);
-    console.log('BASE_PATH = ' + basePath);
+    console.log('BASE_PATH = ' + basePath + ',' + process.env.BASE_PATH);
     console.log('Frontend-mappe = ' + frontendMappe);
 
     // Serve alle statiske filer utenom index.html direkte fra dist-mappen
