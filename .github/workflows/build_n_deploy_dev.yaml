@@ -24,18 +24,15 @@ jobs:
       - name: Installer node-pakker
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-#          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
         run: yarn --prefer-offline --frozen-lockfile
       - name: Kjør typecheck
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-#          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
         run: yarn typecheck
       - name: Kjør tester
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-#          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
         run: yarn test
 
   bygg:
@@ -60,7 +57,6 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_RELEASE: ${{ github.sha }}
           BASE_PATH: ${{ env.BASE_PATH }}
-          DEKORATOREN_URL: "https://dekoratoren.dev.nav.no"
         run: |
           yarn build
           docker build . -t ${IMAGE}
@@ -79,41 +75,3 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
           VAR: VERSION=${{ env.VERSION }}
-#      - uses: nais/docker-build-push@v0
-#        id: docker-push
-#        env:
-#          DEKORATOREN_URL: "https://dekoratoren.dev.nav.no"
-#          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-#        with:
-#          team: teamfamilie
-#          tag: latest
-#          build_args: |
-#            base_path=${{ env.BASE_PATH }}
-#            sentry_release=${{ github.sha }}
-#            NPM_TOKEN=${{ secrets.READER_TOKEN }}
-#          build_secrets:
-#            |
-#            sentry_token=${{ secrets.SENTRY_AUTH_TOKEN }}
-#          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-#          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-#    outputs:
-#      image: ${{ steps.docker-push.outputs.image }}
-
-#  deploy:
-#    name: Deploy til dev gcp
-#    runs-on: ubuntu-latest
-#    permissions:
-#      contents: "read"
-#      id-token: "write"
-#    needs:
-#      - bygg
-#      - test
-#    steps:
-#      - uses: actions/checkout@v4
-#      - uses: nais/deploy/actions/deploy@v1
-#        env:
-#          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-#          CLUSTER: dev-gcp
-#          RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
-#          VAR: base_path=${{ env.BASE_PATH }}
-#          IMAGE: ${{ needs.bygg.outputs.image }}
