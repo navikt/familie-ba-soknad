@@ -9,7 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: "25M"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
 spec:
-  image: {{ image }}
+  image: {{ IMAGE }}
   team: teamfamilie
   replicas:
     min: 2
