@@ -53,5 +53,8 @@ COPY dist ./dist
 COPY node_modules ./node_modules
 COPY package.json .
 
+ENV NODE_ENV=production
+ENV BASE_PATH=/familie/barnetrygd/soknad/ordinaer/
+
 EXPOSE 9000
-CMD ["NODE_ENV=production --es-module-specifier-resolution=node", "build/backend/server.js"]
+CMD ["--es-module-specifier-resolution=node", "build/backend/server.js"]

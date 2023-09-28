@@ -64,7 +64,9 @@ jobs:
           docker push ${IMAGE}
   deploy:
     name: Deploy to NAIS
-    needs: bygg
+    needs:
+      - bygg
+      - test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
