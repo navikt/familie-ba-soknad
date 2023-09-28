@@ -68,7 +68,7 @@ jobs:
     outputs:
       image: ${{ steps.docker-push.outputs.image }}
   deploy:
-    name: Deploy to NAIS
+    name: Deploy til dev-gcp
     needs:
       - bygg
       - test

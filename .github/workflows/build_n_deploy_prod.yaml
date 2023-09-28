@@ -91,7 +91,7 @@ jobs:
           IMAGE: ${{ needs.bygg.outputs.image }}
 
   deploy-prod:
-    name: Deploy til dev-gcp
+    name: Deploy til prod-gcp
     needs:
       - bygg
       - test
