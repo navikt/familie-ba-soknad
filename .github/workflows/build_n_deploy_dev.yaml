@@ -26,18 +26,18 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 #          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
-        run: npx yarn
+        run: yarn --prefer-offline --frozen-lockfile
       - name: Kjør typecheck
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 #          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
-        run: npx yarn typecheck
+        run: yarn typecheck
       - name: Kjør tester
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 #          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
-        run: npx yarn test
+        run: yarn test
 
   bygg:
     name: Bygg app/image og push til GitHub
