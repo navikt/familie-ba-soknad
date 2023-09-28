@@ -15,10 +15,6 @@ export const konfigurerStatic = (app: Express): Express => {
     // I dev-mode vil vi ikke cache index.html, siden denne oppdateres med nye js-bundles når vi endrer ting i appen
     process.env.NODE_ENV !== 'production' && app.set('view cache', false);
 
-    console.log('NODE_ENV = ' + process.env.NODE_ENV);
-    console.log('BASE_PATH = ' + basePath + ',' + process.env.BASE_PATH);
-    console.log('Frontend-mappe = ' + frontendMappe);
-
     // Serve alle statiske filer utenom index.html direkte fra dist-mappen
     app.use(basePath, express.static(frontendMappe, { index: false }));
     return app;
