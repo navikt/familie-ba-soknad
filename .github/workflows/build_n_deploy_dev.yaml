@@ -8,8 +8,6 @@ on:
 
 env:
   BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
-  IMAGE: ghcr.io/navikt/familie-ba-soknad:${{ github.sha }}
-  VERSION: familie-ba-soknad:${{ github.sha }}
 
 jobs:
   test:
@@ -67,6 +65,8 @@ jobs:
           docker_context: .
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+    outputs:
+      image: ${{ steps.docker-push.outputs.image }}
   deploy:
     name: Deploy to NAIS
     needs:
@@ -84,3 +84,4 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
+          IMAGE: ${{ needs.bygg.outputs.image }}
