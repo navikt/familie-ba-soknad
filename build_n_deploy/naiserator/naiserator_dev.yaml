@@ -9,7 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: "25M"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
 spec:
-  image: {{ IMAGE }}
+  image: {{ image }}
   team: teamfamilie
   replicas:
     min: 2
@@ -52,7 +52,7 @@ spec:
     - name: NODE_ENV
       value: production
     - name: BASE_PATH
-      value: /familie/barnetrygd/soknad/ordinaer/
+      value: ${{ env.BASE_PATH }}
     - name: ENV
       value: dev
   secureLogs:
