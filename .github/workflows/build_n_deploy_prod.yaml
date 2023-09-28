@@ -66,6 +66,8 @@ jobs:
           docker_context: .
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+    outputs:
+      image: ${{ steps.docker-push.outputs.image }}
 
   deploy-preprod:
     name: Deploy til dev-gcp
@@ -81,6 +83,8 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
+          VAR: base_path=${{ env.BASE_PATH }}
+          IMAGE: ${{ needs.bygg.outputs.image }}
 
   deploy-prod:
     name: Deploy til dev-gcp
@@ -96,3 +100,5 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: build_n_deploy/naiserator/naiserator_prod.yaml
+          VAR: base_path=${{ env.BASE_PATH }}
+          IMAGE: ${{ needs.bygg.outputs.image }}
