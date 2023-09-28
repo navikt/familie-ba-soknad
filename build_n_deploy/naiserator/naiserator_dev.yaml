@@ -49,8 +49,10 @@ spec:
   tokenx:
     enabled: true
   env:
+    - name: NODE_ENV
+      value: production
     - name: BASE_PATH
-      value: {{base_path}}
+      value: /familie/barnetrygd/soknad/ordinaer/
     - name: ENV
       value: dev
   secureLogs:
