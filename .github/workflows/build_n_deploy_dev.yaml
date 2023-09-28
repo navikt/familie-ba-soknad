@@ -25,18 +25,18 @@ jobs:
       - name: Installer node-pakker
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
+#          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
         run: npx yarn
       - name: Kjør typecheck
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
+#          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
         run: npx yarn typecheck
       - name: Kjør tester
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
+#          NPM_TOKEN: ${{ secrets.READER_TOKEN }}
         run: npx yarn test
 
   bygg:
