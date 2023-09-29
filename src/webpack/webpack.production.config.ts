@@ -31,6 +31,11 @@ const prodConfig: webpack.Configuration = mergeWithRules({
                   url: 'https://sentry.gc.nav.no/',
                   release: process.env.SENTRY_RELEASE,
                   urlPrefix: `~${process.env.BASE_PATH}`,
+                  errorHandler: (err, _, compilation) => {
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      compilation.warnings.push('Sentry CLI Plugin: ' + err.message);
+                  },
               })
             : undefined,
     ].filter(val => !!val),
