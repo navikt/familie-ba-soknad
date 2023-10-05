@@ -1847,15 +1847,6 @@
   resolved "https://npm.pkg.github.com/download/@navikt/ds-tokens/5.5.0/f963d7872d9b6eb74198f19f107b6073bfa8c6a5#f963d7872d9b6eb74198f19f107b6073bfa8c6a5"
   integrity sha512-zV9TfGNjiRgpX1Ec11gK8BtgkiR+HN+qwjVbWt5NA6ux8xIQYdaFqLJWQa585vLl6DEOhwrlzb0FhT+KDvG3Rg==
 
-"@navikt/familie-form-elements@^12.0.0":
-  version "12.0.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/familie-form-elements/12.0.0/a333e46e08a5bff4d30c92f1ce990a2b58fe1cb7#a333e46e08a5bff4d30c92f1ce990a2b58fe1cb7"
-  integrity sha512-6k8XoBzgAEfOIaACVDSyWvYEYgXqOskUc1VvY41o8zpDKqgbQ636fw0H1kFaVN2Qq+yKjZUxTRIH5ryhSlcgSA==
-  dependencies:
-    "@types/classnames" "^2.3.1"
-    classnames "^2.3.2"
-    react-select "^5.7.0"
-
 "@navikt/familie-form-elements@^13.0.0":
   version "13.0.0"
   resolved "https://npm.pkg.github.com/download/@navikt/familie-form-elements/13.0.0/c3ec85621cb87c35cece49ce4a0d59d17ab0ad7c#c3ec85621cb87c35cece49ce4a0d59d17ab0ad7c"
@@ -1892,12 +1883,12 @@
     deep-equal "^2.2.0"
     hashids "^2.2.10"
 
-"@navikt/familie-sprakvelger@^10.0.0":
-  version "10.0.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/familie-sprakvelger/10.0.0/35c7ddbecc55e4741c80aa12404860e287b98871#35c7ddbecc55e4741c80aa12404860e287b98871"
-  integrity sha512-0efA+y5oNHQNpA0+/Zz3UbN4R2SomBsTPVZauQGz7KSLZQCfJ+0pBi4RtQ2lkEIrqPAzGr+epTQ8xmUtnHXAoQ==
+"@navikt/familie-sprakvelger@^10.0.1":
+  version "10.0.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-sprakvelger/10.0.1/e8948eb8b38481f489c9fb4beb43e2f504367d39#e8948eb8b38481f489c9fb4beb43e2f504367d39"
+  integrity sha512-6cAjRdfyyXGW2jO1YrzyUWyPXb7Gg9A6Aa9PRo3uQRZdmgSGqZC66xmheeZ1Y3Tx/78DFLPpUJbDmWYzei6zJQ==
   dependencies:
-    "@navikt/familie-form-elements" "^12.0.0"
+    "@navikt/familie-form-elements" "^13.0.0"
     "@types/react-aria-menubutton" "^6.2.9"
     react-aria-menubutton "^7.0.3"
 
