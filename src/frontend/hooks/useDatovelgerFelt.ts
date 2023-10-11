@@ -28,17 +28,20 @@ const useDatovelgerFelt = ({
         verdi: søknadsfelt.svar,
         valideringsfunksjon: (felt, avhengigheter) => {
             const feilmeldingSpråkId = avhengigheter && avhengigheter.feilmeldingSpråkId;
+            const startdatoAvgrensningOppdatert =
+                avhengigheter && avhengigheter.startdatoAvgrensning;
 
             return validerDato(
                 felt,
                 feilmeldingSpråkId,
-                startdatoAvgrensning,
+                startdatoAvgrensningOppdatert,
                 sluttdatoAvgrensning,
                 customStartdatoFeilmelding
             );
         },
         skalFeltetVises: avhengigheter => avhengigheter?.skalFeltetVises,
         avhengigheter: {
+            startdatoAvgrensning,
             skalFeltetVises,
             feilmeldingSpråkId,
             ...avhengigheter,
