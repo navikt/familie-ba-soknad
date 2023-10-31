@@ -1,9 +1,5 @@
 import { initialize } from 'unleash-client';
 
-import { logInfo } from '@navikt/familie-logging';
-
-logInfo(`********** UNLEASH_SERVER_API_URL :${process.env.UNLEASH_SERVER_API_URL}/api`);
-
 const unleash = initialize({
     url:
         process.env.UNLEASH_SERVER_API_URL + '/api' ??
