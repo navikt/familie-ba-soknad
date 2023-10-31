@@ -1,24 +1,13 @@
-import { initialize, Strategy } from 'unleash-client';
-
-class ByClusterStrategy extends Strategy {
-    private cluster: string = process.env.NAIS_CLUSTER_NAME ?? 'lokalutvikling';
-
-    constructor() {
-        super('byCluster');
-    }
-
-    isEnabled(parameters: Record<string, string> | undefined): boolean {
-        const clustersKommaseparert: string = parameters ? parameters['cluster'] : '';
-        const clusters = clustersKommaseparert.split(',');
-
-        return !!clusters.find(enabletForCluster => enabletForCluster === this.cluster);
-    }
-}
+import { initialize } from 'unleash-client';
 
 const unleash = initialize({
-    url: 'https://unleash.nais.io/api/',
+    url:
+        process.env.UNLEASH_SERVER_API_URL ??
+        'https://teamfamilie-unleash-api.nav.cloud.nais.io/api',
+    customHeaders: {
+        Authorization: process.env.UNLEASH_SERVER_API_TOKEN ?? '',
+    },
     appName: process.env.NAIS_APP_NAME ?? 'familie-ba-soknad',
-    strategies: [new ByClusterStrategy()],
 });
 
 export const isEnabled = (feature: string, defaultValue?: boolean): boolean => {
