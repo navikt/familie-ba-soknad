@@ -1,9 +1,11 @@
 import { initialize } from 'unleash-client';
 
+const UNLEASH_SERVER_API_URL = process.env.UNLEASH_SERVER_API_URL
+    ? process.env.UNLEASH_SERVER_API_URL + '/api'
+    : 'https://teamfamilie-unleash-api.nav.cloud.nais.io/api';
+
 const unleash = initialize({
-    url:
-        process.env.UNLEASH_SERVER_API_URL + '/api' ??
-        'https://teamfamilie-unleash-api.nav.cloud.nais.io/api',
+    url: UNLEASH_SERVER_API_URL,
     customHeaders: {
         Authorization: process.env.UNLEASH_SERVER_API_TOKEN ?? '',
     },
