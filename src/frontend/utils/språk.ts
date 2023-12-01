@@ -56,7 +56,11 @@ export const toSlektsforholdSpråkId = (slektsforhold: Slektsforhold): string =>
 };
 
 export const landkodeTilSpråk = (landkode: Alpha3Code | '', locale: string): string => {
-    return landkode ? getName(alpha3ToAlpha2(landkode), locale) : AlternativtSvarForInput.UKJENT;
+    const alpha3ToAlpha2Land = landkode && alpha3ToAlpha2(landkode);
+    return (
+        (alpha3ToAlpha2Land && getName(alpha3ToAlpha2Land, locale)) ??
+        AlternativtSvarForInput.UKJENT
+    );
 };
 
 const stripSpråkfil = (språkfilInnhold: Record<string, string>): Record<string, string> => {
