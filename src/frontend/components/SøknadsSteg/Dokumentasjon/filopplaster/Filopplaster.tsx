@@ -83,7 +83,7 @@ const Filopplaster: React.FC<Props> = ({
         <>
             <FilopplastningBoks type={'button'} {...getRootProps()} $harFeil={harFeil}>
                 <input {...getInputProps()} />
-                <StyledUpload focusable={false} />
+                <StyledUpload focusable={false} aria-hidden />
                 <BodyShort>
                     <SpråkTekst
                         id={
