@@ -6,12 +6,16 @@ Frontend - søknad for barnetrygd.
 1. Node versjon >=18.13.0
 
 
-## Log in på https://npm.pkg.github.com
-På github -> Settings -> Developer Settings -> Generate New Token
+## Logg inn på https://npm.pkg.github.com
+1. På github -> Settings -> Developer Settings -> Generate New Token
 Select scopes `repo` og `read:packages`
-
-eksporter miljøvariabel NPM_TOKEN, f eks ved å legge til 
+2. Eksporter miljøvariabel NPM_TOKEN, f.eks ved å legge til 
 `export NPM_TOKEN=<ditt token>` i ~/.zshrc
+
+## Legg til token for unleash for lokalmiljø
+1. Generer personlig token på [unleash](https://teamfamilie-unleash-web.nav.cloud.nais.io/profile/personal-api-tokens?sort=createdAt)
+2. Eksporter miljøvariabel UNLEASH_SERVER_API_TOKEN, f.eks ved å legge til
+`export UNLEASH_SERVER_API_TOKEN=<ditt token>` i ~/.zshrc
 
 ## Kjør lokalt
 
