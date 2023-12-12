@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 
 interface Props {
     controlsId: string;
@@ -11,7 +12,7 @@ interface Props {
     onToggle: () => void;
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled(Button)`
     border: none;
     background: transparent;
     padding: 0;
@@ -65,6 +66,7 @@ const InfoToggleButton = (props: Props) => {
             type="button"
             onClick={onToggle}
             aria-expanded={isOpen}
+            variant={'tertiary'}
             aria-controls={controlsId}
         >
             <ButtonInnholdWrapper>
