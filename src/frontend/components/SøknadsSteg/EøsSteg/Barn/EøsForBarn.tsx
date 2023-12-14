@@ -183,7 +183,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             )}
 
             {!skalSkjuleAndreForelderFelt(barn) && (
-                <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
+                <SkjemaFieldset legendSpråkId={'ombarnet.andre-forelder'}>
                     {!barnMedSammeForelder ? (
                         <>
                             <IdNummerForAndreForelder

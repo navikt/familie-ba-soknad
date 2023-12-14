@@ -6,7 +6,7 @@ import { Fieldset } from '@navikt/ds-react';
 
 import SpråkTekst from './SpråkTekst/SpråkTekst';
 
-const Container = styled(Fieldset)`
+const StyledFieldset = styled(Fieldset)`
     border: none;
     padding: 0;
 
@@ -20,16 +20,16 @@ const ChildContainer = styled.div`
 `;
 
 const SkjemaFieldset: React.FC<{
-    tittelId: string;
+    legendSpråkId: string;
     språkValues?: { [key: string]: ReactNode };
     dynamisk?: boolean;
     children?: ReactNode;
-}> = ({ tittelId, språkValues, dynamisk = false, children }) => {
+}> = ({ legendSpråkId, språkValues, dynamisk = false, children }) => {
     const childrenLengde = React.Children.count(children);
     return (
-        <Container
+        <StyledFieldset
             aria-live={dynamisk ? 'polite' : 'off'}
-            legend={<SpråkTekst id={tittelId} values={språkValues} />}
+            legend={<SpråkTekst id={legendSpråkId} values={språkValues} />}
         >
             {React.Children.map(children, (child, index) => {
                 return (
@@ -41,7 +41,7 @@ const SkjemaFieldset: React.FC<{
                     ))
                 );
             })}
-        </Container>
+        </StyledFieldset>
     );
 };
 
