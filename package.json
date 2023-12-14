@@ -23,7 +23,8 @@
     "typecheck": "tsc --noEmit -p src/frontend/tsconfig.json",
     "texts:find-unused": "python3 src/scripts/finn-ubrukte-språktekster.py",
     "texts:find-missing": "node src/scripts/find-missing-text-ids.js",
-    "texts:cleanup": "src/scripts/formater-tekster.sh src/frontend/assets/lang"
+    "texts:cleanup": "src/scripts/formater-tekster.sh src/frontend/assets/lang",
+    "prepare": "husky install"
   },
   "jest": {
     "roots": [
@@ -61,11 +62,6 @@
       "\\.[jt]sx?$": "babel-jest"
     },
     "resetMocks": true
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && yarn run typecheck"
-    }
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,css}": [
@@ -193,7 +189,7 @@
     "file-loader": "^6.2.0",
     "html-react-parser": "^4.2.10",
     "html-webpack-plugin": "^5.5.3",
-    "husky": "^4.3.8",
+    "husky": "^8.0.3",
     "intl": "^1.2.5",
     "jest": "29.7.0",
     "jest-circus": "29.7.0",
