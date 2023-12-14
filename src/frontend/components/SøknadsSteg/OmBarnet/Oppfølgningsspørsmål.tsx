@@ -88,7 +88,10 @@ const Oppfølgningsspørsmål: React.FC<{
             )}
 
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
-                <SkjemaFieldset tittelId={'ombarnet.institusjon'} språkValues={{ navn: barn.navn }}>
+                <SkjemaFieldset
+                    legendSpråkId={'ombarnet.institusjon'}
+                    språkValues={{ navn: barn.navn }}
+                >
                     <SkjemaCheckbox
                         labelSpråkTekstId={
                             omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.institusjonIUtland]
@@ -166,7 +169,7 @@ const Oppfølgningsspørsmål: React.FC<{
             )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
-                    tittelId={'ombarnet.opplystatbarnutlandopphold.info'}
+                    legendSpråkId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barn.navn }}
                 >
                     {utenlandsperioder.map((periode, index) => (
@@ -223,7 +226,7 @@ const Oppfølgningsspørsmål: React.FC<{
             )}
             {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
                 <SkjemaFieldset
-                    tittelId={'ombarnet.barnetrygd-eøs'}
+                    legendSpråkId={'ombarnet.barnetrygd-eøs'}
                     språkValues={{ navn: barn.navn }}
                 >
                     <KomponentGruppe>

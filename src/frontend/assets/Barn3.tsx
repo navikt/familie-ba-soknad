@@ -12,6 +12,7 @@ const Barn3: React.FC = () => {
             viewBox="0 0 63 90"
             xmlns="http://www.w3.org/2000/svg"
             aria-label={formatMessage({ id: 'felles.barneillustrasjon.tittel' })}
+            role="img"
         >
             <defs>
                 <path

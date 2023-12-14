@@ -44,7 +44,7 @@ const AndreForelder: React.FC<{
     );
 
     return (
-        <SkjemaFieldset tittelId={'ombarnet.andre-forelder'}>
+        <SkjemaFieldset legendSpråkId={'ombarnet.andre-forelder'}>
             <KomponentGruppe>
                 {skjema.felter.sammeForelderSomAnnetBarn.erSynlig && (
                     <SammeSomAnnetBarnRadio
