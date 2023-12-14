@@ -77,7 +77,7 @@ const SamboerOpplysninger: React.FC<{
                 type={'button'}
                 variant={'tertiary'}
                 onClick={() => fjernTidligereSamboer(samboer)}
-                icon={<TrashFillIcon />}
+                icon={<TrashFillIcon aria-hidden />}
             >
                 <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />
             </StyledButton>

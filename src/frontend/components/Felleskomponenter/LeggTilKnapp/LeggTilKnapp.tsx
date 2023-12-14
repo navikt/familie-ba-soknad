@@ -30,7 +30,7 @@ export const LeggTilKnapp: React.FC<Props> = ({ onClick, språkTekst, feilmeldin
             type={'button'}
             onClick={onClick}
             $feilmelding={!!feilmelding}
-            icon={<PlusCircleIcon />}
+            icon={<PlusCircleIcon aria-hidden />}
         >
             <SpråkTekst id={språkTekst} />
         </StyledButton>
