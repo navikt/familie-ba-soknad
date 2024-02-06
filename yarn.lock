@@ -11047,10 +11047,10 @@ universalify@^2.0.0:
   resolved "https://registry.npmjs.org/universalify/-/universalify-2.0.1.tgz#168efc2180964e6386d061e094df61afe239b18d"
   integrity sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==
 
-unleash-client@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.npmjs.org/unleash-client/-/unleash-client-5.3.0.tgz#d6099537000f478fb13a030747a6241d6fa81326"
-  integrity sha512-wjxaokbojFtOawh6X1wRo8X4dVZdW6oXdOFUY6rvFeMV/z4wRoer3ZZK762ygS6JEbQDuMSlZkvkOZ2AfweDnA==
+unleash-client@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.npmjs.org/unleash-client/-/unleash-client-5.4.0.tgz#66d9684bdfeaabd618a65734ec7345767ec1b7e2"
+  integrity sha512-1MOAy/uTTv7y5upt7plZ5inAqzNo1MN+nIaM9WDZzAeQt+0xTPrxzwzYdzqPWnPkEUu3WbHKyyRgeOOKdB6r3w==
   dependencies:
     ip "^1.1.8"
     make-fetch-happen "^10.2.1"
