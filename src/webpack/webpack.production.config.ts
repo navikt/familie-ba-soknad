@@ -28,9 +28,6 @@ const prodConfig: webpack.Configuration = mergeWithRules({
                   project: 'familie-ba-soknad',
                   authToken: process.env.SENTRY_AUTH_TOKEN,
                   url: 'https://sentry.gc.nav.no/',
-                  release: {
-                      name: process.env.SENTRY_RELEASE,
-                  },
                   errorHandler: err => {
                       console.warn('Sentry CLI Plugin: ' + err.message);
                   },
