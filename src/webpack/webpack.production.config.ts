@@ -25,7 +25,7 @@ const prodConfig: webpack.Configuration = mergeWithRules({
         process.env.SENTRY_AUTH_TOKEN
             ? sentryWebpackPlugin({
                   sourcemaps: {
-                      assets: ['.dist/**/*'],
+                      assets: [`~${process.env.BASE_PATH}/dist'`],
                   },
                   org: 'nav',
                   project: 'familie-ba-soknad',
