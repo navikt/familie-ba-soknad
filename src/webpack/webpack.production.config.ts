@@ -24,9 +24,6 @@ const prodConfig: webpack.Configuration = mergeWithRules({
         new CssMinimizerWebpackPlugin(),
         process.env.SENTRY_AUTH_TOKEN
             ? sentryWebpackPlugin({
-                  sourcemaps: {
-                      assets: ['dist'],
-                  },
                   org: 'nav',
                   project: 'familie-ba-soknad',
                   authToken: process.env.SENTRY_AUTH_TOKEN,
