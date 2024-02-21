@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 
-import { GuidePanel, Heading } from '@navikt/ds-react';
+import { Button, GuidePanel, Heading } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -52,6 +52,13 @@ const Forside: React.FC = () => {
 
     return (
         <InnholdContainer>
+            <Button
+                onClick={() => {
+                    throw new Error('Dette er en testfeil');
+                }}
+            >
+                Error
+            </Button>
             <GuidePanel>
                 <SpråkTekst id={'forside.veilederhilsen'} values={{ navn: navn.toUpperCase() }} />
             </GuidePanel>
