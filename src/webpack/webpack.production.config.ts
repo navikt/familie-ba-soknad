@@ -1,4 +1,4 @@
-import SentryCliPlugin from '@sentry/webpack-plugin';
+import { sentryWebpackPlugin } from '@sentry/webpack-plugin';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserWebpackPlugin from 'terser-webpack-plugin';
@@ -23,18 +23,20 @@ const prodConfig: webpack.Configuration = mergeWithRules({
         }),
         new CssMinimizerWebpackPlugin(),
         process.env.SENTRY_AUTH_TOKEN
-            ? new SentryCliPlugin({
-                  include: 'dist',
+            ? sentryWebpackPlugin({
                   org: 'nav',
                   project: 'familie-ba-soknad',
                   authToken: process.env.SENTRY_AUTH_TOKEN,
                   url: 'https://sentry.gc.nav.no/',
-                  release: process.env.SENTRY_RELEASE,
-                  urlPrefix: `~${process.env.BASE_PATH}`,
-                  errorHandler: (err, _, compilation) => {
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      // @ts-ignore
-                      compilation.warnings.push('Sentry CLI Plugin: ' + err.message);
+                  release: {
+                      name: process.env.SENTRY_RELEASE,
+                      uploadLegacySourcemaps: {
+                          paths: ['dist'],
+                          urlPrefix: `~${process.env.BASE_PATH}`,
+                      },
+                  },
+                  errorHandler: err => {
+                      console.warn('Sentry CLI Plugin: ' + err.message);
                   },
               })
             : undefined,
