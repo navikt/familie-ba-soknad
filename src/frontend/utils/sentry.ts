@@ -70,6 +70,6 @@ export const initSentry = () => {
             /dekoratoren\/client/,
         ],
         beforeSend: fjernPersonopplysninger,
-        // enabled: process.env.NODE_ENV === 'development',
+        enabled: process.env.NODE_ENV !== 'development',
     });
 };
