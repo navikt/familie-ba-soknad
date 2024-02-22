@@ -24,19 +24,16 @@ const prodConfig: webpack.Configuration = mergeWithRules({
         new CssMinimizerWebpackPlugin(),
         process.env.SENTRY_AUTH_TOKEN
             ? sentryWebpackPlugin({
-                  sourcemaps: {
-                      assets: [`~${process.env.BASE_PATH}/dist'`],
-                  },
                   org: 'nav',
                   project: 'familie-ba-soknad',
                   authToken: process.env.SENTRY_AUTH_TOKEN,
                   url: 'https://sentry.gc.nav.no/',
                   release: {
                       name: process.env.SENTRY_RELEASE,
-                      // uploadLegacySourcemaps: {
-                      //     paths: ['dist'],
-                      //     urlPrefix: `~${process.env.BASE_PATH}`,
-                      // },
+                      uploadLegacySourcemaps: {
+                          paths: ['dist'],
+                          urlPrefix: `~${process.env.BASE_PATH}`,
+                      },
                   },
                   errorHandler: err => {
                       console.warn('Sentry CLI Plugin: ' + err.message);
