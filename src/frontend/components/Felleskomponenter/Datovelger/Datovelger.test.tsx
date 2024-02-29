@@ -75,7 +75,7 @@ describe('Datovelger', () => {
         act(() => tilOgMedÅpneknapp.click());
         const forrigeDag = container.querySelector('[aria-label="torsdag 9"]');
 
-        expect(forrigeDag?.getAttribute('disabled')).not.toBeNull();
+        expect(forrigeDag).toBeDisabled();
     });
 
     it('kan avgrenses frem i tid', () => {
@@ -114,6 +114,6 @@ describe('Datovelger', () => {
 
         act(() => datovelgerÅpneKnapp.click());
         const nesteDag = container.querySelector('[aria-label="lørdag 11"]');
-        expect(nesteDag?.getAttribute('disabled')).not.toBeNull();
+        expect(nesteDag).toBeDisabled();
     });
 });
