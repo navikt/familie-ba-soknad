@@ -3,7 +3,7 @@
 Frontend - søknad for barnetrygd.
 
 ## Avhengigheter
-1. Node versjon >=18.13.0
+1. Node versjon >=18.13.0, <20
 
 
 ## Logg inn på https://npm.pkg.github.com
