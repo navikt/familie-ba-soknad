@@ -61,12 +61,7 @@ describe('Datovelger', () => {
 
         const { getAllByRole } = render(
             <TestProvidere>
-                <Datovelger
-                    felt={current.fraOgMed}
-                    skjema={skjemaMock}
-                    label={'test-fra-og-med'}
-                    data-testid="test-fra-og-med"
-                />
+                <Datovelger felt={current.fraOgMed} skjema={skjemaMock} label={'test-fra-og-med'} />
                 <Datovelger
                     felt={current.tilOgMed}
                     tilhørendeFraOgMedFelt={current.fraOgMed}
