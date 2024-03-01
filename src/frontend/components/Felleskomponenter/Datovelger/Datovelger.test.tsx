@@ -59,7 +59,7 @@ describe('Datovelger', () => {
             visFeilmeldinger: true,
         });
 
-        const { getAllByRole, container } = render(
+        const { getAllByRole } = render(
             <TestProvidere>
                 <Datovelger felt={current.fraOgMed} skjema={skjemaMock} label={'test-fra-og-med'} />
                 <Datovelger
@@ -71,11 +71,14 @@ describe('Datovelger', () => {
             </TestProvidere>
         );
 
-        const tilOgMedÅpneknapp = getAllByRole('button')[1];
+        const [, tilOgMedÅpneknapp] = getAllByRole('button');
         act(() => tilOgMedÅpneknapp.click());
-        const forrigeDag = container.querySelector('[aria-label="torsdag 9"]');
 
-        expect(forrigeDag?.getAttribute('disabled')).not.toBeNull();
+        const [tilOgMedKalender] = getAllByRole('dialog');
+
+        const forrigeDag = tilOgMedKalender.querySelector('[aria-label="torsdag 9"]');
+
+        expect(forrigeDag).toBeDisabled();
     });
 
     it('kan avgrenses frem i tid', () => {
@@ -114,6 +117,6 @@ describe('Datovelger', () => {
 
         act(() => datovelgerÅpneKnapp.click());
         const nesteDag = container.querySelector('[aria-label="lørdag 11"]');
-        expect(nesteDag?.getAttribute('disabled')).not.toBeNull();
+        expect(nesteDag).toBeDisabled();
     });
 });
