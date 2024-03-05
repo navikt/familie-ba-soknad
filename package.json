@@ -24,7 +24,7 @@
     "texts:find-unused": "python3 src/scripts/finn-ubrukte-språktekster.py",
     "texts:find-missing": "node src/scripts/find-missing-text-ids.js",
     "texts:cleanup": "src/scripts/formater-tekster.sh src/frontend/assets/lang",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "jest": {
     "roots": [
