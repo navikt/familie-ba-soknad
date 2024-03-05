@@ -1,4 +1,4 @@
-export enum EToggle {
+export enum EKillSwitchToggle {
     ORDINAER = 'familie-ba-soknad.disable-soknad-ordinaer',
     UTVIDET = 'familie-ba-soknad.disable-soknad-utvidet',
 }
