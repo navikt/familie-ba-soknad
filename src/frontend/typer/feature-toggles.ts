@@ -3,9 +3,13 @@ export enum EToggle {
     UTVIDET = 'familie-ba-soknad.disable-soknad-utvidet',
 }
 
-export enum EFeatureToggle {}
+export enum EFeatureToggle {
+    KOMBINER_SOKNADER = 'KOMBINER_SOKNADER',
+}
 
-export const ToggleKeys: Record<EFeatureToggle, string> = {};
+export const ToggleKeys: Record<EFeatureToggle, string> = {
+    KOMBINER_SOKNADER: 'familie-ba-soknad.kombiner-soknader',
+};
 
 export type EAllFeatureToggles = Record<EFeatureToggle, boolean>;
 
