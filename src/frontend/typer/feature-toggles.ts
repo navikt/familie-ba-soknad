@@ -8,7 +8,7 @@ export enum EFeatureToggle {
 }
 
 export const ToggleKeys: Record<EFeatureToggle, string> = {
-    KOMBINER_SOKNADER: 'familie-ba-soknad.kombiner-soknader',
+    [EFeatureToggle.KOMBINER_SOKNADER]: 'familie-ba-soknad.kombiner-soknader',
 };
 
 export type EAllFeatureToggles = Record<EFeatureToggle, boolean>;
