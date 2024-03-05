@@ -210,7 +210,7 @@
     "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.3",
     "styled-components": "^6.1.1",
-    "terser": "^5.26.0",
+    "terser": "^5.28.1",
     "terser-webpack-plugin": "^5.3.9",
     "ts-essentials": "^9.4.1",
     "ts-jest": "^29.1.1",
