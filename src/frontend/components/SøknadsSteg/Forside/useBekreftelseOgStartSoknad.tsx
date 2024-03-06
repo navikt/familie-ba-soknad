@@ -23,7 +23,6 @@ export const useBekreftelseOgStartSoknad = (): {
     startPåNytt: () => void;
     visStartPåNyttModal: boolean;
     settVisStartPåNyttModal: (synlig: boolean) => void;
-    søknadstype: ESøknadstype | undefined;
     settSøknadstype: (søknadstype: ESøknadstype) => void;
     søknadstypeFeil: boolean;
     settSøknadstypeFeil: (søknadstypeFeil: boolean) => void;
@@ -47,7 +46,7 @@ export const useBekreftelseOgStartSoknad = (): {
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
     );
 
-    const [søknadstype, settSøknadstype] = useState<ESøknadstype | undefined>(undefined);
+    const [søknadstype, settSøknadstype] = useState<ESøknadstype>();
     const [søknadstypeFeil, settSøknadstypeFeil] = useState<boolean>(false);
 
     const [gjenopprettetFraMellomlagring, settGjenpprettetFraMellomlagring] = useState(false);
@@ -118,7 +117,6 @@ export const useBekreftelseOgStartSoknad = (): {
         onStartSøknad,
         bekreftelseOnChange,
         bekreftelseStatus,
-        søknadstype,
         settSøknadstype,
         fortsettPåSøknaden,
         startPåNytt,

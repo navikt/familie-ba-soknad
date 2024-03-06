@@ -43,7 +43,6 @@ const BekreftelseOgStartSoknad: React.FC = () => {
         onStartSøknad,
         bekreftelseOnChange,
         bekreftelseStatus,
-        søknadstype,
         settSøknadstype,
         søknadstypeFeil,
         settSøknadstypeFeil,
@@ -58,7 +57,6 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                         settSøknadstype(value);
                         settSøknadstypeFeil(false);
                     }}
-                    value={søknadstype}
                     error={søknadstypeFeil && 'Du må velge søknadstype'} // TODO: Skal hente tekst fra Sanity
                 >
                     <Radio value={ESøknadstype.UTVIDET}>Ja</Radio>
