@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISteg } from '../../../typer/routes';
 import { logForsettPåSøknad, logSkjemaStartet } from '../../../utils/amplitude';
@@ -41,6 +43,7 @@ export const useBekreftelseOgStartSoknad = (): {
         mellomlagretVerdi,
     } = useApp();
     const { settBarnSomTriggerEøs, skalTriggeEøsForBarn, settSøkerTriggerEøs } = useEøs();
+    const { toggles } = useFeatureToggles();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
@@ -56,7 +59,11 @@ export const useBekreftelseOgStartSoknad = (): {
 
     useEffect(() => {
         if (gjenopprettetFraMellomlagring && mellomlagretVerdi) {
-            navigate(steg[mellomlagretVerdi.sisteUtfylteStegIndex].path);
+            const sisteUtfylteSteg =
+                mellomlagretVerdi.sisteUtfylteStegIndex == 0
+                    ? 1
+                    : mellomlagretVerdi.sisteUtfylteStegIndex;
+            navigate(steg[sisteUtfylteSteg].path);
             settGjenpprettetFraMellomlagring(false);
         }
     }, [gjenopprettetFraMellomlagring]);
@@ -87,22 +94,38 @@ export const useBekreftelseOgStartSoknad = (): {
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();
-        if (bekreftelseStatus === BekreftelseStatus.BEKREFTET && søknadstype != undefined) {
-            settSøknadstypeFeil(false);
-            settSøknad({
-                ...søknad,
-                lestOgForståttBekreftelse: true,
-                søknadstype: søknadstype,
-            });
-            if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
-                settSisteUtfylteStegIndex(nåværendeStegIndex);
+        if (toggles[EFeatureToggle.KOMBINER_SOKNADER]) {
+            if (bekreftelseStatus === BekreftelseStatus.BEKREFTET && søknadstype != undefined) {
+                settSøknadstypeFeil(false);
+                settSøknad({
+                    ...søknad,
+                    lestOgForståttBekreftelse: true,
+                    søknadstype: søknadstype,
+                });
+                if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
+                    settSisteUtfylteStegIndex(nåværendeStegIndex);
+                }
+                logSkjemaStartet();
+                navigate(nesteRoute.path);
+            } else {
+                søknadstype === undefined && settSøknadstypeFeil(true);
+                bekreftelseStatus !== BekreftelseStatus.BEKREFTET &&
+                    settBekreftelseStatus(BekreftelseStatus.FEIL);
             }
-            logSkjemaStartet();
-            navigate(nesteRoute.path);
         } else {
-            søknadstype === undefined && settSøknadstypeFeil(true);
-            bekreftelseStatus !== BekreftelseStatus.BEKREFTET &&
+            if (bekreftelseStatus === BekreftelseStatus.BEKREFTET) {
+                settSøknad({
+                    ...søknad,
+                    lestOgForståttBekreftelse: true,
+                });
+                if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
+                    settSisteUtfylteStegIndex(nåværendeStegIndex);
+                }
+                logSkjemaStartet();
+                navigate(nesteRoute.path);
+            } else {
                 settBekreftelseStatus(BekreftelseStatus.FEIL);
+            }
         }
     };
 
