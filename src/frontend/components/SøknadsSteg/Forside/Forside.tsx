@@ -38,10 +38,15 @@ const StyledAlertStripeUtvidetInfo = styled(FamilieAlert)`
 `;
 
 const Forside: React.FC = () => {
-    const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad, settNåværendeRoute, settSøknad } =
-        useApp();
+    const { sluttbruker, mellomlagretVerdi, søknad, settNåværendeRoute, settSøknad } = useApp();
 
     const { toggles } = useFeatureToggles();
+    const kombinerSøknaderToggle = toggles[EFeatureToggle.KOMBINER_SOKNADER];
+
+    const erUtvidet =
+        kombinerSøknaderToggle && mellomlagretVerdi
+            ? mellomlagretVerdi.søknad.søknadstype === ESøknadstype.UTVIDET
+            : søknad.søknadstype === ESøknadstype.UTVIDET;
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
 
@@ -52,7 +57,7 @@ const Forside: React.FC = () => {
     const kanFortsettePåSøknad =
         mellomlagretVerdi &&
         mellomlagretVerdi.modellVersjon === Miljø().modellVersjon &&
-        mellomlagretVerdi.søknad.søknadstype === søknad.søknadstype;
+        (kombinerSøknaderToggle || mellomlagretVerdi.søknad.søknadstype === søknad.søknadstype);
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 

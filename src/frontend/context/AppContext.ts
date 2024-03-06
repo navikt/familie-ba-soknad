@@ -130,7 +130,10 @@ const [AppProvider, useApp] = createUseContext(() => {
     };
 
     useEffect(() => {
-        if (sisteUtfylteStegIndex > 0) {
+        if (
+            (toggles[EFeatureToggle.KOMBINER_SOKNADER] && sisteUtfylteStegIndex > -1) ||
+            sisteUtfylteStegIndex > 0
+        ) {
             mellomlagre();
         }
     }, [nåværendeRoute, søknad.dokumentasjon]);
@@ -172,7 +175,6 @@ const [AppProvider, useApp] = createUseContext(() => {
         const initialSøknad = initialStateSøknad(toggles[EFeatureToggle.KOMBINER_SOKNADER]);
         settSøknad({
             ...initialSøknad,
-            søknadstype: søknad.søknadstype,
             søker: {
                 ...initialSøknad.søker,
                 ident: søker.ident,
