@@ -34,6 +34,7 @@ import { getRoutes, RoutesProvider } from '../context/RoutesContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
+import { EFeatureToggle } from '../typer/feature-toggles';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { ISøker, ISøkerRespons } from '../typer/person';
@@ -146,7 +147,7 @@ export const mockFeatureToggle = () => {
         .spyOn(featureToggleContext, 'useFeatureToggles')
         .mockImplementation(
             jest.fn().mockReturnValue({
-                // toggles: { [EFeatureToggle.EXAMPLE]: false },
+                toggles: { [EFeatureToggle.KOMBINER_SOKNADER]: false },
             })
         );
     return { useFeatureToggle };

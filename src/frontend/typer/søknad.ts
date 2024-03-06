@@ -49,7 +49,7 @@ export const hentSøknadstype = () => {
         : ESøknadstype.ORDINÆR;
 };
 
-export const initialStateSøknad = (kombinerSøknaderToggle: boolean): ISøknad => {
+export const initialStateSøknad = (kombinerSøknaderToggle: boolean = false): ISøknad => {
     return {
         søknadstype: kombinerSøknaderToggle ? ESøknadstype.ORDINÆR : hentSøknadstype(),
         erEøs: false,
