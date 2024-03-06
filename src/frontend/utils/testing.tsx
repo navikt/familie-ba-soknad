@@ -248,7 +248,7 @@ export const LesUtLocation = () => {
 
 export const mekkGyldigSøker = (): ISøker => {
     return {
-        ...initialStateSøknad.søker,
+        ...initialStateSøknad(false).søker,
         sivilstand: { type: ESivilstand.UGIFT },
         harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
         utenlandsperioder: [],
@@ -296,7 +296,7 @@ export const mekkGyldigSøker = (): ISøker => {
 
 export const mekkGyldigSøknad = (): ISøknad => {
     return {
-        ...initialStateSøknad,
+        ...initialStateSøknad(false),
         søknadstype: ESøknadstype.ORDINÆR,
         lestOgForståttBekreftelse: true,
         søker: mekkGyldigSøker(),

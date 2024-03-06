@@ -2,13 +2,16 @@ import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 
-import { GuidePanel, Heading } from '@navikt/ds-react';
+import { GuidePanel, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø from '../../../../shared-utils/Miljø';
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
+import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { RouteEnum } from '../../../typer/routes';
 import { logSidevisningBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -35,7 +38,10 @@ const StyledAlertStripeUtvidetInfo = styled(FamilieAlert)`
 `;
 
 const Forside: React.FC = () => {
-    const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad, settNåværendeRoute } = useApp();
+    const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad, settNåværendeRoute, settSøknad } =
+        useApp();
+
+    const { toggles } = useFeatureToggles();
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
 
@@ -88,7 +94,26 @@ const Forside: React.FC = () => {
                 )}
             </Informasjonsbolk>
 
-            {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
+            {kanFortsettePåSøknad ? (
+                <FortsettPåSøknad />
+            ) : (
+                <>
+                    {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
+                        <RadioGroup
+                            legend={
+                                'Vil du søke om utvidet barnetrygd i tillegg til ordinær barnetrygd?'
+                            } // TODO: Skal hente tekster fra Sanity
+                            onChange={(value: ESøknadstype) =>
+                                settSøknad({ ...søknad, søknadstype: value })
+                            }
+                        >
+                            <Radio value={ESøknadstype.UTVIDET}>Ja</Radio>
+                            <Radio value={ESøknadstype.ORDINÆR}>Nei</Radio>
+                        </RadioGroup>
+                    )}
+                    <BekreftelseOgStartSoknad />
+                </>
+            )}
 
             <Informasjonsbolk>
                 <EksternLenke

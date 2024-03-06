@@ -14,6 +14,7 @@ import {
 
 import Miljø, { basePath } from '../../shared-utils/Miljø';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { EFeatureToggle } from '../typer/feature-toggles';
 import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
@@ -24,6 +25,7 @@ import { InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/barn';
 
 import { preferredAxios } from './axios';
+import { useFeatureToggles } from './FeatureToggleContext';
 import { useInnloggetContext } from './InnloggetContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 import { hentSluttbrukerFraPdl } from './pdl';
@@ -31,11 +33,14 @@ import { hentSluttbrukerFraPdl } from './pdl';
 const [AppProvider, useApp] = createUseContext(() => {
     const [valgtLocale] = useSprakContext();
     const intl = useIntl();
+    const { toggles } = useFeatureToggles();
     const { axiosRequest, lasterRessurser } = useLastRessurserContext();
     const { innloggetStatus } = useInnloggetContext();
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>());
     const [eøsLand, settEøsLand] = useState(byggTomRessurs<Map<Alpha3Code, string>>());
-    const [søknad, settSøknad] = useState<ISøknad>(initialStateSøknad);
+    const [søknad, settSøknad] = useState<ISøknad>(
+        initialStateSøknad(toggles[EFeatureToggle.KOMBINER_SOKNADER])
+    );
     const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
@@ -164,11 +169,12 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     const nullstillSøknadsobjekt = () => {
         const søker = søknad.søker;
+        const initialSøknad = initialStateSøknad(toggles[EFeatureToggle.KOMBINER_SOKNADER]);
         settSøknad({
-            ...initialStateSøknad,
+            ...initialSøknad,
             søknadstype: søknad.søknadstype,
             søker: {
-                ...initialStateSøknad.søker,
+                ...initialSøknad.søker,
                 ident: søker.ident,
                 navn: søker.navn,
                 barn: søker.barn,

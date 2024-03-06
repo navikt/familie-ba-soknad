@@ -49,172 +49,174 @@ export const hentSøknadstype = () => {
         : ESøknadstype.ORDINÆR;
 };
 
-export const initialStateSøknad: ISøknad = {
-    søknadstype: hentSøknadstype(),
-    erEøs: false,
-    barnInkludertISøknaden: [],
-    lestOgForståttBekreftelse: false,
-    barnRegistrertManuelt: [],
-    dokumentasjon: [
-        genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
-            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.AVTALE_DELT_BOSTED),
-            'dokumentasjon.deltbosted.informasjon'
-        ),
-        genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
-            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE),
-            'dokumentasjon.oppholdstillatelse.informasjon'
-        ),
-        genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.ADOPSJON_DATO,
-            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.ADOPSJON_DATO),
-            'dokumentasjon.adopsjon.informasjon'
-        ),
-        genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
-            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN),
-            'dokumentasjon.bekreftelsebarnevernet.informasjon'
-        ),
-        genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
-            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.BOR_FAST_MED_SØKER),
-            'dokumentasjon.bekreftelseborsammen.informasjon'
-        ),
-        genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
-            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.SEPARERT_SKILT_ENKE),
-            'dokumentasjon.separasjonskilsmissedødsfall.informasjon'
-        ),
-        genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.MEKLINGSATTEST,
-            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.MEKLINGSATTEST),
-            'dokumentasjon.meklingsattest.informasjon'
-        ),
-        genererInitiellDokumentasjon(
-            Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
-            dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.ANNEN_DOKUMENTASJON),
-            hentSøknadstype() === ESøknadstype.UTVIDET
-                ? 'dokumentasjon.annendokumentasjon.utvidet.informasjon'
-                : null
-        ),
-    ],
-    søker: {
-        navn: '',
-        barn: [],
-        triggetEøs: false,
-        statsborgerskap: [],
-        ident: '',
-        sivilstand: { type: ESivilstand.UOPPGITT },
-        adressebeskyttelse: false,
-        adresse: {
-            adressenavn: '',
-            husbokstav: '',
-            husnummer: '',
-            bruksenhetsnummer: '',
-            postnummer: '',
-            poststed: '',
-        },
-        utenlandsperioder: [],
-        borPåRegistrertAdresse: {
-            id: OmDegSpørsmålId.borPåRegistrertAdresse,
-            svar: null,
-        },
-        værtINorgeITolvMåneder: {
-            id: OmDegSpørsmålId.værtINorgeITolvMåneder,
-            svar: null,
-        },
-        planleggerÅBoINorgeTolvMnd: {
-            id: OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd,
-            svar: null,
-        },
-        erAsylsøker: {
-            id: DinLivssituasjonSpørsmålId.erAsylsøker,
-            svar: null,
-        },
-        arbeidIUtlandet: {
-            id: DinLivssituasjonSpørsmålId.arbeidIUtlandet,
-            svar: null,
-        },
-        mottarUtenlandspensjon: {
-            id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
-            svar: null,
-        },
-        arbeidsperioderUtland: [],
-
-        arbeidINorge: {
-            id: EøsSøkerSpørsmålId.arbeidINorge,
-            svar: null,
-        },
-        arbeidsperioderNorge: [],
-        pensjonNorge: {
-            id: EøsSøkerSpørsmålId.pensjonNorge,
-            svar: null,
-        },
-        pensjonsperioderNorge: [],
-        pensjonsperioderUtland: [],
-        andreUtbetalinger: {
-            id: EøsSøkerSpørsmålId.utbetalinger,
-            svar: null,
-        },
-        andreUtbetalingsperioder: [],
-        harSamboerNå: {
-            id: DinLivssituasjonSpørsmålId.harSamboerNå,
-            svar: null,
-        },
-        nåværendeSamboer: null,
-        adresseISøkeperiode: { id: EøsSøkerSpørsmålId.adresseISøkeperiode, svar: '' },
-        idNummer: [],
-        utvidet: {
-            spørsmål: {
-                årsak: {
-                    id: DinLivssituasjonSpørsmålId.årsak,
-                    svar: '',
-                },
-                separertEnkeSkilt: {
-                    id: DinLivssituasjonSpørsmålId.separertEnkeSkilt,
-                    svar: null,
-                },
-                separertEnkeSkiltUtland: {
-                    id: DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland,
-                    svar: null,
-                },
-                separertEnkeSkiltDato: {
-                    id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
-                    svar: '',
-                },
+export const initialStateSøknad = (kombinerSøknaderToggle: boolean): ISøknad => {
+    return {
+        søknadstype: kombinerSøknaderToggle ? ESøknadstype.ORDINÆR : hentSøknadstype(),
+        erEøs: false,
+        barnInkludertISøknaden: [],
+        lestOgForståttBekreftelse: false,
+        barnRegistrertManuelt: [],
+        dokumentasjon: [
+            genererInitiellDokumentasjon(
+                Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
+                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.AVTALE_DELT_BOSTED),
+                'dokumentasjon.deltbosted.informasjon'
+            ),
+            genererInitiellDokumentasjon(
+                Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
+                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE),
+                'dokumentasjon.oppholdstillatelse.informasjon'
+            ),
+            genererInitiellDokumentasjon(
+                Dokumentasjonsbehov.ADOPSJON_DATO,
+                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.ADOPSJON_DATO),
+                'dokumentasjon.adopsjon.informasjon'
+            ),
+            genererInitiellDokumentasjon(
+                Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
+                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN),
+                'dokumentasjon.bekreftelsebarnevernet.informasjon'
+            ),
+            genererInitiellDokumentasjon(
+                Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
+                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.BOR_FAST_MED_SØKER),
+                'dokumentasjon.bekreftelseborsammen.informasjon'
+            ),
+            genererInitiellDokumentasjon(
+                Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
+                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.SEPARERT_SKILT_ENKE),
+                'dokumentasjon.separasjonskilsmissedødsfall.informasjon'
+            ),
+            genererInitiellDokumentasjon(
+                Dokumentasjonsbehov.MEKLINGSATTEST,
+                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.MEKLINGSATTEST),
+                'dokumentasjon.meklingsattest.informasjon'
+            ),
+            genererInitiellDokumentasjon(
+                Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
+                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.ANNEN_DOKUMENTASJON),
+                !kombinerSøknaderToggle && hentSøknadstype() === ESøknadstype.UTVIDET
+                    ? 'dokumentasjon.annendokumentasjon.utvidet.informasjon'
+                    : null
+            ),
+        ],
+        søker: {
+            navn: '',
+            barn: [],
+            triggetEøs: false,
+            statsborgerskap: [],
+            ident: '',
+            sivilstand: { type: ESivilstand.UOPPGITT },
+            adressebeskyttelse: false,
+            adresse: {
+                adressenavn: '',
+                husbokstav: '',
+                husnummer: '',
+                bruksenhetsnummer: '',
+                postnummer: '',
+                poststed: '',
             },
-            tidligereSamboere: [],
+            utenlandsperioder: [],
+            borPåRegistrertAdresse: {
+                id: OmDegSpørsmålId.borPåRegistrertAdresse,
+                svar: null,
+            },
+            værtINorgeITolvMåneder: {
+                id: OmDegSpørsmålId.værtINorgeITolvMåneder,
+                svar: null,
+            },
+            planleggerÅBoINorgeTolvMnd: {
+                id: OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd,
+                svar: null,
+            },
+            erAsylsøker: {
+                id: DinLivssituasjonSpørsmålId.erAsylsøker,
+                svar: null,
+            },
+            arbeidIUtlandet: {
+                id: DinLivssituasjonSpørsmålId.arbeidIUtlandet,
+                svar: null,
+            },
+            mottarUtenlandspensjon: {
+                id: DinLivssituasjonSpørsmålId.mottarUtenlandspensjon,
+                svar: null,
+            },
+            arbeidsperioderUtland: [],
+
+            arbeidINorge: {
+                id: EøsSøkerSpørsmålId.arbeidINorge,
+                svar: null,
+            },
+            arbeidsperioderNorge: [],
+            pensjonNorge: {
+                id: EøsSøkerSpørsmålId.pensjonNorge,
+                svar: null,
+            },
+            pensjonsperioderNorge: [],
+            pensjonsperioderUtland: [],
+            andreUtbetalinger: {
+                id: EøsSøkerSpørsmålId.utbetalinger,
+                svar: null,
+            },
+            andreUtbetalingsperioder: [],
+            harSamboerNå: {
+                id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                svar: null,
+            },
+            nåværendeSamboer: null,
+            adresseISøkeperiode: { id: EøsSøkerSpørsmålId.adresseISøkeperiode, svar: '' },
+            idNummer: [],
+            utvidet: {
+                spørsmål: {
+                    årsak: {
+                        id: DinLivssituasjonSpørsmålId.årsak,
+                        svar: '',
+                    },
+                    separertEnkeSkilt: {
+                        id: DinLivssituasjonSpørsmålId.separertEnkeSkilt,
+                        svar: null,
+                    },
+                    separertEnkeSkiltUtland: {
+                        id: DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland,
+                        svar: null,
+                    },
+                    separertEnkeSkiltDato: {
+                        id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
+                        svar: '',
+                    },
+                },
+                tidligereSamboere: [],
+            },
         },
-    },
-    erNoenAvBarnaFosterbarn: {
-        id: OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
-        svar: null,
-    },
-    oppholderBarnSegIInstitusjon: {
-        id: OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon,
-        svar: null,
-    },
-    erBarnAdoptertFraUtland: {
-        id: OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland,
-        svar: null,
-    },
-    søktAsylForBarn: {
-        id: OmBarnaDineSpørsmålId.søktAsylForBarn,
-        svar: null,
-    },
-    barnOppholdtSegTolvMndSammenhengendeINorge: {
-        id: OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge,
-        svar: null,
-    },
-    mottarBarnetrygdForBarnFraAnnetEøsland: {
-        id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
-        svar: null,
-    },
-    erAvdødPartnerForelder: {
-        id: OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder,
-        svar: null,
-    },
+        erNoenAvBarnaFosterbarn: {
+            id: OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
+            svar: null,
+        },
+        oppholderBarnSegIInstitusjon: {
+            id: OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon,
+            svar: null,
+        },
+        erBarnAdoptertFraUtland: {
+            id: OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland,
+            svar: null,
+        },
+        søktAsylForBarn: {
+            id: OmBarnaDineSpørsmålId.søktAsylForBarn,
+            svar: null,
+        },
+        barnOppholdtSegTolvMndSammenhengendeINorge: {
+            id: OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge,
+            svar: null,
+        },
+        mottarBarnetrygdForBarnFraAnnetEøsland: {
+            id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
+            svar: null,
+        },
+        erAvdødPartnerForelder: {
+            id: OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder,
+            svar: null,
+        },
+    };
 };
 
 export const muligeÅrsaker: Årsak[] = [
