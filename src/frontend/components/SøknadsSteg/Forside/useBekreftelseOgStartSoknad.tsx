@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import { useSteg } from '../../../context/StegContext';
+import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISteg } from '../../../typer/routes';
 import { logForsettPåSøknad, logSkjemaStartet } from '../../../utils/amplitude';
 
@@ -22,6 +23,10 @@ export const useBekreftelseOgStartSoknad = (): {
     startPåNytt: () => void;
     visStartPåNyttModal: boolean;
     settVisStartPåNyttModal: (synlig: boolean) => void;
+    søknadstype: ESøknadstype | undefined;
+    settSøknadstype: (søknadstype: ESøknadstype) => void;
+    søknadstypeFeil: boolean;
+    settSøknadstypeFeil: (søknadstypeFeil: boolean) => void;
 } => {
     const navigate = useNavigate();
     const [visStartPåNyttModal, settVisStartPåNyttModal] = useState(false);
@@ -41,6 +46,9 @@ export const useBekreftelseOgStartSoknad = (): {
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
     );
+
+    const [søknadstype, settSøknadstype] = useState<ESøknadstype | undefined>(undefined);
+    const [søknadstypeFeil, settSøknadstypeFeil] = useState<boolean>(false);
 
     const [gjenopprettetFraMellomlagring, settGjenpprettetFraMellomlagring] = useState(false);
 
@@ -80,10 +88,12 @@ export const useBekreftelseOgStartSoknad = (): {
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();
-        if (bekreftelseStatus === BekreftelseStatus.BEKREFTET) {
+        if (bekreftelseStatus === BekreftelseStatus.BEKREFTET && søknadstype != undefined) {
+            settSøknadstypeFeil(false);
             settSøknad({
                 ...søknad,
                 lestOgForståttBekreftelse: true,
+                søknadstype: søknadstype,
             });
             if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
                 settSisteUtfylteStegIndex(nåværendeStegIndex);
@@ -91,7 +101,9 @@ export const useBekreftelseOgStartSoknad = (): {
             logSkjemaStartet();
             navigate(nesteRoute.path);
         } else {
-            settBekreftelseStatus(BekreftelseStatus.FEIL);
+            søknadstype === undefined && settSøknadstypeFeil(true);
+            bekreftelseStatus !== BekreftelseStatus.BEKREFTET &&
+                settBekreftelseStatus(BekreftelseStatus.FEIL);
         }
     };
 
@@ -106,9 +118,13 @@ export const useBekreftelseOgStartSoknad = (): {
         onStartSøknad,
         bekreftelseOnChange,
         bekreftelseStatus,
+        søknadstype,
+        settSøknadstype,
         fortsettPåSøknaden,
         startPåNytt,
         visStartPåNyttModal,
         settVisStartPåNyttModal,
+        søknadstypeFeil,
+        settSøknadstypeFeil,
     };
 };

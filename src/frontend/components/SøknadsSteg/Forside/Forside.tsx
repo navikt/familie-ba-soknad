@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 
-import { GuidePanel, Heading, Radio, RadioGroup } from '@navikt/ds-react';
+import { GuidePanel, Heading } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -38,7 +38,7 @@ const StyledAlertStripeUtvidetInfo = styled(FamilieAlert)`
 `;
 
 const Forside: React.FC = () => {
-    const { sluttbruker, mellomlagretVerdi, søknad, settNåværendeRoute, settSøknad } = useApp();
+    const { sluttbruker, mellomlagretVerdi, søknad, settNåværendeRoute } = useApp();
 
     const { toggles } = useFeatureToggles();
     const kombinerSøknaderToggle = toggles[EFeatureToggle.KOMBINER_SOKNADER];
@@ -99,26 +99,7 @@ const Forside: React.FC = () => {
                 )}
             </Informasjonsbolk>
 
-            {kanFortsettePåSøknad ? (
-                <FortsettPåSøknad />
-            ) : (
-                <>
-                    {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
-                        <RadioGroup
-                            legend={
-                                'Vil du søke om utvidet barnetrygd i tillegg til ordinær barnetrygd?'
-                            } // TODO: Skal hente tekster fra Sanity
-                            onChange={(value: ESøknadstype) =>
-                                settSøknad({ ...søknad, søknadstype: value })
-                            }
-                        >
-                            <Radio value={ESøknadstype.UTVIDET}>Ja</Radio>
-                            <Radio value={ESøknadstype.ORDINÆR}>Nei</Radio>
-                        </RadioGroup>
-                    )}
-                    <BekreftelseOgStartSoknad />
-                </>
-            )}
+            {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
 
             <Informasjonsbolk>
                 <EksternLenke

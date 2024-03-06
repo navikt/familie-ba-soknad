@@ -3,9 +3,12 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BodyLong, Button, ConfirmationPanel } from '@navikt/ds-react';
+import { BodyLong, Button, ConfirmationPanel, Radio, RadioGroup } from '@navikt/ds-react';
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
+import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -35,10 +38,33 @@ export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
 
 const BekreftelseOgStartSoknad: React.FC = () => {
     const { formatMessage } = useIntl();
-    const { onStartSøknad, bekreftelseOnChange, bekreftelseStatus } = useBekreftelseOgStartSoknad();
+    const { toggles } = useFeatureToggles();
+    const {
+        onStartSøknad,
+        bekreftelseOnChange,
+        bekreftelseStatus,
+        søknadstype,
+        settSøknadstype,
+        søknadstypeFeil,
+        settSøknadstypeFeil,
+    } = useBekreftelseOgStartSoknad();
 
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
+            {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
+                <RadioGroup
+                    legend={'Vil du søke om utvidet barnetrygd i tillegg til ordinær barnetrygd?'} // TODO: Skal hente tekst fra Sanity
+                    onChange={(value: ESøknadstype) => {
+                        settSøknadstype(value);
+                        settSøknadstypeFeil(false);
+                    }}
+                    value={søknadstype}
+                    error={søknadstypeFeil && 'Du må velge søknadstype'} // TODO: Skal hente tekst fra Sanity
+                >
+                    <Radio value={ESøknadstype.UTVIDET}>Ja</Radio>
+                    <Radio value={ESøknadstype.ORDINÆR}>Nei</Radio>
+                </RadioGroup>
+            )}
             <Informasjonsbolk tittelId="forside.bekreftelsesboks.tittel">
                 <ConfirmationPanel
                     label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
