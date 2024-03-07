@@ -59,10 +59,8 @@ export const useBekreftelseOgStartSoknad = (): {
 
     useEffect(() => {
         if (gjenopprettetFraMellomlagring && mellomlagretVerdi) {
-            const sisteUtfylteSteg =
-                mellomlagretVerdi.sisteUtfylteStegIndex == 0
-                    ? 1
-                    : mellomlagretVerdi.sisteUtfylteStegIndex;
+            // Sørger for at man blir sendt til første side i søknad dersom man kun har svart på spørsmålene på forsiden.
+            const sisteUtfylteSteg = Math.max(mellomlagretVerdi.sisteUtfylteStegIndex, 1);
             navigate(steg[sisteUtfylteSteg].path);
             settGjenpprettetFraMellomlagring(false);
         }
