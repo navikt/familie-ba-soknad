@@ -16,8 +16,12 @@ import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles';
 import { konfigurerModellVersjonEndpoint } from './routes/modellversjon';
 import { konfigurerNais } from './routes/nais';
 import { konfigurerStatic } from './routes/static';
+import { initializeUnleash } from './utils/unleash';
 
 dotenv.config();
+
+initializeUnleash();
+
 const app = express();
 
 // webpack serve kjører på en annen port enn oss, må tillate det som origin

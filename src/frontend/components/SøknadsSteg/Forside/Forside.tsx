@@ -8,7 +8,10 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø from '../../../../shared-utils/Miljø';
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
+import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { RouteEnum } from '../../../typer/routes';
 import { logSidevisningBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -35,7 +38,15 @@ const StyledAlertStripeUtvidetInfo = styled(FamilieAlert)`
 `;
 
 const Forside: React.FC = () => {
-    const { sluttbruker, mellomlagretVerdi, erUtvidet, søknad, settNåværendeRoute } = useApp();
+    const { sluttbruker, mellomlagretVerdi, søknad, settNåværendeRoute } = useApp();
+
+    const { toggles } = useFeatureToggles();
+    const kombinerSøknaderToggle = toggles[EFeatureToggle.KOMBINER_SOKNADER];
+
+    const erUtvidet =
+        kombinerSøknaderToggle && mellomlagretVerdi
+            ? mellomlagretVerdi.søknad.søknadstype === ESøknadstype.UTVIDET
+            : søknad.søknadstype === ESøknadstype.UTVIDET;
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
 
@@ -46,7 +57,7 @@ const Forside: React.FC = () => {
     const kanFortsettePåSøknad =
         mellomlagretVerdi &&
         mellomlagretVerdi.modellVersjon === Miljø().modellVersjon &&
-        mellomlagretVerdi.søknad.søknadstype === søknad.søknadstype;
+        (kombinerSøknaderToggle || mellomlagretVerdi.søknad.søknadstype === søknad.søknadstype);
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 

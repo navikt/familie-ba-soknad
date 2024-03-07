@@ -20,11 +20,13 @@ import {
 
 import { useApp } from './AppContext';
 
+const initialSøknad = initialStateSøknad(false);
+
 const søknadEtterRespons: ISøknad = {
-    ...initialStateSøknad,
+    ...initialSøknad,
     søknadstype: ESøknadstype.ORDINÆR,
     søker: {
-        ...initialStateSøknad.søker,
+        ...initialSøknad.søker,
         ident: '12345678910',
         navn: 'Navn navnesen',
         barn: [],

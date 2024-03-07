@@ -15,7 +15,7 @@ const hentAnnenDokumentasjon = (): IDokumentasjon => {
     jest.resetModules();
     const { initialStateSøknad } = jest.requireActual('../../../typer/søknad');
 
-    const dokumentasjon = initialStateSøknad.dokumentasjon.find(
+    const dokumentasjon = initialStateSøknad(false).dokumentasjon.find(
         dok => dok.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
     );
 
