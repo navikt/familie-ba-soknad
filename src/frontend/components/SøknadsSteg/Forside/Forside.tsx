@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 
-import { GuidePanel, Heading } from '@navikt/ds-react';
+import { Accordion, Alert, BodyShort, GuidePanel, Heading } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -61,53 +61,129 @@ const Forside: React.FC = () => {
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
 
+    if (!kombinerSøknaderToggle) {
+        return (
+            <InnholdContainer>
+                <GuidePanel>
+                    <SpråkTekst
+                        id={'forside.veilederhilsen'}
+                        values={{ navn: navn.toUpperCase() }}
+                    />
+                </GuidePanel>
+                <StyledHeading size="xlarge">
+                    <SpråkTekst
+                        id={erUtvidet ? 'forside.utvidet.sidetittel' : 'forside.sidetittel'}
+                    />
+                </StyledHeading>
+
+                <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
+
+                {!erUtvidet && (
+                    <StyledAlertStripeUtvidetInfo variant={'info'} inline={false}>
+                        <SpråkTekst id={'forside.utvidetinfo.info'} />
+                        <EksternLenke
+                            lenkeSpråkId={'forside.utvidetinfo.lenke'}
+                            lenkeTekstSpråkId={'forside.utvidetinfo.lenketekst'}
+                            target="_blank"
+                        />
+                    </StyledAlertStripeUtvidetInfo>
+                )}
+
+                <Informasjonsbolk>
+                    <SpråkTekst
+                        id={'forside.info.punktliste'}
+                        values={{ b: msg => <b>{msg}</b> }}
+                    />
+                    <EksternLenke
+                        lenkeSpråkId={'forside.plikter.lenke'}
+                        lenkeTekstSpråkId={'forside.plikter.lenketekst'}
+                        target="_blank"
+                    />
+                    {erUtvidet && (
+                        <EksternLenke
+                            lenkeSpråkId={'forside.hvemharrettpåutvidet.lenke'}
+                            lenkeTekstSpråkId={'forside.hvemharrettpåutvidet.lenketekst'}
+                            target="_blank"
+                        />
+                    )}
+                </Informasjonsbolk>
+
+                {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
+
+                <Informasjonsbolk>
+                    <EksternLenke
+                        lenkeSpråkId={'forside.behandling-av-personopplysning.lenke'}
+                        lenkeTekstSpråkId={'forside.behandling-av-personopplysning.lenketekst'}
+                        target="_blank"
+                    />
+                </Informasjonsbolk>
+            </InnholdContainer>
+        );
+    }
     return (
         <InnholdContainer>
-            <GuidePanel>
-                <SpråkTekst id={'forside.veilederhilsen'} values={{ navn: navn.toUpperCase() }} />
-            </GuidePanel>
-            <StyledHeading size="xlarge">
-                <SpråkTekst id={erUtvidet ? 'forside.utvidet.sidetittel' : 'forside.sidetittel'} />
+            <StyledHeading size="xlarge" /* todo legg til tekst i sanity */>
+                Søknad om barnetrygd
             </StyledHeading>
-
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
-
-            {!erUtvidet && (
-                <StyledAlertStripeUtvidetInfo variant={'info'} inline={false}>
-                    <SpråkTekst id={'forside.utvidetinfo.info'} />
-                    <EksternLenke
-                        lenkeSpråkId={'forside.utvidetinfo.lenke'}
-                        lenkeTekstSpråkId={'forside.utvidetinfo.lenketekst'}
-                        target="_blank"
-                    />
-                </StyledAlertStripeUtvidetInfo>
-            )}
-
-            <Informasjonsbolk>
-                <SpråkTekst id={'forside.info.punktliste'} values={{ b: msg => <b>{msg}</b> }} />
-                <EksternLenke
-                    lenkeSpråkId={'forside.plikter.lenke'}
-                    lenkeTekstSpråkId={'forside.plikter.lenketekst'}
-                    target="_blank"
-                />
-                {erUtvidet && (
-                    <EksternLenke
-                        lenkeSpråkId={'forside.hvemharrettpåutvidet.lenke'}
-                        lenkeTekstSpråkId={'forside.hvemharrettpåutvidet.lenketekst'}
-                        target="_blank"
-                    />
-                )}
-            </Informasjonsbolk>
-
+            <GuidePanel poster /* todo legg til tekst i sanity*/>
+                <BodyShort weight="semibold">Hei, TODO TODOSEN!</BodyShort>
+                <BodyShort /* dette innholdet skal inn i sanity! alt sammen. blir vel en tekstblock*/
+                >
+                    Jeg er her for å veilede deg gjennom søknaden.
+                </BodyShort>
+                <ul>
+                    <li>Du må svare på alle spørsmål på hver side for å komme videre.</li>
+                    <li>
+                        Vi lagrer søknaden din ut morgendagen. Derfor kan du ta pauser når du fyller
+                        ut.{' '}
+                    </li>
+                    <li>Du kan avbryte søknaden og slette opplysningene du har lagt inn.</li>
+                    <li>
+                        Du må bekrefte at du har lest og forstått pliktene dine for å fortsette med
+                        søknaden.
+                    </li>
+                </ul>
+            </GuidePanel>
+            <Accordion>
+                <Accordion.Item>
+                    <Accordion.Header>Hvis du får barnetrygd gjelder dette</Accordion.Header>
+                    <Accordion.Content>
+                        For at du skal få utbetalt riktig beløp fra NAV, er vi avhengig av at du gir
+                        oss riktige opplysninger og melder fra når det skjer endringer i
+                        livssituasjonen din.
+                        <EksternLenke
+                            lenkeSpråkId={'forside.plikter.lenke'}
+                            lenkeTekstSpråkId={'forside.plikter.lenketekst'}
+                            target="_blank"
+                        />
+                    </Accordion.Content>
+                </Accordion.Item>
+                <Accordion.Item>
+                    <Accordion.Header>Vi vil hente og bruke informasjon om deg</Accordion.Header>
+                    <Accordion.Content>
+                        <BodyShort /* dette blir en tekstblock fra sanity*/>
+                            I tillegg til den informasjonen du oppgir i søknaden, henter vi:
+                        </BodyShort>
+                        <ul>
+                            <li>personinformasjon om deg og barna dine fra Folkeregisteret</li>
+                            <li>opplysninger om deg vi har fra før</li>
+                        </ul>
+                        <BodyShort>
+                            Dette gjør vi for å vurdere om du har rett til barnetrygd.
+                        </BodyShort>
+                        <EksternLenke
+                            lenkeSpråkId={'forside.behandling-av-personopplysning.lenke'}
+                            lenkeTekstSpråkId={'forside.behandling-av-personopplysning.lenketekst'}
+                            target="_blank"
+                        />
+                    </Accordion.Content>
+                </Accordion.Item>
+            </Accordion>
+            <Alert variant="info" /* todo hent tekst fra sanity */>
+                Hvis du bor alene med barn under 18 år, kan du ha rett til utvidet barnetrygd.
+            </Alert>
             {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
-
-            <Informasjonsbolk>
-                <EksternLenke
-                    lenkeSpråkId={'forside.behandling-av-personopplysning.lenke'}
-                    lenkeTekstSpråkId={'forside.behandling-av-personopplysning.lenketekst'}
-                    target="_blank"
-                />
-            </Informasjonsbolk>
         </InnholdContainer>
     );
 };
