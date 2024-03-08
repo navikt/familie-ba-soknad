@@ -19,6 +19,7 @@ import { FeatureTogglesProvider } from './context/FeatureToggleContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 import { RoutesProvider } from './context/RoutesContext';
+import { SanityProvider } from './context/SanityContext';
 import { StegProvider } from './context/StegContext';
 import { GlobalStyle } from './Theme';
 import { logError } from './utils/amplitude';
@@ -35,36 +36,38 @@ function App() {
                     onError={logError}
                 >
                     <LastRessurserProvider>
-                        <InnloggetProvider>
-                            <FeatureTogglesProvider>
-                                <AppProvider>
-                                    <EøsProvider>
-                                        <RoutesProvider>
-                                            <Router basename={routerBasePath}>
-                                                <StegProvider>
-                                                    <GlobalStyle />
-                                                    {process.env.NODE_ENV !== 'production' && (
-                                                        <FamilieAlert
-                                                            variant={'warning'}
-                                                            inline={false}
-                                                        >
-                                                            {`Denne siden er under utvikling. `}
-                                                            <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
-                                                                Klikk her for å gå til våre sider
-                                                                for barnetrygd
-                                                            </a>
-                                                        </FamilieAlert>
-                                                    )}
-                                                    <AppNavigationProvider>
-                                                        <AppContainer />
-                                                    </AppNavigationProvider>
-                                                </StegProvider>
-                                            </Router>
-                                        </RoutesProvider>
-                                    </EøsProvider>
-                                </AppProvider>
-                            </FeatureTogglesProvider>
-                        </InnloggetProvider>
+                        <SanityProvider>
+                            <InnloggetProvider>
+                                <FeatureTogglesProvider>
+                                    <AppProvider>
+                                        <EøsProvider>
+                                            <RoutesProvider>
+                                                <Router basename={routerBasePath}>
+                                                    <StegProvider>
+                                                        <GlobalStyle />
+                                                        {process.env.NODE_ENV !== 'production' && (
+                                                            <FamilieAlert
+                                                                variant={'warning'}
+                                                                inline={false}
+                                                            >
+                                                                {`Denne siden er under utvikling. `}
+                                                                <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
+                                                                    Klikk her for å gå til våre
+                                                                    sider for barnetrygd
+                                                                </a>
+                                                            </FamilieAlert>
+                                                        )}
+                                                        <AppNavigationProvider>
+                                                            <AppContainer />
+                                                        </AppNavigationProvider>
+                                                    </StegProvider>
+                                                </Router>
+                                            </RoutesProvider>
+                                        </EøsProvider>
+                                    </AppProvider>
+                                </FeatureTogglesProvider>
+                            </InnloggetProvider>
+                        </SanityProvider>
                     </LastRessurserProvider>
                 </Sentry.ErrorBoundary>
             </HttpProvider>

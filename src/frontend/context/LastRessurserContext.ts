@@ -76,6 +76,8 @@ const [LastRessurserProvider, useLastRessurserContext] = createUseContext(() => 
         wrapMedSystemetLaster,
         lasterRessurser,
         ressurserSomLaster,
+        settRessurserSomLaster,
+        fjernRessursSomLaster,
     };
 });
 

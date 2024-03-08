@@ -6,9 +6,12 @@ import styled from 'styled-components';
 import { BodyLong, Button, ConfirmationPanel, Radio, RadioGroup } from '@navikt/ds-react';
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
+import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
+import { toPlainText } from '../../../utils/sanity';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -48,11 +51,13 @@ const BekreftelseOgStartSoknad: React.FC = () => {
         settSøknadstypeFeil,
     } = useBekreftelseOgStartSoknad();
 
+    const { tekster } = useApp();
+
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
             {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
                 <RadioGroup
-                    legend={'Vil du søke om utvidet barnetrygd i tillegg til ordinær barnetrygd?'} // TODO: Skal hente tekst fra Sanity
+                    legend={toPlainText(tekster()[ESanitySteg.FORSIDE].soekerDuUtvidet.sporsmal.nb)} // TODO: Skal hente tekst fra Sanity
                     onChange={(value: ESøknadstype) => {
                         settSøknadstype(value);
                         settSøknadstypeFeil(false);
