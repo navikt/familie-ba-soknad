@@ -3,25 +3,33 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BodyLong, Button, ConfirmationPanel, Radio, RadioGroup } from '@navikt/ds-react';
+import {
+    Alert,
+    BodyLong,
+    BodyShort,
+    Button,
+    ConfirmationPanel,
+    Radio,
+    RadioGroup,
+    VStack,
+} from '@navikt/ds-react';
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
-import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
 const FormContainer = styled.form`
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    gap: 3rem;
 `;
 
 const StyledButton = styled(Button)`
     && {
-        margin: 2.3rem auto 0 auto;
+        margin: 0 auto;
     }
 `;
 
@@ -51,36 +59,45 @@ const BekreftelseOgStartSoknad: React.FC = () => {
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
             {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
-                <RadioGroup
-                    legend={'Vil du søke om utvidet barnetrygd i tillegg til ordinær barnetrygd?'} // TODO: Skal hente tekst fra Sanity
-                    onChange={(value: ESøknadstype) => {
-                        settSøknadstype(value);
-                        settSøknadstypeFeil(false);
-                    }}
-                    error={søknadstypeFeil && 'Du må velge søknadstype'} // TODO: Skal hente tekst fra Sanity
-                >
-                    <Radio value={ESøknadstype.UTVIDET}>Ja</Radio>
-                    <Radio value={ESøknadstype.ORDINÆR}>Nei</Radio>
-                </RadioGroup>
+                <VStack gap={'6'}>
+                    <Alert variant="info" /* todo hent tekst fra sanity */>
+                        Hvis du bor alene med barn under 18 år, kan du ha rett til utvidet
+                        barnetrygd.
+                    </Alert>
+                    <RadioGroup
+                        legend={
+                            'Vil du søke om utvidet barnetrygd i tillegg til ordinær barnetrygd?'
+                        } // TODO: Skal hente tekst fra Sanity
+                        onChange={(value: ESøknadstype) => {
+                            settSøknadstype(value);
+                            settSøknadstypeFeil(false);
+                        }}
+                        error={søknadstypeFeil && 'Du må velge søknadstype'} // TODO: Skal hente tekst fra Sanity
+                    >
+                        <Radio value={ESøknadstype.UTVIDET}>Ja</Radio>
+                        <Radio value={ESøknadstype.ORDINÆR}>Nei</Radio>
+                    </RadioGroup>
+                </VStack>
             )}
-            <Informasjonsbolk tittelId="forside.bekreftelsesboks.tittel">
-                <ConfirmationPanel
-                    label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
-                    onChange={bekreftelseOnChange}
-                    checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
-                    error={
-                        bekreftelseStatus === BekreftelseStatus.FEIL && (
-                            <span role={'alert'}>
-                                <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
-                            </span>
-                        )
-                    }
-                >
-                    <BodyLong>
-                        <SpråkTekst id="forside.bekreftelsesboks.brødtekst" />
-                    </BodyLong>
-                </ConfirmationPanel>
-            </Informasjonsbolk>
+            <ConfirmationPanel
+                label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
+                onChange={bekreftelseOnChange}
+                checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
+                error={
+                    bekreftelseStatus === BekreftelseStatus.FEIL && (
+                        <span role={'alert'}>
+                            <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
+                        </span>
+                    )
+                }
+            >
+                <BodyShort weight={'semibold'}>
+                    <SpråkTekst id="forside.bekreftelsesboks.tittel" />
+                </BodyShort>
+                <BodyLong>
+                    <SpråkTekst id="forside.bekreftelsesboks.brødtekst" />
+                </BodyLong>
+            </ConfirmationPanel>
 
             <StyledButton
                 variant={

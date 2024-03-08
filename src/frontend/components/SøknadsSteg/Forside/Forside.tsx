@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 
-import { Accordion, Alert, BodyShort, GuidePanel, Heading } from '@navikt/ds-react';
+import { Accordion, BodyShort, GuidePanel, Heading } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -10,6 +10,7 @@ import Miljø from '../../../../shared-utils/Miljø';
 import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
+import { device } from '../../../Theme';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { RouteEnum } from '../../../typer/routes';
@@ -35,6 +36,26 @@ const StyledSpråkvelger = styled(Sprakvelger)`
 
 const StyledAlertStripeUtvidetInfo = styled(FamilieAlert)`
     margin-top: 3rem;
+`;
+
+const StyledAccordion = styled(Accordion)`
+    width: 100%;
+`;
+
+const Layout = styled.div`
+    max-width: var(--innhold-bredde);
+    display: grid;
+    gap: 3rem;
+    margin: 2rem auto 4rem auto;
+
+    @media all and ${device.tablet} {
+        max-width: 100%;
+        margin: 2rem 2rem 4rem 2rem;
+    }
+`;
+
+const StyledInformasjonsbolk = styled(Informasjonsbolk)`
+    margin-bottom: 3rem;
 `;
 
 const Forside: React.FC = () => {
@@ -89,7 +110,7 @@ const Forside: React.FC = () => {
                     </StyledAlertStripeUtvidetInfo>
                 )}
 
-                <Informasjonsbolk>
+                <StyledInformasjonsbolk>
                     <SpråkTekst
                         id={'forside.info.punktliste'}
                         values={{ b: msg => <b>{msg}</b> }}
@@ -106,7 +127,7 @@ const Forside: React.FC = () => {
                             target="_blank"
                         />
                     )}
-                </Informasjonsbolk>
+                </StyledInformasjonsbolk>
 
                 {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
 
@@ -121,10 +142,10 @@ const Forside: React.FC = () => {
         );
     }
     return (
-        <InnholdContainer>
-            <StyledHeading size="xlarge" /* todo legg til tekst i sanity */>
+        <Layout>
+            <Heading size="xlarge" align={'center'} /* todo legg til tekst i sanity */>
                 Søknad om barnetrygd
-            </StyledHeading>
+            </Heading>
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
             <GuidePanel poster /* todo legg til tekst i sanity*/>
                 <BodyShort weight="semibold">Hei, TODO TODOSEN!</BodyShort>
@@ -145,7 +166,7 @@ const Forside: React.FC = () => {
                     </li>
                 </ul>
             </GuidePanel>
-            <Accordion>
+            <StyledAccordion size={'large'}>
                 <Accordion.Item>
                     <Accordion.Header>Hvis du får barnetrygd gjelder dette</Accordion.Header>
                     <Accordion.Content>
@@ -179,12 +200,9 @@ const Forside: React.FC = () => {
                         />
                     </Accordion.Content>
                 </Accordion.Item>
-            </Accordion>
-            <Alert variant="info" /* todo hent tekst fra sanity */>
-                Hvis du bor alene med barn under 18 år, kan du ha rett til utvidet barnetrygd.
-            </Alert>
+            </StyledAccordion>
             {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
-        </InnholdContainer>
+        </Layout>
     );
 };
 
