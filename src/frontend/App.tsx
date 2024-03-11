@@ -2,22 +2,32 @@ import React from 'react';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { basePath } from '../shared-utils/Miljø';
+
 import AppContainer from './AppContainer';
 import FamilieAlert from './components/Felleskomponenter/FamilieAlert/FamilieAlert';
 import { AppProvider } from './context/AppContext';
 import { AppNavigationProvider } from './context/AppNavigationContext';
 import { EøsProvider } from './context/EøsContext';
+import { useFeatureToggles } from './context/FeatureToggleContext';
 import { RoutesProvider } from './context/RoutesContext';
 import { StegProvider } from './context/StegContext';
 import { GlobalStyle } from './Theme';
+import { EFeatureToggle } from './typer/feature-toggles';
 import { routerBasePath } from './utils/hjelpefunksjoner';
 
 function App() {
+    const { toggles } = useFeatureToggles();
+
     return (
         <AppProvider>
             <EøsProvider>
                 <RoutesProvider>
-                    <Router basename={routerBasePath()}>
+                    <Router
+                        basename={
+                            toggles[EFeatureToggle.KOMBINER_SOKNADER] ? basePath : routerBasePath()
+                        }
+                    >
                         <StegProvider>
                             <GlobalStyle />
                             {process.env.NODE_ENV !== 'production' && (
