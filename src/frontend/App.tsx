@@ -40,7 +40,7 @@ function App() {
                                 <AppProvider>
                                     <EøsProvider>
                                         <RoutesProvider>
-                                            <Router basename={routerBasePath}>
+                                            <Router basename={routerBasePath()}>
                                                 <StegProvider>
                                                     <GlobalStyle />
                                                     {process.env.NODE_ENV !== 'production' && (

@@ -7,7 +7,7 @@ import { routerBasePath } from './hjelpefunksjoner';
 
 const er401Feil = (error: AxiosError) => error && error.response && error.response.status === 401;
 const getLoginUrl = () => {
-    return `${Miljø().wonderwallUrl}${window.location.origin}${routerBasePath}`;
+    return `${Miljø().wonderwallUrl}${window.location.origin}${routerBasePath()}`;
 };
 
 export enum InnloggetStatus {
