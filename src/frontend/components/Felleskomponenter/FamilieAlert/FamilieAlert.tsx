@@ -16,7 +16,7 @@ const StyledAlert = styled(Alert)`
 `;
 
 const FamilieAlert: React.FC<AlertStripeProps> = ({
-    // todo vurder om denne kan fjernes etter arbeid med kombinert søknad
+    // TODO: vurder om denne kan fjernes etter arbeid med kombinert søknad
     variant,
     inline = true,
     size = 'medium',

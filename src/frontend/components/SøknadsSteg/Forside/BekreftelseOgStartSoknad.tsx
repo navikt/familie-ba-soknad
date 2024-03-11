@@ -60,7 +60,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
         <FormContainer onSubmit={event => onStartSøknad(event)}>
             {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
                 <VStack gap={'6'}>
-                    <Alert variant="info" /* todo hent tekst fra sanity */>
+                    <Alert variant="info" /* TODO: hent tekst fra sanity */>
                         Hvis du bor alene med barn under 18 år, kan du ha rett til utvidet
                         barnetrygd.
                     </Alert>

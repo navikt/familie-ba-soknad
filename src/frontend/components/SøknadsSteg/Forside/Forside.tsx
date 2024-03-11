@@ -143,11 +143,11 @@ const Forside: React.FC = () => {
     }
     return (
         <Layout>
-            <Heading size="xlarge" align={'center'} /* todo legg til tekst i sanity */>
+            <Heading size="xlarge" align={'center'} /* TODO: legg til tekst i sanity */>
                 Søknad om barnetrygd
             </Heading>
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
-            <GuidePanel poster /* todo legg til tekst i sanity*/>
+            <GuidePanel poster /* TODO: legg til tekst i sanity*/>
                 <BodyShort weight="semibold">Hei, TODO TODOSEN!</BodyShort>
                 <BodyShort /* dette innholdet skal inn i sanity! alt sammen. blir vel en tekstblock*/
                 >
