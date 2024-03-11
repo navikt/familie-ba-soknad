@@ -20,12 +20,7 @@ import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
-import {
-    ESanityFlettefeltverdi,
-    ESanitySteg,
-    FlettefeltVerdier,
-    PlainTekst,
-} from '../typer/sanity/sanity';
+import { ESanityFlettefeltverdi, FlettefeltVerdier, PlainTekst } from '../typer/sanity/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
@@ -256,7 +251,6 @@ const [AppProvider, useApp] = createUseContext(() => {
         flettefelter?: FlettefeltVerdier,
         spesifikkLocale?: LocaleType
     ): string => {
-        const frittståendeOrd = tekster()[ESanitySteg.FELLES].frittståendeOrd;
         switch (sanityFlettefelt) {
             case ESanityFlettefeltverdi.DATO:
                 if (!flettefelter?.dato) {
@@ -285,18 +279,6 @@ const [AppProvider, useApp] = createUseContext(() => {
                     throw Error('Flettefeltet barnetsNavn ikke sendt med');
                 }
                 return flettefelter.barnetsNavn;
-            case ESanityFlettefeltverdi.I_UTENFOR:
-                return plainTekst(
-                    flettefelter?.gjelderUtland ? frittståendeOrd.utenfor : frittståendeOrd.i,
-                    undefined,
-                    spesifikkLocale ?? valgtLocale
-                );
-            case ESanityFlettefeltverdi.UTLANDET_NORGE:
-                return plainTekst(
-                    flettefelter?.gjelderUtland ? frittståendeOrd.utlandet : frittståendeOrd.norge,
-                    undefined,
-                    spesifikkLocale ?? valgtLocale
-                );
             case ESanityFlettefeltverdi.LAND:
                 if (!flettefelter?.land) {
                     throw Error('Flettefeltet land ikke sendt med');
@@ -304,6 +286,14 @@ const [AppProvider, useApp] = createUseContext(() => {
                 return (
                     getName(flettefelter.land, spesifikkLocale ?? valgtLocale) ?? flettefelter.land
                 );
+            case ESanityFlettefeltverdi.YTELSE:
+                throw Error('Flettefeltet YTELSE er ikke støttet enda');
+            case ESanityFlettefeltverdi.YTELSE_BESTEMT_FORM:
+                throw Error('Flettefeltet YTELSE_BESTEMT_FORM er ikke støttet enda');
+            case ESanityFlettefeltverdi.I_UTENFOR:
+                throw Error('Flettefeltet I_UTENFOR er ikke støttet enda');
+            case ESanityFlettefeltverdi.UTLANDET_NORGE:
+                throw Error('Flettefeltet UTLANDET_NORGE er ikke støttet enda');
         }
     };
 

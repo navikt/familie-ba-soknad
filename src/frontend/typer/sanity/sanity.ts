@@ -57,6 +57,8 @@ export enum ESanityFlettefeltverdi {
     LAND = 'LAND',
     DATO = 'DATO',
     KLOKKESLETT = 'KLOKKESLETT',
+    YTELSE = 'YTELSE',
+    YTELSE_BESTEMT_FORM = 'YTELSE_BESTEMT_FORM',
 }
 
 export type FlettefeltVerdier = {
