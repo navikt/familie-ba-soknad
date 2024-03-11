@@ -33,7 +33,7 @@ const devConfig: webpack.Configuration = mergeWithRules({
         client: {
             overlay: true,
         },
-        open: [basePath],
+        open: [basePath + 'ordinaer'],
         proxy: {
             [`${basePath}modellversjon`]: `http://localhost:55554`,
             [`${basePath}api`]: `http://localhost:55554`,
