@@ -1,6 +1,22 @@
-import { PortableTextBlock } from '@portabletext/types';
+import { isPortableTextSpan } from '@portabletext/toolkit';
+import {
+    ArbitraryTypedObject,
+    PortableTextBlock,
+    PortableTextMarkDefinition,
+    PortableTextSpan,
+} from '@portabletext/types';
+import { pipe } from 'ramda';
 
-import { ESanitySteg, frittståendeOrdPrefix, SanityDokument } from '../typer/sanity/sanity';
+import { LocaleType } from '@navikt/familie-sprakvelger';
+
+import {
+    ESanityFlettefeltverdi,
+    ESanitySteg,
+    FlettefeltVerdier,
+    frittståendeOrdPrefix,
+    LocaleRecordBlock,
+    SanityDokument,
+} from '../typer/sanity/sanity';
 import {
     IFellesTekstInnhold,
     IFrittståendeOrdTekstinnhold,
@@ -46,21 +62,108 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
     return tekstInnhold as ITekstinnhold;
 };
 
-export const toPlainText = (blocks: PortableTextBlock[] = []) => {
-    return (
-        blocks
-            // loop through each block
-            .map(block => {
-                // if it's not a text block with children,
-                // return nothing
-                if (block._type !== 'block' || !block.children) {
-                    return '';
+// Denne funksjonen har kopiert mye fra en tråd i Sanity-slacken:
+// https://sanity-io.slack.com/archives/CF876M37F/p1664206409432079?thread_ts=1663841434.772959&cid=CF876M37F
+export const plainTekstHof =
+    (
+        flettefeltTilTekst: (
+            flettefeltVerdi: ESanityFlettefeltverdi,
+            flettefelter?: FlettefeltVerdier,
+            spesifikkLocale?: LocaleType
+        ) => string,
+        søknadLocale: LocaleType
+    ) =>
+    (
+        localeRecord: LocaleRecordBlock | undefined,
+        flettefelter?: FlettefeltVerdier,
+        spesifikkLocale?: LocaleType
+    ): string => {
+        if (!localeRecord) {
+            throw new Error(`Mangler tekst som skulle eksistert`);
+        }
+
+        const innholdForLocale = localeRecord[spesifikkLocale ?? søknadLocale];
+
+        if (typeof innholdForLocale === 'string') {
+            return innholdForLocale;
+        }
+
+        const marks = {
+            flettefelt: props => {
+                if (props.value.flettefeltVerdi) {
+                    return flettefeltTilTekst(
+                        props.value.flettefeltVerdi,
+                        flettefelter,
+                        spesifikkLocale
+                    );
+                } else {
+                    throw new Error(`Fant ikke flettefeltVerdi`);
                 }
-                // loop through the children spans, and join the
-                // text strings
-                return block.children.map(child => child.text).join('');
-            })
-            // join the paragraphs leaving split by two linebreaks
-            .join('\n\n')
-    );
+            },
+        };
+
+        const leadingSpace = /^\s/;
+        const trailingSpace = /^\s/;
+
+        let tekst = '';
+
+        innholdForLocale.forEach((block, index) => {
+            let previousElementIsNonSpan = false;
+
+            block.children.forEach(child => {
+                if (isPortableTextSpan(child)) {
+                    // If the previous element was a non-span, and we have no natural whitespace
+                    // between the previous and the next span, insert it to give the spans some
+                    // room to breathe. However, don't do so if this is the first span.
+                    tekst +=
+                        previousElementIsNonSpan &&
+                        tekst &&
+                        !trailingSpace.test(tekst) &&
+                        !leadingSpace.test(child.text)
+                            ? ' '
+                            : '';
+
+                    const transformedMarks = tranformMarks(child, block, marks);
+
+                    tekst += transformedMarks
+                        ? pipe(node => node, ...transformedMarks)(child).text
+                        : pipe(node => node)(child).text;
+                    previousElementIsNonSpan = false;
+                } else {
+                    previousElementIsNonSpan = true;
+                }
+            });
+
+            if (index !== innholdForLocale.length - 1) {
+                tekst += '\n\n';
+            }
+        });
+
+        return tekst;
+    };
+
+const tranformMarks = (
+    span: PortableTextSpan,
+    block: PortableTextBlock<
+        PortableTextMarkDefinition,
+        ArbitraryTypedObject | PortableTextSpan,
+        string,
+        string
+    >,
+    customMarks: { flettefelt: (props: { value: { flettefeltVerdi } }) => string }
+) => {
+    return span.marks?.map(name => node => {
+        const markDef = block.markDefs?.find(({ _key }) => _key === name);
+        const mark = markDef && customMarks[markDef._type];
+
+        return mark
+            ? {
+                  ...node,
+                  text: mark({
+                      ...node,
+                      value: markDef,
+                  }),
+              }
+            : node;
+    });
 };

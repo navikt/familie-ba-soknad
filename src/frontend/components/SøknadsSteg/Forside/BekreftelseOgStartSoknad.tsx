@@ -11,7 +11,6 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
-import { toPlainText } from '../../../utils/sanity';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -51,21 +50,28 @@ const BekreftelseOgStartSoknad: React.FC = () => {
         settSøknadstypeFeil,
     } = useBekreftelseOgStartSoknad();
 
-    const { tekster } = useApp();
+    const { tekster, plainTekst } = useApp();
 
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
             {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
                 <RadioGroup
-                    legend={toPlainText(tekster()[ESanitySteg.FORSIDE].soekerDuUtvidet.sporsmal.nb)} // TODO: Skal hente tekst fra Sanity
+                    legend={plainTekst(tekster()[ESanitySteg.FORSIDE].soekerDuUtvidet.sporsmal)}
                     onChange={(value: ESøknadstype) => {
                         settSøknadstype(value);
                         settSøknadstypeFeil(false);
                     }}
-                    error={søknadstypeFeil && 'Du må velge søknadstype'} // TODO: Skal hente tekst fra Sanity
+                    error={
+                        søknadstypeFeil &&
+                        plainTekst(tekster()[ESanitySteg.FORSIDE].soekerDuUtvidet.feilmelding)
+                    }
                 >
-                    <Radio value={ESøknadstype.UTVIDET}>Ja</Radio>
-                    <Radio value={ESøknadstype.ORDINÆR}>Nei</Radio>
+                    <Radio value={ESøknadstype.UTVIDET}>
+                        {plainTekst(tekster()[ESanitySteg.FELLES].frittståendeOrd.ja)}
+                    </Radio>
+                    <Radio value={ESøknadstype.ORDINÆR}>
+                        {plainTekst(tekster()[ESanitySteg.FELLES].frittståendeOrd.nei)}
+                    </Radio>
                 </RadioGroup>
             )}
             <Informasjonsbolk tittelId="forside.bekreftelsesboks.tittel">

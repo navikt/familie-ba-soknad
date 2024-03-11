@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import createUseContext from 'constate';
-import { Alpha3Code } from 'i18n-iso-countries';
+import { Alpha3Code, getName } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
-import { useSprakContext } from '@navikt/familie-sprakvelger';
+import { LocaleType, useSprakContext } from '@navikt/familie-sprakvelger';
 import {
     byggHenterRessurs,
     byggTomRessurs,
@@ -20,10 +20,17 @@ import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
+import {
+    ESanityFlettefeltverdi,
+    ESanitySteg,
+    FlettefeltVerdier,
+    PlainTekst,
+} from '../typer/sanity/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/barn';
+import { plainTekstHof } from '../utils/sanity';
 
 import { preferredAxios } from './axios';
 import { useFeatureToggles } from './FeatureToggleContext';
@@ -244,6 +251,64 @@ const [AppProvider, useApp] = createUseContext(() => {
         }
     };
 
+    const flettefeltTilTekst = (
+        sanityFlettefelt: ESanityFlettefeltverdi,
+        flettefelter?: FlettefeltVerdier,
+        spesifikkLocale?: LocaleType
+    ): string => {
+        const frittståendeOrd = tekster()[ESanitySteg.FELLES].frittståendeOrd;
+        switch (sanityFlettefelt) {
+            case ESanityFlettefeltverdi.DATO:
+                if (!flettefelter?.dato) {
+                    throw Error('Flettefeltet dato ikke sendt med');
+                }
+                return flettefelter.dato;
+            case ESanityFlettefeltverdi.KLOKKESLETT:
+                if (!flettefelter?.klokkeslett) {
+                    throw Error('Flettefeltet klokkeslett ikke sendt med');
+                }
+                return flettefelter.klokkeslett;
+            case ESanityFlettefeltverdi.ANTALL:
+                if (!flettefelter?.antall) {
+                    throw Error('Flettefeltet antall ikke sendt med');
+                }
+                return flettefelter.antall;
+            case ESanityFlettefeltverdi.TOTAL_ANTALL:
+                if (!flettefelter?.totalAntall) {
+                    throw Error('Flettefeltet totalAntall ikke sendt med');
+                }
+                return flettefelter.totalAntall;
+            case ESanityFlettefeltverdi.SØKER_NAVN:
+                return søknad.søker.navn;
+            case ESanityFlettefeltverdi.BARN_NAVN:
+                if (!flettefelter?.barnetsNavn) {
+                    throw Error('Flettefeltet barnetsNavn ikke sendt med');
+                }
+                return flettefelter.barnetsNavn;
+            case ESanityFlettefeltverdi.I_UTENFOR:
+                return plainTekst(
+                    flettefelter?.gjelderUtland ? frittståendeOrd.utenfor : frittståendeOrd.i,
+                    undefined,
+                    spesifikkLocale ?? valgtLocale
+                );
+            case ESanityFlettefeltverdi.UTLANDET_NORGE:
+                return plainTekst(
+                    flettefelter?.gjelderUtland ? frittståendeOrd.utlandet : frittståendeOrd.norge,
+                    undefined,
+                    spesifikkLocale ?? valgtLocale
+                );
+            case ESanityFlettefeltverdi.LAND:
+                if (!flettefelter?.land) {
+                    throw Error('Flettefeltet land ikke sendt med');
+                }
+                return (
+                    getName(flettefelter.land, spesifikkLocale ?? valgtLocale) ?? flettefelter.land
+                );
+        }
+    };
+
+    const plainTekst: PlainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
+
     return {
         axiosRequest,
         sluttbruker,
@@ -272,6 +337,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         eøsLand,
         settEøsLand,
         tekster,
+        plainTekst,
+        flettefeltTilTekst,
     };
 });
 
