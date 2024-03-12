@@ -15,9 +15,11 @@ import {
 } from '@navikt/ds-react';
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
+import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
@@ -56,6 +58,11 @@ const BekreftelseOgStartSoknad: React.FC = () => {
         settSøknadstypeFeil,
     } = useBekreftelseOgStartSoknad();
 
+    const { tekster: teksterFunksjon, plainTekst } = useApp();
+    const tekster = teksterFunksjon();
+    const forsidetekster = tekster[ESanitySteg.FORSIDE];
+    const fellestekster = tekster[ESanitySteg.FELLES];
+
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
             {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
@@ -65,17 +72,22 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                         barnetrygd.
                     </Alert>
                     <RadioGroup
-                        legend={
-                            'Vil du søke om utvidet barnetrygd i tillegg til ordinær barnetrygd?'
-                        } // TODO: Skal hente tekst fra Sanity
+                        legend={plainTekst(forsidetekster.soekerDuUtvidet.sporsmal)}
                         onChange={(value: ESøknadstype) => {
                             settSøknadstype(value);
                             settSøknadstypeFeil(false);
                         }}
-                        error={søknadstypeFeil && 'Du må velge søknadstype'} // TODO: Skal hente tekst fra Sanity
+                        error={
+                            søknadstypeFeil &&
+                            plainTekst(forsidetekster.soekerDuUtvidet.feilmelding)
+                        }
                     >
-                        <Radio value={ESøknadstype.UTVIDET}>Ja</Radio>
-                        <Radio value={ESøknadstype.ORDINÆR}>Nei</Radio>
+                        <Radio value={ESøknadstype.UTVIDET}>
+                            {plainTekst(fellestekster.frittståendeOrd.ja)}
+                        </Radio>
+                        <Radio value={ESøknadstype.ORDINÆR}>
+                            {plainTekst(fellestekster.frittståendeOrd.nei)}
+                        </Radio>
                     </RadioGroup>
                 </VStack>
             )}

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import createUseContext from 'constate';
-import { Alpha3Code } from 'i18n-iso-countries';
+import { Alpha3Code, getName } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
-import { useSprakContext } from '@navikt/familie-sprakvelger';
+import { LocaleType, useSprakContext } from '@navikt/familie-sprakvelger';
 import {
     byggHenterRessurs,
     byggTomRessurs,
@@ -20,15 +20,19 @@ import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
+import { ESanityFlettefeltverdi, FlettefeltVerdier, PlainTekst } from '../typer/sanity/sanity';
+import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/barn';
+import { plainTekstHof } from '../utils/sanity';
 
 import { preferredAxios } from './axios';
 import { useFeatureToggles } from './FeatureToggleContext';
 import { useInnloggetContext } from './InnloggetContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 import { hentSluttbrukerFraPdl } from './pdl';
+import { useSanity } from './SanityContext';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const [valgtLocale] = useSprakContext();
@@ -49,6 +53,8 @@ const [AppProvider, useApp] = createUseContext(() => {
     const { modellVersjon } = Miljø();
     const [sisteModellVersjon, settSisteModellVersjon] = useState(modellVersjon);
     const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
+
+    const { teksterRessurs } = useSanity();
 
     useEffect(() => {
         if (nåværendeRoute === RouteEnum.Kvittering) {
@@ -211,7 +217,9 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     const systemetFeiler = () => {
         return (
-            sluttbruker.status === RessursStatus.FEILET || eøsLand.status === RessursStatus.FEILET
+            sluttbruker.status === RessursStatus.FEILET ||
+            eøsLand.status === RessursStatus.FEILET ||
+            teksterRessurs.status === RessursStatus.FEILET
         );
     };
 
@@ -219,7 +227,8 @@ const [AppProvider, useApp] = createUseContext(() => {
         return (
             innloggetStatus === InnloggetStatus.AUTENTISERT &&
             sluttbruker.status === RessursStatus.SUKSESS &&
-            eøsLand.status === RessursStatus.SUKSESS
+            eøsLand.status === RessursStatus.SUKSESS &&
+            teksterRessurs.status === RessursStatus.SUKSESS
         );
     };
 
@@ -228,6 +237,67 @@ const [AppProvider, useApp] = createUseContext(() => {
     const systemetLaster = (): boolean => {
         return lasterRessurser() || innloggetStatus === InnloggetStatus.IKKE_VERIFISERT;
     };
+
+    const tekster = (): ITekstinnhold => {
+        if (teksterRessurs.status === RessursStatus.SUKSESS) {
+            return teksterRessurs.data;
+        } else {
+            throw new Error(`Søknaden har lastet uten tekster`);
+        }
+    };
+
+    const flettefeltTilTekst = (
+        sanityFlettefelt: ESanityFlettefeltverdi,
+        flettefelter?: FlettefeltVerdier,
+        spesifikkLocale?: LocaleType
+    ): string => {
+        switch (sanityFlettefelt) {
+            case ESanityFlettefeltverdi.DATO:
+                if (!flettefelter?.dato) {
+                    throw Error('Flettefeltet dato ikke sendt med');
+                }
+                return flettefelter.dato;
+            case ESanityFlettefeltverdi.KLOKKESLETT:
+                if (!flettefelter?.klokkeslett) {
+                    throw Error('Flettefeltet klokkeslett ikke sendt med');
+                }
+                return flettefelter.klokkeslett;
+            case ESanityFlettefeltverdi.ANTALL:
+                if (!flettefelter?.antall) {
+                    throw Error('Flettefeltet antall ikke sendt med');
+                }
+                return flettefelter.antall;
+            case ESanityFlettefeltverdi.TOTAL_ANTALL:
+                if (!flettefelter?.totalAntall) {
+                    throw Error('Flettefeltet totalAntall ikke sendt med');
+                }
+                return flettefelter.totalAntall;
+            case ESanityFlettefeltverdi.SØKER_NAVN:
+                return søknad.søker.navn;
+            case ESanityFlettefeltverdi.BARN_NAVN:
+                if (!flettefelter?.barnetsNavn) {
+                    throw Error('Flettefeltet barnetsNavn ikke sendt med');
+                }
+                return flettefelter.barnetsNavn;
+            case ESanityFlettefeltverdi.LAND:
+                if (!flettefelter?.land) {
+                    throw Error('Flettefeltet land ikke sendt med');
+                }
+                return (
+                    getName(flettefelter.land, spesifikkLocale ?? valgtLocale) ?? flettefelter.land
+                );
+            case ESanityFlettefeltverdi.YTELSE:
+                throw Error('Flettefeltet YTELSE er ikke støttet enda');
+            case ESanityFlettefeltverdi.YTELSE_BESTEMT_FORM:
+                throw Error('Flettefeltet YTELSE_BESTEMT_FORM er ikke støttet enda');
+            case ESanityFlettefeltverdi.I_UTENFOR:
+                throw Error('Flettefeltet I_UTENFOR er ikke støttet enda');
+            case ESanityFlettefeltverdi.UTLANDET_NORGE:
+                throw Error('Flettefeltet UTLANDET_NORGE er ikke støttet enda');
+        }
+    };
+
+    const plainTekst: PlainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
 
     return {
         axiosRequest,
@@ -256,6 +326,9 @@ const [AppProvider, useApp] = createUseContext(() => {
         settSisteModellVersjon,
         eøsLand,
         settEøsLand,
+        tekster,
+        plainTekst,
+        flettefeltTilTekst,
     };
 });
 
