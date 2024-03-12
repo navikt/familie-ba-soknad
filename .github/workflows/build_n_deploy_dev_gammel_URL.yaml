@@ -2,6 +2,9 @@ name: Build, push, and deploy app to dev, gammel URL
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - 'feat/fjern-familie-fra-url'
 
 env:
   BASE_PATH: /familie/barnetrygd/soknad/
