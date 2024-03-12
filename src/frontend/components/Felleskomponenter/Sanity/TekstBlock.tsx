@@ -51,12 +51,6 @@ export function TypografiWrapper({ typografi, style, children }: Props) {
                     {children}
                 </Heading>
             );
-        case Typografi.Ingress:
-            return (
-                <BodyLong size={'large'} style={style}>
-                    {children}
-                </BodyLong>
-            );
         case Typografi.BodyLong:
             return <StyledBodyLong style={style}>{children}</StyledBodyLong>;
         case Typografi.BodyShort:
