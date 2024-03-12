@@ -26,6 +26,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         run: yarn typecheck
+      - name: Kjør prettier og eslint
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+        run: yarn lint-test
       - name: Kjør tester
         env:
           CI: true
