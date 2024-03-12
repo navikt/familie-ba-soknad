@@ -86,7 +86,7 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
+          RESOURCE: build_n_deploy/naiserator/naiserator_dev_gammel_URL.yaml # TODO: må endres når vi endrer path for prod
           VAR: base_path=${{ env.BASE_PATH }}
           IMAGE: ${{ needs.bygg.outputs.image }}
 
