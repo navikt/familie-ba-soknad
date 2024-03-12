@@ -80,21 +80,11 @@ const TekstBlock: React.FC<{
         <PortableText
             value={block[valgtLocale]}
             components={{
-                block: {
-                    normal: ({ children }) => (
-                        <TypografiWrapper typografi={typografi} style={{ minHeight: '1rem' }}>
-                            {children}
-                        </TypografiWrapper>
-                    ),
-                    h1: ({ children }) => (
-                        <TypografiWrapper typografi={typografi}>{children}</TypografiWrapper>
-                    ),
-                    h2: ({ children }) => (
-                        <TypografiWrapper typografi={Typografi.HeadingH2}>
-                            {children}
-                        </TypografiWrapper>
-                    ),
-                },
+                block: ({ children }) => (
+                    <TypografiWrapper typografi={typografi} style={{ minHeight: '1rem' }}>
+                        {children}
+                    </TypografiWrapper>
+                ),
                 marks: {
                     flettefelt: props => {
                         if (props?.value?.flettefeltVerdi) {
