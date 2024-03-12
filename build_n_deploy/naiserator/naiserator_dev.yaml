@@ -25,6 +25,7 @@ spec:
     initialDelay: 5
   ingresses:
     - https://familie-ba-soknad.intern.dev.nav.no/familie/barnetrygd/soknad
+    - https://familie-ba-soknad.intern.dev.nav.no/barnetrygd/soknad
   accessPolicy:
     outbound:
       rules:
