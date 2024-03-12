@@ -38,9 +38,9 @@ const Miljø = (): MiljøProps => {
             dokumentUrl: 'http://familie-dokument/familie/dokument/api', //Vil uansett gå til bucket "familievedlegg" enn så lenge
             modellVersjon: modellVersjon,
             wonderwallUrl:
-                'https://familie-ba-soknad.dev.nav.no/familie/barnetrygd/soknad/oauth2/login?redirect=',
+                'https://familie-ba-soknad.dev.nav.no/barnetrygd/soknad/oauth2/login?redirect=',
             oauthCallbackUri:
-                'https://familie-ba-soknad.dev.nav.no/familie/barnetrygd/soknad/oauth2/callback',
+                'https://familie-ba-soknad.dev.nav.no/barnetrygd/soknad/oauth2/callback',
             port: 9000,
         };
     } else if (erProd()) {

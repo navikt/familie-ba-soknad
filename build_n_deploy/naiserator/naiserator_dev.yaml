@@ -24,7 +24,6 @@ spec:
     path: /internal/isReady
     initialDelay: 5
   ingresses:
-    - https://familie-ba-soknad.intern.dev.nav.no/familie/barnetrygd/soknad
     - https://familie-ba-soknad.intern.dev.nav.no/barnetrygd/soknad
   accessPolicy:
     outbound:
@@ -47,8 +46,8 @@ spec:
       autoLogin: true
       level: Level4
       autoLoginIgnorePaths:
-        - /familie/barnetrygd/soknad/**/*.css
-        - /familie/barnetrygd/soknad/**/manifest.json
+        - /barnetrygd/soknad/**/*.css
+        - /barnetrygd/soknad/**/manifest.json
   tokenx:
     enabled: true
   env:
