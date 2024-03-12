@@ -50,27 +50,29 @@ const BekreftelseOgStartSoknad: React.FC = () => {
         settSøknadstypeFeil,
     } = useBekreftelseOgStartSoknad();
 
-    const { tekster, plainTekst } = useApp();
+    const { tekster: teksterFunksjon, plainTekst } = useApp();
+    const tekster = teksterFunksjon();
+    const forsidetekster = tekster[ESanitySteg.FORSIDE];
+    const fellestekster = tekster[ESanitySteg.FELLES];
 
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
             {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
                 <RadioGroup
-                    legend={plainTekst(tekster()[ESanitySteg.FORSIDE].soekerDuUtvidet.sporsmal)}
+                    legend={plainTekst(forsidetekster.soekerDuUtvidet.sporsmal)}
                     onChange={(value: ESøknadstype) => {
                         settSøknadstype(value);
                         settSøknadstypeFeil(false);
                     }}
                     error={
-                        søknadstypeFeil &&
-                        plainTekst(tekster()[ESanitySteg.FORSIDE].soekerDuUtvidet.feilmelding)
+                        søknadstypeFeil && plainTekst(forsidetekster.soekerDuUtvidet.feilmelding)
                     }
                 >
                     <Radio value={ESøknadstype.UTVIDET}>
-                        {plainTekst(tekster()[ESanitySteg.FELLES].frittståendeOrd.ja)}
+                        {plainTekst(fellestekster.frittståendeOrd.ja)}
                     </Radio>
                     <Radio value={ESøknadstype.ORDINÆR}>
-                        {plainTekst(tekster()[ESanitySteg.FELLES].frittståendeOrd.nei)}
+                        {plainTekst(fellestekster.frittståendeOrd.nei)}
                     </Radio>
                 </RadioGroup>
             )}
