@@ -8,6 +8,7 @@ import { createRoot } from 'react-dom/client';
 import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 
 import App from './App';
+import MiljøProvider from './MiljøProvider';
 import { initSentry } from './utils/sentry';
 import '@navikt/ds-css';
 
@@ -57,7 +58,9 @@ polyfillLocaledata().then(() => {
     root.render(
         <React.StrictMode>
             <SprakProvider defaultLocale={LocaleType.nb}>
-                <App />
+                <MiljøProvider>
+                    <App />
+                </MiljøProvider>
             </SprakProvider>
         </React.StrictMode>
     );
