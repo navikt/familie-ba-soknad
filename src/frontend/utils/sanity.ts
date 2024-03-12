@@ -23,24 +23,6 @@ import {
     ITekstinnhold,
 } from '../typer/sanity/tekstInnhold';
 
-const strukturerInnholdForSteg = (
-    dokumenter: SanityDokument[],
-    steg: ESanitySteg
-): Record<string, SanityDokument> =>
-    dokumenter
-        .filter(dok => dok.steg === steg)
-        .reduce((acc, dok) => {
-            return { ...acc, [dok.api_navn]: dok };
-        }, {});
-
-const struktrerInnholdForFelles = (dokumenter: SanityDokument[]): Partial<IFellesTekstInnhold> =>
-    dokumenter.reduce((acc, dok) => {
-        return { ...acc, [dok.api_navn]: dok };
-    }, {});
-
-const dokumenterFiltrertPåPrefix = (dokumenter: SanityDokument[], prefix) =>
-    dokumenter.filter(dok => dok._type.includes(prefix));
-
 export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): ITekstinnhold => {
     const fellesDokumenter = alleDokumenter.filter(dok => dok.steg === ESanitySteg.FELLES);
 
@@ -61,6 +43,24 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
     };
     return tekstInnhold as ITekstinnhold;
 };
+
+const strukturerInnholdForSteg = (
+    dokumenter: SanityDokument[],
+    steg: ESanitySteg
+): Record<string, SanityDokument> =>
+    dokumenter
+        .filter(dok => dok.steg === steg)
+        .reduce((acc, dok) => {
+            return { ...acc, [dok.api_navn]: dok };
+        }, {});
+
+const struktrerInnholdForFelles = (dokumenter: SanityDokument[]): Partial<IFellesTekstInnhold> =>
+    dokumenter.reduce((acc, dok) => {
+        return { ...acc, [dok.api_navn]: dok };
+    }, {});
+
+const dokumenterFiltrertPåPrefix = (dokumenter: SanityDokument[], prefix) =>
+    dokumenter.filter(dok => dok._type.includes(prefix));
 
 // Denne funksjonen har kopiert mye fra en tråd i Sanity-slacken:
 // https://sanity-io.slack.com/archives/CF876M37F/p1664206409432079?thread_ts=1663841434.772959&cid=CF876M37F
