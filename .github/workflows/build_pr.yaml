@@ -1,7 +1,9 @@
-name: Build, push, and deploy app to dev
+name: Build PR
 
 on:
-  workflow_dispatch:
+  push:
+    ignore-branches:
+      - main
 
 env:
   BASE_PATH: /familie/barnetrygd/soknad/
@@ -24,6 +26,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         run: yarn typecheck
+      - name: Kjør prettier og eslint
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+        run: yarn lint-test
       - name: Kjør tester
         env:
           CI: true
@@ -31,7 +37,7 @@ jobs:
         run: yarn test
 
   bygg:
-    name: Bygg app/image og push til GitHub
+    name: Bygg app
     runs-on: ubuntu-latest
     permissions:
       contents: "read"
@@ -52,34 +58,3 @@ jobs:
         run: |
           yarn --prefer-offline --frozen-lockfile
           yarn build
-
-      - uses: nais/docker-build-push@v0
-        id: docker-push
-        with:
-          team: teamfamilie
-          push_image: true
-          dockerfile: Dockerfile
-          docker_context: .
-          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-    outputs:
-      image: ${{ steps.docker-push.outputs.image }}
-  deploy:
-    name: Deploy til dev-gcp
-    needs:
-      - bygg
-      - test
-    runs-on: ubuntu-latest
-    permissions:
-      contents: "read"
-      id-token: "write"
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy til dev-gcp team namespace
-        uses: nais/deploy/actions/deploy@v2
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-gcp
-          RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
-          VAR: base_path=${{ env.BASE_PATH }}
-          IMAGE: ${{ needs.bygg.outputs.image }}
