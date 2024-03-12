@@ -1,4 +1,4 @@
-name: Build, push, and deploy app to dev
+name: Build, push, and deploy app to dev, gammel URL
 
 on:
   workflow_dispatch:
