@@ -1,0 +1,59 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: familie-ba-soknad
+  namespace: teamfamilie
+  labels:
+    team: teamfamilie
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "25M"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+spec:
+  envFrom:
+    - secret: familie-ba-soknad-unleash-api-token
+  image: {{ image }}
+  replicas:
+    min: 2
+    max: 2
+    cpuThresholdPercentage: 50
+  port: 9000
+  liveness:
+    path: /internal/isAlive
+    initialDelay: 5
+  readiness:
+    path: /internal/isReady
+    initialDelay: 5
+  ingresses:
+    - https://familie-ba-soknad.intern.dev.nav.no/familie/barnetrygd/soknad
+  accessPolicy:
+    outbound:
+      rules:
+        - application: familie-baks-soknad-api
+        - application: familie-dokument
+      external:
+        - host: www.nav.no
+        - host: teamfamilie-unleash-api.nav.cloud.nais.io
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 1024Mi
+    requests:
+      memory: 512Mi
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      autoLogin: true
+      level: Level4
+      autoLoginIgnorePaths:
+        - /familie/barnetrygd/soknad/**/*.css
+        - /familie/barnetrygd/soknad/**/manifest.json
+  tokenx:
+    enabled: true
+  env:
+    - name: BASE_PATH
+      value: {{base_path}}
+    - name: ENV
+      value: dev
+  secureLogs:
+    enabled: true
