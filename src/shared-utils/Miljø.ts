@@ -1,6 +1,7 @@
 import { modellVersjon } from './modellversjon';
 
 interface MiljøProps {
+    sanityDataset: string;
     soknadApiProxyUrl: string;
     soknadApiUrl: string;
     dokumentProxyUrl: string;
@@ -32,6 +33,7 @@ export const erLokalt = () => !erProd() && !erDev();
 const Miljø = (): MiljøProps => {
     if (erDev()) {
         return {
+            sanityDataset: 'production',
             soknadApiProxyUrl: `https://familie-ba-soknad.intern.dev.nav.no${basePath}api`,
             soknadApiUrl: `http://familie-baks-soknad-api/api`,
             dokumentProxyUrl: `https://familie-ba-soknad.intern.dev.nav.no${basePath}dokument`,
@@ -43,6 +45,7 @@ const Miljø = (): MiljøProps => {
         };
     } else if (erProd()) {
         return {
+            sanityDataset: 'production',
             soknadApiProxyUrl: `https://www.nav.no${basePath}api`,
             soknadApiUrl: `http://familie-baks-soknad-api/api`,
             dokumentProxyUrl: `https://www.nav.no${basePath}dokument`,
@@ -54,6 +57,7 @@ const Miljø = (): MiljøProps => {
         };
     } else {
         return {
+            sanityDataset: 'test',
             soknadApiProxyUrl: `http://localhost:3000${basePath}api`,
             soknadApiUrl: 'http://localhost:8080/api',
             dokumentProxyUrl: `http://localhost:3000${basePath}dokument`,
