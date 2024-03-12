@@ -12,10 +12,6 @@ export interface IFellesTekstInnhold {
 export interface IFrittståendeOrdTekstinnhold {
     ja: LocaleRecordBlock;
     nei: LocaleRecordBlock;
-    utenfor: LocaleRecordBlock;
-    i: LocaleRecordBlock;
-    utlandet: LocaleRecordBlock;
-    norge: LocaleRecordBlock;
 }
 
 export interface IForsideTekstinnhold {
