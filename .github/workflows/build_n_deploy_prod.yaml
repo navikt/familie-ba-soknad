@@ -9,7 +9,7 @@ on:
       - 'main'
 
 env:
-  BASE_PATH: /familie/barnetrygd/soknad/
+  BASE_PATH: /familie/barnetrygd/soknad/ # TODO: må endres når vi endrer path for prod
 
 jobs:
   test:

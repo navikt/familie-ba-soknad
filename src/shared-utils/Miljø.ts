@@ -50,8 +50,8 @@ const Miljø = (): MiljøProps => {
             dokumentProxyUrl: `https://www.nav.no${basePath}dokument`,
             dokumentUrl: 'http://familie-dokument/familie/dokument/api', //Vil uansett gå til bucket "familievedlegg" enn så lenge,
             modellVersjon: modellVersjon,
-            wonderwallUrl: 'https://www.nav.no/familie/barnetrygd/soknad/oauth2/login?redirect=',
-            oauthCallbackUri: 'https://www.nav.no/familie/barnetrygd/soknad/oauth2/callback',
+            wonderwallUrl: 'https://www.nav.no/familie/barnetrygd/soknad/oauth2/login?redirect=', // TODO: må endres når vi endrer path for prod
+            oauthCallbackUri: 'https://www.nav.no/familie/barnetrygd/soknad/oauth2/callback', // TODO: må endres når vi endrer path for prod
             port: 9000,
         };
     } else {
