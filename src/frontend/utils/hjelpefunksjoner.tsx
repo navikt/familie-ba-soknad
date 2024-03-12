@@ -24,6 +24,5 @@ export const visFeiloppsummering = (skjema: ISkjema<SkjemaFeltTyper, string>): b
  * express-appen, og vi kan forwarde requests til APIet via /ordinaer, det eneste som må endres for
  * å støtte utvidet søknad er basepath for react-routeren og login-redirect, derfor gjør vi dette her.
  */
-export const routerBasePath = window.location.pathname.includes('utvidet')
-    ? basePath.replace('ordinaer', 'utvidet')
-    : basePath;
+export const routerBasePath = () =>
+    window.location.pathname.includes('utvidet') ? basePath + 'utvidet' : basePath + 'ordinaer';

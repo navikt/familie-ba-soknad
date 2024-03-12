@@ -9,7 +9,7 @@ on:
       - 'main'
 
 env:
-  BASE_PATH: /familie/barnetrygd/soknad/ordinaer/
+  BASE_PATH: /familie/barnetrygd/soknad/
 
 jobs:
   test:

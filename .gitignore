@@ -7,3 +7,4 @@ yarn-error.log
 dist/
 .DS_Store
 secure.log
+secure1.log
