@@ -20,18 +20,18 @@ import { routerBasePath } from './utils/hjelpefunksjoner';
 function App() {
     const { toggles } = useFeatureToggles();
 
+    const basePathPrefiks = window.location.pathname.includes('/familie') ? '/familie' : '';
+    const basePathMedSuffiks = toggles[EFeatureToggle.KOMBINER_SOKNADER]
+        ? basePath
+        : routerBasePath();
+    const basePathGittToggleOgUrl = `${basePathPrefiks}${basePathMedSuffiks}`;
+
     return (
         <SanityProvider>
             <AppProvider>
                 <EøsProvider>
                     <RoutesProvider>
-                        <Router
-                            basename={
-                                toggles[EFeatureToggle.KOMBINER_SOKNADER]
-                                    ? basePath
-                                    : routerBasePath()
-                            }
-                        >
+                        <Router basename={basePathGittToggleOgUrl}>
                             <StegProvider>
                                 <GlobalStyle />
                                 {process.env.NODE_ENV !== 'production' && (
