@@ -14,6 +14,7 @@ import {
     mockEøs,
     mockFeatureToggle,
     mockRoutes,
+    mockSanity,
     silenceConsoleErrors,
     TestProvidere,
 } from '../utils/testing';
@@ -85,6 +86,7 @@ describe('AppContext', () => {
         mockEøs();
         mockRoutes();
         mockFeatureToggle();
+        mockSanity();
         silenceConsoleErrors();
         hookResult = renderHook(() => useApp(), {
             wrapper: TestProvidere,

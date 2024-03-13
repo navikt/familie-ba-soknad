@@ -19,6 +19,7 @@ import {
     mockEøs,
     mockFeatureToggle,
     mockRoutes,
+    mockSanity,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
@@ -67,6 +68,7 @@ describe('VelgBarn', () => {
         mockEøs();
         mockRoutes();
         mockFeatureToggle();
+        mockSanity();
         silenceConsoleErrors();
     });
 
