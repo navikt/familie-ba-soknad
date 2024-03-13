@@ -67,8 +67,8 @@ describe('VelgBarn', () => {
         }));
         mockEøs();
         mockRoutes();
-        mockFeatureToggle();
         mockSanity();
+        mockFeatureToggle();
         silenceConsoleErrors();
     });
 
