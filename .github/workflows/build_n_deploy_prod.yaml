@@ -9,7 +9,7 @@ on:
       - 'main'
 
 env:
-  BASE_PATH: /familie/barnetrygd/soknad/ # TODO: må endres når vi endrer path for prod
+  BASE_PATH: /barnetrygd/soknad/
 
 jobs:
   test:
@@ -86,7 +86,7 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: build_n_deploy/naiserator/naiserator_dev_gammel_URL.yaml # TODO: må endres når vi endrer path for prod
+          RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
           VAR: base_path=${{ env.BASE_PATH }}
           IMAGE: ${{ needs.bygg.outputs.image }}
 
