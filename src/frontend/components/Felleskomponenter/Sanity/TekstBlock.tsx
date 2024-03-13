@@ -109,6 +109,10 @@ const TekstBlock: React.FC<{
                         );
                     },
                 },
+                types: {
+                    flettefelt: props =>
+                        flettefeltTilTekst(props.value.flettefelt, flettefelter, valgtLocale),
+                },
             }}
         />
     ) : null;
