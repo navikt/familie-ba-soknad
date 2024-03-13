@@ -12,6 +12,7 @@ import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import { FeatureTogglesProvider } from './context/FeatureToggleContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
+import { SanityProvider } from './context/SanityContext';
 import { logError } from './utils/amplitude';
 
 const MiljøProvider: React.FC<PropsWithChildren> = ({ children }) => {
@@ -25,9 +26,11 @@ const MiljøProvider: React.FC<PropsWithChildren> = ({ children }) => {
                     onError={logError}
                 >
                     <LastRessurserProvider>
-                        <InnloggetProvider>
-                            <FeatureTogglesProvider>{children}</FeatureTogglesProvider>
-                        </InnloggetProvider>
+                        <SanityProvider>
+                            <InnloggetProvider>
+                                <FeatureTogglesProvider>{children}</FeatureTogglesProvider>
+                            </InnloggetProvider>
+                        </SanityProvider>
                     </LastRessurserProvider>
                 </Sentry.ErrorBoundary>
             </HttpProvider>
