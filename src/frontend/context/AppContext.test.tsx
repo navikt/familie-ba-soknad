@@ -14,6 +14,7 @@ import {
     mockEøs,
     mockFeatureToggle,
     mockRoutes,
+    mockSanity,
     silenceConsoleErrors,
     TestProvidere,
 } from '../utils/testing';
@@ -54,6 +55,9 @@ jest.mock('./LastRessurserContext', () => {
         useLastRessurserContext: () => ({
             axiosRequest: () => mockResult,
             lasterRessurser: () => false,
+            ressurserSomLaster: [],
+            settRessurserSomLaster: jest.fn(),
+            fjernRessursSomLaster: jest.fn(),
         }),
         LastRessurserProvider: ({ children }) => <>{children}</>,
     };
@@ -84,6 +88,7 @@ describe('AppContext', () => {
     beforeEach(() => {
         mockEøs();
         mockRoutes();
+        mockSanity();
         mockFeatureToggle();
         silenceConsoleErrors();
         hookResult = renderHook(() => useApp(), {

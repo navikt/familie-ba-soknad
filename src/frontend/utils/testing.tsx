@@ -31,6 +31,8 @@ import { LastRessurserProvider } from '../context/LastRessurserContext';
 import * as pdlRequest from '../context/pdl';
 import * as routesContext from '../context/RoutesContext';
 import { getRoutes, RoutesProvider } from '../context/RoutesContext';
+import * as sanityContext from '../context/SanityContext';
+import { SanityProvider } from '../context/SanityContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
@@ -153,6 +155,15 @@ export const mockFeatureToggle = () => {
     return { useFeatureToggle };
 };
 
+export const mockSanity = () => {
+    const useSanity = jest.spyOn(sanityContext, 'useSanity').mockImplementation(
+        jest.fn().mockReturnValue({
+            teksterRessurs: RessursStatus.SUKSESS,
+        })
+    );
+    return { useSanity };
+};
+
 /**
  * Åpen for norsk oversettelse av funksjonsnavn
  * Denne fjerner alle console errors fra jest-output. Ikke bruk før du veit at det kun er
@@ -210,6 +221,7 @@ const wrapMedDefaultProvidere = (
             SprakProvider,
             HttpProvider,
             LastRessurserProvider,
+            SanityProvider,
             InnloggetProvider,
             FeatureTogglesProvider,
             AppProvider,
