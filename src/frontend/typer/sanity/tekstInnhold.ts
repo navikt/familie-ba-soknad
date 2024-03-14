@@ -12,6 +12,7 @@ export interface IFellesTekstInnhold {
 export interface IFrittståendeOrdTekstinnhold {
     ja: LocaleRecordBlock;
     nei: LocaleRecordBlock;
+    barnetrygd: LocaleRecordBlock;
 }
 
 export interface IForsideTekstinnhold {
@@ -23,4 +24,5 @@ export interface IForsideTekstinnhold {
     informasjonOmPersonopplysningerTittel: LocaleRecordBlock;
     utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
+    bekreftelsesboksBroedtekst: LocaleRecordBlock;
 }

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import {
     Alert,
-    BodyLong,
     BodyShort,
     Button,
     ConfirmationPanel,
@@ -20,6 +19,7 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
@@ -105,9 +105,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                 <BodyShort weight={'semibold'}>
                     <SpråkTekst id="forside.bekreftelsesboks.tittel" />
                 </BodyShort>
-                <BodyLong>
-                    <SpråkTekst id="forside.bekreftelsesboks.brødtekst" />
-                </BodyLong>
+                <TekstBlock block={forsidetekster.bekreftelsesboksBroedtekst} />
             </ConfirmationPanel>
 
             <StyledButton

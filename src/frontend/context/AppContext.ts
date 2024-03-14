@@ -20,7 +20,12 @@ import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
-import { ESanityFlettefeltverdi, FlettefeltVerdier, PlainTekst } from '../typer/sanity/sanity';
+import {
+    ESanityFlettefeltverdi,
+    ESanitySteg,
+    FlettefeltVerdier,
+    PlainTekst,
+} from '../typer/sanity/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
@@ -287,7 +292,11 @@ const [AppProvider, useApp] = createUseContext(() => {
                     getName(flettefelter.land, spesifikkLocale ?? valgtLocale) ?? flettefelter.land
                 );
             case ESanityFlettefeltverdi.YTELSE:
-                throw Error('Flettefeltet YTELSE er ikke støttet enda');
+                return plainTekst(
+                    tekster()[ESanitySteg.FELLES].frittståendeOrd.barnetrygd,
+                    undefined,
+                    spesifikkLocale ?? valgtLocale
+                );
             case ESanityFlettefeltverdi.YTELSE_BESTEMT_FORM:
                 throw Error('Flettefeltet YTELSE_BESTEMT_FORM er ikke støttet enda');
             case ESanityFlettefeltverdi.I_UTENFOR:
