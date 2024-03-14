@@ -1,6 +1,7 @@
 export enum EKillSwitchToggle {
     ORDINAER = 'familie-ba-soknad.disable-soknad-ordinaer',
     UTVIDET = 'familie-ba-soknad.disable-soknad-utvidet',
+    SOKNAD = 'famimlie-ba-soknad.disable-soknad',
 }
 
 export enum EFeatureToggle {

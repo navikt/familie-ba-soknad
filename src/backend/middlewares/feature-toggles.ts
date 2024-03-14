@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { EKillSwitchToggle } from '../../frontend/typer/feature-toggles';
+import { EFeatureToggle, EKillSwitchToggle } from '../../frontend/typer/feature-toggles';
 import { isEnabled } from '../utils/unleash';
 
 /**
@@ -13,6 +13,8 @@ export const expressToggleInterceptor: RequestHandler = (req, res, next) => {
     let skalRendreDisabledApp;
     if (process.env.FORCE_DISABLED) {
         skalRendreDisabledApp = true;
+    } else if (isEnabled(EFeatureToggle.KOMBINER_SOKNADER)) {
+        skalRendreDisabledApp = isEnabled(EKillSwitchToggle.SOKNAD);
     } else if (erUtvidet) {
         skalRendreDisabledApp = isEnabled(EKillSwitchToggle.UTVIDET);
     } else {
