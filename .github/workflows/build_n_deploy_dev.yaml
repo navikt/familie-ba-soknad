@@ -2,9 +2,6 @@ name: Build, push, and deploy app to dev
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'feat/fjern-familie-fra-url'
 
 env:
   BASE_PATH: /barnetrygd/soknad/
