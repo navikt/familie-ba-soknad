@@ -15,5 +15,12 @@ export interface IFrittståendeOrdTekstinnhold {
 }
 
 export interface IForsideTekstinnhold {
+    veilederHei: LocaleRecordBlock;
+    veilederIntro: LocaleRecordBlock;
+    informasjonOmPlikter: LocaleRecordBlock;
+    informasjonOmPlikterTittel: LocaleRecordBlock;
+    informasjonOmPersonopplysninger: LocaleRecordBlock;
+    informasjonOmPersonopplysningerTittel: LocaleRecordBlock;
+    utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
 }
