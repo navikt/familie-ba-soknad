@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 
-import { Accordion, BodyShort, GuidePanel, Heading } from '@navikt/ds-react';
+import { Accordion, GuidePanel, Heading } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -14,7 +14,7 @@ import { device } from '../../../Theme';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { RouteEnum } from '../../../typer/routes';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
+import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { logSidevisningBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
@@ -153,7 +153,7 @@ const Forside: React.FC = () => {
             </Heading>
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
             <GuidePanel poster>
-                <BodyShort weight="semibold">{plainTekst(forsidetekster.veilederHei)}</BodyShort>
+                <TekstBlock block={forsidetekster.veilederHei} typografi={Typografi.HeadingH2} />
                 <TekstBlock block={forsidetekster.veilederIntro} />
             </GuidePanel>
             <StyledAccordion size={'large'}>
