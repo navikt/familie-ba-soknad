@@ -25,4 +25,7 @@ export interface IForsideTekstinnhold {
     utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
     bekreftelsesboksBroedtekst: LocaleRecordBlock;
+    bekreftelsesboksErklaering: LocaleRecordBlock;
+    bekreftelsesboksTittel: LocaleRecordBlock;
+    bekreftelsesboksFeilmelding: LocaleRecordBlock;
 }

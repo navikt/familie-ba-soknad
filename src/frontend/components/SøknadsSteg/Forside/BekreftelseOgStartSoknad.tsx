@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import {
@@ -47,7 +46,6 @@ export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
 };
 
 const BekreftelseOgStartSoknad: React.FC = () => {
-    const { formatMessage } = useIntl();
     const { toggles } = useFeatureToggles();
     const {
         onStartSøknad,
@@ -91,19 +89,19 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                 </VStack>
             )}
             <ConfirmationPanel
-                label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
+                label={plainTekst(forsidetekster.bekreftelsesboksErklaering)}
                 onChange={bekreftelseOnChange}
                 checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                 error={
                     bekreftelseStatus === BekreftelseStatus.FEIL && (
                         <span role={'alert'}>
-                            <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
+                            <TekstBlock block={forsidetekster.bekreftelsesboksFeilmelding} />
                         </span>
                     )
                 }
             >
                 <BodyShort weight={'semibold'}>
-                    <SpråkTekst id="forside.bekreftelsesboks.tittel" />
+                    {plainTekst(forsidetekster.bekreftelsesboksTittel)}
                 </BodyShort>
                 <TekstBlock block={forsidetekster.bekreftelsesboksBroedtekst} />
             </ConfirmationPanel>
