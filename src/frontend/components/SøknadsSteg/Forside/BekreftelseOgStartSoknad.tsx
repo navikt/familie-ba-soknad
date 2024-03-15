@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import {
     Alert,
+    BodyLong,
     BodyShort,
     Button,
     ConfirmationPanel,
@@ -18,7 +20,6 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
@@ -46,6 +47,7 @@ export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
 };
 
 const BekreftelseOgStartSoknad: React.FC = () => {
+    const { formatMessage } = useIntl();
     const { toggles } = useFeatureToggles();
     const {
         onStartSøknad,
@@ -89,21 +91,23 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                 </VStack>
             )}
             <ConfirmationPanel
-                label={plainTekst(forsidetekster.bekreftelsesboksErklaering)}
+                label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
                 onChange={bekreftelseOnChange}
                 checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                 error={
                     bekreftelseStatus === BekreftelseStatus.FEIL && (
                         <span role={'alert'}>
-                            <TekstBlock block={forsidetekster.bekreftelsesboksFeilmelding} />
+                            <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
                         </span>
                     )
                 }
             >
                 <BodyShort weight={'semibold'}>
-                    {plainTekst(forsidetekster.bekreftelsesboksTittel)}
+                    <SpråkTekst id="forside.bekreftelsesboks.tittel" />
                 </BodyShort>
-                <TekstBlock block={forsidetekster.bekreftelsesboksBroedtekst} />
+                <BodyLong>
+                    <SpråkTekst id="forside.bekreftelsesboks.brødtekst" />
+                </BodyLong>
             </ConfirmationPanel>
 
             <StyledButton

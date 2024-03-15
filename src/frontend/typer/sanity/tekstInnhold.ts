@@ -25,8 +25,4 @@ export interface IForsideTekstinnhold {
     informasjonOmPersonopplysningerTittel: LocaleRecordBlock;
     utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
-    bekreftelsesboksBroedtekst: LocaleRecordBlock;
-    bekreftelsesboksErklaering: LocaleRecordBlock;
-    bekreftelsesboksTittel: LocaleRecordBlock;
-    bekreftelsesboksFeilmelding: LocaleRecordBlock;
 }
