@@ -24,6 +24,11 @@ export type LocaleRecordBlock = Record<LocaleType, PortableTextBlock[]> & {
     [key: string]: unknown;
 };
 
+export type LocaleRecordString = Record<LocaleType, string> & {
+    api_navn: string;
+    [key: string]: unknown;
+};
+
 export enum Typografi {
     StegHeadingH1 = 'StegHeadingH1',
     ModalHeadingH1 = 'ModalHeadingH1',
@@ -71,7 +76,7 @@ export type FlettefeltVerdier = {
 };
 
 export type PlainTekst = (
-    localeRecord: LocaleRecordBlock | undefined,
+    localeRecord: LocaleRecordBlock | LocaleRecordString | undefined,
     flettefelter?: FlettefeltVerdier,
     spesifikkLocale?: LocaleType
 ) => string;

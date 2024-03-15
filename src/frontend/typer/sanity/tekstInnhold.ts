@@ -1,4 +1,9 @@
-import { ESanitySteg, ISanitySpørsmålDokument, LocaleRecordBlock } from './sanity';
+import {
+    ESanitySteg,
+    ISanitySpørsmålDokument,
+    LocaleRecordBlock,
+    LocaleRecordString,
+} from './sanity';
 
 export interface ITekstinnhold {
     [ESanitySteg.FORSIDE]: IForsideTekstinnhold;
@@ -10,9 +15,9 @@ export interface IFellesTekstInnhold {
 }
 
 export interface IFrittståendeOrdTekstinnhold {
-    ja: LocaleRecordBlock;
-    nei: LocaleRecordBlock;
-    barnetrygd: LocaleRecordBlock;
+    ja: LocaleRecordString;
+    nei: LocaleRecordString;
+    barnetrygd: LocaleRecordString;
 }
 
 export interface IForsideTekstinnhold {

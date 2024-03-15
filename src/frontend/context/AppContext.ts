@@ -20,12 +20,7 @@ import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
-import {
-    ESanityFlettefeltverdi,
-    ESanitySteg,
-    FlettefeltVerdier,
-    PlainTekst,
-} from '../typer/sanity/sanity';
+import { ESanityFlettefeltverdi, ESanitySteg, FlettefeltVerdier } from '../typer/sanity/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
@@ -306,7 +301,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         }
     };
 
-    const plainTekst: PlainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
+    const plainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
 
     return {
         axiosRequest,
