@@ -148,8 +148,8 @@ const Forside: React.FC = () => {
     }
     return (
         <Layout>
-            <Heading size="xlarge" align={'center'} /* TODO: legg til tekst i sanity */>
-                Søknad om barnetrygd
+            <Heading size="xlarge" align={'center'}>
+                {plainTekst(forsidetekster.soeknadstittelBarnetrygd)}
             </Heading>
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
             <GuidePanel poster>

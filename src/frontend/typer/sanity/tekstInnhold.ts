@@ -16,6 +16,7 @@ export interface IFrittståendeOrdTekstinnhold {
 }
 
 export interface IForsideTekstinnhold {
+    soeknadstittelBarnetrygd: LocaleRecordBlock;
     veilederHei: LocaleRecordBlock;
     veilederIntro: LocaleRecordBlock;
     informasjonOmPlikter: LocaleRecordBlock;
