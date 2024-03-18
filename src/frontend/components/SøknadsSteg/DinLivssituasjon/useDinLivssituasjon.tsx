@@ -109,6 +109,7 @@ export const useDinLivssituasjon = (): {
             søker.sivilstand.type === ESivilstand.GIFT
                 ? 'omdeg.samboernå.gift.feilmelding'
                 : 'omdeg.samboernå.feilmelding',
+        skalSkjules: !erUtvidet,
     });
 
     const nåværendeSamboerNavn = useInputFelt({
