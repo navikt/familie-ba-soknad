@@ -15,6 +15,7 @@ import {
     FlettefeltVerdier,
     frittståendeOrdPrefix,
     LocaleRecordBlock,
+    LocaleRecordString,
     SanityDokument,
 } from '../typer/sanity/sanity';
 import {
@@ -74,7 +75,7 @@ export const plainTekstHof =
         søknadLocale: LocaleType
     ) =>
     (
-        localeRecord: LocaleRecordBlock | undefined,
+        localeRecord: LocaleRecordBlock | LocaleRecordString | undefined,
         flettefelter?: FlettefeltVerdier,
         spesifikkLocale?: LocaleType
     ): string => {
