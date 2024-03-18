@@ -47,11 +47,15 @@ const søknad = {
     ],
     søker: {
         sivilstand: { type: ESivilstand.UGIFT },
-        harSamboerNå: {
-            id: DinLivssituasjonSpørsmålId.harSamboerNå,
-            svar: ESvar.JA,
+        utvidet: {
+            spørsmål: {
+                harSamboerNå: {
+                    id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                    svar: ESvar.JA,
+                },
+            },
+            nåværendeSamboer: null,
         },
-        nåværendeSamboer: null,
     },
 };
 
@@ -59,22 +63,25 @@ const søknadGyldigNåværendeSamboerBase = {
     ...søknad,
     søker: {
         ...søknad.søker,
-        nåværendeSamboer: {
-            navn: {
-                id: SamboerSpørsmålId.nåværendeSamboerNavn,
-                svar: 'Initial verdi for samboer sitt navn',
-            },
-            ident: {
-                id: SamboerSpørsmålId.nåværendeSamboerFnr,
-                svar: AlternativtSvarForInput.UKJENT,
-            },
-            fødselsdato: {
-                id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-                svar: AlternativtSvarForInput.UKJENT,
-            },
-            samboerFraDato: {
-                id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-                svar: '2000-01-01',
+        utvidet: {
+            ...søknad.søker.utvidet,
+            nåværendeSamboer: {
+                navn: {
+                    id: SamboerSpørsmålId.nåværendeSamboerNavn,
+                    svar: 'Initial verdi for samboer sitt navn',
+                },
+                ident: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFnr,
+                    svar: AlternativtSvarForInput.UKJENT,
+                },
+                fødselsdato: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
+                    svar: AlternativtSvarForInput.UKJENT,
+                },
+                samboerFraDato: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFraDato,
+                    svar: '2000-01-01',
+                },
             },
         },
     },

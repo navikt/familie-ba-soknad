@@ -517,11 +517,6 @@ export const testdata5: TilKontraktTestData = {
             pensjonsperioderNorge: [],
             pensjonsperioderUtland: [],
             andreUtbetalingsperioder: [],
-            harSamboerNå: {
-                id: 'har-samboer-nå-og-gift',
-                svar: 'NEI',
-            },
-            nåværendeSamboer: null,
             utvidet: {
                 spørsmål: {
                     årsak: {
@@ -539,6 +534,10 @@ export const testdata5: TilKontraktTestData = {
                     separertEnkeSkiltDato: {
                         id: 'separert-enke-skilt-dato',
                         svar: '',
+                    },
+                    harSamboerNå: {
+                        id: 'har-samboer-nå-og-gift',
+                        svar: 'NEI',
                     },
                 },
                 tidligereSamboere: [
@@ -565,6 +564,7 @@ export const testdata5: TilKontraktTestData = {
                         },
                     },
                 ],
+                nåværendeSamboer: null,
             },
         },
         erNoenAvBarnaFosterbarn: {
@@ -702,14 +702,6 @@ export const testdata5: TilKontraktTestData = {
                     },
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
-                harSamboerNå: {
-                    label: {
-                        en: 'Are you currently living with a cohabiting partner that is not your spouse?',
-                        nb: 'Har du en annen samboer enn din ektefelle nå?',
-                        nn: 'Har du ein anna sambuar enn din ektefelle no?',
-                    },
-                    verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
-                },
                 pensjonsland: {
                     label: { en: 'ukjent-spørsmål', nb: 'ukjent-spørsmål', nn: 'ukjent-spørsmål' },
                     verdi: { nb: 'Benin', nn: 'Benin', en: 'Benin' },
@@ -731,6 +723,14 @@ export const testdata5: TilKontraktTestData = {
                         en: 'Are you separated or divorced without this having been registered in the Norwegian National Registry (folkeregisteret)?',
                         nb: 'Er du separert, skilt eller enke/enkemann uten at dette er registrert i folkeregisteret i Norge?',
                         nn: 'Er du separert, skilt eller enke/enkemann utan at dette er registrert i folkeregisteret i Noreg?',
+                    },
+                    verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                },
+                harSamboerNå: {
+                    label: {
+                        en: 'Are you currently living with a cohabiting partner that is not your spouse?',
+                        nb: 'Har du en annen samboer enn din ektefelle nå?',
+                        nn: 'Har du ein anna sambuar enn din ektefelle no?',
                     },
                     verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
                 },
