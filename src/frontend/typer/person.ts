@@ -59,8 +59,6 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     arbeidsperioderUtland: IArbeidsperiode[];
     mottarUtenlandspensjon: ISøknadSpørsmål<ESvar | null>;
     pensjonsperioderUtland: IPensjonsperiode[];
-    harSamboerNå: ISøknadSpørsmål<ESvar | null>;
-    nåværendeSamboer: ISamboer | null;
 
     // Steg: EØS-steg
     arbeidINorge: ISøknadSpørsmål<ESvar | null>;
@@ -78,8 +76,10 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
             separertEnkeSkilt: ISøknadSpørsmål<ESvar | null>;
             separertEnkeSkiltUtland: ISøknadSpørsmål<ESvar | null>;
             separertEnkeSkiltDato: ISøknadSpørsmål<ISODateString>;
+            harSamboerNå: ISøknadSpørsmål<ESvar | null>;
         };
         tidligereSamboere: ITidligereSamboer[];
+        nåværendeSamboer: ISamboer | null;
     };
 }
 

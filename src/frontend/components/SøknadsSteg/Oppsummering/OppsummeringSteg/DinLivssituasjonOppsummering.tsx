@@ -163,23 +163,25 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                             )}
                         </StyledOppsummeringsFeltGruppe>
                     )}
-                </>
-            )}
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={dinLivssituasjonSpørsmålSpråkId[søknad.søker.harSamboerNå.id]}
+
+                    <StyledOppsummeringsFeltGruppe>
+                        <OppsummeringFelt
+                            tittel={
+                                <SpråkTekst
+                                    id={
+                                        dinLivssituasjonSpørsmålSpråkId[
+                                            søknad.søker.utvidet.spørsmål.harSamboerNå.id
+                                        ]
+                                    }
+                                />
+                            }
+                            søknadsvar={søknad.søker.utvidet.spørsmål.harSamboerNå.svar}
                         />
-                    }
-                    søknadsvar={søknad.søker.harSamboerNå.svar}
-                />
-                {søknad.søker.nåværendeSamboer && (
-                    <SamboerOppsummering samboer={søknad.søker.nåværendeSamboer} />
-                )}
-            </StyledOppsummeringsFeltGruppe>
-            {erUtvidet && (
-                <>
+                        {søknad.søker.utvidet.nåværendeSamboer && (
+                            <SamboerOppsummering samboer={søknad.søker.utvidet.nåværendeSamboer} />
+                        )}
+                    </StyledOppsummeringsFeltGruppe>
+
                     <StyledOppsummeringsFeltGruppe>
                         <OppsummeringFelt
                             tittel={

@@ -325,11 +325,6 @@ export const testdata1: TilKontraktTestData = {
             pensjonsperioderNorge: [],
             pensjonsperioderUtland: [],
             andreUtbetalingsperioder: [],
-            harSamboerNå: {
-                id: 'har-samboer-nå-og-gift',
-                svar: 'NEI',
-            },
-            nåværendeSamboer: null,
             utvidet: {
                 spørsmål: {
                     årsak: {
@@ -348,8 +343,13 @@ export const testdata1: TilKontraktTestData = {
                         id: 'separert-enke-skilt-dato',
                         svar: '',
                     },
+                    harSamboerNå: {
+                        id: 'har-samboer-nå-og-gift',
+                        svar: 'NEI',
+                    },
                 },
                 tidligereSamboere: [],
+                nåværendeSamboer: null,
             },
         },
         erNoenAvBarnaFosterbarn: {

@@ -104,17 +104,18 @@ export const useDinLivssituasjon = (): {
 
     /*---- NÅVÆRENDE SAMBOER ----*/
     const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt({
-        søknadsfelt: søker.harSamboerNå,
+        søknadsfelt: søker.utvidet.spørsmål.harSamboerNå,
         feilmeldingSpråkId:
             søker.sivilstand.type === ESivilstand.GIFT
                 ? 'omdeg.samboernå.gift.feilmelding'
                 : 'omdeg.samboernå.feilmelding',
+        skalSkjules: !erUtvidet,
     });
 
     const nåværendeSamboerNavn = useInputFelt({
         søknadsfelt: {
             id: SamboerSpørsmålId.nåværendeSamboerNavn,
-            svar: søknad.søker.nåværendeSamboer?.navn.svar || '',
+            svar: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
         },
         feilmeldingSpråkId: 'omdeg.samboerNavn.feilmelding',
         skalVises: harSamboerNå.verdi === ESvar.JA,
@@ -127,7 +128,7 @@ export const useDinLivssituasjon = (): {
     };
     const nåværendeSamboerFnrUkjent = useFelt<ESvar>({
         feltId: SamboerSpørsmålId.nåværendeSamboerFnrUkjent,
-        verdi: fnrUkjentInitiellVerdi(søker.nåværendeSamboer),
+        verdi: fnrUkjentInitiellVerdi(søker.utvidet.nåværendeSamboer),
         avhengigheter: { harSamboerNå },
         skalFeltetVises: avhengigheter => avhengigheter.harSamboerNå.verdi === ESvar.JA,
     });
@@ -139,7 +140,7 @@ export const useDinLivssituasjon = (): {
     const nåværendeSamboerFnr = useInputFeltMedUkjent({
         søknadsfelt: {
             id: SamboerSpørsmålId.nåværendeSamboerFnr,
-            svar: fnrInitiellVerdi(søker.nåværendeSamboer),
+            svar: fnrInitiellVerdi(søker.utvidet.nåværendeSamboer),
         },
         avhengighet: nåværendeSamboerFnrUkjent,
         feilmeldingSpråkId: 'omdeg.samboer.ident.ikkebesvart.feilmelding',
@@ -153,7 +154,7 @@ export const useDinLivssituasjon = (): {
     };
     const nåværendeSamboerFødselsdatoUkjent = useFelt<ESvar>({
         feltId: SamboerSpørsmålId.nåværendeSamboerFødselsdatoUkjent,
-        verdi: settKjennerIkkeFødselsdatoInitialValue(søker.nåværendeSamboer),
+        verdi: settKjennerIkkeFødselsdatoInitialValue(søker.utvidet.nåværendeSamboer),
         avhengigheter: { fnrUkjent: nåværendeSamboerFnrUkjent },
         skalFeltetVises: avhengigheter => avhengigheter.fnrUkjent.verdi === ESvar.JA,
         nullstillVedAvhengighetEndring: false,
@@ -166,7 +167,7 @@ export const useDinLivssituasjon = (): {
 
     const nåværendeSamboerFødselsdato = useDatovelgerFeltMedUkjent({
         feltId: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-        initiellVerdi: getInitialFødselsdato(søker.nåværendeSamboer),
+        initiellVerdi: getInitialFødselsdato(søker.utvidet.nåværendeSamboer),
         vetIkkeCheckbox: nåværendeSamboerFødselsdatoUkjent,
         feilmeldingSpråkId: 'omdeg.nåværendesamboer.fødselsdato.ukjent',
         skalFeltetVises: nåværendeSamboerFnrUkjent.verdi === ESvar.JA,
@@ -176,7 +177,7 @@ export const useDinLivssituasjon = (): {
     const nåværendeSamboerFraDato = useDatovelgerFeltMedJaNeiAvhengighet({
         søknadsfelt: {
             id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-            svar: søker.nåværendeSamboer?.samboerFraDato.svar || '',
+            svar: søker.utvidet.nåværendeSamboer?.samboerFraDato.svar || '',
         },
         avhengigSvarCondition: ESvar.JA,
         avhengighet: harSamboerNå,
@@ -304,38 +305,6 @@ export const useDinLivssituasjon = (): {
 
     const genererOppdatertSøker = (): ISøker => ({
         ...søknad.søker,
-        harSamboerNå: {
-            ...søknad.søker.harSamboerNå,
-            svar: skjema.felter.harSamboerNå.verdi,
-        },
-        nåværendeSamboer:
-            harSamboerNå.verdi === ESvar.JA
-                ? {
-                      ...søknad.søker.nåværendeSamboer,
-                      navn: {
-                          id: SamboerSpørsmålId.nåværendeSamboerNavn,
-                          svar: trimWhiteSpace(skjema.felter.nåværendeSamboerNavn.verdi),
-                      },
-                      ident: {
-                          id: SamboerSpørsmålId.nåværendeSamboerFnr,
-                          svar: svarForSpørsmålMedUkjent(
-                              skjema.felter.nåværendeSamboerFnrUkjent,
-                              skjema.felter.nåværendeSamboerFnr
-                          ),
-                      },
-                      fødselsdato: {
-                          id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-                          svar: svarForSpørsmålMedUkjent(
-                              skjema.felter.nåværendeSamboerFødselsdatoUkjent,
-                              skjema.felter.nåværendeSamboerFødselsdato
-                          ),
-                      },
-                      samboerFraDato: {
-                          id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-                          svar: skjema.felter.nåværendeSamboerFraDato.verdi,
-                      },
-                  }
-                : null,
         erAsylsøker: {
             ...søknad.søker.erAsylsøker,
             svar: skjema.felter.erAsylsøker.verdi,
@@ -378,7 +347,39 @@ export const useDinLivssituasjon = (): {
                     ...søknad.søker.utvidet.spørsmål.separertEnkeSkiltDato,
                     svar: skjema.felter.separertEnkeSkiltDato.verdi,
                 },
+                harSamboerNå: {
+                    ...søknad.søker.utvidet.spørsmål.harSamboerNå,
+                    svar: skjema.felter.harSamboerNå.verdi,
+                },
             },
+            nåværendeSamboer:
+                harSamboerNå.verdi === ESvar.JA
+                    ? {
+                          ...søknad.søker.utvidet.nåværendeSamboer,
+                          navn: {
+                              id: SamboerSpørsmålId.nåværendeSamboerNavn,
+                              svar: trimWhiteSpace(skjema.felter.nåværendeSamboerNavn.verdi),
+                          },
+                          ident: {
+                              id: SamboerSpørsmålId.nåværendeSamboerFnr,
+                              svar: svarForSpørsmålMedUkjent(
+                                  skjema.felter.nåværendeSamboerFnrUkjent,
+                                  skjema.felter.nåværendeSamboerFnr
+                              ),
+                          },
+                          fødselsdato: {
+                              id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
+                              svar: svarForSpørsmålMedUkjent(
+                                  skjema.felter.nåværendeSamboerFødselsdatoUkjent,
+                                  skjema.felter.nåværendeSamboerFødselsdato
+                              ),
+                          },
+                          samboerFraDato: {
+                              id: SamboerSpørsmålId.nåværendeSamboerFraDato,
+                              svar: skjema.felter.nåværendeSamboerFraDato.verdi,
+                          },
+                      }
+                    : null,
         },
     });
 
