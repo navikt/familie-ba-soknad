@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import { Heading } from '@navikt/ds-react';
 import { APurple200, APurple400 } from '@navikt/ds-tokens/dist/tokens';
 
+import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const Section = styled.section`
@@ -18,10 +21,16 @@ const Section = styled.section`
 `;
 
 const Banner: React.FC<{ språkTekstId: string }> = ({ språkTekstId }) => {
+    const { toggles } = useFeatureToggles();
+    const { tekster, plainTekst } = useApp();
     return (
         <Section>
             <Heading size="large">
-                <SpråkTekst id={språkTekstId} />
+                {toggles.KOMBINER_SOKNADER ? (
+                    plainTekst(tekster()[ESanitySteg.FORSIDE].soeknadstittelBarnetrygd)
+                ) : (
+                    <SpråkTekst id={språkTekstId} />
+                )}
             </Heading>
         </Section>
     );
