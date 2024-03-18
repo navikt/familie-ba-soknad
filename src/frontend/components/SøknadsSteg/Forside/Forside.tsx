@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 
-import { Accordion, BodyShort, GuidePanel, Heading } from '@navikt/ds-react';
+import { Accordion, GuidePanel, Heading } from '@navikt/ds-react';
 import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -14,11 +14,13 @@ import { device } from '../../../Theme';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { RouteEnum } from '../../../typer/routes';
+import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { logSidevisningBarnetrygd } from '../../../utils/amplitude';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
@@ -59,7 +61,8 @@ const StyledInformasjonsbolk = styled(Informasjonsbolk)`
 `;
 
 const Forside: React.FC = () => {
-    const { sluttbruker, mellomlagretVerdi, søknad, settNåværendeRoute } = useApp();
+    const { sluttbruker, mellomlagretVerdi, søknad, settNåværendeRoute, tekster, plainTekst } =
+        useApp();
 
     const { toggles } = useFeatureToggles();
     const kombinerSøknaderToggle = toggles[EFeatureToggle.KOMBINER_SOKNADER];
@@ -81,6 +84,8 @@ const Forside: React.FC = () => {
         (kombinerSøknaderToggle || mellomlagretVerdi.søknad.søknadstype === søknad.søknadstype);
 
     const navn = sluttbruker.status === RessursStatus.SUKSESS ? sluttbruker.data.navn : '-';
+
+    const forsidetekster = tekster()[ESanitySteg.FORSIDE];
 
     if (!kombinerSøknaderToggle) {
         return (
@@ -143,61 +148,29 @@ const Forside: React.FC = () => {
     }
     return (
         <Layout>
-            <Heading size="xlarge" align={'center'} /* TODO: legg til tekst i sanity */>
-                Søknad om barnetrygd
+            <Heading size="xlarge" align={'center'}>
+                {plainTekst(forsidetekster.soeknadstittelBarnetrygd)}
             </Heading>
             <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
-            <GuidePanel poster /* TODO: legg til tekst i sanity*/>
-                <BodyShort weight="semibold">Hei, TODO TODOSEN!</BodyShort>
-                <BodyShort /* dette innholdet skal inn i sanity! alt sammen. blir vel en tekstblock*/
-                >
-                    Jeg er her for å veilede deg gjennom søknaden.
-                </BodyShort>
-                <ul>
-                    <li>Du må svare på alle spørsmål på hver side for å komme videre.</li>
-                    <li>
-                        Vi lagrer søknaden din ut morgendagen. Derfor kan du ta pauser når du fyller
-                        ut.{' '}
-                    </li>
-                    <li>Du kan avbryte søknaden og slette opplysningene du har lagt inn.</li>
-                    <li>
-                        Du må bekrefte at du har lest og forstått pliktene dine for å fortsette med
-                        søknaden.
-                    </li>
-                </ul>
+            <GuidePanel poster>
+                <TekstBlock block={forsidetekster.veilederHei} typografi={Typografi.HeadingH2} />
+                <TekstBlock block={forsidetekster.veilederIntro} />
             </GuidePanel>
             <StyledAccordion size={'large'}>
                 <Accordion.Item>
-                    <Accordion.Header>Hvis du får barnetrygd gjelder dette</Accordion.Header>
+                    <Accordion.Header>
+                        {plainTekst(forsidetekster.informasjonOmPlikterTittel)}
+                    </Accordion.Header>
                     <Accordion.Content>
-                        For at du skal få utbetalt riktig beløp fra NAV, er vi avhengig av at du gir
-                        oss riktige opplysninger og melder fra når det skjer endringer i
-                        livssituasjonen din.
-                        <EksternLenke
-                            lenkeSpråkId={'forside.plikter.lenke'}
-                            lenkeTekstSpråkId={'forside.plikter.lenketekst'}
-                            target="_blank"
-                        />
+                        <TekstBlock block={forsidetekster.informasjonOmPlikter} />
                     </Accordion.Content>
                 </Accordion.Item>
                 <Accordion.Item>
-                    <Accordion.Header>Vi vil hente og bruke informasjon om deg</Accordion.Header>
+                    <Accordion.Header>
+                        {plainTekst(forsidetekster.informasjonOmPersonopplysningerTittel)}
+                    </Accordion.Header>
                     <Accordion.Content>
-                        <BodyShort /* dette blir en tekstblock fra sanity*/>
-                            I tillegg til den informasjonen du oppgir i søknaden, henter vi:
-                        </BodyShort>
-                        <ul>
-                            <li>personinformasjon om deg og barna dine fra Folkeregisteret</li>
-                            <li>opplysninger om deg vi har fra før</li>
-                        </ul>
-                        <BodyShort>
-                            Dette gjør vi for å vurdere om du har rett til barnetrygd.
-                        </BodyShort>
-                        <EksternLenke
-                            lenkeSpråkId={'forside.behandling-av-personopplysning.lenke'}
-                            lenkeTekstSpråkId={'forside.behandling-av-personopplysning.lenketekst'}
-                            target="_blank"
-                        />
+                        <TekstBlock block={forsidetekster.informasjonOmPersonopplysninger} />
                     </Accordion.Content>
                 </Accordion.Item>
             </StyledAccordion>
