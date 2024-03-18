@@ -159,11 +159,6 @@ export const initialStateSøknad = (kombinerSøknaderToggle: boolean = false): I
                 svar: null,
             },
             andreUtbetalingsperioder: [],
-            harSamboerNå: {
-                id: DinLivssituasjonSpørsmålId.harSamboerNå,
-                svar: null,
-            },
-            nåværendeSamboer: null,
             adresseISøkeperiode: { id: EøsSøkerSpørsmålId.adresseISøkeperiode, svar: '' },
             idNummer: [],
             utvidet: {
@@ -184,8 +179,13 @@ export const initialStateSøknad = (kombinerSøknaderToggle: boolean = false): I
                         id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
                         svar: '',
                     },
+                    harSamboerNå: {
+                        id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                        svar: null,
+                    },
                 },
                 tidligereSamboere: [],
+                nåværendeSamboer: null,
             },
         },
         erNoenAvBarnaFosterbarn: {

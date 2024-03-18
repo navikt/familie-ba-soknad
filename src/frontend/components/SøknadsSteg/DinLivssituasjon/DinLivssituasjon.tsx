@@ -114,7 +114,9 @@ const DinLivssituasjon: React.FC = () => {
                             skjema={skjema}
                             felt={skjema.felter.harSamboerNå}
                             spørsmålTekstId={
-                                dinLivssituasjonSpørsmålSpråkId[søknad.søker.harSamboerNå.id]
+                                dinLivssituasjonSpørsmålSpråkId[
+                                    søknad.søker.utvidet.spørsmål.harSamboerNå.id
+                                ]
                             }
                         />
 

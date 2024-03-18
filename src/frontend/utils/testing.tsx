@@ -263,21 +263,27 @@ export const mekkGyldigSøker = (): ISøker => {
     return {
         ...initialStateSøknad(false).søker,
         sivilstand: { type: ESivilstand.UGIFT },
-        harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
         utenlandsperioder: [],
-        nåværendeSamboer: {
-            navn: { id: SamboerSpørsmålId.nåværendeSamboerNavn, svar: 'Gunnar' },
-            ident: {
-                id: SamboerSpørsmålId.nåværendeSamboerFnr,
-                svar: AlternativtSvarForInput.UKJENT,
+        utvidet: {
+            ...initialStateSøknad(false).søker.utvidet,
+            spørsmål: {
+                ...initialStateSøknad(false).søker.utvidet.spørsmål,
+                harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
             },
-            fødselsdato: {
-                id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
-                svar: AlternativtSvarForInput.UKJENT,
-            },
-            samboerFraDato: {
-                id: SamboerSpørsmålId.nåværendeSamboerFraDato,
-                svar: '2021-08-11',
+            nåværendeSamboer: {
+                navn: { id: SamboerSpørsmålId.nåværendeSamboerNavn, svar: 'Gunnar' },
+                ident: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFnr,
+                    svar: AlternativtSvarForInput.UKJENT,
+                },
+                fødselsdato: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
+                    svar: AlternativtSvarForInput.UKJENT,
+                },
+                samboerFraDato: {
+                    id: SamboerSpørsmålId.nåværendeSamboerFraDato,
+                    svar: '2021-08-11',
+                },
             },
         },
         borPåRegistrertAdresse: {
@@ -463,6 +469,10 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                         id: DinLivssituasjonSpørsmålId.separertEnkeSkiltDato,
                         svar: '2021-09-09',
                     },
+                    harSamboerNå: {
+                        id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                        svar: ESvar.NEI,
+                    },
                 },
                 tidligereSamboere: [
                     {
@@ -488,6 +498,7 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                         },
                     },
                 ],
+                nåværendeSamboer: null,
             },
         },
         barnInkludertISøknaden: base.barnInkludertISøknaden.map(barn => ({

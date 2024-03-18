@@ -170,15 +170,15 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                 <SpråkTekst
                                     id={
                                         dinLivssituasjonSpørsmålSpråkId[
-                                            søknad.søker.harSamboerNå.id
+                                            søknad.søker.utvidet.spørsmål.harSamboerNå.id
                                         ]
                                     }
                                 />
                             }
-                            søknadsvar={søknad.søker.harSamboerNå.svar}
+                            søknadsvar={søknad.søker.utvidet.spørsmål.harSamboerNå.svar}
                         />
-                        {søknad.søker.nåværendeSamboer && (
-                            <SamboerOppsummering samboer={søknad.søker.nåværendeSamboer} />
+                        {søknad.søker.utvidet.nåværendeSamboer && (
+                            <SamboerOppsummering samboer={søknad.søker.utvidet.nåværendeSamboer} />
                         )}
                     </StyledOppsummeringsFeltGruppe>
 

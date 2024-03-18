@@ -36,21 +36,22 @@ const søknad = mockDeep<ISøknad>({
     ],
     søker: {
         sivilstand: { type: ESivilstand.SKILT },
-        nåværendeSamboer: {
-            navn: { svar: '' },
-            ident: { svar: '' },
-            fødselsdato: { svar: '' },
-            samboerFraDato: { svar: '' },
-        },
-        harSamboerNå: {
-            id: DinLivssituasjonSpørsmålId.harSamboerNå,
-            svar: ESvar.JA,
-        },
+
         utvidet: {
             spørsmål: {
                 årsak: { svar: '' },
+                harSamboerNå: {
+                    id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                    svar: ESvar.JA,
+                },
             },
             tidligereSamboere: [],
+            nåværendeSamboer: {
+                navn: { svar: '' },
+                ident: { svar: '' },
+                fødselsdato: { svar: '' },
+                samboerFraDato: { svar: '' },
+            },
         },
     },
 });

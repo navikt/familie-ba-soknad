@@ -103,12 +103,18 @@ const [AppProvider, useApp] = createUseContext(() => {
                             adresse: ressurs.data.adresse,
                             sivilstand: ressurs.data.sivilstand,
                             adressebeskyttelse: ressurs.data.adressebeskyttelse,
-                            harSamboerNå: {
-                                ...søknad.søker.harSamboerNå,
-                                id:
-                                    ressurs.data.sivilstand.type === ESivilstand.GIFT
-                                        ? DinLivssituasjonSpørsmålId.harSamboerNåGift
-                                        : DinLivssituasjonSpørsmålId.harSamboerNå,
+                            utvidet: {
+                                ...søknad.søker.utvidet,
+                                spørsmål: {
+                                    ...søknad.søker.utvidet.spørsmål,
+                                    harSamboerNå: {
+                                        ...søknad.søker.utvidet.spørsmål.harSamboerNå,
+                                        id:
+                                            ressurs.data.sivilstand.type === ESivilstand.GIFT
+                                                ? DinLivssituasjonSpørsmålId.harSamboerNåGift
+                                                : DinLivssituasjonSpørsmålId.harSamboerNå,
+                                    },
+                                },
                             },
                         },
                     });
@@ -190,12 +196,18 @@ const [AppProvider, useApp] = createUseContext(() => {
                 adresse: søker.adresse,
                 sivilstand: søker.sivilstand,
                 adressebeskyttelse: søker.adressebeskyttelse,
-                harSamboerNå: {
-                    id:
-                        søker.sivilstand.type === ESivilstand.GIFT
-                            ? DinLivssituasjonSpørsmålId.harSamboerNåGift
-                            : DinLivssituasjonSpørsmålId.harSamboerNå,
-                    svar: null,
+                utvidet: {
+                    ...søker.utvidet,
+                    spørsmål: {
+                        ...søker.utvidet.spørsmål,
+                        harSamboerNå: {
+                            id:
+                                søker.sivilstand.type === ESivilstand.GIFT
+                                    ? DinLivssituasjonSpørsmålId.harSamboerNåGift
+                                    : DinLivssituasjonSpørsmålId.harSamboerNå,
+                            svar: null,
+                        },
+                    },
                 },
             },
         });
