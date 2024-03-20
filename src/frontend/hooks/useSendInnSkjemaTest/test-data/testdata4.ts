@@ -431,28 +431,6 @@ export const testdata4: TilKontraktTestData = {
             pensjonsperioderNorge: [],
             pensjonsperioderUtland: [],
             andreUtbetalingsperioder: [],
-            harSamboerNå: {
-                id: 'har-samboer-nå-og-gift',
-                svar: 'JA',
-            },
-            nåværendeSamboer: {
-                navn: {
-                    id: 'utvidet-nåværende-samboer-navn',
-                    svar: 'twethsetjdtykdrtsh',
-                },
-                ident: {
-                    id: 'utvidet-nåværende-samboer-fnr',
-                    svar: 'UKJENT',
-                },
-                fødselsdato: {
-                    id: 'utvidet-nåværende-samboer-fødselsdato',
-                    svar: '1997-01-09',
-                },
-                samboerFraDato: {
-                    id: 'utvidet-nåværende-samboer-samboerFraDato',
-                    svar: '2022-01-06',
-                },
-            },
             utvidet: {
                 spørsmål: {
                     årsak: {
@@ -470,6 +448,10 @@ export const testdata4: TilKontraktTestData = {
                     separertEnkeSkiltDato: {
                         id: 'separert-enke-skilt-dato',
                         svar: '2022-01-01',
+                    },
+                    harSamboerNå: {
+                        id: 'har-samboer-nå-og-gift',
+                        svar: 'JA',
                     },
                 },
                 tidligereSamboere: [
@@ -496,6 +478,24 @@ export const testdata4: TilKontraktTestData = {
                         },
                     },
                 ],
+                nåværendeSamboer: {
+                    navn: {
+                        id: 'utvidet-nåværende-samboer-navn',
+                        svar: 'twethsetjdtykdrtsh',
+                    },
+                    ident: {
+                        id: 'utvidet-nåværende-samboer-fnr',
+                        svar: 'UKJENT',
+                    },
+                    fødselsdato: {
+                        id: 'utvidet-nåværende-samboer-fødselsdato',
+                        svar: '1997-01-09',
+                    },
+                    samboerFraDato: {
+                        id: 'utvidet-nåværende-samboer-samboerFraDato',
+                        svar: '2022-01-06',
+                    },
+                },
             },
         },
         erNoenAvBarnaFosterbarn: {
@@ -697,14 +697,6 @@ export const testdata4: TilKontraktTestData = {
                     },
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
-                harSamboerNå: {
-                    label: {
-                        en: 'Are you currently living with a cohabiting partner that is not your spouse?',
-                        nb: 'Har du en annen samboer enn din ektefelle nå?',
-                        nn: 'Har du ein anna sambuar enn din ektefelle no?',
-                    },
-                    verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
-                },
                 arbeidsland: {
                     label: { en: 'ukjent-spørsmål', nb: 'ukjent-spørsmål', nn: 'ukjent-spørsmål' },
                     verdi: { nb: 'Argentina', nn: 'Argentina', en: 'Argentina' },
@@ -744,6 +736,14 @@ export const testdata4: TilKontraktTestData = {
                         nn: 'Frå kva dato er du separert, skilt eller enke/enkemann?',
                     },
                     verdi: { nb: '2022-01-01', nn: '2022-01-01', en: '2022-01-01' },
+                },
+                harSamboerNå: {
+                    label: {
+                        en: 'Are you currently living with a cohabiting partner that is not your spouse?',
+                        nb: 'Har du en annen samboer enn din ektefelle nå?',
+                        nn: 'Har du ein anna sambuar enn din ektefelle no?',
+                    },
+                    verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
             },
             tidligereSamboere: [

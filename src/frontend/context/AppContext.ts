@@ -20,7 +20,7 @@ import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
-import { ESanityFlettefeltverdi, FlettefeltVerdier, PlainTekst } from '../typer/sanity/sanity';
+import { ESanityFlettefeltverdi, ESanitySteg, FlettefeltVerdier } from '../typer/sanity/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
@@ -103,12 +103,18 @@ const [AppProvider, useApp] = createUseContext(() => {
                             adresse: ressurs.data.adresse,
                             sivilstand: ressurs.data.sivilstand,
                             adressebeskyttelse: ressurs.data.adressebeskyttelse,
-                            harSamboerNå: {
-                                ...søknad.søker.harSamboerNå,
-                                id:
-                                    ressurs.data.sivilstand.type === ESivilstand.GIFT
-                                        ? DinLivssituasjonSpørsmålId.harSamboerNåGift
-                                        : DinLivssituasjonSpørsmålId.harSamboerNå,
+                            utvidet: {
+                                ...søknad.søker.utvidet,
+                                spørsmål: {
+                                    ...søknad.søker.utvidet.spørsmål,
+                                    harSamboerNå: {
+                                        ...søknad.søker.utvidet.spørsmål.harSamboerNå,
+                                        id:
+                                            ressurs.data.sivilstand.type === ESivilstand.GIFT
+                                                ? DinLivssituasjonSpørsmålId.harSamboerNåGift
+                                                : DinLivssituasjonSpørsmålId.harSamboerNå,
+                                    },
+                                },
                             },
                         },
                     });
@@ -190,12 +196,18 @@ const [AppProvider, useApp] = createUseContext(() => {
                 adresse: søker.adresse,
                 sivilstand: søker.sivilstand,
                 adressebeskyttelse: søker.adressebeskyttelse,
-                harSamboerNå: {
-                    id:
-                        søker.sivilstand.type === ESivilstand.GIFT
-                            ? DinLivssituasjonSpørsmålId.harSamboerNåGift
-                            : DinLivssituasjonSpørsmålId.harSamboerNå,
-                    svar: null,
+                utvidet: {
+                    ...søker.utvidet,
+                    spørsmål: {
+                        ...søker.utvidet.spørsmål,
+                        harSamboerNå: {
+                            id:
+                                søker.sivilstand.type === ESivilstand.GIFT
+                                    ? DinLivssituasjonSpørsmålId.harSamboerNåGift
+                                    : DinLivssituasjonSpørsmålId.harSamboerNå,
+                            svar: null,
+                        },
+                    },
                 },
             },
         });
@@ -287,7 +299,11 @@ const [AppProvider, useApp] = createUseContext(() => {
                     getName(flettefelter.land, spesifikkLocale ?? valgtLocale) ?? flettefelter.land
                 );
             case ESanityFlettefeltverdi.YTELSE:
-                throw Error('Flettefeltet YTELSE er ikke støttet enda');
+                return plainTekst(
+                    tekster()[ESanitySteg.FELLES].frittståendeOrd.barnetrygd,
+                    undefined,
+                    spesifikkLocale ?? valgtLocale
+                );
             case ESanityFlettefeltverdi.YTELSE_BESTEMT_FORM:
                 throw Error('Flettefeltet YTELSE_BESTEMT_FORM er ikke støttet enda');
             case ESanityFlettefeltverdi.I_UTENFOR:
@@ -297,7 +313,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         }
     };
 
-    const plainTekst: PlainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
+    const plainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
 
     return {
         axiosRequest,

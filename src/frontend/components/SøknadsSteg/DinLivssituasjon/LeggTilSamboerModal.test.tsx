@@ -23,8 +23,12 @@ const søknad = mockDeep<ISøknad>({
         },
     ],
     søker: {
-        nåværendeSamboer: null,
-        harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: null },
+        utvidet: {
+            spørsmål: {
+                harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: null },
+            },
+            nåværendeSamboer: null,
+        },
     },
 });
 

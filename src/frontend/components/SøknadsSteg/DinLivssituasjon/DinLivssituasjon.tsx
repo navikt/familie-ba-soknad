@@ -108,39 +108,44 @@ const DinLivssituasjon: React.FC = () => {
                             </KomponentGruppe>
                         )}
                     </KomponentGruppe>
+
+                    <KomponentGruppe>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.harSamboerNå}
+                            spørsmålTekstId={
+                                dinLivssituasjonSpørsmålSpråkId[
+                                    søknad.søker.utvidet.spørsmål.harSamboerNå.id
+                                ]
+                            }
+                        />
+
+                        {skjema.felter.harSamboerNå.verdi === ESvar.JA && (
+                            <KomponentGruppe dynamisk>
+                                <SamboerSkjema
+                                    skjema={skjema}
+                                    samboerFelter={{
+                                        navn: skjema.felter.nåværendeSamboerNavn,
+                                        fnr: skjema.felter.nåværendeSamboerFnr,
+                                        fnrUkjent: skjema.felter.nåværendeSamboerFnrUkjent,
+                                        fødselsdato: skjema.felter.nåværendeSamboerFødselsdato,
+                                        fødselsdatoUkjent:
+                                            skjema.felter.nåværendeSamboerFødselsdatoUkjent,
+                                        samboerFraDato: skjema.felter.nåværendeSamboerFraDato,
+                                    }}
+                                />
+                            </KomponentGruppe>
+                        )}
+
+                        <TidligereSamboere
+                            tidligereSamboere={tidligereSamboere}
+                            leggTilTidligereSamboer={leggTilTidligereSamboer}
+                            fjernTidligereSamboer={fjernTidligereSamboer}
+                        />
+                    </KomponentGruppe>
                 </>
             )}
 
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.harSamboerNå}
-                    spørsmålTekstId={dinLivssituasjonSpørsmålSpråkId[søknad.søker.harSamboerNå.id]}
-                />
-
-                {skjema.felter.harSamboerNå.verdi === ESvar.JA && (
-                    <KomponentGruppe dynamisk>
-                        <SamboerSkjema
-                            skjema={skjema}
-                            samboerFelter={{
-                                navn: skjema.felter.nåværendeSamboerNavn,
-                                fnr: skjema.felter.nåværendeSamboerFnr,
-                                fnrUkjent: skjema.felter.nåværendeSamboerFnrUkjent,
-                                fødselsdato: skjema.felter.nåværendeSamboerFødselsdato,
-                                fødselsdatoUkjent: skjema.felter.nåværendeSamboerFødselsdatoUkjent,
-                                samboerFraDato: skjema.felter.nåværendeSamboerFraDato,
-                            }}
-                        />
-                    </KomponentGruppe>
-                )}
-                {erUtvidet && (
-                    <TidligereSamboere
-                        tidligereSamboere={tidligereSamboere}
-                        leggTilTidligereSamboer={leggTilTidligereSamboer}
-                        fjernTidligereSamboer={fjernTidligereSamboer}
-                    />
-                )}
-            </KomponentGruppe>
             <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}

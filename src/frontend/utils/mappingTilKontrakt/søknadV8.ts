@@ -66,7 +66,6 @@ export const dataISøknadKontraktFormatV8 = (
         barn,
         utvidet,
         adressebeskyttelse,
-        nåværendeSamboer,
         utenlandsperioder,
         // Nye felter under utvikling av EØS full
         andreUtbetalingsperioder,
@@ -79,7 +78,7 @@ export const dataISøknadKontraktFormatV8 = (
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...søkerSpørsmål
     } = søker;
-    const { spørsmål: utvidaSpørsmål, tidligereSamboere } = utvidet;
+    const { spørsmål: utvidaSpørsmål, tidligereSamboere, nåværendeSamboer } = utvidet;
     const { barnInkludertISøknaden } = søknad;
     const typetSøkerSpørsmål: ISøknadSpørsmålMap = søkerSpørsmål as unknown as ISøknadSpørsmålMap;
     const typetUtvidaSpørsmål: ISøknadSpørsmålMap = utvidaSpørsmål as unknown as ISøknadSpørsmålMap;
