@@ -1,6 +1,7 @@
 import amplitude from 'amplitude-js';
 
 import * as bokmålTekster from '../assets/lang/nb.json' assert { type: 'json' };
+import { ESøknadstype } from '../typer/kontrakt/generelle';
 import { hentSøknadstype, søknadstyper } from '../typer/søknad';
 
 const amplitudeInstance = amplitude.getInstance();
@@ -22,44 +23,44 @@ export function logEvent(eventName: string, eventProperties: any) {
     amplitudeInstance.logEvent(eventName, eventProperties);
 }
 
-export const logSidevisningBarnetrygd = (side: string) => {
+export const logSidevisningBarnetrygd = (side: string, søknadstype: ESøknadstype) => {
     logEvent('sidevisning', {
         side,
         team_id: 'familie',
-        skjemanavn: søknadstyper[hentSøknadstype()].navn,
-        skjemaId: søknadstyper[hentSøknadstype()].id,
+        skjemanavn: søknadstyper[søknadstype].navn,
+        skjemaId: søknadstyper[søknadstype].id,
     });
 };
 
-export const logSkjemaStartet = () => {
+export const logSkjemaStartet = (søknadstype: ESøknadstype) => {
     logEvent('skjema startet', {
-        skjemanavn: søknadstyper[hentSøknadstype()].navn,
-        skjemaId: søknadstyper[hentSøknadstype()].id,
+        skjemanavn: søknadstyper[søknadstype].navn,
+        skjemaId: søknadstyper[søknadstype].id,
         team_id: 'familie',
     });
 };
 
-export const logForsettPåSøknad = () => {
+export const logFortsettPåSøknad = (søknadstype: ESøknadstype) => {
     logEvent('fortsett på søknad', {
-        skjemanavn: søknadstyper[hentSøknadstype()].navn,
-        skjemaId: søknadstyper[hentSøknadstype()].id,
+        skjemanavn: søknadstyper[søknadstype].navn,
+        skjemaId: søknadstyper[søknadstype].id,
         team_id: 'familie',
     });
 };
 
-export const logSkjemaStegFullført = (steg: number) => {
+export const logSkjemaStegFullført = (steg: number, søknadstype: ESøknadstype) => {
     logEvent('skjemasteg fullført', {
-        skjemanavn: søknadstyper[hentSøknadstype()].navn,
-        skjemaId: søknadstyper[hentSøknadstype()].id,
+        skjemanavn: søknadstyper[søknadstype].navn,
+        skjemaId: søknadstyper[søknadstype].id,
         team_id: 'familie',
         steg,
     });
 };
 
-export const logKlikkGåVidere = (steg: number) => {
+export const logKlikkGåVidere = (steg: number, søknadstype: ESøknadstype) => {
     logEvent('klikk gå videre', {
-        skjemanavn: søknadstyper[hentSøknadstype()].navn,
-        skjemaId: søknadstyper[hentSøknadstype()].id,
+        skjemanavn: søknadstyper[søknadstype].navn,
+        skjemaId: søknadstyper[søknadstype].id,
         team_id: 'familie',
         steg,
     });

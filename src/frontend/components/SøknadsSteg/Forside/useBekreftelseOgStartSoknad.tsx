@@ -9,7 +9,8 @@ import { useSteg } from '../../../context/StegContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISteg } from '../../../typer/routes';
-import { logForsettPåSøknad, logSkjemaStartet } from '../../../utils/amplitude';
+import { hentSøknadstype } from '../../../typer/søknad';
+import { logFortsettPåSøknad, logSkjemaStartet } from '../../../utils/amplitude';
 
 export enum BekreftelseStatus {
     NORMAL = 'NORMAL',
@@ -84,7 +85,7 @@ export const useBekreftelseOgStartSoknad = (): {
         } else {
             navigate(nesteRoute.path);
         }
-        logForsettPåSøknad();
+        logFortsettPåSøknad(søknadstype || hentSøknadstype());
     };
     const startPåNytt = (): void => {
         avbrytOgSlettSøknad();
@@ -103,7 +104,7 @@ export const useBekreftelseOgStartSoknad = (): {
                 if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
                     settSisteUtfylteStegIndex(nåværendeStegIndex);
                 }
-                logSkjemaStartet();
+                logSkjemaStartet(søknadstype);
                 navigate(nesteRoute.path);
             } else {
                 søknadstype === undefined && settSøknadstypeFeil(true);
@@ -119,7 +120,7 @@ export const useBekreftelseOgStartSoknad = (): {
                 if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
                     settSisteUtfylteStegIndex(nåværendeStegIndex);
                 }
-                logSkjemaStartet();
+                logSkjemaStartet(hentSøknadstype());
                 navigate(nesteRoute.path);
             } else {
                 settBekreftelseStatus(BekreftelseStatus.FEIL);

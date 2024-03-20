@@ -96,6 +96,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
         erUtvidet,
         settNåværendeRoute,
         modellVersjonOppdatert,
+        søknad,
     } = useApp();
     const {
         hentNesteSteg,
@@ -112,7 +113,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
     const nåværendeStegIndex = hentNåværendeStegIndex();
 
     const nyesteNåværendeRoute: RouteEnum = hentNåværendeSteg().route;
-    useFørsteRender(() => logSidevisningBarnetrygd(nyesteNåværendeRoute));
+    useFørsteRender(() => logSidevisningBarnetrygd(nyesteNåværendeRoute, søknad.søknadstype));
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -140,13 +141,13 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
         }
         const målPath = komFra?.path ?? nesteRoute.path;
         komFra && settKomFra(undefined);
-        logSkjemaStegFullført(hentNåværendeStegIndex() + 1);
+        logSkjemaStegFullført(hentNåværendeStegIndex() + 1, søknad.søknadstype);
         navigate(målPath);
     };
 
     const håndterGåVidere = event => {
         event.preventDefault();
-        logKlikkGåVidere(hentNåværendeStegIndex() + 1);
+        logKlikkGåVidere(hentNåværendeStegIndex() + 1, søknad.søknadstype);
         if (skjema) {
             if (skjema.validerFelterOgVisFeilmelding()) {
                 skjema.settSøknadsdataCallback();
