@@ -46,7 +46,6 @@
     ],
     "moduleNameMapper": {
       "\\.(css)$": "<rootDir>/src/mockStyle.js",
-      "nav-(.*)-style": "<rootDir>/src/mockStyle.js",
       "styled-components/macro": "styled-components",
       "^uuid$": "uuid"
     },
