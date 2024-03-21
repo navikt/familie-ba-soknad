@@ -5,7 +5,6 @@ import createUseContext from 'constate';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø from '../../shared-utils/Miljø';
-import { hentSøknadstype } from '../typer/søknad';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
 
 import { useLastRessurserContext } from './LastRessurserContext';
@@ -33,7 +32,6 @@ const [InnloggetProvider, useInnloggetContext] = createUseContext(() => {
         return axiosRequest({
             url: `${soknadApiProxyUrl}/innlogget/barnetrygd`,
             method: 'GET',
-            params: { søknadstype: hentSøknadstype() },
             withCredentials: true,
             påvirkerSystemLaster: true,
         })
