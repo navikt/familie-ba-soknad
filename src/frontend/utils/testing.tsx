@@ -78,6 +78,7 @@ export const spyOnUseApp = søknad => {
         ...søknad.søker,
     };
     søknad.dokumentasjon = søknad.dokumentasjon ?? [];
+    søknad.søknadstype = søknad.søknadstype ?? ESøknadstype.ORDINÆR;
 
     const settEøsLand = jest.fn();
     const eøsLand = { status: RessursStatus.SUKSESS, data: ['BEL', 'AFG', 'NLD', 'NOR'] };

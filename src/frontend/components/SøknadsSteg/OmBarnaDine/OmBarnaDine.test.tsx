@@ -5,6 +5,7 @@ import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
     silenceConsoleErrors,
@@ -27,6 +28,7 @@ const søknad = mockDeep<ISøknad>({
         id: OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
         svar: ESvar.JA,
     },
+    søknadstype: ESøknadstype.ORDINÆR,
 });
 
 describe('OmBarnaDine', () => {

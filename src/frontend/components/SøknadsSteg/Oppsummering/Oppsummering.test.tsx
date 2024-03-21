@@ -6,6 +6,7 @@ import { act } from 'react-dom/test-utils';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
     LesUtLocation,
@@ -60,6 +61,7 @@ describe('Oppsummering', () => {
                     triggetEøs: false,
                 },
             ],
+            søknadstype: ESøknadstype.ORDINÆR,
         });
         spyOnUseApp(søknad);
 

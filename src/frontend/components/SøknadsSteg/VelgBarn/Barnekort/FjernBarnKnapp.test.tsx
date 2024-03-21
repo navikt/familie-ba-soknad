@@ -2,7 +2,7 @@ import React from 'react';
 
 import { act, render } from '@testing-library/react';
 
-import { ESivilstand } from '../../../../typer/kontrakt/generelle';
+import { ESivilstand, ESøknadstype } from '../../../../typer/kontrakt/generelle';
 import { IBarn } from '../../../../typer/person';
 import {
     mekkGyldigSøker,
@@ -77,6 +77,7 @@ describe('FjernBarnKnapp', () => {
             },
             barnRegistrertManuelt: [registrertBarn],
             dokumentasjon: [],
+            søknadstype: ESøknadstype.ORDINÆR,
         });
         const { getByText } = render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
@@ -98,6 +99,7 @@ describe('FjernBarnKnapp', () => {
                 barn: [],
                 sivilstand: { type: ESivilstand.UGIFT },
             },
+            søknadstype: ESøknadstype.ORDINÆR,
         });
     });
 });
