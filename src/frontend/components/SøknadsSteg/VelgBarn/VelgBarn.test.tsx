@@ -6,7 +6,7 @@ import { DeepPartial } from 'ts-essentials';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { byggSuksessRessurs, RessursStatus } from '@navikt/familie-typer';
-import fnrvalidator from '@navikt/fnrvalidator';
+import * as fnrvalidator from '@navikt/fnrvalidator';
 
 import * as eøsContext from '../../../context/EøsContext';
 import * as pdlRequest from '../../../context/pdl';

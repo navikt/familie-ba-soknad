@@ -95,9 +95,7 @@ export const initialStateSøknad = (kombinerSøknaderToggle: boolean = false): I
             genererInitiellDokumentasjon(
                 Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
                 dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.ANNEN_DOKUMENTASJON),
-                !kombinerSøknaderToggle && hentSøknadstype() === ESøknadstype.UTVIDET
-                    ? 'dokumentasjon.annendokumentasjon.utvidet.informasjon'
-                    : null
+                'dokumentasjon.annendokumentasjon.utvidet.informasjon'
             ),
         ],
         søker: {

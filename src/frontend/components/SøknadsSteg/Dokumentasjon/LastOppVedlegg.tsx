@@ -85,7 +85,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
         <SpråkTekst id={dokumentasjon.tittelSpråkId} values={{ barn: formatertListeMedBarn() }} />
     );
 
-    const skalViseAnnenDokumentasjonsBeskrivelse = () => {
+    const skalViseDokumentasjonsBeskrivelse = () => {
         return (
             dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON ||
             (søknad.søknadstype === ESøknadstype.UTVIDET &&
@@ -110,7 +110,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
                 )}
                 {dokTittel}
             </Heading>
-            {dokumentasjon.beskrivelseSpråkId && skalViseAnnenDokumentasjonsBeskrivelse() && (
+            {dokumentasjon.beskrivelseSpråkId && skalViseDokumentasjonsBeskrivelse() && (
                 <>
                     <SpråkTekst
                         id={dokumentasjon.beskrivelseSpråkId}
