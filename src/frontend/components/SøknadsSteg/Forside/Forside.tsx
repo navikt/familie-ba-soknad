@@ -72,7 +72,7 @@ const Forside: React.FC = () => {
             ? mellomlagretVerdi.søknad.søknadstype === ESøknadstype.UTVIDET
             : søknad.søknadstype === ESøknadstype.UTVIDET;
 
-    useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`));
+    useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`, søknad.søknadstype));
 
     useEffect(() => {
         settNåværendeRoute(RouteEnum.Forside);

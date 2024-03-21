@@ -11,7 +11,7 @@ import * as fnrvalidator from '@navikt/fnrvalidator';
 import * as eøsContext from '../../../context/EøsContext';
 import * as pdlRequest from '../../../context/pdl';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { ESivilstand } from '../../../typer/kontrakt/generelle';
+import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { IBarnRespons, ISøkerRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import {
@@ -79,6 +79,7 @@ describe('VelgBarn', () => {
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
             erEøs: false,
+            søknadstype: ESøknadstype.ORDINÆR,
         };
         const { settSøknad } = spyOnUseApp(søknad);
 
@@ -110,6 +111,7 @@ describe('VelgBarn', () => {
             },
             dokumentasjon: [],
             erEøs: false,
+            søknadstype: ESøknadstype.ORDINÆR,
         });
 
         // Når man trykker på gå videre blir det manuelt registrerte barnet fjernet fra søknaden
@@ -122,6 +124,7 @@ describe('VelgBarn', () => {
             },
             dokumentasjon: [],
             erEøs: false,
+            søknadstype: ESøknadstype.ORDINÆR,
         });
     });
     test('Rendrer anonymt barnekort dersom det har adressebeskyttelse', () => {
@@ -135,6 +138,7 @@ describe('VelgBarn', () => {
                 ],
             },
             barnInkludertISøknaden: [],
+            søknadstype: ESøknadstype.ORDINÆR,
         });
 
         spyOnUseApp(søknad);
