@@ -49,9 +49,9 @@ export const hentSøknadstype = () => {
         : ESøknadstype.ORDINÆR;
 };
 
-export const initialStateSøknad = (kombinerSøknaderToggle: boolean = false): ISøknad => {
+export const initialStateSøknad = (): ISøknad => {
     return {
-        søknadstype: kombinerSøknaderToggle ? ESøknadstype.ORDINÆR : hentSøknadstype(),
+        søknadstype: ESøknadstype.ORDINÆR,
         erEøs: false,
         barnInkludertISøknaden: [],
         lestOgForståttBekreftelse: false,
