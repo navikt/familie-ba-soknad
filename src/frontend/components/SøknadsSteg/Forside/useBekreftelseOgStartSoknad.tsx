@@ -7,7 +7,6 @@ import { useEøs } from '../../../context/EøsContext';
 import { useSteg } from '../../../context/StegContext';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISteg } from '../../../typer/routes';
-import { hentSøknadstype } from '../../../typer/søknad';
 import { logFortsettPåSøknad, logSkjemaStartet } from '../../../utils/amplitude';
 
 export enum BekreftelseStatus {
@@ -47,7 +46,7 @@ export const useBekreftelseOgStartSoknad = (): {
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
     );
 
-    const [søknadstype, settSøknadstype] = useState<ESøknadstype>();
+    const [søknadstype, settSøknadstype] = useState<ESøknadstype>(ESøknadstype.ORDINÆR);
     const [søknadstypeFeil, settSøknadstypeFeil] = useState<boolean>(false);
 
     const [gjenopprettetFraMellomlagring, settGjenpprettetFraMellomlagring] = useState(false);
@@ -71,6 +70,7 @@ export const useBekreftelseOgStartSoknad = (): {
             } = mellomlagretVerdi;
 
             brukMellomlagretVerdi();
+            settSøknadstype(mellomlagretVerdi.søknad.søknadstype);
             settBarnForSteg(barnInkludertISøknaden);
             settBarnSomTriggerEøs(
                 barnInkludertISøknaden
@@ -82,7 +82,7 @@ export const useBekreftelseOgStartSoknad = (): {
         } else {
             navigate(nesteRoute.path);
         }
-        logFortsettPåSøknad(søknadstype || hentSøknadstype());
+        logFortsettPåSøknad(søknadstype);
     };
     const startPåNytt = (): void => {
         avbrytOgSlettSøknad();

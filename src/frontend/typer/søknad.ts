@@ -43,12 +43,6 @@ export interface ISøknad {
     dokumentasjon: IDokumentasjon[];
 }
 
-export const hentSøknadstype = () => {
-    return window.location.pathname.includes('utvidet')
-        ? ESøknadstype.UTVIDET
-        : ESøknadstype.ORDINÆR;
-};
-
 export const initialStateSøknad = (): ISøknad => {
     return {
         søknadstype: ESøknadstype.ORDINÆR,
