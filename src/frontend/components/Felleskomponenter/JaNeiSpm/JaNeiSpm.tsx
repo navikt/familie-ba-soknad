@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
 
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,9 +7,7 @@ import { BodyShort } from '@navikt/ds-react';
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { AlternativtSvarForInput } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { logSpørsmålBesvart } from '../../../utils/amplitude';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface IJaNeiSpmProps {
@@ -35,15 +33,6 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     inkluderVetIkke = false,
     språkValues,
 }) => {
-    const [mounted, settMounted] = useState(false);
-
-    useEffect(() => {
-        if (mounted) {
-            logSpørsmålBesvart(spørsmålTekstId, felt.verdi ?? AlternativtSvarForInput.UKJENT);
-        }
-        settMounted(true);
-    }, [felt.verdi]);
-
     return felt.erSynlig ? (
         <div id={felt.id}>
             <JaNeiSpørsmål
