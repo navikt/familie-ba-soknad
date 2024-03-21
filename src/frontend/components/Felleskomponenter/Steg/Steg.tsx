@@ -73,18 +73,18 @@ const StepperContainer = styled.div<{ $antallSteg: number }>`
     margin: 0 auto;
     display: flex;
     justify-content: center;
-  
+
     @media all and ${device.mobile} {
-       ${kompaktStepper};
+        ${kompaktStepper};
     }
-  ${props =>
-      props.$antallSteg > 12 &&
-      css`
-          @media all and ${device.tablet} {
-              ${kompaktStepper};
-          }
-      `}
-}`;
+    ${props =>
+        props.$antallSteg > 12 &&
+        css`
+            @media all and ${device.tablet} {
+                ${kompaktStepper};
+            }
+        `}
+`;
 
 const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) => {
     const navigate = useNavigate();
