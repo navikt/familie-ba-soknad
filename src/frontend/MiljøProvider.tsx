@@ -13,7 +13,6 @@ import { FeatureTogglesProvider } from './context/FeatureToggleContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 import { SanityProvider } from './context/SanityContext';
-import { logError } from './utils/amplitude';
 
 const MiljøProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [valgtLocale] = useSprakContext();
@@ -23,7 +22,6 @@ const MiljøProvider: React.FC<PropsWithChildren> = ({ children }) => {
                 <Sentry.ErrorBoundary
                     fallback={() => <Feilside />}
                     beforeCapture={scope => scope.setTag('scope', 'familie-ba-soknad')}
-                    onError={logError}
                 >
                     <LastRessurserProvider>
                         <SanityProvider>
