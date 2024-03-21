@@ -14,14 +14,11 @@ import { StegProvider } from './context/StegContext';
 import { GlobalStyle } from './Theme';
 
 function App() {
-    const basePathPrefiks = window.location.pathname.includes('/familie') ? '/familie' : '';
-    const basePathGittInngangsUrl = `${basePathPrefiks}${basePath}`;
-
     return (
         <AppProvider>
             <EøsProvider>
                 <RoutesProvider>
-                    <Router basename={basePathGittInngangsUrl}>
+                    <Router basename={basePath}>
                         <StegProvider>
                             <GlobalStyle />
                             {process.env.NODE_ENV !== 'production' && (
