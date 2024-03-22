@@ -1473,13 +1473,13 @@
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/intl-numberformat@^8.9.0":
-  version "8.9.0"
-  resolved "https://registry.npmjs.org/@formatjs/intl-numberformat/-/intl-numberformat-8.9.0.tgz#c57ac1a26a3745d8824bf5245262c7e4214f5119"
-  integrity sha512-+s4hzGuNtSmo9JJ+5DUzaG0WxE53jarD0EJcNiMYHJpCYdzORgx/732fyHKErse9bQkMEu6Vueg1M9eEbxfkhQ==
+"@formatjs/intl-numberformat@^8.10.0":
+  version "8.10.0"
+  resolved "https://registry.npmjs.org/@formatjs/intl-numberformat/-/intl-numberformat-8.10.0.tgz#f078622e63ebe8d12efee8c12820fe54fe3041d6"
+  integrity sha512-i4Isl+E/ljea9wGwqFSlzOINhSM4GgbXnooI5XB0VGxc5dPEn9QkgadH4XM2wN2halvAxUyIXNq/08QpQDnODQ==
   dependencies:
-    "@formatjs/ecma402-abstract" "1.18.0"
-    "@formatjs/intl-localematcher" "0.5.2"
+    "@formatjs/ecma402-abstract" "1.18.2"
+    "@formatjs/intl-localematcher" "0.5.4"
     tslib "^2.4.0"
 
 "@formatjs/intl@2.10.0":
