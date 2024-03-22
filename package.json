@@ -142,7 +142,7 @@
     "@babel/preset-typescript": "^7.24.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
     "@portabletext/types": "^2.0.6",
-    "@sentry/webpack-plugin": "^2.14.1",
+    "@sentry/webpack-plugin": "^2.16.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.2",
     "@types/amplitude-js": "^8.16.5",
