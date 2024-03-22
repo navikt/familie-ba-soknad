@@ -46,7 +46,7 @@ export const useBekreftelseOgStartSoknad = (): {
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
     );
 
-    const [søknadstype, settSøknadstype] = useState<ESøknadstype>(ESøknadstype.ORDINÆR);
+    const [søknadstype, settSøknadstype] = useState<ESøknadstype>();
     const [søknadstypeFeil, settSøknadstypeFeil] = useState<boolean>(false);
 
     const [gjenopprettetFraMellomlagring, settGjenpprettetFraMellomlagring] = useState(false);
@@ -70,7 +70,6 @@ export const useBekreftelseOgStartSoknad = (): {
             } = mellomlagretVerdi;
 
             brukMellomlagretVerdi();
-            settSøknadstype(mellomlagretVerdi.søknad.søknadstype);
             settBarnForSteg(barnInkludertISøknaden);
             settBarnSomTriggerEøs(
                 barnInkludertISøknaden
@@ -79,10 +78,10 @@ export const useBekreftelseOgStartSoknad = (): {
             );
             settSøkerTriggerEøs(søker.triggetEøs);
             settGjenpprettetFraMellomlagring(true);
+            logFortsettPåSøknad(mellomlagretVerdi.søknad.søknadstype);
         } else {
             navigate(nesteRoute.path);
         }
-        logFortsettPåSøknad(søknadstype);
     };
     const startPåNytt = (): void => {
         avbrytOgSlettSøknad();
