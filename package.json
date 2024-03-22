@@ -180,7 +180,7 @@
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-testing-library": "^6.2.0",
-    "eslint-webpack-plugin": "^4.0.1",
+    "eslint-webpack-plugin": "^4.1.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
     "husky": "^9.0.11",
