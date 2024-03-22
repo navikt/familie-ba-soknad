@@ -9563,10 +9563,10 @@ react-collapse@^5.1.1:
   resolved "https://registry.npmjs.org/react-collapse/-/react-collapse-5.1.1.tgz#a2fa08ef13f372141b02e6a7d49ef72427bcbc2b"
   integrity sha512-k6cd7csF1o9LBhQ4AGBIdxB60SUEUMQDAnL2z1YvYNr9KoKr+nDkhN6FK7uGaBd/rYrYfrMpzpmJEIeHRYogBw==
 
-react-cookie@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.npmjs.org/react-cookie/-/react-cookie-7.0.1.tgz#9bbf3fc304dba584ef8ca5a88fecf9dc9fe23b23"
-  integrity sha512-SmDjy2TFp+vS6BGOqW7HyaWKyJzVmIH74uP3mxq6kswlwLJEBtIbhkrioozdvQL9r81yprHYFQkSmcO4HiXPdA==
+react-cookie@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.npmjs.org/react-cookie/-/react-cookie-7.1.0.tgz#646ddc578ead7dfa2bf1d767c79348dfed74006e"
+  integrity sha512-n2+Gt07/xxuShXary+SImk1sw5l7a1UguQOQEN55YewEW5LoA0opbR4nbeo8sY6OYwR37iCFJtqJ0AGEywqAtg==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.5"
     hoist-non-react-statics "^3.3.2"
