@@ -33,20 +33,13 @@ const devConfig: webpack.Configuration = mergeWithRules({
         client: {
             overlay: true,
         },
-        open: [basePath + 'ordinaer'],
+        open: [basePath],
         proxy: {
             [`${basePath}modellversjon`]: `http://localhost:55554`,
             [`${basePath}api`]: `http://localhost:55554`,
             [`${basePath}dokument`]: `http://localhost:55554`,
             [`${basePath}toggles`]: `http://localhost:55554`,
             [`${basePath}konverter`]: `http://localhost:55554`,
-            // Hvis vi kjører uten en basepath som inneholder ordinaer vil denne og neste regel loope
-            ...(basePath.includes('ordinaer') && {
-                [basePath.replace('ordinaer', 'utvidet')]: {
-                    target: 'http://localhost:3000',
-                    pathRewrite: path => path.replace('utvidet', 'ordinaer'),
-                },
-            }),
             // Essentially en workaround for https://github.com/nrwl/nx/issues/3859
             '*': {
                 target: 'http://localhost:3000',

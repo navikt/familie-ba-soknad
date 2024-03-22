@@ -36,10 +36,10 @@ import { SanityProvider } from '../context/SanityContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
 import { AlternativtSvarForInput } from '../typer/common';
-import { EFeatureToggle } from '../typer/feature-toggles';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { ISøker, ISøkerRespons } from '../typer/person';
+import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
 
@@ -103,6 +103,8 @@ export const spyOnUseApp = søknad => {
         systemetOK: () => jest.fn().mockReturnValue(true),
         systemetFeiler: jest.fn().mockReturnValue(false),
         fåttGyldigKvittering: søknad.fåttGyldigKvittering === true,
+        tekster: jest.fn().mockImplementation(() => mockDeep<ITekstinnhold>()),
+        plainTekst: jest.fn().mockReturnValue('tekst fra sanity'),
     });
 
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
@@ -150,7 +152,7 @@ export const mockFeatureToggle = () => {
         .spyOn(featureToggleContext, 'useFeatureToggles')
         .mockImplementation(
             jest.fn().mockReturnValue({
-                toggles: { [EFeatureToggle.KOMBINER_SOKNADER]: false },
+                // toggles: { [EFeatureToggle.EXAMPLE]: false },
             })
         );
     return { useFeatureToggle };
@@ -262,13 +264,13 @@ export const LesUtLocation = () => {
 
 export const mekkGyldigSøker = (): ISøker => {
     return {
-        ...initialStateSøknad(false).søker,
+        ...initialStateSøknad().søker,
         sivilstand: { type: ESivilstand.UGIFT },
         utenlandsperioder: [],
         utvidet: {
-            ...initialStateSøknad(false).søker.utvidet,
+            ...initialStateSøknad().søker.utvidet,
             spørsmål: {
-                ...initialStateSøknad(false).søker.utvidet.spørsmål,
+                ...initialStateSøknad().søker.utvidet.spørsmål,
                 harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
             },
             nåværendeSamboer: {
@@ -316,7 +318,7 @@ export const mekkGyldigSøker = (): ISøker => {
 
 export const mekkGyldigSøknad = (): ISøknad => {
     return {
-        ...initialStateSøknad(false),
+        ...initialStateSøknad(),
         søknadstype: ESøknadstype.ORDINÆR,
         lestOgForståttBekreftelse: true,
         søker: mekkGyldigSøker(),

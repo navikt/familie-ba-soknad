@@ -16,8 +16,6 @@ import {
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
-import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -48,7 +46,6 @@ export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
 
 const BekreftelseOgStartSoknad: React.FC = () => {
     const { formatMessage } = useIntl();
-    const { toggles } = useFeatureToggles();
     const {
         onStartSøknad,
         bekreftelseOnChange,
@@ -65,31 +62,26 @@ const BekreftelseOgStartSoknad: React.FC = () => {
 
     return (
         <FormContainer onSubmit={event => onStartSøknad(event)}>
-            {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
-                <VStack gap={'6'}>
-                    <Alert variant="info">
-                        {plainTekst(forsidetekster.utvidetBarnetrygdAlert)}
-                    </Alert>
-                    <RadioGroup
-                        legend={plainTekst(forsidetekster.soekerDuUtvidet.sporsmal)}
-                        onChange={(value: ESøknadstype) => {
-                            settSøknadstype(value);
-                            settSøknadstypeFeil(false);
-                        }}
-                        error={
-                            søknadstypeFeil &&
-                            plainTekst(forsidetekster.soekerDuUtvidet.feilmelding)
-                        }
-                    >
-                        <Radio value={ESøknadstype.UTVIDET}>
-                            {plainTekst(fellestekster.frittståendeOrd.ja)}
-                        </Radio>
-                        <Radio value={ESøknadstype.ORDINÆR}>
-                            {plainTekst(fellestekster.frittståendeOrd.nei)}
-                        </Radio>
-                    </RadioGroup>
-                </VStack>
-            )}
+            <VStack gap={'6'}>
+                <Alert variant="info">{plainTekst(forsidetekster.utvidetBarnetrygdAlert)}</Alert>
+                <RadioGroup
+                    legend={plainTekst(forsidetekster.soekerDuUtvidet.sporsmal)}
+                    onChange={(value: ESøknadstype) => {
+                        settSøknadstype(value);
+                        settSøknadstypeFeil(false);
+                    }}
+                    error={
+                        søknadstypeFeil && plainTekst(forsidetekster.soekerDuUtvidet.feilmelding)
+                    }
+                >
+                    <Radio value={ESøknadstype.UTVIDET}>
+                        {plainTekst(fellestekster.frittståendeOrd.ja)}
+                    </Radio>
+                    <Radio value={ESøknadstype.ORDINÆR}>
+                        {plainTekst(fellestekster.frittståendeOrd.nei)}
+                    </Radio>
+                </RadioGroup>
+            </VStack>
             <ConfirmationPanel
                 label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
                 onChange={bekreftelseOnChange}
