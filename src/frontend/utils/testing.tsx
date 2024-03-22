@@ -39,7 +39,7 @@ import { AlternativtSvarForInput } from '../typer/common';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { ISøker, ISøkerRespons } from '../typer/person';
-import { ESanitySteg } from '../typer/sanity/sanity';
+import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
 
@@ -103,7 +103,7 @@ export const spyOnUseApp = søknad => {
         systemetOK: () => jest.fn().mockReturnValue(true),
         systemetFeiler: jest.fn().mockReturnValue(false),
         fåttGyldigKvittering: søknad.fåttGyldigKvittering === true,
-        tekster: jest.fn().mockReturnValue({ [ESanitySteg.FELLES]: {}, [ESanitySteg.FORSIDE]: {} }),
+        tekster: jest.fn().mockImplementation(() => mockDeep<ITekstinnhold>()),
         plainTekst: jest.fn().mockReturnValue('tekst fra sanity'),
     });
 
