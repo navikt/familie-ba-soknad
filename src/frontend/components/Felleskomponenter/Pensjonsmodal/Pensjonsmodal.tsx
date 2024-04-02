@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { formatISO } from 'date-fns';
+
+import { VStack } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IPensjonsperiode } from '../../../typer/perioder';
@@ -10,6 +13,7 @@ import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
+import { MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -120,17 +124,37 @@ export const PensjonModal: React.FC<Props> = ({
                 )}
 
                 {pensjonFraDato.erSynlig && (
-                    <Datovelger
-                        felt={pensjonFraDato}
-                        label={
-                            <SpråkTekst
-                                id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.fraDatoPensjon)}
-                                values={{ ...(barn && { barn: barn.navn }) }}
-                            />
-                        }
-                        skjema={skjema}
-                        avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                    />
+                    <VStack>
+                        <Datovelger
+                            felt={pensjonFraDato}
+                            label={
+                                <SpråkTekst
+                                    id={hentSpørsmålTekstId(
+                                        PensjonsperiodeSpørsmålId.fraDatoPensjon
+                                    )}
+                                    values={{ ...(barn && { barn: barn.navn }) }}
+                                />
+                            }
+                            skjema={skjema}
+                            avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
+                        />
+                        <MånedÅrVelger
+                            label={
+                                <SpråkTekst
+                                    id={hentSpørsmålTekstId(
+                                        PensjonsperiodeSpørsmålId.fraDatoPensjon
+                                    )}
+                                    values={{ ...(barn && { barn: barn.navn }) }}
+                                />
+                            }
+                            avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
+                            onChange={dato =>
+                                pensjonFraDato.validerOgSettFelt(
+                                    formatISO(dato, { representation: 'date' })
+                                )
+                            }
+                        />
+                    </VStack>
                 )}
                 {pensjonTilDato.erSynlig && (
                     <Datovelger
