@@ -32,7 +32,8 @@ import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 export const barnISøknadsFormatV8 = (
     barn: IBarnMedISøknad,
     søker: ISøker,
-    valgtSpråk: LocaleType
+    valgtSpråk: LocaleType,
+    toggleBeOmMånedIkkeDato: boolean
 ): ISøknadIKontraktBarnV8 => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
@@ -119,10 +120,17 @@ export const barnISøknadsFormatV8 = (
             )
         ),
         andreForelder: andreForelder
-            ? andreForelderTilISøknadsfeltV8(andreForelder, barn, valgtSpråk)
+            ? andreForelderTilISøknadsfeltV8(
+                  andreForelder,
+                  barn,
+                  valgtSpråk,
+                  toggleBeOmMånedIkkeDato
+              )
             : null,
 
-        omsorgsperson: omsorgsperson ? omsorgspersonTilISøknadsfeltV8(omsorgsperson, barn) : null,
+        omsorgsperson: omsorgsperson
+            ? omsorgspersonTilISøknadsfeltV8(omsorgsperson, barn, toggleBeOmMånedIkkeDato)
+            : null,
         spørsmål: {
             ...spørmålISøknadsFormat(typetBarnSpørsmål, {
                 navn: navn,

@@ -23,7 +23,8 @@ import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 
 export const omsorgspersonTilISøknadsfeltV8 = (
     omsorgsperson: IOmsorgsperson,
-    barn: IBarnMedISøknad
+    barn: IBarnMedISøknad,
+    toggleBeOmMånedIkkeDato: boolean
 ): IOmsorgspersonIKontraktFormatV8 => {
     const {
         navn,
@@ -126,6 +127,7 @@ export const omsorgspersonTilISøknadsfeltV8 = (
                 gjelderUtlandet: true,
                 personType: PersonType.Omsorgsperson,
                 barn: barn,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         pensjonNorge: søknadsfeltBarn(
@@ -140,6 +142,7 @@ export const omsorgspersonTilISøknadsfeltV8 = (
                 gjelderUtlandet: false,
                 personType: PersonType.Omsorgsperson,
                 barn: barn,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         andreUtbetalinger: søknadsfeltBarn(

@@ -9,7 +9,9 @@ import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IPensjonsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IPensjonsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
+import { formaterDatoKunMåned } from '../dato';
 import { hentTekster, landkodeTilSpråk } from '../språk';
+import { uppercaseFørsteBokstav } from '../visning';
 
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
@@ -17,12 +19,14 @@ interface PensjonsperiodeIKontraktFormatParams {
     periode: IPensjonsperiode;
     periodeNummer: number;
     gjelderUtlandet: boolean;
+    toggleBeOmMånedIkkeDato: boolean;
 }
 
 export const tilIPensjonsperiodeIKontraktFormat = ({
     periode,
     periodeNummer,
     gjelderUtlandet,
+    toggleBeOmMånedIkkeDato,
     personType,
     erDød,
     barn,
@@ -65,13 +69,25 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
             pensjonFra: pensjonFra.svar
                 ? {
                       label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.fraDatoPensjon),
-                      verdi: sammeVerdiAlleSpråk(pensjonFra.svar),
+                      verdi: toggleBeOmMånedIkkeDato
+                          ? verdiCallbackAlleSpråk(locale =>
+                                uppercaseFørsteBokstav(
+                                    formaterDatoKunMåned(pensjonFra.svar, locale)
+                                )
+                            )
+                          : sammeVerdiAlleSpråk(pensjonFra.svar),
                   }
                 : null,
             pensjonTil: pensjonTil.svar
                 ? {
                       label: hentSpørsmålstekster(PensjonsperiodeSpørsmålId.tilDatoPensjon),
-                      verdi: sammeVerdiAlleSpråk(pensjonTil.svar),
+                      verdi: toggleBeOmMånedIkkeDato
+                          ? verdiCallbackAlleSpråk(locale =>
+                                uppercaseFørsteBokstav(
+                                    formaterDatoKunMåned(pensjonTil.svar, locale)
+                                )
+                            )
+                          : sammeVerdiAlleSpråk(pensjonTil.svar),
                   }
                 : null,
         }),
