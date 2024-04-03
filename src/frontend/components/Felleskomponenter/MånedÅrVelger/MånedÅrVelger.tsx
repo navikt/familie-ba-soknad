@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { MonthPicker, useMonthpicker } from '@navikt/ds-react';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
@@ -18,12 +18,23 @@ export const MånedÅrVelger: React.FC<IProps> = ({
 }) => {
     const [valgtLocale] = useSprakContext();
 
-    const { monthpickerProps, inputProps } = useMonthpicker({
+    const { monthpickerProps, inputProps, reset, selectedMonth } = useMonthpicker({
         fromDate: avgrensMinMåned,
         toDate: avgrensMaxMåned,
         locale: valgtLocale,
         onMonthChange: (date?: Date) => date && onChange(date),
     });
+
+    useEffect(() => {
+        if (selectedMonth) {
+            if (
+                (!!avgrensMinMåned && avgrensMinMåned > selectedMonth) ||
+                (!!avgrensMaxMåned && avgrensMaxMåned < selectedMonth)
+            ) {
+                reset();
+            }
+        }
+    }, [avgrensMinMåned, avgrensMaxMåned]);
 
     return (
         <MonthPicker {...monthpickerProps}>
