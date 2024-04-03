@@ -8,6 +8,7 @@ import { IPensjonsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { formaterDatoKunMåned } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
+import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -85,13 +86,17 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
             {pensjonFra.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.fraDatoPensjon)}
-                    søknadsvar={formaterDatoKunMåned(pensjonFra.svar, valgtLocale)}
+                    søknadsvar={uppercaseFørsteBokstav(
+                        formaterDatoKunMåned(pensjonFra.svar, valgtLocale)
+                    )}
                 />
             )}
             {pensjonTil.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.tilDatoPensjon)}
-                    søknadsvar={formaterDatoKunMåned(pensjonTil.svar, valgtLocale)}
+                    søknadsvar={uppercaseFørsteBokstav(
+                        formaterDatoKunMåned(pensjonTil.svar, valgtLocale)
+                    )}
                 />
             )}
         </PeriodeOppsummering>
