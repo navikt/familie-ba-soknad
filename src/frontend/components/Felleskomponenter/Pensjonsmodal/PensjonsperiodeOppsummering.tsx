@@ -6,7 +6,7 @@ import { useSprakContext } from '@navikt/familie-sprakvelger';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { formaterDato } from '../../../utils/dato';
+import { formaterDatoKunMåned } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
@@ -85,13 +85,13 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
             {pensjonFra.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.fraDatoPensjon)}
-                    søknadsvar={formaterDato(pensjonFra.svar)}
+                    søknadsvar={formaterDatoKunMåned(pensjonFra.svar, valgtLocale)}
                 />
             )}
             {pensjonTil.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.tilDatoPensjon)}
-                    søknadsvar={formaterDato(pensjonTil.svar)}
+                    søknadsvar={formaterDatoKunMåned(pensjonTil.svar, valgtLocale)}
                 />
             )}
         </PeriodeOppsummering>

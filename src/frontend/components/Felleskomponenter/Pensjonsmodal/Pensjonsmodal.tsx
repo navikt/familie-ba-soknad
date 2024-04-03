@@ -1,15 +1,13 @@
 import React from 'react';
 
-import { formatISO } from 'date-fns';
+import { formatISO, parseISO } from 'date-fns';
 
-import { VStack } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
@@ -124,51 +122,36 @@ export const PensjonModal: React.FC<Props> = ({
                 )}
 
                 {pensjonFraDato.erSynlig && (
-                    <VStack>
-                        <Datovelger
-                            felt={pensjonFraDato}
-                            label={
-                                <SpråkTekst
-                                    id={hentSpørsmålTekstId(
-                                        PensjonsperiodeSpørsmålId.fraDatoPensjon
-                                    )}
-                                    values={{ ...(barn && { barn: barn.navn }) }}
-                                />
-                            }
-                            skjema={skjema}
-                            avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                        />
-                        <MånedÅrVelger
-                            label={
-                                <SpråkTekst
-                                    id={hentSpørsmålTekstId(
-                                        PensjonsperiodeSpørsmålId.fraDatoPensjon
-                                    )}
-                                    values={{ ...(barn && { barn: barn.navn }) }}
-                                />
-                            }
-                            avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                            onChange={dato =>
-                                pensjonFraDato.validerOgSettFelt(
-                                    formatISO(dato, { representation: 'date' })
-                                )
-                            }
-                        />
-                    </VStack>
+                    <MånedÅrVelger
+                        label={
+                            <SpråkTekst
+                                id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.fraDatoPensjon)}
+                                values={{ ...(barn && { barn: barn.navn }) }}
+                            />
+                        }
+                        avgrensMaxMåned={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
+                        onChange={dato =>
+                            pensjonFraDato.validerOgSettFelt(
+                                formatISO(dato, { representation: 'date' })
+                            )
+                        }
+                    />
                 )}
                 {pensjonTilDato.erSynlig && (
-                    <Datovelger
-                        felt={pensjonTilDato}
+                    <MånedÅrVelger
                         label={
                             <SpråkTekst
                                 id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.tilDatoPensjon)}
                                 values={{ ...(barn && { barn: barn.navn }) }}
                             />
                         }
-                        skjema={skjema}
-                        avgrensMaxDato={dagensDato()}
-                        tilhørendeFraOgMedFelt={pensjonFraDato}
-                        dynamisk
+                        avgrensMinMåned={parseISO(pensjonFraDato.verdi)}
+                        avgrensMaxMåned={dagensDato()}
+                        onChange={dato =>
+                            pensjonTilDato.validerOgSettFelt(
+                                formatISO(dato, { representation: 'date' })
+                            )
+                        }
                     />
                 )}
             </KomponentGruppe>

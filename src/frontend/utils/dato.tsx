@@ -8,13 +8,16 @@ import {
     isFuture,
     isToday,
     isValid,
+    Locale,
     parse,
     startOfDay,
     startOfToday,
     sub,
 } from 'date-fns';
+import { enGB, nb, nn } from 'date-fns/locale';
 
 import { feil, FeltState, ok } from '@navikt/familie-skjema';
+import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { AlternativtSvarForInput, DatoMedUkjent, ISODateString } from '../typer/common';
@@ -105,4 +108,18 @@ export const formaterDatoMedUkjent = (datoMedUkjent: DatoMedUkjent, tekstForUkje
     return datoMedUkjent === AlternativtSvarForInput.UKJENT
         ? tekstForUkjent
         : format(new Date(datoMedUkjent), 'dd.MM.yyyy');
+};
+
+export const formaterDatoKunMåned = (datoString: ISODateString, språk: LocaleType) =>
+    format(new Date(datoString), 'MMMM yyyy', { locale: mapSpråkvalgTilDateFnsLocale(språk) });
+
+const mapSpråkvalgTilDateFnsLocale = (språkvalg: LocaleType): Locale => {
+    switch (språkvalg) {
+        case LocaleType.nb:
+            return nb;
+        case LocaleType.nn:
+            return nn;
+        case LocaleType.en:
+            return enGB;
+    }
 };
