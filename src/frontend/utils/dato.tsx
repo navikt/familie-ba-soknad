@@ -20,7 +20,7 @@ import { feil, FeltState, ok } from '@navikt/familie-skjema';
 import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { AlternativtSvarForInput, DatoMedUkjent, ISODateString } from '../typer/common';
+import { ISODateString } from '../typer/common';
 
 export const erDatoFormatGodkjent = (dato: Date) => isValid(dato);
 
@@ -103,12 +103,6 @@ export const validerDato = (
 
 export const formaterDato = (datoString: ISODateString) =>
     format(new Date(datoString), 'dd.MM.yyyy');
-
-export const formaterDatoMedUkjent = (datoMedUkjent: DatoMedUkjent, tekstForUkjent): string => {
-    return datoMedUkjent === AlternativtSvarForInput.UKJENT
-        ? tekstForUkjent
-        : format(new Date(datoMedUkjent), 'dd.MM.yyyy');
-};
 
 export const formaterDatoKunMåned = (datoString: ISODateString, språk: LocaleType) =>
     format(new Date(datoString), 'MMMM yyyy', { locale: mapSpråkvalgTilDateFnsLocale(språk) });
