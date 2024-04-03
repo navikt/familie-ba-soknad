@@ -137,7 +137,9 @@ export const PensjonModal: React.FC<Props> = ({
                                     values={{ ...(barn && { barn: barn.navn }) }}
                                 />
                             }
-                            avgrensMaxMåned={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
+                            senesteValgbareMåned={
+                                periodenErAvsluttet ? gårsdagensDato() : dagensDato()
+                            }
                             onChange={dato =>
                                 pensjonFraDato.validerOgSettFelt(
                                     formatISO(dato, { representation: 'date' })
@@ -170,8 +172,8 @@ export const PensjonModal: React.FC<Props> = ({
                                     values={{ ...(barn && { barn: barn.navn }) }}
                                 />
                             }
-                            avgrensMinMåned={parseISO(pensjonFraDato.verdi)}
-                            avgrensMaxMåned={dagensDato()}
+                            tidligsteValgbareMåned={parseISO(pensjonFraDato.verdi)}
+                            senesteValgbareMåned={dagensDato()}
                             onChange={dato =>
                                 pensjonTilDato.validerOgSettFelt(
                                     formatISO(dato, { representation: 'date' })

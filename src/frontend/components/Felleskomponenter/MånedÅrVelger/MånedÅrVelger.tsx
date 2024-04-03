@@ -4,23 +4,23 @@ import { MonthPicker, useMonthpicker } from '@navikt/ds-react';
 import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 interface IProps {
-    avgrensMinMåned?: Date;
-    avgrensMaxMåned?: Date;
+    tidligsteValgbareMåned?: Date;
+    senesteValgbareMåned?: Date;
     label: React.ReactNode;
     onChange: (date: Date) => void;
 }
 
 export const MånedÅrVelger: React.FC<IProps> = ({
-    avgrensMinMåned,
-    avgrensMaxMåned,
+    tidligsteValgbareMåned,
+    senesteValgbareMåned,
     label,
     onChange,
 }) => {
     const [valgtLocale] = useSprakContext();
 
     const { monthpickerProps, inputProps, reset, selectedMonth } = useMonthpicker({
-        fromDate: avgrensMinMåned,
-        toDate: avgrensMaxMåned,
+        fromDate: tidligsteValgbareMåned,
+        toDate: senesteValgbareMåned,
         locale: valgtLocale,
         onMonthChange: (date?: Date) => date && onChange(date),
     });
@@ -28,13 +28,13 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     useEffect(() => {
         if (selectedMonth) {
             if (
-                (!!avgrensMinMåned && avgrensMinMåned > selectedMonth) ||
-                (!!avgrensMaxMåned && avgrensMaxMåned < selectedMonth)
+                (!!tidligsteValgbareMåned && tidligsteValgbareMåned > selectedMonth) ||
+                (!!senesteValgbareMåned && senesteValgbareMåned < selectedMonth)
             ) {
                 reset();
             }
         }
-    }, [avgrensMinMåned, avgrensMaxMåned]);
+    }, [tidligsteValgbareMåned, senesteValgbareMåned]);
 
     return (
         <MonthPicker {...monthpickerProps}>
