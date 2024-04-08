@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { formatISO, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -140,11 +140,8 @@ export const PensjonModal: React.FC<Props> = ({
                             senesteValgbareMåned={
                                 periodenErAvsluttet ? gårsdagensDato() : dagensDato()
                             }
-                            onChange={dato =>
-                                pensjonFraDato.validerOgSettFelt(
-                                    formatISO(dato, { representation: 'date' })
-                                )
-                            }
+                            felt={pensjonFraDato}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
                         />
                     ) : (
                         <Datovelger
@@ -174,11 +171,8 @@ export const PensjonModal: React.FC<Props> = ({
                             }
                             tidligsteValgbareMåned={parseISO(pensjonFraDato.verdi)}
                             senesteValgbareMåned={dagensDato()}
-                            onChange={dato =>
-                                pensjonTilDato.validerOgSettFelt(
-                                    formatISO(dato, { representation: 'date' })
-                                )
-                            }
+                            felt={pensjonTilDato}
+                            visFeilmeldinger={skjema.visFeilmeldinger}
                         />
                     ) : (
                         <Datovelger
