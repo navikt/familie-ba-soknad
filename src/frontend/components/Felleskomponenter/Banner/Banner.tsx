@@ -6,9 +6,7 @@ import { Heading } from '@navikt/ds-react';
 import { APurple200, APurple400 } from '@navikt/ds-tokens/dist/tokens';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const Section = styled.section`
     box-sizing: border-box;
@@ -20,17 +18,12 @@ const Section = styled.section`
     margin-bottom: 1rem;
 `;
 
-const Banner: React.FC<{ språkTekstId: string }> = ({ språkTekstId }) => {
-    const { toggles } = useFeatureToggles();
+const Banner: React.FC = () => {
     const { tekster, plainTekst } = useApp();
     return (
         <Section>
             <Heading size="large">
-                {toggles.KOMBINER_SOKNADER ? (
-                    plainTekst(tekster()[ESanitySteg.FORSIDE].soeknadstittelBarnetrygd)
-                ) : (
-                    <SpråkTekst id={språkTekstId} />
-                )}
+                {plainTekst(tekster()[ESanitySteg.FORSIDE].soeknadstittelBarnetrygd)}
             </Heading>
         </Section>
     );
