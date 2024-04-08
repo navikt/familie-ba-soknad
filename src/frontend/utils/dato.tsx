@@ -104,8 +104,11 @@ export const validerDato = (
 export const formaterDato = (datoString: ISODateString) =>
     format(new Date(datoString), 'dd.MM.yyyy');
 
-export const formaterDatoKunMåned = (datoString: ISODateString, språk: LocaleType) =>
+export const formaterDatostringKunMåned = (datoString: ISODateString, språk: LocaleType) =>
     format(new Date(datoString), 'MMMM yyyy', { locale: mapSpråkvalgTilDateFnsLocale(språk) });
+
+export const formaterDatoKunMåned = (dato: Date, språk: LocaleType) =>
+    format(dato, 'MMMM yyyy', { locale: mapSpråkvalgTilDateFnsLocale(språk) });
 
 const mapSpråkvalgTilDateFnsLocale = (språkvalg: LocaleType): Locale => {
     switch (språkvalg) {

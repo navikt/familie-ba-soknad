@@ -8,7 +8,7 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { formaterDato, formaterDatoKunMåned } from '../../../utils/dato';
+import { formaterDato, formaterDatostringKunMåned } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
@@ -92,7 +92,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
                     søknadsvar={
                         toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
                             ? uppercaseFørsteBokstav(
-                                  formaterDatoKunMåned(pensjonFra.svar, valgtLocale)
+                                  formaterDatostringKunMåned(pensjonFra.svar, valgtLocale)
                               )
                             : formaterDato(pensjonFra.svar)
                     }
@@ -104,7 +104,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
                     søknadsvar={
                         toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
                             ? uppercaseFørsteBokstav(
-                                  formaterDatoKunMåned(pensjonTil.svar, valgtLocale)
+                                  formaterDatostringKunMåned(pensjonTil.svar, valgtLocale)
                               )
                             : formaterDato(pensjonTil.svar)
                     }

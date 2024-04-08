@@ -9,7 +9,7 @@ import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IPensjonsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IPensjonsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
-import { formaterDatoKunMåned } from '../dato';
+import { formaterDatostringKunMåned } from '../dato';
 import { hentTekster, landkodeTilSpråk } from '../språk';
 import { uppercaseFørsteBokstav } from '../visning';
 
@@ -72,7 +72,7 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
                       verdi: toggleBeOmMånedIkkeDato
                           ? verdiCallbackAlleSpråk(locale =>
                                 uppercaseFørsteBokstav(
-                                    formaterDatoKunMåned(pensjonFra.svar, locale)
+                                    formaterDatostringKunMåned(pensjonFra.svar, locale)
                                 )
                             )
                           : sammeVerdiAlleSpråk(pensjonFra.svar),
@@ -84,7 +84,7 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
                       verdi: toggleBeOmMånedIkkeDato
                           ? verdiCallbackAlleSpråk(locale =>
                                 uppercaseFørsteBokstav(
-                                    formaterDatoKunMåned(pensjonTil.svar, locale)
+                                    formaterDatostringKunMåned(pensjonTil.svar, locale)
                                 )
                             )
                           : sammeVerdiAlleSpråk(pensjonTil.svar),
