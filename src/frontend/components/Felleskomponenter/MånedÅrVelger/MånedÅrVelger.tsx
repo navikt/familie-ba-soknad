@@ -19,8 +19,8 @@ interface IProps {
 
 /*
 - vurder å lagre som Date og gjøre parsing/format mot mellomlagring og innsending - neste runde
-- onValidate slik at vi kan validere manuell input av disabled måneder
 - sjekk om feilmelding propageres riktig
+- legge feilmeldinger i sanity
 */
 
 export enum Feilmelding {
@@ -47,6 +47,7 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     };
 
     const feilmeldingForDatoFørMinDato = () => {
+        // må få i18n
         if (tidligsteValgbareMåned) {
             return `Du kan ikke velge en dato før ${formaterDatoKunMåned(tidligsteValgbareMåned, valgtLocale)}`;
         }
@@ -54,6 +55,7 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     };
 
     const feilmeldingForDatoEtterMaksDato = () => {
+        // må få i18n
         if (senesteValgbareMåned) {
             return `Du kan ikke velge en dato etter ${formaterDatoKunMåned(senesteValgbareMåned, valgtLocale)}`;
         }
