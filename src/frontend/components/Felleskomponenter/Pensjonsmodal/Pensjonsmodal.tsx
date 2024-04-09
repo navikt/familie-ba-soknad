@@ -169,7 +169,11 @@ export const PensjonModal: React.FC<Props> = ({
                                     values={{ ...(barn && { barn: barn.navn }) }}
                                 />
                             }
-                            tidligsteValgbareMåned={parseISO(pensjonFraDato.verdi)}
+                            tidligsteValgbareMåned={
+                                pensjonFraDato.verdi !== ''
+                                    ? parseISO(pensjonFraDato.verdi)
+                                    : undefined
+                            }
                             senesteValgbareMåned={dagensDato()}
                             felt={pensjonTilDato}
                             visFeilmeldinger={skjema.visFeilmeldinger}
