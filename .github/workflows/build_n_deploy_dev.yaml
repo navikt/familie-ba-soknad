@@ -14,20 +14,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           registry-url: "https://npm.pkg.github.com"
-      - name: Installer node-pakker
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+      - name: Installer node-pakker
         run: yarn --prefer-offline --frozen-lockfile
       - name: Kjør typecheck
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         run: yarn typecheck
       - name: Kjør tester
-        env:
-          CI: true
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         run: yarn test
 
   bygg:
@@ -41,7 +36,7 @@ jobs:
         uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "20"
           registry-url: "https://npm.pkg.github.com"
       - name: Yarn install
         env:
@@ -57,9 +52,6 @@ jobs:
         id: docker-push
         with:
           team: teamfamilie
-          push_image: true
-          dockerfile: Dockerfile
-          docker_context: .
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
     outputs:
@@ -71,14 +63,13 @@ jobs:
       - test
     runs-on: ubuntu-latest
     permissions:
-      contents: "read"
-      id-token: "write"
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - name: Deploy til dev-gcp team namespace
         uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
           VAR: base_path=${{ env.BASE_PATH }}
