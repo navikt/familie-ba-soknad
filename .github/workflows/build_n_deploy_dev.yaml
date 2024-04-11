@@ -29,8 +29,8 @@ jobs:
     name: Bygg app/image og push til GitHub
     runs-on: ubuntu-latest
     permissions:
-      contents: "read"
-      id-token: "write"
+      contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -54,8 +54,7 @@ jobs:
           team: teamfamilie
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-    outputs:
-      image: ${{ steps.docker-push.outputs.image }}
+
   deploy:
     name: Deploy til dev-gcp
     needs:
