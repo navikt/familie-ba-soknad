@@ -16,38 +16,31 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           registry-url: "https://npm.pkg.github.com"
-      - name: Installer node-pakker
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+      - name: Installer node-pakker
         run: yarn --prefer-offline --frozen-lockfile
       - name: Kjør typecheck
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         run: yarn typecheck
       - name: Kjør prettier og eslint
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         run: yarn lint-test
       - name: Kjør tester
-        env:
-          CI: true
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         run: yarn test
 
   bygg:
     name: Bygg app
     runs-on: ubuntu-latest
     permissions:
-      contents: "read"
-      id-token: "write"
+      contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "20"
           registry-url: "https://npm.pkg.github.com"
       - name: Yarn install
         env:
