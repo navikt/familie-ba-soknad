@@ -17,10 +17,9 @@ interface IProps {
     visFeilmeldinger?: boolean;
 }
 
-/*
-- vurder å lagre som Date og gjøre parsing/format mot mellomlagring og innsending - neste runde
-- sjekk om feilmelding propageres riktig
-- legge feilmeldinger i sanity
+/* TODO
+- vurder å lagre som Date og gjøre parsing/format mot mellomlagring og innsending - i neste runde
+- legge feilmeldinger i sanity slik at vi får i18n: støtte flettefelt i fellestekst i formateringsfeilmeldinger, gjøres i familie-baks-soknad-sanity
 */
 
 export enum Feilmelding {
@@ -47,7 +46,7 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     };
 
     const feilmeldingForDatoFørMinDato = () => {
-        // må få i18n
+        // TODO må få i18n
         if (tidligsteValgbareMåned) {
             return `Du kan ikke velge en dato før ${formaterDatoKunMåned(tidligsteValgbareMåned, valgtLocale)}`;
         }
@@ -55,7 +54,7 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     };
 
     const feilmeldingForDatoEtterMaksDato = () => {
-        // må få i18n
+        // TODO må få i18n
         if (senesteValgbareMåned) {
             return `Du kan ikke velge en dato etter ${formaterDatoKunMåned(senesteValgbareMåned, valgtLocale)}`;
         }
@@ -63,7 +62,7 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     };
 
     const feilmeldinger: Record<Feilmelding, string> = {
-        UGYLDIG_DATO: 'Du må velge en gyldig dato',
+        UGYLDIG_DATO: 'Du må velge en gyldig dato', // TODO må få i18n
         FØR_MIN_DATO: feilmeldingForDatoFørMinDato(),
         ETTER_MAKS_DATO: feilmeldingForDatoEtterMaksDato(),
     };
