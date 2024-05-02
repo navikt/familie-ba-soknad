@@ -1,5 +1,4 @@
-import { LocaleType } from '@navikt/familie-sprakvelger';
-
+import { LocaleType } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { ESivilstand } from '../typer/kontrakt/generelle';
 
 import { hentSivilstatusSpråkId, hentTekster, landkodeTilSpråk } from './språk';

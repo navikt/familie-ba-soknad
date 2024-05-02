@@ -1,5 +1,4 @@
-import { LocaleType } from '@navikt/familie-sprakvelger';
-
+import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { ISODateString } from '../common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

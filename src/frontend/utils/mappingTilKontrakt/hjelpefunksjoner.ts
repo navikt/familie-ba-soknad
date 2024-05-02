@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { LocaleType } from '@navikt/familie-sprakvelger';
 
+import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { AlternativtSvarForInput } from '../../typer/common';
 import {

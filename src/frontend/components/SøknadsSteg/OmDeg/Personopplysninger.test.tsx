@@ -3,11 +3,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 
-import { LocaleType } from '@navikt/familie-sprakvelger';
-
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { ISøker } from '../../../typer/person';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { LocaleType } from '../../Felleskomponenter/Dekoratøren/SpråkContext';
 
 import { Personopplysninger } from './Personopplysninger';
 

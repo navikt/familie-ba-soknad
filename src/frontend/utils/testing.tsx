@@ -6,10 +6,13 @@ import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
-import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import norskeTekster from '../assets/lang/nb.json' assert { type: 'json' };
+import {
+    LocaleType,
+    SpråkProvider,
+} from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
@@ -187,7 +190,7 @@ export const wrapMedProvidere = (
     språkTekster?: Record<string, string>
 ) => {
     const [Første, ...resten] = providerComponents;
-    const erSpråkprovider = Første === SprakProvider;
+    const erSpråkprovider = Første === SpråkProvider;
     const erMemoryRouter = Første === MemoryRouter;
 
     return (
@@ -221,7 +224,7 @@ const wrapMedDefaultProvidere = (
 ) =>
     wrapMedProvidere(
         [
-            SprakProvider,
+            SpråkProvider,
             HttpProvider,
             LastRessurserProvider,
             SanityProvider,

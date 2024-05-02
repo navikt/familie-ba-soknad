@@ -1,7 +1,6 @@
 import { getName } from 'i18n-iso-countries';
 
-import { LocaleType } from '@navikt/familie-sprakvelger';
-
+import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IIdNummerIKontraktFormat } from '../../typer/kontrakt/v8';
 import { IIdNummer } from '../../typer/person';

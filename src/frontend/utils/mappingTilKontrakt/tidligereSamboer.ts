@@ -1,5 +1,4 @@
-import { LocaleType } from '@navikt/familie-sprakvelger';
-
+import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { TidligereSamboerSpørsmålId } from '../../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { IKontraktTidligereSamboer, ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { ITidligereSamboer } from '../../typer/person';
