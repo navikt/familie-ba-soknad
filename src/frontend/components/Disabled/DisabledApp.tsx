@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { BodyLong, GuidePanel, Heading } from '@navikt/ds-react';
 
 import { tekster } from '../../../shared-utils/tekster';
-import { useSpråk } from '../Felleskomponenter/Dekoratøren/SpråkContext';
+import { useSpråk } from '../../context/SpråkContext';
 import EksternLenke from '../Felleskomponenter/EksternLenke/EksternLenke';
 import InnholdContainer from '../Felleskomponenter/InnholdContainer/InnholdContainer';
 import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';

@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import { BodyShort, ErrorMessage, DatePicker, useDatepicker } from '@navikt/ds-react';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useSpråk } from '../../../context/SpråkContext';
 import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
@@ -16,7 +17,6 @@ import {
     tidenesEnde,
     tidenesMorgen,
 } from '../../../utils/dato';
-import { useSpråk } from '../Dekoratøren/SpråkContext';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface DatoVelgerProps {

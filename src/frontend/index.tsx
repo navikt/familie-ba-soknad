@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 
 import App from './App';
-import { SpråkProvider } from './components/Felleskomponenter/Dekoratøren/SpråkContext';
+import { SpråkProvider } from './context/SpråkContext';
 import MiljøProvider from './MiljøProvider';
 import { LocaleType } from './typer/common';
 import { initSentry } from './utils/sentry';

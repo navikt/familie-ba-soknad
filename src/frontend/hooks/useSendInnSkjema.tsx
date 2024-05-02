@@ -4,8 +4,8 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø from '../../shared-utils/Miljø';
 import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
-import { useSpråk } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { useApp } from '../context/AppContext';
+import { useSpråk } from '../context/SpråkContext';
 import { ISøknadKontraktV8 } from '../typer/kontrakt/v8';
 import { dataISøknadKontraktFormatV8 } from '../utils/mappingTilKontrakt/søknadV8';
 import { sendInn } from '../utils/sendInnSkjema';

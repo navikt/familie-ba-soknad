@@ -7,12 +7,12 @@ import { HttpProvider } from '@navikt/familie-http';
 
 import { tekster } from '../shared-utils/tekster';
 
-import { useSpråk } from './components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import { FeatureTogglesProvider } from './context/FeatureToggleContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 import { SanityProvider } from './context/SanityContext';
+import { useSpråk } from './context/SpråkContext';
 
 const MiljøProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const { valgtLocale } = useSpråk();

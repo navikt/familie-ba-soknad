@@ -12,7 +12,6 @@ import {
 } from '@navikt/familie-typer';
 
 import Miljø, { basePath } from '../../shared-utils/Miljø';
-import { useSpråk } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { LocaleType } from '../typer/common';
 import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
@@ -32,6 +31,7 @@ import { useInnloggetContext } from './InnloggetContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 import { hentSluttbrukerFraPdl } from './pdl';
 import { useSanity } from './SanityContext';
+import { useSpråk } from './SpråkContext';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const { valgtLocale } = useSpråk();

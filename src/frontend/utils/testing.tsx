@@ -9,7 +9,6 @@ import { HttpProvider } from '@navikt/familie-http';
 import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import norskeTekster from '../assets/lang/nb.json' assert { type: 'json' };
-import { SpråkProvider } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
@@ -33,6 +32,7 @@ import * as routesContext from '../context/RoutesContext';
 import { getRoutes, RoutesProvider } from '../context/RoutesContext';
 import * as sanityContext from '../context/SanityContext';
 import { SanityProvider } from '../context/SanityContext';
+import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
 import { AlternativtSvarForInput, LocaleType } from '../typer/common';

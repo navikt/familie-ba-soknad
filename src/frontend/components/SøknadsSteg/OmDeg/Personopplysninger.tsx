@@ -5,9 +5,9 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { BodyShort, Label } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
+import { useSpråk } from '../../../context/SpråkContext';
 import { genererAdresseVisning } from '../../../utils/adresse';
 import { hentSivilstatusSpråkId, landkodeTilSpråk } from '../../../utils/språk';
-import { useSpråk } from '../../Felleskomponenter/Dekoratøren/SpråkContext';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
