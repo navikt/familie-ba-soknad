@@ -3,7 +3,6 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useSteg } from '../../../../../context/StegContext';
 import {
@@ -16,6 +15,7 @@ import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
+import { useSpråk } from '../../../../Felleskomponenter/Dekoratøren/SpråkContext';
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsperiodeOppsummering } from '../../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
@@ -37,7 +37,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
     const intl = useIntl();
     const { formatMessage } = intl;
     const { hentStegObjektForBarn } = useSteg();
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const omBarnetHook = useOmBarnet(barn.id);
 
     return (

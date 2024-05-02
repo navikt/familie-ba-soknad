@@ -4,10 +4,10 @@ import { Alpha3Code, getAlpha3Codes, getName } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
 import { Felt, ISkjema } from '@navikt/familie-skjema';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useEøs } from '../../../context/EøsContext';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { useSpråk } from '../Dekoratøren/SpråkContext';
 
 import StyledDropdown from './StyledDropdown';
 
@@ -22,7 +22,7 @@ interface LandDropdownProps {
 
 export const LandDropdown: React.FC<LandDropdownProps> = props => {
     const intl = useIntl();
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const { erEøsLand } = useEøs();
     const kunEøs = props.kunEøs ?? false;
 

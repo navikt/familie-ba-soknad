@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
@@ -10,6 +9,7 @@ import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
+import { useSpråk } from '../Dekoratøren/SpråkContext';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -37,7 +37,7 @@ export const UtbetalingsperiodeOppsummering: React.FC<UtbetalingsperiodeOppsumme
     erDød = false,
     barn = undefined,
 }) => {
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } =
         utbetalingsperiode;
 

@@ -3,11 +3,11 @@ import React from 'react';
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { BodyShort, Label } from '@navikt/ds-react';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
 import { genererAdresseVisning } from '../../../utils/adresse';
 import { hentSivilstatusSpråkId, landkodeTilSpråk } from '../../../utils/språk';
+import { useSpråk } from '../../Felleskomponenter/Dekoratøren/SpråkContext';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
@@ -16,7 +16,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { omDegPersonopplysningerSpråkId } from './spørsmål';
 
 export const Personopplysninger: React.FC = () => {
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
 
     const { søknad } = useApp();
     const søker = søknad.søker;

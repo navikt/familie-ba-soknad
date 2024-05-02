@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IPensjonsperiode } from '../../../typer/perioder';
@@ -9,6 +8,7 @@ import { PersonType } from '../../../typer/personType';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
+import { useSpråk } from '../Dekoratøren/SpråkContext';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -41,7 +41,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
     erDød = false,
     barn = undefined,
 }) => {
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = pensjonsperiode;
 
     const periodenErAvsluttet =

@@ -4,7 +4,6 @@ import createUseContext from 'constate';
 import { Alpha3Code, getName } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
-import { LocaleType, useSprakContext } from '@navikt/familie-sprakvelger';
 import {
     byggHenterRessurs,
     byggTomRessurs,
@@ -13,6 +12,7 @@ import {
 } from '@navikt/familie-typer';
 
 import Miljø, { basePath } from '../../shared-utils/Miljø';
+import { LocaleType, useSpråk } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
@@ -33,7 +33,7 @@ import { hentSluttbrukerFraPdl } from './pdl';
 import { useSanity } from './SanityContext';
 
 const [AppProvider, useApp] = createUseContext(() => {
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const intl = useIntl();
     const { axiosRequest, lasterRessurser } = useLastRessurserContext();
     const { innloggetStatus } = useInnloggetContext();

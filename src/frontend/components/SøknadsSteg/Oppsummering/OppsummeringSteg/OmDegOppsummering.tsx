@@ -5,7 +5,6 @@ import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../../context/AppContext';
 import { useRoutes } from '../../../../context/RoutesContext';
@@ -13,6 +12,7 @@ import { RouteEnum } from '../../../../typer/routes';
 import { genererAdresseVisning } from '../../../../utils/adresse';
 import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
+import { useSpråk } from '../../../Felleskomponenter/Dekoratøren/SpråkContext';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsperiodeOppsummering } from '../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import {
@@ -35,7 +35,7 @@ interface Props {
 
 const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { søknad } = useApp();
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const { formatMessage } = useIntl();
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const omDegHook = useOmdeg();

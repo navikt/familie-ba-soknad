@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
+import { useSpråk } from '../Dekoratøren/SpråkContext';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -47,7 +47,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
     const periodenErAvsluttet =
         mottarEøsBarnetrygdNå.svar === ESvar.NEI ||
         (personType === PersonType.AndreForelder && erDød);
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
 
     const hentSpørsmålTekstId = barnetrygdperiodeModalSpørsmålSpråkId(
         personType,

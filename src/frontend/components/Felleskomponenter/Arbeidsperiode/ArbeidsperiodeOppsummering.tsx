@@ -3,7 +3,6 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
@@ -11,6 +10,7 @@ import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
+import { useSpråk } from '../Dekoratøren/SpråkContext';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -42,7 +42,7 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
     personType,
     erDød = false,
 }) => {
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const intl = useIntl();
     const { formatMessage } = intl;
     const {
