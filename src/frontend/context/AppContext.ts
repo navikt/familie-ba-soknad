@@ -12,8 +12,9 @@ import {
 } from '@navikt/familie-typer';
 
 import Miljø, { basePath } from '../../shared-utils/Miljø';
-import { LocaleType, useSpråk } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
+import { useSpråk } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { LocaleType } from '../typer/common';
 import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';

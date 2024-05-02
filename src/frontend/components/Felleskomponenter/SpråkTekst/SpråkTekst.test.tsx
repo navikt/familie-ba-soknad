@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 
-import { LocaleType } from '../Dekoratøren/SpråkContext';
+import { LocaleType } from '../../../typer/common';
 
 import SpråkTekst from './SpråkTekst';
 

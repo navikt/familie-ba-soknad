@@ -2,9 +2,8 @@ import { ReactNode } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { IBarnMedISøknad } from '../../typer/barn';
-import { AlternativtSvarForInput } from '../../typer/common';
+import { AlternativtSvarForInput, LocaleType } from '../../typer/common';
 import {
     ISøknadsfelt,
     Slektsforhold,

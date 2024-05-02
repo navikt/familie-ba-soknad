@@ -1,5 +1,5 @@
-import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import { TidligereSamboerSpørsmålId } from '../../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { LocaleType } from '../../typer/common';
 import { IKontraktTidligereSamboer, ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { ITidligereSamboer } from '../../typer/person';
 

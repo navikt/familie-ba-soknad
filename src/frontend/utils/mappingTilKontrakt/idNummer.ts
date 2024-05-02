@@ -1,6 +1,6 @@
 import { getName } from 'i18n-iso-countries';
 
-import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
+import { LocaleType } from '../../typer/common';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IIdNummerIKontraktFormat } from '../../typer/kontrakt/v8';
 import { IIdNummer } from '../../typer/person';

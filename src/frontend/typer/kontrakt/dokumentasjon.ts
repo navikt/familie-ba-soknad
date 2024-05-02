@@ -1,4 +1,4 @@
-import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
+import { LocaleType } from '../common';
 
 export enum Dokumentasjonsbehov {
     AVTALE_DELT_BOSTED = 'AVTALE_DELT_BOSTED',

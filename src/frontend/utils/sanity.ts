@@ -7,7 +7,7 @@ import {
 } from '@portabletext/types';
 import { pipe } from 'ramda';
 
-import { LocaleType } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
+import { LocaleType } from '../typer/common';
 import {
     ESanityFlettefeltverdi,
     ESanitySteg,

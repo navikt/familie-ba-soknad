@@ -1,7 +1,7 @@
 import { PortableTextBlock } from '@portabletext/types';
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
+import { LocaleType } from '../common';
 
 export interface SanityDokument {
     _createdAt: string;

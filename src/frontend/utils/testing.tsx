@@ -9,10 +9,7 @@ import { HttpProvider } from '@navikt/familie-http';
 import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import norskeTekster from '../assets/lang/nb.json' assert { type: 'json' };
-import {
-    LocaleType,
-    SpråkProvider,
-} from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
+import { SpråkProvider } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
@@ -38,7 +35,7 @@ import * as sanityContext from '../context/SanityContext';
 import { SanityProvider } from '../context/SanityContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
-import { AlternativtSvarForInput } from '../typer/common';
+import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { ISøker, ISøkerRespons } from '../typer/person';

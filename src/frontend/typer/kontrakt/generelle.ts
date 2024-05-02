@@ -1,5 +1,4 @@
-import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
-import { ISODateString } from '../common';
+import { ISODateString, LocaleType } from '../common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadsfelt<any>>;

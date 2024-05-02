@@ -1,5 +1,4 @@
-import { LocaleType } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
-
+import { LocaleType } from './common';
 import { ISøknad } from './søknad';
 
 export interface IMellomlagretBarnetrygd {

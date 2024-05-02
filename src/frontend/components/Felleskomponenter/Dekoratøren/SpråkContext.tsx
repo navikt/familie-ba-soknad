@@ -5,11 +5,7 @@ import { useCookies } from 'react-cookie';
 
 import { onLanguageSelect, setParams } from '@navikt/nav-dekoratoren-moduler';
 
-export enum LocaleType {
-    en = 'en',
-    nb = 'nb',
-    nn = 'nn',
-}
+import { LocaleType } from '../../../typer/common';
 
 const dekoratorLanguageCookieName = 'decorator-language';
 

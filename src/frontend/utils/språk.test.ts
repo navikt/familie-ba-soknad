@@ -1,4 +1,4 @@
-import { LocaleType } from '../components/Felleskomponenter/Dekoratøren/SpråkContext';
+import { LocaleType } from '../typer/common';
 import { ESivilstand } from '../typer/kontrakt/generelle';
 
 import { hentSivilstatusSpråkId, hentTekster, landkodeTilSpråk } from './språk';

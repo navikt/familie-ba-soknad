@@ -1,6 +1,5 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import {
     EøsBarnSpørsmålId,
     eøsBarnSpørsmålSpråkId,
@@ -10,6 +9,7 @@ import {
     omBarnetSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../../typer/barn';
+import { LocaleType } from '../../typer/common';
 import { IAndreForelderIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { PersonType } from '../../typer/personType';
 import { landkodeTilSpråk } from '../språk';

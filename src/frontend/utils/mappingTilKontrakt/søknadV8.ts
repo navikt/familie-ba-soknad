@@ -1,12 +1,12 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { LocaleType } from '../../components/Felleskomponenter/Dekoratøren/SpråkContext';
 import {
     EøsSøkerSpørsmålId,
     eøsSøkerSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
+import { LocaleType } from '../../typer/common';
 import { ESivilstand } from '../../typer/kontrakt/generelle';
 import { ISøknadKontraktV8 } from '../../typer/kontrakt/v8';
 import { ISøker } from '../../typer/person';

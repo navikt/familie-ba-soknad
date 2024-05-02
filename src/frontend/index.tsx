@@ -6,8 +6,9 @@ import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 
 import App from './App';
-import { LocaleType, SpråkProvider } from './components/Felleskomponenter/Dekoratøren/SpråkContext';
+import { SpråkProvider } from './components/Felleskomponenter/Dekoratøren/SpråkContext';
 import MiljøProvider from './MiljøProvider';
+import { LocaleType } from './typer/common';
 import { initSentry } from './utils/sentry';
 import '@navikt/ds-css';
 
