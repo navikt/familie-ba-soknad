@@ -2,9 +2,8 @@ import React from 'react';
 
 import ReactDOM from 'react-dom';
 
-import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
-
 import { DisabledApp } from './components/Disabled/DisabledApp';
+import { SpråkProvider } from './components/Felleskomponenter/Dekoratøren/SpråkContext';
 import InnholdContainer from './components/Felleskomponenter/InnholdContainer/InnholdContainer';
 import { GlobalStyle } from './Theme';
 
@@ -12,9 +11,9 @@ ReactDOM.render(
     <React.StrictMode>
         <InnholdContainer>
             <GlobalStyle />
-            <SprakProvider defaultLocale={LocaleType.nb}>
+            <SpråkProvider>
                 <DisabledApp />
-            </SprakProvider>
+            </SpråkProvider>
         </InnholdContainer>
     </React.StrictMode>,
     document.getElementById('root')
