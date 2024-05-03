@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Accordion, GuidePanel, Heading } from '@navikt/ds-react';
+import { setParams } from '@navikt/nav-dekoratoren-moduler';
 
 import Miljø from '../../../../shared-utils/Miljø';
 import { useApp } from '../../../context/AppContext';
@@ -39,6 +40,13 @@ const Forside: React.FC = () => {
 
     useEffect(() => {
         settNåværendeRoute(RouteEnum.Forside);
+        setParams({
+            availableLanguages: [
+                { locale: 'nb', handleInApp: true },
+                { locale: 'nn', handleInApp: true },
+                { locale: 'en', handleInApp: true },
+            ],
+        });
     }, []);
 
     const kanFortsettePåSøknad =
