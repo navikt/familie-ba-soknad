@@ -20,11 +20,6 @@ export const [SpråkProvider, useSpråk] = createUseContext(() => {
     useEffect(() => {
         setParams({
             language: defaultSpråk,
-            availableLanguages: [
-                { locale: 'nb', handleInApp: true },
-                { locale: 'nn', handleInApp: true },
-                { locale: 'en', handleInApp: true },
-            ],
         }).then(); // Bryr oss egenlig ikke om hva som skjer etterpå men intellij klager på ignorert promise
     }, []);
 
