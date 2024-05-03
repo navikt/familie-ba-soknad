@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 
 import { Heading, Stepper } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
-import { setParams } from '@navikt/nav-dekoratoren-moduler';
+import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
@@ -124,7 +124,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
                 felt.validerOgSettFelt(felt.verdi);
             });
         }
-        setParams({ availableLanguages: [] }).then();
+        setAvailableLanguages([]).then();
     }, []);
 
     useEffect(() => {
