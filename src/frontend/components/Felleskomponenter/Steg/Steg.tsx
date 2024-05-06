@@ -124,12 +124,16 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
                 felt.validerOgSettFelt(felt.verdi);
             });
         }
-        setAvailableLanguages([]).then();
+        skjulSpråkvelger();
     }, []);
 
     useEffect(() => {
         modellVersjonOppdatert && !erModellVersjonModalÅpen && åpneModellVersjonModal();
     }, [modellVersjonOppdatert]);
+
+    const skjulSpråkvelger = () => {
+        setAvailableLanguages([]).then();
+    };
 
     const håndterAvbryt = () => {
         gåTilbakeTilStart();
