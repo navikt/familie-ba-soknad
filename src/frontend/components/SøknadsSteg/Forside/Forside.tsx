@@ -40,12 +40,16 @@ const Forside: React.FC = () => {
 
     useEffect(() => {
         settNåværendeRoute(RouteEnum.Forside);
+        visSpråkvelger();
+    }, []);
+
+    const visSpråkvelger = () => {
         setAvailableLanguages([
             { locale: 'nb', handleInApp: true },
             { locale: 'nn', handleInApp: true },
             { locale: 'en', handleInApp: true },
-        ]);
-    }, []);
+        ]).then();
+    };
 
     const kanFortsettePåSøknad =
         mellomlagretVerdi && mellomlagretVerdi.modellVersjon === Miljø().modellVersjon;
