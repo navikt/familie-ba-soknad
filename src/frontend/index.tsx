@@ -5,10 +5,10 @@ import { registerLocale } from 'i18n-iso-countries';
 import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 
-import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
-
 import App from './App';
+import { SpråkProvider } from './context/SpråkContext';
 import MiljøProvider from './MiljøProvider';
+import { LocaleType } from './typer/common';
 import { initSentry } from './utils/sentry';
 import '@navikt/ds-css';
 
@@ -57,11 +57,11 @@ polyfillLocaledata().then(() => {
 
     root.render(
         <React.StrictMode>
-            <SprakProvider defaultLocale={LocaleType.nb}>
+            <SpråkProvider>
                 <MiljøProvider>
                     <App />
                 </MiljøProvider>
-            </SprakProvider>
+            </SpråkProvider>
         </React.StrictMode>
     );
 });

@@ -2,8 +2,7 @@ import { Request, Response } from 'express';
 import { mockDeep } from 'jest-mock-extended';
 import { DeepPartial } from 'ts-essentials';
 
-import { LocaleType } from '@navikt/familie-sprakvelger';
-
+import { LocaleType } from '../../frontend/typer/common';
 import { ISøknadKontraktV8 } from '../../frontend/typer/kontrakt/v8';
 
 import { erklaeringInterceptor, hentSpråkteksterAlleSpråk } from './erklaering-interceptor';

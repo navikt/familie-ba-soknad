@@ -23,3 +23,9 @@ export type TomString = '';
 export const tomString: TomString = '';
 
 export type ISODateString = string;
+
+export enum LocaleType {
+    en = 'en',
+    nb = 'nb',
+    nn = 'nn',
+}

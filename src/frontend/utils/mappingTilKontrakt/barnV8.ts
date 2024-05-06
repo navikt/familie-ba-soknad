@@ -1,5 +1,3 @@
-import { LocaleType } from '@navikt/familie-sprakvelger';
-
 import {
     EøsBarnSpørsmålId,
     eøsBarnSpørsmålSpråkId,
@@ -9,6 +7,7 @@ import {
     omBarnetSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
+import { LocaleType } from '../../typer/common';
 import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarnV8 } from '../../typer/kontrakt/v8';
 import { ISøker } from '../../typer/person';
