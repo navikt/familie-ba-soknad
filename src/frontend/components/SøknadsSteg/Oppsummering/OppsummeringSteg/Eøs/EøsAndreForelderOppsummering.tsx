@@ -4,8 +4,8 @@ import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { useSpråk } from '../../../../../context/SpråkContext';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
@@ -34,7 +34,7 @@ const EøsAndreForelderOppsummering: React.FC<{
 }> = ({ barn, andreForelder, skjema, settIdNummerFelter }) => {
     const intl = useIntl();
     const { formatMessage } = intl;
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
 
     const andreForelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
 

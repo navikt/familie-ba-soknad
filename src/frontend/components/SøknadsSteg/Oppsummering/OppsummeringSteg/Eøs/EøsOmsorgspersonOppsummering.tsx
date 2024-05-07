@@ -2,8 +2,7 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { useSprakContext } from '@navikt/familie-sprakvelger';
-
+import { useSpråk } from '../../../../../context/SpråkContext';
 import { IBarnMedISøknad } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { IOmsorgsperson } from '../../../../../typer/omsorgsperson';
@@ -25,7 +24,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
     barn: IBarnMedISøknad;
 }> = ({ omsorgsperson, barn }) => {
     const { formatMessage } = useIntl();
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
 
     return (
         <StyledOppsummeringsFeltGruppe>

@@ -5,8 +5,8 @@ import { useIntl } from 'react-intl';
 
 import { BodyShort, ErrorMessage, DatePicker, useDatepicker } from '@navikt/ds-react';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { useSpråk } from '../../../context/SpråkContext';
 import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
@@ -45,7 +45,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     strategy = 'fixed',
 }) => {
     const { formatMessage } = useIntl();
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
 
     const minDatoErIFremtiden = () =>
         tilhørendeFraOgMedFelt?.verdi &&

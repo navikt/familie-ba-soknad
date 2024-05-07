@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { useSpråk } from '../../../context/SpråkContext';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { formaterDato } from '../../../utils/dato';
@@ -47,7 +47,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
     const periodenErAvsluttet =
         mottarEøsBarnetrygdNå.svar === ESvar.NEI ||
         (personType === PersonType.AndreForelder && erDød);
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
 
     const hentSpørsmålTekstId = barnetrygdperiodeModalSpørsmålSpråkId(
         personType,

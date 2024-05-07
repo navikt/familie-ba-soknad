@@ -1,9 +1,8 @@
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { LocaleType } from '@navikt/familie-sprakvelger';
 
-import { ISODateString } from '../common';
+import { ISODateString, LocaleType } from '../common';
 
 import { ISøknadKontraktDokumentasjon } from './dokumentasjon';
 import {

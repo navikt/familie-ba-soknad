@@ -3,8 +3,8 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { BodyShort } from '@navikt/ds-react';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { useSpråk } from '../../../context/SpråkContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { formaterDato } from '../../../utils/dato';
@@ -29,7 +29,7 @@ export const UtenlandsperiodeOppsummering: React.FC<{
     fjernPeriodeCallback?: (periode: IUtenlandsperiode) => void;
     barn?: IBarnMedISøknad;
 }> = ({ periode, nummer, fjernPeriodeCallback, barn }) => {
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const intl = useIntl();
     const { formatMessage } = intl;
     const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
