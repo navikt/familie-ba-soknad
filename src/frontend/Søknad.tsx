@@ -3,7 +3,6 @@ import React from 'react';
 import classNames from 'classnames';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
-import { DekoratørenSpråkHandler } from './components/Felleskomponenter/Dekoratøren/DekoratørenSpråkHandler';
 import RedirectTilStart from './components/Felleskomponenter/RedirectTilStart/RedirectTilStart';
 import Helse from './components/Helse/Helse';
 import DinLivssituasjon from './components/SøknadsSteg/DinLivssituasjon/DinLivssituasjon';
@@ -19,9 +18,7 @@ import Oppsummering from './components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from './components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useApp } from './context/AppContext';
 import { useEøs } from './context/EøsContext';
-import { useFeatureToggles } from './context/FeatureToggleContext';
 import { useRoutes } from './context/RoutesContext';
-import { EFeatureToggle } from './typer/feature-toggles';
 import { IRoute, RouteEnum } from './typer/routes';
 
 /**
@@ -49,7 +46,6 @@ const EøsForBarnWrapper: React.FC = () => {
 const Søknad = () => {
     const { systemetLaster } = useApp();
     const { routes } = useRoutes();
-    const { toggles } = useFeatureToggles();
 
     const routeTilKomponent = (route: IRoute): React.FC => {
         switch (route.route) {
@@ -80,7 +76,6 @@ const Søknad = () => {
 
     return (
         <div className={classNames(systemetLaster() && 'blur')}>
-            <DekoratørenSpråkHandler />
             <Routes>
                 <Route path={'/helse'} element={<Helse />} />
                 <Route path={'/'} element={<Forside />} />
@@ -91,12 +86,8 @@ const Søknad = () => {
                         element={<RedirectTilStart component={routeTilKomponent(route)} />}
                     />
                 ))}
-                {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
-                    <Route path={'/ordinaer/*'} element={<Navigate to={'/'} replace />} />
-                )}
-                {toggles[EFeatureToggle.KOMBINER_SOKNADER] && (
-                    <Route path={'/utvidet/*'} element={<Navigate to={'/'} replace />} />
-                )}
+                <Route path={'/ordinaer/*'} element={<Navigate to={'/'} replace />} />
+                <Route path={'/utvidet/*'} element={<Navigate to={'/'} replace />} />
                 <Route path={'*'} element={<Forside />} />
             </Routes>
         </div>

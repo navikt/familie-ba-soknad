@@ -6,7 +6,6 @@ import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
-import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import norskeTekster from '../assets/lang/nb.json' assert { type: 'json' };
@@ -33,13 +32,14 @@ import * as routesContext from '../context/RoutesContext';
 import { getRoutes, RoutesProvider } from '../context/RoutesContext';
 import * as sanityContext from '../context/SanityContext';
 import { SanityProvider } from '../context/SanityContext';
+import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
-import { AlternativtSvarForInput } from '../typer/common';
-import { EFeatureToggle } from '../typer/feature-toggles';
+import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { ISøker, ISøkerRespons } from '../typer/person';
+import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { Årsak } from '../typer/utvidet';
 
@@ -103,6 +103,8 @@ export const spyOnUseApp = søknad => {
         systemetOK: () => jest.fn().mockReturnValue(true),
         systemetFeiler: jest.fn().mockReturnValue(false),
         fåttGyldigKvittering: søknad.fåttGyldigKvittering === true,
+        tekster: jest.fn().mockImplementation(() => mockDeep<ITekstinnhold>()),
+        plainTekst: jest.fn().mockReturnValue('tekst fra sanity'),
     });
 
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
@@ -150,7 +152,7 @@ export const mockFeatureToggle = () => {
         .spyOn(featureToggleContext, 'useFeatureToggles')
         .mockImplementation(
             jest.fn().mockReturnValue({
-                toggles: { [EFeatureToggle.KOMBINER_SOKNADER]: false },
+                // toggles: { [EFeatureToggle.EXAMPLE]: false },
             })
         );
     return { useFeatureToggle };
@@ -185,7 +187,7 @@ export const wrapMedProvidere = (
     språkTekster?: Record<string, string>
 ) => {
     const [Første, ...resten] = providerComponents;
-    const erSpråkprovider = Første === SprakProvider;
+    const erSpråkprovider = Første === SpråkProvider;
     const erMemoryRouter = Første === MemoryRouter;
 
     return (
@@ -219,7 +221,7 @@ const wrapMedDefaultProvidere = (
 ) =>
     wrapMedProvidere(
         [
-            SprakProvider,
+            SpråkProvider,
             HttpProvider,
             LastRessurserProvider,
             SanityProvider,
@@ -262,13 +264,13 @@ export const LesUtLocation = () => {
 
 export const mekkGyldigSøker = (): ISøker => {
     return {
-        ...initialStateSøknad(false).søker,
+        ...initialStateSøknad().søker,
         sivilstand: { type: ESivilstand.UGIFT },
         utenlandsperioder: [],
         utvidet: {
-            ...initialStateSøknad(false).søker.utvidet,
+            ...initialStateSøknad().søker.utvidet,
             spørsmål: {
-                ...initialStateSøknad(false).søker.utvidet.spørsmål,
+                ...initialStateSøknad().søker.utvidet.spørsmål,
                 harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: ESvar.JA },
             },
             nåværendeSamboer: {
@@ -316,7 +318,7 @@ export const mekkGyldigSøker = (): ISøker => {
 
 export const mekkGyldigSøknad = (): ISøknad => {
     return {
-        ...initialStateSøknad(false),
+        ...initialStateSøknad(),
         søknadstype: ESøknadstype.ORDINÆR,
         lestOgForståttBekreftelse: true,
         søker: mekkGyldigSøker(),

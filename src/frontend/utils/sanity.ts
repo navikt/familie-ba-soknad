@@ -7,8 +7,7 @@ import {
 } from '@portabletext/types';
 import { pipe } from 'ramda';
 
-import { LocaleType } from '@navikt/familie-sprakvelger';
-
+import { LocaleType } from '../typer/common';
 import {
     ESanityFlettefeltverdi,
     ESanitySteg,

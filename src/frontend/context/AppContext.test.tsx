@@ -21,7 +21,7 @@ import {
 
 import { useApp } from './AppContext';
 
-const initialSøknad = initialStateSøknad(false);
+const initialSøknad = initialStateSøknad();
 
 const søknadEtterRespons: ISøknad = {
     ...initialSøknad,

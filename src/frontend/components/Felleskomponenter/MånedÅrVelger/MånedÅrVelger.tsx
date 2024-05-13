@@ -4,8 +4,8 @@ import { formatISO } from 'date-fns';
 
 import { MonthPicker, useMonthpicker } from '@navikt/ds-react';
 import { Felt } from '@navikt/familie-skjema';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { useSpråk } from '../../../context/SpråkContext';
 import { ISODateString } from '../../../typer/common';
 import { formaterDatoKunMåned } from '../../../utils/dato';
 
@@ -35,7 +35,7 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     felt,
     visFeilmeldinger = false,
 }) => {
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const [error, setError] = useState<Feilmelding | undefined>(undefined);
 
     const nullstillOgSettFeilmelding = (feilmelding: Feilmelding) => {

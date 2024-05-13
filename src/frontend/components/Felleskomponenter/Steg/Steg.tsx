@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 
 import { Heading, Stepper } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
+import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
@@ -73,18 +74,18 @@ const StepperContainer = styled.div<{ $antallSteg: number }>`
     margin: 0 auto;
     display: flex;
     justify-content: center;
-  
+
     @media all and ${device.mobile} {
-       ${kompaktStepper};
+        ${kompaktStepper};
     }
-  ${props =>
-      props.$antallSteg > 12 &&
-      css`
-          @media all and ${device.tablet} {
-              ${kompaktStepper};
-          }
-      `}
-}`;
+    ${props =>
+        props.$antallSteg > 12 &&
+        css`
+            @media all and ${device.tablet} {
+                ${kompaktStepper};
+            }
+        `}
+`;
 
 const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) => {
     const navigate = useNavigate();
@@ -93,7 +94,6 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
         gåTilbakeTilStart,
-        erUtvidet,
         settNåværendeRoute,
         modellVersjonOppdatert,
         søknad,
@@ -124,11 +124,16 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
                 felt.validerOgSettFelt(felt.verdi);
             });
         }
+        skjulSpråkvelger();
     }, []);
 
     useEffect(() => {
         modellVersjonOppdatert && !erModellVersjonModalÅpen && åpneModellVersjonModal();
     }, [modellVersjonOppdatert]);
+
+    const skjulSpråkvelger = () => {
+        setAvailableLanguages([]).then();
+    };
 
     const håndterAvbryt = () => {
         gåTilbakeTilStart();
@@ -168,7 +173,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
         <>
             <ScrollHandler />
             <header>
-                <Banner språkTekstId={erUtvidet ? 'felles.banner.utvidet' : 'felles.banner'} />
+                <Banner />
                 {nyesteNåværendeRoute !== RouteEnum.Kvittering && (
                     <StepperContainer $antallSteg={stepperObjekter.length}>
                         <Stepper

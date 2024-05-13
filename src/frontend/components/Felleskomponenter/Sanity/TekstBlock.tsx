@@ -4,9 +4,9 @@ import { PortableText } from '@portabletext/react';
 import styled from 'styled-components';
 
 import { BodyLong, BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useApp } from '../../../context/AppContext';
+import { useSpråk } from '../../../context/SpråkContext';
 import { FlettefeltVerdier, LocaleRecordBlock, Typografi } from '../../../typer/sanity/sanity';
 
 const StyledLabel = styled(Label)`
@@ -73,7 +73,7 @@ const TekstBlock: React.FC<{
     flettefelter?: FlettefeltVerdier;
     typografi?: Typografi;
 }> = ({ block, flettefelter, typografi }) => {
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const { flettefeltTilTekst } = useApp();
 
     return block ? (

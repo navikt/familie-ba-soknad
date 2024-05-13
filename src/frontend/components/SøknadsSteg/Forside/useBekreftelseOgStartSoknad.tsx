@@ -4,12 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
-import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISteg } from '../../../typer/routes';
-import { hentSøknadstype } from '../../../typer/søknad';
 import { logFortsettPåSøknad, logSkjemaStartet } from '../../../utils/amplitude';
 
 export enum BekreftelseStatus {
@@ -44,7 +41,6 @@ export const useBekreftelseOgStartSoknad = (): {
         mellomlagretVerdi,
     } = useApp();
     const { settBarnSomTriggerEøs, skalTriggeEøsForBarn, settSøkerTriggerEøs } = useEøs();
-    const { toggles } = useFeatureToggles();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL
@@ -82,10 +78,10 @@ export const useBekreftelseOgStartSoknad = (): {
             );
             settSøkerTriggerEøs(søker.triggetEøs);
             settGjenpprettetFraMellomlagring(true);
+            logFortsettPåSøknad(mellomlagretVerdi.søknad.søknadstype);
         } else {
             navigate(nesteRoute.path);
         }
-        logFortsettPåSøknad(søknadstype || hentSøknadstype());
     };
     const startPåNytt = (): void => {
         avbrytOgSlettSøknad();
@@ -93,38 +89,23 @@ export const useBekreftelseOgStartSoknad = (): {
 
     const onStartSøknad = (event: React.FormEvent) => {
         event.preventDefault();
-        if (toggles[EFeatureToggle.KOMBINER_SOKNADER]) {
-            if (bekreftelseStatus === BekreftelseStatus.BEKREFTET && søknadstype != undefined) {
-                settSøknadstypeFeil(false);
-                settSøknad({
-                    ...søknad,
-                    lestOgForståttBekreftelse: true,
-                    søknadstype: søknadstype,
-                });
-                if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
-                    settSisteUtfylteStegIndex(nåværendeStegIndex);
-                }
-                logSkjemaStartet(søknadstype);
-                navigate(nesteRoute.path);
-            } else {
-                søknadstype === undefined && settSøknadstypeFeil(true);
-                bekreftelseStatus !== BekreftelseStatus.BEKREFTET &&
-                    settBekreftelseStatus(BekreftelseStatus.FEIL);
+
+        if (bekreftelseStatus === BekreftelseStatus.BEKREFTET && søknadstype != undefined) {
+            settSøknadstypeFeil(false);
+            settSøknad({
+                ...søknad,
+                lestOgForståttBekreftelse: true,
+                søknadstype: søknadstype,
+            });
+            if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
+                settSisteUtfylteStegIndex(nåværendeStegIndex);
             }
+            logSkjemaStartet(søknadstype);
+            navigate(nesteRoute.path);
         } else {
-            if (bekreftelseStatus === BekreftelseStatus.BEKREFTET) {
-                settSøknad({
-                    ...søknad,
-                    lestOgForståttBekreftelse: true,
-                });
-                if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
-                    settSisteUtfylteStegIndex(nåværendeStegIndex);
-                }
-                logSkjemaStartet(hentSøknadstype());
-                navigate(nesteRoute.path);
-            } else {
+            søknadstype === undefined && settSøknadstypeFeil(true);
+            bekreftelseStatus !== BekreftelseStatus.BEKREFTET &&
                 settBekreftelseStatus(BekreftelseStatus.FEIL);
-            }
         }
     };
 

@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useSpråk } from '../../../context/SpråkContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IPensjonsperiode } from '../../../typer/perioder';
@@ -44,7 +44,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
     erDød = false,
     barn = undefined,
 }) => {
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const { toggles } = useFeatureToggles();
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = pensjonsperiode;
 

@@ -17,10 +17,9 @@ import {
 import { enGB, nb, nn } from 'date-fns/locale';
 
 import { feil, FeltState, ok } from '@navikt/familie-skjema';
-import { LocaleType } from '@navikt/familie-sprakvelger';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { ISODateString } from '../typer/common';
+import { ISODateString, LocaleType } from '../typer/common';
 
 export const erDatoFormatGodkjent = (dato: Date) => isValid(dato);
 
