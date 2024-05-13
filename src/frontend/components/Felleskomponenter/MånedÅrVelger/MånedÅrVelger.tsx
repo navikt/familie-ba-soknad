@@ -9,7 +9,6 @@ import { useApp } from '../../../context/AppContext';
 import { useSpråk } from '../../../context/SpråkContext';
 import { ISODateString } from '../../../typer/common';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
-import { formaterDatoKunMåned } from '../../../utils/dato';
 
 interface IProps {
     tidligsteValgbareMåned?: Date;
@@ -40,6 +39,7 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     const { valgtLocale } = useSpråk();
     const { tekster, plainTekst } = useApp();
     const [error, setError] = useState<Feilmelding | undefined>(undefined);
+    const formateringsfeilmeldinger = tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger;
 
     const nullstillOgSettFeilmelding = (feilmelding: Feilmelding) => {
         if (error !== feilmelding) {
@@ -48,29 +48,10 @@ export const MånedÅrVelger: React.FC<IProps> = ({
         }
     };
 
-    const feilmeldingForDatoFørMinDato = () => {
-        // TODO må få i18n
-        if (tidligsteValgbareMåned) {
-            return plainTekst(
-                tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger
-                    .tilDatoKanIkkeVaereFoerFraDato
-            );
-        }
-        return plainTekst(tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger.ugyldigManed);
-    };
-
-    const feilmeldingForDatoEtterMaksDato = () => {
-        // TODO må få i18n
-        if (senesteValgbareMåned) {
-            return `Du kan ikke velge en dato etter ${formaterDatoKunMåned(senesteValgbareMåned, valgtLocale)}`;
-        }
-        return plainTekst(tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger.ugyldigManed);
-    };
-
     const feilmeldinger: Record<Feilmelding, string> = {
-        UGYLDIG_DATO: 'Du må velge en gyldig dato', // TODO må få i18n
-        FØR_MIN_DATO: feilmeldingForDatoFørMinDato(),
-        ETTER_MAKS_DATO: feilmeldingForDatoEtterMaksDato(),
+        UGYLDIG_DATO: plainTekst(formateringsfeilmeldinger.ugyldigManed),
+        FØR_MIN_DATO: plainTekst(formateringsfeilmeldinger.datoErForForsteGyldigeTidspunkt),
+        ETTER_MAKS_DATO: plainTekst(formateringsfeilmeldinger.datoErEtterSisteGyldigeTidspunkt),
     };
 
     const { monthpickerProps, inputProps, reset, selectedMonth } = useMonthpicker({

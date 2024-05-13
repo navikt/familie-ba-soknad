@@ -34,6 +34,7 @@ export interface IForsideTekstinnhold {
 }
 
 export interface IFormateringsfeilmeldingerTekstinnhold {
-    tilDatoKanIkkeVaereFoerFraDato: LocaleRecordString;
+    datoErEtterSisteGyldigeTidspunkt: LocaleRecordString;
+    datoErForForsteGyldigeTidspunkt: LocaleRecordString;
     ugyldigManed: LocaleRecordString;
 }
