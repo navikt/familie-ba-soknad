@@ -5,8 +5,10 @@ import { formatISO } from 'date-fns';
 import { MonthPicker, useMonthpicker } from '@navikt/ds-react';
 import { Felt } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { useSpråk } from '../../../context/SpråkContext';
 import { ISODateString } from '../../../typer/common';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { formaterDatoKunMåned } from '../../../utils/dato';
 
 interface IProps {
@@ -36,6 +38,7 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     visFeilmeldinger = false,
 }) => {
     const { valgtLocale } = useSpråk();
+    const { tekster, plainTekst } = useApp();
     const [error, setError] = useState<Feilmelding | undefined>(undefined);
 
     const nullstillOgSettFeilmelding = (feilmelding: Feilmelding) => {
@@ -48,9 +51,12 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     const feilmeldingForDatoFørMinDato = () => {
         // TODO må få i18n
         if (tidligsteValgbareMåned) {
-            return `Du kan ikke velge en dato før ${formaterDatoKunMåned(tidligsteValgbareMåned, valgtLocale)}`;
+            return plainTekst(
+                tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger
+                    .tilDatoKanIkkeVaereFoerFraDato
+            );
         }
-        return 'Du må velge en gyldig dato';
+        return plainTekst(tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger.ugyldigManed);
     };
 
     const feilmeldingForDatoEtterMaksDato = () => {
@@ -58,7 +64,7 @@ export const MånedÅrVelger: React.FC<IProps> = ({
         if (senesteValgbareMåned) {
             return `Du kan ikke velge en dato etter ${formaterDatoKunMåned(senesteValgbareMåned, valgtLocale)}`;
         }
-        return 'Du må velge en gyldig dato';
+        return plainTekst(tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger.ugyldigManed);
     };
 
     const feilmeldinger: Record<Feilmelding, string> = {
@@ -72,7 +78,6 @@ export const MånedÅrVelger: React.FC<IProps> = ({
         toDate: senesteValgbareMåned,
         locale: valgtLocale,
         onMonthChange: (dato: Date | undefined): void => {
-            console.log(dato);
             if (dato === undefined) {
                 felt.nullstill();
             } else {

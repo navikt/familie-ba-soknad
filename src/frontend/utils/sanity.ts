@@ -12,6 +12,7 @@ import {
     ESanityFlettefeltverdi,
     ESanitySteg,
     FlettefeltVerdier,
+    formateringsfeilmeldingerPrefix,
     frittståendeOrdPrefix,
     LocaleRecordBlock,
     LocaleRecordString,
@@ -19,6 +20,7 @@ import {
 } from '../typer/sanity/sanity';
 import {
     IFellesTekstInnhold,
+    IFormateringsfeilmeldingerTekstinnhold,
     IFrittståendeOrdTekstinnhold,
     ITekstinnhold,
 } from '../typer/sanity/tekstInnhold';
@@ -40,6 +42,9 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
         frittståendeOrd: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, frittståendeOrdPrefix)
         ) as IFrittståendeOrdTekstinnhold,
+        formateringsfeilmeldinger: struktrerInnholdForFelles(
+            dokumenterFiltrertPåPrefix(fellesDokumenter, formateringsfeilmeldingerPrefix)
+        ) as IFormateringsfeilmeldingerTekstinnhold,
     };
     return tekstInnhold as ITekstinnhold;
 };
