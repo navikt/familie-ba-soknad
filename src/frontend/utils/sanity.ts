@@ -40,10 +40,10 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
 
     tekstInnhold[ESanitySteg.FELLES] = {
         frittståendeOrd: struktrerInnholdForFelles(
-            dokumenterFiltrertPåPrefix(fellesDokumenter, frittståendeOrdPrefix)
+            dokumenterFiltrertPåType(fellesDokumenter, frittståendeOrdPrefix)
         ) as IFrittståendeOrdTekstinnhold,
         formateringsfeilmeldinger: struktrerInnholdForFelles(
-            dokumenterFiltrertPåPrefix(fellesDokumenter, formateringsfeilmeldingerPrefix)
+            dokumenterFiltrertPåType(fellesDokumenter, formateringsfeilmeldingerPrefix)
         ) as IFormateringsfeilmeldingerTekstinnhold,
     };
     return tekstInnhold as ITekstinnhold;
@@ -64,7 +64,7 @@ const struktrerInnholdForFelles = (dokumenter: SanityDokument[]): Partial<IFelle
         return { ...acc, [dok.api_navn]: dok };
     }, {});
 
-const dokumenterFiltrertPåPrefix = (dokumenter: SanityDokument[], prefix) =>
+const dokumenterFiltrertPåType = (dokumenter: SanityDokument[], prefix) =>
     dokumenter.filter(dok => dok._type.includes(prefix));
 
 // Denne funksjonen har kopiert mye fra en tråd i Sanity-slacken:
