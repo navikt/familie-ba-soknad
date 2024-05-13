@@ -32,7 +32,7 @@ const StatusIkonContainer = styled.span`
 const PictureScanningExample = ({ image, status, statusText, description }: Props) => (
     <div>
         <ImageContainer>{image}</ImageContainer>
-        <StyledLabel tag="div">
+        <StyledLabel forwardedAs="p">
             <StatusIkonContainer role="presentation">
                 <StatusIkon status={status} />
             </StatusIkonContainer>

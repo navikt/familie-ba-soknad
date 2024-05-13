@@ -33,14 +33,14 @@ export const Personopplysninger: React.FC = () => {
             </FamilieAlert>
 
             <Informasjonsbolk>
-                <Label>
+                <Label as="p">
                     <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
                 </Label>
                 <BodyShort>{søker.ident}</BodyShort>
             </Informasjonsbolk>
 
             <Informasjonsbolk>
-                <Label>
+                <Label as="p">
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />
                 </Label>
                 <BodyShort>
@@ -53,7 +53,7 @@ export const Personopplysninger: React.FC = () => {
             </Informasjonsbolk>
 
             <Informasjonsbolk>
-                <Label>
+                <Label as="p">
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />
                 </Label>
                 <BodyShort>
@@ -62,7 +62,7 @@ export const Personopplysninger: React.FC = () => {
             </Informasjonsbolk>
 
             <Informasjonsbolk>
-                <Label>
+                <Label as="p">
                     <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />
                 </Label>
                 {genererAdresseVisning(søker)}
