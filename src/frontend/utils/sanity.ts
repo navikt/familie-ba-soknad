@@ -18,34 +18,28 @@ import {
     LocaleRecordString,
     SanityDokument,
 } from '../typer/sanity/sanity';
-import {
-    IFellesTekstInnhold,
-    IFormateringsfeilmeldingerTekstinnhold,
-    IFrittståendeOrdTekstinnhold,
-    ITekstinnhold,
-} from '../typer/sanity/tekstInnhold';
+import { IFellesTekstInnhold, ITekstinnhold } from '../typer/sanity/tekstInnhold';
 
 export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): ITekstinnhold => {
     const fellesDokumenter = alleDokumenter.filter(dok => dok.steg === ESanitySteg.FELLES);
 
-    const tekstInnhold: Partial<ITekstinnhold> = {};
+    const tekstInnhold = {};
 
-    for (const steg in ESanitySteg) {
-        ESanitySteg[steg] !== ESanitySteg.FELLES &&
-            (tekstInnhold[ESanitySteg[steg]] = strukturerInnholdForSteg(
-                alleDokumenter,
-                ESanitySteg[steg]
-            ));
-    }
+    Object.values(ESanitySteg)
+        .filter(steg => steg !== ESanitySteg.FELLES)
+        .forEach(steg => {
+            tekstInnhold[steg] = strukturerInnholdForSteg(alleDokumenter, steg);
+        });
 
     tekstInnhold[ESanitySteg.FELLES] = {
         frittståendeOrd: struktrerInnholdForFelles(
             dokumenterFiltrertPåType(fellesDokumenter, frittståendeOrdPrefix)
-        ) as IFrittståendeOrdTekstinnhold,
+        ),
         formateringsfeilmeldinger: struktrerInnholdForFelles(
             dokumenterFiltrertPåType(fellesDokumenter, formateringsfeilmeldingerPrefix)
-        ) as IFormateringsfeilmeldingerTekstinnhold,
+        ),
     };
+
     return tekstInnhold as ITekstinnhold;
 };
 
@@ -55,9 +49,7 @@ const strukturerInnholdForSteg = (
 ): Record<string, SanityDokument> =>
     dokumenter
         .filter(dok => dok.steg === steg)
-        .reduce((acc, dok) => {
-            return { ...acc, [dok.api_navn]: dok };
-        }, {});
+        .reduce((acc, dok) => ({ ...acc, [dok.api_navn]: dok }), {});
 
 const struktrerInnholdForFelles = (dokumenter: SanityDokument[]): Partial<IFellesTekstInnhold> =>
     dokumenter.reduce((acc, dok) => {
