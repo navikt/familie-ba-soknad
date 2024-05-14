@@ -6,7 +6,6 @@ import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
-import { LocaleType, SprakProvider } from '@navikt/familie-sprakvelger';
 import { Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import norskeTekster from '../assets/lang/nb.json' assert { type: 'json' };
@@ -33,9 +32,10 @@ import * as routesContext from '../context/RoutesContext';
 import { getRoutes, RoutesProvider } from '../context/RoutesContext';
 import * as sanityContext from '../context/SanityContext';
 import { SanityProvider } from '../context/SanityContext';
+import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
-import { AlternativtSvarForInput } from '../typer/common';
+import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { ISøker, ISøkerRespons } from '../typer/person';
@@ -187,7 +187,7 @@ export const wrapMedProvidere = (
     språkTekster?: Record<string, string>
 ) => {
     const [Første, ...resten] = providerComponents;
-    const erSpråkprovider = Første === SprakProvider;
+    const erSpråkprovider = Første === SpråkProvider;
     const erMemoryRouter = Første === MemoryRouter;
 
     return (
@@ -221,7 +221,7 @@ const wrapMedDefaultProvidere = (
 ) =>
     wrapMedProvidere(
         [
-            SprakProvider,
+            SpråkProvider,
             HttpProvider,
             LastRessurserProvider,
             SanityProvider,

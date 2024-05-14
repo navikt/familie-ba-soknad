@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Accordion, GuidePanel, Heading } from '@navikt/ds-react';
-import { LocaleType, Sprakvelger } from '@navikt/familie-sprakvelger';
+import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import Miljø from '../../../../shared-utils/Miljø';
 import { useApp } from '../../../context/AppContext';
@@ -16,10 +16,6 @@ import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
 import FortsettPåSøknad from './FortsettPåSøknad';
-
-const StyledSpråkvelger = styled(Sprakvelger)`
-    margin: auto;
-`;
 
 const StyledAccordion = styled(Accordion)`
     width: 100%;
@@ -44,7 +40,16 @@ const Forside: React.FC = () => {
 
     useEffect(() => {
         settNåværendeRoute(RouteEnum.Forside);
+        visSpråkvelger();
     }, []);
+
+    const visSpråkvelger = () => {
+        setAvailableLanguages([
+            { locale: 'nb', handleInApp: true },
+            { locale: 'nn', handleInApp: true },
+            { locale: 'en', handleInApp: true },
+        ]).then();
+    };
 
     const kanFortsettePåSøknad =
         mellomlagretVerdi && mellomlagretVerdi.modellVersjon === Miljø().modellVersjon;
@@ -56,7 +61,6 @@ const Forside: React.FC = () => {
             <Heading size="xlarge" align={'center'}>
                 {plainTekst(forsidetekster.soeknadstittelBarnetrygd)}
             </Heading>
-            <StyledSpråkvelger støttedeSprak={[LocaleType.nn, LocaleType.nb, LocaleType.en]} />
             <GuidePanel poster>
                 <TekstBlock block={forsidetekster.veilederHei} typografi={Typografi.HeadingH2} />
                 <TekstBlock block={forsidetekster.veilederIntro} />

@@ -3,8 +3,8 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
+import { useSpråk } from '../../../../../context/SpråkContext';
 import { useSteg } from '../../../../../context/StegContext';
 import {
     andreForelderDataKeySpørsmål,
@@ -37,7 +37,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
     const intl = useIntl();
     const { formatMessage } = intl;
     const { hentStegObjektForBarn } = useSteg();
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     const omBarnetHook = useOmBarnet(barn.id);
 
     return (

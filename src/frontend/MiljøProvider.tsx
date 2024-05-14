@@ -4,7 +4,6 @@ import * as Sentry from '@sentry/react';
 import { IntlProvider } from 'react-intl';
 
 import { HttpProvider } from '@navikt/familie-http';
-import { useSprakContext } from '@navikt/familie-sprakvelger';
 
 import { tekster } from '../shared-utils/tekster';
 
@@ -13,9 +12,10 @@ import { FeatureTogglesProvider } from './context/FeatureToggleContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 import { SanityProvider } from './context/SanityContext';
+import { useSpråk } from './context/SpråkContext';
 
 const MiljøProvider: React.FC<PropsWithChildren> = ({ children }) => {
-    const [valgtLocale] = useSprakContext();
+    const { valgtLocale } = useSpråk();
     return (
         <IntlProvider locale={valgtLocale} messages={tekster[valgtLocale]}>
             <HttpProvider>
