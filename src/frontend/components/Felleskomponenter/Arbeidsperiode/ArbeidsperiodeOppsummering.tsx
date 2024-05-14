@@ -4,12 +4,14 @@ import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSpråk } from '../../../context/SpråkContext';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { formaterDato } from '../../../utils/dato';
+import { formaterDato, formaterDatostringKunMåned } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
-import { formaterDatoMedUkjent } from '../../../utils/visning';
+import { formaterDatoMedUkjent, uppercaseFørsteBokstav } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -44,6 +46,8 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
 }) => {
     const { valgtLocale } = useSpråk();
     const intl = useIntl();
+    const { toggles } = useFeatureToggles();
+
     const { formatMessage } = intl;
     const {
         arbeidsperiodeAvsluttet,
@@ -93,14 +97,31 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
             {fraDatoArbeidsperiode.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode)}
-                    søknadsvar={formaterDato(fraDatoArbeidsperiode.svar)}
+                    søknadsvar={
+                        toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
+                            ? uppercaseFørsteBokstav(
+                                  formaterDatostringKunMåned(
+                                      fraDatoArbeidsperiode.svar,
+                                      valgtLocale
+                                  )
+                              )
+                            : formaterDato(fraDatoArbeidsperiode.svar)
+                    }
                 />
             )}
             {tilDatoArbeidsperiode.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)}
                     søknadsvar={formaterDatoMedUkjent(
-                        tilDatoArbeidsperiode.svar,
+                        toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
+                            ? uppercaseFørsteBokstav(
+                                  formaterDatostringKunMåned(
+                                      tilDatoArbeidsperiode.svar,
+                                      valgtLocale
+                                  )
+                              )
+                            : tilDatoArbeidsperiode.svar,
+
                         formatMessage({
                             id: hentSpørsmålTekstId(
                                 ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
