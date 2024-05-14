@@ -39,7 +39,7 @@ export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
 
     return (
         <StyledOppsummeringsFelt>
-            {tittel && <StyledLabel>{tittel}</StyledLabel>}
+            {tittel && <StyledLabel forwardedAs="p">{tittel}</StyledLabel>}
             {søknadsvar ? (
                 <BodyShort>
                     {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}

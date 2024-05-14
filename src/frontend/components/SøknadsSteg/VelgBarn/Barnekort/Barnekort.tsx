@@ -101,7 +101,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 <TilfeldigBarnIkon />
             </BarnekortHeader>
             <InformasjonsboksInnhold>
-                <StyledLabel>
+                <StyledLabel forwardedAs="p">
                     {barn.adressebeskyttelse ? (
                         <SpråkTekst id={'hvilkebarn.barn.anonym'} />
                     ) : (

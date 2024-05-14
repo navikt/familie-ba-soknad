@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Label } from '@navikt/ds-react';
+import { Heading } from '@navikt/ds-react';
 
 import EksternLenke from '../EksternLenke/EksternLenke';
 import ExpandableInfo from '../expandableContent/ExpandableInfo';
@@ -23,10 +23,6 @@ const Container = styled.div`
             margin-bottom: 0.5rem;
         }
     }
-`;
-
-const StyledLabel = styled(Label)`
-    padding-bottom: 1rem;
 `;
 
 const EksempelBilderWrapper = styled.div`
@@ -56,9 +52,9 @@ const PictureScanningGuide = () => {
     return (
         <ExpandableInfo title={formatMessage({ id: 'psg.expandable.tittel' })}>
             <Container>
-                <StyledLabel size={'small'}>
+                <Heading level="3" size="xsmall" spacing>
                     <SpråkTekst id="psg.section1.tittel" />
-                </StyledLabel>
+                </Heading>
                 <ul>
                     <li>
                         <SpråkTekst id="psg.section1.liste.1" />
@@ -71,9 +67,9 @@ const PictureScanningGuide = () => {
                     </li>
                 </ul>
 
-                <StyledLabel tag="h3">
+                <Heading level="3" size="xsmall" spacing>
                     <SpråkTekst id="psg.section2.tittel" />
-                </StyledLabel>
+                </Heading>
                 <ul>
                     <li>
                         <SpråkTekst id="psg.section2.liste.1" />
@@ -86,9 +82,9 @@ const PictureScanningGuide = () => {
                     </li>
                 </ul>
                 <div>
-                    <StyledLabel tag="h3">
+                    <Heading level="3" size="xsmall" spacing>
                         <SpråkTekst id="psg.icon.heading" />
-                    </StyledLabel>
+                    </Heading>
                     <EksempelBilderWrapper>
                         <BildeContainer>
                             <PictureScanningExample
