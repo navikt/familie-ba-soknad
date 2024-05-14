@@ -202,6 +202,7 @@ export const andreForelderTilISøknadsfeltV8 = (
                 gjelderUtlandet: true,
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
@@ -222,6 +223,7 @@ export const andreForelderTilISøknadsfeltV8 = (
                 gjelderUtlandet: false,
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>

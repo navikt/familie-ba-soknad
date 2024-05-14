@@ -130,6 +130,7 @@ export const dataISøknadKontraktFormatV8 = (
                     periodeNummer: index + 1,
                     gjelderUtlandet: true,
                     personType: PersonType.Søker,
+                    toggleBeOmMånedIkkeDato,
                 })
             ),
             arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -138,6 +139,7 @@ export const dataISøknadKontraktFormatV8 = (
                     periodeNummer: index + 1,
                     gjelderUtlandet: false,
                     personType: PersonType.Søker,
+                    toggleBeOmMånedIkkeDato,
                 })
             ),
             pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>

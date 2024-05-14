@@ -100,6 +100,7 @@ export const omsorgspersonTilISøknadsfeltV8 = (
                 periodeNummer: index + 1,
                 gjelderUtlandet: true,
                 personType: PersonType.Omsorgsperson,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         arbeidNorge: søknadsfeltBarn(
@@ -113,6 +114,7 @@ export const omsorgspersonTilISøknadsfeltV8 = (
                 periodeNummer: index + 1,
                 gjelderUtlandet: false,
                 personType: PersonType.Omsorgsperson,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         pensjonUtland: søknadsfeltBarn(
