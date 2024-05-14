@@ -20,7 +20,6 @@ interface IProps {
 
 /* TODO
 - vurder å lagre som Date og gjøre parsing/format mot mellomlagring og innsending - i neste runde
-- legge feilmeldinger i sanity slik at vi får i18n: støtte flettefelt i fellestekst i formateringsfeilmeldinger, gjøres i familie-baks-soknad-sanity
 */
 
 export enum Feilmelding {
