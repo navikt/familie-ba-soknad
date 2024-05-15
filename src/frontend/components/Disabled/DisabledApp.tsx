@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { IntlProvider } from 'react-intl';
 import styled from 'styled-components';
 
 import { BodyLong, GuidePanel, Heading } from '@navikt/ds-react';
+import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import { tekster } from '../../../shared-utils/tekster';
 import { useSpråk } from '../../context/SpråkContext';
@@ -19,6 +20,18 @@ const StyledHeading = styled(Heading)`
 
 export const DisabledApp: React.FC = () => {
     const { valgtLocale } = useSpråk();
+
+    useEffect(() => {
+        visSpråkvelger();
+    }, []);
+
+    const visSpråkvelger = () => {
+        setAvailableLanguages([
+            { locale: 'nb', handleInApp: true },
+            { locale: 'nn', handleInApp: true },
+            { locale: 'en', handleInApp: true },
+        ]).then();
+    };
     return (
         <IntlProvider locale={valgtLocale} messages={tekster[valgtLocale]}>
             <main>
