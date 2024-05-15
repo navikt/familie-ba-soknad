@@ -36,9 +36,6 @@ export const DisabledApp: React.FC = () => {
         <IntlProvider locale={valgtLocale} messages={tekster[valgtLocale]}>
             <main>
                 <InnholdContainer>
-                    {
-                        // TODO: Dekoratøren språk-handling fra PR: #265
-                    }
                     <GuidePanel>
                         <SpråkTekst id={'vedlikehold.veilederhilsen'} />
                     </GuidePanel>
