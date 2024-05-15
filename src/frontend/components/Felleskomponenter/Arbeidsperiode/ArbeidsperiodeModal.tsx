@@ -185,6 +185,10 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                                     )}
                                 />
                             }
+                            tidligsteValgbareMåned={minTilDatoForUtbetalingEllerArbeidsperiode(
+                                periodenErAvsluttet,
+                                skjema.felter.fraDatoArbeidsperiode.verdi
+                            )}
                             senesteValgbareMåned={periodenErAvsluttet ? dagensDato() : undefined}
                             felt={skjema.felter.tilDatoArbeidsperiode}
                             visFeilmeldinger={skjema.visFeilmeldinger}
