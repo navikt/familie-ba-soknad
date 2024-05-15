@@ -11,7 +11,7 @@ import { IArbeidsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { formaterDato, formaterDatostringKunMåned } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
-import { formaterDatoMedUkjent, uppercaseFørsteBokstav } from '../../../utils/visning';
+import { formaterMånedMedUkjent, uppercaseFørsteBokstav } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -112,21 +112,15 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
             {tilDatoArbeidsperiode.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)}
-                    søknadsvar={formaterDatoMedUkjent(
-                        toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
-                            ? uppercaseFørsteBokstav(
-                                  formaterDatostringKunMåned(
-                                      tilDatoArbeidsperiode.svar,
-                                      valgtLocale
-                                  )
-                              )
-                            : tilDatoArbeidsperiode.svar,
-
+                    søknadsvar={formaterMånedMedUkjent(
+                        tilDatoArbeidsperiode.svar,
                         formatMessage({
                             id: hentSpørsmålTekstId(
                                 ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
                             ),
-                        })
+                        }),
+                        toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO],
+                        valgtLocale
                     )}
                 />
             )}

@@ -2,13 +2,15 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSpråk } from '../../../context/SpråkContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { formaterDato } from '../../../utils/dato';
+import { formaterDato, formaterDatostringKunMåned } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
-import { formaterDatoMedUkjent } from '../../../utils/visning';
+import { formaterMånedMedUkjent, uppercaseFørsteBokstav } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -40,6 +42,8 @@ export const UtbetalingsperiodeOppsummering: React.FC<UtbetalingsperiodeOppsumme
     const { valgtLocale } = useSpråk();
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } =
         utbetalingsperiode;
+
+    const { toggles } = useFeatureToggles();
 
     const periodenErAvsluttet =
         fårUtbetalingNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);
@@ -79,13 +83,21 @@ export const UtbetalingsperiodeOppsummering: React.FC<UtbetalingsperiodeOppsumme
             />
             <OppsummeringFelt
                 tittel={utbetalingerSpørsmålSpråkTekst(UtbetalingerSpørsmålId.utbetalingFraDato)}
-                søknadsvar={formaterDato(utbetalingFraDato.svar)}
+                søknadsvar={
+                    toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
+                        ? uppercaseFørsteBokstav(
+                              formaterDatostringKunMåned(utbetalingFraDato.svar, valgtLocale)
+                          )
+                        : formaterDato(utbetalingFraDato.svar)
+                }
             />
             <OppsummeringFelt
                 tittel={utbetalingerSpørsmålSpråkTekst(UtbetalingerSpørsmålId.utbetalingTilDato)}
-                søknadsvar={formaterDatoMedUkjent(
+                søknadsvar={formaterMånedMedUkjent(
                     utbetalingTilDato.svar,
-                    utbetalingerSpørsmålSpråkTekst(UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke)
+                    utbetalingerSpørsmålSpråkTekst(UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke),
+                    toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO],
+                    valgtLocale
                 )}
             />
         </PeriodeOppsummering>

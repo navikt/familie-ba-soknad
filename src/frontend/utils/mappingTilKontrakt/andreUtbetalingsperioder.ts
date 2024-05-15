@@ -2,17 +2,19 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { utbetalingsperiodeModalSpørsmålSpråkIder } from '../../components/Felleskomponenter/UtbetalingerModal/språkUtils';
 import { UtbetalingerSpørsmålId } from '../../components/Felleskomponenter/UtbetalingerModal/spørsmål';
+import { useFeatureToggles } from '../../context/FeatureToggleContext';
+import { AlternativtSvarForInput, ISODateString } from '../../typer/common';
+import { EFeatureToggle } from '../../typer/feature-toggles';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IUtbetalingsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IUtbetalingsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
+import { ISøknadSpørsmål } from '../../typer/spørsmål';
+import { formaterDatostringKunMåned } from '../dato';
 import { hentTekster, landkodeTilSpråk } from '../språk';
+import { uppercaseFørsteBokstav } from '../visning';
 
-import {
-    sammeVerdiAlleSpråk,
-    sammeVerdiAlleSpråkEllerUkjentSpråktekst,
-    verdiCallbackAlleSpråk,
-} from './hjelpefunksjoner';
+import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
 interface UtbetalingsperiodeIKontraktFormatParams {
     periode: IUtbetalingsperiode;
@@ -30,6 +32,8 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } = periode;
     const periodenErAvsluttet =
         fårUtbetalingNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);
+
+    const { toggles } = useFeatureToggles();
 
     const hentUtbetalingsperiodeSpråkId = utbetalingsperiodeModalSpørsmålSpråkIder(
         personType,
@@ -59,15 +63,29 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
             },
             utbetalingFraDato: {
                 label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingFraDato),
-                verdi: sammeVerdiAlleSpråk(utbetalingFraDato.svar),
+                verdi: datoTilVerdiForKontrakt(utbetalingFraDato),
             },
             utbetalingTilDato: {
                 label: hentSpørsmålstekster(UtbetalingerSpørsmålId.utbetalingTilDato),
-                verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    utbetalingTilDato.svar,
-                    hentUtbetalingsperiodeSpråkId(UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke)
-                ),
+                verdi:
+                    utbetalingTilDato.svar === AlternativtSvarForInput.UKJENT
+                        ? hentTekster(
+                              hentUtbetalingsperiodeSpråkId(
+                                  UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
+                              )
+                          )
+                        : datoTilVerdiForKontrakt(utbetalingTilDato),
             },
         }),
     };
+
+    function datoTilVerdiForKontrakt(fraDatoArbeidsperiode: ISøknadSpørsmål<ISODateString | ''>) {
+        return toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
+            ? verdiCallbackAlleSpråk(locale =>
+                  uppercaseFørsteBokstav(
+                      formaterDatostringKunMåned(fraDatoArbeidsperiode.svar, locale)
+                  )
+              )
+            : sammeVerdiAlleSpråk(fraDatoArbeidsperiode.svar);
+    }
 };
