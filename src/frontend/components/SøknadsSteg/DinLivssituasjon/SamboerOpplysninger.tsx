@@ -13,16 +13,10 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import { samboerSpråkIder } from './spørsmål';
 
-const StyledLabel = styled(Label)`
-    && {
-        margin-bottom: 0.5rem;
-    }
-`;
-
 const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
-    <StyledLabel>
+    <Label as="p">
         <SpråkTekst id={språkId} />
-    </StyledLabel>
+    </Label>
 );
 
 const SamboerContainer = styled.div`
@@ -46,7 +40,7 @@ const SamboerOpplysninger: React.FC<{
 
     return (
         <SamboerContainer>
-            <Label>{samboer.navn.svar.toUpperCase()}</Label>
+            <Label as="p">{samboer.navn.svar.toUpperCase()}</Label>
             <Informasjonsbolk>
                 <Spørsmål språkId={samboerSpråkIder.fnr} />
                 <BodyShort>

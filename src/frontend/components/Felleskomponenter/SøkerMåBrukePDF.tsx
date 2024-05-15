@@ -26,7 +26,7 @@ export const SøkerMåBrukePDF: FC<Props> = ({ advarselTekstId, utfyllendeAdvars
             </FamilieAlert>
             {utfyllendeAdvarselInfoId && (
                 <Informasjonsbolk>
-                    <Label>
+                    <Label as="p">
                         <SpråkTekst id={utfyllendeAdvarselInfoId} />
                     </Label>
                 </Informasjonsbolk>

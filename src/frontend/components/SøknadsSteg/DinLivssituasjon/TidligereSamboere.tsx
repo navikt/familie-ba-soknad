@@ -26,7 +26,7 @@ const StyledLabel = styled(Label)`
 `;
 
 const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
-    <StyledLabel>
+    <StyledLabel forwardedAs="p">
         <SpråkTekst id={språkId} />
     </StyledLabel>
 );

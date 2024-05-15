@@ -77,7 +77,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                     ))}
 
                     {registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
-                        <Label>
+                        <Label as="p">
                             <SpråkTekst
                                 id={barnetrygdperiodeFlereSpørsmål(personType)}
                                 values={{ barn: barn.navn }}
