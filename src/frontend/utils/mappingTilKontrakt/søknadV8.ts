@@ -165,6 +165,7 @@ export const dataISøknadKontraktFormatV8 = (
                     periode,
                     periodeNummer: index + 1,
                     personType: PersonType.Søker,
+                    toggleBeOmMånedIkkeDato,
                 })
             ),
         },

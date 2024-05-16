@@ -2,9 +2,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { utbetalingsperiodeModalSpørsmålSpråkIder } from '../../components/Felleskomponenter/UtbetalingerModal/språkUtils';
 import { UtbetalingerSpørsmålId } from '../../components/Felleskomponenter/UtbetalingerModal/spørsmål';
-import { useFeatureToggles } from '../../context/FeatureToggleContext';
 import { AlternativtSvarForInput, ISODateString } from '../../typer/common';
-import { EFeatureToggle } from '../../typer/feature-toggles';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IUtbetalingsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IUtbetalingsperiode } from '../../typer/perioder';
@@ -19,6 +17,7 @@ import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjone
 interface UtbetalingsperiodeIKontraktFormatParams {
     periode: IUtbetalingsperiode;
     periodeNummer: number;
+    toggleBeOmMånedIkkeDato: boolean;
 }
 
 export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
@@ -27,13 +26,12 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
     personType,
     erDød,
     barn,
+    toggleBeOmMånedIkkeDato,
 }: UtbetalingsperiodeIKontraktFormatParams &
     PeriodePersonTypeMedBarnProps): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV8> => {
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } = periode;
     const periodenErAvsluttet =
         fårUtbetalingNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);
-
-    const { toggles } = useFeatureToggles();
 
     const hentUtbetalingsperiodeSpråkId = utbetalingsperiodeModalSpørsmålSpråkIder(
         personType,
@@ -80,7 +78,7 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
     };
 
     function datoTilVerdiForKontrakt(fraDatoArbeidsperiode: ISøknadSpørsmål<ISODateString | ''>) {
-        return toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
+        return toggleBeOmMånedIkkeDato
             ? verdiCallbackAlleSpråk(locale =>
                   uppercaseFørsteBokstav(
                       formaterDatostringKunMåned(fraDatoArbeidsperiode.svar, locale)

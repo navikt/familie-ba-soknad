@@ -244,6 +244,7 @@ export const andreForelderTilISøknadsfeltV8 = (
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
                 barn,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         eøsBarnetrygdsperioder: eøsBarnetrygdsperioder.map((periode, index) =>

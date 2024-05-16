@@ -158,6 +158,7 @@ export const omsorgspersonTilISøknadsfeltV8 = (
                 periodeNummer: index + 1,
                 personType: PersonType.Omsorgsperson,
                 barn,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         pågåendeSøknadFraAnnetEøsLand: søknadsfeltBarn(
