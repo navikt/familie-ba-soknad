@@ -101,7 +101,7 @@
     "@sanity/client": "^6.4.9",
     "@sentry/react": "^7.113.0",
     "amplitude-js": "^8.21.9",
-    "axios": "^1.6.2",
+    "axios": "^1.7.0",
     "compression": "^1.7.4",
     "concurrently": "^8.2.2",
     "constate": "^3.3.2",
