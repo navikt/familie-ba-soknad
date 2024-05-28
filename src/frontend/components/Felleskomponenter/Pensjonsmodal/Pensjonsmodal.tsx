@@ -8,13 +8,13 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
+import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -142,6 +142,8 @@ export const PensjonModal: React.FC<Props> = ({
                             }
                             felt={pensjonFraDato}
                             visFeilmeldinger={skjema.visFeilmeldinger}
+                            dagIMåneden={DagIMåneden.FØRSTE_DAG}
+                            kanIkkeVæreFremtid={true}
                         />
                     ) : (
                         <Datovelger
@@ -174,9 +176,12 @@ export const PensjonModal: React.FC<Props> = ({
                                     ? parseISO(pensjonFraDato.verdi)
                                     : undefined
                             }
-                            senesteValgbareMåned={dagensDato()}
+                            senesteValgbareMåned={sisteDagDenneMåneden()}
                             felt={pensjonTilDato}
                             visFeilmeldinger={skjema.visFeilmeldinger}
+                            dagIMåneden={DagIMåneden.SISTE_DAG}
+                            kanIkkeVæreFremtid={periodenErAvsluttet}
+                            kanIkkeVæreFortid={!periodenErAvsluttet}
                         />
                     ) : (
                         <Datovelger

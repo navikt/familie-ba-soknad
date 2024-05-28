@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { formatISO } from 'date-fns';
+import { formatISO, lastDayOfMonth } from 'date-fns';
 
 import { MonthPicker, useMonthpicker } from '@navikt/ds-react';
 import { Felt } from '@navikt/familie-skjema';
@@ -16,6 +16,10 @@ interface IProps {
     label: React.ReactNode;
     felt: Felt<ISODateString>;
     visFeilmeldinger?: boolean;
+    disabled?: boolean;
+    dagIMåneden: DagIMåneden;
+    kanIkkeVæreFortid?: boolean;
+    kanIkkeVæreFremtid?: boolean;
 }
 
 /* TODO
@@ -26,6 +30,13 @@ export enum Feilmelding {
     FØR_MIN_DATO = 'FØR_MIN_DATO',
     ETTER_MAKS_DATO = 'ETTER_MAKS_DATO',
     UGYLDIG_DATO = 'UGYLDIG_DATO',
+    DATO_IKKE_I_FORTID = 'DATO_IKKE_I_FORTID',
+    DATO_IKKE_I_FREMTID = 'DATO_IKKE_I_FREMTID',
+}
+
+export enum DagIMåneden {
+    FØRSTE_DAG = 'FØRSTE_DAG',
+    SISTE_DAG = 'SISTE_DAG',
 }
 
 export const MånedÅrVelger: React.FC<IProps> = ({
@@ -34,6 +45,10 @@ export const MånedÅrVelger: React.FC<IProps> = ({
     label,
     felt,
     visFeilmeldinger = false,
+    disabled = false,
+    dagIMåneden = DagIMåneden.FØRSTE_DAG,
+    kanIkkeVæreFortid,
+    kanIkkeVæreFremtid,
 }) => {
     const { valgtLocale } = useSpråk();
     const { tekster, plainTekst } = useApp();
@@ -51,9 +66,11 @@ export const MånedÅrVelger: React.FC<IProps> = ({
         UGYLDIG_DATO: plainTekst(formateringsfeilmeldinger.ugyldigManed),
         FØR_MIN_DATO: plainTekst(formateringsfeilmeldinger.datoErForForsteGyldigeTidspunkt),
         ETTER_MAKS_DATO: plainTekst(formateringsfeilmeldinger.datoErEtterSisteGyldigeTidspunkt),
+        DATO_IKKE_I_FORTID: plainTekst(formateringsfeilmeldinger.datoKanIkkeVareIFortid),
+        DATO_IKKE_I_FREMTID: plainTekst(formateringsfeilmeldinger.datoKanIkkeVareIFremtid),
     };
 
-    const { monthpickerProps, inputProps, reset, selectedMonth } = useMonthpicker({
+    const { monthpickerProps, inputProps } = useMonthpicker({
         fromDate: tidligsteValgbareMåned,
         toDate: senesteValgbareMåned,
         locale: valgtLocale,
@@ -61,11 +78,21 @@ export const MånedÅrVelger: React.FC<IProps> = ({
             if (dato === undefined) {
                 felt.nullstill();
             } else {
-                felt.validerOgSettFelt(formatISO(dato, { representation: 'date' }));
+                if (dagIMåneden === DagIMåneden.FØRSTE_DAG) {
+                    felt.validerOgSettFelt(formatISO(dato, { representation: 'date' }));
+                } else {
+                    felt.validerOgSettFelt(
+                        formatISO(lastDayOfMonth(dato), { representation: 'date' })
+                    );
+                }
             }
         },
         onValidate: val => {
-            if (val.isBefore) {
+            if (val.isBefore && kanIkkeVæreFortid) {
+                nullstillOgSettFeilmelding(Feilmelding.DATO_IKKE_I_FORTID);
+            } else if (val.isAfter && kanIkkeVæreFremtid) {
+                nullstillOgSettFeilmelding(Feilmelding.DATO_IKKE_I_FREMTID);
+            } else if (val.isBefore) {
                 nullstillOgSettFeilmelding(Feilmelding.FØR_MIN_DATO);
             } else if (val.isAfter) {
                 nullstillOgSettFeilmelding(Feilmelding.ETTER_MAKS_DATO);
@@ -77,22 +104,12 @@ export const MånedÅrVelger: React.FC<IProps> = ({
         },
     });
 
-    useEffect(() => {
-        if (selectedMonth) {
-            if (
-                (!!tidligsteValgbareMåned && tidligsteValgbareMåned > selectedMonth) ||
-                (!!senesteValgbareMåned && senesteValgbareMåned < selectedMonth)
-            ) {
-                reset();
-            }
-        }
-    }, [tidligsteValgbareMåned, senesteValgbareMåned]);
-
     return (
         <MonthPicker {...monthpickerProps}>
             <MonthPicker.Input
                 {...inputProps}
                 label={label}
+                disabled={disabled}
                 error={
                     error && visFeilmeldinger
                         ? feilmeldinger[error]

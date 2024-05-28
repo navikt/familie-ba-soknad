@@ -37,4 +37,6 @@ export interface IFormateringsfeilmeldingerTekstinnhold {
     datoErEtterSisteGyldigeTidspunkt: LocaleRecordString;
     datoErForForsteGyldigeTidspunkt: LocaleRecordString;
     ugyldigManed: LocaleRecordString;
+    datoKanIkkeVareIFortid: LocaleRecordString;
+    datoKanIkkeVareIFremtid: LocaleRecordString;
 }

@@ -7,7 +7,7 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
@@ -15,7 +15,7 @@ import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
+import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
@@ -134,6 +134,8 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             }
                             felt={utbetalingFraDato}
                             visFeilmeldinger={skjema.visFeilmeldinger}
+                            dagIMåneden={DagIMåneden.FØRSTE_DAG}
+                            kanIkkeVæreFremtid={true}
                         />
                     ) : (
                         <Datovelger
@@ -151,23 +153,37 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                     )}
 
                     {toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO] ? (
-                        <MånedÅrVelger
-                            label={
-                                <SpråkTekst
-                                    id={hentSpørsmålTekstId(
-                                        UtbetalingerSpørsmålId.utbetalingTilDato
-                                    )}
-                                    values={{ ...(barn && { barn: barn.navn }) }}
-                                />
-                            }
-                            tidligsteValgbareMåned={minTilDatoForUtbetalingEllerArbeidsperiode(
-                                periodenErAvsluttet,
-                                utbetalingFraDato.verdi
-                            )}
-                            senesteValgbareMåned={periodenErAvsluttet ? dagensDato() : undefined}
-                            felt={utbetalingTilDato}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                        />
+                        <>
+                            <MånedÅrVelger
+                                label={
+                                    <SpråkTekst
+                                        id={hentSpørsmålTekstId(
+                                            UtbetalingerSpørsmålId.utbetalingTilDato
+                                        )}
+                                        values={{ ...(barn && { barn: barn.navn }) }}
+                                    />
+                                }
+                                tidligsteValgbareMåned={minTilDatoForUtbetalingEllerArbeidsperiode(
+                                    periodenErAvsluttet,
+                                    utbetalingFraDato.verdi
+                                )}
+                                senesteValgbareMåned={
+                                    periodenErAvsluttet ? sisteDagDenneMåneden() : undefined
+                                }
+                                felt={utbetalingTilDato}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                dagIMåneden={DagIMåneden.SISTE_DAG}
+                                kanIkkeVæreFremtid={periodenErAvsluttet}
+                                kanIkkeVæreFortid={!periodenErAvsluttet}
+                                disabled={utbetalingTilDatoUkjent.verdi === ESvar.JA}
+                            />
+                            <SkjemaCheckbox
+                                labelSpråkTekstId={hentSpørsmålTekstId(
+                                    UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
+                                )}
+                                felt={utbetalingTilDatoUkjent}
+                            />
+                        </>
                     ) : (
                         <>
                             <Datovelger
