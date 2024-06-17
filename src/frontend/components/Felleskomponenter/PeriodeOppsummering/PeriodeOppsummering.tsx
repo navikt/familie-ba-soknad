@@ -6,6 +6,7 @@ import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, Heading } from '@navikt/ds-react';
 import { ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
+import { HeadingLevel } from '../../../typer/common';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const PeriodeContainer = styled.div<{ $bottomBorder: boolean }>`
@@ -32,7 +33,7 @@ const PeriodeOppsummering: React.FC<{
     tittelSpråkId: string;
     vedleggNotis?: ReactNode;
     children?: ReactNode;
-    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
+    headingLevel?: HeadingLevel;
 }> = ({
     nummer,
     fjernPeriodeCallback = undefined,
