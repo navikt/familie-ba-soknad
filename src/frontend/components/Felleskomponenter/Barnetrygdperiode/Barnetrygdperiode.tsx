@@ -5,6 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema';
@@ -29,7 +30,7 @@ interface Props {
     fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     barn: IBarnMedISøknad;
     tilhørendeJaNeiSpmFelt: Felt<ESvar | null>;
-    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
+    headingLevel?: HeadingLevel;
 }
 
 type BarnetrygdperiodeProps = Props & PeriodePersonTypeProps;

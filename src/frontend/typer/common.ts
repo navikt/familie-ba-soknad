@@ -29,3 +29,5 @@ export enum LocaleType {
     nb = 'nb',
     nn = 'nn',
 }
+
+export type HeadingLevel = '1' | '2' | '3' | '4' | '5' | '6';

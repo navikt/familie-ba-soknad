@@ -3,6 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useSpråk } from '../../../context/SpråkContext';
+import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { formaterDato } from '../../../utils/dato';
@@ -19,7 +20,7 @@ interface BarnetrygdperiodeProps {
     nummer: number;
     fjernPeriodeCallback?: (barnetrygdsperiode: IEøsBarnetrygdsperiode) => void;
     barnetsNavn: string;
-    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
+    headingLevel?: HeadingLevel;
 }
 
 type BarnetrygdperiodeOppsummeringPersonTypeProps =
