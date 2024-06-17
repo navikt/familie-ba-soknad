@@ -44,7 +44,7 @@ const PeriodeOppsummering: React.FC<{
 
     return (
         <PeriodeContainer $bottomBorder={skalHaBottomBorder}>
-            <StyledHeading level={'2'} size={'xsmall'}>
+            <StyledHeading level={'3'} size={'xsmall'}>
                 <SpråkTekst id={tittelSpråkId} values={{ x: nummer }} />
             </StyledHeading>
             {children}
