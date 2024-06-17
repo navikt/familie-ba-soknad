@@ -81,6 +81,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     <Informasjonsbolk
                         tittelId={'ombarnet.fosterbarn'}
                         språkValues={{ navn: barn.navn }}
+                        headingLevel="4"
                     >
                         <VedleggNotis språkTekstId={'ombarnet.fosterbarn.vedleggsinfo'} />
                     </Informasjonsbolk>
@@ -264,6 +265,7 @@ const Oppfølgningsspørsmål: React.FC<{
                             fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
                             barn={barn}
                             personType={PersonType.Søker}
+                            headingLevel="4"
                         />
                     </KomponentGruppe>
                 </SkjemaFieldset>

@@ -19,6 +19,7 @@ interface BarnetrygdperiodeProps {
     nummer: number;
     fjernPeriodeCallback?: (barnetrygdsperiode: IEøsBarnetrygdsperiode) => void;
     barnetsNavn: string;
+    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
 }
 
 type BarnetrygdperiodeOppsummeringPersonTypeProps =
@@ -35,6 +36,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
     barnetsNavn,
     erDød,
     personType,
+    headingLevel = '3',
 }) => {
     const {
         mottarEøsBarnetrygdNå,
@@ -66,6 +68,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
             fjernKnappSpråkId={'felles.fjernbarnetrygd.knapp'}
             nummer={nummer}
             tittelSpråkId={'ombarnet.trygdandreperioder.periode'}
+            headingLevel={headingLevel}
         >
             {mottarEøsBarnetrygdNå.svar && (
                 <OppsummeringFelt

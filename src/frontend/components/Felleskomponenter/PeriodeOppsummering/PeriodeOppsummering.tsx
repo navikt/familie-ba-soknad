@@ -32,6 +32,7 @@ const PeriodeOppsummering: React.FC<{
     tittelSpråkId: string;
     vedleggNotis?: ReactNode;
     children?: ReactNode;
+    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
 }> = ({
     nummer,
     fjernPeriodeCallback = undefined,
@@ -39,12 +40,13 @@ const PeriodeOppsummering: React.FC<{
     tittelSpråkId,
     vedleggNotis,
     children,
+    headingLevel = '3',
 }) => {
     const skalHaBottomBorder = !!fjernPeriodeCallback;
 
     return (
         <PeriodeContainer $bottomBorder={skalHaBottomBorder}>
-            <StyledHeading level={'3'} size={'xsmall'}>
+            <StyledHeading level={headingLevel} size={'xsmall'}>
                 <SpråkTekst id={tittelSpråkId} values={{ x: nummer }} />
             </StyledHeading>
             {children}

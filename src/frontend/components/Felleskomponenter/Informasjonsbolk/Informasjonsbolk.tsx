@@ -10,6 +10,7 @@ export interface IInformasjonsbolkProps {
     tittelId?: string;
     språkValues?: { [key: string]: ReactNode };
     children?: ReactNode;
+    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
 }
 
 const InformasjonsbolkContainer = styled.div`
@@ -24,12 +25,13 @@ const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({
     tittelId,
     språkValues,
     children,
+    headingLevel = '3',
     ...props
 }) => {
     return (
         <InformasjonsbolkContainer {...props}>
             {tittelId && (
-                <Heading level={'2'} size={'xsmall'}>
+                <Heading level={headingLevel} size={'xsmall'}>
                     <SpråkTekst id={tittelId} values={språkValues} />
                 </Heading>
             )}
