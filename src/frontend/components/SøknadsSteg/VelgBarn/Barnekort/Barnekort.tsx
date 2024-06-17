@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BodyShort, Ingress, Label, Checkbox } from '@navikt/ds-react';
+import { BodyShort, Ingress, Checkbox, Heading } from '@navikt/ds-react';
 import { AGray100, APurple400, APurple800 } from '@navikt/ds-tokens/dist/tokens';
 
 import { useApp } from '../../../../context/AppContext';
@@ -62,11 +62,8 @@ const BarnekortHeader = styled.div`
     width: 100%;
 `;
 
-const StyledLabel = styled(Label)`
+const StyledHeading = styled(Heading)`
     text-transform: uppercase;
-    && {
-        font-weight: 700;
-    }
 `;
 
 const StyledIngress = styled(Ingress)`
@@ -101,13 +98,13 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 <TilfeldigBarnIkon />
             </BarnekortHeader>
             <InformasjonsboksInnhold>
-                <StyledLabel forwardedAs="p">
+                <StyledHeading level={'3'} size={'xsmall'}>
                     {barn.adressebeskyttelse ? (
                         <SpråkTekst id={'hvilkebarn.barn.anonym'} />
                     ) : (
                         barn.navn
                     )}
-                </StyledLabel>
+                </StyledHeading>
                 {!barn.adressebeskyttelse && (
                     <BarneKortInfo
                         labelId={'hvilkebarn.barn.fødselsnummer'}
