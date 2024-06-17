@@ -29,6 +29,7 @@ interface Props {
     fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     barn: IBarnMedISøknad;
     tilhørendeJaNeiSpmFelt: Felt<ESvar | null>;
+    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
 }
 
 type BarnetrygdperiodeProps = Props & PeriodePersonTypeProps;
@@ -42,6 +43,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     erDød,
     barn,
     tilhørendeJaNeiSpmFelt,
+    headingLevel = '3',
 }) => {
     const {
         erÅpen: barnetrygdsmodalErÅpen,
@@ -73,6 +75,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             barnetsNavn={barn.navn}
                             personType={personType}
                             erDød={personType === PersonType.AndreForelder && erDød}
+                            headingLevel={headingLevel}
                         />
                     ))}
 
