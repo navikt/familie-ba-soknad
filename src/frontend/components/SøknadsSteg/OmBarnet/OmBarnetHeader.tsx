@@ -36,7 +36,7 @@ export const OmBarnetHeader: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) =
             <TilfeldigBarnIkon byttVedRerender={false} />
             <HorisontalLinje />
             <BarnCounterWrapper>
-                <Heading size={'xsmall'} level={'1'}>
+                <Heading size={'xsmall'} level={'3'}>
                     <SpråkTekst
                         id={'ombarnet.undertittel'}
                         values={{

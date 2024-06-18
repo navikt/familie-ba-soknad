@@ -3,6 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useSpråk } from '../../../context/SpråkContext';
+import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { formaterDato } from '../../../utils/dato';
@@ -19,6 +20,7 @@ interface BarnetrygdperiodeProps {
     nummer: number;
     fjernPeriodeCallback?: (barnetrygdsperiode: IEøsBarnetrygdsperiode) => void;
     barnetsNavn: string;
+    headingLevel?: HeadingLevel;
 }
 
 type BarnetrygdperiodeOppsummeringPersonTypeProps =
@@ -35,6 +37,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
     barnetsNavn,
     erDød,
     personType,
+    headingLevel = '3',
 }) => {
     const {
         mottarEøsBarnetrygdNå,
@@ -66,6 +69,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
             fjernKnappSpråkId={'felles.fjernbarnetrygd.knapp'}
             nummer={nummer}
             tittelSpråkId={'ombarnet.trygdandreperioder.periode'}
+            headingLevel={headingLevel}
         >
             {mottarEøsBarnetrygdNå.svar && (
                 <OppsummeringFelt
