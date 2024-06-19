@@ -14,6 +14,7 @@ import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import Tilleggsinformasjon from '../Tilleggsinformasjon';
 
 import { BarnetrygdperiodeModal } from './BarnetrygdperiodeModal';
 import { BarnetrygdsperiodeOppsummering } from './BarnetrygdperiodeOppsummering';
@@ -66,7 +67,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                 }}
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
-                <>
+                <Tilleggsinformasjon>
                     {registrerteEøsBarnetrygdsperioder.verdi.map((periode, index) => (
                         <BarnetrygdsperiodeOppsummering
                             key={`eøs-barnetrygdsperiode-${index}`}
@@ -115,7 +116,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             erDød={erDød}
                         />
                     )}
-                </>
+                </Tilleggsinformasjon>
             )}
         </>
     );

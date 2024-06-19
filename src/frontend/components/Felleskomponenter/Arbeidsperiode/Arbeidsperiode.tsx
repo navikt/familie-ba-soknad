@@ -17,6 +17,7 @@ import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import Tilleggsinformasjon from '../Tilleggsinformasjon';
 
 import { ArbeidsperiodeModal } from './ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from './ArbeidsperiodeOppsummering';
@@ -81,7 +82,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                 }}
             />
             {arbeiderEllerArbeidetFelt.verdi === ESvar.JA && (
-                <>
+                <Tilleggsinformasjon>
                     {registrerteArbeidsperioder.verdi.map((periode, index) => (
                         <ArbeidsperiodeOppsummering
                             key={`arbeidsperiode-${index}`}
@@ -129,7 +130,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             erDød={erDød}
                         />
                     )}
-                </>
+                </Tilleggsinformasjon>
             )}
         </>
     );

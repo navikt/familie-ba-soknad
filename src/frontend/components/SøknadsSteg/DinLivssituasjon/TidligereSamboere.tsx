@@ -8,6 +8,7 @@ import { ITidligereSamboer } from '../../../typer/person';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import Tilleggsinformasjon from '../../Felleskomponenter/Tilleggsinformasjon';
 
 import LeggTilSamboerModal from './LeggTilSamboerModal';
 import SamboerOpplysninger from './SamboerOpplysninger';
@@ -51,17 +52,19 @@ const TidligereSamboere: React.FC<Props> = ({
                     ]
                 }
             />
-            {tidligereSamboere?.map((samboer: ITidligereSamboer, index: number) => (
-                <SamboerOpplysninger
-                    key={index}
-                    samboer={samboer}
-                    fjernTidligereSamboer={fjernTidligereSamboer}
+            <Tilleggsinformasjon>
+                {tidligereSamboere?.map((samboer: ITidligereSamboer, index: number) => (
+                    <SamboerOpplysninger
+                        key={index}
+                        samboer={samboer}
+                        fjernTidligereSamboer={fjernTidligereSamboer}
+                    />
+                ))}
+                <LeggTilKnapp
+                    språkTekst="omdeg.leggtilfleresamboere.leggtil"
+                    onClick={åpneLeggTilSamboerModal}
                 />
-            ))}
-            <LeggTilKnapp
-                språkTekst="omdeg.leggtilfleresamboere.leggtil"
-                onClick={åpneLeggTilSamboerModal}
-            />
+            </Tilleggsinformasjon>
             {erLeggTilSamboerModalÅpen && (
                 <LeggTilSamboerModal
                     leggTilTidligereSamboer={leggTilTidligereSamboer}

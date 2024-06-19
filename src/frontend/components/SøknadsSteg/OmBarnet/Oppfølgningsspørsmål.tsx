@@ -27,6 +27,7 @@ import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaF
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import Tilleggsinformasjon from '../../Felleskomponenter/Tilleggsinformasjon';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
@@ -173,35 +174,37 @@ const Oppfølgningsspørsmål: React.FC<{
                     legendSpråkId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barn.navn }}
                 >
-                    {utenlandsperioder.map((periode, index) => (
-                        <UtenlandsperiodeOppsummering
-                            key={index}
-                            periode={periode}
-                            nummer={index + 1}
-                            fjernPeriodeCallback={fjernUtenlandsperiode}
-                            barn={barn}
-                        />
-                    ))}
-                    {utenlandsperioder.length > 0 && (
-                        <Label as="p">
-                            <SpråkTekst
-                                id={'ombarnet.flereopphold.spm'}
-                                values={{ barn: barn.navn }}
+                    <Tilleggsinformasjon>
+                        {utenlandsperioder.map((periode, index) => (
+                            <UtenlandsperiodeOppsummering
+                                key={index}
+                                periode={periode}
+                                nummer={index + 1}
+                                fjernPeriodeCallback={fjernUtenlandsperiode}
+                                barn={barn}
                             />
-                        </Label>
-                    )}
-                    <LeggTilKnapp
-                        id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
-                        språkTekst={'felles.leggtilutenlands.knapp'}
-                        onClick={åpneUtenlandsmodal}
-                        feilmelding={
-                            registrerteUtenlandsperioder.erSynlig &&
-                            registrerteUtenlandsperioder.feilmelding &&
-                            skjema.visFeilmeldinger && (
-                                <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
-                            )
-                        }
-                    />
+                        ))}
+                        {utenlandsperioder.length > 0 && (
+                            <Label as="p">
+                                <SpråkTekst
+                                    id={'ombarnet.flereopphold.spm'}
+                                    values={{ barn: barn.navn }}
+                                />
+                            </Label>
+                        )}
+                        <LeggTilKnapp
+                            id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
+                            språkTekst={'felles.leggtilutenlands.knapp'}
+                            onClick={åpneUtenlandsmodal}
+                            feilmelding={
+                                registrerteUtenlandsperioder.erSynlig &&
+                                registrerteUtenlandsperioder.feilmelding &&
+                                skjema.visFeilmeldinger && (
+                                    <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
+                                )
+                            }
+                        />
+                    </Tilleggsinformasjon>
                     {planleggerÅBoINorge12Mnd.erSynlig && (
                         <KomponentGruppe inline dynamisk>
                             <JaNeiSpm

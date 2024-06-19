@@ -12,6 +12,7 @@ import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import Tilleggsinformasjon from '../Tilleggsinformasjon';
 
 import {
     mottarEllerMottattUtbetalingSpråkId,
@@ -65,7 +66,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                 }}
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
-                <>
+                <Tilleggsinformasjon>
                     {registrerteUtbetalingsperioder.verdi.map((utbetalingsperiode, index) => (
                         <UtbetalingsperiodeOppsummering
                             key={`utbetalingsperiode-${index}`}
@@ -109,7 +110,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             erDød={erDød}
                         />
                     )}
-                </>
+                </Tilleggsinformasjon>
             )}
         </>
     );
