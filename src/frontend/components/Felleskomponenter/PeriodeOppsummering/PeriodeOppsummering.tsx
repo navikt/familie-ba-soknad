@@ -10,7 +10,7 @@ import { HeadingLevel } from '../../../typer/common';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const PeriodeContainer = styled.div<{ $bottomBorder: boolean }>`
-    margin: 2rem 0;
+    margin-bottom: 2rem;
     border-bottom: ${props => (props.$bottomBorder ? `1px solid ${ABorderDefault}` : 'none')};
 `;
 
