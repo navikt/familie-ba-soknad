@@ -4,12 +4,14 @@ import styled from 'styled-components';
 
 import { Heading } from '@navikt/ds-react';
 
+import { HeadingLevel } from '../../../typer/common';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 export interface IInformasjonsbolkProps {
     tittelId?: string;
     språkValues?: { [key: string]: ReactNode };
     children?: ReactNode;
+    headingLevel?: HeadingLevel;
 }
 
 const InformasjonsbolkContainer = styled.div`
@@ -24,12 +26,13 @@ const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({
     tittelId,
     språkValues,
     children,
+    headingLevel = '3',
     ...props
 }) => {
     return (
         <InformasjonsbolkContainer {...props}>
             {tittelId && (
-                <Heading level={'2'} size={'xsmall'}>
+                <Heading level={headingLevel} size={'xsmall'}>
                     <SpråkTekst id={tittelId} values={språkValues} />
                 </Heading>
             )}
