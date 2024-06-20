@@ -185,7 +185,7 @@ const Oppfølgningsspørsmål: React.FC<{
                             />
                         ))}
                         {utenlandsperioder.length > 0 && (
-                            <Label as="p">
+                            <Label as="p" spacing>
                                 <SpråkTekst
                                     id={'ombarnet.flereopphold.spm'}
                                     values={{ barn: barn.navn }}

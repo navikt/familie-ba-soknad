@@ -95,7 +95,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                         />
                     ))}
                     {registrerteArbeidsperioder.verdi.length > 0 && (
-                        <Label as="p">
+                        <Label as="p" spacing>
                             <SpråkTekst
                                 id={arbeidsperiodeFlereSpørsmål(gjelderUtlandet, personType)}
                                 values={{

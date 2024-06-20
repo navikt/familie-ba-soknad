@@ -90,7 +90,7 @@ const OmDeg: React.FC = () => {
                                 />
                             ))}
                             {utenlandsperioder.length > 0 && (
-                                <Label>
+                                <Label as="p" spacing>
                                     <SpråkTekst id={'omdeg.flereopphold.spm'} />
                                 </Label>
                             )}

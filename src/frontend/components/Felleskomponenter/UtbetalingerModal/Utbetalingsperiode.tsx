@@ -79,7 +79,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                         />
                     ))}
                     {registrerteUtbetalingsperioder.verdi.length > 0 && (
-                        <Label as="p">
+                        <Label as="p" spacing>
                             <SpråkTekst
                                 id={utbetalingerFlerePerioderSpmSpråkId(personType)}
                                 values={{

@@ -98,7 +98,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                         />
                     ))}
                     {registrertePensjonsperioder.verdi.length > 0 && (
-                        <Label as="p">
+                        <Label as="p" spacing>
                             <SpråkTekst
                                 id={pensjonFlerePerioderSpmSpråkId(gjelderUtlandet, personType)}
                                 values={{
