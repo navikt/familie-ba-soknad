@@ -4,6 +4,7 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import {
@@ -57,6 +58,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { tekster, plainTekst } = useApp();
     const {
         erÅpen: arbeidsmodalErÅpen,
         lukkModal: lukkArbeidsmodal,
@@ -102,6 +104,14 @@ export const Arbeidsperiode: React.FC<Props> = ({
                                     ...(barnetsNavn && { barn: barnetsNavn }),
                                 }}
                             />
+                        </Label>
+                    )}
+                    {registrerteArbeidsperioder.verdi.length === 0 && (
+                        <Label as="p" spacing>
+                            {plainTekst(
+                                tekster()['FELLES'].modaler.arbeidsperiode.søker
+                                    .leggTilPeriodeKnappHjelpetekst
+                            )}
                         </Label>
                     )}
                     <LeggTilKnapp

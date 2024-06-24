@@ -4,6 +4,7 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
@@ -43,6 +44,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { tekster, plainTekst } = useApp();
     const {
         erÅpen: erUtbetalingerModalÅpen,
         lukkModal: lukkUtbetalingerModal,
@@ -86,6 +88,14 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                                     ...(barn && { barn: barnetsNavn }),
                                 }}
                             />
+                        </Label>
+                    )}
+                    {registrerteUtbetalingsperioder.verdi.length === 0 && (
+                        <Label as="p" spacing>
+                            {plainTekst(
+                                tekster()['FELLES'].modaler.andreUtbetalinger.søker
+                                    .leggTilPeriodeKnappHjelpetekst
+                            )}
                         </Label>
                     )}
                     <LeggTilKnapp
