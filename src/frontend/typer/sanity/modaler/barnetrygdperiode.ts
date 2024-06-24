@@ -1,6 +1,6 @@
 import { LocaleRecordString } from '../sanity';
 
-export interface IArbeidsperiodeTekstinnhold {
+export interface IBarnetrygdsperiodeTekstinnhold {
     leggTilPeriodeKnappHjelpetekst: LocaleRecordString;
     flerePerioder: LocaleRecordString;
 }

@@ -1,6 +1,9 @@
 import { IAndreUtbetalingerTekstinnhold } from './modaler/andreUtbetalinger';
 import { IArbeidsperiodeTekstinnhold } from './modaler/arbeidsperiode';
+import { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
 import { IPensjonsperiodeTekstinnhold } from './modaler/pensjonsperiode';
+import { ITidligereSamoboereTekstinnhold } from './modaler/tidligereSamboere';
+import { IUtenlandsoppholdTekstinnhold } from './modaler/utenlandsopphold';
 import {
     ESanitySteg,
     ISanitySpørsmålDokument,
@@ -29,6 +32,8 @@ export interface IFellesTekstInnhold {
 }
 
 export interface IFrittståendeOrdTekstinnhold {
+    i: LocaleRecordString;
+    utenfor: LocaleRecordString;
     ja: LocaleRecordString;
     nei: LocaleRecordString;
     barnetrygd: LocaleRecordString;
@@ -37,12 +42,33 @@ export interface IFrittståendeOrdTekstinnhold {
 export interface IModalerTekstinnhold {
     arbeidsperiode: {
         søker: IArbeidsperiodeTekstinnhold;
+        andreForelder: IArbeidsperiodeTekstinnhold;
+        omsorgsperson: IArbeidsperiodeTekstinnhold;
+    };
+    barnetrygdsperiode: {
+        søker: IBarnetrygdsperiodeTekstinnhold;
+        andreForelder: IBarnetrygdsperiodeTekstinnhold;
+        omsorgsperson: IBarnetrygdsperiodeTekstinnhold;
     };
     pensjonsperiode: {
         søker: IPensjonsperiodeTekstinnhold;
+        andreForelder: IPensjonsperiodeTekstinnhold;
+        omsorgsperson: IPensjonsperiodeTekstinnhold;
     };
     andreUtbetalinger: {
         søker: IAndreUtbetalingerTekstinnhold;
+        andreForelder: IAndreUtbetalingerTekstinnhold;
+        omsorgsperson: IAndreUtbetalingerTekstinnhold;
+    };
+    tidligereSamboere: {
+        søker: ITidligereSamoboereTekstinnhold;
+        andreForelder: ITidligereSamoboereTekstinnhold;
+        omsorgsperson: ITidligereSamoboereTekstinnhold;
+    };
+    utenlandsopphold: {
+        søker: IUtenlandsoppholdTekstinnhold;
+        barn: IUtenlandsoppholdTekstinnhold;
+        andreForelder: IUtenlandsoppholdTekstinnhold;
     };
 }
 

@@ -15,6 +15,7 @@ import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import Tilleggsinformasjon from '../Tilleggsinformasjon';
+import { useApp } from '../../../context/AppContext';
 
 import { BarnetrygdperiodeModal } from './BarnetrygdperiodeModal';
 import { BarnetrygdsperiodeOppsummering } from './BarnetrygdperiodeOppsummering';
@@ -47,11 +48,29 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     tilhørendeJaNeiSpmFelt,
     headingLevel = '3',
 }) => {
+    const { tekster, plainTekst } = useApp();
     const {
         erÅpen: barnetrygdsmodalErÅpen,
         lukkModal: lukkBarnetrygdsmodal,
         åpneModal: åpneBarnetrygdsmodal,
     } = useModal();
+
+    /* 
+    TODO:  
+    1. Lag generisk funksjonalitet for å finne hjelpetekst basert på periodetype (f.eks. arbeidsperiode), antall perioder (f.eks. registrerteArbeidsperioder.verdi.length).
+    2. Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    */
+    let leggTilPeriodeKnappHjelpetekst: string | undefined = undefined;
+
+    try {
+        const modal = tekster()['FELLES'].modaler.barnetrygdsperiode[personType];
+        leggTilPeriodeKnappHjelpetekst =
+            registrerteEøsBarnetrygdsperioder.verdi.length === 0
+                ? plainTekst(modal.leggTilPeriodeKnappHjelpetekst)
+                : plainTekst(modal.flerePerioder);
+    } catch (error) {
+        console.error('Kunne ikke "Legg til periode-knapp hjelpetekst"', error);
+    }
 
     return (
         <>
@@ -81,18 +100,19 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                         />
                     ))}
 
-                    {registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
+                    {/* {registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
                         <Label as="p" spacing>
                             <SpråkTekst
                                 id={barnetrygdperiodeFlereSpørsmål(personType)}
                                 values={{ barn: barn.navn }}
                             />
                         </Label>
-                    )}
+                    )} */}
 
                     <LeggTilKnapp
                         onClick={åpneBarnetrygdsmodal}
                         språkTekst={'ombarnet.trygdandreperioder.knapp'}
+                        hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs,

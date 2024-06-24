@@ -14,12 +14,15 @@ import Tilleggsinformasjon from '../../Felleskomponenter/Tilleggsinformasjon';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
+import { useApp } from '../../../context/AppContext';
 
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
+    const { tekster, plainTekst } = useApp();
+
     const {
         erÅpen: utenlandsoppholdmodalErÅpen,
         lukkModal: lukkUtenlandsoppholdmodal,
@@ -35,6 +38,24 @@ const OmDeg: React.FC = () => {
         fjernUtenlandsperiode,
         utenlandsperioder,
     } = useOmdeg();
+
+    /* 
+    TODO:  
+    1. Lag generisk funksjonalitet for å finne hjelpetekst basert på periodetype (f.eks. arbeidsperiode), antall perioder (f.eks. registrerteArbeidsperioder.verdi.length).
+    2. Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    */
+    let leggTilPeriodeKnappHjelpetekst: string | undefined = undefined;
+
+    try {
+        /* De fleste andre steder brukes tidligereSamboere[personType], skal det her da stå søker istedet? */
+        const modal = tekster()['FELLES'].modaler.utenlandsopphold.søker;
+        leggTilPeriodeKnappHjelpetekst =
+            utenlandsperioder.length === 0
+                ? plainTekst(modal.leggTilPeriodeKnappHjelpetekst)
+                : plainTekst(modal.flerePerioder);
+    } catch (error) {
+        console.error('Kunne ikke "Legg til periode-knapp hjelpetekst"', error);
+    }
 
     return (
         <Steg
@@ -89,14 +110,15 @@ const OmDeg: React.FC = () => {
                                     fjernPeriodeCallback={fjernUtenlandsperiode}
                                 />
                             ))}
-                            {utenlandsperioder.length > 0 && (
+                            {/* {utenlandsperioder.length > 0 && (
                                 <Label as="p" spacing>
                                     <SpråkTekst id={'omdeg.flereopphold.spm'} />
                                 </Label>
-                            )}
+                            )} */}
                             <LeggTilKnapp
-                                språkTekst={'felles.leggtilutenlands.knapp'}
                                 onClick={åpneUtenlandsoppholdmodal}
+                                språkTekst={'felles.leggtilutenlands.knapp'}
+                                hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
                                 id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                                 feilmelding={
                                     skjema.felter.registrerteUtenlandsperioder.erSynlig &&

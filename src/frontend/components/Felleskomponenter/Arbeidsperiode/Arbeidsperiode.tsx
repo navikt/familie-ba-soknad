@@ -4,7 +4,6 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import {
@@ -19,6 +18,7 @@ import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import Tilleggsinformasjon from '../Tilleggsinformasjon';
+import { useApp } from '../../../context/AppContext';
 
 import { ArbeidsperiodeModal } from './ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from './ArbeidsperiodeOppsummering';
@@ -69,6 +69,25 @@ export const Arbeidsperiode: React.FC<Props> = ({
         ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
         : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
+    /* 
+    TODO:  
+    1. Lag generisk funksjonalitet for å finne hjelpetekst basert på periodetype (f.eks. arbeidsperiode), antall perioder (f.eks. registrerteArbeidsperioder.verdi.length).
+    2. Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    */
+    let leggTilPeriodeKnappHjelpetekst: string | undefined = undefined;
+
+    try {
+        const modal = tekster()['FELLES'].modaler.arbeidsperiode[personType];
+        leggTilPeriodeKnappHjelpetekst =
+            registrerteArbeidsperioder.verdi.length === 0
+                ? plainTekst(modal.leggTilPeriodeKnappHjelpetekst)
+                : plainTekst(modal.flerePerioder, {
+                      gjelderUtland: gjelderUtlandet,
+                  });
+    } catch (error) {
+        console.error('Kunne ikke "Legg til periode-knapp hjelpetekst"', error);
+    }
+
     return (
         <>
             <JaNeiSpm
@@ -96,7 +115,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             erDød={personType === PersonType.AndreForelder && erDød}
                         />
                     ))}
-                    {registrerteArbeidsperioder.verdi.length > 0 && (
+                    {/* {registrerteArbeidsperioder.verdi.length > 0 && (
                         <Label as="p" spacing>
                             <SpråkTekst
                                 id={arbeidsperiodeFlereSpørsmål(gjelderUtlandet, personType)}
@@ -105,18 +124,11 @@ export const Arbeidsperiode: React.FC<Props> = ({
                                 }}
                             />
                         </Label>
-                    )}
-                    {registrerteArbeidsperioder.verdi.length === 0 && (
-                        <Label as="p" spacing>
-                            {plainTekst(
-                                tekster()['FELLES'].modaler.arbeidsperiode.søker
-                                    .leggTilPeriodeKnappHjelpetekst
-                            )}
-                        </Label>
-                    )}
+                    )} */}
                     <LeggTilKnapp
                         onClick={åpneArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
+                        hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: arbeidsperiodeSpørsmålId,

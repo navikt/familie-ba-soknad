@@ -4,7 +4,6 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
@@ -14,6 +13,7 @@ import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import Tilleggsinformasjon from '../Tilleggsinformasjon';
+import { useApp } from '../../../context/AppContext';
 
 import {
     mottarEllerMottattUtbetalingSpråkId,
@@ -53,6 +53,23 @@ export const Utbetalingsperiode: React.FC<Props> = ({
 
     const barnetsNavn = barn && barn.navn;
 
+    /* 
+    TODO:  
+    1. Lag generisk funksjonalitet for å finne hjelpetekst basert på periodetype (f.eks. arbeidsperiode), antall perioder (f.eks. registrerteArbeidsperioder.verdi.length).
+    2. Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    */
+    let leggTilPeriodeKnappHjelpetekst: string | undefined = undefined;
+
+    try {
+        const modal = tekster()['FELLES'].modaler.andreUtbetalinger[personType];
+        leggTilPeriodeKnappHjelpetekst =
+            registrerteUtbetalingsperioder.verdi.length === 0
+                ? plainTekst(modal.leggTilPeriodeKnappHjelpetekst)
+                : plainTekst(modal.flerePerioder);
+    } catch (error) {
+        console.error('Kunne ikke "Legg til periode-knapp hjelpetekst"', error);
+    }
+
     return (
         <>
             <JaNeiSpm
@@ -80,7 +97,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             barn={barn}
                         />
                     ))}
-                    {registrerteUtbetalingsperioder.verdi.length > 0 && (
+                    {/* {registrerteUtbetalingsperioder.verdi.length > 0 && (
                         <Label as="p" spacing>
                             <SpråkTekst
                                 id={utbetalingerFlerePerioderSpmSpråkId(personType)}
@@ -89,18 +106,11 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                                 }}
                             />
                         </Label>
-                    )}
-                    {registrerteUtbetalingsperioder.verdi.length === 0 && (
-                        <Label as="p" spacing>
-                            {plainTekst(
-                                tekster()['FELLES'].modaler.andreUtbetalinger.søker
-                                    .leggTilPeriodeKnappHjelpetekst
-                            )}
-                        </Label>
-                    )}
+                    )} */}
                     <LeggTilKnapp
                         onClick={åpneUtbetalingerModal}
                         språkTekst={'felles.flereytelser.knapp'}
+                        hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
                         id={genererPeriodeId({
                             personType: personType,
                             spørsmålsId: UtbetalingerSpørsmålId.utbetalingsperioder,
