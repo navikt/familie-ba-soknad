@@ -32,10 +32,10 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
         });
 
     tekstInnhold[ESanitySteg.FELLES] = {
-        frittståendeOrd: struktrerInnholdForFelles(
+        frittståendeOrd: strukutrerInnholdForFelles(
             dokumenterFiltrertPåType(fellesDokumenter, frittståendeOrdPrefix)
         ),
-        formateringsfeilmeldinger: struktrerInnholdForFelles(
+        formateringsfeilmeldinger: strukutrerInnholdForFelles(
             dokumenterFiltrertPåType(fellesDokumenter, formateringsfeilmeldingerPrefix)
         ),
     };
@@ -51,7 +51,7 @@ const strukturerInnholdForSteg = (
         .filter(dok => dok.steg === steg)
         .reduce((acc, dok) => ({ ...acc, [dok.api_navn]: dok }), {});
 
-const struktrerInnholdForFelles = (dokumenter: SanityDokument[]): Partial<IFellesTekstInnhold> =>
+const strukutrerInnholdForFelles = (dokumenter: SanityDokument[]): Partial<IFellesTekstInnhold> =>
     dokumenter.reduce((acc, dok) => {
         return { ...acc, [dok.api_navn]: dok };
     }, {});
