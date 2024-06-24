@@ -121,39 +121,24 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                     />
 
                     {toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO] ? (
-                        <MånedÅrVelger
-                            label={
-                                <SpråkTekst
-                                    id={hentSpørsmålTekstId(
-                                        UtbetalingerSpørsmålId.utbetalingFraDato
-                                    )}
-                                />
-                            }
-                            senesteValgbareMåned={
-                                periodenErAvsluttet ? gårsdagensDato() : dagensDato()
-                            }
-                            felt={utbetalingFraDato}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            dagIMåneden={DagIMåneden.FØRSTE_DAG}
-                            kanIkkeVæreFremtid={true}
-                        />
-                    ) : (
-                        <Datovelger
-                            skjema={skjema}
-                            felt={utbetalingFraDato}
-                            label={
-                                <SpråkTekst
-                                    id={hentSpørsmålTekstId(
-                                        UtbetalingerSpørsmålId.utbetalingFraDato
-                                    )}
-                                />
-                            }
-                            avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                        />
-                    )}
-
-                    {toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO] ? (
                         <>
+                            <MånedÅrVelger
+                                label={
+                                    <SpråkTekst
+                                        id={hentSpørsmålTekstId(
+                                            UtbetalingerSpørsmålId.utbetalingFraDato
+                                        )}
+                                    />
+                                }
+                                senesteValgbareMåned={
+                                    periodenErAvsluttet ? gårsdagensDato() : dagensDato()
+                                }
+                                felt={utbetalingFraDato}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                dagIMåneden={DagIMåneden.FØRSTE_DAG}
+                                kanIkkeVæreFremtid={true}
+                            />
+
                             <MånedÅrVelger
                                 label={
                                     <SpråkTekst
@@ -177,15 +162,24 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                 kanIkkeVæreFortid={!periodenErAvsluttet}
                                 disabled={utbetalingTilDatoUkjent.verdi === ESvar.JA}
                             />
-                            <SkjemaCheckbox
-                                labelSpråkTekstId={hentSpørsmålTekstId(
-                                    UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
-                                )}
-                                felt={utbetalingTilDatoUkjent}
-                            />
                         </>
                     ) : (
                         <>
+                            <Datovelger
+                                skjema={skjema}
+                                felt={utbetalingFraDato}
+                                label={
+                                    <SpråkTekst
+                                        id={hentSpørsmålTekstId(
+                                            UtbetalingerSpørsmålId.utbetalingFraDato
+                                        )}
+                                    />
+                                }
+                                avgrensMaxDato={
+                                    periodenErAvsluttet ? gårsdagensDato() : dagensDato()
+                                }
+                            />
+
                             <Datovelger
                                 skjema={skjema}
                                 felt={utbetalingTilDato}
@@ -203,14 +197,15 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                                 )}
                                 disabled={utbetalingTilDatoUkjent.verdi === ESvar.JA}
                             />
-                            <SkjemaCheckbox
-                                labelSpråkTekstId={hentSpørsmålTekstId(
-                                    UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
-                                )}
-                                felt={utbetalingTilDatoUkjent}
-                            />
                         </>
                     )}
+
+                    <SkjemaCheckbox
+                        labelSpråkTekstId={hentSpørsmålTekstId(
+                            UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
+                        )}
+                        felt={utbetalingTilDatoUkjent}
+                    />
                 </KomponentGruppe>
             )}
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
