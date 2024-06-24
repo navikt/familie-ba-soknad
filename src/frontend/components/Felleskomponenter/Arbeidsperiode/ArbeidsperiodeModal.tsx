@@ -145,41 +145,28 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                         )}
                     />
                 )}
-                {fraDatoArbeidsperiode.erSynlig &&
-                    (toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO] ? (
-                        <MånedÅrVelger
-                            label={
-                                <SpråkTekst
-                                    id={hentSpørsmålTekstId(
-                                        ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
-                                    )}
-                                />
-                            }
-                            senesteValgbareMåned={
-                                periodenErAvsluttet ? gårsdagensDato() : dagensDato()
-                            }
-                            felt={skjema.felter.fraDatoArbeidsperiode}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            dagIMåneden={DagIMåneden.FØRSTE_DAG}
-                            kanIkkeVæreFremtid={true}
-                        />
-                    ) : (
-                        <Datovelger
-                            felt={skjema.felter.fraDatoArbeidsperiode}
-                            skjema={skjema}
-                            label={
-                                <SpråkTekst
-                                    id={hentSpørsmålTekstId(
-                                        ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
-                                    )}
-                                />
-                            }
-                            avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                        />
-                    ))}
-                {tilDatoArbeidsperiode.erSynlig &&
-                    (toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO] ? (
-                        <>
+                {toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO] ? (
+                    <>
+                        {fraDatoArbeidsperiode.erSynlig && (
+                            <MånedÅrVelger
+                                label={
+                                    <SpråkTekst
+                                        id={hentSpørsmålTekstId(
+                                            ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
+                                        )}
+                                    />
+                                }
+                                senesteValgbareMåned={
+                                    periodenErAvsluttet ? gårsdagensDato() : dagensDato()
+                                }
+                                felt={skjema.felter.fraDatoArbeidsperiode}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                dagIMåneden={DagIMåneden.FØRSTE_DAG}
+                                kanIkkeVæreFremtid={true}
+                            />
+                        )}
+
+                        {tilDatoArbeidsperiode.erSynlig && (
                             <MånedÅrVelger
                                 label={
                                     <SpråkTekst
@@ -201,16 +188,28 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                                 kanIkkeVæreFremtid={periodenErAvsluttet}
                                 kanIkkeVæreFortid={!periodenErAvsluttet}
                             />
-
-                            <SkjemaCheckbox
-                                felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
-                                labelSpråkTekstId={hentSpørsmålTekstId(
-                                    ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                                )}
+                        )}
+                    </>
+                ) : (
+                    <>
+                        {fraDatoArbeidsperiode.erSynlig && (
+                            <Datovelger
+                                felt={skjema.felter.fraDatoArbeidsperiode}
+                                skjema={skjema}
+                                label={
+                                    <SpråkTekst
+                                        id={hentSpørsmålTekstId(
+                                            ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
+                                        )}
+                                    />
+                                }
+                                avgrensMaxDato={
+                                    periodenErAvsluttet ? gårsdagensDato() : dagensDato()
+                                }
                             />
-                        </>
-                    ) : (
-                        <>
+                        )}
+
+                        {tilDatoArbeidsperiode.erSynlig && (
                             <Datovelger
                                 felt={skjema.felter.tilDatoArbeidsperiode}
                                 skjema={skjema}
@@ -230,15 +229,18 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                                     skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA
                                 }
                             />
+                        )}
+                    </>
+                )}
 
-                            <SkjemaCheckbox
-                                felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
-                                labelSpråkTekstId={hentSpørsmålTekstId(
-                                    ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                                )}
-                            />
-                        </>
-                    ))}
+                {tilDatoArbeidsperiode.erSynlig && (
+                    <SkjemaCheckbox
+                        felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
+                        labelSpråkTekstId={hentSpørsmålTekstId(
+                            ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                        )}
+                    />
+                )}
             </KomponentGruppe>
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
