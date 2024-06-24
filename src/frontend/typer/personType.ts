@@ -1,9 +1,9 @@
 import { IBarnMedISøknad } from './barn';
 
 export enum PersonType {
-    AndreForelder = 'AndreForelder',
-    Omsorgsperson = 'Omsorgsperson',
-    Søker = 'Søker',
+    AndreForelder = 'andreForelder',
+    Omsorgsperson = 'omsorgsperson',
+    Søker = 'søker',
 }
 
 export type PeriodePersonTypeMedBarnProps =
