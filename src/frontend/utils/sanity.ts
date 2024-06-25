@@ -29,6 +29,9 @@ import {
     SanityModalPrefix,
     SanityPersonType,
 } from '../typer/sanity/tekstInnhold';
+import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';
+import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
+import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlandsopphold';
 
 const strukturerInnholdForSteg = (
     dokumenter: SanityDokument[],
@@ -63,6 +66,12 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
             personType
         ) as IArbeidsperiodeTekstinnhold;
 
+    const barnetrygsdperiode = (personType: SanityPersonType) =>
+        strukturerInnholdForModal(
+            SanityModalPrefix.BARNETRYGDSPERIODE,
+            personType
+        ) as IBarnetrygdsperiodeTekstinnhold;
+
     const pensjonsperiode = (personType: SanityPersonType) =>
         strukturerInnholdForModal(
             SanityModalPrefix.PENSJONSPERIODE,
@@ -75,15 +84,48 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
             personType
         ) as IAndreUtbetalingerTekstinnhold;
 
+    const tidligereSamboere = (personType: SanityPersonType) =>
+        strukturerInnholdForModal(
+            SanityModalPrefix.TIDLIGERE_SAMBOERE,
+            personType
+        ) as ITidligereSamoboereTekstinnhold;
+
+    const utenlandsopphold = (personType: SanityPersonType) =>
+        strukturerInnholdForModal(
+            SanityModalPrefix.UTENLANDSOPPHOLD,
+            personType
+        ) as IUtenlandsoppholdTekstinnhold;
+
     return {
         arbeidsperiode: {
             søker: arbeidsperiode(SanityPersonType.SOKER),
+            andreForelder: arbeidsperiode(SanityPersonType.ANDRE_FORELDER),
+            omsorgsperson: arbeidsperiode(SanityPersonType.OMSORGSPERSON),
+        },
+        barnetrygdsperiode: {
+            søker: barnetrygsdperiode(SanityPersonType.SOKER),
+            andreForelder: barnetrygsdperiode(SanityPersonType.ANDRE_FORELDER),
+            omsorgsperson: barnetrygsdperiode(SanityPersonType.OMSORGSPERSON),
         },
         pensjonsperiode: {
             søker: pensjonsperiode(SanityPersonType.SOKER),
+            andreForelder: pensjonsperiode(SanityPersonType.ANDRE_FORELDER),
+            omsorgsperson: pensjonsperiode(SanityPersonType.OMSORGSPERSON),
         },
         andreUtbetalinger: {
             søker: andreUtbetalinger(SanityPersonType.SOKER),
+            andreForelder: andreUtbetalinger(SanityPersonType.ANDRE_FORELDER),
+            omsorgsperson: andreUtbetalinger(SanityPersonType.OMSORGSPERSON),
+        },
+        tidligereSamboere: {
+            søker: tidligereSamboere(SanityPersonType.SOKER),
+            andreForelder: tidligereSamboere(SanityPersonType.ANDRE_FORELDER),
+            omsorgsperson: tidligereSamboere(SanityPersonType.OMSORGSPERSON),
+        },
+        utenlandsopphold: {
+            søker: utenlandsopphold(SanityPersonType.SOKER),
+            barn: utenlandsopphold(SanityPersonType.OMSORGSPERSON),
+            andreForelder: utenlandsopphold(SanityPersonType.ANDRE_FORELDER),
         },
     };
 };
