@@ -130,7 +130,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpnePensjonsmodal}
                         språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}
-                        hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
+                        hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: pensjonsperiodeSpørsmålId,
@@ -153,6 +153,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             personType={personType}
                             erDød={erDød}
                             barn={barn}
+                            hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                         />
                     )}
                 </Tilleggsinformasjon>

@@ -118,7 +118,7 @@ const OmDeg: React.FC = () => {
                             <LeggTilKnapp
                                 onClick={åpneUtenlandsoppholdmodal}
                                 språkTekst={'felles.leggtilutenlands.knapp'}
-                                hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
+                                hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                                 id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                                 feilmelding={
                                     skjema.felter.registrerteUtenlandsperioder.erSynlig &&
@@ -156,6 +156,7 @@ const OmDeg: React.FC = () => {
                     erÅpen={utenlandsoppholdmodalErÅpen}
                     lukkModal={lukkUtenlandsoppholdmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
+                    hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                 />
             )}
         </Steg>

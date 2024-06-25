@@ -110,7 +110,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpneUtbetalingerModal}
                         språkTekst={'felles.flereytelser.knapp'}
-                        hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
+                        hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                         id={genererPeriodeId({
                             personType: personType,
                             spørsmålsId: UtbetalingerSpørsmålId.utbetalingsperioder,
@@ -128,6 +128,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             personType={personType}
                             barn={barn}
                             erDød={erDød}
+                            hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                         />
                     )}
                 </Tilleggsinformasjon>

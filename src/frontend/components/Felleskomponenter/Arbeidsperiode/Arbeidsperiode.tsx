@@ -128,7 +128,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpneArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
-                        hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
+                        hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: arbeidsperiodeSpørsmålId,
@@ -150,6 +150,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             gjelderUtlandet={gjelderUtlandet}
                             personType={personType}
                             erDød={erDød}
+                            hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                         />
                     )}
                 </Tilleggsinformasjon>

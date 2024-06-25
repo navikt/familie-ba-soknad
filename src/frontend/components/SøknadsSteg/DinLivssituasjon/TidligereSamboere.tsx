@@ -82,7 +82,7 @@ const TidligereSamboere: React.FC<Props> = ({
                 ))}
                 <LeggTilKnapp
                     språkTekst="omdeg.leggtilfleresamboere.leggtil"
-                    hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
+                    hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                     onClick={åpneLeggTilSamboerModal}
                 />
             </Tilleggsinformasjon>
@@ -91,6 +91,7 @@ const TidligereSamboere: React.FC<Props> = ({
                     leggTilTidligereSamboer={leggTilTidligereSamboer}
                     lukkModal={lukkLeggTilSamboerModal}
                     erÅpen={erLeggTilSamboerModalÅpen}
+                    hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                 />
             )}
         </>

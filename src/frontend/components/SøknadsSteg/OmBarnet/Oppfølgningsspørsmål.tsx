@@ -215,7 +215,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         <LeggTilKnapp
                             id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                             språkTekst={'felles.leggtilutenlands.knapp'}
-                            hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
+                            hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                             onClick={åpneUtenlandsmodal}
                             feilmelding={
                                 registrerteUtenlandsperioder.erSynlig &&
@@ -300,6 +300,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     lukkModal={lukkUtenlandsmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
                     barn={barn}
+                    hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                 />
             )}
         </>

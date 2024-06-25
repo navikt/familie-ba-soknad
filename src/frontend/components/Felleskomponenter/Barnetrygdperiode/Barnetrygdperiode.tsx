@@ -112,7 +112,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                     <LeggTilKnapp
                         onClick={åpneBarnetrygdsmodal}
                         språkTekst={'ombarnet.trygdandreperioder.knapp'}
-                        hjelpeTekst={leggTilPeriodeKnappHjelpetekst}
+                        hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs,
@@ -134,6 +134,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             barn={barn}
                             personType={personType}
                             erDød={erDød}
+                            hjelpetekst={leggTilPeriodeKnappHjelpetekst}
                         />
                     )}
                 </Tilleggsinformasjon>
