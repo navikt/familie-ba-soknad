@@ -39,6 +39,10 @@ export interface IFellesTekstInnhold {
 export interface IFrittståendeOrdTekstinnhold {
     i: LocaleRecordString;
     utenfor: LocaleRecordString;
+    barn: LocaleRecordString;
+    navn: LocaleRecordString;
+    utlandet: LocaleRecordString;
+    norge: LocaleRecordString;
     ja: LocaleRecordString;
     nei: LocaleRecordString;
     barnetrygd: LocaleRecordString;
@@ -50,6 +54,7 @@ export interface IModalerTekstinnhold {
         andreForelder: IArbeidsperiodeTekstinnhold;
         omsorgsperson: IArbeidsperiodeTekstinnhold;
     };
+    // TODO: Må legge til Modaler i Sanity
     barnetrygdsperiode: {
         søker: IBarnetrygdsperiodeTekstinnhold;
         andreForelder: IBarnetrygdsperiodeTekstinnhold;
@@ -65,6 +70,7 @@ export interface IModalerTekstinnhold {
         andreForelder: IAndreUtbetalingerTekstinnhold;
         omsorgsperson: IAndreUtbetalingerTekstinnhold;
     };
+    // TODO: Må legge til Modaler i Sanity
     tidligereSamboere: {
         søker: ITidligereSamoboereTekstinnhold;
         andreForelder: ITidligereSamoboereTekstinnhold;
