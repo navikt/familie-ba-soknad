@@ -10,7 +10,10 @@ import { pipe } from 'ramda';
 import { LocaleType } from '../typer/common';
 import { IAndreUtbetalingerTekstinnhold } from '../typer/sanity/modaler/andreUtbetalinger';
 import { IArbeidsperiodeTekstinnhold } from '../typer/sanity/modaler/arbeidsperiode';
+import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';
 import { IPensjonsperiodeTekstinnhold } from '../typer/sanity/modaler/pensjonsperiode';
+import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
+import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlandsopphold';
 import {
     ESanityFlettefeltverdi,
     ESanitySteg,
@@ -29,9 +32,6 @@ import {
     SanityModalPrefix,
     SanityPersonType,
 } from '../typer/sanity/tekstInnhold';
-import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';
-import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
-import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlandsopphold';
 
 const strukturerInnholdForSteg = (
     dokumenter: SanityDokument[],
