@@ -27,7 +27,7 @@ interface ArbeidsperiodeModalProps extends IUseArbeidsperiodeSkjemaParams {
     lukkModal: () => void;
     onLeggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     gjelderUtlandet: boolean;
-    hjelpetekst?: string;
+    forklaring?: string;
 }
 
 export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
@@ -37,7 +37,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
     gjelderUtlandet = false,
     personType,
     erDød = false,
-    hjelpetekst = undefined,
+    forklaring = undefined,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useArbeidsperiodeSkjema(gjelderUtlandet, personType, erDød);
@@ -100,7 +100,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
         <SkjemaModal
             erÅpen={erÅpen}
             modalTittelSpråkId={modalTittel}
-            hjelpetekst={hjelpetekst}
+            forklaring={forklaring}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilarbeidsperiode.knapp'}
             lukkModal={lukkModal}

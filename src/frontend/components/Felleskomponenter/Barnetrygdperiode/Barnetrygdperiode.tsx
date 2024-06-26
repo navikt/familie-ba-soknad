@@ -8,7 +8,7 @@ import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema';
-import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -50,9 +50,9 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
         åpneModal: åpneBarnetrygdsmodal,
     } = useModal();
 
-    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
     const antallPerioder = registrerteEøsBarnetrygdsperioder.verdi.length;
-    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
         'barnetrygdsperiode',
         personType,
         antallPerioder
@@ -98,7 +98,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                     <LeggTilKnapp
                         onClick={åpneBarnetrygdsmodal}
                         språkTekst={'ombarnet.trygdandreperioder.knapp'}
-                        hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs,
@@ -120,7 +120,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             barn={barn}
                             personType={personType}
                             erDød={erDød}
-                            hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                            forklaring={leggTilPeriodeTekster?.tekstForModal}
                         />
                     )}
                 </Tilleggsinformasjon>

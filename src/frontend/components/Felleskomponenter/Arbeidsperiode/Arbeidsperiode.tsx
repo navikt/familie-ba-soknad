@@ -11,7 +11,7 @@ import {
     IEøsForSøkerFeltTyper,
     IOmBarnetFeltTyper,
 } from '../../../typer/skjema';
-import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -66,9 +66,9 @@ export const Arbeidsperiode: React.FC<Props> = ({
         ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
         : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
-    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
     const antallPerioder = registrerteArbeidsperioder.verdi.length;
-    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
         'arbeidsperiode',
         personType,
         antallPerioder,
@@ -118,7 +118,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpneArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
-                        hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: arbeidsperiodeSpørsmålId,
@@ -140,7 +140,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             gjelderUtlandet={gjelderUtlandet}
                             personType={personType}
                             erDød={erDød}
-                            hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                            forklaring={leggTilPeriodeTekster?.tekstForModal}
                         />
                     )}
                 </Tilleggsinformasjon>

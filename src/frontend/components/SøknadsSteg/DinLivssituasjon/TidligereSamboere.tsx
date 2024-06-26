@@ -6,7 +6,7 @@ import { Label } from '@navikt/ds-react';
 
 import { ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
-import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -45,9 +45,9 @@ const TidligereSamboere: React.FC<Props> = ({
         erÅpen: erLeggTilSamboerModalÅpen,
     } = useModal();
 
-    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
     const antallPerioder = tidligereSamboere.length;
-    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
         'tidligereSamboere',
         PersonType.Søker,
         antallPerioder
@@ -72,7 +72,7 @@ const TidligereSamboere: React.FC<Props> = ({
                 ))}
                 <LeggTilKnapp
                     språkTekst="omdeg.leggtilfleresamboere.leggtil"
-                    hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                    forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                     onClick={åpneLeggTilSamboerModal}
                 />
             </Tilleggsinformasjon>
@@ -81,7 +81,7 @@ const TidligereSamboere: React.FC<Props> = ({
                     leggTilTidligereSamboer={leggTilTidligereSamboer}
                     lukkModal={lukkLeggTilSamboerModal}
                     erÅpen={erLeggTilSamboerModalÅpen}
-                    hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                    forklaring={leggTilPeriodeTekster?.tekstForModal}
                 />
             )}
         </>

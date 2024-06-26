@@ -27,7 +27,7 @@ interface Props extends IUsePensjonsperiodeSkjemaParams {
     erÅpen: boolean;
     lukkModal: () => void;
     onLeggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
-    hjelpetekst?: string;
+    forklaring?: string;
 }
 
 export const BarnetrygdperiodeModal: React.FC<Props> = ({
@@ -37,7 +37,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     barn,
     personType,
     erDød = false,
-    hjelpetekst = undefined,
+    forklaring = undefined,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useBarnetrygdperiodeSkjema(personType, barn, erDød);
@@ -98,7 +98,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
         <SkjemaModal
             erÅpen={erÅpen}
             modalTittelSpråkId={'modal.trygdandreperioder.tittel'}
-            hjelpetekst={hjelpetekst}
+            forklaring={forklaring}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'modal.trygdandreperioder.tittel'}
             lukkModal={lukkModal}

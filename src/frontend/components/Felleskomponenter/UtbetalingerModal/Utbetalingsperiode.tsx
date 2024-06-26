@@ -6,7 +6,7 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
-import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -47,9 +47,9 @@ export const Utbetalingsperiode: React.FC<Props> = ({
 
     const barnetsNavn = barn && barn.navn;
 
-    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
     const antallPerioder = registrerteUtbetalingsperioder.verdi.length;
-    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
         'andreUtbetalinger',
         personType,
         antallPerioder
@@ -95,7 +95,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpneUtbetalingerModal}
                         språkTekst={'felles.flereytelser.knapp'}
-                        hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                         id={genererPeriodeId({
                             personType: personType,
                             spørsmålsId: UtbetalingerSpørsmålId.utbetalingsperioder,
@@ -113,7 +113,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             personType={personType}
                             barn={barn}
                             erDød={erDød}
-                            hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                            forklaring={leggTilPeriodeTekster?.tekstForModal}
                         />
                     )}
                 </Tilleggsinformasjon>

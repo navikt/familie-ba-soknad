@@ -13,7 +13,7 @@ import {
     morgendagensDato,
     stringTilDate,
 } from '../../../utils/dato';
-import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -75,9 +75,9 @@ const Oppfølgningsspørsmål: React.FC<{
         pågåendeSøknadFraAnnetEøsLand,
     } = skjema.felter;
 
-    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
     const antallPerioder = utenlandsperioder.length;
-    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
         'utenlandsopphold',
         PersonType.Søker,
         antallPerioder
@@ -203,7 +203,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         <LeggTilKnapp
                             id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                             språkTekst={'felles.leggtilutenlands.knapp'}
-                            hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                            forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                             onClick={åpneUtenlandsmodal}
                             feilmelding={
                                 registrerteUtenlandsperioder.erSynlig &&
@@ -288,7 +288,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     lukkModal={lukkUtenlandsmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
                     barn={barn}
-                    hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                    forklaring={leggTilPeriodeTekster?.tekstForModal}
                 />
             )}
         </>

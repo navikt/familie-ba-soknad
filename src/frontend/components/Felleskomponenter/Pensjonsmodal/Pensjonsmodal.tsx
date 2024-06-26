@@ -23,7 +23,7 @@ interface Props extends IUsePensjonSkjemaParams {
     lukkModal: () => void;
     onLeggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     gjelderUtland: boolean;
-    hjelpetekst?: string;
+    forklaring?: string;
 }
 
 export const PensjonModal: React.FC<Props> = ({
@@ -34,7 +34,7 @@ export const PensjonModal: React.FC<Props> = ({
     personType,
     barn,
     erDød,
-    hjelpetekst = undefined,
+    forklaring = undefined,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         usePensjonSkjema({
@@ -89,7 +89,7 @@ export const PensjonModal: React.FC<Props> = ({
         <SkjemaModal
             erÅpen={erÅpen}
             modalTittelSpråkId={modalTittel}
-            hjelpetekst={hjelpetekst}
+            forklaring={forklaring}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilpensjon.knapp'}
             lukkModal={lukkModal}

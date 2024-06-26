@@ -11,7 +11,7 @@ import {
     IEøsForSøkerFeltTyper,
     IOmBarnetFeltTyper,
 } from '../../../typer/skjema';
-import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -65,9 +65,9 @@ export const Pensjonsperiode: React.FC<Props> = ({
         ? PensjonsperiodeSpørsmålId.pensjonsperioderUtland
         : PensjonsperiodeSpørsmålId.pensjonsperioderNorge;
 
-    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
     const antallPerioder = registrertePensjonsperioder.verdi.length;
-    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
         'pensjonsperiode',
         personType,
         antallPerioder
@@ -118,7 +118,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpnePensjonsmodal}
                         språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}
-                        hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: pensjonsperiodeSpørsmålId,
@@ -141,7 +141,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             personType={personType}
                             erDød={erDød}
                             barn={barn}
-                            hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                            forklaring={leggTilPeriodeTekster?.tekstForModal}
                         />
                     )}
                 </Tilleggsinformasjon>

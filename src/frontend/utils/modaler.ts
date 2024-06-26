@@ -3,29 +3,38 @@ import { PersonType } from '../typer/personType';
 import { FlettefeltVerdier } from '../typer/sanity/sanity';
 import { IModalerTekstinnhold } from '../typer/sanity/tekstInnhold';
 
-export const hentPeriodeKnappHjelpetekst = (
+export const hentLeggTilPeriodeTekster = (
     modal: keyof IModalerTekstinnhold,
     personType: PersonType,
     antallPerioder: number,
-    flettefeltForLeggTilPeriodeKnappHjelpetekst?: FlettefeltVerdier | undefined,
+    flettefeltForLeggTilPeriodeForklaring?: FlettefeltVerdier | undefined,
     flettefeltForFlerePerioder?: FlettefeltVerdier | undefined
-): string | undefined => {
-    const { tekster, plainTekst } = useApp();
-
-    let hjelpetekst: string | undefined = undefined;
-
+): { tekstForKnapp: string; tekstForModal: string } | undefined => {
     try {
-        const modalTekst = tekster()['FELLES'].modaler[modal][personType];
-        hjelpetekst =
+        const { tekster, plainTekst } = useApp();
+
+        const modalTekster = tekster()['FELLES'].modaler[modal][personType];
+
+        const tekstForKnapp =
             antallPerioder === 0
                 ? plainTekst(
-                      modalTekst.leggTilPeriodeKnappHjelpetekst,
-                      flettefeltForLeggTilPeriodeKnappHjelpetekst
+                      // TODO: Bytt API navn for hjelpetekst i Sanity
+                      modalTekster.leggTilPeriodeKnappHjelpetekst,
+                      flettefeltForLeggTilPeriodeForklaring
                   )
-                : plainTekst(modalTekst.flerePerioder, flettefeltForFlerePerioder);
-    } catch (error) {
-        console.error(`Kunne ikke hente hjelpetekst for ${modal}.${personType}`, error);
-    }
+                : plainTekst(modalTekster.flerePerioder, flettefeltForFlerePerioder);
 
-    return hjelpetekst;
+        const tekstForModal = plainTekst(
+            modalTekster.leggTilPeriodeKnappHjelpetekst,
+            flettefeltForLeggTilPeriodeForklaring
+        );
+
+        return {
+            tekstForKnapp,
+            tekstForModal,
+        };
+    } catch (error) {
+        console.error(`Kunne ikke hente modal-tekster for ${modal}.${personType}`, error);
+        return undefined;
+    }
 };

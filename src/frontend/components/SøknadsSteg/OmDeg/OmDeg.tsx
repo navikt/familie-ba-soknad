@@ -3,7 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { PersonType } from '../../../typer/personType';
-import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -37,9 +37,9 @@ const OmDeg: React.FC = () => {
         utenlandsperioder,
     } = useOmdeg();
 
-    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
     const antallPerioder = utenlandsperioder.length;
-    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
         'utenlandsopphold',
         PersonType.Søker,
         antallPerioder
@@ -106,7 +106,7 @@ const OmDeg: React.FC = () => {
                             <LeggTilKnapp
                                 onClick={åpneUtenlandsoppholdmodal}
                                 språkTekst={'felles.leggtilutenlands.knapp'}
-                                hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                                forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                                 id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                                 feilmelding={
                                     skjema.felter.registrerteUtenlandsperioder.erSynlig &&
@@ -144,7 +144,7 @@ const OmDeg: React.FC = () => {
                     erÅpen={utenlandsoppholdmodalErÅpen}
                     lukkModal={lukkUtenlandsoppholdmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
-                    hjelpetekst={leggTilPeriodeKnappHjelpetekst}
+                    forklaring={leggTilPeriodeTekster?.tekstForModal}
                 />
             )}
         </Steg>

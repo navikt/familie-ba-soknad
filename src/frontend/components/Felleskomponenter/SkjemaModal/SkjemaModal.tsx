@@ -11,7 +11,7 @@ const SkjemaModal: React.FC<{
     erÅpen: boolean;
     lukkModal: () => void;
     modalTittelSpråkId: string;
-    hjelpetekst?: string;
+    forklaring?: string;
     submitSpinner?: boolean;
     valideringErOk: () => boolean;
     onAvbrytCallback?: () => void;
@@ -22,7 +22,7 @@ const SkjemaModal: React.FC<{
     erÅpen,
     lukkModal,
     modalTittelSpråkId,
-    hjelpetekst = undefined,
+    forklaring = undefined,
     submitSpinner = false,
     valideringErOk,
     onAvbrytCallback,
@@ -47,7 +47,7 @@ const SkjemaModal: React.FC<{
             }}
         >
             <ModalContent>
-                {hjelpetekst && <BodyShort spacing>{hjelpetekst}</BodyShort>}
+                {forklaring && <BodyShort spacing>{forklaring}</BodyShort>}
                 <form id="skjema">{children}</form>
             </ModalContent>
             <Modal.Footer>

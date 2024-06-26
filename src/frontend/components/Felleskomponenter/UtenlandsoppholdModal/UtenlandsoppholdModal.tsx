@@ -42,7 +42,7 @@ interface Props extends IUseUtenlandsoppholdSkjemaParams {
     lukkModal: () => void;
     onLeggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     barn?: IBarnMedISøknad;
-    hjelpetekst?: string;
+    forklaring?: string;
 }
 
 export const UtenlandsoppholdModal: React.FC<Props> = ({
@@ -50,7 +50,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     lukkModal,
     onLeggTilUtenlandsperiode,
     barn,
-    hjelpetekst = undefined,
+    forklaring = undefined,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtenlandsoppholdSkjema({
@@ -97,7 +97,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
         <SkjemaModal
             erÅpen={erÅpen}
             modalTittelSpråkId={'modal.utenlandsopphold.tittel'}
-            hjelpetekst={hjelpetekst}
+            forklaring={forklaring}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.leggtilutenlands.knapp'}
             lukkModal={lukkModal}

@@ -14,14 +14,14 @@ interface Props {
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
     lukkModal: () => void;
     erÅpen: boolean;
-    hjelpetekst?: string;
+    forklaring?: string;
 }
 
 const LeggTilSamboerModal: React.FC<Props> = ({
     leggTilTidligereSamboer,
     lukkModal,
     erÅpen,
-    hjelpetekst = undefined,
+    forklaring = undefined,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useTidligereSamboer();
@@ -66,7 +66,7 @@ const LeggTilSamboerModal: React.FC<Props> = ({
         <SkjemaModal
             modalTittelSpråkId={'omdeg.leggtilfleresamboere.leggtil'}
             submitKnappSpråkId={'omdeg.leggtilfleresamboere.leggtil'}
-            hjelpetekst={hjelpetekst}
+            forklaring={forklaring}
             erÅpen={erÅpen}
             lukkModal={lukkModal}
             onSubmitCallback={onLeggTil}
