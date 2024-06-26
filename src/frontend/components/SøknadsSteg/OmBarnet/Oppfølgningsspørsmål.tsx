@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -14,6 +13,7 @@ import {
     morgendagensDato,
     stringTilDate,
 } from '../../../utils/dato';
+import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -32,7 +32,6 @@ import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/Utenlandso
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
-import { useApp } from '../../../context/AppContext';
 
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
@@ -55,7 +54,6 @@ const Oppfølgningsspørsmål: React.FC<{
     fjernBarnetrygdsperiode,
     registrerteEøsBarnetrygdsperioder,
 }) => {
-    const { tekster, plainTekst } = useApp();
     const {
         erÅpen: utenlandsmodalErÅpen,
         lukkModal: lukkUtenlandsmodal,
@@ -77,23 +75,13 @@ const Oppfølgningsspørsmål: React.FC<{
         pågåendeSøknadFraAnnetEøsLand,
     } = skjema.felter;
 
-    /* 
-    TODO:  
-    1. Lag generisk funksjonalitet for å finne hjelpetekst basert på periodetype (f.eks. arbeidsperiode), antall perioder (f.eks. registrerteArbeidsperioder.verdi.length).
-    2. Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
-    */
-    let leggTilPeriodeKnappHjelpetekst: string | undefined = undefined;
-
-    try {
-        /* De fleste andre steder brukes tidligereSamboere[personType], skal det her da stå søker istedet? */
-        const modal = tekster()['FELLES'].modaler.utenlandsopphold.søker;
-        leggTilPeriodeKnappHjelpetekst =
-            utenlandsperioder.length === 0
-                ? plainTekst(modal.leggTilPeriodeKnappHjelpetekst)
-                : plainTekst(modal.flerePerioder);
-    } catch (error) {
-        console.error('Kunne ikke "Legg til periode-knapp hjelpetekst"', error);
-    }
+    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    const antallPerioder = utenlandsperioder.length;
+    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+        'utenlandsopphold',
+        PersonType.Søker,
+        antallPerioder
+    );
 
     return (
         <>

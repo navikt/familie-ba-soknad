@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -12,19 +11,18 @@ import {
     IEøsForSøkerFeltTyper,
     IOmBarnetFeltTyper,
 } from '../../../typer/skjema';
+import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import Tilleggsinformasjon from '../Tilleggsinformasjon';
-import { useApp } from '../../../context/AppContext';
 
 import { ArbeidsperiodeModal } from './ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from './ArbeidsperiodeOppsummering';
 import {
     arbeidsperiodeFeilmelding,
-    arbeidsperiodeFlereSpørsmål,
     arbeidsperiodeLeggTilFlereKnapp,
     arbeidsperiodeSpørsmålSpråkId,
 } from './arbeidsperiodeSpråkUtils';
@@ -58,7 +56,6 @@ export const Arbeidsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
-    const { tekster, plainTekst } = useApp();
     const {
         erÅpen: arbeidsmodalErÅpen,
         lukkModal: lukkArbeidsmodal,
@@ -69,24 +66,17 @@ export const Arbeidsperiode: React.FC<Props> = ({
         ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
         : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
-    /* 
-    TODO:  
-    1. Lag generisk funksjonalitet for å finne hjelpetekst basert på periodetype (f.eks. arbeidsperiode), antall perioder (f.eks. registrerteArbeidsperioder.verdi.length).
-    2. Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
-    */
-    let leggTilPeriodeKnappHjelpetekst: string | undefined = undefined;
-
-    try {
-        const modal = tekster()['FELLES'].modaler.arbeidsperiode[personType];
-        leggTilPeriodeKnappHjelpetekst =
-            registrerteArbeidsperioder.verdi.length === 0
-                ? plainTekst(modal.leggTilPeriodeKnappHjelpetekst)
-                : plainTekst(modal.flerePerioder, {
-                      gjelderUtland: gjelderUtlandet,
-                  });
-    } catch (error) {
-        console.error('Kunne ikke "Legg til periode-knapp hjelpetekst"', error);
-    }
+    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    const antallPerioder = registrerteArbeidsperioder.verdi.length;
+    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+        'arbeidsperiode',
+        personType,
+        antallPerioder,
+        undefined,
+        {
+            gjelderUtland: gjelderUtlandet,
+        }
+    );
 
     return (
         <>

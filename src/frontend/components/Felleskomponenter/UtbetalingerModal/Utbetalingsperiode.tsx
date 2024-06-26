@@ -1,24 +1,19 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
+import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import Tilleggsinformasjon from '../Tilleggsinformasjon';
-import { useApp } from '../../../context/AppContext';
 
-import {
-    mottarEllerMottattUtbetalingSpråkId,
-    utbetalingerFlerePerioderSpmSpråkId,
-} from './språkUtils';
+import { mottarEllerMottattUtbetalingSpråkId } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 import { UtbetalingerModal } from './UtbetalingerModal';
 import { UtbetalingsperiodeOppsummering } from './UtbetalingsperiodeOppsummering';
@@ -44,7 +39,6 @@ export const Utbetalingsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
-    const { tekster, plainTekst } = useApp();
     const {
         erÅpen: erUtbetalingerModalÅpen,
         lukkModal: lukkUtbetalingerModal,
@@ -53,22 +47,13 @@ export const Utbetalingsperiode: React.FC<Props> = ({
 
     const barnetsNavn = barn && barn.navn;
 
-    /* 
-    TODO:  
-    1. Lag generisk funksjonalitet for å finne hjelpetekst basert på periodetype (f.eks. arbeidsperiode), antall perioder (f.eks. registrerteArbeidsperioder.verdi.length).
-    2. Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
-    */
-    let leggTilPeriodeKnappHjelpetekst: string | undefined = undefined;
-
-    try {
-        const modal = tekster()['FELLES'].modaler.andreUtbetalinger[personType];
-        leggTilPeriodeKnappHjelpetekst =
-            registrerteUtbetalingsperioder.verdi.length === 0
-                ? plainTekst(modal.leggTilPeriodeKnappHjelpetekst)
-                : plainTekst(modal.flerePerioder);
-    } catch (error) {
-        console.error('Kunne ikke "Legg til periode-knapp hjelpetekst"', error);
-    }
+    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    const antallPerioder = registrerteUtbetalingsperioder.verdi.length;
+    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+        'andreUtbetalinger',
+        personType,
+        antallPerioder
+    );
 
     return (
         <>

@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { PersonType } from '../../../typer/personType';
+import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -14,15 +15,12 @@ import Tilleggsinformasjon from '../../Felleskomponenter/Tilleggsinformasjon';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
-import { useApp } from '../../../context/AppContext';
 
 import { Personopplysninger } from './Personopplysninger';
 import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
-    const { tekster, plainTekst } = useApp();
-
     const {
         erÅpen: utenlandsoppholdmodalErÅpen,
         lukkModal: lukkUtenlandsoppholdmodal,
@@ -39,23 +37,13 @@ const OmDeg: React.FC = () => {
         utenlandsperioder,
     } = useOmdeg();
 
-    /* 
-    TODO:  
-    1. Lag generisk funksjonalitet for å finne hjelpetekst basert på periodetype (f.eks. arbeidsperiode), antall perioder (f.eks. registrerteArbeidsperioder.verdi.length).
-    2. Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
-    */
-    let leggTilPeriodeKnappHjelpetekst: string | undefined = undefined;
-
-    try {
-        /* De fleste andre steder brukes tidligereSamboere[personType], skal det her da stå søker istedet? */
-        const modal = tekster()['FELLES'].modaler.utenlandsopphold.søker;
-        leggTilPeriodeKnappHjelpetekst =
-            utenlandsperioder.length === 0
-                ? plainTekst(modal.leggTilPeriodeKnappHjelpetekst)
-                : plainTekst(modal.flerePerioder);
-    } catch (error) {
-        console.error('Kunne ikke "Legg til periode-knapp hjelpetekst"', error);
-    }
+    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    const antallPerioder = utenlandsperioder.length;
+    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+        'utenlandsopphold',
+        PersonType.Søker,
+        antallPerioder
+    );
 
     return (
         <Steg

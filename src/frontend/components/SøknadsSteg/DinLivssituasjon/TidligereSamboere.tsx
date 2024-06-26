@@ -5,11 +5,12 @@ import styled from 'styled-components';
 import { Label } from '@navikt/ds-react';
 
 import { ITidligereSamboer } from '../../../typer/person';
+import { PersonType } from '../../../typer/personType';
+import { hentPeriodeKnappHjelpetekst } from '../../../utils/modaler';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Tilleggsinformasjon from '../../Felleskomponenter/Tilleggsinformasjon';
-import { useApp } from '../../../context/AppContext';
 
 import LeggTilSamboerModal from './LeggTilSamboerModal';
 import SamboerOpplysninger from './SamboerOpplysninger';
@@ -38,30 +39,19 @@ const TidligereSamboere: React.FC<Props> = ({
     tidligereSamboere,
     fjernTidligereSamboer,
 }) => {
-    const { tekster, plainTekst } = useApp();
     const {
         lukkModal: lukkLeggTilSamboerModal,
         åpneModal: åpneLeggTilSamboerModal,
         erÅpen: erLeggTilSamboerModalÅpen,
     } = useModal();
 
-    /* 
-    TODO:  
-    1. Lag generisk funksjonalitet for å finne hjelpetekst basert på periodetype (f.eks. arbeidsperiode), antall perioder (f.eks. registrerteArbeidsperioder.verdi.length).
-    2. Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
-    */
-    let leggTilPeriodeKnappHjelpetekst: string | undefined = undefined;
-
-    try {
-        /* De fleste andre steder brukes tidligereSamboere[personType], skal det her da stå søker istedet? */
-        const modal = tekster()['FELLES'].modaler.tidligereSamboere.søker;
-        leggTilPeriodeKnappHjelpetekst =
-            tidligereSamboere.length === 0
-                ? plainTekst(modal.leggTilPeriodeKnappHjelpetekst)
-                : plainTekst(modal.flerePerioder);
-    } catch (error) {
-        console.error('Kunne ikke "Legg til periode-knapp hjelpetekst"', error);
-    }
+    // TODO: Feature toggle for å bytte mellom visning av hjelpetekst gjennom LeggTilKnapp vs bruk av Label over LeggTilKnapp.
+    const antallPerioder = tidligereSamboere.length;
+    const leggTilPeriodeKnappHjelpetekst = hentPeriodeKnappHjelpetekst(
+        'tidligereSamboere',
+        PersonType.Søker,
+        antallPerioder
+    );
 
     return (
         <>
