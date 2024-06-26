@@ -70,7 +70,11 @@ export const Pensjonsperiode: React.FC<Props> = ({
     const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
         'pensjonsperiode',
         personType,
-        antallPerioder
+        antallPerioder,
+        undefined,
+        {
+            gjelderUtland: gjelderUtlandet,
+        }
     );
 
     return (

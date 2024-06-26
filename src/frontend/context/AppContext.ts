@@ -307,7 +307,11 @@ const [AppProvider, useApp] = createUseContext(() => {
             case ESanityFlettefeltverdi.YTELSE_BESTEMT_FORM:
                 throw Error('Flettefeltet YTELSE_BESTEMT_FORM er ikke støttet enda');
             case ESanityFlettefeltverdi.UTLANDET_NORGE:
-                throw Error('Flettefeltet UTLANDET_NORGE er ikke støttet enda');
+                return plainTekst(
+                    flettefelter?.gjelderUtland ? frittståendeOrd.utlandet : frittståendeOrd.norge,
+                    undefined,
+                    spesifikkLocale ?? valgtLocale
+                );
         }
     };
 
