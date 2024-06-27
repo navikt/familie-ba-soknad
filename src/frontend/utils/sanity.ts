@@ -119,8 +119,6 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
         },
         tidligereSamboere: {
             søker: tidligereSamboere(SanityPersonType.SOKER),
-            andreForelder: tidligereSamboere(SanityPersonType.ANDRE_FORELDER),
-            omsorgsperson: tidligereSamboere(SanityPersonType.OMSORGSPERSON),
         },
         utenlandsopphold: {
             søker: utenlandsopphold(SanityPersonType.SOKER),

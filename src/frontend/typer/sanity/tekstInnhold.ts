@@ -73,8 +73,6 @@ export interface IModalerTekstinnhold {
     // TODO: Må legge til Modaler i Sanity
     tidligereSamboere: {
         søker: ITidligereSamoboereTekstinnhold;
-        andreForelder: ITidligereSamoboereTekstinnhold;
-        omsorgsperson: ITidligereSamoboereTekstinnhold;
     };
     utenlandsopphold: {
         søker: IUtenlandsoppholdTekstinnhold;
