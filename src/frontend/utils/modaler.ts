@@ -18,14 +18,13 @@ export const hentLeggTilPeriodeTekster = (
         const tekstForKnapp =
             antallPerioder === 0
                 ? plainTekst(
-                      // TODO: Bytt API navn for hjelpetekst i Sanity
-                      modalTekster.leggTilPeriodeKnappHjelpetekst,
+                      modalTekster.leggTilPeriodeForklaring,
                       flettefeltForLeggTilPeriodeForklaring
                   )
                 : plainTekst(modalTekster.flerePerioder, flettefeltForFlerePerioder);
 
         const tekstForModal = plainTekst(
-            modalTekster.leggTilPeriodeKnappHjelpetekst,
+            modalTekster.leggTilPeriodeForklaring,
             flettefeltForLeggTilPeriodeForklaring
         );
 
