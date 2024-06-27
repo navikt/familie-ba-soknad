@@ -30,7 +30,8 @@ import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 export const andreForelderTilISøknadsfeltV8 = (
     andreForelder: IAndreForelder,
     barn: IBarnMedISøknad,
-    valgtSpråk: LocaleType
+    valgtSpråk: LocaleType,
+    toggleBeOmMånedIkkeDato: boolean
 ): IAndreForelderIKontraktFormatV8 => {
     const {
         navn,
@@ -201,6 +202,7 @@ export const andreForelderTilISøknadsfeltV8 = (
                 gjelderUtlandet: true,
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
@@ -211,6 +213,7 @@ export const andreForelderTilISøknadsfeltV8 = (
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
                 barn,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -220,6 +223,7 @@ export const andreForelderTilISøknadsfeltV8 = (
                 gjelderUtlandet: false,
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
@@ -230,6 +234,7 @@ export const andreForelderTilISøknadsfeltV8 = (
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
                 barn,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
@@ -239,6 +244,7 @@ export const andreForelderTilISøknadsfeltV8 = (
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
                 barn,
+                toggleBeOmMånedIkkeDato,
             })
         ),
         eøsBarnetrygdsperioder: eøsBarnetrygdsperioder.map((periode, index) =>

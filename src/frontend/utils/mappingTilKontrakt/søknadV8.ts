@@ -52,7 +52,8 @@ const antallEøsSteg = (søker: ISøker, barnInkludertISøknaden: IBarnMedISøkn
 
 export const dataISøknadKontraktFormatV8 = (
     valgtSpråk: LocaleType,
-    søknad: ISøknad
+    søknad: ISøknad,
+    toggleBeOmMånedIkkeDato: boolean
 ): ISøknadKontraktV8 => {
     const { søker } = søknad;
     // Raskeste måte å få tak i alle spørsmål minus de andre feltene på søker
@@ -129,6 +130,7 @@ export const dataISøknadKontraktFormatV8 = (
                     periodeNummer: index + 1,
                     gjelderUtlandet: true,
                     personType: PersonType.Søker,
+                    toggleBeOmMånedIkkeDato,
                 })
             ),
             arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -137,6 +139,7 @@ export const dataISøknadKontraktFormatV8 = (
                     periodeNummer: index + 1,
                     gjelderUtlandet: false,
                     personType: PersonType.Søker,
+                    toggleBeOmMånedIkkeDato,
                 })
             ),
             pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
@@ -145,6 +148,7 @@ export const dataISøknadKontraktFormatV8 = (
                     periodeNummer: index + 1,
                     gjelderUtlandet: true,
                     personType: PersonType.Søker,
+                    toggleBeOmMånedIkkeDato,
                 })
             ),
             pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
@@ -153,6 +157,7 @@ export const dataISøknadKontraktFormatV8 = (
                     periodeNummer: index + 1,
                     gjelderUtlandet: false,
                     personType: PersonType.Søker,
+                    toggleBeOmMånedIkkeDato,
                 })
             ),
             andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
@@ -160,10 +165,13 @@ export const dataISøknadKontraktFormatV8 = (
                     periode,
                     periodeNummer: index + 1,
                     personType: PersonType.Søker,
+                    toggleBeOmMånedIkkeDato,
                 })
             ),
         },
-        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormatV8(barn, søker, valgtSpråk)),
+        barn: barnInkludertISøknaden.map(barn =>
+            barnISøknadsFormatV8(barn, søker, valgtSpråk, toggleBeOmMånedIkkeDato)
+        ),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfelt(
                 språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),

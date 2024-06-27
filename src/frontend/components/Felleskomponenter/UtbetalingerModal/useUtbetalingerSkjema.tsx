@@ -1,17 +1,20 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { PersonType } from '../../../typer/personType';
 import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
 import {
     dagensDato,
     erSammeDatoSomDagensDato,
     gårsdagensDato,
+    sisteDagDenneMåneden,
     stringTilDate,
 } from '../../../utils/dato';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
@@ -27,6 +30,8 @@ export interface IUseUtbetalingerSkjemaParams {
 
 export const useUtbetalingerSkjema = (personType, barn, erDød) => {
     const andreForelderErDød = personType === PersonType.AndreForelder && erDød;
+
+    const { toggles } = useFeatureToggles();
 
     const fårUtbetalingNå = useJaNeiSpmFelt({
         søknadsfelt: { id: UtbetalingerSpørsmålId.fårUtbetalingNå, svar: null },
@@ -64,6 +69,10 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
         avhengigheter: { fårUtbetalingNå },
     });
 
+    const utbetalingTilDatoSluttdatoAvgrensning = toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
+        ? sisteDagDenneMåneden()
+        : dagensDato();
+
     const utbetalingTilDato = useDatovelgerFeltMedUkjent({
         feltId: UtbetalingerSpørsmålId.utbetalingTilDato,
         initiellVerdi: '',
@@ -73,7 +82,9 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
             : 'felles.nårstopperutbetalingene.feilmelding',
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
-        sluttdatoAvgrensning: periodenErAvsluttet ? dagensDato() : undefined,
+        sluttdatoAvgrensning: periodenErAvsluttet
+            ? utbetalingTilDatoSluttdatoAvgrensning
+            : undefined,
         startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
             periodenErAvsluttet,
             utbetalingFraDato.verdi

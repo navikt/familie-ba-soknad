@@ -1,6 +1,6 @@
-import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/common';
+import { AlternativtSvarForInput, DatoMedUkjent, LocaleType } from '../typer/common';
 
-import { formaterDato } from './dato';
+import { formaterDato, formaterDatostringKunMåned } from './dato';
 
 export const formaterFnr = (fødselsnummer: string) => {
     return fødselsnummer.substring(0, 6) + ' ' + fødselsnummer.substring(6, 11);
@@ -10,6 +10,21 @@ export const formaterDatoMedUkjent = (datoMedUkjent: DatoMedUkjent, tekstForUkje
     return datoMedUkjent === AlternativtSvarForInput.UKJENT
         ? tekstForUkjent
         : formaterDato(datoMedUkjent);
+};
+
+export const formaterMånedMedUkjent = (
+    svar: string,
+    vetIkkeTekst,
+    toggle: boolean,
+    valgtLocale: LocaleType
+) => {
+    if (svar === AlternativtSvarForInput.UKJENT) {
+        return vetIkkeTekst;
+    } else if (toggle) {
+        return uppercaseFørsteBokstav(formaterDatostringKunMåned(svar, valgtLocale));
+    } else {
+        return formaterDato(svar);
+    }
 };
 
 export const uppercaseFørsteBokstav = text => {

@@ -5,22 +5,23 @@ import {
     arbeidsperiodeOppsummeringOverskrift,
 } from '../../components/Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from '../../components/Felleskomponenter/Arbeidsperiode/spørsmål';
+import { AlternativtSvarForInput, ISODateString } from '../../typer/common';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
 import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/v8';
 import { IArbeidsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../typer/personType';
+import { ISøknadSpørsmål } from '../../typer/spørsmål';
+import { formaterDatostringKunMåned } from '../dato';
 import { hentTekster, landkodeTilSpråk } from '../språk';
+import { uppercaseFørsteBokstav } from '../visning';
 
-import {
-    sammeVerdiAlleSpråk,
-    sammeVerdiAlleSpråkEllerUkjentSpråktekst,
-    verdiCallbackAlleSpråk,
-} from './hjelpefunksjoner';
+import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
 interface ArbeidsperiodeIKontraktFormatParams {
     periode: IArbeidsperiode;
     periodeNummer: number;
     gjelderUtlandet: boolean;
+    toggleBeOmMånedIkkeDato: boolean;
 }
 
 export const tilIArbeidsperiodeIKontraktFormat = ({
@@ -29,6 +30,7 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
     gjelderUtlandet,
     personType,
     erDød,
+    toggleBeOmMånedIkkeDato,
 }: ArbeidsperiodeIKontraktFormatParams &
     PeriodePersonTypeProps): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
     const {
@@ -81,7 +83,10 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
                       label: hentTekster(
                           hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode)
                       ),
-                      verdi: sammeVerdiAlleSpråk(fraDatoArbeidsperiode.svar),
+                      verdi: datoTilVerdiForKontrakt(
+                          toggleBeOmMånedIkkeDato,
+                          fraDatoArbeidsperiode
+                      ),
                   }
                 : null,
             tilDatoArbeidsperiode: tilDatoArbeidsperiode.svar
@@ -89,14 +94,30 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
                       label: hentTekster(
                           hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode)
                       ),
-                      verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                          tilDatoArbeidsperiode.svar,
-                          hentSpørsmålTekstId(
-                              ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                          )
-                      ),
+                      verdi:
+                          tilDatoArbeidsperiode.svar === AlternativtSvarForInput.UKJENT
+                              ? hentTekster(
+                                    hentSpørsmålTekstId(
+                                        ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                                    )
+                                )
+                              : datoTilVerdiForKontrakt(
+                                    toggleBeOmMånedIkkeDato,
+                                    tilDatoArbeidsperiode
+                                ),
                   }
                 : null,
         }),
     };
 };
+
+function datoTilVerdiForKontrakt(
+    toggleBeOmMånedIkkeDato: boolean,
+    fraDatoArbeidsperiode: ISøknadSpørsmål<ISODateString | ''>
+) {
+    return toggleBeOmMånedIkkeDato
+        ? verdiCallbackAlleSpråk(locale =>
+              uppercaseFørsteBokstav(formaterDatostringKunMåned(fraDatoArbeidsperiode.svar, locale))
+          )
+        : sammeVerdiAlleSpråk(fraDatoArbeidsperiode.svar);
+}

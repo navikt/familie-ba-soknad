@@ -12,35 +12,34 @@ import {
     ESanityFlettefeltverdi,
     ESanitySteg,
     FlettefeltVerdier,
+    formateringsfeilmeldingerPrefix,
     frittståendeOrdPrefix,
     LocaleRecordBlock,
     LocaleRecordString,
     SanityDokument,
 } from '../typer/sanity/sanity';
-import {
-    IFellesTekstInnhold,
-    IFrittståendeOrdTekstinnhold,
-    ITekstinnhold,
-} from '../typer/sanity/tekstInnhold';
+import { IFellesTekstInnhold, ITekstinnhold } from '../typer/sanity/tekstInnhold';
 
 export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): ITekstinnhold => {
     const fellesDokumenter = alleDokumenter.filter(dok => dok.steg === ESanitySteg.FELLES);
 
-    const tekstInnhold: Partial<ITekstinnhold> = {};
+    const tekstInnhold = {};
 
-    for (const steg in ESanitySteg) {
-        ESanitySteg[steg] !== ESanitySteg.FELLES &&
-            (tekstInnhold[ESanitySteg[steg]] = strukturerInnholdForSteg(
-                alleDokumenter,
-                ESanitySteg[steg]
-            ));
-    }
+    Object.values(ESanitySteg)
+        .filter(steg => steg !== ESanitySteg.FELLES)
+        .forEach(steg => {
+            tekstInnhold[steg] = strukturerInnholdForSteg(alleDokumenter, steg);
+        });
 
     tekstInnhold[ESanitySteg.FELLES] = {
-        frittståendeOrd: struktrerInnholdForFelles(
-            dokumenterFiltrertPåPrefix(fellesDokumenter, frittståendeOrdPrefix)
-        ) as IFrittståendeOrdTekstinnhold,
+        frittståendeOrd: strukutrerInnholdForFelles(
+            dokumenterFiltrertPåType(fellesDokumenter, frittståendeOrdPrefix)
+        ),
+        formateringsfeilmeldinger: strukutrerInnholdForFelles(
+            dokumenterFiltrertPåType(fellesDokumenter, formateringsfeilmeldingerPrefix)
+        ),
     };
+
     return tekstInnhold as ITekstinnhold;
 };
 
@@ -50,16 +49,14 @@ const strukturerInnholdForSteg = (
 ): Record<string, SanityDokument> =>
     dokumenter
         .filter(dok => dok.steg === steg)
-        .reduce((acc, dok) => {
-            return { ...acc, [dok.api_navn]: dok };
-        }, {});
+        .reduce((acc, dok) => ({ ...acc, [dok.api_navn]: dok }), {});
 
-const struktrerInnholdForFelles = (dokumenter: SanityDokument[]): Partial<IFellesTekstInnhold> =>
+const strukutrerInnholdForFelles = (dokumenter: SanityDokument[]): Partial<IFellesTekstInnhold> =>
     dokumenter.reduce((acc, dok) => {
         return { ...acc, [dok.api_navn]: dok };
     }, {});
 
-const dokumenterFiltrertPåPrefix = (dokumenter: SanityDokument[], prefix) =>
+const dokumenterFiltrertPåType = (dokumenter: SanityDokument[], prefix) =>
     dokumenter.filter(dok => dok._type.includes(prefix));
 
 // Denne funksjonen har kopiert mye fra en tråd i Sanity-slacken:

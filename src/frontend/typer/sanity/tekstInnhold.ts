@@ -12,6 +12,7 @@ export interface ITekstinnhold {
 
 export interface IFellesTekstInnhold {
     frittståendeOrd: IFrittståendeOrdTekstinnhold;
+    formateringsfeilmeldinger: IFormateringsfeilmeldingerTekstinnhold;
 }
 
 export interface IFrittståendeOrdTekstinnhold {
@@ -30,4 +31,12 @@ export interface IForsideTekstinnhold {
     informasjonOmPersonopplysningerTittel: LocaleRecordBlock;
     utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
+}
+
+export interface IFormateringsfeilmeldingerTekstinnhold {
+    datoErEtterSisteGyldigeTidspunkt: LocaleRecordString;
+    datoErForForsteGyldigeTidspunkt: LocaleRecordString;
+    ugyldigManed: LocaleRecordString;
+    datoKanIkkeVareIFortid: LocaleRecordString;
+    datoKanIkkeVareIFremtid: LocaleRecordString;
 }

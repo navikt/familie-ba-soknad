@@ -2,17 +2,20 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { PersonType } from '../../../typer/personType';
 import { IArbeidsperioderFeltTyper } from '../../../typer/skjema';
 import {
     dagensDato,
     erSammeDatoSomDagensDato,
     gårsdagensDato,
+    sisteDagDenneMåneden,
     stringTilDate,
 } from '../../../utils/dato';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
@@ -35,6 +38,7 @@ export const useArbeidsperiodeSkjema = (
     erDød = false
 ) => {
     const { erEøsLand } = useEøs();
+    const { toggles } = useFeatureToggles();
 
     const andreForelderErDød = personType === PersonType.AndreForelder && erDød;
 
@@ -85,6 +89,10 @@ export const useArbeidsperiodeSkjema = (
         avhengigheter: { arbeidsperiodeAvsluttet, arbeidsperiodeLand },
     });
 
+    const tilArbeidsperiodeSluttdatoAvgrensning = toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
+        ? sisteDagDenneMåneden()
+        : dagensDato();
+
     const tilDatoArbeidsperiode = useDatovelgerFeltMedUkjent({
         feltId: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
         initiellVerdi: '',
@@ -94,7 +102,9 @@ export const useArbeidsperiodeSkjema = (
             ? !!erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK ||
               andreForelderErDød,
-        sluttdatoAvgrensning: periodenErAvsluttet ? dagensDato() : undefined,
+        sluttdatoAvgrensning: periodenErAvsluttet
+            ? tilArbeidsperiodeSluttdatoAvgrensning
+            : undefined,
         startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
             periodenErAvsluttet,
             fraDatoArbeidsperiode.verdi

@@ -2,12 +2,15 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSpråk } from '../../../context/SpråkContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { formaterDato } from '../../../utils/dato';
+import { formaterDato, formaterDatostringKunMåned } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
+import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -42,6 +45,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
     barn = undefined,
 }) => {
     const { valgtLocale } = useSpråk();
+    const { toggles } = useFeatureToggles();
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = pensjonsperiode;
 
     const periodenErAvsluttet =
@@ -85,13 +89,25 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
             {pensjonFra.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.fraDatoPensjon)}
-                    søknadsvar={formaterDato(pensjonFra.svar)}
+                    søknadsvar={
+                        toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
+                            ? uppercaseFørsteBokstav(
+                                  formaterDatostringKunMåned(pensjonFra.svar, valgtLocale)
+                              )
+                            : formaterDato(pensjonFra.svar)
+                    }
                 />
             )}
             {pensjonTil.svar && (
                 <OppsummeringFelt
                     tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.tilDatoPensjon)}
-                    søknadsvar={formaterDato(pensjonTil.svar)}
+                    søknadsvar={
+                        toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO]
+                            ? uppercaseFørsteBokstav(
+                                  formaterDatostringKunMåned(pensjonTil.svar, valgtLocale)
+                              )
+                            : formaterDato(pensjonTil.svar)
+                    }
                 />
             )}
         </PeriodeOppsummering>

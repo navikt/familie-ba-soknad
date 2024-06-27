@@ -1,15 +1,20 @@
 import React from 'react';
 
+import { parseISO } from 'date-fns';
+
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
+import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
+import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -41,6 +46,8 @@ export const PensjonModal: React.FC<Props> = ({
             barn,
             erDød,
         });
+
+    const { toggles } = useFeatureToggles();
 
     const { mottarPensjonNå, pensjonTilDato, pensjonFraDato, pensjonsland } = skjema.felter;
 
@@ -119,33 +126,90 @@ export const PensjonModal: React.FC<Props> = ({
                     />
                 )}
 
-                {pensjonFraDato.erSynlig && (
-                    <Datovelger
-                        felt={pensjonFraDato}
-                        label={
-                            <SpråkTekst
-                                id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.fraDatoPensjon)}
-                                values={{ ...(barn && { barn: barn.navn }) }}
+                {toggles[EFeatureToggle.BE_OM_MÅNED_IKKE_DATO] ? (
+                    <>
+                        {pensjonFraDato.erSynlig && (
+                            <MånedÅrVelger
+                                label={
+                                    <SpråkTekst
+                                        id={hentSpørsmålTekstId(
+                                            PensjonsperiodeSpørsmålId.fraDatoPensjon
+                                        )}
+                                        values={{ ...(barn && { barn: barn.navn }) }}
+                                    />
+                                }
+                                senesteValgbareMåned={
+                                    periodenErAvsluttet ? gårsdagensDato() : dagensDato()
+                                }
+                                felt={pensjonFraDato}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                dagIMåneden={DagIMåneden.FØRSTE_DAG}
+                                kanIkkeVæreFremtid={true}
                             />
-                        }
-                        skjema={skjema}
-                        avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                    />
-                )}
-                {pensjonTilDato.erSynlig && (
-                    <Datovelger
-                        felt={pensjonTilDato}
-                        label={
-                            <SpråkTekst
-                                id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.tilDatoPensjon)}
-                                values={{ ...(barn && { barn: barn.navn }) }}
+                        )}
+
+                        {pensjonTilDato.erSynlig && (
+                            <MånedÅrVelger
+                                label={
+                                    <SpråkTekst
+                                        id={hentSpørsmålTekstId(
+                                            PensjonsperiodeSpørsmålId.tilDatoPensjon
+                                        )}
+                                        values={{ ...(barn && { barn: barn.navn }) }}
+                                    />
+                                }
+                                tidligsteValgbareMåned={
+                                    pensjonFraDato.verdi !== ''
+                                        ? parseISO(pensjonFraDato.verdi)
+                                        : undefined
+                                }
+                                senesteValgbareMåned={sisteDagDenneMåneden()}
+                                felt={pensjonTilDato}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                dagIMåneden={DagIMåneden.SISTE_DAG}
+                                kanIkkeVæreFremtid={periodenErAvsluttet}
+                                kanIkkeVæreFortid={!periodenErAvsluttet}
                             />
-                        }
-                        skjema={skjema}
-                        avgrensMaxDato={dagensDato()}
-                        tilhørendeFraOgMedFelt={pensjonFraDato}
-                        dynamisk
-                    />
+                        )}
+                    </>
+                ) : (
+                    <>
+                        {pensjonFraDato.erSynlig && (
+                            <Datovelger
+                                felt={pensjonFraDato}
+                                label={
+                                    <SpråkTekst
+                                        id={hentSpørsmålTekstId(
+                                            PensjonsperiodeSpørsmålId.fraDatoPensjon
+                                        )}
+                                        values={{ ...(barn && { barn: barn.navn }) }}
+                                    />
+                                }
+                                skjema={skjema}
+                                avgrensMaxDato={
+                                    periodenErAvsluttet ? gårsdagensDato() : dagensDato()
+                                }
+                            />
+                        )}
+
+                        {pensjonTilDato.erSynlig && (
+                            <Datovelger
+                                felt={pensjonTilDato}
+                                label={
+                                    <SpråkTekst
+                                        id={hentSpørsmålTekstId(
+                                            PensjonsperiodeSpørsmålId.tilDatoPensjon
+                                        )}
+                                        values={{ ...(barn && { barn: barn.navn }) }}
+                                    />
+                                }
+                                skjema={skjema}
+                                avgrensMaxDato={dagensDato()}
+                                tilhørendeFraOgMedFelt={pensjonFraDato}
+                                dynamisk
+                            />
+                        )}
+                    </>
                 )}
             </KomponentGruppe>
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
