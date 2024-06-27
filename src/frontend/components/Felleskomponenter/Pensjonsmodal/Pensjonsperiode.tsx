@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import {
@@ -23,6 +25,7 @@ import { PensjonModal } from './Pensjonsmodal';
 import { PensjonsperiodeOppsummering } from './PensjonsperiodeOppsummering';
 import {
     mottarEllerMottattPensjonSpråkId,
+    pensjonFlerePerioderSpmSpråkId,
     pensjonsperiodeFeilmelding,
     pensjonsperiodeKnappSpråkId,
 } from './språkUtils';
@@ -56,6 +59,8 @@ export const Pensjonsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { toggles } = useFeatureToggles();
+
     const {
         erÅpen: pensjonsmodalErÅpen,
         lukkModal: lukkPensjonsmodal,
@@ -65,17 +70,20 @@ export const Pensjonsperiode: React.FC<Props> = ({
         ? PensjonsperiodeSpørsmålId.pensjonsperioderUtland
         : PensjonsperiodeSpørsmålId.pensjonsperioderNorge;
 
-    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
-    const antallPerioder = registrertePensjonsperioder.verdi.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'pensjonsperiode',
-        personType,
-        antallPerioder,
-        undefined,
-        {
-            gjelderUtland: gjelderUtlandet,
-        }
-    );
+    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
+
+    if (toggles.NYE_MODAL_TEKSTER) {
+        const antallPerioder = registrertePensjonsperioder.verdi.length;
+        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+            'pensjonsperiode',
+            personType,
+            antallPerioder,
+            undefined,
+            {
+                gjelderUtland: gjelderUtlandet,
+            }
+        );
+    }
 
     return (
         <>
@@ -109,7 +117,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             barn={personType !== PersonType.Søker ? barn : undefined}
                         />
                     ))}
-                    {/* {registrertePensjonsperioder.verdi.length > 0 && (
+                    {!toggles.NYE_MODAL_TEKSTER && registrertePensjonsperioder.verdi.length > 0 && (
                         <Label as="p" spacing>
                             <SpråkTekst
                                 id={pensjonFlerePerioderSpmSpråkId(gjelderUtlandet, personType)}
@@ -118,7 +126,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                                 }}
                             />
                         </Label>
-                    )} */}
+                    )}
                     <LeggTilKnapp
                         onClick={åpnePensjonsmodal}
                         språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}

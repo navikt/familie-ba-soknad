@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import {
@@ -23,6 +25,7 @@ import { ArbeidsperiodeModal } from './ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from './ArbeidsperiodeOppsummering';
 import {
     arbeidsperiodeFeilmelding,
+    arbeidsperiodeFlereSpørsmål,
     arbeidsperiodeLeggTilFlereKnapp,
     arbeidsperiodeSpørsmålSpråkId,
 } from './arbeidsperiodeSpråkUtils';
@@ -56,6 +59,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         erÅpen: arbeidsmodalErÅpen,
         lukkModal: lukkArbeidsmodal,
@@ -66,17 +70,20 @@ export const Arbeidsperiode: React.FC<Props> = ({
         ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
         : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
-    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
-    const antallPerioder = registrerteArbeidsperioder.verdi.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'arbeidsperiode',
-        personType,
-        antallPerioder,
-        undefined,
-        {
-            gjelderUtland: gjelderUtlandet,
-        }
-    );
+    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
+
+    if (toggles.NYE_MODAL_TEKSTER) {
+        const antallPerioder = registrerteArbeidsperioder.verdi.length;
+        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+            'arbeidsperiode',
+            personType,
+            antallPerioder,
+            undefined,
+            {
+                gjelderUtland: gjelderUtlandet,
+            }
+        );
+    }
 
     return (
         <>
@@ -105,7 +112,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             erDød={personType === PersonType.AndreForelder && erDød}
                         />
                     ))}
-                    {/* {registrerteArbeidsperioder.verdi.length > 0 && (
+                    {!toggles.NYE_MODAL_TEKSTER && registrerteArbeidsperioder.verdi.length > 0 && (
                         <Label as="p" spacing>
                             <SpråkTekst
                                 id={arbeidsperiodeFlereSpørsmål(gjelderUtlandet, personType)}
@@ -114,7 +121,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                                 }}
                             />
                         </Label>
-                    )} */}
+                    )}
                     <LeggTilKnapp
                         onClick={åpneArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}

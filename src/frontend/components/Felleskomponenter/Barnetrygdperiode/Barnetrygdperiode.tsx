@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
@@ -18,7 +20,10 @@ import Tilleggsinformasjon from '../Tilleggsinformasjon';
 
 import { BarnetrygdperiodeModal } from './BarnetrygdperiodeModal';
 import { BarnetrygdsperiodeOppsummering } from './BarnetrygdperiodeOppsummering';
-import { barnetrygdSpørsmålSpråkId } from './barnetrygdperiodeSpråkUtils';
+import {
+    barnetrygdSpørsmålSpråkId,
+    barnetrygdperiodeFlereSpørsmål,
+} from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 interface Props {
@@ -44,19 +49,23 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     tilhørendeJaNeiSpmFelt,
     headingLevel = '3',
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         erÅpen: barnetrygdsmodalErÅpen,
         lukkModal: lukkBarnetrygdsmodal,
         åpneModal: åpneBarnetrygdsmodal,
     } = useModal();
 
-    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
-    const antallPerioder = registrerteEøsBarnetrygdsperioder.verdi.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'barnetrygdsperiode',
-        personType,
-        antallPerioder
-    );
+    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
+
+    if (toggles.NYE_MODAL_TEKSTER) {
+        const antallPerioder = registrerteEøsBarnetrygdsperioder.verdi.length;
+        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+            'barnetrygdsperiode',
+            personType,
+            antallPerioder
+        );
+    }
 
     return (
         <>
@@ -86,14 +95,15 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                         />
                     ))}
 
-                    {/* {registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
-                        <Label as="p" spacing>
-                            <SpråkTekst
-                                id={barnetrygdperiodeFlereSpørsmål(personType)}
-                                values={{ barn: barn.navn }}
-                            />
-                        </Label>
-                    )} */}
+                    {!toggles.NYE_MODAL_TEKSTER &&
+                        registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
+                            <Label as="p" spacing>
+                                <SpråkTekst
+                                    id={barnetrygdperiodeFlereSpørsmål(personType)}
+                                    values={{ barn: barn.navn }}
+                                />
+                            </Label>
+                        )}
 
                     <LeggTilKnapp
                         onClick={åpneBarnetrygdsmodal}

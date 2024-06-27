@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { PersonType } from '../../../typer/personType';
 import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
@@ -21,6 +23,8 @@ import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
+    const { toggles } = useFeatureToggles();
+
     const {
         erÅpen: utenlandsoppholdmodalErÅpen,
         lukkModal: lukkUtenlandsoppholdmodal,
@@ -37,13 +41,16 @@ const OmDeg: React.FC = () => {
         utenlandsperioder,
     } = useOmdeg();
 
-    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
-    const antallPerioder = utenlandsperioder.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'utenlandsopphold',
-        PersonType.Søker,
-        antallPerioder
-    );
+    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
+
+    if (toggles.NYE_MODAL_TEKSTER) {
+        const antallPerioder = utenlandsperioder.length;
+        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+            'utenlandsopphold',
+            PersonType.Søker,
+            antallPerioder
+        );
+    }
 
     return (
         <Steg
@@ -98,11 +105,11 @@ const OmDeg: React.FC = () => {
                                     fjernPeriodeCallback={fjernUtenlandsperiode}
                                 />
                             ))}
-                            {/* {utenlandsperioder.length > 0 && (
+                            {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
                                 <Label as="p" spacing>
                                     <SpråkTekst id={'omdeg.flereopphold.spm'} />
                                 </Label>
-                            )} */}
+                            )}
                             <LeggTilKnapp
                                 onClick={åpneUtenlandsoppholdmodal}
                                 språkTekst={'felles.leggtilutenlands.knapp'}

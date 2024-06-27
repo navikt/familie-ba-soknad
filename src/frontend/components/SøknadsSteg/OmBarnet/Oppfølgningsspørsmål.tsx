@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
@@ -54,6 +56,7 @@ const Oppfølgningsspørsmål: React.FC<{
     fjernBarnetrygdsperiode,
     registrerteEøsBarnetrygdsperioder,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         erÅpen: utenlandsmodalErÅpen,
         lukkModal: lukkUtenlandsmodal,
@@ -75,13 +78,16 @@ const Oppfølgningsspørsmål: React.FC<{
         pågåendeSøknadFraAnnetEøsLand,
     } = skjema.felter;
 
-    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
-    const antallPerioder = utenlandsperioder.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'utenlandsopphold',
-        PersonType.Søker,
-        antallPerioder
-    );
+    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
+
+    if (toggles.NYE_MODAL_TEKSTER) {
+        const antallPerioder = utenlandsperioder.length;
+        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+            'utenlandsopphold',
+            PersonType.Søker,
+            antallPerioder
+        );
+    }
 
     return (
         <>
@@ -192,14 +198,14 @@ const Oppfølgningsspørsmål: React.FC<{
                                 barn={barn}
                             />
                         ))}
-                        {/* {utenlandsperioder.length > 0 && (
+                        {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
                             <Label as="p" spacing>
                                 <SpråkTekst
                                     id={'ombarnet.flereopphold.spm'}
                                     values={{ barn: barn.navn }}
                                 />
                             </Label>
-                        )} */}
+                        )}
                         <LeggTilKnapp
                             id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                             språkTekst={'felles.leggtilutenlands.knapp'}

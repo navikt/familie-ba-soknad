@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { Label } from '@navikt/ds-react';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
 import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
@@ -39,19 +40,23 @@ const TidligereSamboere: React.FC<Props> = ({
     tidligereSamboere,
     fjernTidligereSamboer,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         lukkModal: lukkLeggTilSamboerModal,
         åpneModal: åpneLeggTilSamboerModal,
         erÅpen: erLeggTilSamboerModalÅpen,
     } = useModal();
 
-    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
-    const antallPerioder = tidligereSamboere.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'tidligereSamboere',
-        PersonType.Søker,
-        antallPerioder
-    );
+    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
+
+    if (toggles.NYE_MODAL_TEKSTER) {
+        const antallPerioder = tidligereSamboere.length;
+        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+            'tidligereSamboere',
+            PersonType.Søker,
+            antallPerioder
+        );
+    }
 
     return (
         <>

@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
@@ -11,9 +13,13 @@ import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import useModal from '../SkjemaModal/useModal';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import Tilleggsinformasjon from '../Tilleggsinformasjon';
 
-import { mottarEllerMottattUtbetalingSpråkId } from './språkUtils';
+import {
+    mottarEllerMottattUtbetalingSpråkId,
+    utbetalingerFlerePerioderSpmSpråkId,
+} from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 import { UtbetalingerModal } from './UtbetalingerModal';
 import { UtbetalingsperiodeOppsummering } from './UtbetalingsperiodeOppsummering';
@@ -39,6 +45,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         erÅpen: erUtbetalingerModalÅpen,
         lukkModal: lukkUtbetalingerModal,
@@ -47,13 +54,16 @@ export const Utbetalingsperiode: React.FC<Props> = ({
 
     const barnetsNavn = barn && barn.navn;
 
-    // TODO: Feature toggle for å bytte mellom visning av nye tekster fra Sanity vs bruk av Label over LeggTilKnapp.
-    const antallPerioder = registrerteUtbetalingsperioder.verdi.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'andreUtbetalinger',
-        personType,
-        antallPerioder
-    );
+    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
+
+    if (toggles.NYE_MODAL_TEKSTER) {
+        const antallPerioder = registrerteUtbetalingsperioder.verdi.length;
+        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+            'andreUtbetalinger',
+            personType,
+            antallPerioder
+        );
+    }
 
     return (
         <>
@@ -82,16 +92,17 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             barn={barn}
                         />
                     ))}
-                    {/* {registrerteUtbetalingsperioder.verdi.length > 0 && (
-                        <Label as="p" spacing>
-                            <SpråkTekst
-                                id={utbetalingerFlerePerioderSpmSpråkId(personType)}
-                                values={{
-                                    ...(barn && { barn: barnetsNavn }),
-                                }}
-                            />
-                        </Label>
-                    )} */}
+                    {!toggles.NYE_MODAL_TEKSTER &&
+                        registrerteUtbetalingsperioder.verdi.length > 0 && (
+                            <Label as="p" spacing>
+                                <SpråkTekst
+                                    id={utbetalingerFlerePerioderSpmSpråkId(personType)}
+                                    values={{
+                                        ...(barn && { barn: barnetsNavn }),
+                                    }}
+                                />
+                            </Label>
+                        )}
                     <LeggTilKnapp
                         onClick={åpneUtbetalingerModal}
                         språkTekst={'felles.flereytelser.knapp'}
