@@ -10,9 +10,9 @@ export const hentLeggTilPeriodeTekster = (
     flettefeltForLeggTilPeriodeForklaring?: FlettefeltVerdier | undefined,
     flettefeltForFlerePerioder?: FlettefeltVerdier | undefined
 ): { tekstForKnapp: string; tekstForModal: string } | undefined => {
-    try {
-        const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useApp();
 
+    try {
         const modalTekster = tekster()['FELLES'].modaler[modal][personType];
 
         const tekstForKnapp =
