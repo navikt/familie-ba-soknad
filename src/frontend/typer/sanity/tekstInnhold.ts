@@ -54,7 +54,6 @@ export interface IModalerTekstinnhold {
         andreForelder: IArbeidsperiodeTekstinnhold;
         omsorgsperson: IArbeidsperiodeTekstinnhold;
     };
-    // TODO: Må legge til Modaler i Sanity
     barnetrygdsperiode: {
         søker: IBarnetrygdsperiodeTekstinnhold;
         andreForelder: IBarnetrygdsperiodeTekstinnhold;
@@ -70,7 +69,6 @@ export interface IModalerTekstinnhold {
         andreForelder: IAndreUtbetalingerTekstinnhold;
         omsorgsperson: IAndreUtbetalingerTekstinnhold;
     };
-    // TODO: Må legge til Modaler i Sanity
     tidligereSamboere: {
         søker: ITidligereSamoboereTekstinnhold;
     };
