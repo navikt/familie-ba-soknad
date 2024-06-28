@@ -15,6 +15,8 @@ import LeggTilBarnModal from './LeggTilBarn/LeggTilBarnModal';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from './spørsmål';
 import { useVelgBarn } from './useVelgBarn';
+import { VStack } from '@navikt/ds-react';
+import BarnekortNy from './Barnekort/BarnekortNy';
 
 /**
  * Vi har prøvd mye for å få til masonry, men før denne teknologien blir implementert
@@ -87,6 +89,20 @@ const VelgBarn: React.FC = () => {
                     ))}
                     <NyttBarnKort onLeggTilBarn={åpneModal} />
                 </BarnekortContainer>
+                {/* NY */}
+                <VStack id={VelgBarnSpørsmålId.velgBarn} className={'BarnekortContainer'} gap="4">
+                    {barn.map(barnet => (
+                        <BarnekortNy
+                            key={barnet.id}
+                            barn={barnet}
+                            velgBarnCallback={håndterVelgBarnToggle}
+                            barnSomSkalVæreMed={barnSomSkalVæreMed}
+                            fjernBarnCallback={fjernBarn}
+                        />
+                    ))}
+                    <NyttBarnKort onLeggTilBarn={åpneModal} />
+                </VStack>
+                {/* --- */}
                 <LenkeContainer>
                     <EksternLenke
                         lenkeSpråkId={'hvilkebarn.regelverk.lenke'}
