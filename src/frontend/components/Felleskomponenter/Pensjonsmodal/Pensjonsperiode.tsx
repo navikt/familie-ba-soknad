@@ -17,9 +17,9 @@ import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import PeriodeBoks from '../PeriodeBoks';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import Tilleggsinformasjon from '../Tilleggsinformasjon';
 
 import { PensjonModal } from './Pensjonsmodal';
 import { PensjonsperiodeOppsummering } from './PensjonsperiodeOppsummering';
@@ -104,7 +104,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                 }}
             />
             {mottarEllerMottattPensjonFelt.verdi === ESvar.JA && (
-                <Tilleggsinformasjon>
+                <PeriodeBoks>
                     {registrertePensjonsperioder.verdi.map((pensjonsperiode, index) => (
                         <PensjonsperiodeOppsummering
                             key={`pensjonsperiode-${index}`}
@@ -156,7 +156,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             forklaring={leggTilPeriodeTekster?.tekstForModal}
                         />
                     )}
-                </Tilleggsinformasjon>
+                </PeriodeBoks>
             )}
         </>
     );

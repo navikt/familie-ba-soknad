@@ -14,9 +14,9 @@ import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import PeriodeBoks from '../PeriodeBoks';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-import Tilleggsinformasjon from '../Tilleggsinformasjon';
 
 import { BarnetrygdperiodeModal } from './BarnetrygdperiodeModal';
 import { BarnetrygdsperiodeOppsummering } from './BarnetrygdperiodeOppsummering';
@@ -81,7 +81,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                 }}
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
-                <Tilleggsinformasjon>
+                <PeriodeBoks>
                     {registrerteEøsBarnetrygdsperioder.verdi.map((periode, index) => (
                         <BarnetrygdsperiodeOppsummering
                             key={`eøs-barnetrygdsperiode-${index}`}
@@ -133,7 +133,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             forklaring={leggTilPeriodeTekster?.tekstForModal}
                         />
                     )}
-                </Tilleggsinformasjon>
+                </PeriodeBoks>
             )}
         </>
     );

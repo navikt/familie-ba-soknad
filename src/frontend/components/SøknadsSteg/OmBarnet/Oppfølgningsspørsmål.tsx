@@ -24,12 +24,12 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import PeriodeBoks from '../../Felleskomponenter/PeriodeBoks';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import Tilleggsinformasjon from '../../Felleskomponenter/Tilleggsinformasjon';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
@@ -188,7 +188,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     legendSpråkId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barn.navn }}
                 >
-                    <Tilleggsinformasjon>
+                    <PeriodeBoks>
                         {utenlandsperioder.map((periode, index) => (
                             <UtenlandsperiodeOppsummering
                                 key={index}
@@ -219,7 +219,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                 )
                             }
                         />
-                    </Tilleggsinformasjon>
+                    </PeriodeBoks>
                     {planleggerÅBoINorge12Mnd.erSynlig && (
                         <KomponentGruppe inline dynamisk>
                             <JaNeiSpm

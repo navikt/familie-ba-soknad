@@ -10,10 +10,10 @@ import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import PeriodeBoks from '../../Felleskomponenter/PeriodeBoks';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import Tilleggsinformasjon from '../../Felleskomponenter/Tilleggsinformasjon';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
@@ -96,7 +96,7 @@ const OmDeg: React.FC = () => {
                         }
                     />
                     {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
-                        <Tilleggsinformasjon>
+                        <PeriodeBoks>
                             {utenlandsperioder.map((periode, index) => (
                                 <UtenlandsperiodeOppsummering
                                     key={index}
@@ -123,7 +123,7 @@ const OmDeg: React.FC = () => {
                                     )
                                 }
                             />
-                        </Tilleggsinformasjon>
+                        </PeriodeBoks>
                     )}
                 </>
                 {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (

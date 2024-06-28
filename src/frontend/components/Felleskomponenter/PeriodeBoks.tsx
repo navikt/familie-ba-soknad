@@ -10,7 +10,7 @@ const StyledBox = styled(Box)`
     }
 `;
 
-const Tilleggsinformasjon: React.FC<{ children?: ReactNode }> = ({ children }) => {
+const PeriodeBoks: React.FC<{ children?: ReactNode }> = ({ children }) => {
     return (
         <StyledBox padding="4" background="surface-subtle" borderRadius="medium">
             {children}
@@ -18,4 +18,4 @@ const Tilleggsinformasjon: React.FC<{ children?: ReactNode }> = ({ children }) =
     );
 };
 
-export default Tilleggsinformasjon;
+export default PeriodeBoks;
