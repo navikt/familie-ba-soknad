@@ -24,7 +24,7 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
-import PeriodeBoks from '../../Felleskomponenter/PeriodeBoks';
+import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
@@ -188,7 +188,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     legendSpråkId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barn.navn }}
                 >
-                    <PeriodeBoks>
+                    <PerioderContainer>
                         {utenlandsperioder.map((periode, index) => (
                             <UtenlandsperiodeOppsummering
                                 key={index}
@@ -219,7 +219,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                 )
                             }
                         />
-                    </PeriodeBoks>
+                    </PerioderContainer>
                     {planleggerÅBoINorge12Mnd.erSynlig && (
                         <KomponentGruppe inline dynamisk>
                             <JaNeiSpm

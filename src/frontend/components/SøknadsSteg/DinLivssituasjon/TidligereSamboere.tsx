@@ -9,7 +9,7 @@ import { ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
 import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
-import PeriodeBoks from '../../Felleskomponenter/PeriodeBoks';
+import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -67,7 +67,7 @@ const TidligereSamboere: React.FC<Props> = ({
                     ]
                 }
             />
-            <PeriodeBoks>
+            <PerioderContainer>
                 {tidligereSamboere?.map((samboer: ITidligereSamboer, index: number) => (
                     <SamboerOpplysninger
                         key={index}
@@ -80,7 +80,7 @@ const TidligereSamboere: React.FC<Props> = ({
                     forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                     onClick={åpneLeggTilSamboerModal}
                 />
-            </PeriodeBoks>
+            </PerioderContainer>
             {erLeggTilSamboerModalÅpen && (
                 <LeggTilSamboerModal
                     leggTilTidligereSamboer={leggTilTidligereSamboer}

@@ -10,7 +10,7 @@ import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
-import PeriodeBoks from '../../Felleskomponenter/PeriodeBoks';
+import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -96,7 +96,7 @@ const OmDeg: React.FC = () => {
                         }
                     />
                     {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
-                        <PeriodeBoks>
+                        <PerioderContainer>
                             {utenlandsperioder.map((periode, index) => (
                                 <UtenlandsperiodeOppsummering
                                     key={index}
@@ -123,7 +123,7 @@ const OmDeg: React.FC = () => {
                                     )
                                 }
                             />
-                        </PeriodeBoks>
+                        </PerioderContainer>
                     )}
                 </>
                 {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (

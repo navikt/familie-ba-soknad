@@ -10,7 +10,7 @@ const StyledBox = styled(Box)`
     }
 `;
 
-const PeriodeBoks: React.FC<{ children?: ReactNode }> = ({ children }) => {
+const PerioderContainer: React.FC<{ children?: ReactNode }> = ({ children }) => {
     return (
         <StyledBox padding="4" background="surface-subtle" borderRadius="medium">
             {children}
@@ -18,4 +18,4 @@ const PeriodeBoks: React.FC<{ children?: ReactNode }> = ({ children }) => {
     );
 };
 
-export default PeriodeBoks;
+export default PerioderContainer;

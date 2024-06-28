@@ -12,7 +12,7 @@ import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
-import PeriodeBoks from '../PeriodeBoks';
+import PerioderContainer from '../PerioderContainer';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -80,7 +80,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                 }}
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
-                <PeriodeBoks>
+                <PerioderContainer>
                     {registrerteUtbetalingsperioder.verdi.map((utbetalingsperiode, index) => (
                         <UtbetalingsperiodeOppsummering
                             key={`utbetalingsperiode-${index}`}
@@ -127,7 +127,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             forklaring={leggTilPeriodeTekster?.tekstForModal}
                         />
                     )}
-                </PeriodeBoks>
+                </PerioderContainer>
             )}
         </>
     );
