@@ -26,6 +26,7 @@ import {
 
 import { useApp } from '../../../../context/AppContext';
 import { IBarn } from '../../../../typer/person';
+import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -62,6 +63,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
     barnSomSkalVæreMed,
     fjernBarnCallback,
 }) => {
+    const { plainTekst, tekster } = useApp();
     const { formatMessage } = useIntl();
     const {
         søknad: { barnRegistrertManuelt },
@@ -73,6 +75,10 @@ const Barnekort: React.FC<IBarnekortProps> = ({
     const erRegistrertManuelt = !!barnRegistrertManuelt.find(
         manueltRegistrertBarn => manueltRegistrertBarn.id === barn.id
     );
+
+    const fødselsnummerTekst = !barn.adressebeskyttelse
+        ? formaterFnr(barn.ident)
+        : plainTekst(tekster()[ESanitySteg.FELLES].frittståendeOrd.skjult);
 
     return (
         <BarnekortContainer>
@@ -92,12 +98,10 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                     )}
                 </Heading>
                 <HGrid gap="6" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
-                    {!barn.adressebeskyttelse && (
-                        <BarneKortInfo
-                            labelId={'hvilkebarn.barn.fødselsnummer'}
-                            verdi={formaterFnr(barn.ident)}
-                        />
-                    )}
+                    <BarneKortInfo
+                        labelId={'hvilkebarn.barn.fødselsnummer'}
+                        verdi={fødselsnummerTekst}
+                    />
                     {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
                         <BarneKortInfo
                             labelId={'hvilkebarn.barn.alder'}
