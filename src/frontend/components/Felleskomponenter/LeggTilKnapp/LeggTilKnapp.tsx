@@ -6,6 +6,7 @@ import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, ErrorMessage } from '@navikt/ds-react';
 import { ARed500 } from '@navikt/ds-tokens/dist/tokens';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface Props {
@@ -28,19 +29,23 @@ export const LeggTilKnapp: React.FC<Props> = ({
     forklaring,
     feilmelding,
     id,
-}) => (
-    <>
-        {forklaring && <BodyShort spacing>{forklaring}</BodyShort>}
-        <StyledButton
-            id={id}
-            variant={'tertiary'}
-            type={'button'}
-            onClick={onClick}
-            $feilmelding={!!feilmelding}
-            icon={<PlusCircleIcon aria-hidden />}
-        >
-            <SpråkTekst id={språkTekst} />
-        </StyledButton>
-        {!!feilmelding && <ErrorMessage>{feilmelding}</ErrorMessage>}
-    </>
-);
+}) => {
+    const { toggles } = useFeatureToggles();
+
+    return (
+        <>
+            {toggles.NYE_MODAL_TEKSTER && forklaring && <BodyShort spacing>{forklaring}</BodyShort>}
+            <StyledButton
+                id={id}
+                variant={'tertiary'}
+                type={'button'}
+                onClick={onClick}
+                $feilmelding={!!feilmelding}
+                icon={<PlusCircleIcon aria-hidden />}
+            >
+                <SpråkTekst id={språkTekst} />
+            </StyledButton>
+            {!!feilmelding && <ErrorMessage>{feilmelding}</ErrorMessage>}
+        </>
+    );
+};

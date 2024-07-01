@@ -78,16 +78,12 @@ const Oppfølgningsspørsmål: React.FC<{
         pågåendeSøknadFraAnnetEøsLand,
     } = skjema.felter;
 
-    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
-
-    if (toggles.NYE_MODAL_TEKSTER) {
-        const antallPerioder = utenlandsperioder.length;
-        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-            'utenlandsopphold',
-            PersonType.Søker,
-            antallPerioder
-        );
-    }
+    const antallPerioder = utenlandsperioder.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'utenlandsopphold',
+        PersonType.Søker,
+        antallPerioder
+    );
 
     return (
         <>

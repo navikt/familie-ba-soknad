@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -31,6 +32,7 @@ const SkjemaModal: React.FC<{
     children,
 }) => {
     const { formatMessage } = useIntl();
+    const { toggles } = useFeatureToggles();
 
     return (
         <Modal
@@ -47,7 +49,9 @@ const SkjemaModal: React.FC<{
             }}
         >
             <ModalContent>
-                {forklaring && <BodyShort spacing>{forklaring}</BodyShort>}
+                {toggles.NYE_MODAL_TEKSTER && forklaring && (
+                    <BodyShort spacing>{forklaring}</BodyShort>
+                )}
                 <form id="skjema">{children}</form>
             </ModalContent>
             <Modal.Footer>

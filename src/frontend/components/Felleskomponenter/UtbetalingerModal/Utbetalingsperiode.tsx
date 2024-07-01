@@ -54,16 +54,12 @@ export const Utbetalingsperiode: React.FC<Props> = ({
 
     const barnetsNavn = barn && barn.navn;
 
-    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
-
-    if (toggles.NYE_MODAL_TEKSTER) {
-        const antallPerioder = registrerteUtbetalingsperioder.verdi.length;
-        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-            'andreUtbetalinger',
-            personType,
-            antallPerioder
-        );
-    }
+    const antallPerioder = registrerteUtbetalingsperioder.verdi.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'andreUtbetalinger',
+        personType,
+        antallPerioder
+    );
 
     return (
         <>

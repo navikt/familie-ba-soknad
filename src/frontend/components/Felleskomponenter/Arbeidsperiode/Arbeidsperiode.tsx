@@ -70,20 +70,16 @@ export const Arbeidsperiode: React.FC<Props> = ({
         ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
         : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
-    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
-
-    if (toggles.NYE_MODAL_TEKSTER) {
-        const antallPerioder = registrerteArbeidsperioder.verdi.length;
-        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-            'arbeidsperiode',
-            personType,
-            antallPerioder,
-            undefined,
-            {
-                gjelderUtland: gjelderUtlandet,
-            }
-        );
-    }
+    const antallPerioder = registrerteArbeidsperioder.verdi.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'arbeidsperiode',
+        personType,
+        antallPerioder,
+        undefined,
+        {
+            gjelderUtland: gjelderUtlandet,
+        }
+    );
 
     return (
         <>

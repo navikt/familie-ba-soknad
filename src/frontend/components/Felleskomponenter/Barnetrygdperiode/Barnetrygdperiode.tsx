@@ -56,16 +56,12 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
         åpneModal: åpneBarnetrygdsmodal,
     } = useModal();
 
-    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
-
-    if (toggles.NYE_MODAL_TEKSTER) {
-        const antallPerioder = registrerteEøsBarnetrygdsperioder.verdi.length;
-        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-            'barnetrygdsperiode',
-            personType,
-            antallPerioder
-        );
-    }
+    const antallPerioder = registrerteEøsBarnetrygdsperioder.verdi.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'barnetrygdsperiode',
+        personType,
+        antallPerioder
+    );
 
     return (
         <>

@@ -70,20 +70,16 @@ export const Pensjonsperiode: React.FC<Props> = ({
         ? PensjonsperiodeSpørsmålId.pensjonsperioderUtland
         : PensjonsperiodeSpørsmålId.pensjonsperioderNorge;
 
-    let leggTilPeriodeTekster: ReturnType<typeof hentLeggTilPeriodeTekster> = undefined;
-
-    if (toggles.NYE_MODAL_TEKSTER) {
-        const antallPerioder = registrertePensjonsperioder.verdi.length;
-        leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-            'pensjonsperiode',
-            personType,
-            antallPerioder,
-            undefined,
-            {
-                gjelderUtland: gjelderUtlandet,
-            }
-        );
-    }
+    const antallPerioder = registrertePensjonsperioder.verdi.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'pensjonsperiode',
+        personType,
+        antallPerioder,
+        undefined,
+        {
+            gjelderUtland: gjelderUtlandet,
+        }
+    );
 
     return (
         <>
