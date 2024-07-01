@@ -3,18 +3,33 @@ import React, { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BodyShort, Ingress, Checkbox, Heading } from '@navikt/ds-react';
-import { AGray100, APurple400, APurple800 } from '@navikt/ds-tokens/dist/tokens';
+import { TrashFillIcon } from '@navikt/aksel-icons';
+import {
+    BodyShort,
+    Checkbox,
+    Heading,
+    Box,
+    VStack,
+    Label,
+    Button,
+    Bleed,
+    HGrid,
+} from '@navikt/ds-react';
+import {
+    APurple400,
+    APurple800,
+    ABorderRadiusMedium,
+    ASpacing32,
+    ASpacing05,
+    AGrayalpha200,
+} from '@navikt/ds-tokens/dist/tokens';
 
 import { useApp } from '../../../../context/AppContext';
-import { device } from '../../../../Theme';
 import { IBarn } from '../../../../typer/person';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import { formaterFnr } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { TilfeldigBarnIkon } from '../../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
-
-import { FjernBarnKnapp } from './FjernBarnKnapp';
 
 interface IBarnekortProps {
     velgBarnCallback: (barn: IBarn, barnMedISøknad: boolean) => void;
@@ -23,55 +38,22 @@ interface IBarnekortProps {
     fjernBarnCallback: (ident: string) => void;
 }
 
-export const StyledBarnekort = styled.div`
-    position: relative;
-    border-radius: 0.3rem;
-    max-width: calc(16.3rem - 0.3rem * 2);
-    padding: 2rem;
-    margin: 0 0.3125rem 0.625rem;
-    background-color: ${AGray100};
-    @media all and ${device.mobile} {
-        width: 100%;
-        max-width: none;
-        margin: 0 0 0.625rem;
-    }
-`;
-
-const StyledCheckbox = styled(Checkbox)`
-    margin-top: 2.75rem;
-`;
-
-const InformasjonsboksInnhold = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    margin-top: 8rem;
-`;
-
 const BarnekortHeader = styled.div`
-    height: 8rem;
+    height: ${ASpacing32};
     background-color: ${APurple800};
     border-bottom: 0.25rem solid ${APurple400};
-    border-radius: 0.3rem 0.3rem 0 0;
+    border-radius: ${ABorderRadiusMedium} ${ABorderRadiusMedium} 0 0;
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    position: absolute;
-    left: 0;
-    top: 0;
     width: 100%;
 `;
 
-const StyledHeading = styled(Heading)`
-    text-transform: uppercase;
-`;
-
-const StyledIngress = styled(Ingress)`
-    && {
-        font-size: 1rem;
-        margin-top: 1rem;
-        font-weight: 600;
-    }
+const Divider = styled.hr`
+    height: ${ASpacing05};
+    width: 100%;
+    border: none;
+    background-color: ${AGrayalpha200};
 `;
 
 const Barnekort: React.FC<IBarnekortProps> = ({
@@ -93,37 +75,44 @@ const Barnekort: React.FC<IBarnekortProps> = ({
     );
 
     return (
-        <StyledBarnekort>
-            <BarnekortHeader>
-                <TilfeldigBarnIkon />
-            </BarnekortHeader>
-            <InformasjonsboksInnhold>
-                <StyledHeading level={'3'} size={'xsmall'}>
+        <BarnekortContainer>
+            <VStack gap="6">
+                <Bleed marginInline="6" marginBlock="6 0" asChild>
+                    <Box>
+                        <BarnekortHeader>
+                            <TilfeldigBarnIkon />
+                        </BarnekortHeader>
+                    </Box>
+                </Bleed>
+                <Heading level="3" size="medium">
                     {barn.adressebeskyttelse ? (
                         <SpråkTekst id={'hvilkebarn.barn.anonym'} />
                     ) : (
                         barn.navn
                     )}
-                </StyledHeading>
-                {!barn.adressebeskyttelse && (
-                    <BarneKortInfo
-                        labelId={'hvilkebarn.barn.fødselsnummer'}
-                        verdi={formaterFnr(barn.ident)}
-                    />
-                )}
-                {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
-                    <BarneKortInfo
-                        labelId={'hvilkebarn.barn.alder'}
-                        verdi={<SpråkTekst id={'felles.år'} values={{ alder: barn.alder }} />}
-                    />
-                )}
-                {!erRegistrertManuelt && (
-                    <BarneKortInfo
-                        labelId={'hvilkebarn.barn.bosted'}
-                        verdi={<SpråkTekst id={hentBostedSpråkId(barn)} />}
-                    />
-                )}
-                <StyledCheckbox
+                </Heading>
+                <HGrid gap="6" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
+                    {!barn.adressebeskyttelse && (
+                        <BarneKortInfo
+                            labelId={'hvilkebarn.barn.fødselsnummer'}
+                            verdi={formaterFnr(barn.ident)}
+                        />
+                    )}
+                    {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
+                        <BarneKortInfo
+                            labelId={'hvilkebarn.barn.alder'}
+                            verdi={<SpråkTekst id={'felles.år'} values={{ alder: barn.alder }} />}
+                        />
+                    )}
+                    {!erRegistrertManuelt && (
+                        <BarneKortInfo
+                            labelId={'hvilkebarn.barn.bosted'}
+                            verdi={<SpråkTekst id={hentBostedSpråkId(barn)} />}
+                        />
+                    )}
+                </HGrid>
+                <Divider />
+                <Checkbox
                     checked={erMedISøknad}
                     aria-label={
                         formatMessage({
@@ -139,23 +128,38 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                             ? 'hvilkebarn-utvidet.barn.søk-om.spm'
                             : 'hvilkebarn.barn.søk-om.spm',
                     })}
-                </StyledCheckbox>
-            </InformasjonsboksInnhold>
-            {erRegistrertManuelt && (
-                <FjernBarnKnapp barnId={barn.id} fjernBarnCallback={fjernBarnCallback} />
-            )}
-        </StyledBarnekort>
+                </Checkbox>
+                {erRegistrertManuelt && (
+                    <Button
+                        type={'button'}
+                        variant="tertiary"
+                        onClick={() => fjernBarnCallback(barn.id)}
+                        icon={<TrashFillIcon aria-hidden />}
+                    >
+                        <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
+                    </Button>
+                )}
+            </VStack>
+        </BarnekortContainer>
+    );
+};
+
+export const BarnekortContainer: React.FC<{ children?: ReactNode }> = ({ children }) => {
+    return (
+        <Box padding="6" background="surface-subtle" borderRadius="medium">
+            {children}
+        </Box>
     );
 };
 
 const BarneKortInfo: React.FC<{ labelId: string; verdi: ReactNode }> = ({ labelId, verdi }) => {
     return (
-        <div>
-            <StyledIngress>
+        <Box>
+            <Label as="p">
                 <SpråkTekst id={labelId} />
-            </StyledIngress>
+            </Label>
             <BodyShort>{verdi}</BodyShort>
-        </div>
+        </Box>
     );
 };
 
