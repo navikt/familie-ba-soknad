@@ -38,6 +38,7 @@ const søknad = mockDeep<ISøknad>({
                 },
             },
             nåværendeSamboer: null,
+            tidligereSamboere: [],
         },
     },
 });

@@ -20,7 +20,7 @@ const Spørsmål: React.FC<{ språkId: string }> = ({ språkId }) => (
 );
 
 const SamboerContainer = styled.div`
-    margin: 2rem 0;
+    margin-bottom: 2rem;
     border-bottom: 1px solid #78706a;
 `;
 

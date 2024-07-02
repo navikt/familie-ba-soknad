@@ -28,6 +28,7 @@ const søknad = mockDeep<ISøknad>({
                 harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: null },
             },
             nåværendeSamboer: null,
+            tidligereSamboere: [],
         },
     },
 });

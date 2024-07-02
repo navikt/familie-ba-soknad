@@ -4,12 +4,15 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import PerioderContainer from '../PerioderContainer';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -42,6 +45,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         erÅpen: erUtbetalingerModalÅpen,
         lukkModal: lukkUtbetalingerModal,
@@ -49,6 +53,13 @@ export const Utbetalingsperiode: React.FC<Props> = ({
     } = useModal();
 
     const barnetsNavn = barn && barn.navn;
+
+    const antallPerioder = registrerteUtbetalingsperioder.verdi.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'andreUtbetalinger',
+        personType,
+        antallPerioder
+    );
 
     return (
         <>
@@ -65,7 +76,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                 }}
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
-                <>
+                <PerioderContainer>
                     {registrerteUtbetalingsperioder.verdi.map((utbetalingsperiode, index) => (
                         <UtbetalingsperiodeOppsummering
                             key={`utbetalingsperiode-${index}`}
@@ -77,19 +88,21 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             barn={barn}
                         />
                     ))}
-                    {registrerteUtbetalingsperioder.verdi.length > 0 && (
-                        <Label as="p">
-                            <SpråkTekst
-                                id={utbetalingerFlerePerioderSpmSpråkId(personType)}
-                                values={{
-                                    ...(barn && { barn: barnetsNavn }),
-                                }}
-                            />
-                        </Label>
-                    )}
+                    {!toggles.NYE_MODAL_TEKSTER &&
+                        registrerteUtbetalingsperioder.verdi.length > 0 && (
+                            <Label as="p" spacing>
+                                <SpråkTekst
+                                    id={utbetalingerFlerePerioderSpmSpråkId(personType)}
+                                    values={{
+                                        ...(barn && { barn: barnetsNavn }),
+                                    }}
+                                />
+                            </Label>
+                        )}
                     <LeggTilKnapp
                         onClick={åpneUtbetalingerModal}
                         språkTekst={'felles.flereytelser.knapp'}
+                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                         id={genererPeriodeId({
                             personType: personType,
                             spørsmålsId: UtbetalingerSpørsmålId.utbetalingsperioder,
@@ -107,9 +120,10 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             personType={personType}
                             barn={barn}
                             erDød={erDød}
+                            forklaring={leggTilPeriodeTekster?.tekstForModal}
                         />
                     )}
-                </>
+                </PerioderContainer>
             )}
         </>
     );

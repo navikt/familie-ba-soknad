@@ -256,6 +256,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         flettefelter?: FlettefeltVerdier,
         spesifikkLocale?: LocaleType
     ): string => {
+        const frittståendeOrd = tekster()[ESanitySteg.FELLES].frittståendeOrd;
         switch (sanityFlettefelt) {
             case ESanityFlettefeltverdi.DATO:
                 if (!flettefelter?.dato) {
@@ -297,12 +298,20 @@ const [AppProvider, useApp] = createUseContext(() => {
                     undefined,
                     spesifikkLocale ?? valgtLocale
                 );
+            case ESanityFlettefeltverdi.I_UTENFOR:
+                return plainTekst(
+                    flettefelter?.gjelderUtland ? frittståendeOrd.utenfor : frittståendeOrd.i,
+                    undefined,
+                    spesifikkLocale ?? valgtLocale
+                );
             case ESanityFlettefeltverdi.YTELSE_BESTEMT_FORM:
                 throw Error('Flettefeltet YTELSE_BESTEMT_FORM er ikke støttet enda');
-            case ESanityFlettefeltverdi.I_UTENFOR:
-                throw Error('Flettefeltet I_UTENFOR er ikke støttet enda');
             case ESanityFlettefeltverdi.UTLANDET_NORGE:
-                throw Error('Flettefeltet UTLANDET_NORGE er ikke støttet enda');
+                return plainTekst(
+                    flettefelter?.gjelderUtland ? frittståendeOrd.utlandet : frittståendeOrd.norge,
+                    undefined,
+                    spesifikkLocale ?? valgtLocale
+                );
         }
     };
 
