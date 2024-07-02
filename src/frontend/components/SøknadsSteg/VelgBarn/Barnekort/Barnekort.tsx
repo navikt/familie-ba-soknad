@@ -76,9 +76,12 @@ const Barnekort: React.FC<IBarnekortProps> = ({
         manueltRegistrertBarn => manueltRegistrertBarn.id === barn.id
     );
 
+    const storForbokstav = (tekst: string): string =>
+        tekst.charAt(0).toUpperCase() + tekst.slice(1);
+
     const fødselsnummerTekst = !barn.adressebeskyttelse
         ? formaterFnr(barn.ident)
-        : plainTekst(tekster()[ESanitySteg.FELLES].frittståendeOrd.skjult);
+        : storForbokstav(plainTekst(tekster()[ESanitySteg.FELLES].frittståendeOrd.skjult));
 
     return (
         <BarnekortContainer>
