@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { BodyLong } from '@navikt/ds-react';
+import { Bleed, BodyLong, Box } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { BarnetsId } from '../../../typer/common';
@@ -105,7 +105,12 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         språkValues={{ navn: barn.navn }}
                     />
                     {skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker && (
-                        <VedleggNotis språkTekstId={'ombarnet.bor-fast.vedleggsinfo'} dynamisk />
+                        <Bleed marginBlock="2 0">
+                            <VedleggNotis
+                                språkTekstId={'ombarnet.bor-fast.vedleggsinfo'}
+                                dynamisk
+                            />
+                        </Bleed>
                     )}
 
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
@@ -121,10 +126,12 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 språkValues={{ navn: barn.navn }}
                             />
                             {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
-                                <VedleggNotis
-                                    språkTekstId={'ombarnet.delt-bosted.vedleggsinfo'}
-                                    dynamisk
-                                />
+                                <Box paddingBlock="4 0">
+                                    <VedleggNotis
+                                        språkTekstId={'ombarnet.delt-bosted.vedleggsinfo'}
+                                        dynamisk
+                                    />
+                                </Box>
                             )}
                         </>
                     )}

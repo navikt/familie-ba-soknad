@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 
+import { Bleed } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -17,10 +17,6 @@ import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
-
-const VedleggNotisWrapper = styled.div`
-    margin: -1.5rem 0 4.5rem 0;
-`;
 
 const OmBarnaDine: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
@@ -122,9 +118,9 @@ const OmBarnaDine: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
-                        <VedleggNotisWrapper>
+                        <Bleed marginBlock="4 0">
                             <VedleggNotis dynamisk språkTekstId={'ombarna.adoptert.alert'} />
-                        </VedleggNotisWrapper>
+                        </Bleed>
                     )}
                     <JaNeiSpm
                         skjema={skjema}
@@ -143,9 +139,9 @@ const OmBarnaDine: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
-                        <VedleggNotisWrapper>
+                        <Bleed marginBlock="4 0">
                             <VedleggNotis dynamisk språkTekstId={'ombarna.asyl.alert'} />
-                        </VedleggNotisWrapper>
+                        </Bleed>
                     )}
                 </KomponentGruppe>
             )}
