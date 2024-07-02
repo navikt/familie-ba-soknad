@@ -8,7 +8,7 @@ import { byggDataRessurs } from '@navikt/familie-typer';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
 import * as appContext from '../../../../context/AppContext';
-import { silenceConsoleErrors } from '../../../../utils/testing';
+import { silenceConsoleErrors, mockFeatureToggle } from '../../../../utils/testing';
 
 import LeggTilBarnModal from './LeggTilBarnModal';
 import { NyttBarnKort } from './NyttBarnKort';
@@ -25,6 +25,7 @@ jest.mock('react-router-dom', () => ({
 
 test(`Kan legge til barn`, async () => {
     silenceConsoleErrors();
+    mockFeatureToggle();
     const submitMock = jest.fn();
     jest.spyOn(appContext, 'useApp').mockImplementation(
         jest.fn().mockReturnValue({
