@@ -81,10 +81,9 @@ const DinLivssituasjon: React.FC = () => {
                         />
                         {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
                             <Bleed marginBlock="4 0">
-                                <VedleggNotis
-                                    språkTekstId={'omdeg.separertellerskilt.info'}
-                                    dynamisk
-                                />
+                                <VedleggNotis dynamisk>
+                                    <SpråkTekst id="omdeg.separertellerskilt.info" />
+                                </VedleggNotis>
                             </Bleed>
                         )}
                         {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
@@ -162,7 +161,9 @@ const DinLivssituasjon: React.FC = () => {
                 />
                 {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
                     <Bleed marginBlock="4 0">
-                        <VedleggNotis dynamisk språkTekstId={'omdeg.asylsøker.alert'} />
+                        <VedleggNotis dynamisk>
+                            <SpråkTekst id="omdeg.asylsøker.alert" />
+                        </VedleggNotis>
                     </Bleed>
                 )}
 

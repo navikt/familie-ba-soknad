@@ -106,10 +106,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     />
                     {skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker && (
                         <Bleed marginBlock="2 0">
-                            <VedleggNotis
-                                språkTekstId={'ombarnet.bor-fast.vedleggsinfo'}
-                                dynamisk
-                            />
+                            <VedleggNotis dynamisk>
+                                <SpråkTekst id="ombarnet.bor-fast.vedleggsinfo" />
+                            </VedleggNotis>
                         </Bleed>
                     )}
 
@@ -127,10 +126,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             />
                             {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
                                 <Box paddingBlock="4 0">
-                                    <VedleggNotis
-                                        språkTekstId={'ombarnet.delt-bosted.vedleggsinfo'}
-                                        dynamisk
-                                    />
+                                    <VedleggNotis dynamisk>
+                                        <SpråkTekst id="ombarnet.delt-bosted.vedleggsinfo" />
+                                    </VedleggNotis>
                                 </Box>
                             )}
                         </>
@@ -181,10 +179,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                                 ]
                                             }
                                         />
-                                        <VedleggNotis
-                                            språkTekstId={'ombarnet.nårflyttetfra.info'}
-                                            dynamisk
-                                        />
+                                        <VedleggNotis dynamisk>
+                                            <SpråkTekst id="ombarnet.nårflyttetfra.info" />
+                                        </VedleggNotis>
                                     </div>
                                 )}
                             </>

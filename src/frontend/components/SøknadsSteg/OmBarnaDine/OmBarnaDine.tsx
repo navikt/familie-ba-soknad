@@ -119,7 +119,9 @@ const OmBarnaDine: React.FC = () => {
                     />
                     {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
                         <Bleed marginBlock="4 0">
-                            <VedleggNotis dynamisk språkTekstId={'ombarna.adoptert.alert'} />
+                            <VedleggNotis dynamisk>
+                                <SpråkTekst id="ombarna.adoptert.alert" />
+                            </VedleggNotis>
                         </Bleed>
                     )}
                     <JaNeiSpm
@@ -140,7 +142,9 @@ const OmBarnaDine: React.FC = () => {
                     />
                     {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
                         <Bleed marginBlock="4 0">
-                            <VedleggNotis dynamisk språkTekstId={'ombarna.asyl.alert'} />
+                            <VedleggNotis dynamisk>
+                                <SpråkTekst id="ombarna.asyl.alert" />
+                            </VedleggNotis>
                         </Bleed>
                     )}
                 </KomponentGruppe>

@@ -94,7 +94,9 @@ const Oppfølgningsspørsmål: React.FC<{
                         språkValues={{ navn: barn.navn }}
                         headingLevel="4"
                     >
-                        <VedleggNotis språkTekstId={'ombarnet.fosterbarn.vedleggsinfo'} />
+                        <VedleggNotis dynamisk>
+                            <SpråkTekst id="ombarnet.fosterbarn.vedleggsinfo" />
+                        </VedleggNotis>
                     </Informasjonsbolk>
                 </KomponentGruppe>
             )}

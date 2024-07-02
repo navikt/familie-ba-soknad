@@ -2,16 +2,13 @@ import React, { ReactNode } from 'react';
 
 import { Alert } from '@navikt/ds-react';
 
-import SpråkTekst from './SpråkTekst/SpråkTekst';
-
 export const VedleggNotis: React.FC<{
-    språkTekstId: string;
+    children?: ReactNode;
     dynamisk?: boolean;
-    språkValues?: Record<string, ReactNode>;
-}> = ({ språkTekstId, dynamisk = false, språkValues = {} }) => {
+}> = ({ children, dynamisk = false }) => {
     return (
         <Alert variant="info" aria-live={dynamisk ? 'polite' : 'off'}>
-            <SpråkTekst id={språkTekstId} values={språkValues} />
+            {children ? children : null}
         </Alert>
     );
 };
