@@ -55,6 +55,7 @@ const søknad = {
                 },
             },
             nåværendeSamboer: null,
+            tidligereSamboere: [],
         },
     },
 };
