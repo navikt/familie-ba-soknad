@@ -62,7 +62,7 @@ const VelgBarn: React.FC = () => {
 
                 <VStack
                     id={VelgBarnSpørsmålId.velgBarn}
-                    className={'BarnekortContainer'}
+                    className={'BarnekortStack'}
                     marginBlock="12"
                     gap="12"
                 >
