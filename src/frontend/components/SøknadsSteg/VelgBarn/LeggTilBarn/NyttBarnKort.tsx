@@ -3,7 +3,7 @@ import React from 'react';
 import { BodyShort, Button } from '@navikt/ds-react';
 
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { BarnekortContainer } from '../Barnekort/Barnekort';
+import { BarnekortContainer } from '../Barnekort/BarnekortContainer';
 
 export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTilBarn }) => {
     return (

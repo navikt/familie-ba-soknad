@@ -1,20 +1,10 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { TrashFillIcon } from '@navikt/aksel-icons';
-import {
-    BodyShort,
-    Checkbox,
-    Heading,
-    Box,
-    VStack,
-    Label,
-    Button,
-    Bleed,
-    HGrid,
-} from '@navikt/ds-react';
+import { Checkbox, Heading, Box, VStack, Button, Bleed, HGrid } from '@navikt/ds-react';
 import {
     APurple400,
     APurple800,
@@ -28,9 +18,12 @@ import { useApp } from '../../../../context/AppContext';
 import { IBarn } from '../../../../typer/person';
 import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { hentBostedSpråkId } from '../../../../utils/språk';
-import { formaterFnr } from '../../../../utils/visning';
+import { formaterFnr, uppercaseFørsteBokstav } from '../../../../utils/visning';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { TilfeldigBarnIkon } from '../../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
+
+import { BarnekortContainer } from './BarnekortContainer';
+import { BarnekortInfo } from './BarnekortInfo';
 
 interface IBarnekortProps {
     velgBarnCallback: (barn: IBarn, barnMedISøknad: boolean) => void;
@@ -76,12 +69,9 @@ const Barnekort: React.FC<IBarnekortProps> = ({
         manueltRegistrertBarn => manueltRegistrertBarn.id === barn.id
     );
 
-    const storForbokstav = (tekst: string): string =>
-        tekst.charAt(0).toUpperCase() + tekst.slice(1);
-
     const fødselsnummerTekst = !barn.adressebeskyttelse
         ? formaterFnr(barn.ident)
-        : storForbokstav(plainTekst(tekster()[ESanitySteg.FELLES].frittståendeOrd.skjult));
+        : uppercaseFørsteBokstav(plainTekst(tekster()[ESanitySteg.FELLES].frittståendeOrd.skjult));
 
     return (
         <BarnekortContainer>
@@ -101,18 +91,18 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                     )}
                 </Heading>
                 <HGrid gap="6" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
-                    <BarneKortInfo
+                    <BarnekortInfo
                         labelId={'hvilkebarn.barn.fødselsnummer'}
                         verdi={fødselsnummerTekst}
                     />
                     {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
-                        <BarneKortInfo
+                        <BarnekortInfo
                             labelId={'hvilkebarn.barn.alder'}
                             verdi={<SpråkTekst id={'felles.år'} values={{ alder: barn.alder }} />}
                         />
                     )}
                     {!erRegistrertManuelt && (
-                        <BarneKortInfo
+                        <BarnekortInfo
                             labelId={'hvilkebarn.barn.bosted'}
                             verdi={<SpråkTekst id={hentBostedSpråkId(barn)} />}
                         />
@@ -148,25 +138,6 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 )}
             </VStack>
         </BarnekortContainer>
-    );
-};
-
-export const BarnekortContainer: React.FC<{ children?: ReactNode }> = ({ children }) => {
-    return (
-        <Box padding="6" background="surface-subtle" borderRadius="medium">
-            {children}
-        </Box>
-    );
-};
-
-const BarneKortInfo: React.FC<{ labelId: string; verdi: ReactNode }> = ({ labelId, verdi }) => {
-    return (
-        <Box>
-            <Label as="p">
-                <SpråkTekst id={labelId} />
-            </Label>
-            <BodyShort>{verdi}</BodyShort>
-        </Box>
     );
 };
 
