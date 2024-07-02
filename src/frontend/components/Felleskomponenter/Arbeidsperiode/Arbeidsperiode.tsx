@@ -4,6 +4,7 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import {
@@ -12,9 +13,11 @@ import {
     IEøsForSøkerFeltTyper,
     IOmBarnetFeltTyper,
 } from '../../../typer/skjema';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import PerioderContainer from '../PerioderContainer';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -56,6 +59,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         erÅpen: arbeidsmodalErÅpen,
         lukkModal: lukkArbeidsmodal,
@@ -65,6 +69,17 @@ export const Arbeidsperiode: React.FC<Props> = ({
     const arbeidsperiodeSpørsmålId = gjelderUtlandet
         ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
         : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
+
+    const antallPerioder = registrerteArbeidsperioder.verdi.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'arbeidsperiode',
+        personType,
+        antallPerioder,
+        undefined,
+        {
+            gjelderUtland: gjelderUtlandet,
+        }
+    );
 
     return (
         <>
@@ -81,7 +96,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                 }}
             />
             {arbeiderEllerArbeidetFelt.verdi === ESvar.JA && (
-                <>
+                <PerioderContainer>
                     {registrerteArbeidsperioder.verdi.map((periode, index) => (
                         <ArbeidsperiodeOppsummering
                             key={`arbeidsperiode-${index}`}
@@ -93,8 +108,8 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             erDød={personType === PersonType.AndreForelder && erDød}
                         />
                     ))}
-                    {registrerteArbeidsperioder.verdi.length > 0 && (
-                        <Label as="p">
+                    {!toggles.NYE_MODAL_TEKSTER && registrerteArbeidsperioder.verdi.length > 0 && (
+                        <Label as="p" spacing>
                             <SpråkTekst
                                 id={arbeidsperiodeFlereSpørsmål(gjelderUtlandet, personType)}
                                 values={{
@@ -106,6 +121,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpneArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
+                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: arbeidsperiodeSpørsmålId,
@@ -127,9 +143,10 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             gjelderUtlandet={gjelderUtlandet}
                             personType={personType}
                             erDød={erDød}
+                            forklaring={leggTilPeriodeTekster?.tekstForModal}
                         />
                     )}
-                </>
+                </PerioderContainer>
             )}
         </>
     );

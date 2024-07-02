@@ -2,10 +2,14 @@ export enum EKillSwitchToggle {
     SOKNAD = 'familie-ba-soknad.disable-soknad',
 }
 
-export enum EFeatureToggle {} // EKSEMPEL = 'EKSEMPEL',
+export enum EFeatureToggle {
+    // EKSEMPEL = 'EKSEMPEL',
+    NYE_MODAL_TEKSTER = 'NYE_MODAL_TEKSTER',
+}
 
 export const ToggleKeys: Record<EFeatureToggle, string> = {
     // [EFeatureToggle.EKSEMPEL]: 'familie-ba-soknad.eksempel',
+    [EFeatureToggle.NYE_MODAL_TEKSTER]: 'familie-ba-soknad.nye-modal-tekster',
 };
 
 export type EAllFeatureToggles = Record<EFeatureToggle, boolean>;

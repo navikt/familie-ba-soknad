@@ -3,10 +3,14 @@ import React from 'react';
 import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { PersonType } from '../../../typer/personType';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -19,6 +23,8 @@ import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
+    const { toggles } = useFeatureToggles();
+
     const {
         erÅpen: utenlandsoppholdmodalErÅpen,
         lukkModal: lukkUtenlandsoppholdmodal,
@@ -34,6 +40,13 @@ const OmDeg: React.FC = () => {
         fjernUtenlandsperiode,
         utenlandsperioder,
     } = useOmdeg();
+
+    const antallPerioder = utenlandsperioder.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'utenlandsopphold',
+        PersonType.Søker,
+        antallPerioder
+    );
 
     return (
         <Steg
@@ -79,7 +92,7 @@ const OmDeg: React.FC = () => {
                         }
                     />
                     {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
-                        <>
+                        <PerioderContainer>
                             {utenlandsperioder.map((periode, index) => (
                                 <UtenlandsperiodeOppsummering
                                     key={index}
@@ -88,14 +101,15 @@ const OmDeg: React.FC = () => {
                                     fjernPeriodeCallback={fjernUtenlandsperiode}
                                 />
                             ))}
-                            {utenlandsperioder.length > 0 && (
-                                <Label>
+                            {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
+                                <Label as="p" spacing>
                                     <SpråkTekst id={'omdeg.flereopphold.spm'} />
                                 </Label>
                             )}
                             <LeggTilKnapp
-                                språkTekst={'felles.leggtilutenlands.knapp'}
                                 onClick={åpneUtenlandsoppholdmodal}
+                                språkTekst={'felles.leggtilutenlands.knapp'}
+                                forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                                 id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                                 feilmelding={
                                     skjema.felter.registrerteUtenlandsperioder.erSynlig &&
@@ -105,7 +119,7 @@ const OmDeg: React.FC = () => {
                                     )
                                 }
                             />
-                        </>
+                        </PerioderContainer>
                     )}
                 </>
                 {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
@@ -133,6 +147,7 @@ const OmDeg: React.FC = () => {
                     erÅpen={utenlandsoppholdmodalErÅpen}
                     lukkModal={lukkUtenlandsoppholdmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
+                    forklaring={leggTilPeriodeTekster?.tekstForModal}
                 />
             )}
         </Steg>
