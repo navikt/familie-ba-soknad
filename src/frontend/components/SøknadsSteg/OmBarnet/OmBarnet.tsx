@@ -6,6 +6,7 @@ import { Bleed, BodyLong, Box } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { BarnetsId } from '../../../typer/common';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
@@ -32,6 +33,8 @@ const EksternLenkeContainer = styled.div`
 
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     const { tekster } = useApp();
+
+    const { toggles } = useFeatureToggles();
 
     const {
         skjema,
@@ -118,11 +121,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     {skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker && (
                         <Bleed marginBlock="2 0">
                             <VedleggNotis dynamisk>
-                                {/* <SpråkTekst id="ombarnet.bor-fast.vedleggsinfo" /> */}
-                                <TekstBlock
-                                    block={bekreftelsePaaAtBarnBorSammenMedDeg}
-                                    flettefelter={{ barnetsNavn: barn.navn }}
-                                />
+                                {toggles.NYE_VEDLEGGSTEKSTER ? (
+                                    <TekstBlock
+                                        block={bekreftelsePaaAtBarnBorSammenMedDeg}
+                                        flettefelter={{ barnetsNavn: barn.navn }}
+                                    />
+                                ) : (
+                                    <SpråkTekst id="ombarnet.bor-fast.vedleggsinfo" />
+                                )}
                             </VedleggNotis>
                         </Bleed>
                     )}
@@ -142,11 +148,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
                                 <Box paddingBlock="4 0">
                                     <VedleggNotis dynamisk>
-                                        {/* <SpråkTekst id="ombarnet.delt-bosted.vedleggsinfo" /> */}
-                                        <TekstBlock
-                                            block={avtaleOmDeltBosted}
-                                            flettefelter={{ barnetsNavn: barn.navn }}
-                                        />
+                                        {toggles.NYE_VEDLEGGSTEKSTER ? (
+                                            <TekstBlock
+                                                block={avtaleOmDeltBosted}
+                                                flettefelter={{ barnetsNavn: barn.navn }}
+                                            />
+                                        ) : (
+                                            <SpråkTekst id="ombarnet.delt-bosted.vedleggsinfo" />
+                                        )}
                                     </VedleggNotis>
                                 </Box>
                             )}
@@ -199,11 +208,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                             }
                                         />
                                         <VedleggNotis dynamisk>
-                                            {/* <SpråkTekst id="ombarnet.nårflyttetfra.info" /> */}
-                                            <TekstBlock
-                                                block={meklingsattest}
-                                                flettefelter={{ barnetsNavn: barn.navn }}
-                                            />
+                                            {toggles.NYE_VEDLEGGSTEKSTER ? (
+                                                <TekstBlock
+                                                    block={meklingsattest}
+                                                    flettefelter={{ barnetsNavn: barn.navn }}
+                                                />
+                                            ) : (
+                                                <SpråkTekst id="ombarnet.nårflyttetfra.info" />
+                                            )}
                                         </VedleggNotis>
                                     </div>
                                 )}

@@ -6,6 +6,7 @@ import { Bleed } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
@@ -33,6 +34,8 @@ const OmBarnaDine: React.FC = () => {
         navigate('/velg-barn');
         return null;
     }
+
+    const { toggles } = useFeatureToggles();
 
     const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
 
@@ -128,10 +131,11 @@ const OmBarnaDine: React.FC = () => {
                     {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
                         <Bleed marginBlock="4 0">
                             <VedleggNotis dynamisk>
-                                {/* <SpråkTekst id="ombarna.adoptert.alert" /> */}
-                                <TekstBlock block={bekreftelsePaaAdopsjonBarnetrygd} />
-                                {/* TODO: Legg til flettefelt 
-                                flettefelter={{ barnetsNavn: ... }} */}
+                                {toggles.NYE_VEDLEGGSTEKSTER ? (
+                                    <TekstBlock block={bekreftelsePaaAdopsjonBarnetrygd} />
+                                ) : (
+                                    <SpråkTekst id="ombarna.adoptert.alert" />
+                                )}
                             </VedleggNotis>
                         </Bleed>
                     )}
@@ -154,8 +158,12 @@ const OmBarnaDine: React.FC = () => {
                     {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
                         <Bleed marginBlock="4 0">
                             <VedleggNotis dynamisk>
-                                {/* <SpråkTekst id="ombarna.asyl.alert" /> */}
-                                {/* <TekstBlock block={} /> */}
+                                {toggles.NYE_VEDLEGGSTEKSTER ? (
+                                    /* <TekstBlock block={} /> */
+                                    <div>TODO: Tekst i TekstBlock må legges til</div>
+                                ) : (
+                                    <SpråkTekst id="ombarna.asyl.alert" />
+                                )}
                             </VedleggNotis>
                         </Bleed>
                     )}

@@ -104,11 +104,14 @@ const Oppfølgningsspørsmål: React.FC<{
                         headingLevel="4"
                     >
                         <VedleggNotis dynamisk>
-                            {/* <SpråkTekst id="ombarnet.fosterbarn.vedleggsinfo" /> */}
-                            <TekstBlock
-                                block={bekreftelseFraBarnevernet}
-                                flettefelter={{ barnetsNavn: barn.navn }}
-                            />
+                            {toggles.NYE_VEDLEGGSTEKSTER ? (
+                                <TekstBlock
+                                    block={bekreftelseFraBarnevernet}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
+                                />
+                            ) : (
+                                <SpråkTekst id="ombarnet.fosterbarn.vedleggsinfo" />
+                            )}
                         </VedleggNotis>
                     </Informasjonsbolk>
                 </KomponentGruppe>

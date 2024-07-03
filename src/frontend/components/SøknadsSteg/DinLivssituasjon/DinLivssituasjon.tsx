@@ -6,6 +6,7 @@ import { Bleed } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { PersonType } from '../../../typer/personType';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
@@ -43,9 +44,15 @@ const DinLivssituasjon: React.FC = () => {
 
     const { erUtvidet, søknad, tekster } = useApp();
 
+    const { toggles } = useFeatureToggles();
+
+    console.log(toggles.NYE_VEDLEGGSTEKSTER);
+
     const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
 
     const { dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall } = dokumentasjonstekster; // TODO: Legg til i Sanity: DIN_LIVSSITUASJON - asylsoeker
+
+    console.log(dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall);
 
     return (
         <Steg
@@ -89,10 +96,15 @@ const DinLivssituasjon: React.FC = () => {
                         {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
                             <Bleed marginBlock="4 0">
                                 <VedleggNotis dynamisk>
-                                    {/* <SpråkTekst id="omdeg.separertellerskilt.info" /> */}
-                                    <TekstBlock
-                                        block={dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall}
-                                    />
+                                    {toggles.NYE_VEDLEGGSTEKSTER ? (
+                                        <TekstBlock
+                                            block={
+                                                dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall
+                                            }
+                                        />
+                                    ) : (
+                                        <SpråkTekst id="omdeg.separertellerskilt.info" />
+                                    )}
                                 </VedleggNotis>
                             </Bleed>
                         )}
@@ -172,8 +184,12 @@ const DinLivssituasjon: React.FC = () => {
                 {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
                     <Bleed marginBlock="4 0">
                         <VedleggNotis dynamisk>
-                            {/* <SpråkTekst id="omdeg.asylsøker.alert" /> */}
-                            {/* <TekstBlock block={} /> */}
+                            {toggles.NYE_VEDLEGGSTEKSTER ? (
+                                /* <TekstBlock block={} /> */
+                                <div>TODO: Tekst i TekstBlock må legges til</div>
+                            ) : (
+                                <SpråkTekst id="omdeg.asylsøker.alert" />
+                            )}
                         </VedleggNotis>
                     </Bleed>
                 )}
