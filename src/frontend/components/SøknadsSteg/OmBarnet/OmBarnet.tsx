@@ -18,9 +18,9 @@ import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import AndreForelder from './AndreForelder';
-import { IOmBarnetTekstinnhold } from './innholdTyper';
 import { OmBarnetHeader } from './OmBarnetHeader';
 import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
@@ -51,9 +51,10 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernBarnetrygdsperiode,
     } = useOmBarnet(barnetsId);
 
-    const teskterForSteg: IOmBarnetTekstinnhold = tekster()[ESanitySteg.OM_BARNET];
+    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
 
-    const { borBarnFastSammenMedDeg, deltBosted, boddMedAndreForelder } = teskterForSteg;
+    const { bekreftelsePaaAtBarnBorSammenMedDeg, avtaleOmDeltBosted, meklingsattest } =
+        dokumentasjonstekster;
 
     return barn ? (
         <Steg
@@ -118,7 +119,10 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         <Bleed marginBlock="2 0">
                             <VedleggNotis dynamisk>
                                 {/* <SpråkTekst id="ombarnet.bor-fast.vedleggsinfo" /> */}
-                                <TekstBlock block={borBarnFastSammenMedDeg.vedleggsnotis} />
+                                <TekstBlock
+                                    block={bekreftelsePaaAtBarnBorSammenMedDeg}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
+                                />
                             </VedleggNotis>
                         </Bleed>
                     )}
@@ -139,7 +143,10 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 <Box paddingBlock="4 0">
                                     <VedleggNotis dynamisk>
                                         {/* <SpråkTekst id="ombarnet.delt-bosted.vedleggsinfo" /> */}
-                                        <TekstBlock block={deltBosted.vedleggsnotis} />
+                                        <TekstBlock
+                                            block={avtaleOmDeltBosted}
+                                            flettefelter={{ barnetsNavn: barn.navn }}
+                                        />
                                     </VedleggNotis>
                                 </Box>
                             )}
@@ -194,7 +201,8 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         <VedleggNotis dynamisk>
                                             {/* <SpråkTekst id="ombarnet.nårflyttetfra.info" /> */}
                                             <TekstBlock
-                                                block={boddMedAndreForelder.vedleggsnotis}
+                                                block={meklingsattest}
+                                                flettefelter={{ barnetsNavn: barn.navn }}
                                             />
                                         </VedleggNotis>
                                     </div>

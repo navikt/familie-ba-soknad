@@ -37,8 +37,8 @@ import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/Utenlandso
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
-import { IOmBarnetTekstinnhold } from './innholdTyper';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const Oppfølgningsspørsmål: React.FC<{
@@ -90,9 +90,9 @@ const Oppfølgningsspørsmål: React.FC<{
         antallPerioder
     );
 
-    const teskterForSteg: IOmBarnetTekstinnhold = tekster()[ESanitySteg.OM_BARNET];
+    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
 
-    const { opplystFosterbarn } = teskterForSteg;
+    const { bekreftelseFraBarnevernet } = dokumentasjonstekster;
 
     return (
         <>
@@ -106,7 +106,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         <VedleggNotis dynamisk>
                             {/* <SpråkTekst id="ombarnet.fosterbarn.vedleggsinfo" /> */}
                             <TekstBlock
-                                block={opplystFosterbarn}
+                                block={bekreftelseFraBarnevernet}
                                 flettefelter={{ barnetsNavn: barn.navn }}
                             />
                         </VedleggNotis>

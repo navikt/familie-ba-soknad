@@ -15,9 +15,9 @@ import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
-import { IOmBarnaTekstinnhold } from './innholdTyper';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
 
@@ -34,9 +34,9 @@ const OmBarnaDine: React.FC = () => {
         return null;
     }
 
-    const teskterForSteg: IOmBarnaTekstinnhold = tekster()[ESanitySteg.OM_BARNA];
+    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
 
-    const { adoptertBarnetrygd, asyl } = teskterForSteg;
+    const { bekreftelsePaaAdopsjonBarnetrygd } = dokumentasjonstekster; // TODO: Legg til i Sanity: OM_BARNA - asyl
 
     return (
         <Steg
@@ -129,7 +129,9 @@ const OmBarnaDine: React.FC = () => {
                         <Bleed marginBlock="4 0">
                             <VedleggNotis dynamisk>
                                 {/* <SpråkTekst id="ombarna.adoptert.alert" /> */}
-                                <TekstBlock block={adoptertBarnetrygd.vedleggsnotis} />
+                                <TekstBlock block={bekreftelsePaaAdopsjonBarnetrygd} />
+                                {/* TODO: Legg til flettefelt 
+                                flettefelter={{ barnetsNavn: ... }} */}
                             </VedleggNotis>
                         </Bleed>
                     )}
@@ -153,7 +155,7 @@ const OmBarnaDine: React.FC = () => {
                         <Bleed marginBlock="4 0">
                             <VedleggNotis dynamisk>
                                 {/* <SpråkTekst id="ombarna.asyl.alert" /> */}
-                                <TekstBlock block={asyl.vedleggsnotis} />
+                                {/* <TekstBlock block={} /> */}
                             </VedleggNotis>
                         </Bleed>
                     )}

@@ -18,8 +18,8 @@ import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
-import { IDinLivssituasjonTekstinnhold } from './innholdTyper';
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import TidligereSamboere from './TidligereSamboere';
@@ -43,9 +43,9 @@ const DinLivssituasjon: React.FC = () => {
 
     const { erUtvidet, søknad, tekster } = useApp();
 
-    const teskterForSteg: IDinLivssituasjonTekstinnhold = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
+    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
 
-    const { asylsoeker, separertSkiltEllerEnkeEnkemannUtenRegistrert } = teskterForSteg;
+    const { dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall } = dokumentasjonstekster; // TODO: Legg til i Sanity: DIN_LIVSSITUASJON - asylsoeker
 
     return (
         <Steg
@@ -91,9 +91,7 @@ const DinLivssituasjon: React.FC = () => {
                                 <VedleggNotis dynamisk>
                                     {/* <SpråkTekst id="omdeg.separertellerskilt.info" /> */}
                                     <TekstBlock
-                                        block={
-                                            separertSkiltEllerEnkeEnkemannUtenRegistrert.vedleggsnotis
-                                        }
+                                        block={dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall}
                                     />
                                 </VedleggNotis>
                             </Bleed>
@@ -175,7 +173,7 @@ const DinLivssituasjon: React.FC = () => {
                     <Bleed marginBlock="4 0">
                         <VedleggNotis dynamisk>
                             {/* <SpråkTekst id="omdeg.asylsøker.alert" /> */}
-                            <TekstBlock block={asylsoeker.vedleggsnotis} />
+                            {/* <TekstBlock block={} /> */}
                         </VedleggNotis>
                     </Bleed>
                 )}
