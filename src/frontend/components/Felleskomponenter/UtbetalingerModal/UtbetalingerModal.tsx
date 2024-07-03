@@ -26,6 +26,7 @@ interface UtbetalingerModalProps extends IUseUtbetalingerSkjemaParams {
     erÅpen: boolean;
     lukkModal: () => void;
     onLeggTilUtbetalinger: (utbetalingsperiode: IUtbetalingsperiode) => void;
+    forklaring?: string;
 }
 
 export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
@@ -35,6 +36,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     personType,
     barn,
     erDød,
+    forklaring = undefined,
 }) => {
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtbetalingerSkjema(personType, barn, erDød);
@@ -87,6 +89,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
         <SkjemaModal
             erÅpen={erÅpen}
             modalTittelSpråkId={'felles.flereytelser.knapp'}
+            forklaring={forklaring}
             onSubmitCallback={onLeggTil}
             submitKnappSpråkId={'felles.flereytelser.knapp'}
             lukkModal={lukkModal}

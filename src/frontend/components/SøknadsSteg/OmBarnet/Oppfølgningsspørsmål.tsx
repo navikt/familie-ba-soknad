@@ -4,6 +4,7 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
@@ -14,6 +15,7 @@ import {
     morgendagensDato,
     stringTilDate,
 } from '../../../utils/dato';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -22,6 +24,7 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
@@ -53,6 +56,7 @@ const Oppfølgningsspørsmål: React.FC<{
     fjernBarnetrygdsperiode,
     registrerteEøsBarnetrygdsperioder,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         erÅpen: utenlandsmodalErÅpen,
         lukkModal: lukkUtenlandsmodal,
@@ -74,6 +78,13 @@ const Oppfølgningsspørsmål: React.FC<{
         pågåendeSøknadFraAnnetEøsLand,
     } = skjema.felter;
 
+    const antallPerioder = utenlandsperioder.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'utenlandsopphold',
+        PersonType.Søker,
+        antallPerioder
+    );
+
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
@@ -81,6 +92,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     <Informasjonsbolk
                         tittelId={'ombarnet.fosterbarn'}
                         språkValues={{ navn: barn.navn }}
+                        headingLevel="4"
                     >
                         <VedleggNotis språkTekstId={'ombarnet.fosterbarn.vedleggsinfo'} />
                     </Informasjonsbolk>
@@ -172,35 +184,38 @@ const Oppfølgningsspørsmål: React.FC<{
                     legendSpråkId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barn.navn }}
                 >
-                    {utenlandsperioder.map((periode, index) => (
-                        <UtenlandsperiodeOppsummering
-                            key={index}
-                            periode={periode}
-                            nummer={index + 1}
-                            fjernPeriodeCallback={fjernUtenlandsperiode}
-                            barn={barn}
-                        />
-                    ))}
-                    {utenlandsperioder.length > 0 && (
-                        <Label as="p">
-                            <SpråkTekst
-                                id={'ombarnet.flereopphold.spm'}
-                                values={{ barn: barn.navn }}
+                    <PerioderContainer>
+                        {utenlandsperioder.map((periode, index) => (
+                            <UtenlandsperiodeOppsummering
+                                key={index}
+                                periode={periode}
+                                nummer={index + 1}
+                                fjernPeriodeCallback={fjernUtenlandsperiode}
+                                barn={barn}
                             />
-                        </Label>
-                    )}
-                    <LeggTilKnapp
-                        id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
-                        språkTekst={'felles.leggtilutenlands.knapp'}
-                        onClick={åpneUtenlandsmodal}
-                        feilmelding={
-                            registrerteUtenlandsperioder.erSynlig &&
-                            registrerteUtenlandsperioder.feilmelding &&
-                            skjema.visFeilmeldinger && (
-                                <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
-                            )
-                        }
-                    />
+                        ))}
+                        {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
+                            <Label as="p" spacing>
+                                <SpråkTekst
+                                    id={'ombarnet.flereopphold.spm'}
+                                    values={{ barn: barn.navn }}
+                                />
+                            </Label>
+                        )}
+                        <LeggTilKnapp
+                            id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
+                            språkTekst={'felles.leggtilutenlands.knapp'}
+                            forklaring={leggTilPeriodeTekster?.tekstForKnapp}
+                            onClick={åpneUtenlandsmodal}
+                            feilmelding={
+                                registrerteUtenlandsperioder.erSynlig &&
+                                registrerteUtenlandsperioder.feilmelding &&
+                                skjema.visFeilmeldinger && (
+                                    <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
+                                )
+                            }
+                        />
+                    </PerioderContainer>
                     {planleggerÅBoINorge12Mnd.erSynlig && (
                         <KomponentGruppe inline dynamisk>
                             <JaNeiSpm
@@ -264,6 +279,7 @@ const Oppfølgningsspørsmål: React.FC<{
                             fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
                             barn={barn}
                             personType={PersonType.Søker}
+                            headingLevel="4"
                         />
                     </KomponentGruppe>
                 </SkjemaFieldset>
@@ -274,6 +290,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     lukkModal={lukkUtenlandsmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
                     barn={barn}
+                    forklaring={leggTilPeriodeTekster?.tekstForModal}
                 />
             )}
         </>

@@ -41,6 +41,7 @@ export enum Typografi {
 }
 
 export const frittståendeOrdPrefix = 'FRITTSTAENDEORD';
+export const modalPrefix = 'MODAL';
 
 export interface ISanitySpørsmålDokument extends SanityDokument {
     sporsmal: LocaleRecordBlock;

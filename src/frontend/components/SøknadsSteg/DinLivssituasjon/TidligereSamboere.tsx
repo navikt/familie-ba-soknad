@@ -5,7 +5,10 @@ import styled from 'styled-components';
 import { Label } from '@navikt/ds-react';
 
 import { ITidligereSamboer } from '../../../typer/person';
+import { PersonType } from '../../../typer/personType';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -42,6 +45,13 @@ const TidligereSamboere: React.FC<Props> = ({
         erÅpen: erLeggTilSamboerModalÅpen,
     } = useModal();
 
+    const antallPerioder = tidligereSamboere.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'tidligereSamboere',
+        PersonType.Søker,
+        antallPerioder
+    );
+
     return (
         <>
             <Spørsmål
@@ -51,22 +61,26 @@ const TidligereSamboere: React.FC<Props> = ({
                     ]
                 }
             />
-            {tidligereSamboere?.map((samboer: ITidligereSamboer, index: number) => (
-                <SamboerOpplysninger
-                    key={index}
-                    samboer={samboer}
-                    fjernTidligereSamboer={fjernTidligereSamboer}
+            <PerioderContainer>
+                {tidligereSamboere?.map((samboer: ITidligereSamboer, index: number) => (
+                    <SamboerOpplysninger
+                        key={index}
+                        samboer={samboer}
+                        fjernTidligereSamboer={fjernTidligereSamboer}
+                    />
+                ))}
+                <LeggTilKnapp
+                    språkTekst="omdeg.leggtilfleresamboere.leggtil"
+                    forklaring={leggTilPeriodeTekster?.tekstForKnapp}
+                    onClick={åpneLeggTilSamboerModal}
                 />
-            ))}
-            <LeggTilKnapp
-                språkTekst="omdeg.leggtilfleresamboere.leggtil"
-                onClick={åpneLeggTilSamboerModal}
-            />
+            </PerioderContainer>
             {erLeggTilSamboerModalÅpen && (
                 <LeggTilSamboerModal
                     leggTilTidligereSamboer={leggTilTidligereSamboer}
                     lukkModal={lukkLeggTilSamboerModal}
                     erÅpen={erLeggTilSamboerModalÅpen}
+                    forklaring={leggTilPeriodeTekster?.tekstForModal}
                 />
             )}
         </>

@@ -196,7 +196,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
             </header>
             <InnholdContainer>
                 <TittelContainer id={'stegHovedtittel'} tabIndex={-1}>
-                    <Heading level={'1'} size={'xsmall'}>
+                    <Heading level={'2'} size={'large'}>
                         {tittel}
                     </Heading>
                 </TittelContainer>

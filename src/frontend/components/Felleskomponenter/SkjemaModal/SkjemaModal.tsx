@@ -2,8 +2,9 @@ import React, { ReactNode } from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { Button, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, Modal } from '@navikt/ds-react';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -11,6 +12,7 @@ const SkjemaModal: React.FC<{
     erÅpen: boolean;
     lukkModal: () => void;
     modalTittelSpråkId: string;
+    forklaring?: string;
     submitSpinner?: boolean;
     valideringErOk: () => boolean;
     onAvbrytCallback?: () => void;
@@ -21,6 +23,7 @@ const SkjemaModal: React.FC<{
     erÅpen,
     lukkModal,
     modalTittelSpråkId,
+    forklaring = undefined,
     submitSpinner = false,
     valideringErOk,
     onAvbrytCallback,
@@ -29,6 +32,7 @@ const SkjemaModal: React.FC<{
     children,
 }) => {
     const { formatMessage } = useIntl();
+    const { toggles } = useFeatureToggles();
 
     return (
         <Modal
@@ -45,6 +49,9 @@ const SkjemaModal: React.FC<{
             }}
         >
             <ModalContent>
+                {toggles.NYE_MODAL_TEKSTER && forklaring && (
+                    <BodyShort spacing>{forklaring}</BodyShort>
+                )}
                 <form id="skjema">{children}</form>
             </ModalContent>
             <Modal.Footer>

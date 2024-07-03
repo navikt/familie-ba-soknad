@@ -13,7 +13,7 @@ Select scopes `repo` og `read:packages`
 `export NPM_TOKEN=<ditt token>` i ~/.zshrc
 
 ## Legg til token for unleash for lokalmiljø
-1. Hent development token fra [unleash](https://teamfamilie-unleash-web.nav.cloud.nais.io/admin/api)
+1. Hent development token fra [unleash](https://teamfamilie-unleash-web.iap.nav.cloud.nais.io/admin/api)
 2. Legg til variabelen UNLEASH_SERVER_API_TOKEN i `.env`: `UNLEASH_SERVER_API_TOKEN=<ditt token>`
 
 ## Kjør lokalt

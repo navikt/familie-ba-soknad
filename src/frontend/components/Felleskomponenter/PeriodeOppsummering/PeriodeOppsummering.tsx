@@ -6,10 +6,11 @@ import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, Heading } from '@navikt/ds-react';
 import { ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
+import { HeadingLevel } from '../../../typer/common';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const PeriodeContainer = styled.div<{ $bottomBorder: boolean }>`
-    margin: 2rem 0;
+    margin-bottom: 2rem;
     border-bottom: ${props => (props.$bottomBorder ? `1px solid ${ABorderDefault}` : 'none')};
 `;
 
@@ -32,6 +33,7 @@ const PeriodeOppsummering: React.FC<{
     tittelSpråkId: string;
     vedleggNotis?: ReactNode;
     children?: ReactNode;
+    headingLevel?: HeadingLevel;
 }> = ({
     nummer,
     fjernPeriodeCallback = undefined,
@@ -39,12 +41,13 @@ const PeriodeOppsummering: React.FC<{
     tittelSpråkId,
     vedleggNotis,
     children,
+    headingLevel = '3',
 }) => {
     const skalHaBottomBorder = !!fjernPeriodeCallback;
 
     return (
         <PeriodeContainer $bottomBorder={skalHaBottomBorder}>
-            <StyledHeading level={'2'} size={'xsmall'}>
+            <StyledHeading level={headingLevel} size={'small'}>
                 <SpråkTekst id={tittelSpråkId} values={{ x: nummer }} />
             </StyledHeading>
             {children}

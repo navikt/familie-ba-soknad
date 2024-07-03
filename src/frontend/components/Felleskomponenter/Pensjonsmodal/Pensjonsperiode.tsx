@@ -4,6 +4,7 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import {
@@ -12,9 +13,11 @@ import {
     IEøsForSøkerFeltTyper,
     IOmBarnetFeltTyper,
 } from '../../../typer/skjema';
+import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import PerioderContainer from '../PerioderContainer';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -56,6 +59,8 @@ export const Pensjonsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { toggles } = useFeatureToggles();
+
     const {
         erÅpen: pensjonsmodalErÅpen,
         lukkModal: lukkPensjonsmodal,
@@ -64,6 +69,18 @@ export const Pensjonsperiode: React.FC<Props> = ({
     const pensjonsperiodeSpørsmålId = gjelderUtlandet
         ? PensjonsperiodeSpørsmålId.pensjonsperioderUtland
         : PensjonsperiodeSpørsmålId.pensjonsperioderNorge;
+
+    const antallPerioder = registrertePensjonsperioder.verdi.length;
+    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
+        'pensjonsperiode',
+        personType,
+        antallPerioder,
+        undefined,
+        {
+            gjelderUtland: gjelderUtlandet,
+        }
+    );
+
     return (
         <>
             <JaNeiSpm
@@ -83,7 +100,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                 }}
             />
             {mottarEllerMottattPensjonFelt.verdi === ESvar.JA && (
-                <>
+                <PerioderContainer>
                     {registrertePensjonsperioder.verdi.map((pensjonsperiode, index) => (
                         <PensjonsperiodeOppsummering
                             key={`pensjonsperiode-${index}`}
@@ -96,8 +113,8 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             barn={personType !== PersonType.Søker ? barn : undefined}
                         />
                     ))}
-                    {registrertePensjonsperioder.verdi.length > 0 && (
-                        <Label as="p">
+                    {!toggles.NYE_MODAL_TEKSTER && registrertePensjonsperioder.verdi.length > 0 && (
+                        <Label as="p" spacing>
                             <SpråkTekst
                                 id={pensjonFlerePerioderSpmSpråkId(gjelderUtlandet, personType)}
                                 values={{
@@ -109,6 +126,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpnePensjonsmodal}
                         språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}
+                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: pensjonsperiodeSpørsmålId,
@@ -131,9 +149,10 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             personType={personType}
                             erDød={erDød}
                             barn={barn}
+                            forklaring={leggTilPeriodeTekster?.tekstForModal}
                         />
                     )}
-                </>
+                </PerioderContainer>
             )}
         </>
     );

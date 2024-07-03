@@ -23,7 +23,11 @@ const Container = styled.div`
 export const SkjemaFeiloppsummering: React.FC<Props> = ({ skjema, routeForFeilmeldinger, id }) => {
     return (
         <Container role={'alert'}>
-            <ErrorSummary id={id} heading={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}>
+            <ErrorSummary
+                id={id}
+                heading={<SpråkTekst id={'felles.feiloppsummering.tittel'} />}
+                headingTag="h3"
+            >
                 {Object.values(skjema.felter)
                     .filter(felt => {
                         return felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL;

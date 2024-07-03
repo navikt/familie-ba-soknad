@@ -8,6 +8,12 @@ import {
 import { pipe } from 'ramda';
 
 import { LocaleType } from '../typer/common';
+import { IAndreUtbetalingerTekstinnhold } from '../typer/sanity/modaler/andreUtbetalinger';
+import { IArbeidsperiodeTekstinnhold } from '../typer/sanity/modaler/arbeidsperiode';
+import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';
+import { IPensjonsperiodeTekstinnhold } from '../typer/sanity/modaler/pensjonsperiode';
+import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
+import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlandsopphold';
 import {
     ESanityFlettefeltverdi,
     ESanitySteg,
@@ -15,13 +21,112 @@ import {
     frittståendeOrdPrefix,
     LocaleRecordBlock,
     LocaleRecordString,
+    modalPrefix,
     SanityDokument,
 } from '../typer/sanity/sanity';
 import {
     IFellesTekstInnhold,
     IFrittståendeOrdTekstinnhold,
+    IModalerTekstinnhold,
     ITekstinnhold,
+    SanityModalPrefix,
+    SanityPersonType,
 } from '../typer/sanity/tekstInnhold';
+
+const strukturerInnholdForSteg = (
+    dokumenter: SanityDokument[],
+    steg: ESanitySteg
+): Record<string, SanityDokument> =>
+    dokumenter
+        .filter(dok => dok.steg === steg)
+        .reduce((acc, dok) => {
+            return { ...acc, [dok.api_navn]: dok };
+        }, {});
+
+const struktrerInnholdForFelles = (
+    dokumenter: SanityDokument[],
+    personType?: SanityPersonType
+): Partial<IFellesTekstInnhold> =>
+    dokumenter
+        .filter(dok => (personType ? dok._type.includes(personType) : dok))
+        .reduce((acc, dok) => {
+            return { ...acc, [dok.api_navn]: dok };
+        }, {});
+
+const dokumenterFiltrertPåPrefix = (dokumenter: SanityDokument[], prefix) =>
+    dokumenter.filter(dok => dok._type.includes(prefix));
+
+const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTekstinnhold => {
+    const strukturerInnholdForModal = (prefix: string, personType?: SanityPersonType) =>
+        struktrerInnholdForFelles(dokumenterFiltrertPåPrefix(dokumenter, prefix), personType);
+
+    const arbeidsperiode = (personType: SanityPersonType) =>
+        strukturerInnholdForModal(
+            SanityModalPrefix.ARBEIDSPERIODE,
+            personType
+        ) as IArbeidsperiodeTekstinnhold;
+
+    const barnetrygsdperiode = (personType: SanityPersonType) =>
+        strukturerInnholdForModal(
+            SanityModalPrefix.BARNETRYGDSPERIODE,
+            personType
+        ) as IBarnetrygdsperiodeTekstinnhold;
+
+    const pensjonsperiode = (personType: SanityPersonType) =>
+        strukturerInnholdForModal(
+            SanityModalPrefix.PENSJONSPERIODE,
+            personType
+        ) as IPensjonsperiodeTekstinnhold;
+
+    const andreUtbetalinger = (personType: SanityPersonType) =>
+        strukturerInnholdForModal(
+            SanityModalPrefix.ANDRE_UTBETALINGER,
+            personType
+        ) as IAndreUtbetalingerTekstinnhold;
+
+    const tidligereSamboere = (personType: SanityPersonType) =>
+        strukturerInnholdForModal(
+            SanityModalPrefix.TIDLIGERE_SAMBOERE,
+            personType
+        ) as ITidligereSamoboereTekstinnhold;
+
+    const utenlandsopphold = (personType: SanityPersonType) =>
+        strukturerInnholdForModal(
+            SanityModalPrefix.UTENLANDSOPPHOLD,
+            personType
+        ) as IUtenlandsoppholdTekstinnhold;
+
+    return {
+        arbeidsperiode: {
+            søker: arbeidsperiode(SanityPersonType.SOKER),
+            andreForelder: arbeidsperiode(SanityPersonType.ANDRE_FORELDER),
+            omsorgsperson: arbeidsperiode(SanityPersonType.OMSORGSPERSON),
+        },
+        barnetrygdsperiode: {
+            søker: barnetrygsdperiode(SanityPersonType.SOKER),
+            andreForelder: barnetrygsdperiode(SanityPersonType.ANDRE_FORELDER),
+            omsorgsperson: barnetrygsdperiode(SanityPersonType.OMSORGSPERSON),
+        },
+        pensjonsperiode: {
+            søker: pensjonsperiode(SanityPersonType.SOKER),
+            andreForelder: pensjonsperiode(SanityPersonType.ANDRE_FORELDER),
+            omsorgsperson: pensjonsperiode(SanityPersonType.OMSORGSPERSON),
+        },
+        andreUtbetalinger: {
+            søker: andreUtbetalinger(SanityPersonType.SOKER),
+            andreForelder: andreUtbetalinger(SanityPersonType.ANDRE_FORELDER),
+            omsorgsperson: andreUtbetalinger(SanityPersonType.OMSORGSPERSON),
+        },
+        tidligereSamboere: {
+            søker: tidligereSamboere(SanityPersonType.SOKER),
+        },
+        utenlandsopphold: {
+            søker: utenlandsopphold(SanityPersonType.SOKER),
+            barn: utenlandsopphold(SanityPersonType.OMSORGSPERSON),
+            andreForelder: utenlandsopphold(SanityPersonType.ANDRE_FORELDER),
+        },
+    };
+};
 
 export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): ITekstinnhold => {
     const fellesDokumenter = alleDokumenter.filter(dok => dok.steg === ESanitySteg.FELLES);
@@ -37,30 +142,17 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
     }
 
     tekstInnhold[ESanitySteg.FELLES] = {
+        modaler: {
+            ...strukturertInnholdForModaler(
+                dokumenterFiltrertPåPrefix(fellesDokumenter, modalPrefix)
+            ),
+        },
         frittståendeOrd: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, frittståendeOrdPrefix)
         ) as IFrittståendeOrdTekstinnhold,
     };
     return tekstInnhold as ITekstinnhold;
 };
-
-const strukturerInnholdForSteg = (
-    dokumenter: SanityDokument[],
-    steg: ESanitySteg
-): Record<string, SanityDokument> =>
-    dokumenter
-        .filter(dok => dok.steg === steg)
-        .reduce((acc, dok) => {
-            return { ...acc, [dok.api_navn]: dok };
-        }, {});
-
-const struktrerInnholdForFelles = (dokumenter: SanityDokument[]): Partial<IFellesTekstInnhold> =>
-    dokumenter.reduce((acc, dok) => {
-        return { ...acc, [dok.api_navn]: dok };
-    }, {});
-
-const dokumenterFiltrertPåPrefix = (dokumenter: SanityDokument[], prefix) =>
-    dokumenter.filter(dok => dok._type.includes(prefix));
 
 // Denne funksjonen har kopiert mye fra en tråd i Sanity-slacken:
 // https://sanity-io.slack.com/archives/CF876M37F/p1664206409432079?thread_ts=1663841434.772959&cid=CF876M37F
