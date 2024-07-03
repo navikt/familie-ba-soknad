@@ -5,11 +5,14 @@ import styled from 'styled-components';
 import { Bleed, BodyLong, Box } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../context/AppContext';
 import { BarnetsId } from '../../../typer/common';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -17,6 +20,7 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 
 import AndreForelder from './AndreForelder';
+import { IOmBarnetTekstinnhold } from './innholdTyper';
 import { OmBarnetHeader } from './OmBarnetHeader';
 import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
@@ -27,6 +31,8 @@ const EksternLenkeContainer = styled.div`
 `;
 
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
+    const { tekster } = useApp();
+
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -44,6 +50,10 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         leggTilBarnetrygdsperiode,
         fjernBarnetrygdsperiode,
     } = useOmBarnet(barnetsId);
+
+    const teskterForSteg: IOmBarnetTekstinnhold = tekster()[ESanitySteg.OM_BARNET];
+
+    const { borBarnFastSammenMedDeg, deltBosted, boddMedAndreForelder } = teskterForSteg;
 
     return barn ? (
         <Steg
@@ -107,7 +117,8 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     {skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker && (
                         <Bleed marginBlock="2 0">
                             <VedleggNotis dynamisk>
-                                <SpråkTekst id="ombarnet.bor-fast.vedleggsinfo" />
+                                {/* <SpråkTekst id="ombarnet.bor-fast.vedleggsinfo" /> */}
+                                <TekstBlock block={borBarnFastSammenMedDeg.vedleggsnotis} />
                             </VedleggNotis>
                         </Bleed>
                     )}
@@ -127,7 +138,8 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
                                 <Box paddingBlock="4 0">
                                     <VedleggNotis dynamisk>
-                                        <SpråkTekst id="ombarnet.delt-bosted.vedleggsinfo" />
+                                        {/* <SpråkTekst id="ombarnet.delt-bosted.vedleggsinfo" /> */}
+                                        <TekstBlock block={deltBosted.vedleggsnotis} />
                                     </VedleggNotis>
                                 </Box>
                             )}
@@ -180,7 +192,10 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                             }
                                         />
                                         <VedleggNotis dynamisk>
-                                            <SpråkTekst id="ombarnet.nårflyttetfra.info" />
+                                            {/* <SpråkTekst id="ombarnet.nårflyttetfra.info" /> */}
+                                            <TekstBlock
+                                                block={boddMedAndreForelder.vedleggsnotis}
+                                            />
                                         </VedleggNotis>
                                     </div>
                                 )}

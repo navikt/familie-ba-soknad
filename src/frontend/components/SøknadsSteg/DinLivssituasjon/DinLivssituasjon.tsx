@@ -7,16 +7,19 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { PersonType } from '../../../typer/personType';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 
+import { IDinLivssituasjonTekstinnhold } from './innholdTyper';
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import TidligereSamboere from './TidligereSamboere';
@@ -38,7 +41,11 @@ const DinLivssituasjon: React.FC = () => {
         fjernPensjonsperiode,
     } = useDinLivssituasjon();
 
-    const { erUtvidet, søknad } = useApp();
+    const { erUtvidet, søknad, tekster } = useApp();
+
+    const teskterForSteg: IDinLivssituasjonTekstinnhold = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
+
+    const { asylsoeker, separertSkiltEllerEnkeEnkemannUtenRegistrert } = teskterForSteg;
 
     return (
         <Steg
@@ -82,7 +89,12 @@ const DinLivssituasjon: React.FC = () => {
                         {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
                             <Bleed marginBlock="4 0">
                                 <VedleggNotis dynamisk>
-                                    <SpråkTekst id="omdeg.separertellerskilt.info" />
+                                    {/* <SpråkTekst id="omdeg.separertellerskilt.info" /> */}
+                                    <TekstBlock
+                                        block={
+                                            separertSkiltEllerEnkeEnkemannUtenRegistrert.vedleggsnotis
+                                        }
+                                    />
                                 </VedleggNotis>
                             </Bleed>
                         )}
@@ -162,7 +174,8 @@ const DinLivssituasjon: React.FC = () => {
                 {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
                     <Bleed marginBlock="4 0">
                         <VedleggNotis dynamisk>
-                            <SpråkTekst id="omdeg.asylsøker.alert" />
+                            {/* <SpråkTekst id="omdeg.asylsøker.alert" /> */}
+                            <TekstBlock block={asylsoeker.vedleggsnotis} />
                         </VedleggNotis>
                     </Bleed>
                 )}

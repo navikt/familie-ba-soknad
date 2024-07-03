@@ -7,14 +7,17 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
+import { IOmBarnaTekstinnhold } from './innholdTyper';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
 
@@ -23,13 +26,18 @@ const OmBarnaDine: React.FC = () => {
         useOmBarnaDine();
 
     const navigate = useNavigate();
-    const { søknad } = useApp();
+    const { søknad, tekster } = useApp();
     const { barnInkludertISøknaden } = søknad;
 
     if (!barnInkludertISøknaden.length) {
         navigate('/velg-barn');
         return null;
     }
+
+    const teskterForSteg: IOmBarnaTekstinnhold = tekster()[ESanitySteg.OM_BARNA];
+
+    const { adoptertBarnetrygd, asyl } = teskterForSteg;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'ombarna.sidetittel'} />}
@@ -120,7 +128,8 @@ const OmBarnaDine: React.FC = () => {
                     {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
                         <Bleed marginBlock="4 0">
                             <VedleggNotis dynamisk>
-                                <SpråkTekst id="ombarna.adoptert.alert" />
+                                {/* <SpråkTekst id="ombarna.adoptert.alert" /> */}
+                                <TekstBlock block={adoptertBarnetrygd.vedleggsnotis} />
                             </VedleggNotis>
                         </Bleed>
                     )}
@@ -143,7 +152,8 @@ const OmBarnaDine: React.FC = () => {
                     {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
                         <Bleed marginBlock="4 0">
                             <VedleggNotis dynamisk>
-                                <SpråkTekst id="ombarna.asyl.alert" />
+                                {/* <SpråkTekst id="ombarna.asyl.alert" /> */}
+                                <TekstBlock block={asyl.vedleggsnotis} />
                             </VedleggNotis>
                         </Bleed>
                     )}

@@ -4,10 +4,12 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import {
     dagensDato,
@@ -25,6 +27,7 @@ import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
@@ -35,6 +38,7 @@ import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdM
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 
+import { IOmBarnetTekstinnhold } from './innholdTyper';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const Oppfølgningsspørsmål: React.FC<{
@@ -56,6 +60,7 @@ const Oppfølgningsspørsmål: React.FC<{
     fjernBarnetrygdsperiode,
     registrerteEøsBarnetrygdsperioder,
 }) => {
+    const { tekster } = useApp();
     const { toggles } = useFeatureToggles();
     const {
         erÅpen: utenlandsmodalErÅpen,
@@ -85,6 +90,10 @@ const Oppfølgningsspørsmål: React.FC<{
         antallPerioder
     );
 
+    const teskterForSteg: IOmBarnetTekstinnhold = tekster()[ESanitySteg.OM_BARNET];
+
+    const { opplystFosterbarn } = teskterForSteg;
+
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
@@ -95,7 +104,11 @@ const Oppfølgningsspørsmål: React.FC<{
                         headingLevel="4"
                     >
                         <VedleggNotis dynamisk>
-                            <SpråkTekst id="ombarnet.fosterbarn.vedleggsinfo" />
+                            {/* <SpråkTekst id="ombarnet.fosterbarn.vedleggsinfo" /> */}
+                            <TekstBlock
+                                block={opplystFosterbarn}
+                                flettefelter={{ barnetsNavn: barn.navn }}
+                            />
                         </VedleggNotis>
                     </Informasjonsbolk>
                 </KomponentGruppe>

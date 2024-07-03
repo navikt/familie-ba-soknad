@@ -1,3 +1,7 @@
+import { IDinLivssituasjonTekstinnhold } from '../../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
+import { IOmBarnaTekstinnhold } from '../../components/SøknadsSteg/OmBarnaDine/innholdTyper';
+import { IOmBarnetTekstinnhold } from '../../components/SøknadsSteg/OmBarnet/innholdTyper';
+
 import { IAndreUtbetalingerTekstinnhold } from './modaler/andreUtbetalinger';
 import { IArbeidsperiodeTekstinnhold } from './modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
@@ -28,6 +32,9 @@ export enum SanityModalPrefix {
 
 export interface ITekstinnhold {
     [ESanitySteg.FORSIDE]: IForsideTekstinnhold;
+    [ESanitySteg.DIN_LIVSSITUASJON]: IDinLivssituasjonTekstinnhold;
+    [ESanitySteg.OM_BARNA]: IOmBarnaTekstinnhold;
+    [ESanitySteg.OM_BARNET]: IOmBarnetTekstinnhold;
     [ESanitySteg.FELLES]: IFellesTekstInnhold;
 }
 

@@ -16,6 +16,9 @@ export interface SanityDokument {
 
 export enum ESanitySteg {
     FORSIDE = 'FORSIDE',
+    DIN_LIVSSITUASJON = 'DIN_LIVSSITUASJON',
+    OM_BARNA = 'OM_BARNA',
+    OM_BARNET = 'OM_BARNET',
     FELLES = 'FELLES',
 }
 
