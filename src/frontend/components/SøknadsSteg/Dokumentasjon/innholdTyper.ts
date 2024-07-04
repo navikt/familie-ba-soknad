@@ -8,5 +8,6 @@ export type IDokumentasjonTekstinnhold = {
     [BeskrivelseSanityApiNavn.bekreftelsePaaAtBarnBorSammenMedDeg]: LocaleRecordBlock;
     [BeskrivelseSanityApiNavn.avtaleOmDeltBosted]: LocaleRecordBlock;
     [BeskrivelseSanityApiNavn.meklingsattest]: LocaleRecordBlock;
-    [BeskrivelseSanityApiNavn.bekreftelseFraBarnevernet]: LocaleRecordBlock;
+    [BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBarnetrygd]: LocaleRecordBlock;
+    [BeskrivelseSanityApiNavn.lastOppSenereISoknad]: LocaleRecordBlock;
 };

@@ -31,7 +31,8 @@ export enum BeskrivelseSanityApiNavn {
     bekreftelsePaaAtBarnBorSammenMedDeg = 'bekreftelsePaaAtBarnBorSammenMedDeg',
     avtaleOmDeltBosted = 'avtaleOmDeltBosted',
     meklingsattest = 'meklingsattest',
-    bekreftelseFraBarnevernet = 'bekreftelseFraBarnevernet',
+    bekreftelseFraBarnevernetBarnetrygd = 'bekreftelseFraBarnevernetBarnetrygd',
+    lastOppSenereISoknad = 'lastOppSenereISoknad',
 }
 
 export const dokumentasjonsbehovTilSpråkId = (dokumentasjonsbehov: Dokumentasjonsbehov): string => {

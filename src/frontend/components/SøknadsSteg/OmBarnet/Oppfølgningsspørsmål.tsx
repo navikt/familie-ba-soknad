@@ -92,7 +92,7 @@ const Oppfølgningsspørsmål: React.FC<{
 
     const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
 
-    const { bekreftelseFraBarnevernet } = dokumentasjonstekster;
+    const { bekreftelseFraBarnevernetBarnetrygd } = dokumentasjonstekster;
 
     return (
         <>
@@ -106,7 +106,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         <VedleggNotis dynamisk>
                             {toggles.NYE_VEDLEGGSTEKSTER ? (
                                 <TekstBlock
-                                    block={bekreftelseFraBarnevernet}
+                                    block={bekreftelseFraBarnevernetBarnetrygd}
                                     flettefelter={{ barnetsNavn: barn.navn }}
                                 />
                             ) : (
