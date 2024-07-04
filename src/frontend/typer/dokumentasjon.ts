@@ -26,9 +26,8 @@ export enum EFiltyper {
 
 export enum BeskrivelseSanityApiNavn {
     dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall = 'dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall',
-    // TODO: Legg til i Sanity: DIN_LIVSSITUASJON - asylsoeker
+    vedtakOmOppholdstillatelse = 'vedtakOmOppholdstillatelse',
     bekreftelsePaaAdopsjonBarnetrygd = 'bekreftelsePaaAdopsjonBarnetrygd',
-    // TODO: Legg til i Sanity: OM_BARNA - asyl
     bekreftelsePaaAtBarnBorSammenMedDeg = 'bekreftelsePaaAtBarnBorSammenMedDeg',
     avtaleOmDeltBosted = 'avtaleOmDeltBosted',
     meklingsattest = 'meklingsattest',

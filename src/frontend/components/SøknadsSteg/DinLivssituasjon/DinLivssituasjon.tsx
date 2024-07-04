@@ -46,13 +46,10 @@ const DinLivssituasjon: React.FC = () => {
 
     const { toggles } = useFeatureToggles();
 
-    console.log(toggles.NYE_VEDLEGGSTEKSTER);
-
     const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
 
-    const { dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall } = dokumentasjonstekster; // TODO: Legg til i Sanity: DIN_LIVSSITUASJON - asylsoeker
-
-    console.log(dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall);
+    const { dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall, vedtakOmOppholdstillatelse } =
+        dokumentasjonstekster;
 
     return (
         <Steg
@@ -185,8 +182,7 @@ const DinLivssituasjon: React.FC = () => {
                     <Bleed marginBlock="4 0">
                         <VedleggNotis dynamisk>
                             {toggles.NYE_VEDLEGGSTEKSTER ? (
-                                /* <TekstBlock block={} /> */
-                                <div>TODO: Tekst i TekstBlock må legges til</div>
+                                <TekstBlock block={vedtakOmOppholdstillatelse} />
                             ) : (
                                 <SpråkTekst id="omdeg.asylsøker.alert" />
                             )}

@@ -39,7 +39,7 @@ const OmBarnaDine: React.FC = () => {
 
     const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
 
-    const { bekreftelsePaaAdopsjonBarnetrygd } = dokumentasjonstekster; // TODO: Legg til i Sanity: OM_BARNA - asyl
+    const { bekreftelsePaaAdopsjonBarnetrygd, vedtakOmOppholdstillatelse } = dokumentasjonstekster;
 
     return (
         <Steg
@@ -159,8 +159,7 @@ const OmBarnaDine: React.FC = () => {
                         <Bleed marginBlock="4 0">
                             <VedleggNotis dynamisk>
                                 {toggles.NYE_VEDLEGGSTEKSTER ? (
-                                    /* <TekstBlock block={} /> */
-                                    <div>TODO: Tekst i TekstBlock må legges til</div>
+                                    <TekstBlock block={vedtakOmOppholdstillatelse} />
                                 ) : (
                                     <SpråkTekst id="ombarna.asyl.alert" />
                                 )}
