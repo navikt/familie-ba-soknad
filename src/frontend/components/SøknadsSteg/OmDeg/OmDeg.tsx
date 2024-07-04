@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
+import { Alert, Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { PersonType } from '../../../typer/personType';
 import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
-import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
@@ -70,11 +69,11 @@ const OmDeg: React.FC = () => {
                 />
 
                 {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <FamilieAlert variant={'warning'}>
+                    <Alert variant={'warning'}>
                         <SpråkTekst
                             id={'omdeg.borpådenneadressen.kontakt-folkeregister-ukjent.alert'}
                         />
-                    </FamilieAlert>
+                    </Alert>
                 )}
             </KomponentGruppe>
             <KomponentGruppe>
@@ -86,9 +85,9 @@ const OmDeg: React.FC = () => {
                             omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
                         }
                         tilleggsinfo={
-                            <FamilieAlert variant={'info'}>
+                            <Alert variant={'info'}>
                                 <SpråkTekst id={'felles.korteopphold.info'} />
-                            </FamilieAlert>
+                            </Alert>
                         }
                     />
                     {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
@@ -133,11 +132,11 @@ const OmDeg: React.FC = () => {
                         />
                         {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig &&
                             skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                                <FamilieAlert variant={'warning'} dynamisk>
+                                <Alert variant={'warning'} aria-live={'polite'}>
                                     <SpråkTekst
                                         id={'omdeg.planlagt-opphold-sammenhengende.alert'}
                                     />
-                                </FamilieAlert>
+                                </Alert>
                             )}
                     </KomponentGruppe>
                 )}

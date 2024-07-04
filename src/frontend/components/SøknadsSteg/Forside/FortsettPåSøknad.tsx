@@ -3,9 +3,8 @@ import React, { FC } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 
-import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import ModalContent from '../../Felleskomponenter/ModalContent';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -34,11 +33,11 @@ const FortsettPåSøknad: FC = () => {
     return (
         <StyledFortsettPåSøknad role={'navigation'}>
             <KomponentGruppe>
-                <FamilieAlert variant={'info'} inline={false}>
+                <Alert variant={'info'}>
                     <BodyLong>
                         <SpråkTekst id={'mellomlagring.info'} />
                     </BodyLong>
-                </FamilieAlert>
+                </Alert>
             </KomponentGruppe>
             <StyledButton onClick={fortsettPåSøknaden}>
                 <SpråkTekst id={'mellomlagring.knapp.fortsett'} />

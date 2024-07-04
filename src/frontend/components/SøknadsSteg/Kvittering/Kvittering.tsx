@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { format } from 'date-fns';
 
-import { BodyLong } from '@navikt/ds-react';
+import { Alert, BodyLong } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
@@ -11,7 +11,6 @@ import { RouteEnum } from '../../../typer/routes';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
-import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -53,7 +52,7 @@ const Kvittering: React.FC = () => {
     return (
         <Steg tittel={<SpråkTekst id={'kvittering.sidetittel'} />}>
             <KomponentGruppe>
-                <FamilieAlert variant={'success'} inline={false}>
+                <Alert variant={'success'}>
                     <SpråkTekst
                         id={'kvittering.mottatt'}
                         values={{
@@ -61,7 +60,7 @@ const Kvittering: React.FC = () => {
                             dato: dato,
                         }}
                     />
-                </FamilieAlert>
+                </Alert>
             </KomponentGruppe>
             <KomponentGruppe>
                 <BodyLong>

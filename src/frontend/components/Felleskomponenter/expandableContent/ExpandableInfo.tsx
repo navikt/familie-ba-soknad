@@ -4,9 +4,7 @@ import { css } from 'styled-components';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
-import { BodyShort } from '@navikt/ds-react';
-
-import FamilieAlert from '../FamilieAlert/FamilieAlert';
+import { Alert, BodyShort } from '@navikt/ds-react';
 
 import CollapsableContainer from './CollapsableContainer';
 import InfoToggleButton from './InfoToggleButton';
@@ -68,13 +66,7 @@ const ExpandableInfo = ({
             </ButtonContainer>
             <InnholdContainer id={toggleContentId}>
                 <CollapsableContainer isOpen={isOpen} animated={true} ariaLive="polite">
-                    {filledBackground ? (
-                        <FamilieAlert variant={'info'} inline={false}>
-                            {children}
-                        </FamilieAlert>
-                    ) : (
-                        children
-                    )}
+                    {filledBackground ? <Alert variant={'info'}>{children}</Alert> : children}
                 </CollapsableContainer>
             </InnholdContainer>
         </Container>

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
@@ -8,7 +9,6 @@ import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../.
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
-import FamilieAlert from '../FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -165,9 +165,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                             }),
                         }}
                         description={
-                            <FamilieAlert variant={'info'}>
+                            <Alert variant={'info'}>
                                 <SpråkTekst id={'ombarnet.trygdbeløp.info'} />
-                            </FamilieAlert>
+                            </Alert>
                         }
                         fullbredde={false}
                     />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
+import { Alert, Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -19,7 +19,6 @@ import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
-import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -229,11 +228,11 @@ const Oppfølgningsspørsmål: React.FC<{
                                 språkValues={{ barn: barn.navn }}
                             />
                             {planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
-                                <FamilieAlert variant={'warning'} dynamisk>
+                                <Alert variant={'warning'} aria-live={'polite'}>
                                     <SpråkTekst
                                         id={'ombarnet.planlagt-sammenhengende-opphold.alert'}
                                     />
-                                </FamilieAlert>
+                                </Alert>
                             )}
                         </KomponentGruppe>
                     )}
