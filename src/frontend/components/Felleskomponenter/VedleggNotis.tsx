@@ -9,6 +9,8 @@ import { ESanitySteg, FlettefeltVerdier, LocaleRecordBlock } from '../../typer/s
 import TekstBlock from './Sanity/TekstBlock';
 import SpråkTekst from './SpråkTekst/SpråkTekst';
 
+// TODO: Når toggles.NYE_VEDLEGGSTEKSTER fjernes, fjern også språkTekstId som prop.
+
 export const VedleggNotis: React.FC<{
     block: LocaleRecordBlock;
     flettefelter?: FlettefeltVerdier;
@@ -18,15 +20,16 @@ export const VedleggNotis: React.FC<{
     const { tekster, plainTekst } = useApp();
     const { toggles } = useFeatureToggles();
 
+    const dokumentasjonTekster = tekster()[ESanitySteg.DOKUMENTASJON];
+    const { lastOppSenereISoknad } = dokumentasjonTekster;
+
     return (
         <Alert variant="info" aria-live={dynamisk ? 'polite' : 'off'}>
             {toggles.NYE_VEDLEGGSTEKSTER ? (
                 <>
                     <TekstBlock block={block} flettefelter={flettefelter} />
                     <Box paddingBlock="4 0">
-                        <BodyShort>
-                            {plainTekst(tekster()[ESanitySteg.DOKUMENTASJON].lastOppSenereISoknad)}
-                        </BodyShort>
+                        <BodyShort>{plainTekst(lastOppSenereISoknad)}</BodyShort>
                     </Box>
                 </>
             ) : (
