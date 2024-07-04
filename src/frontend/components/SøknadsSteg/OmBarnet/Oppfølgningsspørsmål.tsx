@@ -27,7 +27,6 @@ import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
@@ -103,16 +102,12 @@ const Oppfølgningsspørsmål: React.FC<{
                         språkValues={{ navn: barn.navn }}
                         headingLevel="4"
                     >
-                        <VedleggNotis dynamisk>
-                            {toggles.NYE_VEDLEGGSTEKSTER ? (
-                                <TekstBlock
-                                    block={bekreftelseFraBarnevernetBarnetrygd}
-                                    flettefelter={{ barnetsNavn: barn.navn }}
-                                />
-                            ) : (
-                                <SpråkTekst id="ombarnet.fosterbarn.vedleggsinfo" />
-                            )}
-                        </VedleggNotis>
+                        <VedleggNotis
+                            block={bekreftelseFraBarnevernetBarnetrygd}
+                            flettefelter={{ barnetsNavn: barn.navn }}
+                            språkTekstId="ombarnet.fosterbarn.vedleggsinfo"
+                            dynamisk
+                        />
                     </Informasjonsbolk>
                 </KomponentGruppe>
             )}

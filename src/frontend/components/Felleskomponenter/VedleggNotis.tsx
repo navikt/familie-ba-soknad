@@ -1,27 +1,36 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { Alert, BodyShort, Box } from '@navikt/ds-react';
 
 import { useApp } from '../../context/AppContext';
 import { useFeatureToggles } from '../../context/FeatureToggleContext';
-import { ESanitySteg } from '../../typer/sanity/sanity';
+import { ESanitySteg, FlettefeltVerdier, LocaleRecordBlock } from '../../typer/sanity/sanity';
+
+import TekstBlock from './Sanity/TekstBlock';
+import SpråkTekst from './SpråkTekst/SpråkTekst';
 
 export const VedleggNotis: React.FC<{
-    children?: ReactNode;
+    block: LocaleRecordBlock;
+    flettefelter?: FlettefeltVerdier;
+    språkTekstId: string;
     dynamisk?: boolean;
-}> = ({ children, dynamisk = false }) => {
+}> = ({ block, flettefelter, språkTekstId, dynamisk = false }) => {
     const { tekster, plainTekst } = useApp();
     const { toggles } = useFeatureToggles();
 
     return (
         <Alert variant="info" aria-live={dynamisk ? 'polite' : 'off'}>
-            {children ? children : null}
-            {toggles.NYE_VEDLEGGSTEKSTER && (
-                <Box paddingBlock="4 0">
-                    <BodyShort>
-                        {plainTekst(tekster()[ESanitySteg.DOKUMENTASJON].lastOppSenereISoknad)}
-                    </BodyShort>
-                </Box>
+            {toggles.NYE_VEDLEGGSTEKSTER ? (
+                <>
+                    <TekstBlock block={block} flettefelter={flettefelter} />
+                    <Box paddingBlock="4 0">
+                        <BodyShort>
+                            {plainTekst(tekster()[ESanitySteg.DOKUMENTASJON].lastOppSenereISoknad)}
+                        </BodyShort>
+                    </Box>
+                </>
+            ) : (
+                <SpråkTekst id={språkTekstId} />
             )}
         </Alert>
     );

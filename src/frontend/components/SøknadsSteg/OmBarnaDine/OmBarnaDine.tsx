@@ -6,13 +6,11 @@ import { Bleed } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
@@ -34,8 +32,6 @@ const OmBarnaDine: React.FC = () => {
         navigate('/velg-barn');
         return null;
     }
-
-    const { toggles } = useFeatureToggles();
 
     const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
 
@@ -130,13 +126,11 @@ const OmBarnaDine: React.FC = () => {
                     />
                     {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
                         <Bleed marginBlock="4 0">
-                            <VedleggNotis dynamisk>
-                                {toggles.NYE_VEDLEGGSTEKSTER ? (
-                                    <TekstBlock block={bekreftelsePaaAdopsjonBarnetrygd} />
-                                ) : (
-                                    <SpråkTekst id="ombarna.adoptert.alert" />
-                                )}
-                            </VedleggNotis>
+                            <VedleggNotis
+                                block={bekreftelsePaaAdopsjonBarnetrygd}
+                                språkTekstId="ombarna.adoptert.alert"
+                                dynamisk
+                            />
                         </Bleed>
                     )}
                     <JaNeiSpm
@@ -157,13 +151,11 @@ const OmBarnaDine: React.FC = () => {
                     />
                     {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
                         <Bleed marginBlock="4 0">
-                            <VedleggNotis dynamisk>
-                                {toggles.NYE_VEDLEGGSTEKSTER ? (
-                                    <TekstBlock block={vedtakOmOppholdstillatelse} />
-                                ) : (
-                                    <SpråkTekst id="ombarna.asyl.alert" />
-                                )}
-                            </VedleggNotis>
+                            <VedleggNotis
+                                block={vedtakOmOppholdstillatelse}
+                                språkTekstId="ombarna.asyl.alert"
+                                dynamisk
+                            />
                         </Bleed>
                     )}
                 </KomponentGruppe>

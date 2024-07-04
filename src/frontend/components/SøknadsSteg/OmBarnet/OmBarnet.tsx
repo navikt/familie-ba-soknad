@@ -6,14 +6,12 @@ import { Bleed, BodyLong, Box } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { BarnetsId } from '../../../typer/common';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -33,8 +31,6 @@ const EksternLenkeContainer = styled.div`
 
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     const { tekster } = useApp();
-
-    const { toggles } = useFeatureToggles();
 
     const {
         skjema,
@@ -120,16 +116,12 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     />
                     {skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker && (
                         <Bleed marginBlock="2 0">
-                            <VedleggNotis dynamisk>
-                                {toggles.NYE_VEDLEGGSTEKSTER ? (
-                                    <TekstBlock
-                                        block={bekreftelsePaaAtBarnBorSammenMedDeg}
-                                        flettefelter={{ barnetsNavn: barn.navn }}
-                                    />
-                                ) : (
-                                    <SpråkTekst id="ombarnet.bor-fast.vedleggsinfo" />
-                                )}
-                            </VedleggNotis>
+                            <VedleggNotis
+                                block={bekreftelsePaaAtBarnBorSammenMedDeg}
+                                flettefelter={{ barnetsNavn: barn.navn }}
+                                språkTekstId="ombarnet.bor-fast.vedleggsinfo"
+                                dynamisk
+                            />
                         </Bleed>
                     )}
 
@@ -147,16 +139,12 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             />
                             {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
                                 <Box paddingBlock="4 0">
-                                    <VedleggNotis dynamisk>
-                                        {toggles.NYE_VEDLEGGSTEKSTER ? (
-                                            <TekstBlock
-                                                block={avtaleOmDeltBosted}
-                                                flettefelter={{ barnetsNavn: barn.navn }}
-                                            />
-                                        ) : (
-                                            <SpråkTekst id="ombarnet.delt-bosted.vedleggsinfo" />
-                                        )}
-                                    </VedleggNotis>
+                                    <VedleggNotis
+                                        block={avtaleOmDeltBosted}
+                                        flettefelter={{ barnetsNavn: barn.navn }}
+                                        språkTekstId="ombarnet.delt-bosted.vedleggsinfo"
+                                        dynamisk
+                                    />
                                 </Box>
                             )}
                         </>
@@ -207,16 +195,12 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                                 ]
                                             }
                                         />
-                                        <VedleggNotis dynamisk>
-                                            {toggles.NYE_VEDLEGGSTEKSTER ? (
-                                                <TekstBlock
-                                                    block={meklingsattest}
-                                                    flettefelter={{ barnetsNavn: barn.navn }}
-                                                />
-                                            ) : (
-                                                <SpråkTekst id="ombarnet.nårflyttetfra.info" />
-                                            )}
-                                        </VedleggNotis>
+                                        <VedleggNotis
+                                            block={meklingsattest}
+                                            flettefelter={{ barnetsNavn: barn.navn }}
+                                            språkTekstId="ombarnet.nårflyttetfra.info"
+                                            dynamisk
+                                        />
                                     </div>
                                 )}
                             </>
