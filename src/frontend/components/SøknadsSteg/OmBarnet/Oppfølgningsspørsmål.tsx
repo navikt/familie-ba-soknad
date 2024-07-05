@@ -4,12 +4,10 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import {
     dagensDato,
@@ -36,7 +34,6 @@ import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/Utenlandso
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
-import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
@@ -59,7 +56,6 @@ const Oppfølgningsspørsmål: React.FC<{
     fjernBarnetrygdsperiode,
     registrerteEøsBarnetrygdsperioder,
 }) => {
-    const { tekster } = useApp();
     const { toggles } = useFeatureToggles();
     const {
         erÅpen: utenlandsmodalErÅpen,
@@ -89,10 +85,6 @@ const Oppfølgningsspørsmål: React.FC<{
         antallPerioder
     );
 
-    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
-
-    const { bekreftelseFraBarnevernetBarnetrygd } = dokumentasjonstekster;
-
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
@@ -102,12 +94,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         språkValues={{ navn: barn.navn }}
                         headingLevel="4"
                     >
-                        <VedleggNotis
-                            block={bekreftelseFraBarnevernetBarnetrygd}
-                            flettefelter={{ barnetsNavn: barn.navn }}
-                            språkTekstId="ombarnet.fosterbarn.vedleggsinfo"
-                            dynamisk
-                        />
+                        <VedleggNotis språkTekstId={'ombarnet.fosterbarn.vedleggsinfo'} />
                     </Informasjonsbolk>
                 </KomponentGruppe>
             )}
