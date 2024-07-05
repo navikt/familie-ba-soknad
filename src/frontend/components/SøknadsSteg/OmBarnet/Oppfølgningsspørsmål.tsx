@@ -228,7 +228,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                 språkValues={{ barn: barn.navn }}
                             />
                             {planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
-                                <Alert variant={'warning'} aria-live={'polite'}>
+                                <Alert variant={'warning'} inline aria-live={'polite'}>
                                     <SpråkTekst
                                         id={'ombarnet.planlagt-sammenhengende-opphold.alert'}
                                     />

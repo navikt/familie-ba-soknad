@@ -49,7 +49,7 @@ const LeggTilBarnModal: React.FC<{
                     spørsmålTekstId={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnErFødt]}
                 />
                 {skjema.felter.erFødt.verdi === ESvar.NEI && (
-                    <Alert variant={'warning'}>
+                    <Alert variant={'warning'} inline>
                         <SpråkTekst id={'hvilkebarn.leggtilbarn.barn-ikke-født.alert'} />
                     </Alert>
                 )}

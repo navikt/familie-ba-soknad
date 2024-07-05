@@ -165,7 +165,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                             }),
                         }}
                         description={
-                            <Alert variant={'info'}>
+                            <Alert variant={'info'} inline>
                                 <SpråkTekst id={'ombarnet.trygdbeløp.info'} />
                             </Alert>
                         }

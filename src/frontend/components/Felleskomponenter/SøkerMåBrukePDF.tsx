@@ -20,7 +20,7 @@ const LenkeContainer = styled.div`
 export const SøkerMåBrukePDF: FC<Props> = ({ advarselTekstId, utfyllendeAdvarselInfoId }) => {
     return (
         <Informasjonsbolk aria-live={'polite'}>
-            <Alert variant={'warning'}>
+            <Alert variant={'warning'} inline>
                 <SpråkTekst id={advarselTekstId} />
             </Alert>
             {utfyllendeAdvarselInfoId && (

@@ -15,7 +15,7 @@ const AppContainer = () => {
             {systemetLaster() && <SystemetLaster />}
             {sluttbruker.status === RessursStatus.IKKE_TILGANG && (
                 <div>
-                    <Alert variant={'warning'}>
+                    <Alert variant={'warning'} inline>
                         {'Du må søke på papir. '}
                         <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
                             Klikk her for å gå til våre sider for barnetrygd

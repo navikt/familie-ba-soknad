@@ -50,7 +50,7 @@ const VelgBarn: React.FC = () => {
                     },
                 }}
             >
-                <Alert variant={'info'}>
+                <Alert variant={'info'} inline>
                     <SpråkTekst id={'hvilkebarn.info.alert'} />
                     <EksternLenke
                         lenkeSpråkId={'hvilkebarn.endre-opplysninger.lenke'}
