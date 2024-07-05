@@ -3,8 +3,10 @@ import React from 'react';
 import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { PersonType } from '../../../typer/personType';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -23,6 +25,8 @@ import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
+    const { tekster } = useApp();
+
     const { toggles } = useFeatureToggles();
 
     const {
@@ -48,9 +52,14 @@ const OmDeg: React.FC = () => {
         antallPerioder
     );
 
+    const stegTekster = tekster()[ESanitySteg.OM_DEG];
+
+    const { omDegGuide } = stegTekster;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
+            guide={omDegGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,

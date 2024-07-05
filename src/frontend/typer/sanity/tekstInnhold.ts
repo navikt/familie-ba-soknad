@@ -1,3 +1,12 @@
+import { IDinLivssituasjonTekstinnhold } from '../../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
+import { IDokumentasjonTekstinnhold } from '../../components/SøknadsSteg/Dokumentasjon/innholdTyper';
+import { IEøsForSøkerTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Søker/innholdTyper';
+import { IOmBarnaTekstinnhold } from '../../components/SøknadsSteg/OmBarnaDine/innholdTyper';
+import { IOmBarnetTekstinnhold } from '../../components/SøknadsSteg/OmBarnet/innholdTyper';
+import { IOmDegTekstinnhold } from '../../components/SøknadsSteg/OmDeg/innholdTyper';
+import { IOppsummeringTekstinnhold } from '../../components/SøknadsSteg/Oppsummering/innholdTyper';
+import { IVelgBarnTekstinnhold } from '../../components/SøknadsSteg/VelgBarn/innholdTyper';
+
 import { IAndreUtbetalingerTekstinnhold } from './modaler/andreUtbetalinger';
 import { IArbeidsperiodeTekstinnhold } from './modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
@@ -28,6 +37,15 @@ export enum SanityModalPrefix {
 
 export interface ITekstinnhold {
     [ESanitySteg.FORSIDE]: IForsideTekstinnhold;
+    [ESanitySteg.OM_DEG]: IOmDegTekstinnhold;
+    [ESanitySteg.DIN_LIVSSITUASJON]: IDinLivssituasjonTekstinnhold;
+    [ESanitySteg.VELG_BARN]: IVelgBarnTekstinnhold;
+    [ESanitySteg.OM_BARNA]: IOmBarnaTekstinnhold;
+    [ESanitySteg.OM_BARNET]: IOmBarnetTekstinnhold;
+    [ESanitySteg.EØS_FOR_SØKER]: IEøsForSøkerTekstinnhold;
+    [ESanitySteg.EØS_FOR_BARN]: IEøsForSøkerTekstinnhold;
+    [ESanitySteg.OPPSUMMERING]: IOppsummeringTekstinnhold;
+    [ESanitySteg.DOKUMENTASJON]: IDokumentasjonTekstinnhold;
     [ESanitySteg.FELLES]: IFellesTekstInnhold;
 }
 

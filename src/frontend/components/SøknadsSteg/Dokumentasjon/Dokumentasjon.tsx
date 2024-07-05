@@ -10,6 +10,7 @@ import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
@@ -27,7 +28,7 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 };
 
 const Dokumentasjon: React.FC = () => {
-    const { søknad, settSøknad, innsendingStatus } = useApp();
+    const { søknad, settSøknad, innsendingStatus, tekster } = useApp();
     const { sendInnSkjemaV8 } = useSendInnSkjema();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
@@ -65,9 +66,14 @@ const Dokumentasjon: React.FC = () => {
         });
     });
 
+    const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
+
+    const { dokumentasjonGuide } = stegTekster;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
+            guide={dokumentasjonGuide}
             gåVidereCallback={async () => {
                 const [success, _] = await sendInnSkjemaV8();
                 return success;

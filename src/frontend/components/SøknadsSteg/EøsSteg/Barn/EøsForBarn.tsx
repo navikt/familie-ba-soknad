@@ -8,6 +8,7 @@ import { useApp } from '../../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
 import { BarnetsId } from '../../../../typer/common';
 import { PersonType } from '../../../../typer/personType';
+import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
@@ -61,7 +62,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernBarnetrygdsperiodeOmsorgsperson,
     } = useEøsForBarn(barnetsId);
     const intl = useIntl();
-    const { søknad } = useApp();
+    const { søknad, tekster } = useApp();
 
     const andreBarnSomErFyltUt = søknad.barnInkludertISøknaden.filter(
         barnISøknad =>
@@ -72,9 +73,14 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         annetBarn => annetBarn.id === barn[barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId].svar
     );
 
+    const stegTekster = tekster()[ESanitySteg.EØS_FOR_BARN];
+
+    const { eosForSokerGuide } = stegTekster;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'eøs-om-barn.sidetittel'} values={{ barn: barn.navn }} />}
+            guide={eosForSokerGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,

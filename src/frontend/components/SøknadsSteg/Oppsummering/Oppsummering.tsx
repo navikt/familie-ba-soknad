@@ -10,6 +10,7 @@ import { useEøs } from '../../../context/EøsContext';
 import { useSteg } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { RouteEnum } from '../../../typer/routes';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
@@ -26,7 +27,7 @@ const StyledBodyLong = styled(BodyLong)`
 `;
 
 const Oppsummering: React.FC = () => {
-    const { søknad } = useApp();
+    const { søknad, tekster } = useApp();
     const { hentStegNummer } = useSteg();
     const navigate = useNavigate();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
@@ -48,9 +49,14 @@ const Oppsummering: React.FC = () => {
         return Promise.resolve(feilAnchors.length === 0);
     };
 
+    const stegTekster = tekster()[ESanitySteg.OPPSUMMERING];
+
+    const { oppsummeringGuide } = stegTekster;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}
+            guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
             <StyledBodyLong>

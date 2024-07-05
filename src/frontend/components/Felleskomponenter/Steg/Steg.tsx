@@ -3,7 +3,7 @@ import React, { ReactNode, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import { Heading, Stepper } from '@navikt/ds-react';
+import { Box, Heading, Stepper } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
@@ -13,6 +13,7 @@ import { useSteg } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
+import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     logKlikkGåVidere,
@@ -22,6 +23,7 @@ import {
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
+import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import useModal from '../SkjemaModal/useModal';
 
@@ -31,6 +33,7 @@ import { ScrollHandler } from './ScrollHandler';
 
 interface ISteg {
     tittel: ReactNode;
+    guide?: LocaleRecordBlock;
     skjema?: {
         validerFelterOgVisFeilmelding: () => boolean;
         valideringErOk: () => boolean;
@@ -87,7 +90,13 @@ const StepperContainer = styled.div<{ $antallSteg: number }>`
         `}
 `;
 
-const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) => {
+const Steg: React.FC<ISteg> = ({
+    tittel,
+    guide = undefined,
+    skjema,
+    gåVidereCallback,
+    children,
+}) => {
     const navigate = useNavigate();
     const { erÅpen: erModellVersjonModalÅpen, åpneModal: åpneModellVersjonModal } = useModal();
     const {
@@ -200,6 +209,11 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
                         {tittel}
                     </Heading>
                 </TittelContainer>
+                {guide && (
+                    <Box marginBlock="0 12">
+                        <TekstBlock block={guide} />
+                    </Box>
+                )}
                 <Form onSubmit={event => håndterGåVidere(event)} autoComplete="off">
                     <ChildrenContainer>{children}</ChildrenContainer>
                     {skjema && visFeiloppsummering(skjema.skjema) && (

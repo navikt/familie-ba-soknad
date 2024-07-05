@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import { BodyLong } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../context/AppContext';
 import { BarnetsId } from '../../../typer/common';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -27,6 +29,8 @@ const EksternLenkeContainer = styled.div`
 `;
 
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
+    const { tekster } = useApp();
+
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -45,9 +49,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernBarnetrygdsperiode,
     } = useOmBarnet(barnetsId);
 
+    const stegTekster = tekster()[ESanitySteg.OM_BARNET];
+
+    const { omBarnetGuide } = stegTekster;
+
     return barn ? (
         <Steg
             tittel={<SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />}
+            guide={omBarnetGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,

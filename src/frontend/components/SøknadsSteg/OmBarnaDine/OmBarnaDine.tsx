@@ -7,6 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -27,16 +28,22 @@ const OmBarnaDine: React.FC = () => {
         useOmBarnaDine();
 
     const navigate = useNavigate();
-    const { søknad } = useApp();
+    const { søknad, tekster } = useApp();
     const { barnInkludertISøknaden } = søknad;
 
     if (!barnInkludertISøknaden.length) {
         navigate('/velg-barn');
         return null;
     }
+
+    const stegTekster = tekster()[ESanitySteg.OM_BARNA];
+
+    const { omBarnaGuide } = stegTekster;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'ombarna.sidetittel'} />}
+            guide={omBarnaGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,

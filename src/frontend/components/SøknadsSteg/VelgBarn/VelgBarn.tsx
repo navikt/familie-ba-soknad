@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { VStack } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
@@ -22,7 +23,7 @@ const LenkeContainer = styled.div`
 `;
 
 const VelgBarn: React.FC = () => {
-    const { søknad } = useApp();
+    const { søknad, tekster } = useApp();
     const { lukkModal, åpneModal, erÅpen } = useModal();
     const {
         skjema,
@@ -38,10 +39,15 @@ const VelgBarn: React.FC = () => {
     const barnManueltLagtTil = søknad.barnRegistrertManuelt;
     const barn = barnFraRespons.concat(barnManueltLagtTil);
 
+    const stegTekster = tekster()[ESanitySteg.VELG_BARN];
+
+    const { velgBarnGuide } = stegTekster;
+
     return (
         <>
             <Steg
                 tittel={<SpråkTekst id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]} />}
+                guide={velgBarnGuide}
                 skjema={{
                     validerFelterOgVisFeilmelding,
                     valideringErOk,

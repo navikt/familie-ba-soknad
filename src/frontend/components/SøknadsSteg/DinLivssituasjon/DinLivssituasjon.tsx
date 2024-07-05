@@ -6,6 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { PersonType } from '../../../typer/personType';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
@@ -37,11 +38,16 @@ const DinLivssituasjon: React.FC = () => {
         fjernPensjonsperiode,
     } = useDinLivssituasjon();
 
-    const { erUtvidet, søknad } = useApp();
+    const { erUtvidet, søknad, tekster } = useApp();
+
+    const stegTekster = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
+
+    const { dinLivssituasjonGuide } = stegTekster;
 
     return (
         <Steg
             tittel={<SpråkTekst id={'dinlivssituasjon.sidetittel'} />}
+            guide={dinLivssituasjonGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
