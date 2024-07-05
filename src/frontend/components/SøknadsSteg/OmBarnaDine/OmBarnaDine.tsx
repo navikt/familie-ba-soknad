@@ -71,7 +71,7 @@ const OmBarnaDine: React.FC = () => {
                         ]
                     }
                     tilleggsinfo={
-                        <Alert variant="info" inline>
+                        <Alert variant={'info'} inline>
                             <SpråkTekst id={'ombarna.institusjon.info'} />
                         </Alert>
                     }
