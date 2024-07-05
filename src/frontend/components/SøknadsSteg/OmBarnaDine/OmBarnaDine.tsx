@@ -71,7 +71,7 @@ const OmBarnaDine: React.FC = () => {
                         ]
                     }
                     tilleggsinfo={
-                        <Alert variant="info">
+                        <Alert variant="info" inline>
                             <SpråkTekst id={'ombarna.institusjon.info'} />
                         </Alert>
                     }
@@ -103,7 +103,7 @@ const OmBarnaDine: React.FC = () => {
                             ]
                         }
                         tilleggsinfo={
-                            <Alert variant={'info'}>
+                            <Alert variant={'info'} inline>
                                 <SpråkTekst id={'ombarna.adoptert.info'} />
                             </Alert>
                         }
@@ -160,7 +160,7 @@ const OmBarnaDine: React.FC = () => {
                             ]
                         }
                         tilleggsinfo={
-                            <Alert variant={'info'}>
+                            <Alert variant={'info'} inline>
                                 <SpråkTekst id={'felles.korteopphold.info'} />
                             </Alert>
                         }
