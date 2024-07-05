@@ -22,7 +22,7 @@ export const Personopplysninger: React.FC = () => {
 
     return (
         <>
-            <Alert variant={'info'}>
+            <Alert variant={'info'} inline>
                 <SpråkTekst id={'omdeg.personopplysninger.info.alert'} />
                 <EksternLenke
                     lenkeTekstSpråkId={'omdeg.endre-opplysninger.lenketekst'}
