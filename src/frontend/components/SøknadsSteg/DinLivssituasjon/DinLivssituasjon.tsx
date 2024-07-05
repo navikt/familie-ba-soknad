@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { Bleed } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -87,13 +86,11 @@ const DinLivssituasjon: React.FC = () => {
                             }
                         />
                         {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
-                            <Bleed marginBlock="4 0">
-                                <VedleggNotis
-                                    block={dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall}
-                                    språkTekstId="omdeg.separertellerskilt.info"
-                                    dynamisk
-                                />
-                            </Bleed>
+                            <VedleggNotis
+                                block={dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall}
+                                språkTekstId="omdeg.separertellerskilt.info"
+                                dynamisk
+                            />
                         )}
                         {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
                             <KomponentGruppe inline dynamisk>
@@ -169,13 +166,11 @@ const DinLivssituasjon: React.FC = () => {
                     }
                 />
                 {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
-                    <Bleed marginBlock="4 0">
-                        <VedleggNotis
-                            block={vedtakOmOppholdstillatelse}
-                            språkTekstId="omdeg.asylsøker.alert"
-                            dynamisk
-                        />
-                    </Bleed>
+                    <VedleggNotis
+                        block={vedtakOmOppholdstillatelse}
+                        språkTekstId="omdeg.asylsøker.alert"
+                        dynamisk
+                    />
                 )}
 
                 <Arbeidsperiode

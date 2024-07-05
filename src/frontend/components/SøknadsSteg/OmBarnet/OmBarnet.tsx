@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Bleed, BodyLong, Box } from '@navikt/ds-react';
+import { BodyLong, Box } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -115,14 +115,12 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         språkValues={{ navn: barn.navn }}
                     />
                     {skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker && (
-                        <Bleed marginBlock="2 0">
-                            <VedleggNotis
-                                block={bekreftelsePaaAtBarnBorSammenMedDeg}
-                                flettefelter={{ barnetsNavn: barn.navn }}
-                                språkTekstId="ombarnet.bor-fast.vedleggsinfo"
-                                dynamisk
-                            />
-                        </Bleed>
+                        <VedleggNotis
+                            block={bekreftelsePaaAtBarnBorSammenMedDeg}
+                            flettefelter={{ barnetsNavn: barn.navn }}
+                            språkTekstId="ombarnet.bor-fast.vedleggsinfo"
+                            dynamisk
+                        />
                     )}
 
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
@@ -138,7 +136,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 språkValues={{ navn: barn.navn }}
                             />
                             {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
-                                <Box paddingBlock="4 0">
+                                <Box marginBlock="4 0">
                                     <VedleggNotis
                                         block={avtaleOmDeltBosted}
                                         flettefelter={{ barnetsNavn: barn.navn }}

@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Bleed } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -125,13 +124,11 @@ const OmBarnaDine: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
-                        <Bleed marginBlock="4 0">
-                            <VedleggNotis
-                                block={bekreftelsePaaAdopsjonBarnetrygd}
-                                språkTekstId="ombarna.adoptert.alert"
-                                dynamisk
-                            />
-                        </Bleed>
+                        <VedleggNotis
+                            block={bekreftelsePaaAdopsjonBarnetrygd}
+                            språkTekstId="ombarna.adoptert.alert"
+                            dynamisk
+                        />
                     )}
                     <JaNeiSpm
                         skjema={skjema}
@@ -150,13 +147,11 @@ const OmBarnaDine: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
-                        <Bleed marginBlock="4 0">
-                            <VedleggNotis
-                                block={vedtakOmOppholdstillatelse}
-                                språkTekstId="ombarna.asyl.alert"
-                                dynamisk
-                            />
-                        </Bleed>
+                        <VedleggNotis
+                            block={vedtakOmOppholdstillatelse}
+                            språkTekstId="ombarna.asyl.alert"
+                            dynamisk
+                        />
                     )}
                 </KomponentGruppe>
             )}

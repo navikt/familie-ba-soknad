@@ -28,7 +28,7 @@ export const VedleggNotis: React.FC<{
             {toggles.NYE_VEDLEGGSTEKSTER ? (
                 <>
                     <TekstBlock block={block} flettefelter={flettefelter} />
-                    <Box paddingBlock="4 0">
+                    <Box marginBlock="4 0">
                         <BodyShort>{plainTekst(lastOppSenereISoknad)}</BodyShort>
                     </Box>
                 </>
