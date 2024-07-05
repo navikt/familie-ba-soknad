@@ -69,7 +69,7 @@ const OmDeg: React.FC = () => {
                 />
 
                 {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <Alert variant={'warning'} inline>
+                    <Alert variant={'warning'} inline data-testid={'alertstripe-adresse'}>
                         <SpråkTekst
                             id={'omdeg.borpådenneadressen.kontakt-folkeregister-ukjent.alert'}
                         />
@@ -85,7 +85,7 @@ const OmDeg: React.FC = () => {
                             omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
                         }
                         tilleggsinfo={
-                            <Alert variant={'info'} inline>
+                            <Alert variant={'info'} inline data-testid={'alertstripe'}>
                                 <SpråkTekst id={'felles.korteopphold.info'} />
                             </Alert>
                         }
@@ -132,7 +132,12 @@ const OmDeg: React.FC = () => {
                         />
                         {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig &&
                             skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                                <Alert variant={'warning'} inline aria-live={'polite'}>
+                                <Alert
+                                    variant={'warning'}
+                                    inline
+                                    aria-live={'polite'}
+                                    data-testid={'alertstripe'}
+                                >
                                     <SpråkTekst
                                         id={'omdeg.planlagt-opphold-sammenhengende.alert'}
                                     />

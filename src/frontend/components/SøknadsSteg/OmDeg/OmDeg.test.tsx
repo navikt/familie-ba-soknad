@@ -67,10 +67,18 @@ describe('OmDeg', () => {
         expect(console.error).toHaveBeenCalledTimes(0);
     });
 
-    test('Skal rendre 2 alertstriper i OmDeg', async () => {
-        spyOnUseApp({ søker: mockDeep<ISøker>({ statsborgerskap: [] }) });
+    test('Skal få en alert dersom bruker ikke bor på folkeregistret adresse', async () => {
+        spyOnUseApp({
+            søker: mockDeep<ISøker>({
+                borPåRegistrertAdresse: {
+                    id: OmDegSpørsmålId.borPåRegistrertAdresse,
+                    svar: ESvar.NEI,
+                },
+            }),
+        });
+
         const { findAllByTestId } = render(<TestKomponentMedEkteTekster />);
-        expect(await findAllByTestId(/alertstripe/)).toHaveLength(2);
+        expect(await findAllByTestId(/alertstripe-adresse/)).toHaveLength(1);
     });
 
     test('Viser adressesperre-melding', async () => {
