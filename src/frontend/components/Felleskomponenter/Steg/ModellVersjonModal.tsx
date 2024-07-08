@@ -3,9 +3,8 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 
-import FamilieAlert from '../FamilieAlert/FamilieAlert';
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -30,11 +29,9 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
             }}
         >
             <ModalContent>
-                <FamilieAlert
-                    inline={false}
-                    variant={'error'}
-                    children={<SpråkTekst id={'felles.modal.deployfeil.error'} />}
-                />
+                <Alert variant={'error'}>
+                    <SpråkTekst id={'felles.modal.deployfeil.error'} />
+                </Alert>
                 <StyledBodyLong>
                     <SpråkTekst id={'felles.modal.deployfeil.info'} />
                 </StyledBodyLong>

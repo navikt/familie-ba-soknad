@@ -2,11 +2,10 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { VStack } from '@navikt/ds-react';
+import { Alert, VStack } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
-import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -51,14 +50,14 @@ const VelgBarn: React.FC = () => {
                     },
                 }}
             >
-                <FamilieAlert variant={'info'}>
+                <Alert variant={'info'} inline>
                     <SpråkTekst id={'hvilkebarn.info.alert'} />
                     <EksternLenke
                         lenkeSpråkId={'hvilkebarn.endre-opplysninger.lenke'}
                         lenkeTekstSpråkId={'hvilkebarn.endre-opplysninger.lenketekst'}
                         target="_blank"
                     />
-                </FamilieAlert>
+                </Alert>
 
                 <VStack
                     id={VelgBarnSpørsmålId.velgBarn}

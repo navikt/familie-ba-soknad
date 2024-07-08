@@ -2,10 +2,12 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { BodyLong } from '@navikt/ds-react';
+import { BodyLong, Box } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../context/AppContext';
 import { BarnetsId } from '../../../typer/common';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -15,6 +17,7 @@ import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import AndreForelder from './AndreForelder';
 import { OmBarnetHeader } from './OmBarnetHeader';
@@ -27,6 +30,8 @@ const EksternLenkeContainer = styled.div`
 `;
 
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
+    const { tekster } = useApp();
+
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -44,6 +49,11 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         leggTilBarnetrygdsperiode,
         fjernBarnetrygdsperiode,
     } = useOmBarnet(barnetsId);
+
+    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
+
+    const { bekreftelsePaaAtBarnBorSammenMedDeg, avtaleOmDeltBosted, meklingsattest } =
+        dokumentasjonstekster;
 
     return barn ? (
         <Steg
@@ -105,7 +115,12 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         språkValues={{ navn: barn.navn }}
                     />
                     {skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker && (
-                        <VedleggNotis språkTekstId={'ombarnet.bor-fast.vedleggsinfo'} dynamisk />
+                        <VedleggNotis
+                            block={bekreftelsePaaAtBarnBorSammenMedDeg}
+                            flettefelter={{ barnetsNavn: barn.navn }}
+                            språkTekstId="ombarnet.bor-fast.vedleggsinfo"
+                            dynamisk
+                        />
                     )}
 
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
@@ -121,10 +136,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 språkValues={{ navn: barn.navn }}
                             />
                             {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
-                                <VedleggNotis
-                                    språkTekstId={'ombarnet.delt-bosted.vedleggsinfo'}
-                                    dynamisk
-                                />
+                                <Box marginBlock="4 0">
+                                    <VedleggNotis
+                                        block={avtaleOmDeltBosted}
+                                        flettefelter={{ barnetsNavn: barn.navn }}
+                                        språkTekstId="ombarnet.delt-bosted.vedleggsinfo"
+                                        dynamisk
+                                    />
+                                </Box>
                             )}
                         </>
                     )}
@@ -175,7 +194,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                             }
                                         />
                                         <VedleggNotis
-                                            språkTekstId={'ombarnet.nårflyttetfra.info'}
+                                            block={meklingsattest}
+                                            flettefelter={{ barnetsNavn: barn.navn }}
+                                            språkTekstId="ombarnet.nårflyttetfra.info"
                                             dynamisk
                                         />
                                     </div>
