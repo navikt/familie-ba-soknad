@@ -9,6 +9,7 @@ import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { device } from '../../../Theme';
@@ -116,6 +117,7 @@ const Steg: React.FC<ISteg> = ({
         stepperObjekter,
     } = useSteg();
     const { komFra, settKomFra } = useAppNavigation();
+    const { toggles } = useFeatureToggles();
 
     const nesteRoute = hentNesteSteg();
     const forrigeRoute = hentForrigeSteg();
@@ -209,7 +211,7 @@ const Steg: React.FC<ISteg> = ({
                         {tittel}
                     </Heading>
                 </TittelContainer>
-                {guide && (
+                {toggles.VIS_GUIDE_I_STEG && guide && (
                     <Box marginBlock="0 12">
                         <TekstBlock block={guide} />
                     </Box>
