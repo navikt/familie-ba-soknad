@@ -16,6 +16,7 @@ import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsp
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
@@ -43,6 +44,11 @@ const DinLivssituasjon: React.FC = () => {
     const stegTekster = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
 
     const { dinLivssituasjonGuide } = stegTekster;
+
+    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
+
+    const { dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall, vedtakOmOppholdstillatelse } =
+        dokumentasjonstekster;
 
     return (
         <Steg
@@ -85,7 +91,11 @@ const DinLivssituasjon: React.FC = () => {
                             }
                         />
                         {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
-                            <VedleggNotis språkTekstId={'omdeg.separertellerskilt.info'} dynamisk />
+                            <VedleggNotis
+                                block={dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall}
+                                språkTekstId="omdeg.separertellerskilt.info"
+                                dynamisk
+                            />
                         )}
                         {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
                             <KomponentGruppe inline dynamisk>
@@ -161,7 +171,11 @@ const DinLivssituasjon: React.FC = () => {
                     }
                 />
                 {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
-                    <VedleggNotis dynamisk språkTekstId={'omdeg.asylsøker.alert'} />
+                    <VedleggNotis
+                        block={vedtakOmOppholdstillatelse}
+                        språkTekstId="omdeg.asylsøker.alert"
+                        dynamisk
+                    />
                 )}
 
                 <Arbeidsperiode

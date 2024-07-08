@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { Fieldset } from '@navikt/ds-react';
+import { Alert, Fieldset } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
 import { visFeiloppsummering } from '../../../../utils/hjelpefunksjoner';
-import FamilieAlert from '../../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
@@ -50,9 +49,9 @@ const LeggTilBarnModal: React.FC<{
                     spørsmålTekstId={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.leggTilBarnErFødt]}
                 />
                 {skjema.felter.erFødt.verdi === ESvar.NEI && (
-                    <FamilieAlert variant={'warning'}>
+                    <Alert variant={'warning'} inline>
                         <SpråkTekst id={'hvilkebarn.leggtilbarn.barn-ikke-født.alert'} />
-                    </FamilieAlert>
+                    </Alert>
                 )}
             </KomponentGruppe>
             {skjema.felter.erFødt.valideringsstatus === Valideringsstatus.OK && (

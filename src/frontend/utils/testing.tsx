@@ -157,6 +157,7 @@ export const mockFeatureToggle = () => {
                 toggles: {
                     [EFeatureToggle.NYE_MODAL_TEKSTER]: false,
                     [EFeatureToggle.VIS_GUIDE_I_STEG]: false,
+                    [EFeatureToggle.NYE_VEDLEGGSTEKSTER]: false,
                 },
             })
         );

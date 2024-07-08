@@ -6,12 +6,14 @@ export enum EFeatureToggle {
     // EKSEMPEL = 'EKSEMPEL',
     NYE_MODAL_TEKSTER = 'NYE_MODAL_TEKSTER',
     VIS_GUIDE_I_STEG = 'VIS_GUIDE_I_STEG',
+    NYE_VEDLEGGSTEKSTER = 'NYE_VEDLEGGSTEKSTER',
 }
 
 export const ToggleKeys: Record<EFeatureToggle, string> = {
     // [EFeatureToggle.EKSEMPEL]: 'familie-ba-soknad.eksempel',
     [EFeatureToggle.NYE_MODAL_TEKSTER]: 'familie-ba-soknad.nye-modal-tekster',
     [EFeatureToggle.VIS_GUIDE_I_STEG]: 'familie-ba-soknad.vis-guide-i-steg',
+    [EFeatureToggle.NYE_VEDLEGGSTEKSTER]: 'familie-ba-soknad.nye-vedleggstekster',
 };
 
 export type EAllFeatureToggles = Record<EFeatureToggle, boolean>;
