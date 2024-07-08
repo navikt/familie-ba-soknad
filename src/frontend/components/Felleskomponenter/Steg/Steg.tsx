@@ -3,7 +3,7 @@ import React, { ReactNode, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import { Box, Heading, Stepper } from '@navikt/ds-react';
+import { Box, GuidePanel, Heading, Stepper } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
@@ -213,7 +213,9 @@ const Steg: React.FC<ISteg> = ({
                 </TittelContainer>
                 {toggles.VIS_GUIDE_I_STEG && guide && (
                     <Box marginBlock="0 12">
-                        <TekstBlock block={guide} />
+                        <GuidePanel poster>
+                            <TekstBlock block={guide} />
+                        </GuidePanel>
                     </Box>
                 )}
                 <Form onSubmit={event => håndterGåVidere(event)} autoComplete="off">
