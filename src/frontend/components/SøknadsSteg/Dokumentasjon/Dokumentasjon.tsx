@@ -6,6 +6,7 @@ import { Alert, BodyLong, BodyShort } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
@@ -29,6 +30,7 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 const Dokumentasjon: React.FC = () => {
     const { søknad, settSøknad, innsendingStatus, tekster } = useApp();
     const { sendInnSkjemaV8 } = useSendInnSkjema();
+    const { toggles } = useFeatureToggles();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
     const oppdaterDokumentasjon = (
@@ -94,16 +96,23 @@ const Dokumentasjon: React.FC = () => {
                     </Alert>
                 </KomponentGruppe>
             )}
-            <KomponentGruppe>
-                <Alert variant={'info'}>
-                    <SpråkTekst id={'dokumentasjon.nudge'} />
-                </Alert>
+            {!toggles.VIS_GUIDE_I_STEG ? (
+                <KomponentGruppe>
+                    <Alert variant={'info'}>
+                        <SpråkTekst id={'dokumentasjon.nudge'} />
+                    </Alert>
 
-                <BodyLong>
-                    <SpråkTekst id={'dokumentasjon.info'} />
-                </BodyLong>
-                <PictureScanningGuide />
-            </KomponentGruppe>
+                    <BodyLong>
+                        <SpråkTekst id={'dokumentasjon.info'} />
+                    </BodyLong>
+
+                    <PictureScanningGuide />
+                </KomponentGruppe>
+            ) : (
+                <KomponentGruppe>
+                    <PictureScanningGuide />
+                </KomponentGruppe>
+            )}
             {søknad.dokumentasjon
                 .filter(dokumentasjon => erDokumentasjonRelevant(dokumentasjon))
                 .map((dokumentasjon, index) => (

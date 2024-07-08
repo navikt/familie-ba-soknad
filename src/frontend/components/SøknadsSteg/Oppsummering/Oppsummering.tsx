@@ -7,6 +7,7 @@ import { BodyLong } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { RouteEnum } from '../../../typer/routes';
@@ -30,6 +31,7 @@ const Oppsummering: React.FC = () => {
     const { søknad, tekster } = useApp();
     const { hentStegNummer } = useSteg();
     const navigate = useNavigate();
+    const { toggles } = useFeatureToggles();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
     const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();
     const søkerHarEøsSteg = søkerTriggerEøs || !!barnSomTriggerEøs.length;
@@ -59,9 +61,11 @@ const Oppsummering: React.FC = () => {
             guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
-            <StyledBodyLong>
-                <SpråkTekst id={'oppsummering.info'} />
-            </StyledBodyLong>
+            {!toggles.VIS_GUIDE_I_STEG && (
+                <StyledBodyLong>
+                    <SpråkTekst id={'oppsummering.info'} />
+                </StyledBodyLong>
+            )}
 
             <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
             <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />
