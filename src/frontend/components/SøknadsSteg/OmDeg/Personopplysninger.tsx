@@ -2,14 +2,13 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { BodyShort, Label } from '@navikt/ds-react';
+import { Alert, BodyShort, Label } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { useSpråk } from '../../../context/SpråkContext';
 import { genererAdresseVisning } from '../../../utils/adresse';
 import { hentSivilstatusSpråkId, landkodeTilSpråk } from '../../../utils/språk';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
-import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -23,14 +22,14 @@ export const Personopplysninger: React.FC = () => {
 
     return (
         <>
-            <FamilieAlert variant={'info'}>
+            <Alert variant={'info'} inline>
                 <SpråkTekst id={'omdeg.personopplysninger.info.alert'} />
                 <EksternLenke
                     lenkeTekstSpråkId={'omdeg.endre-opplysninger.lenketekst'}
                     lenkeSpråkId={'omdeg.endre-opplysninger.lenke'}
                     target="_blank"
                 />
-            </FamilieAlert>
+            </Alert>
 
             <Informasjonsbolk>
                 <Label as="p">
