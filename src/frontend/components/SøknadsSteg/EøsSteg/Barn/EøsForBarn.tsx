@@ -75,12 +75,12 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
 
     const stegTekster = tekster()[ESanitySteg.EØS_FOR_BARN];
 
-    const { eosForSokerGuide } = stegTekster;
+    const { eosForBarnGuide } = stegTekster;
 
     return (
         <Steg
             tittel={<SpråkTekst id={'eøs-om-barn.sidetittel'} values={{ barn: barn.navn }} />}
-            guide={eosForSokerGuide}
+            guide={eosForBarnGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,

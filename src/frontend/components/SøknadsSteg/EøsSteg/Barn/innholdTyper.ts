@@ -1,5 +1,5 @@
 import { LocaleRecordBlock } from '../../../../typer/sanity/sanity';
 
-export interface IEosForBarnTekstinnhold {
+export interface IEøsForBarnTekstinnhold {
     eosForBarnGuide: LocaleRecordBlock;
 }
