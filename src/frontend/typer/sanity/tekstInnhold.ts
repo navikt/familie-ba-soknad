@@ -1,3 +1,5 @@
+import { IDokumentasjonTekstinnhold } from '../../components/SøknadsSteg/Dokumentasjon/innholdTyper';
+
 import { IAndreUtbetalingerTekstinnhold } from './modaler/andreUtbetalinger';
 import { IArbeidsperiodeTekstinnhold } from './modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
@@ -28,6 +30,7 @@ export enum SanityModalPrefix {
 
 export interface ITekstinnhold {
     [ESanitySteg.FORSIDE]: IForsideTekstinnhold;
+    [ESanitySteg.DOKUMENTASJON]: IDokumentasjonTekstinnhold;
     [ESanitySteg.FELLES]: IFellesTekstInnhold;
 }
 

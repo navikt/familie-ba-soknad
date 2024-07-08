@@ -1,49 +1,40 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
-import styled from 'styled-components';
+import { Alert, BodyShort, Box } from '@navikt/ds-react';
 
-import { FileTextIcon } from '@navikt/aksel-icons';
-import { BodyLong } from '@navikt/ds-react';
+import { useApp } from '../../context/AppContext';
+import { useFeatureToggles } from '../../context/FeatureToggleContext';
+import { ESanitySteg, FlettefeltVerdier, LocaleRecordBlock } from '../../typer/sanity/sanity';
 
+import TekstBlock from './Sanity/TekstBlock';
 import SpråkTekst from './SpråkTekst/SpråkTekst';
 
-const NotisWrapper = styled.div`
-    display: flex;
-    margin-top: 1rem;
-`;
-
-const StyledFileContent = styled(FileTextIcon)`
-    max-width: 1.5rem;
-    min-width: 1.5rem;
-    max-height: fit-content;
-    margin-right: 1rem;
-    font-size: 1.5rem;
-`;
-
-const NotisInnhold = styled.div`
-    ul {
-        margin: 0;
-        padding-left: 1.3rem; // For kulepunkt
-    }
-
-    p {
-        margin: 0;
-    }
-`;
+// TODO: Når toggles.NYE_VEDLEGGSTEKSTER fjernes, fjern også språkTekstId som prop.
 
 export const VedleggNotis: React.FC<{
+    block: LocaleRecordBlock;
+    flettefelter?: FlettefeltVerdier;
     språkTekstId: string;
     dynamisk?: boolean;
-    språkValues?: Record<string, ReactNode>;
-}> = ({ språkTekstId, dynamisk = false, språkValues = {} }) => {
+}> = ({ block, flettefelter, språkTekstId, dynamisk = false }) => {
+    const { tekster, plainTekst } = useApp();
+    const { toggles } = useFeatureToggles();
+
+    const dokumentasjonTekster = tekster()[ESanitySteg.DOKUMENTASJON];
+    const { lastOppSenereISoknad } = dokumentasjonTekster;
+
     return (
-        <NotisWrapper aria-live={dynamisk ? 'polite' : 'off'}>
-            <StyledFileContent role={'img'} focusable={false} aria-label={'vedleggsikon'} />
-            <NotisInnhold>
-                <BodyLong>
-                    <SpråkTekst id={språkTekstId} values={språkValues} />
-                </BodyLong>
-            </NotisInnhold>
-        </NotisWrapper>
+        <Alert variant="info" aria-live={dynamisk ? 'polite' : 'off'}>
+            {toggles.NYE_VEDLEGGSTEKSTER ? (
+                <>
+                    <TekstBlock block={block} flettefelter={flettefelter} />
+                    <Box marginBlock="4 0">
+                        <BodyShort>{plainTekst(lastOppSenereISoknad)}</BodyShort>
+                    </Box>
+                </>
+            ) : (
+                <SpråkTekst id={språkTekstId} />
+            )}
+        </Alert>
     );
 };

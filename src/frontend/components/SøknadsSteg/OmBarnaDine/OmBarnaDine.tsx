@@ -1,39 +1,41 @@
 import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import FamilieAlert from '../../Felleskomponenter/FamilieAlert/FamilieAlert';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
 import { useOmBarnaDine } from './useOmBarnaDine';
-
-const VedleggNotisWrapper = styled.div`
-    margin: -1.5rem 0 4.5rem 0;
-`;
 
 const OmBarnaDine: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
         useOmBarnaDine();
 
     const navigate = useNavigate();
-    const { søknad } = useApp();
+    const { søknad, tekster } = useApp();
     const { barnInkludertISøknaden } = søknad;
 
     if (!barnInkludertISøknaden.length) {
         navigate('/velg-barn');
         return null;
     }
+
+    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
+
+    const { bekreftelsePaaAdopsjonBarnetrygd, vedtakOmOppholdstillatelse } = dokumentasjonstekster;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'ombarna.sidetittel'} />}
@@ -122,9 +124,11 @@ const OmBarnaDine: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     {skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA && (
-                        <VedleggNotisWrapper>
-                            <VedleggNotis dynamisk språkTekstId={'ombarna.adoptert.alert'} />
-                        </VedleggNotisWrapper>
+                        <VedleggNotis
+                            block={bekreftelsePaaAdopsjonBarnetrygd}
+                            språkTekstId="ombarna.adoptert.alert"
+                            dynamisk
+                        />
                     )}
                     <JaNeiSpm
                         skjema={skjema}
@@ -143,9 +147,11 @@ const OmBarnaDine: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     {skjema.felter.søktAsylForBarn.verdi === ESvar.JA && (
-                        <VedleggNotisWrapper>
-                            <VedleggNotis dynamisk språkTekstId={'ombarna.asyl.alert'} />
-                        </VedleggNotisWrapper>
+                        <VedleggNotis
+                            block={vedtakOmOppholdstillatelse}
+                            språkTekstId="ombarna.asyl.alert"
+                            dynamisk
+                        />
                     )}
                 </KomponentGruppe>
             )}
