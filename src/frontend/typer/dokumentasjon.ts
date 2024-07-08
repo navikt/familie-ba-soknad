@@ -24,6 +24,17 @@ export enum EFiltyper {
     JPEG = '.jpeg',
 }
 
+export enum BeskrivelseSanityApiNavn {
+    dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall = 'dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall',
+    vedtakOmOppholdstillatelse = 'vedtakOmOppholdstillatelse',
+    bekreftelsePaaAdopsjonBarnetrygd = 'bekreftelsePaaAdopsjonBarnetrygd',
+    bekreftelsePaaAtBarnBorSammenMedDeg = 'bekreftelsePaaAtBarnBorSammenMedDeg',
+    avtaleOmDeltBosted = 'avtaleOmDeltBosted',
+    meklingsattest = 'meklingsattest',
+    bekreftelseFraBarnevernetBarnetrygd = 'bekreftelseFraBarnevernetBarnetrygd',
+    lastOppSenereISoknad = 'lastOppSenereISoknad',
+}
+
 export const dokumentasjonsbehovTilSpråkId = (dokumentasjonsbehov: Dokumentasjonsbehov): string => {
     switch (dokumentasjonsbehov) {
         case Dokumentasjonsbehov.ADOPSJON_DATO:
