@@ -33,7 +33,6 @@ const EøsForSøker: React.FC = () => {
     } = useEøsForSøker();
 
     const stegTekster = tekster()[ESanitySteg.EØS_FOR_SØKER];
-
     const { eosForSokerGuide } = stegTekster;
 
     return (

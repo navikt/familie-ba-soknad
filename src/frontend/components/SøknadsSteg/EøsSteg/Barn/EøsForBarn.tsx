@@ -74,7 +74,6 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     );
 
     const stegTekster = tekster()[ESanitySteg.EØS_FOR_BARN];
-
     const { eosForBarnGuide } = stegTekster;
 
     return (

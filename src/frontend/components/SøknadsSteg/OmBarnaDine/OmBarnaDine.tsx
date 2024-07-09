@@ -32,7 +32,6 @@ const OmBarnaDine: React.FC = () => {
     }
 
     const stegTekster = tekster()[ESanitySteg.OM_BARNA];
-
     const { omBarnaGuide } = stegTekster;
 
     const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];

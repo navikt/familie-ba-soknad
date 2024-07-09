@@ -52,7 +52,6 @@ const Oppsummering: React.FC = () => {
     };
 
     const stegTekster = tekster()[ESanitySteg.OPPSUMMERING];
-
     const { oppsummeringGuide } = stegTekster;
 
     return (

@@ -52,7 +52,6 @@ const OmDeg: React.FC = () => {
     );
 
     const stegTekster = tekster()[ESanitySteg.OM_DEG];
-
     const { omDegGuide } = stegTekster;
 
     return (
