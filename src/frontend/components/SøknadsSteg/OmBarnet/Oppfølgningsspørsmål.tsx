@@ -35,7 +35,6 @@ import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/Utenlandso
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
-import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
@@ -88,8 +87,7 @@ const Oppfølgningsspørsmål: React.FC<{
         antallPerioder
     );
 
-    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
-
+    const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { bekreftelseFraBarnevernetBarnetrygd } = dokumentasjonstekster;
 
     return (

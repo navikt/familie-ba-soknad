@@ -16,7 +16,6 @@ import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsp
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
-import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
@@ -42,11 +41,9 @@ const DinLivssituasjon: React.FC = () => {
     const { erUtvidet, søknad, tekster } = useApp();
 
     const stegTekster = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
-
     const { dinLivssituasjonGuide } = stegTekster;
 
-    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
-
+    const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall, vedtakOmOppholdstillatelse } =
         dokumentasjonstekster;
 

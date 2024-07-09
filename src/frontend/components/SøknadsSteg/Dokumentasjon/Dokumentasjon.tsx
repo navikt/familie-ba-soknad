@@ -68,7 +68,6 @@ const Dokumentasjon: React.FC = () => {
     });
 
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
-
     const { dokumentasjonGuide } = stegTekster;
 
     return (

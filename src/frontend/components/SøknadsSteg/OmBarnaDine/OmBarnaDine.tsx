@@ -13,7 +13,6 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
-import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
@@ -36,8 +35,7 @@ const OmBarnaDine: React.FC = () => {
 
     const { omBarnaGuide } = stegTekster;
 
-    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
-
+    const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { bekreftelsePaaAdopsjonBarnetrygd, vedtakOmOppholdstillatelse } = dokumentasjonstekster;
 
     return (
