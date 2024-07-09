@@ -95,7 +95,11 @@ const Dokumentasjon: React.FC = () => {
                     </Alert>
                 </KomponentGruppe>
             )}
-            {!toggles.VIS_GUIDE_I_STEG ? (
+            {toggles.VIS_GUIDE_I_STEG ? (
+                <KomponentGruppe>
+                    <PictureScanningGuide />
+                </KomponentGruppe>
+            ) : (
                 <KomponentGruppe>
                     <Alert variant={'info'}>
                         <SpråkTekst id={'dokumentasjon.nudge'} />
@@ -105,10 +109,6 @@ const Dokumentasjon: React.FC = () => {
                         <SpråkTekst id={'dokumentasjon.info'} />
                     </BodyLong>
 
-                    <PictureScanningGuide />
-                </KomponentGruppe>
-            ) : (
-                <KomponentGruppe>
                     <PictureScanningGuide />
                 </KomponentGruppe>
             )}
