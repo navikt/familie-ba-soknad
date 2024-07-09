@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -72,11 +71,7 @@ const OmBarnaDine: React.FC = () => {
                             OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon
                         ]
                     }
-                    tilleggsinfo={
-                        <Alert variant={'info'} inline>
-                            <SpråkTekst id={'ombarna.institusjon.info'} />
-                        </Alert>
-                    }
+                    tilleggsinfoTekstId={'ombarna.institusjon.info'}
                 />
 
                 <HvilkeBarnCheckboxGruppe
@@ -104,11 +99,7 @@ const OmBarnaDine: React.FC = () => {
                                 OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland
                             ]
                         }
-                        tilleggsinfo={
-                            <Alert variant={'info'} inline>
-                                <SpråkTekst id={'ombarna.adoptert.info'} />
-                            </Alert>
-                        }
+                        tilleggsinfoTekstId={'ombarna.adoptert.info'}
                     />
                     <HvilkeBarnCheckboxGruppe
                         legendSpråkId={
@@ -165,11 +156,7 @@ const OmBarnaDine: React.FC = () => {
                                 OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
                             ]
                         }
-                        tilleggsinfo={
-                            <Alert variant={'info'} inline>
-                                <SpråkTekst id={'felles.korteopphold.info'} />
-                            </Alert>
-                        }
+                        tilleggsinfoTekstId={'felles.korteopphold.info'}
                     />
                     <HvilkeBarnCheckboxGruppe
                         legendSpråkId={
