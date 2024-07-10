@@ -92,11 +92,7 @@ const OmDeg: React.FC = () => {
                         spørsmålTekstId={
                             omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
                         }
-                        tilleggsinfo={
-                            <Alert variant={'info'} inline data-testid={'alertstripe'}>
-                                <SpråkTekst id={'felles.korteopphold.info'} />
-                            </Alert>
-                        }
+                        tilleggsinfoTekstId={'felles.korteopphold.info'}
                     />
                     {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                         <PerioderContainer>
