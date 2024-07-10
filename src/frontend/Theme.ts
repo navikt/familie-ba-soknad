@@ -51,9 +51,4 @@ export const GlobalStyle = createGlobalStyle`
       padding-bottom: 12.75rem;
     }
   }
-
-  footer {
-    position: absolute;
-    bottom: 0;
-  }
 `;
