@@ -20,8 +20,8 @@ export const VedleggNotis: React.FC<{
     const { tekster, plainTekst } = useApp();
     const { toggles } = useFeatureToggles();
 
-    const dokumentasjonTekster = tekster()[ESanitySteg.DOKUMENTASJON];
-    const { lastOppSenereISoknad } = dokumentasjonTekster;
+    const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
+    const { lastOppSenereISoknad } = dokumentasjonstekster;
 
     return (
         <Alert variant="info" aria-live={dynamisk ? 'polite' : 'off'}>

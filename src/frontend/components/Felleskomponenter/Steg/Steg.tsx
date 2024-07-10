@@ -3,16 +3,18 @@ import React, { ReactNode, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import { Heading, Stepper } from '@navikt/ds-react';
+import { Box, GuidePanel, Heading, Stepper } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
+import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     logKlikkGåVidere,
@@ -22,6 +24,7 @@ import {
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Banner from '../Banner/Banner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
+import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import useModal from '../SkjemaModal/useModal';
 
@@ -31,6 +34,7 @@ import { ScrollHandler } from './ScrollHandler';
 
 interface ISteg {
     tittel: ReactNode;
+    guide?: LocaleRecordBlock;
     skjema?: {
         validerFelterOgVisFeilmelding: () => boolean;
         valideringErOk: () => boolean;
@@ -87,7 +91,13 @@ const StepperContainer = styled.div<{ $antallSteg: number }>`
         `}
 `;
 
-const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) => {
+const Steg: React.FC<ISteg> = ({
+    tittel,
+    guide = undefined,
+    skjema,
+    gåVidereCallback,
+    children,
+}) => {
     const navigate = useNavigate();
     const { erÅpen: erModellVersjonModalÅpen, åpneModal: åpneModellVersjonModal } = useModal();
     const {
@@ -107,6 +117,7 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
         stepperObjekter,
     } = useSteg();
     const { komFra, settKomFra } = useAppNavigation();
+    const { toggles } = useFeatureToggles();
 
     const nesteRoute = hentNesteSteg();
     const forrigeRoute = hentForrigeSteg();
@@ -200,6 +211,13 @@ const Steg: React.FC<ISteg> = ({ tittel, skjema, gåVidereCallback, children }) 
                         {tittel}
                     </Heading>
                 </TittelContainer>
+                {toggles.VIS_GUIDE_I_STEG && guide && (
+                    <Box marginBlock="0 12">
+                        <GuidePanel poster>
+                            <TekstBlock block={guide} />
+                        </GuidePanel>
+                    </Box>
+                )}
                 <Form onSubmit={event => håndterGåVidere(event)} autoComplete="off">
                     <ChildrenContainer>{children}</ChildrenContainer>
                     {skjema && visFeiloppsummering(skjema.skjema) && (

@@ -6,7 +6,13 @@ import { IntlProvider } from 'react-intl';
 import { LocaleType } from '../../../typer/common';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { ISøker } from '../../../typer/person';
-import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import {
+    mockEøs,
+    mockFeatureToggle,
+    silenceConsoleErrors,
+    spyOnUseApp,
+    TestProvidere,
+} from '../../../utils/testing';
 
 import { Personopplysninger } from './Personopplysninger';
 
@@ -16,6 +22,7 @@ describe('Personopplysninger', () => {
     beforeEach(() => {
         mockEøs();
         silenceConsoleErrors();
+        mockFeatureToggle();
     });
     test('Rendrer adresse i personopplysninger', async () => {
         const søker: Partial<ISøker> = {
