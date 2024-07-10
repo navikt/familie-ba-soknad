@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -13,7 +12,6 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
-import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
@@ -32,13 +30,16 @@ const OmBarnaDine: React.FC = () => {
         return null;
     }
 
-    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
+    const stegTekster = tekster()[ESanitySteg.OM_BARNA];
+    const { omBarnaGuide } = stegTekster;
 
+    const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { bekreftelsePaaAdopsjonBarnetrygd, vedtakOmOppholdstillatelse } = dokumentasjonstekster;
 
     return (
         <Steg
             tittel={<SpråkTekst id={'ombarna.sidetittel'} />}
+            guide={omBarnaGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
@@ -72,11 +73,7 @@ const OmBarnaDine: React.FC = () => {
                             OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon
                         ]
                     }
-                    tilleggsinfo={
-                        <Alert variant={'info'} inline>
-                            <SpråkTekst id={'ombarna.institusjon.info'} />
-                        </Alert>
-                    }
+                    tilleggsinfoTekstId={'ombarna.institusjon.info'}
                 />
 
                 <HvilkeBarnCheckboxGruppe
@@ -104,11 +101,7 @@ const OmBarnaDine: React.FC = () => {
                                 OmBarnaDineSpørsmålId.erBarnAdoptertFraUtland
                             ]
                         }
-                        tilleggsinfo={
-                            <Alert variant={'info'} inline>
-                                <SpråkTekst id={'ombarna.adoptert.info'} />
-                            </Alert>
-                        }
+                        tilleggsinfoTekstId={'ombarna.adoptert.info'}
                     />
                     <HvilkeBarnCheckboxGruppe
                         legendSpråkId={
@@ -165,11 +158,7 @@ const OmBarnaDine: React.FC = () => {
                                 OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
                             ]
                         }
-                        tilleggsinfo={
-                            <Alert variant={'info'} inline>
-                                <SpråkTekst id={'felles.korteopphold.info'} />
-                            </Alert>
-                        }
+                        tilleggsinfoTekstId={'felles.korteopphold.info'}
                     />
                     <HvilkeBarnCheckboxGruppe
                         legendSpråkId={

@@ -7,9 +7,11 @@ import { BodyLong } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { RouteEnum } from '../../../typer/routes';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
@@ -26,9 +28,10 @@ const StyledBodyLong = styled(BodyLong)`
 `;
 
 const Oppsummering: React.FC = () => {
-    const { søknad } = useApp();
+    const { søknad, tekster } = useApp();
     const { hentStegNummer } = useSteg();
     const navigate = useNavigate();
+    const { toggles } = useFeatureToggles();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
     const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();
     const søkerHarEøsSteg = søkerTriggerEøs || !!barnSomTriggerEøs.length;
@@ -48,14 +51,22 @@ const Oppsummering: React.FC = () => {
         return Promise.resolve(feilAnchors.length === 0);
     };
 
+    const stegTekster = tekster()[ESanitySteg.OPPSUMMERING];
+    const { oppsummeringGuide } = stegTekster;
+
+    const visGammelInfo = !toggles.VIS_GUIDE_I_STEG || !oppsummeringGuide;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}
+            guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
-            <StyledBodyLong>
-                <SpråkTekst id={'oppsummering.info'} />
-            </StyledBodyLong>
+            {visGammelInfo && (
+                <StyledBodyLong>
+                    <SpråkTekst id={'oppsummering.info'} />
+                </StyledBodyLong>
+            )}
 
             <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
             <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />

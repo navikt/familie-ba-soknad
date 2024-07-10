@@ -17,7 +17,6 @@ import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
-import { IDokumentasjonTekstinnhold } from '../Dokumentasjon/innholdTyper';
 
 import AndreForelder from './AndreForelder';
 import { OmBarnetHeader } from './OmBarnetHeader';
@@ -50,8 +49,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernBarnetrygdsperiode,
     } = useOmBarnet(barnetsId);
 
-    const dokumentasjonstekster: IDokumentasjonTekstinnhold = tekster()[ESanitySteg.DOKUMENTASJON];
-
+    const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { bekreftelsePaaAtBarnBorSammenMedDeg, avtaleOmDeltBosted, meklingsattest } =
         dokumentasjonstekster;
 

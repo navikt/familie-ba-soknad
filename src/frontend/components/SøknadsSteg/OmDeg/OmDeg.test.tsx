@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -46,11 +46,11 @@ describe('OmDeg', () => {
         spyOnUseApp({ søker: søkerMedSvarSomViserAlleTekster });
         søkerMedSvarSomViserAlleTekster.adresse = null;
         søkerMedSvarSomViserAlleTekster.adressebeskyttelse = false;
-        const { findAllByTestId } = render(<TestKomponentMedEkteTekster />);
+        render(<TestKomponentMedEkteTekster />);
 
-        // Vent på effect i AppContext så vi ikke får advarsel om act
-        await findAllByTestId(/alertstripe/);
-        expect(console.error).toHaveBeenCalledTimes(0);
+        await waitFor(() => {
+            expect(console.error).toHaveBeenCalledTimes(0);
+        });
     });
 
     test('Alle tekster finnes når man svarer at man ikke bor på registrert adresse', () => {
@@ -104,16 +104,16 @@ describe('OmDeg', () => {
                 statsborgerskap: [{ landkode: 'NOR' }],
             }),
         });
-        const { queryByText, findAllByTestId } = render(<TestKomponent />);
-        // Lar async useEffect i AppContext bli ferdig
-        await findAllByTestId('alertstripe');
+        const { queryByText } = render(<TestKomponent />);
 
-        expect(
-            queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse])
-        ).not.toBeInTheDocument();
-        expect(
-            queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder])
-        ).toBeInTheDocument();
+        await waitFor(() => {
+            expect(
+                queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse])
+            ).not.toBeInTheDocument();
+            expect(
+                queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder])
+            ).toBeInTheDocument();
+        });
     });
 
     test('Søker med adresse får opp to spørsmål med en gang', async () => {
@@ -140,16 +140,16 @@ describe('OmDeg', () => {
                 statsborgerskap: [{ landkode: 'NOR' }],
             }),
         });
-        const { queryByText, findAllByTestId } = render(<TestKomponent />);
-        // Lar async useEffect i AppContext bli ferdig
-        await findAllByTestId('alertstripe');
+        const { queryByText } = render(<TestKomponent />);
 
-        expect(
-            queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse])
-        ).not.toBeInTheDocument();
+        await waitFor(() => {
+            expect(
+                queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse])
+            ).not.toBeInTheDocument();
 
-        expect(
-            queryByText(omDegSpørsmålSpråkId['søker-vært-i-norge-sammenhengende-tolv-måneder'])
-        ).toBeInTheDocument();
+            expect(
+                queryByText(omDegSpørsmålSpråkId['søker-vært-i-norge-sammenhengende-tolv-måneder'])
+            ).toBeInTheDocument();
+        });
     });
 });

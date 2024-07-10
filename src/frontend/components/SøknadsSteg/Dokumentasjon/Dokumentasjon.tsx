@@ -6,10 +6,12 @@ import { Alert, BodyLong, BodyShort } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -26,8 +28,9 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 };
 
 const Dokumentasjon: React.FC = () => {
-    const { søknad, settSøknad, innsendingStatus } = useApp();
+    const { søknad, settSøknad, innsendingStatus, tekster } = useApp();
     const { sendInnSkjemaV8 } = useSendInnSkjema();
+    const { toggles } = useFeatureToggles();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
     const oppdaterDokumentasjon = (
@@ -64,9 +67,15 @@ const Dokumentasjon: React.FC = () => {
         });
     });
 
+    const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
+    const { dokumentasjonGuide } = stegTekster;
+
+    const visNyGuide = toggles.VIS_GUIDE_I_STEG && dokumentasjonGuide;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
+            guide={dokumentasjonGuide}
             gåVidereCallback={async () => {
                 const [success, _] = await sendInnSkjemaV8();
                 return success;
@@ -88,16 +97,23 @@ const Dokumentasjon: React.FC = () => {
                     </Alert>
                 </KomponentGruppe>
             )}
-            <KomponentGruppe>
-                <Alert variant={'info'}>
-                    <SpråkTekst id={'dokumentasjon.nudge'} />
-                </Alert>
+            {visNyGuide ? (
+                <KomponentGruppe>
+                    <PictureScanningGuide />
+                </KomponentGruppe>
+            ) : (
+                <KomponentGruppe>
+                    <Alert variant={'info'}>
+                        <SpråkTekst id={'dokumentasjon.nudge'} />
+                    </Alert>
 
-                <BodyLong>
-                    <SpråkTekst id={'dokumentasjon.info'} />
-                </BodyLong>
-                <PictureScanningGuide />
-            </KomponentGruppe>
+                    <BodyLong>
+                        <SpråkTekst id={'dokumentasjon.info'} />
+                    </BodyLong>
+
+                    <PictureScanningGuide />
+                </KomponentGruppe>
+            )}
             {søknad.dokumentasjon
                 .filter(dokumentasjon => erDokumentasjonRelevant(dokumentasjon))
                 .map((dokumentasjon, index) => (

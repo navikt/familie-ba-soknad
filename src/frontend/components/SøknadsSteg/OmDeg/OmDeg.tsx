@@ -3,8 +3,10 @@ import React from 'react';
 import { Alert, Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { PersonType } from '../../../typer/personType';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -22,6 +24,8 @@ import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
+    const { tekster } = useApp();
+
     const { toggles } = useFeatureToggles();
 
     const {
@@ -47,9 +51,13 @@ const OmDeg: React.FC = () => {
         antallPerioder
     );
 
+    const stegTekster = tekster()[ESanitySteg.OM_DEG];
+    const { omDegGuide } = stegTekster;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
+            guide={omDegGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
@@ -84,11 +92,7 @@ const OmDeg: React.FC = () => {
                         spørsmålTekstId={
                             omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
                         }
-                        tilleggsinfo={
-                            <Alert variant={'info'} inline data-testid={'alertstripe'}>
-                                <SpråkTekst id={'felles.korteopphold.info'} />
-                            </Alert>
-                        }
+                        tilleggsinfoTekstId={'felles.korteopphold.info'}
                     />
                     {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                         <PerioderContainer>
