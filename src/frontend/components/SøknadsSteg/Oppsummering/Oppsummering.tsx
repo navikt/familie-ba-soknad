@@ -54,13 +54,15 @@ const Oppsummering: React.FC = () => {
     const stegTekster = tekster()[ESanitySteg.OPPSUMMERING];
     const { oppsummeringGuide } = stegTekster;
 
+    const visGammelInfo = !toggles.VIS_GUIDE_I_STEG || !oppsummeringGuide;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}
             guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
-            {!toggles.VIS_GUIDE_I_STEG && (
+            {visGammelInfo && (
                 <StyledBodyLong>
                     <SpråkTekst id={'oppsummering.info'} />
                 </StyledBodyLong>

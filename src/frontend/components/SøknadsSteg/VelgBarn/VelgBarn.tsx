@@ -43,6 +43,8 @@ const VelgBarn: React.FC = () => {
     const stegTekster = tekster()[ESanitySteg.VELG_BARN];
     const { velgBarnGuide } = stegTekster;
 
+    const visGammelInfo = !toggles.VIS_GUIDE_I_STEG || !velgBarnGuide;
+
     return (
         <>
             <Steg
@@ -57,7 +59,7 @@ const VelgBarn: React.FC = () => {
                     },
                 }}
             >
-                {!toggles.VIS_GUIDE_I_STEG && (
+                {visGammelInfo && (
                     <Alert variant={'info'} inline>
                         <SpråkTekst id={'hvilkebarn.info.alert'} />
                         <EksternLenke

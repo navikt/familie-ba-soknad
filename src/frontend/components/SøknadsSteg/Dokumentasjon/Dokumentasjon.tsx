@@ -70,6 +70,8 @@ const Dokumentasjon: React.FC = () => {
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { dokumentasjonGuide } = stegTekster;
 
+    const visNyGuide = toggles.VIS_GUIDE_I_STEG && dokumentasjonGuide;
+
     return (
         <Steg
             tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
@@ -95,7 +97,7 @@ const Dokumentasjon: React.FC = () => {
                     </Alert>
                 </KomponentGruppe>
             )}
-            {toggles.VIS_GUIDE_I_STEG ? (
+            {visNyGuide ? (
                 <KomponentGruppe>
                     <PictureScanningGuide />
                 </KomponentGruppe>
