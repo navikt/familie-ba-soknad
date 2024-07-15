@@ -12,6 +12,7 @@ import { useAppNavigation } from '../../../context/AppNavigationContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
+import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
 import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -43,6 +44,16 @@ interface ISteg {
     gåVidereCallback?: () => Promise<boolean>;
     children?: ReactNode;
 }
+
+const FormProgressContainer = styled.div`
+    max-width: var(--innhold-bredde);
+    margin: 0 auto;
+
+    @media all and ${device.tablet} {
+        max-width: 100%;
+        margin: 0 var(--a-spacing-8);
+    }
+`;
 
 const ChildrenContainer = styled.div`
     margin-bottom: 2rem;
@@ -162,7 +173,7 @@ const Steg: React.FC<ISteg> = ({
             <header>
                 <Banner />
                 {nyesteNåværendeRoute !== RouteEnum.Kvittering && (
-                    <Box marginInline="8">
+                    <FormProgressContainer>
                         <FormProgress
                             totalSteps={formProgressSteps.length}
                             activeStep={hentNåværendeStegIndex()}
@@ -178,7 +189,7 @@ const Steg: React.FC<ISteg> = ({
                                 </FormProgress.Step>
                             ))}
                         </FormProgress>
-                    </Box>
+                    </FormProgressContainer>
                 )}
             </header>
             <InnholdContainer>
