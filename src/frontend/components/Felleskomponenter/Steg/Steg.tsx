@@ -1,9 +1,9 @@
 import React, { ReactNode, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { Box, GuidePanel, Heading, Stepper } from '@navikt/ds-react';
+import { Box, FormProgress, GuidePanel, Heading } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
@@ -45,6 +45,16 @@ interface ISteg {
     children?: ReactNode;
 }
 
+const FormProgressContainer = styled.div`
+    max-width: var(--innhold-bredde);
+    margin: 0 auto;
+
+    @media all and ${device.tablet} {
+        max-width: 100%;
+        margin: 0 var(--a-spacing-8);
+    }
+`;
+
 const ChildrenContainer = styled.div`
     margin-bottom: 2rem;
 `;
@@ -61,34 +71,6 @@ const TittelContainer = styled.div`
 
 const Form = styled.form`
     width: 100%;
-`;
-
-const kompaktStepper = () => css`
-    * {
-        font-size: 0;
-        --navds-stepper-circle-size: 0.75rem;
-        --navds-stepper-border-width: 1px;
-        > li {
-            gap: 0;
-        }
-    }
-`;
-
-const StepperContainer = styled.div<{ $antallSteg: number }>`
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-
-    @media all and ${device.mobile} {
-        ${kompaktStepper};
-    }
-    ${props =>
-        props.$antallSteg > 12 &&
-        css`
-            @media all and ${device.tablet} {
-                ${kompaktStepper};
-            }
-        `}
 `;
 
 const Steg: React.FC<ISteg> = ({
@@ -109,12 +91,12 @@ const Steg: React.FC<ISteg> = ({
         søknad,
     } = useApp();
     const {
+        formProgressSteps,
         hentNesteSteg,
         hentForrigeSteg,
         hentNåværendeSteg,
         hentNåværendeStegIndex,
         erPåKvitteringsside,
-        stepperObjekter,
     } = useSteg();
     const { komFra, settKomFra } = useAppNavigation();
     const { toggles } = useFeatureToggles();
@@ -180,29 +162,34 @@ const Steg: React.FC<ISteg> = ({
         navigate(forrigeRoute.path);
     };
 
+    const håndterGåTilSteg = (stegIndex: number) => {
+        const steg = formProgressSteps[stegIndex];
+        navigate(steg.path);
+    };
+
     return (
         <>
             <ScrollHandler />
             <header>
                 <Banner />
                 {nyesteNåværendeRoute !== RouteEnum.Kvittering && (
-                    <StepperContainer $antallSteg={stepperObjekter.length}>
-                        <Stepper
-                            aria-label={'Søknadssteg'}
+                    <FormProgressContainer>
+                        <FormProgress
+                            totalSteps={formProgressSteps.length}
                             activeStep={hentNåværendeStegIndex()}
-                            orientation={'horizontal'}
-                            interactive={false}
+                            onStepChange={stegIndex => håndterGåTilSteg(stegIndex - 1)}
                         >
-                            {stepperObjekter.map((value, index) => (
-                                <Stepper.Step
-                                    children={''}
-                                    title={value.label}
-                                    key={value.key}
+                            {formProgressSteps.map((value, index) => (
+                                <FormProgress.Step
+                                    key={index}
                                     completed={index + 1 < hentNåværendeStegIndex()}
-                                />
+                                    interactive={index + 1 < hentNåværendeStegIndex()}
+                                >
+                                    {value.label}
+                                </FormProgress.Step>
                             ))}
-                        </Stepper>
-                    </StepperContainer>
+                        </FormProgress>
+                    </FormProgressContainer>
                 )}
             </header>
             <InnholdContainer>
