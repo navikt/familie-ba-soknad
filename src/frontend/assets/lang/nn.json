@@ -495,7 +495,7 @@
   "ombarnet.andre-forelder.utenlandspensjon.land.spm": "Kva land får den andre forelderen til {barn} pensjon frå?",
   "ombarnet.andreforelderpensjonutland.feilmelding": "Du må oppgje om den andre forelderen til {navn} får eller har fått pensjon frå utlandet for å gå vidare",
   "ombarnet.andreforelderpensjonutland.spm": "Får eller har den andre forelderen til {navn} fått pensjon frå utlandet?",
-  "ombarnet.barnetrygd-eøs": "Du har opplyst at du får eller har søkt om barnetrygd for {navn} frå eit anna EØS land.",
+  "ombarnet.barnetrygd-eøs": "Du har opplyst at du får, har fått eller har søkt om barnetrygd for {navn} frå eit anna EØS land.",
   "ombarnet.barnetrygd-eøs-fortid": "Du har opplyst at du får, har fått eller har søkt om barnetrygd for {navn} frå eit anna EØS land.",
   "ombarnet.barnetrygd-eøs.land.feilmelding": "Du må oppgje kva land du får eller har søkt barnetrygd frå for å gå vidare",
   "ombarnet.barnetrygd-eøs.land.spm": "Kva land får eller har du søkt barnetrygd frå?",

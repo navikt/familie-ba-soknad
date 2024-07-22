@@ -495,7 +495,7 @@
   "ombarnet.andre-forelder.utenlandspensjon.land.spm": "What country does {barn}'s other parent receive a pension from?",
   "ombarnet.andreforelderpensjonutland.feilmelding": "You must state whether {navn}'s other parent receives or has received a pension from abroad in order to be able to proceed",
   "ombarnet.andreforelderpensjonutland.spm": "Does {navn}'s other parent receive, or have they received a pension from abroad?",
-  "ombarnet.barnetrygd-eøs": "You have stated that you are receiving or have applied for child benefit for {navn} from another EEA country.",
+  "ombarnet.barnetrygd-eøs": "You have stated that you are receiving, have received or have applied for child benefit for {navn} from another EEA country.",
   "ombarnet.barnetrygd-eøs-fortid": "You have stated that you are receiving, have received or have applied for child benefit for {navn} from another EEA country.",
   "ombarnet.barnetrygd-eøs.land.feilmelding": "You must state which country you are receiving or have applied for child benefit from in order to be able to proceed",
   "ombarnet.barnetrygd-eøs.land.spm": "From which country are you receiving or have you applied for child benefit?",
