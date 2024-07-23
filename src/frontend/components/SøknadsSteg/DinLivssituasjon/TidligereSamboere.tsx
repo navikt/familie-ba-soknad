@@ -22,7 +22,7 @@ interface Props {
     skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
-    hattFlereSamboereForSøktPeriodeFelt: Felt<ESvar | null>;
+    hattAnnenSamboerForSøktPeriodeFelt: Felt<ESvar | null>;
     tidligereSamboere: Felt<ITidligereSamboer[]>;
 }
 
@@ -30,7 +30,7 @@ const TidligereSamboere: React.FC<Props> = ({
     skjema,
     leggTilTidligereSamboer,
     fjernTidligereSamboer,
-    hattFlereSamboereForSøktPeriodeFelt,
+    hattAnnenSamboerForSøktPeriodeFelt,
     tidligereSamboere,
 }) => {
     const {
@@ -50,14 +50,14 @@ const TidligereSamboere: React.FC<Props> = ({
         <>
             <JaNeiSpm
                 skjema={skjema}
-                felt={hattFlereSamboereForSøktPeriodeFelt}
+                felt={hattAnnenSamboerForSøktPeriodeFelt}
                 spørsmålTekstId={
                     dinLivssituasjonSpørsmålSpråkId[
                         DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
                     ]
                 }
             />
-            {hattFlereSamboereForSøktPeriodeFelt.verdi === ESvar.JA && (
+            {hattAnnenSamboerForSøktPeriodeFelt.verdi === ESvar.JA && (
                 <PerioderContainer>
                     {tidligereSamboere.verdi.map((samboer: ITidligereSamboer, index: number) => (
                         <SamboerOpplysninger
@@ -72,7 +72,7 @@ const TidligereSamboere: React.FC<Props> = ({
                         onClick={åpneLeggTilSamboerModal}
                         id={genererPeriodeId({
                             personType: PersonType.Søker,
-                            spørsmålsId: DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode,
+                            spørsmålsId: DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode,
                         })}
                         feilmelding={
                             tidligereSamboere.erSynlig &&

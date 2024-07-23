@@ -182,8 +182,8 @@ export const useDinLivssituasjon = (): {
     });
 
     /*--- TIDLIGERE SAMBOER ---*/
-    const hattFlereSamboereForSøktPeriode = useJaNeiSpmFelt({
-        søknadsfelt: søker.utvidet.spørsmål.hattFlereSamboereForSøktPeriode,
+    const hattAnnenSamboerForSøktPeriode = useJaNeiSpmFelt({
+        søknadsfelt: søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode,
         feilmeldingSpråkId: 'omdeg.tidligereSamboer.feilmelding',
         skalSkjules: !erUtvidet,
     });
@@ -193,14 +193,14 @@ export const useDinLivssituasjon = (): {
         leggTilPeriode: leggTilTidligereSamboer,
         registrertePerioder: tidligereSamboere,
     } = usePerioder<ITidligereSamboer>({
-        feltId: `${DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode}-${PersonType.Søker}`,
+        feltId: `${DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode}-${PersonType.Søker}`,
         verdi: søker.utvidet.tidligereSamboere,
-        avhengigheter: { hattFlereSamboereForSøktPeriode },
+        avhengigheter: { hattAnnenSamboerForSøktPeriode },
         skalFeltetVises: avhengigheter =>
-            avhengigheter.hattFlereSamboereForSøktPeriode.verdi === ESvar.JA,
+            avhengigheter.hattAnnenSamboerForSøktPeriode.verdi === ESvar.JA,
         valideringsfunksjon: (felt, avhengigheter) => {
-            return avhengigheter?.hattFlereSamboereForSøktPeriode.verdi === ESvar.NEI ||
-                (avhengigheter?.hattFlereSamboereForSøktPeriode.verdi === ESvar.JA &&
+            return avhengigheter?.hattAnnenSamboerForSøktPeriode.verdi === ESvar.NEI ||
+                (avhengigheter?.hattAnnenSamboerForSøktPeriode.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
                 : feil(felt, <SpråkTekst id={'omdeg.tidligereSamboer.feilmelding'} />);
@@ -268,7 +268,7 @@ export const useDinLivssituasjon = (): {
             separertEnkeSkiltUtland,
             separertEnkeSkiltDato,
             harSamboerNå,
-            hattFlereSamboereForSøktPeriode,
+            hattAnnenSamboerForSøktPeriode,
             nåværendeSamboerNavn,
             nåværendeSamboerFnr,
             nåværendeSamboerFnrUkjent,
@@ -364,9 +364,9 @@ export const useDinLivssituasjon = (): {
                     ...søknad.søker.utvidet.spørsmål.harSamboerNå,
                     svar: skjema.felter.harSamboerNå.verdi,
                 },
-                hattFlereSamboereForSøktPeriode: {
-                    ...søknad.søker.utvidet.spørsmål.hattFlereSamboereForSøktPeriode,
-                    svar: skjema.felter.hattFlereSamboereForSøktPeriode.verdi,
+                hattAnnenSamboerForSøktPeriode: {
+                    ...søknad.søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode,
+                    svar: skjema.felter.hattAnnenSamboerForSøktPeriode.verdi,
                 },
             },
             nåværendeSamboer:
@@ -398,7 +398,7 @@ export const useDinLivssituasjon = (): {
                       }
                     : null,
             tidligereSamboere:
-                skjema.felter.hattFlereSamboereForSøktPeriode.verdi === ESvar.JA
+                skjema.felter.hattAnnenSamboerForSøktPeriode.verdi === ESvar.JA
                     ? skjema.felter.tidligereSamboere.verdi
                     : [],
         },

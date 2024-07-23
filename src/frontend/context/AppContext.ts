@@ -208,8 +208,8 @@ const [AppProvider, useApp] = createUseContext(() => {
                                     : DinLivssituasjonSpørsmålId.harSamboerNå,
                             svar: null,
                         },
-                        hattFlereSamboereForSøktPeriode: {
-                            id: DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode,
+                        hattAnnenSamboerForSøktPeriode: {
+                            id: DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode,
                             svar: null,
                         },
                     },

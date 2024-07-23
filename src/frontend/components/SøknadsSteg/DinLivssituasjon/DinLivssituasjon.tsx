@@ -153,8 +153,8 @@ const DinLivssituasjon: React.FC = () => {
                             skjema={skjema}
                             leggTilTidligereSamboer={leggTilTidligereSamboer}
                             fjernTidligereSamboer={fjernTidligereSamboer}
-                            hattFlereSamboereForSøktPeriodeFelt={
-                                skjema.felter.hattFlereSamboereForSøktPeriode
+                            hattAnnenSamboerForSøktPeriodeFelt={
+                                skjema.felter.hattAnnenSamboerForSøktPeriode
                             }
                             tidligereSamboere={skjema.felter.tidligereSamboere}
                         />

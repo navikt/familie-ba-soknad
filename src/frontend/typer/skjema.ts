@@ -28,7 +28,7 @@ export interface IDinLivssituasjonFeltTyper {
     separertEnkeSkiltUtland: ESvar | null;
     separertEnkeSkiltDato: ISODateString;
     harSamboerNå: ESvar | null;
-    hattFlereSamboereForSøktPeriode: ESvar | null;
+    hattAnnenSamboerForSøktPeriode: ESvar | null;
     nåværendeSamboerNavn: string;
     nåværendeSamboerFnr: string;
     nåværendeSamboerFnrUkjent: ESvar;
