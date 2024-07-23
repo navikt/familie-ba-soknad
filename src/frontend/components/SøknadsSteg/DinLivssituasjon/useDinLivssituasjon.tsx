@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
@@ -99,7 +99,7 @@ export const useDinLivssituasjon = (): {
     });
 
     /*---- NÅVÆRENDE SAMBOER ----*/
-    const harSamboerNå: Felt<ESvar | null> = useJaNeiSpmFelt({
+    const harSamboerNå = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.harSamboerNå,
         feilmeldingSpråkId:
             søker.sivilstand.type === ESivilstand.GIFT
@@ -182,7 +182,7 @@ export const useDinLivssituasjon = (): {
     });
 
     /*--- TIDLIGERE SAMBOER ---*/
-    const hattFlereSamboereForSøktPeriode: Felt<ESvar | null> = useJaNeiSpmFelt({
+    const hattFlereSamboereForSøktPeriode = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.harSamboerNå,
         feilmeldingSpråkId: 'omdeg.tidligereSamboer.feilmelding',
         skalSkjules: !erUtvidet,
@@ -366,7 +366,7 @@ export const useDinLivssituasjon = (): {
                 },
                 hattFlereSamboereForSøktPeriode: {
                     ...søknad.søker.utvidet.spørsmål.hattFlereSamboereForSøktPeriode,
-                    svar: skjema.felter.harSamboerNå.verdi,
+                    svar: skjema.felter.hattFlereSamboereForSøktPeriode.verdi,
                 },
             },
             nåværendeSamboer:
