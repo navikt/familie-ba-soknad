@@ -158,7 +158,6 @@ const DinLivssituasjon: React.FC = () => {
                             }
                             tidligereSamboere={skjema.felter.tidligereSamboere}
                         />
-                        {skjema.felter.tidligereSamboere.verdi.length}
                     </KomponentGruppe>
                 </>
             )}
