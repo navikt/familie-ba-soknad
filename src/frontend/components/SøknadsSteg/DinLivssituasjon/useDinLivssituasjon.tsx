@@ -398,8 +398,8 @@ export const useDinLivssituasjon = (): {
                       }
                     : null,
             tidligereSamboere:
-                hattFlereSamboereForSøktPeriode.verdi === ESvar.JA
-                    ? søknad.søker.utvidet.tidligereSamboere
+                skjema.felter.hattFlereSamboereForSøktPeriode.verdi === ESvar.JA
+                    ? skjema.felter.tidligereSamboere.verdi
                     : [],
         },
     });
