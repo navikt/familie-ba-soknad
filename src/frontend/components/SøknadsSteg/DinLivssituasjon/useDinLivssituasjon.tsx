@@ -183,7 +183,7 @@ export const useDinLivssituasjon = (): {
 
     /*--- TIDLIGERE SAMBOER ---*/
     const hattFlereSamboereForSøktPeriode = useJaNeiSpmFelt({
-        søknadsfelt: søker.utvidet.spørsmål.harSamboerNå,
+        søknadsfelt: søker.utvidet.spørsmål.hattFlereSamboereForSøktPeriode,
         feilmeldingSpråkId: 'omdeg.tidligereSamboer.feilmelding',
         skalSkjules: !erUtvidet,
     });
