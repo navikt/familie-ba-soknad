@@ -18,7 +18,7 @@ import {
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
-import { IBarn, IIdNummer } from './person';
+import { IBarn, IIdNummer, ITidligereSamboer } from './person';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 
@@ -28,6 +28,7 @@ export interface IDinLivssituasjonFeltTyper {
     separertEnkeSkiltUtland: ESvar | null;
     separertEnkeSkiltDato: ISODateString;
     harSamboerNå: ESvar | null;
+    hattFlereSamboereForSøktPeriode: ESvar | null;
     nåværendeSamboerNavn: string;
     nåværendeSamboerFnr: string;
     nåværendeSamboerFnrUkjent: ESvar;
@@ -36,6 +37,7 @@ export interface IDinLivssituasjonFeltTyper {
     nåværendeSamboerFraDato: ISODateString;
     erAsylsøker: ESvar | null;
     arbeidIUtlandet: ESvar | null;
+    tidligereSamboere: ITidligereSamboer[];
     registrerteArbeidsperioder: IArbeidsperiode[];
     mottarUtenlandspensjon: ESvar | null;
     registrertePensjonsperioder: IPensjonsperiode[];

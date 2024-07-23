@@ -630,6 +630,7 @@
   "omdeg.nårstartetsamboerforhold.spm": "Når starta sambuarforholdet?",
   "omdeg.nåværendeSamboer.ident.ukjent": "Eg kjenner ikkje fødselsnummer eller d-nummer",
   "omdeg.nåværendesamboer.fødselsdato.ukjent": "Du må oppgje sambuarens fødselsdato for å gå vidare",
+  "omdeg.tidligereSamboer.feilmelding": "Du må leggja til minst ein tidlegare sambuar for å gå vidare",
   "omdeg.oppholderi.eøs-info": "Du må laste ned og fylle ut tilleggsskjema og legge ved seinare i søknaden, sidan du oppheld deg i eit EØS-land.",
   "omdeg.oppholdti.eøs-info": "Du må laste ned og fylle ut tilleggsskjema og legge ved seinare i søknaden, sidan du har opphalde deg eit EØS-land.",
   "omdeg.oppholdtsammenhengende.feilmelding": "Du må oppgje om du har opphalde deg samanhengande i Noreg dei siste tolv månadene for å gå vidare",

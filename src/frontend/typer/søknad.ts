@@ -175,6 +175,10 @@ export const initialStateSøknad = (): ISøknad => {
                         id: DinLivssituasjonSpørsmålId.harSamboerNå,
                         svar: null,
                     },
+                    hattFlereSamboereForSøktPeriode: {
+                        id: DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode,
+                        svar: null,
+                    },
                 },
                 tidligereSamboere: [],
                 nåværendeSamboer: null,

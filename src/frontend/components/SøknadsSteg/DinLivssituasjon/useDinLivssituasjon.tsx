@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -33,7 +33,7 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { idNummerLand } from '../EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
-import { SamboerSpørsmålId } from './spørsmål';
+import { DinLivssituasjonSpørsmålId, SamboerSpørsmålId } from './spørsmål';
 
 export const useDinLivssituasjon = (): {
     skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
@@ -43,7 +43,6 @@ export const useDinLivssituasjon = (): {
     validerAlleSynligeFelter: () => void;
     leggTilTidligereSamboer: (samboer: ITidligereSamboer) => void;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
-    tidligereSamboere: ITidligereSamboer[];
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
     fjernArbeidsperiode: (periode: IArbeidsperiode) => void;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
@@ -52,9 +51,6 @@ export const useDinLivssituasjon = (): {
     const { søknad, settSøknad, erUtvidet } = useApp();
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs, erEøsLand } = useEøs();
     const søker = søknad.søker;
-    const [tidligereSamboere, settTidligereSamboere] = useState<ITidligereSamboer[]>(
-        søker.utvidet.tidligereSamboere
-    );
 
     /*---- UTVIDET BARNETRYGD ----*/
     const årsak = useFelt<Årsak | ''>({
@@ -185,6 +181,32 @@ export const useDinLivssituasjon = (): {
         sluttdatoAvgrensning: dagensDato(),
     });
 
+    /*--- TIDLIGERE SAMBOER ---*/
+    const hattFlereSamboereForSøktPeriode: Felt<ESvar | null> = useJaNeiSpmFelt({
+        søknadsfelt: søker.utvidet.spørsmål.harSamboerNå,
+        feilmeldingSpråkId: 'omdeg.tidligereSamboer.feilmelding',
+        skalSkjules: !erUtvidet,
+    });
+
+    const {
+        fjernPeriode: fjernTidligereSamboer,
+        leggTilPeriode: leggTilTidligereSamboer,
+        registrertePerioder: tidligereSamboere,
+    } = usePerioder<ITidligereSamboer>({
+        feltId: `${DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode}-${PersonType.Søker}`,
+        verdi: søker.utvidet.tidligereSamboere,
+        avhengigheter: { hattFlereSamboereForSøktPeriode },
+        skalFeltetVises: avhengigheter =>
+            avhengigheter.hattFlereSamboereForSøktPeriode.verdi === ESvar.JA,
+        valideringsfunksjon: (felt, avhengigheter) => {
+            return avhengigheter?.hattFlereSamboereForSøktPeriode.verdi === ESvar.NEI ||
+                (avhengigheter?.hattFlereSamboereForSøktPeriode.verdi === ESvar.JA &&
+                    felt.verdi.length)
+                ? ok(felt)
+                : feil(felt, <SpråkTekst id={'omdeg.tidligereSamboer.feilmelding'} />);
+        },
+    });
+
     /*--- ASYL ARBEID OG PENSJON ----*/
 
     const erAsylsøker = useJaNeiSpmFelt({
@@ -246,6 +268,7 @@ export const useDinLivssituasjon = (): {
             separertEnkeSkiltUtland,
             separertEnkeSkiltDato,
             harSamboerNå,
+            hattFlereSamboereForSøktPeriode,
             nåværendeSamboerNavn,
             nåværendeSamboerFnr,
             nåværendeSamboerFnrUkjent,
@@ -254,22 +277,13 @@ export const useDinLivssituasjon = (): {
             nåværendeSamboerFraDato,
             erAsylsøker,
             arbeidIUtlandet,
+            tidligereSamboere,
             registrerteArbeidsperioder,
             mottarUtenlandspensjon,
             registrertePensjonsperioder,
         },
         skjemanavn: 'dinlivssituasjon',
     });
-
-    const leggTilTidligereSamboer = (samboer: ITidligereSamboer) => {
-        settTidligereSamboere(prevState => prevState.concat(samboer));
-    };
-
-    const fjernTidligereSamboer = (samboerSomSkalFjernes: ITidligereSamboer) => {
-        settTidligereSamboere(prevState =>
-            prevState.filter(samboer => samboer !== samboerSomSkalFjernes)
-        );
-    };
 
     const erEnkeEnkemann = () =>
         skjema.felter.årsak.verdi === Årsak.ENKE_ENKEMANN ||
@@ -328,7 +342,6 @@ export const useDinLivssituasjon = (): {
         idNummer: filtrerteRelevanteIdNummer(),
         utvidet: {
             ...søknad.søker.utvidet,
-            tidligereSamboere,
             spørsmål: {
                 ...søknad.søker.utvidet.spørsmål,
                 årsak: {
@@ -349,6 +362,10 @@ export const useDinLivssituasjon = (): {
                 },
                 harSamboerNå: {
                     ...søknad.søker.utvidet.spørsmål.harSamboerNå,
+                    svar: skjema.felter.harSamboerNå.verdi,
+                },
+                hattFlereSamboereForSøktPeriode: {
+                    ...søknad.søker.utvidet.spørsmål.hattFlereSamboereForSøktPeriode,
                     svar: skjema.felter.harSamboerNå.verdi,
                 },
             },
@@ -380,6 +397,10 @@ export const useDinLivssituasjon = (): {
                           },
                       }
                     : null,
+            tidligereSamboere:
+                hattFlereSamboereForSøktPeriode.verdi === ESvar.JA
+                    ? søknad.søker.utvidet.tidligereSamboere
+                    : [],
         },
     });
 
@@ -437,7 +458,6 @@ export const useDinLivssituasjon = (): {
         validerAlleSynligeFelter,
         valideringErOk,
         oppdaterSøknad,
-        tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
         leggTilArbeidsperiode,

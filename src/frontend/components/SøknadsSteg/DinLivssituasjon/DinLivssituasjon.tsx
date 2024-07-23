@@ -29,7 +29,6 @@ const DinLivssituasjon: React.FC = () => {
         validerFelterOgVisFeilmelding,
         valideringErOk,
         oppdaterSøknad,
-        tidligereSamboere,
         leggTilTidligereSamboer,
         fjernTidligereSamboer,
         leggTilArbeidsperiode,
@@ -151,10 +150,15 @@ const DinLivssituasjon: React.FC = () => {
                         )}
 
                         <TidligereSamboere
-                            tidligereSamboere={tidligereSamboere}
+                            skjema={skjema}
                             leggTilTidligereSamboer={leggTilTidligereSamboer}
                             fjernTidligereSamboer={fjernTidligereSamboer}
+                            hattFlereSamboereForSøktPeriodeFelt={
+                                skjema.felter.hattFlereSamboereForSøktPeriode
+                            }
+                            tidligereSamboere={skjema.felter.tidligereSamboere}
                         />
+                        {skjema.felter.tidligereSamboere.verdi.length}
                     </KomponentGruppe>
                 </>
             )}

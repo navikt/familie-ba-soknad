@@ -630,6 +630,7 @@
   "omdeg.nårstartetsamboerforhold.spm": "When did you start living together?",
   "omdeg.nåværendeSamboer.ident.ukjent": "I don't know the National identity number or-D number",
   "omdeg.nåværendesamboer.fødselsdato.ukjent": "You must provide your cohabiting partners date of birth in order to be able to proceed",
+  "omdeg.tidligereSamboer.feilmelding": "You must add at least one former partner to proceed",
   "omdeg.oppholderi.eøs-info": "Since you are staying in an EEA country you must download and fill out a supplementary form and provide it later on in the application.",
   "omdeg.oppholdti.eøs-info": "Since you have stayed in an EEA country you must download and fill out a supplementary form and provide it later on in the application.",
   "omdeg.oppholdtsammenhengende.feilmelding": "You must state whether you have stayed continuously in Norway for the last twelve months in order to be able to proceed",

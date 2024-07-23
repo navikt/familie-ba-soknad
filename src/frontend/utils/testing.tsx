@@ -482,6 +482,10 @@ export const mekkGyldigUtvidetSøknad = (): ISøknad => {
                         id: DinLivssituasjonSpørsmålId.harSamboerNå,
                         svar: ESvar.NEI,
                     },
+                    hattFlereSamboereForSøktPeriode: {
+                        id: DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode,
+                        svar: ESvar.NEI,
+                    },
                 },
                 tidligereSamboere: [
                     {
