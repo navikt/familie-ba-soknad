@@ -200,7 +200,12 @@ const [AppProvider, useApp] = createUseContext(() => {
                                     : DinLivssituasjonSpørsmålId.harSamboerNå,
                             svar: null,
                         },
+                        hattFlereSamboereForSøktPeriode: {
+                            id: DinLivssituasjonSpørsmålId.hattFlereSamboereForSøktPeriode,
+                            svar: null,
+                        },
                     },
+                    tidligereSamboere: [],
                 },
             },
         });
