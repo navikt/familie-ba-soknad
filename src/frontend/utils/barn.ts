@@ -1,5 +1,4 @@
 import { Alpha3Code } from 'i18n-iso-countries';
-import { IntlShape } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -12,8 +11,6 @@ import { tomString } from '../typer/common';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { ISøknad } from '../typer/søknad';
-
-import { formaterFnr } from './visning';
 
 export const genererInitiellAndreForelder = (
     andreForelder: IAndreForelder | null,
@@ -255,10 +252,10 @@ export const hentUid = () => {
     });
 };
 
-export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
+export const mapBarnResponsTilBarn = (barn: IBarnRespons[]): IBarn[] => {
     return barn.map(barnRespons => ({
         id: hentUid(),
-        navn: barnetsNavnValue(barnRespons, intl),
+        navn: barnetsNavnValue(barnRespons),
         ident: barnRespons.ident,
         alder: barnRespons.fødselsdato ? hentAlder(barnRespons.fødselsdato) : null,
         borMedSøker: barnRespons.borMedSøker,
@@ -266,13 +263,8 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
     }));
 };
 
-export const barnetsNavnValue = (barn: IBarnRespons, intl: IntlShape): string => {
-    return barn.navn
-        ? barn.navn
-        : intl.formatMessage(
-              { id: 'felles.anonym.barn.fnr' },
-              { fødselsnummer: formaterFnr(barn.ident) }
-          );
+export const barnetsNavnValue = (barn: IBarnRespons): string => {
+    return barn.navn ? barn.navn : 'Barn';
 };
 
 export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {

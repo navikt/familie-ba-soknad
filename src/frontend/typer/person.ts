@@ -13,30 +13,31 @@ import {
 import { ISøknadSpørsmål } from './spørsmål';
 import { Årsak } from './utvidet';
 
-export interface IPerson {
-    ident: string;
-    adressebeskyttelse: boolean;
-}
-
-export interface IBarnRespons extends IPerson {
+export interface IBarnRespons {
     navn: string | null;
     borMedSøker: boolean;
     fødselsdato: string | undefined;
+    ident?: string;
+    adressebeskyttelse: boolean;
 }
 
-export interface ISøkerRespons extends IPerson {
+export interface ISøkerRespons {
     navn: string;
     barn: IBarnRespons[];
     statsborgerskap: { landkode: Alpha3Code }[];
     adresse: IAdresse | null;
     sivilstand: { type: ESivilstand };
+    ident: string;
+    adressebeskyttelse: boolean;
 }
 
-export interface IBarn extends IPerson {
+export interface IBarn {
     id: BarnetsId;
     navn: string;
     borMedSøker: boolean | undefined;
     alder: string | null;
+    ident?: string;
+    adressebeskyttelse: boolean;
 }
 
 export interface IIdNummer {

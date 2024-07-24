@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import createUseContext from 'constate';
 import { Alpha3Code, getName } from 'i18n-iso-countries';
-import { useIntl } from 'react-intl';
 
 import {
     byggHenterRessurs,
@@ -35,7 +34,6 @@ import { useSpråk } from './SpråkContext';
 
 const [AppProvider, useApp] = createUseContext(() => {
     const { valgtLocale } = useSpråk();
-    const intl = useIntl();
     const { axiosRequest, lasterRessurser } = useLastRessurserContext();
     const { innloggetStatus } = useInnloggetContext();
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>());
@@ -94,7 +92,7 @@ const [AppProvider, useApp] = createUseContext(() => {
                             ...søknad.søker,
                             navn: ressurs.data.navn,
                             statsborgerskap: ressurs.data.statsborgerskap,
-                            barn: mapBarnResponsTilBarn(ressurs.data.barn, intl),
+                            barn: mapBarnResponsTilBarn(ressurs.data.barn),
                             ident: ressurs.data.ident,
                             adresse: ressurs.data.adresse,
                             sivilstand: ressurs.data.sivilstand,
