@@ -16,10 +16,16 @@ export const useSendInnSkjema = (): {
     const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
     const { soknadApiProxyUrl } = Miljø();
     const { valgtLocale } = useSpråk();
+    const { tekster, tilRestLocaleRecord } = useApp();
     const sendInnSkjemaV8 = async (): Promise<[boolean, ISøknadKontraktV8]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
 
-        const formatert: ISøknadKontraktV8 = dataISøknadKontraktFormatV8(valgtLocale, søknad);
+        const formatert: ISøknadKontraktV8 = dataISøknadKontraktFormatV8(
+            valgtLocale,
+            søknad,
+            tekster(),
+            tilRestLocaleRecord
+        );
 
         const res = await sendInn<ISøknadKontraktV8>(
             formatert,

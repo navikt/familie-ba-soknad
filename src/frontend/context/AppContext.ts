@@ -315,6 +315,14 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     const plainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
 
+    const tilRestLocaleRecord = (sanityTekst, flettefelter): Record<LocaleType, string> => {
+        return {
+            [LocaleType.en]: plainTekst(sanityTekst, flettefelter, LocaleType.en),
+            [LocaleType.nn]: plainTekst(sanityTekst, flettefelter, LocaleType.nn),
+            [LocaleType.nb]: plainTekst(sanityTekst, flettefelter, LocaleType.nb),
+        };
+    };
+
     return {
         axiosRequest,
         sluttbruker,
@@ -344,6 +352,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         settEøsLand,
         tekster,
         plainTekst,
+        tilRestLocaleRecord,
         flettefeltTilTekst,
     };
 });

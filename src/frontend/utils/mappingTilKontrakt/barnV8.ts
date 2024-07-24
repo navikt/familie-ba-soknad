@@ -8,10 +8,11 @@ import {
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
 import { LocaleType } from '../../typer/common';
-import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
+import { ERegistrertBostedType, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarnV8 } from '../../typer/kontrakt/v8';
 import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
+import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { hentTekster } from '../språk';
 
@@ -31,7 +32,9 @@ import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 export const barnISøknadsFormatV8 = (
     barn: IBarnMedISøknad,
     søker: ISøker,
-    valgtSpråk: LocaleType
+    valgtSpråk: LocaleType,
+    tekster: ITekstinnhold,
+    tilRestLocaleRecord: TilRestLocaleRecord
 ): ISøknadIKontraktBarnV8 => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
@@ -55,6 +58,7 @@ export const barnISøknadsFormatV8 = (
         ...barnSpørsmål
     } = barn;
     const typetBarnSpørsmål = barnSpørsmål as unknown as ISøknadSpørsmålMap;
+    const fellesTekster = tekster.FELLES;
 
     const registertBostedVerdi = (): ERegistrertBostedType => {
         /**
@@ -86,7 +90,9 @@ export const barnISøknadsFormatV8 = (
         navn: søknadsfeltBarn('pdf.barn.navn.label', sammeVerdiAlleSpråk(navn), barn),
         ident: søknadsfeltBarn(
             'pdf.barn.ident.label',
-            ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt'),
+            ident
+                ? sammeVerdiAlleSpråk(ident)
+                : tilRestLocaleRecord(fellesTekster.frittståendeOrd.skjult),
             barn
         ),
         registrertBostedType: søknadsfeltBarn(
