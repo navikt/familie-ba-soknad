@@ -129,7 +129,6 @@ const AndreForelderOppsummering: React.FC<{
                             gjelderUtlandet={true}
                             personType={PersonType.AndreForelder}
                             erDød={barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA}
-                            barn={barn}
                         />
                     ))}
 

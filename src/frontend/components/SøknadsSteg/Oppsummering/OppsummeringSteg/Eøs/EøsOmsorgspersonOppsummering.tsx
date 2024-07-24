@@ -94,7 +94,6 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     nummer={index + 1}
                     personType={PersonType.Omsorgsperson}
                     gjelderUtlandet={true}
-                    barn={barn}
                 />
             ))}
             {omsorgsperson.arbeidNorge.svar && (
@@ -115,7 +114,6 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     nummer={index + 1}
                     personType={PersonType.Omsorgsperson}
                     gjelderUtlandet={false}
-                    barn={barn}
                 />
             ))}
             {omsorgsperson.pensjonUtland.svar && (

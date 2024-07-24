@@ -29,7 +29,7 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
     PeriodePersonTypeMedBarnProps): ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV8> => {
     const { fårUtbetalingNå, utbetalingLand, utbetalingFraDato, utbetalingTilDato } = periode;
     const periodenErAvsluttet =
-        fårUtbetalingNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && !!erDød);
+        fårUtbetalingNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);
 
     const hentUtbetalingsperiodeSpråkId = utbetalingsperiodeModalSpørsmålSpråkIder(
         personType,
