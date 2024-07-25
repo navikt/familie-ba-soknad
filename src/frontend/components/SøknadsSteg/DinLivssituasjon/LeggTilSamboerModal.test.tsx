@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
@@ -40,14 +40,21 @@ describe('LeggTilSamboerModal', () => {
     beforeEach(() => {
         silenceConsoleErrors();
     });
-    it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', () => {
+    it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText, getAllByText, queryByText } = render(
+        const { getByText, getAllByText, findByRole, queryByText } = render(
             <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
+
+        const hattAnnenSamboerForSøktPeriode: HTMLElement = await findByRole('group', {
+            name: /Har du hatt samboer tidligere i perioden du søker barnetrygd for?/i,
+        });
+
+        const jaKnapp: HTMLElement = within(hattAnnenSamboerForSøktPeriode).getByText('Ja');
+        act(() => jaKnapp.click());
 
         const leggTilSamboerKnapp: HTMLElement = getByText('Legg til samboer');
         act(() => leggTilSamboerKnapp.click());

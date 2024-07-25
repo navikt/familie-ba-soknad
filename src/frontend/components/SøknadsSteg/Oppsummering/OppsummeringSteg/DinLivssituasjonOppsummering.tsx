@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { BodyShort } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
@@ -14,7 +13,6 @@ import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
 import { formaterDato } from '../../../../utils/dato';
 import { toÅrsakSpråkId } from '../../../../utils/språk';
-import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -194,18 +192,15 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                     }
                                 />
                             }
+                            søknadsvar={
+                                søknad.søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode.svar
+                            }
                         />
-                        {tidligereSamboere && tidligereSamboere.length > 0 ? (
-                            tidligereSamboere.map((tidligereSamboer, index) => (
-                                <StyledOppsummeringsFeltGruppe key={index}>
-                                    <SamboerOppsummering samboer={tidligereSamboer} />
-                                </StyledOppsummeringsFeltGruppe>
-                            ))
-                        ) : (
-                            <BodyShort>
-                                <SpråkTekst id={jaNeiSvarTilSpråkId(ESvar.NEI)} />
-                            </BodyShort>
-                        )}
+                        {tidligereSamboere.map((tidligereSamboer, index) => (
+                            <StyledOppsummeringsFeltGruppe key={index}>
+                                <SamboerOppsummering samboer={tidligereSamboer} />
+                            </StyledOppsummeringsFeltGruppe>
+                        ))}
                     </StyledOppsummeringsFeltGruppe>
                 </>
             )}

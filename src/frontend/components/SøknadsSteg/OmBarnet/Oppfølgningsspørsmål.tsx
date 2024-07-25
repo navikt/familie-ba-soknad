@@ -83,7 +83,7 @@ const Oppfølgningsspørsmål: React.FC<{
     const antallPerioder = utenlandsperioder.length;
     const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
         'utenlandsopphold',
-        PersonType.Søker,
+        PersonType.Søker, // TODO: Bytt til persontype barn
         antallPerioder
     );
 
