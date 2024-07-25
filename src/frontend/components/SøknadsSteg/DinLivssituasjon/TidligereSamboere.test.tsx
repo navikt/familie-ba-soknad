@@ -79,6 +79,13 @@ describe('TidligereSamboere', () => {
                 ...søknad.søker,
                 utvidet: {
                     ...søknad.søker.utvidet,
+                    spørsmål: {
+                        ...søknad.søker.utvidet.spørsmål,
+                        hattAnnenSamboerForSøktPeriode: {
+                            id: DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode,
+                            svar: ESvar.JA,
+                        },
+                    },
                     tidligereSamboere: [
                         {
                             navn: {
