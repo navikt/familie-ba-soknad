@@ -101,6 +101,8 @@ export interface IForsideTekstinnhold {
     soeknadstittelBarnetrygd: LocaleRecordBlock;
     veilederHei: LocaleRecordBlock;
     veilederIntro: LocaleRecordBlock;
+    foerDuSoekerTittel: LocaleRecordBlock;
+    foerDuSoeker: LocaleRecordBlock;
     informasjonOmPlikter: LocaleRecordBlock;
     informasjonOmPlikterTittel: LocaleRecordBlock;
     informasjonOmPersonopplysninger: LocaleRecordBlock;

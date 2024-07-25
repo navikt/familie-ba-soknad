@@ -58,25 +58,20 @@ const Forside: React.FC = () => {
                 </Heading>
                 <GuidePanel poster>
                     <Heading level="2" size="medium" spacing>
-                        <TekstBlock block={forsidetekster.veilederHei} />
+                        {plainTekst(forsidetekster.veilederHei)}
                     </Heading>
                     <BodyLong>
                         <TekstBlock block={forsidetekster.veilederIntro} />
-                        {/* TODO: Legg til lenkte-tekst fra Sanity */}
-                        Lenke til produktsiden
                     </BodyLong>
                 </GuidePanel>
-                <div>
-                    <Heading level="2" size="large" spacing>
-                        {/* TODO: Legg til tekst fra Sanity */}
-                        Før du søker
+                {/*<div>
+                     <Heading level="2" size="large" spacing>
+                        {plainTekst(forsidetekster.foerDuSoekerTittel)}
                     </Heading>
                     <BodyLong>
-                        {/* TODO: Legg til tekst fra Sanity */}
-                        Denne seksjonen brukes til å gi søkerne informasjon de vil ha stor nytte av
-                        før de går i gang med søknaden.
-                    </BodyLong>
-                </div>
+                        <TekstBlock block={forsidetekster.foerDuSoeker} />
+                    </BodyLong> 
+                </div>*/}
                 <Accordion>
                     <Accordion.Item>
                         <Accordion.Header>
