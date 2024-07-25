@@ -539,6 +539,10 @@ export const testdata5: TilKontraktTestData = {
                         id: 'har-samboer-nå-og-gift',
                         svar: 'NEI',
                     },
+                    hattAnnenSamboerForSøktPeriode: {
+                        id: 'hatt-annen-samboer-i-perioden',
+                        svar: 'JA',
+                    },
                 },
                 tidligereSamboere: [
                     {
@@ -733,6 +737,14 @@ export const testdata5: TilKontraktTestData = {
                         nn: 'Har du ein anna sambuar enn din ektefelle no?',
                     },
                     verdi: { nb: 'NEI', nn: 'NEI', en: 'NEI' },
+                },
+                hattAnnenSamboerForSøktPeriode: {
+                    label: {
+                        en: 'Have you had a cohabiting partner earlier during the period for which you are applying for child benefit?',
+                        nb: 'Har du hatt samboer tidligere i perioden du søker barnetrygd for?',
+                        nn: 'Har du hatt sambuar tidlegare i perioden du søker barnetrygd for?',
+                    },
+                    verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
             },
             tidligereSamboere: [
@@ -1711,9 +1723,9 @@ export const testdata5: TilKontraktTestData = {
                 nn: 'Du har opplyst at {navn} har oppheldt seg utanfor Noreg i løpet av dei siste tolv månadene',
             },
             'ombarnet.barnetrygd-eøs': {
-                en: 'You have stated that you are receiving or have applied for child benefit for {navn} from another EEA country.',
-                nb: 'Du har opplyst at du får eller har søkt om barnetrygd for {navn} fra et annet EØS land.',
-                nn: 'Du har opplyst at du får eller har søkt om barnetrygd for {navn} frå eit anna EØS land.',
+                en: 'You have stated that you are receiving, have received or have applied for child benefit for {navn} from another EEA country.',
+                nb: 'Du har opplyst at du får, har fått eller har søkt om barnetrygd for {navn} fra et annet EØS land.',
+                nn: 'Du har opplyst at du får, har fått eller har søkt om barnetrygd for {navn} frå eit anna EØS land.',
             },
             'omdeg.annensamboer.spm': {
                 en: 'Have you had a cohabiting partner earlier during the period for which you are applying for child benefit?',

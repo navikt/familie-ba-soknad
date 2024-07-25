@@ -811,9 +811,9 @@ export const testdata1: TilKontraktTestData = {
                 nn: 'Du har opplyst at {navn} har oppheldt seg utanfor Noreg i løpet av dei siste tolv månadene',
             },
             'ombarnet.barnetrygd-eøs': {
-                en: 'You have stated that you are receiving or have applied for child benefit for {navn} from another EEA country.',
-                nb: 'Du har opplyst at du får eller har søkt om barnetrygd for {navn} fra et annet EØS land.',
-                nn: 'Du har opplyst at du får eller har søkt om barnetrygd for {navn} frå eit anna EØS land.',
+                en: 'You have stated that you are receiving, have received or have applied for child benefit for {navn} from another EEA country.',
+                nb: 'Du har opplyst at du får, har fått eller har søkt om barnetrygd for {navn} fra et annet EØS land.',
+                nn: 'Du har opplyst at du får, har fått eller har søkt om barnetrygd for {navn} frå eit anna EØS land.',
             },
             'omdeg.annensamboer.spm': {
                 en: 'Have you had a cohabiting partner earlier during the period for which you are applying for child benefit?',

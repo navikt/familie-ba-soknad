@@ -2,6 +2,7 @@ import { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arb
 import { BarnetrygdperiodeSpørsmålId } from '../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { PensjonsperiodeSpørsmålId } from '../components/Felleskomponenter/Pensjonsmodal/spørsmål';
 import { UtbetalingerSpørsmålId } from '../components/Felleskomponenter/UtbetalingerModal/spørsmål';
+import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { BarnetsId } from '../typer/common';
 import { PersonType } from '../typer/personType';
 
@@ -38,7 +39,8 @@ export const genererPeriodeId = ({
         | ArbeidsperiodeSpørsmålsId
         | PensjonsperiodeSpørsmålId
         | BarnetrygdperiodeSpørsmålId
-        | UtbetalingerSpørsmålId;
+        | UtbetalingerSpørsmålId
+        | DinLivssituasjonSpørsmålId;
     barnetsId?: BarnetsId;
 }) => {
     return personType === PersonType.Søker

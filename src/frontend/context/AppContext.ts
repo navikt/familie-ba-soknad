@@ -193,6 +193,14 @@ const [AppProvider, useApp] = createUseContext(() => {
                     ...søker.utvidet,
                     spørsmål: {
                         ...søker.utvidet.spørsmål,
+                        årsak: {
+                            id: DinLivssituasjonSpørsmålId.årsak,
+                            svar: '',
+                        },
+                        separertEnkeSkilt: {
+                            id: DinLivssituasjonSpørsmålId.separertEnkeSkilt,
+                            svar: null,
+                        },
                         harSamboerNå: {
                             id:
                                 søker.sivilstand.type === ESivilstand.GIFT
@@ -200,7 +208,12 @@ const [AppProvider, useApp] = createUseContext(() => {
                                     : DinLivssituasjonSpørsmålId.harSamboerNå,
                             svar: null,
                         },
+                        hattAnnenSamboerForSøktPeriode: {
+                            id: DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode,
+                            svar: null,
+                        },
                     },
+                    tidligereSamboere: [],
                 },
             },
         });
