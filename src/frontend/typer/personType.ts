@@ -4,12 +4,14 @@ export enum PersonType {
     AndreForelder = 'andreForelder',
     Omsorgsperson = 'omsorgsperson',
     Søker = 'søker',
+    Barn = 'barn',
 }
 
 export type PeriodePersonTypeMedBarnProps =
-    | { personType: PersonType.Søker; barn?: never; erDød?: never }
-    | { personType: PersonType.Omsorgsperson; barn: IBarnMedISøknad; erDød?: never }
-    | { personType: PersonType.AndreForelder; barn: IBarnMedISøknad; erDød: boolean };
+    | { personType: PersonType.Søker; erDød?: boolean; barn?: IBarnMedISøknad | undefined }
+    | { personType: PersonType.Omsorgsperson; erDød?: boolean; barn: IBarnMedISøknad | undefined }
+    | { personType: PersonType.AndreForelder; erDød?: boolean; barn: IBarnMedISøknad | undefined }
+    | { personType: PersonType.Barn; erDød?: boolean; barn?: IBarnMedISøknad | undefined };
 
 export type PeriodePersonTypeProps =
     | { personType: PersonType.Søker; erDød?: never }

@@ -6,7 +6,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useSpråk } from '../../../context/SpråkContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
-import { PersonType } from '../../../typer/personType';
+import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
@@ -27,12 +27,7 @@ interface Props {
     gjelderUtlandet: boolean;
 }
 
-type ArbeidperiodeOppsummeringPersonTypeProps =
-    | { personType: PersonType.Søker; erDød?: boolean }
-    | { personType: PersonType.Omsorgsperson; erDød?: boolean }
-    | { personType: PersonType.AndreForelder; erDød: boolean };
-
-type ArbeidsperiodeOppsummeringProps = Props & ArbeidperiodeOppsummeringPersonTypeProps;
+type ArbeidsperiodeOppsummeringProps = Props & PeriodePersonTypeMedBarnProps;
 
 export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProps> = ({
     arbeidsperiode,
