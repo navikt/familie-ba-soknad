@@ -3,12 +3,13 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
+import { ArrowRightIcon } from '@navikt/aksel-icons';
 import {
-    Alert,
-    BodyLong,
     BodyShort,
     Button,
     ConfirmationPanel,
+    Heading,
+    Link,
     Radio,
     RadioGroup,
     VStack,
@@ -22,9 +23,10 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
-const FormContainer = styled.form`
-    display: grid;
-    gap: 3rem;
+const StyledLink = styled(Link)`
+    && {
+        color: var(--a-text-action);
+    }
 `;
 
 const StyledButton = styled(Button)`
@@ -61,9 +63,8 @@ const BekreftelseOgStartSoknad: React.FC = () => {
     const fellestekster = tekster[ESanitySteg.FELLES];
 
     return (
-        <FormContainer onSubmit={event => onStartSøknad(event)}>
-            <VStack gap={'6'}>
-                <Alert variant="info">{plainTekst(forsidetekster.utvidetBarnetrygdAlert)}</Alert>
+        <form onSubmit={event => onStartSøknad(event)}>
+            <VStack gap="12">
                 <RadioGroup
                     legend={plainTekst(forsidetekster.soekerDuUtvidet.sporsmal)}
                     onChange={(value: ESøknadstype) => {
@@ -81,36 +82,45 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                         {plainTekst(fellestekster.frittståendeOrd.nei)}
                     </Radio>
                 </RadioGroup>
-            </VStack>
-            <ConfirmationPanel
-                label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
-                onChange={bekreftelseOnChange}
-                checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
-                error={
-                    bekreftelseStatus === BekreftelseStatus.FEIL && (
-                        <span role={'alert'}>
-                            <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
-                        </span>
-                    )
-                }
-            >
-                <BodyShort weight={'semibold'}>
-                    <SpråkTekst id="forside.bekreftelsesboks.tittel" />
-                </BodyShort>
-                <BodyLong>
-                    <SpråkTekst id="forside.bekreftelsesboks.brødtekst" />
-                </BodyLong>
-            </ConfirmationPanel>
 
-            <StyledButton
-                variant={
-                    bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'primary' : 'secondary'
-                }
-                type={'submit'}
-            >
-                <SpråkTekst id="forside.start-soknad.knapp" />
-            </StyledButton>
-        </FormContainer>
+                <ConfirmationPanel
+                    label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
+                    onChange={bekreftelseOnChange}
+                    checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
+                    error={
+                        bekreftelseStatus === BekreftelseStatus.FEIL && (
+                            <span role={'alert'}>
+                                <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
+                            </span>
+                        )
+                    }
+                >
+                    <Heading level="2" size="xsmall" spacing>
+                        <SpråkTekst id="forside.bekreftelsesboks.tittel" />
+                    </Heading>
+                    <BodyShort>
+                        <SpråkTekst id="forside.bekreftelsesboks.brødtekst" />{' '}
+                        <StyledLink
+                            href={formatMessage({ id: 'forside.bekreftelsesboks.lenke' })}
+                            inlineText
+                        >
+                            <SpråkTekst id="forside.bekreftelsesboks.lenketekst" />
+                        </StyledLink>
+                    </BodyShort>
+                </ConfirmationPanel>
+
+                <StyledButton
+                    variant={
+                        bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'primary' : 'secondary'
+                    }
+                    type={'submit'}
+                    icon={<ArrowRightIcon aria-hidden />}
+                    iconPosition="right"
+                >
+                    <SpråkTekst id="forside.start-soknad.knapp" />
+                </StyledButton>
+            </VStack>
+        </form>
     );
 };
 
