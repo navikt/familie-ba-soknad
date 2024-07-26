@@ -64,14 +64,14 @@ const Forside: React.FC = () => {
                         <TekstBlock block={forsidetekster.veilederIntro} />
                     </BodyLong>
                 </GuidePanel>
-                {/*<div>
-                     <Heading level="2" size="large" spacing>
+                <div>
+                    <Heading level="2" size="large" spacing>
                         {plainTekst(forsidetekster.foerDuSoekerTittel)}
                     </Heading>
                     <BodyLong>
                         <TekstBlock block={forsidetekster.foerDuSoeker} />
-                    </BodyLong> 
-                </div>*/}
+                    </BodyLong>
+                </div>
                 <Accordion>
                     <Accordion.Item>
                         <Accordion.Header>
