@@ -47,7 +47,7 @@ const FortsettPåSøknad: FC = () => {
                 </ModalContent>
                 <Modal.Footer>
                     <Button variant={'primary'} onClick={startPåNytt}>
-                        <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
+                        <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />
                     </Button>
                     <Button variant={'secondary'} onClick={() => settVisStartPåNyttModal(false)}>
                         <SpråkTekst id={'felles.startpånytt.modal.avbrytknapp'} />
