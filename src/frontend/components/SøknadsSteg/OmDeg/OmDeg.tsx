@@ -5,9 +5,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
-import { PersonType } from '../../../typer/personType';
+import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
-import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
@@ -24,7 +23,7 @@ import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
-    const { tekster } = useApp();
+    const { tekster, plainTekst } = useApp();
 
     const { toggles } = useFeatureToggles();
 
@@ -44,12 +43,9 @@ const OmDeg: React.FC = () => {
         utenlandsperioder,
     } = useOmdeg();
 
-    const antallPerioder = utenlandsperioder.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'utenlandsopphold',
-        PersonType.Søker,
-        antallPerioder
-    );
+    const teksterForModal: IUtenlandsoppholdTekstinnhold =
+        tekster().FELLES.modaler.utenlandsopphold.søker;
+    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     const stegTekster = tekster()[ESanitySteg.OM_DEG];
     const { omDegGuide } = stegTekster;
@@ -112,7 +108,11 @@ const OmDeg: React.FC = () => {
                             <LeggTilKnapp
                                 onClick={åpneUtenlandsoppholdmodal}
                                 språkTekst={'felles.leggtilutenlands.knapp'}
-                                forklaring={leggTilPeriodeTekster?.tekstForKnapp}
+                                leggTilFlereTekst={
+                                    toggles.NYE_MODAL_TEKSTER &&
+                                    utenlandsperioder.length > 0 &&
+                                    plainTekst(flerePerioder)
+                                }
                                 id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                                 feilmelding={
                                     skjema.felter.registrerteUtenlandsperioder.erSynlig &&
@@ -155,7 +155,7 @@ const OmDeg: React.FC = () => {
                     erÅpen={utenlandsoppholdmodalErÅpen}
                     lukkModal={lukkUtenlandsoppholdmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
-                    forklaring={leggTilPeriodeTekster?.tekstForModal}
+                    forklaring={plainTekst(leggTilPeriodeForklaring)}
                 />
             )}
         </Steg>

@@ -9,6 +9,7 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
+import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import {
@@ -17,7 +18,6 @@ import {
     morgendagensDato,
     stringTilDate,
 } from '../../../utils/dato';
-import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -57,7 +57,7 @@ const Oppfølgningsspørsmål: React.FC<{
     fjernBarnetrygdsperiode,
     registrerteEøsBarnetrygdsperioder,
 }) => {
-    const { tekster } = useApp();
+    const { tekster, plainTekst } = useApp();
     const { toggles } = useFeatureToggles();
     const {
         erÅpen: utenlandsmodalErÅpen,
@@ -80,12 +80,9 @@ const Oppfølgningsspørsmål: React.FC<{
         pågåendeSøknadFraAnnetEøsLand,
     } = skjema.felter;
 
-    const antallPerioder = utenlandsperioder.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'utenlandsopphold',
-        PersonType.Barn,
-        antallPerioder
-    );
+    const teksterForModal: IUtenlandsoppholdTekstinnhold =
+        tekster().FELLES.modaler.utenlandsopphold.barn;
+    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { bekreftelseFraBarnevernetBarnetrygd } = dokumentasjonstekster;
@@ -215,7 +212,11 @@ const Oppfølgningsspørsmål: React.FC<{
                         <LeggTilKnapp
                             id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                             språkTekst={'felles.leggtilutenlands.knapp'}
-                            forklaring={leggTilPeriodeTekster?.tekstForKnapp}
+                            leggTilFlereTekst={
+                                toggles.NYE_MODAL_TEKSTER &&
+                                registrerteUtenlandsperioder.verdi.length > 0 &&
+                                plainTekst(flerePerioder)
+                            }
                             onClick={åpneUtenlandsmodal}
                             feilmelding={
                                 registrerteUtenlandsperioder.erSynlig &&
@@ -300,7 +301,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     lukkModal={lukkUtenlandsmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
                     barn={barn}
-                    forklaring={leggTilPeriodeTekster?.tekstForModal}
+                    forklaring={plainTekst(leggTilPeriodeForklaring)}
                 />
             )}
         </>

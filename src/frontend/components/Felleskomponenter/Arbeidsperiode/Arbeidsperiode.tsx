@@ -4,16 +4,17 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
+import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
 import {
     IDinLivssituasjonFeltTyper,
     IEøsForBarnFeltTyper,
     IEøsForSøkerFeltTyper,
     IOmBarnetFeltTyper,
 } from '../../../typer/skjema';
-import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -65,21 +66,16 @@ export const Arbeidsperiode: React.FC<Props> = ({
         lukkModal: lukkArbeidsmodal,
         åpneModal: åpneArbeidsmodal,
     } = useModal();
+    const { tekster, plainTekst } = useApp();
+
     const barnetsNavn = !!barn && barn.navn;
     const arbeidsperiodeSpørsmålId = gjelderUtlandet
         ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
         : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
-    const antallPerioder = registrerteArbeidsperioder.verdi.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'arbeidsperiode',
-        personType,
-        antallPerioder,
-        undefined,
-        {
-            gjelderUtland: gjelderUtlandet,
-        }
-    );
+    const teksterForModal: IArbeidsperiodeTekstinnhold =
+        tekster().FELLES.modaler.arbeidsperiode[personType];
+    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     return (
         <>
@@ -122,7 +118,11 @@ export const Arbeidsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpneArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
-                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
+                        leggTilFlereTekst={
+                            toggles.NYE_MODAL_TEKSTER &&
+                            registrerteArbeidsperioder.verdi.length > 0 &&
+                            plainTekst(flerePerioder)
+                        }
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: arbeidsperiodeSpørsmålId,
@@ -144,7 +144,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             gjelderUtlandet={gjelderUtlandet}
                             personType={personType}
                             erDød={erDød}
-                            forklaring={leggTilPeriodeTekster?.tekstForModal}
+                            forklaring={plainTekst(leggTilPeriodeForklaring)}
                         />
                     )}
                 </PerioderContainer>
