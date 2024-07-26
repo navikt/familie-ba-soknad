@@ -1631,14 +1631,14 @@ export const testdata4: TilKontraktTestData = {
             },
             lestOgForståttBekreftelse: {
                 label: {
-                    en: 'I am aware that I may lose my right to child benefit if I provide incorrect information. I am also aware that I will have to pay back any money I receive that I am not entitled to, that I have received if I have failed to provide information or have provided incorrect information.',
-                    nb: 'Jeg er klar over at jeg kan miste retten til barnetrygd dersom jeg gir feil opplysninger. Jeg er også klar over at jeg må betale tilbake dersom jeg får penger jeg ikke har rett til hvis jeg lar være å informere eller gir feil opplysninger.',
-                    nn: 'Eg er klar over at eg kan miste retten til barnetrygd dersom eg gjev feil opplysningar. Eg er også klar over at eg må betale tilbake dersom eg får pengar eg ikkje har rett til hvis eg har latt vere å informere eller har gjeve feil opplysningar.',
+                    en: 'I am aware that I may lose my right to Child Benefit if I provide incorrect information. I am also aware that I will have to pay back any money I receive that I am not entitled to, that I have received if I have failed to provide information or have provided incorrect information.',
+                    nb: 'Det er viktig at du gir oss riktige opplysninger slik at vi kan behandle saken din.',
+                    nn: 'Det er viktig at du gir oss riktige opplysningar slik at me kan behandla saka di.',
                 },
                 verdi: {
-                    en: 'I hereby confirm that I have read and understood.',
-                    nb: 'Jeg bekrefter at jeg har lest og forstått.',
-                    nn: 'Eg stadfestar at eg har lese og forstått',
+                    en: 'I confirm that I will provide correct and complete information.',
+                    nb: 'Jeg vil svare så godt jeg kan på spørsmålene i søknaden.',
+                    nn: 'Eg svara så godt eg kan på spørsmåla i søknaden.',
                 },
             },
         },
