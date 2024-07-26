@@ -24,6 +24,7 @@ export enum SanityPersonType {
     ANDRE_FORELDER = 'ANDRE_FORELDER',
     SOKER = 'SOKER',
     OMSORGSPERSON = 'OMSORGSPERSON',
+    BARN = 'BARN',
 }
 
 export enum SanityModalPrefix {
