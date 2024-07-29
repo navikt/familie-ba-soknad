@@ -22,12 +22,14 @@ import {
     LocaleRecordBlock,
     LocaleRecordString,
     modalPrefix,
+    navigasjonPrefix,
     SanityDokument,
 } from '../typer/sanity/sanity';
 import {
     IFellesTekstInnhold,
     IFrittståendeOrdTekstinnhold,
     IModalerTekstinnhold,
+    INavigasjonTekstinnhold,
     ITekstinnhold,
     SanityModalPrefix,
     SanityPersonType,
@@ -150,6 +152,9 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
         frittståendeOrd: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, frittståendeOrdPrefix)
         ) as IFrittståendeOrdTekstinnhold,
+        navigasjon: struktrerInnholdForFelles(
+            dokumenterFiltrertPåPrefix(fellesDokumenter, navigasjonPrefix)
+        ) as INavigasjonTekstinnhold,
     };
     return tekstInnhold as ITekstinnhold;
 };

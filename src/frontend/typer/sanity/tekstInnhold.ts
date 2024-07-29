@@ -54,6 +54,7 @@ export interface ITekstinnhold {
 export interface IFellesTekstInnhold {
     frittståendeOrd: IFrittståendeOrdTekstinnhold;
     modaler: IModalerTekstinnhold;
+    navigasjon: INavigasjonTekstinnhold;
 }
 
 export interface IFrittståendeOrdTekstinnhold {
@@ -67,6 +68,18 @@ export interface IFrittståendeOrdTekstinnhold {
     nei: LocaleRecordString;
     barnetrygd: LocaleRecordString;
     skjult: LocaleRecordString;
+}
+
+export interface INavigasjonTekstinnhold {
+    startKnapp: LocaleRecordString;
+    fortsettKnapp: LocaleRecordString;
+    startPaaNyttKnapp: LocaleRecordString;
+    duMaaRetteOppFoelgende: LocaleRecordString;
+    avbrytSoeknad: LocaleRecordString;
+    tilbakeKnapp: LocaleRecordString;
+    gaaVidereKnapp: LocaleRecordString;
+    sendSoeknadKnapp: LocaleRecordString;
+    slettSoeknadKnapp: LocaleRecordString;
 }
 
 export interface IModalerTekstinnhold {

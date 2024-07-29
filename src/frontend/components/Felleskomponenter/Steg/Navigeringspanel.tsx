@@ -1,50 +1,19 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-import styled from 'styled-components';
-
-import { Button } from '@navikt/ds-react';
+import {
+    ArrowLeftIcon,
+    ArrowRightIcon,
+    FloppydiskIcon,
+    PaperplaneIcon,
+    TrashIcon,
+} from '@navikt/aksel-icons';
+import { Box, Button, HGrid, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
 import { useSteg } from '../../../context/StegContext';
-import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
-
-const Container = styled.nav`
-    padding: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-        ' tilbake gåVidere '
-        ' avbryt avbryt';
-    grid-template-rows: auto;
-    gap: 0.5rem;
-    justify-content: center;
-
-    @media all and ${device.mobile} {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            ' gåVidere '
-            ' tilbake '
-            ' avbryt';
-        padding: 2rem 0;
-    }
-`;
-
-const StyledButton = styled(Button)<{
-    $placeself: 'end' | 'center' | 'start';
-    $gridarea: 'tilbake' | 'gåVidere' | 'avbryt';
-}>`
-    && {
-        grid-area: ${props => props.$gridarea};
-        min-width: 12.5rem;
-        place-self: ${props => props.$placeself};
-        @media all and ${device.mobile} {
-            place-self: center;
-        }
-    }
-`;
+import { LocaleRecordString } from '../../../typer/sanity/sanity';
 
 type Knappetype = 'primary' | 'secondary';
 
@@ -55,54 +24,76 @@ const Navigeringspanel: React.FC<{
 }> = ({ onAvbrytCallback, onTilbakeCallback, valideringErOk }) => {
     const { hentNesteSteg } = useSteg();
     const nesteSteg = hentNesteSteg();
-    const { innsendingStatus } = useApp();
+    const { innsendingStatus, tekster, plainTekst } = useApp();
+
+    const { sendSoeknadKnapp, gaaVidereKnapp, tilbakeKnapp, fortsettKnapp, slettSoeknadKnapp } =
+        tekster().FELLES.navigasjon;
 
     const hentKnappetype = (): Knappetype => {
-        if (valideringErOk) {
-            return valideringErOk() ? 'primary' : 'secondary';
-        } else {
-            return 'primary';
-        }
+        return valideringErOk && valideringErOk() ? 'primary' : 'secondary';
+    };
+
+    const hentKnappeIkon = (): ReactNode => {
+        return nesteSteg.route === RouteEnum.Kvittering ? (
+            <PaperplaneIcon aria-hidden />
+        ) : (
+            <ArrowRightIcon aria-hidden />
+        );
+    };
+
+    const hentKnappeSpråkTekstId = (): LocaleRecordString => {
+        return nesteSteg.route === RouteEnum.Kvittering ? sendSoeknadKnapp : gaaVidereKnapp;
     };
 
     return (
-        <Container>
-            <StyledButton
-                variant={'secondary'}
-                type={'button'}
-                onClick={onTilbakeCallback}
-                $placeself={'end'}
-                $gridarea={'tilbake'}
-            >
-                <SpråkTekst id={'felles.navigasjon.tilbake'} />
-            </StyledButton>
-            <StyledButton
-                type={'submit'}
-                variant={hentKnappetype()}
-                $placeself={'start'}
-                $gridarea={'gåVidere'}
-                loading={innsendingStatus.status === RessursStatus.HENTER}
-            >
-                <SpråkTekst
-                    id={
-                        nesteSteg.route === RouteEnum.Kvittering
-                            ? 'dokumentasjon.send-søknad.knapp'
-                            : 'felles.navigasjon.gå-videre'
-                    }
-                />
-            </StyledButton>
+        <Box marginBlock="12 0">
+            <VStack gap="4">
+                <HGrid
+                    gap={{ xs: '4', sm: '8 4' }}
+                    columns={{ xs: 1, sm: 2 }}
+                    width={{ sm: 'fit-content' }}
+                >
+                    <Button
+                        type={'button'}
+                        variant="secondary"
+                        onClick={onTilbakeCallback}
+                        icon={<ArrowLeftIcon aria-hidden />}
+                        iconPosition="left"
+                    >
+                        {plainTekst(tilbakeKnapp)}
+                    </Button>
+                    <Button
+                        type={'submit'}
+                        variant={hentKnappetype()}
+                        icon={hentKnappeIkon()}
+                        iconPosition="right"
+                        loading={innsendingStatus.status === RessursStatus.HENTER}
+                    >
+                        {plainTekst(hentKnappeSpråkTekstId())}
+                    </Button>
 
-            <StyledButton
-                variant={'tertiary'}
-                type={'button'}
-                onClick={onAvbrytCallback}
-                $gridarea={'avbryt'}
-                $placeself={'center'}
-                margintop={'0'}
-            >
-                <SpråkTekst id={'felles.navigasjon.avbryt'} />
-            </StyledButton>
-        </Container>
+                    <Box asChild marginBlock={{ xs: '4 0', sm: '0' }}>
+                        <Button
+                            variant="tertiary"
+                            type={'button'}
+                            onClick={onAvbrytCallback}
+                            icon={<FloppydiskIcon aria-hidden />}
+                            iconPosition="left"
+                        >
+                            {plainTekst(fortsettKnapp)}
+                        </Button>
+                    </Box>
+                    <Button
+                        variant="tertiary"
+                        type={'button'}
+                        icon={<TrashIcon aria-hidden />}
+                        iconPosition="left"
+                    >
+                        {plainTekst(slettSoeknadKnapp)}
+                    </Button>
+                </HGrid>
+            </VStack>
+        </Box>
     );
 };
 
