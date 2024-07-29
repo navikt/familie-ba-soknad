@@ -89,6 +89,14 @@ const Forside: React.FC = () => {
                             <TekstBlock block={forsidetekster.informasjonOmPersonopplysninger} />
                         </Accordion.Content>
                     </Accordion.Item>
+                    <Accordion.Item>
+                        <Accordion.Header>
+                            {plainTekst(forsidetekster.informasjonOmLagringAvSvarTittel)}
+                        </Accordion.Header>
+                        <Accordion.Content>
+                            <TekstBlock block={forsidetekster.informasjonOmLagringAvSvar} />
+                        </Accordion.Content>
+                    </Accordion.Item>
                 </Accordion>
 
                 {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}

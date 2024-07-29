@@ -108,6 +108,8 @@ export interface IForsideTekstinnhold {
     informasjonOmPlikterTittel: LocaleRecordBlock;
     informasjonOmPersonopplysninger: LocaleRecordBlock;
     informasjonOmPersonopplysningerTittel: LocaleRecordBlock;
+    informasjonOmLagringAvSvar: LocaleRecordBlock;
+    informasjonOmLagringAvSvarTittel: LocaleRecordBlock;
     utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
 }
