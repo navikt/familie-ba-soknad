@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 
-import { Accordion, BodyLong, GuidePanel, Heading, VStack } from '@navikt/ds-react';
+import { Accordion, GuidePanel, Heading, VStack } from '@navikt/ds-react';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import Miljø from '../../../../shared-utils/Miljø';
@@ -10,7 +10,7 @@ import { useApp } from '../../../context/AppContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
+import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { logSidevisningBarnetrygd } from '../../../utils/amplitude';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
@@ -60,17 +60,19 @@ const Forside: React.FC = () => {
                     <Heading level="2" size="medium" spacing>
                         {plainTekst(forsidetekster.veilederHei)}
                     </Heading>
-                    <BodyLong>
-                        <TekstBlock block={forsidetekster.veilederIntro} />
-                    </BodyLong>
+                    <TekstBlock
+                        block={forsidetekster.veilederIntro}
+                        typografi={Typografi.BodyLong}
+                    />
                 </GuidePanel>
                 <div>
                     <Heading level="2" size="large" spacing>
                         {plainTekst(forsidetekster.foerDuSoekerTittel)}
                     </Heading>
-                    <BodyLong>
-                        <TekstBlock block={forsidetekster.foerDuSoeker} />
-                    </BodyLong>
+                    <TekstBlock
+                        block={forsidetekster.foerDuSoeker}
+                        typografi={Typografi.BodyLong}
+                    />
                 </div>
                 <Accordion>
                     <Accordion.Item>
