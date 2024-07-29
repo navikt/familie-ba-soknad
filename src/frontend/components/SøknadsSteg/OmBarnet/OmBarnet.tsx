@@ -49,6 +49,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         fjernBarnetrygdsperiode,
     } = useOmBarnet(barnetsId);
 
+    const stegTekster = tekster()[ESanitySteg.OM_BARNET];
+    const { omBarnetGuide } = stegTekster;
+
     const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { bekreftelsePaaAtBarnBorSammenMedDeg, avtaleOmDeltBosted, meklingsattest } =
         dokumentasjonstekster;
@@ -56,6 +59,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     return barn ? (
         <Steg
             tittel={<SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />}
+            guide={omBarnetGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
                 valideringErOk,
