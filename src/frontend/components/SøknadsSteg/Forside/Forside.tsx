@@ -52,7 +52,7 @@ const Forside: React.FC = () => {
 
     return (
         <Layout>
-            <VStack as="main" gap="12">
+            <VStack gap="12">
                 <Heading level="1" size="large" align="center">
                     {plainTekst(forsidetekster.soeknadstittelBarnetrygd)}
                 </Heading>
