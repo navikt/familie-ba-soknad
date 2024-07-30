@@ -66,7 +66,7 @@ const Forside: React.FC = () => {
                     />
                 </GuidePanel>
                 <div>
-                    <Heading level="2" size="large" spacing>
+                    <Heading level="2" size="medium" spacing>
                         {plainTekst(forsidetekster.foerDuSoekerTittel)}
                     </Heading>
                     <TekstBlock
