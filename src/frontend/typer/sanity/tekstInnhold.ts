@@ -3,6 +3,7 @@ import { IDokumentasjonTekstinnhold } from '../../components/SøknadsSteg/Dokume
 import { IEøsForBarnTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
 import { IEøsForSøkerTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Søker/innholdTyper';
 import { IOmBarnaTekstinnhold } from '../../components/SøknadsSteg/OmBarnaDine/innholdTyper';
+import { IOmBarnetTekstinnhold } from '../../components/SøknadsSteg/OmBarnet/innholdTyper';
 import { IOmDegTekstinnhold } from '../../components/SøknadsSteg/OmDeg/innholdTyper';
 import { IOppsummeringTekstinnhold } from '../../components/SøknadsSteg/Oppsummering/innholdTyper';
 import { IVelgBarnTekstinnhold } from '../../components/SøknadsSteg/VelgBarn/innholdTyper';
@@ -41,6 +42,7 @@ export interface ITekstinnhold {
     [ESanitySteg.OM_DEG]: IOmDegTekstinnhold;
     [ESanitySteg.DIN_LIVSSITUASJON]: IDinLivssituasjonTekstinnhold;
     [ESanitySteg.VELG_BARN]: IVelgBarnTekstinnhold;
+    [ESanitySteg.OM_BARNET]: IOmBarnetTekstinnhold;
     [ESanitySteg.OM_BARNA]: IOmBarnaTekstinnhold;
     [ESanitySteg.EØS_FOR_SØKER]: IEøsForSøkerTekstinnhold;
     [ESanitySteg.EØS_FOR_BARN]: IEøsForBarnTekstinnhold;
