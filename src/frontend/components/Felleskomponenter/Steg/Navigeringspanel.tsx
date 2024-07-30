@@ -26,8 +26,13 @@ const Navigeringspanel: React.FC<{
     const nesteSteg = hentNesteSteg();
     const { innsendingStatus, tekster, plainTekst } = useApp();
 
-    const { sendSoeknadKnapp, gaaVidereKnapp, tilbakeKnapp, fortsettKnapp, slettSoeknadKnapp } =
-        tekster().FELLES.navigasjon;
+    const {
+        sendSoeknadKnapp,
+        gaaVidereKnapp,
+        tilbakeKnapp,
+        fortsettSenereKnapp,
+        slettSoeknadKnapp,
+    } = tekster().FELLES.navigasjon;
 
     const hentKnappetype = (): Knappetype => {
         return valideringErOk && valideringErOk() ? 'primary' : 'secondary';
@@ -80,7 +85,7 @@ const Navigeringspanel: React.FC<{
                             icon={<FloppydiskIcon aria-hidden />}
                             iconPosition="left"
                         >
-                            {plainTekst(fortsettKnapp)}
+                            {plainTekst(fortsettSenereKnapp)}
                         </Button>
                     </Box>
                     <Button

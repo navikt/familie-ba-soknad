@@ -80,6 +80,7 @@ export interface INavigasjonTekstinnhold {
     gaaVidereKnapp: LocaleRecordString;
     sendSoeknadKnapp: LocaleRecordString;
     slettSoeknadKnapp: LocaleRecordString;
+    fortsettSenereKnapp: LocaleRecordString;
 }
 
 export interface IModalerTekstinnhold {
