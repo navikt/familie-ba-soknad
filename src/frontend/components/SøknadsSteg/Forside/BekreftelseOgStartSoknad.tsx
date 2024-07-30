@@ -1,33 +1,18 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { ArrowRightIcon } from '@navikt/aksel-icons';
-import {
-    BodyShort,
-    Button,
-    ConfirmationPanel,
-    Heading,
-    Link,
-    Radio,
-    RadioGroup,
-    VStack,
-} from '@navikt/ds-react';
+import { Button, ConfirmationPanel, Heading, Radio, RadioGroup, VStack } from '@navikt/ds-react';
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
 import { useApp } from '../../../context/AppContext';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
+import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
-
-const StyledLink = styled(Link)`
-    && {
-        color: var(--a-text-action);
-    }
-`;
 
 const StyledButton = styled(Button)`
     && {
@@ -47,7 +32,6 @@ export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
 };
 
 const BekreftelseOgStartSoknad: React.FC = () => {
-    const { formatMessage } = useIntl();
     const {
         onStartSøknad,
         bekreftelseOnChange,
@@ -84,29 +68,24 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                 </RadioGroup>
 
                 <ConfirmationPanel
-                    label={formatMessage({ id: 'forside.bekreftelsesboks.erklæring.spm' })}
+                    label={plainTekst(forsidetekster.bekreftelsesboksErklaering)}
                     onChange={bekreftelseOnChange}
                     checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                     error={
                         bekreftelseStatus === BekreftelseStatus.FEIL && (
                             <span role={'alert'}>
-                                <SpråkTekst id={'forside.bekreftelsesboks.feilmelding'} />
+                                {plainTekst(forsidetekster.bekreftelsesboksFeilmelding)}
                             </span>
                         )
                     }
                 >
                     <Heading level="2" size="xsmall" spacing>
-                        <SpråkTekst id="forside.bekreftelsesboks.tittel" />
+                        {plainTekst(forsidetekster.bekreftelsesboksTittel)}
                     </Heading>
-                    <BodyShort>
-                        <SpråkTekst id="forside.bekreftelsesboks.brødtekst" />{' '}
-                        <StyledLink
-                            href={formatMessage({ id: 'forside.bekreftelsesboks.lenke' })}
-                            inlineText
-                        >
-                            <SpråkTekst id="forside.bekreftelsesboks.lenketekst" />
-                        </StyledLink>
-                    </BodyShort>
+                    <TekstBlock
+                        block={forsidetekster.bekreftelsesboksBroedtekst}
+                        typografi={Typografi.BodyLong}
+                    />
                 </ConfirmationPanel>
 
                 <StyledButton

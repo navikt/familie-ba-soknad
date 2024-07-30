@@ -101,6 +101,10 @@ export interface IModalerTekstinnhold {
 }
 
 export interface IForsideTekstinnhold {
+    bekreftelsesboksTittel: LocaleRecordString;
+    bekreftelsesboksBroedtekst: LocaleRecordBlock;
+    bekreftelsesboksErklaering: LocaleRecordString;
+    bekreftelsesboksFeilmelding: LocaleRecordString;
     soeknadstittelBarnetrygd: LocaleRecordBlock;
     veilederHei: LocaleRecordBlock;
     veilederIntro: LocaleRecordBlock;
