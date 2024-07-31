@@ -101,13 +101,21 @@ export interface IModalerTekstinnhold {
 }
 
 export interface IForsideTekstinnhold {
+    bekreftelsesboksTittel: LocaleRecordString;
+    bekreftelsesboksBroedtekst: LocaleRecordBlock;
+    bekreftelsesboksErklaering: LocaleRecordString;
+    bekreftelsesboksFeilmelding: LocaleRecordString;
     soeknadstittelBarnetrygd: LocaleRecordBlock;
     veilederHei: LocaleRecordBlock;
     veilederIntro: LocaleRecordBlock;
+    foerDuSoekerTittel: LocaleRecordBlock;
+    foerDuSoeker: LocaleRecordBlock;
     informasjonOmPlikter: LocaleRecordBlock;
     informasjonOmPlikterTittel: LocaleRecordBlock;
     informasjonOmPersonopplysninger: LocaleRecordBlock;
     informasjonOmPersonopplysningerTittel: LocaleRecordBlock;
+    informasjonOmLagringAvSvar: LocaleRecordBlock;
+    informasjonOmLagringAvSvarTittel: LocaleRecordBlock;
     utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
 }
