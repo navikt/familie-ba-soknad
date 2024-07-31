@@ -90,6 +90,8 @@ const Steg: React.FC<ISteg> = ({
         settNåværendeRoute,
         modellVersjonOppdatert,
         søknad,
+        tekster,
+        plainTekst,
     } = useApp();
     const {
         formProgressSteps,
@@ -168,6 +170,8 @@ const Steg: React.FC<ISteg> = ({
         navigate(steg.path);
     };
 
+    const { forrigeStegLenke } = tekster().FELLES.navigasjon;
+
     return (
         <>
             <ScrollHandler />
@@ -176,17 +180,19 @@ const Steg: React.FC<ISteg> = ({
                 {nyesteNåværendeRoute !== RouteEnum.Kvittering && (
                     <TopNavigasjonContainer>
                         <VStack gap="4">
-                            <Link
-                                href={forrigeRoute.path}
-                                variant="action"
-                                onClick={event => {
-                                    event.preventDefault();
-                                    håndterTilbake();
-                                }}
-                            >
-                                <ArrowLeftIcon aria-hidden />
-                                Forrige steg
-                            </Link>
+                            <div>
+                                <Link
+                                    href={forrigeRoute.path}
+                                    variant="action"
+                                    onClick={event => {
+                                        event.preventDefault();
+                                        håndterTilbake();
+                                    }}
+                                >
+                                    <ArrowLeftIcon aria-hidden />
+                                    {plainTekst(forrigeStegLenke)}
+                                </Link>
+                            </div>
                             <FormProgress
                                 totalSteps={formProgressSteps.length}
                                 activeStep={hentNåværendeStegIndex()}
