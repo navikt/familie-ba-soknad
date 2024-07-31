@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alert, Label } from '@navikt/ds-react';
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -238,13 +238,6 @@ const Oppfølgningsspørsmål: React.FC<{
                                 }
                                 språkValues={{ barn: barn.navn }}
                             />
-                            {planleggerÅBoINorge12Mnd.verdi === ESvar.NEI && (
-                                <Alert variant={'warning'} inline aria-live={'polite'}>
-                                    <SpråkTekst
-                                        id={'ombarnet.planlagt-sammenhengende-opphold.alert'}
-                                    />
-                                </Alert>
-                            )}
                         </KomponentGruppe>
                     )}
                 </SkjemaFieldset>
