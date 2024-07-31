@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 
-import { Accordion, GuidePanel, Heading } from '@navikt/ds-react';
+import { Accordion, GuidePanel, Heading, VStack } from '@navikt/ds-react';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import Miljø from '../../../../shared-utils/Miljø';
@@ -17,14 +17,8 @@ import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
 import FortsettPåSøknad from './FortsettPåSøknad';
 
-const StyledAccordion = styled(Accordion)`
-    width: 100%;
-`;
-
 const Layout = styled.div`
     max-width: var(--innhold-bredde);
-    display: grid;
-    gap: 3rem;
     margin: 2rem auto 4rem auto;
 
     @media all and ${device.tablet} {
@@ -58,32 +52,57 @@ const Forside: React.FC = () => {
 
     return (
         <Layout>
-            <Heading size="xlarge" align={'center'}>
-                {plainTekst(forsidetekster.soeknadstittelBarnetrygd)}
-            </Heading>
-            <GuidePanel poster>
-                <TekstBlock block={forsidetekster.veilederHei} typografi={Typografi.HeadingH2} />
-                <TekstBlock block={forsidetekster.veilederIntro} />
-            </GuidePanel>
-            <StyledAccordion size={'large'}>
-                <Accordion.Item>
-                    <Accordion.Header>
-                        {plainTekst(forsidetekster.informasjonOmPlikterTittel)}
-                    </Accordion.Header>
-                    <Accordion.Content>
-                        <TekstBlock block={forsidetekster.informasjonOmPlikter} />
-                    </Accordion.Content>
-                </Accordion.Item>
-                <Accordion.Item>
-                    <Accordion.Header>
-                        {plainTekst(forsidetekster.informasjonOmPersonopplysningerTittel)}
-                    </Accordion.Header>
-                    <Accordion.Content>
-                        <TekstBlock block={forsidetekster.informasjonOmPersonopplysninger} />
-                    </Accordion.Content>
-                </Accordion.Item>
-            </StyledAccordion>
-            {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
+            <VStack gap="12">
+                <Heading level="1" size="large" align="center">
+                    {plainTekst(forsidetekster.soeknadstittelBarnetrygd)}
+                </Heading>
+                <GuidePanel poster>
+                    <Heading level="2" size="medium" spacing>
+                        {plainTekst(forsidetekster.veilederHei)}
+                    </Heading>
+                    <TekstBlock
+                        block={forsidetekster.veilederIntro}
+                        typografi={Typografi.BodyLong}
+                    />
+                </GuidePanel>
+                <div>
+                    <Heading level="2" size="medium" spacing>
+                        {plainTekst(forsidetekster.foerDuSoekerTittel)}
+                    </Heading>
+                    <TekstBlock
+                        block={forsidetekster.foerDuSoeker}
+                        typografi={Typografi.BodyLong}
+                    />
+                </div>
+                <Accordion>
+                    <Accordion.Item>
+                        <Accordion.Header>
+                            {plainTekst(forsidetekster.informasjonOmPlikterTittel)}
+                        </Accordion.Header>
+                        <Accordion.Content>
+                            <TekstBlock block={forsidetekster.informasjonOmPlikter} />
+                        </Accordion.Content>
+                    </Accordion.Item>
+                    <Accordion.Item>
+                        <Accordion.Header>
+                            {plainTekst(forsidetekster.informasjonOmPersonopplysningerTittel)}
+                        </Accordion.Header>
+                        <Accordion.Content>
+                            <TekstBlock block={forsidetekster.informasjonOmPersonopplysninger} />
+                        </Accordion.Content>
+                    </Accordion.Item>
+                    <Accordion.Item>
+                        <Accordion.Header>
+                            {plainTekst(forsidetekster.informasjonOmLagringAvSvarTittel)}
+                        </Accordion.Header>
+                        <Accordion.Content>
+                            <TekstBlock block={forsidetekster.informasjonOmLagringAvSvar} />
+                        </Accordion.Content>
+                    </Accordion.Item>
+                </Accordion>
+
+                {kanFortsettePåSøknad ? <FortsettPåSøknad /> : <BekreftelseOgStartSoknad />}
+            </VStack>
         </Layout>
     );
 };

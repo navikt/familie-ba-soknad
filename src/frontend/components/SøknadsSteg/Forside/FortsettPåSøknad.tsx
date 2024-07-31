@@ -1,50 +1,35 @@
 import React, { FC } from 'react';
 
 import { useIntl } from 'react-intl';
-import styled from 'styled-components';
 
-import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
+import { Alert, BodyLong, Box, Button, Modal, VStack } from '@navikt/ds-react';
 
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import ModalContent from '../../Felleskomponenter/ModalContent';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import { useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
-
-const StyledButton = styled(Button)`
-    && {
-        margin: 0 auto 2rem auto;
-        padding: 1rem 3rem 1rem 3rem;
-    }
-`;
-
-const StyledFortsettPåSøknad = styled.div`
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-`;
 
 const FortsettPåSøknad: FC = () => {
     const { fortsettPåSøknaden, startPåNytt, visStartPåNyttModal, settVisStartPåNyttModal } =
         useBekreftelseOgStartSoknad();
     const { formatMessage } = useIntl();
     return (
-        <StyledFortsettPåSøknad role={'navigation'}>
-            <KomponentGruppe>
-                <Alert variant={'info'}>
-                    <BodyLong>
-                        <SpråkTekst id={'mellomlagring.info'} />
-                    </BodyLong>
-                </Alert>
-            </KomponentGruppe>
-            <StyledButton onClick={fortsettPåSøknaden}>
-                <SpråkTekst id={'mellomlagring.knapp.fortsett'} />
-            </StyledButton>
-            <StyledButton variant={'secondary'} onClick={() => settVisStartPåNyttModal(true)}>
-                <SpråkTekst id={'mellomlagring.knapp.startpånytt'} />
-            </StyledButton>
+        <VStack role={'navigation'} gap="6">
+            <Alert variant={'info'}>
+                <BodyLong>
+                    <SpråkTekst id={'mellomlagring.info'} />
+                </BodyLong>
+            </Alert>
+            <Box marginInline="auto">
+                <Button onClick={fortsettPåSøknaden}>
+                    <SpråkTekst id={'mellomlagring.knapp.fortsett'} />
+                </Button>
+            </Box>
+            <Box marginInline="auto">
+                <Button variant={'secondary'} onClick={() => settVisStartPåNyttModal(true)}>
+                    <SpråkTekst id={'mellomlagring.knapp.startpånytt'} />
+                </Button>
+            </Box>
             <Modal
                 open={visStartPåNyttModal}
                 onClose={() => {
@@ -62,14 +47,14 @@ const FortsettPåSøknad: FC = () => {
                 </ModalContent>
                 <Modal.Footer>
                     <Button variant={'primary'} onClick={startPåNytt}>
-                        <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />{' '}
+                        <SpråkTekst id={'felles.startpånytt.modal.startpånyttknapp'} />
                     </Button>
                     <Button variant={'secondary'} onClick={() => settVisStartPåNyttModal(false)}>
                         <SpråkTekst id={'felles.startpånytt.modal.avbrytknapp'} />
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </StyledFortsettPåSøknad>
+        </VStack>
     );
 };
 export default FortsettPåSøknad;
