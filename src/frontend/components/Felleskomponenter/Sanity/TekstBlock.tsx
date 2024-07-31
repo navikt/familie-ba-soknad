@@ -72,7 +72,8 @@ const TekstBlock: React.FC<{
     block: LocaleRecordBlock | undefined;
     flettefelter?: FlettefeltVerdier;
     typografi?: Typografi;
-}> = ({ block, flettefelter, typografi }) => {
+    brukTypografiWrapper?: boolean;
+}> = ({ block, flettefelter, typografi, brukTypografiWrapper = true }) => {
     const { valgtLocale } = useSpråk();
     const { flettefeltTilTekst } = useApp();
 
@@ -80,11 +81,14 @@ const TekstBlock: React.FC<{
         <PortableText
             value={block[valgtLocale]}
             components={{
-                block: ({ children }) => (
-                    <TypografiWrapper typografi={typografi} style={{ minHeight: '1rem' }}>
-                        {children}
-                    </TypografiWrapper>
-                ),
+                block: ({ children }) =>
+                    brukTypografiWrapper ? (
+                        <TypografiWrapper typografi={typografi} style={{ minHeight: '1rem' }}>
+                            {children}
+                        </TypografiWrapper>
+                    ) : (
+                        children
+                    ),
                 marks: {
                     flettefelt: props => {
                         if (props?.value?.flettefeltVerdi) {

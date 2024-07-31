@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 import { Alert, VStack } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
@@ -17,10 +15,6 @@ import LeggTilBarnModal from './LeggTilBarn/LeggTilBarnModal';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from './spørsmål';
 import { useVelgBarn } from './useVelgBarn';
-
-const LenkeContainer = styled.div`
-    margin-top: 1.5rem;
-`;
 
 const VelgBarn: React.FC = () => {
     const { søknad, tekster } = useApp();
@@ -86,14 +80,6 @@ const VelgBarn: React.FC = () => {
                     ))}
                     <NyttBarnKort onLeggTilBarn={åpneModal} />
                 </VStack>
-
-                <LenkeContainer>
-                    <EksternLenke
-                        lenkeSpråkId={'hvilkebarn.regelverk.lenke'}
-                        lenkeTekstSpråkId={'hvilkebarn.regelverk.lenketekst'}
-                        target="_blank"
-                    />
-                </LenkeContainer>
             </Steg>
             {erÅpen && <LeggTilBarnModal erÅpen={erÅpen} lukkModal={lukkModal} />}
         </>

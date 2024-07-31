@@ -10,9 +10,11 @@ import { useApp } from '../../../../context/AppContext';
 import { useRoutes } from '../../../../context/RoutesContext';
 import { useSpråk } from '../../../../context/SpråkContext';
 import { RouteEnum } from '../../../../typer/routes';
+import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { genererAdresseVisning } from '../../../../utils/adresse';
 import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
+import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsperiodeOppsummering } from '../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import {
@@ -34,11 +36,12 @@ interface Props {
 }
 
 const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
-    const { søknad } = useApp();
+    const { søknad, tekster, plainTekst } = useApp();
     const { valgtLocale } = useSpråk();
     const { formatMessage } = useIntl();
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const omDegHook = useOmdeg();
+    const forsidetekster = tekster()[ESanitySteg.FORSIDE];
 
     return (
         <Oppsummeringsbolk
@@ -49,12 +52,17 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
         >
             <StyledOppsummeringsFeltGruppe>
                 <OppsummeringFelt
-                    tittel={<SpråkTekst id={'forside.bekreftelsesboks.brødtekst'} />}
-                    søknadsvar={formatMessage({
-                        id: søknad.lestOgForståttBekreftelse
-                            ? 'forside.bekreftelsesboks.erklæring.spm'
-                            : jaNeiSvarTilSpråkId(ESvar.NEI),
-                    })}
+                    tittel={
+                        <TekstBlock
+                            block={forsidetekster.bekreftelsesboksBroedtekst}
+                            brukTypografiWrapper={false}
+                        />
+                    }
+                    søknadsvar={
+                        søknad.lestOgForståttBekreftelse
+                            ? plainTekst(forsidetekster.bekreftelsesboksErklaering)
+                            : formatMessage({ id: jaNeiSvarTilSpråkId(ESvar.NEI) })
+                    }
                 />
             </StyledOppsummeringsFeltGruppe>
             <StyledOppsummeringsFeltGruppe>
