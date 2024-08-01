@@ -4,16 +4,17 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
+import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
 import {
     IDinLivssituasjonFeltTyper,
     IEøsForBarnFeltTyper,
     IEøsForSøkerFeltTyper,
     IOmBarnetFeltTyper,
 } from '../../../typer/skjema';
-import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -66,20 +67,15 @@ export const Pensjonsperiode: React.FC<Props> = ({
         lukkModal: lukkPensjonsmodal,
         åpneModal: åpnePensjonsmodal,
     } = useModal();
+    const { tekster, plainTekst } = useApp();
+
     const pensjonsperiodeSpørsmålId = gjelderUtlandet
         ? PensjonsperiodeSpørsmålId.pensjonsperioderUtland
         : PensjonsperiodeSpørsmålId.pensjonsperioderNorge;
 
-    const antallPerioder = registrertePensjonsperioder.verdi.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'pensjonsperiode',
-        personType,
-        antallPerioder,
-        undefined,
-        {
-            gjelderUtland: gjelderUtlandet,
-        }
-    );
+    const teksterForModal: IPensjonsperiodeTekstinnhold =
+        tekster().FELLES.modaler.pensjonsperiode[personType];
+    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     return (
         <>
@@ -126,7 +122,11 @@ export const Pensjonsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpnePensjonsmodal}
                         språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}
-                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
+                        leggTilFlereTekst={
+                            toggles.NYE_MODAL_TEKSTER &&
+                            registrertePensjonsperioder.verdi.length > 0 &&
+                            plainTekst(flerePerioder)
+                        }
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: pensjonsperiodeSpørsmålId,
@@ -149,7 +149,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             personType={personType}
                             erDød={erDød}
                             barn={barn}
-                            forklaring={leggTilPeriodeTekster?.tekstForModal}
+                            forklaring={plainTekst(leggTilPeriodeForklaring)}
                         />
                     )}
                 </PerioderContainer>
