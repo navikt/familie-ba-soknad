@@ -9,7 +9,7 @@ import { useApp } from '../../../context/AppContext';
 const StyledHeading = styled(Heading)`
     && {
         white-space: nowrap;
-        margin-right: 4rem;
+        margin-right: var(--a-spacing-18);
     }
 `;
 

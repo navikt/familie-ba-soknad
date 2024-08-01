@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import {
     ArrowLeftIcon,
@@ -13,12 +13,9 @@ import { RessursStatus } from '@navikt/familie-typer';
 import { useApp } from '../../../context/AppContext';
 import { useSteg } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
-import { LocaleRecordString } from '../../../typer/sanity/sanity';
 import { useBekreftelseOgStartSoknad } from '../../SøknadsSteg/Forside/useBekreftelseOgStartSoknad';
 
 import { SlettSøknadenModal } from './SlettSøknadenModal';
-
-type Knappetype = 'primary' | 'secondary';
 
 const Navigeringspanel: React.FC<{
     onAvbrytCallback: () => void;
@@ -38,22 +35,6 @@ const Navigeringspanel: React.FC<{
         fortsettSenereKnapp,
         slettSoeknadKnapp,
     } = tekster().FELLES.navigasjon;
-
-    const hentKnappetype = (): Knappetype => {
-        return valideringErOk && valideringErOk() ? 'primary' : 'secondary';
-    };
-
-    const hentKnappeIkon = (): ReactNode => {
-        return nesteSteg.route === RouteEnum.Kvittering ? (
-            <PaperplaneIcon aria-hidden />
-        ) : (
-            <ArrowRightIcon aria-hidden />
-        );
-    };
-
-    const hentKnappeTekst = (): LocaleRecordString => {
-        return nesteSteg.route === RouteEnum.Kvittering ? sendSoeknadKnapp : gaaVidereKnapp;
-    };
 
     return (
         <>
@@ -75,13 +56,23 @@ const Navigeringspanel: React.FC<{
                         </Button>
                         <Button
                             type={'submit'}
-                            variant={hentKnappetype()}
-                            icon={hentKnappeIkon()}
+                            variant={valideringErOk && valideringErOk() ? 'primary' : 'secondary'}
+                            icon={
+                                nesteSteg.route === RouteEnum.Kvittering ? (
+                                    <PaperplaneIcon aria-hidden />
+                                ) : (
+                                    <ArrowRightIcon aria-hidden />
+                                )
+                            }
                             iconPosition="right"
                             loading={innsendingStatus.status === RessursStatus.HENTER}
                             data-testid="neste-steg"
                         >
-                            {plainTekst(hentKnappeTekst())}
+                            {plainTekst(
+                                nesteSteg.route === RouteEnum.Kvittering
+                                    ? sendSoeknadKnapp
+                                    : gaaVidereKnapp
+                            )}
                         </Button>
 
                         <Box asChild marginBlock={{ xs: '4 0', sm: '0' }}>
