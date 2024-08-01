@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { Alert, BodyLong, Box, Button, Modal, VStack } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Modal, VStack } from '@navikt/ds-react';
 
 import ModalContent from '../../Felleskomponenter/ModalContent';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -14,22 +14,21 @@ const FortsettPåSøknad: FC = () => {
         useBekreftelseOgStartSoknad();
     const { formatMessage } = useIntl();
     return (
-        <VStack role={'navigation'} gap="6">
+        <VStack role={'navigation'} gap="8">
             <Alert variant={'info'}>
                 <BodyLong>
                     <SpråkTekst id={'mellomlagring.info'} />
                 </BodyLong>
             </Alert>
-            <Box marginInline="auto">
+            <VStack gap="8" width={{ sm: 'fit-content' }}>
                 <Button onClick={fortsettPåSøknaden}>
                     <SpråkTekst id={'mellomlagring.knapp.fortsett'} />
                 </Button>
-            </Box>
-            <Box marginInline="auto">
+
                 <Button variant={'secondary'} onClick={() => settVisStartPåNyttModal(true)}>
                     <SpråkTekst id={'mellomlagring.knapp.startpånytt'} />
                 </Button>
-            </Box>
+            </VStack>
             <Modal
                 open={visStartPåNyttModal}
                 onClose={() => {
