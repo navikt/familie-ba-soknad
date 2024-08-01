@@ -3,10 +3,12 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
+import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
-import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
@@ -33,18 +35,17 @@ const TidligereSamboere: React.FC<Props> = ({
     hattAnnenSamboerForSøktPeriodeFelt,
     tidligereSamboere,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         lukkModal: lukkLeggTilSamboerModal,
         åpneModal: åpneLeggTilSamboerModal,
         erÅpen: erLeggTilSamboerModalÅpen,
     } = useModal();
+    const { tekster, plainTekst } = useApp();
 
-    const antallPerioder = tidligereSamboere.verdi.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'tidligereSamboere',
-        PersonType.Søker,
-        antallPerioder
-    );
+    const teksterForModal: ITidligereSamoboereTekstinnhold =
+        tekster().FELLES.modaler.tidligereSamboere.søker;
+    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     return (
         <>
@@ -68,7 +69,11 @@ const TidligereSamboere: React.FC<Props> = ({
                     ))}
                     <LeggTilKnapp
                         språkTekst="omdeg.leggtilfleresamboere.leggtil"
-                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
+                        leggTilFlereTekst={
+                            toggles.NYE_MODAL_TEKSTER &&
+                            tidligereSamboere.verdi.length > 0 &&
+                            plainTekst(flerePerioder)
+                        }
                         onClick={åpneLeggTilSamboerModal}
                         id={genererPeriodeId({
                             personType: PersonType.Søker,
@@ -87,7 +92,7 @@ const TidligereSamboere: React.FC<Props> = ({
                             leggTilTidligereSamboer={leggTilTidligereSamboer}
                             lukkModal={lukkLeggTilSamboerModal}
                             erÅpen={erLeggTilSamboerModalÅpen}
-                            forklaring={leggTilPeriodeTekster?.tekstForModal}
+                            forklaring={plainTekst(leggTilPeriodeForklaring)}
                         />
                     )}
                 </PerioderContainer>

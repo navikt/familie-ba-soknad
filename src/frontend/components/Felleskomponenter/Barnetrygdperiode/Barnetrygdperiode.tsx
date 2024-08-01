@@ -4,13 +4,14 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
+import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
 import { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema';
-import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -55,13 +56,11 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
         lukkModal: lukkBarnetrygdsmodal,
         åpneModal: åpneBarnetrygdsmodal,
     } = useModal();
+    const { tekster, plainTekst } = useApp();
 
-    const antallPerioder = registrerteEøsBarnetrygdsperioder.verdi.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'barnetrygdsperiode',
-        personType,
-        antallPerioder
-    );
+    const teksterForModal: IBarnetrygdsperiodeTekstinnhold =
+        tekster().FELLES.modaler.barnetrygdsperiode[personType];
+    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     return (
         <>
@@ -104,7 +103,11 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                     <LeggTilKnapp
                         onClick={åpneBarnetrygdsmodal}
                         språkTekst={'ombarnet.trygdandreperioder.knapp'}
-                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
+                        leggTilFlereTekst={
+                            toggles.NYE_MODAL_TEKSTER &&
+                            registrerteEøsBarnetrygdsperioder.verdi.length > 0 &&
+                            plainTekst(flerePerioder)
+                        }
                         id={genererPeriodeId({
                             personType,
                             spørsmålsId: BarnetrygdperiodeSpørsmålId.barnetrygdsperiodeEøs,
@@ -126,7 +129,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             barn={barn}
                             personType={personType}
                             erDød={erDød}
-                            forklaring={leggTilPeriodeTekster?.tekstForModal}
+                            forklaring={plainTekst(leggTilPeriodeForklaring)}
                         />
                     )}
                 </PerioderContainer>

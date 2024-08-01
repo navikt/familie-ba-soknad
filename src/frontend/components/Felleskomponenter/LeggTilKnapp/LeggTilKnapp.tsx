@@ -12,7 +12,7 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 interface Props {
     onClick: () => void | Promise<void>;
     språkTekst: string;
-    forklaring?: string;
+    leggTilFlereTekst?: ReactNode;
     feilmelding?: ReactNode;
     id?: string;
 }
@@ -26,7 +26,7 @@ const StyledButton = styled(Button)`
 export const LeggTilKnapp: React.FC<Props> = ({
     onClick,
     språkTekst,
-    forklaring,
+    leggTilFlereTekst,
     feilmelding,
     id,
 }) => {
@@ -34,7 +34,9 @@ export const LeggTilKnapp: React.FC<Props> = ({
 
     return (
         <>
-            {toggles.NYE_MODAL_TEKSTER && forklaring && <BodyShort spacing>{forklaring}</BodyShort>}
+            {toggles.NYE_MODAL_TEKSTER && leggTilFlereTekst && (
+                <BodyShort spacing>{leggTilFlereTekst}</BodyShort>
+            )}
             <StyledButton
                 id={id}
                 variant={'tertiary'}

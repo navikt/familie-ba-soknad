@@ -4,11 +4,12 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
+import { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/andreUtbetalinger';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
-import { hentLeggTilPeriodeTekster } from '../../../utils/modaler';
 import { genererPeriodeId } from '../../../utils/perioder';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -51,15 +52,13 @@ export const Utbetalingsperiode: React.FC<Props> = ({
         lukkModal: lukkUtbetalingerModal,
         åpneModal: åpneUtbetalingerModal,
     } = useModal();
+    const { tekster, plainTekst } = useApp();
 
     const barnetsNavn = barn && barn.navn;
 
-    const antallPerioder = registrerteUtbetalingsperioder.verdi.length;
-    const leggTilPeriodeTekster = hentLeggTilPeriodeTekster(
-        'andreUtbetalinger',
-        personType,
-        antallPerioder
-    );
+    const teksterForModal: IAndreUtbetalingerTekstinnhold =
+        tekster().FELLES.modaler.andreUtbetalinger[personType];
+    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     return (
         <>
@@ -102,7 +101,11 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                     <LeggTilKnapp
                         onClick={åpneUtbetalingerModal}
                         språkTekst={'felles.flereytelser.knapp'}
-                        forklaring={leggTilPeriodeTekster?.tekstForKnapp}
+                        leggTilFlereTekst={
+                            toggles.NYE_MODAL_TEKSTER &&
+                            registrerteUtbetalingsperioder.verdi.length > 0 &&
+                            plainTekst(flerePerioder)
+                        }
                         id={genererPeriodeId({
                             personType: personType,
                             spørsmålsId: UtbetalingerSpørsmålId.utbetalingsperioder,
@@ -120,7 +123,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             personType={personType}
                             barn={barn}
                             erDød={erDød}
-                            forklaring={leggTilPeriodeTekster?.tekstForModal}
+                            forklaring={plainTekst(leggTilPeriodeForklaring)}
                         />
                     )}
                 </PerioderContainer>
