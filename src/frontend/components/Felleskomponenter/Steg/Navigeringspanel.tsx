@@ -56,7 +56,13 @@ const Navigeringspanel: React.FC<{
                         </Button>
                         <Button
                             type={'submit'}
-                            variant={valideringErOk && valideringErOk() ? 'primary' : 'secondary'}
+                            variant={
+                                valideringErOk
+                                    ? valideringErOk()
+                                        ? 'primary'
+                                        : 'secondary'
+                                    : 'primary'
+                            }
                             icon={
                                 nesteSteg.route === RouteEnum.Kvittering ? (
                                     <PaperplaneIcon aria-hidden />
