@@ -51,14 +51,13 @@ describe('Oppsummering', () => {
         });
         spyOnUseApp(søknad);
 
-        const { findByText, getByText, findByTestId } = render(
+        const { getByText, findByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/oppsummering']}>
                 <Oppsummering />
                 <LesUtLocation />
             </TestProvidere>
         );
-        const gåVidere = await findByText('felles.navigasjon.gå-videre');
-
+        const gåVidere = await findByTestId('neste-steg');
         await act(() => gåVidere.click());
 
         const feilmelding = getByText('omdeg.oppholdtsammenhengende.feilmelding');
@@ -73,13 +72,13 @@ describe('Oppsummering', () => {
         const søknad = mekkGyldigSøknad();
         spyOnUseApp(søknad);
 
-        const { findByText, queryAllByRole, findByTestId } = render(
+        const { queryAllByRole, findByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/oppsummering']}>
                 <Oppsummering />
                 <LesUtLocation />
             </TestProvidere>
         );
-        const gåVidere = await findByText('felles.navigasjon.gå-videre');
+        const gåVidere = await findByTestId('neste-steg');
 
         await act(() => gåVidere.click());
 

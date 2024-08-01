@@ -51,7 +51,7 @@ const Navigeringspanel: React.FC<{
         );
     };
 
-    const hentKnappeSpråkTekstId = (): LocaleRecordString => {
+    const hentKnappeTekst = (): LocaleRecordString => {
         return nesteSteg.route === RouteEnum.Kvittering ? sendSoeknadKnapp : gaaVidereKnapp;
     };
 
@@ -79,8 +79,9 @@ const Navigeringspanel: React.FC<{
                             icon={hentKnappeIkon()}
                             iconPosition="right"
                             loading={innsendingStatus.status === RessursStatus.HENTER}
+                            data-testid="neste-steg"
                         >
-                            {plainTekst(hentKnappeSpråkTekstId())}
+                            {plainTekst(hentKnappeTekst())}
                         </Button>
 
                         <Box asChild marginBlock={{ xs: '4 0', sm: '0' }}>
