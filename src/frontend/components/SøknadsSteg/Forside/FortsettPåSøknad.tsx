@@ -17,28 +17,30 @@ export const FortsettPåSøknad: React.FC = () => {
     const navigasjonTekster = tekster().FELLES.navigasjon;
 
     return (
-        <VStack role={'navigation'} gap="8">
-            <Alert variant={'info'}>
-                <BodyLong>
-                    <TekstBlock
-                        block={forsideTekster.mellomlagretAlert}
-                        brukTypografiWrapper={false}
-                    />
-                </BodyLong>
-            </Alert>
-            <VStack gap="8" width={{ sm: 'fit-content' }}>
-                <Button onClick={fortsettPåSøknaden}>
-                    {plainTekst(navigasjonTekster.fortsettKnapp)}
-                </Button>
-                <Button variant={'secondary'} onClick={() => settVisStartPåNyttModal(true)}>
-                    {plainTekst(navigasjonTekster.startPaaNyttKnapp)}
-                </Button>
+        <>
+            <VStack role={'navigation'} gap="8">
+                <Alert variant={'info'}>
+                    <BodyLong>
+                        <TekstBlock
+                            block={forsideTekster.mellomlagretAlert}
+                            brukTypografiWrapper={false}
+                        />
+                    </BodyLong>
+                </Alert>
+                <VStack gap="8" width={{ sm: 'fit-content' }}>
+                    <Button onClick={fortsettPåSøknaden}>
+                        {plainTekst(navigasjonTekster.fortsettKnapp)}
+                    </Button>
+                    <Button variant={'secondary'} onClick={() => settVisStartPåNyttModal(true)}>
+                        {plainTekst(navigasjonTekster.startPaaNyttKnapp)}
+                    </Button>
+                </VStack>
             </VStack>
             <SlettSøknadenModal
                 open={visStartPåNyttModal}
                 avbryt={() => settVisStartPåNyttModal(false)}
                 startPåNytt={() => startPåNytt()}
             />
-        </VStack>
+        </>
     );
 };

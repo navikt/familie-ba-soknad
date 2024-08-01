@@ -14,6 +14,9 @@ import { useApp } from '../../../context/AppContext';
 import { useSteg } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
 import { LocaleRecordString } from '../../../typer/sanity/sanity';
+import { useBekreftelseOgStartSoknad } from '../../SøknadsSteg/Forside/useBekreftelseOgStartSoknad';
+
+import { SlettSøknadenModal } from './SlettSøknadenModal';
 
 type Knappetype = 'primary' | 'secondary';
 
@@ -25,6 +28,8 @@ const Navigeringspanel: React.FC<{
     const { hentNesteSteg } = useSteg();
     const nesteSteg = hentNesteSteg();
     const { innsendingStatus, tekster, plainTekst } = useApp();
+    const { visStartPåNyttModal, settVisStartPåNyttModal, startPåNytt } =
+        useBekreftelseOgStartSoknad();
 
     const {
         sendSoeknadKnapp,
@@ -51,54 +56,62 @@ const Navigeringspanel: React.FC<{
     };
 
     return (
-        <Box marginBlock="12 0">
-            <VStack gap="4">
-                <HGrid
-                    gap={{ xs: '4', sm: '8 4' }}
-                    columns={{ xs: 1, sm: 2 }}
-                    width={{ sm: 'fit-content' }}
-                >
-                    <Button
-                        type={'button'}
-                        variant="secondary"
-                        onClick={onTilbakeCallback}
-                        icon={<ArrowLeftIcon aria-hidden />}
-                        iconPosition="left"
+        <>
+            <Box marginBlock="12 0">
+                <VStack gap="4">
+                    <HGrid
+                        gap={{ xs: '4', sm: '8 4' }}
+                        columns={{ xs: 1, sm: 2 }}
+                        width={{ sm: 'fit-content' }}
                     >
-                        {plainTekst(tilbakeKnapp)}
-                    </Button>
-                    <Button
-                        type={'submit'}
-                        variant={hentKnappetype()}
-                        icon={hentKnappeIkon()}
-                        iconPosition="right"
-                        loading={innsendingStatus.status === RessursStatus.HENTER}
-                    >
-                        {plainTekst(hentKnappeSpråkTekstId())}
-                    </Button>
+                        <Button
+                            type={'button'}
+                            variant="secondary"
+                            onClick={onTilbakeCallback}
+                            icon={<ArrowLeftIcon aria-hidden />}
+                            iconPosition="left"
+                        >
+                            {plainTekst(tilbakeKnapp)}
+                        </Button>
+                        <Button
+                            type={'submit'}
+                            variant={hentKnappetype()}
+                            icon={hentKnappeIkon()}
+                            iconPosition="right"
+                            loading={innsendingStatus.status === RessursStatus.HENTER}
+                        >
+                            {plainTekst(hentKnappeSpråkTekstId())}
+                        </Button>
 
-                    <Box asChild marginBlock={{ xs: '4 0', sm: '0' }}>
+                        <Box asChild marginBlock={{ xs: '4 0', sm: '0' }}>
+                            <Button
+                                variant="tertiary"
+                                type={'button'}
+                                onClick={onAvbrytCallback}
+                                icon={<FloppydiskIcon aria-hidden />}
+                                iconPosition="left"
+                            >
+                                {plainTekst(fortsettSenereKnapp)}
+                            </Button>
+                        </Box>
                         <Button
                             variant="tertiary"
                             type={'button'}
-                            onClick={onAvbrytCallback}
-                            icon={<FloppydiskIcon aria-hidden />}
+                            icon={<TrashIcon aria-hidden />}
                             iconPosition="left"
+                            onClick={() => settVisStartPåNyttModal(true)}
                         >
-                            {plainTekst(fortsettSenereKnapp)}
+                            {plainTekst(slettSoeknadKnapp)}
                         </Button>
-                    </Box>
-                    <Button
-                        variant="tertiary"
-                        type={'button'}
-                        icon={<TrashIcon aria-hidden />}
-                        iconPosition="left"
-                    >
-                        {plainTekst(slettSoeknadKnapp)}
-                    </Button>
-                </HGrid>
-            </VStack>
-        </Box>
+                    </HGrid>
+                </VStack>
+            </Box>
+            <SlettSøknadenModal
+                open={visStartPåNyttModal}
+                avbryt={() => settVisStartPåNyttModal(false)}
+                startPåNytt={() => startPåNytt()}
+            />
+        </>
     );
 };
 

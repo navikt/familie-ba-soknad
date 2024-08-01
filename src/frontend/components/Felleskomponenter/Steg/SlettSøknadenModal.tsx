@@ -39,10 +39,10 @@ export const SlettSøknadenModal: React.FC<ISlettSøkadenModalProps> = ({
                 </BodyLong>
             </ModalContent>
             <Modal.Footer>
-                <Button variant={'danger'} onClick={startPåNytt}>
+                <Button variant={'danger'} type="button" onClick={startPåNytt}>
                     {plainTekst(startPåNyttTekster.startNySoeknadKnapp)}
                 </Button>
-                <Button variant={'secondary'} onClick={avbryt}>
+                <Button variant={'secondary'} type="button" onClick={avbryt}>
                     {plainTekst(startPåNyttTekster.startPaaNyttAvbryt)}
                 </Button>
             </Modal.Footer>
