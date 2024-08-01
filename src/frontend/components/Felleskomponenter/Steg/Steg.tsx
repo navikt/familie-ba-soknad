@@ -89,6 +89,8 @@ const Steg: React.FC<ISteg> = ({
         settNåværendeRoute,
         modellVersjonOppdatert,
         søknad,
+        tekster,
+        plainTekst,
     } = useApp();
     const {
         formProgressSteps,
@@ -167,6 +169,17 @@ const Steg: React.FC<ISteg> = ({
         navigate(steg.path);
     };
 
+    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
+
+    const formProgressStegTekst =
+        plainTekst(frittståendeOrdTekster.steg) +
+        ' ' +
+        hentNåværendeStegIndex() +
+        ' ' +
+        plainTekst(frittståendeOrdTekster.av) +
+        ' ' +
+        formProgressSteps.length;
+
     return (
         <>
             <ScrollHandler />
@@ -175,6 +188,11 @@ const Steg: React.FC<ISteg> = ({
                 {nyesteNåværendeRoute !== RouteEnum.Kvittering && (
                     <FormProgressContainer>
                         <FormProgress
+                            translations={{
+                                step: formProgressStegTekst,
+                                showAllSteps: plainTekst(frittståendeOrdTekster.visAlleSteg),
+                                hideAllSteps: plainTekst(frittståendeOrdTekster.skjulAlleSteg),
+                            }}
                             totalSteps={formProgressSteps.length}
                             activeStep={hentNåværendeStegIndex()}
                             onStepChange={stegIndex => håndterGåTilSteg(stegIndex - 1)}

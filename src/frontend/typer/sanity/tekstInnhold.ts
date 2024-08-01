@@ -67,6 +67,10 @@ export interface IFrittståendeOrdTekstinnhold {
     nei: LocaleRecordString;
     barnetrygd: LocaleRecordString;
     skjult: LocaleRecordString;
+    av: LocaleRecordString;
+    steg: LocaleRecordString;
+    visAlleSteg: LocaleRecordString;
+    skjulAlleSteg: LocaleRecordString;
 }
 
 export interface IModalerTekstinnhold {
