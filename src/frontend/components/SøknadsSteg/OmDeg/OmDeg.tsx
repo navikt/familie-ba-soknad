@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alert, Label } from '@navikt/ds-react';
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -71,14 +71,6 @@ const OmDeg: React.FC = () => {
                     felt={skjema.felter.borPåRegistrertAdresse}
                     spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
                 />
-
-                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <Alert variant={'warning'} inline data-testid={'alertstripe-adresse'}>
-                        <SpråkTekst
-                            id={'omdeg.borpådenneadressen.kontakt-folkeregister-ukjent.alert'}
-                        />
-                    </Alert>
-                )}
             </KomponentGruppe>
             <KomponentGruppe>
                 <>
@@ -134,19 +126,6 @@ const OmDeg: React.FC = () => {
                                 omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
                             }
                         />
-                        {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig &&
-                            skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                                <Alert
-                                    variant={'warning'}
-                                    inline
-                                    aria-live={'polite'}
-                                    data-testid={'alertstripe'}
-                                >
-                                    <SpråkTekst
-                                        id={'omdeg.planlagt-opphold-sammenhengende.alert'}
-                                    />
-                                </Alert>
-                            )}
                     </KomponentGruppe>
                 )}
             </KomponentGruppe>
