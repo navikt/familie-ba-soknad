@@ -1,10 +1,17 @@
 import React from 'react';
 
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
+import styled from 'styled-components';
+
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
-import ModalContent from '../ModalContent';
-import TekstBlock from '../Sanity/TekstBlock';
+
+const StyledHeading = styled(Heading)`
+    && {
+        white-space: nowrap;
+        margin-right: 4rem;
+    }
+`;
 
 interface ISlettSøkadenModalProps {
     open: boolean;
@@ -22,22 +29,12 @@ export const SlettSøknadenModal: React.FC<ISlettSøkadenModalProps> = ({
     const startPåNyttTekster = tekster().FELLES.modaler.startPåNytt;
 
     return (
-        <Modal
-            open={open}
-            onClose={avbryt}
-            header={{
-                heading: plainTekst(startPåNyttTekster.startPaaNyttTittel),
-                size: 'medium',
-            }}
-        >
-            <ModalContent>
-                <BodyLong>
-                    <TekstBlock
-                        block={startPåNyttTekster.startPaaNyttInfo}
-                        brukTypografiWrapper={false}
-                    />
-                </BodyLong>
-            </ModalContent>
+        <Modal open={open} onClose={avbryt} aria-labelledby="modal-heading">
+            <Modal.Header>
+                <StyledHeading level="1" size="medium" id="modal-heading">
+                    {plainTekst(startPåNyttTekster.startPaaNyttTittel)}
+                </StyledHeading>
+            </Modal.Header>
             <Modal.Footer>
                 <Button variant={'danger'} type="button" onClick={startPåNytt}>
                     {plainTekst(startPåNyttTekster.startNySoeknadKnapp)}

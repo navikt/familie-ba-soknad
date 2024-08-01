@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Alert, BodyLong, Button, VStack } from '@navikt/ds-react';
+import { Alert, Button, VStack } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
+import { Typografi } from '../../../typer/sanity/sanity';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SlettSøknadenModal } from '../../Felleskomponenter/Steg/SlettSøknadenModal';
 
@@ -20,12 +21,10 @@ export const FortsettPåSøknad: React.FC = () => {
         <>
             <VStack role={'navigation'} gap="8">
                 <Alert variant={'info'}>
-                    <BodyLong>
-                        <TekstBlock
-                            block={forsideTekster.mellomlagretAlert}
-                            brukTypografiWrapper={false}
-                        />
-                    </BodyLong>
+                    <TekstBlock
+                        block={forsideTekster.mellomlagretAlert}
+                        typografi={Typografi.BodyLong}
+                    />
                 </Alert>
                 <VStack gap="8" width={{ sm: 'fit-content' }}>
                     <Button onClick={fortsettPåSøknaden}>
