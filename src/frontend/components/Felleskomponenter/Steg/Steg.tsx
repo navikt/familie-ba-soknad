@@ -170,7 +170,7 @@ const Steg: React.FC<ISteg> = ({
         navigate(steg.path);
     };
 
-    const { forrigeStegLenke } = tekster().FELLES.navigasjon;
+    const { tilbakeKnapp } = tekster().FELLES.navigasjon;
 
     return (
         <>
@@ -190,7 +190,7 @@ const Steg: React.FC<ISteg> = ({
                                     }}
                                 >
                                     <ArrowLeftIcon aria-hidden />
-                                    {plainTekst(forrigeStegLenke)}
+                                    {plainTekst(tilbakeKnapp)}
                                 </Link>
                             </div>
                             <FormProgress

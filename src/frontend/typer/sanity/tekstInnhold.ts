@@ -83,7 +83,6 @@ export interface INavigasjonTekstinnhold {
     sendSoeknadKnapp: LocaleRecordString;
     slettSoeknadKnapp: LocaleRecordString;
     fortsettSenereKnapp: LocaleRecordString;
-    forrigeStegLenke: LocaleRecordString;
 }
 
 export interface IModalerTekstinnhold {
