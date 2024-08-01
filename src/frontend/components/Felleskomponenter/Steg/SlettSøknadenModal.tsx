@@ -3,23 +3,28 @@ import React from 'react';
 import { BodyLong, Button, Modal } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
-import { useBekreftelseOgStartSoknad } from '../../SøknadsSteg/Forside/useBekreftelseOgStartSoknad';
 import ModalContent from '../ModalContent';
 import TekstBlock from '../Sanity/TekstBlock';
 
-export const SlettSøknadenModal: React.FC = () => {
+interface ISlettSøkadenModalProps {
+    open: boolean;
+    avbryt: () => void;
+    startPåNytt: () => void;
+}
+
+export const SlettSøknadenModal: React.FC<ISlettSøkadenModalProps> = ({
+    open,
+    avbryt,
+    startPåNytt,
+}) => {
     const { tekster, plainTekst } = useApp();
-    const { startPåNytt, visStartPåNyttModal, settVisStartPåNyttModal } =
-        useBekreftelseOgStartSoknad();
 
     const startPåNyttTekster = tekster().FELLES.modaler.startPåNytt;
 
     return (
         <Modal
-            open={visStartPåNyttModal}
-            onClose={() => {
-                settVisStartPåNyttModal(false);
-            }}
+            open={open}
+            onClose={avbryt}
             header={{
                 heading: plainTekst(startPåNyttTekster.startPaaNyttTittel),
                 size: 'medium',
@@ -37,7 +42,7 @@ export const SlettSøknadenModal: React.FC = () => {
                 <Button variant={'danger'} onClick={startPåNytt}>
                     {plainTekst(startPåNyttTekster.startNySoeknadKnapp)}
                 </Button>
-                <Button variant={'secondary'} onClick={() => settVisStartPåNyttModal(false)}>
+                <Button variant={'secondary'} onClick={avbryt}>
                     {plainTekst(startPåNyttTekster.startPaaNyttAvbryt)}
                 </Button>
             </Modal.Footer>

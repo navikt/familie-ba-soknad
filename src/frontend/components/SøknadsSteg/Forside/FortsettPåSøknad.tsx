@@ -10,7 +10,8 @@ import { useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
 export const FortsettPåSøknad: React.FC = () => {
     const { tekster, plainTekst } = useApp();
-    const { fortsettPåSøknaden, settVisStartPåNyttModal } = useBekreftelseOgStartSoknad();
+    const { fortsettPåSøknaden, visStartPåNyttModal, settVisStartPåNyttModal, startPåNytt } =
+        useBekreftelseOgStartSoknad();
 
     const forsideTekster = tekster().FORSIDE;
     const navigasjonTekster = tekster().FELLES.navigasjon;
@@ -33,7 +34,11 @@ export const FortsettPåSøknad: React.FC = () => {
                     {plainTekst(navigasjonTekster.startPaaNyttKnapp)}
                 </Button>
             </VStack>
-            <SlettSøknadenModal />
+            <SlettSøknadenModal
+                open={visStartPåNyttModal}
+                avbryt={() => settVisStartPåNyttModal(false)}
+                startPåNytt={() => startPåNytt()}
+            />
         </VStack>
     );
 };
