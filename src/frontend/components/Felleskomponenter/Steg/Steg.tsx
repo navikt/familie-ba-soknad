@@ -14,6 +14,7 @@ import { useSteg } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
+import { ISteg as RoutesISteg } from '../../../typer/routes';
 import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
@@ -93,7 +94,7 @@ const Steg: React.FC<ISteg> = ({
         plainTekst,
     } = useApp();
     const {
-        formProgressSteps,
+        steg,
         hentNesteSteg,
         hentForrigeSteg,
         hentNåværendeSteg,
@@ -164,8 +165,14 @@ const Steg: React.FC<ISteg> = ({
         navigate(forrigeRoute.path);
     };
 
+    const formProgressSteps = (): RoutesISteg[] => {
+        return steg.filter(
+            steg => steg.route !== RouteEnum.Forside && steg.route !== RouteEnum.Kvittering
+        );
+    };
+
     const håndterGåTilSteg = (stegIndex: number) => {
-        const steg = formProgressSteps[stegIndex];
+        const steg = formProgressSteps()[stegIndex];
         navigate(steg.path);
     };
 
@@ -178,7 +185,7 @@ const Steg: React.FC<ISteg> = ({
         ' ' +
         plainTekst(frittståendeOrdTekster.av) +
         ' ' +
-        formProgressSteps.length;
+        formProgressSteps().length;
 
     return (
         <>
@@ -193,11 +200,11 @@ const Steg: React.FC<ISteg> = ({
                                 showAllSteps: plainTekst(frittståendeOrdTekster.visAlleSteg),
                                 hideAllSteps: plainTekst(frittståendeOrdTekster.skjulAlleSteg),
                             }}
-                            totalSteps={formProgressSteps.length}
+                            totalSteps={formProgressSteps().length}
                             activeStep={hentNåværendeStegIndex()}
                             onStepChange={stegIndex => håndterGåTilSteg(stegIndex - 1)}
                         >
-                            {formProgressSteps.map((value, index) => (
+                            {formProgressSteps().map((value, index) => (
                                 <FormProgress.Step
                                     key={index}
                                     completed={index + 1 < hentNåværendeStegIndex()}
